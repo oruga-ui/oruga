@@ -8,7 +8,6 @@ title: Icon
 
 > Icons take an important role of any application
 
-<Carbon />
 </div>
 
 <div class="vp-example">
@@ -45,6 +44,7 @@ title: Icon
 | customClass | Add class to icon font.<br/>See icon library documentation for custom classes. | string         | -                                                                                                                |                                                                                                                                                   |
 | customSize  | Overrides icon font size                                                       | string         | `Depends on library: null (smallest)`, `fa-sm`, `fa-lg`, `fa-xl`, `mdi-18px`, `mdi-24px`, `mdi-36px`, `mdi-48px` |                                                                                                                                                   |
 | icon        | Icon name                                                                      | string         | -                                                                                                                |                                                                                                                                                   |
+| override    | Override existing theme classes completely                                     | boolean        | -                                                                                                                |                                                                                                                                                   |
 | pack        | Icon pack to use                                                               | string         | `mdi`, `fa`, `fas and any other custom icon pack`                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;iconPack: "mdi"<br>}</code>          |
 | rotation    | Rotation 0-360                                                                 | number\|string | -                                                                                                                |                                                                                                                                                   |
 | size        | Icon size                                                                      | string         | `small`, `medium`, `large`                                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>icon: {<br>&nbsp;&nbsp;size: undefined<br>}</code>    |

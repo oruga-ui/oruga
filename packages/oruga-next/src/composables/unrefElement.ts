@@ -21,8 +21,8 @@ export type UnRefElementReturn<T extends MaybeElement = MaybeElement> =
     T extends ComponentPublicInstance
         ? Exclude<MaybeElement, ComponentPublicInstance>
         : T extends Component
-        ? HTMLElement
-        : T | undefined;
+          ? HTMLElement
+          : T | undefined;
 
 /**
  * Get the dom element of a ref of element or Vue component instance

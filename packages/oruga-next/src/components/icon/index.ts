@@ -4,9 +4,6 @@ import Icon from "./Icon.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-/** export icon specific types */
-export type * from "./types";
-
 /** export icon plugin */
 export default {
     install(app: App) {

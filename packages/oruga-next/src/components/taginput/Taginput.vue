@@ -4,11 +4,11 @@ import { computed, nextTick, ref, useAttrs, watch, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { getValueByPath } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
+    getActiveClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -28,8 +28,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Array, default: () => [] },
     /** Items data */
@@ -170,34 +170,42 @@ const props = defineProps({
         default: () => getOption("taginput.teleport", false),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when expanded */
     expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the input container */
     containerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the input container size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the entered item variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the close button of entered item */
     closeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the entered item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the counter element */
     counterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -266,7 +274,10 @@ const emits = defineEmits<{
 
 const autocompleteRef = ref<InstanceType<typeof OAutocomplete>>();
 
-const items = useVModelBinding<any[]>(props, emits, { passive: true });
+const items = useVModelBinding<any[]>(props, emits, {
+    passive: true,
+    deep: true,
+});
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -405,57 +416,64 @@ function handleOnBlur(event: Event): void {
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
+
+const autocompleteRootClasses = defineClasses([
+    "autocompleteClasses.rootClass",
+    "o-taginput__autocomplete",
+]);
+
+const autocompleteInputClasses = defineClasses([
+    "autocompleteClasses.inputClasses.inputClass",
+    "o-taginput__input",
+]);
+
 const autocompleteBind = computed(() => ({
     ...attrs,
-    "root-class": useComputedClass(
-        "autocompleteClasses.rootClass",
-        "o-taginput__autocomplete",
-    ),
+    "root-class": getActiveClasses(autocompleteRootClasses.value),
     "input-classes": {
-        "input-class": useComputedClass(
-            "autocompleteClasses.inputClasses.inputClass",
-            "o-taginput__input",
-        ),
+        "input-class": getActiveClasses(autocompleteInputClasses.value),
     },
     ...props.autocompleteClasses,
 }));
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-taginput"),
-    {
-        [useComputedClass("expandedClass", "o-taginput--expanded")]:
-            props.expanded,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-taginput"],
+    [
+        "expandedClass",
+        "o-taginput--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+);
 
-const containerClasses = computed(() => [
-    useComputedClass("containerClass", "o-taginput__container"),
-    {
-        [useComputedClass("sizeClass", "o-taginput__container--", props.size)]:
-            props.size,
-    },
-]);
+const containerClasses = defineClasses(
+    ["containerClass", "o-taginput__container"],
+    [
+        "sizeClass",
+        "o-taginput__container--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+);
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-taginput__item"),
-    {
-        [useComputedClass("variantClass", "o-taginput__item--", props.variant)]:
-            props.variant,
-    },
-]);
+const itemClasses = defineClasses(
+    ["itemClass", "o-taginput__item"],
+    [
+        "variantClass",
+        "o-taginput__item--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+);
 
-const closeClasses = computed(() => [
-    useComputedClass("closeClass", "o-taginput__item__close"),
-]);
+const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
 
-const counterClasses = computed(() => [
-    useComputedClass("counterClass", "o-taginput__counter"),
-]);
+const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 </script>
 
 <template>
     <div data-oruga="taginput" :class="rootClasses">
-        <div :class="containerClasses" @click="hasInput && onFocus()">
+        <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
             <!--
                 @slot Override selected items
                 @binding {unknown[]} items - selected items
@@ -479,7 +497,7 @@ const counterClasses = computed(() => [
             </slot>
 
             <o-autocomplete
-                v-if="hasInput"
+                v-show="hasInput"
                 ref="autocompleteRef"
                 v-model="newItem"
                 v-bind="autocompleteBind"
@@ -501,6 +519,9 @@ const counterClasses = computed(() => [
                 :check-scroll="checkScroll"
                 :teleport="teleport"
                 :confirm-keys="confirmKeys"
+                :placeholder="placeholder"
+                :validation-message="validationMessage"
+                :expanded="expanded"
                 @input="onInput"
                 @focus="onFocus"
                 @blur="handleOnBlur"

@@ -9,11 +9,11 @@ import {
     type PropType,
 } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
-    useComputedClass,
+    defineClasses,
+    getActiveClasses,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
@@ -33,8 +33,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether siedbar is active or not, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /**
@@ -161,70 +161,87 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of sidebar component when its active */
     activeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of sidebar when teleported */
     teleportClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar overlay */
     overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar position */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar when is fullheight */
     fullheightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar when is fullwidth */
     fullwidthClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar when its inlined */
     inlineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar when reduced */
     reduceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar when expanded on hover */
     expandOnHoverClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of sidebar component when on mobile */
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the body when sidebar clipped */
     crollClipClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the body when sidebar is not clipped */
     noScrollClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar content when sidebar is hidden */
     hiddenClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the sidebar content when sidebar is visible */
     visibleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -308,8 +325,8 @@ onBeforeUnmount(() => {
                 ? savedScrollTop.value
                 : document.documentElement.scrollTop;
             if (scrollClass.value) {
-                document.body.classList.remove(scrollClass.value);
-                document.documentElement.classList.remove(scrollClass.value);
+                document.body.classList.remove(...scrollClass.value);
+                document.documentElement.classList.remove(...scrollClass.value);
             }
             document.documentElement.scrollTop = scrollto;
             document.body.style.top = null;
@@ -340,10 +357,12 @@ function handleScroll(): void {
     if (!isClient) return;
 
     if (props.scroll === "clip") {
-        if (scrollClass.value) {
-            if (isActive.value)
-                document.documentElement.classList.add(scrollClass.value);
-            else document.documentElement.classList.remove(scrollClass.value);
+        if (scrollClass.value?.length) {
+            if (isActive.value) {
+                document.documentElement.classList.add(...scrollClass.value);
+            } else {
+                document.documentElement.classList.remove(...scrollClass.value);
+            }
         }
         return;
     }
@@ -353,8 +372,8 @@ function handleScroll(): void {
         : document.documentElement.scrollTop;
 
     if (scrollClass.value) {
-        if (isActive.value) document.body.classList.add(scrollClass.value);
-        else document.body.classList.remove(scrollClass.value);
+        if (isActive.value) document.body.classList.add(...scrollClass.value);
+        else document.body.classList.remove(...scrollClass.value);
     }
 
     if (isActive.value) {
@@ -379,75 +398,88 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-side"),
-    {
-        [useComputedClass("mobileClass", "o-side--mobile")]: isMobile.value,
-    },
-    {
-        [useComputedClass("activeClass", "o-side--active")]: isActive.value,
-    },
-    {
-        [useComputedClass("teleportClass", "o-side--teleport")]:
-            !!props.teleport,
-    },
-    {
-        [useComputedClass("inlineClass", "o-side--inline")]: props.inline,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-side"],
+    ["mobileClass", "o-side--mobile", null, isMobile],
+    ["activeClass", "o-side--active", null, isActive],
+    [
+        "teleportClass",
+        "o-side--teleport",
+        null,
+        computed(() => !!props.teleport),
+    ],
+    ["inlineClass", "o-side--inline", null, computed(() => props.inline)],
+);
 
-const overlayClasses = computed(() => [
-    useComputedClass("overlayClass", "o-side__overlay"),
-]);
+const overlayClasses = defineClasses(["overlayClass", "o-side__overlay"]);
 
-const contentClasses = computed(() => [
-    useComputedClass("contentClass", "o-side__content"),
-    {
-        [useComputedClass("variantClass", "o-side__content--", props.variant)]:
-            props.variant,
-    },
-    {
-        [useComputedClass(
-            "positionClass",
-            "o-side__content--",
-            props.position,
-        )]: props.position,
-    },
-    {
-        [useComputedClass("fullheightClass", "o-side__content--fullheight")]:
-            props.fullheight,
-    },
-    {
-        [useComputedClass("fullwidthClass", "o-side__content--fullwidth")]:
-            props.fullwidth || (props.mobile === "fullwidth" && isMobile.value),
-    },
-    {
-        [useComputedClass("reduceClass", "o-side__content--reduced")]:
-            props.reduce || (props.mobile === "reduced" && isMobile.value),
-    },
-    {
-        [useComputedClass(
-            "expandOnHoverClass",
-            "o-side__content--reduced-expand",
-        )]:
-            props.expandOnHover &&
-            (!isMobile.value || props.mobile !== "fullwidth"),
-    },
-    {
-        [useComputedClass("visibleClass", "o-side__content--visible")]:
-            isActive.value,
-    },
-    {
-        [useComputedClass("hiddenClass", "o-side__content--hidden")]:
-            !isActive.value,
-    },
-]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-side__content"],
+    [
+        "variantClass",
+        "o-side__content--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+    [
+        "positionClass",
+        "o-side__content--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+    [
+        "fullheightClass",
+        "o-side__content--fullheight",
+        null,
+        computed(() => props.fullheight),
+    ],
+    [
+        "fullwidthClass",
+        "o-side__content--fullwidth",
+        null,
+        computed(
+            () =>
+                props.fullwidth ||
+                (props.mobile === "fullwidth" && isMobile.value),
+        ),
+    ],
+    [
+        "reduceClass",
+        "o-side__content--reduced",
+        null,
+        computed(
+            () =>
+                props.reduce || (props.mobile === "reduced" && isMobile.value),
+        ),
+    ],
+    [
+        "expandOnHoverClass",
+        "o-side__content--reduced-expand",
+        null,
+        computed(
+            () =>
+                props.expandOnHover &&
+                (!isMobile.value || props.mobile !== "fullwidth"),
+        ),
+    ],
+    ["visibleClass", "o-side__content--visible", null, isActive],
+    [
+        "hiddenClass",
+        "o-side__content--hidden",
+        null,
+        computed(() => !isActive.value),
+    ],
+);
+
+const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
+const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
 
 const scrollClass = computed(() =>
-    props.scroll === "clip"
-        ? useComputedClass("scrollClipClass", "o-clipped")
-        : useComputedClass("noScrollClass", "o-noscroll"),
+    getActiveClasses(
+        props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
+    ),
 );
+
 // computed ref must be computed at least once for programmatic usage
 scrollClass.value;
 
@@ -468,6 +500,8 @@ defineExpose({ close, promise: props.promise });
             <div
                 v-if="overlay && isActive"
                 :class="overlayClasses"
+                :tabindex="-1"
+                aria-hidden="true"
                 @click="(evt) => clickedOutside(evt)" />
             <transition
                 :name="transitionName"

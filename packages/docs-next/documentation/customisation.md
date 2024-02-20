@@ -9,9 +9,9 @@ And <b>all components came with predefined classes </b> by default.
 
 You can customise component classes in 3 different ways:
 
-- [Global configuration](#global-configuration)
-- [Individual configuration](#overriding-configuration)
-- [Programmatically configuration](#using-configuration)
+- [Global configuration](#global)
+- [Individual configuration](#individual)
+- [Programmatically configuration](#programmatic)
 
 ::: info
 Although all components have predefined classes, Oruga allows you to easily override the style of existing components by appending one or more classes, either globally or programmatically, to individual components.
@@ -26,7 +26,7 @@ Here you can inspect the elements affected by each class property using the `Cla
 
 
 
-## Global configuration
+## Configuration {#global}
 
 The easiest way to customise your components is set up a global configuration object with a <i>class-mapping</i> for each component.
 
@@ -67,27 +67,7 @@ createApp(...)
     .use(Oruga, {
         autocomplete: {
             rootClass: 'myautocomplete-root',
-            menuClass: 'myautocomplete-menu',
             itemClass: 'myautocomplete-item',
-            ...
-        }
-    });
-```
-
-If you use individual imports you can customize each compoment using the `Config` plugin.
-
-```js
-import { createApp } from 'vue';
-import { OAutocomplete, OSidebar, Config } from '@oruga-ui/oruga-next';
-
-createApp(...)
-    .component(OAutocomplete)
-    .component(OSidebar)
-    .use(Config, {
-        autocomplete: {
-            rootClass: 'autocomplete-root',
-            menuClass: 'autocomplete-menu',
-            itemClass: 'autocomplete-item',
             ...
         }
     });
@@ -97,10 +77,9 @@ You can also use an `array` to specify more than one class or a `function` to ex
 
 ```js
 createApp(...)
-    .use(Config, {
+    .use(Oruga, {
         autocomplete: {
-            rootClass: 'autocomplete-root',
-            menuClass: ['autocomplete-menu', 'super-menu'],
+            rootClass: ['autocomplete-root', 'additional-class']
             menuPositionClass: {
                 class: (suffix) => {
                     return `autocomplete-menu-${suffix}`
@@ -111,19 +90,19 @@ createApp(...)
     });
 ```
 
-For a better customisation experience, this function accepts the component's `context` containing its read-only attributes (`props`, `data` and `computed`) as a second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
+For a better customisation experience, this function accepts the component's read-only `props` as a second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
 
 ```js
 createApp(...)
     .use(Oruga, {
         input: {
-            rootClass: (_, context) => {
-                if (context.computed.hasIconRight) {
+            rootClass: (_, props) => {
+                if (props.iconRight) {
                     return 'has-icons-right';
                 }
             },
-            variantClass: (variant, context) => {
-                if (!context.props.outlined) {
+            variantClass: (variant, props) => {
+                if (!props.outlined) {
                     return `btn-${variant}`;
                 }
             }
@@ -131,18 +110,6 @@ createApp(...)
         ...
     });
 ```
-
-### Global Props
-
-| Field              | Description                                                                                                                                                                                  | Default |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | true    |
-| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
-| useHtml5Validation | Default form components use-html5-validation attribute                                                                                                                                       | true    |
-| iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
-| reportInvalidInput | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
-
-Have a look at the docs of each component to know all the customisable fields/props by config.
 
 ### Overriding classes
 
@@ -154,7 +121,6 @@ createApp(...)
         autocomplete: {
             override: true,
             rootClass: 'myautocomplete-root',
-            menuClass: 'myautocomplete-menu',
             itemClass: 'myautocomplete-item',
             ...
         }
@@ -181,13 +147,12 @@ You can also specify the override behaviour for each class:
 
 ```js
 createApp(...)
-    .use(Config, {
+    .use(Oruga, {
         autocomplete: {
             rootClass: {
                 class: 'myautocomplete-root',
                 override: true
             },
-            menuClass: 'myautocomplete-menu',
             itemClass: 'myautocomplete-item',
             ...
         }
@@ -200,7 +165,7 @@ In case you want to transform applied `classes` you can use `transformClasses` f
 
 ```js
 createApp(...)
-    .use(Config, {
+    .use(Oruga, {
         button: {
             transformClasses: (appliedClasses) => {
                 return appliedClasses.replace(/-/g, '--')
@@ -214,7 +179,7 @@ You can also use `transformClasses` globally if you need to transform classes fo
 
 ```js
 createApp(...)
-    .use(Config, {
+    .use(Oruga, {
         transformClasses: (appliedClasses) => {
             return appliedClasses.replace(/-/g, '--')
         }
@@ -222,22 +187,36 @@ createApp(...)
     })
 ```
 
+### Component properties {#individual}
 
-## Individual configuration
-
-You can also add and override classes to a component directly using class properties:
+You can also add and override classes to a component directly using `class` properties:
 
 ```html
 <o-autocomplete 
     root-class="autocomplete-root" 
-    menu-class="autocomplete-menu" 
     item-class="autocomplete-item" />
 ```
 
+## Global Props
 
-## Programmatically configuration
+| Field              | Description                                                                                                                                                                                  | Default |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | true    |
+| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
+| useHtml5Validation | Default form components use-html5-validation attribute                                                                                                                                       | true    |
+| iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
+| reportInvalidInput | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
 
-As alternative Oruga allows to customize each components providing and overriding the `Config` object programmatically:
+Have a look at the docs of each component to know all the customisable fields/props by config.
+
+
+## Programmatic usage {#programmatic}
+
+As alternative Oruga provide a programmatic interface `useOruga()` to access the config as well as programmatic component interfaces such as [`Modal`](/components/Modal.html) or [`Sidebar`](/components/Sidebar.html).
+This interface gives you access to all registered programmatic components.
+
+The config can be customised for each component by overriding the `Config` object programmatically:
+
 ```js
 import { useOruga } from '@oruga-ui/oruga-next';
 
@@ -245,6 +224,73 @@ const oruga = useOruga();
 
 const config = oruga.config.getOptions();
 
+const myThemeConfig = {
+    ...config,
+    autocomplete: {
+        rootClass: 'autocomplete-root',
+        itemClass: 'autocomplete-item',
+        ...
+    }
+}
+
 oruga.config.setOptions(myThemeConfig);
 ```
 
+If you use individual imports instead of the default global plugin export, the programmatic config will not be registered to the `useOruga()` interface by default.
+But you can add the config interface by adding the dedicated `ConfigPlugin` plugin:
+
+```js
+import { createApp } from 'vue';
+import { OAutocomplete, OSidebar, ConfigPlugin, useOruga } from '@oruga-ui/oruga-next';
+
+createApp(...)
+    .component(OAutocomplete)
+    .component(OSidebar)
+    .use(ConfigPlugin);
+
+const oruga = useOruga();
+
+const config = oruga.config.getOptions();
+
+config.setOption("autocomplete", {
+    rootClass: 'autocomplete-root',
+    itemClass: 'autocomplete-item',
+    ...
+});
+
+config.setOption("sidebar", { ... });
+```
+
+However, you can also customise each component by using the dedicated `ConfigProgrammatic` object:
+
+```js
+import { ConfigProgrammatic } from '@oruga-ui/oruga-next';
+
+const config = ConfigProgrammatic.getOptions();
+
+const myThemeConfig = {
+    ...config,
+    autocomplete: {
+        rootClass: 'autocomplete-root',
+        itemClass: 'autocomplete-item',
+        ...
+    }
+}
+
+ConfigProgrammatic.setOptions(myThemeConfig);
+```
+
+If you use the default global plugin export or any plugin of a component with a programmatic interface, this interface will be registered and can be accessed with `useOruga()`:
+
+```js
+import { useOruga } from "@oruga-ui/oruga-next";
+
+const oruga = useOruga();
+
+oruga.sidebar.open({
+    component: MyCoolComponent,
+    fullheight: true,
+    overlay: true,
+    destroyOnHide: true,
+});
+```

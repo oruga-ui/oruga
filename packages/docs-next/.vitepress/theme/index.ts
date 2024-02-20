@@ -10,12 +10,11 @@ import InspectorWrapper from "./components/InspectorWrapper.vue";
 import Inspector from "./components/Inspector.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
-import Carbon from "./components/Carbon.vue";
 
 import Oruga, { useOruga } from "../../../oruga-next/dist/oruga";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
-import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
+import * as bootstrapTheme from "@oruga-ui/theme-bootstrap";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -38,7 +37,7 @@ import themes from "../themes.json";
 
 // load last used theme or set a default one
 function loadTheme() {
-    const cache = localStorage.getItem("oruga.io:theme");
+    const cache = localStorage.getItem("oruga-ui.com:theme");
     if (cache && cache !== "undefined") {
         try {
             const themeConfig = JSON.parse(cache);
@@ -63,7 +62,6 @@ export default {
         app.component("Inspector", Inspector);
         app.component("ExampleViewer", ExampleViewer);
         app.component("Expo", Expo);
-        app.component("Carbon", Carbon);
 
         // import example components
         const examples = import.meta.glob<DefineComponent>(
@@ -111,9 +109,10 @@ export default {
                     break;
                 }
                 case "theme-bootstrap": {
-                    bootstrapConfig.iconPack = "fas";
-                    bootstrapConfig.iconComponent = "vue-fontawesome";
-                    oruga.config.setOptions(bootstrapConfig);
+                    bootstrapTheme.bootstrapConfig.iconPack = "fas";
+                    bootstrapTheme.bootstrapConfig.iconComponent =
+                        "vue-fontawesome";
+                    oruga.config.setOptions(bootstrapTheme.bootstrapConfig);
                     break;
                 }
             }

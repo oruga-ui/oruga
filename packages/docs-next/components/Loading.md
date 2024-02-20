@@ -8,7 +8,6 @@ title: Loading
 
 > A simple loading overlay
 
-<Carbon />
 </div>
 
 <div class="vp-example">
@@ -51,6 +50,7 @@ title: Loading
 | label      | Notification label, unnecessary when default slot is used.                                                                              | string                | -                          |                                                                                                                                                      |
 | onCancel   | Callback function to call after user canceled (pressed escape / clicked outside).                                                       | () =&gt; void         | -                          | Default function (see source code)                                                                                                                   |
 | onClose    | Callback function to call after close (programmatically close or user canceled).                                                        | () =&gt; void         | -                          | Default function (see source code)                                                                                                                   |
+| override   | Override existing theme classes completely                                                                                              | boolean               | -                          |                                                                                                                                                      |
 
 ### Events
 

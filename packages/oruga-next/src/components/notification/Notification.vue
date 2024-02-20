@@ -3,9 +3,8 @@ import { computed, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, usePropBinding } from "@/composables";
+import { defineClasses, usePropBinding } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -23,8 +22,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: true },
     /**
@@ -112,30 +111,37 @@ const props = defineProps({
         default: () => getOption("notification.closeIconSize"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the close button container */
     closeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the content element */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the icon on the left */
     iconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the element when positioned */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the notification variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the wrapper element */
     wrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -185,33 +191,35 @@ function close(...args: any[]): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-notification"),
-    {
-        [useComputedClass("variantClass", "o-notification--", props.variant)]:
-            props.variant,
-    },
-    {
-        [useComputedClass("positionClass", "o-notification--", props.position)]:
-            props.position,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-notification"],
+    [
+        "variantClass",
+        "o-notification--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+    [
+        "positionClass",
+        "o-notification--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+);
+
+const wrapperClasses = defineClasses([
+    "wrapperClass",
+    "o-notification__wrapper",
 ]);
 
-const wrapperClasses = computed(() => [
-    useComputedClass("wrapperClass", "o-notification__wrapper"),
+const iconClasses = defineClasses(["iconClass", "o-notification__icon"]);
+
+const contentClasses = defineClasses([
+    "contentClass",
+    "o-notification__content",
 ]);
 
-const iconClasses = computed(() => [
-    useComputedClass("iconClass", "o-notification__icon"),
-]);
-
-const contentClasses = computed(() => [
-    useComputedClass("contentClass", "o-notification__content"),
-]);
-
-const closeClasses = computed(() => [
-    useComputedClass("closeClass", "o-notification__close"),
-]);
+const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
 </script>
 
 <template>

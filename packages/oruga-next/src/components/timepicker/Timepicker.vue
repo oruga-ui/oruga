@@ -2,18 +2,18 @@
 import { computed, ref, watch, type PropType } from "vue";
 
 import OSelect from "../select/Select.vue";
-import OPickerWrapper from "../datepicker/PickerWrapper.vue";
+import OPickerWrapper from "../utils/PickerWrapper.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useMatchMedia,
     usePropBinding,
+    getActiveClasses,
 } from "@/composables";
 
-import { useTimepickerMixins } from "./useTimepickerShare";
+import { useTimepickerMixins } from "./useTimepickerMixins";
 
 import type { ComponentClass } from "@/types";
 
@@ -29,8 +29,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Date as PropType<Date>, default: undefined },
     /** The active state of the dropdown */
@@ -105,6 +105,7 @@ const props = defineProps({
         type: [Array, Function] as PropType<Date[] | ((date: Date) => boolean)>,
         default: () => [],
     },
+    /** Reset the time inputs when meridian changes */
     resetOnMeridianChange: {
         type: Boolean,
         default: false,
@@ -168,22 +169,27 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    izeClass: {
+    /** Class of the Timepicker component size */
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Timepicker component box where you choose the date */
     boxClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Timepicker separator */
     separatorClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Timepicker footer */
     footerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -289,12 +295,12 @@ watch(
             minutesSelected.value = value.getMinutes();
             secondsSelected.value = value.getSeconds();
             meridienSelected.value =
-                value.getHours() >= 12 ? pmString : amString;
+                value.getHours() >= 12 ? pmString.value : amString.value;
         } else {
             hoursSelected.value = null;
             minutesSelected.value = null;
             secondsSelected.value = null;
-            meridienSelected.value = amString;
+            meridienSelected.value = amString.value;
         }
     },
     { immediate: true },
@@ -573,7 +579,7 @@ function updateDateSelected(
         minutes != null &&
         ((!isHourFormat24.value && meridiens !== null) || isHourFormat24.value)
     ) {
-        let time = null;
+        let time: Date = null;
         if (vmodel.value) {
             time = new Date(vmodel.value);
         } else {
@@ -690,43 +696,44 @@ function onChangeNativePicker(date: string): void {
 
 // --- Computed Component Classes ---
 
-const dropdownClass = computed(() =>
-    useComputedClass("dropdownClasses.rootClass", "o-tpck__dropdown"),
-);
+const selectSelectClasses = defineClasses([
+    "selectClasses.selectClass",
+    "o-tpck__select",
+]);
+
+const selectPlaceholderClasses = defineClasses([
+    "selectClasses.placeholderClass",
+    "o-tpck__select-placeholder",
+]);
 
 const selectBind = computed(() => ({
-    "select-class": useComputedClass(
-        "selectClasses.selectClass",
-        "o-tpck__select",
-    ),
-    "placeholder-class": useComputedClass(
-        "selectClasses.placeholderClass",
-        "o-tpck__select-placeholder",
-    ),
+    "select-class": getActiveClasses(selectSelectClasses.value),
+    "placeholder-class": getActiveClasses(selectPlaceholderClasses.value),
     ...props.selectClasses,
 }));
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-tpck"),
-    {
-        [useComputedClass("sizeClass", "o-tpck--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("mobileClass", "o-tpck--mobile")]: isMobile.value,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-tpck"],
+    [
+        "sizeClass",
+        "o-tpck--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    ["mobileClass", "o-tpck--mobile", null, isMobile],
+);
+
+const separatorClasses = defineClasses(["separatorClass", "o-tpck__separtor"]);
+
+const footerClasses = defineClasses(["footerClass", "o-tpck__footer"]);
+
+const dropdownClass = defineClasses([
+    "dropdownClasses.rootClass",
+    "o-tpck__dropdown",
 ]);
 
-const boxClasses = computed(() => [
-    useComputedClass("boxClass", "o-tpck__box"),
-]);
-
-const separatorClasses = computed(() => [
-    useComputedClass("separatorClass", "o-tpck__separtor"),
-]);
-
-const footerClasses = computed(() => [
-    useComputedClass("footerClass", "o-tpck__footer"),
-]);
+const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
+const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 </script>
 
 <template>
@@ -742,9 +749,9 @@ const footerClasses = computed(() => [
         :native-max="formatNative(maxTime)"
         :native-min="formatNative(minTime)"
         :native-step="nativeStep"
-        :dropdown-class="dropdownClass"
+        :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
-        :box-class="boxClasses"
+        :box-class="boxClassBind"
         @change="onChange"
         @native-change="onChangeNativePicker"
         @focus="$emit('focus', $event)"

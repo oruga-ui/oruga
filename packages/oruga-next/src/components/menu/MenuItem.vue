@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, toRaw, type PropType, type Ref } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
+    defineClasses,
     usePropBinding,
     useProviderChild,
     useProviderParent,
@@ -25,8 +24,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** The active state of the menu item, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /** Menu item label */
@@ -61,7 +60,7 @@ const props = defineProps({
     /** Menu item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("menu.menuTag", "a"),
+        default: () => getOption<DynamicComponent>("menu.menuTag", "a"),
     },
     /**
      * Role attribute to be passed to the list item for better accessibility.
@@ -72,26 +71,32 @@ const props = defineProps({
         default: getOption("menu.itemAriaRole", "menuitem"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the menu item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the active menu item */
     itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the disabled menu item */
     itemDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the icon of menu item */
     itemIconTextClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu item when is a submenu */
     itemSubmenuClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the root element of menu item */
     itemWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -177,28 +182,31 @@ useProviderParent(rootRef, { data: provideData, key: "menu-item" });
 
 // --- Computed Component Classes ---
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-menu__item"),
-    {
-        [useComputedClass("itemActiveClass", "o-menu__item--active")]:
-            isActive.value,
-    },
-    {
-        [useComputedClass("itemDisabledClass", "o-menu__item--disabled")]:
-            props.disabled,
-    },
-    {
-        [useComputedClass("itemIconTextClass", "o-menu__item--icon-text")]:
-            props.icon,
-    },
+const itemClasses = defineClasses(
+    ["itemClass", "o-menu__item"],
+    ["itemActiveClass", "o-menu__item--active", null, isActive],
+    [
+        "itemDisabledClass",
+        "o-menu__item--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "itemIconTextClass",
+        "o-menu__item--icon-text",
+        null,
+        computed(() => !!props.icon),
+    ],
+);
+
+const submenuClasses = defineClasses([
+    "itemSubmenuClass",
+    "o-menu__item__submenu",
 ]);
 
-const submenuClasses = computed(() => [
-    useComputedClass("itemSubmenuClass", "o-menu__item__submenu"),
-]);
-
-const wrapperClasses = computed(() => [
-    useComputedClass("itemWrapperClass", "o-menu__item__wrapper"),
+const wrapperClasses = defineClasses([
+    "itemWrapperClass",
+    "o-menu__item__wrapper",
 ]);
 </script>
 
@@ -208,7 +216,8 @@ const wrapperClasses = computed(() => [
         :role="ariaRole"
         :class="wrapperClasses"
         :data-id="identifier"
-        data-oruga="menu-item">
+        data-oruga="menu-item"
+        aria-roledescription="item">
         <component
             :is="tag"
             v-bind="$attrs"

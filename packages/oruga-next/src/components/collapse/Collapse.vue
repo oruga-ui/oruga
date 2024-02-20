@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, type PropType } from "vue";
+import { type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { useComputedClass, usePropBinding } from "@/composables";
+import { defineClasses, usePropBinding } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -20,8 +19,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether collapse is open or not, use v-model:open to make it two-way binding */
     open: { type: Boolean, default: true },
     /** Custom animation (transition name) */
@@ -41,14 +40,17 @@ const props = defineProps({
         validator: (value: string) => ["top", "bottom"].indexOf(value) > -1,
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the trigger element */
     triggerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -77,20 +79,22 @@ function toggle(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [useComputedClass("rootClass", "o-clps")]);
+const rootClasses = defineClasses(["rootClass", "o-clps"]);
 
-const triggerClasses = computed(() => [
-    useComputedClass("triggerClass", "o-clps__trigger"),
-]);
+const triggerClasses = defineClasses(["triggerClass", "o-clps__trigger"]);
 
-const contentClasses = computed(() => [
-    useComputedClass("contentClass", "o-clps__content"),
-]);
+const contentClasses = defineClasses(["contentClass", "o-clps__content"]);
 </script>
 
 <template>
     <div :class="rootClasses" data-oruga="collapse">
-        <div v-if="position === 'top'" :class="triggerClasses" @click="toggle">
+        <div
+            v-if="position === 'top'"
+            :class="triggerClasses"
+            role="button"
+            tabindex="0"
+            @click="toggle"
+            @keydown.enter="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
@@ -110,7 +114,10 @@ const contentClasses = computed(() => [
         <div
             v-if="position === 'bottom'"
             :class="triggerClasses"
-            @click="toggle">
+            role="button"
+            tabindex="0"
+            @click="toggle"
+            @keydown.enter="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 

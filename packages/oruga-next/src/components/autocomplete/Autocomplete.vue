@@ -4,10 +4,10 @@ import {
     nextTick,
     ref,
     watch,
-    onBeforeUpdate,
     useAttrs,
     toRaw,
     onMounted,
+    useSlots,
     type PropType,
     type Component,
 } from "vue";
@@ -16,20 +16,29 @@ import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { getValueByPath } from "@/utils/helpers";
+import { getValueByPath, uuid } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import { unrefElement } from "@/utils/unrefElement";
 import {
-    useComputedClass,
+    unrefElement,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
     useDebounce,
     useEventListener,
 } from "@/composables";
 
-import type { ComponentClass, DynamicComponent, PropBind } from "@/types";
+import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
+
+enum SpecialOption {
+    Header,
+    Footer,
+}
+
+/** True if the specified option is a special option. */
+function isSpecialOption(option: any): option is SpecialOption {
+    return option in SpecialOption;
+}
 
 /**
  * Extended input that provide suggestions while the user types
@@ -44,8 +53,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: "" },
     /** Input type */
@@ -53,12 +62,14 @@ const props = defineProps({
     /** Menu tag name */
     menuTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("autocomplete.menuTag", "div"),
+        default: () =>
+            getOption<DynamicComponent>("autocomplete.menuTag", "div"),
     },
     /** Menu item tag name */
     itemTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("autocomplete.itemTag", "div"),
+        default: () =>
+            getOption<DynamicComponent>("autocomplete.itemTag", "div"),
     },
     /** Options / suggestions */
     data: { type: Array, default: () => [] },
@@ -81,7 +92,7 @@ const props = defineProps({
             ["auto", "top", "bottom"].indexOf(value) >= 0,
     },
     /** Property of the object (if data is array of objects) to use as display text, and to keep track of selected option */
-    field: { type: String, default: "value" },
+    field: { type: String, default: undefined },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
     /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
@@ -218,30 +229,37 @@ const props = defineProps({
         default: () => getOption("autocomplete.teleport", false),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu items */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu items on hover */
     itemHoverClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu items group title */
     itemGroupTitleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu empty placeholder item */
     itemEmptyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu header item */
     itemHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu footer item */
     itemFooterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -313,19 +331,21 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
+const slots = useSlots();
 const inputRef = ref<InstanceType<typeof OInput>>();
 const dropdownRef = ref<InstanceType<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const itemRefs = ref([]);
 
-function setItemRef(el: HTMLElement | Component): void {
+function setItemRef(
+    el: HTMLElement | Component,
+    groupIndex: number,
+    itemIndex: number,
+): void {
+    if (groupIndex === 0 && itemIndex === 0) itemRefs.value.splice(0);
     if (el) itemRefs.value.push(el);
 }
-
-onBeforeUpdate(() => {
-    itemRefs.value = [];
-});
 
 // use form input functionalities
 const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused } =
@@ -342,6 +362,9 @@ const hoveredOption = ref(null);
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
+const hoveredId = ref(null);
+const menuId = uuid();
+
 /**
  * When updating input's value
  *   1. If value isn't the same as selected, set null
@@ -352,15 +375,17 @@ watch(
     (value) => {
         // Check if selected is invalid
         const currentValue = getValue(selectedOption.value);
-        if (currentValue && currentValue !== value) setSelected(null, false);
+        if (currentValue && currentValue !== value) {
+            setSelected(null, false);
 
-        nextTick(() => {
-            // Close dropdown if data is empty
-            if (isEmpty.value) isActive.value = false;
-            // Close dropdown if input is clear or else open it
-            else if (isFocused.value && (!props.openOnFocus || value))
-                isActive.value = !!value;
-        });
+            nextTick(() => {
+                // Close dropdown if data is empty
+                if (isEmpty.value && !slots.empty) isActive.value = false;
+                // Close dropdown if input is clear or else open it
+                else if (isFocused.value && (!props.openOnFocus || value))
+                    isActive.value = !!value;
+            });
+        }
     },
 );
 
@@ -380,9 +405,9 @@ watch(
             const data = computedData.value
                 .map((d) => d.items)
                 .reduce((a, b) => [...a, ...b], []);
-            if (!data.some((d) => getValue(d) === hoveredValue)) {
-                setHovered(null);
-            }
+            const index = data.findIndex((d) => getValue(d) === hoveredValue);
+            if (index >= 0) nextTick(() => setHoveredIdToIndex(index));
+            else setHovered(null);
         }
     },
 );
@@ -464,7 +489,16 @@ function getValue(option: unknown): string {
 /** Set which option is currently hovered. */
 function setHovered(option: unknown): void {
     if (option === undefined) return;
-    hoveredOption.value = option;
+    hoveredOption.value = isSpecialOption(option) ? null : option;
+    headerHovered.value = option === SpecialOption.Header;
+    footerHovered.value = option === SpecialOption.Footer;
+    hoveredId.value = null;
+}
+
+/** Set which option is the aria-activedescendant by index. */
+function setHoveredIdToIndex(index: number): void {
+    const element = unrefElement(itemRefs.value[index]);
+    hoveredId.value = element ? element.id : null;
 }
 
 /**
@@ -497,6 +531,7 @@ function selectFirstOption(): void {
         if (nonEmptyElements.length) {
             const option = nonEmptyElements[0].items[0];
             setHovered(option);
+            setHoveredIdToIndex(0);
         } else {
             setHovered(null);
         }
@@ -504,26 +539,24 @@ function selectFirstOption(): void {
 }
 
 /** Check if header or footer was selected. */
-function selectHeaderOrFoterByClick(
+function selectHeaderOrFooterByClick(
     event: Event,
-    origin?: "header" | "footer",
+    origin?: SpecialOption,
     closeDropdown = true,
 ): void {
     if (
         props.selectableHeader &&
-        (headerHovered.value || origin === "header")
+        (headerHovered.value || origin === SpecialOption.Header)
     ) {
         emits("select-header", event);
-        headerHovered.value = false;
         if (origin) setHovered(null);
         if (closeDropdown) isActive.value = false;
     }
     if (
         props.selectableFooter &&
-        (footerHovered.value || origin === "footer")
+        (footerHovered.value || origin === SpecialOption.Footer)
     ) {
         emits("select-footer", event);
-        footerHovered.value = false;
         if (origin) setHovered(null);
         if (closeDropdown) isActive.value = false;
     }
@@ -561,12 +594,10 @@ function navigateItem(direction: 1 | -1): void {
     index = index < 0 ? 0 : index;
 
     // set hover state
-    footerHovered.value = false;
-    headerHovered.value = false;
     if (footerRef.value && props.selectableFooter && index === data.length - 1)
-        footerHovered.value = true;
+        setHovered(SpecialOption.Footer);
     else if (headerRef.value && props.selectableHeader && index === 0)
-        headerHovered.value = true;
+        setHovered(SpecialOption.Header);
     else setHovered(data[index] !== undefined ? data[index] : null);
 
     // get items from input
@@ -578,6 +609,9 @@ function navigateItem(direction: 1 | -1): void {
 
     const element = unrefElement(items[index]);
     if (!element) return;
+
+    // set aria-activedescendant
+    hoveredId.value = element.id;
 
     // define scroll position
     const dropdownMenu = unrefElement(dropdownRef.value.$content);
@@ -616,7 +650,7 @@ function onKeydown(event: KeyboardEvent): void {
         if (hoveredOption.value === null) {
             // header and footer uses headerHovered && footerHovered. If header or footer
             // was selected then fire event otherwise just return so a value isn't selected
-            selectHeaderOrFoterByClick(event, null, closeDropdown);
+            selectHeaderOrFooterByClick(event, null, closeDropdown);
             return;
         }
         setSelected(hoveredOption.value, closeDropdown, event);
@@ -638,6 +672,15 @@ function handleFocus(event: Event): void {
             selectFirstOption();
     }
     onFocus(event);
+}
+
+/**
+ * Blur listener.
+ * Close on blur.
+ */
+function handleBlur(event: Event): void {
+    isActive.value = false;
+    onBlur(event);
 }
 
 /** emit input change event */
@@ -720,60 +763,56 @@ const inputBind = computed(() => ({
     ...props.inputClasses,
 }));
 
-const rootClasses = computed(() => [useComputedClass("rootClass", "o-acp")]);
+const rootClasses = defineClasses(["rootClass", "o-acp"]);
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-acp__item"),
+const itemClasses = defineClasses(["itemClass", "o-acp__item"]);
+
+const itemEmptyClasses = defineClasses([
+    "itemEmptyClass",
+    "o-acp__item--empty",
 ]);
 
-const itemEmptyClasses = computed(() => [
-    ...itemClasses.value,
-    useComputedClass("itemEmptyClass", "o-acp__item--empty"),
+const itemGroupClasses = defineClasses([
+    "itemGroupTitleClass",
+    "o-acp__item-group-title",
 ]);
 
-const itemGroupClasses = computed(() => [
-    ...itemClasses.value,
-    useComputedClass("itemGroupTitleClass", "o-acp__item-group-title"),
-]);
+const itemHeaderClasses = defineClasses(
+    ["itemHeaderClass", "o-acp__item-header"],
+    ["itemHoverClass", "o-acp__item--hover", null, headerHovered],
+);
 
-const itemHeaderClasses = computed(() => [
-    ...itemClasses.value,
-    useComputedClass("itemHeaderClass", "o-acp__item-header"),
-    {
-        [useComputedClass("itemHoverClass", "o-acp__item--hover")]:
-            headerHovered.value,
-    },
-]);
+const itemFooterClasses = defineClasses(
+    ["itemFooterClass", "o-acp__item-footer"],
+    ["itemHoverClass", "o-acp__item--hover", null, footerHovered],
+);
 
-const itemFooterClasses = computed(() => [
-    ...itemClasses.value,
-    useComputedClass("itemFooterClass", "o-acp__item-footer"),
-    {
-        [useComputedClass("itemHoverClass", "o-acp__item--hover")]:
-            footerHovered.value,
-    },
-]);
+function itemOptionClasses(option): ClassBind[] {
+    const optionClasses = defineClasses([
+        "itemHoverClass",
+        "o-acp__item--hover",
+        null,
+        toRaw(option) === toRaw(hoveredOption.value),
+    ]);
 
-function itemOptionClasses(option): PropBind {
-    return [
-        ...itemClasses.value,
-        {
-            [useComputedClass("itemHoverClass", "o-acp__item--hover")]:
-                toRaw(option) === toRaw(hoveredOption.value),
-        },
-    ];
+    return [...itemClasses.value, ...optionClasses.value];
 }
 </script>
 
 <template>
     <o-dropdown
         ref="dropdownRef"
+        v-model="selectedOption"
         v-model:active="isActive"
         data-oruga="autocomplete"
         :class="rootClasses"
+        :menu-id="menuId"
+        :menu-tabindex="-1"
         :menu-tag="menuTag"
         scrollable
+        aria-role="listbox"
         :tabindex="-1"
+        :trap-focus="false"
         :triggers="[]"
         :disabled="disabled"
         :closeable="closeableOptions"
@@ -787,8 +826,8 @@ function itemOptionClasses(option): PropBind {
         <template #trigger>
             <o-input
                 ref="inputRef"
-                v-model="vmodel"
                 v-bind="inputBind"
+                v-model="vmodel"
                 :type="type"
                 :size="size"
                 :rounded="rounded"
@@ -800,13 +839,17 @@ function itemOptionClasses(option): PropBind {
                 :maxlength="maxlength"
                 :autocomplete="autocomplete"
                 :use-html5-validation="false"
+                role="combobox"
+                :aria-activedescendant="hoveredId"
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
+                :aria-controls="menuId"
+                :aria-expanded="isActive"
                 :expanded="expanded"
                 :disabled="disabled"
                 :status-icon="statusIcon"
                 @update:model-value="onInput"
                 @focus="handleFocus"
-                @blur="onBlur"
+                @blur="handleBlur"
                 @invalid="onInvalid"
                 @keydown="onKeydown"
                 @keydown.up.prevent="navigateItem(-1)"
@@ -817,12 +860,16 @@ function itemOptionClasses(option): PropBind {
 
         <o-dropdown-item
             v-if="$slots.header"
+            :id="`${menuId}-header`"
             ref="headerRef"
             :tag="itemTag"
-            aria-role="button"
-            :tabindex="0"
-            :class="itemHeaderClasses"
-            @click="(v, e) => selectHeaderOrFoterByClick(e, 'header')">
+            aria-role="option"
+            :aria-selected="headerHovered"
+            :tabindex="-1"
+            :class="[...itemClasses, ...itemHeaderClasses]"
+            @click="
+                (v, e) => selectHeaderOrFooterByClick(e, SpecialOption.Header)
+            ">
             <!--
                 @slot Define an additional header
             -->
@@ -834,7 +881,8 @@ function itemOptionClasses(option): PropBind {
                 v-if="element.group"
                 :key="groupindex + 'group'"
                 :tag="itemTag"
-                :class="itemGroupClasses">
+                :tabindex="-1"
+                :class="[...itemClasses, ...itemGroupClasses]">
                 <!--
                     @slot Override the option grpup
                     @binding {object} group - options group
@@ -852,13 +900,15 @@ function itemOptionClasses(option): PropBind {
 
             <o-dropdown-item
                 v-for="(option, index) in element.items"
+                :id="`${menuId}-${groupindex}-${index}`"
                 :key="groupindex + ':' + index"
-                :ref="setItemRef"
+                :ref="(el) => setItemRef(el, groupindex, index)"
                 :value="option"
                 :tag="itemTag"
                 :class="itemOptionClasses(option)"
-                aria-role="button"
-                :tabindex="0"
+                aria-role="option"
+                :aria-selected="toRaw(option) === toRaw(hoveredOption)"
+                :tabindex="-1"
                 @click="(value, event) => setSelected(value, !keepOpen, event)">
                 <!--
                     @slot Override the select option
@@ -880,7 +930,7 @@ function itemOptionClasses(option): PropBind {
         <o-dropdown-item
             v-if="isEmpty && $slots.empty"
             :tag="itemTag"
-            :class="itemEmptyClasses">
+            :class="[...itemClasses, ...itemEmptyClasses]">
             <!--
                 @slot Define content for empty state 
             -->
@@ -889,12 +939,16 @@ function itemOptionClasses(option): PropBind {
 
         <o-dropdown-item
             v-if="$slots.footer"
+            :id="`${menuId}-footer`"
             ref="footerRef"
             :tag="itemTag"
-            aria-role="button"
-            :tabindex="0"
-            :class="itemFooterClasses"
-            @click="(v, e) => selectHeaderOrFoterByClick(e, 'footer')">
+            aria-role="option"
+            :aria-selected="footerHovered"
+            :tabindex="-1"
+            :class="[...itemClasses, ...itemFooterClasses]"
+            @click="
+                (v, e) => selectHeaderOrFooterByClick(e, SpecialOption.Footer)
+            ">
             <!--
                 @slot Define an additional footer
             -->

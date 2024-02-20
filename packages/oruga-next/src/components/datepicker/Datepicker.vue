@@ -3,27 +3,18 @@ import { computed, ref, watch, type PropType } from "vue";
 
 import OButton from "../button/Button.vue";
 import OSelect from "../select/Select.vue";
-import OPickerWrapper from "./PickerWrapper.vue";
+import OPickerWrapper from "../utils/PickerWrapper.vue";
 import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import {
-    useComputedClass,
-    useVModelBinding,
-    useMatchMedia,
-    usePropBinding,
-} from "@/composables";
+import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
+import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
-import {
-    useDatepickerShare,
-    type DatepickerEvent,
-    type FocusedDate,
-} from "./useDatepickerShare";
 
-import type { ComponentClass } from "@/types";
+import type { DatepickerEvent, FocusedDate } from "./types";
+import type { ComponentClass, OrugaOptions } from "@/types";
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
@@ -37,8 +28,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: {
         type: [Date, Array] as PropType<Date | Date[]>,
@@ -260,202 +251,252 @@ const props = defineProps({
         default: () => getOption("datepicker.ariaNextLabel", "Previous Page"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker box where you choose the date */
     boxClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker header inside the box */
     headerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker buttons inside the box */
     headerButtonsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker buttons inside the box when a size is choosen */
     headerButtonsSizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the prev button inside the Datepicker box */
     prevButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the next button inside the Datepicker box */
     nextButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the month and year selects container inside the Datepicker box */
     listsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker footer */
     footerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker table inside the box */
     tableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Datepicker header with days of the week inside the table */
     tableHeadClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the cell inside the table header */
     tableHeadCellClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table body inside the box */
     tableBodyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table row */
     tableRowClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell */
     tableCellClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell when nearby month days are hidden */
     tableCellInvisibleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of table cell when it's selected */
     tableCellSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the first selected table cell when in range */
     tableCellFirstSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cells within the range when the range is selected */
     tableCellWithinSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the last selected table cell during range selection */
     tableCellLastSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the first hovered table cell during range selection */
     tableCellFirstHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell when hovered during range selection */
     tableCellWithinHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the last table cell hovered during range selection */
     tableCellLastHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell of the current day */
     tableCellTodayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell that is selectable */
     tableCellSelectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell that is unselectable */
     tableCellUnselectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell when nearby days (prev/next month) are selectable */
     tableCellNearbyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the cell of a row when at least one event is present */
     tableCellEventsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the events container */
     tableEventsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the event */
     tableEventClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the event indicator when a `variant` is specified */
     tableEventVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the event indicator */
     tableEventIndicatorsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker table inside the box when type is month */
     monthClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table body inside the box when type is month */
     monthBodyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table container when type is month */
     monthTableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell when type is month */
     monthCellClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of table cell when it's selected when type is month */
     monthCellSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the first selected table cell when in range when type is month */
     monthCellFirstSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cells within the range when the range is selected when type is month */
     monthCellWithinSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the last selected table cell during range selection when type is month */
     monthCellLastSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the first hovered table cell during range selection when type is month */
     monthCellWithinHoveredRangeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell when hovered during range selection when type is month */
     monthCellFirstHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell when hovered during range selection and cell is in range when type is month */
     monthCellWithinHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the last table cell hovered during range selection when type is month */
     monthCellLastHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell of the current day when type is month */
     monthCellTodayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell that is selectable when type is month */
     monthCellSelectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the table cell that is unselectable when type is month */
     monthCellUnselectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /**Class of the events container when type is month */
     monthCellEventsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Datepicker when on mobile */
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -466,7 +507,8 @@ const props = defineProps({
      */
     inputClasses: {
         type: Object,
-        default: () => getOption("datepicker.inputClasses", {}),
+        default: () =>
+            getOption<OrugaOptions["input"]>("datepicker.inputClasses", {}),
     },
     /**
      * Class configuration for the internal dropdown component
@@ -474,7 +516,11 @@ const props = defineProps({
      */
     dropdownClasses: {
         type: Object,
-        default: () => getOption("datepicker.dropdownClasses", {}),
+        default: () =>
+            getOption<OrugaOptions["dropdown"]>(
+                "datepicker.dropdownClasses",
+                {},
+            ),
     },
     /**
      * Class configuration for the internal select component
@@ -482,7 +528,8 @@ const props = defineProps({
      */
     selectClasses: {
         type: Object,
-        default: () => getOption("datepicker.selectClasses", {}),
+        default: () =>
+            getOption<OrugaOptions["select"]>("datepicker.selectClasses", {}),
     },
 });
 
@@ -544,14 +591,15 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const { defaultDateFormatter, defaultDateParser } = useDatepickerShare(props);
+const { defaultDateFormatter, defaultDateParser } = useDatepickerMixins(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const vmodel = useVModelBinding<Date | Date[]>(props, emits, { passive: true });
+/** modelvalue of selected date */
+const vmodel = defineModel<Date | Date[]>();
 
 /** Dropdown active state */
-const isActive = usePropBinding<boolean>("active", props, emits);
+const isActive = defineModel<boolean>("active");
 
 /** modelValue formated into string */
 const formattedValue = computed(() =>
@@ -697,7 +745,7 @@ const listOfYears = computed(() => {
     }
 
     return Array.from(
-        { length: latestYear - earliestYear || 1 },
+        { length: latestYear - earliestYear + 1 || 1 },
         (value, index) => earliestYear + index,
     ).reverse();
 });
@@ -831,57 +879,51 @@ function onChangeNativePicker(value: string): void {
 
 // --- Computed Component Classes ---
 
-const dropdownClass = computed(() =>
-    useComputedClass("dropdownClasses.rootClass", "o-dpck__dropdown"),
+const rootClasses = defineClasses(
+    ["rootClass", "o-dpck"],
+    [
+        "sizeClass",
+        "o-dpck--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    ["mobileClass", "o-dpck--mobile", null, isMobile],
+    ["expandedClass", "o-dpck--expanded", null, computed(() => props.expanded)],
 );
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-dpck"),
-    {
-        [useComputedClass("sizeClass", "o-dpck--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("mobileClass", "o-dpck--mobile")]: isMobile.value,
-    },
-    {
-        [useComputedClass("expandedClass", "o-dpck--expanded")]: props.expanded,
-    },
+const headerClasses = defineClasses(["headerClass", "o-dpck__header"]);
+
+const headerButtonsClasses = defineClasses(
+    ["headerButtonsClass", "o-dpck__header__buttons"],
+    [
+        "headerButtonsSizeClass",
+        "o-dpck__header__buttons--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+);
+
+const prevButtonClasses = defineClasses([
+    "prevButtonClass",
+    "o-dpck__header__previous",
 ]);
 
-const boxClasses = computed(() => [
-    useComputedClass("boxClass", "o-dpck__box"),
+const nextButtonClasses = defineClasses([
+    "nextButtonClass",
+    "o-dpck__header__next",
 ]);
 
-const headerClasses = computed(() => [
-    useComputedClass("headerClass", "o-dpck__header"),
+const listsClasses = defineClasses(["listsClass", "o-dpck__header__list"]);
+
+const footerClasses = defineClasses(["footerClass", "o-dpck__footer"]);
+
+const dropdownClass = defineClasses([
+    "dropdownClasses.rootClass",
+    "o-tpck__dropdown",
 ]);
 
-const headerButtonsClasses = computed(() => [
-    useComputedClass("headerButtonsClass", "o-dpck__header__buttons"),
-    {
-        [useComputedClass(
-            "headerButtonsSizeClass",
-            "o-dpck__header__buttons--",
-            props.size,
-        )]: props.size,
-    },
-]);
-
-const prevButtonClasses = computed(() => [
-    useComputedClass("prevButtonClass", "o-dpck__header__previous"),
-]);
-
-const nextButtonClasses = computed(() => [
-    useComputedClass("nextButtonClass", "o-dpck__header__next"),
-]);
-
-const listsClasses = computed(() => [
-    useComputedClass("listsClass", "o-dpck__header__list"),
-]);
-
-const footerClasses = computed(() => [
-    useComputedClass("footerClass", "o-dpck__footer"),
-]);
+const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
+const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 </script>
 
 <template>
@@ -897,9 +939,9 @@ const footerClasses = computed(() => [
         :native-max="formatNative(maxDate)"
         :native-min="formatNative(minDate)"
         :stay-open="multiple"
-        :dropdown-class="dropdownClass"
+        :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
-        :box-class="boxClasses"
+        :box-class="boxClassBind"
         @change="onChange"
         @native-change="onChangeNativePicker"
         @focus="$emit('focus', $event)"

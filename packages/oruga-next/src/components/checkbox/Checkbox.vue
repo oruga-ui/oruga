@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     usePropBinding,
     useVModelBinding,
     useInputHandler,
@@ -26,8 +25,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number, Boolean, Array], default: undefined },
     /**
@@ -75,38 +74,47 @@ const props = defineProps({
         default: () => getOption("useHtml5Validation", true),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when checkbox is disabled */
     disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the root element when checked */
     checkedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the checkbox input */
     inputClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the checkbox input when checked */
     inputCheckedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when checkbox is indeterminate */
     indeterminateClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the checkbox labe */
     labelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the checkbox size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the checkbox variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -182,38 +190,36 @@ function onInput(event: Event): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-chk"),
-    {
-        [useComputedClass("checkedClass", "o-chk--checked")]: isChecked.value,
-    },
-    {
-        [useComputedClass("sizeClass", "o-chk--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("disabledClass", "o-chk--disabled")]: props.disabled,
-    },
-    {
-        [useComputedClass("variantClass", "o-chk--", props.variant)]:
-            props.variant,
-    },
-]);
-
-const inputClasses = computed(() => [
-    useComputedClass("inputClass", "o-chk__input"),
-    {
-        [useComputedClass("inputCheckedClass", "o-chk__input--checked")]:
-            isChecked.value,
-    },
-    {
-        [useComputedClass("indeterminateClass", "o-chk__input--indeterminate")]:
-            isIndeterminate.value,
-    },
-]);
-
-const labelClasses = computed(() =>
-    useComputedClass("labelClass", "o-chk__label"),
+const rootClasses = defineClasses(
+    ["rootClass", "o-chk"],
+    ["checkedClass", "o-chk--checked", null, isChecked],
+    [
+        "sizeClass",
+        "o-chk--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    ["disabledClass", "o-chk--disabled", null, computed(() => props.disabled)],
+    [
+        "variantClass",
+        "o-chk--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
 );
+
+const inputClasses = defineClasses(
+    ["inputClass", "o-chk__input"],
+    ["inputCheckedClass", "o-chk__input--checked", null, isChecked],
+    [
+        "indeterminateClass",
+        "o-chk__input--indeterminate",
+        null,
+        isIndeterminate,
+    ],
+);
+
+const labelClasses = defineClasses(["labelClass", "o-chk__label"]);
 </script>
 
 <template>
@@ -221,6 +227,8 @@ const labelClasses = computed(() =>
         ref="label"
         :class="rootClasses"
         data-oruga="checkbox"
+        role="checkbox"
+        :aria-checked="isChecked"
         @click.stop="setFocus"
         @keydown.prevent.enter="setFocus">
         <input
