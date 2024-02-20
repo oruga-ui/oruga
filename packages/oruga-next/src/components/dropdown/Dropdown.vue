@@ -524,7 +524,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => isActive.value || props.inline),
     ],
-    ["hoverableClass", "", null, computed(() => hoverable.value)],
+    ["hoverableClass", "", null, hoverable],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
