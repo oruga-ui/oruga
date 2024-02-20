@@ -13,7 +13,7 @@ import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    getActiveClasses, useClickOutside,
+    getActiveClasses,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
@@ -334,18 +334,15 @@ onBeforeUnmount(() => {
     }
 });
 
-let removeOutsideListener = null;
-
 /** add outside click event listener */
 function addHandler(): void {
-    if (isClient && !props.overlay) {
-        removeOutsideListener = useClickOutside(rootRef, clickedOutside);
-    }
+    if (isClient && !props.overlay)
+        setTimeout(() => document.addEventListener("click", clickedOutside));
 }
 
 /** remove outside click event listener */
 function removeHandler(): void {
-    if (removeOutsideListener !== null) removeOutsideListener();
+    document.removeEventListener("click", clickedOutside);
 }
 
 /** Close fixed sidebar if clicked outside. */
