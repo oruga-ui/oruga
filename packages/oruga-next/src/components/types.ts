@@ -473,9 +473,9 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
                 /** Class prefix used when position is applied to root element */
-                rootPositionClass: ClassDefinition;
+                positionClass: ClassDefinition;
                 /** Active class for root element */
-                rootActiveClass: ClassDefinition;
+                activeClass: ClassDefinition;
                 /** Class when hoverable */
                 hoverableClass: ClassDefinition;
             }>;
@@ -1446,7 +1446,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the tooltip arrow position */
                 arrowPositionClass: ClassDefinition;
                 /** Position class to display on the root element. Used as a prefix, position is applied as a suffix. */
-                rootPositionClass: ClassDefinition;
+                positionClass: ClassDefinition;
             }>;
         upload?: ComponentConfigBase &
             Partial<{

@@ -223,11 +223,11 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    rootPositionClass: {
+    positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    rootActiveClass: {
+    activeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -513,13 +513,13 @@ const rootClasses = defineClasses(
         computed(() => isMobileModal.value && !hoverable.value),
     ],
     [
-        "rootPositionClass",
+        "positionClass",
         "o-drop--position-",
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
     [
-        "rootActiveClass",
+        "activeClass",
         "o-drop--active",
         null,
         computed(() => isActive.value || props.inline),
