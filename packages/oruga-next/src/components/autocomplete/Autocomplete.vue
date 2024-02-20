@@ -442,7 +442,7 @@ const isEmpty = computed(
 );
 
 watch(isEmpty, (empty) => {
-    if (isFocused.value) isActive.value = !empty || !!slots.empty;
+    if (isFocused) isActive.value = !empty;
 });
 
 const closeableOptions = computed(() => {
@@ -674,10 +674,6 @@ function handleFocus(event: Event): void {
     onFocus(event);
 }
 
-function focus(): void {
-    inputRef.value.focus();
-}
-
 /**
  * Blur listener.
  * Close on blur.
@@ -724,7 +720,7 @@ function rightIconClick(event: Event): void {
     if (props.clearable) {
         vmodel.value = "";
         setSelected(null, false);
-        if (props.openOnFocus) focus();
+        if (props.openOnFocus) inputRef.value.$el.focus();
     } else emits("icon-right-click", event);
 }
 
@@ -801,10 +797,6 @@ function itemOptionClasses(option): ClassBind[] {
 
     return [...itemClasses.value, ...optionClasses.value];
 }
-
-defineExpose({
-    focus,
-});
 </script>
 
 <template>
