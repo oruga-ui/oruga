@@ -343,6 +343,11 @@ const selectClasses = defineClasses(
 const iconLeftClasses = defineClasses(["iconLeftClass", "o-sel__icon-left"]);
 
 const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

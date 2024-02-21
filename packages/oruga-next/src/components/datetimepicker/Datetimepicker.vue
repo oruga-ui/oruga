@@ -227,7 +227,7 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { onBlur, onFocus, onInvalid } = useInputHandler(
+const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     elementRef,
     emits,
     props,
@@ -555,6 +555,11 @@ const timepickerWrapperClasses = defineClasses([
     "timepickerWrapperClass",
     "o-dtpck__time",
 ]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

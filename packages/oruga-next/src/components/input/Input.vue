@@ -442,6 +442,11 @@ const iconRightClasses = defineClasses([
 ]);
 
 const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

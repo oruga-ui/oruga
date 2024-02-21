@@ -469,6 +469,11 @@ const itemClasses = defineClasses(
 const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

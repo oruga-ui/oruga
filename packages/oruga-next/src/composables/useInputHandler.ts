@@ -62,7 +62,7 @@ export function useInputHandler(
     const { parentField } = injectField();
 
     const element = computed<ValidatableFormElement>(() => {
-        const el = unrefElement(inputRef as Component);
+        const el = unrefElement<Component | HTMLElement>(inputRef);
         if (!el) {
             console.warn("useInputHandler: inputRef contains no element");
             return undefined;
