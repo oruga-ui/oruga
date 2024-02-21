@@ -263,6 +263,5 @@ const getProps = (vm: ComponentInternalInstance): ComponentProps => {
         .filter((key) => key.endsWith("Props"))
         .forEach((key) => (props = { ...props, ...props[key] }));
 
-    // TODO: revert object escape
-    return { props };
+    return props;
 };
