@@ -4,9 +4,8 @@ import { computed, ref, watch, type PropType } from "vue";
 import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useProviderParent } from "@/composables";
+import { defineClasses, useProviderParent } from "@/composables";
 
 import type { SliderComponent } from "./types";
 import type { ComponentClass } from "@/types";
@@ -24,8 +23,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: {
         type: [Number, Array] as PropType<number | number[]>,
@@ -105,54 +104,67 @@ const props = defineProps({
         default: () => getOption("slider.ariaLabel"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the vertical slider size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the slider track */
     trackClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the filled part of the slider */
     fillClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when the slider is rounded */
     thumbRoundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when the thumb gets dragged */
     thumbDraggingClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when slider is disabled */
     disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the thumb wrapper */
     thumbWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the thumb */
     thumbClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the slider variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of slider tick */
     tickClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when slider tick is hidden */
     tickHiddenClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of tick label */
     tickLabelClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
@@ -290,21 +302,21 @@ function sliderSize(): number {
 
 function onSliderClick(event: MouseEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
-    const sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left;
+    const sliderOffsetLeft = sliderRef.value.getBoundingClientRect().left;
     const percent = ((event.clientX - sliderOffsetLeft) / sliderSize()) * 100;
     const targetValue = props.min + (percent * (props.max - props.min)) / 100;
     const diffFirst = Math.abs(targetValue - valueStart.value);
     if (!isRange.value) {
         if (diffFirst < props.step / 2) return;
-        this.$refs.button1.setPosition(percent);
+        thumbStartRef.value.setPosition(percent);
     } else {
         const diffSecond = Math.abs(targetValue - valueEnd.value);
         if (diffFirst <= diffSecond) {
             if (diffFirst < props.step / 2) return;
-            this.$refs["button1"].setPosition(percent);
+            thumbStartRef.value.setPosition(percent);
         } else {
             if (diffSecond < props.step / 2) return;
-            this.$refs["button2"].setPosition(percent);
+            thumbEndRef.value.setPosition(percent);
         }
     }
     emitValue("change");
@@ -326,43 +338,48 @@ function onDragEnd(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-slide"),
-    {
-        [useComputedClass("sizeClass", "o-slide--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("disabledClass", "o-slide--disabled")]:
-            props.disabled,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-slide"],
+    [
+        "sizeClass",
+        "o-slide--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "disabledClass",
+        "o-slide--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+);
 
-const trackClasses = computed(() => [
-    useComputedClass("trackClass", "o-slide__track"),
-]);
+const trackClasses = defineClasses(["trackClass", "o-slide__track"]);
 
-const fillClasses = computed(() => [
-    useComputedClass("fillClass", "o-slide__fill"),
-    {
-        [useComputedClass("variantClass", "o-slide__fill--", props.variant)]:
-            props.variant,
-    },
-]);
+const fillClasses = defineClasses(
+    ["fillClass", "o-slide__fill"],
+    [
+        "variantClass",
+        "o-slide__fill--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+);
 
-const thumbClasses = computed(() => [
-    useComputedClass("thumbClass", "o-slide__thumb"),
-    {
-        [useComputedClass("thumbDraggingClass", "o-slide__thumb--dragging")]:
-            dragging.value,
-    },
-    {
-        [useComputedClass("thumbRoundedClass", "o-slide__thumb--rounded")]:
-            props.rounded,
-    },
-]);
+const thumbClasses = defineClasses(
+    ["thumbClass", "o-slide__thumb"],
+    ["thumbDraggingClass", "o-slide__thumb--dragging", null, dragging],
+    [
+        "thumbRoundedClass",
+        "o-slide__thumb--rounded",
+        null,
+        computed(() => props.rounded),
+    ],
+);
 
-const thumbWrapperClasses = computed(() => [
-    useComputedClass("thumbWrapperClass", "o-slide__thumb-wrapper"),
+const thumbWrapperClasses = defineClasses([
+    "thumbWrapperClass",
+    "o-slide__thumb-wrapper",
 ]);
 </script>
 

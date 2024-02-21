@@ -90,19 +90,19 @@ createApp(...)
     });
 ```
 
-For a better customisation experience, this function accepts the component's `context` containing its read-only attributes (`props`, `data` and `computed`) as a second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
+For a better customisation experience, this function accepts the component's read-only `props` as a second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
 
 ```js
 createApp(...)
     .use(Oruga, {
         input: {
-            rootClass: (_, context) => {
-                if (context.computed.hasIconRight) {
+            rootClass: (_, props) => {
+                if (props.iconRight) {
                     return 'has-icons-right';
                 }
             },
-            variantClass: (variant, context) => {
-                if (!context.props.outlined) {
+            variantClass: (variant, props) => {
+                if (!props.outlined) {
                     return `btn-${variant}`;
                 }
             }

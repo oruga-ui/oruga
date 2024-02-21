@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
+import PositionWrapper from "../utils/PositionWrapper.vue";
+
 import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
-    useComputedClass,
+    defineClasses,
     usePropBinding,
     useEventListener,
     useClickOutside,
@@ -26,8 +26,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Tooltip text, unnecessary when content slot is used */
@@ -74,7 +74,7 @@ const props = defineProps({
     /** Tooltip trigger tag name */
     triggerTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("tooltip.triggerTag", "div"),
+        default: () => getOption<DynamicComponent>("tooltip.triggerTag", "div"),
     },
     /**
      * Tooltip trigger events
@@ -111,42 +111,52 @@ const props = defineProps({
         default: () => getOption("dropdown.teleport", false),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when the dropdown is teleported */
     teleportClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger position */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger */
     triggerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip content when is multiline */
     multilineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger when is always visible */
     alwaysClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip arrow */
     arrowClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip arrow position */
     arrowPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -181,7 +191,7 @@ const autoPosition = ref(props.position);
 /** update autoPosition on prop change */
 watch(
     () => props.position,
-    (v) => autoPosition.value = v,
+    (v) => (autoPosition.value = v),
 );
 
 // --- Event Handler ---
@@ -284,58 +294,61 @@ function onClose(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-tip"),
-    {
-        [useComputedClass("teleportClass", "o-tip--teleport")]:
-            !!props.teleport,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-tip"],
+    [
+        "teleportClass",
+        "o-tip--teleport",
+        null,
+        computed(() => !!props.teleport),
+    ],
+);
 
-const triggerClasses = computed(() => [
-    useComputedClass("triggerClass", "o-tip__trigger"),
-]);
+const triggerClasses = defineClasses(["triggerClass", "o-tip__trigger"]);
 
-const arrowClasses = computed(() => [
-    useComputedClass("arrowClass", "o-tip__arrow"),
-    {
-        [useComputedClass(
-            "arrowPositionClass",
-            "o-tip__arrow--",
-            autoPosition.value,
-        )]: autoPosition.value,
-    },
-    {
-        [useComputedClass(
-            "variantArrowClass",
-            "o-tip__arrow--",
-            props.variant,
-        )]: props.variant,
-    },
-]);
+const arrowClasses = defineClasses(
+    ["arrowClass", "o-tip__arrow"],
+    [
+        "arrowPositionClass",
+        "o-tip__arrow--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "variantArrowClass",
+        "o-tip__arrow--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+);
 
-const contentClasses = computed(() => [
-    useComputedClass("contentClass", "o-tip__content"),
-    {
-        [useComputedClass(
-            "positionClass",
-            "o-tip__content--",
-            autoPosition.value,
-        )]: autoPosition.value,
-    },
-    {
-        [useComputedClass("variantClass", "o-tip__content--", props.variant)]:
-            props.variant,
-    },
-    {
-        [useComputedClass("multilineClass", "o-tip__content--multiline")]:
-            props.multiline,
-    },
-    {
-        [useComputedClass("alwaysClass", "o-tip__content--always")]:
-            props.always,
-    },
-]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-tip__content"],
+    [
+        "positionClass",
+        "o-tip__content--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "variantClass",
+        "o-tip__content--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+    [
+        "multilineClass",
+        "o-tip__content--multiline",
+        null,
+        computed(() => props.multiline),
+    ],
+    [
+        "alwaysClass",
+        "o-tip__content--always",
+        null,
+        computed(() => props.always),
+    ],
+);
 </script>
 
 <template>

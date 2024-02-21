@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch, type PropType, type Ref } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
+import PositionWrapper from "../utils/PositionWrapper.vue";
+
 import { getOption } from "@/utils/config";
 import { vTrapFocus } from "@/directives/trapFocus";
 import { toCssDimension, isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
     unrefElement,
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useMatchMedia,
     useEventListener,
@@ -34,8 +34,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: {
         type: [String, Number, Boolean, Object, Array],
@@ -100,15 +100,20 @@ const props = defineProps({
     },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
+    /** HTML element ID of the dropdown menu element */
+    menuId: { type: String, default: null },
+    /** Tabindex of the dropdown menu element */
+    menuTabindex: { type: Number, default: null },
     /** Dropdown menu tag name */
     menuTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("dropdown.menuTag", "div"),
+        default: () => getOption<DynamicComponent>("dropdown.menuTag", "div"),
     },
     /** Dropdown trigger tag name */
     triggerTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("dropdown.triggerTag", "div"),
+        default: () =>
+            getOption<DynamicComponent>("dropdown.triggerTag", "div"),
     },
     /**
      * Dropdown will be triggered by any events
@@ -140,13 +145,13 @@ const props = defineProps({
     /**
      * Role attribute to be passed to the list container for better accessibility.
      * Use menu only in situations where your dropdown is related to a navigation menu.
-     * @values list, menu, dialog
+     * @values list, listbox, menu, dialog
      */
     ariaRole: {
         type: String,
         default: getOption("dropdown.ariaRole", "list"),
         validator: (value: string) =>
-            ["menu", "list", "dialog"].indexOf(value) > -1,
+            ["list", "listbox", "menu", "dialog"].indexOf(value) > -1,
     },
     /** Mobile breakpoint as max-width value */
     mobileBreakpoint: {
@@ -163,46 +168,57 @@ const props = defineProps({
         default: () => getOption("dropdown.teleport", false),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when the dropdown is teleported */
     teleportClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the trigger element */
     triggerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of dropdown menu when inline */
     inlineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the overlay when on mobile */
     menuMobileOverlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the dropdown menu */
     menuClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of dropdown menu position */
     menuPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of dropdown menu when active */
     menuActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of dropdown when on mobile */
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of dropdown when disabled */
     disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of dropdown when expanded */
     expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -473,53 +489,48 @@ provideDropdown(provideData);
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-drop"),
-    {
-        [useComputedClass("disabledClass", "o-drop--disabled")]: props.disabled,
-    },
-    {
-        [useComputedClass("expandedClass", "o-drop--expanded")]: props.expanded,
-    },
-    {
-        [useComputedClass("inlineClass", "o-drop--inline")]: props.inline,
-    },
-    {
-        [useComputedClass("mobileClass", "o-drop--mobile")]:
-            isMobileModal.value && !hoverable.value,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-drop"],
+    ["disabledClass", "o-drop--disabled", null, computed(() => props.disabled)],
+    ["expandedClass", "o-drop--expanded", null, computed(() => props.expanded)],
+    ["inlineClass", "o-drop--inline", null, computed(() => props.inline)],
+    [
+        "mobileClass",
+        "o-drop--mobile",
+        null,
+        computed(() => isMobileModal.value && !hoverable.value),
+    ],
+);
+
+const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
+
+const positionWrapperClasses = defineClasses([
+    "teleportClass",
+    "o-drop--teleport",
+    null,
+    computed(() => !!props.teleport),
 ]);
 
-const triggerClasses = computed(() => [
-    useComputedClass("triggerClass", "o-drop__trigger"),
+const menuMobileOverlayClasses = defineClasses([
+    "menuMobileOverlayClass",
+    "o-drop__overlay",
 ]);
 
-const positionWrapperClasses = computed(() => [
-    ...rootClasses.value,
-    {
-        [useComputedClass("teleportClass", "o-drop--teleport")]:
-            !!props.teleport,
-    },
-]);
-
-const menuMobileOverlayClasses = computed(() => [
-    useComputedClass("menuMobileOverlayClass", "o-drop__overlay"),
-]);
-
-const menuClasses = computed(() => [
-    useComputedClass("menuClass", "o-drop__menu"),
-    {
-        [useComputedClass(
-            "menuPositionClass",
-            "o-drop__menu--",
-            autoPosition.value,
-        )]: autoPosition.value,
-    },
-    {
-        [useComputedClass("menuActiveClass", "o-drop__menu--active")]:
-            isActive.value || props.inline,
-    },
-]);
+const menuClasses = defineClasses(
+    ["menuClass", "o-drop__menu"],
+    [
+        "menuPositionClass",
+        "o-drop__menu--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "menuActiveClass",
+        "o-drop__menu--active",
+        null,
+        computed(() => isActive.value || props.inline),
+    ],
+);
 
 // --- Expose Public Functionality ---
 
@@ -528,14 +539,18 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
 </script>
 
 <template>
-    <div data-oruga="dropdown" :class="rootClasses" @mouseleave="onHoverLeave">
+    <div
+        data-oruga="dropdown"
+        :class="rootClasses"
+        @mouseleave="onHoverLeave"
+        @focusout="onHoverLeave">
         <component
             :is="triggerTag"
             v-if="!inline"
             ref="triggerRef"
             :tabindex="disabled ? null : tabindex"
             :class="triggerClasses"
-            aria-haspopup="true"
+            :aria-haspopup="ariaRole === 'list' ? true : ariaRole"
             @click="onClick"
             @contextmenu="onContextMenu"
             @mouseenter="onHover"
@@ -548,10 +563,11 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                 {{ label }}
             </slot>
         </component>
+
         <PositionWrapper
             v-model:position="autoPosition"
             :teleport="teleport"
-            :class="positionWrapperClasses"
+            :class="[...rootClasses, ...positionWrapperClasses]"
             :trigger="triggerRef"
             :content="contentRef"
             :disabled="!isActive"
@@ -564,16 +580,19 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :class="menuMobileOverlayClasses"
                     :aria-hidden="!isActive" />
             </transition>
+
             <transition :name="animation">
                 <component
                     :is="menuTag"
                     v-show="(!disabled && (isActive || isHovered)) || inline"
+                    :id="menuId"
                     ref="contentRef"
                     v-trap-focus="trapFocus"
+                    :tabindex="menuTabindex"
                     :class="menuClasses"
                     :aria-hidden="!isActive"
                     :role="ariaRole"
-                    :aria-modal="!inline"
+                    :aria-modal="!inline && trapFocus"
                     :style="menuStyle">
                     <!--
                         @slot Place dropdown items here 

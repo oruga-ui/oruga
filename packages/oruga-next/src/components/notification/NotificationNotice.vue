@@ -9,15 +9,18 @@ import {
     type Component,
 } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useProgrammaticComponent } from "@/composables";
+import {
+    defineClasses,
+    getActiveClasses,
+    useProgrammaticComponent,
+} from "@/composables";
 
 import type { NotifcationProps } from "./types";
-import type { PropBind, ProgrammaticInstance, ComponentClass } from "@/types";
+import type { ProgrammaticInstance, ComponentClass } from "@/types";
 
 /**
- * Notification Notice is used for the programmatic usage
+ * Notification Notice is an extension of the Notification component and is used for the programmatic usage
  * @displayName Notification Notice
  */
 defineOptions({
@@ -28,15 +31,10 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether notification is active or not, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: true },
-    /** Props passed to the internal notification component. */
-    notification: {
-        type: Object as PropType<NotifcationProps>,
-        default: () => ({}),
-    },
     /**
      * Which position the notification will appear when programmatically.
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
@@ -92,6 +90,14 @@ const props = defineProps({
         default: () => getOption("notification.container", "body"),
     },
     /**
+     * Props passed to the internal notification component.
+     * @ignore
+     */
+    notification: {
+        type: Object as PropType<NotifcationProps>,
+        default: () => ({}),
+    },
+    /**
      * This is used internally for programmatic usage.
      * @ignore
      */
@@ -105,14 +111,17 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Root class of the notice */
     noticeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the notice when positioned */
     noticePositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the custom container element */
     noticeCustomContainerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -160,50 +169,51 @@ watch(
 /** Create or inject notice dom container elements. */
 onBeforeMount(() => {
     if (
-        rootClasses.value &&
-        positionClasses("top") &&
-        positionClasses("bottom")
+        noticeClasses.value &&
+        positionBottomClasses.value &&
+        positionTopClasses.value
     ) {
+        const rootClasses = getActiveClasses(noticeClasses.value);
+        const topClasses = getActiveClasses(positionTopClasses.value);
+        const bottomClasses = getActiveClasses(positionBottomClasses.value);
+
         parentTop.value = container.value.querySelector(
-            `&>.${rootClasses.value.join(".")}.${positionClasses("top").join(
-                ".",
-            )}`,
+            `.${rootClasses.join(".")}.${topClasses.join(".")}`,
         );
         parentBottom.value = container.value.querySelector(
-            `&>.${rootClasses.value.join(".")}.${positionClasses("bottom").join(
-                ".",
-            )}`,
+            `.${rootClasses.join(".")}.${bottomClasses.join(".")}`,
         );
 
         if (parentTop.value && parentBottom.value) return;
 
         if (!parentTop.value) {
             parentTop.value = document.createElement("div");
-            parentTop.value.className = `${rootClasses.value.join(
+            parentTop.value.className = `${rootClasses.join(
                 " ",
-            )} ${positionClasses("top").join(" ")}`;
+            )} ${topClasses.join(" ")}`;
         }
 
         if (!parentBottom.value) {
             parentBottom.value = document.createElement("div");
-            parentBottom.value.className = `${rootClasses.value.join(
+            parentBottom.value.className = `${rootClasses.join(
                 " ",
-            )} ${positionClasses("bottom").join(" ")}`;
+            )} ${bottomClasses.join(" ")}`;
         }
 
         container.value.appendChild(parentTop.value);
         container.value.appendChild(parentBottom.value);
 
         if (container.value.tagName !== "BODY") {
-            const classes = noticeCustomContainerClasses.value;
-            if (classes && classes.length) {
+            const classes = getActiveClasses(
+                noticeCustomContainerClasses.value,
+            );
+            if (classes?.length)
                 classes
                     .filter((c) => !!c)
                     .forEach((c: string) => {
                         parentTop.value.classList.add(c);
                         parentBottom.value.classList.add(c);
                     });
-            }
         }
     }
 });
@@ -265,19 +275,22 @@ function handleClose(...args: any[]): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("noticeClass", "o-notices"),
+const noticeClasses = defineClasses(["noticeClass", "o-notices"]);
+
+const positionTopClasses = defineClasses([
+    "noticePositionClass",
+    "o-notices--",
+    "top",
+]);
+const positionBottomClasses = defineClasses([
+    "noticePositionClass",
+    "o-notices--",
+    "bottom",
 ]);
 
-function positionClasses(position): PropBind {
-    return [useComputedClass("noticePositionClass", "o-notices--", position)];
-}
-
-const noticeCustomContainerClasses = computed(() => [
-    useComputedClass(
-        "noticeCustomContainerClass",
-        "o-notices__custom-container",
-    ),
+const noticeCustomContainerClasses = defineClasses([
+    "noticeCustomContainerClass",
+    "o-notices__custom-container",
 ]);
 
 // --- Expose Public Functionality ---

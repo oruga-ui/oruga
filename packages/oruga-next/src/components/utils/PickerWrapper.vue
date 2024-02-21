@@ -5,14 +5,16 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import OInput from "../input/Input.vue";
 
+import { isMobileAgent } from "@/utils/helpers";
+import { isClient } from "@/utils/ssr";
 import {
+    getActiveClasses,
     useEventListener,
     useInputHandler,
     usePropBinding,
 } from "@/composables";
-import { isMobileAgent } from "@/utils/helpers";
-import { isClient } from "@/utils/ssr";
-import type { ComponentClass, PropBind } from "@/types";
+
+import type { ClassBind, ComponentClass } from "@/types";
 
 /**
  * This is a internal used component.
@@ -38,13 +40,16 @@ const props = defineProps({
     nativeMin: { type: [String, Number], default: undefined },
     nativeMax: { type: [String, Number], default: undefined },
     stayOpen: { type: Boolean, default: false },
-    dropdownClass: { type: String, required: true },
     rootClasses: {
-        type: [String, Object] as PropType<PropBind>,
+        type: Array as PropType<ClassBind[]>,
+        required: true,
+    },
+    dropdownClasses: {
+        type: Array as PropType<ClassBind[]>,
         required: true,
     },
     boxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
+        type: Array as PropType<ComponentClass>,
         required: true,
     },
 });
@@ -174,7 +179,7 @@ const inputBind = computed(() => ({
 }));
 
 const dropdownBind = computed(() => ({
-    "root-class": props.dropdownClass,
+    "root-class": getActiveClasses(props.dropdownClasses),
     ...picker.value.dropdownClasses,
 }));
 </script>
@@ -193,7 +198,7 @@ const dropdownBind = computed(() => ({
             :trap-focus="picker.trapFocus"
             :aria-role="ariaRole"
             :aria-modal="!picker.inline"
-            :trigger-tabindex="-1"
+            :tabindex="-1"
             :teleport="picker.teleport"
             :triggers="triggers">
             <template v-if="!picker.inline" #trigger>

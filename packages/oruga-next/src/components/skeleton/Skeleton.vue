@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
-import { useComputedClass } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -20,8 +19,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Show or hide loader	 */
     active: { type: Boolean, default: true },
     /** Show a loading animation */
@@ -58,26 +57,32 @@ const props = defineProps({
             ["left", "centered", "right"].indexOf(value) > -1,
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the skeleton animation */
     animationClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the skeleton position */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the skeleton item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the skeleton item rounded */
     itemRoundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the skeleton size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -92,29 +97,37 @@ const itemStyle = computed(() => ({
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-sklt"),
-    {
-        [useComputedClass("positionClass", "o-sklt--", props.position)]:
-            props.position,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-sklt"],
+    [
+        "positionClass",
+        "o-sklt--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+);
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-sklt__item"),
-    {
-        [useComputedClass("itemRoundedClass", "o-sklt__item--rounded")]:
-            props.rounded,
-    },
-    {
-        [useComputedClass("animationClass", "o-sklt__item--animated")]:
-            props.animated,
-    },
-    {
-        [useComputedClass("sizeClass", "o-sklt__item--", props.size)]:
-            props.size,
-    },
-]);
+const itemClasses = defineClasses(
+    ["itemClass", "o-sklt__item"],
+    [
+        "itemRoundedClass",
+        "o-sklt__item--rounded",
+        null,
+        computed(() => props.rounded),
+    ],
+    [
+        "animationClass",
+        "o-sklt__item--animated",
+        null,
+        computed(() => props.animated),
+    ],
+    [
+        "sizeClass",
+        "o-sklt__item--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+);
 </script>
 
 <template>

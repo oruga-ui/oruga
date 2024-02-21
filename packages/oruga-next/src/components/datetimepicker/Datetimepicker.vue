@@ -5,19 +5,14 @@ import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
 import OInput from "../input/Input.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { isMobileAgent } from "@/utils/helpers";
-import {
-    useComputedClass,
-    useInputHandler,
-    usePropBinding,
-} from "@/composables";
+import { defineClasses, useInputHandler, usePropBinding } from "@/composables";
 
 import { matchWithGroups } from "../datepicker/utils";
-import type { DatepickerProps } from "../datepicker/useDatepickerShare";
-import type { TimepickerProps } from "../timepicker/useTimepickerShare";
 
+import type { DatepickerProps } from "../datepicker/types";
+import type { TimepickerProps } from "../timepicker/types";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -37,8 +32,8 @@ const PM = "PM";
 const HOUR_FORMAT_24 = "24";
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Date, default: undefined },
     /** The active state of the dropdown, use v-model:active to make it two-way binding. */
@@ -153,10 +148,12 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the Datepicker wrapper */
     datepickerWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Timepicker wrapper */
     timepickerWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -552,12 +549,14 @@ function onChangeNativePicker(event: Event): void {
 
 // --- Computed Component Classes ---
 
-const datepickerWrapperClasses = computed(() => [
-    useComputedClass("datepickerWrapperClass", "o-dtpck__date"),
+const datepickerWrapperClasses = defineClasses([
+    "datepickerWrapperClass",
+    "o-dtpck__date",
 ]);
 
-const timepickerWrapperClasses = computed(() => [
-    useComputedClass("timepickerWrapperClass", "o-dtpck__time"),
+const timepickerWrapperClasses = defineClasses([
+    "timepickerWrapperClass",
+    "o-dtpck__time",
 ]);
 </script>
 

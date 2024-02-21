@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import getIcons from "@/utils/icons";
-import { useComputedClass } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -20,8 +19,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Icon component name */
     component: {
         type: String,
@@ -75,22 +74,27 @@ const props = defineProps({
      */
     both: { type: Boolean, default: false },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the icon when clickable */
     clickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the element when spin */
     spinClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the icon size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the icon variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -160,23 +164,28 @@ function getEquivalentIconOf(value): string {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-icon"),
-    {
-        [useComputedClass("clickableClass", "o-icon--clickable")]:
-            props.clickable,
-    },
-    {
-        [useComputedClass("spinClass", "o-icon--spin")]: props.spin,
-    },
-    {
-        [useComputedClass("sizeClass", "o-icon--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("variantClass", "o-icon--", computedVariant.value)]:
-            computedVariant.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-icon"],
+    [
+        "clickableClass",
+        "o-icon--clickable",
+        null,
+        computed(() => props.clickable),
+    ],
+    ["spinClass", "o-icon--spin", null, computed(() => props.spin)],
+    [
+        "sizeClass",
+        "o-icon--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "variantClass",
+        "o-icon--",
+        computedVariant,
+        computed(() => !!computedVariant.value),
+    ],
+);
 </script>
 
 <template>

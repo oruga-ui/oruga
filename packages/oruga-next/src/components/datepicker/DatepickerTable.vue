@@ -4,15 +4,11 @@ import { computed, ref, type PropType } from "vue";
 import ODatepickerTableRow from "./DatepickerTableRow.vue";
 
 import { isDefined } from "@/utils/helpers";
-import { useComputedClass, usePropBinding } from "@/composables";
+import { defineClasses } from "@/composables";
 
+import { useDatepickerMixins } from "./useDatepickerMixins";
 import { weekBuilder } from "./utils";
-import {
-    useDatepickerShare,
-    type DatepickerProps,
-    type DatepickerEvent,
-    type FocusedDate,
-} from "./useDatepickerShare";
+import type { DatepickerProps, DatepickerEvent, FocusedDate } from "./types";
 
 defineOptions({
     name: "ODatepickerTable",
@@ -43,15 +39,15 @@ const emits = defineEmits<{
     (e: "week-number-click", value: number): void;
 }>();
 
-const { isDateSelectable } = useDatepickerShare(props.pickerProps);
+const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
+
+const focusedDateModel = defineModel<FocusedDate>("focusedDate");
 
 const selectedBeginDate = ref<Date>();
 const selectedEndDate = ref<Date>();
 const hoveredEndDate = ref<Date>();
 
 const datepicker = computed<DatepickerProps>(() => props.pickerProps);
-
-const focusedDate = usePropBinding<FocusedDate>("focusedDate", props, emits);
 
 const visibleDayNames = computed(() => {
     const visibleDayNames = [];
@@ -74,16 +70,16 @@ const eventsInThisMonth = computed(() => {
         )
         .filter(
             (event) =>
-                event.date.getMonth() === focusedDate.value.month &&
-                event.date.getFullYear() === focusedDate.value.year,
+                event.date.getMonth() === focusedDateModel.value.month &&
+                event.date.getFullYear() === focusedDateModel.value.year,
         );
 });
 
 /** Return array of all weeks in the specified month */
 const weeksInThisMonth = computed(() => {
     validateFocusedDay();
-    const month = focusedDate.value.month;
-    const year = focusedDate.value.year;
+    const month = focusedDateModel.value.month;
+    const year = focusedDateModel.value.year;
     const weeksInThisMonth = [];
 
     let startingDay = 1;
@@ -123,29 +119,29 @@ const hoveredDateRange = computed(() => {
 
 function validateFocusedDay(): void {
     const currentDate = new Date(
-        focusedDate.value.year,
-        focusedDate.value.month,
-        focusedDate.value.day,
+        focusedDateModel.value.year,
+        focusedDateModel.value.month,
+        focusedDateModel.value.day,
     );
-    if (isDateSelectable(currentDate, focusedDate.value.month)) return;
+    if (isDateSelectable(currentDate, focusedDateModel.value.month)) return;
 
     let day = 0;
     // Number of days in the current month
     const monthDays = new Date(
-        focusedDate.value.year,
-        focusedDate.value.month + 1,
+        focusedDateModel.value.year,
+        focusedDateModel.value.month + 1,
         0,
     ).getDate();
     let firstFocusable = null;
     while (!firstFocusable && ++day < monthDays) {
         const date = new Date(
-            focusedDate.value.year,
-            focusedDate.value.month,
+            focusedDateModel.value.year,
+            focusedDateModel.value.month,
             day,
         );
-        if (isDateSelectable(date, focusedDate.value.month)) {
+        if (isDateSelectable(date, focusedDateModel.value.month)) {
             firstFocusable = currentDate;
-            focusedDate.value = {
+            focusedDateModel.value = {
                 day: date.getDate(),
                 month: date.getMonth(),
                 year: date.getFullYear(),
@@ -225,7 +221,7 @@ function onRangeHoverEndDate(date: Date): void {
 }
 
 function onChangeFocus(date: Date): void {
-    focusedDate.value = {
+    focusedDateModel.value = {
         day: date.getDate(),
         month: date.getMonth(),
         year: date.getFullYear(),
@@ -234,25 +230,26 @@ function onChangeFocus(date: Date): void {
 
 // --- Computed Component Classes ---
 
-const tableClasses = computed(() => [
-    useComputedClass("tableClass", "o-dpck__table"),
+const tableClasses = defineClasses(["tableClass", "o-dpck__table"]);
+
+const tableHeadClasses = defineClasses([
+    "tableHeadClass",
+    "o-dpck__table__head",
 ]);
 
-const tableHeadClasses = computed(() => [
-    useComputedClass("tableHeadClass", "o-dpck__table__head"),
+const tableCellClasses = defineClasses([
+    "tableCellClass",
+    "o-dpck__table__cell",
 ]);
 
-const tableCellClasses = computed(() => [
-    useComputedClass("tableCellClass", "o-dpck__table__cell"),
+const tableHeadCellClasses = defineClasses([
+    "tableHeadCellClass",
+    "o-dpck__table__head-cell",
 ]);
 
-const tableHeadCellClasses = computed(() => [
-    useComputedClass("tableHeadCellClass", "o-dpck__table__head-cell"),
-    ...tableCellClasses.value,
-]);
-
-const tableBodyClasses = computed(() => [
-    useComputedClass("tableBodyClass", "o-dpck__table__body"),
+const tableBodyClasses = defineClasses([
+    "tableBodyClass",
+    "o-dpck__table__body",
 ]);
 </script>
 
@@ -262,7 +259,7 @@ const tableBodyClasses = computed(() => [
             <div
                 v-for="(day, index) in visibleDayNames"
                 :key="index"
-                :class="tableHeadCellClasses">
+                :class="[...tableCellClasses, ...tableHeadCellClasses]">
                 <span>{{ day }}</span>
             </div>
         </header>
@@ -271,9 +268,9 @@ const tableBodyClasses = computed(() => [
                 v-for="(week, index) in weeksInThisMonth"
                 :key="index"
                 :selected-date="modelValue"
-                :day="focusedDate.day"
+                :day="focusedDateModel.day"
                 :week="week"
-                :month="focusedDate.month"
+                :month="focusedDateModel.month"
                 :events="eventsInThisWeek(week)"
                 :hovered-date-range="hoveredDateRange"
                 :picker-props="props.pickerProps"

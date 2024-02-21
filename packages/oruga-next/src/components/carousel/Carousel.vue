@@ -13,18 +13,17 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useEventListener,
     useProviderParent,
 } from "@/composables";
 
-import type { ComponentClass, PropBind } from "@/types";
+import type { ComponentClass, ClassBind } from "@/types";
 
 /**
  * A Slideshow for cycling images in confined spaces
@@ -39,8 +38,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Number, default: 0 },
     /** Enable drag mode */
@@ -133,62 +132,77 @@ const props = defineProps({
         default: () => ({}),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the root element in overlay */
     overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the wrapper element of carousel items */
     wrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of slider items */
     itemsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of slider items on drag */
     itemsDraggingClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of arrow elements */
     arrowIconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of prev arrow element */
     arrowIconPrevClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of next arrow element */
     arrowIconNextClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of indicator link element */
     indicatorClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of indicators wrapper element */
     indicatorsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of indicators wrapper element when inside */
     indicatorsInsideClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of indicators wrapper element when inside and position */
     indicatorsInsidePositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of indicator item element */
     indicatorItemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of indicator element when is active */
     indicatorItemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of indicator element to separate different styles */
     indicatorItemStyleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -326,8 +340,8 @@ const translation = computed(
 
 const total = computed(() => childItems.value.length);
 
-const indicatorCount = computed(
-    () => Math.ceil(total.value / settings.value.itemsToList) + 1,
+const indicatorCount = computed(() =>
+    Math.ceil(total.value / settings.value.itemsToList),
 );
 
 const indicatorIndex = computed(() =>
@@ -350,7 +364,7 @@ function onPrev(): void {
 
 const hasNext = computed(
     () =>
-        (settings.value.repeat || scrollIndex.value < total.value) &&
+        (settings.value.repeat || scrollIndex.value < total.value - 1) &&
         hasArrows.value,
 );
 
@@ -359,7 +373,7 @@ function onNext(): void {
 }
 
 function switchTo(index: number, onlyMove?: boolean): void {
-    if (settings.value.repeat) index = mod(index, total.value + 1);
+    if (settings.value.repeat) index = mod(index, total.value);
 
     index = bound(index, 0, total.value);
     scrollIndex.value = index;
@@ -411,8 +425,7 @@ function startTimer(): void {
     if (!props.autoplay || timer.value) return;
     isPaused.value = false;
     timer.value = setInterval(() => {
-        if (!props.repeat && activeIndex.value >= childItems.value.length - 1)
-            pauseTimer();
+        if (!props.repeat && !hasNext.value) pauseTimer();
         else onNext();
     }, props.interval);
 }
@@ -506,78 +519,68 @@ function dragEnd(event?: TouchEvent | MouseEvent): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-car"),
-    {
-        [useComputedClass("overlayClass", "o-car__overlay")]: props.overlay,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-car"],
+    ["overlayClass", "o-car__overlay", null, computed(() => props.overlay)],
+);
+
+const wrapperClasses = defineClasses(["wrapperClass", "o-car__wrapper"]);
+
+const itemsClasses = defineClasses(
+    ["itemsClass", "o-car__items"],
+    ["itemsDraggingClass", "o-car__items--dragging", null, isDragging],
+);
+
+const arrowIconClasses = defineClasses([
+    "arrowIconClass",
+    "o-car__arrow__icon",
 ]);
 
-const wrapperClasses = computed(() => [
-    useComputedClass("wrapperClass", "o-car__wrapper"),
+const arrowIconPrevClasses = defineClasses([
+    "arrowIconPrevClass",
+    "o-car__arrow__icon-prev",
 ]);
 
-const itemsClasses = computed(() => [
-    useComputedClass("itemsClass", "o-car__items"),
-    {
-        [useComputedClass("itemsDraggingClass", "o-car__items--dragging")]:
-            isDragging.value,
-    },
+const arrowIconNextClasses = defineClasses([
+    "arrowIconNextClass",
+    "o-car__arrow__icon-next",
 ]);
 
-const arrowIconClasses = computed(() => [
-    useComputedClass("arrowIconClass", "o-car__arrow__icon"),
-]);
-
-const arrowIconPrevClasses = computed(() => [
-    ...arrowIconClasses.value,
-    useComputedClass("arrowIconPrevClass", "o-car__arrow__icon-prev"),
-]);
-
-const arrowIconNextClasses = computed(() => [
-    ...arrowIconClasses.value,
-    useComputedClass("arrowIconNextClass", "o-car__arrow__icon-next"),
-]);
-
-function indicatorItemClasses(index): PropBind {
-    return [
-        useComputedClass("indicatorItemClass", "o-car__indicator__item"),
-        {
-            [useComputedClass(
-                "indicatorItemActiveClass",
-                "o-car__indicator__item--active",
-            )]: indicatorIndex.value === index,
-        },
-        {
-            [useComputedClass(
-                "indicatorItemStyleClass",
-                "o-car__indicator__item--",
-                props.indicatorStyle,
-            )]: props.indicatorStyle,
-        },
-    ];
+function indicatorItemClasses(index): ClassBind[] {
+    return defineClasses(
+        ["indicatorItemClass", "o-car__indicator__item"],
+        [
+            "indicatorItemActiveClass",
+            "o-car__indicator__item--active",
+            null,
+            indicatorIndex.value === index,
+        ],
+        [
+            "indicatorItemStyleClass",
+            "o-car__indicator__item--",
+            props.indicatorStyle,
+            !!props.indicatorStyle,
+        ],
+    ).value;
 }
 
-const indicatorsClasses = computed(() => [
-    useComputedClass("indicatorsClass", "o-car__indicators"),
-    {
-        [useComputedClass(
-            "indicatorsInsideClass",
-            "o-car__indicators--inside",
-        )]: props.indicatorInside,
-    },
-    {
-        [useComputedClass(
-            "indicatorsInsidePositionClass",
-            "o-car__indicators--inside--",
-            props.indicatorPosition,
-        )]: props.indicatorInside && props.indicatorPosition,
-    },
-]);
+const indicatorsClasses = defineClasses(
+    ["indicatorsClass", "o-car__indicators"],
+    [
+        "indicatorsInsideClass",
+        "o-car__indicators--inside",
+        null,
+        computed(() => !!props.indicatorInside),
+    ],
+    [
+        "indicatorsInsidePositionClass",
+        "o-car__indicators--inside--",
+        computed(() => props.indicatorPosition),
+        computed(() => props.indicatorInside && !!props.indicatorPosition),
+    ],
+);
 
-const indicatorClasses = computed(() => [
-    useComputedClass("indicatorClass", "o-car__indicator"),
-]);
+const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
 </script>
 
 <template>
@@ -585,12 +588,21 @@ const indicatorClasses = computed(() => [
         ref="rootRef"
         :class="rootClasses"
         data-oruga="carousel"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave">
+        role="region"
+        @mouseover="onMouseEnter"
+        @mouseleave="onMouseLeave"
+        @focus="onMouseEnter"
+        @blur="onMouseLeave"
+        @keydown.left="onPrev"
+        @keydown.right="onNext">
         <div :class="wrapperClasses">
             <div
                 :class="itemsClasses"
                 :style="'transform:translateX(' + translation + 'px)'"
+                tabindex="0"
+                role="group"
+                draggable="true"
+                aria-roledescription="carousel"
                 @mousedown="onDragStart"
                 @touchstart="onDragStart">
                 <!--
@@ -614,20 +626,26 @@ const indicatorClasses = computed(() => [
                 <template v-if="arrows">
                     <o-icon
                         v-show="hasPrev"
-                        :class="arrowIconPrevClasses"
+                        :class="[...arrowIconClasses, ...arrowIconPrevClasses]"
                         :pack="iconPack"
                         :icon="iconPrev"
                         :size="iconSize"
                         both
-                        @click="onPrev" />
+                        role="button"
+                        tabindex="0"
+                        @click="onPrev"
+                        @keydown.enter="onPrev" />
                     <o-icon
                         v-show="hasNext"
-                        :class="arrowIconNextClasses"
+                        :class="[...arrowIconClasses, ...arrowIconNextClasses]"
                         :pack="iconPack"
                         :icon="iconNext"
                         :size="iconSize"
                         both
-                        @click="onNext" />
+                        role="button"
+                        tabindex="0"
+                        @click="onNext"
+                        @keydown.enter="onNext" />
                 </template>
             </slot>
         </div>
@@ -644,13 +662,17 @@ const indicatorClasses = computed(() => [
             :indicator-index="indicatorIndex"
             name="indicators">
             <template v-if="childItems.length">
-                <div v-if="indicators" :class="indicatorsClasses">
-                    <a
+                <div v-if="indicators" :class="indicatorsClasses" role="group">
+                    <div
                         v-for="(_, index) in indicatorCount"
                         :key="index"
                         :class="indicatorClasses"
+                        role="button"
+                        tabindex="0"
+                        @focus="onModeChange('hover', index)"
                         @mouseover="onModeChange('hover', index)"
-                        @click="onModeChange('click', index)">
+                        @click="onModeChange('click', index)"
+                        @keypress.enter="onModeChange('click', index)">
                         <!--
                             @slot Override the indicator elements
                             @binding {index} index indicator index 
@@ -658,7 +680,7 @@ const indicatorClasses = computed(() => [
                         <slot :index="index" name="indicator">
                             <span :class="indicatorItemClasses(index)" />
                         </slot>
-                    </a>
+                    </div>
                 </div>
             </template>
         </slot>

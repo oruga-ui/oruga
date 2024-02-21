@@ -4,9 +4,6 @@ import Tooltip from "./Tooltip.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-/** export tooltip specific types */
-export type * from "./types";
-
 /** export tooltip plugin */
 export default {
     install(app: App) {

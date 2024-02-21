@@ -1,6 +1,6 @@
 <div class="theme-bootstrap">
 
-> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_ 
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
 ```scss
 $speed-slow: 150ms !default;

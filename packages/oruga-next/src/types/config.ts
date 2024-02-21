@@ -2,15 +2,11 @@ import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
 import type { DynamicComponent } from "./utils";
 
-export type ComponentContext = {
-    props: Record<string, any>;
-    data: Record<string, any>;
-    computed: Record<string, any>;
-};
+export type ComponentProps = Record<string, any>;
 
 export type ClassFunction = (
     suffix: string,
-    ctx: ComponentContext,
+    props: ComponentProps,
 ) => string | undefined;
 
 export type ClassObject = {

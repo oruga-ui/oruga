@@ -1,20 +1,20 @@
-import type { ProviderItem } from "@/composables";
-import TabItem from "./TabItem.vue";
 import type {
-    ClassDefinition,
-    ComponentClass,
-    ComponentConfigBase,
-    DynamicComponent,
-} from "@/types";
+    ComponentProps,
+    ComponentSlots,
+} from "vue-component-type-helpers";
+import type { ProviderItem } from "@/composables";
+import type { ClassBind } from "@/types";
 
-export type TabItemProps = InstanceType<typeof TabItem>["$props"];
+import TabItem from "./TabItem.vue";
 
-export type TabItemSlots = InstanceType<typeof TabItem>["$slots"];
+export type TabItemProps = ComponentProps<typeof TabItem>;
+
+export type TabItemSlots = ComponentSlots<typeof TabItem>;
 
 export type TabItemComponent = TabItemProps & {
     $slots: TabItemSlots;
-    headerIconClasses: ComponentClass;
-    headerTextClasses: ComponentClass;
+    headerIconClasses: ClassBind[];
+    headerTextClasses: ClassBind[];
     isTransitioning: boolean;
     activate: (index: number) => void;
     deactivate: (index: number) => void;

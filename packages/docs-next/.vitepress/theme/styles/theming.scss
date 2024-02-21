@@ -5,7 +5,7 @@
 .theme-orugabase {
     .theme-orugafull,
     .theme-bulma,
-    .theme-bootstrap, {
+    .theme-bootstrap {
         display: none;
     }
 }
@@ -13,7 +13,7 @@
 .theme-orugafull {
     .theme-orugabase,
     .theme-bulma,
-    .theme-bootstrap, {
+    .theme-bootstrap {
         display: none;
     }
 }
@@ -21,7 +21,7 @@
 .theme-bulma {
     .theme-orugabase,
     .theme-orugafull,
-    .theme-bootstrap, {
+    .theme-bootstrap {
         display: none;
     }
 }
@@ -29,7 +29,7 @@
 .theme-bootstrap {
     .theme-orugabase,
     .theme-orugafull,
-    .theme-bulma, {
+    .theme-bulma {
         display: none;
     }
 }

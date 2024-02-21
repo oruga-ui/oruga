@@ -2,19 +2,19 @@
 import { computed, ref, watch, toValue, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
-import OSlotComponent from "@/utils/SlotComponent";
+import OSlotComponent from "../utils/SlotComponent";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { mod, isDefined } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
+    getActiveClasses,
     useProviderParent,
     useVModelBinding,
 } from "@/composables";
 
 import type { TabItem, TabItemComponent } from "./types";
-import type { ComponentClass, PropBind } from "@/types";
+import type { ComponentClass, ClassBind } from "@/types";
 
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease
@@ -29,8 +29,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: 0 },
     /**
@@ -88,50 +88,62 @@ const props = defineProps({
     /** Show tab items multiline when there is no space */
     multiline: { type: Boolean, default: false },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Tabs component when when is vertical and its position changes */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Tabs component when expanded */
     expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Tabs component when vertical */
     verticalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Tabs component when multiline */
     multilineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Tabs component nav tabs */
     navTabsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Size of the navigation */
     navSizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Tabs component nav position */
     navPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Type of the navigation */
     navTypeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab content when transitioning */
     transitioningClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item wrapper */
     itemWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -257,7 +269,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
 function performAction(newId: number | string): void {
     const oldValue = activeId.value;
     const oldTab = isDefined(oldValue)
-        ? items.value.find((item) => item.value === oldValue)
+        ? items.value.find((item) => item.value === oldValue) || items.value[0]
         : items.value[0];
     activeId.value = newId;
     nextTick(() => {
@@ -271,81 +283,88 @@ function performAction(newId: number | string): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-tabs"),
-    {
-        [useComputedClass("positionClass", "o-tabs--", props.position)]:
-            props.position && props.vertical,
-    },
-    {
-        [useComputedClass("expandedClass", "o-tabs--fullwidth")]:
-            props.expanded,
-    },
-    {
-        [useComputedClass("verticalClass", "o-tabs--vertical")]: props.vertical,
-    },
-    {
-        [useComputedClass("multilineClass", "o-tabs--multiline")]:
-            props.multiline,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-tabs"],
+    [
+        "positionClass",
+        "o-tabs--",
+        computed(() => props.position),
+        computed(() => props.position && props.vertical),
+    ],
+    [
+        "expandedClass",
+        "o-tabs--fullwidth",
+        null,
+        computed(() => props.expanded),
+    ],
+    ["verticalClass", "o-tabs--vertical", null, computed(() => props.vertical)],
+    [
+        "multilineClass",
+        "o-tabs--multiline",
+        null,
+        computed(() => props.multiline),
+    ],
+);
+
+const itemWrapperClasses = defineClasses([
+    "itemWrapperClass",
+    "o-tabs__nav-item-wrapper",
 ]);
 
-const itemWrapperClasses = computed(() => [
-    useComputedClass("itemWrapperClass", "o-tabs__nav-item-wrapper"),
-]);
+const navClasses = defineClasses(
+    ["navTabsClass", "o-tabs__nav"],
+    [
+        "navSizeClass",
+        "o-tabs__nav--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "navPositionClass",
+        "o-tabs__nav--",
+        computed(() => props.position),
+        computed(() => props.position && !props.vertical),
+    ],
+    [
+        "navTypeClass",
+        "o-tabs__nav--",
+        computed(() => props.type),
+        computed(() => !!props.type),
+    ],
+);
 
-const navClasses = computed(() => [
-    useComputedClass("navTabsClass", "o-tabs__nav"),
-    {
-        [useComputedClass("navSizeClass", "o-tabs__nav--", props.size)]:
-            props.size,
-    },
-    {
-        [useComputedClass("navPositionClass", "o-tabs__nav--", props.position)]:
-            props.position && !props.vertical,
-    },
-    {
-        [useComputedClass("navTypeClass", "o-tabs__nav--", props.type)]:
+const contentClasses = defineClasses(
+    ["contentClass", "o-tabs__content"],
+    [
+        "transitioningClass",
+        "o-tabs__content--transitioning",
+        null,
+        isTransitioning,
+    ],
+);
+
+function itemHeaderClasses(
+    childItem: (typeof items.value)[number],
+): ClassBind[] {
+    const classes = defineClasses(
+        ["itemHeaderClass", "o-tabs__nav-item"],
+        ["itemHeaderTypeClass", "o-tabs__nav-item-", props.type, !!props.type],
+        [
+            "itemHeaderActiveClass",
+            "o-tabs__nav-item-{*}--active",
             props.type,
-    },
-]);
+            isActive(childItem),
+        ],
+        [
+            "itemHeaderDisabledClass",
+            "o-tabs__nav-item-{*}--disabled",
+            props.type,
+            childItem.disabled,
+        ],
+    );
+    const headerClass = { [childItem.headerClass || ""]: true };
 
-const contentClasses = computed(() => [
-    useComputedClass("contentClass", "o-tabs__content"),
-    {
-        [useComputedClass(
-            "transitioningClass",
-            "o-tabs__content--transitioning",
-        )]: isTransitioning.value,
-    },
-]);
-
-function itemHeaderClasses(childItem): PropBind {
-    return [
-        childItem.headerClass,
-        useComputedClass("itemHeaderClass", "o-tabs__nav-item"),
-        {
-            [useComputedClass(
-                "itemHeaderTypeClass",
-                "o-tabs__nav-item-",
-                props.type,
-            )]: props.type,
-        },
-        {
-            [useComputedClass(
-                "itemHeaderActiveClass",
-                "o-tabs__nav-item-{*}--active",
-                props.type,
-            )]: isActive(childItem),
-        },
-        {
-            [useComputedClass(
-                "itemHeaderDisabledClass",
-                "o-tabs__nav-item-{*}--disabled",
-                props.type,
-            )]: childItem.disabled,
-        },
-    ];
+    return [headerClass, ...classes.value];
 }
 </script>
 
@@ -366,13 +385,7 @@ function itemHeaderClasses(childItem): PropBind {
                 :class="itemWrapperClasses"
                 role="tab"
                 :aria-controls="`${childItem.value}-content`"
-                :aria-selected="isActive(childItem) ? 'true' : 'false'"
-                @keydown.left.prevent="prev"
-                @keydown.right.prevent="next"
-                @keydown.up.prevent="prev"
-                @keydown.down.prevent="next"
-                @keydown.home.prevent="homePressed"
-                @keydown.end.prevent="endPressed">
+                :aria-selected="isActive(childItem) ? 'true' : 'false'">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
@@ -380,6 +393,7 @@ function itemHeaderClasses(childItem): PropBind {
                     name="header"
                     :class="itemHeaderClasses(childItem)"
                     @click="itemClick(childItem)"
+                    @keydown.enter="itemClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"
@@ -389,11 +403,22 @@ function itemHeaderClasses(childItem): PropBind {
                 <component
                     :is="childItem.tag"
                     v-else
+                    role="button"
+                    :tabindex="0"
                     :class="itemHeaderClasses(childItem)"
-                    @click="itemClick(childItem)">
+                    @click="itemClick(childItem)"
+                    @keydown.enter="itemClick(childItem)"
+                    @keydown.left.prevent="prev"
+                    @keydown.right.prevent="next"
+                    @keydown.up.prevent="prev"
+                    @keydown.down.prevent="next"
+                    @keydown.home.prevent="homePressed"
+                    @keydown.end.prevent="endPressed">
                     <o-icon
                         v-if="childItem.icon"
-                        :root-class="childItem.headerIconClasses"
+                        :root-class="
+                            getActiveClasses(childItem.headerIconClasses)
+                        "
                         :icon="childItem.icon"
                         :pack="childItem.iconPack"
                         :size="size" />

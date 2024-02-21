@@ -11,10 +11,10 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { uuid } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -36,8 +36,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: "" },
     /**
@@ -124,6 +124,8 @@ const props = defineProps({
         type: String,
         default: () => getOption("input.autocomplete", "off"),
     },
+    /** Accessibility label to establish relationship between the checkbox and control label */
+    ariaLabelledby: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -132,54 +134,67 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when expanded */
     expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when type textarea */
     textareaClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the left icon space inside the input */
     iconLeftSpaceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the right icon space inside the input */
     iconRightSpaceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the native input element */
     inputClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when rounded */
     roundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when disabled */
     disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the left icon */
     iconLeftClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the right icon */
     iconRightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the counter element */
     counterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the input size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the input variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -373,58 +388,60 @@ function togglePasswordVisibility(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-input__wrapper"),
-    {
-        [useComputedClass("expandedClass", "o-input__wrapper--expanded")]:
-            props.expanded,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-input__wrapper"],
+    [
+        "expandedClass",
+        "o-input__wrapper--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+);
+
+const inputClasses = defineClasses(
+    ["inputClass", "o-input"],
+    ["roundedClass", "o-input--rounded", null, computed(() => props.rounded)],
+    [
+        "sizeClass",
+        "o-input--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "variantClass",
+        "o-input--",
+        computed(() => statusVariant.value || props.variant),
+        computed(() => !!statusVariant.value || !!props.variant),
+    ],
+    [
+        "disabledClass",
+        "o-input--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "textareaClass",
+        "o-input__textarea",
+        null,
+        computed(() => props.type === "textarea"),
+    ],
+    [
+        "iconLeftSpaceClass",
+        "o-input--iconspace-left",
+        null,
+        computed(() => !!props.icon),
+    ],
+    ["iconRightSpaceClass", "o-input--iconspace-right", null, hasIconRight],
+);
+
+const iconLeftClasses = defineClasses(["iconLeftClass", "o-input__icon-left"]);
+
+const iconRightClasses = defineClasses([
+    "iconRightClass",
+    "o-input__icon-right",
 ]);
 
-const inputClasses = computed(() => [
-    useComputedClass("inputClass", "o-input"),
-    {
-        [useComputedClass("roundedClass", "o-input--rounded")]: props.rounded,
-    },
-    {
-        [useComputedClass("sizeClass", "o-input--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass(
-            "variantClass",
-            "o-input--",
-            statusVariant.value || props.variant,
-        )]: statusVariant.value || props.variant,
-    },
-    {
-        [useComputedClass("disabledClass", "o-input--disabled")]:
-            props.disabled,
-    },
-    {
-        [useComputedClass("textareaClass", "o-input__textarea")]:
-            props.type === "textarea",
-    },
-    {
-        [useComputedClass("iconLeftSpaceClass", "o-input--iconspace-left")]:
-            props.icon,
-    },
-    {
-        [useComputedClass("iconRightSpaceClass", "o-input--iconspace-right")]:
-            hasIconRight.value,
-    },
-]);
-
-const iconLeftClasses = computed(() => [
-    useComputedClass("iconLeftClass", "o-input__icon-left"),
-]);
-
-const iconRightClasses = computed(() => [
-    useComputedClass("iconRightClass", "o-input__icon-right"),
-]);
-
-const counterClasses = computed(() => [
-    useComputedClass("counterClass", "o-input__counter"),
-]);
+const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 </script>
 
 <template>
@@ -450,6 +467,7 @@ const counterClasses = computed(() => [
             :autocomplete="autocomplete"
             :placeholder="placeholder"
             :disabled="disabled"
+            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
@@ -466,6 +484,7 @@ const counterClasses = computed(() => [
             :style="computedStyles"
             :placeholder="placeholder"
             :disabled="disabled"
+            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"

@@ -8,7 +8,6 @@ title: Menu
 
 > A simple menu
 
-
 </div>
 
 <div class="vp-example">
@@ -47,6 +46,7 @@ title: Menu
 | iconPack  | Icon pack to use                                                                                                                                                 | string  | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
 | iconSize  | Icon size                                                                                                                                                        | string  | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code> |
 | label     | Menu label                                                                                                                                                       | string  | -                                                 |                                                                                                                                                    |
+| override  | Override existing theme classes completely                                                                                                                       | boolean | -                                                 |                                                                                                                                                    |
 
 ### Slots
 
@@ -80,6 +80,7 @@ title: Menu
 | iconPack  | Icon pack to use                                                                  | string           | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
 | iconSize  | Icon size                                                                         | string           | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code>      |
 | label     | Menu item label                                                                   | string           | -                                                 |                                                                                                                                                         |
+| override  | Override existing theme classes completely                                        | boolean          | -                                                 |                                                                                                                                                         |
 | tag       | Menu item tag name                                                                | DynamicComponent | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;menuTag: "a"<br>}</code>             |
 
 ### Events

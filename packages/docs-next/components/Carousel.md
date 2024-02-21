@@ -8,7 +8,6 @@ title: Carousel
 
 > A Slideshow for cycling images in confined spaces
 
-
 </div>
 
 <div class="vp-example">
@@ -58,6 +57,7 @@ title: Carousel
 | itemsToList       | Number of items to switch at once                 | number                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;itemsToList: 1<br>}</code>              |
 | itemsToShow       | Number of items to show at once                   | number                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;itemsToShow: 1<br>}</code>              |
 | overlay           | Show an overlay                                   | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| override          | Override existing theme classes completely        | boolean                   | -                                                 |                                                                                                                                                                |
 | pauseHover        | Pause autoplay on hover                           | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
 | repeat            | Repeat from the beginning after reaching the end  | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
 | v-model           |                                                   | number                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                        |
@@ -94,9 +94,11 @@ title: Carousel
 
 ### Props
 
-| Prop name | Description         | Type    | Values | Default                                                     |
-| --------- | ------------------- | ------- | ------ | ----------------------------------------------------------- |
-| clickable | Make item clickable | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| Prop name | Description                                                             | Type    | Values | Default                                                                                                                                               |
+| --------- | ----------------------------------------------------------------------- | ------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility | string  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;ariaRole: "option"<br>}</code> |
+| clickable | Make item clickable                                                     | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| override  | Override existing theme classes completely                              | boolean | -      |                                                                                                                                                       |
 
 ### Slots
 

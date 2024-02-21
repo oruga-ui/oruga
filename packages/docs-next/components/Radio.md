@@ -8,7 +8,6 @@ title: Radio
 
 > Select an option from a set
 
-
 </div>
 
 <div class="vp-example">
@@ -46,6 +45,7 @@ title: Radio
 | label              | Input label, unnecessary when default slot is used                                   | string                  | -                                                                               |                                                                                                                                                     |
 | name               | Same as native name                                                                  | string                  | -                                                                               |                                                                                                                                                     |
 | nativeValue        | Same as native value                                                                 | string\|number\|boolean | -                                                                               |                                                                                                                                                     |
+| override           | Override existing theme classes completely                                           | boolean                 | -                                                                               |                                                                                                                                                     |
 | required           | Same as native required                                                              | boolean                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                         |
 | size               | Size of the control                                                                  | string                  | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>radio: {<br>&nbsp;&nbsp;size: undefined<br>}</code>     |
 | useHtml5Validation | Enable html 5 native validation                                                      | boolean                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;useHtml5Validation: true<br>}</code>   |

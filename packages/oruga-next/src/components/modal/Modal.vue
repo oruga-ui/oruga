@@ -12,12 +12,12 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { vTrapFocus } from "@/directives/trapFocus";
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { removeElement, toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
-    useComputedClass,
+    defineClasses,
+    getActiveClasses,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
@@ -33,11 +33,12 @@ defineOptions({
     isOruga: true,
     name: "OModal",
     configField: "modal",
+    inheritAttrs: false,
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Display modal as full screen */
@@ -92,8 +93,6 @@ const props = defineProps({
         validator: (value: string) =>
             ["dialog", "alertdialog"].indexOf(value) >= 0,
     },
-    /** Accessibility aria-modal to be passed to the div wrapper element */
-    ariaModal: { type: Boolean, default: () => getOption("modal.ariaModal") },
     /** Accessibility aria-label to be passed to the div wrapper element */
     ariaLabel: { type: String, default: () => getOption("modal.ariaLabel") },
     /** Destroy modal on hide */
@@ -164,38 +163,47 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of modal component when its active */
     activeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal overlay */
     overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the close button */
     closeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal when fullscreen */
     fullScreenClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of modal component when on mobile */
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal when scroll is clip */
     scrollClipClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal when scroll is not clip */
     noScrollClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -272,8 +280,8 @@ onBeforeUnmount(() => {
             ? savedScrollTop.value
             : document.documentElement.scrollTop;
         if (scrollClass.value) {
-            document.body.classList.remove(scrollClass.value);
-            document.documentElement.classList.remove(scrollClass.value);
+            document.body.classList.remove(...scrollClass.value);
+            document.documentElement.classList.remove(...scrollClass.value);
         }
         document.documentElement.scrollTop = scrollto;
         document.body.style.top = null;
@@ -286,8 +294,9 @@ function handleScroll(): void {
     if (props.scroll === "clip") {
         if (scrollClass.value) {
             if (isActive.value)
-                document.documentElement.classList.add(scrollClass.value);
-            else document.documentElement.classList.remove(scrollClass.value);
+                document.documentElement.classList.add(...scrollClass.value);
+            else
+                document.documentElement.classList.remove(...scrollClass.value);
         }
         return;
     }
@@ -297,8 +306,8 @@ function handleScroll(): void {
         : document.documentElement.scrollTop;
 
     if (scrollClass.value) {
-        if (isActive.value) document.body.classList.add(scrollClass.value);
-        else document.body.classList.remove(scrollClass.value);
+        if (isActive.value) document.body.classList.add(...scrollClass.value);
+        else document.body.classList.remove(...scrollClass.value);
     }
 
     if (isActive.value) {
@@ -323,37 +332,35 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-modal"),
-    {
-        [useComputedClass("mobileClass", "o-modal--mobile")]: isMobile.value,
-    },
-    {
-        [useComputedClass("activeClass", "o-modal--active")]: isActive.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-modal"],
+    ["mobileClass", "o-modal--mobile", null, isMobile],
+    ["activeClass", "o-modal--active", null, isActive],
+);
 
-const overlayClasses = computed(() => [
-    useComputedClass("overlayClass", "o-modal__overlay"),
-]);
+const overlayClasses = defineClasses(["overlayClass", "o-modal__overlay"]);
 
-const contentClasses = computed(() => [
-    useComputedClass("contentClass", "o-modal__content"),
-    {
-        [useComputedClass("fullScreenClass", "o-modal__content--full-screen")]:
-            props.fullScreen,
-    },
-]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-modal__content"],
+    [
+        "fullScreenClass",
+        "o-modal__content--full-screen",
+        null,
+        computed(() => props.fullScreen),
+    ],
+);
 
-const closeClasses = computed(() => [
-    useComputedClass("closeClass", "o-modal__close"),
-]);
+const closeClasses = defineClasses(["closeClass", "o-modal__close"]);
+
+const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
+const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
 
 const scrollClass = computed(() =>
-    props.scroll === "clip"
-        ? useComputedClass("scrollClipClass", "o-clipped")
-        : useComputedClass("noScrollClass", "o-noscroll"),
+    getActiveClasses(
+        props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
+    ),
 );
+
 // computed ref must be computed at least once for programmatic usage
 scrollClass.value;
 
@@ -371,6 +378,7 @@ defineExpose({ close, promise: props.promise });
             @before-leave="beforeLeave">
             <div
                 v-show="isActive"
+                v-bind="$attrs"
                 ref="rootRef"
                 v-trap-focus="trapFocus"
                 data-oruga="modal"
@@ -378,8 +386,13 @@ defineExpose({ close, promise: props.promise });
                 :tabindex="-1"
                 :role="ariaRole"
                 :aria-label="ariaLabel"
-                :aria-modal="ariaModal">
-                <div :class="overlayClasses" @click="cancel('outside')" />
+                :aria-modal="isActive">
+                <div
+                    :class="overlayClasses"
+                    tabindex="-1"
+                    aria-hidden="true"
+                    @click="cancel('outside')" />
+
                 <div :class="contentClasses" :style="customStyle">
                     <!-- injected component for programmatic usage -->
                     <component

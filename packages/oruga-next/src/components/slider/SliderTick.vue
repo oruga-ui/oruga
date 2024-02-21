@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { computed, type ComputedRef, type PropType } from "vue";
-import { useComputedClass, useProviderChild } from "@/composables";
-
-import { baseComponentProps } from "@/utils/SharedProps";
+import { defineClasses, useProviderChild } from "@/composables";
 
 import type { SliderComponent } from "./types";
 import type { ComponentClass } from "@/types";
@@ -17,8 +15,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Value of single tick */
     value: { type: Number, required: true },
     /** Tick label */
@@ -27,10 +25,12 @@ const props = defineProps({
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when slider tick is hidden */
     tickHiddenClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of tick label */
     tickLabelClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
@@ -56,16 +56,14 @@ const tickStyle = computed(() => ({ left: position.value + "%" }));
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("tickClass", "o-slide__tick"),
-    {
-        [useComputedClass("tickHiddenClass", "o-slide__tick--hidden")]:
-            hidden.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["tickClass", "o-slide__tick"],
+    ["tickHiddenClass", "o-slide__tick--hidden", null, hidden],
+);
 
-const tickLabelClasses = computed(() => [
-    useComputedClass("tickLabelClass", "o-slide__tick-label"),
+const tickLabelClasses = defineClasses([
+    "tickLabelClass",
+    "o-slide__tick-label",
 ]);
 </script>
 

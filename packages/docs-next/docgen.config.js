@@ -30,6 +30,7 @@ const IGNORE = [
     "DatepickerTableRow",
     "DatepickerMonth",
     "PickerWrapper",
+    "PositionWrapper",
     "NotificationNotice",
     "CarouselItem",
 ];
@@ -217,64 +218,38 @@ ${description ? "> " + description : ""}
             d.indexOf("else ") < 0
         ) {
             let configParts = null;
-            if (d.includes("getOptions")) {
-                // old components
-                const params = d
-                    .substring(d.lastIndexOf("("), d.lastIndexOf(")"))
-                    .replace(/\r\n/g, "")
-                    .split(",");
-                if (params.length > 3) {
-                    // In case last param contains a ','
-                    params[2] = params.slice(2).join(",");
-                }
-                if (params[1]) {
-                    configParts = params[1].trim().split(".");
-                }
-                if (configParts && configParts[0] && configParts[1]) {
-                    const value = `${configParts[1].replace(/'|"/g, "")}: ${
-                        params[2]
-                    }`;
-                    d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(
-                        /'|"/g,
-                        "",
-                    )}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
-                }
-                if (configParts && configParts.length == 1) {
-                    const value = `${configParts[0].replace(/'|"/g, "")}: ${
-                        params[2]
-                    }`;
-                    d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
-                }
-            } else {
-                // refactored components
-                const clear = (s) => s.replace(/'|"/g, "");
-                // get default params
-                d = d.replace(/\r\n/g, "");
-                let f = d.substring(
+            const clear = (s) => s.replace(/'|"/g, "");
+            // get default params
+            d = d.replace(/\r\n/g, "");
+            let f = "";
+            if (d.includes("getOption("))
+                f = d.substring(
                     d.lastIndexOf("getOption(") + "getOption(".length,
                 );
-                // remove function prop invokation
-                if (f.lastIndexOf("(") > 0)
-                    f = f.substring(0, f.lastIndexOf("("));
-                if (f.lastIndexOf(")") > 0)
-                    f = f.substring(0, f.lastIndexOf(")"));
-                const params = f.split(", ");
-                if (params.length >= 3) {
-                    // In case last param contains a ','
-                    params[1] = params.slice(1).join(",");
-                }
-                if (params[0]) {
-                    configParts = params[0].trim().split(".");
-                }
-                if (configParts && configParts[0] && configParts[1]) {
-                    const value = `${clear(configParts[1])}: ${params[1]}`;
-                    d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${clear(
-                        configParts[0],
-                    )}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
-                } else if (configParts && configParts.length == 1) {
-                    const value = `${clear(configParts[0])}: ${params[1]}`;
-                    d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
-                }
+            else if (d.includes("getOption<"))
+                f = d.substring(d.indexOf(">(") + ">(".length);
+
+            // remove new line (+)
+            d = d.replace(/=>(.*?)getOption/g, "=> getOption");
+            // remove function prop invokation
+            if (f.lastIndexOf("(") > 0) f = f.substring(0, f.lastIndexOf("("));
+            if (f.lastIndexOf(")") > 0) f = f.substring(0, f.lastIndexOf(")"));
+            const params = f.split(", ");
+            if (params.length >= 3) {
+                // In case last param contains a ','
+                params[1] = params.slice(1).join(",");
+            }
+            if (params[0]) {
+                configParts = params[0].trim().split(".");
+            }
+            if (configParts && configParts[0] && configParts[1]) {
+                const value = `${clear(configParts[1])}: ${params[1]}`;
+                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${clear(
+                    configParts[0],
+                )}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
+            } else if (configParts && configParts.length == 1) {
+                const value = `${clear(configParts[0])}: ${params[1]}`;
+                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
             }
         } else if (d.includes("=>")) {
             d = "Default function (see source code)";

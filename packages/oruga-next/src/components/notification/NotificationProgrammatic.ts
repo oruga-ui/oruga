@@ -1,6 +1,7 @@
 import { createVNode, render } from "vue";
 
 import NotificationNotice from "./NotificationNotice.vue";
+import type { NotifcationNoticeProps, NotifcationProps } from "./types";
 
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
@@ -11,7 +12,6 @@ import type {
     ProgrammaticExpose,
     ProgrammaticInstance,
 } from "@/types";
-import type { NotifcationNoticeProps, NotifcationProps } from "./types";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -23,7 +23,10 @@ const instances = new InstanceRegistry<typeof NotificationNotice>();
 
 type ProgrammaticProps = Readonly<
     | string
-    | (NotifcationNoticeProps & NotifcationProps & OrugaOptions["notification"])
+    | (NotifcationNoticeProps &
+          NotifcationProps &
+          OrugaOptions["notification"] &
+          Record<string, unknown>)
 >;
 
 const NotificationProgrammatic = {
@@ -49,8 +52,12 @@ const NotificationProgrammatic = {
             position: getOption("notification.position", "top-right"),
         };
 
+        const notificationParams = componentParams.notification
+            ? componentParams.notification
+            : componentParams;
+
         const propsData = merge(defaultParams, componentParams);
-        propsData.notification = Object.assign({}, componentParams);
+        propsData.notification = merge({}, notificationParams);
         propsData.promise = new Promise((p1, p2) => {
             propsData.programmatic.resolve = p1;
             propsData.programmatic.reject = p2;

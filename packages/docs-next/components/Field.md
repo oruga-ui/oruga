@@ -8,7 +8,6 @@ title: Field
 
 > Fields are used to add functionality to controls and to attach/group components and elements together
 
-
 </div>
 
 <div class="vp-example">
@@ -49,6 +48,7 @@ title: Field
 | labelSize        | Vertical size of input                                                                                              | string  | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;labelsize: undefined<br>}</code>        |
 | message          | Help message text                                                                                                   | string  | -                                                                               |                                                                                                                                                             |
 | mobileBreakpoint | Mobile breakpoint as max-width value                                                                                | string  | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;mobileBreakpoint: undefined<br>}</code> |
+| override         | Override existing theme classes completely                                                                          | boolean | -                                                                               |                                                                                                                                                             |
 | variant          | Color of the field and help message, also adds a matching icon.<br/>Used by Input, Select and Autocomplete.         | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                                             |
 
 ### Slots

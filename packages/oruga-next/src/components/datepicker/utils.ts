@@ -4,7 +4,7 @@
  * @param  {String} format long (ex. March), short (ex. Mar) or narrow (M)
  * @return {Array<String>} An array of month names
  */
-type monthType =
+type MonthType =
     | "numeric"
     | "2-digit"
     | "long"
@@ -14,7 +14,7 @@ type monthType =
 
 export function getMonthNames(
     locale: string = undefined,
-    format: monthType = "long",
+    format: MonthType = "long",
 ): string[] {
     const dates = [];
     for (let i = 0; i < 12; i++) {
@@ -35,12 +35,12 @@ export function getMonthNames(
  * @return {Array<String>} An array of weekday names
  */
 
-type weekdayType = "long" | "short" | "narrow" | undefined;
+type WeekdayType = "long" | "short" | "narrow" | undefined;
 
 export function getWeekdayNames(
     locale: string = undefined,
     firstDayOfWeek: number = 0,
-    format: weekdayType = "narrow",
+    format: WeekdayType = "narrow",
 ): string[] {
     const dates = [];
     for (let i = 1, j = 0; j < 7; i++) {
