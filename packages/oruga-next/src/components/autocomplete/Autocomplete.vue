@@ -442,7 +442,7 @@ const isEmpty = computed(
 );
 
 watch(isEmpty, (empty) => {
-    if (isFocused) isActive.value = !empty;
+    if (isFocused.value) isActive.value = !empty || !!slots.empty;
 });
 
 const closeableOptions = computed(() => {
@@ -932,7 +932,7 @@ function itemOptionClasses(option): ClassBind[] {
             :tag="itemTag"
             :class="[...itemClasses, ...itemEmptyClasses]">
             <!--
-                @slot Define content for empty state 
+                @slot Define content for empty state
             -->
             <slot name="empty" />
         </o-dropdown-item>
