@@ -23,7 +23,7 @@ import type {
 } from "@/types";
 
 // named tuple as prop definition
-export type ComputedClass = readonly [
+type ComputedClass = readonly [
     className: string,
     defaultClass: string,
     suffix?: MaybeRefOrGetter<string>,
