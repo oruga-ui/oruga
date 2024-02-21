@@ -720,7 +720,7 @@ function rightIconClick(event: Event): void {
     if (props.clearable) {
         vmodel.value = "";
         setSelected(null, false);
-        if (props.openOnFocus) inputRef.value.$el.focus();
+        if (props.openOnFocus) setFocus();
     } else emits("icon-right-click", event);
 }
 
