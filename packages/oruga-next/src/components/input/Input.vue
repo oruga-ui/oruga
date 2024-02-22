@@ -367,7 +367,7 @@ const inputType = ref(props.type);
 
 const computedInputType = computed(() => {
     if (props.passwordReveal) {
-        return isPasswordVisible.value ? "input" : "password";
+        return isPasswordVisible.value ? "text" : "password";
     } else {
         return inputType.value;
     }
