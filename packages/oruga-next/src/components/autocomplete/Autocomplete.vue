@@ -348,7 +348,7 @@ function setItemRef(
 }
 
 // use form input functionalities
-const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused } =
+const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
     useInputHandler(inputRef, emits, props);
 
 const vmodel = useVModelBinding<string | number>(props, emits, {
@@ -720,7 +720,7 @@ function rightIconClick(event: Event): void {
     if (props.clearable) {
         vmodel.value = "";
         setSelected(null, false);
-        if (props.openOnFocus) inputRef.value.$el.focus();
+        if (props.openOnFocus) setFocus();
     } else emits("icon-right-click", event);
 }
 
@@ -797,6 +797,11 @@ function itemOptionClasses(option): ClassBind[] {
 
     return [...itemClasses.value, ...optionClasses.value];
 }
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

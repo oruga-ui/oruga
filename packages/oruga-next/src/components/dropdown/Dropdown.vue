@@ -532,7 +532,7 @@ const menuClasses = defineClasses(
     ],
 );
 
-// --- Expose Public Functionality ---
+// --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ $trigger: triggerRef, $content: contentRef });

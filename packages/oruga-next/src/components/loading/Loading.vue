@@ -160,7 +160,7 @@ const iconClasses = defineClasses(["iconClass", "o-load__icon"]);
 
 const labelClasses = defineClasses(["labelClass", "o-load__label"]);
 
-// --- Expose Public Functionality ---
+// --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close, promise: props.promise });
