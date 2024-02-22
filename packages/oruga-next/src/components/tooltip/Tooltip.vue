@@ -161,11 +161,6 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Root element class indicated dropdown position */
-    rootPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
 });
 
 const emits = defineEmits<{
@@ -306,12 +301,6 @@ const rootClasses = defineClasses(
         "o-tip--teleport",
         null,
         computed(() => !!props.teleport),
-    ],
-    [
-        "rootPositionClass",
-        "o-tip--",
-        autoPosition,
-        computed(() => !!autoPosition.value),
     ],
 );
 

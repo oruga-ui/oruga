@@ -1445,8 +1445,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 alwaysClass: ClassDefinition;
                 /** Class of the tooltip arrow position */
                 arrowPositionClass: ClassDefinition;
-                /** Position class to display on the root element. Used as a prefix, position is applied as a suffix. */
-                rootPositionClass: ClassDefinition;
             }>;
         upload?: ComponentConfigBase &
             Partial<{
