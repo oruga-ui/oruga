@@ -340,7 +340,7 @@ let removeOutsideListener = null;
 /** add outside click event listener */
 function addHandler(): void {
     if (isClient && !props.overlay) {
-        removeOutsideListener = useClickOutside(rootRef, clickedOutside);
+        removeOutsideListener = useClickOutside(sidebarContent, clickedOutside);
     }
 }
 
