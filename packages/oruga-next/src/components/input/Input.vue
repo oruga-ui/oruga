@@ -184,6 +184,7 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class to display when a right icon is used */
     hasIconRightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

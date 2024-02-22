@@ -223,14 +223,17 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the root element indicating position of dropdown */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the root element indicating whether the dropdown is open */
     activeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the root element when the dropdown is hoverable */
     hoverableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

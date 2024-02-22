@@ -183,6 +183,7 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the select variant for the root element*/
     rootVariantClass: {
         type: Boolean,
         default: () => getOption("select.rootVariantClass", false),

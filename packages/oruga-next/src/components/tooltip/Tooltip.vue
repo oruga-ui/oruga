@@ -161,6 +161,7 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Root element class indicated dropdown position */
     rootPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

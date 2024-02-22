@@ -169,6 +169,7 @@ const props = defineProps({
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class to display on the wrapper element when the slider is dragged */
     thumbWrapperDraggingClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
