@@ -89,6 +89,27 @@ const props = defineProps({
         default: () => getOption("steps.animated", true),
     },
     /**
+     * Transition animation name
+     * @values [next, prev], [right, left, down, up]
+     */
+    animation: {
+        type: Array as PropType<Array<string>>,
+        default: () =>
+            getOption("tabs.animation", [
+                "slide-next",
+                "slide-prev",
+                "slide-down",
+                "slide-up",
+            ]),
+        validator: (value: Array<string>) =>
+            value.length === 2 || value.length === 4,
+    },
+    /** Apply animation on the initial render */
+    animateInitially: {
+        type: Boolean,
+        default: () => getOption("steps.animateInitially", false),
+    },
+    /**
      * Position of the marker label
      * @values bottom, right, left
      */
@@ -225,6 +246,9 @@ const rootRef = ref();
 const provideData = computed(() => ({
     activeId: activeId.value,
     vertical: props.vertical,
+    animated: props.animated,
+    animation: props.animation,
+    animateInitially: props.animateInitially,
 }));
 
 /** Provide functionalities and data to child item components */

@@ -584,7 +584,7 @@ See icon library documentation for custom classes. */
                 iconRightSpaceClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
-                /** Class to display is a right icon is present */
+                /** Class to display when a right icon is used */
                 hasIconRightClass: ClassDefinition;
             }>;
         loading?: ComponentConfigBase &
@@ -864,8 +864,8 @@ but will set body to position fixed, might break some layouts. */
                 placeholderClass: ClassDefinition;
                 /** Class of the select arrow */
                 arrowClass: ClassDefinition;
-                /** Variant class for the root element. The prop is a prefix, the variant suffix is applied automatically. */
-                rootVariantClass: ClassDefinition;
+                /** Class of the select variant for the root element */
+                rootVariantClass: boolean;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
@@ -998,7 +998,7 @@ but will set body to position fixed, might break some layouts. */
                 tickHiddenClass: ClassDefinition;
                 /** Class of tick label */
                 tickLabelClass: ClassDefinition;
-                /** Dragging class to place on wrapper */
+                /** Class to display on the wrapper element when the slider is dragged */
                 thumbWrapperDraggingClass: ClassDefinition;
             }>;
         steps?: ComponentConfigBase &
@@ -1025,6 +1025,8 @@ but will set body to position fixed, might break some layouts. */
                 itemHeaderVariantClass: ClassDefinition;
                 /** Tab size */
                 size: string;
+                /** Transition animation name */
+                animation: string[];
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Color of the control */
@@ -1047,6 +1049,8 @@ but will set body to position fixed, might break some layouts. */
                 positionClass: ClassDefinition;
                 /** Step navigation is animated */
                 animated: boolean;
+                /** Apply animation on the initial render */
+                animateInitially: boolean;
                 /** Position of the marker label */
                 labelPosition: string;
                 /** Class of the tooltip trigger */
@@ -1274,6 +1278,8 @@ but will set body to position fixed, might break some layouts. */
                 size: string;
                 /** Tab type */
                 type: string;
+                /** Transition animation name */
+                animation: string[];
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Color of the control */
@@ -1290,6 +1296,8 @@ but will set body to position fixed, might break some layouts. */
                 animated: boolean;
                 /** Show tab in vertical layout */
                 vertical: boolean;
+                /** Apply animation on the initial render */
+                animateInitially: boolean;
                 /** Class of Tabs component when vertical */
                 verticalClass: ClassDefinition;
                 /** Class of Tabs component when multiline */

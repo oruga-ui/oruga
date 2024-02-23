@@ -118,16 +118,23 @@ const isActive = computed(() => parent.value.activeId === props.value);
 
 const isTransitioning = ref(false);
 
+const nextAnimation = computed(() => {
+    const idx =
+        parent.value.vertical && parent.value.animation.length === 4 ? 2 : 0;
+    return parent.value.animation[idx];
+});
+
+const prevAnimation = computed(() => {
+    const idx =
+        parent.value.vertical && parent.value.animation.length === 4 ? 3 : 1;
+    return parent.value.animation[idx];
+});
+
 /** Activate element, alter animation name based on the index. */
 function activate(oldIndex: number): void {
     transitionName.value =
-        item.value.index < oldIndex
-            ? parent.value.vertical
-                ? "slide-down"
-                : "slide-next"
-            : parent.value.vertical
-              ? "slide-up"
-              : "slide-prev";
+        item.value.index < oldIndex ? nextAnimation.value : prevAnimation.value;
+
     // emit event
     emits("activate");
 }
@@ -135,13 +142,8 @@ function activate(oldIndex: number): void {
 /** Deactivate element, alter animation name based on the index. */
 function deactivate(newIndex: number): void {
     transitionName.value =
-        newIndex < item.value.index
-            ? parent.value.vertical
-                ? "slide-down"
-                : "slide-next"
-            : parent.value.vertical
-              ? "slide-up"
-              : "slide-prev";
+        newIndex < item.value.index ? nextAnimation.value : prevAnimation.value;
+
     // emit event
     emits("deactivate");
 }
@@ -173,7 +175,9 @@ const headerTextClasses = defineClasses([
 
 <template>
     <Transition
+        :disabled="!parent.animated"
         :name="transitionName"
+        :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
         <div

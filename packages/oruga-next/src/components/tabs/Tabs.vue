@@ -76,6 +76,27 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("tabs.animated", true),
     },
+    /**
+     * Transition animation name
+     * @values [next, prev], [right, left, down, up]
+     */
+    animation: {
+        type: Array as PropType<Array<string>>,
+        default: () =>
+            getOption("tabs.animation", [
+                "slide-next",
+                "slide-prev",
+                "slide-down",
+                "slide-up",
+            ]),
+        validator: (value: Array<string>) =>
+            value.length === 2 || value.length === 4,
+    },
+    /** Apply animation on the initial render */
+    animateInitially: {
+        type: Boolean,
+        default: () => getOption("tabs.animateInitially", false),
+    },
     /** Show tab items multiline when there is no space */
     multiline: { type: Boolean, default: false },
     // class props (will not be displayed in the docs)
@@ -162,6 +183,9 @@ const provideData = computed(() => ({
     activeId: activeId.value,
     type: props.type,
     vertical: props.vertical,
+    animated: props.animated,
+    animation: props.animation,
+    animateInitially: props.animateInitially,
 }));
 
 /** Provide functionalities and data to child item components */
@@ -389,6 +413,7 @@ function itemHeaderClasses(
                     @keydown.down.prevent="next"
                     @keydown.home.prevent="homePressed"
                     @keydown.end.prevent="endPressed" />
+
                 <component
                     :is="childItem.tag"
                     v-else
