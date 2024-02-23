@@ -5,6 +5,10 @@
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
+  "workspaces": [
+    "packages/oruga-next", 
+    "packages/docs-next"
+  ],
   "scripts": {
     "test:oruga-next": "lerna run test --scope @oruga-ui/oruga-next",
     "test:ts:oruga-next": "lerna run test:ts --scope @oruga-ui/oruga-next",
