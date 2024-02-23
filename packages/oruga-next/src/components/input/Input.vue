@@ -184,6 +184,11 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class to display when a right icon is used */
+    hasIconRightClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the counter element */
     counterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -324,13 +329,14 @@ function onInput(event: Event): void {
 
 // --- Icon Feature ---
 
-const hasIconRight = computed(
-    () =>
+const hasIconRight = computed(() => {
+    return !!(
         props.passwordReveal ||
         (props.statusIcon && statusVariantIcon.value) ||
         (props.clearable && vmodel.value && props.clearIcon) ||
-        props.iconRight,
-);
+        props.iconRight
+    );
+});
 
 const computedIconRight = computed(() => {
     if (props.passwordReveal) {
@@ -396,6 +402,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    [
+        "hasIconRightClass",
+        "o-input__wrapper--has-icon-right",
+        null,
+        hasIconRight,
+    ],
 );
 
 const inputClasses = defineClasses(
@@ -451,15 +463,6 @@ defineExpose({ focus: setFocus });
 
 <template>
     <div data-oruga="input" :class="rootClasses">
-        <o-icon
-            v-if="icon"
-            :class="iconLeftClasses"
-            :clickable="iconClickable"
-            :icon="icon"
-            :pack="iconPack"
-            :size="size"
-            @click="iconClick('icon-click', $event)" />
-
         <input
             v-if="type !== 'textarea'"
             v-bind="$attrs"
@@ -494,6 +497,15 @@ defineExpose({ focus: setFocus });
             @focus="onFocus"
             @invalid="onInvalid"
             @input="onInput" />
+
+        <o-icon
+            v-if="icon"
+            :class="iconLeftClasses"
+            :clickable="iconClickable"
+            :icon="icon"
+            :pack="iconPack"
+            :size="size"
+            @click="iconClick('icon-click', $event)" />
 
         <o-icon
             v-if="hasIconRight"

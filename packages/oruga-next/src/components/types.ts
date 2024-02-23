@@ -472,6 +472,12 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
+                /** Class prefix used when position is applied to root element */
+                positionClass: ClassDefinition;
+                /** Active class for root element */
+                activeClass: ClassDefinition;
+                /** Class when hoverable */
+                hoverableClass: ClassDefinition;
             }>;
         field?: ComponentConfigBase &
             Partial<{
@@ -578,6 +584,8 @@ See icon library documentation for custom classes. */
                 iconRightSpaceClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
+                /** Class to display is a right icon is present */
+                hasIconRightClass: ClassDefinition;
             }>;
         loading?: ComponentConfigBase &
             Partial<{
@@ -721,6 +729,12 @@ but will set body to position fixed, might break some layouts. */
                 ariaCloseLabel: string;
                 /** Class of the element when positioned */
                 positionClass: ClassDefinition;
+                /** Root class of the notice */
+                noticeClass: ClassDefinition;
+                /** Class of the notice when positioned */
+                noticePositionClass: ClassDefinition;
+                /** Class of the custom container element */
+                noticeCustomContainerClass: ClassDefinition;
             }>;
         pagination?: ComponentConfigBase &
             Partial<{
@@ -850,6 +864,8 @@ but will set body to position fixed, might break some layouts. */
                 placeholderClass: ClassDefinition;
                 /** Class of the select arrow */
                 arrowClass: ClassDefinition;
+                /** Variant class for the root element. The prop is a prefix, the variant suffix is applied automatically. */
+                rootVariantClass: ClassDefinition;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
@@ -982,6 +998,8 @@ but will set body to position fixed, might break some layouts. */
                 tickHiddenClass: ClassDefinition;
                 /** Class of tick label */
                 tickLabelClass: ClassDefinition;
+                /** Dragging class to place on wrapper */
+                thumbWrapperDraggingClass: ClassDefinition;
             }>;
         steps?: ComponentConfigBase &
             Partial<{

@@ -223,6 +223,21 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the root element indicating position of dropdown */
+    positionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class for the root element indicating whether the dropdown is open */
+    activeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class for the root element when the dropdown is hoverable */
+    hoverableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
@@ -500,6 +515,19 @@ const rootClasses = defineClasses(
         null,
         computed(() => isMobileModal.value && !hoverable.value),
     ],
+    [
+        "positionClass",
+        "o-drop--position-",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "activeClass",
+        "o-drop--active",
+        null,
+        computed(() => isActive.value || props.inline),
+    ],
+    ["hoverableClass", "", null, hoverable],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
@@ -556,7 +584,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
             @mouseenter="onHover"
             @focus.capture="onFocus">
             <!--
-                @slot Override the trigger element, default is label prop 
+                @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
             -->
             <slot name="trigger" :active="isActive">
@@ -595,7 +623,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :aria-modal="!inline && trapFocus"
                     :style="menuStyle">
                     <!--
-                        @slot Place dropdown items here 
+                        @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->

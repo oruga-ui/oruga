@@ -183,6 +183,11 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the select variant for the root element*/
+    rootVariantClass: {
+        type: Boolean,
+        default: () => getOption("select.rootVariantClass", false),
+    },
 });
 
 const emits = defineEmits<{
@@ -300,6 +305,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    [
+        "rootVariantClass",
+        "o-ctrl-sel--",
+        computed(() => statusVariant.value || props.variant),
+        computed(() => !!statusVariant.value || !!props.variant),
+    ],
 );
 
 const selectClasses = defineClasses(
@@ -377,7 +388,7 @@ defineExpose({ focus: setFocus });
             @invalid="onInvalid">
             <template v-if="placeholder || $slots.placeholder">
                 <option v-if="placeholderVisible" :value="null" disabled hidden>
-                    <!-- 
+                    <!--
                         @slot Override the placeholder
                     -->
                     <slot name="placeholder">
