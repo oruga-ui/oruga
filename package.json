@@ -6,7 +6,6 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
     "test:oruga-next": "lerna run test --scope @oruga-ui/oruga-next",
     "test:ts:oruga-next": "lerna run test:ts --scope @oruga-ui/oruga-next",
     "test:watch:oruga-next": "lerna run test:watch --scope @oruga-ui/oruga-next",
