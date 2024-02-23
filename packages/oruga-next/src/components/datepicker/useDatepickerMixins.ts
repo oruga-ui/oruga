@@ -1,21 +1,8 @@
 import { computed } from "vue";
-import Datepicker from "./Datepicker.vue";
 import { matchWithGroups } from "./utils";
+import type { DatepickerProps } from "./types";
 
-export type DatepickerProps = InstanceType<typeof Datepicker>["$props"];
-
-export type DatepickerEvent = {
-    date: Date;
-    type?: string;
-};
-
-export type FocusedDate = {
-    day: number;
-    month: number;
-    year: number;
-};
-
-export function useDatepickerShare(props: DatepickerProps) {
+export function useDatepickerMixins(props: DatepickerProps) {
     /**
      * Check that selected date is within earliest/latest params and
      * is within a given month

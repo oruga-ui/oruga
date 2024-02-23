@@ -169,6 +169,11 @@ const props = defineProps({
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class to display on the wrapper element when the slider is dragged */
+    thumbWrapperDraggingClass: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
@@ -377,10 +382,15 @@ const thumbClasses = defineClasses(
     ],
 );
 
-const thumbWrapperClasses = defineClasses([
-    "thumbWrapperClass",
-    "o-slide__thumb-wrapper",
-]);
+const thumbWrapperClasses = defineClasses(
+    ["thumbWrapperClass", "o-slide__thumb-wrapper"],
+    [
+        "thumbWrapperDraggingClass",
+        "o-slide__thumb-wrapper--dragging",
+        null,
+        dragging,
+    ],
+);
 </script>
 
 <template>
@@ -397,7 +407,7 @@ const thumbWrapperClasses = defineClasses([
                     :tick-label-class="tickLabelClass" />
             </template>
 
-            <!-- 
+            <!--
                 @slot Define additional slider ticks here
              -->
             <slot />

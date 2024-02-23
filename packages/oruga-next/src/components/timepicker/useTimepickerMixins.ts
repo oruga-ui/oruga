@@ -1,8 +1,6 @@
 import { computed } from "vue";
-import Timepicker from "./Timepicker.vue";
 import { matchWithGroups } from "../datepicker/utils";
-
-export type TimepickerProps = InstanceType<typeof Timepicker>["$props"];
+import type { TimepickerProps } from "./types";
 
 const AM = "AM";
 const PM = "PM";

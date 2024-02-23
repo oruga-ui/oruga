@@ -184,6 +184,11 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class to display when a right icon is used */
+    hasIconRightClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the counter element */
     counterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -324,13 +329,14 @@ function onInput(event: Event): void {
 
 // --- Icon Feature ---
 
-const hasIconRight = computed(
-    () =>
+const hasIconRight = computed(() => {
+    return !!(
         props.passwordReveal ||
         (props.statusIcon && statusVariantIcon.value) ||
         (props.clearable && vmodel.value && props.clearIcon) ||
-        props.iconRight,
-);
+        props.iconRight
+    );
+});
 
 const computedIconRight = computed(() => {
     if (props.passwordReveal) {
@@ -363,13 +369,14 @@ function rightIconClick(event: Event): void {
 // --- Password Visability Feature ---
 
 const isPasswordVisible = ref(false);
-const inputType = ref(props.type);
 
-// update inputType on type prop change
-watch(
-    () => props.type,
-    (type) => (inputType.value = type),
-);
+const inputType = computed(() => {
+    if (props.passwordReveal) {
+        return isPasswordVisible.value ? "text" : "password";
+    } else {
+        return props.type;
+    }
+});
 
 /** Current password-reveal icon name. */
 const passwordVisibleIcon = computed(() =>
@@ -382,7 +389,6 @@ const passwordVisibleIcon = computed(() =>
  */
 function togglePasswordVisibility(): void {
     isPasswordVisible.value = !isPasswordVisible.value;
-    inputType.value = isPasswordVisible.value ? "text" : "password";
     nextTick(() => setFocus());
 }
 
@@ -395,6 +401,12 @@ const rootClasses = defineClasses(
         "o-input__wrapper--expanded",
         null,
         computed(() => props.expanded),
+    ],
+    [
+        "hasIconRightClass",
+        "o-input__wrapper--has-icon-right",
+        null,
+        hasIconRight,
     ],
 );
 
@@ -442,19 +454,15 @@ const iconRightClasses = defineClasses([
 ]);
 
 const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>
     <div data-oruga="input" :class="rootClasses">
-        <o-icon
-            v-if="icon"
-            :class="iconLeftClasses"
-            :clickable="iconClickable"
-            :icon="icon"
-            :pack="iconPack"
-            :size="size"
-            @click="iconClick('icon-click', $event)" />
-
         <input
             v-if="type !== 'textarea'"
             v-bind="$attrs"
@@ -489,6 +497,15 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
             @focus="onFocus"
             @invalid="onInvalid"
             @input="onInput" />
+
+        <o-icon
+            v-if="icon"
+            :class="iconLeftClasses"
+            :clickable="iconClickable"
+            :icon="icon"
+            :pack="iconPack"
+            :size="size"
+            @click="iconClick('icon-click', $event)" />
 
         <o-icon
             v-if="hasIconRight"

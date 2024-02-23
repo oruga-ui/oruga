@@ -7,12 +7,12 @@ import OInput from "../input/Input.vue";
 
 import { getOption } from "@/utils/config";
 import { isMobileAgent } from "@/utils/helpers";
-import { defineClasses, useInputHandler, usePropBinding } from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import { matchWithGroups } from "../datepicker/utils";
-import type { DatepickerProps } from "../datepicker/useDatepickerShare";
-import type { TimepickerProps } from "../timepicker/useTimepickerShare";
 
+import type { DatepickerProps } from "../datepicker/types";
+import type { TimepickerProps } from "../timepicker/types";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -227,7 +227,7 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { onBlur, onFocus, onInvalid } = useInputHandler(
+const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     elementRef,
     emits,
     props,
@@ -243,52 +243,52 @@ watch([() => isMobileNative.value, () => props.inline], () => {
 });
 
 /** Dropdown active state */
-const isActive = usePropBinding<boolean>("active", props, emits);
+const isActive = defineModel<boolean>("active");
 
-const vmodel = computed({
-    get() {
-        return props.modelValue;
-    },
-    set(value) {
-        if (!value) {
-            emits("update:modelValue", value);
-            return;
+const vmodel = defineModel<Date>();
+
+function updateVModel(value: Date | Date[]): void {
+    if (!value) {
+        vmodel.value = undefined;
+        return;
+    }
+    if (Array.isArray(value)) {
+        updateVModel(value[0]);
+        return;
+    }
+    let date = new Date(value.getTime());
+    if (!props.modelValue) {
+        date = props.datetimeCreator(value);
+    } else {
+        // restore time part
+        if (
+            (value.getDate() !== props.modelValue.getDate() ||
+                value.getMonth() !== props.modelValue.getMonth() ||
+                value.getFullYear() !== props.modelValue.getFullYear()) &&
+            value.getHours() === 0 &&
+            value.getMinutes() === 0 &&
+            value.getSeconds() === 0
+        ) {
+            date.setHours(
+                props.modelValue.getHours(),
+                props.modelValue.getMinutes(),
+                props.modelValue.getSeconds(),
+                0,
+            );
         }
-        let date = new Date(value.getTime());
-        if (!props.modelValue) {
-            date = props.datetimeCreator(value);
-        } else {
-            // restore time part
-            if (
-                (value.getDate() !== props.modelValue.getDate() ||
-                    value.getMonth() !== props.modelValue.getMonth() ||
-                    value.getFullYear() !== props.modelValue.getFullYear()) &&
-                value.getHours() === 0 &&
-                value.getMinutes() === 0 &&
-                value.getSeconds() === 0
-            ) {
-                date.setHours(
-                    props.modelValue.getHours(),
-                    props.modelValue.getMinutes(),
-                    props.modelValue.getSeconds(),
-                    0,
-                );
-            }
-        }
-        // check min and max range
-        if (props.minDatetime && date < props.minDatetime) {
-            date = props.minDatetime;
-        } else if (props.maxDatetime && date > props.maxDatetime) {
-            date = props.maxDatetime;
-        }
-        emits("update:modelValue", new Date(date.getTime()));
-    },
-});
+    }
+    // check min and max range
+    if (props.minDatetime && date < props.minDatetime) {
+        date = props.minDatetime;
+    } else if (props.maxDatetime && date > props.maxDatetime) {
+        date = props.maxDatetime;
+    }
+    vmodel.value = new Date(date.getTime());
+}
 
 const minDate = computed(() => {
     if (!props.minDatetime)
         return props.datepicker ? props.datepicker.minDate : null;
-
     return new Date(
         props.minDatetime.getFullYear(),
         props.minDatetime.getMonth(),
@@ -303,7 +303,6 @@ const minDate = computed(() => {
 const maxDate = computed(() => {
     if (!props.maxDatetime)
         return props.datepicker ? props.datepicker.maxDate : null;
-
     return new Date(
         props.maxDatetime.getFullYear(),
         props.maxDatetime.getMonth(),
@@ -448,9 +447,7 @@ const pmString = computed(() => {
         const dayPeriod = dtf.value
             .formatToParts(d)
             .find((part) => part.type === "dayPeriod");
-        if (dayPeriod) {
-            return dayPeriod.value;
-        }
+        if (dayPeriod) return dayPeriod.value;
     }
     return PM;
 });
@@ -541,9 +538,9 @@ function onChangeNativePicker(event: Event): void {
         const minutes = parseInt(s[4], 10);
         // Seconds are omitted intentionally; they are unsupported by input
         // type=datetime-local and cause the control to fail native validation
-        vmodel.value = new Date(year, month, day, hours, minutes);
+        updateVModel(new Date(year, month, day, hours, minutes));
     } else {
-        vmodel.value = null;
+        updateVModel(null);
     }
 }
 
@@ -558,6 +555,11 @@ const timepickerWrapperClasses = defineClasses([
     "timepickerWrapperClass",
     "o-dtpck__time",
 ]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>
@@ -565,8 +567,8 @@ const timepickerWrapperClasses = defineClasses([
         v-if="!isMobileNative || inline"
         ref="datepickerRef"
         v-bind="{ ...$attrs, ...datepicker }"
-        v-model="vmodel"
         v-model:active="isActive"
+        :model-value="vmodel"
         data-oruga="datetimepicker"
         :class="datepickerWrapperClasses"
         :rounded="rounded"
@@ -591,6 +593,7 @@ const timepickerWrapperClasses = defineClasses([
         :mobile-native="isMobileNative"
         :locale="locale"
         :teleport="teleport"
+        @update:model-value="updateVModel"
         @focus="onFocus"
         @blur="onBlur"
         @change-month="$emit('change-month', $event)"

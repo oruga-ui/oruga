@@ -487,7 +487,7 @@ const scrollClass = computed(() =>
 // computed ref must be computed at least once for programmatic usage
 scrollClass.value;
 
-// --- Expose Public Functionality ---
+// --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close, promise: props.promise });
