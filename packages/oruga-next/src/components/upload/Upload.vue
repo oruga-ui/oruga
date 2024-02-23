@@ -127,11 +127,8 @@ const vmodel = useVModelBinding<Object | Object[] | File | File[]>(
 );
 
 // use form input functionality
-const { checkHtml5Validity, onFocus, onBlur, isValid } = useInputHandler(
-    inputRef,
-    emits,
-    props,
-);
+const { checkHtml5Validity, onFocus, onBlur, isValid, setFocus } =
+    useInputHandler(inputRef, emits, props);
 
 const dragDropFocus = ref(false);
 
@@ -266,6 +263,11 @@ const draggableClasses = defineClasses(
         computed(() => props.variant && dragDropFocus.value),
     ],
 );
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

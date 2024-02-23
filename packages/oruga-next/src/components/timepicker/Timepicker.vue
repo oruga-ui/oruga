@@ -13,7 +13,7 @@ import {
     getActiveClasses,
 } from "@/composables";
 
-import { useTimepickerMixins } from "./useTimepickerShare";
+import { useTimepickerMixins } from "./useTimepickerMixins";
 
 import type { ComponentClass } from "@/types";
 
@@ -271,6 +271,8 @@ const {
     minuteLiteral,
     secondLiteral,
 } = useTimepickerMixins(props);
+
+const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 const vmodel = useVModelBinding<Date>(props, emits);
 
@@ -734,11 +736,16 @@ const dropdownClass = defineClasses([
 
 const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
 const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: pickerRef.value.focus });
 </script>
 
 <template>
     <OPickerWrapper
-        ref="wrapperRef"
+        ref="pickerRef"
         v-model:active="isActive"
         data-oruga="timepicker"
         :value="vmodel"

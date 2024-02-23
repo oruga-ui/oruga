@@ -220,6 +220,11 @@ const inputClasses = defineClasses(
 );
 
 const labelClasses = defineClasses(["labelClass", "o-chk__label"]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

@@ -186,6 +186,11 @@ const inputClasses = defineClasses(
 );
 
 const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

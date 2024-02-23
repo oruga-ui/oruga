@@ -11,12 +11,7 @@ import {
 import { isDefined } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
-import {
-    type DatepickerProps,
-    type DatepickerEvent,
-    type FocusedDate,
-} from "./useDatepickerShare";
-
+import type { DatepickerProps, DatepickerEvent, FocusedDate } from "./types";
 import type { ClassBind } from "@/types";
 
 defineOptions({

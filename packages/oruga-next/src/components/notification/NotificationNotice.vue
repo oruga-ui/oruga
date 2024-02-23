@@ -293,7 +293,7 @@ const noticeCustomContainerClasses = defineClasses([
     "o-notices__custom-container",
 ]);
 
-// --- Expose Public Functionality ---
+// --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close: handleClose, promise: props.promise });
