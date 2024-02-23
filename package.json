@@ -20,9 +20,9 @@
     "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\""
   },
   "devDependencies": {
-    "conventional-changelog": "^3.1.25",
-    "conventional-changelog-cli": "^2.2.2",
-    "lerna": "^6.4.1",
-    "replace-in-file": "^6.3.5"
+    "conventional-changelog": "^5.1.0",
+    "conventional-changelog-cli": "^4.1.0",
+    "lerna": "^8.1.2",
+    "replace-in-file": "^7.1.0"
   }
 }
