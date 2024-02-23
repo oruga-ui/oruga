@@ -280,17 +280,19 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
 
 /** Activate next child and deactivate prev child */
 function performAction(newId: number | string): void {
-    const oldValue = activeId.value;
-    const oldTab = isDefined(oldValue)
-        ? items.value.find((item) => item.value === oldValue) || items.value[0]
-        : items.value[0];
-    activeId.value = newId;
+    const oldId = activeId.value;
+    const oldItem = activeItem.value;
+    const newItem =
+        items.value.find((item) => item.value === newId) || items.value[0];
+
+    if (oldItem && newItem) {
+        oldItem.deactivate(newItem.index);
+        newItem.activate(oldItem.index);
+    }
+
     nextTick(() => {
-        if (oldTab && activeItem.value) {
-            oldTab.deactivate(activeItem.value.index);
-            activeItem.value.activate(oldTab.index);
-        }
-        emits("change", newId, oldValue);
+        activeId.value = newId;
+        emits("change", newId, oldId);
     });
 }
 
