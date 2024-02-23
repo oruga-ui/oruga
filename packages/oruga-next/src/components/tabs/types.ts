@@ -24,6 +24,9 @@ export type TabsComponent = {
     activeId: number;
     type: string;
     vertical: boolean;
+    animated: boolean;
+    animation: string[];
+    animateInitially: boolean;
 };
 
 export type TabItem = Omit<ProviderItem, "data"> & TabItemComponent;

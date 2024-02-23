@@ -89,6 +89,27 @@ const props = defineProps({
         default: () => getOption("steps.animated", true),
     },
     /**
+     * Transition animation name
+     * @values [next, prev], [right, left, down, up]
+     */
+    animation: {
+        type: Array as PropType<Array<string>>,
+        default: () =>
+            getOption("tabs.animation", [
+                "slide-next",
+                "slide-prev",
+                "slide-down",
+                "slide-up",
+            ]),
+        validator: (value: Array<string>) =>
+            value.length === 2 || value.length === 4,
+    },
+    /** Apply animation on the initial render */
+    animateInitially: {
+        type: Boolean,
+        default: () => getOption("steps.animateInitially", false),
+    },
+    /**
      * Position of the marker label
      * @values bottom, right, left
      */
@@ -225,6 +246,9 @@ const rootRef = ref();
 const provideData = computed(() => ({
     activeId: activeId.value,
     vertical: props.vertical,
+    animated: props.animated,
+    animation: props.animation,
+    animateInitially: props.animateInitially,
 }));
 
 /** Provide functionalities and data to child item components */
@@ -242,7 +266,7 @@ const items = computed<StepItem[]>(() =>
 
 const activeId = useVModelBinding(props, emits, { passive: true });
 
-/**  When v-model is changed set the new active tab. */
+/** When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
     (value) => {
@@ -321,13 +345,17 @@ function itemClick(item: StepItem): void {
 /** Activate next child and deactivate prev child */
 function performAction(newId: number | string): void {
     const oldId = activeItem.value.value;
-    const oldItem = items.value.find((item) => item.value === oldId);
-    activeId.value = newId;
+    const oldItem = activeItem.value;
+    const newItem =
+        items.value.find((item) => item.value === newId) || items.value[0];
+
+    if (oldItem && newItem) {
+        oldItem.deactivate(newItem.index);
+        newItem.activate(oldItem.index);
+    }
+
     nextTick(() => {
-        if (oldItem && activeItem.value) {
-            oldItem.deactivate(activeItem.value.index);
-            activeItem.value.activate(oldItem.index);
-        }
+        activeId.value = newId;
         emits("change", newId, oldId);
     });
 }
