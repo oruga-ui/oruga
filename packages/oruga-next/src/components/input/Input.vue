@@ -369,13 +369,14 @@ function rightIconClick(event: Event): void {
 // --- Password Visability Feature ---
 
 const isPasswordVisible = ref(false);
-const inputType = ref(props.type);
 
-// update inputType on type prop change
-watch(
-    () => props.type,
-    (type) => (inputType.value = type),
-);
+const inputType = computed(() => {
+    if (props.passwordReveal) {
+        return isPasswordVisible.value ? "text" : "password";
+    } else {
+        return props.type;
+    }
+});
 
 /** Current password-reveal icon name. */
 const passwordVisibleIcon = computed(() =>
@@ -388,7 +389,6 @@ const passwordVisibleIcon = computed(() =>
  */
 function togglePasswordVisibility(): void {
     isPasswordVisible.value = !isPasswordVisible.value;
-    inputType.value = isPasswordVisible.value ? "text" : "password";
     nextTick(() => setFocus());
 }
 
