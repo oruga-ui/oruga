@@ -266,7 +266,7 @@ const items = computed<StepItem[]>(() =>
 
 const activeId = useVModelBinding(props, emits, { passive: true });
 
-/**  When v-model is changed set the new active tab. */
+/** When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
     (value) => {
@@ -345,13 +345,16 @@ function itemClick(item: StepItem): void {
 /** Activate next child and deactivate prev child */
 function performAction(newId: number | string): void {
     const oldId = activeItem.value.value;
-    const oldItem = items.value.find((item) => item.value === oldId);
-    activeId.value = newId;
+    const oldItem = activeItem.value;
+    const newItem = items.value.find((item) => item.value === newId);
+
+    if (oldItem && newItem) {
+        oldItem.deactivate(newItem.index);
+        newItem.activate(oldItem.index);
+    }
+
     nextTick(() => {
-        if (oldItem && activeItem.value) {
-            oldItem.deactivate(activeItem.value.index);
-            activeItem.value.activate(oldItem.index);
-        }
+        activeId.value = newId;
         emits("change", newId, oldId);
     });
 }
