@@ -679,7 +679,6 @@ function handleFocus(event: Event): void {
  * Close on blur.
  */
 function handleBlur(event: Event): void {
-    isActive.value = false;
     onBlur(event);
 }
 
