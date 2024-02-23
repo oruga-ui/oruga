@@ -346,7 +346,8 @@ function itemClick(item: StepItem): void {
 function performAction(newId: number | string): void {
     const oldId = activeItem.value.value;
     const oldItem = activeItem.value;
-    const newItem = items.value.find((item) => item.value === newId);
+    const newItem =
+        items.value.find((item) => item.value === newId) || items.value[0];
 
     if (oldItem && newItem) {
         oldItem.deactivate(newItem.index);
