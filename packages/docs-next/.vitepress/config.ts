@@ -85,10 +85,6 @@ export default defineConfig({
                         text: "Changelog",
                         link: "https://github.com/oruga-ui/oruga/releases",
                     },
-                    {
-                        text: "Vue 2 version",
-                        link: "https://vue2.oruga-ui.com",
-                    },
                 ],
             },
         ],
