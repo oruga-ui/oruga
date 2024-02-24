@@ -17,4 +17,4 @@ jobs:
       - name: Install dependencies 📦
         run: npm install && npm run bootstrap
       - name: Check TS 🧐
-        run: npm run test:ts:oruga-next
+        run: npm run test:lib:ts
