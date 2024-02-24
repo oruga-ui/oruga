@@ -6,24 +6,17 @@ Therefore, it <b>doesn't provide a grid system or CSS utilities</b>, but you can
 Oruga provides you with a set of functional components, so you can <b>focus only on the UI/UX aspects</b> of your application
 and can be entirely flexible for future changes without having to touch a line of JavaScript.
 
-
 If you need a component library and want to easily apply your [custom styles](/documentation/customisation), Oruga is the library for you! 🐛
 
 In addition, if you don't want to style everything yourself, we've created several [themes](/documentation/themes) to provide you with a variety of ready-to-use styles. 🦋
 
+---
 
-
-## Availability
-
-🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x** and has been tested in all major browsers.
-
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png)
---- | --- | --- | --- | --- |
-Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
-
-> IE is not supported.
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x**.
 
 💅 For more info about components customisation, go to [#customisation](/documentation/customisation).
+
+🦋 For a list of all available themes, go to [#themes](/documentation/themes).
 
 🕹 To see Oruga in action, go to [#examples](#examples).
 

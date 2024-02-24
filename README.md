@@ -63,14 +63,6 @@ Browse [online documentation here](https://oruga-ui.com/documentation/).
 
 Note: the documentation source code is in the `docs` directory, it serves as the demo as well.
 
-## Browser support
-
-🌎 Oruga has been tested in all major browsers
-
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) |
---- | --- | --- | --- | --- |
-Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
-
 ## Quick start
 
 🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x** 
