@@ -17,8 +17,8 @@
     "build:lib:watch": "lerna run build:lib:watch --parallel --scope @oruga-ui/oruga-next",
     "publish:lib": "lerna run publish:lib --scope @oruga-ui/oruga-next",
     "gen": "npm run gen:types && npm run get:volar && npm run docs:gen --workspace @oruga-ui/docs-next",
-    "gen:volar": "node ./.scripts/gen-volar-dts.mjs --bundle --platform=node",
-    "gen:types": "node ./.scripts/gen-comp-types.mjs --bundle --platform=node",
+    "gen:volar": "node .scripts/gen-volar-dts.mjs --bundle --platform=node",
+    "gen:types": "node .scripts/gen-comp-types.mjs --bundle --platform=node",
     "version": "node .scripts/config-sync && git add . && conventional-changelog -p angular -i CHANGELOG.md -s && node .scripts/wait-confirm && git add CHANGELOG.md",
     "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\""
   },
