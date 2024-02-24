@@ -25,7 +25,7 @@
     "gen:types": "node .scripts/gen-comp-types.mjs --bundle --platform=node",
     "publish:lib": "lerna run publish:lib --scope @oruga-ui/oruga-next",
     "release": "npm run version && npm run changelog",
-    "version": "lerna version && git add .",
+    "version": "node .scripts/sync-version.js && git add .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && node .scripts/wait-confirm && git add CHANGELOG.md",
     "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\""
   },
