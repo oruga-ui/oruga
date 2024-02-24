@@ -380,7 +380,7 @@ const inputType = computed(() => {
 
 /** Current password-reveal icon name. */
 const passwordVisibleIcon = computed(() =>
-    !isPasswordVisible.value ? "eye" : "eye-off",
+    !isPasswordVisible.value ? "eye-off" : "eye",
 );
 
 /**
