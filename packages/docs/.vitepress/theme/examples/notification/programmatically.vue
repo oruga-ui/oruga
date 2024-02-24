@@ -1,5 +1,5 @@
 <script setup>
-import { useOruga } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga/dist/oruga";
 import NotificationForm from "./_notification-form.vue";
 
 const oruga = useOruga();

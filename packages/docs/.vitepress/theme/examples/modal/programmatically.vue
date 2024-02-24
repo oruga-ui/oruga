@@ -1,6 +1,6 @@
 <script setup>
 import { h } from "vue";
-import { useOruga } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga/dist/oruga";
 import ModalForm from "./_modal-form.vue";
 
 const oruga = useOruga();

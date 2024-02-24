@@ -54,7 +54,7 @@ const getComponent = (filename) => {
 createThemeDocs();
 
 export default {
-    componentsRoot: `../oruga-next/src/components`,
+    componentsRoot: `../oruga/src/components`,
     components: "**/[A-Z]*.vue",
     outDir: "./components",
     docsRepo: "oruga-ui/oruga",

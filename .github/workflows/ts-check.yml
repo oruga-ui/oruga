@@ -1,4 +1,4 @@
-name: TS Check (next)
+name: TS Check
 on:
   push:
     branches: [ develop ]

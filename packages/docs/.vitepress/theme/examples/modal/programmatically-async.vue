@@ -1,5 +1,5 @@
 <script setup>
-import { useOruga } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga/dist/oruga";
 import ModalForm from "./_modal-form-async.vue";
 
 const oruga = useOruga();
