@@ -18,7 +18,7 @@ const codeComputed = computed(() => {
     const code = props.code;
     return code
         .replace(/\.\.\//g, "")
-        .replace("oruga-next/dist/oruga", "@oruga-ui/oruga-next");
+        .replace("oruga/dist/oruga", "@oruga-ui/oruga-next");
 });
 
 const scriptCode = computed(() =>

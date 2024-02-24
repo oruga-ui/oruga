@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onUnmounted, ref, watch, nextTick } from "vue";
-import { setValueByPath } from "../../../../oruga-next/src/utils/helpers";
+import { setValueByPath } from "../../../../oruga/src/utils/helpers";
 
 const INSPECT_CLASS = "odocs-inspected-element";
 

@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import process from 'process'
 
-import { createComponentMetaChecker } from '../packages/oruga-next/node_modules/vue-component-meta/out/index.js';
+import { createComponentMetaChecker } from '../packages/oruga/node_modules/vue-component-meta/out/index.js';
 
 import { componentDirectory, getFolders, getComponents, exist } from "./utils.mjs";
 

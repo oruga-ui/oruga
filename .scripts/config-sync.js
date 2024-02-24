@@ -1,10 +1,10 @@
 const replace = require('replace-in-file')
 
 const jsonPaths = [
-  'packages/docs-next/package.json',
-  'packages/docs-next/package-lock.json',
-  'packages/oruga-next/package.json',
-  'packages/oruga-next/package-lock.json',
+  'packages/docs/package.json',
+  'packages/docs/package-lock.json',
+  'packages/oruga/package.json',
+  'packages/oruga/package-lock.json',
 ]
 const version = require('../package.json').version
 

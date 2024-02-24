@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useOruga } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga/dist/oruga";
 
 const oruga = useOruga();
 
