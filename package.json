@@ -10,7 +10,6 @@
     "packages/docs-next"
   ],
   "scripts": {
-    "bootstrap": "npm install",
     "dev": "concurrently \"lerna run dev --scope @oruga-ui/oruga-next\" \"lerna run dev --scope @oruga-ui/docs-next\"",
     "dev:watch": "concurrently \"lerna run build:lib:watch --scope @oruga-ui/oruga-next\" \"lerna run devs:dev --scope @oruga-ui/docs-next\"",
     "test": "lerna run test --scope @oruga-ui/oruga-next",

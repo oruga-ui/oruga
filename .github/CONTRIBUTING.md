@@ -52,10 +52,10 @@ Add comments if method is too complex and/or whenever you judge necessary.
 
 You need at least [Node.js](http://nodejs.org/) **version 20.10.0**.
 
-After cloning the repository, install the dependencies and then run:
+After cloning the repository, install the dependencies:
 
 ```bash
-$ npm run bootstrap
+$ npm install
 ```
 
 **Common used NPM scripts: (Quick Start)**
@@ -79,8 +79,8 @@ After writing tests, run the following command:
 
 ```bash
 # launch tests suite
-$ npm run test:lib
+$ npm run test
 
 # test typescript
-$ npm run test:lib:ts
+$ npm run test:ts
 ```
