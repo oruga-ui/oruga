@@ -14,6 +14,7 @@ import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
     getActiveClasses,
+    useClickOutside,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
@@ -334,15 +335,18 @@ onBeforeUnmount(() => {
     }
 });
 
+let removeOutsideListener = null;
+
 /** add outside click event listener */
 function addHandler(): void {
-    if (isClient && !props.overlay)
-        setTimeout(() => document.addEventListener("click", clickedOutside));
+    if (isClient && !props.overlay) {
+        removeOutsideListener = useClickOutside(sidebarContent, clickedOutside);
+    }
 }
 
 /** remove outside click event listener */
 function removeHandler(): void {
-    document.removeEventListener("click", clickedOutside);
+    if (removeOutsideListener !== null) removeOutsideListener();
 }
 
 /** Close fixed sidebar if clicked outside. */
@@ -483,7 +487,7 @@ const scrollClass = computed(() =>
 // computed ref must be computed at least once for programmatic usage
 scrollClass.value;
 
-// --- Expose Public Functionality ---
+// --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close, promise: props.promise });

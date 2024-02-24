@@ -256,6 +256,11 @@ const switchCheckClasses = defineClasses(
 );
 
 const labelClasses = defineClasses(["labelClass", "o-switch__label"]);
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>

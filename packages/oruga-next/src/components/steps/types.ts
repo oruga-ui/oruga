@@ -20,6 +20,9 @@ export type StepItemComponent = StepItemProps & {
 export type StepsComponent = {
     activeId: string | number;
     vertical: boolean;
+    animated: boolean;
+    animation: string[];
+    animateInitially: boolean;
 };
 
 export type StepItem = Omit<ProviderItem, "data"> & StepItemComponent;

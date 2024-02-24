@@ -404,7 +404,7 @@ const linkCurrentClasses = defineClasses([
 
 const listItemClasses = defineClasses(["listItemClass", "o-pag__item"]);
 
-// --- Expose Public Functionality ---
+// --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ last, first, prev, next });

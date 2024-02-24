@@ -472,6 +472,12 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
+                /** Class prefix used when position is applied to root element */
+                positionClass: ClassDefinition;
+                /** Active class for root element */
+                activeClass: ClassDefinition;
+                /** Class when hoverable */
+                hoverableClass: ClassDefinition;
             }>;
         field?: ComponentConfigBase &
             Partial<{
@@ -578,6 +584,8 @@ See icon library documentation for custom classes. */
                 iconRightSpaceClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
+                /** Class to display when a right icon is used */
+                hasIconRightClass: ClassDefinition;
             }>;
         loading?: ComponentConfigBase &
             Partial<{
@@ -721,6 +729,12 @@ but will set body to position fixed, might break some layouts. */
                 ariaCloseLabel: string;
                 /** Class of the element when positioned */
                 positionClass: ClassDefinition;
+                /** Root class of the notice */
+                noticeClass: ClassDefinition;
+                /** Class of the notice when positioned */
+                noticePositionClass: ClassDefinition;
+                /** Class of the custom container element */
+                noticeCustomContainerClass: ClassDefinition;
             }>;
         pagination?: ComponentConfigBase &
             Partial<{
@@ -850,6 +864,8 @@ but will set body to position fixed, might break some layouts. */
                 placeholderClass: ClassDefinition;
                 /** Class of the select arrow */
                 arrowClass: ClassDefinition;
+                /** Class of the select variant for the root element */
+                rootVariantClass: boolean;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
@@ -982,6 +998,8 @@ but will set body to position fixed, might break some layouts. */
                 tickHiddenClass: ClassDefinition;
                 /** Class of tick label */
                 tickLabelClass: ClassDefinition;
+                /** Class to display on the wrapper element when the slider is dragged */
+                thumbWrapperDraggingClass: ClassDefinition;
             }>;
         steps?: ComponentConfigBase &
             Partial<{
@@ -1007,6 +1025,8 @@ but will set body to position fixed, might break some layouts. */
                 itemHeaderVariantClass: ClassDefinition;
                 /** Tab size */
                 size: string;
+                /** Transition animation name */
+                animation: string[];
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Color of the control */
@@ -1029,6 +1049,8 @@ but will set body to position fixed, might break some layouts. */
                 positionClass: ClassDefinition;
                 /** Step navigation is animated */
                 animated: boolean;
+                /** Apply animation on the initial render */
+                animateInitially: boolean;
                 /** Position of the marker label */
                 labelPosition: string;
                 /** Class of the tooltip trigger */
@@ -1256,6 +1278,8 @@ but will set body to position fixed, might break some layouts. */
                 size: string;
                 /** Tab type */
                 type: string;
+                /** Transition animation name */
+                animation: string[];
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Color of the control */
@@ -1272,6 +1296,8 @@ but will set body to position fixed, might break some layouts. */
                 animated: boolean;
                 /** Show tab in vertical layout */
                 vertical: boolean;
+                /** Apply animation on the initial render */
+                animateInitially: boolean;
                 /** Class of Tabs component when vertical */
                 verticalClass: ClassDefinition;
                 /** Class of Tabs component when multiline */

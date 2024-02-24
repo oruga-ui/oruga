@@ -1,3 +1,5 @@
+import { isDefined } from "@/utils/helpers";
+
 /**
  * Given an element, returns the element who scrolls it.
  */
@@ -8,7 +10,7 @@ export function getScrollingParent(target: HTMLElement): HTMLElement {
     let isScrollingParent = false;
     let nextParent = target.parentElement;
 
-    while (!isScrollingParent) {
+    while (!isScrollingParent && isDefined(nextParent)) {
         if (nextParent === document.documentElement) break;
 
         const { overflow, overflowY } = getComputedStyle(nextParent);

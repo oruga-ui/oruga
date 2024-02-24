@@ -595,6 +595,8 @@ const { defaultDateFormatter, defaultDateParser } = useDatepickerMixins(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
+const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
+
 /** modelvalue of selected date */
 const vmodel = defineModel<Date | Date[]>();
 
@@ -924,11 +926,16 @@ const dropdownClass = defineClasses([
 
 const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
 const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: pickerRef.value.focus });
 </script>
 
 <template>
     <OPickerWrapper
-        ref="wrapperRef"
+        ref="pickerRef"
         v-model:active="isActive"
         data-oruga="datepicker"
         :value="vmodel"

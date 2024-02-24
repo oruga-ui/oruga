@@ -182,6 +182,11 @@ const dropdownBind = computed(() => ({
     "root-class": getActiveClasses(props.dropdownClasses),
     ...picker.value.dropdownClasses,
 }));
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ focus: setFocus });
 </script>
 
 <template>
