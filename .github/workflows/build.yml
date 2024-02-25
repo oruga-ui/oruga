@@ -17,9 +17,9 @@ jobs:
           node-version: 20.x
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies 📦
-        run: npm install && npm run bootstrap
-      - name: Run lint and component tests 🧪
-        run: npm run test:lib
+        run: npm install
+      - name: Run component tests 🧪
+        run: npm run test
       - name: Upload coverage 📈
         uses: codecov/codecov-action@v3
         with:

@@ -6,7 +6,9 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "private": true,
   "scripts": {
+    "dev": "vitepress dev",
     "docs:dev": "concurrently \"vue-docgen --watch\" \"vitepress dev\"",
     "docs:gen": "vue-docgen",
     "docs:build": "vitepress build",

@@ -10,13 +10,13 @@ const version = require('../package.json').version
 
 const configJsonOptions = {
   files: jsonPaths,
-  from: /"version": .+/i,
-  to: `"version": "${version}",`,
+  from: /"name": "@oruga-ui\/(.*)-next",([^"]*)"version": .+/ig,
+  to: (match) => 
+    match.replace(/"version": .+/i, `"version": "${version}",`),
 }
 
-const replaceInFile = (config) => {
-  return replace.sync(config).map((el) => el.file)
-}
+const replaceInFile = (config) => 
+   replace.sync(config).map((el) => el.file);
 
 try {
   const changedFiles = replaceInFile(configJsonOptions)
