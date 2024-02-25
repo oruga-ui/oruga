@@ -7,11 +7,8 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "baseUrl": ".",
-    "types": ["node", "vite/client", "./volar.d.ts"]
+    "types": ["node", "vite/client", "vitepress/client", "./volar.d.ts"]
 
-  },
-  "vueCompilerOptions": {
-    "strictTemplates": true
   },
   "include": [
     ".vitepress/**/*",

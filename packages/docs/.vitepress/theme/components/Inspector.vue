@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, type PropType } from "vue";
 
 const props = defineProps({
     inspectData: {
-        type: Array as () => any[],
+        type: Array as PropType<any[]>,
         required: true,
     },
     subitem: {
