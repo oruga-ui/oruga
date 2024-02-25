@@ -79,13 +79,12 @@ onMounted(() => {
 });
 
 function copy(val: string) {
-    setTimeout(() => {
-        navigator.clipboard.writeText(val);
-    }, 300);
+    setTimeout(() => navigator.clipboard.writeText(val), 300);
 }
 </script>
 
 <template>
+    <!-- eslint-disable vue/no-v-html -->
     <div v-if="component" ref="nodeRef" class="odocs-example odocs-mt">
         <ClientOnly>
             <component :is="component" />

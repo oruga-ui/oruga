@@ -1,31 +1,25 @@
 <script setup lang="ts">
-import { onUnmounted, ref, watch, nextTick } from "vue";
+import { onUnmounted, ref, watch, nextTick, type PropType } from "vue";
 import { setValueByPath } from "../../../../oruga/src/utils/helpers";
 
 const INSPECT_CLASS = "odocs-inspected-element";
 
 defineProps({
-    inspectData: {
-        type: Array as () => any[],
-        required: true,
-    },
-    subitem: {
-        type: String,
-        default: undefined,
-    },
+    inspectData: { type: Array as PropType<unknown[]>, required: true },
+    subitem: { type: String, default: undefined },
 });
 
 const component = ref<HTMLElement | null>(null);
 
 const inspectClass = ref<{
     className: string;
-    action: (cmp: HTMLElement, data: any) => void;
+    action: (cmp: HTMLElement, data: unknown) => void;
 }>({} as any);
 
 const classes = ref({});
 const data = ref({});
 const classesApplied = ref<string | undefined>();
-const interval = ref<any>();
+const interval = ref<ReturnType<typeof setInterval>>();
 
 onUnmounted(() => {
     clearInterval(interval.value);

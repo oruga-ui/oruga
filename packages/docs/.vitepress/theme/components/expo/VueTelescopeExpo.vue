@@ -174,7 +174,9 @@ function loadMoreItems() {
 .grid-item-image {
     border-radius: 1rem;
     box-shadow: 2px 2px 4px #424e5a;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+        transform 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
     max-width: 100%;
 }
 

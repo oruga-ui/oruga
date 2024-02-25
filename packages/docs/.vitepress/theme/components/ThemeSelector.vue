@@ -27,10 +27,10 @@ function loadTheme() {
             if (themeConfig && typeof themeConfig === "object")
                 return themeConfig;
         } catch (e) {
-            return themes[0];
+            return themes[1];
         }
     }
-    return themes[0];
+    return themes[1];
 }
 
 function onThemeChange(theme) {
@@ -52,6 +52,7 @@ function onThemeChange(theme) {
                 <o-icon :icon="active ? 'caret-up' : 'caret-down'" />
             </span>
         </template>
+
         <o-dropdown-item
             v-for="item in themes"
             :key="item.value"
