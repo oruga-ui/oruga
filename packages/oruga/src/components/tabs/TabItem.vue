@@ -2,7 +2,7 @@
 import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
+import { isEqual, uuid } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { TabsComponent, TabItemComponent } from "./types";
@@ -107,14 +107,14 @@ const providedData = computed<TabItemComponent>(() => ({
     deactivate,
 }));
 
-// Inject functionalities and data from the parent carousel component
+// Inject functionalities and data from the parent component
 const { parent, item } = useProviderChild<ComputedRef<TabsComponent>>({
     data: providedData,
 });
 
 const transitionName = ref();
 
-const isActive = computed(() => parent.value.activeId === props.value);
+const isActive = computed(() => isEqual(parent.value.activeValue, props.value));
 
 const isTransitioning = ref(false);
 

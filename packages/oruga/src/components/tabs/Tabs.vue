@@ -10,10 +10,9 @@ import {
     defineClasses,
     getActiveClasses,
     useProviderParent,
-    useVModelBinding,
 } from "@/composables";
 
-import type { TabItem, TabItemComponent } from "./types";
+import type { TabsComponent, TabItem, TabItemComponent } from "./types";
 import type { ComponentClass, ClassBind } from "@/types";
 
 /**
@@ -179,8 +178,8 @@ const emits = defineEmits<{
 const rootRef = ref();
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed(() => ({
-    activeId: activeId.value,
+const provideData = computed<TabsComponent>(() => ({
+    activeValue: vmodel.value,
     type: props.type,
     vertical: props.vertical,
     animated: props.animated,
@@ -201,19 +200,19 @@ const items = computed<TabItem[]>(() =>
     })),
 );
 
-const activeId = useVModelBinding(props, emits, { passive: true });
+const vmodel = defineModel<string | number>();
 
 /**  When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (activeId.value !== value) performAction(value);
+        if (vmodel.value !== value) performAction(value);
     },
 );
 
 const activeItem = computed(() =>
-    isDefined(activeId)
-        ? items.value.find((item) => item.value === activeId.value) ||
+    isDefined(vmodel.value)
+        ? items.value.find((item) => item.value === vmodel.value) ||
           items.value[0]
         : items.value[0],
 );
@@ -230,7 +229,7 @@ const isTransitioning = computed(() =>
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: TabItem): void {
-    if (activeId.value !== item.value) performAction(item.value);
+    if (vmodel.value !== item.value) performAction(item.value);
 }
 
 /** Go to the next item or wrap around */
@@ -280,7 +279,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
 
 /** Activate next child and deactivate prev child */
 function performAction(newId: number | string): void {
-    const oldId = activeId.value;
+    const oldId = vmodel.value;
     const oldItem = activeItem.value;
     const newItem =
         items.value.find((item) => item.value === newId) || items.value[0];
@@ -291,7 +290,7 @@ function performAction(newId: number | string): void {
     }
 
     nextTick(() => {
-        activeId.value = newId;
+        vmodel.value = newId;
         emits("change", newId, oldId);
     });
 }

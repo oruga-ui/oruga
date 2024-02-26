@@ -2,10 +2,10 @@
 import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
+import { isEqual, uuid } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { StepsComponent } from "./types";
+import type { StepsComponent, StepItemComponent } from "./types";
 import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
@@ -98,7 +98,7 @@ const emits = defineEmits<{
 
 const slots = useSlots();
 
-const providedData = computed(() => ({
+const providedData = computed<StepItemComponent>(() => ({
     ...props,
     $slots: slots,
     isTransitioning: isTransitioning.value,
@@ -113,7 +113,7 @@ const { parent, item } = useProviderChild<ComputedRef<StepsComponent>>({
 
 const transitionName = ref();
 
-const isActive = computed(() => parent.value.activeId === props.value);
+const isActive = computed(() => isEqual(parent.value.activeValue, props.value));
 
 const isTransitioning = ref(false);
 
