@@ -128,6 +128,7 @@ const rootClasses = defineClasses(
         :class="rootClasses"
         :role="ariaRole"
         :tabindex="tabindex"
+        :type="isClickable ? 'button' : null"
         data-oruga="dropdown-item"
         @click="selectItem">
         <!--
