@@ -459,6 +459,12 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                 menuPositionClass: ClassDefinition;
                 /** Class of dropdown menu when active */
                 menuActiveClass: ClassDefinition;
+                /** Class for the root element indicating position of dropdown */
+                positionClass: ClassDefinition;
+                /** Class for the root element indicating whether the dropdown is open */
+                activeClass: ClassDefinition;
+                /** Class for the root element when the dropdown is hoverable */
+                hoverableClass: ClassDefinition;
                 /** Class of the dropdown item */
                 itemClass: ClassDefinition;
                 /** Dropdown item tag name */
@@ -472,12 +478,6 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
-                /** Class prefix used when position is applied to root element */
-                positionClass: ClassDefinition;
-                /** Active class for root element */
-                activeClass: ClassDefinition;
-                /** Class when hoverable */
-                hoverableClass: ClassDefinition;
             }>;
         field?: ComponentConfigBase &
             Partial<{
@@ -670,6 +670,8 @@ but will set body to position fixed, might break some layouts. */
                 mobileBreakpoint: string;
                 /** Class of modal component when on mobile */
                 mobileClass: ClassDefinition;
+                /** Class of modal component when its active */
+                activeClass: ClassDefinition;
                 /** Is Modal cancleable by clicking 'X', pressing escape or clicking outside */
                 cancelable: boolean | string[];
                 /** DOM element where the modal component will be created on (for programmatic usage) */
@@ -686,8 +688,6 @@ but will set body to position fixed, might break some layouts. */
                 closeIcon: string;
                 /** Size of close icon */
                 closeIconSize: string;
-                /** Class of modal component when its active */
-                activeClass: ClassDefinition;
                 /** Class of the close button */
                 closeClass: ClassDefinition;
                 /** Class of the modal when fullscreen */
@@ -719,6 +719,8 @@ but will set body to position fixed, might break some layouts. */
                 iconSize: string;
                 /** Class of the content element */
                 contentClass: ClassDefinition;
+                /** Class of the element when positioned */
+                positionClass: ClassDefinition;
                 /** Close icon name */
                 closeIcon: string;
                 /** Size of close icon */
@@ -727,14 +729,6 @@ but will set body to position fixed, might break some layouts. */
                 closeClass: ClassDefinition;
                 /** Accessibility label for the close button */
                 ariaCloseLabel: string;
-                /** Class of the element when positioned */
-                positionClass: ClassDefinition;
-                /** Root class of the notice */
-                noticeClass: ClassDefinition;
-                /** Class of the notice when positioned */
-                noticePositionClass: ClassDefinition;
-                /** Class of the custom container element */
-                noticeCustomContainerClass: ClassDefinition;
             }>;
         pagination?: ComponentConfigBase &
             Partial<{
@@ -902,18 +896,18 @@ but will set body to position fixed, might break some layouts. */
                 teleportClass: ClassDefinition;
                 /** Class of the sidebar when its inlined */
                 inlineClass: ClassDefinition;
+                /** Class of the sidebar position */
+                positionClass: ClassDefinition;
+                /** Class of sidebar component when its active */
+                activeClass: ClassDefinition;
                 /** Is Sidebar cancleable by pressing escape or clicking outside. */
                 cancelable: boolean | string[];
                 /** DOM element where the sidebar component will be created on (for programmatic usage). */
                 container: string | HTMLElement;
                 /** Destroy sidebar on hide */
                 destroyOnHide: boolean;
-                /** Class of sidebar component when its active */
-                activeClass: ClassDefinition;
                 /** Class of the body when sidebar is not clipped */
                 noScrollClass: ClassDefinition;
-                /** Class of the sidebar position */
-                positionClass: ClassDefinition;
                 /** Show sidebar in fullheight */
                 fullheight: boolean;
                 /** Show sidebar in fullwidth */
@@ -1137,6 +1131,8 @@ but will set body to position fixed, might break some layouts. */
                 tableClass: ClassDefinition;
                 /** Class of the Table component when on mobile */
                 mobileClass: ClassDefinition;
+                /** Class of the Table when is hoverable */
+                hoverableClass: ClassDefinition;
                 /** How many rows per page (if paginated) */
                 perPage: string | number;
                 /** Accessibility label for the pagination page button. */
@@ -1203,8 +1199,6 @@ but will set body to position fixed, might break some layouts. */
                 stripedClass: ClassDefinition;
                 /** Class of the Table when rows are narrowed */
                 narrowedClass: ClassDefinition;
-                /** Class of the Table when is hoverable */
-                hoverableClass: ClassDefinition;
                 /** Class of the Table wrapper when header is sticky */
                 stickyHeaderClass: ClassDefinition;
                 /** Class of the Table wrapper when its content is scrollable */
@@ -1288,10 +1282,10 @@ but will set body to position fixed, might break some layouts. */
                 expandedClass: ClassDefinition;
                 /** Class of the tab content */
                 contentClass: ClassDefinition;
-                /** Class of the tab item wrapper */
-                itemWrapperClass: ClassDefinition;
                 /** Class of Tabs component when when is vertical and its position changes */
                 positionClass: ClassDefinition;
+                /** Class of the tab item wrapper */
+                itemWrapperClass: ClassDefinition;
                 /** Tab will have an animation */
                 animated: boolean;
                 /** Show tab in vertical layout */
@@ -1445,10 +1439,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 closeable: boolean | string[];
                 /** Class when the dropdown is teleported */
                 teleportClass: ClassDefinition;
-                /** Class of the tooltip arrow */
-                arrowClass: ClassDefinition;
                 /** Class of the tooltip trigger position */
                 positionClass: ClassDefinition;
+                /** Class of the tooltip arrow */
+                arrowClass: ClassDefinition;
                 /** Class of the tooltip content when is multiline */
                 multilineClass: ClassDefinition;
                 /** Class of the tooltip trigger when is always visible */
