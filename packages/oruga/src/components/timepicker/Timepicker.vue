@@ -740,7 +740,7 @@ const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: pickerRef.value.focus });
+defineExpose({ focus: () => pickerRef.value?.focus() });
 </script>
 
 <template>
