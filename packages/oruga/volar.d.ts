@@ -19,6 +19,7 @@ declare module "vue" {
         OMenuItem: (typeof import("@oruga-ui/oruga-next"))["OMenuItem"];
         OModal: (typeof import("@oruga-ui/oruga-next"))["OModal"];
         ONotification: (typeof import("@oruga-ui/oruga-next"))["ONotification"];
+        ONotificationNotice: (typeof import("@oruga-ui/oruga-next"))["ONotificationNotice"];
         OPagination: (typeof import("@oruga-ui/oruga-next"))["OPagination"];
         ORadio: (typeof import("@oruga-ui/oruga-next"))["ORadio"];
         OSelect: (typeof import("@oruga-ui/oruga-next"))["OSelect"];
