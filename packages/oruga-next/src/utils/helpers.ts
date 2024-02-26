@@ -17,16 +17,6 @@ function signPoly(value: number): number {
 export const sign = Math.sign || signPoly;
 
 /**
- * Checks if the flag is set
- * @param val
- * @param flag
- * @returns {boolean}
- */
-export function hasFlag(val: number, flag: number): boolean {
-    return (val & flag) === flag;
-}
-
-/**
  * Native modulo bug with negative numbers
  * @param n
  * @param mod
@@ -101,6 +91,45 @@ export function indexOf<T>(
     if (!array) return -1;
     if (!fn || typeof fn !== "function") return array.indexOf(obj);
     return array.findIndex((value, index, arr) => fn(value, arr));
+}
+
+/**
+ * Sort an array by key without mutating original data.
+ * Call the user sort function if it was passed.
+ */
+export function sortBy<T>(
+    array: T[],
+    key: string,
+    fn: (a: T, b: T, asc: boolean) => number,
+    isAsc: boolean,
+): T[] {
+    let sorted = [];
+    // Sorting without mutating original data
+    if (fn && typeof fn === "function") {
+        sorted = [...array].sort((a, b) => fn(a, b, isAsc));
+    } else {
+        sorted = [...array].sort((a, b) => {
+            // Get nested values from objects
+            let newA = getValueByPath(a, key);
+            let newB = getValueByPath(b, key);
+
+            // sort boolean type
+            if (typeof newA === "boolean" && typeof newB === "boolean") {
+                return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
+            }
+
+            if (!newA && newA !== 0) return 1;
+            if (!newB && newB !== 0) return -1;
+            if (newA === newB) return 0;
+
+            newA = typeof newA === "string" ? newA.toUpperCase() : newA;
+            newB = typeof newB === "string" ? newB.toUpperCase() : newB;
+
+            return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
+        });
+    }
+
+    return sorted;
 }
 
 export const isObject = <T>(obj: T): boolean =>

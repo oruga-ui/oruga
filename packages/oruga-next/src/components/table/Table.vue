@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import {
     computed,
     ref,
@@ -28,19 +28,19 @@ import {
     toCssDimension,
     escapeRegExpChars,
     removeDiacriticsFromString,
-    uuid,
+    sortBy,
 } from "@/utils/helpers";
 import {
     defineClasses,
     useProviderParent,
-    usePropBinding,
     useMatchMedia,
     useDebounce,
+    useObjectMap,
     getActiveClasses,
 } from "@/composables";
 
-import type { Column, TableColumn, TableColumnComponent } from "./types";
-import type { ComponentClass, ClassBind } from "@/types";
+import type { Column, Row, TableColumn, TableColumnComponent } from "./types";
+import type { ComponentClass, ClassBind, OrugaOptions } from "@/types";
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -59,9 +59,20 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** Table data */
-    data: { type: Array as PropType<unknown[]>, default: () => [] },
+    data: { type: Array as PropType<T[]>, default: () => [] },
     /** Table columns */
     columns: { type: Array as PropType<Column[]>, default: () => [] },
+    /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
+    rowKey: { type: String, default: () => getOption("table.rowKey") },
+    /** Define individual class for a row */
+    rowClass: {
+        type: Function as PropType<(row: T, index: number) => string>,
+        default: (row: T, index: number) =>
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            getOption("table.rowClass", (row, index) => "")(row, index),
+    },
+    /** Set which row is selected, use v-model:selected to make it two-way binding */
+    selected: { type: Object as PropType<Row<T>>, default: undefined },
     /** Border to all cells */
     bordered: { type: Boolean, default: false },
     /** Whether table is striped */
@@ -72,14 +83,35 @@ const props = defineProps({
     hoverable: { type: Boolean, default: false },
     /** Enable loading state */
     loading: { type: Boolean, default: false },
-    /** Allow row details  */
-    detailed: { type: Boolean, default: false },
+    /** Table can be focused and user can navigate with keyboard arrows (require selected) and rows are highlighted when hovering */
+    focusable: { type: Boolean, default: false },
+    /** Show header */
+    showHeader: {
+        type: Boolean,
+        default: () => getOption("table.showHeader", true),
+    },
+    /** Allows rows to be draggable */
+    draggable: { type: Boolean, default: false },
+    /** Allows columns to be draggable */
+    draggableColumn: { type: Boolean, default: false },
+    /** Add a horizontal scrollbar when table is too wide */
+    scrollable: { type: Boolean, default: undefined },
+    /** Show a sticky table header */
+    stickyHeader: { type: Boolean, default: undefined },
+    /** Table fixed height */
+    height: { type: [Number, String], default: undefined },
+    /** Filtering debounce time (in milliseconds) */
+    debounceSearch: { type: Number, default: undefined },
     /** Rows can be checked (multiple) */
     checkable: { type: Boolean, default: false },
-    /** Show check/uncheck all checkbox in table header when checkable */
+    /** Make the checkbox column sticky when checkable */
+    stickyCheckbox: { type: Boolean, default: false },
+    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
     headerCheckable: { type: Boolean, default: true },
+    /** Set which rows are checked, use v-model:checkedRows to make it two-way binding (if checkable) */
+    checkedRows: { type: Array as PropType<Row<T>[]>, default: () => [] },
     /**
-     * Position of the checkbox when checkable
+     * Position of the checkbox when checkable (if checkable)
      * @values left, right
      */
     checkboxPosition: {
@@ -88,37 +120,31 @@ const props = defineProps({
         validator: (value: string) => ["left", "right"].indexOf(value) >= 0,
     },
     /**
-     * Color of the checkbox when checkable
+     * Color of the checkbox when checkable (if checkable)
      * @values primary, info, success, warning, danger, and any other custom color
      */
     checkboxVariant: {
         type: String,
         default: () => getOption("table.checkboxVariant"),
     },
-    /** Set which row is selected, use v-model:selected to make it two-way binding */
-    selected: { type: Object, default: undefined },
-    /** Custom method to verify if a row is selectable, works when is selected. */
-    isRowSelectable: { type: Function, default: () => true },
-    /** Table can be focused and user can navigate with keyboard arrows (require selected) and rows are highlighted when hovering */
-    focusable: { type: Boolean, default: false },
-    /** Custom method to verify if row is checked, works when is checkable. Useful for backend pagination */
-    customIsChecked: {
-        type: Function as PropType<(row: unknown, data: unknown[]) => boolean>,
+    /** Custom method to verify if a row is checked, works when is checkable. Useful for backend pagination. */
+    isRowChecked: {
+        type: Function as PropType<(row: T, data: unknown[]) => boolean>,
         default: undefined,
     },
+    /** Custom method to verify if a row is selectable, works when is selected. */
+    isRowSelectable: { type: Function, default: () => true },
     /** Custom method to verify if a row is checkable, works when is checkable */
     isRowCheckable: {
-        type: Function as PropType<(row: unknown) => boolean>,
-        default: (row: unknown) =>
+        type: Function as PropType<(row: T) => boolean>,
+        default: (row: T) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("table.isRowCheckable", (row) => true)(row),
     },
-    /** Set which rows are checked, use v-model:checkedRows to make it two-way binding */
-    checkedRows: { type: Array, default: () => [] },
-    /** Rows appears as cards on mobile (collapse rows) */
-    mobileCards: {
+    /** Columns won't be sorted with Javascript, use with sort event to sort in your backend */
+    backendSorting: {
         type: Boolean,
-        default: () => getOption("table.mobileCards", true),
+        default: () => getOption("table.backendSorting", false),
     },
     /** Sets the default sort column and order — e.g. ['first_name', 'desc'] */
     defaultSort: {
@@ -154,91 +180,40 @@ const props = defineProps({
         type: String,
         default: () => getOption("table.iconPack"),
     },
-    /** Columns won't be sorted with Javascript, use with sort event to sort in your backend */
-    backendSorting: {
-        type: Boolean,
-        default: () => getOption("table.backendSorting", false),
-    },
-    /** Columns won't be filtered with Javascript, use with searchable prop to the columns to filter in your backend */
-    backendFiltering: {
-        type: Boolean,
-        default: () => getOption("table.backendFiltering", false),
-    },
-    /** Add a class to row based on the return */
-    rowClass: {
-        type: Function as PropType<(row: unknown, index: number) => string>,
-        default: (row: unknown, index: number) =>
+    /** Allow row details  */
+    detailed: { type: Boolean, default: false },
+    /** Allow pre-defined opened details (if detailed). Ideal to open details via vue-router. (A unique key is required; check rowKey prop) */
+    detailedRows: { type: Array as PropType<T[]>, default: () => [] },
+    /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
+    isDetailedVisible: {
+        type: Function as PropType<(row: T) => boolean>,
+        default: (row: T) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("table.rowClass", (row, index) => "")(row, index),
+            getOption("table.isDetailedVisible", (row) => true)(row),
     },
-    /** Allow pre-defined opened details. Ideal to open details via vue-router. (A unique key is required; check detail-key prop) */
-    openedDetailed: { type: Array, default: () => [] },
-    /** Controls the visibility of the trigger that toggles the detailed rows. */
-    hasDetailedVisible: {
-        type: Function as PropType<(row: unknown) => boolean>,
-        default: (row: unknown) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("table.hasDetailedVisible", (row) => true)(row),
-    },
-    /** Use a unique key of your data Object when use detailed or opened detailed. (id recommended) */
-    detailKey: {
-        type: String,
-        default: () => getOption("table.detailKey"),
-    },
-    /** Allow chevron icon and column to be visible */
+    /** Allow chevron icon and column to be visible (if detailed) */
     showDetailIcon: {
         type: Boolean,
         default: () => getOption("table.showDetailIcon", true),
     },
-    /** Icon name of detail action */
+    /** Icon name of detail action (if detailed) */
     detailIcon: {
         type: String,
         default: () => getOption("table.detailIcon", "chevron-right"),
     },
-    /** Custom style on details */
+    /** Enable custom style on details (if detailed) */
     customDetailRow: { type: Boolean, default: false },
-    /* Transition name to use when toggling row details. */
+    /* Transition name to use when toggling row details (if detailed) */
     detailTransition: {
         type: String,
         default: () => getOption("table.detailTransition", "slide"),
     },
-    /** Text when nothing is selected */
-    mobileSortPlaceholder: {
-        type: String,
-        default: () => getOption("table.mobileSortPlaceholder"),
-    },
-    /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-    customRowKey: {
-        type: String,
-        default: () => getOption("table.customRowKey"),
-    },
-    /** Allows rows to be draggable */
-    draggable: { type: Boolean, default: false },
-    /** Allows columns to be draggable */
-    draggableColumn: { type: Boolean, default: false },
-    /** Add a horizontal scrollbar when table is too wide */
-    scrollable: { type: Boolean, default: undefined },
-    /** Show a sticky table header */
-    stickyHeader: { type: Boolean, default: undefined },
-    /** Table fixed height */
-    height: { type: [Number, String], default: undefined },
-    /** Add a native event to filter */
-    filtersEvent: { type: String, default: "" },
-    /** Filtering debounce time (in milliseconds) */
-    debounceSearch: { type: Number, default: undefined },
-    /** Show header */
-    showHeader: {
-        type: Boolean,
-        default: () => getOption("table.showHeader", true),
-    },
-    /** Make the checkbox column sticky when checkable */
-    stickyCheckbox: { type: Boolean, default: false },
     /** Adds pagination to the table */
     paginated: {
         type: Boolean,
         default: () => getOption("table.paginated", false),
     },
-    /** Rows won't be paginated with Javascript, use with page-change event to paginate in your backend */
+    /** Rows won't be paginated with Javascript, use with `page-change` event to paginate in your backend */
     backendPagination: { type: Boolean, default: false },
     /** Total number of table data if backend-pagination is enabled */
     total: { type: Number, default: 0 },
@@ -259,23 +234,26 @@ const props = defineProps({
         validator: (value: string) =>
             ["bottom", "top", "both"].indexOf(value) >= 0,
     },
-    /** Rounded pagination if paginated */
+    /** Rounded pagination buttons(if paginated) */
     paginationRounded: {
         type: Boolean,
         default: () => getOption("table.paginationRounded", false),
     },
-    /** Size of pagination if paginated */
+    /**
+     * Size of pagination (if paginated)
+     * @values small, medium, large
+     */
     paginationSize: {
         type: String,
         default: () => getOption("table.paginationSize", "small"),
     },
-    /** Enable simple style pagination if paginated */
+    /** Enable simple style pagination (if paginated) */
     paginationSimple: {
         type: Boolean,
         default: () => getOption("table.paginationSimple", false),
     },
     /**
-     * Pagination buttons order if paginated
+     * Pagination buttons order (if paginated)
      * @values centered, right, left
      */
     paginationOrder: {
@@ -284,10 +262,47 @@ const props = defineProps({
         validator: (value: string) =>
             ["centered", "right", "left"].indexOf(value) >= 0,
     },
+    /** Columns won't be filtered with Javascript, use with searchable prop to the columns to filter in your backend */
+    backendFiltering: {
+        type: Boolean,
+        default: () => getOption("table.backendFiltering", false),
+    },
+    /** Icon of the column search input */
+    filtersIcon: {
+        type: String,
+        default: () => getOption("table.filterIcon"),
+    },
+    /** Placeholder of the column search input */
+    filtersPlaceholder: {
+        type: String,
+        default: () => getOption("table.filterPlaceholder"),
+    },
+    /** Add a native event to filter */
+    filtersEvent: { type: String, default: "" },
+    /** Icon for the loading state */
+    loadingIcon: {
+        type: String,
+        default: () => getOption("table.loadingIcon", "loading"),
+    },
+    /** Label for the loading state */
+    loadingLabel: {
+        type: String,
+        default: () => getOption("table.loadingLabel"),
+    },
     /** Mobile breakpoint as max-width value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("table.mobileBreakpoint"),
+    },
+    /** Rows appears as cards on mobile (collapse rows) */
+    mobileCards: {
+        type: Boolean,
+        default: () => getOption("table.mobileCards", true),
+    },
+    /** Text when nothing is selected */
+    mobileSortPlaceholder: {
+        type: String,
+        default: () => getOption("table.mobileSortPlaceholder"),
     },
     /** Accessibility label for the pagination next page button. */
     ariaNextLabel: {
@@ -470,6 +485,15 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /**
+     * Class configuration for the internal loading component
+     * @ignore
+     */
+    loadingClasses: {
+        type: Object,
+        default: () =>
+            getOption<OrugaOptions["loading"]>("table.loadingClasses", {}),
+    },
 });
 
 const emits = defineEmits<{
@@ -485,31 +509,31 @@ const emits = defineEmits<{
     (e: "page-change", page: number): void;
     /**
      * select prop two-way binding
-     * @param value {typeof data} updated select prop
+     * @param value {Row} updated select prop
      */
-    (e: "update:selected", value: unknown): void;
+    (e: "update:selected", value: Row<T>): void;
     /**
      * on row select event
-     * @param newRow {typeof data} new select value
-     * @param oldRow {typeof data} old select value
+     * @param newRow {Row} new select value
+     * @param oldRow {Row} old select value
      */
-    (e: "select", newrow: unknown, oldrow: unknown): void;
+    (e: "select", newrow: Row<T>, oldrow: Row<T>): void;
     /**
      * on row checked event
-     * @param value {Array<typeof data>} all checked rows
-     * @param row {typeof data} row data
+     * @param value {Array<Row>} all checked rows
+     * @param row {Row} row data
      */
-    (e: "check", value: Array<unknown>, row?: unknown): void;
+    (e: "check", value: Array<Row<T>>, row?: Row<T>): void;
     /**
      * on all rows checked event
-     * @param value {Array<typeof data>} all checked rows
+     * @param value {Array<Row>} all checked rows
      */
-    (e: "check-all", value: Array<unknown>): void;
+    (e: "check-all", value: Array<Row<T>>): void;
     /**
      * checkedRows prop two-way binding
-     * @param value {Array<typeof data>} updated checkedRows prop
+     * @param value {Array<Row>} updated checkedRows prop
      */
-    (e: "update:checkedRows", value: Array<unknown>): void;
+    (e: "update:checkedRows", value: Array<Row<T>>): void;
     /**
      * on column sort change event
      * @param column {Column} column data
@@ -517,7 +541,12 @@ const emits = defineEmits<{
      *
      * @param event {Event} native  event
      */
-    (e: "sort", column: Column, direction: "asc" | "desc", event: Event): void;
+    (
+        e: "sort",
+        column: Column<T>,
+        direction: "asc" | "desc",
+        event: Event,
+    ): void;
     /**
      * on filter change event
      * @param filters {Record<string, string>} filter object
@@ -536,58 +565,58 @@ const emits = defineEmits<{
         event: Event,
     ): void;
     /**
-     * openedDetailed prop two-way binding
-     * @param value {Array<typeof data>} updated openedDetailed prop
+     * detailedRows prop two-way binding
+     * @param value {Array<Row>} updated detailedRows prop
      */
-    (e: "update:openedDetailed", value: Array<unknown>): void;
+    (e: "update:detailedRows", value: Array<Row<T>>): void;
     /**
      * on details open event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      */
-    (e: "details-open", row: unknown): void;
+    (e: "details-open", row: Row<T>): void;
     /**
      * on details close event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      */
-    (e: "details-close", row: unknown): void;
+    (e: "details-close", row: Row<T>): void;
     /**
      * on row click event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "click", row: unknown, index: number, event: Event): void;
+    (e: "click", row: Row<T>, index: number, event: Event): void;
     /**
      * on row double click event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "dblclick", row: unknown, index: number, event: Event): void;
+    (e: "dblclick", row: Row<T>, index: number, event: Event): void;
     /**
      * on row right click event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of clicked row
      * @param event {Event} native contextmenu event
      */
-    (e: "contextmenu", row: unknown, index: number, event: Event): void;
+    (e: "contextmenu", row: Row<T>, index: number, event: Event): void;
     /**
      * on row mouseenter event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseenter event
      */
-    (e: "mouseenter", row: unknown, index: number, event: Event): void;
+    (e: "mouseenter", row: Row<T>, index: number, event: Event): void;
     /**
      * on row mouseleave event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseleave event
      */
-    (e: "mouseleave", row: unknown, index: number, event: Event): void;
+    (e: "mouseleave", row: Row<T>, index: number, event: Event): void;
     /**
      * on cell click event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param column {Column} column data
      * @param index {number} row index
      * @param colindex {number} column index
@@ -595,48 +624,48 @@ const emits = defineEmits<{
      */
     (
         e: "cell-click",
-        row: unknown,
-        column: Column,
+        row: Row<T>,
+        column: Column<T>,
         index: number,
         colindex: number,
         event: Event,
     ): void;
     /**
      * on row dragstart event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragstart event
      */
-    (e: "dragstart", row: unknown, index: number, event: DragEvent): void;
+    (e: "dragstart", row: Row<T>, index: number, event: DragEvent): void;
     /**
      * on row dragend event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragend event
      */
-    (e: "dragend", row: unknown, index: number, event: DragEvent): void;
+    (e: "dragend", row: Row<T>, index: number, event: DragEvent): void;
     /**
      * on row drop event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native drop event
      */
-    (e: "drop", row: unknown, index: number, event: DragEvent): void;
+    (e: "drop", row: Row<T>, index: number, event: DragEvent): void;
 
     /**
      * on row dragleave event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragleave event
      */
-    (e: "dragleave", row: unknown, index: number, event: DragEvent): void;
+    (e: "dragleave", row: Row<T>, index: number, event: DragEvent): void;
     /**
      * on row dragover event
-     * @param row {typeof data} row data
+     * @param row {Row} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragover event
      */
-    (e: "dragover", row: unknown, index: number, event: DragEvent): void;
+    (e: "dragover", row: Row<T>, index: number, event: DragEvent): void;
     /**
      * on column columndragstart event
      * @param column {Column} column data
@@ -645,7 +674,7 @@ const emits = defineEmits<{
      */
     (
         e: "columndragstart",
-        column: Column,
+        column: Column<T>,
         index: number,
         event: DragEvent,
     ): void;
@@ -655,14 +684,19 @@ const emits = defineEmits<{
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragend event
      */
-    (e: "columndragend", column: Column, index: number, event: DragEvent): void;
+    (
+        e: "columndragend",
+        column: Column<T>,
+        index: number,
+        event: DragEvent,
+    ): void;
     /**
      * on column columndrop event
      * @param column {Column} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndrop event
      */
-    (e: "columndrop", column: Column, index: number, event: DragEvent): void;
+    (e: "columndrop", column: Column<T>, index: number, event: DragEvent): void;
     /**
      * on column columndragleave event
      * @param column {Column} column data
@@ -671,7 +705,7 @@ const emits = defineEmits<{
      */
     (
         e: "columndragleave",
-        column: Column,
+        column: Column<T>,
         index: number,
         event: DragEvent,
     ): void;
@@ -683,7 +717,7 @@ const emits = defineEmits<{
      */
     (
         e: "columndragover",
-        column: Column,
+        column: Column<T>,
         index: number,
         event: DragEvent,
     ): void;
@@ -693,80 +727,61 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
-const rootRef = ref<HTMLElement>();
 const slotRef = ref<HTMLElement>();
 
-/** Provide functionalities and data to child item components */
-const provider = useProviderParent<ComputedRef<TableColumnComponent>>(slotRef);
+// const filters = ref<Record<string, string>>({});
+// const currentSortColumn = ref<TableColumn<T>>();
 
-const tableColumns = computed<TableColumn[]>(() =>
-    provider.sortedItems.value.map((column) => ({
+// provide functionalities and data to child item components
+const provider =
+    useProviderParent<ComputedRef<TableColumnComponent<T>>>(slotRef);
+
+/** all defined columns */
+const tableColumns = computed<TableColumn<T>[]>(() => {
+    if (!provider.sortedItems.value) return [];
+    return provider.sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data),
-    })),
-);
-
-const tableData = computed(() => {
-    if (!props.data?.length) return [...props.data];
-    // if no customRowKey is given and data are objects, create unique row id for each row
-    return props.data.map((row) =>
-        !props.customRowKey && typeof row === "object"
-            ? Object.assign({ __rowKey: uuid() }, row)
-            : row,
-    );
+    }));
 });
 
-const tableRows = ref(tableData.value);
-const dataTotal = ref(
-    props.backendPagination ? props.total : tableData.value.length,
-);
-
-const tableCurrentPage = usePropBinding<number>("currentPage", props, emits, {
-    passive: true,
-});
-
-/**
- * When table rows data change:
- *   1. Update internal value.
- *   2. Filter data if it's not backend-filtered.
- *   3. Sort again if it's not backend-sorted.
- *   4. Set new total if it's not backend-paginated.
- */
-watch(
-    () => tableData.value,
-    (value) => {
-        // if not backend filtered, filter rows
-        if (!props.backendFiltering)
-            tableRows.value = value.filter((row) => isRowFiltered(row));
-        else tableRows.value = [...value];
-        // if not backend sorted, sort rows
-        if (!props.backendSorting) sort(currentSortColumn.value, true);
-        // if not backend paginated, set pagination total
-        if (!props.backendPagination) dataTotal.value = tableRows.value.length;
-    },
-    { deep: true },
+/** all defined data elements mapped in Row type */
+const tableMappedData = computed<Row<T>[]>(() =>
+    useObjectMap(props.data, props.rowKey),
 );
 
 /**
- * When Pagination total change, update internal total
- * only if it's backend-paginated.
+ * Compute tableRows based on:
+ *   1. Filter data if it's not backend-filtered.
+ *   2. Sort data if it's not backend-sorted.
  */
-watch(
-    () => props.total,
-    (newTotal) => {
-        if (!props.backendPagination) return;
-        dataTotal.value = newTotal;
-    },
+const tableRows = computed(() => {
+    if (!tableMappedData.value) return [];
+    let rows = [...tableMappedData.value];
+
+    // TODO: revert filter and sort to feature
+    // if not backend filtered, filter rows
+    if (!props.backendFiltering && filters.value) rows = filterRows(rows);
+
+    // if not backend sorted, sort rows
+    if (!props.backendSorting && currentSortColumn.value)
+        rows = sortByColumn(rows);
+
+    return rows;
+});
+
+/** Shows total data. If backend paginated, use props total else rows data lendth */
+const tableTotal = computed(() =>
+    // if not backend paginated, use rows as pagination total
+    props.backendPagination ? props.total : tableRows.value.length,
 );
 
-const tableWrapperStyle = computed(() => ({
-    height: toCssDimension(props.height),
-}));
+const tableCurrentPage = defineModel<number>("currentPage");
 
-/** Splitted data based on the pagination. */
+/** Visible rows based on current page */
 const visibleRows = computed(() => {
-    if (!props.paginated) return tableRows.value;
+    if (!props.paginated || props.backendPagination) return tableRows.value;
 
     const currentPage = tableCurrentPage.value;
     const perPage = Number(props.perPage);
@@ -780,12 +795,12 @@ const visibleRows = computed(() => {
     }
 });
 
-const visibleColumns = computed(() => {
-    if (!tableColumns.value) return tableColumns.value;
-    return tableColumns.value.filter((column) => {
-        return column.visible || column.visible === undefined;
-    });
-});
+/** Visible columns based on the column visible property */
+const visibleColumns = computed(() =>
+    tableColumns.value.filter(
+        (column) => column.visible || column.visible === undefined,
+    ),
+);
 
 watch([() => visibleRows.value, () => visibleColumns.value], () => {
     // process tdAttrs when row or columns got changed
@@ -793,13 +808,15 @@ watch([() => visibleRows.value, () => visibleColumns.value], () => {
         for (let i = 0; i < visibleColumns.value.length; i++) {
             const col = visibleColumns.value[i];
             col.tdAttrsData = visibleRows.value.map((data) =>
-                typeof col.tdAttrs === "function" ? col.tdAttrs(data, col) : {},
+                typeof col.tdAttrs === "function"
+                    ? col.tdAttrs(data.value, col)
+                    : {},
             );
         }
     }
 });
 
-/** Return total column count based if it's checkable or expanded */
+/** Total column count based if it's checkable or expanded */
 const columnCount = computed(() => {
     let count = visibleColumns.value.length;
     count += props.checkable ? 1 : 0;
@@ -808,11 +825,11 @@ const columnCount = computed(() => {
 });
 
 /** Check if has any searchable column. */
-const hasSearchablenewColumns = computed(() =>
+const hasSearchableColumns = computed(() =>
     tableColumns.value.some((column) => column.searchable),
 );
 
-/** return if scrollable table */
+/** Check if table is scrollable */
 const isScrollable = computed(() => {
     if (props.scrollable) return true;
     if (!tableColumns.value) return false;
@@ -821,12 +838,13 @@ const isScrollable = computed(() => {
 
 const slots = useSlots();
 
+/** Check if table hast subheadings  */
 const hasCustomSubheadings = computed(() => {
     if (slots.subheading) return true;
     return tableColumns.value.some((column) => !!column.subheading);
 });
 
-/** Check if footer slot has custom content. */
+/** Check if footer slot has custom content */
 function hasCustomFooterSlot(): boolean {
     if (slots.footer) {
         // [Vue warn]: Slot "footer" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead.
@@ -839,11 +857,25 @@ function hasCustomFooterSlot(): boolean {
     return true;
 }
 
-/** Table arrow keys listener, change selection. */
+/** get the format row value for a column */
+function getValueForColumn(row: T, column: Column): string {
+    if (!column.field) return row as string;
+    const prop = getValueByPath(row, column.field);
+    return column.display ? column.display(prop, row) : prop;
+}
+
+// --- Select Feature ---
+
+const tableSelectedRow = defineModel<Row<T>>("selected");
+
+/** Table arrow keys listener, change selection */
 function onArrowPressed(pos: number, event: KeyboardEvent): void {
     if (!visibleRows.value.length) return;
 
-    let index = visibleRows.value.indexOf(props.selected) + pos;
+    let index =
+        visibleRows.value.findIndex(
+            (r) => r.key === tableSelectedRow.value.key,
+        ) + pos;
 
     // Prevent from going up from first and down from last
     index =
@@ -882,27 +914,19 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
  * Row click listener.
  * Emit all necessary events.
  */
-function selectRow(row: unknown, index: number, event: Event): void {
+function selectRow(row: Row<T>, index: number, event: Event): void {
     emits("click", row, index, event);
 
-    if (props.selected === row) return;
+    if (tableSelectedRow.value === row) return;
     if (!props.isRowSelectable(row)) return;
 
+    tableSelectedRow.value = row;
     // emit new and old row
-    emits("select", row, props.selected);
-
-    // emit new row to update user variable
-    emits("update:selected", row);
+    emits("select", row, tableSelectedRow.value);
 }
 
-function isRowSelected(row: unknown, selectedRow: unknown): boolean {
-    return selectedRow ? getRowKey(row) === getRowKey(selectedRow) : false;
-}
-
-function getRowKey(row: unknown): unknown {
-    if (props.customRowKey) return row[props.customRowKey];
-    if (typeof row === "object") return row["__rowKey"];
-    return row;
+function isRowSelected(row: Row<T>, selectedRow: Row<T>): boolean {
+    return selectedRow ? row.key === selectedRow.key : false;
 }
 
 // --- Filter Feature ---
@@ -912,9 +936,13 @@ const filters = ref<Record<string, string>>({});
 watch(
     filters.value,
     (value) => {
+        if (!props.backendFiltering) return;
         if (props.debounceSearch)
-            useDebounce(() => handleFiltersChange(value), props.debounceSearch);
-        else handleFiltersChange(value);
+            useDebounce(
+                () => emits("filters-change", value),
+                props.debounceSearch,
+            );
+        else emits("filters-change", value);
     },
     { deep: true },
 );
@@ -923,71 +951,49 @@ function onFiltersEvent(event: Event): void {
     emits("filters-event", props.filtersEvent, filters.value, event);
 }
 
-function handleFiltersChange(value: Record<string, string>): void {
-    if (props.backendFiltering) {
-        emits("filters-change", value);
-    } else {
-        tableRows.value = props.data.filter((row) => isRowFiltered(row));
-        if (!props.backendPagination) {
-            dataTotal.value = tableRows.value.length;
-        }
-        if (!props.backendSorting) {
-            if (Object.keys(currentSortColumn.value).length > 0) {
-                doSortSingleColumn(currentSortColumn.value);
-            }
-        }
-    }
+/** Check whether a row is filtered by filter or not */
+function isRowFiltered(row: T): boolean {
+    return Object.entries(filters.value).some(([key, filter]) => {
+        if (!filter) return false;
+        // get column for filter
+        const column = tableColumns.value.find((c) => c.field === key);
+        // if column has onSearch return result
+        if (typeof column?.onSearch === "function")
+            return column.onSearch(row, filter);
+
+        const value = getValueByPath(row, key);
+        if (value == null) return false;
+        // if number compare values
+        if (Number.isInteger(value)) return value === Number(filter);
+        const re = new RegExp(escapeRegExpChars(filter), "i");
+        if (Array.isArray(value))
+            return value.some(
+                (val) =>
+                    re.test(removeDiacriticsFromString(val)) || re.test(val),
+            );
+
+        return re.test(removeDiacriticsFromString(value)) || re.test(value);
+    });
 }
 
-function isRowFiltered(row: unknown): boolean {
-    for (const key in filters.value) {
-        if (!filters.value[key]) continue;
-        const input = filters.value[key];
-        const column = tableColumns.value.filter((c) => c.field === key)[0];
-        if (typeof column?.customSearch === "function") {
-            if (!column.customSearch(row, input)) return false;
-        } else {
-            const value = getValueByPath(row, key);
-            if (value == null) return false;
-            if (Number.isInteger(value)) {
-                if (value !== Number(input)) return false;
-            } else {
-                const re = new RegExp(escapeRegExpChars(input), "i");
-                if (Array.isArray(value)) {
-                    const valid = value.some(
-                        (val) =>
-                            re.test(removeDiacriticsFromString(val)) ||
-                            re.test(val),
-                    );
-                    if (!valid) return false;
-                } else {
-                    if (
-                        !re.test(removeDiacriticsFromString(value)) &&
-                        !re.test(value)
-                    ) {
-                        return false;
-                    }
-                }
-            }
-        }
-    }
-    return true;
+function filterRows(rows: Row<T>[]): Row<T>[] {
+    return rows.filter((row) => isRowFiltered(row.value));
 }
 
 // --- Sort Feature ---
 
-const currentSortColumn = ref<TableColumn>();
+const currentSortColumn = ref<TableColumn<T>>();
 const isAsc = ref(true);
 
 onMounted(() => nextTick(() => checkSort()));
 
 /** Check if has any sortable column. */
-const hasSortablenewColumns = computed(() =>
+const hasSortableColumns = computed(() =>
     tableColumns.value.some((column) => column.sortable),
 );
 
 /** Check if the column is the current sort column. */
-function isColumnSorted(column: TableColumn): boolean {
+function isColumnSorted(column: TableColumn<T>): boolean {
     return currentSortColumn.value?.identifier === column.identifier;
 }
 
@@ -1001,15 +1007,10 @@ function checkSort(): void {
             currentSortColumn.value &&
             Object.keys(currentSortColumn.value).length > 0
         ) {
-            for (let i = 0; i < tableColumns.value.length; i++) {
-                if (
-                    currentSortColumn.value.field ===
-                    tableColumns.value[i].field
-                ) {
-                    currentSortColumn.value = tableColumns.value[i];
-                    break;
-                }
-            }
+            const column = tableColumns.value.find(
+                (column) => currentSortColumn.value.field === column.field,
+            );
+            if (column) currentSortColumn.value = column;
         }
     }
 }
@@ -1027,9 +1028,9 @@ function initSort(): void {
     } else {
         sortField = props.defaultSort;
     }
-    const sortColumn = tableColumns.value.filter(
+    const sortColumn = tableColumns.value.find(
         (column) => column.field === sortField,
-    )[0];
+    );
     if (sortColumn) {
         isAsc.value = sortDirection.toLowerCase() !== "desc";
         sort(sortColumn, true);
@@ -1042,7 +1043,7 @@ function initSort(): void {
  * and not just updating the prop.
  */
 function sort(
-    column: TableColumn,
+    column: TableColumn<T>,
     updateDirection = false,
     event?: Event,
 ): void {
@@ -1057,110 +1058,73 @@ function sort(
     if (currentSortColumn.value)
         emits("sort", column, isAsc.value ? "asc" : "desc", event);
 
-    if (!props.backendSorting) doSortSingleColumn(column);
-
+    // computed rows get sorted on currentSortColumn change
     currentSortColumn.value = column;
 }
 
-function doSortSingleColumn(column: Column): void {
-    tableRows.value = sortBy(
-        tableRows.value,
-        column.field,
-        column.customSort,
+function sortByColumn(rows: Row<T>[]): Row<T>[] {
+    const column = currentSortColumn.value;
+    return sortBy<Row<T>>(
+        rows,
+        column?.field ? "value." + column.field : undefined,
+        column?.onSort
+            ? (a, b, asc) => column.onSort(a.value, b.value, asc)
+            : undefined,
         isAsc.value,
     );
 }
 
-/**
- * Sort an array by key without mutating original data.
- * Call the user sort function if it was passed.
- */
-function sortBy(
-    array: unknown[],
-    key: string,
-    fn: (a: unknown, b: unknown, asc: boolean) => number,
-    isAsc: boolean,
-): unknown[] {
-    let sorted = [];
-    // Sorting without mutating original data
-    if (fn && typeof fn === "function") {
-        sorted = [...array].sort((a, b) => fn(a, b, isAsc));
-    } else {
-        sorted = [...array].sort((a, b) => {
-            // Get nested values from objects
-            let newA = getValueByPath(a, key);
-            let newB = getValueByPath(b, key);
-
-            // sort boolean type
-            if (typeof newA === "boolean" && typeof newB === "boolean") {
-                return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
-            }
-
-            if (!newA && newA !== 0) return 1;
-            if (!newB && newB !== 0) return -1;
-            if (newA === newB) return 0;
-
-            newA = typeof newA === "string" ? newA.toUpperCase() : newA;
-            newB = typeof newB === "string" ? newB.toUpperCase() : newB;
-
-            return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
-        });
-    }
-
-    return sorted;
-}
-
 // --- Checkable Feature ---
 
-const newCheckedRows = ref([...props.checkedRows]);
+const tableCheckedRows = defineModel<Row<T>[]>("checkedRows");
 const lastCheckedRowIndex = ref(null);
-
-/**
- * When checkedRows prop change, update internal value without
- * mutating original data.
- */
-watch(
-    () => props.checkedRows,
-    (rows) => {
-        newCheckedRows.value = [...rows];
-    },
-    { deep: true },
-);
 
 /** Check if all rows in the page are checked. */
 const isAllChecked = computed(() => {
     const validVisibleData = visibleRows.value.filter((row) =>
-        props.isRowCheckable(row),
+        props.isRowCheckable(row.value),
     );
     if (validVisibleData.length === 0) return false;
-    const isAllChecked = validVisibleData.some(
+    return !validVisibleData.some(
         (currentVisibleRow) =>
             indexOf(
-                newCheckedRows.value,
-                currentVisibleRow,
-                props.customIsChecked,
+                tableCheckedRows.value.map((r) => r.value),
+                currentVisibleRow.value,
+                props.isRowChecked,
             ) < 0,
     );
-    return !isAllChecked;
 });
 
 /** Check if all rows in the page are checkable. */
-const isAllUncheckable = computed(() => {
-    const validVisibleData = visibleRows.value.filter((row) =>
-        props.isRowCheckable(row),
-    );
-    return validVisibleData.length === 0;
-});
+const isAllUncheckable = computed(
+    () => !visibleRows.value.some((row) => props.isRowCheckable(row.value)),
+);
 
 /** Check if the row is checked (is added to the array). */
-function isRowChecked(row: unknown): boolean {
-    return indexOf(newCheckedRows.value, row, props.customIsChecked) >= 0;
+function isChecked(row: Row<T>): boolean {
+    return (
+        indexOf(
+            tableCheckedRows.value.map((r) => r.value),
+            row.value,
+            props.isRowChecked,
+        ) >= 0
+    );
+}
+
+/** Add a checked row to the the array. */
+function addCheckedRow(row: Row<T>): void {
+    tableCheckedRows.value = [...tableCheckedRows.value, row];
 }
 
 /** Remove a checked row from the array. */
-function removeCheckedRow(row: unknown): void {
-    const index = indexOf(newCheckedRows.value, row, props.customIsChecked);
-    if (index >= 0) newCheckedRows.value.splice(index, 1);
+function removeCheckedRow(row: Row<T>): void {
+    const idx = indexOf(
+        tableCheckedRows.value.map((r) => r.value),
+        row.value,
+        props.isRowChecked,
+    );
+    if (idx >= 0)
+        tableCheckedRows.value = tableCheckedRows.value.toSpliced(idx, 1);
 }
 
 /**
@@ -1168,68 +1132,30 @@ function removeCheckedRow(row: unknown): void {
  * Add or remove all rows in current page.
  */
 function checkAll(): void {
-    const allChecked = isAllChecked.value;
-    visibleRows.value.forEach((currentRow) => {
-        if (props.isRowCheckable(currentRow)) removeCheckedRow(currentRow);
+    const checkedRows = visibleRows.value.filter((row) =>
+        props.isRowCheckable(row.value),
+    );
 
-        if (!allChecked) {
-            if (props.isRowCheckable(currentRow))
-                newCheckedRows.value.push(currentRow);
-        }
-    });
+    tableCheckedRows.value = isAllChecked.value ? [] : checkedRows;
 
-    emits("check", newCheckedRows.value);
-    emits("check-all", newCheckedRows.value);
-
-    // Emit checked rows to update user variable
-    emits("update:checkedRows", newCheckedRows.value);
+    emits("check", tableCheckedRows.value);
+    emits("check-all", tableCheckedRows.value);
 }
 
 /** Row checkbox click listener. */
-function checkRow(row: unknown, index: number): void {
-    if (!props.isRowCheckable(row)) return;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const lastIndex = lastCheckedRowIndex.value;
+function checkRow(row: Row<T>, index: number): void {
+    if (!props.isRowCheckable(row.value)) return;
     lastCheckedRowIndex.value = index;
 
-    // if (event.shiftKey && lastIndex !== null && index !== lastIndex) {
-    //         shiftCheckRow(row, index, lastIndex);
-
-    if (!isRowChecked(row)) newCheckedRows.value.push(row);
+    if (!isChecked(row)) addCheckedRow(row);
     else removeCheckedRow(row);
 
-    emits("check", newCheckedRows.value, row);
-
-    // Emit checked rows to update user variable
-    emits("update:checkedRows", newCheckedRows.value);
-}
-
-/** Check row when shift is pressed. */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function shiftCheckRow(
-    row: unknown,
-    index: number,
-    lastCheckedRowIndex: number,
-): void {
-    // Get the subset of the list between the two indicies
-    const subset = visibleRows.value.slice(
-        Math.min(index, lastCheckedRowIndex),
-        Math.max(index, lastCheckedRowIndex) + 1,
-    );
-
-    // Determine the operation based on the state of the clicked checkbox
-    const shouldCheck = !isRowChecked(row);
-
-    subset.forEach((item) => {
-        removeCheckedRow(item);
-        if (shouldCheck && props.isRowCheckable(item))
-            newCheckedRows.value.push(item);
-    });
+    emits("check", tableCheckedRows.value, row);
 }
 
 // --- Detail Row Feature ---
 
-const visibleDetailRows = ref(props.openedDetailed);
+const visibleDetailedRows = defineModel<Row<T>[]>("detailedRows");
 
 /**
  * return if detailed row tabled
@@ -1239,19 +1165,8 @@ const showDetailRowIcon = computed(
     () => props.detailed && props.showDetailIcon,
 );
 
-/**
- * When the user wants to control the detailed rows via props.
- * Or wants to open the details of certain row with the router for example.
- */
-watch(
-    () => props.openedDetailed,
-    (expandedRows) => {
-        visibleDetailRows.value = expandedRows;
-    },
-);
-
 /** Toggle to show/hide details slot */
-function toggleDetails(row: unknown): void {
+function toggleDetails(row: Row<T>): void {
     const found = isVisibleDetailRow(row);
 
     if (found) {
@@ -1261,42 +1176,24 @@ function toggleDetails(row: unknown): void {
         openDetailRow(row);
         emits("details-open", row);
     }
-
-    // Syncs the detailed rows with the parent component
-    emits("update:openedDetailed", visibleDetailRows.value);
 }
 
-function openDetailRow(row: unknown): void {
-    const index = handleDetailKey(row);
-    visibleDetailRows.value.push(index);
+function openDetailRow(row: Row<T>): void {
+    visibleDetailedRows.value = [...visibleDetailedRows.value, row];
 }
 
-function closeDetailRow(row: unknown): void {
-    const index = handleDetailKey(row);
-    const i = visibleDetailRows.value.indexOf(index);
-    if (i >= 0) visibleDetailRows.value.splice(i, 1);
+function closeDetailRow(row: Row<T>): void {
+    const idx = visibleDetailedRows.value.findIndex((r) => r.key === row.key);
+    if (idx >= 0)
+        visibleDetailedRows.value = visibleDetailedRows.value.toSpliced(idx, 1);
 }
 
-function isVisibleDetailRow(row: unknown): boolean {
-    const index = handleDetailKey(row);
-    return visibleDetailRows.value.indexOf(index) >= 0;
+function isVisibleDetailRow(row: Row<T>): boolean {
+    return visibleDetailedRows.value.some((r) => r.key === row.key);
 }
 
-function isActiveDetailRow(row: unknown): boolean {
-    return props.detailed && !props.customDetailRow && isVisibleDetailRow(row);
-}
-
-function isActiveCustomDetailRow(row: unknown): boolean {
-    return props.detailed && props.customDetailRow && isVisibleDetailRow(row);
-}
-
-/**
- * When the detailKey is defined we use the object[detailKey] as index.
- * If not, use the object reference by default.
- */
-function handleDetailKey(row: unknown): string {
-    const key = props.detailKey;
-    return !key?.length || !row ? row : row[key];
+function isActiveDetailRow(row: Row<T>): boolean {
+    return props.detailed && isVisibleDetailRow(row);
 }
 
 // --- Drag&Drop Feature ---
@@ -1311,38 +1208,38 @@ const canDragColumn = computed(
 );
 
 /** Emits drag start event*/
-function handleDragStart(row: unknown, index: number, event: DragEvent): void {
+function handleDragStart(row: Row<T>, index: number, event: DragEvent): void {
     if (!props.draggable) return;
     emits("dragstart", row, index, event);
 }
 
 /** Emits drag leave event */
-function handleDragEnd(row: unknown, index: number, event: DragEvent): void {
+function handleDragEnd(row: Row<T>, index: number, event: DragEvent): void {
     if (!props.draggable) return;
     emits("dragend", row, index, event);
 }
 
 /** Emits drop event */
-function handleDrop(row: unknown, index: number, event: DragEvent): void {
+function handleDrop(row: Row<T>, index: number, event: DragEvent): void {
     if (!props.draggable) return;
     emits("drop", row, index, event);
 }
 
 /** Emits drag over event */
-function handleDragOver(row: unknown, index: number, event: DragEvent): void {
+function handleDragOver(row: Row<T>, index: number, event: DragEvent): void {
     if (!props.draggable) return;
     emits("dragover", row, index, event);
 }
 
 /** Emits drag leave event */
-function handleDragLeave(row: unknown, index: number, event: DragEvent): void {
+function handleDragLeave(row: Row<T>, index: number, event: DragEvent): void {
     if (!props.draggable) return;
     emits("dragleave", row, index, event);
 }
 
 /** Emits drag start event (column) */
 function handleColumnDragStart(
-    column: Column,
+    column: Column<T>,
     index: number,
     event: DragEvent,
 ): void {
@@ -1353,7 +1250,7 @@ function handleColumnDragStart(
 
 /** Emits drag leave event (column) */
 function handleColumnDragEnd(
-    column: Column,
+    column: Column<T>,
     index: number,
     event: DragEvent,
 ): void {
@@ -1364,7 +1261,7 @@ function handleColumnDragEnd(
 
 /** Emits drop event (column) */
 function handleColumnDrop(
-    column: Column,
+    column: Column<T>,
     index: number,
     event: DragEvent,
 ): void {
@@ -1374,7 +1271,7 @@ function handleColumnDrop(
 
 /** Emits drag over event (column) */
 function handleColumnDragOver(
-    column: Column,
+    column: Column<T>,
     index: number,
     event: DragEvent,
 ): void {
@@ -1384,7 +1281,7 @@ function handleColumnDragOver(
 
 /** Emits drag leave event (column) */
 function handleColumnDragLeave(
-    column: Column,
+    column: Column<T>,
     index: number,
     event: DragEvent,
 ): void {
@@ -1444,6 +1341,10 @@ const tableWrapperClasses = defineClasses(
     ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
 );
 
+const tableWrapperStyle = computed(() => ({
+    height: toCssDimension(props.height),
+}));
+
 const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
@@ -1498,7 +1399,7 @@ const thSortIconClasses = defineClasses([
     "o-table__th__sort-icon",
 ]);
 
-function thClasses(column: TableColumn): ClassBind[] {
+function thClasses(column: TableColumn<T>): ClassBind[] {
     const classes = defineClasses(
         [
             "thCurrentSortClass",
@@ -1525,23 +1426,25 @@ function thClasses(column: TableColumn): ClassBind[] {
     return [...thBaseClasses.value, ...classes.value];
 }
 
-function rowClasses(row: unknown, index: number): ClassBind[] {
+function rowClasses(row: Row<T>, index: number): ClassBind[] {
     const classes = defineClasses(
         [
             "trSelectedClass",
             "o-table__tr--selected",
             null,
-            isRowSelected(row, props.selected),
+            isRowSelected(row, tableSelectedRow.value),
         ],
-        ["trCheckedClass", "o-table__tr--checked", null, isRowChecked(row)],
+        ["trCheckedClass", "o-table__tr--checked", null, isChecked(row)],
     );
 
-    const rowClass = props.rowClass(row, index);
+    const rowClass = props.rowClass
+        ? props.rowClass(row.value, index) || ""
+        : "";
 
     return [...classes.value, { [rowClass]: true }];
 }
 
-function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
+function tdClasses(row: Row<T>, column: TableColumn<T>): ClassBind[] {
     const classes = defineClasses(
         [
             "tdPositionClass",
@@ -1558,26 +1461,36 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses" data-oruga="table">
+    <div :class="rootClasses" data-oruga="table">
         <div ref="slotRef" style="display: none">
             <!--
                 @slot Place o-table-column here
             -->
             <slot>
+                <!--
+                    @slot Place extra o-table-column here even if you have some columns defined by prop
+                -->
+                <slot name="before" />
+
                 <template v-if="columns?.length">
                     <o-table-column
                         v-for="(column, idx) in columns"
-                        :key="idx"
+                        :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ column.field ? row[column.field] : row }}
+                        {{ getValueForColumn(row, column) }}
                     </o-table-column>
                 </template>
+
+                <!--
+                    @slot Place extra o-table-column here even if you have some columns defined by prop
+                -->
+                <slot name="after" />
             </slot>
         </div>
 
         <o-table-mobile-sort
-            v-if="isMobileActive && hasSortablenewColumns"
+            v-if="isMobileActive && hasSortableColumns"
             :current-sort-column="currentSortColumn"
             :columns="tableColumns"
             :placeholder="mobileSortPlaceholder"
@@ -1604,14 +1517,14 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                 name="pagination"
                 :current="tableCurrentPage"
                 :per-page="perPage"
-                :total="dataTotal"
+                :total="tableTotal"
                 :change="(page) => (tableCurrentPage = page)">
                 <o-table-pagination
                     v-bind="$attrs"
                     v-model:current="tableCurrentPage"
                     :paginated="paginated"
                     :per-page="perPage"
-                    :total="dataTotal"
+                    :total="tableTotal"
                     :rounded="paginationRounded"
                     :size="paginationSize"
                     :order="paginationOrder"
@@ -1649,9 +1562,11 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                     -->
                     <slot name="preheader" />
                     <tr>
+                        <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
                             :class="[...thBaseClasses, ...thDetailedClasses]" />
+                        <!-- checkable column left -->
                         <th
                             v-if="checkable && checkboxPosition === 'left'"
                             :class="[...thBaseClasses, ...thCheckboxClasses]">
@@ -1675,6 +1590,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                     @update:model-value="checkAll" />
                             </slot>
                         </th>
+                        <!-- row data columns -->
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="column.identifier + ':' + index + 'header'"
@@ -1722,6 +1638,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                 </span>
                             </template>
                         </th>
+                        <!-- checkable column right -->
                         <th
                             v-if="checkable && checkboxPosition === 'right'"
                             :class="[...thBaseClasses, ...thCheckboxClasses]">
@@ -1747,11 +1664,14 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                             </template>
                         </th>
                     </tr>
-                    <tr v-if="hasSearchablenewColumns">
+                    <tr v-if="hasSearchableColumns">
+                        <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
                             :class="[...thBaseClasses, ...thDetailedClasses]" />
+                        <!-- checkable column left -->
                         <th v-if="checkable && checkboxPosition === 'left'" />
+                        <!-- row data columns -->
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="
@@ -1771,17 +1691,25 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                 <o-input
                                     v-else
                                     v-model="filters[column.field]"
-                                    :type="column.numeric ? 'number' : 'text'"
+                                    :type="column.numeric ? 'number' : 'search'"
+                                    :pack="iconPack"
+                                    :placeholder="filtersPlaceholder"
+                                    :icon="filtersIcon"
+                                    size="small"
                                     @[filtersEvent]="onFiltersEvent" />
                             </template>
                         </th>
+                        <!-- checkable column right -->
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
                     <tr v-if="hasCustomSubheadings">
+                        <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
                             :class="[...thBaseClasses, ...thDetailedClasses]" />
+                        <!-- checkable column left -->
                         <th v-if="checkable && checkboxPosition === 'left'" />
+                        <!-- row data columns -->
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="
@@ -1798,13 +1726,14 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                             </template>
                             <template v-else>{{ column.subheading }}</template>
                         </th>
+                        <!-- checkable column right -->
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
                 </thead>
                 <tbody>
                     <template
                         v-for="(row, index) in visibleRows"
-                        :key="getRowKey(row) + 'row'">
+                        :key="row.key + ':' + index + 'row'">
                         <tr
                             :class="rowClasses(row, index)"
                             :draggable="canDragRow"
@@ -1832,7 +1761,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                     ...tdDetailedChevronClasses,
                                 ]">
                                 <o-icon
-                                    v-if="hasDetailedVisible(row)"
+                                    v-if="isDetailedVisible(row.value)"
                                     :icon="detailIcon"
                                     :pack="iconPack"
                                     :rotation="isVisibleDetailRow(row) ? 90 : 0"
@@ -1850,10 +1779,10 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                     ...tdCheckboxClasses,
                                 ]">
                                 <o-checkbox
-                                    :model-value="isRowChecked(row)"
+                                    :model-value="isChecked(row)"
                                     autocomplete="off"
                                     :variant="checkboxVariant"
-                                    :disabled="!isRowCheckable(row)"
+                                    :disabled="!isRowCheckable(row.value)"
                                     @update:model-value="
                                         checkRow(row, index)
                                     " />
@@ -1898,10 +1827,10 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                     ...tdCheckboxClasses,
                                 ]">
                                 <o-checkbox
-                                    :model-value="isRowChecked(row)"
+                                    :model-value="isChecked(row)"
                                     autocomplete="off"
                                     :variant="checkboxVariant"
-                                    :disabled="!isRowCheckable(row)"
+                                    :disabled="!isRowCheckable(row.value)"
                                     @update:model-value="
                                         checkRow(row, index)
                                     " />
@@ -1909,33 +1838,35 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                         </tr>
 
                         <transition :name="detailTransition">
-                            <tr
-                                v-if="isActiveDetailRow(row)"
-                                :key="getRowKey(row) + 'detail'"
-                                :class="detailedClasses">
-                                <td :colspan="columnCount">
-                                    <!--
-                                        @slot Place row detail content here
-                                        @binding {unknown} row - row conent
-                                        @binding {number} index - row index
-                                    -->
-                                    <slot
-                                        name="detail"
-                                        :row="row"
-                                        :index="index" />
-                                </td>
-                            </tr>
+                            <template v-if="isActiveDetailRow(row)">
+                                <!--
+                                    @slot Place row detail content here
+                                    @binding {unknown} row - row conent
+                                    @binding {number} index - row index
+                                -->
+                                <slot
+                                    v-if="customDetailRow"
+                                    name="detail"
+                                    :row="row"
+                                    :index="index" />
+                                <tr
+                                    v-else
+                                    :key="row.key + 'detail'"
+                                    :class="detailedClasses">
+                                    <td :colspan="columnCount">
+                                        <!--
+                                            @slot Place row detail content here
+                                            @binding {unknown} row - row conent
+                                            @binding {number} index - row index
+                                        -->
+                                        <slot
+                                            name="detail"
+                                            :row="row"
+                                            :index="index" />
+                                    </td>
+                                </tr>
+                            </template>
                         </transition>
-                        <!--
-                            @slot Place row detail content here
-                            @binding {unknown} row - row conent
-                            @binding {number} index - row index
-                        -->
-                        <slot
-                            v-if="isActiveCustomDetailRow(row)"
-                            name="detail"
-                            :row="row"
-                            :index="index" />
                     </template>
 
                     <tr v-if="!visibleRows.length">
@@ -1974,12 +1905,21 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                     </tr>
                 </tfoot>
             </table>
+
             <!--
                 @slot Override loading component
                 @binding {boolean} loading - is loading enabled
             -->
             <slot name="loading" :loading="loading">
-                <o-loading :full-page="false" :active="loading" />
+                <o-loading
+                    v-bind="loadingClasses"
+                    :full-page="false"
+                    :active="loading"
+                    :icon="loadingIcon"
+                    :label="loadingLabel"
+                    icon-size="large"
+                    role="status"
+                    aria-hidden="true" />
             </slot>
         </div>
 
@@ -2001,14 +1941,14 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                 name="pagination"
                 :current="tableCurrentPage"
                 :per-page="perPage"
-                :total="dataTotal"
+                :total="tableTotal"
                 :change="(page) => (tableCurrentPage = page)">
                 <o-table-pagination
                     v-bind="$attrs"
                     v-model:current="tableCurrentPage"
                     :paginated="paginated"
                     :per-page="perPage"
-                    :total="dataTotal"
+                    :total="tableTotal"
                     :rounded="paginationRounded"
                     :size="paginationSize"
                     :order="paginationOrder"

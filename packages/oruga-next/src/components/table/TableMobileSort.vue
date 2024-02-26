@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { computed, watch, ref, type PropType } from "vue";
 
 import OButton from "../button/Button.vue";
@@ -19,11 +19,11 @@ defineOptions({
 
 const props = defineProps({
     currentSortColumn: {
-        type: Object as PropType<TableColumn>,
+        type: Object as PropType<TableColumn<T>>,
         default: undefined,
     },
     columns: {
-        type: Array as PropType<TableColumn[]>,
+        type: Array as PropType<TableColumn<T>[]>,
         default: undefined,
     },
     placeholder: { type: String, default: undefined },
@@ -35,7 +35,7 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
-    (e: "sort", column: TableColumn, event: Event);
+    (e: "sort", column: TableColumn<T>, event: Event);
 }>();
 
 const mobileSort = ref<string>(

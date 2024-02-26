@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import {
     computed,
     onBeforeMount,
@@ -11,7 +11,7 @@ import {
 import { useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
 
-import type { TableColumnComponent, Column } from "./types";
+import type { TableColumnComponent } from "./types";
 
 /**
  * @displayName Table Column
@@ -27,6 +27,11 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /** Define an object property key if data is an object */
     field: { type: String, default: undefined },
+    /** Provide a display function to edit the output */
+    display: {
+        type: Function as PropType<(value: unknown, row: T) => string>,
+        default: undefined,
+    },
     /** Define a column sub heading  */
     subheading: { type: String, default: undefined },
     /** Add addtional meta information for the column for custom purpose*/
@@ -54,30 +59,29 @@ const props = defineProps({
     sortable: { type: Boolean, default: false },
     /** Define whether the column is visible or not */
     visible: { type: Boolean, default: true },
-    /** Define a custom sort function */
-    customSort: {
-        type: Function as PropType<
-            (a: Column, b: Column, isAsc: boolean) => number
-        >,
-        default: undefined,
-    },
-    /** Define a custom funtion for the filter search */
-    customSearch: {
-        type: Function as PropType<(row: unknown, filter: string) => boolean>,
-        default: undefined,
-    },
+
     /** Whether the column is sticky or not */
     sticky: { type: Boolean, default: false },
     /** Make header selectable */
     headerSelectable: { type: Boolean, default: false },
+    /** Define a custom sort function */
+    onSort: {
+        type: Function as PropType<(a: T, b: T, isAsc: boolean) => number>,
+        default: undefined,
+    },
+    /** Define a custom filter funtion for the search */
+    onSearch: {
+        type: Function as PropType<(row: T, filter: string) => boolean>,
+        default: undefined,
+    },
     /** Adds native attributes to th */
     thAttrs: {
-        type: Function as PropType<(column: Column) => object>,
+        type: Function as PropType<(column: typeof props) => object>,
         default: () => ({}),
     },
     /** Adds native attributes to td */
     tdAttrs: {
-        type: Function as PropType<(row: unknown, column: Column) => object>,
+        type: Function as PropType<(row: T, column: typeof props) => object>,
         default: () => ({}),
     },
 });
@@ -96,7 +100,7 @@ const isHeaderUnselectable = computed(
 const vm = getCurrentInstance();
 const slots = useSlots();
 
-const providedData = computed<TableColumnComponent>(() => ({
+const providedData = computed<TableColumnComponent<T>>(() => ({
     ...props,
     $el: vm.proxy,
     $slots: slots,
@@ -127,7 +131,7 @@ onBeforeMount(() => {
         <template v-if="false">
             <!--
                 @slot Default Slot
-                @binding {unknown} row - row data 
+                @binding {Row} row - row data 
                 @binding {Column} column - column definition 
                 @binding {number} index - row index 
                 @binding {number} colindex - column index 
