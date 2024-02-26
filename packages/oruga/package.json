@@ -44,7 +44,7 @@
     "build:lib": "rimraf dist && npm run test:ts && npm run build:vue",
     "build:lib:watch": "npm link && npm run build:vue:watch",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
+    "test:coverage": "NODE_ENV=test vitest run --coverage",
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open --component",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --quiet --ignore-path .gitignore",
