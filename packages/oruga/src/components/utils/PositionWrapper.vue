@@ -128,7 +128,10 @@ function addHandler(): void {
         // get parent container
         scrollingParent.value = getScrollingParent(unrefElement(props.content));
         // set event listener
-        if (scrollingParent.value !== document.documentElement) {
+        if (
+            scrollingParent.value &&
+            scrollingParent.value !== document.documentElement
+        ) {
             scrollingParent.value.addEventListener(
                 "scroll",
                 updatePositioning,
