@@ -865,7 +865,7 @@ but will set body to position fixed, might break some layouts. */
                 /** Class of the select arrow */
                 arrowClass: ClassDefinition;
                 /** Class of the select variant for the root element */
-                rootVariantClass: boolean;
+                rootVariantClass: ClassDefinition;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
