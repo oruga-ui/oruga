@@ -181,7 +181,7 @@ const isChecked = computed(
     () =>
         vmodel.value === props.trueValue ||
         (Array.isArray(vmodel.value) &&
-            vmodel.value.indexOf(props.nativeValue) !== -1),
+            vmodel.value.includes(props.nativeValue)),
 );
 
 function onInput(event: Event): void {
