@@ -1,0 +1,21 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "types": ["node", "vite/client", "vitepress/client", "./volar.d.ts"]
+
+  },
+  "include": [
+    ".vitepress/**/*",
+    "docgen.config.ts",
+    "volar.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
