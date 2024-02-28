@@ -86,11 +86,11 @@ const isClickable = computed(
 
 const isActive = computed(() => {
     if (parent.value.selected === null) return false;
-    return parent.value.props.multiple && Array.isArray(parent.value.selected)
-        ? parent.value.selected.some((selected) =>
-              isEqual(props.value, selected),
-          )
-        : isEqual(props.value, parent.value.selected);
+    if (parent.value.props.multiple && Array.isArray(parent.value.selected))
+        return parent.value.selected.some((selected) =>
+            isEqual(props.value, selected),
+        );
+    return isEqual(props.value, parent.value.selected);
 });
 
 /** Click listener, select the item. */

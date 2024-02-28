@@ -114,7 +114,7 @@ const { parent, item } = useProviderChild<ComputedRef<TabsComponent>>({
 
 const transitionName = ref();
 
-const isActive = computed(() => isEqual(parent.value.activeValue, props.value));
+const isActive = computed(() => isEqual(props.value, parent.value.activeValue));
 
 const isTransitioning = ref(false);
 
