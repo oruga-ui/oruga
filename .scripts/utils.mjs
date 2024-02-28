@@ -1,5 +1,5 @@
 // The file is not designed to run directly. `cwd` should be project root.
-import fs from 'fs-extra';
+import fs from 'fs';
 import path from 'path';
 
 // Components to be ignored
@@ -12,10 +12,9 @@ const IGNORE = [
   "DatepickerTable",
   "DatepickerTableRow",
   "DatepickerMonth",
-  "NotificationNotice",
 ];
   
-export const componentDirectory = './src/components';
+export const componentDirectory = './packages/oruga/src/components';
 
 export function exist (path) {
   return fs.existsSync(path)

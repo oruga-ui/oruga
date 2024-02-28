@@ -1,9 +1,9 @@
 // The file is not designed to run directly. `cwd` should be project root.
-import fs from 'fs-extra'
+import fs from 'fs'
 import path from 'path'
 import process from 'process'
 
-import { createComponentMetaChecker } from '../packages/oruga-next/node_modules/vue-component-meta/out/index.js';
+import { createComponentMetaChecker } from "vue-component-meta/out/index.js";
 
 import { componentDirectory, getFolders, getComponents, exist } from "./utils.mjs";
 
@@ -14,7 +14,7 @@ if(!exist(path.resolve(__dirname, componentDirectory)))
 
 // create component meta checker
 const checker = createComponentMetaChecker(
-    path.resolve(__dirname, './tsconfig.json'),
+    path.resolve(__dirname, './packages/oruga/tsconfig.json'),
     {
         forceUseTs: true,
         printer: { newLine: 1 },
@@ -89,7 +89,7 @@ declare module "../index" {
             props.map(prop =>`
                 /** ${prop.description} */
                 ${prop.name}: ${prop.type};`
-            ).join("")
+            ).sort((a,b) => a.localeCompare(b)) .join("")
             }
             }>;`
         ).join(`

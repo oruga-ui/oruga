@@ -50,63 +50,37 @@ Add comments if method is too complex and/or whenever you judge necessary.
 
 # Development Setup
 
-You need at least [Node.js](http://nodejs.org/) **version 17.9.1**.
+You need at least [Node.js](http://nodejs.org/) **version 20.10.0**.
 
-After cloning the repository, install the dependencies and then run:
+After cloning the repository, install the dependencies:
 
 ```bash
-$ npm run bootstrap
+$ npm install
 ```
 
 **Common used NPM scripts: (Quick Start)**
 
 To compile the code in watch mode:
 
-For Oruga Next (Vue 3):
-
 ```bash
 # build lib in watch mode
-$ npm run build:lib:watch:oruga-next 
-```
-
-For Oruga (Vue 2):
-
-```bash
-# build lib in watch mode
-$ npm run build:lib:watch:oruga
+$ npm run build:lib:watch
 ```
 
 Then open up new bash and run the live server **concurrently** with the above command, and then start working to see your changes live on [http://localhost:8080](http://localhost:8080):
 
-For Oruga Next (Vue 3):
-
 ```bash
 # build and launch live server of docs in watch mode to see the changes (it may take a few seconds)
-$ npm run build:docs-next:watch:oruga
-```
-
-For Oruga (Vue 2):
-
-```bash
-# build and launch live server of docs in watch mode to see the changes (it may take a few seconds)
-$ npm run build:docs:watch:oruga
+$ npm run build:docs:watch
 ```
 
 After writing tests, run the following command:
 
-For Oruga Next (Vue 3):
 
 ```bash
 # launch tests suite
-$ npm run test:oruga-next
+$ npm run test
 
 # test typescript
-$ npm run test:ts:oruga-next
-```
-
-For Oruga (Vue 2):
-
-```bash
-# launch tests suite
-$ npm run test:oruga
+$ npm run test:ts
 ```
