@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch, type PropType, type Ref } from "vue";
+import { computed, nextTick, ref, watch, type PropType } from "vue";
 
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
@@ -10,14 +10,13 @@ import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
     defineClasses,
-    useVModelBinding,
+    useProviderParent,
     useMatchMedia,
     useEventListener,
-    usePropBinding,
     useClickOutside,
 } from "@/composables";
 
-import { provideDropdown } from "./useDropdownShare";
+import type { DropdownComponent } from "./types";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
 
@@ -270,15 +269,9 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
-    props,
-    emits,
-    { passive: true },
-) as Ref<any>;
+const vmodel = defineModel<any>();
 
-const isActive = usePropBinding<boolean>("active", props, emits, {
-    passive: true,
-});
+const isActive = defineModel<boolean>("active");
 
 const autoPosition = ref(props.position);
 
@@ -454,7 +447,7 @@ function checkDropdownScroll(): void {
     }
 }
 
-// --- Field Dependency Injection Feature ---
+// --- Dependency Injection Feature ---
 
 /**
  * Click listener from DropdownItem.
@@ -466,20 +459,20 @@ function selectItem(value: any): void {
     if (props.multiple) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
-                // Add value
+                // add a value
                 vmodel.value = [...vmodel.value, value];
             } else {
-                // Remove value
+                // remove a value
                 vmodel.value = vmodel.value.filter((val) => val !== value);
             }
         } else {
-            // Init value array
+            // init new value array
             vmodel.value = [value];
         }
         emits("change", vmodel.value);
     } else {
         if (vmodel.value !== value) {
-            // Upodate value
+            // update a single value
             vmodel.value = value;
             emits("change", vmodel.value);
         }
@@ -493,14 +486,14 @@ function selectItem(value: any): void {
 }
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed(() => ({
+const provideData = computed<DropdownComponent>(() => ({
     props,
     selected: vmodel.value,
     selectItem,
 }));
 
-// Provide field component data via dependency injection.
-provideDropdown(provideData);
+/** Provide functionalities and data to child item components */
+useProviderParent(contentRef, { data: provideData });
 
 // --- Computed Component Classes ---
 
@@ -605,6 +598,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                 <div
                     v-if="isMobileModal"
                     v-show="isActive"
+                    :tabindex="-1"
                     :class="menuMobileOverlayClasses"
                     :aria-hidden="!isActive" />
             </transition>
@@ -618,10 +612,10 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     v-trap-focus="trapFocus"
                     :tabindex="menuTabindex"
                     :class="menuClasses"
-                    :aria-hidden="!isActive"
+                    :style="menuStyle"
                     :role="ariaRole"
-                    :aria-modal="!inline && trapFocus"
-                    :style="menuStyle">
+                    :aria-hidden="!isActive"
+                    :aria-modal="!inline && trapFocus">
                     <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state

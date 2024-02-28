@@ -1,3 +1,14 @@
+## [0.8.5](https://github.com/oruga-ui/oruga/compare/v0.8.4...v0.8.5) (2024-02-26)
+
+
+### Bug Fixes
+
+* check scrolling parent not null ([#813](https://github.com/oruga-ui/oruga/issues/813)) ([e471f76](https://github.com/oruga-ui/oruga/commit/e471f76c7a7b85a5f069b433b59610d66e979fca))
+* fix generation scripts ([#814](https://github.com/oruga-ui/oruga/issues/814)) ([27fe3b5](https://github.com/oruga-ui/oruga/commit/27fe3b568a9d4d8e4830dcbe36c57ccaa116e7af))
+* **datepicker|timepicker:** wrap focus listener into function ([#810](https://github.com/oruga-ui/oruga/issues/810)) ([b1b6586](https://github.com/oruga-ui/oruga/commit/b1b6586f1ff8516d96eda1625d0432d98113f816))
+
+
+
 ## [0.8.4](https://github.com/oruga-ui/oruga/compare/v0.8.3...v0.8.4) (2024-02-24)
 
 

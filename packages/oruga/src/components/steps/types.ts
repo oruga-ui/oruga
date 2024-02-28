@@ -18,7 +18,7 @@ export type StepItemComponent = StepItemProps & {
 };
 
 export type StepsComponent = {
-    activeId: string | number;
+    activeValue: string | number;
     vertical: boolean;
     animated: boolean;
     animation: string[];
