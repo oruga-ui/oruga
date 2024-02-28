@@ -1,4 +1,6 @@
-import InstanceRegistry from "@utils/InstanceRegistry";
+import { describe, it, expect } from "vitest";
+
+import InstanceRegistry from "./InstanceRegistry";
 
 describe("InstanceRegistry", () => {
     describe(".add", () => {
