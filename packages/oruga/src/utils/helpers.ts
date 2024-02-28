@@ -130,6 +130,9 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
     // Check if only one value is empty.
     if ((!valueA && !!valueB) || (!!valueA && !valueB)) return false;
 
+    // If both objects are identical, return true.
+    if (valueA === valueB) return true;
+
     // Check if both values are objecs.
     if (isObject(valueA) && isObject(valueB)) {
         // Get the keys of both objects.
@@ -155,7 +158,7 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
     }
 
     // Check if both values are arrays.
-    else if (Array.isArray(valueA) && Array.isArray(valueB)) {
+    if (Array.isArray(valueA) && Array.isArray(valueB)) {
         // Check if the number of keys is the same.
         if (valueA.length !== valueB.length) return false;
         // Check if each value of the array is the same.
@@ -164,8 +167,7 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
         return true;
     }
 
-    // If both objects are identical, return true.
-    else return valueA === valueB;
+    return false;
 }
 
 /**
