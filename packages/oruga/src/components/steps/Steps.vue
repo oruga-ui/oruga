@@ -6,14 +6,9 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { isDefined } from "@/utils/helpers";
-import {
-    defineClasses,
-    useProviderParent,
-    useVModelBinding,
-    useMatchMedia,
-} from "@/composables";
+import { defineClasses, useProviderParent, useMatchMedia } from "@/composables";
 
-import type { StepItem, StepItemComponent } from "./types";
+import type { StepItem, StepItemComponent, StepsComponent } from "./types";
 import type { ComponentClass, ClassBind } from "@/types";
 
 /**
@@ -243,8 +238,8 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const rootRef = ref();
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed(() => ({
-    activeId: activeId.value,
+const provideData = computed<StepsComponent>(() => ({
+    activeValue: vmodel.value,
     vertical: props.vertical,
     animated: props.animated,
     animation: props.animation,
@@ -264,19 +259,19 @@ const items = computed<StepItem[]>(() =>
     })),
 );
 
-const activeId = useVModelBinding(props, emits, { passive: true });
+const vmodel = defineModel<string | number>();
 
 /** When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (activeId.value !== value) performAction(value);
+        if (vmodel.value !== value) performAction(value);
     },
 );
 
 const activeItem = computed(() =>
-    isDefined(activeId)
-        ? items.value.find((item) => item.value === activeId.value) ||
+    isDefined(vmodel.value)
+        ? items.value.find((item) => item.value === vmodel.value) ||
           items.value[0]
         : items.value[0],
 );
@@ -339,7 +334,7 @@ function next(): void {
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem): void {
-    if (activeId.value !== item.value) performAction(item.value);
+    if (vmodel.value !== item.value) performAction(item.value);
 }
 
 /** Activate next child and deactivate prev child */
@@ -355,7 +350,7 @@ function performAction(newId: number | string): void {
     }
 
     nextTick(() => {
-        activeId.value = newId;
+        vmodel.value = newId;
         emits("change", newId, oldId);
     });
 }
