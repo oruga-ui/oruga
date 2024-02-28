@@ -123,7 +123,6 @@ const rootClasses = defineClasses(
         :tabindex="tabindex"
         data-oruga="dropdown-item"
         @click="selectItem">
-        {{ isActive }}
         <!--
             @slot Override the label, default is label prop 
         -->

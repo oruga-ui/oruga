@@ -126,24 +126,46 @@ export function clone<T extends object>(obj: T): T {
     return Object.assign({}, obj);
 }
 
-export function isEqual(object1: unknown, object2: unknown): boolean {
-    const keys1 = Object.keys(object1);
-    const keys2 = Object.keys(object2);
+export function isEqual(valueA: unknown, valueB: unknown): boolean {
+    // Check if only one value is empty.
+    if ((!valueA && !!valueB) || (!!valueA && !valueB)) return false;
 
-    if (keys1.length !== keys2.length) return false;
+    // Check if both values are objecs.
+    if (isObject(valueA) && isObject(valueB)) {
+        // Get the keys of both objects.
+        const keys1 = Object.keys(valueA);
+        const keys2 = Object.keys(valueB);
 
-    for (const key of keys1) {
-        const val1 = object1[key];
-        const val2 = object2[key];
-        const areObjects = isObject(val1) && isObject(val2);
-        if (
-            (areObjects && !isEqual(val1, val2)) ||
-            (!areObjects && val1 !== val2)
-        )
-            return false;
+        // Check if the number of keys is the same.
+        if (keys1.length !== keys2.length) return false;
+
+        // Iterate through the keys and compare their values recursively.
+        for (const key of keys1) {
+            const val1 = valueA[key];
+            const val2 = valueB[key];
+            const areObjects = isObject(val1) && isObject(val2);
+            if (
+                (areObjects && !isEqual(val1, val2)) ||
+                (!areObjects && val1 !== val2)
+            )
+                return false;
+        }
+        // If all checks pass, the objects are deep equal.
+        return true;
     }
 
-    return true;
+    // Check if both values are arrays.
+    else if (Array.isArray(valueA) && Array.isArray(valueB)) {
+        // Check if the number of keys is the same.
+        if (valueA.length !== valueB.length) return false;
+        // Check if each value of the array is the same.
+        if (!valueA.every((val, index) => val === valueB[index])) return false;
+        // If all checks pass, the arrays are deep equal.
+        return true;
+    }
+
+    // If both objects are identical, return true.
+    else return valueA === valueB;
 }
 
 /**
