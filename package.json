@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "concurrently \"npm run dev -w @oruga-ui/oruga-next\" \"npm run dev -w @oruga-ui/docs-next\"",
     "dev:watch": "concurrently \"npm run build:lib:watch\" \"npm run build:docs:watch\"",
-    "test": "npm run test --workspace @oruga-ui/oruga-next",
+    "test": "npm run test:coverage --workspace @oruga-ui/oruga-next",
     "test:ts": "npm run test:ts --workspace @oruga-ui/oruga-next",
     "test:watch": "npm run test:watch --workspace @oruga-ui/oruga-next",
     "build:docs": "npm run docs:build --workspace @oruga-ui/docs-next",
