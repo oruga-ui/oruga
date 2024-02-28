@@ -11,7 +11,7 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "baseUrl": ".",
-    "types": ["cypress", "node", "vite/client"],
+    "types": ["node", "vite/client"],
     "paths": {
       "@/*": [
         "src/*",
@@ -30,7 +30,6 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "./cypress/cypress.d.ts"
   ],
   "exclude": [
     "node_modules"

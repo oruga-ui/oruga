@@ -21,7 +21,7 @@ jobs:
       - name: Run component tests 🧪
         run: npm run test
       - name: Upload coverage 📈
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: oruga-next
