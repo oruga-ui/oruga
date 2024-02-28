@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies 📦
         run: npm install
       - name: Run component tests 🧪
-        run: npm run test:coverage
+        run: npm run test
       - name: Upload coverage 📈
         uses: codecov/codecov-action@v4
         with:
