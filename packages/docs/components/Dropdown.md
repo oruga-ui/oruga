@@ -68,14 +68,14 @@ title: Dropdown
 
 ### Events
 
-| Event name        | Properties                                                                     | Description                                    |
-| ----------------- | ------------------------------------------------------------------------------ | ---------------------------------------------- |
-| update:modelValue | **value** `[String, Number, Boolean, Object, Array]` - updated modelValue prop | modelValue prop two-way binding                |
-| update:active     | **value** `boolean` - updated active prop                                      | active prop two-way binding                    |
-| change            | **value** `any` - selected value                                               | on change event                                |
-| close             | **method** `string` - close method                                             | on close event                                 |
-| scroll-start      |                                                                                | the list inside the dropdown reached the start |
-| scroll-end        |                                                                                | the list inside the dropdown reached it's end  |
+| Event name        | Properties                                                                     | Description                                     |
+| ----------------- | ------------------------------------------------------------------------------ | ----------------------------------------------- |
+| update:modelValue | **value** `[String, Number, Boolean, Object, Array]` - updated modelValue prop | modelValue prop two-way binding                 |
+| update:active     | **value** `boolean` - updated active prop                                      | active prop two-way binding                     |
+| change            | **value** `any` - selected value                                               | on change event - fired after modelValue:update |
+| close             | **method** `string` - close method                                             | on close event                                  |
+| scroll-start      |                                                                                | the list inside the dropdown reached the start  |
+| scroll-end        |                                                                                | the list inside the dropdown reached it's end   |
 
 ### Slots
 

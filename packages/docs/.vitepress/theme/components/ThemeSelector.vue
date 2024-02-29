@@ -1,20 +1,8 @@
 <script setup>
-import { ref, watch } from "vue";
-
 // Import theme definitions
 import themes from "../../themes.json";
 
-const props = defineProps(["theme"]);
-const emits = defineEmits(["update:theme"]);
-
-const selectedTheme = ref();
-
-// implement v-model for theme prop
-watch(
-    () => props.theme,
-    (theme) => (selectedTheme.value = theme),
-);
-watch(selectedTheme, (theme) => emits("update:theme", theme));
+const selectedTheme = defineModel("theme");
 
 selectedTheme.value = loadTheme();
 
@@ -42,7 +30,7 @@ function onThemeChange(theme) {
 
 <template>
     <o-dropdown
-        v-model="selectedTheme"
+        :model-value="selectedTheme"
         root-class="theme-selector"
         aria-role="list"
         @change="onThemeChange">
@@ -55,9 +43,8 @@ function onThemeChange(theme) {
 
         <o-dropdown-item
             v-for="item in themes"
-            :key="item.value"
+            :key="item.key"
             :value="item"
-            clickable
             aria-role="listitem">
             {{ item.label }}
         </o-dropdown-item>
