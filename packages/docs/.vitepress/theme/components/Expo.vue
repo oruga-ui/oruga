@@ -3,32 +3,34 @@ import VueTelescopeExpo from "./expo/VueTelescopeExpo.vue";
 </script>
 
 <template>
-    <vue-telescope-expo
-        :slugs="{ ui: 'oruga' }"
-        sort-by="lastDetectedAt"
-        sort-direction="desc">
-        <template #buttons="{ loading, hasMoreItems, loadMoreItems }">
-            <o-button
-                v-if="hasMoreItems"
-                root-class="loadingbtn"
-                wrapper-class="loadingbtnwrapper"
-                @click="loadMoreItems">
-                <o-icon
-                    v-if="loading"
-                    root-class="loadingicon"
-                    pack="fas"
-                    icon="sync-alt"
-                    spin>
-                </o-icon>
-                <span v-else>Load more</span>
-            </o-button>
-        </template>
+    <ClientOnly>
+        <vue-telescope-expo
+            :slugs="{ ui: 'oruga' }"
+            sort-by="lastDetectedAt"
+            sort-direction="desc">
+            <template #buttons="{ loading, hasMoreItems, loadMoreItems }">
+                <o-button
+                    v-if="hasMoreItems"
+                    root-class="loadingbtn"
+                    wrapper-class="loadingbtnwrapper"
+                    @click="loadMoreItems">
+                    <o-icon
+                        v-if="loading"
+                        root-class="loadingicon"
+                        pack="fas"
+                        icon="sync-alt"
+                        spin>
+                    </o-icon>
+                    <span v-else>Load more</span>
+                </o-button>
+            </template>
 
-        <template #retry="{ firstLoadItems }">
-            <p>Something went wrong!</p>
-            <o-button label="Retry" @click="firstLoadItems" />
-        </template>
-    </vue-telescope-expo>
+            <template #retry="{ firstLoadItems }">
+                <p>Something went wrong!</p>
+                <o-button label="Retry" @click="firstLoadItems" />
+            </template>
+        </vue-telescope-expo>
+    </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
