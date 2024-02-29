@@ -385,6 +385,9 @@ watch(
                 else if (isFocused.value && (!props.openOnFocus || value))
                     isActive.value = !!value;
             });
+        } else {
+            // Open if you have search string but no results and empty template is present
+            if (!!slots.empty && isEmpty.value) isActive.value = !!value;
         }
     },
 );
