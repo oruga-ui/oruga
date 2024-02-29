@@ -13,11 +13,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import {
-    defineClasses,
-    useVModelBinding,
-    useInputHandler,
-} from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/useFieldShare";
 
@@ -39,7 +35,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** @model */
-    modelValue: { type: [String, Number], default: "" },
+    modelValue: { type: String, default: "" },
     /**
      * Input type, like native
      * @values Any native input type, and textarea
@@ -209,15 +205,15 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: string): void;
     /**
      * on input change event
-     * @param value {string | number} input value
+     * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string | number, event: Event): void;
+    (e: "input", value: string, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -268,17 +264,16 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = useVModelBinding<string | number>(props, emits, {
-    passive: true,
-});
+const vmodel = defineModel<string>();
 
 /** Get value length */
-const valueLength = computed(() =>
-    typeof vmodel.value === "string"
-        ? vmodel.value.length
-        : typeof vmodel.value === "number"
-          ? vmodel.value.toString().length
-          : 0,
+const valueLength = computed(
+    () => vmodel.value.length,
+    // typeof vmodel.value === "string"
+    //     ? vmodel.value.length
+    //     : typeof vmodel.value === "number"
+    //       ? vmodel.value.toString().length
+    //       : 0,
 );
 
 onMounted(() => {
@@ -355,7 +350,7 @@ const computedIconRightVariant = computed(() =>
         : statusVariant.value,
 );
 
-function iconClick(emit, event): void {
+function iconClick(emit, event: Event): void {
     emits(emit, event);
     nextTick(() => setFocus());
 }
@@ -370,13 +365,13 @@ function rightIconClick(event: Event): void {
 
 const isPasswordVisible = ref(false);
 
-const inputType = computed(() => {
-    if (props.passwordReveal) {
-        return isPasswordVisible.value ? "text" : "password";
-    } else {
-        return props.type;
-    }
-});
+const inputType = computed(() =>
+    props.passwordReveal
+        ? isPasswordVisible.value
+            ? "text"
+            : "password"
+        : props.type,
+);
 
 /** Current password-reveal icon name. */
 const passwordVisibleIcon = computed(() =>
