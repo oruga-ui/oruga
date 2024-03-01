@@ -6,6 +6,7 @@ import { useEventListener } from "./useEventListener";
 import { removeElement } from "@/utils/helpers";
 
 type ProgrammaticProps = {
+    // TODO: remove active from here and use it in the component by the onClose event
     active: boolean;
     /** Define if the component is cancelable at all or by specific events. */
     cancelable?: boolean | string[];
@@ -18,7 +19,7 @@ type ProgrammaticProps = {
     /** This defines the programmatic usage. */
     programmatic?: ProgrammaticInstance;
 };
-
+// TODO: combine both types
 export interface ProgrammaticOptions {
     /** Method options that allow the component to be cancelled. */
     cancelOptions?: string[];
@@ -39,6 +40,7 @@ export interface ProgrammaticOptions {
 export function useProgrammaticComponent(
     elementRef: Ref<HTMLElement> | (() => HTMLElement),
     props: ProgrammaticProps,
+    // remove events and make them in the components
     emits: {
         (e: "update:active", value: boolean): void;
         (e: "close", ...args: any[]): void;
