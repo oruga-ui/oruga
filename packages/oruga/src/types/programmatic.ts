@@ -18,6 +18,6 @@ export interface ProgrammaticInstance<T = ComponentInternalInstance> {
  * because the exposed data isn't included.
  */
 export interface ProgrammaticExpose {
-    close(args: object): void;
-    promise: Promise<void>;
+    close(...args: any[]): void;
+    promise: Promise<unknown>;
 }
