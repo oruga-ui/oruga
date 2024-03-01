@@ -1,13 +1,13 @@
 <p align="center">
     <a href="https://oruga-ui.com">
-        <img width="240" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs-next/public/logo.png" />
+        <img width="240" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/public/logo.png" />
     </a>
 </p>
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
-    <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build-next.yml/badge.svg" /><a>
+    <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build.yml/badge.svg" /><a>
     <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://codecov.io/gh/oruga-ui/oruga/branch/develop/graph/badge.svg?flag=oruga-next" /></a>
 </p>
 
@@ -62,14 +62,6 @@ Browse [online documentation here](https://oruga-ui.com/documentation/).
 🕹 To see Oruga in action, go to the [Example section](https://oruga-ui.com/documentation/#examples) in the documentation.
 
 Note: the documentation source code is in the `docs` directory, it serves as the demo as well.
-
-## Browser support
-
-🌎 Oruga has been tested in all major browsers
-
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) |
---- | --- | --- | --- | --- |
-Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 ## Quick start
 

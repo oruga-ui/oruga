@@ -1,5 +1,5 @@
 // The file is not designed to run directly. `cwd` should be project root.
-import fs from 'fs-extra'
+import fs from 'fs'
 import path from 'path'
 import process from 'process'
 
@@ -45,6 +45,6 @@ export {};
 }
 
 // generate main package volar file
-generateComponentsType("@oruga-ui/oruga-next", 'volar.d.ts');
+generateComponentsType("@oruga-ui/oruga-next", './packages/oruga/volar.d.ts');
 // generate docs package volar file 
-generateComponentsType("../oruga-next/dist/types", '../docs-next/volar.d.ts');
+generateComponentsType("../oruga/dist/types", './packages/docs/volar.d.ts');
