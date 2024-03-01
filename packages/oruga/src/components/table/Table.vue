@@ -1438,7 +1438,7 @@ const tableWrapperClasses = defineClasses(
         "stickyHeaderClass",
         "o-table__wrapper--sticky-header",
         null,
-        computed(() => props.stickyHeader),
+        computed(() => !!props.stickyHeader),
     ],
     ["scrollableClass", "o-table__wrapper--scrollable", null, isScrollable],
     ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
