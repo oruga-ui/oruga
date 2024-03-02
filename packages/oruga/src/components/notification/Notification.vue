@@ -72,11 +72,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("notification.animation", "fade"),
     },
-    /** Accessibility label for the close button */
-    ariaCloseLabel: {
-        type: String,
-        default: () => getOption("notification.ariaCloseLabel", "Close"),
-    },
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -109,6 +104,11 @@ const props = defineProps({
     closeIconSize: {
         type: String,
         default: () => getOption("notification.closeIconSize"),
+    },
+    /** Accessibility label for the close button */
+    ariaCloseLabel: {
+        type: String,
+        default: () => getOption("notification.ariaCloseLabel", "Close"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element */

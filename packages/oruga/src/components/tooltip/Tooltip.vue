@@ -208,7 +208,11 @@ watch(isActive, (value) => {
             if (cancelOptions.value.indexOf("outside") >= 0) {
                 // set outside handler
                 eventCleanups.value.push(
-                    useClickOutside(contentRef, onClickedOutside, [triggerRef]),
+                    useClickOutside(contentRef, onClickedOutside, {
+                        ignore: [triggerRef],
+                        immediate: true,
+                        passive: true,
+                    }),
                 );
             }
 
