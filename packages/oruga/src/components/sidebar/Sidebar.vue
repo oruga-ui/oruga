@@ -4,6 +4,7 @@ import {
     computed,
     watch,
     onBeforeUnmount,
+    onMounted,
     type Component,
     type PropType,
 } from "vue";
@@ -328,6 +329,10 @@ onBeforeUnmount(() => {
         document.documentElement.scrollTop = scrollto;
         document.body.style.top = null;
     }
+});
+
+onMounted(() => {
+    if (isActive.value && props.overlay) handleScroll();
 });
 
 // --- Events Feature ---

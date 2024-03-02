@@ -5,6 +5,7 @@ import {
     watch,
     nextTick,
     onBeforeUnmount,
+    onMounted,
     type Component,
     type PropType,
 } from "vue";
@@ -292,6 +293,10 @@ onBeforeUnmount(() => {
     }
 });
 
+onMounted(() => {
+    if (isActive.value && props.overlay) handleScroll();
+});
+
 // --- Events Feature ---
 
 if (isClient) {
@@ -395,9 +400,6 @@ const scrollClass = computed(() =>
         props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
     ),
 );
-
-// computed ref must be computed at least once for programmatic usage
-// scrollClass.value; // TODO: maybe raus?
 
 // --- Expose Public Functionalities ---
 
