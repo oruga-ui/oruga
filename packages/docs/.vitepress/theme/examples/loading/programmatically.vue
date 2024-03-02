@@ -1,10 +1,10 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from "vue";
 import { useOruga } from "../../../../../oruga/dist/oruga";
 
 const oruga = useOruga();
 
-const elementRef = ref<HTMLElement | null>(null);
+const elementRef = ref(null);
 const isFullPage = ref(true);
 
 function openLoading() {
