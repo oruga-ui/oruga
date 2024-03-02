@@ -316,6 +316,10 @@ watch(isActive, () => {
     if (props.overlay) handleScroll();
 });
 
+onMounted(() => {
+    if (isActive.value && props.overlay) handleScroll();
+});
+
 onBeforeUnmount(() => {
     if (isClient && props.overlay) {
         // reset scroll
@@ -329,10 +333,6 @@ onBeforeUnmount(() => {
         document.documentElement.scrollTop = scrollto;
         document.body.style.top = null;
     }
-});
-
-onMounted(() => {
-    if (isActive.value && props.overlay) handleScroll();
 });
 
 // --- Events Feature ---
@@ -489,9 +489,6 @@ const scrollClass = computed(() =>
         props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
     ),
 );
-
-// computed ref must be computed at least once for programmatic usage
-scrollClass.value;
 
 // --- Expose Public Functionalities ---
 

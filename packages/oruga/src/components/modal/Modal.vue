@@ -278,6 +278,10 @@ watch(isActive, (value) => {
         setTimeout(() => removeElement(rootRef.value));
 });
 
+onMounted(() => {
+    if (isActive.value && props.overlay) handleScroll();
+});
+
 onBeforeUnmount(() => {
     if (isClient && props.overlay) {
         // reset scroll
@@ -291,10 +295,6 @@ onBeforeUnmount(() => {
         document.documentElement.scrollTop = scrollto;
         document.body.style.top = null;
     }
-});
-
-onMounted(() => {
-    if (isActive.value && props.overlay) handleScroll();
 });
 
 // --- Events Feature ---
