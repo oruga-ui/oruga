@@ -13,7 +13,7 @@ function openLoading() {
         container: isFullPage.value ? null : elementRef.value,
         overlay: !isFullPage.value,
     });
-    setTimeout(() => loadingComponent.close(), 50 * 1000);
+    setTimeout(() => loadingComponent.close(), 3 * 1000);
 }
 </script>
 
