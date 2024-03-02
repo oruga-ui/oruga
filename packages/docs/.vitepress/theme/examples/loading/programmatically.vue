@@ -11,7 +11,6 @@ function openLoading() {
     const loadingComponent = oruga.loading.open({
         fullPage: isFullPage.value,
         container: isFullPage.value ? null : elementRef.value,
-        overlay: !isFullPage.value,
     });
     setTimeout(() => loadingComponent.close(), 3 * 1000);
 }
