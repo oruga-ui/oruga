@@ -162,7 +162,7 @@ onBeforeMount(() => {
                 name="searchable"
                 :column="null"
                 :index="null"
-                :filter="null" />
+                :filters="null" />
         </template>
     </span>
 </template>
