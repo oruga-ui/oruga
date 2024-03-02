@@ -35,6 +35,7 @@ const SidebarProgrammatic = {
         const vnode = createVNode(Sidebar, propsData);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
+
         // return exposed functionalities
         return vnode.component.exposed as ProgrammaticExpose;
     },

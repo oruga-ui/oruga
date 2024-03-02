@@ -3,7 +3,6 @@ import {
     ref,
     computed,
     watch,
-    onMounted,
     onBeforeUnmount,
     type Component,
     type PropType,
@@ -15,6 +14,7 @@ import {
     defineClasses,
     getActiveClasses,
     useClickOutside,
+    useEventListener,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
@@ -98,9 +98,7 @@ const props = defineProps({
         type: [Array, Boolean] as PropType<string[] | boolean>,
         default: () => getOption("sidebar.cancelable", ["escape", "outside"]),
     },
-    /** Callback function to call after user canceled (pressed escape / clicked outside) */
-    onCancel: { type: Function as PropType<() => void>, default: () => {} },
-    /** Callback function to call after close (programmatically close or user canceled) */
+    /** Callback function to call on close (programmatically close or user canceled) */
     onClose: { type: Function as PropType<() => void>, default: () => {} },
     /**
      * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
@@ -263,29 +261,27 @@ const emits = defineEmits<{
 }>();
 
 const rootRef = ref();
-const sidebarContent = ref();
+const contentRef = ref();
+
+const isActive = defineModel<boolean>("active");
+
+function handleClose(...args: any[]): void {
+    if (typeof props.onClose === "function" && isActive.value)
+        props.onClose.apply(args);
+    isActive.value = false;
+    emits("close", args);
+}
 
 /** add programmatic usage to this component */
-const { isActive, close, cancel } = useProgrammaticComponent(
-    rootRef,
-    props,
-    emits,
-    {
-        destroyOnHide: props.destroyOnHide,
-        cancelOptions: getOption("sidebar.cancelable", ["escape", "outside"]),
-    },
-);
+const { close, cancel } = useProgrammaticComponent(rootRef, {
+    container: props.container,
+    programmatic: props.programmatic,
+    cancelable: props.cancelable,
+    destroy: props.destroyOnHide,
+    onClose: handleClose,
+});
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
-
-const savedScrollTop = ref(null);
-const isAnimating = ref(!props.active);
-
-watch(isActive, (value) => {
-    if (props.overlay) handleScroll();
-    if (value) addHandler();
-    else removeHandler();
-});
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
@@ -313,46 +309,47 @@ const hideOnMobile = computed(
     () => props.mobile === "hidden" && isMobile.value,
 );
 
-onMounted(() => {
-    if (props.active) addHandler();
+const savedScrollTop = ref(null);
+
+watch(isActive, () => {
+    if (props.overlay) handleScroll();
 });
 
 onBeforeUnmount(() => {
-    removeHandler();
-    if (isClient) {
-        if (props.overlay) {
-            // reset scroll
-            const scrollto = savedScrollTop.value
-                ? savedScrollTop.value
-                : document.documentElement.scrollTop;
-            if (scrollClass.value) {
-                document.body.classList.remove(...scrollClass.value);
-                document.documentElement.classList.remove(...scrollClass.value);
-            }
-            document.documentElement.scrollTop = scrollto;
-            document.body.style.top = null;
+    if (isClient && props.overlay) {
+        // reset scroll
+        const scrollto = savedScrollTop.value
+            ? savedScrollTop.value
+            : document.documentElement.scrollTop;
+        if (scrollClass.value) {
+            document.body.classList.remove(...scrollClass.value);
+            document.documentElement.classList.remove(...scrollClass.value);
         }
+        document.documentElement.scrollTop = scrollto;
+        document.body.style.top = null;
     }
 });
 
-let removeOutsideListener = null;
+// --- Events Feature ---
 
-/** add outside click event listener */
-function addHandler(): void {
-    if (isClient && !props.overlay) {
-        removeOutsideListener = useClickOutside(sidebarContent, clickedOutside);
-    }
+if (isClient) {
+    // register onKeyPress event listener when is active
+    useEventListener("keyup", onKeyPress, rootRef.value, { trigger: isActive });
+    if (!props.overlay)
+        // register outside click event listener when is active
+        useClickOutside(contentRef, clickedOutside, { trigger: isActive });
 }
 
-/** remove outside click event listener */
-function removeHandler(): void {
-    if (removeOutsideListener !== null) removeOutsideListener();
+/** Keypress event that is bound to the document. */
+function onKeyPress(event: KeyboardEvent): void {
+    if (!isActive.value) return;
+    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
 }
 
 /** Close fixed sidebar if clicked outside. */
 function clickedOutside(event: Event): void {
     if (props.inline || !isActive.value || isAnimating.value) return;
-    if (props.overlay || !event.composedPath().includes(sidebarContent.value))
+    if (props.overlay || !event.composedPath().includes(contentRef.value))
         event.preventDefault();
     cancel("outside");
 }
@@ -389,6 +386,10 @@ function handleScroll(): void {
     document.body.style.top = null;
     savedScrollTop.value = null;
 }
+
+// --- Animation Feature ---
+
+const isAnimating = ref(!props.active);
 
 /** Transition after-enter hook */
 function afterEnter(): void {
@@ -506,15 +507,13 @@ defineExpose({ close, promise: props.promise });
                 :class="overlayClasses"
                 :tabindex="-1"
                 aria-hidden="true"
-                @click="(evt) => clickedOutside(evt)" />
+                @click="clickedOutside($event)" />
+
             <transition
                 :name="transitionName"
                 @after-enter="afterEnter"
                 @before-leave="beforeLeave">
-                <div
-                    v-show="isActive"
-                    ref="sidebarContent"
-                    :class="contentClasses">
+                <div v-show="isActive" ref="contentRef" :class="contentClasses">
                     <!--
                         @slot Sidebar default content, default is component prop
                         @binding {(...args):void} close - function to close the component

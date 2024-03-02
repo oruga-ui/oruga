@@ -1,19 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useOruga } from "../../../../../oruga/dist/oruga";
 
 const oruga = useOruga();
 
-const elementRef = ref();
-
+const elementRef = ref<HTMLElement | null>(null);
 const isFullPage = ref(true);
 
 function openLoading() {
     const loadingComponent = oruga.loading.open({
         fullPage: isFullPage.value,
         container: isFullPage.value ? null : elementRef.value,
+        overlay: !isFullPage.value,
     });
-    setTimeout(() => loadingComponent.close(), 3 * 1000);
+    setTimeout(() => loadingComponent.close(), 50 * 1000);
 }
 </script>
 
