@@ -219,7 +219,7 @@ const props = defineProps({
     /** Add a horizontal scrollbar when table is too wide */
     scrollable: { type: Boolean, default: undefined },
     /** Show a sticky table header */
-    stickyHeader: { type: Boolean, default: undefined },
+    stickyHeader: { type: Boolean, default: false },
     /** Table fixed height */
     height: { type: [Number, String], default: undefined },
     /** Add a native event to filter */
@@ -1438,7 +1438,7 @@ const tableWrapperClasses = defineClasses(
         "stickyHeaderClass",
         "o-table__wrapper--sticky-header",
         null,
-        computed(() => !!props.stickyHeader),
+        computed(() => props.stickyHeader),
     ],
     ["scrollableClass", "o-table__wrapper--scrollable", null, isScrollable],
     ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
