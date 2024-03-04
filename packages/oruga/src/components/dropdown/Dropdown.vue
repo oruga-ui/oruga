@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch, type PropType } from "vue";
+import {
+    computed,
+    nextTick,
+    ref,
+    watch,
+    onUnmounted,
+    type PropType,
+} from "vue";
 
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
@@ -281,17 +288,6 @@ watch(
     (v) => (autoPosition.value = v),
 );
 
-/** toggle isActive value when prop is changed */
-watch(
-    () => props.active,
-    (value) => {
-        if (!value) isActive.value = value;
-        // if not active, toggle after clickOutside event
-        // this fixes toggling programmatic
-        else setTimeout(() => (isActive.value = value));
-    },
-);
-
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 // check if mobile modal should be shown
@@ -314,34 +310,46 @@ const hoverable = computed(() => props.triggers.indexOf("hover") >= 0);
 const contentRef = ref<HTMLElement>();
 const triggerRef = ref<HTMLElement>();
 
-const eventCleanups = ref([]);
-const timer = ref();
+const eventCleanups = [];
+let timer: NodeJS.Timeout;
 
-watch(isActive, (value) => {
-    // on active set event handler
-    if (value && isClient) {
-        setTimeout(() => {
-            if (cancelOptions.value.indexOf("outside") >= 0) {
-                // set outside handler
-                eventCleanups.value.push(
-                    useClickOutside(contentRef, onClickedOutside, [triggerRef]),
-                );
-            }
+watch(
+    isActive,
+    (value) => {
+        // on active set event handler
+        if (value && isClient) {
+            setTimeout(() => {
+                if (cancelOptions.value.indexOf("outside") >= 0) {
+                    // set outside handler
+                    eventCleanups.push(
+                        useClickOutside(contentRef, onClickedOutside, [
+                            triggerRef,
+                        ]),
+                    );
+                }
 
-            if (cancelOptions.value.indexOf("escape") >= 0) {
-                // set keyup handler
-                eventCleanups.value.push(
-                    useEventListener("keyup", onKeyPress, document, {
-                        immediate: true,
-                    }),
-                );
-            }
-        });
-    } else if (!value) {
-        // on close cleanup event handler
-        eventCleanups.value.forEach((fn) => fn());
-        eventCleanups.value.length = 0;
-    }
+                if (cancelOptions.value.indexOf("escape") >= 0) {
+                    // set keyup handler
+                    eventCleanups.push(
+                        useEventListener("keyup", onKeyPress, document, {
+                            immediate: true,
+                        }),
+                    );
+                }
+            });
+        } else if (!value) {
+            // on close cleanup event handler
+            eventCleanups.forEach((fn) => fn());
+            eventCleanups.length = 0;
+        }
+    },
+    { immediate: true },
+);
+
+onUnmounted(() => {
+    // on close cleanup event handler
+    eventCleanups.forEach((fn) => fn());
+    eventCleanups.length = 0;
 });
 
 const cancelOptions = computed(() =>
@@ -411,9 +419,9 @@ function toggle(): void {
 function open(): void {
     if (props.disabled) return;
     if (props.delay) {
-        timer.value = setTimeout(() => {
+        timer = setTimeout(() => {
             isActive.value = true;
-            timer.value = null;
+            timer = null;
         }, props.delay);
     } else {
         isActive.value = true;
@@ -424,7 +432,7 @@ function onClose(): void {
     if (cancelOptions.value.indexOf("content") < 0) return;
     emits("close", "content");
     isActive.value = !props.closeable;
-    if (timer.value && props.closeable) clearTimeout(timer.value);
+    if (timer && props.closeable) clearTimeout(timer);
 }
 
 // --- InfitiveScroll Feature ---
