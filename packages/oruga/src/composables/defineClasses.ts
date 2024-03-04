@@ -84,7 +84,9 @@ export function defineClasses(
             scope.run(() => {
                 watch(
                     () => toValue(suffix),
-                    () => {
+                    (value, oldValue) => {
+                        // only recompute when value has really changed
+                        if (value === oldValue) return;
                         // recompute the class bind property
                         const classBind = getClassBind();
                         // update class binding property by class index
@@ -99,7 +101,10 @@ export function defineClasses(
             scope.run(() => {
                 watch(
                     () => toValue(apply),
-                    (applied) => {
+                    (applied, oldValue) => {
+                        // only change apply when value has really changed
+                        if (applied === oldValue) return;
+
                         // get class binding property by class index
                         const classBind = classes.value[index];
 
