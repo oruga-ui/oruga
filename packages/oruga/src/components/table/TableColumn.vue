@@ -57,7 +57,7 @@ const props = defineProps({
     /** Define a custom sort function */
     customSort: {
         type: Function as PropType<
-            (a: Column, b: Column, isAsc: boolean) => number
+            (a: unknown, b: unknown, isAsc: boolean) => number
         >,
         default: undefined,
     },
