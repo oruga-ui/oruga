@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import tsconfigPaths from "vite-tsconfig-paths";
-import istanbul from "vite-plugin-istanbul";
 import dts from "vite-plugin-dts";
 
 import babel from "@rollup/plugin-babel";
@@ -112,15 +111,11 @@ export default defineConfig(({ mode }) => ({
             ],
         },
     },
-    plugins: [
-        tsconfigPaths(),
-        vue(),
-        dts({ outDir: "./dist/types" }),
-        istanbul({
-            include: "src/*",
-            exclude: ["node_modules", "cypress/", "**/tests/*"],
-            extension: [".ts", ".vue"],
-            cypress: true,
-        }),
-    ],
+    plugins: [tsconfigPaths(), vue(), dts({ outDir: "./dist/types" })],
+    test: {
+        environment: "happy-dom",
+        coverage: {
+            provider: "istanbul",
+        },
+    },
 }));

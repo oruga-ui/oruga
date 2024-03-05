@@ -12,7 +12,9 @@ const theme = ref({ key: undefined });
 <template>
     <Layout :class="theme.key">
         <template #nav-bar-content-before>
-            <ThemeSelector v-if="hasSidebar" v-model:theme="theme" />
+            <ClientOnly>
+                <ThemeSelector v-if="hasSidebar" v-model:theme="theme" />
+            </ClientOnly>
         </template>
     </Layout>
 </template>

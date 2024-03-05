@@ -254,7 +254,7 @@ const emits = defineEmits<{
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on change event
+     * on change event - fired after modelValue:update
      * @param value {any} selected value
      */
     (e: "change", value: any): void;

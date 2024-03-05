@@ -1,3 +1,5 @@
+import { describe, it, expect } from "vitest";
+
 import { getOptions, setOptions } from "./config";
 
 describe("Configuration", () => {
