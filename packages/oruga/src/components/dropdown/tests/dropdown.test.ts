@@ -4,6 +4,7 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 import ODropdown from "@/components/dropdown/Dropdown.vue";
 import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
+import Dropdown from "@/components/dropdown/Dropdown.vue";
 
 describe("ODropdown", () => {
     enableAutoUnmount(afterEach);
@@ -165,6 +166,36 @@ describe("ODropdown", () => {
         await nextTick(); // await dom update
 
         expect(wrapper.classes("o-drop--active")).toBeTruthy();
+    });
+
+    test("react accordingly when mouse over without trigger", async () => {
+        const wrapper = mount(Dropdown, {
+            props: { triggers: ["click"] },
+            attachTo: document.body,
+        });
+
+        const trigger = wrapper.find(".o-drop__trigger");
+        await trigger.trigger("mouseenter");
+        expect(wrapper.find(".o-drop__menu").isVisible()).toBeFalsy();
+    });
+
+    test("react accordingly when mouse over with trigger", async () => {
+        const wrapper = mount(Dropdown, {
+            props: { triggers: ["hover"] },
+            attachTo: document.body,
+        });
+        const trigger = wrapper.find(".o-drop__trigger");
+        await trigger.trigger("mouseenter");
+        expect(wrapper.find(".o-drop__menu").isVisible()).toBeTruthy();
+    });
+
+    test("react accordingly when is disabled", async () => {
+        const wrapper = mount(Dropdown, {
+            props: { disabled: true, active: true },
+            attachTo: document.body,
+        });
+        expect(wrapper.classes("o-drop--disabled")).toBeTruthy();
+        expect(wrapper.find(".o-drop__menu").isVisible()).toBeFalsy();
     });
 
     test("reset events before destroy", async () => {

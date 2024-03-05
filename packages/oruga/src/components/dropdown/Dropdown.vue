@@ -477,12 +477,14 @@ function selectItem(value: any): void {
             // init new value array
             vmodel.value = [value];
         }
-        emits("change", vmodel.value);
+        // emit change after vmodel has changed
+        nextTick(() => emits("change", vmodel.value));
     } else {
         if (vmodel.value !== value) {
             // update a single value
             vmodel.value = value;
-            emits("change", vmodel.value);
+            // emit change after vmodel has changed
+            nextTick(() => emits("change", vmodel.value));
         }
     }
     if (!props.multiple) {
@@ -528,7 +530,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => isActive.value || props.inline),
     ],
-    ["hoverableClass", "", null, hoverable],
+    ["hoverableClass", "o-drop--hoverable", null, hoverable],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
@@ -608,7 +610,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     v-show="isActive"
                     :tabindex="-1"
                     :class="menuMobileOverlayClasses"
-                    :aria-hidden="!isActive" />
+                    :aria-hidden="disabled || !isActive" />
             </transition>
 
             <transition :name="animation">
@@ -622,7 +624,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :class="menuClasses"
                     :style="menuStyle"
                     :role="ariaRole"
-                    :aria-hidden="!isActive"
+                    :aria-hidden="disabled || !isActive"
                     :aria-modal="!inline && trapFocus">
                     <!--
                         @slot Place dropdown items here
