@@ -77,7 +77,7 @@ const emits = defineEmits<{
     (e: "click", value: T, event: Event): void;
 }>();
 
-const itemValue = (props.value || uuid()) as T;
+const itemValue = computed(() => (props.value || uuid()) as T);
 
 // Inject functionalities and data from the parent component
 const { parent } = useProviderChild<ComputedRef<DropdownComponent<T>>>();
@@ -90,16 +90,16 @@ const isActive = computed(() => {
     if (parent.value.selected === null) return false;
     if (parent.value.props.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected) =>
-            isEqual(itemValue, selected),
+            isEqual(itemValue.value, selected),
         );
-    return isEqual(itemValue, parent.value.selected);
+    return isEqual(itemValue.value, parent.value.selected);
 });
 
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(itemValue);
-    emits("click", itemValue, event);
+    parent.value.selectItem(itemValue.value);
+    emits("click", itemValue.value, event);
 }
 
 // --- Computed Component Classes ---
