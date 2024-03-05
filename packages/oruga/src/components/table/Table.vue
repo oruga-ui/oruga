@@ -1590,6 +1590,7 @@ function tdClasses(row: Row<T>, column: TableColumn<T>): ClassBind[] {
                                     v-if="headerCheckable"
                                     :model-value="isAllChecked"
                                     autocomplete="off"
+                                    name="row_check_all"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
                                     @update:model-value="checkAll" />
@@ -1662,6 +1663,7 @@ function tdClasses(row: Row<T>, column: TableColumn<T>): ClassBind[] {
                                     <o-checkbox
                                         :model-value="isAllChecked"
                                         autocomplete="off"
+                                        name="row_check_all"
                                         :variant="checkboxVariant"
                                         :disabled="isAllUncheckable"
                                         @update:model-value="checkAll" />
@@ -1696,6 +1698,7 @@ function tdClasses(row: Row<T>, column: TableColumn<T>): ClassBind[] {
                                 <o-input
                                     v-else
                                     v-model="filters[column.field]"
+                                    :name="`column_${column.field}_filter`"
                                     :type="column.numeric ? 'number' : 'search'"
                                     :pack="iconPack"
                                     :placeholder="filtersPlaceholder"
@@ -1786,6 +1789,7 @@ function tdClasses(row: Row<T>, column: TableColumn<T>): ClassBind[] {
                                 <o-checkbox
                                     :model-value="isChecked(row)"
                                     autocomplete="off"
+                                    :name="`row_${index}_check`"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
                                     @update:model-value="
