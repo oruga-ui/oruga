@@ -97,7 +97,7 @@ const props = defineProps({
     /** Add a horizontal scrollbar when table is too wide */
     scrollable: { type: Boolean, default: undefined },
     /** Show a sticky table header */
-    stickyHeader: { type: Boolean, default: undefined },
+    stickyHeader: { type: Boolean, default: false },
     /** Table fixed height */
     height: { type: [Number, String], default: undefined },
     /** Filtering debounce time (in milliseconds) */
@@ -207,6 +207,11 @@ const props = defineProps({
     detailTransition: {
         type: String,
         default: () => getOption("table.detailTransition", "slide"),
+    },
+    /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
+    customRowKey: {
+        type: String,
+        default: () => getOption("table.customRowKey"),
     },
     /** Adds pagination to the table */
     paginated: {

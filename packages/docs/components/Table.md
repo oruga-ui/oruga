@@ -190,12 +190,12 @@ title: Table
 
 ### Slots
 
-| Name       | Description               | Bindings                                                                                                                                                                                                        |
-| ---------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| default    | Default Slot              | **row** `Row` - row data<br/>**column** `Column` - column definition<br/>**index** `number` - row index<br/>**colindex** `number` - column index<br/>**toggle-details** `(row): void` - toggle details function |
-| header     | Override header label     | **column** `Column` - column definition<br/>**index** `number` - column index                                                                                                                                   |
-| subheading | Override subheading label | **column** `Column` - column definition<br/>**index** `number` - column index                                                                                                                                   |
-| searchable | Override searchable input | **column** `Column` - column definition<br/>**index** `number` - column index<br/>                                                                                                                              |
+| Name       | Description               | Bindings                                                                                                                                                                                                            |
+| ---------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| default    | Default Slot              | **row** `unknown` - row data<br/>**column** `Column` - column definition<br/>**index** `number` - row index<br/>**colindex** `number` - column index<br/>**toggle-details** `(row): void` - toggle details function |
+| header     | Override header label     | **column** `Column` - column definition<br/>**index** `number` - column index                                                                                                                                       |
+| subheading | Override subheading label | **column** `Column` - column definition<br/>**index** `number` - column index                                                                                                                                       |
+| searchable | Override searchable input | **column** `Column` - column definition<br/>**index** `number` - column index<br/>**filters** `Record&lt;string,string&gt;` - active filters object                                                                 |
 
 </div>
 

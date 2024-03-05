@@ -1,5 +1,3 @@
-import { unref } from "vue";
-
 /**
  * Generates a random string
  */
@@ -135,8 +133,7 @@ export function sortBy<T>(
 export const isObject = <T>(obj: T): boolean =>
     obj && typeof obj === "object" && !Array.isArray(obj);
 
-export const isDefined = <T>(d: T): boolean =>
-    unref(d) !== null && unref(d) !== undefined;
+export const isDefined = <T>(d: T): boolean => d !== null && d !== undefined;
 
 export function blankIfUndefined(value: string): string {
     return typeof value !== "undefined" && value !== null ? value : "";
