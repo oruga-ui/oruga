@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 
-import OPagination from "../pagination/Pagination.vue";
+import OPagination from "@/components/pagination/Pagination.vue";
 
 import type { ComponentClass } from "@/types";
 

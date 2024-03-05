@@ -7,13 +7,13 @@ import type { ObjectMap, ProviderItem } from "@/composables";
 
 import TableColumn from "./TableColumn.vue";
 
-export type Row<T = unknown> = ObjectMap<T>[number];
+export type TableRow<T = unknown> = ObjectMap<T>[number];
 
-export type Column<T = unknown> = ComponentProps<typeof TableColumn<T>>;
+export type TableColumn<T = unknown> = ComponentProps<typeof TableColumn<T>>;
 
-export type TableColumnSlots = ComponentSlots<typeof TableColumn>;
+type TableColumnSlots = ComponentSlots<typeof TableColumn>;
 
-export type TableColumnComponent<T = unknown> = Column<T> & {
+export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $el: ComponentPublicInstance;
     $slots: TableColumnSlots;
     style: StyleValue;
@@ -22,5 +22,5 @@ export type TableColumnComponent<T = unknown> = Column<T> & {
     isHeaderUnselectable: boolean;
 };
 
-export type TableColumn<T = unknown> = Omit<ProviderItem, "data"> &
+export type TableColumnItem<T = unknown> = Omit<ProviderItem, "data"> &
     TableColumnComponent<T>;

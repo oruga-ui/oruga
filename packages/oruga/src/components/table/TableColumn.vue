@@ -59,7 +59,6 @@ const props = defineProps({
     sortable: { type: Boolean, default: false },
     /** Define whether the column is visible or not */
     visible: { type: Boolean, default: true },
-
     /** Whether the column is sticky or not */
     sticky: { type: Boolean, default: false },
     /** Make header selectable */
