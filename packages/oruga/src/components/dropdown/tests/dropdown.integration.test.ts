@@ -168,4 +168,6 @@ describe("ODropdown Integration", () => {
         expect(dropdown.emitted("change")).toBeUndefined();
         expect(dropdown.emitted("close")).toBeUndefined();
     });
+
+    // TODO: add complex object values test
 });
