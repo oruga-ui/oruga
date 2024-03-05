@@ -106,7 +106,7 @@ onMounted(() => {
                 field="original_title"
                 label="Title"
                 sortable>
-                {{ props.row.original_title }}
+                {{ props.row.value.original_title }}
             </o-table-column>
             <o-table-column
                 v-slot="props"
@@ -114,8 +114,8 @@ onMounted(() => {
                 label="Vote Average"
                 numeric
                 sortable>
-                <span class="tag" :class="type(props.row.vote_average)">
-                    {{ props.row.vote_average }}
+                <span class="tag" :class="type(props.row.value.vote_average)">
+                    {{ props.row.value.vote_average }}
                 </span>
             </o-table-column>
             <o-table-column
@@ -124,7 +124,7 @@ onMounted(() => {
                 label="Vote Count"
                 numeric
                 sortable>
-                {{ props.row.vote_count }}
+                {{ props.row.value.vote_count }}
             </o-table-column>
             <o-table-column
                 v-slot="props"
@@ -133,13 +133,15 @@ onMounted(() => {
                 sortable
                 centered>
                 {{
-                    props.row.release_date
-                        ? new Date(props.row.release_date).toLocaleDateString()
+                    props.row.value.release_date
+                        ? new Date(
+                              props.row.value.release_date,
+                          ).toLocaleDateString()
                         : "unknown"
                 }}
             </o-table-column>
             <o-table-column v-slot="props" label="Overview" width="500">
-                {{ props.row.overview }}
+                {{ props.row.value.overview }}
             </o-table-column>
         </o-table>
     </section>

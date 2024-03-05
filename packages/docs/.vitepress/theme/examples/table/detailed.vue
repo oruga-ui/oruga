@@ -107,6 +107,7 @@ const showDefaultDetail = ref(true);
 const table = ref(null);
 
 const toggle = (row) => {
+    // TODO: check if its working
     table.value.toggleDetails(row);
 };
 </script>
@@ -141,12 +142,12 @@ const toggle = (row) => {
                 width="300"
                 sortable>
                 <template v-if="showDetailIcon">
-                    {{ props.row.name }}
+                    {{ props.row.value.name }}
                 </template>
 
                 <template v-else>
-                    <a @click="toggle(props.row)">
-                        {{ props.row.name }}
+                    <a @click="toggle(props.row.value.value)">
+                        {{ props.row.value.name }}
                     </a>
                 </template>
             </o-table-column>
@@ -158,7 +159,7 @@ const toggle = (row) => {
                 :label="columnsVisible['sold'].title"
                 sortable
                 position="centered">
-                {{ props.row.sold }}
+                {{ props.row.value.sold }}
             </o-table-column>
 
             <o-table-column
@@ -168,7 +169,7 @@ const toggle = (row) => {
                 :label="columnsVisible['available'].title"
                 sortable
                 position="centered">
-                {{ props.row.available }}
+                {{ props.row.value.available }}
             </o-table-column>
 
             <o-table-column
@@ -179,14 +180,15 @@ const toggle = (row) => {
                 <span>
                     {{
                         Math.round(
-                            (props.row.sold / props.row.available) * 100,
+                            (props.row.value.sold / props.row.value.available) *
+                                100,
                         )
                     }}%
                 </span>
             </o-table-column>
 
             <template #detail="props">
-                <tr v-for="item in props.row.items" :key="item.name">
+                <tr v-for="item in props.row.value.items" :key="item.name">
                     <td v-if="showDetailIcon"></td>
                     <td v-show="columnsVisible['name'].display">
                         &nbsp;&nbsp;&nbsp;&nbsp;{{ item.name }}

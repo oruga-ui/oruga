@@ -748,9 +748,6 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
 const slotRef = ref<HTMLElement>();
 
-// const filters = ref<Record<string, string>>({});
-// const currentSortColumn = ref<TableColumn<T>>();
-
 // provide functionalities and data to child item components
 const provider =
     useProviderParent<ComputedRef<TableColumnComponent<T>>>(slotRef);
@@ -770,13 +767,11 @@ const tableData = computed<TableRow<T>[]>(() =>
     useObjectMap(props.data, props.rowKey),
 );
 
+// TODO: refactor to use only tableData with more attributes like hidden, detailed
 const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;
 
 /** recompute table rows when table data change */
-watch(
-    () => tableData.value,
-    () => processTableData(),
-);
+watch(tableData, () => processTableData());
 
 /**
  * Compute tableRows based on:
@@ -785,6 +780,7 @@ watch(
  *   3. Update internal value.
  */
 function processTableData(): void {
+    // create new array to don't mutate the original data order
     let rows = [...tableData.value];
 
     // if not backend filtered, filter rows
@@ -801,7 +797,7 @@ const tableTotal = computed(() =>
     props.backendPagination ? props.total : tableRows.value.length,
 );
 
-const tableCurrentPage = defineModel<number>("currentPage");
+const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 /** Visible rows based on current page */
 const visibleRows = computed(() => {
@@ -1004,7 +1000,7 @@ function isRowFiltered(row: T): boolean {
 }
 
 function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
-    return rows.filter((row) => isRowFiltered(row.value));
+    return rows.filter((row) => !isRowFiltered(row.value));
 }
 
 // --- Sort Feature ---
@@ -1104,7 +1100,9 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
 
 // --- Checkable Feature ---
 
-const tableCheckedRows = defineModel<TableRow<T>[]>("checkedRows");
+const tableCheckedRows = defineModel<TableRow<T>[]>("checkedRows", {
+    default: [],
+});
 const lastCheckedRowIndex = ref(null);
 
 /** Check if all rows in the page are checked. */
@@ -1183,7 +1181,9 @@ function checkRow(row: TableRow<T>, index: number): void {
 
 // --- Detail Row Feature ---
 
-const visibleDetailedRows = defineModel<TableRow<T>[]>("detailedRows");
+const visibleDetailedRows = defineModel<TableRow<T>[]>("detailedRows", {
+    default: [],
+});
 
 /**
  * return if detailed row tabled
@@ -1500,6 +1500,8 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
 
     return [...tdBaseClasses.value, ...classes.value];
 }
+
+// defineExpose({ tableRows, tableColumns });
 </script>
 
 <template>
@@ -1520,7 +1522,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                         :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ getColumnValue(row, column) }}
+                        {{ getColumnValue(row.value, column) }}
                     </o-table-column>
                 </template>
 

@@ -96,7 +96,7 @@ const columns = ref([
                 :key="idx"
                 v-slot="{ row }"
                 v-bind="column">
-                {{ row[column.field] }}
+                {{ row.value[column.field] }}
             </o-table-column>
             <template #bottom-left>
                 <b>Total checked</b>: {{ checkedRows.length }}

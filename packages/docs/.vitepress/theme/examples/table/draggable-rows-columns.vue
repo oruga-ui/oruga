@@ -154,7 +154,7 @@ function columndrop(column, index, event) {
                 :key="idx"
                 v-slot="{ row }"
                 v-bind="column">
-                {{ row[column.field] }}
+                {{ row.value[column.field] }}
             </o-table-column>
         </o-table>
     </section>

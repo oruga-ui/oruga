@@ -84,18 +84,18 @@ const hasMobileCards = ref(true);
                 label="ID"
                 width="40"
                 numeric>
-                {{ props.row.id }}
+                {{ props.row.value.id }}
             </o-table-column>
 
             <o-table-column
                 v-slot="props"
                 field="first_name"
                 label="First Name">
-                {{ props.row.first_name }}
+                {{ props.row.value.first_name }}
             </o-table-column>
 
             <o-table-column v-slot="props" field="last_name" label="Last Name">
-                {{ props.row.last_name }}
+                {{ props.row.value.last_name }}
             </o-table-column>
 
             <o-table-column
@@ -103,14 +103,16 @@ const hasMobileCards = ref(true);
                 field="date"
                 label="Date"
                 position="centered">
-                {{ new Date(props.row.date).toLocaleDateString() }}
+                {{ new Date(props.row.value.date).toLocaleDateString() }}
             </o-table-column>
 
             <o-table-column v-slot="props" label="Gender">
                 <o-icon
                     pack="fas"
-                    :icon="props.row.gender === 'Male' ? 'mars' : 'venus'" />
-                {{ props.row.gender }}
+                    :icon="
+                        props.row.value.gender === 'Male' ? 'mars' : 'venus'
+                    " />
+                {{ props.row.value.gender }}
             </o-table-column>
         </o-table>
     </section>

@@ -77,7 +77,7 @@ const columns = ref([
                 :key="idx"
                 v-slot="{ row }"
                 v-bind="column">
-                {{ row[column.field] }}
+                {{ row.value[column.field] }}
             </o-table-column>
         </o-table>
 
@@ -92,7 +92,7 @@ const columns = ref([
                 :key="idx"
                 v-slot="{ row }"
                 v-bind="column">
-                {{ row[column.field] }}
+                {{ row.value[column.field] }}
             </o-table-column>
         </o-table>
 
@@ -113,7 +113,7 @@ const columns = ref([
                         size="small" />
                 </template>
                 <template #default="props">
-                    {{ props.row[column.field] }}
+                    {{ props.row.value[column.field] }}
                 </template>
             </o-table-column>
         </o-table>

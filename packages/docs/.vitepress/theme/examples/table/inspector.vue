@@ -312,7 +312,7 @@ const inspectData = [
                 :key="index"
                 v-bind="column"
                 v-slot="{ row }">
-                {{ row[column.field] }}
+                {{ row.value[column.field] }}
             </o-table-column>
             <template #footer> This is the footer </template>
             <template #detail> DETAILS </template>
