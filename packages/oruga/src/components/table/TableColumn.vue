@@ -130,11 +130,11 @@ onBeforeMount(() => {
         <template v-if="false">
             <!--
                 @slot Default Slot
-                @binding {Row} row - row data 
-                @binding {Column} column - column definition 
+                @binding {TableRow} row - row data 
+                @binding {TableColumn} column - column definition 
                 @binding {number} index - row index 
                 @binding {number} colindex - column index 
-                @binding {(row): void} toggle-details - toggle details function 
+                @binding {(TableRow): void} toggle-details - toggle details function 
             -->
             <slot
                 :row="null"
@@ -144,20 +144,20 @@ onBeforeMount(() => {
                 :toggle-details="null" />
             <!--
                 @slot Override header label 
-                @binding {Column} column - column definition 
+                @binding {TableColumn} column - column definition 
                 @binding {number} index - column index 
             -->
             <slot name="header" :column="null" :index="null" />
             <!--
                 @slot Override subheading label 
-                @binding {Column} column - column definition 
+                @binding {TableColumn} column - column definition 
                 @binding {number} index - column index 
             -->
             <slot name="subheading" :column="null" :index="null" />
 
             <!--
                 @slot Override searchable input 
-                @binding {Column} column - column definition 
+                @binding {TableColumn} column - column definition 
                 @binding {number} index - column index 
                 @binding {Record<string,string>} filters - active filters object
             -->
