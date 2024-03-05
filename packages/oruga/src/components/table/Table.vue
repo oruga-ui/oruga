@@ -9,6 +9,7 @@ import {
     toValue,
     type PropType,
     type ComputedRef,
+    type Ref,
 } from "vue";
 
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
@@ -29,6 +30,7 @@ import {
     escapeRegExpChars,
     removeDiacriticsFromString,
     sortBy,
+    isEqual,
 } from "@/utils/helpers";
 import {
     defineClasses,
@@ -134,7 +136,7 @@ const props = defineProps({
     },
     /** Custom method to verify if a row is checked, works when is checkable. Useful for backend pagination. */
     isRowChecked: {
-        type: Function as PropType<(row: T, data: unknown[]) => boolean>,
+        type: Function as PropType<(row: T, data: T[]) => boolean>,
         default: undefined,
     },
     /** Custom method to verify if a row is checkable, works when is checkable */
@@ -764,33 +766,38 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
 });
 
 /** all defined data elements mapped in Row type */
-const tableMappedData = computed<TableRow<T>[]>(() =>
+const tableData = computed<TableRow<T>[]>(() =>
     useObjectMap(props.data, props.rowKey),
+);
+
+const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;
+
+/** recompute table rows when table data change */
+watch(
+    () => tableData.value,
+    () => processTableData(),
 );
 
 /**
  * Compute tableRows based on:
  *   1. Filter data if it's not backend-filtered.
  *   2. Sort data if it's not backend-sorted.
+ *   3. Update internal value.
  */
-const tableRows = computed(() => {
-    if (!tableMappedData.value) return [];
-    let rows = [...tableMappedData.value];
+function processTableData(): void {
+    let rows = [...tableData.value];
 
-    // TODO: revert filter and sort to feature
     // if not backend filtered, filter rows
-    if (!props.backendFiltering && filters.value) rows = filterRows(rows);
+    if (!props.backendFiltering) rows = filterRows(rows);
 
     // if not backend sorted, sort rows
-    if (!props.backendSorting && currentSortColumn.value)
-        rows = sortByColumn(rows);
+    if (!props.backendSorting) rows = sortByColumn(rows);
 
-    return rows;
-});
+    tableRows.value = rows;
+}
 
-/** Shows total data. If backend paginated, use props total else rows data lendth */
+/** Shows total data. If backend paginated, use props total else use rows data length as pagination total*/
 const tableTotal = computed(() =>
-    // if not backend paginated, use rows as pagination total
     props.backendPagination ? props.total : tableRows.value.length,
 );
 
@@ -824,7 +831,7 @@ watch([() => visibleRows.value, () => visibleColumns.value], () => {
     if (visibleColumns.value.length && visibleRows.value.length) {
         for (let i = 0; i < visibleColumns.value.length; i++) {
             const col = visibleColumns.value[i];
-            col.tdAttrsData = visibleRows.value.map((data) =>
+            col.tdAttrsData.value = visibleRows.value.map((data) =>
                 typeof col.tdAttrs === "function"
                     ? col.tdAttrs(data.value, col)
                     : {},
@@ -874,9 +881,9 @@ function hasCustomFooterSlot(): boolean {
     return true;
 }
 
-/** get the format row value for a column */
-function getValueForColumn(row: T, column: TableColumn): string {
-    if (!column.field) return row as string;
+/** Get the formated row value for a column */
+function getColumnValue(row: T, column: TableColumn): string {
+    if (!column.field) return String(row);
     const prop = getValueByPath(row, column.field);
     return column.display ? column.display(prop, row) : prop;
 }
@@ -891,7 +898,7 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
 
     let index =
         visibleRows.value.findIndex(
-            (r) => r.key === tableSelectedRow.value.key,
+            (r) => r.key === tableSelectedRow.value?.key,
         ) + pos;
 
     // Prevent from going up from first and down from last
@@ -934,7 +941,7 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
 function selectRow(row: TableRow<T>, index: number, event: Event): void {
     emits("click", row, index, event);
 
-    if (tableSelectedRow.value === row) return;
+    if (isEqual(tableSelectedRow.value, row)) return;
     if (!props.isRowSelectable(row)) return;
 
     tableSelectedRow.value = row;
@@ -955,14 +962,17 @@ watch(
     (value) => {
         if (!props.backendFiltering) return;
         if (props.debounceSearch)
-            useDebounce(
-                () => emits("filters-change", value),
-                props.debounceSearch,
-            );
-        else emits("filters-change", value);
+            useDebounce(() => handleFiltersChange(value), props.debounceSearch);
+        else handleFiltersChange(value);
     },
     { deep: true },
 );
+
+function handleFiltersChange(value: Record<string, string>): void {
+    emits("filters-change", value);
+    // recompute rows with updated filters
+    processTableData();
+}
 
 function onFiltersEvent(event: Event): void {
     emits("filters-event", props.filtersEvent, filters.value, event);
@@ -1075,8 +1085,9 @@ function sort(
     if (currentSortColumn.value)
         emits("sort", column, isAsc.value ? "asc" : "desc", event);
 
-    // computed rows get sorted on currentSortColumn change
     currentSortColumn.value = column;
+    // recompute rows with updated currentSortColumn
+    processTableData();
 }
 
 function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
@@ -1085,7 +1096,7 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
         rows,
         column?.field ? "value." + column.field : undefined,
         column?.onSort
-            ? (a, b, asc) => column.onSort(a.value, b.value, asc)
+            ? (a, b, asc): number => column.onSort(a.value, b.value, asc)
             : undefined,
         isAsc.value,
     );
@@ -1184,9 +1195,7 @@ const showDetailRowIcon = computed(
 
 /** Toggle to show/hide details slot */
 function toggleDetails(row: TableRow<T>): void {
-    const found = isVisibleDetailRow(row);
-
-    if (found) {
+    if (isVisibleDetailRow(row)) {
         closeDetailRow(row);
         emits("details-close", row);
     } else {
@@ -1511,7 +1520,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                         :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ getValueForColumn(row, column) }}
+                        {{ getColumnValue(row, column) }}
                     </o-table-column>
                 </template>
 
@@ -1878,7 +1887,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                             <template v-if="isActiveDetailRow(row)">
                                 <!--
                                     @slot Place row detail content here
-                                    @binding {unknown} row - row conent
+                                    @binding {TableRow} row - row conent
                                     @binding {number} index - row index
                                 -->
                                 <slot
@@ -1893,7 +1902,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                                     <td :colspan="columnCount">
                                         <!--
                                             @slot Place row detail content here
-                                            @binding {unknown} row - row conent
+                                            @binding {TableRow} row - row conent
                                             @binding {number} index - row index
                                         -->
                                         <slot
@@ -1956,7 +1965,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                     :label="loadingLabel"
                     icon-size="large"
                     role="status"
-                    aria-hidden="true" />
+                    :aria-hidden="!loading" />
             </slot>
         </div>
 

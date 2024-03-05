@@ -1,4 +1,4 @@
-import type { ComponentPublicInstance, StyleValue } from "vue";
+import type { ComponentPublicInstance, Ref, StyleValue } from "vue";
 import type {
     ComponentProps,
     ComponentSlots,
@@ -18,7 +18,7 @@ export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $slots: TableColumnSlots;
     style: StyleValue;
     thAttrsData: object;
-    tdAttrsData: Array<object>;
+    tdAttrsData: Ref<Array<object>>;
     isHeaderUnselectable: boolean;
 };
 

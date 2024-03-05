@@ -17,7 +17,7 @@ export function useObjectMap<T>(
         key:
             // if no key is given and data is object, create unique row id for each row
             key && typeof value === "object"
-                ? (value[key as keyof T] as string)
+                ? (value[key as keyof T] as string) || uuid()
                 : uuid(),
     }));
 }

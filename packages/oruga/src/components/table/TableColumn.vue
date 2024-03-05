@@ -105,7 +105,7 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
     $slots: slots,
     style: style.value,
     thAttrsData: thAttrsData.value,
-    tdAttrsData: tdAttrsData.value,
+    tdAttrsData: tdAttrsData,
     isHeaderUnselectable: isHeaderUnselectable.value,
 }));
 

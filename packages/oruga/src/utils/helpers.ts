@@ -200,10 +200,7 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
  * Merge function to replace Object.assign with deep merging possibility
  */
 export function merge(target: any, source: any, deep = false): any {
-    if (!isObject(target) || !isObject(source)) {
-        return source;
-    }
-
+    if (!isObject(target) || !isObject(source)) return source;
     if (!deep) return Object.assign(target, source);
     else return mergeDeep(target, source);
 }
@@ -217,9 +214,7 @@ export function merge(target: any, source: any, deep = false): any {
 export function mergeDeep(target: any, source: any): any {
     const isObject = (obj: any): any => obj && typeof obj === "object";
 
-    if (!isObject(target) || !isObject(source)) {
-        return source;
-    }
+    if (!isObject(target) || !isObject(source)) return source;
 
     Object.getOwnPropertyNames(source).forEach((key) => {
         const targetValue = target[key];
@@ -260,6 +255,9 @@ export function createAbsoluteElement(el: Element): HTMLDivElement {
     return root;
 }
 
+/**
+ * @deprecated
+ */
 export function createNewEvent(eventName: string): Event {
     let event: any;
     if (typeof Event === "function") {
