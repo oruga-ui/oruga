@@ -1,17 +1,20 @@
 <script setup lang="ts">
-// <!-- /** Button will be disabled */ -->
-
-// <!-- disabled: { type: Boolean, default: false }, -->
-
-// <!-- /** Class of the button when disabled */
-//     disabledClass: {
-//         type: [String, Array, Function] as PropType<ComponentClass>,
-//         default: undefined,
-//     }, -->
-
 import { computed } from 'vue'
 
-const props = defineProps({});
+const props = defineProps({
+    active: {
+        type: String,
+        default: () => getOption("button.variant"),
+    },
+    tag: {
+        type: String,
+        default: () => getOption("button.variant"),
+    },
+    disabled: {
+        type: String,
+        default: () => getOption("button.variant"),
+    },
+});
 // const computedTag = computed(()=>{});
 </script>
 
