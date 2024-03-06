@@ -10,13 +10,13 @@ import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * The classic button, in different colors, sizes, and states
- * @displayName Button
- * @style _button.scss
+ * @displayName Breadcrumb
+ * @style _breadcrumb.scss
  */
 defineOptions({
     isOruga: true,
-    name: "OButton",
-    configField: "button",
+    name: "OBreadcrumb",
+    configField: "breadcrumb",
 });
 
 const props = defineProps({
@@ -46,6 +46,13 @@ const props = defineProps({
         type: String,
         default: () => getOption("button.size"),
     },
+
+    // separator
+    separator: {
+        type: String,
+        default: () => getOption("button.size"),
+    },
+
     /** Button label, unnecessary when default slot is used */
     label: { type: String, default: undefined },
     /**
@@ -66,27 +73,12 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("button.rounded", false),
     },
-    /** Button will be expanded (full-width) */
-    expanded: { type: Boolean, default: false },
-    /** Button will be disabled */
-    disabled: { type: Boolean, default: false },
-    /** Enable outlined style */
-    outlined: { type: Boolean, default: false },
-    /** Enable loading style */
-    loading: { type: Boolean, default: false },
-    /** Enable inverted style */
-    inverted: { type: Boolean, default: false },
     /** Button type, like native */
     nativeType: {
         type: String,
         default: "button",
         validator: (value: string) =>
             ["button", "submit", "reset"].indexOf(value) >= 0,
-    },
-    /** Accessibility Role attribute to be passed to the button. */
-    role: {
-        type: String,
-        default: () => getOption("button.role", "button"),
     },
     /**
      * This is used internally
@@ -101,36 +93,6 @@ const props = defineProps({
     },
     /** Class of the button elements wrapper */
     wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when outlined */
-    outlinedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button with loading */
-    loadingClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when inverted */
-    invertedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when expanded */
-    expandedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when rounded */
-    roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when disabled */
-    disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -149,11 +111,6 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the button label */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
     /** Class of the button size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -166,17 +123,17 @@ const props = defineProps({
     },
 });
 
-const computedTag = computed(() =>
-    typeof props.disabled !== "undefined" && props.disabled !== false
-        ? "button"
-        : props.tag,
-);
+// const computedTag = computed(() => 
+//     // typeof props.disabled !== "undefined" && props.disabled !== false
+//     //     ? "button"
+//     //     : props.tag,
+// );
 
 const computedNativeType = computed(() =>
     props.tag === "button" || props.tag === "input" ? props.nativeType : null,
 );
 
-const computedDisabled = computed(() => (props.disabled ? true : null));
+// const computedDisabled = computed(() => (props.disabled ? true : null));
 
 // --- Computed Component Classes ---
 
