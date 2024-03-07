@@ -54,32 +54,7 @@ const props = defineProps({
     },
 
     /** Button label, unnecessary when default slot is used */
-    label: { type: String, default: undefined },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-
-    iconPack: {
-        type: String,
-        default: () => getOption("button.iconPack", undefined),
-    },
-    /** Icon name to show on the left */
-    iconLeft: { type: String, default: undefined },
-    /** Icon name to show on the right */
-    iconRight: { type: String, default: undefined },
-    /** Enable rounded style */
-    rounded: {
-        type: Boolean,
-        default: () => getOption("button.rounded", false),
-    },
-    /** Button type, like native */
-    nativeType: {
-        type: String,
-        default: "button",
-        validator: (value: string) =>
-            ["button", "submit", "reset"].indexOf(value) >= 0,
-    },
+    label: { type: String, default: undefined }, // -----------------------------------------------------------------
     /**
      * This is used internally
      * @ignore
@@ -93,21 +68,6 @@ const props = defineProps({
     },
     /** Class of the button elements wrapper */
     wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button icon */
-    iconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button icon on the left */
-    iconLeftClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button icon on the right */
-    iconRightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -151,76 +111,17 @@ const rootClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
-    [
-        "outlinedClass",
-        "o-btn--outlined",
-        null,
-        computed(() => props.outlined && !props.variant),
-    ],
-    [
-        "invertedClass",
-        "o-btn--inverted",
-        null,
-        computed(() => props.inverted && !props.variant),
-    ],
-    [
-        "outlinedClass",
-        "o-btn--outlined-",
-        computed(() => props.variant),
-        computed(() => props.outlined && !!props.variant),
-    ],
-    [
-        "invertedClass",
-        "o-btn--inverted-",
-        computed(() => props.variant),
-        computed(() => props.inverted && !!props.variant),
-    ],
-    ["expandedClass", "o-btn--expanded", null, computed(() => props.expanded)],
-    ["loadingClass", "o-btn--loading", null, computed(() => props.loading)],
-    ["roundedClass", "o-btn--rounded", null, computed(() => props.rounded)],
-    ["disabledClass", "o-btn--disabled", null, computed(() => props.disabled)],
+    // ["disabledClass", "o-btn--disabled", null, computed(() => props.disabled)],
 );
-
-const labelClasses = defineClasses(["labelClass", "o-btn__label"]);
-
-const iconClasses = defineClasses(["iconClass", "o-btn__icon"]);
-
-const iconLeftClasses = defineClasses(["iconLeftClass", "o-btn__icon-left"]);
-
-const iconRightClasses = defineClasses(["iconRightClass", "o-btn__icon-right"]);
-
-const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
 </script>
 
 <template>
     <component
         :is="computedTag"
-        :disabled="computedDisabled"
         :type="computedNativeType"
         :class="rootClasses"
-        :role="role"
-        data-oruga="button">
-        <span :class="wrapperClasses">
-            <o-icon
-                v-if="iconLeft"
-                :pack="iconPack"
-                :icon="iconLeft"
-                :size="size"
-                :both="iconBoth"
-                :class="[...iconClasses, ...iconLeftClasses]" />
-            <span v-if="label || $slots.default" :class="labelClasses">
-                <!--
-                    @slot Override the label, default is label prop 
-                -->
-                <slot>{{ label }}</slot>
-            </span>
-            <o-icon
-                v-if="iconRight"
-                :pack="iconPack"
-                :icon="iconRight"
-                :size="size"
-                :both="iconBoth"
-                :class="[...iconClasses, ...iconRightClasses]" />
-        </span>
+        data-oruga="breadcrumb">
+        <!-- BreadcrumbItems -->
+        <slot></slot>
     </component>
 </template>
