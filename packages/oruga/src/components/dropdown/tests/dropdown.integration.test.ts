@@ -190,7 +190,11 @@ describe("ODropdown Integration", () => {
 
         const dropdown = wrapper.findComponent(ODropdown);
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
+        expect(dropdown.emitted("update:modelValue")[0][0]).toStrictEqual(
+            values[1],
+        );
         expect(dropdown.emitted("change")).toHaveLength(1);
+        expect(dropdown.emitted("change")[0][0]).toStrictEqual(values[1]);
         expect(dropdown.emitted("close")).toHaveLength(1);
     });
 });
