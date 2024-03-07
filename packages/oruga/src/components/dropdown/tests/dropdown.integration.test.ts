@@ -169,5 +169,28 @@ describe("ODropdown Integration", () => {
         expect(dropdown.emitted("close")).toBeUndefined();
     });
 
-    // TODO: add complex object values test
+    test("react accordingly when is using objects values", async () => {
+        const values = [{ label: "1" }, { label: "2" }, { label: "3" }];
+        const wrapper = mount(DropdownExample, {
+            props: { values, field: "label" },
+        });
+
+        const items = wrapper.findAll(".o-drop__item");
+        expect(items.length).toBe(3);
+
+        items.forEach((item, index) =>
+            expect(item.text()).toEqual(values[index].label),
+        );
+
+        const item = items[1];
+        await item.trigger("click");
+        expect(items[0].classes("o-drop__item--active")).toBeFalsy();
+        expect(items[1].classes("o-drop__item--active")).toBeTruthy();
+        expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+
+        const dropdown = wrapper.findComponent(ODropdown);
+        expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
+        expect(dropdown.emitted("change")).toHaveLength(1);
+        expect(dropdown.emitted("close")).toHaveLength(1);
+    });
 });
