@@ -20,7 +20,7 @@ const props = defineProps({
      * @values mdi, fa, fas and any other custom icon pack
      */
 
-     iconPack: {
+    iconPack: {
         type: String,
         default: () => getOption("button.iconPack", undefined),
     },

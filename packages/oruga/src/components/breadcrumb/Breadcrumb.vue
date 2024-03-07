@@ -46,7 +46,10 @@ const props = defineProps({
         type: String,
         default: () => getOption("button.size"),
     },
-
+    align : {
+        type : String,
+        default : getOption("button.size"),
+    }
     // separator
     separator: {
         type: String,
@@ -78,6 +81,16 @@ const props = defineProps({
     },
     /** Class of the button variant */
     variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the button separator */
+    separatorClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the button align */
+    alignClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
