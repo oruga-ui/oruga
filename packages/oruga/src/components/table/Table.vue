@@ -65,7 +65,10 @@ const props = defineProps({
     /** Border to all cells */
     bordered: { type: Boolean, default: false },
     /** Whether table is striped */
-    striped: { type: Boolean, default: false },
+    striped: {
+        type: Boolean,
+        default: () => getOption("table.striped", false),
+    },
     /** Makes the cells narrower */
     narrowed: { type: Boolean, default: false },
     /** Rows are highlighted when hovering */

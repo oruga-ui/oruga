@@ -1255,6 +1255,8 @@ but will set body to position fixed, might break some layouts. */
                 customRowKey: string;
                 /** Use a unique key of your data Object when use detailed or opened detailed. (id recommended) */
                 detailKey: string;
+                /** Whether table is striped */
+                striped: boolean;
             }>;
         tabs?: ComponentConfigBase &
             Partial<{
