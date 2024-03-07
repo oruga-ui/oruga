@@ -63,16 +63,25 @@ const props = defineProps({
     /** Table columns */
     columns: { type: Array as PropType<Column[]>, default: () => [] },
     /** Border to all cells */
-    bordered: { type: Boolean, default: false },
+    bordered: {
+        type: Boolean,
+        default: () => getOption("table.bordered", false),
+    },
     /** Whether table is striped */
     striped: {
         type: Boolean,
         default: () => getOption("table.striped", false),
     },
     /** Makes the cells narrower */
-    narrowed: { type: Boolean, default: false },
+    narrowed: {
+        type: Boolean,
+        default: () => getOption("table.narrowed", false),
+    },
     /** Rows are highlighted when hovering */
-    hoverable: { type: Boolean, default: false },
+    hoverable: {
+        type: Boolean,
+        default: () => getOption("table.hoverable", false),
+    },
     /** Enable loading state */
     loading: { type: Boolean, default: false },
     /** Allow row details  */
