@@ -483,8 +483,7 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "
-                :class="itemClasses(childItem)"
-                :aria-selected="childItem.value === activeItem.value">
+                :class="itemClasses(childItem)">
                 <span v-if="index > 0" :class="stepDividerClasses"> </span>
 
                 <component
