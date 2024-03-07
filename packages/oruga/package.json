@@ -16,7 +16,10 @@
       "import": "./dist/esm/index.mjs",
       "require": "./dist/cjs/index.js"
     },
-    "./*": "./*"
+    "./*": "./*",
+    "./types": {
+      "types": "./volar.d.ts"
+    }
   },
   "files": [
     "dist",
@@ -37,6 +40,17 @@
   "bugs": {
     "url": "https://github.com/oruga-ui/oruga/issues"
   },
+  "keywords": [
+    "oruga",
+    "vue",
+    "vuejs",
+    "components",
+    "ux",
+    "ui",
+    "css",
+    "agnostic",
+    "framework"
+  ],
   "scripts": {
     "dev": "vite",
     "build:vue": "rimraf dist && vite build && vite build --mode minify",
@@ -51,17 +65,6 @@
     "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
     "update": "ncu -u"
   },
-  "keywords": [
-    "oruga",
-    "vue",
-    "vuejs",
-    "components",
-    "ux",
-    "ui",
-    "css",
-    "agnostic",
-    "framework"
-  ],
   "peerDependencies": {
     "vue": "^3.0.0"
   },
