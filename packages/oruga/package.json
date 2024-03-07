@@ -17,7 +17,7 @@
       "require": "./dist/cjs/index.js"
     },
     "./*": "./*",
-    "./types": {
+    "./volar": {
       "types": "./volar.d.ts"
     }
   },

@@ -122,7 +122,7 @@ If you are using Volar, you can specify global component types by configuring `c
 {
   "compilerOptions": {
     // ...
-    "types": ["@oruga-ui/oruga-next"]
+    "types": ["@oruga-ui/oruga-next/volar"]
   }
 }
 ```
