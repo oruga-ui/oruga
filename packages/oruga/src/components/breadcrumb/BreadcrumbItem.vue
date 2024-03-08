@@ -55,15 +55,15 @@ const props = defineProps({
 });
 // const computedTag = computed(()=>{});
 
-const labelClasses = defineClasses(["labelClass", "o-btn__label"]);
+const labelClasses = defineClasses(["labelClass", "o-breadcrumb__label"]);
 
-const iconClasses = defineClasses(["iconClass", "o-btn__icon"]);
+const iconClasses = defineClasses(["iconClass", "o-breadcrumb__icon"]);
 
-const iconLeftClasses = defineClasses(["iconLeftClass", "o-btn__icon-left"]);
+const iconLeftClasses = defineClasses(["iconLeftClass", "o-breadcrumb__icon-left"]);
 
-const iconRightClasses = defineClasses(["iconRightClass", "o-btn__icon-right"]);
+const iconRightClasses = defineClasses(["iconRightClass", "o-breadcrumb__icon-right"]);
 
-const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
+const wrapperClasses = defineClasses(["wrapperClass", "o-breadcrumb__wrapper"]);
 </script>
 
 <template>

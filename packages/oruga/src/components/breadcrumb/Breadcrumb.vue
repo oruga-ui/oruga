@@ -111,24 +111,25 @@ const computedNativeType = computed(() =>
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-btn"],
+    ["rootClass", "o-breadcrumb"],
     [
         "sizeClass",
-        "o-btn--",
+        "o-breadcrumb--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
     [
         "variantClass",
-        "o-btn--",
+        "o-breadcrumb--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
-    // ["disabledClass", "o-btn--disabled", null, computed(() => props.disabled)],
+    // ["disabledClass", "o-breadcrumb--disabled", null, computed(() => props.disabled)],
 );
 </script>
 
 <template>
+    <h2>It works!</h2>
     <component
         :is="computedTag"
         :type="computedNativeType"
