@@ -117,11 +117,7 @@ export function clone<T extends object>(obj: T): T {
 /**
  * Merge function to replace Object.assign with deep merging possibility
  */
-export function merge<T extends object, S extends object>(
-    target: T,
-    source: S,
-    deep = false,
-): object {
+export function merge(target: any, source: any, deep = false): any {
     if (!isObject(target) || !isObject(source)) return source;
     if (!deep) return Object.assign(target, source);
     else return mergeDeep(target, source);
@@ -133,10 +129,7 @@ export function merge<T extends object, S extends object>(
  *
  * @author inspired by [jhildenbiddle](https://stackoverflow.com/a/48218209).
  */
-export function mergeDeep<T extends object, S extends object>(
-    target: T,
-    source: S,
-): object {
+export function mergeDeep(target: any, source: any): any {
     if (!isObject(target) || !isObject(source)) return source;
 
     Object.getOwnPropertyNames(source).forEach((key) => {
@@ -161,7 +154,7 @@ export function mergeDeep<T extends object, S extends object>(
 /**
  * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<T>(
+export function getValueByPath<T = any>(
     obj: Record<string, any>,
     path: string,
     defaultValue?: T,
@@ -178,7 +171,7 @@ export function getValueByPath<T>(
 /**
  * Set a value of an object property/path even if it's nested
  */
-export function setValueByPath<T>(
+export function setValueByPath<T = any>(
     obj: Record<string, any>,
     path: string,
     value: T,
