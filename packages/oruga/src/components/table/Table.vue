@@ -81,13 +81,25 @@ const props = defineProps({
     /** Set which row is selected, use `v-model:selected` to make it two-way binding */
     selected: { type: Object as PropType<TableRow<T>>, default: undefined },
     /** Border to all cells */
-    bordered: { type: Boolean, default: false },
+    bordered: {
+        type: Boolean,
+        default: () => getOption("table.bordered", false),
+    },
     /** Whether table is striped */
-    striped: { type: Boolean, default: false },
+    striped: {
+        type: Boolean,
+        default: () => getOption("table.striped", false),
+    },
     /** Makes the cells narrower */
-    narrowed: { type: Boolean, default: false },
+    narrowed: {
+        type: Boolean,
+        default: () => getOption("table.narrowed", false),
+    },
     /** Rows are highlighted when hovering */
-    hoverable: { type: Boolean, default: false },
+    hoverable: {
+        type: Boolean,
+        default: () => getOption("table.hoverable", false),
+    },
     /** Enable loading state */
     loading: { type: Boolean, default: false },
     /** Table can be focused and user can navigate with keyboard arrows (require selected) and rows are highlighted when hovering */

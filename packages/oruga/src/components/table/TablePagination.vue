@@ -37,9 +37,9 @@ const currentPage = defineModel<number>("current");
 
 /** paginator change listener. */
 function pageChanged(page: number): void {
-    const value = page > 0 ? page : 1;
-    currentPage.value = value;
-    emits("change", value);
+    const newPage = page > 0 ? page : 1;
+    currentPage.value = newPage;
+    emits("change", newPage);
 }
 </script>
 
