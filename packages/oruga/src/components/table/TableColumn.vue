@@ -89,7 +89,6 @@ const vm = getCurrentInstance();
 
 const providedData = computed<TableColumnComponent>(() => ({
     ...toRaw(props),
-
     $el: vm.proxy,
     $slots: vm.slots,
     style: style.value,
