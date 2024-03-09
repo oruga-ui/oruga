@@ -177,8 +177,8 @@ title: Table
 | sortable         | Enable column sortability                                        | boolean                                               | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
 | sticky           | Whether the column is sticky or not                              | boolean                                               | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
 | subheading       | Define a column sub heading                                      | string                                                | -                           |                                                             |
-| tdAttrs          | Adds native attributes to td                                     | (row: unknown, column: Column) =&gt; object           | -                           | Default function (see source code)                          |
-| thAttrs          | Adds native attributes to th                                     | (column: Column) =&gt; object                         | -                           | Default function (see source code)                          |
+| tdAttrs          | Adds native attributes to td                                     | (row: unknown, column: typeof props) =&gt; object     | -                           | Default function (see source code)                          |
+| thAttrs          | Adds native attributes to th                                     | (column: typeof props) =&gt; object                   | -                           | Default function (see source code)                          |
 | visible          | Define whether the column is visible or not                      | boolean                                               | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>  |
 | width            | Column fixed width                                               | number\|string                                        | -                           |                                                             |
 
