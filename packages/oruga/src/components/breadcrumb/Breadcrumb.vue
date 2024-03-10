@@ -45,12 +45,15 @@ const props = defineProps({
         type: String,
         default: () => getOption("button.size"),
     },
+    tag: {
+        type: String,
+        default: () => getOption("button.tag"),
+    },
     // -----------------------------------------------------------------
     /**
      * This is used internally
      * @ignore
      */
-    iconBoth: { type: Boolean, default: false },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {

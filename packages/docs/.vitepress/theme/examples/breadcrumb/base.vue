@@ -15,10 +15,11 @@
 
 <template>
     <section>
-        <o-breadcrumb>
-            <breadcrumb-item>Home</breadcrumb-item>
-            <breadcrumb-item>Docs</breadcrumb-item>
-            <breadcrumb-item>Breadcrumb</breadcrumb-item>
+        <!--  align="center" -->
+        <o-breadcrumb separator="/" size="medium">
+            <breadcrumb-item icon-left="plus">Home</breadcrumb-item>
+            <breadcrumb-item active="true">Docs</breadcrumb-item>
+            <breadcrumb-item disabled="true">Breadcrumb</breadcrumb-item>
         </o-breadcrumb>
         <!-- <o-breadcrumb>
             <h1>Hello World</h1>

@@ -47,6 +47,7 @@ const props = defineProps({
      * This is used internally
      * @ignore
      */
+    iconBoth: { type: Boolean, default: false },
     /** Class of the button icon */
     iconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -65,42 +66,44 @@ const props = defineProps({
 });
 
 // --- Computed Component Classes ---
-const computedTag = computed(() =>
-    typeof props.disabled !== "undefined" && props.disabled !== false
-        ? "a"
-        : props.tag,
-);
+const computedTag = computed(() => {
+    return props.tag ? props.tag : "li";
+});
 // const computedDisabled = computed(() => (props.disabled ? true : null));
 // --- Computed Component Classes ---
 
-const labelClasses = defineClasses(["labelClass", "o-breadcrumb__label"]);
-
-const iconClasses = defineClasses(["iconClass", "o-breadcrumb__icon"]);
+const iconClasses = defineClasses(["iconClass", "o-breadcrumb-item__icon"]);
 
 const iconLeftClasses = defineClasses([
     "iconLeftClass",
-    "o-breadcrumb__icon-left",
+    "o-breadcrumb-item__icon-left",
 ]);
 
 const iconRightClasses = defineClasses([
     "iconRightClass",
-    "o-breadcrumb__icon-right",
+    "o-breadcrumb-item__icon-right",
 ]);
 
-const wrapperClasses = defineClasses(["wrapperClass", "o-breadcrumb__wrapper"]);
+// eslint-disable-next-line prettier/prettier
+const wrapperClasses = defineClasses(["wrapperClass", "o-breadcrumb-item__wrapper"]);
 
 // const separatorClasses = defineClasses([
 //     "iconLeftClass",
 //     "o-breadcrumb--",computed(() => props.separator),
 // ]);
 const rootClasses = defineClasses(
-    ["disabledClass", "o-breadcrumb--disabled", null, computed(() => props.disabled)],
-    ["activeClass", "o-breadcrumb--active", null, computed(() => props.active)],
+    // eslint-disable-next-line prettier/prettier
+    ["disabledClass", "o-breadcrumb-item--disabled", null, computed(() => props.disabled)],
+    // eslint-disable-next-line prettier/prettier
+    ["activeClass", "o-breadcrumb-item--active", null, computed(() => props.active)],
 )
 </script>
 
 <template>
-    <component :is="computedTag" :class="rootClasses" data-oruga="breadcrumb">
+    <component
+        :is="computedTag"
+        :class="rootClasses"
+        data-oruga="breadcrumb-item">
         <span :class="wrapperClasses">
             <o-icon
                 v-if="iconLeft"
@@ -109,12 +112,7 @@ const rootClasses = defineClasses(
                 :size="size"
                 :both="iconBoth"
                 :class="[...iconClasses, ...iconLeftClasses]" />
-            <span v-if="label || $slots.default" :class="labelClasses">
-                <!--
-                    @slot Override the label, default is label prop 
-                -->
-                <slot>{{ label }}</slot>
-            </span>
+            <slot></slot>
             <o-icon
                 v-if="iconRight"
                 :pack="iconPack"
@@ -124,4 +122,24 @@ const rootClasses = defineClasses(
                 :class="[...iconClasses, ...iconRightClasses]" />
         </span>
     </component>
+    <!-- <h1>hdfbdfndfgn</h1> -->
+
+    <!-- <li :class="rootClasses" data-oruga="breadcrumb-item">
+        <o-icon
+            v-if="iconLeft"
+            :pack="iconPack"
+            :icon="iconLeft"
+            :size="size"
+            :both="iconBoth"
+            :class="[...iconClasses, ...iconLeftClasses]" />
+        <h1>hdfbdfndfgn</h1>
+        <slot></slot>
+        <o-icon
+            v-if="iconRight"
+            :pack="iconPack"
+            :icon="iconRight"
+            :size="size"
+            :both="iconBoth"
+            :class="[...iconClasses, ...iconRightClasses]" />
+    </li> -->
 </template>

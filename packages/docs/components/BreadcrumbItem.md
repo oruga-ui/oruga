@@ -44,9 +44,9 @@ title: BreadcrumbItem
 
 ### Slots
 
-| Name    | Description                               | Bindings |
-| ------- | ----------------------------------------- | -------- |
-| default | Override the label, default is label prop |          |
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
 
 </div>
 
