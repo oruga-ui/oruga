@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, type ComputedRef, type PropType } from "vue";
+import { computed, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { uuid, isEqual } from "@/utils/helpers";
@@ -80,7 +80,7 @@ const emits = defineEmits<{
 const itemValue = computed(() => (props.value || uuid()) as T);
 
 // Inject functionalities and data from the parent component
-const { parent } = useProviderChild<ComputedRef<DropdownComponent<T>>>();
+const { parent } = useProviderChild<DropdownComponent<T>>();
 
 const isClickable = computed(
     () => !parent.value.props.disabled && !props.disabled && props.clickable,

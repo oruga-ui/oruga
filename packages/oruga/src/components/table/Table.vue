@@ -8,7 +8,6 @@ import {
     useSlots,
     toValue,
     type PropType,
-    type ComputedRef,
 } from "vue";
 
 import OCheckbox from "../checkbox/Checkbox.vue";
@@ -709,7 +708,7 @@ const rootRef = ref<HTMLElement>();
 const slotRef = ref<HTMLElement>();
 
 /** Provide functionalities and data to child item components */
-const provider = useProviderParent<ComputedRef<TableColumnComponent>>(slotRef);
+const provider = useProviderParent<TableColumnComponent>(slotRef);
 
 const tableColumns = computed<TableColumn[]>(() =>
     provider.sortedItems.value.map((column) => ({

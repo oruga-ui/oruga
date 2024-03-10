@@ -23,6 +23,7 @@ import {
     useProviderParent,
 } from "@/composables";
 
+import type { CarouselComponent } from "./types";
 import type { ComponentClass, ClassBind } from "@/types";
 
 /**
@@ -234,11 +235,11 @@ function restartTimer(): void {
     startTimer();
 }
 
-const provideData = computed(() => ({
+const provideData = computed<CarouselComponent>(() => ({
     restartTimer,
     itemWidth: itemWidth.value,
     activeIndex: scrollIndex.value,
-    onClick: (event: MouseEvent): void => emits("click", event),
+    onClick: (event: Event): void => emits("click", event),
     setActive: (index: number): void => switchTo(index),
 }));
 
