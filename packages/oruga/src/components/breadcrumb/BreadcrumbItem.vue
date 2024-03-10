@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { defineClasses } from "@/composables";
+
+import { getOption } from "@/utils/config";
+
+import { computed, type PropType } from "vue";
+import OIcon from "../icon/Icon.vue";
+
+import type { ComponentClass } from "@/types";
 
 const props = defineProps({
     active: {
@@ -10,6 +17,14 @@ const props = defineProps({
         type: String,
         default: () => getOption("button.variant"),
     },
+    /**
+     * Button tag name
+     * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
+     */
+    //  tag: {
+    //     type: [String, Object, Function] as PropType<DynamicComponent>,
+    //     default: () => getOption<DynamicComponent>("button.tag", "button"),
+    // },
     disabled: {
         type: String,
         default: () => getOption("button.variant"),
@@ -28,11 +43,6 @@ const props = defineProps({
     iconLeft: { type: String, default: undefined },
     /** Icon name to show on the right */
     iconRight: { type: String, default: undefined },
-    /** Enable rounded style */
-    rounded: {
-        type: Boolean,
-        default: () => getOption("button.rounded", false),
-    },
     /**
      * This is used internally
      * @ignore
@@ -53,25 +63,44 @@ const props = defineProps({
         default: undefined,
     },
 });
-// const computedTag = computed(()=>{});
+
+// --- Computed Component Classes ---
+const computedTag = computed(() =>
+    typeof props.disabled !== "undefined" && props.disabled !== false
+        ? "a"
+        : props.tag,
+);
+// const computedDisabled = computed(() => (props.disabled ? true : null));
+// --- Computed Component Classes ---
 
 const labelClasses = defineClasses(["labelClass", "o-breadcrumb__label"]);
 
 const iconClasses = defineClasses(["iconClass", "o-breadcrumb__icon"]);
 
-const iconLeftClasses = defineClasses(["iconLeftClass", "o-breadcrumb__icon-left"]);
+const iconLeftClasses = defineClasses([
+    "iconLeftClass",
+    "o-breadcrumb__icon-left",
+]);
 
-const iconRightClasses = defineClasses(["iconRightClass", "o-breadcrumb__icon-right"]);
+const iconRightClasses = defineClasses([
+    "iconRightClass",
+    "o-breadcrumb__icon-right",
+]);
 
 const wrapperClasses = defineClasses(["wrapperClass", "o-breadcrumb__wrapper"]);
+
+// const separatorClasses = defineClasses([
+//     "iconLeftClass",
+//     "o-breadcrumb--",computed(() => props.separator),
+// ]);
+const rootClasses = defineClasses(
+    ["disabledClass", "o-breadcrumb--disabled", null, computed(() => props.disabled)],
+    ["activeClass", "o-breadcrumb--active", null, computed(() => props.active)],
+)
 </script>
 
 <template>
-     <component
-        :is="computedTag"
-        :type="computedNativeType"
-        :class="rootClasses"
-        data-oruga="breadcrumb">
+    <component :is="computedTag" :class="rootClasses" data-oruga="breadcrumb">
         <span :class="wrapperClasses">
             <o-icon
                 v-if="iconLeft"

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
 
-import OIcon from "../icon/Icon.vue";
-
 import { getOption } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
@@ -23,14 +21,6 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * Button tag name
-     * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
-     */
-    tag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("button.tag", "button"),
-    },
-    /**
      * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
@@ -46,18 +36,16 @@ const props = defineProps({
         type: String,
         default: () => getOption("button.size"),
     },
-    align : {
-        type : String,
-        default : getOption("button.size"),
-    }
+    align: {
+        type: String,
+        default: getOption("button.size"),
+    },
     // separator
     separator: {
         type: String,
         default: () => getOption("button.size"),
     },
-
-    /** Button label, unnecessary when default slot is used */
-    label: { type: String, default: undefined }, // -----------------------------------------------------------------
+    // -----------------------------------------------------------------
     /**
      * This is used internally
      * @ignore
@@ -96,18 +84,11 @@ const props = defineProps({
     },
 });
 
-// const computedTag = computed(() => 
-//     // typeof props.disabled !== "undefined" && props.disabled !== false
-//     //     ? "button"
-//     //     : props.tag,
-// );
+const computedTag = computed(() => {
+    return props.tag ? props.tag : "ul";
+});
 
-const computedNativeType = computed(() =>
-    props.tag === "button" || props.tag === "input" ? props.nativeType : null,
-);
-
-// const computedDisabled = computed(() => (props.disabled ? true : null));
-
+// --- Computed Component Classes ---
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -124,17 +105,13 @@ const rootClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
-    // ["disabledClass", "o-breadcrumb--disabled", null, computed(() => props.disabled)],
 );
 </script>
 
 <template>
-    <h2>It works!</h2>
-    <component
-        :is="computedTag"
-        :type="computedNativeType"
-        :class="rootClasses"
-        data-oruga="breadcrumb">
+    <h2>It works!!!</h2>
+    <!-- <slot></slot> -->
+    <component :is="computedTag" :class="rootClasses" data-oruga="breadcrumb">
         <!-- BreadcrumbItems -->
         <slot></slot>
     </component>
