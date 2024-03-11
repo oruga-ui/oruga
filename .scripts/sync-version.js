@@ -1,6 +1,7 @@
 const replace = require('replace-in-file')
 
 const jsonPaths = [
+  'package-lock.json',
   'packages/docs/package.json',
   'packages/docs/package-lock.json',
   'packages/oruga/package.json',

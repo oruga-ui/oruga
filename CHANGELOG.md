@@ -1,3 +1,27 @@
+## [0.8.6](https://github.com/oruga-ui/oruga/compare/v0.8.5...v0.8.6) (2024-03-11)
+
+
+### Bug Fixes
+
+* **build:** add volar types export ([#844](https://github.com/oruga-ui/oruga/issues/844)) ([4b31d5e](https://github.com/oruga-ui/oruga/commit/4b31d5ee3a7cad73df80bc755f0203e9be43cdbc))
+* **build:** export `ConfigPlugin` ([#824](https://github.com/oruga-ui/oruga/issues/824)) ([e50cc19](https://github.com/oruga-ui/oruga/commit/e50cc1959f0ca1111ded4c9790f25697cb4708b1))
+* **helpers:** remove unintended unref function in `isDefined` helper function ([#834](https://github.com/oruga-ui/oruga/issues/834)) ([ed75a71](https://github.com/oruga-ui/oruga/commit/ed75a718d3282198e532596423ea4b71256cfb06))
+* **modal:** make property `witdh` reactive ([#830](https://github.com/oruga-ui/oruga/issues/830)) ([7f65756](https://github.com/oruga-ui/oruga/commit/7f6575664926259be4f5a5bf3516ca42629b1017))
+* **programmatic:** fix ProgrammaticExpose type ([#831](https://github.com/oruga-ui/oruga/issues/831)) ([e490336](https://github.com/oruga-ui/oruga/commit/e4903369209789188b61dcebcc95d71a30611e3a))
+* **table:** `stickyHeaderClass` should not display by default ([#832](https://github.com/oruga-ui/oruga/issues/832)) ([09a45a1](https://github.com/oruga-ui/oruga/commit/09a45a1176b9b79fc6c018a744bd5e4ce4953e52))
+* **table:** fix `page-change` event sending old value ([#842](https://github.com/oruga-ui/oruga/issues/842)) ([082e2fa](https://github.com/oruga-ui/oruga/commit/082e2fa0f0e99b6e995f21848c2a968529dc8cf3))
+* **table:** fix TableColumn `searchable` slot property bug ([#836](https://github.com/oruga-ui/oruga/issues/836)) ([0ecba93](https://github.com/oruga-ui/oruga/commit/0ecba93c40f6c249b4a4272b88c48fd068b74f79))
+* **table:** prevent TableColumn props trigger recursive reactivity ([#848](https://github.com/oruga-ui/oruga/issues/848)) ([8f83b71](https://github.com/oruga-ui/oruga/commit/8f83b710f937993cb489d3910f0ea492412467f7))
+* **table:** set TableColumn `customSort` type to unknown ([#840](https://github.com/oruga-ui/oruga/issues/840)) ([548304d](https://github.com/oruga-ui/oruga/commit/548304d835385d155373c6684db340bb3c427352))
+* **upload:** fix input bindung ([#843](https://github.com/oruga-ui/oruga/issues/843)) ([deafbdf](https://github.com/oruga-ui/oruga/commit/deafbdfac0823ac1ae4c6326bd0066660237af19))
+
+
+### Features
+
+* **table:** make `bordered`, `striped`, `narrowed` and `hoverable` configurable ([#845](https://github.com/oruga-ui/oruga/issues/845)) ([6872eee](https://github.com/oruga-ui/oruga/commit/6872eeee735a309d3489c541c92f192c063cf821))
+
+
+
 ## [0.8.5](https://github.com/oruga-ui/oruga/compare/v0.8.4...v0.8.5) (2024-02-26)
 
 
