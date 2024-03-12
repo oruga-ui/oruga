@@ -91,6 +91,7 @@
     "eslint-plugin-vuejs-accessibility": "^2.2.1",
     "happy-dom": "^13.6.2",
     "npm-check-updates": "^16.14.15",
+    "jest-axe": "^8.0.0",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
     "sass": "1.71.1",
