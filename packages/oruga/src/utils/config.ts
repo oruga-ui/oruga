@@ -3,6 +3,12 @@ import { getValueByPath, merge, clone, setValueByPath } from "./helpers";
 import { setVueInstance } from "./plugins";
 import type { OrugaOptions } from "@/types";
 
+declare module "../index" {
+    interface OrugaProgrammatic {
+        config: typeof ConfigProgrammatic;
+    }
+}
+
 const globalOptions = ref<OrugaOptions>({
     iconPack: "mdi",
     useHtml5Validation: true,
@@ -35,7 +41,7 @@ export const ConfigProgrammatic = {
     },
 };
 
-export const ConfigPlugin = {
+export const OrugaConfig = {
     install(app: App, options?: OrugaOptions): void {
         // set global vue instance
         setVueInstance(app);
