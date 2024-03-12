@@ -57,8 +57,13 @@ const onProfileActivate = () => {
     <!-- Taken from the first example in the documentation -->
     <o-steps
         v-model="activeStep"
+        :vertical="isVertical"
+        :animated="isAnimated"
+        :rounded="isRounded"
+        :has-navigation="hasNavigation"
         icon-prev="chevron-left"
-        icon-next="chevron-right">
+        icon-next="chevron-right"
+        :label-position="labelPosition">
         <o-step-item
             value="1"
             step="1"

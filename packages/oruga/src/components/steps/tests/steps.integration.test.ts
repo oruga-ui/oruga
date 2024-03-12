@@ -1,10 +1,8 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-import { axe, toHaveNoViolations } from "jest-axe";
+import { axe } from "jest-axe";
 
 import StepsExample from "./StepsExample.vue";
-
-expect.extend(toHaveNoViolations);
 
 describe("Steps Integration", () => {
     enableAutoUnmount(afterEach);
