@@ -48,7 +48,7 @@ const enableProfileActivateEvent = ref(false);
 
 const onProfileActivate = () => {
     if (enableProfileActivateEvent.value) {
-        alert("Profile Activated");
+        console.log("Profile Activated");
     }
 };
 </script>
