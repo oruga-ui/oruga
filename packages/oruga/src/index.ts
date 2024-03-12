@@ -27,7 +27,7 @@ export { useOruga } from "./utils/programmatic";
 // main oruga vue plugin
 const plugin: Plugin = {
     install(app: App, options: OrugaOptions = {}) {
-        // enable programmatic config registering
+        // initialise config with options
         app.use(OrugaConfig, options);
 
         // add all components
