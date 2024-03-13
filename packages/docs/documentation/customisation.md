@@ -30,6 +30,10 @@ Here you can inspect the elements affected by each class property using the `Cla
 
 The easiest way to customise your components is set up a global configuration object with a <i>class-mapping</i> for each component.
 
+::: info
+While using TypeScript, the configuration object is defined by the type `OrugaOptions`.
+:::
+
 The Config object is defined as:
 ```js
 {
@@ -90,7 +94,7 @@ createApp(...)
     });
 ```
 
-For a better customisation experience, this function accepts the component's read-only `props` as a second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
+For a better customisation experience, this function accepts the component's read-only `props` as a second parameter. For example, when using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
 
 ```js
 createApp(...)
@@ -140,7 +144,7 @@ Or directly in your component:
 ```
 
 ::: warning
-In this case `override` property replaces all existing theme config classes completely, ignoring your configuration.
+In this case `override` property replaces **all** existing theme config classes completely, ignoring your configuration.
 :::
 
 You can also specify the override behaviour for each class:
@@ -201,19 +205,41 @@ You can also add and override classes to a component directly using `class` prop
 
 | Field              | Description                                                                                                                                                                                  | Default |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | true    |
-| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
-| useHtml5Validation | Default form components use-html5-validation attribute                                                                                                                                       | true    |
+| override           | In case you want to override existing Oruga default classes all components completely, you can specify the override behaviour here globaly.                                                  | <code style='white-space: nowrap; padding: 0;'>null</code>   |
 | iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
-| reportInvalidInput | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
+| iconComponent      | Define a specific icon component                                                                                                                                                             | <code style='white-space: nowrap; padding: 0;'>null</code>    |
+| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | <code style='white-space: nowrap; padding: 0;'>true</code>   |
+| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
+| useHtml5Validation | Enable default form components HTML5 validation attribute                                                                                                                                    | <code style='white-space: nowrap; padding: 0;'>true</code>    |
+| invalidHandler | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
 
 Have a look at the docs of each component to know all the customisable fields/props by config.
 
 
 ## Programmatic usage {#programmatic}
 
-As alternative Oruga provide a programmatic interface `useOruga()` to access the config as well as programmatic component interfaces such as [`Modal`](/components/Modal.html) or [`Sidebar`](/components/Sidebar.html).
-This interface gives you access to all registered programmatic components.
+As alternative Oruga provide a programmatic interface `useOruga()` to access the config as well as programmatic component interfaces such as [`Modal`](/components/Modal.html#programmatically) or [`Sidebar`](/components/Sidebar.html#programmatically).
+This interface gives you access to all registered programmatic components. A programmatic component interface get registered while using the main or an individual component plugin.
+
+
+### Programmatic component 
+
+If you use the default main plugin export or any plugin of a component with a programmatic interface, this interface will be registered and can be accessed using the `useOruga()` composable:
+
+```js
+import { useOruga } from "@oruga-ui/oruga-next";
+
+const oruga = useOruga();
+
+oruga.sidebar.open({
+    component: MyCoolComponent,
+    fullheight: true,
+    overlay: true,
+    destroyOnHide: true,
+});
+```
+
+### Programmatic config 
 
 The config can be customised for each component by overriding the `Config` object programmatically:
 
@@ -236,31 +262,6 @@ const myThemeConfig = {
 oruga.config.setOptions(myThemeConfig);
 ```
 
-If you use individual imports instead of the default global plugin export, the programmatic config will not be registered to the `useOruga()` interface by default.
-But you can add the config interface by adding the dedicated `ConfigPlugin` plugin:
-
-```js
-import { createApp } from 'vue';
-import { OAutocomplete, OSidebar, ConfigPlugin, useOruga } from '@oruga-ui/oruga-next';
-
-createApp(...)
-    .component(OAutocomplete)
-    .component(OSidebar)
-    .use(ConfigPlugin);
-
-const oruga = useOruga();
-
-const config = oruga.config.getOptions();
-
-config.setOption("autocomplete", {
-    rootClass: 'autocomplete-root',
-    itemClass: 'autocomplete-item',
-    ...
-});
-
-config.setOption("sidebar", { ... });
-```
-
 However, you can also customise each component by using the dedicated `ConfigProgrammatic` object:
 
 ```js
@@ -280,17 +281,27 @@ const myThemeConfig = {
 ConfigProgrammatic.setOptions(myThemeConfig);
 ```
 
-If you use the default global plugin export or any plugin of a component with a programmatic interface, this interface will be registered and can be accessed with `useOruga()`:
+If you use individual imports instead of the default main plugin export, the programmatic config will not be registered to the `useOruga()` interface by default.
+Therefore, you can make the config interface available by adding the dedicated `OrugaConfig` plugin:
 
 ```js
-import { useOruga } from "@oruga-ui/oruga-next";
+import { createApp } from 'vue';
+import { OAutocomplete, OSidebar, OrugaConfig, useOruga } from '@oruga-ui/oruga-next';
+
+createApp(...)
+    .component(OAutocomplete)
+    .component(OSidebar)
+    .use(OrugaConfig);
 
 const oruga = useOruga();
 
-oruga.sidebar.open({
-    component: MyCoolComponent,
-    fullheight: true,
-    overlay: true,
-    destroyOnHide: true,
+const config = oruga.config.getOptions();
+
+config.setOption("autocomplete", {
+    rootClass: 'autocomplete-root',
+    itemClass: 'autocomplete-item',
+    ...
 });
+
+config.setOption("sidebar", { ... });
 ```
