@@ -18,7 +18,7 @@ export * from "./components/plugins";
 // export programmatic config
 export {
     OrugaConfig,
-    OrugaConfig as ConfigPlugin, // todo: breaking change rename
+    OrugaConfig as ConfigPlugin, // todo: remove export later - beaking change
     ConfigProgrammatic,
 };
 
