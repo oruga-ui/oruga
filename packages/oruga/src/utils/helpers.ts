@@ -1,9 +1,7 @@
 /**
  * Generates a random string
  */
-export function uuid(): string {
-    return Math.random().toString(36).substring(2, 15);
-}
+export const uuid = (): string => Math.random().toString(36).substring(2, 15);
 
 /**
  * +/- function to native math sign
@@ -20,9 +18,7 @@ export const sign = Math.sign || signPoly;
  * @param mod
  * @returns {number}
  */
-export function mod(n: number, mod: number): number {
-    return ((n % mod) + mod) % mod;
-}
+export const mod = (n: number, mod: number): number => ((n % mod) + mod) % mod;
 
 /**
  * Asserts a value is beetween min and max
@@ -35,52 +31,25 @@ export function bound(val: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, val));
 }
 
-/**
- * Get a value of an object property/path even if it's nested
- */
-export function getValueByPath<T = any>(
-    obj: Record<string, any>,
-    path: string,
-    defaultValue?: T,
-): T {
-    const value = path
-        .split(".")
-        .reduce(
-            (o, i) => (typeof o !== "undefined" ? o[i] : undefined),
-            obj,
-        ) as T;
-    return typeof value !== "undefined" ? value : defaultValue;
-}
+export const isObject = <T>(obj: T): boolean =>
+    obj && typeof obj === "object" && !Array.isArray(obj);
+
+export const isDefined = <T>(d: T): boolean => d !== null && d !== undefined;
+
+export const blankIfUndefined = (value: string): string =>
+    typeof value !== "undefined" && value !== null ? value : "";
+
+export const defaultIfUndefined = <T>(
+    value: T | undefined,
+    defaultValue: T,
+): T => (typeof value !== "undefined" && value !== null ? value : defaultValue);
+
+export const toCssDimension = (width: string | number): string | number =>
+    !isDefined(width) ? null : isNaN(width as number) ? width : width + "px";
 
 /**
- * Set a value of an object property/path even if it's nested
+ * Extension of indexOf method by equality function if specified
  */
-export function setValueByPath<T>(
-    obj: Record<string, any>,
-    path: string,
-    value: T,
-): void {
-    const p = path.split(".");
-    if (p.length === 1) {
-        obj[path] = value;
-        return;
-    }
-    const field = p[0];
-    if (typeof obj[field] === "undefined") obj[field] = {};
-    return setValueByPath(obj[field], p.slice(1).join("."), value);
-}
-
-export function getStyleValue(value: any): any {
-    if (typeof value === "object") {
-        for (const key in value) {
-            if (value[key]) return key;
-        }
-        return "";
-    }
-    return value;
-}
-
-/** Extension of indexOf method by equality function if specified */
 export function indexOf<T>(
     array: T[],
     obj: T,
@@ -130,28 +99,9 @@ export function sortBy<T>(
     return sorted;
 }
 
-export const isObject = <T>(obj: T): boolean =>
-    obj && typeof obj === "object" && !Array.isArray(obj);
-
-export const isDefined = <T>(d: T): boolean => d !== null && d !== undefined;
-
-export function blankIfUndefined(value: string): string {
-    return typeof value !== "undefined" && value !== null ? value : "";
-}
-
-export function defaultIfUndefined<T>(
-    value: T | undefined,
-    defaultValue: T,
-): T {
-    return typeof value !== "undefined" && value !== null
-        ? value
-        : defaultValue;
-}
-
-export function clone<T extends object>(obj: T): T {
-    return Object.assign({}, obj);
-}
-
+/**
+ * Deeply check if two values are equal
+ */
 export function isEqual(valueA: unknown, valueB: unknown): boolean {
     // Check if only one value is empty.
     if ((!valueA && !!valueB) || (!!valueA && !valueB)) return false;
@@ -197,6 +147,13 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
 }
 
 /**
+ * Clone an obj with Object.assign
+ */
+export function clone<T extends object>(obj: T): T {
+    return Object.assign({}, obj);
+}
+
+/**
  * Merge function to replace Object.assign with deep merging possibility
  */
 export function merge(target: any, source: any, deep = false): any {
@@ -212,8 +169,6 @@ export function merge(target: any, source: any, deep = false): any {
  * @author inspired by [jhildenbiddle](https://stackoverflow.com/a/48218209).
  */
 export function mergeDeep(target: any, source: any): any {
-    const isObject = (obj: any): any => obj && typeof obj === "object";
-
     if (!isObject(target) || !isObject(source)) return source;
 
     Object.getOwnPropertyNames(source).forEach((key) => {
@@ -233,6 +188,41 @@ export function mergeDeep(target: any, source: any): any {
     });
 
     return target;
+}
+
+/**
+ * Get a value of an object property/path even if it's nested
+ */
+export function getValueByPath<T = any>(
+    obj: Record<string, any>,
+    path: string,
+    defaultValue?: T,
+): T {
+    const value = path
+        .split(".")
+        .reduce(
+            (o, i) => (typeof o !== "undefined" ? o[i] : undefined),
+            obj,
+        ) as T;
+    return typeof value !== "undefined" ? value : defaultValue;
+}
+
+/**
+ * Set a value of an object property/path even if it's nested
+ */
+export function setValueByPath<T = any>(
+    obj: Record<string, any>,
+    path: string,
+    value: T,
+): void {
+    const p = path.split(".");
+    if (p.length === 1) {
+        obj[path] = value;
+        return;
+    }
+    const field = p[0];
+    if (typeof obj[field] === "undefined") obj[field] = {};
+    return setValueByPath(obj[field], p.slice(1).join("."), value);
 }
 
 export function removeElement(el: Element): void {
@@ -256,20 +246,6 @@ export function createAbsoluteElement(el: Element): HTMLDivElement {
 }
 
 /**
- * @deprecated
- */
-export function createNewEvent(eventName: string): Event {
-    let event: any;
-    if (typeof Event === "function") {
-        event = new Event(eventName);
-    } else {
-        event = document.createEvent("Event");
-        event.initEvent(eventName, true, true);
-    }
-    return event;
-}
-
-/**
  * Escape regex characters
  * http://stackoverflow.com/a/6969486
  */
@@ -277,35 +253,6 @@ export function escapeRegExpChars(value: string): string {
     if (!value) return value;
     // eslint-disable-next-line no-useless-escape
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
-
-export function toCssDimension(width: string | number): string | number {
-    return width === undefined
-        ? null
-        : isNaN(width as number)
-          ? width
-          : width + "px";
-}
-
-/**
- * @deprecated use useDebounce composable instead
- */
-export function debounce<A extends Array<unknown>>(
-    func: (...args: A[]) => void,
-    wait: number,
-    immediate?: boolean,
-): (...args: A[]) => void {
-    let timeout: NodeJS.Timeout;
-    return (...args: A[]) => {
-        const later = () => {
-            timeout = null;
-            if (!immediate) func.apply(this, args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(this, args);
-    };
 }
 
 /**

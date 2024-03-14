@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
+import { computed, toRaw, ref, useSlots, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { isEqual, uuid } from "@/utils/helpers";
@@ -99,7 +99,7 @@ const emits = defineEmits<{
 const slots = useSlots();
 
 const providedData = computed<StepItemComponent>(() => ({
-    ...props,
+    ...toRaw(props),
     $slots: slots,
     isTransitioning: isTransitioning.value,
     activate,
@@ -107,7 +107,7 @@ const providedData = computed<StepItemComponent>(() => ({
 }));
 
 // Inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<ComputedRef<StepsComponent>>({
+const { parent, item } = useProviderChild<StepsComponent>({
     data: providedData,
 });
 

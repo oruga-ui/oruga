@@ -16,12 +16,12 @@ declare module "../../index" {
 
 const instances = new InstanceRegistry<typeof Loading>();
 
-type ProgrammaticProps = Readonly<
+type LoadingProgrammaticProps = Readonly<
     string | (LoadingProps & OrugaOptions["loading"])
 >;
 
 const LoadingProgrammatic = {
-    open(params: ProgrammaticProps): ProgrammaticExpose {
+    open(params: LoadingProgrammaticProps): ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {

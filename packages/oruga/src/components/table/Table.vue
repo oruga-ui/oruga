@@ -8,7 +8,6 @@ import {
     useSlots,
     toValue,
     type PropType,
-    type ComputedRef,
     type Ref,
 } from "vue";
 
@@ -761,8 +760,7 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 const slotRef = ref<HTMLElement>();
 
 // provide functionalities and data to child item components
-const provider =
-    useProviderParent<ComputedRef<TableColumnComponent<T>>>(slotRef);
+const provider = useProviderParent<TableColumnComponent<T>>(slotRef);
 
 /** all defined columns */
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
@@ -771,6 +769,8 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data),
+        thAttrsData: {},
+        tdAttrsData: [],
     }));
 });
 
@@ -827,19 +827,21 @@ const visibleRows = computed(() => {
     }
 });
 
-/** Visible columns based on the column visible property */
-const visibleColumns = computed(() =>
-    tableColumns.value.filter(
+const visibleColumns = computed(() => {
+    if (!tableColumns.value) return [];
+    return tableColumns.value.filter(
         (column) => column.visible || column.visible === undefined,
-    ),
-);
+    );
+});
 
-watch([() => visibleRows.value, () => visibleColumns.value], () => {
-    // process tdAttrs when row or columns got changed
+/** process thAttrs & tdAttrs when row or columns got changed */
+watch([visibleRows, visibleColumns], () => {
     if (visibleColumns.value.length && visibleRows.value.length) {
         for (let i = 0; i < visibleColumns.value.length; i++) {
             const col = visibleColumns.value[i];
-            col.tdAttrsData.value = visibleRows.value.map((data) =>
+            col.thAttrsData =
+                typeof col.thAttrs === "function" ? col.thAttrs(col) : {};
+            col.tdAttrsData = visibleRows.value.map((data) =>
                 typeof col.tdAttrs === "function"
                     ? col.tdAttrs(data.value, col)
                     : {},
@@ -1783,7 +1785,9 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                                     tag="span"
                                     :props="{ column, index }" />
                             </template>
-                            <template v-else>{{ column.subheading }}</template>
+                            <template v-else>
+                                {{ column.subheading }}
+                            </template>
                         </th>
                         <!-- checkable column right -->
                         <th v-if="checkable && checkboxPosition === 'right'" />

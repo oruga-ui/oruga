@@ -1,12 +1,5 @@
 <script setup lang="ts" generic="T">
-import {
-    computed,
-    onBeforeMount,
-    ref,
-    useSlots,
-    getCurrentInstance,
-    type PropType,
-} from "vue";
+import { toRaw, computed, getCurrentInstance, type PropType } from "vue";
 
 import { useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
@@ -85,9 +78,6 @@ const props = defineProps({
     },
 });
 
-const thAttrsData = ref({});
-const tdAttrsData = ref([]);
-
 const style = computed(() => ({
     width: toCssDimension(props.width),
 }));
@@ -97,25 +87,16 @@ const isHeaderUnselectable = computed(
 );
 
 const vm = getCurrentInstance();
-const slots = useSlots();
 
-const providedData = computed<TableColumnComponent<T>>(() => ({
-    ...props,
+const providedData = computed<TableColumnComponent>(() => ({
+    ...toRaw(props),
     $el: vm.proxy,
-    $slots: slots,
+    $slots: vm.slots,
     style: style.value,
-    thAttrsData: thAttrsData.value,
-    tdAttrsData: tdAttrsData,
     isHeaderUnselectable: isHeaderUnselectable.value,
 }));
 
 const { item } = useProviderChild({ data: providedData });
-
-onBeforeMount(() => {
-    if (typeof props.thAttrs !== "undefined") {
-        thAttrsData.value = props.thAttrs(props);
-    }
-});
 </script>
 
 <template>
