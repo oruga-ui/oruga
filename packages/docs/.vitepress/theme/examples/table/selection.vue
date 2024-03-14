@@ -80,14 +80,10 @@ const columns = ref([
 
         <p><b>Selection:</b> {{ selected }}</p>
 
-        <o-table v-model:selected="selected" :data="data" focusable>
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row.value[column.field] }}
-            </o-table-column>
-        </o-table>
+        <o-table
+            v-model:selected="selected"
+            :data="data"
+            :columns="columns"
+            focusable />
     </section>
 </template>

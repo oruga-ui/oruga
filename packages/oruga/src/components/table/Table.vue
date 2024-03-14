@@ -1536,7 +1536,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                         :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ getColumnValue(row.value, column) }}
+                        {{ getColumnValue(row, column) }}
                     </o-table-column>
                 </template>
 
@@ -1866,7 +1866,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                                 :style="isMobileActive ? {} : column.style"
                                 :data-label="column.label"
                                 :props="{
-                                    row,
+                                    row: row.value,
                                     column,
                                     index,
                                     colindex,

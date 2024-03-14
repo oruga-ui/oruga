@@ -74,7 +74,7 @@ const columns = ref([
                 :key="idx"
                 v-slot="{ row }"
                 v-bind="column">
-                {{ row.value[column.field] }}
+                {{ row[column.field] }}
             </o-table-column>
         </o-table>
     </section>

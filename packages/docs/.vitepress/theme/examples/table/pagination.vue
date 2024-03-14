@@ -267,7 +267,7 @@ const data = ref(tableData);
                 width="40"
                 sortable
                 numeric>
-                {{ props.row.value.id }}
+                {{ props.row.id }}
             </o-table-column>
 
             <o-table-column
@@ -275,7 +275,7 @@ const data = ref(tableData);
                 field="user.first_name"
                 label="First Name"
                 sortable>
-                {{ props.row.value.user.first_name }}
+                {{ props.row.user.first_name }}
             </o-table-column>
 
             <o-table-column
@@ -283,7 +283,7 @@ const data = ref(tableData);
                 field="user.last_name"
                 label="Last Name"
                 sortable>
-                {{ props.row.value.user.last_name }}
+                {{ props.row.user.last_name }}
             </o-table-column>
 
             <o-table-column
@@ -292,17 +292,15 @@ const data = ref(tableData);
                 label="Date"
                 sortable
                 position="centered">
-                {{ new Date(props.row.value.date).toLocaleDateString() }}
+                {{ new Date(props.row.date).toLocaleDateString() }}
             </o-table-column>
 
             <o-table-column v-slot="props" label="Gender">
                 <o-icon
                     pack="fas"
-                    :icon="
-                        props.row.value.gender === 'Male' ? 'mars' : 'venus'
-                    " />
+                    :icon="props.row.gender === 'Male' ? 'mars' : 'venus'" />
 
-                {{ props.row.value.gender }}
+                {{ props.row.gender }}
             </o-table-column>
         </o-table>
     </section>

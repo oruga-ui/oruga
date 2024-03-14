@@ -111,7 +111,7 @@ const { item } = useProviderChild({ data: providedData });
         <template v-if="false">
             <!--
                 @slot Default Slot
-                @binding {TableRow} row - row data 
+                @binding {T} row - row data 
                 @binding {TableColumn} column - column definition 
                 @binding {number} index - row index 
                 @binding {number} colindex - column index 

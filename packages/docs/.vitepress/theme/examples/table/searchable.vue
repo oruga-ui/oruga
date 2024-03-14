@@ -71,30 +71,14 @@ const columns = ref([
 
 <template>
     <section>
-        <o-table :data="data">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row.value[column.field] }}
-            </o-table-column>
-        </o-table>
+        <o-table :data="data" :columns="columns" />
 
         <p>
             You can debounce search filter to avoid multiple filtering when
             typing.
         </p>
 
-        <o-table :data="data" :debounce-search="1000">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row.value[column.field] }}
-            </o-table-column>
-        </o-table>
+        <o-table :data="data" :columns="columns" :debounce-search="1000" />
 
         <p>You can also customize the search input using a scoped slot.</p>
 
@@ -113,7 +97,7 @@ const columns = ref([
                         size="small" />
                 </template>
                 <template #default="props">
-                    {{ props.row.value[column.field] }}
+                    {{ props.row[column.field] }}
                 </template>
             </o-table-column>
         </o-table>

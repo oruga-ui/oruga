@@ -137,8 +137,10 @@ function columndrop(column, index, event) {
             <code>dragover</code>/<code>columndragover </code> and
             <code>drop</code>/<code>columndrop</code> events
         </p>
+
         <o-table
             :data="data"
+            :columns="columns"
             draggable
             draggable-column
             @dragstart="dragstart"
@@ -148,14 +150,6 @@ function columndrop(column, index, event) {
             @columndragstart="columndragstart"
             @columndrop="columndrop"
             @columndragover="columndragover"
-            @columndragleave="columndragleave">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row.value[column.field] }}
-            </o-table-column>
-        </o-table>
+            @columndragleave="columndragleave" />
     </section>
 </template>

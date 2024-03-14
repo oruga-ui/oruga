@@ -127,15 +127,10 @@ const columns = ref([
             <o-switch v-model="stickyHeaders" label="Sticky Headers" />
         </o-field>
 
-        <o-table :data="data" :sticky-header="stickyHeaders">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row.value[column.field] }}
-            </o-table-column>
-        </o-table>
+        <o-table
+            :data="data"
+            :columns="columns"
+            :sticky-header="stickyHeaders" />
     </section>
 </template>
 
