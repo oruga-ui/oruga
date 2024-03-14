@@ -134,23 +134,4 @@ const rootClasses = defineClasses(
                 :class="[...iconClasses, ...iconRightClasses]" />
         </span>
     </component>
-    <!-- <h1>hdfbdfndfgn</h1> -->
-
-    <!-- <li :class="rootClasses" data-oruga="breadcrumb-item">
-        <o-icon
-            v-if="iconLeft"
-            :pack="iconPack"
-            :icon="iconLeft"
-            :size="size"
-            :both="iconBoth"
-            :class="[...iconClasses, ...iconLeftClasses]" />
-        <slot></slot>
-        <o-icon
-            v-if="iconRight"
-            :pack="iconPack"
-            :icon="iconRight"
-            :size="size"
-            :both="iconBoth"
-            :class="[...iconClasses, ...iconRightClasses]" />
-    </li> -->
 </template>

@@ -87,11 +87,10 @@ const props = defineProps({
     },
 });
 
+// --- Computed Component Classes ---
 const computedTag = computed(() => {
     return props.tag ? props.tag : "ul";
 });
-
-// --- Computed Component Classes ---
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -124,12 +123,29 @@ const rootClasses = defineClasses(
 </script>
 
 <template>
-    <!-- <h2>It works!!!</h2>
-    <h1>Hello world</h1> -->
-
-    <!-- <slot></slot> -->
     <component :is="computedTag" :class="rootClasses" data-oruga="breadcrumb">
         <!-- BreadcrumbItems -->
         <slot></slot>
     </component>
 </template>
+<!-- <h2>It works!!!</h2>
+<h1>Hello world</h1> -->
+<!-- <slot></slot> -->
+<!-- <h1>hdfbdfndfgn</h1> -->
+<!-- <li :class="rootClasses" data-oruga="breadcrumb-item">
+    <o-icon
+        v-if="iconLeft"
+        :pack="iconPack"
+        :icon="iconLeft"
+        :size="size"
+        :both="iconBoth"
+        :class="[...iconClasses, ...iconLeftClasses]" />
+    <slot></slot>
+    <o-icon
+        v-if="iconRight"
+        :pack="iconPack"
+        :icon="iconRight"
+        :size="size"
+        :both="iconBoth"
+        :class="[...iconClasses, ...iconRightClasses]" />
+</li> -->
