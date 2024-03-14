@@ -35,7 +35,7 @@ const emits = defineEmits<{
 
 const currentPage = defineModel<number>("current");
 
-/** paginator change listener. */
+/** paginator change listener */
 function pageChanged(page: number): void {
     const newPage = page > 0 ? page : 1;
     currentPage.value = newPage;

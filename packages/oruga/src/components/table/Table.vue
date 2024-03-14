@@ -33,11 +33,11 @@ import {
 } from "@/utils/helpers";
 import {
     defineClasses,
+    getActiveClasses,
     useProviderParent,
     useMatchMedia,
     useDebounce,
     useObjectMap,
-    getActiveClasses,
 } from "@/composables";
 
 import type {
@@ -145,12 +145,12 @@ const props = defineProps({
         type: String,
         default: () => getOption("table.checkboxVariant"),
     },
-    /** Custom method to verify if a row is checked, works when is checkable. Useful for backend pagination. */
+    /** Custom method to verify if a row is checked (if checkable). Useful for backend pagination. */
     isRowChecked: {
         type: Function as PropType<(row: T, data: T[]) => boolean>,
         default: undefined,
     },
-    /** Custom method to verify if a row is checkable, works when is checkable */
+    /** Custom method to verify if a row is checkable (if checkable) */
     isRowCheckable: {
         type: Function as PropType<(row: T) => boolean>,
         default: (row: T) =>
@@ -159,7 +159,7 @@ const props = defineProps({
     },
     /** Custom method to verify if a row is selectable, works when is selected. */
     isRowSelectable: {
-        type: Function as PropType<(row: TableRow<T>) => boolean>,
+        type: Function as PropType<(row: T) => boolean>,
         default: () => true,
     },
     /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
@@ -204,7 +204,7 @@ const props = defineProps({
     /** Allow row details  */
     detailed: { type: Boolean, default: false },
     /** Allow pre-defined opened details (if detailed). Ideal to open details via vue-router. (A unique key is required; check `rowKey` prop) */
-    detailedRows: { type: Array as PropType<T[]>, default: () => [] },
+    detailedRows: { type: Array as PropType<TableRow<T>[]>, default: () => [] },
     /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
     isDetailedVisible: {
         type: Function as PropType<(row: T) => boolean>,
@@ -260,11 +260,6 @@ const props = defineProps({
         validator: (value: string) =>
             ["bottom", "top", "both"].indexOf(value) >= 0,
     },
-    /** Rounded pagination buttons (if paginated) */
-    paginationRounded: {
-        type: Boolean,
-        default: () => getOption("table.paginationRounded", false),
-    },
     /**
      * Size of pagination (if paginated)
      * @values small, medium, large
@@ -272,6 +267,11 @@ const props = defineProps({
     paginationSize: {
         type: String,
         default: () => getOption("table.paginationSize", "small"),
+    },
+    /** Enable rounded pagination buttons (if paginated) */
+    paginationRounded: {
+        type: Boolean,
+        default: () => getOption("table.paginationRounded", false),
     },
     /** Enable simple style pagination (if paginated) */
     paginationSimple: {
@@ -325,7 +325,7 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("table.mobileCards", true),
     },
-    /** Text when nothing is selected */
+    /** Select placeholder text when nothing is selected (if mobileCards)*/
     mobileSortPlaceholder: {
         type: String,
         default: () => getOption("table.mobileSortPlaceholder"),
@@ -543,21 +543,21 @@ const emits = defineEmits<{
      * @param newRow {TableRow} new select value
      * @param oldRow {TableRow} old select value
      */
-    (e: "select", newrow: TableRow<T>, oldrow: TableRow<T>): void;
+    (e: "select", newRow: TableRow<T>, oldRow: TableRow<T>): void;
     /**
      * on row checked event
-     * @param value {Array<TableRow>} all checked rows
+     * @param value {TableRow[]} all checked rows
      * @param row {TableRow} row data
      */
-    (e: "check", value: Array<TableRow<T>>, row?: TableRow<T>): void;
+    (e: "check", value: Array<TableRow<T>>, row: TableRow<T>): void;
     /**
      * on all rows checked event
-     * @param value {Array<TableRow>} all checked rows
+     * @param value {TableRow[]} all checked rows
      */
     (e: "check-all", value: Array<TableRow<T>>): void;
     /**
      * checkedRows prop two-way binding
-     * @param value {Array<TableRow>} updated checkedRows prop
+     * @param value {TableRow[]} updated checkedRows prop
      */
     (e: "update:checkedRows", value: Array<TableRow<T>>): void;
     /**
@@ -574,13 +574,13 @@ const emits = defineEmits<{
     ): void;
     /**
      * on filter change event
-     * @param filters {Record<string, string>} filter object
+     * @param filters {Object} filter object
      */
     (e: "filters-change", value: Record<string, string>): void;
     /**
-     * on natvie filter event based on props filtersEvent
+     * on native filter event based on props filtersEvent
      * @param filtersEvent {string} props filtersEvent value
-     * @param filters {Record<string, string>} filter object
+     * @param filters {Object} filter object
      * @param event {Event} native  event
      */
     (
@@ -591,7 +591,7 @@ const emits = defineEmits<{
     ): void;
     /**
      * detailedRows prop two-way binding
-     * @param value {Array<TableRow>} updated detailedRows prop
+     * @param value {TableRow[]} updated detailedRows prop
      */
     (e: "update:detailedRows", value: Array<TableRow<T>>): void;
     /**
@@ -774,7 +774,7 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
     }));
 });
 
-/** all defined data elements mapped in Row type */
+/** all defined data elements as an object map */
 const tableData = computed<TableRow<T>[]>(() =>
     useObjectMap(props.data, props.rowKey),
 );
@@ -804,7 +804,7 @@ function processTableData(): void {
     tableRows.value = rows;
 }
 
-/** Shows total data. If backend paginated, use props total else use rows data length as pagination total*/
+/** Shows total data. If backend paginated, use props total else use rows data length as pagination total */
 const tableTotal = computed(() =>
     props.backendPagination ? props.total : tableRows.value.length,
 );
@@ -893,9 +893,8 @@ function hasCustomFooterSlot(): boolean {
 
 /** Get the formated row value for a column */
 function getColumnValue(row: T, column: TableColumn): string {
-    if (!column.field) return String(row);
-    const prop = getValueByPath(row, column.field);
-    return column.display ? column.display(prop, row) : prop;
+    const prop = column.field ? getValueByPath(row, column.field) : row;
+    return column.display ? column.display(prop, row) : String(prop);
 }
 
 // --- Select Feature ---
@@ -921,7 +920,7 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
 
     const row = visibleRows.value[index];
 
-    if (!props.isRowSelectable(row)) {
+    if (!props.isRowSelectable(row.value)) {
         let newIndex = null;
         if (pos > 0) {
             for (
@@ -929,11 +928,13 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
                 i < visibleRows.value.length && newIndex === null;
                 i++
             ) {
-                if (props.isRowSelectable(visibleRows.value[i])) newIndex = i;
+                if (props.isRowSelectable(visibleRows.value[i].value))
+                    newIndex = i;
             }
         } else {
             for (let i = index; i >= 0 && newIndex === null; i--) {
-                if (props.isRowSelectable(visibleRows.value[i])) newIndex = i;
+                if (props.isRowSelectable(visibleRows.value[i].value))
+                    newIndex = i;
             }
         }
         if (newIndex >= 0) {
@@ -952,7 +953,7 @@ function selectRow(row: TableRow<T>, index: number, event: Event): void {
     emits("click", row, index, event);
 
     if (isEqual(tableSelectedRow.value, row)) return;
-    if (!props.isRowSelectable(row)) return;
+    if (!props.isRowSelectable(row.value)) return;
 
     tableSelectedRow.value = row;
     // emit new and old row
@@ -1178,7 +1179,6 @@ function checkAll(): void {
 
     tableCheckedRows.value = isAllChecked.value ? [] : checkedRows;
 
-    emits("check", tableCheckedRows.value);
     emits("check-all", tableCheckedRows.value);
 }
 
@@ -1493,9 +1493,10 @@ function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
         ["trCheckedClass", "o-table__tr--checked", null, isChecked(row)],
     );
 
-    const rowClass = props.rowClass
-        ? props.rowClass(row.value, index) || ""
-        : "";
+    const rowClass =
+        typeof props.rowClass === "function"
+            ? props.rowClass(row.value, index) || ""
+            : "";
 
     return [...classes.value, { [rowClass]: true }];
 }
@@ -1514,8 +1515,6 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
 
     return [...tdBaseClasses.value, ...classes.value];
 }
-
-// defineExpose({ tableRows, tableColumns });
 </script>
 
 <template>
@@ -1796,7 +1795,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                 <tbody>
                     <template
                         v-for="(row, index) in visibleRows"
-                        :key="row.key + ':' + index + 'row'">
+                        :key="row.key + ':' + index + '_row'">
                         <tr
                             :class="rowClasses(row, index)"
                             :draggable="canDragRow"
@@ -1915,7 +1914,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                                     :index="index" />
                                 <tr
                                     v-else
-                                    :key="row.key + 'detail'"
+                                    :key="row.key + '_detail'"
                                     :class="detailedClasses">
                                     <td :colspan="columnCount">
                                         <!--

@@ -74,9 +74,9 @@ watch(
 );
 
 function sort(event?: Event): void {
-    const column = sortableColumns.value.filter(
+    const column = sortableColumns.value.find(
         (c) => getValueByPath(c, "identifier") === mobileSort.value,
-    )[0];
+    );
     emits("sort", column, event);
 }
 </script>
@@ -97,11 +97,12 @@ function sort(event?: Event): void {
                 </template>
                 <option
                     v-for="(column, index) in sortableColumns"
-                    :key="index"
+                    :key="column.field || index"
                     :value="column.identifier">
                     {{ column.label }}
                 </option>
             </o-select>
+
             <o-button @click="sort($event)">
                 <o-icon
                     v-show="isCurrentSort"
