@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { defineClasses } from "@/composables";
+import { defineClasses /*useProviderChild */ } from "@/composables";
 
 import { getOption } from "@/utils/config";
 
-import { computed, type PropType } from "vue";
+import { computed, type PropType, type Ref } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import type { ComponentClass } from "@/types";
+/**
+ * The classic button, in different colors, sizes, and states
+ * @displayName Breadcrumb Item
+ */
+defineOptions({
+    isOruga: true,
+    name: "OBreadcrumbItem",
+    configField: "breadcrumb",
+    // inheritAttrs: false,
+});
 
 const props = defineProps({
     active: {
@@ -65,11 +75,19 @@ const props = defineProps({
     },
 });
 
+// Inject functionalities and data from the parent carousel component
+// const { parent, item } = useProviderChild<Ref<any>>();
+
 // --- Computed Component Classes ---
 const computedTag = computed(() => {
     return props.tag ? props.tag : "li";
 });
-// const computedDisabled = computed(() => (props.disabled ? true : null));
+const computedDisabled = computed(() =>
+    props.disabled ? "o-breadcrumb-item--disabled" : null,
+);
+const computedActive = computed(() =>
+    props.active ? "o-breadcrumb-item--active" : null,
+);
 // --- Computed Component Classes ---
 
 const iconClasses = defineClasses(["iconClass", "o-breadcrumb-item__icon"]);
@@ -84,25 +102,19 @@ const iconRightClasses = defineClasses([
     "o-breadcrumb-item__icon-right",
 ]);
 
-// eslint-disable-next-line prettier/prettier
-const wrapperClasses = defineClasses(["wrapperClass", "o-breadcrumb-item__wrapper"]);
-
-// const separatorClasses = defineClasses([
-//     "iconLeftClass",
-//     "o-breadcrumb--",computed(() => props.separator),
-// ]);
 const rootClasses = defineClasses(
+    ["rootClass", "o-breadcrumb-item"],
     // eslint-disable-next-line prettier/prettier
-    ["disabledClass", "o-breadcrumb-item--disabled", null, computed(() => props.disabled)],
+    // ["disabledClass", "o-breadcrumb-item--disabled", null, computed(() => props.disabled)],
     // eslint-disable-next-line prettier/prettier
-    ["activeClass", "o-breadcrumb-item--active", null, computed(() => props.active)],
+    // ["activeClass", "o-breadcrumb-item--active", null, computed(() => props.active)],
 )
 </script>
 
 <template>
     <component
         :is="computedTag"
-        :class="rootClasses"
+        :class="[rootClasses, computedActive, computedDisabled]"
         data-oruga="breadcrumb-item">
         <span :class="wrapperClasses">
             <o-icon
@@ -132,7 +144,6 @@ const rootClasses = defineClasses(
             :size="size"
             :both="iconBoth"
             :class="[...iconClasses, ...iconLeftClasses]" />
-        <h1>hdfbdfndfgn</h1>
         <slot></slot>
         <o-icon
             v-if="iconRight"

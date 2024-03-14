@@ -1,10 +1,12 @@
 ---
-title: BreadcrumbItem
+title: Breadcrumb Item
 ---
 
-# BreadcrumbItem
+# Breadcrumb Item
 
 <div class="vp-doc">
+
+> The classic button, in different colors, sizes, and states
 
 </div>
 
@@ -26,6 +28,8 @@ title: BreadcrumbItem
 <div class="vp-doc">
 
 ## BreadcrumbItem component
+
+> The classic button, in different colors, sizes, and states
 
 ```html
 <o-breadcrumb-item></o-breadcrumb-item>

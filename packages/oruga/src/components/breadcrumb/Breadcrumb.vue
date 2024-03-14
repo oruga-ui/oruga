@@ -108,11 +108,25 @@ const rootClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
+    [
+        "separatorClass",
+        "o-breadcrumb--",
+        computed(() => props.separator),
+        computed(() => !!props.separator),
+    ],
+    [
+        "alignClass",
+        "o-breadcrumb--",
+        computed(() => props.align),
+        computed(() => !!props.align),
+    ],
 );
 </script>
 
 <template>
-    <h2>It works!!!</h2>
+    <!-- <h2>It works!!!</h2>
+    <h1>Hello world</h1> -->
+
     <!-- <slot></slot> -->
     <component :is="computedTag" :class="rootClasses" data-oruga="breadcrumb">
         <!-- BreadcrumbItems -->
