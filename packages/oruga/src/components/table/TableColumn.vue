@@ -140,7 +140,7 @@ const { item } = useProviderChild({ data: providedData });
                 @slot Override searchable input 
                 @binding {TableColumn} column - column definition 
                 @binding {number} index - column index 
-                @binding {Object} filters - active filters object
+                @binding {object} filters - active filters object
             -->
             <slot
                 name="searchable"

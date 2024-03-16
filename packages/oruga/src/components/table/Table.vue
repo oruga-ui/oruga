@@ -588,7 +588,7 @@ const emits = defineEmits<{
     /**
      * on native filter event based on props filtersEvent
      * @param filtersEvent {string} props filtersEvent value
-     * @param filters {Object} filter object
+     * @param filters {object} filter object
      * @param event {Event} native  event
      */
     (

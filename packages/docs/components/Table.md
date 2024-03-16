@@ -124,7 +124,7 @@ title: Table
 | update:checkedRows  | **value** `TableRow[]` - updated checkedRows prop                                                                                                                                               | checkedRows prop two-way binding                           |
 | sort                | **column** `TableColumn` - column data<br/>**direction** `string` - 'asc' or 'desc'<br/>**event** `Event` - native event                                                                        | on column sort change event                                |
 | filters-change      | **filters** `Object` - filter object                                                                                                                                                            | on filter change event                                     |
-| filters-event       | **filtersEvent** `string` - props filtersEvent value<br/>**filters** `Object` - filter object<br/>**event** `Event` - native event                                                              | on native filter event based on props filtersEvent         |
+| filters-event       | **filtersEvent** `string` - props filtersEvent value<br/>**filters** `object` - filter object<br/>**event** `Event` - native event                                                              | on native filter event based on props filtersEvent         |
 | update:detailedRows | **value** `TableRow[]` - updated detailedRows prop                                                                                                                                              | detailedRows prop two-way binding                          |
 | details-open        | **row** `TableRow` - row data                                                                                                                                                                   | on details open event                                      |
 | details-close       | **row** `TableRow` - row data                                                                                                                                                                   | on details close event                                     |
@@ -197,7 +197,7 @@ title: Table
 | default    | Default Slot              | **row** `T` - row data<br/>**column** `TableColumn` - column definition<br/>**index** `number` - row index<br/>**colindex** `number` - column index<br/>**toggle-details** `(): void` - toggle details function |
 | header     | Override header label     | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | subheading | Override subheading label | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
-| searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `Object` - active filters object                                                                             |
+| searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
 
 </div>
 
