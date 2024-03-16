@@ -6,7 +6,7 @@ title: Breadcrumb
 
 <div class="vp-doc">
 
-> The classic button, in different colors, sizes, and states
+> The classic breadcrumb, in different colors, sizes, and states
 
 </div>
 
@@ -29,7 +29,7 @@ title: Breadcrumb
 
 ## Breadcrumb component
 
-> The classic button, in different colors, sizes, and states
+> The classic breadcrumb, in different colors, sizes, and states
 
 ```html
 <o-breadcrumb></o-breadcrumb>

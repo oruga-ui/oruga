@@ -3,19 +3,19 @@ import { defineClasses /*useProviderChild */ } from "@/composables";
 
 import { getOption } from "@/utils/config";
 
-import { computed, type PropType, type Ref } from "vue";
+import { computed, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import type { ComponentClass } from "@/types";
 /**
- * The classic button, in different colors, sizes, and states
+ * The classic breadrcumb item, in different colors, sizes, and states
  * @displayName Breadcrumb Item
  */
 defineOptions({
     isOruga: true,
     name: "OBreadcrumbItem",
     configField: "breadcrumb",
-    // inheritAttrs: false,
+    // inheritAttrs: true,
 });
 
 const props = defineProps({
@@ -28,8 +28,8 @@ const props = defineProps({
         default: () => getOption("button.variant"),
     },
     /**
-     * Button tag name
-     * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
+     * breadcrumb item tag name
+     * @values li, a, router-link, nuxt-link (or other nuxt alias)
      */
     //  tag: {
     //     type: [String, Object, Function] as PropType<DynamicComponent>,

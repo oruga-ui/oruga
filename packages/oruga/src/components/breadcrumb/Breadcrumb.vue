@@ -4,10 +4,10 @@ import { computed, type PropType } from "vue";
 import { getOption } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { ComponentClass } from "@/types";
 
 /**
- * The classic button, in different colors, sizes, and states
+ * The classic breadcrumb, in different colors, sizes, and states
  * @displayName Breadcrumb
  * @style _breadcrumb.scss
  */
