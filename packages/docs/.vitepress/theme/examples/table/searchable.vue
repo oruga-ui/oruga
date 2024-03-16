@@ -1,6 +1,35 @@
 <script setup>
 import { ref } from "vue";
 
+const columns = ref([
+    {
+        field: "id",
+        label: "ID",
+        width: "100",
+        numeric: true,
+        searchable: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+        searchable: true,
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+        searchable: true,
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+    },
+    {
+        field: "gender",
+        label: "Gender",
+    },
+]);
+
 const data = ref([
     {
         id: 1,
@@ -36,35 +65,6 @@ const data = ref([
         last_name: "Lee",
         date: "2016-12-06 14:38:38",
         gender: "Female",
-    },
-]);
-
-const columns = ref([
-    {
-        field: "id",
-        label: "ID",
-        width: "100",
-        numeric: true,
-        searchable: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-        searchable: true,
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-        searchable: true,
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-    },
-    {
-        field: "gender",
-        label: "Gender",
     },
 ]);
 </script>

@@ -203,7 +203,10 @@ const props = defineProps({
     },
     /** Allow row details  */
     detailed: { type: Boolean, default: false },
-    /** Allow pre-defined opened details (if detailed). Ideal to open details via vue-router. (A unique key is required; check `rowKey` prop) */
+    /**
+     * Set which rows have opened details, use `v-model:detailedRows` to make it two-way binding (if detailed).
+     * Ideal to open details via vue-router. (A unique key is required; check `rowKey` prop)
+     */
     detailedRows: { type: Array as PropType<TableRow<T>[]>, default: () => [] },
     /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
     isDetailedVisible: {
@@ -1869,7 +1872,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                                     column,
                                     index,
                                     colindex,
-                                    toggleDetails,
+                                    toggleDetails: () => toggleDetails(row),
                                 }"
                                 @click="
                                     $emit(
@@ -1904,13 +1907,13 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                             <template v-if="isActiveDetailRow(row)">
                                 <!--
                                     @slot Place row detail content here
-                                    @binding {TableRow} row - row conent
+                                    @binding {T} row - row conent
                                     @binding {number} index - row index
                                 -->
                                 <slot
                                     v-if="customDetailRow"
                                     name="detail"
-                                    :row="row"
+                                    :row="row.value"
                                     :index="index" />
                                 <tr
                                     v-else
@@ -1919,12 +1922,12 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                                     <td :colspan="columnCount">
                                         <!--
                                             @slot Place row detail content here
-                                            @binding {TableRow} row - row conent
+                                            @binding {T} row - row conent
                                             @binding {number} index - row index
                                         -->
                                         <slot
                                             name="detail"
-                                            :row="row"
+                                            :row="row.value"
                                             :index="index" />
                                     </td>
                                 </tr>

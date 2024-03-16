@@ -4,11 +4,6 @@ import { useOruga } from "../../../../../oruga/dist/oruga";
 
 const oruga = useOruga();
 
-const draggingRow = ref(null);
-const draggingRowIndex = ref(null);
-const draggingColumnIndex = ref(null);
-const draggingColumn = ref(null);
-
 const columns = ref([
     {
         field: "id",
@@ -73,6 +68,11 @@ const data = ref([
     },
 ]);
 
+const draggingRow = ref(null);
+const draggingRowIndex = ref(null);
+const draggingColumnIndex = ref(null);
+const draggingColumn = ref(null);
+
 function dragstart(row, index, event) {
     draggingRow.value = row;
     draggingRowIndex.value = index;
@@ -80,14 +80,14 @@ function dragstart(row, index, event) {
 }
 
 function dragover(row, index, event) {
+    event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     event.target.closest("tr").classList.add("is-selected");
-    event.preventDefault();
 }
 
 function dragleave(row, index, event) {
-    event.target.closest("tr").classList.remove("is-selected");
     event.preventDefault();
+    event.target.closest("tr").classList.remove("is-selected");
 }
 
 function drop(row, index, event) {
@@ -107,14 +107,14 @@ function columndragstart(column, index, event) {
 }
 
 function columndragover(column, index, event) {
+    event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     event.target.closest("th").classList.add("is-selected");
-    event.preventDefault();
 }
 
 function columndragleave(column, index, event) {
-    event.target.closest("th").classList.remove("is-selected");
     event.preventDefault();
+    event.target.closest("th").classList.remove("is-selected");
 }
 
 function columndrop(column, index, event) {
@@ -153,3 +153,9 @@ function columndrop(column, index, event) {
             @columndragleave="columndragleave" />
     </section>
 </template>
+
+<style lang="scss" scoped>
+:deep(.is-selected) {
+    background-color: lightblue;
+}
+</style>

@@ -1,7 +1,33 @@
 <script setup>
 import { ref } from "vue";
 
-const tableData = [
+const columns = ref([
+    {
+        field: "id",
+        label: "ID",
+        width: "40",
+        numeric: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+    },
+    {
+        field: "gender",
+        label: "Gender",
+    },
+]);
+
+const data = ref([
     {
         id: 1,
         first_name: "Jesse",
@@ -37,36 +63,9 @@ const tableData = [
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-];
-
-const data = ref(tableData);
-const selected = ref(tableData[1]);
-
-const columns = ref([
-    {
-        field: "id",
-        label: "ID",
-        width: "40",
-        numeric: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-    },
-    {
-        field: "gender",
-        label: "Gender",
-    },
 ]);
+
+const selected = ref(data.value[1]);
 </script>
 
 <template>

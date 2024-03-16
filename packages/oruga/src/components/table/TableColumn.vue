@@ -115,7 +115,7 @@ const { item } = useProviderChild({ data: providedData });
                 @binding {TableColumn} column - column definition 
                 @binding {number} index - row index 
                 @binding {number} colindex - column index 
-                @binding {(TableRow): void} toggle-details - toggle details function 
+                @binding {(): void} toggle-details - toggle details function 
             -->
             <slot
                 :row="null"
@@ -140,7 +140,7 @@ const { item } = useProviderChild({ data: providedData });
                 @slot Override searchable input 
                 @binding {TableColumn} column - column definition 
                 @binding {number} index - column index 
-                @binding {Record<string,string>} filters - active filters object
+                @binding {Object} filters - active filters object
             -->
             <slot
                 name="searchable"
