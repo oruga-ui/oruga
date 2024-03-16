@@ -103,6 +103,11 @@ const columnsVisible = ref({
 });
 const showDetailIcon = ref(true);
 const showDefaultDetail = ref(true);
+const detailedRows = ref([]);
+
+function onRowsCreated(rows) {
+    detailedRows.value = [rows.find((row) => row.value.name === "Board Games")];
+}
 </script>
 
 <template>
@@ -124,10 +129,11 @@ const showDefaultDetail = ref(true);
             detailed
             hoverable
             row-key="name"
-            :opened-detailed="['Board Games']"
+            :detailed-rows="detailedRows"
             :default-sort="['name', 'asc']"
             :custom-detail-row="!showDefaultDetail"
-            :show-detail-icon="showDetailIcon">
+            :show-detail-icon="showDetailIcon"
+            @rows="onRowsCreated">
             <o-table-column
                 v-slot="{ row, toggleDetails }"
                 field="name"

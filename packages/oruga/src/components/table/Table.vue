@@ -532,6 +532,11 @@ const emits = defineEmits<{
      */
     (e: "update:currentPage", value: number): void;
     /**
+     * is emitted each time the table data is processed into rows
+     * @param value {TableRow[]} computed table rows
+     */
+    (e: "rows", value: Array<TableRow<T>>): void;
+    /**
      * on pagination page change event
      * @param page {number} updated page
      */
@@ -785,8 +790,13 @@ const tableData = computed<TableRow<T>[]>(() =>
 // TODO: refactor to use only tableData with more attributes like hidden, detailed
 const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;
 
+emits("rows", tableData.value); // emit computed rows first time
+
 /** recompute table rows when table data change */
-watch(tableData, () => processTableData());
+watch(tableData, (data) => {
+    emits("rows", data); // emit computed rows every time they the data get changed
+    processTableData();
+});
 
 /**
  * Compute tableRows based on:
@@ -1518,6 +1528,11 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
 
     return [...tdBaseClasses.value, ...classes.value];
 }
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ rows: tableData });
 </script>
 
 <template>
@@ -1528,7 +1543,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
             -->
             <slot>
                 <!--
-                    @slot Place extra o-table-column here even if you have some columns defined by prop
+                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
                 -->
                 <slot name="before" />
 
@@ -1543,7 +1558,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
                 </template>
 
                 <!--
-                    @slot Place extra o-table-column here even if you have some columns defined by prop
+                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
                 -->
                 <slot name="after" />
             </slot>
@@ -1974,7 +1989,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
 
             <!--
                 @slot Override loading component
-                @binding {boolean} loading - is loading enabled
+                @binding {boolean} loading - is loading state enabled
             -->
             <slot name="loading" :loading="loading">
                 <o-loading

@@ -94,7 +94,7 @@ function drop(row, index, event) {
     event.target.closest("tr").classList.remove("is-selected");
     const droppedOnRowIndex = index;
     oruga.notification.open(
-        `Moved ${draggingRow.value.first_name} from row ${
+        `Moved ${draggingRow.value.value.first_name} from row ${
             draggingRowIndex.value + 1
         } to ${droppedOnRowIndex + 1}`,
     );
