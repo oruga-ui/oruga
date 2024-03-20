@@ -15,17 +15,17 @@ defineOptions({
     isOruga: true,
     name: "OBreadcrumbItem",
     configField: "breadcrumb",
-    // inheritAttrs: true,
+    inheritAttrs: true,
 });
 
 const props = defineProps({
     active: {
         type: String,
-        default: () => getOption("button.variant"),
+        default: () => getOption("breadcrumb.active"),
     },
     tag: {
         type: String,
-        default: () => getOption("button.variant"),
+        default: () => getOption("breadcrumb.tag"),
     },
     /**
      * breadcrumb item tag name
@@ -33,11 +33,11 @@ const props = defineProps({
      */
     //  tag: {
     //     type: [String, Object, Function] as PropType<DynamicComponent>,
-    //     default: () => getOption<DynamicComponent>("button.tag", "button"),
+    //     default: () => getOption<DynamicComponent>("breadcrumb.tag", "breadcrumb"),
     // },
     disabled: {
         type: String,
-        default: () => getOption("button.variant"),
+        default: () => getOption("breadcrumb.disabled"),
     },
 
     /**
@@ -47,7 +47,7 @@ const props = defineProps({
 
     iconPack: {
         type: String,
-        default: () => getOption("button.iconPack", undefined),
+        default: () => getOption("breadcrumb.iconPack", undefined),
     },
     /** Icon name to show on the left */
     iconLeft: { type: String, default: undefined },
@@ -57,6 +57,11 @@ const props = defineProps({
      * This is used internally
      * @ignore
      */
+    /** Class of the button elements wrapper */
+    wrapperClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     iconBoth: { type: Boolean, default: false },
     /** Class of the button icon */
     iconClass: {
@@ -102,13 +107,15 @@ const iconRightClasses = defineClasses([
     "o-breadcrumb-item__icon-right",
 ]);
 
+const wrapperClasses = defineClasses(["wrapperClass", "o-breadcrumb__wrapper"]);
+
 const rootClasses = defineClasses(
     ["rootClass", "o-breadcrumb-item"],
     // eslint-disable-next-line prettier/prettier
     // ["disabledClass", "o-breadcrumb-item--disabled", null, computed(() => props.disabled)],
     // eslint-disable-next-line prettier/prettier
     // ["activeClass", "o-breadcrumb-item--active", null, computed(() => props.active)],
-)
+);
 </script>
 
 <template>
@@ -121,7 +128,6 @@ const rootClasses = defineClasses(
                 v-if="iconLeft"
                 :pack="iconPack"
                 :icon="iconLeft"
-                :size="size"
                 :both="iconBoth"
                 :class="[...iconClasses, ...iconLeftClasses]" />
             <slot></slot>
@@ -129,9 +135,10 @@ const rootClasses = defineClasses(
                 v-if="iconRight"
                 :pack="iconPack"
                 :icon="iconRight"
-                :size="size"
                 :both="iconBoth"
                 :class="[...iconClasses, ...iconRightClasses]" />
         </span>
     </component>
 </template>
+<!-- :size="size" -->
+<!-- :size="size" -->

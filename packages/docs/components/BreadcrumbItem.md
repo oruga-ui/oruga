@@ -37,14 +37,15 @@ title: Breadcrumb Item
 
 ### Props
 
-| Prop name | Description                    | Type   | Values                                                      | Default                                                                                                                                              |
-| --------- | ------------------------------ | ------ | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active    |                                | string | -                                                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
-| disabled  | breadcrumb item tag name       | string | `li`, `a`, `router-link`, `nuxt-link (or other nuxt alias)` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
-| iconLeft  | Icon name to show on the left  | string | -                                                           |                                                                                                                                                      |
-| iconPack  | Icon pack to use               | string | `mdi`, `fa`, `fas and any other custom icon pack`           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
-| iconRight | Icon name to show on the right | string | -                                                           |                                                                                                                                                      |
-| tag       |                                | string | -                                                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
+| Prop name | Description                    | Type    | Values                                                      | Default                                                                                                                                                  |
+| --------- | ------------------------------ | ------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active    |                                | string  | -                                                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;active: undefined<br>}</code>   |
+| disabled  | breadcrumb item tag name       | string  | `li`, `a`, `router-link`, `nuxt-link (or other nuxt alias)` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;disabled: undefined<br>}</code> |
+| iconBoth  |                                | boolean | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| iconLeft  | Icon name to show on the left  | string  | -                                                           |                                                                                                                                                          |
+| iconPack  | Icon pack to use               | string  | `mdi`, `fa`, `fas and any other custom icon pack`           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconRight | Icon name to show on the right | string  | -                                                           |                                                                                                                                                          |
+| tag       |                                | string  | -                                                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;tag: undefined<br>}</code>      |
 
 ### Slots
 

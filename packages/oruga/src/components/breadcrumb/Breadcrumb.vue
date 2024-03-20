@@ -26,7 +26,7 @@ const props = defineProps({
      */
     variant: {
         type: String,
-        default: () => getOption("button.variant"),
+        default: () => getOption("breadcrumb.variant"),
     },
     /**
      * Size of the control
@@ -34,20 +34,20 @@ const props = defineProps({
      */
     size: {
         type: String,
-        default: () => getOption("button.size"),
+        default: () => getOption("breadcrumb.size"),
     },
     align: {
         type: String,
-        default: getOption("button.size"),
+        default: getOption("breadcrumb.size"),
     },
     // separator
     separator: {
         type: String,
-        default: () => getOption("button.size"),
+        default: () => getOption("breadcrumb.size"),
     },
     tag: {
         type: String,
-        default: () => getOption("button.tag"),
+        default: () => getOption("breadcrumb.tag"),
     },
     // -----------------------------------------------------------------
     /**
@@ -128,3 +128,9 @@ const rootClasses = defineClasses(
         <slot></slot>
     </component>
 </template>
+
+<style>
+.o-breadcrumb {
+    background-color: red;
+}
+</style>

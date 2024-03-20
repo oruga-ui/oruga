@@ -1,3 +1,26 @@
 <template>
-    <section></section>
+    <section>
+        <o-breadcrumb
+            tag="div"
+            separator="has-arrow-separator"
+            size="medium"
+            align="center">
+            <o-breadcrumb-item tag="a" href="/" icon-left="home" active="true"
+                >Home
+            </o-breadcrumb-item>
+            <o-breadcrumb-item
+                tag="a"
+                href="/documentation/"
+                icon-left="plus"
+                disabled="true"
+                >Docs
+            </o-breadcrumb-item>
+            <o-breadcrumb-item
+                tag="a"
+                href="/components/Breadcrumb.html"
+                icon-left="location"
+                >Breadcrumb
+            </o-breadcrumb-item>
+        </o-breadcrumb>
+    </section>
 </template>
