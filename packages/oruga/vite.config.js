@@ -117,5 +117,6 @@ export default defineConfig(({ mode }) => ({
         coverage: {
             provider: "istanbul",
         },
+        setupFiles: [resolve("./src/__tests__/vitest.setup.ts")],
     },
 }));

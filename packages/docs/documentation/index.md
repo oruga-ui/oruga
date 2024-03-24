@@ -55,7 +55,9 @@ import Oruga from '@oruga-ui/oruga-next';
 createApp(...).use(Oruga);
 ```
 
-After the installation, you can use all the components in your SFC like this.
+To specify some global configuration, a configuration object (see [#customisation](/documentation/customisation)) can be passed as second parameter to the `Oruga` plugin.
+
+After the installation, you can use all the components in an SFC like this:
 
 ```html
 <template>
@@ -74,6 +76,16 @@ import { Autocomplete, Sidebar } from '@oruga-ui/oruga-next';
 createApp(...)
   .use(Autocomplete)
   .use(Sidebar);
+```
+
+When using individual components, no configuration is initialised by default. To add some configuration we provide an `OrugaConfig` plugin which can be used to add some global configuration:
+
+```js
+import { OrugaConfig } from '@oruga-ui/oruga-next';
+
+const options: OrugaOptions = { ... }
+
+createApp(...).use(OrugaConfig, options);
 ```
 
 However, if you just need to import a single component separately, without any additional programmatic functionalities, you can import individual components like this:
@@ -128,11 +140,11 @@ If you are using Volar, you can specify global component types by configuring `c
 ```
 
 
-## Nuxt module
+### Nuxt module
 
 Oruga doesn't provide a [Nuxt.js](https://nuxtjs.org) module at the moment.
 
-You can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing:
+But you can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing:
 
 ```js
 import Oruga from '@oruga-ui/oruga-next';

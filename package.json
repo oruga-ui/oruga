@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -22,7 +22,7 @@
     "gen": "npm run gen:types && npm run gen:volar && npm run gen:docs",
     "gen:volar": "node .scripts/gen-volar-dts.mjs --bundle --platform=node",
     "gen:types": "node .scripts/gen-comp-types.mjs --bundle --platform=node",
-    "gen:docs" : "npm run docs:gen --workspace @oruga-ui/docs-next",
+    "gen:docs": "npm run docs:gen --workspace @oruga-ui/docs-next",
     "publish:lib": "npm run publish:lib --workspace @oruga-ui/oruga-next",
     "release": "npm run version && npm run changelog",
     "version": "node .scripts/sync-version.js && git add .",
