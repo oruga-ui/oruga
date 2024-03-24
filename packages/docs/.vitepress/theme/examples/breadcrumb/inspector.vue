@@ -115,5 +115,10 @@ const inspectData = [
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-button v-bind="props">Button</o-button>
+        <o-breadcrumb v-bind="props">
+            <o-breadcrumb-item tag="a" href="/" active="true" >Home</o-breadcrumb-item>
+            <o-breadcrumb-item tag="a" href="/documentation/" disabled="true">Docs</o-breadcrumb-item>
+            <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html">Breadcrumb</o-breadcrumb-item>
+        </o-breadcrumb>
     </inspector-wrapper>
 </template>

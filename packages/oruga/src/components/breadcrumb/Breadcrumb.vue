@@ -128,9 +128,3 @@ const rootClasses = defineClasses(
         <slot></slot>
     </component>
 </template>
-
-<style>
-.o-breadcrumb {
-    background-color: red;
-}
-</style>
