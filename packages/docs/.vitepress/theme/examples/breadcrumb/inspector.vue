@@ -6,94 +6,22 @@ const inspectData = [
     },
     {
         class: "wrapperClass",
-        description: "Class of the button elements wrapper",
+        description: "Class of the breadcrumb elements wrapper",
         action: (cmp, data) => {
             data.expanded = true;
-        },
-    },
-    {
-        class: "outlinedClass",
-        description: "Class of the button when outlined",
-        properties: ["outlined"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
-            data.variant = "primary";
-            data.outlined = true;
-        },
-    },
-    {
-        class: "loadingClass",
-        description: "Class of the button with loading",
-        properties: ["loading"],
-        action: (cmp, data) => {
-            data.loading = true;
-        },
-    },
-    {
-        class: "invertedClass",
-        description: "Class of the button when inverted",
-        properties: ["inverted"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
-            data.variant = "primary";
-            data.inverted = true;
-        },
-    },
-    {
-        class: "expandedClass",
-        description: "Class of the button when expanded",
-        properties: ["expanded"],
-        action: (cmp, data) => {
-            data.expanded = true;
-        },
-    },
-    {
-        class: "roundedClass",
-        description: "Class of the button when rounded",
-        properties: ["rounded"],
-        action: (cmp, data) => {
-            data.rounded = true;
         },
     },
     {
         class: "disabledClass",
-        description: "Class of the button when disabled",
+        description: "Class of the breadcrumb when disabled",
         properties: ["disabled"],
         action: (cmp, data) => {
             data.disabled = true;
         },
     },
     {
-        class: "labelClass",
-        description: "Class of the button label",
-    },
-    {
-        class: "iconClass",
-        description: "Class of the button icon",
-        properties: ["iconLeft", "iconRight"],
-        action: (cmp, data) => {
-            data["icon-left"] = "plus";
-        },
-    },
-    {
-        class: "iconLeftClass",
-        description: "Class of the button icon on the left",
-        properties: ["iconLeft"],
-        action: (cmp, data) => {
-            data["icon-left"] = "plus";
-        },
-    },
-    {
-        class: "iconRightClass",
-        description: "Class of the button icon on the right",
-        properties: ["iconRight"],
-        action: (cmp, data) => {
-            data["icon-right"] = "plus";
-        },
-    },
-    {
         class: "sizeClass",
-        description: "Class of the button size",
+        description: "Class of the breadcrumb size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data) => {
@@ -102,11 +30,36 @@ const inspectData = [
     },
     {
         class: "variantClass",
-        description: "Class of the button variant",
+        description: "Class of the breadcrumb variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data) => {
             data.variant = "warning";
+        },
+    },
+    {
+        class: "separatorClass",
+        description: "Class of the breadcrumb separator",
+        properties: ["separator"],
+        suffixes: [
+            "has-arrow-separator",
+            "has-dot-separator",
+            "has-slash-separator",
+            "has-bullet-separator",
+            "has-succeeds-separator",
+            "has-chevron-separator",
+        ],
+        action: (cmp, data) => {
+            data.variant = "has-slash-separator";
+        },
+    },
+    {
+        class: "alignClass",
+        description: "Class of the breadcrumb align",
+        properties: ["align"],
+        suffixes: ["left", "center", "right"],
+        action: (cmp, data) => {
+            data.variant = "left";
         },
     },
 ];
