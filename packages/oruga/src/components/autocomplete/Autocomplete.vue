@@ -666,7 +666,7 @@ function handleFocus(event: Event): void {
         inputRef.value.$el.querySelector("input").select();
     }
     if (props.openOnFocus) {
-        if (!isEmpty.value) isActive.value = true;
+        isActive.value = true;
         if (props.keepFirst)
             // If open on focus, update the hovered
             selectFirstOption();
