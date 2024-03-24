@@ -39,8 +39,9 @@ const currentPage = usePropBinding("current", props, emits);
 
 /** Paginator change listener. */
 function pageChanged(page: number): void {
-    currentPage.value = page > 0 ? page : 1;
-    emits("change", currentPage.value);
+    const newPage = page > 0 ? page : 1;
+    currentPage.value = newPage;
+    emits("change", newPage);
 }
 </script>
 

@@ -250,7 +250,6 @@ const _teleport = computed(() =>
 );
 
 const savedScrollTop = ref(null);
-const modalWidth = ref(toCssDimension(props.width));
 const isAnimating = ref(!props.active);
 
 watch(isActive, (value) => {
@@ -270,7 +269,7 @@ const showX = computed(() =>
 );
 
 const customStyle = computed(() =>
-    !props.fullScreen ? { maxWidth: modalWidth.value } : null,
+    !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
 );
 
 onBeforeUnmount(() => {

@@ -1143,6 +1143,8 @@ but will set body to position fixed, might break some layouts. */
                 paginated: boolean;
                 /** Allow chevron icon and column to be visible */
                 showDetailIcon: boolean;
+                /** Border to all cells */
+                bordered: boolean;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the sortable form wrapper on mobile */
@@ -1225,6 +1227,8 @@ but will set body to position fixed, might break some layouts. */
                 detailIcon: string;
                 /** Icon pack to use */
                 iconPack: string;
+                /** Makes the cells narrower */
+                narrowed: boolean;
                 /** Mobile breakpoint as max-width value */
                 mobileBreakpoint: string;
                 /** Pagination buttons order if paginated */
@@ -1237,6 +1241,8 @@ but will set body to position fixed, might break some layouts. */
                 paginationRounded: boolean;
                 /** Rows appears as cards on mobile (collapse rows) */
                 mobileCards: boolean;
+                /** Rows are highlighted when hovering */
+                hoverable: boolean;
                 /** Sets the default sort column and order — e.g. ['first_name', 'desc'] */
                 defaultSort: string | string[];
                 /** Sets the default sort column direction on the first click */
@@ -1255,6 +1261,8 @@ but will set body to position fixed, might break some layouts. */
                 customRowKey: string;
                 /** Use a unique key of your data Object when use detailed or opened detailed. (id recommended) */
                 detailKey: string;
+                /** Whether table is striped */
+                striped: boolean;
             }>;
         tabs?: ComponentConfigBase &
             Partial<{
