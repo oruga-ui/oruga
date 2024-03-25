@@ -1,9 +1,10 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends String | Number | Object">
 import {
     computed,
     nextTick,
     ref,
     watch,
+    watchEffect,
     useAttrs,
     toRaw,
     onMounted,
@@ -22,7 +23,6 @@ import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
     defineClasses,
-    useVModelBinding,
     useInputHandler,
     useDebounce,
     useEventListener,
@@ -56,7 +56,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** @model */
-    modelValue: { type: [String, Number], default: "" },
+    modelValue: { type: [String, Number], default: undefined },
     /** Input type */
     type: { type: String, default: "text" },
     /** Menu tag name */
@@ -72,7 +72,7 @@ const props = defineProps({
             getOption<DynamicComponent>("autocomplete.itemTag", "div"),
     },
     /** Options / suggestions */
-    data: { type: Array, default: () => [] },
+    data: { type: Array as PropType<T[]>, default: () => [] },
     /**
      * Size of the control
      * @values small, medium, large
@@ -149,7 +149,7 @@ const props = defineProps({
     },
     /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
     confirmKeys: {
-        type: Array,
+        type: Array as PropType<string[]>,
         default: () => ["Tab", "Enter"],
     },
     /** Dropdown content (items) are shown into a modal on mobile */
@@ -277,9 +277,9 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string | number | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on input change event
      * @param value {string | number} input value
@@ -287,9 +287,9 @@ const emits = defineEmits<{
     (e: "input", value: string | number): void;
     /**
      * selected element changed event
-     * @param value {string | number} selected value
+     * @param value {string | number | object} selected value
      */
-    (e: "select", value: string | number, evt: Event): void;
+    (e: "select", value: T, evt: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
@@ -351,14 +351,12 @@ function setItemRef(
 const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
     useInputHandler(inputRef, emits, props);
 
-const vmodel = useVModelBinding<string | number>(props, emits, {
-    passive: true,
-});
+const vmodel = defineModel<string | number>({ default: undefined });
 
 const isActive = ref(false);
 
-const selectedOption = ref(null);
-const hoveredOption = ref(null);
+const selectedOption = ref<T>();
+const hoveredOption = ref<T>();
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
@@ -470,7 +468,7 @@ function onDropdownClose(method: string): void {
  * If object, get value from path based on given field, or else just the value.
  * Apply a formatter function to the label if given.
  */
-function getValue(option: unknown): string {
+function getValue(option: T): string {
     if (!option) return "";
 
     const property =
@@ -487,7 +485,7 @@ function getValue(option: unknown): string {
 }
 
 /** Set which option is currently hovered. */
-function setHovered(option: unknown): void {
+function setHovered(option: T | SpecialOption): void {
     if (option === undefined) return;
     hoveredOption.value = isSpecialOption(option) ? null : option;
     headerHovered.value = option === SpecialOption.Header;
@@ -505,7 +503,7 @@ function setHoveredIdToIndex(index: number): void {
  * Set which option is currently selected, update v-model,
  * update input value and close dropdown.
  */
-function setSelected(option, closeDropdown = true, event = undefined): void {
+function setSelected(option: T, closeDropdown = true, event = undefined): void {
     if (option === undefined) return;
     selectedOption.value = option;
     emits("select", selectedOption.value, event);
@@ -691,12 +689,9 @@ function onInput(value: string | number): void {
 
 let debouncedInput = useDebounce(emitInput, props.debounce || 0);
 
-watch(
-    () => props.debounce,
-    (value) => {
-        debouncedInput = useDebounce(emitInput, value);
-    },
-);
+watchEffect(() => {
+    debouncedInput = useDebounce(emitInput, props.debounce);
+});
 
 function emitInput(value: string | number): void {
     emits("input", value);
@@ -913,7 +908,9 @@ defineExpose({ focus: setFocus });
                 aria-role="option"
                 :aria-selected="toRaw(option) === toRaw(hoveredOption)"
                 :tabindex="-1"
-                @click="(value, event) => setSelected(value, !keepOpen, event)">
+                @click="
+                    (value, event) => setSelected(value as T, !keepOpen, event)
+                ">
                 <!--
                     @slot Override the select option
                     @binding {object} option - option object
