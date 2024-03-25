@@ -277,9 +277,9 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string | number | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: string | number | object): void;
     /**
      * on input change event
      * @param value {string | number} input value
@@ -287,9 +287,9 @@ const emits = defineEmits<{
     (e: "input", value: string | number): void;
     /**
      * selected element changed event
-     * @param value {string | number} selected value
+     * @param value {string | number | object} selected value
      */
-    (e: "select", value: string | number, evt: Event): void;
+    (e: "select", value: string | number | object, evt: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
