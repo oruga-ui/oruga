@@ -21,7 +21,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * Color variant of the control
+     * Color variant of the breadcrumb
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
@@ -29,25 +29,37 @@ const props = defineProps({
         default: () => getOption("breadcrumb.variant"),
     },
     /**
-     * Size of the control
+     * Size of the breadcrumb
      * @values small, medium, large
      */
     size: {
         type: String,
         default: () => getOption("breadcrumb.size"),
     },
+    /**
+     * Position of the breadcrumb
+     * @values left, center, right
+     */
     align: {
         type: String,
         default: getOption("breadcrumb.size"),
     },
-    // separator
+    /**
+     * The breadcrumb separator between breadcrumb items
+     * @values
+     *  has-arrow-separator, has-dot-separator, has-slash-separator, has-bullet-separator, has-succeeds-separator, has-chevron-separator
+     */
     separator: {
         type: String,
         default: () => getOption("breadcrumb.size"),
     },
+    /**
+     * Tag of the breadcrumb
+     * @values div, section ...
+     */
     tag: {
-        type: String,
-        default: () => getOption("breadcrumb.tag"),
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: () => getOption<DynamicComponent>("breadcrumb.tag", "breadcrumb"),
     },
     // -----------------------------------------------------------------
     /**
