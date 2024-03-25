@@ -6,7 +6,7 @@ import { getOption } from "@/utils/config";
 import { computed, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 /**
  * The classic breadrcumb item, in different colors, sizes, and states
  * @displayName Breadcrumb Item
@@ -19,24 +19,28 @@ defineOptions({
 });
 
 const props = defineProps({
+    /**
+     * breadcrumb item is active
+     * @values true, false
+     */
     active: {
-        type: String,
+        type: Boolean,
         default: () => getOption("breadcrumb.active"),
-    },
-    tag: {
-        type: String,
-        default: () => getOption("breadcrumb.tag"),
     },
     /**
      * breadcrumb item tag name
      * @values li, a, router-link, nuxt-link (or other nuxt alias)
      */
-    //  tag: {
-    //     type: [String, Object, Function] as PropType<DynamicComponent>,
-    //     default: () => getOption<DynamicComponent>("breadcrumb.tag", "breadcrumb"),
-    // },
+    tag: {
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: () => getOption<DynamicComponent>("breadcrumb.tag", "breadcrumb"),
+    },
+    /**
+     * breadcrumb item is disabled
+     * @values true, false
+     */
     disabled: {
-        type: String,
+        type: Boolean,
         default: () => getOption("breadcrumb.disabled"),
     },
 
@@ -88,10 +92,10 @@ const computedTag = computed(() => {
     return props.tag ? props.tag : "li";
 });
 const computedDisabled = computed(() =>
-    props.disabled ? "o-breadcrumb-item--disabled" : null,
+    props.disabled ? "o-breadcrumb-item__disabled" : null,
 );
 const computedActive = computed(() =>
-    props.active ? "o-breadcrumb-item--active" : null,
+    props.active ? "o-breadcrumb-item__active" : null,
 );
 // --- Computed Component Classes ---
 
@@ -112,9 +116,9 @@ const wrapperClasses = defineClasses(["wrapperClass", "o-breadcrumb__wrapper"]);
 const rootClasses = defineClasses(
     ["rootClass", "o-breadcrumb-item"],
     // eslint-disable-next-line prettier/prettier
-    // ["disabledClass", "o-breadcrumb-item--disabled", null, computed(() => props.disabled)],
+    // ["disabledClass", "o-breadcrumb-item__disabled", null, computed(() => props.disabled)],
     // eslint-disable-next-line prettier/prettier
-    // ["activeClass", "o-breadcrumb-item--active", null, computed(() => props.active)],
+    // ["activeClass", "o-breadcrumb-item__active", null, computed(() => props.active)],
 );
 </script>
 
