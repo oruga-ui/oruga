@@ -150,7 +150,7 @@ const props = defineProps({
     /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
     confirmKeys: {
         type: Array as PropType<string[]>,
-        default: () => ["Tab", "Enter"],
+        default: () => getOption("autocomplete.confirmKeys", ["Tab", "Enter"]),
     },
     /** Dropdown content (items) are shown into a modal on mobile */
     mobileModal: {
