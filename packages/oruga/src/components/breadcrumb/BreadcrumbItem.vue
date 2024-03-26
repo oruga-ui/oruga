@@ -33,7 +33,7 @@ const props = defineProps({
      */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("breadcrumb.tag", "breadcrumb"),
+        default: () => getOption<DynamicComponent>("breadcrumb.tag", "a"),
     },
     /**
      * breadcrumb item is disabled

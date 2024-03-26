@@ -42,7 +42,7 @@ const props = defineProps({
      */
     align: {
         type: String,
-        default: getOption("breadcrumb.size"),
+        default: getOption("breadcrumb.align"),
     },
     /**
      * The breadcrumb separator between breadcrumb items
@@ -51,7 +51,7 @@ const props = defineProps({
      */
     separator: {
         type: String,
-        default: () => getOption("breadcrumb.size"),
+        default: () => getOption("breadcrumb.separator"),
     },
     /**
      * Tag of the breadcrumb
@@ -59,7 +59,7 @@ const props = defineProps({
      */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("breadcrumb.tag", "breadcrumb"),
+        default: () => getOption<DynamicComponent>("breadcrumb.tag", "section"),
     },
     // -----------------------------------------------------------------
     /**

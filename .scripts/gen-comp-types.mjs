@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import process from 'process'
 
-import { createComponentMetaChecker } from "vue-component-meta/out/index.js";
+import { createChecker } from "vue-component-meta";
 
 import { componentDirectory, getFolders, getComponents, exist } from "./utils.mjs";
 
@@ -13,7 +13,7 @@ if(!exist(path.resolve(__dirname, componentDirectory)))
     throw new Error("Path not exist: " + componentDirectory);
 
 // create component meta checker
-const checker = createComponentMetaChecker(
+const checker = createChecker(
     path.resolve(__dirname, './packages/oruga/tsconfig.json'),
     {
         forceUseTs: true,
