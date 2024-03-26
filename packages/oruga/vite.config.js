@@ -113,10 +113,10 @@ export default defineConfig(({ mode }) => ({
     },
     plugins: [tsconfigPaths(), vue(), dts({ outDir: "./dist/types" })],
     test: {
-        environment: "happy-dom",
+        setupFiles: [resolve("./src/__tests__/vitest.setup.ts")],
+        environment: "jsdom",
         coverage: {
             provider: "istanbul",
         },
-        setupFiles: [resolve("./src/__tests__/vitest.setup.ts")],
     },
 }));

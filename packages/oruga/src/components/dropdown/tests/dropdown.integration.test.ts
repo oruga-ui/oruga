@@ -5,7 +5,7 @@ import DropdownExample from "./DropdownExample.vue";
 import ODropdownItem from "@/components/dropdown/DropdownItem.vue";
 import ODropdown from "@/components/dropdown/Dropdown.vue";
 
-describe("ODropdown Integration", () => {
+describe("Dropdown integration tests", () => {
     enableAutoUnmount(afterEach);
 
     test("is called", () => {

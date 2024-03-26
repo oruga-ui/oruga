@@ -1,12 +1,13 @@
 import { describe, test, expect, vi, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 
-import ODropdown from "@/components/dropdown/Dropdown.vue";
 import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
+
+import ODropdown from "@/components/dropdown/Dropdown.vue";
 import Dropdown from "@/components/dropdown/Dropdown.vue";
 
-describe("ODropdown", () => {
+describe("Dropdown tests", () => {
     enableAutoUnmount(afterEach);
 
     test("is called", () => {
