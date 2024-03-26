@@ -91,7 +91,6 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.22.0",
     "eslint-plugin-vuejs-accessibility": "^2.2.1",
-    "happy-dom": "^13.6.2",
     "jest-axe": "^8.0.0",
     "jsdom": "^24.0.0",
     "npm-check-updates": "^16.14.15",
