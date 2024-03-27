@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-    ref,
-    computed,
-    watch,
-    nextTick,
-    type PropType,
-    type Component,
-} from "vue";
+import { ref, computed, watch, nextTick, type PropType } from "vue";
 
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
@@ -203,7 +196,7 @@ watch(
 
 // --- Event Handler ---
 
-const contentRef = ref<HTMLElement | Component>();
+const contentRef = ref<HTMLElement>();
 const triggerRef = ref<HTMLElement>();
 
 const eventCleanups = ref([]);
@@ -371,7 +364,7 @@ const contentClasses = defineClasses(
             <transition :name="animation">
                 <div
                     v-show="isActive || (always && !disabled)"
-                    :ref="(el) => (contentRef = setContent(el))"
+                    :ref="(el) => (contentRef = setContent(el as HTMLElement))"
                     :class="contentClasses">
                     <span :class="arrowClasses"></span>
 

@@ -80,9 +80,9 @@ const teleportDisabled = computed(() =>
         : false,
 );
 
-const contentRef = ref();
+const contentRef = ref<HTMLElement | Component>();
 
-function setContent(el: HTMLElement | Component): typeof el {
+function setContent<T extends typeof contentRef.value>(el: T): typeof el {
     contentRef.value = el;
 
     nextTick(() => {
