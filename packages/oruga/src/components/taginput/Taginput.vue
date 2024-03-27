@@ -246,7 +246,7 @@ const emits = defineEmits<{
     (e: "add", value: T): void;
     /**
      * item got removed
-     * @param value {String | Number | Object} removed item
+     * @param value {string | number | object} removed item
      */
     (e: "remove", value: T): void;
     /**
