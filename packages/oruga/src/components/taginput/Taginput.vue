@@ -231,7 +231,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {(String | Number | Object)[]} updated modelValue prop
+     * @param value {(string | number | object)[]} updated modelValue prop
      */
     (e: "update:modelValue", value: T[]): void;
     /**
