@@ -99,7 +99,7 @@ const props = defineProps({
     groupOptions: { type: String, default: undefined },
     /** Function to format an option to a string for display in the input (as alternative to field prop) */
     formatter: {
-        type: Function as PropType<(value: string | number) => string | number>,
+        type: Function as PropType<(value: unknown) => string | number>,
         default: undefined,
     },
     /** Input placeholder */
