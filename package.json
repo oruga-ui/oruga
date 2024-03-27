@@ -34,5 +34,8 @@
     "conventional-changelog": "^5.1.0",
     "conventional-changelog-cli": "^4.1.0",
     "replace-in-file": "^7.1.0"
+  },
+  "dependencies": {
+    "jest-axe": "^8.0.0"
   }
 }
