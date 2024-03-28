@@ -15,6 +15,7 @@ defineOptions({
     isOruga: true,
     name: "OStepItem",
     configField: "steps",
+    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -172,6 +173,7 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
         <div
             v-show="isActive && visible"
             ref="rootRef"
+            v-bind="$attrs"
             :class="elementClasses"
             :data-id="`steps-${item.identifier}`"
             data-oruga="steps-item"
