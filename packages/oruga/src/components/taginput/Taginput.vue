@@ -43,7 +43,7 @@ const props = defineProps({
     /** Items data */
     data: { type: Array as PropType<T[]>, default: () => [] },
     /** Property of the object (if data is array of objects) to use as display text */
-    field: { type: String, default: undefined },
+    field: { type: String, default: "value" },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
     /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
