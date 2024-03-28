@@ -730,7 +730,7 @@ onMounted(() => {
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
-    const dropdown = dropdownRef.value.$content;
+    const dropdown = unrefElement(dropdownRef.value.$content);
     if (!dropdown) return;
     const trashhold = dropdown.offsetTop;
     const headerHeight = headerRef.value?.clientHeight || 0;
