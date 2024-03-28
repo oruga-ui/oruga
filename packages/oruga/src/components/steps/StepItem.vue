@@ -164,7 +164,7 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
 
 <template>
     <Transition
-        :disabled="!parent.animated"
+        :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
         @after-enter="afterEnter"

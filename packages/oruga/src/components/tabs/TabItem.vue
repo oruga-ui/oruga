@@ -175,7 +175,7 @@ const headerTextClasses = defineClasses([
 
 <template>
     <Transition
-        :disabled="!parent.animated"
+        :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
