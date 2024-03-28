@@ -15,6 +15,7 @@ defineOptions({
     isOruga: true,
     name: "OTabItem",
     configField: "tabs",
+    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -183,6 +184,7 @@ const headerTextClasses = defineClasses([
         <div
             v-show="isActive && visible"
             ref="rootRef"
+            v-bind="$attrs"
             :class="elementClasses"
             :data-id="`tabs-${item.identifier}`"
             data-oruga="tabs-item"
