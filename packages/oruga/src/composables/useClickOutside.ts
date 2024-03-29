@@ -27,12 +27,7 @@ export function useClickOutside(
     if (!window) return;
 
     // set default options
-    const listenerOptions = Object.assign(
-        {
-            ignore: [],
-        },
-        options,
-    );
+    const listenerOptions = Object.assign({ ignore: [] }, options);
 
     /**
      * White-listed items that not emit event when clicked.
