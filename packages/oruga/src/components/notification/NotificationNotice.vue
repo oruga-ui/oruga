@@ -81,7 +81,7 @@ const props = defineProps({
      * Meaning that the container should be fixed.
      */
     container: {
-        type: [Object, String] as PropType<string | HTMLElement>,
+        type: [Object, String] as PropType<string | HTMLElement | null>,
         default: () => getOption("notification.container", "body"),
     },
     /**

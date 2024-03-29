@@ -149,7 +149,7 @@ const props = defineProps({
     events: { type: Object, default: () => ({}) },
     /** DOM element where the modal component will be created on (for programmatic usage) */
     container: {
-        type: [Object, String] as PropType<string | HTMLElement>,
+        type: [Object, String] as PropType<string | HTMLElement | null>,
         default: () => getOption("modal.container", "body"),
     },
     /**

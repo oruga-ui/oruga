@@ -67,7 +67,7 @@ const props = defineProps({
      * Note that this also changes fullPage to false.
      */
     container: {
-        type: [Object, String] as PropType<string | HTMLElement>,
+        type: [Object, String] as PropType<string | HTMLElement | null>,
         default: () => getOption("loading.container", "body"),
     },
     /**

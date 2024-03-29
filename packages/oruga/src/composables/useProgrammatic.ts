@@ -15,9 +15,9 @@ type ProgrammaticOptions = {
      * DOM element where the programmatic component will be mounted on.
      * Default is `document.body`.
      */
-    container?: string | HTMLElement;
+    container?: string | HTMLElement | null;
     /** This defines the programmatic usage. */
-    programmatic?: ProgrammaticInstance<unknown>;
+    programmatic?: ProgrammaticInstance;
     /**
      * Define if the component is cancelable at all or by specific events.
      * Default is `true`.

@@ -144,7 +144,7 @@ const props = defineProps({
     events: { type: Object, default: () => ({}) },
     /** DOM element where the sidebar component will be created on (for programmatic usage). */
     container: {
-        type: [Object, String] as PropType<string | HTMLElement>,
+        type: [Object, String] as PropType<string | HTMLElement | null>,
         default: () => getOption("sidebar.container", "body"),
     },
     /**
