@@ -1,9 +1,9 @@
 import { describe, test, expect, vi, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-
-import ODropdown from "@/components/dropdown/Dropdown.vue";
 import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
+
+import ODropdown from "@/components/dropdown/Dropdown.vue";
 import Dropdown from "@/components/dropdown/Dropdown.vue";
 
 describe("ODropdown", () => {
@@ -11,8 +11,9 @@ describe("ODropdown", () => {
 
     test("is called", () => {
         const wrapper = mount(ODropdown);
-        expect(wrapper.attributes("data-oruga")).toBe("dropdown");
         expect(!!wrapper.vm).toBeTruthy();
+        expect(wrapper.exists()).toBeTruthy();
+        expect(wrapper.attributes("data-oruga")).toBe("dropdown");
     });
 
     test("render correctly", () => {
