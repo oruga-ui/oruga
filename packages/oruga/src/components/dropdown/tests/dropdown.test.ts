@@ -169,7 +169,7 @@ describe("Dropdown tests", () => {
     });
 
     test("react accordingly when mouse over without trigger", async () => {
-        const wrapper = mount(Dropdown, {
+        const wrapper = mount(ODropdown, {
             props: { triggers: ["click"] },
             attachTo: document.body,
         });
@@ -180,7 +180,7 @@ describe("Dropdown tests", () => {
     });
 
     test("react accordingly when mouse over with trigger", async () => {
-        const wrapper = mount(Dropdown, {
+        const wrapper = mount(ODropdown, {
             props: { triggers: ["hover"] },
             attachTo: document.body,
         });
@@ -190,7 +190,7 @@ describe("Dropdown tests", () => {
     });
 
     test("react accordingly when is disabled", async () => {
-        const wrapper = mount(Dropdown, {
+        const wrapper = mount(ODropdown, {
             props: { disabled: true, active: true },
             attachTo: document.body,
         });
