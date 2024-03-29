@@ -8,6 +8,7 @@ import {
     type ProviderItem,
 } from "@/composables";
 
+import type { MenuComponent, MenuItemComponent } from "./types";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -81,20 +82,20 @@ const props = defineProps({
 const rootRef = ref();
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed(() => ({
+const provideData = computed<MenuComponent>(() => ({
     activable: props.activable,
     accordion: props.accordion,
     resetMenu,
 }));
 
 /** Provide functionalities and data to child item components */
-const { childItems } = useProviderParent<{ reset: () => void }>(rootRef, {
+const { childItems } = useProviderParent<MenuItemComponent>(rootRef, {
     data: provideData,
 });
 
 function resetMenu(excludedItems: ProviderItem[] = []): void {
     childItems.value.forEach((item) => {
-        if (!excludedItems.includes(toRaw(item))) item.data.reset();
+        if (!excludedItems.includes(toRaw(item))) item.data.value.reset();
     });
 }
 

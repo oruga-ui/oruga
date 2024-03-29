@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
+import { computed, toRaw, ref, useSlots, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { isEqual, uuid } from "@/utils/helpers";
@@ -98,7 +98,7 @@ const emits = defineEmits<{
 const slots = useSlots();
 
 const providedData = computed<TabItemComponent>(() => ({
-    ...props,
+    ...toRaw(props),
     $slots: slots,
     headerIconClasses: headerIconClasses.value,
     headerTextClasses: headerTextClasses.value,
@@ -108,7 +108,7 @@ const providedData = computed<TabItemComponent>(() => ({
 }));
 
 // Inject functionalities and data from the parent component
-const { parent, item } = useProviderChild<ComputedRef<TabsComponent>>({
+const { parent, item } = useProviderChild<TabsComponent>({
     data: providedData,
 });
 

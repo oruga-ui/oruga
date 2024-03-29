@@ -8,7 +8,6 @@ import {
     useSlots,
     toValue,
     type PropType,
-    type ComputedRef,
 } from "vue";
 
 import OCheckbox from "../checkbox/Checkbox.vue";
@@ -63,13 +62,25 @@ const props = defineProps({
     /** Table columns */
     columns: { type: Array as PropType<Column[]>, default: () => [] },
     /** Border to all cells */
-    bordered: { type: Boolean, default: false },
+    bordered: {
+        type: Boolean,
+        default: () => getOption("table.bordered", false),
+    },
     /** Whether table is striped */
-    striped: { type: Boolean, default: false },
+    striped: {
+        type: Boolean,
+        default: () => getOption("table.striped", false),
+    },
     /** Makes the cells narrower */
-    narrowed: { type: Boolean, default: false },
+    narrowed: {
+        type: Boolean,
+        default: () => getOption("table.narrowed", false),
+    },
     /** Rows are highlighted when hovering */
-    hoverable: { type: Boolean, default: false },
+    hoverable: {
+        type: Boolean,
+        default: () => getOption("table.hoverable", false),
+    },
     /** Enable loading state */
     loading: { type: Boolean, default: false },
     /** Allow row details  */
@@ -219,7 +230,7 @@ const props = defineProps({
     /** Add a horizontal scrollbar when table is too wide */
     scrollable: { type: Boolean, default: undefined },
     /** Show a sticky table header */
-    stickyHeader: { type: Boolean, default: undefined },
+    stickyHeader: { type: Boolean, default: false },
     /** Table fixed height */
     height: { type: [Number, String], default: undefined },
     /** Add a native event to filter */
@@ -697,13 +708,15 @@ const rootRef = ref<HTMLElement>();
 const slotRef = ref<HTMLElement>();
 
 /** Provide functionalities and data to child item components */
-const provider = useProviderParent<ComputedRef<TableColumnComponent>>(slotRef);
+const provider = useProviderParent<TableColumnComponent>(slotRef);
 
 const tableColumns = computed<TableColumn[]>(() =>
     provider.sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data),
+        thAttrsData: {},
+        tdAttrsData: [],
     })),
 );
 
@@ -781,17 +794,19 @@ const visibleRows = computed(() => {
 });
 
 const visibleColumns = computed(() => {
-    if (!tableColumns.value) return tableColumns.value;
-    return tableColumns.value.filter((column) => {
-        return column.visible || column.visible === undefined;
-    });
+    if (!tableColumns.value) return [];
+    return tableColumns.value.filter(
+        (column) => column.visible || column.visible === undefined,
+    );
 });
 
-watch([() => visibleRows.value, () => visibleColumns.value], () => {
-    // process tdAttrs when row or columns got changed
+/** process thAttrs & tdAttrs when row or columns got changed */
+watch([visibleRows, visibleColumns], () => {
     if (visibleColumns.value.length && visibleRows.value.length) {
         for (let i = 0; i < visibleColumns.value.length; i++) {
             const col = visibleColumns.value[i];
+            col.thAttrsData =
+                typeof col.thAttrs === "function" ? col.thAttrs(col) : {};
             col.tdAttrsData = visibleRows.value.map((data) =>
                 typeof col.tdAttrs === "function" ? col.tdAttrs(data, col) : {},
             );
@@ -1796,7 +1811,9 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                     tag="span"
                                     :props="{ column, index }" />
                             </template>
-                            <template v-else>{{ column.subheading }}</template>
+                            <template v-else>
+                                {{ column.subheading }}
+                            </template>
                         </th>
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>

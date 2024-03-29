@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import {
-    computed,
-    onBeforeMount,
-    ref,
-    useSlots,
-    getCurrentInstance,
-    type PropType,
-} from "vue";
+import { toRaw, computed, getCurrentInstance, type PropType } from "vue";
 
 import { useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
 
-import type { TableColumnComponent, Column } from "./types";
+import type { TableColumnComponent } from "./types";
 
 /**
  * @displayName Table Column
@@ -57,7 +50,7 @@ const props = defineProps({
     /** Define a custom sort function */
     customSort: {
         type: Function as PropType<
-            (a: Column, b: Column, isAsc: boolean) => number
+            (a: unknown, b: unknown, isAsc: boolean) => number
         >,
         default: undefined,
     },
@@ -72,18 +65,17 @@ const props = defineProps({
     headerSelectable: { type: Boolean, default: false },
     /** Adds native attributes to th */
     thAttrs: {
-        type: Function as PropType<(column: Column) => object>,
+        type: Function as PropType<(column: typeof props) => object>,
         default: () => ({}),
     },
     /** Adds native attributes to td */
     tdAttrs: {
-        type: Function as PropType<(row: unknown, column: Column) => object>,
+        type: Function as PropType<
+            (row: unknown, column: typeof props) => object
+        >,
         default: () => ({}),
     },
 });
-
-const thAttrsData = ref({});
-const tdAttrsData = ref([]);
 
 const style = computed(() => ({
     width: toCssDimension(props.width),
@@ -94,25 +86,16 @@ const isHeaderUnselectable = computed(
 );
 
 const vm = getCurrentInstance();
-const slots = useSlots();
 
 const providedData = computed<TableColumnComponent>(() => ({
-    ...props,
+    ...toRaw(props),
     $el: vm.proxy,
-    $slots: slots,
+    $slots: vm.slots,
     style: style.value,
-    thAttrsData: thAttrsData.value,
-    tdAttrsData: tdAttrsData.value,
     isHeaderUnselectable: isHeaderUnselectable.value,
 }));
 
 const { item } = useProviderChild({ data: providedData });
-
-onBeforeMount(() => {
-    if (typeof props.thAttrs !== "undefined") {
-        thAttrsData.value = props.thAttrs(props);
-    }
-});
 </script>
 
 <template>
@@ -162,7 +145,7 @@ onBeforeMount(() => {
                 name="searchable"
                 :column="null"
                 :index="null"
-                :filter="null" />
+                :filters="null" />
         </template>
     </span>
 </template>

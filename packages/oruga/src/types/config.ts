@@ -45,10 +45,17 @@ export type GlobalConfig = Partial<{
     customIconPacks: Record<string, IconConfig>;
     /** Define a specific icon component */
     iconComponent: DynamicComponent;
-    /** Enable HTML5 validation */
-    useHtml5Validation: boolean;
     /** Show input status icon using field and variant prop */
     statusIcon: boolean;
+    /** Default mapping of variant and icon name */
+    statusVariantIcon: {
+        success: string;
+        danger: string;
+        info: string;
+        warning: string;
+    };
+    /** Enable default form components HTML5 validation attribute */
+    useHtml5Validation: boolean;
     /** Custom HTML5 validation invalid handler */
     invalidHandler: (
         validatable: ValidatableFormElement,

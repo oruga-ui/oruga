@@ -70,7 +70,7 @@ or a specific component variable, such as button icon width
 
 ## Oruga Theme
 
-The default [Oruga Theme](https://github.com/oruga-ui/theme-oruga) provides some ready-to-use and completely dependency-free styling and comes with two different versions, `oruga.css` and `oruga-full.css`. This theme uses the default class configuration.
+The default [Oruga Theme](https://github.com/oruga-ui/theme-oruga) provides some ready-to-use and completely dependency-free styling and comes with two different versions, `oruga.css` and `oruga-full.css`. This theme uses the component's default class configuration.
 
 ::: code-group
 
@@ -286,7 +286,6 @@ The theme comes with its own Bulma-based class mapping configuration and some ad
 
 ```js
 import { createApp } from 'vue'
-import App from './App.vue'
 
 import Oruga from '@oruga-ui/oruga-next';
 
@@ -294,7 +293,7 @@ import { bulmaConfig } from '@oruga-ui/theme-bulma';
 
 import '@oruga-ui/theme-bulma/dist/bulma.css';
 
-createApp(App)
+createApp(...)
     .use(Oruga, bulmaConfig)
     .mount('#app')
 ```
@@ -326,7 +325,6 @@ The theme comes with its own Bootstrap-based class mapping configuration and som
 
 ```js
 import { createApp } from 'vue'
-import App from './App.vue'
 
 import Oruga from '@oruga-ui/oruga-next';
 
@@ -334,7 +332,7 @@ import { bootstrapConfig } from '@oruga-ui/theme-bootstrap';
 
 import '@oruga-ui/theme-bootstrap/dist/bootstrap.css';
 
-createApp(App)
+createApp(...)
     .use(Oruga, bootstrapConfig)
     .mount('#app')
 ```
@@ -343,8 +341,8 @@ See the [theme repository](https://github.com/oruga-ui/theme-bootstrap) and the 
 
 ## Global Theme Variables
 
-:::info 
-Change the active theme in the navigation bar to see other theme-specific global variables.
+:::info
+You can change the active theme in the navigation bar to see the specific global variables for another theme.
 :::
 
 <!--@include: ./../themes/theme-orugabase.md-->

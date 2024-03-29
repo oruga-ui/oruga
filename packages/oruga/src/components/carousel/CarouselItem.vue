@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, type PropType, type Ref } from "vue";
+import { computed, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
+import type { CarouselComponent } from "./types";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -45,7 +46,7 @@ const props = defineProps({
 });
 
 // Inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<Ref<any>>();
+const { parent, item } = useProviderChild<CarouselComponent>();
 
 const isActive = computed(() => parent.value.activeIndex === item.value.index);
 

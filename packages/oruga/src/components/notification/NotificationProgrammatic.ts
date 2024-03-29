@@ -17,7 +17,7 @@ declare module "../../index" {
 
 const instances = new InstanceRegistry<typeof NotificationNotice>();
 
-type ProgrammaticProps = Readonly<
+type NotifcationProgrammaticProps = Readonly<
     | string
     | (NotifcationNoticeProps &
           NotifcationProps &
@@ -26,7 +26,7 @@ type ProgrammaticProps = Readonly<
 >;
 
 const NotificationProgrammatic = {
-    open(params: ProgrammaticProps): ProgrammaticExpose {
+    open(params: NotifcationProgrammaticProps): ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {
