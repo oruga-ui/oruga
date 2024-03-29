@@ -3,8 +3,8 @@ import {
     ref,
     computed,
     watch,
-    onBeforeUnmount,
     onMounted,
+    onBeforeUnmount,
     type Component,
     type PropType,
 } from "vue";
@@ -509,7 +509,7 @@ defineExpose({ close, promise: props.promise });
                 :class="overlayClasses"
                 :tabindex="-1"
                 aria-hidden="true"
-                @click="clickedOutside($event)" />
+                @click="clickedOutside" />
 
             <transition
                 :name="transitionName"
