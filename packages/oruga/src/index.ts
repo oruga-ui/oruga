@@ -16,11 +16,7 @@ export * from "./components";
 export * from "./components/plugins";
 
 // export programmatic config
-export {
-    OrugaConfig,
-    OrugaConfig as ConfigPlugin, // todo: remove export later - beaking change
-    ConfigProgrammatic,
-};
+export { OrugaConfig, ConfigProgrammatic };
 
 // export programmatic composable
 export { useOruga } from "./utils/programmatic";
