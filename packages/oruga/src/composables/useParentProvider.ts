@@ -6,9 +6,11 @@ import {
     onUnmounted,
     provide,
     ref,
+    type Component,
     type ComputedRef,
     type Ref,
 } from "vue";
+import { unrefElement } from "./unrefElement";
 
 export type ProviderItem<T = unknown> = {
     index: number;
@@ -41,7 +43,7 @@ type ProviderParentOptions<T = unknown> = {
  * @param options additional options
  */
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
-    rootRef?: Ref<HTMLElement>,
+    rootRef?: Ref<HTMLElement | Component>,
     options?: ProviderParentOptions<ParentData>,
 ): {
     childItems: Ref<ProviderItem<ItemData>[]>;
@@ -81,8 +83,9 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
                 const ids = childItems.value
                     .map((item) => `[data-id="${key}-${item.identifier}"]`)
                     .join(",");
-                const elements = rootRef.value.querySelectorAll(ids);
-                const sortedIds = Array.from(elements).map((el: any) =>
+                const parent = unrefElement(rootRef);
+                const children = parent.querySelectorAll(ids);
+                const sortedIds = Array.from(children).map((el: any) =>
                     el.getAttribute("data-id").replace(`${key}-`, ""),
                 );
 

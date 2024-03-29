@@ -4,9 +4,8 @@ import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
 
 import ODropdown from "@/components/dropdown/Dropdown.vue";
-import Dropdown from "@/components/dropdown/Dropdown.vue";
 
-describe("ODropdown", () => {
+describe("Dropdown tests", () => {
     enableAutoUnmount(afterEach);
 
     test("is called", () => {
