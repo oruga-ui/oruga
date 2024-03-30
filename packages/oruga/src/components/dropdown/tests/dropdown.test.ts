@@ -1,19 +1,18 @@
 import { describe, test, expect, vi, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-
 import { nextTick } from "vue";
 import { setTimeout } from "timers/promises";
 
 import ODropdown from "@/components/dropdown/Dropdown.vue";
-import Dropdown from "@/components/dropdown/Dropdown.vue";
 
 describe("Dropdown tests", () => {
     enableAutoUnmount(afterEach);
 
     test("is called", () => {
         const wrapper = mount(ODropdown);
-        expect(wrapper.attributes("data-oruga")).toBe("dropdown");
         expect(!!wrapper.vm).toBeTruthy();
+        expect(wrapper.exists()).toBeTruthy();
+        expect(wrapper.attributes("data-oruga")).toBe("dropdown");
     });
 
     test("render correctly", () => {
@@ -170,7 +169,7 @@ describe("Dropdown tests", () => {
     });
 
     test("react accordingly when mouse over without trigger", async () => {
-        const wrapper = mount(Dropdown, {
+        const wrapper = mount(ODropdown, {
             props: { triggers: ["click"] },
             attachTo: document.body,
         });
@@ -181,7 +180,7 @@ describe("Dropdown tests", () => {
     });
 
     test("react accordingly when mouse over with trigger", async () => {
-        const wrapper = mount(Dropdown, {
+        const wrapper = mount(ODropdown, {
             props: { triggers: ["hover"] },
             attachTo: document.body,
         });
@@ -191,7 +190,7 @@ describe("Dropdown tests", () => {
     });
 
     test("react accordingly when is disabled", async () => {
-        const wrapper = mount(Dropdown, {
+        const wrapper = mount(ODropdown, {
             props: { disabled: true, active: true },
             attachTo: document.body,
         });

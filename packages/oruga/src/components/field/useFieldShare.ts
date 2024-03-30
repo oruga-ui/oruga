@@ -68,7 +68,7 @@ export function injectField() {
     /**
      * Icon name based on the variant.
      */
-    const statusVariantIcon = computed(() => {
+    const statusVariantIcon = computed<string>(() => {
         const statusVariantIcon = getOption("statusVariantIcon", {
             success: "check",
             danger: "alert-circle",
