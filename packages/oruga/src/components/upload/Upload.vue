@@ -4,11 +4,7 @@ import { computed, ref, watch, type PropType } from "vue";
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
 import { uuid } from "@/utils/helpers";
-import {
-    defineClasses,
-    useVModelBinding,
-    useInputHandler,
-} from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -34,6 +30,8 @@ const props = defineProps({
         >,
         default: undefined,
     },
+    /** Same as native, also push new item to v-model instead of replacing */
+    multiple: { type: Boolean, default: false },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -42,8 +40,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("upload.variant"),
     },
-    /** Same as native, also push new item to v-model instead of replacing */
-    multiple: { type: Boolean, default: false },
     /** Same as native disabled */
     disabled: { type: Boolean, default: false },
     /** Same as native accept */
@@ -101,7 +97,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Object | Object[] | File | File[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: Object | Object[] | File | File[]): void;
+    (e: "update:modelValue", value: object | object[] | File | File[]): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -121,10 +117,7 @@ const emits = defineEmits<{
 
 const inputRef = ref<HTMLInputElement>();
 
-const vmodel = useVModelBinding<Object | Object[] | File | File[]>(
-    props,
-    emits,
-);
+const vmodel = defineModel<object | object[] | File | File[]>();
 
 // use form input functionality
 const { checkHtml5Validity, onFocus, onBlur, isValid, setFocus } =
@@ -137,14 +130,11 @@ const dragDropFocus = ref(false);
  * 1. Reset interna input file value
  * 2. If it's invalid, validate again.
  */
-watch(
-    () => props.modelValue,
-    (value) => {
-        if (!value || (Array.isArray(value) && value.length === 0))
-            inputRef.value.value = null;
-        if (!isValid.value && !props.dragDrop) checkHtml5Validity();
-    },
-);
+watch(vmodel, (value) => {
+    if (!value || (Array.isArray(value) && value.length === 0))
+        inputRef.value.value = null;
+    if (!isValid.value && !props.dragDrop) checkHtml5Validity();
+});
 
 /**
  * Listen change event on input type 'file',
@@ -161,13 +151,31 @@ function onFileChange(event: Event | DragEvent): void {
         if (!vmodel.value) return;
         if (props.native) vmodel.value = null;
     }
+
+    // multiple upload
+    if (props.multiple) {
+        // always new values if native or undefined local
+        const values =
+            props.native || !vmodel.value || !Array.isArray(vmodel.value)
+                ? []
+                : [...vmodel.value];
+
+        for (let i = 0; i < value.length; i++) {
+            const file = value[i];
+            // add file when type is valid
+            if (checkType(file)) values.push(file);
+        }
+        vmodel.value = values;
+    }
     // single uplaod
-    else if (!props.multiple) {
+    else {
         // only one element in case drag drop mode and isn't multiple
         if (props.dragDrop && value.length !== 1) return;
         else {
             const file = value[0];
+            // add file when type is valid
             if (checkType(file)) vmodel.value = file;
+            // else clear input
             else if (vmodel.value) {
                 vmodel.value = null;
                 clearInput();
@@ -178,23 +186,6 @@ function onFileChange(event: Event | DragEvent): void {
                 return;
             }
         }
-    }
-    // multiple upload
-    else {
-        // always new values if native or undefined local
-        let newValues = false;
-        if (props.native || !vmodel.value || !Array.isArray(vmodel.value)) {
-            vmodel.value = [] as any;
-            newValues = true;
-        }
-        for (let i = 0; i < value.length; i++) {
-            const file = value[i];
-            if (checkType(file) && Array.isArray(vmodel.value)) {
-                vmodel.value.push(file);
-                newValues = true;
-            }
-        }
-        if (!newValues) return;
     }
 
     if (!props.dragDrop) checkHtml5Validity();
@@ -301,6 +292,7 @@ defineExpose({ focus: setFocus });
             v-bind="$attrs"
             ref="inputRef"
             type="file"
+            data-oruga-input="file"
             :multiple="multiple"
             :accept="accept"
             :disabled="disabled"

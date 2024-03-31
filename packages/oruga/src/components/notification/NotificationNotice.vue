@@ -4,7 +4,6 @@ import {
     ref,
     onMounted,
     onBeforeMount,
-    watch,
     type PropType,
     type Component,
 } from "vue";
@@ -33,10 +32,8 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** Whether notification is active or not, use v-model:active to make it two-way binding. */
-    active: { type: Boolean, default: true },
     /**
-     * Which position the notification will appear when programmatically.
+     * Which position the notification will appear.
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
      */
     position: {
@@ -64,9 +61,7 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("notification.queue"),
     },
-    /** Callback function to call after user canceled (pressed escape / clicked outside). */
-    onCancel: { type: Function as PropType<() => void>, default: () => {} },
-    /** Callback function to call after close (programmatically close or user canceled). */
+    /** Callback function to call on close (programmatically close or user canceled). */
     onClose: { type: Function as PropType<() => void>, default: () => {} },
     /**
      * Component to be injected.
@@ -86,7 +81,7 @@ const props = defineProps({
      * Meaning that the container should be fixed.
      */
     container: {
-        type: [Object, String] as PropType<string | HTMLElement>,
+        type: [Object, String] as PropType<string | HTMLElement | null>,
         default: () => getOption("notification.container", "body"),
     },
     /**
@@ -128,28 +123,26 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits<{
-    /**
-     * active prop two-way binding
-     * @param value {boolean} - updated active prop
-     */
-    (e: "update:active", value: boolean): void;
-    /**
-     * on component close event
-     * @param value {any} - close event data
-     */
-    (e: "close", ...args: any[]): void;
-}>();
-
 const notificationRef = ref();
 
+const isActive = ref(true);
+
+function handleClose(...args: any[]): void {
+    if (typeof props.onClose === "function" && isActive.value)
+        props.onClose.apply(args);
+    isActive.value = false;
+    if (timer.value) clearTimeout(timer.value);
+}
+
 /** add programmatic usage to this component */
-const { isActive, close, container } = useProgrammaticComponent(
+const { close, container } = useProgrammaticComponent(
     () => notificationRef.value.$el,
-    props,
-    emits,
     {
-        cancelOptions: ["escape", "x"],
+        container: props.container,
+        programmatic: props.programmatic,
+        cancelable: true,
+        destroy: true,
+        onClose: handleClose,
     },
 );
 
@@ -157,14 +150,6 @@ const parentTop = ref(null);
 const parentBottom = ref(null);
 
 const timer = ref();
-
-watch(
-    () => isActive,
-    (value) => {
-        if (value) setAutoClose();
-        else if (timer.value) clearTimeout(timer.value);
-    },
-);
 
 /** Create or inject notice dom container elements. */
 onBeforeMount(() => {
@@ -219,7 +204,11 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-    showNotice();
+    if (shouldQueue.value) correctParent.value.innerHTML = "";
+    correctParent.value.insertAdjacentElement(
+        "afterbegin",
+        notificationRef.value.$el,
+    );
     setAutoClose();
 });
 
@@ -246,15 +235,6 @@ const shouldQueue = computed(() =>
         : false,
 );
 
-function showNotice(): void {
-    if (shouldQueue.value) correctParent.value.innerHTML = "";
-    correctParent.value.insertAdjacentElement(
-        "afterbegin",
-        notificationRef.value.$el,
-    );
-    isActive.value = true;
-}
-
 /** Set timer to auto close message */
 function setAutoClose(): void {
     if (!props.infinite) {
@@ -262,15 +242,9 @@ function setAutoClose(): void {
         if (timer.value) clearTimeout(timer.value);
         // set new timer
         timer.value = setTimeout(() => {
-            if (isActive.value)
-                handleClose({ action: "close", method: "timeout" });
+            if (isActive.value) close({ action: "close", method: "timeout" });
         }, props.duration);
     }
-}
-
-function handleClose(...args: any[]): void {
-    clearTimeout(timer.value);
-    close(...args);
 }
 
 // --- Computed Component Classes ---
@@ -305,7 +279,7 @@ defineExpose({ close: handleClose, promise: props.promise });
         ref="notificationRef"
         v-model:active="isActive"
         :position="position"
-        @close="handleClose">
+        @close="close">
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->
             <component

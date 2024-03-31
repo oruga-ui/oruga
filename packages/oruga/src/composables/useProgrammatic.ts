@@ -1,52 +1,53 @@
-import { computed, getCurrentInstance, onMounted, type Ref } from "vue";
-import type { ProgrammaticInstance } from "..";
+import {
+    computed,
+    getCurrentInstance,
+    onMounted,
+    type ComputedRef,
+    type MaybeRefOrGetter,
+} from "vue";
 import { isClient, HTMLElement } from "@/utils/ssr";
-import { usePropBinding } from "./usePropValue";
-import { useEventListener } from "./useEventListener";
+import { unrefElement } from "@/composables";
 import { removeElement } from "@/utils/helpers";
+import type { ProgrammaticInstance } from "@/types";
 
-type ProgrammaticProps = {
-    // TODO: remove active from here and use it in the component by the onClose event
-    active: boolean;
-    /** Define if the component is cancelable at all or by specific events. */
-    cancelable?: boolean | string[];
-    /** Callback function to call after user canceled (pressed escape / clicked outside). */
-    onCancel: (...args: any[]) => void;
-    /** Callback function to call after close (programmatically close or user canceled). */
-    onClose: (...args: any[]) => void;
-    /** DOM element where the programmatic component will be mounted on. */
-    container?: string | HTMLElement;
+type ProgrammaticOptions = {
+    /**
+     * DOM element where the programmatic component will be mounted on.
+     * Default is `document.body`.
+     */
+    container?: string | HTMLElement | null;
     /** This defines the programmatic usage. */
     programmatic?: ProgrammaticInstance;
+    /**
+     * Define if the component is cancelable at all or by specific events.
+     * Default is `true`.
+     */
+    cancelable?: boolean | string[];
+    /**
+     * Destroy the component on close event.
+     * Default is `true`.
+     */
+    destroy?: boolean;
+    /** Callback function to call after close event (programmatically close or user canceled). */
+    onClose?: (...args: unknown[]) => void;
 };
-// TODO: combine both types
-export interface ProgrammaticOptions {
-    /** Method options that allow the component to be cancelled. */
-    cancelOptions?: string[];
-    /** Destroy the component on hide. Default is `true`. */
-    destroyOnHide?: boolean;
-}
 
 /**
  * This provides functionalities for programmatic usage.
  * The component get appended to the container.
  * This defines a cancel and close handler, as well as escape handler.
- * The component will be distroyed on close.
+ * The component will be destroyed on close.
  * @param elementRef HTMLElement which should injected
- * @param props ProgrammaticProps
- * @param emits ["update:active", "close"]
- * @param options
+ * @param options ProgrammaticOptions
  */
 export function useProgrammaticComponent(
-    elementRef: Ref<HTMLElement> | (() => HTMLElement),
-    props: ProgrammaticProps,
-    // remove events and make them in the components
-    emits: {
-        (e: "update:active", value: boolean): void;
-        (e: "close", ...args: any[]): void;
-    },
-    options: ProgrammaticOptions = { cancelOptions: ["escape", "outside"] },
-) {
+    elementRef: MaybeRefOrGetter<typeof HTMLElement>,
+    options: ProgrammaticOptions,
+): {
+    close: (...args: unknown[]) => void;
+    cancel: (method: string) => void;
+    container: ComputedRef<HTMLElement>;
+} {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
     if (!vm)
@@ -54,105 +55,76 @@ export function useProgrammaticComponent(
             "useProgrammaticComponent must be called within a component setup function.",
         );
 
-    const isActive = usePropBinding("active", props, emits);
-
-    const cancelOptions = computed(() =>
-        typeof props.cancelable === "boolean"
-            ? props.cancelable
-                ? options.cancelOptions
-                : []
-            : props.cancelable,
+    const element = computed<HTMLElement>(() =>
+        unrefElement<typeof HTMLElement>(elementRef),
     );
-
-    function getElement(): HTMLElement {
-        return typeof elementRef === "function"
-            ? elementRef()
-            : elementRef.value;
-    }
 
     const container = computed(
         (): HTMLElement =>
-            typeof props.container === "string"
-                ? document.querySelector<HTMLElement>(props.container)
-                : (props.container as HTMLElement) || document.body,
+            typeof options.container === "string"
+                ? document.querySelector<HTMLElement>(options.container)
+                : (options.container as HTMLElement) || document.body,
     );
 
     onMounted(() => {
-        if (props.programmatic) {
-            if (props.programmatic.instances) {
-                props.programmatic.instances.add(vm);
-            }
+        if (options.programmatic) {
+            if (options.programmatic.instances)
+                options.programmatic.instances.add(vm);
+
             // Insert the component in the container or the body tag
             // only if it's programmatic
-            const el = getElement();
-            container.value.appendChild(el);
-
-            isActive.value = true;
+            if (element.value) container.value.appendChild(element.value);
         }
     });
 
-    if (isClient) useEventListener("keyup", onKeyPress, container.value);
-
-    /** Keypress event that is bound to the document. */
-    function onKeyPress(event: KeyboardEvent): void {
-        if (isActive.value && (event.key === "Escape" || event.key === "Esc")) {
-            cancel("escape");
-        }
-    }
-
     /**
-     * Close the component if cancelable.
+     * Check if method is cancelable.
+     * Class close with action `cancel`.
      * @param method Cancel method
      */
     function cancel(method: string): void {
-        if (!props.cancelable || !isActive.value) return;
-        // check if method is in options
-        if (cancelOptions.value.indexOf(method) < 0) return;
-        props.onCancel.apply(null);
+        // check if method is cancelable
+        if (
+            !options.cancelable ||
+            (typeof options.cancelable === "boolean" && !options.cancelable) ||
+            (Array.isArray(options.cancelable) &&
+                !options.cancelable.includes(method))
+        )
+            return;
         close({ action: "cancel", method });
     }
 
     /**
-     * Emit events, and destroy the component if it's programmatic.
-     * Can get called outside of a setup scope.
+     * Call onClose handler.
+     * If it's programmatic, resolve promise and destroy the component.
      */
-    function close(...args: any[]): void {
-        vm.emit("close");
-        props.onClose.apply(null, args);
+    function close(...args: unknown[]): void {
+        // call handler if given
+        if (typeof options.onClose === "function")
+            options.onClose.apply(null, args);
 
-        if (props.programmatic) {
-            if (props.programmatic.instances)
-                props.programmatic.instances.remove(vm);
+        if (options.programmatic) {
+            if (options.programmatic.instances)
+                options.programmatic.instances.remove(vm);
 
-            if (props.programmatic.resolve)
-                props.programmatic.resolve.apply(null, args);
+            if (options.programmatic.resolve)
+                options.programmatic.resolve.apply(null, args);
 
-            // Timeout for the animation complete before destroying
-            setTimeout(() => {
-                // set active state of current instance
-                vm.props.active = false;
-                vm.emit("update:active", false);
-                if (
-                    typeof options.destroyOnHide === "undefined" ||
-                    options.destroyOnHide
-                )
+            if (typeof options.destroy === "undefined" || options.destroy) {
+                // use timeout for any animation to complete before destroying
+                setTimeout(() => {
                     if (isClient)
                         window.requestAnimationFrame(() => {
                             // remove the component from the container or the body tag
-                            const el = getElement();
-                            if (el) removeElement(el);
+                            if (element.value) removeElement(element.value);
                         });
                     else {
-                        const el = getElement();
-                        if (el) removeElement(el);
+                        if (element.value) removeElement(element.value);
                     }
-            });
-        } else {
-            // set active state of current instance
-            vm.props.active = false;
-            vm.emit("update:active", false);
+                });
+            }
         }
     }
 
-    return { close, cancel, isActive, container };
+    return { close, cancel, container };
 }

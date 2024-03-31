@@ -7,8 +7,7 @@ const clickMe = () => {
 
 const settings = reactive({
     rounded: false,
-    tooltip: true,
-    variant: "warning",
+    variant: "success",
     size: "medium",
 });
 </script>
@@ -16,9 +15,6 @@ const settings = reactive({
 <template>
     <section>
         <o-field grouped>
-            <o-field>
-                <o-switch v-model="settings.rounded" label="Rounded" />
-            </o-field>
             <o-field label="Size">
                 <o-select v-model="settings.size">
                     <option value="small">small</option>
@@ -37,7 +33,11 @@ const settings = reactive({
                     <option value="danger">danger</option>
                 </o-select>
             </o-field>
+            <o-field label="Rounded">
+                <o-switch v-model="settings.rounded" />
+            </o-field>
         </o-field>
+
         <o-button
             :variant="settings.variant"
             :size="settings.size"

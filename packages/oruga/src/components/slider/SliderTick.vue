@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type ComputedRef, type PropType } from "vue";
+import { computed, type PropType } from "vue";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { SliderComponent } from "./types";
@@ -38,7 +38,7 @@ const props = defineProps({
 });
 
 // Inject functionalities and data from the parent carousel component
-const { parent } = useProviderChild<ComputedRef<SliderComponent>>();
+const { parent } = useProviderChild<SliderComponent>();
 
 const position = computed(() => {
     const pos =

@@ -16,12 +16,12 @@ declare module "../../index" {
 
 const instances = new InstanceRegistry<typeof Modal>();
 
-type ProgrammaticProps = Readonly<
+type ModalProgrammaticProps = Readonly<
     string | (ModalProps & OrugaOptions["modal"])
 >;
 
 const ModalProgrammatic = {
-    open(params: ProgrammaticProps): ProgrammaticExpose {
+    open(params: ModalProgrammaticProps): ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {
