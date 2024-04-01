@@ -65,7 +65,7 @@ const props = defineProps({
     headerSelectable: { type: Boolean, default: false },
     /**
      * Adds native attributes to th
-     * @deprecated will be moved to table component
+     * @deprecated will be moved to table component in v0.9
      */
     thAttrs: {
         type: Function as PropType<(column: typeof props) => object>,
@@ -73,7 +73,7 @@ const props = defineProps({
     },
     /**
      * Adds native attributes to td
-     * @deprecated will be moved to table component
+     * @deprecated will be moved to table component in v0.9
      */
     tdAttrs: {
         type: Function as PropType<
