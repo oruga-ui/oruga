@@ -1,3 +1,23 @@
+## [0.8.7](https://github.com/mlmoravek/oruga/compare/v0.8.6...v0.8.7) (2024-04-02)
+
+
+### Bug Fixes
+
+* **autocomplete:** adjust active state behavior ([#859](https://github.com/mlmoravek/oruga/issues/859)) ([9ce1971](https://github.com/mlmoravek/oruga/commit/9ce1971c71e719a392dbfa7735dc64c5cabaeef2))
+* **autocomplete:** change options type definition to generic ([#866](https://github.com/mlmoravek/oruga/issues/866)) ([5f6717a](https://github.com/mlmoravek/oruga/commit/5f6717a668be58ee5916b55c896034574de02856))
+* **steps|tabs:** fix disable animation ([#870](https://github.com/mlmoravek/oruga/issues/870)) ([08c1fbf](https://github.com/mlmoravek/oruga/commit/08c1fbf93adda4af411e733a75fed097432d5da7))
+* **steps|tabs:** make item props reactive again ([#879](https://github.com/mlmoravek/oruga/issues/879)) ([269183d](https://github.com/mlmoravek/oruga/commit/269183dcadb918b365894cef4809a12241387172))
+* **table:** make `TableColumn` props reactive again ([#878](https://github.com/mlmoravek/oruga/issues/878)) ([d2b1caa](https://github.com/mlmoravek/oruga/commit/d2b1caa3074b7f3826e856942e7979b9abc72aea))
+* fix type generation script ([#867](https://github.com/mlmoravek/oruga/issues/867)) ([2f6b6c8](https://github.com/mlmoravek/oruga/commit/2f6b6c893b75997e95be1e276616dd750f5c99a1))
+* resolve maximum recursive update exceeded in tests ([#869](https://github.com/mlmoravek/oruga/issues/869)) ([40d8b94](https://github.com/mlmoravek/oruga/commit/40d8b942805e15d07589e9bc93b6841885f5cab3))
+
+
+### Features
+
+* **tabs:** move inherit attrs to div instead of transition ([#871](https://github.com/mlmoravek/oruga/issues/871)) ([6db3f74](https://github.com/mlmoravek/oruga/commit/6db3f74c0a24b13d4ce7f9edccaa131829640131))
+
+
+
 ## [0.8.6](https://github.com/oruga-ui/oruga/compare/v0.8.5...v0.8.6) (2024-03-11)
 
 
