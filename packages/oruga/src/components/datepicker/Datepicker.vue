@@ -854,11 +854,11 @@ function onChange(value: string): void {
     const date = (props.dateParser as any)(value, defaultDateParser);
 
     if (
-        date &&
-        Array.isArray(date) &&
-        date.length === 2 &&
-        !isNaN(date[0]) &&
-        !isNaN(date[1])
+        date instanceof Date ||
+        (Array.isArray(date) &&
+            date.length === 2 &&
+            date[0] instanceof Date &&
+            date[1] instanceof Date)
     ) {
         vmodel.value = date;
     } else {
