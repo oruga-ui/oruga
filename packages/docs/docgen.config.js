@@ -191,46 +191,52 @@ ${description ? "> " + description : ""}
     );
 
     props.forEach((pr) => {
-        const p = pr.name;
-        if (p.endsWith("Class") || p.endsWith("Classes")) {
+        if (pr.tags?.ignore) return;
+
+        const name = pr.name === "modelValue" ? "v-model" : pr.name;
+        if (name.endsWith("Class") || name.endsWith("Classes")) {
             if (
                 !(
                     IGNORE_CLASSES[name.toLowerCase()] &&
-                    IGNORE_CLASSES[name.toLowerCase()].indexOf(p) >= 0
+                    IGNORE_CLASSES[name.toLowerCase()].indexOf(name) >= 0
                 )
             )
                 return;
         }
-        if (pr.tags?.ignore) return;
 
-        const n = pr.type?.name ? pr.type.name : "";
-        let d = pr.defaultValue?.value ? pr.defaultValue.value : "";
-        const v = pr.values
+        if (pr.tags?.type) console.log(pr.tags?.type);
+        const type = pr.tags?.type
+            ? pr.tags?.type[0].description
+            : pr.type?.name
+              ? pr.type.name
+              : "";
+        let value = pr.defaultValue?.value ? pr.defaultValue.value : "";
+        const values = pr.values
             ? pr.values.map((pv) => `\`${pv}\``).join(", ")
             : "-";
-        const t = pr.description ? pr.description : "";
+        const description = pr.description ? pr.description : "";
 
-        if (d === "undefined") d = "";
+        if (value === "undefined") value = "";
         else if (
-            d.indexOf("getOption") >= 0 &&
-            d.indexOf("const ") < 0 &&
-            d.indexOf("if ") < 0 &&
-            d.indexOf("else ") < 0
+            value.indexOf("getOption") >= 0 &&
+            value.indexOf("const ") < 0 &&
+            value.indexOf("if ") < 0 &&
+            value.indexOf("else ") < 0
         ) {
             let configParts = null;
             const clear = (s) => s.replace(/'|"/g, "");
             // get default params
-            d = d.replace(/\r\n/g, "");
+            value = value.replace(/\r\n/g, "");
             let f = "";
-            if (d.includes("getOption("))
-                f = d.substring(
-                    d.lastIndexOf("getOption(") + "getOption(".length,
+            if (value.includes("getOption("))
+                f = value.substring(
+                    value.lastIndexOf("getOption(") + "getOption(".length,
                 );
-            else if (d.includes("getOption<"))
-                f = d.substring(d.indexOf(">(") + ">(".length);
+            else if (value.includes("getOption<"))
+                f = value.substring(value.indexOf(">(") + ">(".length);
 
             // remove new line (+)
-            d = d.replace(/=>(.*?)getOption/g, "=> getOption");
+            value = value.replace(/=>(.*?)getOption/g, "=> getOption");
             // remove function prop invokation
             if (f.lastIndexOf("(") > 0) f = f.substring(0, f.lastIndexOf("("));
             if (f.lastIndexOf(")") > 0) f = f.substring(0, f.lastIndexOf(")"));
@@ -243,24 +249,23 @@ ${description ? "> " + description : ""}
                 configParts = params[0].trim().split(".");
             }
             if (configParts && configParts[0] && configParts[1]) {
-                const value = `${clear(configParts[1])}: ${params[1]}`;
-                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${clear(
+                const config = `${clear(configParts[1])}: ${params[1]}`;
+                value = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${clear(
                     configParts[0],
-                )}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
+                )}: {<br>&nbsp;&nbsp;${config}<br>}</code>`;
             } else if (configParts && configParts.length == 1) {
-                const value = `${clear(configParts[0])}: ${params[1]}`;
-                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
+                const config = `${clear(configParts[0])}: ${params[1]}`;
+                value = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${config}<br>}</code>`;
             }
-        } else if (d.includes("=>")) {
-            d = "Default function (see source code)";
+        } else if (value.includes("=>")) {
+            value = "Default function (see source code)";
         } else {
-            d = `<code style='white-space: nowrap; padding: 0;'>${d}</code>`;
+            value = `<code style='white-space: nowrap; padding: 0;'>${value}</code>`;
         }
 
         ret +=
-            `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(
-                v,
-            )} | ${d} |` + "\n";
+            `| ${mdclean(name)} | ${mdclean(description)} | ${mdclean(type)} | ${mdclean(values)} | ${value} |` +
+            "\n";
     });
     return ret;
 }

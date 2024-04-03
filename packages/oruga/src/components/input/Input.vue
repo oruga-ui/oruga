@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="TNumber extends boolean">
 import {
     ref,
     computed,
@@ -30,12 +30,22 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type T = TNumber extends true ? number : string;
+
 type Props = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** @model */
-    modelValue?: Props["number"] extends true ? number : string;
-    number?: boolean;
+    /**
+     * @type string | number
+     * @model
+     */
+    modelValue?: T;
+    /**
+     * @type boolean
+     */
+    number?: TNumber;
+    /** Input placeholder */
+    placeholder?: string;
     /**
      * Input type, like native
      * @values Any native input type, and textarea
@@ -51,8 +61,6 @@ type Props = {
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
-    /** Input placeholder */
-    placeholder?: string;
     /** Makes input full width when inside a grouped or addon field */
     expanded?: boolean;
     /** Makes the element rounded */
@@ -128,35 +136,32 @@ type Props = {
 };
 
 const props = withDefaults(defineProps<Props>(), {
-    modelValue: "",
-    number: true,
     type: "text",
-    size: () => getOption("input.size"),
-    variant: () => getOption("input.variant"),
+    size: getOption("input.size"),
+    variant: getOption("input.variant"),
     placeholder: undefined,
     expanded: false,
     rounded: false,
     disabled: false,
     passwordReveal: false,
     maxlength: undefined,
-    counter: () => getOption("input.counter", false),
+    counter: getOption("input.counter", false),
     autosize: false,
-    iconPack: () => getOption("input.iconPack", undefined),
-    icon: () => getOption("input.icon", undefined),
+    iconPack: getOption("input.iconPack", undefined),
+    icon: getOption("input.icon", undefined),
     iconClickable: false,
-    iconRight: () => getOption("input.iconRight", undefined),
+    iconRight: getOption("input.iconRight", undefined),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    clearable: () => getOption("input.clearable", false),
-    clearIcon: () => getOption("input.clearIcon", "close-circle"),
-    statusIcon: () => getOption("statusIcon", true),
-    autocomplete: () => getOption("input.autocomplete", "off"),
-    ariaLabelledby: () => uuid(),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    clearable: getOption("input.clearable", false),
+    clearIcon: getOption("input.clearIcon", "close-circle"),
+    statusIcon: getOption("statusIcon", true),
+    autocomplete: getOption("input.autocomplete", "off"),
+    ariaLabelledby: uuid(),
+    useHtml5Validation: getOption("useHtml5Validation", true),
     validationMessage: undefined,
 });
 
-type T = typeof props.number extends true ? number : string;
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
@@ -219,10 +224,10 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<string | number>({ default: "" });
+const vmodel = defineModel<T>();
 
 /** Get value length */
-const valueLength = computed(
+const valueLength = computed(() =>
     typeof vmodel.value === "string"
         ? vmodel.value.length
         : typeof vmodel.value === "number"
@@ -272,7 +277,9 @@ const computedStyles = computed(
 );
 
 function onInput(event: Event): void {
-    emits("input", (event.target as HTMLInputElement).value, event);
+    const v = (event.target as HTMLInputElement).value;
+    const value = (props.number ? Number(v) : String(v)) as T;
+    emits("input", value, event);
 }
 
 // --- Icon Feature ---
@@ -310,7 +317,7 @@ function iconClick(event: Event): void {
 
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
-    else if (props.clearable) vmodel.value = props.number ? 0 : "";
+    else if (props.clearable) vmodel.value = (props.number ? 0 : "") as T;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());

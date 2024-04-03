@@ -42,7 +42,7 @@
     "typescript": "5.4.2",
     "vitepress": "^1.0.0-rc.45",
     "vue": "^3.4.21",
-    "vue-docgen-cli": "4.67.0",
+    "vue-docgen-cli": "^4.79.0",
     "vue-tsc": "^2.0.6"
   }
 }
