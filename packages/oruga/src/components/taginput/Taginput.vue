@@ -1,5 +1,14 @@
-<script setup lang="ts">
-import { computed, nextTick, ref, useAttrs, watch, type PropType } from "vue";
+<script setup lang="ts" generic="T extends String | Number | Object">
+import {
+    computed,
+    nextTick,
+    ref,
+    useAttrs,
+    watch,
+    watchEffect,
+    type ComponentInstance,
+    type PropType,
+} from "vue";
 
 import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
@@ -9,7 +18,6 @@ import { getValueByPath } from "@/utils/helpers";
 import {
     defineClasses,
     getActiveClasses,
-    useVModelBinding,
     useInputHandler,
 } from "@/composables";
 
@@ -31,9 +39,9 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** @model */
-    modelValue: { type: Array, default: () => [] },
+    modelValue: { type: Array as PropType<T[]>, default: () => [] },
     /** Items data */
-    data: { type: Array, default: () => [] },
+    data: { type: Array as PropType<T[]>, default: () => [] },
     /** Property of the object (if data is array of objects) to use as display text */
     field: { type: String, default: "value" },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
@@ -112,8 +120,8 @@ const props = defineProps({
     },
     /** Function to create a new item to push into v-model (items) */
     createItem: {
-        type: Function as PropType<(value: any) => any>,
-        default: (item: any) => item,
+        type: Function as PropType<(value: string) => T>,
+        default: (item: string) => item,
     },
     /** Makes the component check if list reached scroll start or end and emit scroll events. */
     checkScroll: {
@@ -223,24 +231,24 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {any[]} updated modelValue prop
+     * @param value {(string | number | object)[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: any[]): void;
+    (e: "update:modelValue", value: T[]): void;
     /**
      * on input change event
-     * @param value {any} input value
+     * @param value {String} input value
      */
-    (e: "input", value: any): void;
+    (e: "input", value: string): void;
     /**
      * new item got added
-     * @param value {any} added item
+     * @param value {string | number | object} added item
      */
-    (e: "add", value: any): void;
+    (e: "add", value: T): void;
     /**
      * item got removed
-     * @param value {any} removed item
+     * @param value {string | number | object} removed item
      */
-    (e: "remove", value: any): void;
+    (e: "remove", value: T): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -272,12 +280,9 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const autocompleteRef = ref<InstanceType<typeof OAutocomplete>>();
+const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<T>>>();
 
-const items = useVModelBinding<any[]>(props, emits, {
-    passive: true,
-    deep: true,
-});
+const items = defineModel<T[]>({ default: [] });
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -286,7 +291,7 @@ const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
     props,
 );
 
-const newItem = ref("");
+const newItem = ref<string>("");
 const isComposing = ref(false);
 
 const valueLength = computed(() => newItem.value.trim().length);
@@ -305,13 +310,10 @@ const hasInput = computed(
     () => props.maxitems == null || itemsLength.value < props.maxitems,
 );
 
-watch(
-    () => hasInput.value,
-    () => {
-        // blur if input is empty
-        if (!hasInput.value) onBlur();
-    },
-);
+watchEffect(() => {
+    // blur if input is empty
+    if (!hasInput.value) onBlur();
+});
 
 /**
  * If input has pasteSeparators prop,
@@ -330,15 +332,15 @@ const separatorsAsRegExp = computed(() =>
         : null,
 );
 
-function getNormalizedItemText(item: any): string {
+function getNormalizedItemText(item: T): string {
     if (typeof item === "object") item = getValueByPath(item, props.field);
     return `${item}`;
 }
 
-function addItem(item?: string): void {
+function addItem(item?: T | string): void {
     item = item || newItem.value.trim();
 
-    if (item) {
+    if (item && typeof item === "string") {
         if (!props.allowAutocomplete) {
             const reg = separatorsAsRegExp.value;
             if (reg && item.match(reg)) {
@@ -377,7 +379,7 @@ function removeItem(index: number, event?: Event): void {
 
 // --- Event Handler ---
 
-function onSelect(option?: string): void {
+function onSelect(option: T): void {
     if (!option) return;
     addItem(option);
     nextTick(() => (newItem.value = ""));
@@ -534,7 +536,7 @@ defineExpose({ focus: setFocus });
                 @keydown="onKeydown"
                 @compositionstart="isComposing = true"
                 @compositionend="isComposing = false"
-                @select="onSelect($event as string)"
+                @select="onSelect($event)"
                 @scroll-start="$emit('scroll-start')"
                 @scroll-end="$emit('scroll-end')"
                 @icon-click="$emit('icon-click', $event)"

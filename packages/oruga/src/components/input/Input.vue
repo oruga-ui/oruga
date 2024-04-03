@@ -219,7 +219,7 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<number | string>();
+const vmodel = defineModel<string | number>({ default: "" });
 
 /** Get value length */
 const valueLength = computed(
@@ -253,10 +253,9 @@ const height = ref("auto");
 function resize(): void {
     height.value = "auto";
     nextTick(() => {
-        if (textareaRef.value) {
-            const scrollHeight = textareaRef.value.scrollHeight;
-            height.value = scrollHeight + "px";
-        }
+        if (!textareaRef.value) return;
+        const scrollHeight = textareaRef.value.scrollHeight;
+        height.value = scrollHeight + "px";
     });
 }
 
@@ -273,11 +272,7 @@ const computedStyles = computed(
 );
 
 function onInput(event: Event): void {
-    emits(
-        "input",
-        props.number ? Number(vmodel.value) : String(vmodel.value),
-        event,
-    );
+    emits("input", (event.target as HTMLInputElement).value, event);
 }
 
 // --- Icon Feature ---
@@ -308,15 +303,18 @@ const computedIconRightVariant = computed(() =>
         : statusVariant.value,
 );
 
-function iconClick(emit, event: Event): void {
-    emits(emit, event);
+function iconClick(event: Event): void {
+    emits("icon-click", event);
     nextTick(() => setFocus());
 }
 
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
     else if (props.clearable) vmodel.value = props.number ? 0 : "";
-    if (props.iconRightClickable) iconClick("icon-right-click", event);
+    if (props.iconRightClickable) {
+        emits("icon-right-click", event);
+        nextTick(() => setFocus());
+    }
 }
 
 // --- Password Visability Feature ---
@@ -458,7 +456,7 @@ defineExpose({ focus: setFocus });
             :icon="icon"
             :pack="iconPack"
             :size="size"
-            @click="iconClick('icon-click', $event)" />
+            @click="iconClick" />
 
         <o-icon
             v-if="hasIconRight"

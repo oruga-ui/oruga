@@ -33,10 +33,6 @@ const props = defineProps({
         type: Object as PropType<HTMLElement | Component>,
         default: undefined,
     },
-    content: {
-        type: Object as PropType<HTMLElement | Component>,
-        default: undefined,
-    },
     /**
      * Position of the component relative to the trigger
      * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
@@ -74,15 +70,29 @@ const emits = defineEmits<{
     (e: "update:position", value: string);
 }>();
 
-const to = computed(() =>
+const teleportTo = computed(() =>
     typeof props.teleport === "boolean" ? "body" : props.teleport,
 );
 
-const disabled = computed(() =>
+const teleportDisabled = computed(() =>
     typeof props.teleport === "boolean" || !props.teleport
         ? !props.teleport
         : false,
 );
+
+const contentRef = ref<HTMLElement | Component>();
+
+function setContent<T extends typeof contentRef.value>(el: T): typeof el {
+    contentRef.value = el;
+
+    nextTick(() => {
+        // update positioning
+        updatePositioning();
+        // add handler
+        addHandler();
+    });
+    return el;
+}
 
 // --- Dynamic Positioning Handling Feature ---
 
@@ -97,7 +107,7 @@ if (isClient && window.ResizeObserver) {
 
 // on content or disable state change update event listener
 watch(
-    [() => props.disabled, () => props.content],
+    () => props.disabled,
     () => {
         if (!props.disabled) addHandler();
         else removeHandler();
@@ -108,8 +118,7 @@ watch(
 // update positioning if props change
 watch(
     [
-        () => props.trigger,
-        () => props.content,
+        () => !!props.trigger,
         () => props.disablePositioning,
         () => props.disabled,
     ],
@@ -124,9 +133,9 @@ onBeforeUnmount(() => removeHandler());
 
 /** add event listener */
 function addHandler(): void {
-    if (isClient && !scrollingParent.value && props.content) {
+    if (isClient && !scrollingParent.value && contentRef.value) {
         // get parent container
-        scrollingParent.value = getScrollingParent(unrefElement(props.content));
+        scrollingParent.value = getScrollingParent(unrefElement(contentRef));
         // set event listener
         if (
             scrollingParent.value &&
@@ -173,7 +182,7 @@ function updatePositioning(): void {
     // do not set content position if not teleport enabled
     if (!props.teleport) return;
 
-    const content = unrefElement(props.content);
+    const content = unrefElement(contentRef);
     const trigger = unrefElement(props.trigger);
 
     // set content position
@@ -221,7 +230,7 @@ function updatePositioning(): void {
 /** calculate best position if auto */
 function getAutoPosition(): string {
     let bestPosition = props.defaultPosition;
-    if (!props.content || !props.trigger) return bestPosition;
+    if (!props.trigger || !contentRef.value) return bestPosition;
     if (!scrollingParent.value) return bestPosition;
 
     // get viewport from container
@@ -232,7 +241,7 @@ function getAutoPosition(): string {
         scrollingParent.value.clientHeight,
     );
 
-    const contentRect = unrefElement(props.content).getBoundingClientRect();
+    const contentRect = unrefElement(contentRef).getBoundingClientRect();
     const triggerRect = unrefElement(props.trigger).getBoundingClientRect();
 
     // detect auto position
@@ -302,15 +311,15 @@ const anchors = (rect: DOMRect): Record<Position, Point> => ({
 </script>
 
 <template>
-    <Teleport :to="to" :disabled="disabled">
-        <template v-if="disabled">
-            <slot />
+    <Teleport :to="teleportTo" :disabled="teleportDisabled">
+        <template v-if="teleportDisabled">
+            <slot :set-content />
         </template>
         <template v-else>
             <div
                 v-bind="$attrs"
                 :style="{ position: 'absolute', left: '0px', top: '0px' }">
-                <slot />
+                <slot :set-content />
             </div>
         </template>
     </Teleport>

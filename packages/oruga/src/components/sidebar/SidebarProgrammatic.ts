@@ -16,10 +16,12 @@ declare module "../../index" {
 
 const instances = new InstanceRegistry<typeof Sidebar>();
 
-type ProgrammaticProps = Readonly<SidebarProps & OrugaOptions["sidebar"]>;
+type SidebarProgrammaticProps = Readonly<
+    SidebarProps & OrugaOptions["sidebar"]
+>;
 
 const SidebarProgrammatic = {
-    open(params: ProgrammaticProps): ProgrammaticExpose {
+    open(params: SidebarProgrammaticProps): ProgrammaticExpose {
         const defaultParams = {
             programmatic: { instances },
             active: true, // set the active state to true

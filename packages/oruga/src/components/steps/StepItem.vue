@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
+import { computed, ref, useSlots, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { isEqual, uuid } from "@/utils/helpers";
@@ -15,6 +15,7 @@ defineOptions({
     isOruga: true,
     name: "OStepItem",
     configField: "steps",
+    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -107,7 +108,7 @@ const providedData = computed<StepItemComponent>(() => ({
 }));
 
 // Inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<ComputedRef<StepsComponent>>({
+const { parent, item } = useProviderChild<StepsComponent>({
     data: providedData,
 });
 
@@ -164,7 +165,7 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
 
 <template>
     <Transition
-        :disabled="!parent.animated"
+        :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
@@ -172,6 +173,7 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
         <div
             v-show="isActive && visible"
             ref="rootRef"
+            v-bind="$attrs"
             :class="elementClasses"
             :data-id="`steps-${item.identifier}`"
             data-oruga="steps-item"

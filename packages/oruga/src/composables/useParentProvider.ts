@@ -6,19 +6,22 @@ import {
     onUnmounted,
     provide,
     ref,
+    type Component,
+    type ComputedRef,
     type Ref,
 } from "vue";
+import { unrefElement } from "./unrefElement";
 
 export type ProviderItem<T = unknown> = {
     index: number;
-    data: T;
+    data: ComputedRef<T>;
     identifier: string;
 };
 
 type PovidedData<P, I = unknown> = {
-    registerItem: (data: I) => ProviderItem<I>;
+    registerItem: (data: ComputedRef<I>) => ProviderItem<I>;
     unregisterItem: (item: ProviderItem<I>) => void;
-    data?: P;
+    data?: ComputedRef<P>;
 };
 
 type ProviderParentOptions<T = unknown> = {
@@ -30,7 +33,7 @@ type ProviderParentOptions<T = unknown> = {
     /**
      * Additional data provided for the child to the item
      */
-    data?: T;
+    data?: ComputedRef<T>;
 };
 
 /**
@@ -40,9 +43,12 @@ type ProviderParentOptions<T = unknown> = {
  * @param options additional options
  */
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
-    rootRef?: Ref<HTMLElement>,
+    rootRef?: Ref<HTMLElement | Component>,
     options?: ProviderParentOptions<ParentData>,
-) {
+): {
+    childItems: Ref<ProviderItem<ItemData>[]>;
+    sortedItems: Ref<ProviderItem<ItemData>[]>;
+} {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
     if (!vm)
@@ -65,7 +71,9 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         childItems.value.slice().sort((a, b) => a.index - b.index),
     );
 
-    function registerItem(data?: ItemData): ProviderItem<ItemData> {
+    function registerItem(
+        data?: ComputedRef<ItemData>,
+    ): ProviderItem<ItemData> {
         const index = childItems.value.length;
         const identifier = nextSequence();
         const item = { index, data, identifier };
@@ -75,8 +83,9 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
                 const ids = childItems.value
                     .map((item) => `[data-id="${key}-${item.identifier}"]`)
                     .join(",");
-                const elements = rootRef.value.querySelectorAll(ids);
-                const sortedIds = Array.from(elements).map((el: any) =>
+                const parent = unrefElement(rootRef);
+                const children = parent.querySelectorAll(ids);
+                const sortedIds = Array.from(children).map((el: any) =>
                     el.getAttribute("data-id").replace(`${key}-`, ""),
                 );
 
@@ -124,7 +133,7 @@ type ProviderChildOptions<T = unknown> = {
     /**
      * Additional data appended to the item
      */
-    data?: T;
+    data?: ComputedRef<T>;
     /**
      * Register child on parent
      * @default true
@@ -138,7 +147,7 @@ type ProviderChildOptions<T = unknown> = {
  */
 export function useProviderChild<ParentData, ItemData = unknown>(
     options: ProviderChildOptions<ItemData> = { needParent: true },
-): { parent: ParentData; item: Ref<ProviderItem<ItemData>> } {
+): { parent: ComputedRef<ParentData>; item: Ref<ProviderItem<ItemData>> } {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
     if (!vm)

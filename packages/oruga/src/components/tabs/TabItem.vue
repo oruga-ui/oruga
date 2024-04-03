@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
+import { computed, ref, useSlots, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { isEqual, uuid } from "@/utils/helpers";
@@ -15,6 +15,7 @@ defineOptions({
     isOruga: true,
     name: "OTabItem",
     configField: "tabs",
+    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -108,7 +109,7 @@ const providedData = computed<TabItemComponent>(() => ({
 }));
 
 // Inject functionalities and data from the parent component
-const { parent, item } = useProviderChild<ComputedRef<TabsComponent>>({
+const { parent, item } = useProviderChild<TabsComponent>({
     data: providedData,
 });
 
@@ -175,7 +176,7 @@ const headerTextClasses = defineClasses([
 
 <template>
     <Transition
-        :disabled="!parent.animated"
+        :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
@@ -183,6 +184,7 @@ const headerTextClasses = defineClasses([
         <div
             v-show="isActive && visible"
             ref="rootRef"
+            v-bind="$attrs"
             :class="elementClasses"
             :data-id="`tabs-${item.identifier}`"
             data-oruga="tabs-item"

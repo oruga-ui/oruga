@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Dropdown tests > render correctly 1`] = `
+"<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
+  <div tabindex="0" class="o-drop__trigger" aria-haspopup="true">
+    <!--
+                @slot Override the trigger element, default is label prop
+                @binding {boolean} active - dropdown active state
+            -->
+  </div>
+  <!--teleport start-->
+  <transition-stub name="fade" appear="false" persisted="false" css="true">
+    <!--v-if-->
+  </transition-stub>
+  <transition-stub name="fade" appear="false" persisted="true" css="true">
+    <div class="o-drop__menu o-drop__menu--bottom-left" role="list" aria-hidden="true" aria-modal="true" style="display: none;">
+      <!--
+                        @slot Place dropdown items here
+                        @binding {boolean} active - dropdown active state
+                        @binding {boolean} toggle - toggle active state function
+                    -->
+    </div>
+  </transition-stub>
+  <!--teleport end-->
+</div>"
+`;

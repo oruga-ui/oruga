@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, toRaw, type PropType, type Ref } from "vue";
+import { ref, computed, toRaw, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import {
@@ -10,6 +10,11 @@ import {
     type ProviderItem,
 } from "@/composables";
 
+import type {
+    MenuComponent,
+    MenuItemComponent,
+    MenuItemProvider,
+} from "./types";
 import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
@@ -116,19 +121,17 @@ const emits = defineEmits<{
     (e: "update:expanded", value: boolean): void;
 }>();
 
-const providedData = computed(() => ({
+const providedData = computed<MenuItemComponent>(() => ({
     reset,
 }));
 
 // Inject functionalities and data from the parent menu component
-const { parent, item } = useProviderChild<Ref<any>>({
+const { parent, item } = useProviderChild<MenuComponent>({
     data: providedData,
 });
 
 // Inject functionalities and data from the parent menu-item component
-const providedItem = useProviderChild<
-    Ref<{ triggerReset: typeof triggerReset } | undefined>
->({
+const providedItem = useProviderChild<MenuItemProvider>({
     key: "menu-item",
     needParent: false,
 });
@@ -173,12 +176,12 @@ function reset(): void {
 const rootRef = ref();
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed(() => ({
+const provideData = computed<MenuItemProvider>(() => ({
     triggerReset,
 }));
 
 /** Provide functionalities and data to child item components */
-useProviderParent(rootRef, { data: provideData, key: "menu-item" });
+useProviderParent(rootRef, { key: "menu-item", data: provideData });
 
 // --- Computed Component Classes ---
 
