@@ -475,7 +475,7 @@ const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, removeItem: removeItem });
 </script>
 
 <template>
