@@ -33,8 +33,15 @@ const plugin: Plugin = {
         app.use(OrugaConfig, options);
 
         // add all components
-        for (const componentKey in plugins) {
-            registerPlugin(app, plugins[componentKey]);
+        if (options.dontRegisterComponents !== true) {
+            const skipList = options.dontRegisterComponents ?? [];
+
+            for (const componentKey in plugins) {
+                if (skipList.includes(componentKey)) {
+                    continue;
+                }
+                registerPlugin(app, plugins[componentKey]);
+            }
         }
 
         // add programmatic config component

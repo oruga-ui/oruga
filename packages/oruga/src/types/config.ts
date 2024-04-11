@@ -68,6 +68,10 @@ export type GlobalConfig = Partial<{
      * you can specify the override behaviour here globaly.
      */
     override: boolean;
+    /**
+     * Components registration constraints
+     */
+    dontRegisterComponents: true | string[];
 }>;
 
 export interface OrugaOptions extends GlobalConfig {}
