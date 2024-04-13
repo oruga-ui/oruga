@@ -65,9 +65,9 @@ const props = defineProps({
         default: () => getOption("taginput.variant"),
     },
     /** Limits the number of items, plus item counter */
-    maxitems: { type: Number, default: undefined },
+    maxitems: { type: [String, Number], default: undefined },
     /** Same as native maxlength, plus character counter */
-    maxlength: { type: Number, default: undefined },
+    maxlength: { type: [String, Number], default: undefined },
     /** Show counter when maxlength or maxtags props are passed */
     counter: {
         type: Boolean,
@@ -307,7 +307,7 @@ watch(
 
 /** Show the input field if a maxitems hasn't been set or reached. */
 const hasInput = computed(
-    () => props.maxitems == null || itemsLength.value < props.maxitems,
+    () => props.maxitems == null || itemsLength.value < Number(props.maxitems),
 );
 
 watchEffect(() => {
