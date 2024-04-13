@@ -65,7 +65,7 @@ const props = defineProps({
     /** Menu item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("menu.menuTag", "a"),
+        default: () => getOption<DynamicComponent>("menu.menuTag", "button"),
     },
     /**
      * Role attribute to be passed to the list item for better accessibility.
@@ -110,10 +110,10 @@ const props = defineProps({
 
 const emits = defineEmits<{
     /**
-     * modelValue prop two-way binding
-     * @param value {boolean} updated modelValue prop
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
      */
-    (e: "update:modelValue", value: boolean): void;
+    (e: "update:active", value: boolean): void;
     /**
      * expanded prop two-way binding
      * @param value {boolean} updated expanded prop
@@ -159,11 +159,11 @@ function onClick(): void {
 function triggerReset(child?: ProviderItem): void {
     // The point of this method is to collect references to the clicked item and any parent,
     // this way we can skip resetting those elements.
-    if (itemParent.value?.triggerReset) {
+    if (typeof itemParent.value?.triggerReset === "function") {
         itemParent.value.triggerReset(toRaw(item.value));
     }
     // else if not a sub item reset parent menu
-    else if (parent.value.resetMenu) {
+    else if (typeof parent.value.resetMenu === "function") {
         parent.value.resetMenu([toRaw(item.value), child]);
     }
 }
