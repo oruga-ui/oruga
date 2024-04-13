@@ -111,7 +111,7 @@ const props = defineProps({
     /** Same as native input disabled */
     disabled: { type: Boolean, default: false },
     /** Same as native maxlength, plus character counter */
-    maxlength: { type: Number, default: undefined },
+    maxlength: { type: [String, Number], default: undefined },
     /** Makes the component check if list reached scroll start or end and emit scroll events. */
     checkScroll: {
         type: Boolean,
