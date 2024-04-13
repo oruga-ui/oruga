@@ -485,7 +485,7 @@ defineExpose({ focus: setFocus });
                 @slot Override selected items
                 @binding {unknown[]} items - selected items
             -->
-            <slot name="selected" :items="items">
+            <slot name="selected" :items="items" :remove-item="removeItem">
                 <span
                     v-for="(item, index) in items"
                     :key="getNormalizedItemText(item) + index"
