@@ -62,6 +62,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
 
     const childItems = ref<ProviderItem<ItemData>[]>([]);
     const sequence = ref(1);
+
     /**
      * When items are added/removed sort them according to their position
      */
