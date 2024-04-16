@@ -852,13 +852,15 @@ function formatNative(value: Date | Date[]): string {
 /** Parse string into date */
 function onChange(value: string): void {
     const date = (props.dateParser as any)(value, defaultDateParser);
+    const validDate = (d: unknown): d is Date =>
+        d instanceof Date && !isNaN(d.getTime());
 
     if (
-        date instanceof Date ||
+        validDate(date) ||
         (Array.isArray(date) &&
             date.length === 2 &&
-            date[0] instanceof Date &&
-            date[1] instanceof Date)
+            validDate(date[0]) &&
+            validDate(date[1]))
     ) {
         vmodel.value = date;
     } else {
