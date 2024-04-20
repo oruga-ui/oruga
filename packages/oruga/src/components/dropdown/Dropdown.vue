@@ -6,6 +6,7 @@ import {
     watch,
     onUnmounted,
     type PropType,
+    type Component,
 } from "vue";
 
 import PositionWrapper from "../utils/PositionWrapper.vue";
@@ -307,7 +308,7 @@ const hoverable = computed(() => props.triggers.indexOf("hover") >= 0);
 
 // --- Event Handler ---
 
-const contentRef = ref<HTMLElement>();
+const contentRef = ref<HTMLElement | Component>();
 const triggerRef = ref<HTMLElement>();
 
 const eventCleanups = [];
@@ -596,11 +597,11 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
         </component>
 
         <PositionWrapper
+            v-slot="{ setContent }"
             v-model:position="autoPosition"
             :teleport="teleport"
             :class="[...rootClasses, ...positionWrapperClasses]"
             :trigger="triggerRef"
-            :content="contentRef"
             :disabled="!isActive"
             default-position="bottom"
             :disable-positioning="!isMobileModal">
@@ -618,7 +619,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :is="menuTag"
                     v-show="(!disabled && (isActive || isHovered)) || inline"
                     :id="menuId"
-                    ref="contentRef"
+                    :ref="(el) => (contentRef = setContent(el))"
                     v-trap-focus="trapFocus"
                     :tabindex="menuTabindex"
                     :class="menuClasses"
