@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, toRaw, type PropType } from "vue";
 
+import OIcon from "../icon/Icon.vue";
+
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
-    usePropBinding,
     useProviderChild,
     useProviderParent,
     type ProviderItem,
@@ -108,7 +109,7 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits<{
+defineEmits<{
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -125,12 +126,12 @@ const providedData = computed<MenuItemComponent>(() => ({
     reset,
 }));
 
-// Inject functionalities and data from the parent menu component
+// inject functionalities and data from the parent menu component
 const { parent, item } = useProviderChild<MenuComponent>({
     data: providedData,
 });
 
-// Inject functionalities and data from the parent menu-item component
+// inject functionalities and data from the parent menu-item component
 const providedItem = useProviderChild<MenuItemProvider>({
     key: "menu-item",
     needParent: false,
@@ -138,9 +139,9 @@ const providedItem = useProviderChild<MenuItemProvider>({
 
 const itemParent = computed(() => providedItem.parent?.value);
 
-const isActive = usePropBinding("active", props, emits, { passive: true });
+const isActive = defineModel<boolean>("active", { default: false });
 
-const isExpanded = usePropBinding("expanded", props, emits, { passive: true });
+const isExpanded = defineModel<boolean>("expanded", { default: false });
 
 /** template identifier */
 const identifier = computed(() =>
@@ -175,12 +176,12 @@ function reset(): void {
 
 const rootRef = ref();
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<MenuItemProvider>(() => ({
     triggerReset,
 }));
 
-/** Provide functionalities and data to child item components */
+/** provide functionalities and data to child item components */
 useProviderParent(rootRef, { key: "menu-item", data: provideData });
 
 // --- Computed Component Classes ---
@@ -225,6 +226,9 @@ const wrapperClasses = defineClasses([
             :is="tag"
             v-bind="$attrs"
             :class="itemClasses"
+            role="button"
+            :disabled="disabled"
+            @keyup.enter="onClick"
             @click="onClick()">
             <o-icon
                 v-if="icon"

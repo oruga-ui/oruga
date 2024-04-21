@@ -6,23 +6,26 @@ import ODropdownItem from "@/components/dropdown/DropdownItem.vue";
 import ODropdown from "@/components/dropdown/Dropdown.vue";
 
 describe("Dropdown integration tests", () => {
+    const values = ["A", "B", "C"];
+
     enableAutoUnmount(afterEach);
 
     test("is called", () => {
-        const values = ["A", "B", "C"];
         const wrapper = mount(DropdownExample, { props: { values } });
         expect(wrapper.attributes("data-oruga")).toBe("dropdown");
         expect(!!wrapper.vm).toBeTruthy();
 
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(values.length);
-        values.forEach((value, idx) =>
-            expect(items.at(idx).text()).toBe(value),
-        );
+        values.forEach((value, idx) => {
+            expect(items.at(idx).attributes("data-oruga")).toBe(
+                "dropdown-item",
+            );
+            expect(items.at(idx).text()).toBe(value);
+        });
     });
 
     test("react accordingly when new item is selected", async () => {
-        const values = ["A", "B", "C"];
         const wrapper = mount(DropdownExample, {
             props: { values, value: values[0] },
         });
@@ -47,7 +50,6 @@ describe("Dropdown integration tests", () => {
     });
 
     test("react accordingly when same item is selected", async () => {
-        const values = ["A", "B", "C"];
         const wrapper = mount(DropdownExample, {
             props: { values, value: values[0] },
         });
@@ -71,7 +73,6 @@ describe("Dropdown integration tests", () => {
     });
 
     test("react accordingly when an item is selected with multiple prop", async () => {
-        const values = ["A", "B", "C"];
         const wrapper = mount(DropdownExample, {
             props: { values, multiple: true },
         });
@@ -121,7 +122,6 @@ describe("Dropdown integration tests", () => {
     });
 
     test("react accordingly when item is selected without closeable", async () => {
-        const values = ["A", "B", "C"];
         const wrapper = mount(DropdownExample, {
             props: { values, closeable: false },
         });
@@ -145,7 +145,6 @@ describe("Dropdown integration tests", () => {
     });
 
     test("react accordingly when is disabled", async () => {
-        const values = ["A", "B", "C"];
         const wrapper = mount(DropdownExample, {
             props: { values, disabled: true },
         });

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, toRaw, type PropType } from "vue";
 
+import OIcon from "../icon/Icon.vue";
+
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -81,14 +83,14 @@ const props = defineProps({
 
 const rootRef = ref();
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<MenuComponent>(() => ({
     activable: props.activable,
     accordion: props.accordion,
     resetMenu,
 }));
 
-/** Provide functionalities and data to child item components */
+/** provide functionalities and data to child item components */
 const { childItems } = useProviderParent<MenuItemComponent>(rootRef, {
     data: provideData,
 });
