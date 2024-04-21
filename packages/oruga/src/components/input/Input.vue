@@ -15,7 +15,7 @@ import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
-import { injectField } from "../field/useFieldShare";
+import { injectField } from "../field/fieldInjection";
 
 import type { ComponentClass } from "@/types";
 
@@ -120,8 +120,8 @@ const props = defineProps({
         type: String,
         default: () => getOption("input.autocomplete", "off"),
     },
-    /** Accessibility label to establish relationship between the checkbox and control label */
-    ariaLabelledby: { type: String, default: () => uuid() },
+    /** Same as native id. Also set the for label for o-field wrapper. */
+    id: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -265,6 +265,9 @@ const {
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
 const vmodel = defineModel<string | number>({ default: "" });
+
+// if id is given set as `for` property on o-field wrapper
+if (props.id) parentField?.value?.setInputId(props.id);
 
 /** Get value length */
 const valueLength = computed(() =>
@@ -462,6 +465,7 @@ defineExpose({ focus: setFocus });
         <input
             v-if="type !== 'textarea'"
             v-bind="$attrs"
+            :id="id"
             ref="inputRef"
             v-model="vmodel"
             :data-oruga-input="inputType"
@@ -471,7 +475,6 @@ defineExpose({ focus: setFocus });
             :autocomplete="autocomplete"
             :placeholder="placeholder"
             :disabled="disabled"
-            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
@@ -480,6 +483,7 @@ defineExpose({ focus: setFocus });
         <textarea
             v-else
             v-bind="$attrs"
+            :id="id"
             ref="textareaRef"
             v-model="vmodel"
             data-oruga-input="textarea"
@@ -488,7 +492,6 @@ defineExpose({ focus: setFocus });
             :style="computedStyles"
             :placeholder="placeholder"
             :disabled="disabled"
-            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"

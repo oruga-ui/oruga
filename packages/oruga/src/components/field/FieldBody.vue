@@ -9,7 +9,7 @@ import {
     type PropType,
 } from "vue";
 
-import { injectField } from "./useFieldShare";
+import { injectField } from "./fieldInjection";
 
 import type { ClassBind } from "@/types";
 
