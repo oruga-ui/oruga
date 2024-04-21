@@ -158,7 +158,7 @@ function onKeydown(event: KeyboardEvent, weekDay: Date): void {
 
 /** Emit select event with chosen date as payload */
 function selectDate(date: Date): void {
-    if (datepicker.value.disabled) return;
+    if (datepicker.value.disabled || datepicker.value.readonly) return;
     if (isDateSelectable(date, props.month)) emits("select", date);
 }
 
@@ -289,7 +289,9 @@ function cellClasses(day: Date): ClassBind[] {
             "tableCellSelectableClass",
             "o-dpck__table__cell--selectable",
             null,
-            isDateSelectable(day, props.month) && !datepicker.value.disabled,
+            isDateSelectable(day, props.month) &&
+                !datepicker.value.disabled &&
+                !datepicker.value.readonly,
         ],
         [
             "tableCellUnselectableClass",
@@ -382,7 +384,11 @@ const cellEventsClass = defineClasses([
         </div>
         <template v-for="(weekDay, idx) in week" :key="idx">
             <div
-                v-if="!datepicker.disabled && isDateSelectable(weekDay, month)"
+                v-if="
+                    !datepicker.disabled &&
+                    !datepicker.readonly &&
+                    isDateSelectable(weekDay, month)
+                "
                 :ref="(el) => setDayRef(weekDay, el)"
                 :class="cellClasses(weekDay)"
                 role="button"

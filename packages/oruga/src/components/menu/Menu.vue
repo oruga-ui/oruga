@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, toRaw, type PropType } from "vue";
+import { ref, computed, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -97,7 +97,8 @@ const { childItems } = useProviderParent<MenuItemComponent>(rootRef, {
 
 function resetMenu(excludedItems: ProviderItem[] = []): void {
     childItems.value.forEach((item) => {
-        if (!excludedItems.includes(toRaw(item))) item.data.value.reset();
+        if (!excludedItems.map((i) => i?.identifier).includes(item.identifier))
+            item.data.reset();
     });
 }
 

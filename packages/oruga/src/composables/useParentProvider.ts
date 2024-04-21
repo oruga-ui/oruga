@@ -9,6 +9,7 @@ import {
     type Component,
     type ComputedRef,
     type Ref,
+    type UnwrapNestedRefs,
 } from "vue";
 import { unrefElement } from "./unrefElement";
 
@@ -46,8 +47,8 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     rootRef?: Ref<HTMLElement | Component>,
     options?: ProviderParentOptions<ParentData>,
 ): {
-    childItems: Ref<ProviderItem<ItemData>[]>;
-    sortedItems: Ref<ProviderItem<ItemData>[]>;
+    childItems: Ref<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
+    sortedItems: ComputedRef<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
 } {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
@@ -59,9 +60,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     const configField = vm.proxy?.$options.configField;
     const key = options?.key ? options.key : configField;
 
-    const childItems = ref<ProviderItem<ItemData>[]>([]) as Ref<
-        ProviderItem<ItemData>[]
-    >;
+    const childItems = ref<ProviderItem<ItemData>[]>([]);
     const sequence = ref(1);
 
     /**
@@ -77,7 +76,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         const index = childItems.value.length;
         const identifier = nextSequence();
         const item = { index, data, identifier };
-        childItems.value.push(item);
+        childItems.value.push(item as UnwrapNestedRefs<typeof item>);
         if (rootRef?.value) {
             nextTick(() => {
                 const ids = childItems.value
@@ -85,7 +84,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
                     .join(",");
                 const parent = unrefElement(rootRef);
                 const children = parent.querySelectorAll(ids);
-                const sortedIds = Array.from(children).map((el: any) =>
+                const sortedIds = Array.from(children).map((el) =>
                     el.getAttribute("data-id").replace(`${key}-`, ""),
                 );
 

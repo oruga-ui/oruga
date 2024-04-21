@@ -34,6 +34,9 @@ export function bound(val: number, min: number, max: number): number {
 export const isObject = <T>(obj: T): boolean =>
     obj && typeof obj === "object" && !Array.isArray(obj);
 
+export const isDate = (d: unknown): d is Date =>
+    d && d instanceof Date && !isNaN(d.getTime());
+
 export const isDefined = <T>(d: T): boolean => d !== null && d !== undefined;
 
 export const blankIfUndefined = (value: string): string =>

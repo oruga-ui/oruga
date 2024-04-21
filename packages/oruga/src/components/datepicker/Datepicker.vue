@@ -8,6 +8,7 @@ import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getOption } from "@/utils/config";
+import { isDate } from "@/utils/helpers";
 import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
@@ -85,7 +86,7 @@ const props = defineProps({
     /** Input placeholder */
     placeholder: { type: String, default: undefined },
     /** Same as native input readonly */
-    readonly: { type: Boolean, default: true },
+    readonly: { type: Boolean, default: false },
     /** Same as native, also push new item to v-model instead of replacing */
     multiple: { type: Boolean, default: false },
     /** Same as native disabled */
@@ -854,11 +855,11 @@ function onChange(value: string): void {
     const date = (props.dateParser as any)(value, defaultDateParser);
 
     if (
-        date &&
-        Array.isArray(date) &&
-        date.length === 2 &&
-        !isNaN(date[0]) &&
-        !isNaN(date[1])
+        isDate(date) ||
+        (Array.isArray(date) &&
+            date.length === 2 &&
+            isDate(date[0]) &&
+            isDate(date[1]))
     ) {
         vmodel.value = date;
     } else {
