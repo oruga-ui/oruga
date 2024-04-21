@@ -14,6 +14,7 @@ describe("Dropdown integration tests", () => {
         const wrapper = mount(DropdownExample, { props: { values } });
         expect(wrapper.attributes("data-oruga")).toBe("dropdown");
         expect(!!wrapper.vm).toBeTruthy();
+        expect(wrapper.html()).toMatchSnapshot();
 
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(values.length);

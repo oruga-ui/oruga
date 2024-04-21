@@ -16,6 +16,7 @@ describe("Menu integration tests", () => {
         const wrapper = mount(MenuExample, { props: { items } });
         expect(wrapper.attributes("data-oruga")).toBe("menu");
         expect(!!wrapper.vm).toBeTruthy();
+        expect(wrapper.html()).toMatchSnapshot();
 
         const itemComps = wrapper.findAllComponents(OMenuItem);
         expect(itemComps.length).toBe(items.length);
