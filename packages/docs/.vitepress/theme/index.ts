@@ -65,23 +65,23 @@ export default {
 
         // import example components
         const examples = import.meta.glob<DefineComponent>(
-            "./examples/**/index.vue",
+            "../../../oruga/src/components/**/examples/index.vue",
             { eager: true },
         );
         for (const path in examples) {
             const v = path.split("/");
-            app.component("example-" + v[2], markRaw(examples[path].default));
+            app.component("example-" + v[6], markRaw(examples[path].default));
         }
 
         // import inspector components
         const inspectors = import.meta.glob<DefineComponent>(
-            "./examples/**/inspector.vue",
+            "../../../oruga/src/components/**/examples/inspector.vue",
             { eager: true },
         );
         for (const path in inspectors) {
             const v = path.split("/");
             app.component(
-                "inspector-" + v[2] + "-viewer",
+                "inspector-" + v[6] + "-viewer",
                 markRaw(inspectors[path].default),
             );
         }
