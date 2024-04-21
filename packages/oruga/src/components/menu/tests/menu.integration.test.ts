@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "vitest";
-import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
+import { enableAutoUnmount, mount } from "@vue/test-utils";
 
 import MenuExample from "./MenuExample.vue";
 import OMenuItem from "@/components/menu/MenuItem.vue";
@@ -24,6 +24,9 @@ describe("Menu integration tests", () => {
                 "menu-item",
             );
             expect(itemComps.at(idx).text()).toBe(value.label);
+            expect(itemComps.at(idx).classes()).toContain(
+                "o-menu__item__wrapper",
+            );
         });
     });
 
@@ -33,12 +36,69 @@ describe("Menu integration tests", () => {
         const itemComps = wrapper.findAllComponents(OMenuItem);
         expect(itemComps.length).toBe(items.length);
 
-        const item = itemComps.at(0).find("button");
-        expect(item.exists()).toBeTruthy();
+        const itemOne = itemComps.at(0);
+        const itemTwo = itemComps.at(1);
+        const itemButtonOne = itemOne.find("button");
+        const itemButtonTwo = itemTwo.find("button");
+        expect(itemButtonOne.exists()).toBeTruthy();
+        expect(itemButtonTwo.exists()).toBeTruthy();
 
-        await item.trigger("click");
-        expect(wrapper.emitted("update:active")[0]).toContainEqual(false);
-        expect(wrapper.emitted("update:expanded")[0]).toContainEqual(true);
+        await itemButtonOne.trigger("click");
+        expect(itemOne.emitted("update:active")[0]).toContainEqual(true);
+        expect(itemOne.emitted("update:expanded")[0]).toContainEqual(true);
+        expect(itemTwo.emitted("update:active")[0]).toContainEqual(false);
+        expect(itemTwo.emitted("update:expanded")[0]).toContainEqual(false);
+
+        await itemButtonTwo.trigger("click");
+        expect(itemOne.emitted("update:active")[1]).toContainEqual(false);
+        expect(itemOne.emitted("update:expanded")[1]).toContainEqual(false);
+        expect(itemTwo.emitted("update:active")[1]).toContainEqual(true);
+        expect(itemTwo.emitted("update:expanded")[1]).toContainEqual(true);
+    });
+
+    test("react accordingly when item has disabled prop", async () => {
+        const items = [
+            { label: "label1", disabled: true },
+            { label: "label2", disabled: false },
+        ];
+        const wrapper = mount(MenuExample, { props: { items } });
+
+        const itemComps = wrapper.findAllComponents(OMenuItem);
+        expect(itemComps.length).toBe(items.length);
+
+        const itemOne = itemComps.at(0);
+        const itemTwo = itemComps.at(1);
+        const itemButtonOne = itemOne.find("button");
+        const itemButtonTwo = itemTwo.find("button");
+
+        expect(itemButtonOne.attributes("disabled")).toBe("");
+        expect(itemButtonOne.classes()).toContain("o-menu__item--disabled");
+        expect(itemButtonTwo.attributes("disabled")).toBe(undefined);
+
+        await itemButtonOne.trigger("click");
+        expect(itemOne.emitted("update:active")).toBe(undefined);
+        expect(itemTwo.emitted("update:active")).toBe(undefined);
+
+        await itemButtonTwo.trigger("click");
+        expect(itemOne.emitted("update:active")[0]).toContainEqual(false);
+        expect(itemTwo.emitted("update:active")[0]).toContainEqual(true);
+    });
+
+    test("react accordingly when item has active prop", async () => {
+        const item = {
+            label: "label1",
+            icon: "user",
+            active: true,
+        };
+        const wrapper = mount(MenuExample, { props: { items: [item] } });
+
+        const itemComp = wrapper.findComponent(OMenuItem);
+        expect(itemComp.exists()).toBeTruthy();
+        const itemButton = itemComp.find("button");
+        expect(itemButton.classes()).toContain("o-menu__item--active");
+
+        await itemButton.trigger("click");
+        expect(itemComp.emitted("update:active")[0]).toContainEqual(false);
     });
 
     test("react accordingly when item has tag prop", () => {
@@ -57,37 +117,61 @@ describe("Menu integration tests", () => {
         expect(tag.attributes("data-test")).toBe(item["data-test"]);
     });
 
-    test("react accordingly when item has disabled prop", async () => {
-        const items = [
-            { label: "label1", disabled: true },
-            { label: "label2", disabled: false },
-        ];
-        const wrapper = mount(MenuExample, { props: { items } });
-        await flushPromises(); // await items get registered in menu
+    test("react accordingly when menu is not accordion", async () => {
+        const wrapper = mount(MenuExample, {
+            props: { items, accordion: false },
+        });
 
         const itemComps = wrapper.findAllComponents(OMenuItem);
         expect(itemComps.length).toBe(items.length);
-        const disabledItem = itemComps.at(0);
-        const normalItem = itemComps.at(1);
-        expect(disabledItem.exists()).toBeTruthy();
-        expect(normalItem.exists()).toBeTruthy();
-        const disabledItemButton = disabledItem.find("button");
-        const normalItemButton = normalItem.find("button");
-        expect(disabledItemButton.attributes("disabled")).toBe("");
-        expect(normalItemButton.attributes("disabled")).toBe(undefined);
+        const itemOne = itemComps.at(0);
+        const itemTwo = itemComps.at(1);
+        const itemButtonOne = itemOne.find("button");
+        const itemButtonTwo = itemTwo.find("button");
 
-        await disabledItemButton.trigger("click");
-        expect(disabledItem.emitted("update:active")).toBe(undefined);
-
-        // await normalItemButton.trigger("click");
-        // console.log(disabledItem.emitted("update:active"));
-        // expect(disabledItem.emitted("update:active")).toBe(1);
+        await itemButtonOne.trigger("click");
+        expect(itemOne.emitted("update:active")[0]).toContainEqual(true);
+        expect(itemOne.emitted("update:expanded")).toBe(undefined);
+        expect(itemTwo.emitted("update:active")[0]).toContainEqual(false);
+        expect(itemTwo.emitted("update:expanded")).toBe(undefined);
+        await itemButtonTwo.trigger("click");
+        expect(itemOne.emitted("update:active")[1]).toContainEqual(false);
+        expect(itemOne.emitted("update:expanded")).toBe(undefined);
+        expect(itemTwo.emitted("update:active")[1]).toContainEqual(true);
+        expect(itemTwo.emitted("update:expanded")).toBe(undefined);
+        await itemButtonOne.trigger("click");
+        expect(itemOne.emitted("update:active")[2]).toContainEqual(true);
+        expect(itemOne.emitted("update:expanded")).toBe(undefined);
+        expect(itemTwo.emitted("update:active")[2]).toContainEqual(false);
+        expect(itemTwo.emitted("update:expanded")).toBe(undefined);
     });
 
-    // todo: test item disabled
-    // todo: test item active "react accordingly when item has active prop"
-    // todo: test item active "react accordingly when item active change"
-    // todo: test menu accordion "react accordingly when menu is accordion"
-    // todo: test menu activable "react accordingly when menu is not activable"
-    // Active should only be toggled when activable is set by the parent
+    test("react accordingly when menu is not activable", async () => {
+        const wrapper = mount(MenuExample, {
+            props: { items, activable: false },
+        });
+
+        const itemComps = wrapper.findAllComponents(OMenuItem);
+        expect(itemComps.length).toBe(items.length);
+        const itemOne = itemComps.at(0);
+        const itemTwo = itemComps.at(1);
+        const itemButtonOne = itemOne.find("button");
+        const itemButtonTwo = itemTwo.find("button");
+
+        await itemButtonOne.trigger("click");
+        expect(itemOne.emitted("update:active")).toBe(undefined);
+        expect(itemOne.emitted("update:expanded")[0]).toContainEqual(true);
+        expect(itemTwo.emitted("update:active")).toBe(undefined);
+        expect(itemTwo.emitted("update:expanded")[0]).toContainEqual(false);
+        await itemButtonTwo.trigger("click");
+        expect(itemOne.emitted("update:active")).toBe(undefined);
+        expect(itemOne.emitted("update:expanded")[1]).toContainEqual(false);
+        expect(itemTwo.emitted("update:active")).toBe(undefined);
+        expect(itemTwo.emitted("update:expanded")[1]).toContainEqual(true);
+        await itemButtonOne.trigger("click");
+        expect(itemOne.emitted("update:active")).toBe(undefined);
+        expect(itemOne.emitted("update:expanded")[2]).toContainEqual(true);
+        expect(itemTwo.emitted("update:active")).toBe(undefined);
+        expect(itemTwo.emitted("update:expanded")[2]).toContainEqual(false);
+    });
 });

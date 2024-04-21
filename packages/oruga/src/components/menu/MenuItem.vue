@@ -153,8 +153,8 @@ const identifier = computed(() =>
 function onClick(): void {
     if (props.disabled) return;
     triggerReset();
-    isExpanded.value = props.expanded || !isExpanded.value;
-    if (parent.value.activable) isActive.value = true;
+    if (parent.value.accordion) isExpanded.value = !isExpanded.value;
+    if (parent.value.activable) isActive.value = !isActive.value;
 }
 
 function triggerReset(child?: ProviderItem): void {
@@ -186,6 +186,11 @@ useProviderParent(rootRef, { key: "menu-item", data: provideData });
 
 // --- Computed Component Classes ---
 
+const wrapperClasses = defineClasses([
+    "itemWrapperClass",
+    "o-menu__item__wrapper",
+]);
+
 const itemClasses = defineClasses(
     ["itemClass", "o-menu__item"],
     ["itemActiveClass", "o-menu__item--active", null, isActive],
@@ -207,11 +212,6 @@ const submenuClasses = defineClasses([
     "itemSubmenuClass",
     "o-menu__item__submenu",
 ]);
-
-const wrapperClasses = defineClasses([
-    "itemWrapperClass",
-    "o-menu__item__wrapper",
-]);
 </script>
 
 <template>
@@ -228,7 +228,7 @@ const wrapperClasses = defineClasses([
             :class="itemClasses"
             role="button"
             :disabled="disabled"
-            @keyup.enter="onClick"
+            @keyup.enter="onClick()"
             @click="onClick()">
             <o-icon
                 v-if="icon"
