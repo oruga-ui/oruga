@@ -6,7 +6,7 @@ import OFieldBody from "./FieldBody.vue";
 import { getOption } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
-import { injectField, provideField } from "../field/useFieldShare";
+import { injectField, provideField } from "./fieldInjection";
 
 import type { ComponentClass } from "@/types";
 
@@ -184,6 +184,12 @@ const slots = useSlots();
 
 const hasLabel = computed(() => props.label || !!slots.label);
 
+const inputId = ref(props.labelFor);
+watch(
+    () => props.labelFor,
+    (v) => (inputId.value = v),
+);
+
 const hasMessage = computed(
     () =>
         !!(!parentField?.value?.hasInnerField && fieldMessage.value) ||
@@ -226,6 +232,9 @@ function setVariant(value: string): void {
 function setMessage(value: string): void {
     fieldMessage.value = value;
 }
+function setInputId(value: string): void {
+    inputId.value = value;
+}
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed(() => ({
@@ -235,6 +244,7 @@ const provideData = computed(() => ({
     hasMessage: hasMessage.value,
     fieldVariant: fieldVariant.value,
     fieldMessage: fieldMessage.value,
+    setInputId,
     setFocus,
     setFilled,
     setVariant,
@@ -319,7 +329,7 @@ const innerFieldClasses = defineClasses(
 <template>
     <div ref="rootRef" data-oruga="field" :class="rootClasses">
         <div v-if="horizontal" :class="labelHorizontalClasses">
-            <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
+            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
                 <!--
                     @slot Override the label
                 -->
@@ -327,7 +337,7 @@ const innerFieldClasses = defineClasses(
             </label>
         </div>
         <template v-else>
-            <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
+            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
                 <!--
                     @slot Override the label
                 -->

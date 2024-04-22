@@ -3,7 +3,6 @@ import { computed, ref, watch, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
-import { uuid } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -50,8 +49,6 @@ const props = defineProps({
     expanded: { type: Boolean, default: false },
     /** Replace last chosen files every time (like native file input element) */
     native: { type: Boolean, default: true },
-    /** Accessibility label to establish relationship between the input and control label */
-    ariaLabelledby: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -262,7 +259,7 @@ defineExpose({ focus: setFocus });
 </script>
 
 <template>
-    <label :id="ariaLabelledby" :class="rootClasses" data-oruga="upload">
+    <label :class="rootClasses" data-oruga="upload">
         <template v-if="!dragDrop">
             <!--
                 @slot Default content
@@ -296,7 +293,6 @@ defineExpose({ focus: setFocus });
             :multiple="multiple"
             :accept="accept"
             :disabled="disabled"
-            :aria-labelledby="ariaLabelledby"
             @change="onFileChange"
             @focus="onFocus"
             @blur="onBlur" />

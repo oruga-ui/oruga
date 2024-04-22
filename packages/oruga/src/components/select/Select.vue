@@ -11,7 +11,7 @@ import {
     useInputHandler,
 } from "@/composables";
 
-import { injectField } from "../field/useFieldShare";
+import { injectField } from "../field/fieldInjection";
 
 import type { OptionsItem } from "./types";
 import type { ComponentClass } from "@/types";
@@ -93,8 +93,8 @@ const props = defineProps({
     iconRightClickable: { type: Boolean, default: false },
     /** Variant of right icon */
     iconRightVariant: { type: String, default: undefined },
-    /** Accessibility label to establish relationship between the input and control label */
-    ariaLabelledby: { type: String, default: () => uuid() },
+    /** Same as native id. Also set the for label for o-field wrapper. */
+    id: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -374,6 +374,7 @@ defineExpose({ focus: setFocus });
 
         <select
             v-bind="$attrs"
+            :id="id"
             ref="selectRef"
             v-model="vmodel"
             data-oruga-input="select"
@@ -382,7 +383,6 @@ defineExpose({ focus: setFocus });
             :multiple="multiple"
             :size="nativeSize"
             :disabled="disabled"
-            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid">
