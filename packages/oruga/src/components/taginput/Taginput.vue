@@ -115,13 +115,13 @@ const props = defineProps({
     },
     /** Function to validate the value of the item before adding */
     beforeAdding: {
-        type: Function as PropType<(value: string) => boolean>,
+        type: Function as PropType<(value: T | string) => boolean>,
         default: () => true,
     },
     /** Function to create a new item to push into v-model (items) */
     createItem: {
-        type: Function as PropType<(value: string) => T>,
-        default: (item: string) => item,
+        type: Function as PropType<(value: T | string) => T>,
+        default: (item: T | string) => item,
     },
     /** Makes the component check if list reached scroll start or end and emit scroll events. */
     checkScroll: {
@@ -340,8 +340,8 @@ function getNormalizedItemText(item: T): string {
 function addItem(item?: T | string): void {
     item = item || newItem.value.trim();
 
-    if (item && typeof item === "string") {
-        if (!props.allowAutocomplete) {
+    if (item) {
+        if (typeof item === "string") {
             const reg = separatorsAsRegExp.value;
             if (reg && item.match(reg)) {
                 item.split(reg)
@@ -536,7 +536,7 @@ defineExpose({ focus: setFocus });
                 @keydown="onKeydown"
                 @compositionstart="isComposing = true"
                 @compositionend="isComposing = false"
-                @select="onSelect($event)"
+                @select="onSelect"
                 @scroll-start="$emit('scroll-start')"
                 @scroll-end="$emit('scroll-end')"
                 @icon-click="$emit('icon-click', $event)"
