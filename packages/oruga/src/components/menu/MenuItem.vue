@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, toRaw, type PropType } from "vue";
 
+import OIcon from "../icon/Icon.vue";
+
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
-    usePropBinding,
     useProviderChild,
     useProviderParent,
     type ProviderItem,
@@ -65,7 +66,7 @@ const props = defineProps({
     /** Menu item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("menu.menuTag", "a"),
+        default: () => getOption<DynamicComponent>("menu.menuTag", "button"),
     },
     /**
      * Role attribute to be passed to the list item for better accessibility.
@@ -108,12 +109,12 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits<{
+defineEmits<{
     /**
-     * modelValue prop two-way binding
-     * @param value {boolean} updated modelValue prop
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
      */
-    (e: "update:modelValue", value: boolean): void;
+    (e: "update:active", value: boolean): void;
     /**
      * expanded prop two-way binding
      * @param value {boolean} updated expanded prop
@@ -125,12 +126,12 @@ const providedData = computed<MenuItemComponent>(() => ({
     reset,
 }));
 
-// Inject functionalities and data from the parent menu component
+// inject functionalities and data from the parent menu component
 const { parent, item } = useProviderChild<MenuComponent>({
     data: providedData,
 });
 
-// Inject functionalities and data from the parent menu-item component
+// inject functionalities and data from the parent menu-item component
 const providedItem = useProviderChild<MenuItemProvider>({
     key: "menu-item",
     needParent: false,
@@ -138,9 +139,9 @@ const providedItem = useProviderChild<MenuItemProvider>({
 
 const itemParent = computed(() => providedItem.parent?.value);
 
-const isActive = usePropBinding("active", props, emits, { passive: true });
+const isActive = defineModel<boolean>("active", { default: false });
 
-const isExpanded = usePropBinding("expanded", props, emits, { passive: true });
+const isExpanded = defineModel<boolean>("expanded", { default: false });
 
 /** template identifier */
 const identifier = computed(() =>
@@ -152,18 +153,18 @@ const identifier = computed(() =>
 function onClick(): void {
     if (props.disabled) return;
     triggerReset();
-    isExpanded.value = props.expanded || !isExpanded.value;
-    if (parent.value.activable) isActive.value = true;
+    if (parent.value.accordion) isExpanded.value = !isExpanded.value;
+    if (parent.value.activable) isActive.value = !isActive.value;
 }
 
 function triggerReset(child?: ProviderItem): void {
     // The point of this method is to collect references to the clicked item and any parent,
     // this way we can skip resetting those elements.
-    if (itemParent.value?.triggerReset) {
+    if (typeof itemParent.value?.triggerReset === "function") {
         itemParent.value.triggerReset(toRaw(item.value));
     }
     // else if not a sub item reset parent menu
-    else if (parent.value.resetMenu) {
+    else if (typeof parent.value.resetMenu === "function") {
         parent.value.resetMenu([toRaw(item.value), child]);
     }
 }
@@ -175,15 +176,20 @@ function reset(): void {
 
 const rootRef = ref();
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<MenuItemProvider>(() => ({
     triggerReset,
 }));
 
-/** Provide functionalities and data to child item components */
+/** provide functionalities and data to child item components */
 useProviderParent(rootRef, { key: "menu-item", data: provideData });
 
 // --- Computed Component Classes ---
+
+const wrapperClasses = defineClasses([
+    "itemWrapperClass",
+    "o-menu__item__wrapper",
+]);
 
 const itemClasses = defineClasses(
     ["itemClass", "o-menu__item"],
@@ -206,11 +212,6 @@ const submenuClasses = defineClasses([
     "itemSubmenuClass",
     "o-menu__item__submenu",
 ]);
-
-const wrapperClasses = defineClasses([
-    "itemWrapperClass",
-    "o-menu__item__wrapper",
-]);
 </script>
 
 <template>
@@ -225,6 +226,9 @@ const wrapperClasses = defineClasses([
             :is="tag"
             v-bind="$attrs"
             :class="itemClasses"
+            role="button"
+            :disabled="disabled"
+            @keyup.enter="onClick()"
             @click="onClick()">
             <o-icon
                 v-if="icon"
