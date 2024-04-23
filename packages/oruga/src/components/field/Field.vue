@@ -345,7 +345,7 @@ const innerFieldClasses = defineClasses(
             <label v-if="hasLabel" :for="inputId" :class="labelClasses">
                 <!--
                     @slot Override the label
-                    @binding {string} label label property 
+                    @binding {string} label - label property 
                 -->
                 <slot name="label" :label="label">{{ label }}</slot>
             </label>
@@ -354,7 +354,7 @@ const innerFieldClasses = defineClasses(
             <label v-if="hasLabel" :for="inputId" :class="labelClasses">
                 <!--
                     @slot Override the label
-                    @binding {string} label label property 
+                    @binding {string} label - label property 
                 -->
                 <slot name="label" :label="label">{{ label }}</slot>
             </label>
@@ -405,7 +405,7 @@ const innerFieldClasses = defineClasses(
             :class="messageClasses">
             <!--
                 @slot Override the message
-                @binding {string} message field message 
+                @binding {string} message - field message 
             -->
             <slot name="message" :message="fieldMessage">
                 {{ fieldMessage }}
