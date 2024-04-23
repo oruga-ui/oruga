@@ -18,6 +18,7 @@ type FieldData = {
     hasMessage: boolean;
     fieldVariant: string;
     fieldMessage: string;
+    addInnerField: () => void;
     setInputId: (value: string) => void;
     setFocus: (value: boolean) => void;
     setFilled: (value: boolean) => void;
@@ -41,7 +42,7 @@ export function provideField(data: ProvidedField): void {
 
 /** Inject parent field component if used inside one. **/
 export function injectField() {
-    const parentField = inject($FieldKey);
+    const parentField = inject($FieldKey, undefined);
 
     /**
      * Get the type prop from parent if it's a Field.

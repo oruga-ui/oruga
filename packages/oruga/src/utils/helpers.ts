@@ -1,3 +1,5 @@
+import { Comment, Fragment, Text } from "vue";
+
 /**
  * Generates a random string
  */
@@ -226,6 +228,15 @@ export function escapeRegExpChars(value: string): string {
 export function removeDiacriticsFromString(value: string): string {
     if (!value) return value;
     return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+/** checks if a vue vnode is empty */
+export function isVNodeEmpty(vnode): boolean {
+    if (!vnode) return true;
+    if (vnode.type === Comment) return true;
+    if (vnode.type === Text && !vnode.children.trim()) return true;
+    if (vnode.type === Fragment && isVNodeEmpty(vnode.children)) return true;
+    return false;
 }
 
 /**
