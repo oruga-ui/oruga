@@ -369,8 +369,8 @@ const innerFieldClasses = defineClasses(
                     v-else
                     :variant="fieldVariant"
                     :addons="false"
-                    :message-tag
-                    :message-class>
+                    :message-tag="messageTag"
+                    :message-class="messageClass">
                     <!-- render inner default slot element -->
                     <component :is="element" />
                     <!-- show field message here -->
