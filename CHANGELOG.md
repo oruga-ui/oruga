@@ -1,3 +1,25 @@
+## [0.8.8](https://github.com/oruga-ui/oruga/compare/v0.8.7...v0.8.8) (2024-04-23)
+
+
+### Bug Fixes
+
+* **build:** fix cjs extension in package.json entry point ([#894](https://github.com/oruga-ui/oruga/issues/894)) ([51e7184](https://github.com/oruga-ui/oruga/commit/51e718411014ec2317d38dae2dacc12cededa4b7))
+* **datepicker:** fix defineClasses parent props problem ([#900](https://github.com/oruga-ui/oruga/issues/900)) ([087a8dc](https://github.com/oruga-ui/oruga/commit/087a8dcf55c59712d7d31c0b14c0e12a9dde589d))
+* **datepicker:** make date parsing work again ([#882](https://github.com/oruga-ui/oruga/issues/882)) ([047e999](https://github.com/oruga-ui/oruga/commit/047e999324b912e8b7b456bb4f72feb09b4282e8))
+* **field:** add field `setInputId` & remove `ariaLabelledby` prop ([#902](https://github.com/oruga-ui/oruga/issues/902)) ([458d45c](https://github.com/oruga-ui/oruga/commit/458d45c17d2c3d96813e78f1902cd781d7e6ae93))
+* **field:** fix slot invoked outside render function & ass `messageTag` prop ([#906](https://github.com/oruga-ui/oruga/issues/906)) ([f9d07c6](https://github.com/oruga-ui/oruga/commit/f9d07c62a091bf44a36b38454c5b1ba86559270a))
+* **menu:** fix `useProviderParent` composable `childItems` type problem ([#897](https://github.com/oruga-ui/oruga/issues/897)) ([b9656a6](https://github.com/oruga-ui/oruga/commit/b9656a6b5adfc27510be66e3bfe9b018e5de2cdd))
+* **taginput:** fix selection with autocomplete on non string items ([#889](https://github.com/oruga-ui/oruga/issues/889)) ([930c397](https://github.com/oruga-ui/oruga/commit/930c39707d2f938fe87876808c90251a743b8cd2))
+
+
+### Features
+
+* **datepicker:** change prop `readonly` default to `false` & disable calendar interaction while `readonly` ([#901](https://github.com/oruga-ui/oruga/issues/901)) ([364d0c5](https://github.com/oruga-ui/oruga/commit/364d0c5c9128e57167cff3922a0585bf6d323010))
+* **taginput:** add `removeItem` as selected slot property ([#887](https://github.com/oruga-ui/oruga/issues/887)) ([#888](https://github.com/oruga-ui/oruga/issues/888)) ([c8c26cc](https://github.com/oruga-ui/oruga/commit/c8c26cc7608a4ecdcc7336f63a0a069721a9cfcc))
+* **taginput:** update prop types ([#895](https://github.com/oruga-ui/oruga/issues/895)) ([b5709c5](https://github.com/oruga-ui/oruga/commit/b5709c569a8390e0f7944234b166534d146a363d))
+
+
+
 ## [0.8.7](https://github.com/mlmoravek/oruga/compare/v0.8.6...v0.8.7) (2024-04-02)
 
 
