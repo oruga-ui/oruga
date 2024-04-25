@@ -36,9 +36,7 @@ describe("OField tests", () => {
             const message = "Some string message";
             const wrapper = mount(OField, {
                 props: { message },
-                slots: {
-                    default: [OInput],
-                },
+                slots: { default: [OInput] },
             });
             const messageDiv = wrapper.find("p.o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
@@ -50,9 +48,7 @@ describe("OField tests", () => {
             const messageTag = "a";
             const wrapper = mount(OField, {
                 props: { message, messageTag },
-                slots: {
-                    default: [OInput],
-                },
+                slots: { default: [OInput] },
             });
             const messageDiv = wrapper.find(messageTag + ".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
@@ -62,9 +58,7 @@ describe("OField tests", () => {
         test('react accordingly when "message" prop is changed dynamically', async () => {
             const message = "Some string message";
             const wrapper = mount(OField, {
-                slots: {
-                    default: [OInput],
-                },
+                slots: { default: [OInput] },
             });
 
             await wrapper.setProps({ message });
@@ -130,6 +124,52 @@ describe("OField tests", () => {
                 slots: { default: text },
             });
             expect(wrapper.text()).toBe(text);
+        });
+    });
+
+    describe("managing horizontal prop ", () => {
+        test('react accordingly when "grouped" prop is set', () => {
+            const wrapper = mount(OField, {
+                props: { grouped: true, horizontal: true },
+                slots: {
+                    default: [OInput, '<button class="button">Button</button>'],
+                },
+            });
+
+            const body = wrapper.find(".o-field__horizontal-body");
+            expect(body.exists()).toBeTruthy();
+            const innerField = body.find(".o-field");
+            expect(innerField.classes()).not.toContain("o-field--grouped");
+        });
+
+        test('react accordingly when "groupMultiline" prop is set', () => {
+            const wrapper = mount(OField, {
+                props: { groupMultiline: true, horizontal: true },
+                slots: {
+                    default: [OInput, '<button class="button">Button</button>'],
+                },
+            });
+
+            const body = wrapper.find(".o-field__horizontal-body");
+            expect(body.exists()).toBeTruthy();
+            const innerField = body.find(".o-field");
+            expect(innerField.classes()).not.toContain(
+                "o-field--grouped-multiline",
+            );
+        });
+
+        test('react accordingly when "message" prop is set', () => {
+            const message = "Some string message";
+            const wrapper = mount(OField, {
+                props: { message, horizontal: true },
+                slots: {
+                    default: [OInput, '<button class="button">Button</button>'],
+                },
+            });
+
+            const messages = wrapper.findAll(".o-field__message");
+            expect(messages.length).toBe(1);
+            expect(messages[0].text()).toBe(message);
         });
     });
 });
