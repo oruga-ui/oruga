@@ -1,28 +1,12 @@
-<script setup>
-// import { reactive } from "vue";
-
-// const clickMe = () => {
-//     alert("Clicked!");
-// };
-
-// const settings = reactive({
-//     rounded: false,
-//     tooltip: true,
-//     variant: "warning",
-//     size: "medium",
-// });
-</script>
-
 <template>
     <section>
         <!--  align="center" -->
         <o-breadcrumb
-            tag="div"
             separator="has-arrow-separator"
             size="medium"
             align="center">
             <o-breadcrumb-item tag="a" href="/" active="true"
-                >Home
+                >Homee
             </o-breadcrumb-item>
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"
                 >Docs

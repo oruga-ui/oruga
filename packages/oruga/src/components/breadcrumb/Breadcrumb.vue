@@ -99,12 +99,6 @@ const props = defineProps({
     },
 });
 
-// --- Computed Component Classes ---
-const computedTag = computed(() => {
-    return props.tag ? props.tag : "ul";
-});
-// --- Computed Component Classes ---
-
 const rootClasses = defineClasses(
     ["rootClass", "o-breadcrumb"],
     [
@@ -135,7 +129,7 @@ const rootClasses = defineClasses(
 </script>
 
 <template>
-    <component :is="computedTag" :class="rootClasses" data-oruga="breadcrumb">
+    <component :is="tag" :class="rootClasses" data-oruga="breadcrumb">
         <!-- BreadcrumbItems -->
         <slot></slot>
     </component>
