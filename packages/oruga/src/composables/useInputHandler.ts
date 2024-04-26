@@ -6,7 +6,7 @@ import {
     type MaybeRefOrGetter,
     type Component,
 } from "vue";
-import { injectField } from "@/components/field/useFieldShare";
+import { injectField } from "@/components/field/fieldInjection";
 import { unrefElement } from "./unrefElement";
 import { getOption } from "@/utils/config";
 import { isSSR } from "@/utils/ssr";

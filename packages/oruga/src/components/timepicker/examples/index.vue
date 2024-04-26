@@ -5,8 +5,8 @@ import BaseCode from "./base.vue?raw";
 import MinMaxDate from "./min-max-date.vue";
 import MinMaxDateCode from "./min-max-date.vue?raw";
 
-import Slot from "./Slot.vue";
-import SlotCode from "./Slot.vue?raw";
+import Slot from "./slot.vue";
+import SlotCode from "./slot.vue?raw";
 
 import Granularity from "./granularity.vue";
 import GranularityCode from "./granularity.vue?raw";

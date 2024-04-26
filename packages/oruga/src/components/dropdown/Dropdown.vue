@@ -443,7 +443,7 @@ if (isClient && props.checkScroll)
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
-    const dropdown = unrefElement(contentRef.value);
+    const dropdown = unrefElement(contentRef);
     if (dropdown.clientHeight !== dropdown.scrollHeight) {
         if (
             dropdown.scrollTop + dropdown.clientHeight >=

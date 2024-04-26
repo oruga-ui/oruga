@@ -28,6 +28,6 @@ import SlotsCode from "./slots.vue?raw";
     <h3 id="horizontal">Horizontal</h3>
     <ExampleViewer :component="Horizontal" :code="HorizontalCode" />
 
-    <h3 id="slots">Slots</h3>
+    <h3 id="field-slots">Slots</h3>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 </template>
