@@ -5,13 +5,7 @@ import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    useVModelBinding,
-    useMatchMedia,
-    usePropBinding,
-    getActiveClasses,
-} from "@/composables";
+import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
@@ -220,7 +214,7 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits<{
+defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {Date} updated modelValue prop
@@ -274,10 +268,10 @@ const {
 
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
-const vmodel = useVModelBinding<Date>(props, emits);
+const vmodel = defineModel<Date>();
 
 /** Dropdown active state */
-const isActive = usePropBinding<boolean>("active", props, emits);
+const isActive = defineModel<boolean>("active", { default: false });
 
 const hoursSelected = ref();
 const minutesSelected = ref();

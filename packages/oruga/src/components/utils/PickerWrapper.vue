@@ -11,7 +11,6 @@ import {
     getActiveClasses,
     useEventListener,
     useInputHandler,
-    usePropBinding,
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
@@ -128,9 +127,7 @@ watch(
     },
 );
 
-const isActive = usePropBinding<boolean>("active", props, emits, {
-    passive: true,
-});
+const isActive = defineModel<boolean>("active", { default: false });
 
 watch(isActive, onActiveChange);
 

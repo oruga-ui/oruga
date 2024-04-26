@@ -32,7 +32,6 @@ import {
 import {
     defineClasses,
     useProviderParent,
-    usePropBinding,
     useMatchMedia,
     useDebounce,
     getActiveClasses,
@@ -735,9 +734,7 @@ const dataTotal = ref(
     props.backendPagination ? props.total : tableData.value.length,
 );
 
-const tableCurrentPage = usePropBinding<number>("currentPage", props, emits, {
-    passive: true,
-});
+const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 /**
  * When table rows data change:

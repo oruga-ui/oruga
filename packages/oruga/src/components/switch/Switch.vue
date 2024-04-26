@@ -2,11 +2,7 @@
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    useVModelBinding,
-    useInputHandler,
-} from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -185,9 +181,7 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = useVModelBinding<string | number | boolean>(props, emits, {
-    passive: true,
-});
+const vmodel = defineModel<string | number | boolean>();
 
 const isChecked = computed(
     () =>

@@ -3,8 +3,6 @@ import type { PropType } from "vue";
 
 import OPagination from "../pagination/Pagination.vue";
 
-import { usePropBinding } from "@/composables";
-
 import type { ComponentClass } from "@/types";
 
 defineOptions({
@@ -13,7 +11,7 @@ defineOptions({
     configField: "table",
 });
 
-const props = defineProps({
+defineProps({
     current: { type: Number, default: undefined },
     paginated: { type: Boolean, default: false },
     rootClass: {
@@ -35,7 +33,7 @@ const emits = defineEmits<{
     (e: "change", event: number): void;
 }>();
 
-const currentPage = usePropBinding("current", props, emits);
+const currentPage = defineModel<number>("current");
 
 /** Paginator change listener. */
 function pageChanged(page: number): void {

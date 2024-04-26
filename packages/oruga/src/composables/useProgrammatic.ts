@@ -1,7 +1,6 @@
 import { computed, getCurrentInstance, onMounted, type Ref } from "vue";
 import type { ProgrammaticInstance } from "..";
 import { isClient, HTMLElement } from "@/utils/ssr";
-import { usePropBinding } from "./usePropValue";
 import { useEventListener } from "./useEventListener";
 import { removeElement } from "@/utils/helpers";
 
@@ -52,7 +51,7 @@ export function useProgrammaticComponent(
             "useProgrammaticComponent must be called within a component setup function.",
         );
 
-    const isActive = usePropBinding("active", props, emits);
+    const isActive = defineModel<boolean>("active");
 
     const cancelOptions = computed(() =>
         typeof props.cancelable === "boolean"

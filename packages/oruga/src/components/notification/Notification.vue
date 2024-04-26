@@ -4,7 +4,7 @@ import { computed, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { defineClasses, usePropBinding } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -161,9 +161,7 @@ const emits = defineEmits<{
     (e: "close", ...args: any[]): void;
 }>();
 
-const isActive = usePropBinding<boolean>("active", props, emits, {
-    passive: true,
-});
+const isActive = defineModel<boolean>("active", { default: true });
 
 /** Icon name (MDI) based on type. */
 const computedIcon = computed(() => {

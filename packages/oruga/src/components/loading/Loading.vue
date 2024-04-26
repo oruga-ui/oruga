@@ -4,11 +4,7 @@ import { ref, onMounted, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    useProgrammaticComponent,
-    usePropBinding,
-} from "@/composables";
+import { defineClasses, useProgrammaticComponent } from "@/composables";
 
 import type { ComponentClass, ProgrammaticInstance } from "@/types";
 
@@ -131,7 +127,7 @@ const emits = defineEmits<{
 
 const rootRef = ref();
 
-const displayInFullPage = usePropBinding("fullPage", props, emits);
+const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 /** add programmatic usage to this component */
 const { isActive, close, cancel } = useProgrammaticComponent(
@@ -144,14 +140,14 @@ const { isActive, close, cancel } = useProgrammaticComponent(
 );
 
 onMounted(() => {
-    if (props.programmatic && props.container) displayInFullPage.value = false;
+    if (props.programmatic && props.container) isFullPage.value = false;
 });
 
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-load"],
-    ["fullPageClass", "o-load--fullpage", null, displayInFullPage],
+    ["fullPageClass", "o-load--fullpage", null, isFullPage],
 );
 
 const overlayClasses = defineClasses(["overlayClass", "o-load__overlay"]);
