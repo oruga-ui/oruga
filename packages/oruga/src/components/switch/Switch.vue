@@ -2,7 +2,6 @@
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
 import {
     defineClasses,
     useVModelBinding,
@@ -70,8 +69,6 @@ const props = defineProps({
     rounded: { type: Boolean, default: true },
     /** Label position */
     position: { type: String, default: "right" },
-    /** Accessibility label to establish relationship between the switch and control label' */
-    ariaLabelledby: { type: String, default: () => uuid() },
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete: {
         type: String,
@@ -287,7 +284,6 @@ defineExpose({ focus: setFocus });
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue"
-            :aria-labelledby="ariaLabelledby"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"
@@ -298,10 +294,7 @@ defineExpose({ focus: setFocus });
             <span :class="switchCheckClasses"></span>
         </span>
 
-        <span
-            v-if="label || $slots.default"
-            :id="ariaLabelledby"
-            :class="labelClasses">
+        <span v-if="label || $slots.default" :class="labelClasses">
             <!--
                 @slot Override the label, default is label prop 
             -->

@@ -58,7 +58,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         );
 
     const configField = vm.proxy?.$options.configField;
-    const key = options?.key ? options.key : configField;
+    const key = options?.key || configField;
 
     const childItems = ref<ProviderItem<ItemData>[]>([]);
     const sequence = ref(1);
@@ -155,7 +155,7 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         );
 
     const configField = vm.proxy?.$options.configField;
-    const key = options?.key ? options.key : configField;
+    const key = options?.key || configField;
 
     /** Inject parent component functionality if used inside one **/
     const parent = inject<PovidedData<ParentData, ItemData>>(
@@ -163,11 +163,9 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         undefined,
     );
 
-    const needParent =
-        typeof options.needParent === "undefined" || options.needParent;
+    const needParent = options.needParent !== false;
 
-    const register =
-        typeof options.register === "undefined" || options.register;
+    const register = options.register !== false;
 
     if (needParent && !parent) {
         throw new Error(
