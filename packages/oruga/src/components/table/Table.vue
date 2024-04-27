@@ -928,7 +928,7 @@ watch(
     filters.value,
     (value) => {
         if (props.debounceSearch)
-            useDebounce(() => handleFiltersChange(value), props.debounceSearch);
+            useDebounce(() => handleFiltersChange(value), props.debounceSearch)();
         else handleFiltersChange(value);
     },
     { deep: true },
