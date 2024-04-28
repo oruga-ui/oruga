@@ -236,7 +236,10 @@ const props = defineProps({
     /** Add a native event to filter */
     filtersEvent: { type: String, default: "" },
     /** Filtering debounce time (in milliseconds) */
-    debounceSearch: { type: Number, default: undefined },
+    debounceSearch: { 
+        type: Number, 
+        default: () => getOption("table.debounceSearch", undefined),
+    },
     /** Show header */
     showHeader: {
         type: Boolean,
