@@ -64,7 +64,7 @@ const props = defineProps({
     /** Group label and control on the same line for horizontal forms */
     horizontal: { type: Boolean, default: false },
     /** Field automatically attach controls together */
-    addons: { type: Boolean, default: true },
+    addons: { type: Boolean, default: false },
     /** Mobile breakpoint as max-width value */
     mobileBreakpoint: {
         type: String,
