@@ -947,7 +947,10 @@ function handleFiltersChange(value: Record<string, string>): void {
             dataTotal.value = tableRows.value.length;
         }
         if (!props.backendSorting) {
-            if (Object.keys(currentSortColumn.value).length > 0) {
+            if (
+                currentSortColumn.value &&
+                Object.keys(currentSortColumn.value).length > 0
+            ) {
                 doSortSingleColumn(currentSortColumn.value);
             }
         }
