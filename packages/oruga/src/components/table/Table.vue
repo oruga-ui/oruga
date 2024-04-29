@@ -236,7 +236,10 @@ const props = defineProps({
     /** Add a native event to filter */
     filtersEvent: { type: String, default: "" },
     /** Filtering debounce time (in milliseconds) */
-    debounceSearch: { type: Number, default: undefined },
+    debounceSearch: { 
+        type: Number, 
+        default: () => getOption("table.debounceSearch", undefined),
+    },
     /** Show header */
     showHeader: {
         type: Boolean,
@@ -928,7 +931,7 @@ watch(
     filters.value,
     (value) => {
         if (props.debounceSearch)
-            useDebounce(() => handleFiltersChange(value), props.debounceSearch);
+            useDebounce(() => handleFiltersChange(value), props.debounceSearch)();
         else handleFiltersChange(value);
     },
     { deep: true },
