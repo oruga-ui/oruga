@@ -28,6 +28,6 @@ import PositionsCode from "./positions.vue?raw";
     <h3 id="sizes">Sizes</h3>
     <ExampleViewer :component="Sizes" :code="SizesCode" />
 
-    <h3 id="positions">Sizes</h3>
+    <h3 id="positions">Positions</h3>
     <ExampleViewer :component="Positions" :code="PositionsCode" />
 </template>

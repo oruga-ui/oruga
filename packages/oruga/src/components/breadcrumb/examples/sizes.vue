@@ -1,10 +1,10 @@
 <template>
     <section class="odocs-spaced">
-        <!--  align="center" -->
+        <!--  Size small -->
         <o-breadcrumb
             tag="div"
             separator="has-arrow-separator"
-            size="medium"
+            size="small"
             align="center">
             <o-breadcrumb-item tag="a" href="/" active="true"
                 >Home
@@ -16,6 +16,7 @@
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>
+        <!--  Size medium -->
         <o-breadcrumb
             tag="div"
             separator="has-arrow-separator"
@@ -31,5 +32,22 @@
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>
+        <!--  Size large -->
+        <o-breadcrumb
+            tag="div"
+            separator="has-arrow-separator"
+            size="large"
+            align="center">
+            <o-breadcrumb-item tag="router-link" to="/" active="true"
+                >Home
+            </o-breadcrumb-item>
+            <o-breadcrumb-item tag="router-link" to="/documentation/" disabled="true"
+                >Docs
+            </o-breadcrumb-item>
+            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb.html"
+                >Breadcrumb
+            </o-breadcrumb-item>
+        </o-breadcrumb>
+
     </section>
 </template>
