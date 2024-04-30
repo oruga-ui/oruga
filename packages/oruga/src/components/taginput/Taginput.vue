@@ -297,14 +297,6 @@ const isComposing = ref(false);
 const valueLength = computed(() => newItem.value.trim().length);
 const itemsLength = computed(() => items.value.length);
 
-/** When modelValue is changed set internal value. */
-watch(
-    () => props.modelValue,
-    (value) => {
-        items.value = Array.isArray(value) ? value.slice(0) : value || [];
-    },
-);
-
 /** Show the input field if a maxitems hasn't been set or reached. */
 const hasInput = computed(
     () => props.maxitems == null || itemsLength.value < Number(props.maxitems),
