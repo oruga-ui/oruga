@@ -279,7 +279,7 @@ const emits = defineEmits<{
 
 const vmodel = defineModel<any>();
 
-const isActive = defineModel<boolean>("active");
+const isActive = defineModel<boolean>("active", { default: false });
 
 const autoPosition = ref(props.position);
 

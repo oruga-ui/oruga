@@ -264,7 +264,7 @@ const emits = defineEmits<{
 const rootRef = ref();
 const contentRef = ref();
 
-const isActive = defineModel<boolean>("active");
+const isActive = defineModel<boolean>("active", { default: false });
 
 function handleClose(...args: any[]): void {
     if (typeof props.onClose === "function" && isActive.value)
