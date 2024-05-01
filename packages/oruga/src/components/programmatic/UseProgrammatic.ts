@@ -23,7 +23,7 @@ declare module "../../index" {
     }
 }
 
-type DynamicComponentProps = {
+type ProgrammaticComponentProps = {
     /**
      * Component to be injected.
      * Terminate the component by emitting a 'close' event — emits('close')
@@ -49,8 +49,8 @@ type DynamicComponentProps = {
     instances: InstanceRegistry<ComponentInternalInstance>;
 };
 
-const DynamicComponent = defineComponent(
-    (props: DynamicComponentProps, { expose }) => {
+const ProgrammaticComponent = defineComponent(
+    (props: ProgrammaticComponentProps, { expose }) => {
         // getting a hold of the internal instance in setup()
         const vm = getCurrentInstance();
 
@@ -76,14 +76,14 @@ const DynamicComponent = defineComponent(
             if (typeof props.destroyable === "undefined" || props.destroyable) {
                 // use timeout for any animation to complete before destroying
                 setTimeout(() => {
-                    const element = vm.vnode.el as HTMLElement;
-                    if (isClient)
-                        window.requestAnimationFrame(() => {
-                            // remove the component from the container or the body tag
-                            if (element) removeElement(element);
-                        });
-                    else {
-                        if (element) removeElement(element);
+                    const element = vm.vnode.el as Element;
+                    // remove the component from the container or the body tag
+                    if (element) {
+                        if (isClient)
+                            window.requestAnimationFrame(() =>
+                                removeElement(element),
+                            );
+                        else removeElement(element);
                     }
                 });
             }
@@ -107,7 +107,7 @@ export type ProgrammaticProps = {
      * @default `body`
      */
     target?: string | HTMLElement;
-} & Omit<DynamicComponentProps, "instances">;
+} & Omit<ProgrammaticComponentProps, "instances">;
 
 const UseProgrammatic = {
     open(props: ProgrammaticProps): ProgrammaticExpose {
@@ -122,7 +122,7 @@ const UseProgrammatic = {
         const container = document.createElement("div");
 
         // create dynamic component
-        const vnode = createVNode(DynamicComponent, {
+        const vnode = createVNode(ProgrammaticComponent, {
             ...props,
             instances: instances,
         });
