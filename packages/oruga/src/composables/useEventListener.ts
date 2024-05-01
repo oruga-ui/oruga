@@ -1,8 +1,13 @@
-import { onBeforeUnmount, onMounted, type MaybeRefOrGetter } from "vue";
+import {
+    onBeforeUnmount,
+    onMounted,
+    type MaybeRefOrGetter,
+    type Component,
+} from "vue";
 import { isObject } from "@/utils/helpers";
 import { unrefElement } from "./unrefElement";
 
-type EventTarget = Element | Document | Window;
+type EventTarget = Element | Document | Window | Component;
 type EventListenerOptions = AddEventListenerOptions & {
     /** Register event listener immediate or on mounted hook. */
     immediate?: boolean;

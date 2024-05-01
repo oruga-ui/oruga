@@ -99,4 +99,7 @@ function onThemeChange(theme) {
         color: var(--oruga-dropdown-item-hover-color, #000000);
     }
 }
+:deep(.o-drop__item--active) {
+    color: var(--oruga-dropdown-item-active-color, #ffffff);
+}
 </style>
