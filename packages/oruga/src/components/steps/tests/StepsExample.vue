@@ -1,52 +1,29 @@
-<script setup lang="ts" generic="T extends Record<string, unknown> | string">
-import { type PropType, ref } from "vue";
+<script setup lang="ts">
+import { ref, type PropType } from "vue";
+
 import OSteps from "@/components/steps/Steps.vue";
 import OStepItem from "@/components/steps/StepItem.vue";
 import OButton from "@/components/button/Button.vue";
 
 defineProps({
-    isVertical: {
-        type: Boolean,
-        default: false,
-    },
-    isAnimated: {
-        type: Boolean,
-        default: false,
-    },
-    isRounded: {
-        type: Boolean,
-        default: false,
-    },
-    hasNavigation: {
-        type: Boolean,
-        default: false,
-    },
+    isVertical: { type: Boolean, default: false },
+    isAnimated: { type: Boolean, default: false },
+    isRounded: { type: Boolean, default: false },
+    hasNavigation: { type: Boolean, default: false },
     labelPosition: {
         type: String as PropType<"bottom" | "left" | "right">,
         default: "bottom",
     },
-    isStepsClickable: {
-        type: Boolean,
-        default: false,
-    },
-    isProfileSuccess: {
-        type: Boolean,
-        default: false,
-    },
-    showSocial: {
-        type: Boolean,
-        default: false,
-    },
-    customNavigation: {
-        type: Boolean,
-        default: false,
-    },
+    isStepsClickable: { type: Boolean, default: false },
+    isProfileSuccess: { type: Boolean, default: false },
+    showSocial: { type: Boolean, default: false },
+    customNavigation: { type: Boolean, default: false },
 });
 
-const activeStep = ref<number>(1);
+const activeStep = ref(1);
 const enableProfileActivateEvent = ref(false);
 
-const onProfileActivate = () => {
+const onProfileActivate = (): void => {
     if (enableProfileActivateEvent.value) {
         console.log("Profile Activated");
     }

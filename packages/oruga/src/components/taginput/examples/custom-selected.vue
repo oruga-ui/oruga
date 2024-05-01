@@ -27,7 +27,7 @@ function getType(item) {
                 v-model="items"
                 icon="tag"
                 placeholder="Add an item">
-                <template #selected="{ items }">
+                <template #selected="{ items, removeItem }">
                     <o-button
                         v-for="(item, index) in items"
                         :key="index"
@@ -35,7 +35,7 @@ function getType(item) {
                         native-type="button"
                         :variant="getType(item)"
                         rounded
-                        @click="$refs.input.removeItem(index, $event)" />
+                        @click="removeItem(index, $event)" />
                 </template>
             </o-taginput>
         </o-field>

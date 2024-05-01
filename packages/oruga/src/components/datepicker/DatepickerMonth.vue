@@ -216,7 +216,7 @@ function onKeydown(event: KeyboardEvent, weekDay: Date): void {
  * Emit update:modelValue event with selected date as payload for v-model in parent
  */
 function selectDate(date: Date): void {
-    if (datepicker.value.disabled) return;
+    if (datepicker.value.disabled || datepicker.value.readonly) return;
     if (
         !datepicker.value.range &&
         !datepicker.value.multiple &&
@@ -434,7 +434,9 @@ function cellClasses(day: Date): ClassBind[] {
             "monthCellSelectableclass",
             "o-dpck__month__cell--selectable",
             null,
-            isDateSelectable(day) && !datepicker.value.disabled,
+            isDateSelectable(day) &&
+                !datepicker.value.disabled &&
+                !datepicker.value.readonly,
         ],
         [
             "monthCellUnselectableClass",
@@ -454,11 +456,14 @@ function cellClasses(day: Date): ClassBind[] {
             <div :class="monthTableClasses">
                 <template v-for="(date, idx) in monthDates" :key="idx">
                     <div
-                        v-if="!datepicker.disabled && isDateSelectable(date)"
+                        v-if="
+                            !datepicker.disabled &&
+                            !datepicker.readonly &&
+                            isDateSelectable(date)
+                        "
                         :ref="(el) => setMonthRef(date, el)"
                         :class="cellClasses(date)"
                         role="button"
-                        :disabled="datepicker.disabled"
                         :tabindex="
                             focusedDate.month === date.getMonth() ? null : 0
                         "

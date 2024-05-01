@@ -1,3 +1,5 @@
+import { Comment, Fragment, Text } from "vue";
+
 /**
  * Generates a random string
  */
@@ -33,6 +35,9 @@ export function bound(val: number, min: number, max: number): number {
 
 export const isObject = <T>(obj: T): boolean =>
     obj && typeof obj === "object" && !Array.isArray(obj);
+
+export const isDate = (d: unknown): d is Date =>
+    d && d instanceof Date && !isNaN(d.getTime());
 
 export const isDefined = <T>(d: T): boolean => d !== null && d !== undefined;
 
@@ -223,6 +228,15 @@ export function escapeRegExpChars(value: string): string {
 export function removeDiacriticsFromString(value: string): string {
     if (!value) return value;
     return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+/** checks if a vue vnode is empty */
+export function isVNodeEmpty(vnode): boolean {
+    if (!vnode) return true;
+    if (vnode.type === Comment) return true;
+    if (vnode.type === Text && !vnode.children.trim()) return true;
+    if (vnode.type === Fragment && isVNodeEmpty(vnode.children)) return true;
+    return false;
 }
 
 /**
