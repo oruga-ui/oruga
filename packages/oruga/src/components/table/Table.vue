@@ -907,7 +907,7 @@ function hasCustomFooterSlot(): boolean {
 }
 
 /** get the formated row value for a column */
-function getColumnValue(row: T, column: TableColumn): string {
+function getColumnValue(row: T, column: TableColumn<T>): string {
     const prop = column.field ? getValueByPath(row, column.field) : row;
     return column.display ? column.display(prop, row) : String(prop);
 }
