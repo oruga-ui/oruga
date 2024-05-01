@@ -48,6 +48,7 @@
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>
+        <!-- Separatoer succeeds -->
         <o-breadcrumb
             tag="div"
             separator="has-succeeds-separator"
