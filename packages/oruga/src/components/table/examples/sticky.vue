@@ -122,7 +122,7 @@ const stickyHeaders = ref(true);
 </script>
 
 <template>
-    <section class="overflow">
+    <section>
         <o-field grouped>
             <o-switch v-model="stickyHeaders" label="Sticky Headers" />
         </o-field>
@@ -142,8 +142,5 @@ const stickyHeaders = ref(true);
 .is-sticky-column-two {
     background: #167df0 !important;
     color: white !important;
-}
-.overflow {
-    overflow-x: scroll;
 }
 </style>
