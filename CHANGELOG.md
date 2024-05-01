@@ -1,3 +1,45 @@
+## [0.8.8](https://github.com/oruga-ui/oruga/compare/v0.8.7...v0.8.8) (2024-04-23)
+
+
+### Bug Fixes
+
+* **build:** fix cjs extension in package.json entry point ([#894](https://github.com/oruga-ui/oruga/issues/894)) ([51e7184](https://github.com/oruga-ui/oruga/commit/51e718411014ec2317d38dae2dacc12cededa4b7))
+* **datepicker:** fix defineClasses parent props problem ([#900](https://github.com/oruga-ui/oruga/issues/900)) ([087a8dc](https://github.com/oruga-ui/oruga/commit/087a8dcf55c59712d7d31c0b14c0e12a9dde589d))
+* **datepicker:** make date parsing work again ([#882](https://github.com/oruga-ui/oruga/issues/882)) ([047e999](https://github.com/oruga-ui/oruga/commit/047e999324b912e8b7b456bb4f72feb09b4282e8))
+* **field:** add field `setInputId` & remove `ariaLabelledby` prop ([#902](https://github.com/oruga-ui/oruga/issues/902)) ([458d45c](https://github.com/oruga-ui/oruga/commit/458d45c17d2c3d96813e78f1902cd781d7e6ae93))
+* **field:** fix slot invoked outside render function & ass `messageTag` prop ([#906](https://github.com/oruga-ui/oruga/issues/906)) ([f9d07c6](https://github.com/oruga-ui/oruga/commit/f9d07c62a091bf44a36b38454c5b1ba86559270a))
+* **menu:** fix `useProviderParent` composable `childItems` type problem ([#897](https://github.com/oruga-ui/oruga/issues/897)) ([b9656a6](https://github.com/oruga-ui/oruga/commit/b9656a6b5adfc27510be66e3bfe9b018e5de2cdd))
+* **taginput:** fix selection with autocomplete on non string items ([#889](https://github.com/oruga-ui/oruga/issues/889)) ([930c397](https://github.com/oruga-ui/oruga/commit/930c39707d2f938fe87876808c90251a743b8cd2))
+
+
+### Features
+
+* **datepicker:** change prop `readonly` default to `false` & disable calendar interaction while `readonly` ([#901](https://github.com/oruga-ui/oruga/issues/901)) ([364d0c5](https://github.com/oruga-ui/oruga/commit/364d0c5c9128e57167cff3922a0585bf6d323010))
+* **taginput:** add `removeItem` as selected slot property ([#887](https://github.com/oruga-ui/oruga/issues/887)) ([#888](https://github.com/oruga-ui/oruga/issues/888)) ([c8c26cc](https://github.com/oruga-ui/oruga/commit/c8c26cc7608a4ecdcc7336f63a0a069721a9cfcc))
+* **taginput:** update prop types ([#895](https://github.com/oruga-ui/oruga/issues/895)) ([b5709c5](https://github.com/oruga-ui/oruga/commit/b5709c569a8390e0f7944234b166534d146a363d))
+
+
+
+## [0.8.7](https://github.com/mlmoravek/oruga/compare/v0.8.6...v0.8.7) (2024-04-02)
+
+
+### Bug Fixes
+
+* **autocomplete:** adjust active state behavior ([#859](https://github.com/mlmoravek/oruga/issues/859)) ([9ce1971](https://github.com/mlmoravek/oruga/commit/9ce1971c71e719a392dbfa7735dc64c5cabaeef2))
+* **autocomplete:** change options type definition to generic ([#866](https://github.com/mlmoravek/oruga/issues/866)) ([5f6717a](https://github.com/mlmoravek/oruga/commit/5f6717a668be58ee5916b55c896034574de02856))
+* **steps|tabs:** fix disable animation ([#870](https://github.com/mlmoravek/oruga/issues/870)) ([08c1fbf](https://github.com/mlmoravek/oruga/commit/08c1fbf93adda4af411e733a75fed097432d5da7))
+* **steps|tabs:** make item props reactive again ([#879](https://github.com/mlmoravek/oruga/issues/879)) ([269183d](https://github.com/mlmoravek/oruga/commit/269183dcadb918b365894cef4809a12241387172))
+* **table:** make `TableColumn` props reactive again ([#878](https://github.com/mlmoravek/oruga/issues/878)) ([d2b1caa](https://github.com/mlmoravek/oruga/commit/d2b1caa3074b7f3826e856942e7979b9abc72aea))
+* fix type generation script ([#867](https://github.com/mlmoravek/oruga/issues/867)) ([2f6b6c8](https://github.com/mlmoravek/oruga/commit/2f6b6c893b75997e95be1e276616dd750f5c99a1))
+* resolve maximum recursive update exceeded in tests ([#869](https://github.com/mlmoravek/oruga/issues/869)) ([40d8b94](https://github.com/mlmoravek/oruga/commit/40d8b942805e15d07589e9bc93b6841885f5cab3))
+
+
+### Features
+
+* **tabs:** move inherit attrs to div instead of transition ([#871](https://github.com/mlmoravek/oruga/issues/871)) ([6db3f74](https://github.com/mlmoravek/oruga/commit/6db3f74c0a24b13d4ce7f9edccaa131829640131))
+
+
+
 ## [0.8.6](https://github.com/oruga-ui/oruga/compare/v0.8.5...v0.8.6) (2024-03-11)
 
 

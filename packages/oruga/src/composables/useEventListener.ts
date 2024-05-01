@@ -4,11 +4,12 @@ import {
     watch,
     type MaybeRefOrGetter,
     type Ref,
+    type Component,
 } from "vue";
 import { isObject } from "@/utils/helpers";
 import { unrefElement } from "./unrefElement";
 
-export type EventTarget = Element | Document | Window;
+export type EventTarget = Element | Document | Window | Component;
 export type EventListenerOptions = AddEventListenerOptions & {
     /** Register event listener immediate or on mounted hook. */
     immediate?: boolean;

@@ -6,9 +6,12 @@ import {
     onUnmounted,
     provide,
     ref,
+    type Component,
     type ComputedRef,
     type Ref,
+    type UnwrapNestedRefs,
 } from "vue";
+import { unrefElement } from "./unrefElement";
 
 export type ProviderItem<T = unknown> = {
     index: number;
@@ -41,11 +44,11 @@ type ProviderParentOptions<T = unknown> = {
  * @param options additional options
  */
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
-    rootRef?: Ref<HTMLElement>,
+    rootRef?: Ref<HTMLElement | Component>,
     options?: ProviderParentOptions<ParentData>,
 ): {
-    childItems: Ref<ProviderItem<ItemData>[]>;
-    sortedItems: Ref<ProviderItem<ItemData>[]>;
+    childItems: Ref<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
+    sortedItems: ComputedRef<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
 } {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
@@ -55,11 +58,9 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         );
 
     const configField = vm.proxy?.$options.configField;
-    const key = options?.key ? options.key : configField;
+    const key = options?.key || configField;
 
-    const childItems = ref<ProviderItem<ItemData>[]>([]) as Ref<
-        ProviderItem<ItemData>[]
-    >;
+    const childItems = ref<ProviderItem<ItemData>[]>([]);
     const sequence = ref(1);
 
     /**
@@ -75,14 +76,15 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         const index = childItems.value.length;
         const identifier = nextSequence();
         const item = { index, data, identifier };
-        childItems.value.push(item);
+        childItems.value.push(item as UnwrapNestedRefs<typeof item>);
         if (rootRef?.value) {
             nextTick(() => {
                 const ids = childItems.value
                     .map((item) => `[data-id="${key}-${item.identifier}"]`)
                     .join(",");
-                const elements = rootRef.value.querySelectorAll(ids);
-                const sortedIds = Array.from(elements).map((el: any) =>
+                const parent = unrefElement(rootRef);
+                const children = parent.querySelectorAll(ids);
+                const sortedIds = Array.from(children).map((el) =>
                     el.getAttribute("data-id").replace(`${key}-`, ""),
                 );
 
@@ -153,7 +155,7 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         );
 
     const configField = vm.proxy?.$options.configField;
-    const key = options?.key ? options.key : configField;
+    const key = options?.key || configField;
 
     /** Inject parent component functionality if used inside one **/
     const parent = inject<PovidedData<ParentData, ItemData>>(
@@ -161,11 +163,9 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         undefined,
     );
 
-    const needParent =
-        typeof options.needParent === "undefined" || options.needParent;
+    const needParent = options.needParent !== false;
 
-    const register =
-        typeof options.register === "undefined" || options.register;
+    const register = options.register !== false;
 
     if (needParent && !parent) {
         throw new Error(
