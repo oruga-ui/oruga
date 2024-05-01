@@ -1,3 +1,20 @@
+## [0.8.9](https://github.com/oruga-ui/oruga/compare/v0.8.8...v0.8.9) (2024-05-01)
+
+
+### Bug Fixes
+
+* **field:** fix bug when prop `horizontal` is set ([#915](https://github.com/oruga-ui/oruga/issues/915)) ([962bfea](https://github.com/oruga-ui/oruga/commit/962bfea1d447aac2b6a2c3174e2becf49ebac926))
+* **table:** fix filtering when table is not sorted ([#911](https://github.com/oruga-ui/oruga/issues/911)) ([10ee451](https://github.com/oruga-ui/oruga/commit/10ee45119d107ae35c9c25fc17f9dfe8d12116c3))
+* **Table:** fix table async example backend sort function ([#910](https://github.com/oruga-ui/oruga/issues/910)) ([18f3c00](https://github.com/oruga-ui/oruga/commit/18f3c002bc295601948d111b005bc3f1e221cba5))
+* **taginput:** fix infinite recursive update when updating modeValue ([#917](https://github.com/oruga-ui/oruga/issues/917)) ([e2e3c4a](https://github.com/oruga-ui/oruga/commit/e2e3c4a2d9347a3e01709379a4c6ee7bb98eba5f))
+
+
+### Features
+
+* **table:** make debounceSearch a global option ([#912](https://github.com/oruga-ui/oruga/issues/912)) ([517598f](https://github.com/oruga-ui/oruga/commit/517598f5220db093c282a108a427a36f97502e7d))
+
+
+
 ## [0.8.8](https://github.com/oruga-ui/oruga/compare/v0.8.7...v0.8.8) (2024-04-23)
 
 
