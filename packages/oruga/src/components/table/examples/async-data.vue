@@ -58,8 +58,8 @@ const onPageChange = (p) => {
 /*
  * Handle sort event
  */
-const onSort = (field, order) => {
-    sortField.value = field;
+const onSort = (column, order) => {
+    sortField.value = column?.field;
     sortOrder.value = order;
     loadAsyncData();
 };

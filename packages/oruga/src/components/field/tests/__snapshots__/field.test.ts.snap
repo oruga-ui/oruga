@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OField tests > render correctly 1`] = `
+"<div data-oruga="field" class="o-field">
+  <!--v-if-->
+  <!--
+                @slot Default content
+            -->
+  <!--v-if-->
+</div>"
+`;

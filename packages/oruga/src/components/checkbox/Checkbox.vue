@@ -2,7 +2,6 @@
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
 import {
     defineClasses,
     usePropBinding,
@@ -61,8 +60,6 @@ const props = defineProps({
     trueValue: { type: [String, Number, Boolean], default: true },
     /** Overrides the returned value when it's not checked */
     falseValue: { type: [String, Number, Boolean], default: false },
-    /** Accessibility label to establish relationship between the checkbox and control label */
-    ariaLabelledby: { type: String, default: () => uuid() },
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete: {
         type: String,
@@ -251,17 +248,13 @@ defineExpose({ focus: setFocus });
             :indeterminate.prop="indeterminate"
             :true-value="trueValue"
             :false-value="falseValue"
-            :aria-labelledby="ariaLabelledby"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
             @input="onInput" />
 
-        <span
-            v-if="label || $slots.default"
-            :id="ariaLabelledby"
-            :class="labelClasses">
+        <span v-if="label || $slots.default" :class="labelClasses">
             <!--
                 @slot Content slot, default is label prop
             -->

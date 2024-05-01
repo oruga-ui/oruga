@@ -119,7 +119,10 @@ const props = defineProps({
     /** Table fixed height */
     height: { type: [Number, String], default: undefined },
     /** Filtering debounce time (in milliseconds) */
-    debounceSearch: { type: Number, default: undefined },
+    debounceSearch: {
+        type: Number,
+        default: () => getOption("table.debounceSearch", undefined),
+    },
     /** Rows can be checked (multiple) */
     checkable: { type: Boolean, default: false },
     /** Make the checkbox column sticky when checkable */
@@ -986,7 +989,10 @@ watch(
     (value) => {
         if (!props.backendFiltering) return;
         if (props.debounceSearch)
-            useDebounce(() => handleFiltersChange(value), props.debounceSearch);
+            useDebounce(
+                () => handleFiltersChange(value),
+                props.debounceSearch,
+            )();
         else handleFiltersChange(value);
     },
     { deep: true },
@@ -1116,6 +1122,7 @@ function sort(
 
 function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
     const column = currentSortColumn.value;
+    if (!column) return rows;
     return sortBy<TableRow<T>>(
         rows,
         column?.field ? "value." + column.field : undefined,

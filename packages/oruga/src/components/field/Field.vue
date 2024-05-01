@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, watch, type PropType } from "vue";
-
-import OFieldBody from "./FieldBody.vue";
+import {
+    computed,
+    ref,
+    useSlots,
+    watch,
+    type PropType,
+    type VNodeArrayChildren,
+} from "vue";
 
 import { getOption } from "@/utils/config";
+import { isVNodeEmpty } from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
-import { injectField, provideField } from "../field/useFieldShare";
+import { injectField, provideField } from "./fieldInjection";
 
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
@@ -44,6 +50,10 @@ const props = defineProps({
     labelFor: { type: String, default: undefined },
     /** Help message text */
     message: { type: String, default: undefined },
+    messageTag: {
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: () => getOption<DynamicComponent>("field.messageTag", "p"),
+    },
     /**
      * Direct child components/elements of Field will be grouped horizontally
      * (see which ones at the top of the page).
@@ -145,6 +155,12 @@ const props = defineProps({
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
+const inputId = ref(props.labelFor);
+watch(
+    () => props.labelFor,
+    (v) => (inputId.value = v),
+);
+
 /** Set internal variant when prop change. */
 const fieldVariant = ref(props.variant);
 watch(
@@ -159,14 +175,6 @@ watch(
     (v) => (fieldMessage.value = v),
 );
 
-/** this can be set from outside to update the focus state. */
-const isFocused = ref(false);
-/** this can be set from outside to update the filled state. */
-const isFilled = ref(false);
-
-// inject parent field component if used inside one
-const { parentField } = injectField();
-
 /** Set parent message if we use Field in Field. */
 watch(
     () => fieldMessage.value,
@@ -180,40 +188,50 @@ watch(
     },
 );
 
+/** this can be set from outside to update the focus state */
+const isFocused = ref(false);
+/** this can be set from outside to update the filled state */
+const isFilled = ref(false);
+/** this can be set from sub fields to update the has inner field state */
+const hasInnerField = ref<boolean>(false);
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
+// tell parent field it has an inner field
+if (parentField?.value) parentField.value.addInnerField();
+
 const slots = useSlots();
 
 const hasLabel = computed(() => props.label || !!slots.label);
 
-const hasMessage = computed(
+const hasMessage = computed(() => !!fieldMessage.value || !!slots.message);
+
+const isGrouped = computed(
     () =>
-        !!(!parentField?.value?.hasInnerField && fieldMessage.value) ||
-        !!slots.message,
+        props.grouped ||
+        props.groupMultiline ||
+        hasInnerField.value ||
+        hasAddons.value,
 );
 
-const hasInnerField = computed(
-    () => props.grouped || props.groupMultiline || hasAddons(),
+const hasAddons = computed(
+    () => props.addons && !props.horizontal && !!slots.default,
 );
 
-function hasAddons(): boolean {
-    if (!props.addons || props.horizontal) return false;
-
-    let renderedNode = 0;
-    // [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead.
-    const slot = slots.default();
-    if (slot) {
-        const children =
-            slot.length === 1 && Array.isArray(slot[0].children)
-                ? slot[0].children
-                : slot;
-        renderedNode = children.filter((n) => !!n).length;
-    }
-    return renderedNode > 1 && props.addons && !props.horizontal;
+function getInnerContent(vnode): VNodeArrayChildren {
+    const slot = vnode();
+    return slot.length === 1 && Array.isArray(slot[0].children)
+        ? slot[0].children
+        : slot;
 }
 
 // --- Field Dependency Injection Feature ---
 
 const rootRef = ref();
 
+function addInnerField(): void {
+    hasInnerField.value = true;
+}
 function setFocus(value: boolean): void {
     isFocused.value = value;
 }
@@ -226,6 +244,9 @@ function setVariant(value: string): void {
 function setMessage(value: string): void {
     fieldMessage.value = value;
 }
+function setInputId(value: string): void {
+    inputId.value = value;
+}
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed(() => ({
@@ -235,6 +256,8 @@ const provideData = computed(() => ({
     hasMessage: hasMessage.value,
     fieldVariant: fieldVariant.value,
     fieldMessage: fieldMessage.value,
+    addInnerField,
+    setInputId,
     setFocus,
     setFilled,
     setVariant,
@@ -311,7 +334,7 @@ const innerFieldClasses = defineClasses(
         "addonsClass",
         "o-field--addons",
         null,
-        computed(() => !props.grouped && hasAddons()),
+        computed(() => !props.grouped && hasAddons.value),
     ],
 );
 </script>
@@ -319,30 +342,49 @@ const innerFieldClasses = defineClasses(
 <template>
     <div ref="rootRef" data-oruga="field" :class="rootClasses">
         <div v-if="horizontal" :class="labelHorizontalClasses">
-            <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
+            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
                 <!--
                     @slot Override the label
+                    @binding {string} label - label property 
                 -->
-                <slot name="label">{{ label }}</slot>
+                <slot name="label" :label="label">{{ label }}</slot>
             </label>
         </div>
         <template v-else>
-            <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
+            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
                 <!--
                     @slot Override the label
+                    @binding {string} label - label property 
                 -->
-                <slot name="label">{{ label }}</slot>
+                <slot name="label" :label="label">{{ label }}</slot>
             </label>
         </template>
 
-        <o-field-body v-if="horizontal" :classes="bodyHorizontalClasses">
-            <!--
-                @slot Default content
-            -->
-            <slot />
-        </o-field-body>
+        <div v-if="horizontal" :class="bodyHorizontalClasses">
+            <template
+                v-for="(element, index) in getInnerContent($slots.default)"
+                :key="index">
+                <component :is="element" v-if="isVNodeEmpty(element)" />
 
-        <div v-else-if="hasInnerField" :class="bodyClasses">
+                <OField
+                    v-else
+                    :variant="fieldVariant"
+                    :addons="false"
+                    :message-tag="messageTag"
+                    :message-class="messageClass">
+                    <!-- render inner default slot element -->
+                    <component :is="element" />
+                    <!-- show field message here -->
+                    <template v-if="index === 0" #message>
+                        <slot name="message" :message="fieldMessage">
+                            {{ fieldMessage }}
+                        </slot>
+                    </template>
+                </OField>
+            </template>
+        </div>
+
+        <div v-else-if="isGrouped" :class="bodyClasses">
             <div :class="innerFieldClasses">
                 <!--
                    @slot Default content
@@ -358,11 +400,17 @@ const innerFieldClasses = defineClasses(
             <slot />
         </template>
 
-        <p v-if="hasMessage && !horizontal" :class="messageClasses">
+        <component
+            :is="messageTag"
+            v-if="hasMessage && !horizontal"
+            :class="messageClasses">
             <!--
                 @slot Override the message
+                @binding {string} message - field message 
             -->
-            <slot name="message"> {{ fieldMessage }} </slot>
-        </p>
+            <slot name="message" :message="fieldMessage">
+                {{ fieldMessage }}
+            </slot>
+        </component>
     </div>
 </template>

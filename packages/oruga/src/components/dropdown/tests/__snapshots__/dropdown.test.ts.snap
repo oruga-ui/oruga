@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ODropdown > render correctly 1`] = `
+exports[`Dropdown tests > render correctly 1`] = `
 "<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
   <div tabindex="0" class="o-drop__trigger" aria-haspopup="true">
     <!--

@@ -396,7 +396,9 @@ const filteredDataObj = computed(() =>
                 :open-on-focus="openOnFocus"
                 :data="filteredDataObj"
                 field="user.first_name"
-                @select="(option) => (selected = option)" />
+                @select="(option) => (selected = option)">
+                <template #empty> No results found </template>
+            </o-autocomplete>
         </o-field>
         <p><b>Selected:</b> {{ selected }}</p>
     </section>

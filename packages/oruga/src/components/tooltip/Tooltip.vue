@@ -354,17 +354,17 @@ const contentClasses = defineClasses(
 <template>
     <div :class="rootClasses" data-oruga="tooltip">
         <PositionWrapper
+            v-slot="{ setContent }"
             v-model:position="autoPosition"
             :teleport="teleport"
             :class="rootClasses"
             :trigger="triggerRef"
-            :content="contentRef"
             default-position="top"
             :disabled="!isActive">
             <transition :name="animation">
                 <div
                     v-show="isActive || (always && !disabled)"
-                    ref="contentRef"
+                    :ref="(el) => (contentRef = setContent(el as HTMLElement))"
                     :class="contentClasses">
                     <span :class="arrowClasses"></span>
 
@@ -375,6 +375,7 @@ const contentClasses = defineClasses(
                 </div>
             </transition>
         </PositionWrapper>
+
         <component
             :is="triggerTag"
             ref="triggerRef"
