@@ -114,6 +114,10 @@ const hasMobileCards = ref(true);
                     :icon="row.gender === 'Male' ? 'mars' : 'venus'" />
                 {{ row.gender }}
             </o-table-column>
+
+            <template #footer>
+                <td colspan="5">Custom Footer</td>
+            </template>
         </o-table>
     </section>
 </template>

@@ -535,7 +535,7 @@ const emits = defineEmits<{
      */
     (e: "update:currentPage", value: number): void;
     /**
-     * is emitted each time the table data is processed into rows
+     * is emitted each time the table data is processed into rows (usefull for setting predefined `checkedRows` or `detailedRows`)
      * @param value {TableRow[]} computed table rows
      */
     (e: "rows", value: Array<TableRow<T>>): void;
@@ -585,7 +585,7 @@ const emits = defineEmits<{
     ): void;
     /**
      * on filter change event
-     * @param filters {Object} filter object
+     * @param filters {object} filter object
      */
     (e: "filters-change", value: Record<string, string>): void;
     /**
@@ -770,7 +770,7 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
 const slotRef = ref<HTMLElement>();
 
-// provide functionalities and data to child item components
+/** provide functionalities and data to child item components */
 const provider = useProviderParent<TableColumnComponent<T>>(slotRef);
 
 /** all defined columns */
@@ -790,7 +790,6 @@ const tableData = computed<TableRow<T>[]>(() =>
     useObjectMap(props.data, props.rowKey),
 );
 
-// TODO: refactor to use only tableData with more attributes like hidden, detailed
 const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;
 
 emits("rows", tableData.value); // emit computed rows first time
@@ -827,28 +826,27 @@ const tableTotal = computed(() =>
 
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
-/** Visible rows based on current page */
+/** visible rows based on current page */
 const visibleRows = computed(() => {
     if (!props.paginated || props.backendPagination) return tableRows.value;
 
     const currentPage = tableCurrentPage.value;
     const perPage = Number(props.perPage);
 
-    if (tableRows.value.length <= perPage) {
-        return tableRows.value;
-    } else {
-        const start = (currentPage - 1) * perPage;
-        const end = start + perPage;
-        return tableRows.value.slice(start, end);
-    }
+    if (tableRows.value.length <= perPage) return tableRows.value;
+
+    const start = (currentPage - 1) * perPage;
+    const end = start + perPage;
+    return tableRows.value.slice(start, end);
 });
 
-const visibleColumns = computed(() => {
-    if (!tableColumns.value) return [];
-    return tableColumns.value.filter(
-        (column) => column.visible || column.visible === undefined,
-    );
-});
+const visibleColumns = computed(() =>
+    tableColumns.value
+        ? tableColumns.value.filter(
+              (column) => column.visible || column.visible === undefined,
+          )
+        : [],
+);
 
 /** process thAttrs & tdAttrs when row or columns got changed */
 watch([visibleRows, visibleColumns], () => {
@@ -866,7 +864,7 @@ watch([visibleRows, visibleColumns], () => {
     }
 });
 
-/** Total column count based if it's checkable or expanded */
+/** total column count based if it's checkable or expanded */
 const columnCount = computed(() => {
     let count = visibleColumns.value.length;
     count += props.checkable ? 1 : 0;
@@ -874,12 +872,12 @@ const columnCount = computed(() => {
     return count;
 });
 
-/** Check if has any searchable column. */
+/** check if has any searchable column. */
 const hasSearchableColumns = computed(() =>
     tableColumns.value.some((column) => column.searchable),
 );
 
-/** Check if table is scrollable */
+/** check if table is scrollable */
 const isScrollable = computed(() => {
     if (props.scrollable) return true;
     if (!tableColumns.value) return false;
@@ -888,26 +886,27 @@ const isScrollable = computed(() => {
 
 const slots = useSlots();
 
-/** Check if table hast subheadings  */
+/** check if table hast subheadings  */
 const hasCustomSubheadings = computed(() => {
     if (slots.subheading) return true;
     return tableColumns.value.some((column) => !!column.subheading);
 });
 
-/** Check if footer slot has custom content */
+/**
+ * Check if footer slot has custom content.
+ * Must be called during rendering.
+ */
 function hasCustomFooterSlot(): boolean {
-    if (slots.footer) {
-        // [Vue warn]: Slot "footer" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead.
-        const footer = slots.footer();
-        if (footer.length > 1) return true;
+    if (!slots.footer) return false;
 
-        const tag = footer[0]["tag"];
-        if (tag !== "th" && tag !== "td") return false;
-    }
-    return true;
+    const footer = slots.footer();
+    if (footer.length > 1) return true;
+
+    const tag = footer[0]["type"];
+    return tag === "th" || tag === "td";
 }
 
-/** Get the formated row value for a column */
+/** get the formated row value for a column */
 function getColumnValue(row: T, column: TableColumn): string {
     const prop = column.field ? getValueByPath(row, column.field) : row;
     return column.display ? column.display(prop, row) : String(prop);
@@ -917,7 +916,7 @@ function getColumnValue(row: T, column: TableColumn): string {
 
 const tableSelectedRow = defineModel<TableRow<T>>("selected");
 
-/** Table arrow keys listener, change selection */
+/** table arrow keys listener, change selection */
 function onArrowPressed(pos: number, event: KeyboardEvent): void {
     if (!visibleRows.value.length) return;
 
@@ -926,7 +925,7 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
             (r) => r.key === tableSelectedRow.value?.key,
         ) + pos;
 
-    // Prevent from going up from first and down from last
+    // prevent from going up from first and down from last
     index =
         index < 0
             ? 0
@@ -1008,7 +1007,7 @@ function onFiltersEvent(event: Event): void {
     emits("filters-event", props.filtersEvent, filters.value, event);
 }
 
-/** Check whether a row is filtered by filter or not */
+/** check whether a row is filtered by filter or not */
 function isRowFiltered(row: T): boolean {
     return Object.entries(filters.value).some(([key, filter]) => {
         if (!filter) return false;
@@ -1044,17 +1043,17 @@ const isAsc = ref(true);
 
 onMounted(() => nextTick(() => checkSort()));
 
-/** Check if has any sortable column. */
+/** check if has any sortable column */
 const hasSortableColumns = computed(() =>
     tableColumns.value.some((column) => column.sortable),
 );
 
-/** Check if the column is the current sort column. */
+/** check if the column is the current sort column */
 function isColumnSorted(column: TableColumnItem<T>): boolean {
     return currentSortColumn.value?.identifier === column.identifier;
 }
 
-/** Call initSort only first time (For example async data). */
+/** call initSort only first time (For example async data) */
 function checkSort(): void {
     if (tableColumns.value.length && !currentSortColumn.value) {
         // is first time sort
@@ -1072,7 +1071,7 @@ function checkSort(): void {
     }
 }
 
-/** Initial sorted column based on the default-sort prop. */
+/** initial sorted column based on the default-sort prop */
 function initSort(): void {
     if (!props.defaultSort) return;
     let sortField = "";
@@ -1140,7 +1139,7 @@ const tableCheckedRows = defineModel<TableRow<T>[]>("checkedRows", {
 });
 const lastCheckedRowIndex = ref(null);
 
-/** Check if all rows in the page are checked. */
+/** check if all rows in the page are checked */
 const isAllChecked = computed(() => {
     const validVisibleData = visibleRows.value.filter((row) =>
         props.isRowCheckable(row.value),
@@ -1156,12 +1155,12 @@ const isAllChecked = computed(() => {
     );
 });
 
-/** Check if all rows in the page are checkable. */
+/** check if all rows in the page are checkable */
 const isAllUncheckable = computed(
     () => !visibleRows.value.some((row) => props.isRowCheckable(row.value)),
 );
 
-/** Check if the row is checked (is added to the array). */
+/** check if the row is checked (is added to the array) */
 function isChecked(row: TableRow<T>): boolean {
     return (
         indexOf(
@@ -1172,12 +1171,12 @@ function isChecked(row: TableRow<T>): boolean {
     );
 }
 
-/** Add a checked row to the the array. */
+/** add a checked row to the the array */
 function addCheckedRow(row: TableRow<T>): void {
     tableCheckedRows.value = [...tableCheckedRows.value, row];
 }
 
-/** Remove a checked row from the array. */
+/** remove a checked row from the array */
 function removeCheckedRow(row: TableRow<T>): void {
     const idx = indexOf(
         tableCheckedRows.value.map((r) => r.value),
@@ -1196,13 +1195,11 @@ function checkAll(): void {
     const checkedRows = visibleRows.value.filter((row) =>
         props.isRowCheckable(row.value),
     );
-
     tableCheckedRows.value = isAllChecked.value ? [] : checkedRows;
-
     emits("check-all", tableCheckedRows.value);
 }
 
-/** Row checkbox click listener. */
+/** row checkbox click listener */
 function checkRow(row: TableRow<T>, index: number): void {
     if (!props.isRowCheckable(row.value)) return;
     lastCheckedRowIndex.value = index;
@@ -1220,14 +1217,14 @@ const visibleDetailedRows = defineModel<TableRow<T>[]>("detailedRows", {
 });
 
 /**
- * return if detailed row tabled
- * will be with chevron column & icon or not
+ * Return if detailed row tabled.
+ * Will be with chevron column & icon or not.
  */
 const showDetailRowIcon = computed(
     () => props.detailed && props.showDetailIcon,
 );
 
-/** Toggle to show/hide details slot */
+/** toggle to show/hide details slot */
 function toggleDetails(row: TableRow<T>): void {
     if (isVisibleDetailRow(row)) {
         closeDetailRow(row);
@@ -1267,7 +1264,7 @@ const canDragColumn = computed(
     () => props.draggableColumn && !isDraggingRow.value,
 );
 
-/** Emits drag start event*/
+/** emits drag start event */
 function handleDragStart(
     row: TableRow<T>,
     index: number,
@@ -1277,7 +1274,7 @@ function handleDragStart(
     emits("dragstart", row, index, event);
 }
 
-/** Emits drag leave event */
+/** emits drag leave event */
 function handleDragEnd(
     row: TableRow<T>,
     index: number,
@@ -1287,13 +1284,13 @@ function handleDragEnd(
     emits("dragend", row, index, event);
 }
 
-/** Emits drop event */
+/** emits drop event */
 function handleDrop(row: TableRow<T>, index: number, event: DragEvent): void {
     if (!props.draggable) return;
     emits("drop", row, index, event);
 }
 
-/** Emits drag over event */
+/** emits drag over event */
 function handleDragOver(
     row: TableRow<T>,
     index: number,
@@ -1303,7 +1300,7 @@ function handleDragOver(
     emits("dragover", row, index, event);
 }
 
-/** Emits drag leave event */
+/** emits drag leave event */
 function handleDragLeave(
     row: TableRow<T>,
     index: number,
@@ -1313,7 +1310,7 @@ function handleDragLeave(
     emits("dragleave", row, index, event);
 }
 
-/** Emits drag start event (column) */
+/** emits drag start event (column) */
 function handleColumnDragStart(
     column: TableColumn<T>,
     index: number,
@@ -1324,7 +1321,7 @@ function handleColumnDragStart(
     emits("columndragstart", column, index, event);
 }
 
-/** Emits drag leave event (column) */
+/** emits drag leave event (column) */
 function handleColumnDragEnd(
     column: TableColumn<T>,
     index: number,
@@ -1335,7 +1332,7 @@ function handleColumnDragEnd(
     emits("columndragend", column, index, event);
 }
 
-/** Emits drop event (column) */
+/** emits drop event (column) */
 function handleColumnDrop(
     column: TableColumn<T>,
     index: number,
@@ -1345,7 +1342,7 @@ function handleColumnDrop(
     emits("columndrop", column, index, event);
 }
 
-/** Emits drag over event (column) */
+/** emits drag over event (column) */
 function handleColumnDragOver(
     column: TableColumn<T>,
     index: number,
@@ -1355,7 +1352,7 @@ function handleColumnDragOver(
     emits("columndragover", column, index, event);
 }
 
-/** Emits drag leave event (column) */
+/** emits drag leave event (column) */
 function handleColumnDragLeave(
     column: TableColumn<T>,
     index: number,

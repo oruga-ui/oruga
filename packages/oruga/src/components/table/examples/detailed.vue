@@ -120,7 +120,7 @@ function onRowsCreated(rows) {
             <div v-for="(column, index) in columnsVisible" :key="index">
                 <o-checkbox
                     v-model="column.display"
-                    :label="`Show column  '${column.title}'`" />
+                    :label="`Show column '${column.title}'`" />
             </div>
         </o-field>
 
