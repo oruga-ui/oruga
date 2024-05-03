@@ -56,8 +56,11 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number], default: undefined },
+    /**
+     * The input value
+     * @model
+     */
+    modelValue: { type: String, default: undefined },
     /** Input type */
     type: { type: String, default: "text" },
     /** Menu tag name */
@@ -334,7 +337,7 @@ const emits = defineEmits<{
 
 const slots = useSlots();
 const inputRef = ref<ComponentInstance<typeof OInput>>();
-const dropdownRef = ref<InstanceType<typeof ODropdown>>();
+const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const itemRefs = ref([]);
@@ -352,7 +355,7 @@ function setItemRef(
 const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
     useInputHandler(inputRef, emits, props);
 
-const vmodel = defineModel<string | number>({ default: undefined });
+const vmodel = defineModel<string>({ default: undefined });
 
 const isActive = ref(false);
 
