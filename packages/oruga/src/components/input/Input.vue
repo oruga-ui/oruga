@@ -11,7 +11,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
+import { isDefined, uuid } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -229,7 +229,8 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 
 const vmodel = defineModel<InputValueType>();
 // set default value
-if (!vmodel.value) vmodel.value = (props.number ? 0 : "") as InputValueType;
+if (!isDefined(vmodel.value))
+    vmodel.value = (props.number ? 0 : "") as InputValueType;
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
