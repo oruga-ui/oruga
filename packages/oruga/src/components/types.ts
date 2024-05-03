@@ -1263,6 +1263,8 @@ but will set body to position fixed, might break some layouts. */
                 detailKey: string;
                 /** Whether table is striped */
                 striped: boolean;
+                /** Filtering debounce time (in milliseconds) */
+                debounceSearch: number;
             }>;
         tabs?: ComponentConfigBase &
             Partial<{

@@ -65,9 +65,9 @@ const props = defineProps({
         default: () => getOption("taginput.variant"),
     },
     /** Limits the number of items, plus item counter */
-    maxitems: { type: Number, default: undefined },
+    maxitems: { type: [String, Number], default: undefined },
     /** Same as native maxlength, plus character counter */
-    maxlength: { type: Number, default: undefined },
+    maxlength: { type: [String, Number], default: undefined },
     /** Show counter when maxlength or maxtags props are passed */
     counter: {
         type: Boolean,
@@ -115,13 +115,13 @@ const props = defineProps({
     },
     /** Function to validate the value of the item before adding */
     beforeAdding: {
-        type: Function as PropType<(value: string) => boolean>,
+        type: Function as PropType<(value: T | string) => boolean>,
         default: () => true,
     },
     /** Function to create a new item to push into v-model (items) */
     createItem: {
-        type: Function as PropType<(value: string) => T>,
-        default: (item: string) => item,
+        type: Function as PropType<(value: T | string) => T>,
+        default: (item: T | string) => item,
     },
     /** Makes the component check if list reached scroll start or end and emit scroll events. */
     checkScroll: {
@@ -297,17 +297,9 @@ const isComposing = ref(false);
 const valueLength = computed(() => newItem.value.trim().length);
 const itemsLength = computed(() => items.value.length);
 
-/** When modelValue is changed set internal value. */
-watch(
-    () => props.modelValue,
-    (value) => {
-        items.value = Array.isArray(value) ? value.slice(0) : value || [];
-    },
-);
-
 /** Show the input field if a maxitems hasn't been set or reached. */
 const hasInput = computed(
-    () => props.maxitems == null || itemsLength.value < props.maxitems,
+    () => props.maxitems == null || itemsLength.value < Number(props.maxitems),
 );
 
 watchEffect(() => {
@@ -340,8 +332,8 @@ function getNormalizedItemText(item: T): string {
 function addItem(item?: T | string): void {
     item = item || newItem.value.trim();
 
-    if (item && typeof item === "string") {
-        if (!props.allowAutocomplete) {
+    if (item) {
+        if (typeof item === "string") {
             const reg = separatorsAsRegExp.value;
             if (reg && item.match(reg)) {
                 item.split(reg)
@@ -485,7 +477,7 @@ defineExpose({ focus: setFocus });
                 @slot Override selected items
                 @binding {unknown[]} items - selected items
             -->
-            <slot name="selected" :items="items">
+            <slot name="selected" :items="items" :remove-item="removeItem">
                 <span
                     v-for="(item, index) in items"
                     :key="getNormalizedItemText(item) + index"
@@ -536,7 +528,7 @@ defineExpose({ focus: setFocus });
                 @keydown="onKeydown"
                 @compositionstart="isComposing = true"
                 @compositionend="isComposing = false"
-                @select="onSelect($event)"
+                @select="onSelect"
                 @scroll-start="$emit('scroll-start')"
                 @scroll-end="$emit('scroll-end')"
                 @icon-click="$emit('icon-click', $event)"

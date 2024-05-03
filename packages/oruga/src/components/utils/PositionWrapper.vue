@@ -313,13 +313,13 @@ const anchors = (rect: DOMRect): Record<Position, Point> => ({
 <template>
     <Teleport :to="teleportTo" :disabled="teleportDisabled">
         <template v-if="teleportDisabled">
-            <slot :set-content />
+            <slot :set-content="setContent" />
         </template>
         <template v-else>
             <div
                 v-bind="$attrs"
                 :style="{ position: 'absolute', left: '0px', top: '0px' }">
-                <slot :set-content />
+                <slot :set-content="setContent" />
             </div>
         </template>
     </Teleport>

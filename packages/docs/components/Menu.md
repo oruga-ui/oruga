@@ -81,14 +81,14 @@ title: Menu
 | iconSize  | Icon size                                                                         | string           | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code>      |
 | label     | Menu item label                                                                   | string           | -                                                 |                                                                                                                                                         |
 | override  | Override existing theme classes completely                                        | boolean          | -                                                 |                                                                                                                                                         |
-| tag       | Menu item tag name                                                                | DynamicComponent | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;menuTag: "a"<br>}</code>             |
+| tag       | Menu item tag name                                                                | DynamicComponent | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;menuTag: "button"<br>}</code>        |
 
 ### Events
 
-| Event name        | Properties                                    | Description                     |
-| ----------------- | --------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `boolean` - updated modelValue prop | modelValue prop two-way binding |
-| update:expanded   | **value** `boolean` - updated expanded prop   | expanded prop two-way binding   |
+| Event name      | Properties                                  | Description                   |
+| --------------- | ------------------------------------------- | ----------------------------- |
+| update:active   | **value** `boolean` - updated active prop   | active prop two-way binding   |
+| update:expanded | **value** `boolean` - updated expanded prop | expanded prop two-way binding |
 
 ### Slots
 
