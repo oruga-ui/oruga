@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="TNumber extends boolean = false">
+<script setup lang="ts" generic="IsNumberInput extends boolean = false">
 import {
     ref,
     computed,
@@ -30,7 +30,7 @@ defineOptions({
     inheritAttrs: false,
 });
 
-type InputValue = TNumber extends true ? number : string;
+type InputValueType = IsNumberInput extends true ? number : string;
 
 type Props = {
     /** Override existing theme classes completely */
@@ -39,13 +39,13 @@ type Props = {
      * @type string | number
      * @model
      */
-    // eslint-disable-next-line vue/require-default-prop
-    modelValue?: InputValue;
+    modelValue?: InputValueType; // eslint-disable-line vue/require-default-prop
     /**
      * @type boolean
      */
-    // eslint-disable-next-line vue/require-default-prop
-    number?: TNumber;
+    number?: IsNumberInput; // eslint-disable-line vue/require-default-prop
+    /** Same as native id. Also set the for label for o-field wrapper. */
+    id?: string;
     /** Input placeholder */
     placeholder?: string;
     /**
@@ -139,6 +139,7 @@ type Props = {
 
 const props = withDefaults(defineProps<Props>(), {
     type: "text",
+    id: uuid(),
     size: getOption("input.size"),
     variant: getOption("input.variant"),
     placeholder: undefined,
@@ -169,13 +170,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {typeof modelValue} updated modelValue prop
      */
-    (e: "update:modelValue", value: InputValue): void;
+    (e: "update:modelValue", value: InputValueType): void;
     /**
      * on input change event
      * @param value {typeof modelValue} input value
      * @param event {Event} native event
      */
-    (e: "input", value: InputValue, event: Event): void;
+    (e: "input", value: InputValueType, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -226,7 +227,9 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<InputValue>();
+const vmodel = defineModel<InputValueType>();
+// set default value
+vmodel.value = (props.number && !vmodel.value ? 0 : "") as InputValueType;
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -283,7 +286,7 @@ const computedStyles = computed(
 
 function onInput(event: Event): void {
     const v = (event.target as HTMLInputElement).value;
-    const value = (props.number ? Number(v) : String(v)) as InputValue;
+    const value = (props.number ? Number(v) : String(v)) as InputValueType;
     emits("input", value, event);
 }
 
@@ -323,7 +326,7 @@ function iconClick(event: Event): void {
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
     else if (props.clearable)
-        vmodel.value = (props.number ? 0 : "") as InputValue;
+        vmodel.value = (props.number ? 0 : "") as InputValueType;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());
