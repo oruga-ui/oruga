@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch, type PropType } from "vue";
+import {
+    computed,
+    ref,
+    watch,
+    type ComponentInstance,
+    type PropType,
+} from "vue";
 
 import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
@@ -220,7 +226,7 @@ const emits = defineEmits<{
 
 const datepickerRef = ref<InstanceType<typeof ODatepicker>>();
 const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
-const nativeInputRef = ref<InstanceType<typeof OInput>>();
+const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
 
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : datepickerRef.value,

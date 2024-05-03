@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="TNumber extends boolean">
+<script setup lang="ts" generic="TNumber extends boolean = false">
 import {
     ref,
     computed,
@@ -30,7 +30,7 @@ defineOptions({
     inheritAttrs: false,
 });
 
-type T = TNumber extends true ? number : string;
+type InputValue = TNumber extends true ? number : string;
 
 type Props = {
     /** Override existing theme classes completely */
@@ -39,10 +39,12 @@ type Props = {
      * @type string | number
      * @model
      */
-    modelValue?: T;
+    // eslint-disable-next-line vue/require-default-prop
+    modelValue?: InputValue;
     /**
      * @type boolean
      */
+    // eslint-disable-next-line vue/require-default-prop
     number?: TNumber;
     /** Input placeholder */
     placeholder?: string;
@@ -167,13 +169,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {typeof modelValue} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    (e: "update:modelValue", value: InputValue): void;
     /**
      * on input change event
      * @param value {typeof modelValue} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T, event: Event): void;
+    (e: "input", value: InputValue, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -224,7 +226,7 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<T>();
+const vmodel = defineModel<InputValue>();
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -281,7 +283,7 @@ const computedStyles = computed(
 
 function onInput(event: Event): void {
     const v = (event.target as HTMLInputElement).value;
-    const value = (props.number ? Number(v) : String(v)) as T;
+    const value = (props.number ? Number(v) : String(v)) as InputValue;
     emits("input", value, event);
 }
 
@@ -320,7 +322,8 @@ function iconClick(event: Event): void {
 
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
-    else if (props.clearable) vmodel.value = (props.number ? 0 : "") as T;
+    else if (props.clearable)
+        vmodel.value = (props.number ? 0 : "") as InputValue;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());
@@ -427,7 +430,6 @@ defineExpose({ focus: setFocus });
         <input
             v-if="type !== 'textarea'"
             v-bind="$attrs"
-            :id="id"
             ref="inputRef"
             v-model="vmodel"
             :data-oruga-input="inputType"
@@ -445,7 +447,6 @@ defineExpose({ focus: setFocus });
         <textarea
             v-else
             v-bind="$attrs"
-            :id="id"
             ref="textareaRef"
             v-model="vmodel"
             data-oruga-input="textarea"

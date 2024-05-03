@@ -11,6 +11,7 @@ import {
     useSlots,
     type PropType,
     type Component,
+    type ComponentInstance,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -332,7 +333,7 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<InstanceType<typeof OInput>>();
+const inputRef = ref<ComponentInstance<typeof OInput>>();
 const dropdownRef = ref<InstanceType<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
