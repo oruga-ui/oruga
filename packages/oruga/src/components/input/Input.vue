@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="IsNumberInput extends boolean = false">
+<script setup lang="ts" generic="IsNumber extends boolean = false">
 import {
     ref,
     computed,
@@ -30,7 +30,7 @@ defineOptions({
     inheritAttrs: false,
 });
 
-type InputValueType = IsNumberInput extends true ? number : string;
+type InputValueType = IsNumber extends true ? number : string;
 
 type Props = {
     /** Override existing theme classes completely */
@@ -43,7 +43,7 @@ type Props = {
     /**
      * @type boolean
      */
-    number?: IsNumberInput; // eslint-disable-line vue/require-default-prop
+    number?: IsNumber; // eslint-disable-line vue/require-default-prop
     /** Same as native id. Also set the for label for o-field wrapper. */
     id?: string;
     /** Input placeholder */
@@ -229,7 +229,7 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 
 const vmodel = defineModel<InputValueType>();
 // set default value
-vmodel.value = (props.number && !vmodel.value ? 0 : "") as InputValueType;
+if (!vmodel.value) vmodel.value = (props.number ? 0 : "") as InputValueType;
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -285,9 +285,11 @@ const computedStyles = computed(
 );
 
 function onInput(event: Event): void {
-    const v = (event.target as HTMLInputElement).value;
-    const value = (props.number ? Number(v) : String(v)) as InputValueType;
-    emits("input", value, event);
+    const value = (event.target as HTMLInputElement).value;
+    const input = (
+        props.number ? Number(value) : String(value)
+    ) as InputValueType;
+    emits("input", input, event);
 }
 
 // --- Icon Feature ---
@@ -302,13 +304,10 @@ const hasIconRight = computed(() => {
 });
 
 const computedIconRight = computed(() => {
-    if (props.passwordReveal) {
-        return passwordVisibleIcon.value;
-    } else if (props.clearable && vmodel.value && props.clearIcon) {
+    if (props.passwordReveal) return passwordVisibleIcon.value;
+    if (props.clearable && vmodel.value && props.clearIcon)
         return props.clearIcon;
-    } else if (props.iconRight) {
-        return props.iconRight;
-    }
+    if (props.iconRight) return props.iconRight;
     return statusVariantIcon.value;
 });
 
@@ -433,6 +432,7 @@ defineExpose({ focus: setFocus });
         <input
             v-if="type !== 'textarea'"
             v-bind="$attrs"
+            :id="id"
             ref="inputRef"
             v-model="vmodel"
             :data-oruga-input="inputType"
@@ -450,6 +450,7 @@ defineExpose({ focus: setFocus });
         <textarea
             v-else
             v-bind="$attrs"
+            :id="id"
             ref="textareaRef"
             v-model="vmodel"
             data-oruga-input="textarea"
