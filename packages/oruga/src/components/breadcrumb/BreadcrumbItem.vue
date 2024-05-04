@@ -24,7 +24,7 @@ const props = defineProps({
      * @values true, false
      */
     active: {
-        type: Boolean,
+        type: String,
         default: () => getOption("breadcrumb.active"),
     },
     /**
@@ -95,7 +95,7 @@ const computedDisabled = computed(() =>
     props.disabled ? "o-breadcrumb-item__disabled" : null,
 );
 const computedActive = computed(() =>
-    props.active ? "o-breadcrumb-item__active" : null,
+    props.active ? `o-breadcrumb-item__${props.active}` : null,
 );
 // --- Computed Component Classes ---
 
@@ -111,7 +111,10 @@ const iconRightClasses = defineClasses([
     "o-breadcrumb-item__icon-right",
 ]);
 
-const wrapperClasses = defineClasses(["wrapperClass", "o-breadcrumb__wrapper"]);
+const wrapperClasses = defineClasses([
+    "wrapperClass",
+    "o-breadcrumb-item__wrapper",
+]);
 
 const rootClasses = defineClasses(
     ["rootClass", "o-breadcrumb-item"],
@@ -144,5 +147,3 @@ const rootClasses = defineClasses(
         </span>
     </component>
 </template>
-<!-- :size="size" -->
-<!-- :size="size" -->

@@ -83,10 +83,10 @@ const props = defineProps({
         default: undefined,
     },
     /** Class of the button variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+    // variantClass: {
+    //     type: [String, Array, Function] as PropType<ComponentClass>,
+    //     default: undefined,
+    // },
     /** Class of the button separator */
     separatorClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -107,12 +107,12 @@ const rootClasses = defineClasses(
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    [
-        "variantClass",
-        "o-breadcrumb__",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
+    // [
+    //     "variantClass",
+    //     "o-breadcrumb__",
+    //     computed(() => props.variant),
+    //     computed(() => !!props.variant),
+    // ],
     [
         "separatorClass",
         "o-breadcrumb__",

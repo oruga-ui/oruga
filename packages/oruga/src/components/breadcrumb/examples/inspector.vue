@@ -68,7 +68,7 @@ const inspectData = [
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-breadcrumb v-bind="props">
-            <o-breadcrumb-item tag="a" href="/" active="true"
+            <o-breadcrumb-item tag="a" href="/" active="primary"
                 >Home</o-breadcrumb-item
             >
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"
