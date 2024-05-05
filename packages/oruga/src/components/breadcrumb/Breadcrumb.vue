@@ -24,10 +24,6 @@ const props = defineProps({
      * Color variant of the breadcrumb
      * @values primary, info, success, warning, danger, and any other custom color
      */
-    variant: {
-        type: String,
-        default: () => getOption("breadcrumb.variant"),
-    },
     /**
      * Size of the breadcrumb
      * @values small, medium, large
@@ -72,27 +68,22 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the button elements wrapper */
+    /** Class of the breadcrumb elements wrapper */
     wrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the button size */
+    /** Class of the breadcrumb size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the button variant */
-    // variantClass: {
-    //     type: [String, Array, Function] as PropType<ComponentClass>,
-    //     default: undefined,
-    // },
-    /** Class of the button separator */
+    /** Class of the breadcrumb separator */
     separatorClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the button align */
+    /** Class of the breadcrumb align */
     alignClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -107,12 +98,6 @@ const rootClasses = defineClasses(
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    // [
-    //     "variantClass",
-    //     "o-breadcrumb__",
-    //     computed(() => props.variant),
-    //     computed(() => !!props.variant),
-    // ],
     [
         "separatorClass",
         "o-breadcrumb__",

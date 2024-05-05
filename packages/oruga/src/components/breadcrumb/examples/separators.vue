@@ -2,7 +2,7 @@
     <section>
         <!-- Separatoer Slash -->
         <o-breadcrumb tag="div" separator="has-slash-separator">
-            <o-breadcrumb-item tag="a" href="/" active="primary"
+            <o-breadcrumb-item tag="a" href="/" active="true" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"
@@ -14,7 +14,7 @@
         </o-breadcrumb>
         <!-- Separatoer dot -->
         <o-breadcrumb tag="div" separator="has-dot-separator">
-            <o-breadcrumb-item tag="a" href="/" active="primary"
+            <o-breadcrumb-item tag="a" href="/" active="true" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"
@@ -26,7 +26,7 @@
         </o-breadcrumb>
         <!-- Separatoer chevron -->
         <o-breadcrumb tag="div" separator="has-chevron-separator">
-            <o-breadcrumb-item tag="a" href="/" active="primary"
+            <o-breadcrumb-item tag="a" href="/" active="true" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"
@@ -38,7 +38,7 @@
         </o-breadcrumb>
         <!-- Separatoer bullet -->
         <o-breadcrumb tag="div" separator="has-bullet-separator">
-            <o-breadcrumb-item tag="a" href="/" active="primary"
+            <o-breadcrumb-item tag="a" href="/" active="true" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"
@@ -54,7 +54,7 @@
             separator="has-succeeds-separator"
             size="medium"
             align="center">
-            <o-breadcrumb-item tag="a" href="/" active="primary"
+            <o-breadcrumb-item tag="a" href="/" active="true" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"

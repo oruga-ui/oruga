@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineClasses /*useProviderChild */ } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import { getOption } from "@/utils/config";
 
@@ -7,6 +7,7 @@ import { computed, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
+
 /**
  * The classic breadrcumb item, in different colors, sizes, and states
  * @displayName Breadcrumb Item
@@ -20,12 +21,16 @@ defineOptions({
 
 const props = defineProps({
     /**
-     * breadcrumb item is active
+     * breadcrumb item is active, works only when tag provided is a
      * @values true, false
      */
     active: {
-        type: String,
+        type: Boolean,
         default: () => getOption("breadcrumb.active"),
+    },
+    activeVariant: {
+        type: String,
+        default: () => getOption("breadcrumb.activeVariant"),
     },
     /**
      * breadcrumb item tag name
@@ -84,9 +89,6 @@ const props = defineProps({
     },
 });
 
-// Inject functionalities and data from the parent carousel component
-// const { parent, item } = useProviderChild<Ref<any>>();
-
 // --- Computed Component Classes ---
 const computedTag = computed(() => {
     return props.tag ? props.tag : "li";
@@ -94,9 +96,14 @@ const computedTag = computed(() => {
 const computedDisabled = computed(() =>
     props.disabled ? "o-breadcrumb-item__disabled" : null,
 );
-const computedActive = computed(() =>
-    props.active ? `o-breadcrumb-item__${props.active}` : null,
-);
+const computedActive = computed(() => {
+    if (props.active && props.tag !== "router-link")
+        return `o-breadcrumb-item__${props.activeVariant} active`;
+    if (props.tag == "router-link")
+        return `o-breadcrumb-item__${props.activeVariant}`;
+    return null;
+});
+
 // --- Computed Component Classes ---
 
 const iconClasses = defineClasses(["iconClass", "o-breadcrumb-item__icon"]);
@@ -116,13 +123,7 @@ const wrapperClasses = defineClasses([
     "o-breadcrumb-item__wrapper",
 ]);
 
-const rootClasses = defineClasses(
-    ["rootClass", "o-breadcrumb-item"],
-    // eslint-disable-next-line prettier/prettier
-    // ["disabledClass", "o-breadcrumb-item__disabled", null, computed(() => props.disabled)],
-    // eslint-disable-next-line prettier/prettier
-    // ["activeClass", "o-breadcrumb-item__active", null, computed(() => props.active)],
-);
+const rootClasses = defineClasses(["rootClass", "o-breadcrumb-item"]);
 </script>
 
 <template>

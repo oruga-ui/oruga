@@ -14,25 +14,25 @@
         </o-breadcrumb>
         <!--  Position center -->
         <o-breadcrumb tag="div" align="centered">
-            <o-breadcrumb-item tag="router-link" to="/" active="primary"
+            <o-breadcrumb-item tag="router-link" to="/" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
-            <o-breadcrumb-item tag="router-link" to="/documentation/" disabled="true"
+            <o-breadcrumb-item tag="router-link" to="/documentation/" active-variant="primary" disabled="true"
                 >Docs
             </o-breadcrumb-item>
-            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb.html"
+            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb.html" active-variant="primary"
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>
         <!--  Position right -->
         <o-breadcrumb tag="div" align="right">
-            <o-breadcrumb-item tag="router-link" to="/" active="primary"
+            <o-breadcrumb-item tag="router-link" to="/" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
-            <o-breadcrumb-item tag="router-link" to="/documentation/" disabled="true"
+            <o-breadcrumb-item tag="router-link" to="/documentation/" disabled="true" active-variant="primary"
                 >Docs
             </o-breadcrumb-item>
-            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb.html"
+            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb.html" active-variant="primary"
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>

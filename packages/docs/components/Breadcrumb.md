@@ -44,7 +44,6 @@ title: Breadcrumb
 | separator | The breadcrumb separator between breadcrumb items | string           | `has-arrow-separator`, `has-dot-separator`, `has-slash-separator`, `has-bullet-separator`, `has-succeeds-separator`, `has-chevron-separator` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: undefined<br>}</code> |
 | size      | Size of the breadcrumb                            | string           | `small`, `medium`, `large`                                                                                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;size: undefined<br>}</code>      |
 | tag       | Tag of the breadcrumb                             | DynamicComponent | `div`, `section ...`                                                                                                                         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;tag: "section"<br>}</code>       |
-| variant   | Color variant of the breadcrumb                   | string           | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                                                              | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>   |
 
 ### Slots
 

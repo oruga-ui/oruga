@@ -21,7 +21,11 @@
             separator="has-arrow-separator"
             size="medium"
             align="center">
-            <o-breadcrumb-item tag="a" href="/" active="primary"
+            <o-breadcrumb-item
+                tag="a"
+                href="/"
+                active="true"
+                active-variant="primary"
                 >Homee
             </o-breadcrumb-item>
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"
@@ -36,18 +40,23 @@
             separator="has-arrow-separator"
             size="medium"
             align="center">
-            <o-breadcrumb-item tag="router-link" to="/" active="primary"
+            <o-breadcrumb-item 
+                tag="router-link"  
+                to="/" 
+                active-variant="primary"
                 >Home
             </o-breadcrumb-item>
             <o-breadcrumb-item
                 tag="router-link"
                 to="/documentation/"
                 disabled="true"
+                active-variant="primary"
                 >Docs
             </o-breadcrumb-item>
             <o-breadcrumb-item
                 tag="router-link"
                 to="/components/Breadcrumb.html"
+                active-variant="primary"
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>
