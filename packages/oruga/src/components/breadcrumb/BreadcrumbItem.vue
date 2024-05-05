@@ -48,12 +48,10 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("breadcrumb.disabled"),
     },
-
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
      */
-
     iconPack: {
         type: String,
         default: () => getOption("breadcrumb.iconPack", undefined),
@@ -62,27 +60,29 @@ const props = defineProps({
     iconLeft: { type: String, default: undefined },
     /** Icon name to show on the right */
     iconRight: { type: String, default: undefined },
+    /** Show the icon in both sides, left - right */
+    iconBoth: { type: Boolean, default: false },
     /**
      * This is used internally
      * @ignore
      */
-    /** Class of the button elements wrapper */
+    /* class props (will not be displayed in the docs) */
+    /** Class of the breadcrumb elements wrapper */
     wrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconBoth: { type: Boolean, default: false },
-    /** Class of the button icon */
+    /** Class of the breadcrumb icon */
     iconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the button icon on the left */
+    /** Class of the breadcrumb icon on the left */
     iconLeftClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the button icon on the right */
+    /** Class of the breadcrumb icon on the right */
     iconRightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -90,9 +90,6 @@ const props = defineProps({
 });
 
 // --- Computed Component Classes ---
-const computedTag = computed(() => {
-    return props.tag ? props.tag : "li";
-});
 const computedDisabled = computed(() =>
     props.disabled ? "o-breadcrumb-item__disabled" : null,
 );
@@ -103,7 +100,6 @@ const computedActive = computed(() => {
         return `o-breadcrumb-item__${props.activeVariant}`;
     return null;
 });
-
 // --- Computed Component Classes ---
 
 const iconClasses = defineClasses(["iconClass", "o-breadcrumb-item__icon"]);
@@ -128,7 +124,7 @@ const rootClasses = defineClasses(["rootClass", "o-breadcrumb-item"]);
 
 <template>
     <component
-        :is="computedTag"
+        :is="tag"
         :class="[rootClasses, computedActive, computedDisabled]"
         data-oruga="breadcrumb-item">
         <span :class="wrapperClasses">

@@ -5,7 +5,7 @@ import BreadcrumbItem from "./BreadcrumbItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-/** export button plugin */
+/** export breadcrumb plugin */
 export default {
     install(app: App) {
         registerComponent(app, Breadcrumb);

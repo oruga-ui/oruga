@@ -21,10 +21,6 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * Color variant of the breadcrumb
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    /**
      * Size of the breadcrumb
      * @values small, medium, large
      */
