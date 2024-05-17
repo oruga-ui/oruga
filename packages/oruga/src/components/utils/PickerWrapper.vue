@@ -123,9 +123,9 @@ watch(
     () => {
         // toggle picker if not stay open
         if (!props.stayOpen) togglePicker(false);
-        // check validation if native
-        if (isMobileNative.value && !isValid.value) checkHtml5Validity();
+        if (!isValid.value) checkHtml5Validity();
     },
+    { flush: "post" },
 );
 
 const isActive = usePropBinding<boolean>("active", props, emits, {
