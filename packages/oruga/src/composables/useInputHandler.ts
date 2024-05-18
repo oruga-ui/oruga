@@ -5,6 +5,7 @@ import {
     type ExtractPropTypes,
     type MaybeRefOrGetter,
     type Component,
+    watch,
 } from "vue";
 import { injectField } from "@/components/field/fieldInjection";
 import { unrefElement } from "./unrefElement";
@@ -35,6 +36,16 @@ function asValidatableFormElement(el: unknown): ValidatableFormElement | null {
         : null;
 }
 
+const constraintValidationAttributes = [
+    "required",
+    "pattern",
+    "maxlength",
+    "minlength",
+    "max",
+    "min",
+    "step",
+];
+
 /**
  * Form input handler functionalities
  */
@@ -61,10 +72,9 @@ export function useInputHandler(
     // inject parent field component if used inside one
     const { parentField } = injectField();
 
-    const element = computed<ValidatableFormElement>(() => {
+    const maybeElement = computed<ValidatableFormElement | undefined>(() => {
         const el = unrefElement<Component | HTMLElement>(inputRef);
         if (!el) {
-            console.warn("useInputHandler: inputRef contains no element");
             return undefined;
         }
         if (el.getAttribute("data-oruga-input"))
@@ -81,6 +91,14 @@ export function useInputHandler(
         }
         // return underlaying the input element
         return inputs as ValidatableFormElement;
+    });
+
+    const element = computed(() => {
+        const el = maybeElement.value;
+        if (!el) {
+            console.warn("useInputHandler: inputRef contains no element");
+        }
+        return el;
     });
 
     // --- Input Focus Feature ---
@@ -199,6 +217,58 @@ export function useInputHandler(
             }
         }
         emits("invalid", event);
+    }
+
+    if (!isSSR) {
+        // Respond to attribute changes that might clear constraint validation errors.
+        // For instance, removing the `required` attribute on an empty field means that it's no
+        // longer invalid, so we might as well clear the validation message.
+        // In order to follow our usual convention, we won't add new validation messages
+        // until the next time the user interacts with the control.
+
+        // Technically, having the `required` attribute on one element in a radio button
+        // group affects the validity of the entire group.
+        // See https://html.spec.whatwg.org/multipage/input.html#radio-button-group.
+        // We're not checking for that here because it would require more expensive logic.
+        // Because of that, this will only work properly if the `required` attributes of all radio
+        // buttons in the group are synchronized with each other, which is likely anyway.
+        // (We're also expecting the use of radio buttons with our default validation message handling
+        // to be fairly uncommon because the overall visual experience is clunky with such a configuration.)
+        const onAttributeChange = (): void => {
+            if (!isValid.value) checkHtml5Validity();
+        };
+        let validationAttributeObserver: MutationObserver | null = null;
+        watch(
+            [maybeElement, isValid, () => props.useHtml5Validation],
+            (data) => {
+                // Not using destructuring assignment because browser support is just a little too weak at the moment
+                const el = data[0];
+                const valid = data[1];
+                const useValidation = data[2];
+
+                // Clean up previous state.
+                if (validationAttributeObserver != null) {
+                    // Process any pending events.
+                    if (validationAttributeObserver.takeRecords().length > 0) {
+                        onAttributeChange();
+                    }
+                    validationAttributeObserver.disconnect();
+                }
+
+                if (el == undefined || valid || !useValidation) {
+                    return;
+                }
+                if (validationAttributeObserver == null) {
+                    validationAttributeObserver = new MutationObserver(
+                        onAttributeChange,
+                    );
+                }
+                validationAttributeObserver.observe(el, {
+                    attributeFilter: constraintValidationAttributes,
+                });
+            },
+            { immediate: true },
+        );
     }
 
     return {
