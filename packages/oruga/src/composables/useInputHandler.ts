@@ -138,7 +138,7 @@ export function useInputHandler(
      * If validation fail, send 'danger' type,
      * and error message to parent if it's a Field.
      */
-    function checkHtml5Validity(): boolean {
+    function checkHtml5Validity(): void {
         if (!props.useHtml5Validation) return;
 
         if (!element.value) return;
@@ -149,8 +149,6 @@ export function useInputHandler(
             setInvalid();
             isValid.value = false;
         }
-
-        return isValid.value;
     }
 
     function setInvalid(): void {
