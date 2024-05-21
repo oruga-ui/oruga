@@ -37,6 +37,7 @@ function asValidatableFormElement(el: unknown): ValidatableFormElement | null {
 }
 
 const constraintValidationAttributes = [
+    "disabled",
     "required",
     "pattern",
     "maxlength",
@@ -238,6 +239,7 @@ export function useInputHandler(
             if (!isValid.value) checkHtml5Validity();
         };
         let validationAttributeObserver: MutationObserver | null = null;
+        let ancestorMutationObserver: MutationObserver | null = null;
         watch(
             [maybeElement, isValid, () => props.useHtml5Validation],
             (data) => {
@@ -254,10 +256,17 @@ export function useInputHandler(
                     }
                     validationAttributeObserver.disconnect();
                 }
+                if (ancestorMutationObserver != null) {
+                    if (ancestorMutationObserver.takeRecords().length > 0) {
+                        onAttributeChange();
+                    }
+                    ancestorMutationObserver.disconnect();
+                }
 
                 if (el == undefined || valid || !useValidation) {
                     return;
                 }
+
                 if (validationAttributeObserver == null) {
                     validationAttributeObserver = new MutationObserver(
                         onAttributeChange,
@@ -266,6 +275,25 @@ export function useInputHandler(
                 validationAttributeObserver.observe(el, {
                     attributeFilter: constraintValidationAttributes,
                 });
+
+                // Note that this doesn't react to changes in the list of ancestors.
+                // Based on testing, Vue seems to rarely, if ever, re-parent DOM nodes;
+                // it generally prefers to create new ones under the new parent.
+                // That means this simpler solution is likely good enough for now.
+                let ancestor: Node | null = el;
+                while ((ancestor = ancestor.parentNode)) {
+                    // Form controls can be disabled by their ancestor fieldsets.
+                    if (ancestor instanceof HTMLFieldSetElement) {
+                        if (ancestorMutationObserver == null) {
+                            ancestorMutationObserver = new MutationObserver(
+                                onAttributeChange,
+                            );
+                        }
+                        ancestorMutationObserver.observe(ancestor, {
+                            attributeFilter: ["disabled"],
+                        });
+                    }
+                }
             },
             { immediate: true },
         );
