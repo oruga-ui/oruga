@@ -59,7 +59,12 @@ const props = defineProps({
         type: String,
         default: () => getOption("timepicker.size"),
     },
-    hourFormat: { type: String, default: undefined },
+    hourFormat: {
+        type: [String, Number] as PropType<"12" | "24" | 12 | 24>,
+        validator: (value: string | number) =>
+            ["12", "24", 12, 24, undefined].includes(value),
+        default: undefined,
+    },
     incrementHours: { type: Number, default: 1 },
     incrementMinutes: { type: Number, default: 1 },
     incrementSeconds: { type: Number, default: 1 },
