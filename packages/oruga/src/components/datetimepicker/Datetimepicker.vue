@@ -243,9 +243,9 @@ watch([() => isMobileNative.value, () => props.inline], () => {
 });
 
 /** Dropdown active state */
-const isActive = defineModel<boolean>("active");
+const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<Date>();
+const vmodel = defineModel<Date>({ default: undefined });
 
 function updateVModel(value: Date | Date[]): void {
     if (!value) {
