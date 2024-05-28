@@ -70,15 +70,12 @@ const props = defineProps({
     type: { type: String, default: () => getOption("tabs.type", "default") },
     /** Tabs will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
+    /** Destroy tabItem on hide */
+    destroyOnHide: { type: Boolean, default: false },
     /** Tab will have an animation */
     animated: {
         type: Boolean,
         default: () => getOption("tabs.animated", true),
-    },
-    /** Destroy tabItem on hide */
-    destroyOnHide: {
-        type: Boolean,
-        default: false,
     },
     /**
      * Transition animation name
