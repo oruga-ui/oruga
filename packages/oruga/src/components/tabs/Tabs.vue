@@ -75,6 +75,11 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("tabs.animated", true),
     },
+    /** Destroy tabItem on hide */
+    destroyOnHide: {
+        type: Boolean,
+        default: false,
+    },
     /**
      * Transition animation name
      * @values [next, prev], [right, left, down, up]
@@ -185,6 +190,7 @@ const provideData = computed<TabsComponent>(() => ({
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
+    destroyOnHide: props.destroyOnHide,
 }));
 
 /** Provide functionalities and data to child item components */
