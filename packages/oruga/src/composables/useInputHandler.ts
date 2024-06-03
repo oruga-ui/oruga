@@ -240,7 +240,6 @@ export function useInputHandler(
             if (!isValid.value) checkHtml5Validity();
         };
         let validationAttributeObserver: MutationObserver | null = null;
-        let ancestorMutationObserver: MutationObserver | null = null;
         watch(
             [maybeElement, isValid, () => props.useHtml5Validation],
             (data) => {
@@ -256,12 +255,6 @@ export function useInputHandler(
                         onAttributeChange();
                     }
                     validationAttributeObserver.disconnect();
-                }
-                if (ancestorMutationObserver != null) {
-                    if (ancestorMutationObserver.takeRecords().length > 0) {
-                        onAttributeChange();
-                    }
-                    ancestorMutationObserver.disconnect();
                 }
 
                 if (!isDefined(el) || valid || !useValidation) {
@@ -285,12 +278,7 @@ export function useInputHandler(
                 while ((ancestor = ancestor.parentNode)) {
                     // Form controls can be disabled by their ancestor fieldsets.
                     if (ancestor instanceof HTMLFieldSetElement) {
-                        if (ancestorMutationObserver == null) {
-                            ancestorMutationObserver = new MutationObserver(
-                                onAttributeChange,
-                            );
-                        }
-                        ancestorMutationObserver.observe(ancestor, {
+                        validationAttributeObserver.observe(ancestor, {
                             attributeFilter: ["disabled"],
                         });
                     }
