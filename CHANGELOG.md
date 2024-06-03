@@ -1,3 +1,19 @@
+## [0.8.10](https://github.com/oruga-ui/oruga/compare/v0.8.9...v0.8.10) (2024-06-03)
+
+
+### Bug Fixes
+
+* **datetimpicker:** fix inline value edit | make picker props reactive ([#932](https://github.com/oruga-ui/oruga/issues/932)) ([1e93773](https://github.com/oruga-ui/oruga/commit/1e93773fbbe38859ecac3deee8e651c340d01012))
+
+
+### Features
+
+* **modal:** set default `destroyOnHide` to `true` for programmatic usage ([#937](https://github.com/oruga-ui/oruga/issues/937)) ([0b0bdca](https://github.com/oruga-ui/oruga/commit/0b0bdca61e72bf471d2e8788d8737a47803f79b4))
+* **steps:** add `destroyOnHide` prop ([#934](https://github.com/oruga-ui/oruga/issues/934)) ([d06ea1e](https://github.com/oruga-ui/oruga/commit/d06ea1ecf462b54c626a72286ba123d2a1489031))
+* **tabs:** add `destroyOnHide` prop ([#926](https://github.com/oruga-ui/oruga/issues/926)) ([e87882b](https://github.com/oruga-ui/oruga/commit/e87882bcb633ba288228f77ddf885a3373bbd860))
+
+
+
 ## [0.8.9](https://github.com/oruga-ui/oruga/compare/v0.8.8...v0.8.9) (2024-05-01)
 
 
