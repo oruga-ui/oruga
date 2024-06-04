@@ -37,17 +37,17 @@ const props = defineProps({
         default: () => getOption("steps.variant"),
     },
     /**
-     * Tab size
+     * Step size
      * @values small, medium, large
      */
     size: {
         type: String,
         default: () => getOption("steps.size"),
     },
-    /** Show tab in vertical layout */
+    /** Show step in vertical layout */
     vertical: { type: Boolean, default: false },
     /**
-     * Position of the tab
+     * Position of the step
      * @values left, centered, right
      */
     position: {
@@ -78,6 +78,8 @@ const props = defineProps({
      * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
      */
     hasNavigation: { type: Boolean, default: true },
+    /** Destroy stepItem on hide */
+    destroyOnHide: { type: Boolean, default: false },
     /** Step navigation is animated */
     animated: {
         type: Boolean,
@@ -90,7 +92,7 @@ const props = defineProps({
     animation: {
         type: Array as PropType<Array<string>>,
         default: () =>
-            getOption("tabs.animation", [
+            getOption("steps.animation", [
                 "slide-next",
                 "slide-prev",
                 "slide-down",
@@ -226,9 +228,9 @@ const emits = defineEmits<{
      */
     (e: "update:modelValue", value: string | number): void;
     /**
-     * on tab change event
-     * @param value {string | number} new tab value
-     * @param value {string | number} old tab value
+     * on step change event
+     * @param value {string | number} new step value
+     * @param value {string | number} old step value
      */
     (e: "change", newValue: string | number, oldValue: string | number): void;
 }>();
@@ -244,6 +246,7 @@ const provideData = computed<StepsComponent>(() => ({
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
+    destroyOnHide: props.destroyOnHide,
 }));
 
 /** Provide functionalities and data to child item components */
@@ -261,7 +264,7 @@ const items = computed<StepItem[]>(() =>
 
 const vmodel = defineModel<string | number>();
 
-/** When v-model is changed set the new active tab. */
+/** When v-model is changed set the new active step. */
 watch(
     () => props.modelValue,
     (value) => {
