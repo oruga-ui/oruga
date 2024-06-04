@@ -116,9 +116,11 @@ const props = defineProps({
     },
     /** Custom function to parse a string into a date */
     dateParser: {
-        type: Function as PropType<(date: string) => Date>,
-        default: (date: string, defaultFunction: (date: string) => Date) =>
-            getOption("datepicker.dateParser", defaultFunction)(date),
+        type: Function as PropType<(date: string) => Date | Date[]>,
+        default: (
+            date: string,
+            defaultFunction: (date: string) => Date | Date[],
+        ) => getOption("datepicker.dateParser", defaultFunction)(date),
     },
     /** Date creator function, default is `new Date()` */
     dateCreator: {
