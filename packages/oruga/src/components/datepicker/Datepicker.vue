@@ -616,34 +616,30 @@ const isTypeMonth = computed(() => props.type === "month");
 /**
  * When v-model is changed:
  *   1. Update internal value.
- *   2. If it's invalid, validate again.
  */
 watch(
     () => props.modelValue,
     (value) => {
-        // updateInternalState
-        if (vmodel.value !== value) {
-            const isArray = Array.isArray(value);
-            const currentDate = isArray
-                ? !value.length
-                    ? props.dateCreator()
-                    : value[value.length - 1]
-                : !value
-                  ? props.dateCreator()
-                  : value;
-            if (
-                !isArray ||
-                (isArray &&
-                    Array.isArray(vmodel.value) &&
-                    value.length > vmodel.value.length)
-            ) {
-                focusedDateData.value = {
-                    day: currentDate.getDate(),
-                    month: currentDate.getMonth(),
-                    year: currentDate.getFullYear(),
-                };
-            }
-        }
+        const isArray = Array.isArray(value);
+        const currentDate = isArray
+            ? value.length
+                ? value[value.length - 1]
+                : props.dateCreator()
+            : value
+              ? value
+              : props.dateCreator();
+        if (
+            !isArray ||
+            (isArray &&
+                Array.isArray(vmodel.value) &&
+                value.length > vmodel.value.length)
+        )
+            // updateInternalState
+            focusedDateData.value = {
+                day: currentDate.getDate(),
+                month: currentDate.getMonth(),
+                year: currentDate.getFullYear(),
+            };
     },
 );
 
