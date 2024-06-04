@@ -222,6 +222,15 @@ const datepickerRef = ref<InstanceType<typeof ODatepicker>>();
 const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
 const nativeInputRef = ref<InstanceType<typeof OInput>>();
 
+const timepickerProps = ref(props.timepicker);
+watch(timepickerProps.value, (value) => (timepickerProps.value = value), {
+    deep: true,
+});
+const datepickerProps = ref(props.datepicker);
+watch(datepickerProps.value, (value) => (datepickerProps.value = value), {
+    deep: true,
+});
+
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : datepickerRef.value,
 );
@@ -243,9 +252,9 @@ watch([() => isMobileNative.value, () => props.inline], () => {
 });
 
 /** Dropdown active state */
-const isActive = defineModel<boolean>("active");
+const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<Date>();
+const vmodel = defineModel<Date>({ default: undefined });
 
 function updateVModel(value: Date | Date[]): void {
     if (!value) {
@@ -288,7 +297,7 @@ function updateVModel(value: Date | Date[]): void {
 
 const minDate = computed(() => {
     if (!props.minDatetime)
-        return props.datepicker ? props.datepicker.minDate : null;
+        return datepickerProps.value ? datepickerProps.value.minDate : null;
     return new Date(
         props.minDatetime.getFullYear(),
         props.minDatetime.getMonth(),
@@ -302,7 +311,7 @@ const minDate = computed(() => {
 
 const maxDate = computed(() => {
     if (!props.maxDatetime)
-        return props.datepicker ? props.datepicker.maxDate : null;
+        return datepickerProps.value ? datepickerProps.value.maxDate : null;
     return new Date(
         props.maxDatetime.getFullYear(),
         props.maxDatetime.getMonth(),
@@ -324,7 +333,7 @@ const minTime = computed(() => {
         vmodel.value.getMonth() != props.minDatetime.getMonth() ||
         vmodel.value.getDate() != props.minDatetime.getDate()
     ) {
-        return props.timepicker ? props.timepicker.minTime : null;
+        return timepickerProps.value ? timepickerProps.value.minTime : null;
     }
     return props.minDatetime;
 });
@@ -338,21 +347,23 @@ const maxTime = computed(() => {
         vmodel.value.getMonth() != props.maxDatetime.getMonth() ||
         vmodel.value.getDate() != props.maxDatetime.getDate()
     ) {
-        return props.timepicker ? props.timepicker.maxTime : null;
+        return timepickerProps.value ? timepickerProps.value.maxTime : null;
     }
     return props.maxDatetime;
 });
 
 const datepickerSize = computed(() =>
-    props.datepicker?.size ? props.datepicker.size : props.size,
+    datepickerProps.value?.size ? datepickerProps.value.size : props.size,
 );
 
 const timepickerSize = computed(() =>
-    props.timepicker?.size ? props.timepicker.size : props.size,
+    timepickerProps.value?.size ? timepickerProps.value.size : props.size,
 );
 
 const timepickerDisabled = computed(() =>
-    props.timepicker?.disabled ? props.timepicker.disabled : props.disabled,
+    timepickerProps.value?.disabled
+        ? timepickerProps.value.disabled
+        : props.disabled,
 );
 
 function formatNative(value: Date): string {
@@ -403,8 +414,9 @@ const localeOptions = computed(
 
 const isHourFormat24 = computed(
     () =>
-        props.timepicker?.hourFormat === HOUR_FORMAT_24 ||
-        !localeOptions.value.hour12,
+        (timepickerProps.value?.hourFormat &&
+            timepickerProps.value.hourFormat === HOUR_FORMAT_24) ||
+        (!timepickerProps.value?.hourFormat && !localeOptions.value.hour12),
 );
 
 const dtf = computed(
@@ -463,7 +475,7 @@ function defaultDatetimeParser(value: string): Date {
                 dayPeriods.push(amString.value);
                 dayPeriods.push(pmString.value);
             }
-            const parts = this.dtf.formatToParts(new Date());
+            const parts = dtf.value.formatToParts(new Date());
             const formatRegex = parts
                 .map((part, idx) => {
                     if (part.type === "literal") {

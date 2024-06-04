@@ -599,10 +599,10 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-const vmodel = defineModel<Date | Date[]>();
+const vmodel = defineModel<Date | Date[]>({ default: undefined });
 
 /** Dropdown active state */
-const isActive = defineModel<boolean>("active");
+const isActive = defineModel<boolean>("active", { default: false });
 
 /** modelValue formated into string */
 const formattedValue = computed(() =>

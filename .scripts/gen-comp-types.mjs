@@ -1,7 +1,7 @@
 // The file is not designed to run directly. `cwd` should be project root.
-import fs from 'fs'
-import path from 'path'
-import process from 'process'
+import fs from 'fs';
+import path from 'path';
+import process from 'process';
 
 import { createChecker } from "vue-component-meta";
 
