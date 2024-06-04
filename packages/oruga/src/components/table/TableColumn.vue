@@ -57,12 +57,12 @@ const props = defineProps({
     /** Make header selectable */
     headerSelectable: { type: Boolean, default: false },
     /** Define a custom sort function */
-    onSort: {
+    doSort: {
         type: Function as PropType<(a: T, b: T, isAsc: boolean) => number>,
         default: undefined,
     },
     /** Define a custom filter funtion for the search */
-    onSearch: {
+    doSearch: {
         type: Function as PropType<(row: T, filter: string) => boolean>,
         default: undefined,
     },

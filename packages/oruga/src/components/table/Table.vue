@@ -125,7 +125,7 @@ const props = defineProps({
     },
     /** Rows can be checked (multiple) */
     checkable: { type: Boolean, default: false },
-    /** Make the checkbox column sticky when checkable */
+    /** Make the checkbox column sticky (if checkable) */
     stickyCheckbox: { type: Boolean, default: false },
     /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
     headerCheckable: { type: Boolean, default: true },
@@ -840,13 +840,12 @@ const visibleRows = computed(() => {
     return tableRows.value.slice(start, end);
 });
 
-const visibleColumns = computed(() =>
-    tableColumns.value
-        ? tableColumns.value.filter(
-              (column) => column.visible || column.visible === undefined,
-          )
-        : [],
-);
+const visibleColumns = computed(() => {
+    if (!tableColumns.value) return [];
+    return tableColumns.value.filter(
+        (column) => column.visible || column.visible === undefined,
+    );
+});
 
 /** process thAttrs & tdAttrs when row or columns got changed */
 watch([visibleRows, visibleColumns], () => {
@@ -1014,8 +1013,8 @@ function isRowFiltered(row: T): boolean {
         // get column for filter
         const column = tableColumns.value.find((c) => c.field === key);
         // if column has onSearch return result
-        if (typeof column?.onSearch === "function")
-            return column.onSearch(row, filter);
+        if (typeof column?.doSearch === "function")
+            return column.doSearch(row, filter);
 
         const value = getValueByPath(row, key);
         if (value == null) return false;
@@ -1125,8 +1124,8 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
     return sortBy<TableRow<T>>(
         rows,
         column?.field ? "value." + column.field : undefined,
-        column?.onSort
-            ? (a, b, asc): number => column.onSort(a.value, b.value, asc)
+        column?.doSort
+            ? (a, b, asc): number => column.doSort(a.value, b.value, asc)
             : undefined,
         isAsc.value,
     );
@@ -1926,7 +1925,7 @@ defineExpose({ rows: tableData });
                             <template v-if="isActiveDetailRow(row)">
                                 <!--
                                     @slot Place row detail content here
-                                    @binding {T} row - row conent
+                                    @binding {T} row - row content
                                     @binding {number} index - row index
                                 -->
                                 <slot
@@ -1941,7 +1940,7 @@ defineExpose({ rows: tableData });
                                     <td :colspan="columnCount">
                                         <!--
                                             @slot Place row detail content here
-                                            @binding {T} row - row conent
+                                            @binding {T} row - row content
                                             @binding {number} index - row index
                                         -->
                                         <slot
