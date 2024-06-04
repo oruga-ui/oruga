@@ -74,6 +74,9 @@ export function useInputHandler(
     // inject parent field component if used inside one
     const { parentField } = injectField();
 
+    /// Allows access to the native element in cases where it might be missing,
+    /// e.g. because the component hasn't been mounted yet or has been suspended
+    /// by a <KeepAlive>
     const maybeElement = computed<ValidatableFormElement | undefined>(() => {
         const el = unrefElement<Component | HTMLElement>(inputRef);
         if (!el) {
@@ -95,6 +98,8 @@ export function useInputHandler(
         return inputs as ValidatableFormElement;
     });
 
+    /// Should be used for most accesses to the native element; we generally
+    /// expect it to be present, especially in event handlers.
     const element = computed(() => {
         const el = maybeElement.value;
         if (!el) {
