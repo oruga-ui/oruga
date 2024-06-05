@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { h } from "vue";
 import { useOruga } from "../../../../../oruga/dist/oruga";
 import ModalForm from "./_modal-form.vue";

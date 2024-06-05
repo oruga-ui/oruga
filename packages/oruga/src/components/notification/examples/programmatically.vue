@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useOruga } from "../../../../../oruga/dist/oruga";
 import NotificationForm from "./_notification-form.vue";
 

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onBeforeMount, onBeforeUnmount } from "vue";
 import { useOruga } from "../../../../../oruga/dist/oruga";
 
