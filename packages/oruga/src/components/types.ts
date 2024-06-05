@@ -335,7 +335,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to format a date into a string */
                 dateFormatter: (date: Date | Date[]) => string;
                 /** Custom function to parse a string into a date */
-                dateParser: (date: string) => Date;
+                dateParser: (date: string) => Date | Date[];
                 /** Date creator function, default is `new Date()` */
                 dateCreator: () => Date;
                 /** Define a list of weeks which can not be selected */
