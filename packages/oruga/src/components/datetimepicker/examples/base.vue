@@ -53,6 +53,7 @@ const locale = ref(); // Browser locale
                 :datepicker="{ showWeekNumber }"
                 :timepicker="{ enableSeconds, hourFormat }" />
         </o-field>
+
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

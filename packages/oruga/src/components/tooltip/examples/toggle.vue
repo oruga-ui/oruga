@@ -7,7 +7,7 @@ const active = ref(true);
 <template>
     <section>
         <o-field>
-            <o-switch v-model="active"> Toggle </o-switch>
+            <o-switch v-model="active" label="Toggle" />
         </o-field>
 
         <div class="odocs-spaced">

@@ -38,6 +38,7 @@ const filteredDataObj = computed(() =>
                 field="user.first_name"
                 @select="(option) => (selected = option)" />
         </o-field>
+
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

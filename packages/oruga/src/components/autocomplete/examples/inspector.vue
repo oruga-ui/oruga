@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
 const filtered = [
     {
         type: "Frameworks",
@@ -22,7 +24,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "Q",
-                    char: "Q",
                     shiftKey: true,
                 }),
             );
@@ -85,7 +86,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "Q",
-                    char: "Q",
                     shiftKey: true,
                 }),
             );
@@ -102,7 +102,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "|",
-                    char: "|",
                     shiftKey: true,
                 }),
             );
@@ -119,7 +118,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "Q",
-                    char: "Q",
                     shiftKey: true,
                 }),
             );
@@ -136,7 +134,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "Q",
-                    char: "Q",
                     shiftKey: true,
                 }),
             );
@@ -149,6 +146,8 @@ const inspectData = [
         componentRef: "Input",
     },
 ];
+
+const selected = ref();
 </script>
 
 <template>

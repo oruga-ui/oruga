@@ -19,6 +19,7 @@ onMounted(() => {
                     <span> Issues 3 </span>
                 </template>
             </o-tab-item>
+
             <o-tab-item>
                 <template #header>
                     <o-icon icon="retweet" root-class="custom-icon" />

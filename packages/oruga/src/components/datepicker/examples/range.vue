@@ -14,6 +14,7 @@ const date = ref();
                 trap-focus
                 range />
         </o-field>
+
         <p><b>Selected:</b> {{ date }}</p>
     </section>
 </template>

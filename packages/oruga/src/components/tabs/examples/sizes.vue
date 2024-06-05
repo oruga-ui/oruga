@@ -38,6 +38,7 @@ const tabs = [
                 :icon="tab.icon"
                 :disabled="tab.disabled" />
         </o-tabs>
+
         <o-tabs size="medium" type="boxed">
             <o-tab-item
                 v-for="(tab, i) in tabs"
@@ -47,6 +48,7 @@ const tabs = [
                 :icon="tab.icon"
                 :disabled="tab.disabled" />
         </o-tabs>
+
         <o-tabs size="large" type="boxed">
             <o-tab-item
                 v-for="(tab, i) in tabs"

@@ -30,7 +30,7 @@ const radio = ref("small");
                 size="large"
                 label="Large" />
         </o-field>
-        
+
         <p><b>Selection:</b> {{ radio }}</p>
     </section>
 </template>

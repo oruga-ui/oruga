@@ -8,8 +8,8 @@ const date = ref(new Date(2017, thisMonth, 1));
 const indicators = computed(() => (bars.value ? "bars" : "dots"));
 
 const events = [
-    new Date(2017, thisMonth, 2),
-    new Date(2017, thisMonth, 6),
+    { date: new Date(2017, thisMonth, 2) },
+    { date: new Date(2017, thisMonth, 6) },
     {
         date: new Date(2017, thisMonth, 6),
         type: "info",
@@ -26,7 +26,7 @@ const events = [
         date: new Date(2017, thisMonth, 10),
         type: "link",
     },
-    new Date(2017, thisMonth, 12),
+    { date: new Date(2017, thisMonth, 12) },
     {
         date: new Date(2017, thisMonth, 12),
         type: "warning",
@@ -35,7 +35,7 @@ const events = [
         date: new Date(2017, thisMonth, 16),
         type: "danger",
     },
-    new Date(2017, thisMonth, 20),
+    { date: new Date(2017, thisMonth, 20) },
     {
         date: new Date(2017, thisMonth, 29),
         type: "success",

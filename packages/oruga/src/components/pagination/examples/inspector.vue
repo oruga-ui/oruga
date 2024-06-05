@@ -87,7 +87,7 @@ const inspectData = [
         class: "linkDisabledClass",
         description: "Class of the disabled link",
         action: () => {
-            this.current = 20;
+            current.value = 20;
         },
     },
     {
