@@ -116,9 +116,11 @@ const props = defineProps({
     },
     /** Custom function to parse a string into a date */
     dateParser: {
-        type: Function as PropType<(date: string) => Date>,
-        default: (date: string, defaultFunction: (date: string) => Date) =>
-            getOption("datepicker.dateParser", defaultFunction)(date),
+        type: Function as PropType<(date: string) => Date | Date[]>,
+        default: (
+            date: string,
+            defaultFunction: (date: string) => Date | Date[],
+        ) => getOption("datepicker.dateParser", defaultFunction)(date),
     },
     /** Date creator function, default is `new Date()` */
     dateCreator: {
@@ -616,34 +618,30 @@ const isTypeMonth = computed(() => props.type === "month");
 /**
  * When v-model is changed:
  *   1. Update internal value.
- *   2. If it's invalid, validate again.
  */
 watch(
     () => props.modelValue,
     (value) => {
-        // updateInternalState
-        if (vmodel.value !== value) {
-            const isArray = Array.isArray(value);
-            const currentDate = isArray
-                ? !value.length
-                    ? props.dateCreator()
-                    : value[value.length - 1]
-                : !value
-                  ? props.dateCreator()
-                  : value;
-            if (
-                !isArray ||
-                (isArray &&
-                    Array.isArray(vmodel.value) &&
-                    value.length > vmodel.value.length)
-            ) {
-                focusedDateData.value = {
-                    day: currentDate.getDate(),
-                    month: currentDate.getMonth(),
-                    year: currentDate.getFullYear(),
-                };
-            }
-        }
+        const isArray = Array.isArray(value);
+        const currentDate = isArray
+            ? value.length
+                ? value[value.length - 1]
+                : props.dateCreator()
+            : value
+              ? value
+              : props.dateCreator();
+        if (
+            !isArray ||
+            (isArray &&
+                Array.isArray(vmodel.value) &&
+                value.length > vmodel.value.length)
+        )
+            // updateInternalState
+            focusedDateData.value = {
+                day: currentDate.getDate(),
+                month: currentDate.getMonth(),
+                year: currentDate.getFullYear(),
+            };
     },
 );
 
@@ -854,17 +852,14 @@ function formatNative(value: Date | Date[]): string {
 function onChange(value: string): void {
     const date = (props.dateParser as any)(value, defaultDateParser);
 
-    if (
+    const isValid =
         isDate(date) ||
         (Array.isArray(date) &&
             date.length === 2 &&
             isDate(date[0]) &&
-            isDate(date[1]))
-    ) {
-        vmodel.value = date;
-    } else {
-        vmodel.value = null;
-    }
+            isDate(date[1]));
+
+    vmodel.value = isValid ? date : null;
 }
 
 /** Parse date from string */
