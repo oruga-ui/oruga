@@ -204,11 +204,7 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-    if (shouldQueue.value) correctParent.value.innerHTML = "";
-    correctParent.value.insertAdjacentElement(
-        "afterbegin",
-        notificationRef.value.$el,
-    );
+    showNotice();
     setAutoClose();
 });
 
@@ -234,6 +230,14 @@ const shouldQueue = computed(() =>
           parentBottom.value.childElementCount > 0
         : false,
 );
+
+function showNotice(): void {
+    if (shouldQueue.value) correctParent.value.innerHTML = "";
+    correctParent.value.insertAdjacentElement(
+        "afterbegin",
+        notificationRef.value.$el,
+    );
+}
 
 /** Set timer to auto close message */
 function setAutoClose(): void {
