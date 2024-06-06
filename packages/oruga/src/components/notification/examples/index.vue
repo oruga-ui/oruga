@@ -19,11 +19,11 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
 </script>
 
 <template>
-    <h3 id="programmatic">programmatic use</h3>
-    <ExampleViewer :component="Programmatic" :code="ProgrammaticCode" />
-
     <h3 id="base">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
+
+    <h3 id="programmatic">programmatic use</h3>
+    <ExampleViewer :component="Programmatic" :code="ProgrammaticCode" />
 
     <h3 id="variants">Variants</h3>
     <ExampleViewer :component="Variants" :code="VariantsCode" />
