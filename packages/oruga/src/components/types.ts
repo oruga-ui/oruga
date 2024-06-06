@@ -691,6 +691,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobileBreakpoint: string;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
                 ariaRole: string;
+                /** Show an overlay */
+                overlay: boolean;
                 /** Size of close icon */
                 closeIconSize: string;
                 /** Trap focus inside the modal */
