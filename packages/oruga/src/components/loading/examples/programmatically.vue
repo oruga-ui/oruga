@@ -4,8 +4,7 @@ import { useOruga } from "../../../../../oruga/dist/oruga";
 
 const oruga = useOruga();
 
-const elementRef = ref();
-
+const elementRef = ref(null);
 const isFullPage = ref(true);
 
 function openLoading() {
