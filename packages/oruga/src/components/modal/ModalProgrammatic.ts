@@ -38,6 +38,7 @@ const ModalProgrammatic = {
         const defaultParams = {
             programmatic: { instances },
             active: true, // set the active state to true
+            destroyOnHide: true, // set destroy on hide true
         };
 
         const propsData = merge(defaultParams, componentParams);

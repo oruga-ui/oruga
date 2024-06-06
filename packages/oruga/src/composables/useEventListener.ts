@@ -1,7 +1,8 @@
 import {
-    onBeforeUnmount,
     onMounted,
     watch,
+    getCurrentScope,
+    onScopeDispose,
     type MaybeRefOrGetter,
     type Ref,
     type Component,
@@ -49,18 +50,18 @@ export function useEventListener(
         });
     };
 
-    const stop = (): void => {
-        if (typeof cleanup === "function") cleanup();
-    };
-
-    let watchStop;
+    let stopWatch;
 
     if (typeof options?.trigger !== "undefined") {
-        watchStop = watch(options.trigger, (value) => {
-            // toggle listener
-            if (value) register();
-            else stop();
-        });
+        stopWatch = watch(
+            options.trigger,
+            (value) => {
+                // toggle listener
+                if (value) register();
+                else stop();
+            },
+            { flush: "post" },
+        );
     }
 
     if (options?.immediate) register();
@@ -75,11 +76,13 @@ export function useEventListener(
         });
     }
 
-    // remove listener before unmounting
-    onBeforeUnmount(() => {
-        stop();
-        if (typeof watchStop === "function") watchStop();
-    });
+    const stop = (): void => {
+        // remove listener before unmounting
+        if (typeof stopWatch === "function") stopWatch();
+        if (typeof cleanup === "function") cleanup();
+    };
+
+    if (getCurrentScope()) onScopeDispose(stop);
 
     return stop;
 }

@@ -147,7 +147,7 @@ function computeClass(
     suffix = "",
 ): string {
     // get component props
-    const props = getProps(vm).props; // TODO: remove `.props` when object escape get reverted
+    const props = getProps(vm);
 
     const configField = vm.proxy?.$options.configField;
     if (!configField)
@@ -269,6 +269,5 @@ const getProps = (vm: ComponentInternalInstance): ComponentProps => {
         .map((key) => props[key])
         .reduce((a, b) => ({ ...a, ...b }), props);
 
-    // TODO: revert object escape
-    return { props };
+    return props;
 };

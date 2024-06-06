@@ -16,7 +16,7 @@ const multiline = ref(false);
             <o-switch v-model="multiline" label="Multiline" />
         </o-field>
 
-        <o-tabs v-model="activeTab" :multiline="multiline">
+        <o-tabs v-model="activeTab" :multiline="multiline" destroy-on-hide>
             <o-tab-item :value="0" label="Pictures" icon="image">
                 hat light is light, if Silvia be not seen? <br />
                 What joy is joy.
