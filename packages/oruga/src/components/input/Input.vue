@@ -6,6 +6,7 @@ import {
     watch,
     onMounted,
     type StyleValue,
+    type PropType,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -32,151 +33,197 @@ defineOptions({
 
 type InputValueType = IsNumber extends true ? number : string;
 
-type Props = {
-    /** Override existing theme classes completely */
-    override?: boolean;
+const props = defineProps({
     /**
      * @type string | number
      * @model
      */
-    modelValue?: InputValueType; // eslint-disable-line vue/require-default-prop
-    /**
-     * @type boolean
-     */
-    number?: IsNumber; // eslint-disable-line vue/require-default-prop
-    /** Same as native id. Also set the for label for o-field wrapper. */
-    id?: string;
-    /** Input placeholder */
-    placeholder?: string;
+    modelValue: {
+        type: [Number, String] as unknown as PropType<InputValueType>,
+        default: undefined,
+    },
+    /** @type boolean */
+    number: { type: Boolean as PropType<IsNumber>, default: false },
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /**
      * Input type, like native
      * @values Any native input type, and textarea
      */
-    type?: string;
+    type: { type: String, default: "text" },
     /**
      * Size of the control
      * @values small, medium, large
      */
-    size?: string;
+    size: {
+        type: String,
+        default: () => getOption("input.size"),
+    },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
-    variant?: string;
+    variant: {
+        type: String,
+        default: () => getOption("input.variant"),
+    },
+    /** Input placeholder */
+    placeholder: { type: String, default: undefined },
     /** Makes input full width when inside a grouped or addon field */
-    expanded?: boolean;
+    expanded: { type: Boolean, default: false },
     /** Makes the element rounded */
-    rounded?: boolean;
+    rounded: { type: Boolean, default: false },
     /** Same as native disabled */
-    disabled?: boolean;
+    disabled: { type: Boolean, default: false },
     /** Adds the reveal password functionality */
-    passwordReveal?: boolean;
+    passwordReveal: { type: Boolean, default: false },
     /** Same as native maxlength, plus character counter */
-    maxlength?: number | string;
+    maxlength: { type: [Number, String], default: undefined },
     /** Show character counter when maxlength prop is passed */
-    counter?: boolean;
+    counter: {
+        type: Boolean,
+        default: () => getOption("input.counter", false),
+    },
     /** Automatically adjust height in textarea */
-    autosize?: boolean;
+    autosize: { type: Boolean, default: false },
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
      */
-    iconPack?: string;
+    iconPack: {
+        type: String,
+        default: () => getOption("input.iconPack", undefined),
+    },
     /** Icon to be shown */
-    icon?: string;
+    icon: {
+        type: String,
+        default: () => getOption("input.icon", undefined),
+    },
     /** Makes the icon clickable */
-    iconClickable?: boolean;
+    iconClickable: { type: Boolean, default: false },
     /** Icon to be added on the right side */
-    iconRight?: string;
+    iconRight: {
+        type: String,
+        default: () => getOption("input.iconRight", undefined),
+    },
     /** Make the icon right clickable */
-    iconRightClickable?: boolean;
+    iconRightClickable: { type: Boolean, default: false },
     /** Variant of right icon */
-    iconRightVariant?: string;
+    iconRightVariant: { type: String, default: undefined },
     /** Add a button/icon to clear the inputed text */
-    clearable?: boolean;
+    clearable: {
+        type: Boolean,
+        default: () => getOption("input.clearable", false),
+    },
     /** Icon name to be added on the clear button */
-    clearIcon?: string;
+    clearIcon: {
+        type: String,
+        default: () => getOption("input.clearIcon", "close-circle"),
+    },
     /** Show status icon using field and variant prop */
-    statusIcon?: boolean;
+    statusIcon: {
+        type: Boolean,
+        default: () => getOption("statusIcon", true),
+    },
     /** Native options to use in HTML5 validation */
-    autocomplete?: string;
-    /** Accessibility label to establish relationship between the checkbox and control label */
-    ariaLabelledby?: string;
+    autocomplete: {
+        type: String,
+        default: () => getOption("input.autocomplete", "off"),
+    },
+    /** Same as native id. Also set the for label for o-field wrapper. */
+    id: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
-    useHtml5Validation?: boolean;
+    useHtml5Validation: {
+        type: Boolean,
+        default: () => getOption("useHtml5Validation", true),
+    },
     /** The message which is shown when a validation error occurs */
-    validationMessage?: string;
+    validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
-    rootClass?: ComponentClass; // eslint-disable-line
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of input when expanded */
-    expandedClass?: ComponentClass; // eslint-disable-line
+    expandedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of input when type textarea */
-    textareaClass?: ComponentClass; // eslint-disable-line
+    textareaClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the left icon space inside the input */
-    iconLeftSpaceClass?: ComponentClass; // eslint-disable-line
+    iconLeftSpaceClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the right icon space inside the input */
-    iconRightSpaceClass?: ComponentClass; // eslint-disable-line
+    iconRightSpaceClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the native input element */
-    inputClass?: ComponentClass; // eslint-disable-line
+    inputClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of input when rounded */
-    roundedClass?: ComponentClass; // eslint-disable-line
+    roundedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of input when disabled */
-    disabledClass?: ComponentClass; // eslint-disable-line
+    disabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the left icon */
-    iconLeftClass?: ComponentClass; // eslint-disable-line
+    iconLeftClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the right icon */
-    iconRightClass?: ComponentClass; // eslint-disable-line
+    iconRightClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class to display when a right icon is used */
-    hasIconRightClass?: ComponentClass; // eslint-disable-line
+    hasIconRightClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the counter element */
-    counterClass?: ComponentClass; // eslint-disable-line
+    counterClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the input size */
-    sizeClass?: ComponentClass; // eslint-disable-line
+    sizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the input variant */
-    variantClass?: ComponentClass; // eslint-disable-line
-};
-
-const props = withDefaults(defineProps<Props>(), {
-    type: "text",
-    id: uuid(),
-    size: getOption("input.size"),
-    variant: getOption("input.variant"),
-    placeholder: undefined,
-    expanded: false,
-    rounded: false,
-    disabled: false,
-    passwordReveal: false,
-    maxlength: undefined,
-    counter: getOption("input.counter", false),
-    autosize: false,
-    iconPack: getOption("input.iconPack", undefined),
-    icon: getOption("input.icon", undefined),
-    iconClickable: false,
-    iconRight: getOption("input.iconRight", undefined),
-    iconRightClickable: false,
-    iconRightVariant: undefined,
-    clearable: getOption("input.clearable", false),
-    clearIcon: getOption("input.clearIcon", "close-circle"),
-    statusIcon: getOption("statusIcon", true),
-    autocomplete: getOption("input.autocomplete", "off"),
-    ariaLabelledby: uuid(),
-    useHtml5Validation: getOption("useHtml5Validation", true),
-    validationMessage: undefined,
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {typeof modelValue} updated modelValue prop
+     * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: InputValueType): void;
+    (e: "update:modelValue", value: string | number): void;
     /**
      * on input change event
-     * @param value {typeof modelValue} input value
+     * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: InputValueType, event: Event): void;
+    (e: "input", value: string | number, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -306,9 +353,9 @@ const hasIconRight = computed(() => {
 
 const computedIconRight = computed(() => {
     if (props.passwordReveal) return passwordVisibleIcon.value;
-    if (props.clearable && vmodel.value && props.clearIcon)
+    else if (props.clearable && vmodel.value && props.clearIcon)
         return props.clearIcon;
-    if (props.iconRight) return props.iconRight;
+    else if (props.iconRight) return props.iconRight;
     return statusVariantIcon.value;
 });
 
@@ -337,13 +384,11 @@ function rightIconClick(event: Event): void {
 
 const isPasswordVisible = ref(false);
 
-const inputType = computed(() =>
-    props.passwordReveal
-        ? isPasswordVisible.value
-            ? "text"
-            : "password"
-        : props.type,
-);
+const inputType = computed(() => {
+    if (props.passwordReveal)
+        return isPasswordVisible.value ? "text" : "password";
+    else return props.type;
+});
 
 /** Current password-reveal icon name. */
 const passwordVisibleIcon = computed(() =>
