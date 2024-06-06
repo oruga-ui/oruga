@@ -274,7 +274,7 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<InputValueType>();
+const vmodel = defineModel<InputValueType>({ default: undefined });
 // set default value
 if (!isDefined(vmodel.value))
     vmodel.value = (props.number ? 0 : "") as InputValueType;
