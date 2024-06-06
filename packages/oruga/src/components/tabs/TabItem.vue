@@ -181,20 +181,22 @@ const headerTextClasses = defineClasses([
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <div
-            v-show="isActive && visible"
-            ref="rootRef"
-            v-bind="$attrs"
-            :class="elementClasses"
-            :data-id="`tabs-${item.identifier}`"
-            data-oruga="tabs-item"
-            :tabindex="isActive ? 0 : -1"
-            :role="ariaRole"
-            aria-roledescription="item">
-            <!-- 
-                @slot Tab item content
-            -->
-            <slot />
-        </div>
+        <template v-if="!parent.destroyOnHide || (isActive && visible)">
+            <div
+                v-show="isActive && visible"
+                ref="rootRef"
+                v-bind="$attrs"
+                :class="elementClasses"
+                :data-id="`tabs-${item.identifier}`"
+                data-oruga="tabs-item"
+                :tabindex="isActive ? 0 : -1"
+                :role="ariaRole"
+                aria-roledescription="item">
+                <!-- 
+                    @slot Tab item content
+                -->
+                <slot />
+            </div>
+        </template>
     </Transition>
 </template>

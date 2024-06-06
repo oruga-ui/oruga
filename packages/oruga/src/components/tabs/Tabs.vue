@@ -70,6 +70,8 @@ const props = defineProps({
     type: { type: String, default: () => getOption("tabs.type", "default") },
     /** Tabs will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
+    /** Destroy tabItem on hide */
+    destroyOnHide: { type: Boolean, default: false },
     /** Tab will have an animation */
     animated: {
         type: Boolean,
@@ -185,6 +187,7 @@ const provideData = computed<TabsComponent>(() => ({
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
+    destroyOnHide: props.destroyOnHide,
 }));
 
 /** Provide functionalities and data to child item components */

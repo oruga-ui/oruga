@@ -23,6 +23,7 @@ export type StepsComponent = {
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
+    destroyOnHide: boolean;
 };
 
 export type StepItem = Omit<ProviderItem, "data"> & StepItemComponent;

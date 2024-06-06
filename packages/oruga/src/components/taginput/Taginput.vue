@@ -4,7 +4,6 @@ import {
     nextTick,
     ref,
     useAttrs,
-    watch,
     watchEffect,
     type ComponentInstance,
     type PropType,
@@ -282,7 +281,7 @@ const emits = defineEmits<{
 
 const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<T>>>();
 
-const items = defineModel<T[]>({ default: [] });
+const items = defineModel<T[]>({ default: () => [] });
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -350,7 +349,7 @@ function addItem(item?: T | string): void {
             ? items.value.indexOf(itemToAdd) === -1
             : true;
         if (add && props.beforeAdding(item)) {
-            items.value.push(itemToAdd);
+            items.value = [...items.value, itemToAdd];
             emits("add", itemToAdd);
         }
     }
@@ -363,7 +362,8 @@ function addItem(item?: T | string): void {
 }
 
 function removeItem(index: number, event?: Event): void {
-    const item = items.value.splice(index, 1)[0];
+    const item = items.value.at(index);
+    items.value = items.value.toSpliced(index, 1);
     emits("remove", item);
     if (event) event.stopPropagation();
     if (props.openOnFocus && autocompleteRef.value) setFocus();
