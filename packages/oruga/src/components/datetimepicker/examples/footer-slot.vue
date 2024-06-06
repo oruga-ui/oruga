@@ -9,6 +9,7 @@ const datetime = ref(new Date());
         <o-field label="Select datetime">
             <o-datetimepicker
                 v-model="datetime"
+                rounded
                 placeholder="Click to select...">
                 <template #footer>
                     <div class="footer-container">

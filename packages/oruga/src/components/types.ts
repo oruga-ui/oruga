@@ -15,6 +15,8 @@ declare module "../index" {
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: string | boolean | Record<string, any>;
+                /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
+                confirmKeys: string[];
                 /** Class of the menu empty placeholder item */
                 itemEmptyClass: ClassDefinition;
                 /** Class of the menu footer item */
@@ -333,7 +335,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to format a date into a string */
                 dateFormatter: (date: Date | Date[]) => string;
                 /** Custom function to parse a string into a date */
-                dateParser: (date: string) => Date;
+                dateParser: (date: string) => Date | Date[];
                 /** Date creator function, default is `new Date()` */
                 dateCreator: () => Date;
                 /** Define a list of weeks which can not be selected */
@@ -481,6 +483,8 @@ Use menuitem only in situations where your dropdown is related to a navigation m
             }>;
         field?: ComponentConfigBase &
             Partial<{
+                /**  */
+                messageTag: DynamicComponent;
                 /** "Class for field body when horizontal */
                 bodyHorizontalClass: ClassDefinition;
                 /** Class for components automatically attached together when inside a field */
@@ -677,7 +681,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 closeIcon: string;
                 /** Custom animation (transition name) */
                 animation: string;
-                /** Destroy modal on hide */
+                /** Destroy modal on hide - default `true` for programmatic usage */
                 destroyOnHide: boolean;
                 /** DOM element where the modal component will be created on (for programmatic usage) */
                 container: string | HTMLElement;
@@ -1083,7 +1087,7 @@ but will set body to position fixed, might break some layouts. */
                 itemTag: DynamicComponent;
                 /** Step navigation is animated */
                 animated: boolean;
-                /** Tab size */
+                /** Step size */
                 size: string;
                 /** Transition animation name */
                 animation: string[];
@@ -1221,6 +1225,8 @@ but will set body to position fixed, might break some layouts. */
                 isRowCheckable: (row: unknown) => boolean;
                 /** Enable simple style pagination if paginated */
                 paginationSimple: boolean;
+                /** Filtering debounce time (in milliseconds) */
+                debounceSearch: number;
                 /** How many rows per page (if paginated) */
                 perPage: string | number;
                 /** Icon name of detail action */
@@ -1263,8 +1269,6 @@ but will set body to position fixed, might break some layouts. */
                 detailKey: string;
                 /** Whether table is striped */
                 striped: boolean;
-                /** Filtering debounce time (in milliseconds) */
-                debounceSearch: number;
             }>;
         tabs?: ComponentConfigBase &
             Partial<{

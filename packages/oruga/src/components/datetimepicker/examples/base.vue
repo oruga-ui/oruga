@@ -47,7 +47,6 @@ const locale = ref(); // Browser locale
         <o-field label="Select datetime">
             <o-datetimepicker
                 v-model="selected"
-                rounded
                 placeholder="Click to select..."
                 icon="calendar"
                 :locale="locale"

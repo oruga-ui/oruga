@@ -91,9 +91,9 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
-    /** on tab item activate event */
+    /** on step item activate event */
     (e: "activate"): void;
-    /** on tab item deactivate event */
+    /** on step item deactivate event */
     (e: "deactivate"): void;
 }>();
 
@@ -170,20 +170,22 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <div
-            v-show="isActive && visible"
-            ref="rootRef"
-            v-bind="$attrs"
-            :class="elementClasses"
-            :data-id="`steps-${item.identifier}`"
-            data-oruga="steps-item"
-            :tabindex="isActive ? 0 : -1"
-            :role="ariaRole"
-            aria-roledescription="item">
-            <!-- 
+        <template v-if="!parent.destroyOnHide || (isActive && visible)">
+            <div
+                v-show="isActive && visible"
+                ref="rootRef"
+                v-bind="$attrs"
+                :class="elementClasses"
+                :data-id="`steps-${item.identifier}`"
+                data-oruga="steps-item"
+                :tabindex="isActive ? 0 : -1"
+                :role="ariaRole"
+                aria-roledescription="item">
+                <!-- 
                 @slot Step item content
             -->
-            <slot />
-        </div>
+                <slot />
+            </div>
+        </template>
     </Transition>
 </template>
