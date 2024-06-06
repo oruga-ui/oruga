@@ -147,7 +147,7 @@ function computeClass(
     suffix = "",
 ): string {
     // get component props
-    const props = getProps(vm).props; // TODO: remove `.props` when object escape get reverted
+    const props = getProps(vm);
 
     const configField = vm.proxy?.$options.configField;
     if (!configField)
