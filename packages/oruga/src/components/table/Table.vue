@@ -138,7 +138,7 @@ const props = defineProps({
     /** Filtering debounce time (in milliseconds) */
     debounceSearch: {
         type: Number,
-        default: () => getOption("table.debounceSearch", undefined),
+        default: () => getOption("table.debounceSearch"),
     },
     /** Rows can be checked (multiple) */
     checkable: { type: Boolean, default: false },
@@ -799,13 +799,8 @@ const tableData = computed<TableRow<T>[]>(() =>
 
 const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;
 
-emits("processed", tableRows.value); // emit computed rows first time
-
 /** recompute table rows when table data change */
-watch(tableData, () => {
-    processTableData();
-    emits("processed", tableRows.value); // emit computed rows every time they the data get changed
-});
+watch(tableData, () => processTableData());
 
 /**
  * Compute tableRows based on:
@@ -824,6 +819,7 @@ function processTableData(): void {
     if (!props.backendSorting) rows = sortByColumn(rows);
 
     tableRows.value = rows;
+    emits("processed", rows); // emit computed rows every time they the data get changed
 }
 
 /** Shows total data. If backend paginated, use props total else use rows data length as pagination total */
@@ -920,7 +916,7 @@ function getColumnValue(row: T, column: TableColumn<T>): string {
 
 // --- Select Feature ---
 
-const tableSelectedRow = defineModel<T>("selected");
+const tableSelectedRow = defineModel<T>("selected", { default: undefined });
 
 /** table arrow keys listener, change selection */
 function onArrowPressed(pos: number, event: KeyboardEvent): void {
