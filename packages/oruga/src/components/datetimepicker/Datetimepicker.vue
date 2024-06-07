@@ -223,13 +223,17 @@ const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
 const nativeInputRef = ref<InstanceType<typeof OInput>>();
 
 const timepickerProps = ref(props.timepicker);
-watch(timepickerProps.value, (value) => (timepickerProps.value = value), {
+watch(timepickerProps, (value) => (timepickerProps.value = value), {
     deep: true,
 });
 const datepickerProps = ref(props.datepicker);
-watch(datepickerProps.value, (value) => (datepickerProps.value = value), {
+watch(datepickerProps, (value) => (datepickerProps.value = value), {
     deep: true,
 });
+
+const isMobileNative = computed(
+    () => props.mobileNative && isMobileAgent.any(),
+);
 
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : datepickerRef.value,
@@ -240,10 +244,6 @@ const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     elementRef,
     emits,
     props,
-);
-
-const isMobileNative = computed(
-    () => props.mobileNative && isMobileAgent.any(),
 );
 
 watch([() => isMobileNative.value, () => props.inline], () => {
