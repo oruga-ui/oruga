@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const tableData = [
+const data = ref([
     {
         id: 1,
         user: { first_name: "Jesse", last_name: "Simmons" },
@@ -176,7 +176,7 @@ const tableData = [
         date: "2016/04/12 00:05:35",
         gender: "Male",
     },
-];
+]);
 
 const isPaginated = ref(true);
 const isPaginationSimple = ref(false);
@@ -186,7 +186,6 @@ const sortIconSize = ref("small");
 const defaultSortDirection = ref("asc");
 const currentPage = ref(1);
 const perPage = ref(3);
-const data = ref(tableData);
 </script>
 
 <template>
@@ -261,46 +260,45 @@ const data = ref(tableData);
             :sort-icon-size="sortIconSize"
             default-sort="user.first_name">
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="id"
                 label="ID"
                 width="40"
                 sortable
                 numeric>
-                {{ props.row.id }}
+                {{ row.id }}
             </o-table-column>
 
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="user.first_name"
                 label="First Name"
                 sortable>
-                {{ props.row.user.first_name }}
+                {{ row.user.first_name }}
             </o-table-column>
 
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="user.last_name"
                 label="Last Name"
                 sortable>
-                {{ props.row.user.last_name }}
+                {{ row.user.last_name }}
             </o-table-column>
 
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="date"
                 label="Date"
                 sortable
                 position="centered">
-                {{ new Date(props.row.date).toLocaleDateString() }}
+                {{ new Date(row.date).toLocaleDateString() }}
             </o-table-column>
 
-            <o-table-column v-slot="props" label="Gender">
+            <o-table-column v-slot="{ row }" label="Gender">
                 <o-icon
                     pack="fas"
-                    :icon="props.row.gender === 'Male' ? 'mars' : 'venus'" />
-
-                {{ props.row.gender }}
+                    :icon="row.gender === 'Male' ? 'mars' : 'venus'" />
+                {{ row.gender }}
             </o-table-column>
         </o-table>
     </section>

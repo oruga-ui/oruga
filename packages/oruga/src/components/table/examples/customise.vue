@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const tableData = [
+const data = ref([
     {
         id: 1,
         first_name: "Jesse",
@@ -37,17 +37,16 @@ const tableData = [
         date: "2016/12/06 14:38:38",
         gender: "Female",
     },
-];
+]);
 
 const isEmpty = ref(false);
 const isBordered = ref(false);
 const isStriped = ref(false);
 const isNarrowed = ref(false);
 const isHoverable = ref(false);
-const isFocusable = ref(false);
+const isSelectable = ref(false);
 const isCheckbale = ref(false);
 const isLoading = ref(false);
-const data = ref(tableData);
 const hasMobileCards = ref(true);
 </script>
 
@@ -58,7 +57,7 @@ const hasMobileCards = ref(true);
             <o-switch v-model="isStriped" label="Striped" />
             <o-switch v-model="isNarrowed" label="Narrowed" />
             <o-switch v-model="isHoverable" label="Hoverable" />
-            <o-switch v-model="isFocusable" label="Focusable" />
+            <o-switch v-model="isSelectable" label="Selectable" />
             <o-switch v-model="isCheckbale" label="Checkable" />
             <o-switch v-model="isLoading" label="Loading state" />
             <o-switch v-model="isEmpty" label="Empty" />
@@ -76,42 +75,49 @@ const hasMobileCards = ref(true);
             :hoverable="isHoverable"
             :checkable="isCheckbale"
             :loading="isLoading"
-            :focusable="isFocusable"
+            :selectable="isSelectable"
             :mobile-cards="hasMobileCards">
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="id"
                 label="ID"
                 width="40"
                 numeric>
-                {{ props.row.id }}
+                {{ row.id }}
             </o-table-column>
 
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="first_name"
                 label="First Name">
-                {{ props.row.first_name }}
-            </o-table-column>
-
-            <o-table-column v-slot="props" field="last_name" label="Last Name">
-                {{ props.row.last_name }}
+                {{ row.first_name }}
             </o-table-column>
 
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
+                field="last_name"
+                label="Last Name">
+                {{ row.last_name }}
+            </o-table-column>
+
+            <o-table-column
+                v-slot="{ row }"
                 field="date"
                 label="Date"
                 position="centered">
-                {{ new Date(props.row.date).toLocaleDateString() }}
+                {{ new Date(row.date).toLocaleDateString() }}
             </o-table-column>
 
-            <o-table-column v-slot="props" label="Gender">
+            <o-table-column v-slot="{ row }" label="Gender">
                 <o-icon
                     pack="fas"
-                    :icon="props.row.gender === 'Male' ? 'mars' : 'venus'" />
-                {{ props.row.gender }}
+                    :icon="row.gender === 'Male' ? 'mars' : 'venus'" />
+                {{ row.gender }}
             </o-table-column>
+
+            <template #footer>
+                <td colspan="5">Custom Footer</td>
+            </template>
         </o-table>
     </section>
 </template>
