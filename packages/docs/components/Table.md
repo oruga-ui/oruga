@@ -172,9 +172,9 @@ title: Table
 
 | Prop name        | Description                                                      | Type                                         | Values                      | Default                                                     |
 | ---------------- | ---------------------------------------------------------------- | -------------------------------------------- | --------------------------- | ----------------------------------------------------------- |
+| customSearch     | Define a custom filter funtion for the search                    | (row: T, filter: string) =&gt; boolean       | -                           |                                                             |
+| customSort       | Define a custom sort function                                    | (a: T, b: T, isAsc: boolean) =&gt; number    | -                           |                                                             |
 | display          | Provide a display function to edit the output                    | (value: unknown, row: T) =&gt; string        | -                           |                                                             |
-| doSearch         | Define a custom filter funtion for the search                    | (row: T, filter: string) =&gt; boolean       | -                           |                                                             |
-| doSort           | Define a custom sort function                                    | (a: T, b: T, isAsc: boolean) =&gt; number    | -                           |                                                             |
 | field            | Define an object property key if data is an object               | string                                       | -                           |                                                             |
 | headerSelectable | Make header selectable                                           | boolean                                      | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
 | label            | Define the column label                                          | string                                       | -                           |                                                             |

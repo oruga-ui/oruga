@@ -1013,8 +1013,8 @@ function isRowFiltered(row: T): boolean {
         // get column for filter
         const column = tableColumns.value.find((c) => c.field === key);
         // if column has onSearch return result
-        if (typeof column?.doSearch === "function")
-            return column.doSearch(row, filter);
+        if (typeof column?.customSearch === "function")
+            return column.customSearch(row, filter);
 
         const value = getValueByPath(row, key);
         if (value == null) return false;
@@ -1124,8 +1124,8 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
     return sortBy<TableRow<T>>(
         rows,
         column?.field ? "value." + column.field : undefined,
-        column?.doSort
-            ? (a, b, asc): number => column.doSort(a.value, b.value, asc)
+        column?.customSort
+            ? (a, b, asc): number => column.customSort(a.value, b.value, asc)
             : undefined,
         isAsc.value,
     );
@@ -1672,7 +1672,7 @@ defineExpose({ rows: tableData });
                         <!-- row data columns -->
                         <th
                             v-for="(column, index) in visibleColumns"
-                            :key="column.identifier + ':' + index + 'header'"
+                            :key="`${column.identifier}_${index}_header`"
                             v-bind="column.thAttrsData"
                             :class="thClasses(column)"
                             :style="isMobileActive ? {} : column.style"
@@ -1754,9 +1754,7 @@ defineExpose({ rows: tableData });
                         <!-- row data columns -->
                         <th
                             v-for="(column, index) in visibleColumns"
-                            :key="
-                                column.identifier + ':' + index + 'searchable'
-                            "
+                            :key="`${column.identifier}_${index}_searchable`"
                             v-bind="column.thAttrsData"
                             :class="thClasses(column)"
                             :style="isMobileActive ? {} : column.style">
@@ -1793,9 +1791,7 @@ defineExpose({ rows: tableData });
                         <!-- row data columns -->
                         <th
                             v-for="(column, index) in visibleColumns"
-                            :key="
-                                column.identifier + ':' + index + 'subheading'
-                            "
+                            :key="`${column.identifier}_${index}_subheading`"
                             :style="isMobileActive ? {} : column.style"
                             :class="[...thBaseClasses, ...thSubheadingClasses]">
                             <template v-if="column.$slots?.subheading">
@@ -1816,7 +1812,7 @@ defineExpose({ rows: tableData });
                 <tbody>
                     <template
                         v-for="(row, index) in visibleRows"
-                        :key="row.key + ':' + index + '_row'">
+                        :key="`${row.key}_${index}_row`">
                         <tr
                             :class="rowClasses(row, index)"
                             :draggable="canDragRow"
@@ -1875,9 +1871,7 @@ defineExpose({ rows: tableData });
                             <!-- row data columns -->
                             <o-slot-component
                                 v-for="(column, colindex) in visibleColumns"
-                                :key="
-                                    column.identifier + index + ':' + colindex
-                                "
+                                :key="`${column.identifier}_${index}_${colindex}`"
                                 v-bind="column.tdAttrsData[index]"
                                 :component="column.$el"
                                 name="default"
@@ -1935,7 +1929,7 @@ defineExpose({ rows: tableData });
                                     :index="index" />
                                 <tr
                                     v-else
-                                    :key="row.key + '_detail'"
+                                    :key="`${row.key}_detail`"
                                     :class="detailedClasses">
                                     <td :colspan="columnCount">
                                         <!--
