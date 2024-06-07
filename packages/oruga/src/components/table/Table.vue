@@ -2005,7 +2005,6 @@ defineExpose({ rows: tableData });
                     :active="loading"
                     :icon="loadingIcon"
                     :label="loadingLabel"
-                    icon-size="large"
                     role="status"
                     :aria-hidden="!loading" />
             </slot>
