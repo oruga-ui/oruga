@@ -923,6 +923,12 @@ function getRowKey(row: unknown): unknown {
     return row;
 }
 
+/** get the formated row value for a column */
+function getColumnValue(row: unknown, column: TableColumn): string {
+    const prop = column.field ? getValueByPath(row, column.field) : row;
+    return column.display ? column.display(prop, row) : String(prop);
+}
+
 // --- Filter Feature ---
 
 const filters = ref<Record<string, string>>({});
@@ -1588,15 +1594,25 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                 @slot Place o-table-column here
             -->
             <slot>
+                <!--
+                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
+                -->
+                <slot name="before" />
+
                 <template v-if="columns?.length">
                     <o-table-column
                         v-for="(column, idx) in columns"
-                        :key="idx"
+                        :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ column.field ? row[column.field] : row }}
+                        {{ getColumnValue(row, column as TableColumn) }}
                     </o-table-column>
                 </template>
+
+                <!--
+                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
+                -->
+                <slot name="after" />
             </slot>
         </div>
 

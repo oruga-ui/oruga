@@ -20,6 +20,11 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /** Define an object property key if data is an object */
     field: { type: String, default: undefined },
+    /** Provide a display function to edit the output */
+    display: {
+        type: Function as PropType<(value: unknown, row: unknown) => string>,
+        default: undefined,
+    },
     /** Define a column sub heading  */
     subheading: { type: String, default: undefined },
     /** Add addtional meta information for the column for custom purpose*/
