@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const isSwitched = ref(false);
@@ -10,11 +10,13 @@ const isSwitchedCustom = ref("Yes");
         <o-field>
             <o-switch label="Default" />
         </o-field>
+
         <o-field>
             <o-switch v-model="isSwitched">
                 {{ isSwitched }}
             </o-switch>
         </o-field>
+
         <o-field>
             <o-switch
                 v-model="isSwitchedCustom"
@@ -23,6 +25,7 @@ const isSwitchedCustom = ref("Yes");
                 {{ isSwitchedCustom }}
             </o-switch>
         </o-field>
+
         <o-field>
             <o-switch disabled>Disabled</o-switch>
         </o-field>

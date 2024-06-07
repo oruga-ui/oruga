@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const today = new Date();
 const minDate = new Date(
     today.getFullYear(),

@@ -20,7 +20,7 @@ export function exist (path) {
   return fs.existsSync(path)
 }
 
-const filter = f => !f.includes("tests") && !f.includes("utils") && !f.includes(".ts") && !f.includes("examples") 
+const filter = f => !f.includes("tests") && !f.includes("examples") && !f.includes("utils") && !f.includes(".ts") && f.includes(".vue")
 
 export function getFolders(dir) {
   const folders = fs.readdirSync(dir)

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { getCurrentInstance, ref } from "vue";
 
 const datepicker = ref();

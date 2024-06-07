@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const radio = ref("default");
@@ -44,7 +44,7 @@ const radio = ref("default");
                 variant="danger"
                 label="Danger" />
         </o-field>
-        
+
         <p><b>Selection:</b> {{ radio }}</p>
     </section>
 </template>
