@@ -1275,8 +1275,8 @@ but will set body to position fixed, might break some layouts. */
                 showHeader: boolean;
                 /** Size of pagination (if paginated) */
                 paginationSize: string;
-                /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-                customRowKey: string;
+                /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */
+                selectable: boolean;
                 /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
                 rowKey: string;
                 /** Whether table is striped */

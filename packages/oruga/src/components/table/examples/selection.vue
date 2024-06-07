@@ -65,11 +65,7 @@ const data = ref([
     },
 ]);
 
-const selected = ref(null);
-
-function onRowsCreated(rows) {
-    selected.value = rows[1];
-}
+const selected = ref(data.value[2]);
 </script>
 
 <template>
@@ -87,7 +83,6 @@ function onRowsCreated(rows) {
             v-model:selected="selected"
             :data="data"
             :columns="columns"
-            focusable
-            @rows="onRowsCreated" />
+            selectable />
     </section>
 </template>

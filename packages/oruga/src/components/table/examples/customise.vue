@@ -44,7 +44,7 @@ const isBordered = ref(false);
 const isStriped = ref(false);
 const isNarrowed = ref(false);
 const isHoverable = ref(false);
-const isFocusable = ref(false);
+const isSelectable = ref(false);
 const isCheckbale = ref(false);
 const isLoading = ref(false);
 const hasMobileCards = ref(true);
@@ -57,7 +57,7 @@ const hasMobileCards = ref(true);
             <o-switch v-model="isStriped" label="Striped" />
             <o-switch v-model="isNarrowed" label="Narrowed" />
             <o-switch v-model="isHoverable" label="Hoverable" />
-            <o-switch v-model="isFocusable" label="Focusable" />
+            <o-switch v-model="isSelectable" label="Selectable" />
             <o-switch v-model="isCheckbale" label="Checkable" />
             <o-switch v-model="isLoading" label="Loading state" />
             <o-switch v-model="isEmpty" label="Empty" />
@@ -75,7 +75,7 @@ const hasMobileCards = ref(true);
             :hoverable="isHoverable"
             :checkable="isCheckbale"
             :loading="isLoading"
-            :focusable="isFocusable"
+            :selectable="isSelectable"
             :mobile-cards="hasMobileCards">
             <o-table-column
                 v-slot="{ row }"

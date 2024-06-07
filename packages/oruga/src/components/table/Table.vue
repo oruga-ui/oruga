@@ -9,6 +9,7 @@ import {
     toValue,
     type PropType,
     type Ref,
+    type MaybeRefOrGetter,
 } from "vue";
 
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
@@ -29,7 +30,7 @@ import {
     escapeRegExpChars,
     removeDiacriticsFromString,
     sortBy,
-    isEqual,
+    isDefined,
 } from "@/utils/helpers";
 import {
     defineClasses,
@@ -77,8 +78,14 @@ const props = defineProps({
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("table.rowClass", (row, index) => "")(row, index),
     },
-    /** Set which row is selected, use `v-model:selected` to make it two-way binding */
-    selected: { type: Object as PropType<TableRow<T>>, default: undefined },
+    /**
+     * Define a custom comparison function to check whether two row elements are equal.
+     * By default a `rowKey` comparison is performed if given. Otherwise a simple object comparison is done.
+     */
+    customCompare: {
+        type: Function as PropType<(a: T, b: T) => boolean>,
+        default: undefined,
+    },
     /** Border to all cells */
     bordered: {
         type: Boolean,
@@ -101,8 +108,18 @@ const props = defineProps({
     },
     /** Enable loading state */
     loading: { type: Boolean, default: false },
-    /** Table can be focused and user can navigate with keyboard arrows (require selected) and rows are highlighted when hovering */
-    focusable: { type: Boolean, default: false },
+    /** Set which row is selected, use `v-model:selected` to make it two-way binding (if selectable) */
+    selected: { type: Object as PropType<T>, default: undefined },
+    /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */
+    selectable: {
+        type: Boolean,
+        default: () => getOption("table.selectable", false),
+    },
+    /** Custom method to verify if a row is selectable, works when is selectable */
+    isRowSelectable: {
+        type: Function as PropType<(row: T) => boolean>,
+        default: () => true,
+    },
     /** Show header */
     showHeader: {
         type: Boolean,
@@ -130,7 +147,7 @@ const props = defineProps({
     /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
     headerCheckable: { type: Boolean, default: true },
     /** Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable) */
-    checkedRows: { type: Array as PropType<TableRow<T>[]>, default: () => [] },
+    checkedRows: { type: Array as PropType<T[]>, default: () => [] },
     /**
      * Position of the checkbox when checkable (if checkable)
      * @values left, right
@@ -159,11 +176,6 @@ const props = defineProps({
         default: (row: T) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("table.isRowCheckable", (row) => true)(row),
-    },
-    /** Custom method to verify if a row is selectable, works when is selected. */
-    isRowSelectable: {
-        type: Function as PropType<(row: T) => boolean>,
-        default: () => true,
     },
     /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
     backendSorting: {
@@ -210,7 +222,7 @@ const props = defineProps({
      * Set which rows have opened details, use `v-model:detailedRows` to make it two-way binding (if detailed).
      * Ideal to open details via vue-router. (A unique key is required; check `rowKey` prop)
      */
-    detailedRows: { type: Array as PropType<TableRow<T>[]>, default: () => [] },
+    detailedRows: { type: Array as PropType<T[]>, default: () => [] },
     /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
     isDetailedVisible: {
         type: Function as PropType<(row: T) => boolean>,
@@ -234,11 +246,6 @@ const props = defineProps({
     detailTransition: {
         type: String,
         default: () => getOption("table.detailTransition", "slide"),
-    },
-    /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-    customRowKey: {
-        type: String,
-        default: () => getOption("table.customRowKey"),
     },
     /** Adds pagination to the table */
     paginated: {
@@ -535,10 +542,10 @@ const emits = defineEmits<{
      */
     (e: "update:currentPage", value: number): void;
     /**
-     * is emitted each time the table data is processed into rows (usefull for setting predefined `checkedRows` or `detailedRows`)
+     * is emitted each time the table data is processed into rows
      * @param value {TableRow[]} computed table rows
      */
-    (e: "rows", value: Array<TableRow<T>>): void;
+    (e: "processed", value: Array<TableRow<T>>): void;
     /**
      * on pagination page change event
      * @param page {number} updated page
@@ -546,31 +553,31 @@ const emits = defineEmits<{
     (e: "page-change", page: number): void;
     /**
      * select prop two-way binding
-     * @param value {TableRow} updated select prop
+     * @param value {T} updated select prop
      */
-    (e: "update:selected", value: TableRow<T>): void;
+    (e: "update:selected", value: T): void;
     /**
      * on row select event
-     * @param newRow {TableRow} new select value
-     * @param oldRow {TableRow} old select value
+     * @param newRow {T} new select value
+     * @param oldRow {T} old select value
      */
-    (e: "select", newRow: TableRow<T>, oldRow: TableRow<T>): void;
+    (e: "select", newRow: T, oldRow: T): void;
     /**
      * on row checked event
-     * @param value {TableRow[]} all checked rows
-     * @param row {TableRow} row data
+     * @param value {T[]} all checked rows
+     * @param row {T} row data
      */
-    (e: "check", value: Array<TableRow<T>>, row: TableRow<T>): void;
+    (e: "check", value: Array<T>, row: T): void;
     /**
      * on all rows checked event
-     * @param value {TableRow[]} all checked rows
+     * @param value {T[]} all checked rows
      */
-    (e: "check-all", value: Array<TableRow<T>>): void;
+    (e: "check-all", value: Array<T>): void;
     /**
      * checkedRows prop two-way binding
-     * @param value {TableRow[]} updated checkedRows prop
+     * @param value {T[]} updated checkedRows prop
      */
-    (e: "update:checkedRows", value: Array<TableRow<T>>): void;
+    (e: "update:checkedRows", value: Array<T>): void;
     /**
      * on column sort change event
      * @param column {TableColumn} column data
@@ -602,57 +609,57 @@ const emits = defineEmits<{
     ): void;
     /**
      * detailedRows prop two-way binding
-     * @param value {TableRow[]} updated detailedRows prop
+     * @param value {T[]} updated detailedRows prop
      */
-    (e: "update:detailedRows", value: Array<TableRow<T>>): void;
+    (e: "update:detailedRows", value: Array<T>): void;
     /**
      * on details open event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      */
-    (e: "details-open", row: TableRow<T>): void;
+    (e: "details-open", row: T): void;
     /**
      * on details close event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      */
-    (e: "details-close", row: TableRow<T>): void;
+    (e: "details-close", row: T): void;
     /**
      * on row click event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "click", row: TableRow<T>, index: number, event: Event): void;
+    (e: "click", row: T, index: number, event: Event): void;
     /**
      * on row double click event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "dblclick", row: TableRow<T>, index: number, event: Event): void;
+    (e: "dblclick", row: T, index: number, event: Event): void;
     /**
      * on row right click event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native contextmenu event
      */
-    (e: "contextmenu", row: TableRow<T>, index: number, event: Event): void;
+    (e: "contextmenu", row: T, index: number, event: Event): void;
     /**
      * on row mouseenter event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseenter event
      */
-    (e: "mouseenter", row: TableRow<T>, index: number, event: Event): void;
+    (e: "mouseenter", row: T, index: number, event: Event): void;
     /**
      * on row mouseleave event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseleave event
      */
-    (e: "mouseleave", row: TableRow<T>, index: number, event: Event): void;
+    (e: "mouseleave", row: T, index: number, event: Event): void;
     /**
      * on cell click event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param column {TableColumn} column data
      * @param index {number} row index
      * @param colindex {number} column index
@@ -660,7 +667,7 @@ const emits = defineEmits<{
      */
     (
         e: "cell-click",
-        row: TableRow<T>,
+        row: T,
         column: TableColumn<T>,
         index: number,
         colindex: number,
@@ -668,40 +675,40 @@ const emits = defineEmits<{
     ): void;
     /**
      * on row dragstart event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragstart event
      */
-    (e: "dragstart", row: TableRow<T>, index: number, event: DragEvent): void;
+    (e: "dragstart", row: T, index: number, event: DragEvent): void;
     /**
      * on row dragend event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragend event
      */
-    (e: "dragend", row: TableRow<T>, index: number, event: DragEvent): void;
+    (e: "dragend", row: T, index: number, event: DragEvent): void;
     /**
      * on row drop event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native drop event
      */
-    (e: "drop", row: TableRow<T>, index: number, event: DragEvent): void;
+    (e: "drop", row: T, index: number, event: DragEvent): void;
 
     /**
      * on row dragleave event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragleave event
      */
-    (e: "dragleave", row: TableRow<T>, index: number, event: DragEvent): void;
+    (e: "dragleave", row: T, index: number, event: DragEvent): void;
     /**
      * on row dragover event
-     * @param row {TableRow} row data
+     * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragover event
      */
-    (e: "dragover", row: TableRow<T>, index: number, event: DragEvent): void;
+    (e: "dragover", row: T, index: number, event: DragEvent): void;
     /**
      * on column columndragstart event
      * @param column {TableColumn} column data
@@ -792,12 +799,12 @@ const tableData = computed<TableRow<T>[]>(() =>
 
 const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;
 
-emits("rows", tableData.value); // emit computed rows first time
+emits("processed", tableRows.value); // emit computed rows first time
 
 /** recompute table rows when table data change */
-watch(tableData, (data) => {
-    emits("rows", data); // emit computed rows every time they the data get changed
+watch(tableData, () => {
     processTableData();
+    emits("processed", tableRows.value); // emit computed rows every time they the data get changed
 });
 
 /**
@@ -913,15 +920,15 @@ function getColumnValue(row: T, column: TableColumn<T>): string {
 
 // --- Select Feature ---
 
-const tableSelectedRow = defineModel<TableRow<T>>("selected");
+const tableSelectedRow = defineModel<T>("selected");
 
 /** table arrow keys listener, change selection */
 function onArrowPressed(pos: number, event: KeyboardEvent): void {
     if (!visibleRows.value.length) return;
 
     let index =
-        visibleRows.value.findIndex(
-            (r) => r.key === tableSelectedRow.value?.key,
+        visibleRows.value.findIndex((row) =>
+            isRowEqual(row.value, tableSelectedRow.value),
         ) + pos;
 
     // prevent from going up from first and down from last
@@ -964,18 +971,29 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
  * Emit all necessary events.
  */
 function selectRow(row: TableRow<T>, index: number, event: Event): void {
-    emits("click", row, index, event);
+    emits("click", row.value, index, event);
 
-    if (isEqual(tableSelectedRow.value, row)) return;
+    if (!props.selectable) return;
+
+    if (isRowEqual(tableSelectedRow, row.value)) return;
     if (!props.isRowSelectable(row.value)) return;
 
-    tableSelectedRow.value = row;
+    tableSelectedRow.value = row.value;
     // emit new and old row
-    emits("select", row, tableSelectedRow.value);
+    emits("select", row.value, tableSelectedRow.value);
 }
 
-function isRowSelected(row: TableRow<T>, selectedRow: TableRow<T>): boolean {
-    return selectedRow ? row.key === selectedRow.key : false;
+function isRowEqual(
+    sourceRow: MaybeRefOrGetter<T>,
+    targetRow?: MaybeRefOrGetter<T>,
+): boolean {
+    const el1 = toValue(sourceRow);
+    const el2 = toValue(targetRow);
+    if (!isDefined(targetRow)) return false;
+    if (typeof props.customCompare === "function")
+        return props.customCompare(el1, el2);
+    if (props.rowKey) return el1[props.rowKey] == el2[props.rowKey];
+    return el1 == el2;
 }
 
 // --- Filter Feature ---
@@ -1133,7 +1151,7 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
 
 // --- Checkable Feature ---
 
-const tableCheckedRows = defineModel<TableRow<T>[]>("checkedRows", {
+const tableCheckedRows = defineModel<T[]>("checkedRows", {
     default: [],
 });
 const lastCheckedRowIndex = ref(null);
@@ -1147,7 +1165,7 @@ const isAllChecked = computed(() => {
     return !validVisibleData.some(
         (currentVisibleRow) =>
             indexOf(
-                tableCheckedRows.value.map((r) => r.value),
+                tableCheckedRows.value,
                 currentVisibleRow.value,
                 props.isRowChecked,
             ) < 0,
@@ -1161,27 +1179,17 @@ const isAllUncheckable = computed(
 
 /** check if the row is checked (is added to the array) */
 function isChecked(row: TableRow<T>): boolean {
-    return (
-        indexOf(
-            tableCheckedRows.value.map((r) => r.value),
-            row.value,
-            props.isRowChecked,
-        ) >= 0
-    );
+    return indexOf(tableCheckedRows.value, row.value, props.isRowChecked) >= 0;
 }
 
 /** add a checked row to the the array */
 function addCheckedRow(row: TableRow<T>): void {
-    tableCheckedRows.value = [...tableCheckedRows.value, row];
+    tableCheckedRows.value = [...tableCheckedRows.value, row.value];
 }
 
 /** remove a checked row from the array */
 function removeCheckedRow(row: TableRow<T>): void {
-    const idx = indexOf(
-        tableCheckedRows.value.map((r) => r.value),
-        row.value,
-        props.isRowChecked,
-    );
+    const idx = indexOf(tableCheckedRows.value, row.value, props.isRowChecked);
     if (idx >= 0)
         tableCheckedRows.value = tableCheckedRows.value.toSpliced(idx, 1);
 }
@@ -1194,7 +1202,9 @@ function checkAll(): void {
     const checkedRows = visibleRows.value.filter((row) =>
         props.isRowCheckable(row.value),
     );
-    tableCheckedRows.value = isAllChecked.value ? [] : checkedRows;
+    tableCheckedRows.value = isAllChecked.value
+        ? []
+        : checkedRows.map((row) => row.value);
     emits("check-all", tableCheckedRows.value);
 }
 
@@ -1206,12 +1216,12 @@ function checkRow(row: TableRow<T>, index: number): void {
     if (!isChecked(row)) addCheckedRow(row);
     else removeCheckedRow(row);
 
-    emits("check", tableCheckedRows.value, row);
+    emits("check", tableCheckedRows.value, row.value);
 }
 
 // --- Detail Row Feature ---
 
-const visibleDetailedRows = defineModel<TableRow<T>[]>("detailedRows", {
+const visibleDetailedRows = defineModel<T[]>("detailedRows", {
     default: [],
 });
 
@@ -1227,25 +1237,27 @@ const showDetailRowIcon = computed(
 function toggleDetails(row: TableRow<T>): void {
     if (isVisibleDetailRow(row)) {
         closeDetailRow(row);
-        emits("details-close", row);
+        emits("details-close", row.value);
     } else {
         openDetailRow(row);
-        emits("details-open", row);
+        emits("details-open", row.value);
     }
 }
 
 function openDetailRow(row: TableRow<T>): void {
-    visibleDetailedRows.value = [...visibleDetailedRows.value, row];
+    visibleDetailedRows.value = [...visibleDetailedRows.value, row.value];
 }
 
 function closeDetailRow(row: TableRow<T>): void {
-    const idx = visibleDetailedRows.value.findIndex((r) => r.key === row.key);
+    const idx = visibleDetailedRows.value.findIndex((r) =>
+        isRowEqual(r, row.value),
+    );
     if (idx >= 0)
         visibleDetailedRows.value = visibleDetailedRows.value.toSpliced(idx, 1);
 }
 
 function isVisibleDetailRow(row: TableRow<T>): boolean {
-    return visibleDetailedRows.value.some((r) => r.key === row.key);
+    return visibleDetailedRows.value.some((r) => isRowEqual(r, row.value));
 }
 
 function isActiveDetailRow(row: TableRow<T>): boolean {
@@ -1270,7 +1282,7 @@ function handleDragStart(
     event: DragEvent,
 ): void {
     if (!props.draggable) return;
-    emits("dragstart", row, index, event);
+    emits("dragstart", row.value, index, event);
 }
 
 /** emits drag leave event */
@@ -1280,13 +1292,13 @@ function handleDragEnd(
     event: DragEvent,
 ): void {
     if (!props.draggable) return;
-    emits("dragend", row, index, event);
+    emits("dragend", row.value, index, event);
 }
 
 /** emits drop event */
 function handleDrop(row: TableRow<T>, index: number, event: DragEvent): void {
     if (!props.draggable) return;
-    emits("drop", row, index, event);
+    emits("drop", row.value, index, event);
 }
 
 /** emits drag over event */
@@ -1296,7 +1308,7 @@ function handleDragOver(
     event: DragEvent,
 ): void {
     if (!props.draggable) return;
-    emits("dragover", row, index, event);
+    emits("dragover", row.value, index, event);
 }
 
 /** emits drag leave event */
@@ -1306,7 +1318,7 @@ function handleDragLeave(
     event: DragEvent,
 ): void {
     if (!props.draggable) return;
-    emits("dragleave", row, index, event);
+    emits("dragleave", row.value, index, event);
 }
 
 /** emits drag start event (column) */
@@ -1389,7 +1401,7 @@ const tableClasses = defineClasses(
         null,
         computed(
             () =>
-                (props.hoverable || props.focusable) &&
+                (props.hoverable || props.selectable) &&
                 !!visibleRows.value.length,
         ),
     ],
@@ -1504,7 +1516,7 @@ function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
             "trSelectedClass",
             "o-table__tr--selected",
             null,
-            isRowSelected(row, tableSelectedRow.value),
+            isRowEqual(row.value, tableSelectedRow.value),
         ],
         ["trCheckedClass", "o-table__tr--checked", null, isChecked(row)],
     );
@@ -1625,7 +1637,7 @@ defineExpose({ rows: tableData });
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
                 :class="tableClasses"
-                :tabindex="!focusable ? null : 0"
+                :tabindex="selectable ? 0 : null"
                 @keydown.self.prevent.up="onArrowPressed(-1, $event)"
                 @keydown.self.prevent.down="onArrowPressed(1, $event)">
                 <caption v-if="$slots.caption">
@@ -1817,15 +1829,17 @@ defineExpose({ rows: tableData });
                             :class="rowClasses(row, index)"
                             :draggable="canDragRow"
                             @click="selectRow(row, index, $event)"
-                            @dblclick="$emit('dblclick', row, index, $event)"
+                            @dblclick="
+                                $emit('dblclick', row.value, index, $event)
+                            "
                             @mouseenter="
-                                $emit('mouseenter', row, index, $event)
+                                $emit('mouseenter', row.value, index, $event)
                             "
                             @mouseleave="
-                                $emit('mouseleave', row, index, $event)
+                                $emit('mouseleave', row.value, index, $event)
                             "
                             @contextmenu="
-                                $emit('contextmenu', row, index, $event)
+                                $emit('contextmenu', row.value, index, $event)
                             "
                             @dragstart="handleDragStart(row, index, $event)"
                             @dragend="handleDragEnd(row, index, $event)"
@@ -1889,7 +1903,7 @@ defineExpose({ rows: tableData });
                                 @click="
                                     $emit(
                                         'cell-click',
-                                        row,
+                                        row.value,
                                         column,
                                         index,
                                         colindex,
