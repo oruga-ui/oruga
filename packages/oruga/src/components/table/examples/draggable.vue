@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
-// @ts-expect-error Examples are loaded differently.
-import { useOruga } from "../../../../../oruga/dist/oruga";
+import { useOruga } from "../../../../dist/oruga";
+import type { TableColumn } from "../../../../dist/oruga";
 
 const oruga = useOruga();
 
-const columns = ref([
+const columns = ref<TableColumn[]>([
     {
         field: "id",
         label: "ID",

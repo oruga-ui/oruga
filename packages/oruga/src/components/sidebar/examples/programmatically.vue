@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { h } from "vue";
-// @ts-expect-error Examples are loaded differently.
-import { useOruga } from "../../../../../oruga/dist/oruga";
+import { useOruga } from "../../../../dist/oruga";
 import Form from "./_sidebar-form.vue";
 
 const oruga = useOruga();
