@@ -4,11 +4,6 @@ import { useOruga } from "../../../../../oruga/dist/oruga";
 
 const oruga = useOruga();
 
-const draggingRow = ref(null);
-const draggingRowIndex = ref(null);
-const draggingColumnIndex = ref(null);
-const draggingColumn = ref(null);
-
 const columns = ref([
     {
         field: "id",
@@ -73,6 +68,11 @@ const data = ref([
     },
 ]);
 
+const draggingRow = ref(null);
+const draggingRowIndex = ref(null);
+const draggingColumnIndex = ref(null);
+const draggingColumn = ref(null);
+
 function dragstart(row, index, event) {
     draggingRow.value = row;
     draggingRowIndex.value = index;
@@ -80,21 +80,21 @@ function dragstart(row, index, event) {
 }
 
 function dragover(row, index, event) {
+    event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     event.target.closest("tr").classList.add("is-selected");
-    event.preventDefault();
 }
 
 function dragleave(row, index, event) {
-    event.target.closest("tr").classList.remove("is-selected");
     event.preventDefault();
+    event.target.closest("tr").classList.remove("is-selected");
 }
 
 function drop(row, index, event) {
     event.target.closest("tr").classList.remove("is-selected");
     const droppedOnRowIndex = index;
     oruga.notification.open(
-        `Moved ${draggingRow.value.first_name} from row ${
+        `Moved ${draggingRow.value.value.first_name} from row ${
             draggingRowIndex.value + 1
         } to ${droppedOnRowIndex + 1}`,
     );
@@ -107,14 +107,14 @@ function columndragstart(column, index, event) {
 }
 
 function columndragover(column, index, event) {
+    event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     event.target.closest("th").classList.add("is-selected");
-    event.preventDefault();
 }
 
 function columndragleave(column, index, event) {
-    event.target.closest("th").classList.remove("is-selected");
     event.preventDefault();
+    event.target.closest("th").classList.remove("is-selected");
 }
 
 function columndrop(column, index, event) {
@@ -137,8 +137,10 @@ function columndrop(column, index, event) {
             <code>dragover</code>/<code>columndragover </code> and
             <code>drop</code>/<code>columndrop</code> events
         </p>
+
         <o-table
             :data="data"
+            :columns="columns"
             draggable
             draggable-column
             @dragstart="dragstart"
@@ -148,14 +150,12 @@ function columndrop(column, index, event) {
             @columndragstart="columndragstart"
             @columndrop="columndrop"
             @columndragover="columndragover"
-            @columndragleave="columndragleave">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row[column.field] }}
-            </o-table-column>
-        </o-table>
+            @columndragleave="columndragleave" />
     </section>
 </template>
+
+<style lang="scss" scoped>
+:deep(.is-selected) {
+    background-color: lightblue;
+}
+</style>

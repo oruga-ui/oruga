@@ -45,12 +45,12 @@ const props = defineProps({
         type: String,
         default: () => getOption("pagination.size"),
     },
-    /** Simple style */
+    /** Enable simple style */
     simple: {
         type: Boolean,
         default: () => getOption("pagination.simple", false),
     },
-    /** Rounded button style */
+    /** Enable rounded button style */
     rounded: {
         type: Boolean,
         default: () => getOption("pagination.rounded", false),

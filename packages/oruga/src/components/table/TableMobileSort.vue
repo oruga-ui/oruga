@@ -1,14 +1,14 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { computed, watch, ref, type PropType } from "vue";
 
-import OButton from "../button/Button.vue";
-import OSelect from "../select/Select.vue";
-import OIcon from "../icon/Icon.vue";
-import OField from "../field/Field.vue";
+import OButton from "@/components/button/Button.vue";
+import OSelect from "@/components/select/Select.vue";
+import OIcon from "@/components/icon/Icon.vue";
+import OField from "@/components/field/Field.vue";
 
 import { getValueByPath } from "@/utils/helpers";
 
-import type { TableColumn } from "./types";
+import type { TableColumnItem } from "./types";
 import type { ClassBind } from "@/types";
 
 defineOptions({
@@ -19,11 +19,11 @@ defineOptions({
 
 const props = defineProps({
     currentSortColumn: {
-        type: Object as PropType<TableColumn>,
+        type: Object as PropType<TableColumnItem<T>>,
         default: undefined,
     },
     columns: {
-        type: Array as PropType<TableColumn[]>,
+        type: Array as PropType<TableColumnItem<T>[]>,
         default: undefined,
     },
     placeholder: { type: String, default: undefined },
@@ -35,7 +35,7 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
-    (e: "sort", column: TableColumn, event: Event);
+    (e: "sort", column: TableColumnItem<T>, event: Event);
 }>();
 
 const mobileSort = ref<string>(
@@ -74,9 +74,9 @@ watch(
 );
 
 function sort(event?: Event): void {
-    const column = sortableColumns.value.filter(
+    const column = sortableColumns.value.find(
         (c) => getValueByPath(c, "identifier") === mobileSort.value,
-    )[0];
+    );
     emits("sort", column, event);
 }
 </script>
@@ -97,11 +97,12 @@ function sort(event?: Event): void {
                 </template>
                 <option
                     v-for="(column, index) in sortableColumns"
-                    :key="index"
+                    :key="column.field || index"
                     :value="column.identifier">
                     {{ column.label }}
                 </option>
             </o-select>
+
             <o-button @click="sort($event)">
                 <o-icon
                     v-show="isCurrentSort"

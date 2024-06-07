@@ -1,41 +1,6 @@
 <script setup>
 import { ref } from "vue";
 
-const stickyHeaders = ref(true);
-
-const data = ref([
-    {
-        id: 1,
-        user: { first_name: "Jesse", last_name: "Simmons" },
-        date: "2016/10/15 13:43:27",
-        gender: "Male",
-    },
-    {
-        id: 2,
-        user: { first_name: "John", last_name: "Jacobs" },
-        date: "2016/12/15 06:00:53",
-        gender: "Male",
-    },
-    {
-        id: 3,
-        user: { first_name: "Tina", last_name: "Gilbert" },
-        date: "2016/04/26 06:26:28",
-        gender: "Female",
-    },
-    {
-        id: 4,
-        user: { first_name: "Clarence", last_name: "Flores" },
-        date: "2016/04/10 10:28:46",
-        gender: "Male",
-    },
-    {
-        id: 5,
-        user: { first_name: "Anne", last_name: "Lee" },
-        date: "2016/12/06 14:38:38",
-        gender: "Female",
-    },
-]);
-
 const columns = ref([
     {
         field: "id",
@@ -119,23 +84,53 @@ const columns = ref([
         label: "Column O",
     },
 ]);
+
+const data = ref([
+    {
+        id: 1,
+        user: { first_name: "Jesse", last_name: "Simmons" },
+        date: "2016/10/15 13:43:27",
+        gender: "Male",
+    },
+    {
+        id: 2,
+        user: { first_name: "John", last_name: "Jacobs" },
+        date: "2016/12/15 06:00:53",
+        gender: "Male",
+    },
+    {
+        id: 3,
+        user: { first_name: "Tina", last_name: "Gilbert" },
+        date: "2016/04/26 06:26:28",
+        gender: "Female",
+    },
+    {
+        id: 4,
+        user: { first_name: "Clarence", last_name: "Flores" },
+        date: "2016/04/10 10:28:46",
+        gender: "Male",
+    },
+    {
+        id: 5,
+        user: { first_name: "Anne", last_name: "Lee" },
+        date: "2016/12/06 14:38:38",
+        gender: "Female",
+    },
+]);
+
+const stickyHeaders = ref(true);
 </script>
 
 <template>
-    <section class="overflow">
+    <section>
         <o-field grouped>
             <o-switch v-model="stickyHeaders" label="Sticky Headers" />
         </o-field>
 
-        <o-table :data="data" :sticky-header="stickyHeaders">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row[column.field] }}
-            </o-table-column>
-        </o-table>
+        <o-table
+            :data="data"
+            :columns="columns"
+            :sticky-header="stickyHeaders" />
     </section>
 </template>
 
@@ -147,8 +142,5 @@ const columns = ref([
 .is-sticky-column-two {
     background: #167df0 !important;
     color: white !important;
-}
-.overflow {
-    overflow-x: scroll;
 }
 </style>
