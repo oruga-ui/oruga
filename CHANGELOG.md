@@ -1,3 +1,19 @@
+## [0.8.11](https://github.com/oruga-ui/oruga/compare/v0.8.10...v0.8.11) (2024-06-05)
+
+
+### Bug Fixes
+
+* **datepicker:** always validate programmatic date updates ([#927](https://github.com/oruga-ui/oruga/issues/927)) ([20ceedd](https://github.com/oruga-ui/oruga/commit/20ceedda2566211b5c790a12a687a01ce26380b5))
+* **datepicker:** update focused date on editing directly ([#941](https://github.com/oruga-ui/oruga/issues/941)) ([1af13cf](https://github.com/oruga-ui/oruga/commit/1af13cf1cc97703aa58820d99b403791b554f9ba))
+* **taginput:** solve defineModel macro array constrains ([#942](https://github.com/oruga-ui/oruga/issues/942)) ([404c5f6](https://github.com/oruga-ui/oruga/commit/404c5f6d1aa61cbbbe7dfce089bf203ffde4259e))
+
+
+### Features
+
+* **inputs:** detect constraint validation attribute changes ([#930](https://github.com/oruga-ui/oruga/issues/930)) ([4de3bd7](https://github.com/oruga-ui/oruga/commit/4de3bd74f512a3a1b07363b0cb062d6f2b5cc95d))
+
+
+
 ## [0.8.10](https://github.com/oruga-ui/oruga/compare/v0.8.9...v0.8.10) (2024-06-03)
 
 

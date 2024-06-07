@@ -4,8 +4,10 @@ import { ref, onMounted, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
+import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
+    useEventListener,
     useProgrammaticComponent,
     usePropBinding,
 } from "@/composables";
@@ -40,9 +42,7 @@ const props = defineProps({
     },
     /** Is Loading cancable by pressing escape or clicking outside. */
     cancelable: { type: Boolean, default: false },
-    /** Callback function to call after user canceled (pressed escape / clicked outside). */
-    onCancel: { type: Function as PropType<() => void>, default: () => {} },
-    /** Callback function to call after close (programmatically close or user canceled). */
+    /** Callback function to call on close (programmatically close or user canceled). */
     onClose: { type: Function as PropType<() => void>, default: () => {} },
     /** Icon name to show, unnecessary when default slot is used. */
     icon: {
@@ -67,7 +67,7 @@ const props = defineProps({
      * Note that this also changes fullPage to false.
      */
     container: {
-        type: [Object, String] as PropType<string | HTMLElement>,
+        type: [Object, String] as PropType<string | HTMLElement | null>,
         default: () => getOption("loading.container", "body"),
     },
     /**
@@ -133,19 +133,42 @@ const rootRef = ref();
 
 const displayInFullPage = usePropBinding("fullPage", props, emits);
 
+const isActive = defineModel<boolean>("active");
+
+function handleClose(...args: any[]): void {
+    if (typeof props.onClose === "function" && isActive.value)
+        props.onClose.apply(args);
+    isActive.value = false;
+    emits("close", args);
+}
+
 /** add programmatic usage to this component */
-const { isActive, close, cancel } = useProgrammaticComponent(
-    rootRef,
-    props,
-    emits,
-    {
-        cancelOptions: ["escape", "outside"],
-    },
-);
+const { close, cancel } = useProgrammaticComponent(rootRef, {
+    container: props.container,
+    programmatic: props.programmatic,
+    cancelable: props.cancelable,
+    destroy: false,
+    onClose: handleClose,
+});
 
 onMounted(() => {
     if (props.programmatic && props.container) displayInFullPage.value = false;
 });
+
+// --- Events Feature ---
+
+if (isClient) {
+    // register onKeyPress event when is active
+    useEventListener("keyup", onKeyPress, rootRef.value, {
+        trigger: isActive,
+    });
+}
+
+/** Keypress event that is bound to the document. */
+function onKeyPress(event: KeyboardEvent): void {
+    if (!isActive.value) return;
+    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
+}
 
 // --- Computed Component Classes ---
 

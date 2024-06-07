@@ -1,16 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`OMenu > render correctly 1`] = `
-"<div data-oruga="menu" class="o-menu">
-  <!--v-if-->
-  <ul class="o-menu__list" role="menu">
-    <!--
-                @slot Place menu items here 
-            -->
-  </ul>
-</div>"
-`;
-
 exports[`OMenu tests > render correctly 1`] = `
 "<div data-oruga="menu" class="o-menu">
   <!--v-if-->
