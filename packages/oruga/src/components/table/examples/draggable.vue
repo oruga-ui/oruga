@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+// @ts-expect-error Examples are loaded differently.
 import { useOruga } from "../../../../../oruga/dist/oruga";
 
 const oruga = useOruga();
@@ -73,51 +74,51 @@ const draggingRowIndex = ref(null);
 const draggingColumnIndex = ref(null);
 const draggingColumn = ref(null);
 
-function dragstart(row, index, event) {
+function dragstart(row, index, event): void {
     draggingRow.value = row;
     draggingRowIndex.value = index;
     event.dataTransfer.effectAllowed = "copy";
 }
 
-function dragover(row, index, event) {
+function dragover(row, index, event): void {
     event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     event.target.closest("tr").classList.add("is-selected");
 }
 
-function dragleave(row, index, event) {
+function dragleave(row, index, event): void {
     event.preventDefault();
     event.target.closest("tr").classList.remove("is-selected");
 }
 
-function drop(row, index, event) {
+function drop(row, index, event): void {
     event.target.closest("tr").classList.remove("is-selected");
     const droppedOnRowIndex = index;
     oruga.notification.open(
-        `Moved ${draggingRow.value.value.first_name} from row ${
+        `Moved ${draggingRow.value.first_name} from row ${
             draggingRowIndex.value + 1
         } to ${droppedOnRowIndex + 1}`,
     );
 }
 
-function columndragstart(column, index, event) {
+function columndragstart(column, index, event): void {
     draggingColumn.value = column;
     draggingColumnIndex.value = index;
     event.dataTransfer.effectAllowed = "copy";
 }
 
-function columndragover(column, index, event) {
+function columndragover(column, index, event): void {
     event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     event.target.closest("th").classList.add("is-selected");
 }
 
-function columndragleave(column, index, event) {
+function columndragleave(column, index, event): void {
     event.preventDefault();
     event.target.closest("th").classList.remove("is-selected");
 }
 
-function columndrop(column, index, event) {
+function columndrop(column, index, event): void {
     event.target.closest("th").classList.remove("is-selected");
     const droppedOnColumnIndex = index;
     oruga.notification.open(

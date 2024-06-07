@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { h } from "vue";
+// @ts-expect-error Examples are loaded differently.
 import { useOruga } from "../../../../../oruga/dist/oruga";
 import Form from "./_sidebar-form.vue";
 
 const oruga = useOruga();
 
-function imageSidebar() {
+function imageSidebar(): void {
     const vnode = h("p", { style: { "text-align": "center" } }, [
         h("img", {
             src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
@@ -19,7 +20,7 @@ function imageSidebar() {
     });
 }
 
-function formSidebar() {
+function formSidebar(): void {
     oruga.sidebar.open({
         component: Form,
         fullheight: true,
