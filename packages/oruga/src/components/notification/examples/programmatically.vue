@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-expect-error Examples are loaded differently.
 import { useOruga } from "../../../../dist/oruga";
 import NotificationForm from "./_notification-form.vue";
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onBeforeMount, onBeforeUnmount } from "vue";
+// @ts-expect-error Examples are loaded differently.
 import { useOruga } from "../../../../dist/oruga";
 
 const customIconPacks = {
