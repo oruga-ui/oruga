@@ -1151,6 +1151,8 @@ but will set body to position fixed, might break some layouts. */
                 showDetailIcon: boolean;
                 /** Border to all cells */
                 bordered: boolean;
+                /** Class configuration for the internal loading component */
+                loadingClasses: Record<string, any>;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the sortable form wrapper on mobile */
@@ -1231,10 +1233,14 @@ but will set body to position fixed, might break some layouts. */
                 debounceSearch: number;
                 /** How many rows per page (if paginated) */
                 perPage: string | number;
+                /** Icon for the loading state */
+                loadingIcon: string;
                 /** Icon name of detail action */
                 detailIcon: string;
                 /** Icon pack to use */
                 iconPack: string;
+                /** Label for the loading state */
+                loadingLabel: string;
                 /** Makes the cells narrower */
                 narrowed: boolean;
                 /** Mobile breakpoint as max-width value */

@@ -39,7 +39,7 @@ import {
 } from "@/composables";
 
 import type { Column, TableColumn, TableColumnComponent } from "./types";
-import type { ComponentClass, ClassBind } from "@/types";
+import type { ComponentClass, ClassBind, OrugaOptions } from "@/types";
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -298,6 +298,16 @@ const props = defineProps({
         validator: (value: string) =>
             ["centered", "right", "left"].indexOf(value) >= 0,
     },
+    /** Icon for the loading state */
+    loadingIcon: {
+        type: String,
+        default: () => getOption("table.loadingIcon", "loading"),
+    },
+    /** Label for the loading state */
+    loadingLabel: {
+        type: String,
+        default: () => getOption("table.loadingLabel"),
+    },
     /** Mobile breakpoint as max-width value */
     mobileBreakpoint: {
         type: String,
@@ -483,6 +493,15 @@ const props = defineProps({
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
+    },
+    /**
+     * Class configuration for the internal loading component
+     * @ignore
+     */
+    loadingClasses: {
+        type: Object,
+        default: () =>
+            getOption<OrugaOptions["loading"]>("table.loadingClasses", {}),
     },
 });
 
@@ -2000,12 +2019,21 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                     </tr>
                 </tfoot>
             </table>
+
             <!--
                 @slot Override loading component
-                @binding {boolean} loading - is loading enabled
+                @binding {boolean} loading - is loading state enabled
             -->
             <slot name="loading" :loading="loading">
-                <o-loading :full-page="false" :active="loading" />
+                <o-loading
+                    v-bind="loadingClasses"
+                    :full-page="false"
+                    :active="loading"
+                    :icon="loadingIcon"
+                    :label="loadingLabel"
+                    icon-size="large"
+                    role="status"
+                    :aria-hidden="!loading" />
             </slot>
         </div>
 
