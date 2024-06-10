@@ -19,7 +19,7 @@ import type { ProgrammaticExpose } from "@/types";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        programmatic: typeof UseProgrammatic;
+        programmatic: typeof Programmatic;
     }
 }
 
@@ -109,7 +109,7 @@ export type ProgrammaticProps = {
     target?: string | HTMLElement;
 } & Omit<ProgrammaticComponentProps, "instances">;
 
-const UseProgrammatic = {
+const Programmatic = {
     open(props: ProgrammaticProps): ProgrammaticExpose {
         const target =
             typeof props.target === "string"
@@ -128,12 +128,11 @@ const UseProgrammatic = {
         });
         vnode.appContext = VueInstance._context;
 
-        // render new vue instance into container
+        // render a new vue instance into the cache container
         render(vnode, container);
 
-        // place children into target
-        const children = container.childNodes;
-        target.append(...children);
+        // place rendered elements into target element
+        target.append(...container.childNodes);
 
         // return exposed functionalities
         return vnode.component.exposed as ProgrammaticExpose;
@@ -143,4 +142,4 @@ const UseProgrammatic = {
     },
 };
 
-export default UseProgrammatic;
+export default Programmatic;
