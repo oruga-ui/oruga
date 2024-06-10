@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OSelect tests > render correctly 1`] = `
+"<div class="o-ctrl-sel" data-oruga="select">
+  <!--v-if--><select id="mocked" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+    <!--v-if-->
+    <!--
+                @slot Override the options, default is options prop
+            -->
+  </select>
+  <!--v-if-->
+</div>"
+`;
