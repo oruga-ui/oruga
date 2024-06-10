@@ -140,7 +140,7 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = defineModel<string | number | boolean>();
+const vmodel = defineModel<string | number | boolean>({ default: undefined });
 
 const isChecked = computed(() => vmodel.value === props.nativeValue);
 
