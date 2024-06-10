@@ -7,15 +7,11 @@ import OInput from "@/components/input/Input.vue";
 describe("OField tests", () => {
     enableAutoUnmount(afterEach);
 
-    test("is called", () => {
+    test("render correctly", () => {
         const wrapper = mount(OField);
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("field");
-    });
-
-    test("render correctly", () => {
-        const wrapper = mount(OField);
         expect(wrapper.html()).toMatchSnapshot();
         expect(wrapper.classes("o-field")).toBeTruthy();
     });

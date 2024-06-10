@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const isFetching = ref(false);
@@ -90,6 +90,7 @@ function getMoreAsyncData() {
                 </template>
             </o-autocomplete>
         </o-field>
+
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

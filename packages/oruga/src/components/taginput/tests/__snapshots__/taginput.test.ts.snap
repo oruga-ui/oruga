@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OTaginput tests > render correctly 1`] = `
+"<div data-oruga="taginput" class="o-taginput">
+  <div class="o-taginput__container">
+    <!--
+                @slot Override selected items
+                @binding {unknown[]} items - selected items
+            -->
+    <div data-oruga="autocomplete" class="o-drop o-drop--position-auto o-acp o-taginput__autocomplete">
+      <div tabindex="-1" class="o-drop__trigger" aria-haspopup="listbox">
+        <!--
+                @slot Override the trigger element, default is label prop
+                @binding {boolean} active - dropdown active state
+            -->
+        <div data-oruga="input" class="o-input__wrapper"><input has-counter="false" role="combobox" aria-autocomplete="list" aria-controls="mocked" aria-expanded="false" id="mocked" data-oruga-input="text" type="text" class="o-input o-taginput__input" autocomplete="off">
+          <!--v-if-->
+          <!--v-if-->
+          <!--v-if-->
+        </div>
+      </div>
+      <!--teleport start-->
+      <transition-stub name="fade" appear="false" persisted="false" css="true">
+        <!--v-if-->
+      </transition-stub>
+      <transition-stub name="fade" appear="false" persisted="true" css="true">
+        <div id="mocked" tabindex="-1" class="o-drop__menu o-drop__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-hidden="true" aria-modal="false">
+          <!--
+                        @slot Place dropdown items here
+                        @binding {boolean} active - dropdown active state
+                        @binding {boolean} toggle - toggle active state function
+                    -->
+        </div>
+      </transition-stub>
+      <!--teleport end-->
+    </div>
+  </div>
+  <!--v-if-->
+</div>"
+`;

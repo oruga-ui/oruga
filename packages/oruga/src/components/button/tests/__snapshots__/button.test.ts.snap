@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OButton tests > render correctly 1`] = `"<button type="button" class="o-btn" role="button" data-oruga="button"><span class="o-btn__wrapper"><!--v-if--><!--v-if--><!--v-if--></span></button>"`;

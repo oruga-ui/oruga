@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OSidebar tests > render correctly 1`] = `
+"<!--teleport start-->
+<div class="o-side" data-oruga="sidebar">
+  <!--v-if-->
+  <transition-stub name="slide-prev" appear="false" persisted="true" css="true">
+    <div class="o-side__content o-side__content--left o-side__content--hidden" style="display: none;">
+      <!--
+                        @slot Sidebar default content, default is component prop
+                        @binding {(...args):void} close - function to close the component
+                    -->
+      <!-- injected component for programmatic usage -->
+      <!--v-if-->
+    </div>
+  </transition-stub>
+</div>
+<!--teleport end-->"
+`;

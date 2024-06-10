@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OModal tests > render correctly 1`] = `
+"<!--teleport start-->
+<transition-stub name="zoom-out" appear="false" persisted="true" css="true">
+  <div data-oruga="modal" class="o-modal" tabindex="-1" aria-modal="false" style="display: none;">
+    <div class="o-modal__overlay" tabindex="-1" aria-hidden="true"></div>
+    <div class="o-modal__content" style="max-width: 960px;">
+      <!-- injected component for programmatic usage -->
+      <!--
+                        @slot Modal default content, default is content prop
+                        @binding {(...args): void} close - function to close the component
+                    -->
+      <!--v-if--><span class="o-icon o-icon--clickable o-icon--medium o-modal__close" data-oruga="icon" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-close mdi-36px"></i></span>
+    </div>
+  </div>
+</transition-stub>
+<!--teleport end-->"
+`;

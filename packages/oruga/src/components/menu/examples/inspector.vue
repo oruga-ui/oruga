@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const subitem = "menu-item";
 
 const inspectData = [

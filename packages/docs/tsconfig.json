@@ -7,7 +7,7 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "baseUrl": ".",
-    "types": ["node", "vite/client", "vitepress/client", "./volar.d.ts"]
+    "types": ["node", "vite/client", "vitepress/client"]
 
   },
   "include": [

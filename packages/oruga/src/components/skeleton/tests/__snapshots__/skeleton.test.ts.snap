@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OSkeleton tests > render correctly 1`] = `
+"<div data-oruga="skeleton" class="o-sklt o-sklt--left">
+  <div class="o-sklt__item o-sklt__item--rounded o-sklt__item--animated"></div>
+</div>"
+`;

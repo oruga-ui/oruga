@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OIcon tests > render correctly 1`] = `"<span class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-undefined mdi-24px"></i></span>"`;

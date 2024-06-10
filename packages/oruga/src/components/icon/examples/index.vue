@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
@@ -8,7 +8,7 @@ import CustomIconPackCode from "./custom-icon-pack.vue?raw";
 import { ref } from "vue";
 
 const customIconConfigCode = ref(
-    `<script setup>
+    `<script setup lang="ts">
 const customIconConfig = {
     customIconPacks: {
         fas: {
@@ -32,7 +32,7 @@ app.use(Oruga, {
 );
 
 const faIconConfigCode = ref(
-    `<script setup>
+    `<script setup lang="ts">
 import { library } from "@fortawesome/fontawesome-svg-core";
 // internal icons
 import {

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const total = ref(200);
@@ -87,7 +87,7 @@ const inspectData = [
         class: "linkDisabledClass",
         description: "Class of the disabled link",
         action: () => {
-            this.current = 20;
+            current.value = 20;
         },
     },
     {

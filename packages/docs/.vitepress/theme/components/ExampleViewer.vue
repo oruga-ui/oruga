@@ -18,14 +18,14 @@ const codeComputed = computed(() => {
     const code = props.code;
     return code
         .replace(/\.\.\//g, "")
-        .replace("oruga/dist/oruga", "@oruga-ui/oruga-next");
+        .replace("dist/oruga", "@oruga-ui/oruga-next");
 });
 
 const scriptCode = computed(() =>
-    codeComputed.value.includes("<script setup>")
+    codeComputed.value.includes('<script setup lang="ts">')
         ? codeComputed.value.substring(
-              codeComputed.value.indexOf("<script setup>") +
-                  "<script setup>".length,
+              codeComputed.value.indexOf('<script setup lang="ts">') +
+                  '<script setup lang="ts">'.length,
               codeComputed.value.lastIndexOf("/script>") - 1,
           )
         : "",

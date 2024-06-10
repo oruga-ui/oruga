@@ -1,5 +1,38 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
+// @ts-expect-error Examples are loaded differently.
+import type { TableColumn } from "../../../../dist/oruga";
+
+const columns = ref<TableColumn[]>([
+    {
+        field: "id",
+        label: "ID",
+        width: "40",
+        numeric: true,
+        sortable: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+        sortable: true,
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+        sortable: true,
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+        sortable: true,
+    },
+    {
+        field: "gender",
+        label: "Gender",
+        sortable: true,
+    },
+]);
 
 const data = ref([
     {
@@ -38,44 +71,10 @@ const data = ref([
         gender: "Female",
     },
 ]);
-
-const columns = ref([
-    {
-        field: "id",
-        label: "ID",
-        width: "40",
-        numeric: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-    },
-    {
-        field: "gender",
-        label: "Gender",
-    },
-]);
 </script>
 
 <template>
     <section>
-        <o-table :data="data">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row[column.field] }}
-            </o-table-column>
-        </o-table>
+        <o-table :data="data" :columns="columns" />
     </section>
 </template>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Programmatic from "./programmatic.vue";
 import ProgrammaticCode from "./programmatic.vue?raw";
 

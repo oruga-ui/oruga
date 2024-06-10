@@ -73,6 +73,7 @@ const itemClasses = defineClasses(
 
 <template>
     <div
+        v-if="parent"
         :class="itemClasses"
         :style="itemStyle"
         :data-id="`carousel-${item.identifier}`"
