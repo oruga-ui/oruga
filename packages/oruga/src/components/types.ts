@@ -811,6 +811,9 @@ Meaning that the container should be fixed. */
                 /** Pagination size */
                 size: string;
             }>;
+        programmatic?: ComponentConfigBase &
+            Partial<{
+            }>;
         radio?: ComponentConfigBase &
             Partial<{
                 /** Class of the native input element */

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Programmatically from "./programmatically.vue";
-import ProgrammaticallyCode from "./programmatically.vue?raw";
-
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
@@ -13,6 +10,9 @@ import UseTypesCode from "./use-types.vue?raw";
 
 import AddCustomButtons from "./add-custom-buttons.vue";
 import AddCustomButtonsCode from "./add-custom-buttons.vue?raw";
+
+import Programmatically from "./programmatically.vue";
+import ProgrammaticallyCode from "./programmatically.vue?raw";
 </script>
 
 <template>
