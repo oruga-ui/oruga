@@ -47,18 +47,18 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                     <!--
                 @slot Override the options, default is options prop
             -->
-                    <option value="0">Januar</option>
-                    <option value="1">Februar</option>
-                    <option value="2">März</option>
+                    <option value="0">January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
                     <option value="3">April</option>
-                    <option value="4">Mai</option>
-                    <option value="5">Juni</option>
-                    <option value="6">Juli</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
                     <option value="7">August</option>
                     <option value="8">September</option>
-                    <option value="9">Oktober</option>
+                    <option value="9">October</option>
                     <option value="10">November</option>
-                    <option value="11">Dezember</option>
+                    <option value="11">December</option>
                   </select>
                   <!--v-if-->
                 </div>
@@ -188,12 +188,12 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
           <section class="o-dpck__table">
             <header class="o-dpck__table__head">
               <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>S</span></div>
-              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>M</span></div>
-              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>D</span></div>
-              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>M</span></div>
-              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>D</span></div>
-              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>F</span></div>
               <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>S</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>M</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>T</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>W</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>T</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>F</span></div>
             </header>
             <div class="o-dpck__table__body">
               <div class="o-dpck__table__row">

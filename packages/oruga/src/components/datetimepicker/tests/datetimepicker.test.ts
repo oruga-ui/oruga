@@ -1,4 +1,4 @@
-import { describe, test, expect, afterEach, vi } from "vitest";
+import { beforeEach, describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 
 import { timezoneMock } from "@/__tests__/mocks/timezoneMock";
