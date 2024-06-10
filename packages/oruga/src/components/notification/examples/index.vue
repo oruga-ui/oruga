@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Programmatic from "./programmatic.vue";
-import ProgrammaticCode from "./programmatic.vue?raw";
-
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
@@ -21,9 +18,6 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
-
-    <h3 id="programmatic">programmatic use</h3>
-    <ExampleViewer :component="Programmatic" :code="ProgrammaticCode" />
 
     <h3 id="variants">Variants</h3>
     <ExampleViewer :component="Variants" :code="VariantsCode" />

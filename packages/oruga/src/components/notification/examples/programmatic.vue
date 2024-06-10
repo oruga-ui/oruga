@@ -11,11 +11,6 @@ async function component(): Promise<void> {
         target: "#notification",
     });
 
-    setTimeout(
-        () => oruga.programmatic.closeAll({ action: "closeAll" }),
-        3 * 1000,
-    );
-
     // wait until the notification got closed
     const result = await instance.promise;
 
