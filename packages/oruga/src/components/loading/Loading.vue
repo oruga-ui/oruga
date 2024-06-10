@@ -9,7 +9,6 @@ import {
     defineClasses,
     useEventListener,
     useProgrammaticComponent,
-    usePropBinding,
 } from "@/composables";
 
 import type { ComponentClass, ProgrammaticInstance } from "@/types";
@@ -131,9 +130,9 @@ const emits = defineEmits<{
 
 const rootRef = ref();
 
-const displayInFullPage = usePropBinding("fullPage", props, emits);
+const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
-const isActive = defineModel<boolean>("active");
+const isActive = defineModel<boolean>("active", { default: false });
 
 function handleClose(...args: any[]): void {
     if (typeof props.onClose === "function" && isActive.value)
@@ -152,7 +151,7 @@ const { close, cancel } = useProgrammaticComponent(rootRef, {
 });
 
 onMounted(() => {
-    if (props.programmatic && props.container) displayInFullPage.value = false;
+    if (props.programmatic && props.container) isFullPage.value = false;
 });
 
 // --- Events Feature ---
@@ -174,7 +173,7 @@ function onKeyPress(event: KeyboardEvent): void {
 
 const rootClasses = defineClasses(
     ["rootClass", "o-load"],
-    ["fullPageClass", "o-load--fullpage", null, displayInFullPage],
+    ["fullPageClass", "o-load--fullpage", null, isFullPage],
 );
 
 const overlayClasses = defineClasses(["overlayClass", "o-load__overlay"]);

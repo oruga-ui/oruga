@@ -7,7 +7,6 @@ import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    usePropBinding,
     useEventListener,
     useClickOutside,
 } from "@/composables";
@@ -175,9 +174,7 @@ const emits = defineEmits<{
     (e: "open"): void;
 }>();
 
-const isActive = usePropBinding<boolean>("active", props, emits, {
-    passive: true,
-});
+const isActive = defineModel<boolean>("active", { default: false });
 
 watch(isActive, (value) => {
     if (value) emits("open");

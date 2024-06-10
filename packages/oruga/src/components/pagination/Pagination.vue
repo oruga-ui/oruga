@@ -5,7 +5,7 @@ import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { defineClasses, useMatchMedia, usePropBinding } from "@/composables";
+import { defineClasses, useMatchMedia } from "@/composables";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
 
@@ -208,7 +208,7 @@ const emits = defineEmits<{
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const current = usePropBinding("current", props, emits);
+const currentPage = defineModel<number>("current", { default: 1 });
 
 /** Total page size (count). */
 const pageCount = computed(() =>
@@ -334,7 +334,7 @@ function last(event?: Event): void {
 function changePage(page: number, event: Event): void {
     if (props.current === page || page < 1 || page > pageCount.value) return;
     emits("change", page);
-    current.value = page;
+    currentPage.value = page;
 
     // Set focus on element to keep tab order
     if (event && event.target)
@@ -419,9 +419,11 @@ defineExpose({ last, first, prev, next });
             @binding {(event:Event): void} click - onClick handler
             @binding {string} ariaLabel - aria-label attribute
         -->
-        <slot name="previous" v-bind="getPage(current - 1, ariaPreviousLabel)">
+        <slot
+            name="previous"
+            v-bind="getPage(currentPage - 1, ariaPreviousLabel)">
             <o-pagination-button
-                v-bind="getPage(current - 1, ariaPreviousLabel)"
+                v-bind="getPage(currentPage - 1, ariaPreviousLabel)"
                 :class="prevBtnClasses"
                 :link-class="linkClasses"
                 :link-current-class="linkCurrentClasses">
@@ -439,9 +441,9 @@ defineExpose({ last, first, prev, next });
             @binding {(event:Event): void} click - onClick handler
             @binding {string} ariaLabel - aria-label attribute
         -->
-        <slot name="next" v-bind="getPage(current + 1, ariaNextLabel)">
+        <slot name="next" v-bind="getPage(currentPage + 1, ariaNextLabel)">
             <o-pagination-button
-                v-bind="getPage(current + 1, ariaNextLabel)"
+                v-bind="getPage(currentPage + 1, ariaNextLabel)"
                 :class="nextBtnClasses"
                 :link-class="linkClasses"
                 :link-current-class="linkCurrentClasses">
@@ -458,7 +460,9 @@ defineExpose({ last, first, prev, next });
                 {{ firstItem }} / {{ total }}
             </template>
             <template v-else>
-                {{ firstItem }}-{{ Math.min(current * Number(perPage), total) }}
+                {{ firstItem }}-{{
+                    Math.min(currentPage * Number(perPage), total)
+                }}
                 /
                 {{ total }}
             </template>

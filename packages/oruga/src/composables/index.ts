@@ -1,6 +1,5 @@
 export * from "./unrefElement";
 export * from "./defineClasses";
-export * from "./usePropValue";
 export * from "./useEventListener";
 export * from "./useMatchMedia";
 export * from "./useInputHandler";
