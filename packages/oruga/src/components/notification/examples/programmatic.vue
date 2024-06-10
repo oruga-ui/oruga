@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useOruga } from "../../../../../oruga/dist/oruga";
+// @ts-expect-error Examples are loaded differently.
+import { useOruga } from "../../../../dist/oruga";
 import NotificationForm from "./_notification-form.vue";
 
 const oruga = useOruga();
