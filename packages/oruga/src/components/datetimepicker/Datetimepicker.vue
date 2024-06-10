@@ -231,6 +231,10 @@ watch(datepickerProps.value, (value) => (datepickerProps.value = value), {
     deep: true,
 });
 
+const isMobileNative = computed(
+    () => props.mobileNative && isMobileAgent.any(),
+);
+
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : datepickerRef.value,
 );
@@ -241,11 +245,6 @@ const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     emits,
     props,
 );
-
-const isMobileNative = computed(
-    () => props.mobileNative && isMobileAgent.any(),
-);
-
 watch([() => isMobileNative.value, () => props.inline], () => {
     // $refs attached, it's time to refresh datepicker (input)
     if (datepickerRef.value) datepickerRef.value.$forceUpdate();

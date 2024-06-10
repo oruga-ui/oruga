@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OPagination tests > render correctly 1`] = `
+"<nav class="o-pag o-pag--right" data-oruga="pagination">
+  <!-- 
+            @slot Previous button slot
+            @binding {number} number - page number 
+            @binding {boolean} isCurrent - if page is current
+            @binding {(event:Event): void} click - onClick handler
+            @binding {string} ariaLabel - aria-label attribute
+        --><button role="button" tabindex="0" class="o-pag__link o-pag__previous o-pag__link--disabled" aria-label="Previous page" aria-current="false"><span class="o-icon" data-oruga="icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span></button>
+  <!-- 
+            @slot Next button slot
+            @binding {number} number - page number 
+            @binding {boolean} isCurrent - if page is current
+            @binding {(event:Event): void} click - onClick handler
+            @binding {string} ariaLabel - aria-label attribute
+        --><button role="button" tabindex="0" class="o-pag__link o-pag__next o-pag__link--disabled" aria-label="Next page" aria-current="false"><span class="o-icon" data-oruga="icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span></button>
+  <ul class="o-pag__list">
+    <!--First-->
+    <!--v-if-->
+    <!--v-if-->
+    <!--Pages-->
+    <!--Last-->
+    <!--v-if-->
+    <!--v-if-->
+  </ul>
+</nav>"
+`;

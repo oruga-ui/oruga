@@ -165,6 +165,7 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
 
 <template>
     <Transition
+        v-if="parent"
         :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"

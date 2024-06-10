@@ -6,6 +6,14 @@ import ODatepicker from "@/components/datepicker/Datepicker.vue";
 describe("ODatepicker", () => {
     enableAutoUnmount(afterEach);
 
+    test("render correctly", () => {
+        const wrapper = mount(ODatepicker);
+        expect(!!wrapper.vm).toBeTruthy();
+        expect(wrapper.exists()).toBeTruthy();
+        expect(wrapper.attributes("data-oruga")).toBe("datepicker");
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
     test("parses keyboard input", () => {
         const wrapper = mount(ODatepicker, { props: { readonly: false } });
 
