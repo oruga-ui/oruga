@@ -997,9 +997,9 @@ function isRowEqual(
 const filters = ref<Record<string, string>>({});
 
 watch(
-    filters.value,
+    filters,
     (value) => {
-        if (!props.backendFiltering) return;
+        if (props.backendFiltering) return;
         if (props.debounceSearch)
             useDebounce(
                 () => handleFiltersChange(value),
@@ -1022,6 +1022,7 @@ function onFiltersEvent(event: Event): void {
 
 /** check whether a row is filtered by filter or not */
 function isRowFiltered(row: T): boolean {
+    if (!Object.values(filters.value).filter(Boolean).length) return true;
     return Object.entries(filters.value).some(([key, filter]) => {
         if (!filter) return false;
         // get column for filter
@@ -1046,7 +1047,7 @@ function isRowFiltered(row: T): boolean {
 }
 
 function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
-    return rows.filter((row) => !isRowFiltered(row.value));
+    return rows.filter((row) => isRowFiltered(row.value));
 }
 
 // --- Sort Feature ---
