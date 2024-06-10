@@ -9,7 +9,6 @@ import {
     defineClasses,
     useEventListener,
     useProgrammaticComponent,
-    usePropBinding,
 } from "@/composables";
 
 import type { ComponentClass, ProgrammaticInstance } from "@/types";
