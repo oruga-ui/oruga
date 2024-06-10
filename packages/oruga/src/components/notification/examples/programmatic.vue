@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { useOruga } from "../../../../../oruga/dist/oruga";
 import NotificationForm from "./_notification-form.vue";
 
 const oruga = useOruga();
 
-async function component() {
+async function component(): Promise<void> {
     const instance = oruga.programmatic.open({
         component: NotificationForm,
         target: "#notification",
