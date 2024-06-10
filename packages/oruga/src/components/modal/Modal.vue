@@ -5,6 +5,7 @@ import {
     watch,
     nextTick,
     onBeforeUnmount,
+    onMounted,
     type Component,
     type PropType,
 } from "vue";
@@ -18,6 +19,8 @@ import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
     getActiveClasses,
+    useClickOutside,
+    useEventListener,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
@@ -55,6 +58,8 @@ const props = defineProps({
         type: String,
         default: () => getOption("modal.animation", "zoom-out"),
     },
+    /** Show an overlay  */
+    overlay: { type: Boolean, default: getOption("modal.overlay", true) },
     /**
      * Is Modal cancleable by clicking 'X', pressing escape or clicking outside
      * @values escape, x, outside, button, true, false
@@ -62,11 +67,9 @@ const props = defineProps({
     cancelable: {
         type: [Array, Boolean] as PropType<string[] | boolean>,
         default: () =>
-            getOption("modal.cancelable", ["escape", "x", "outside", "button"]),
+            getOption("modal.cancelable", ["escape", "x", "outside"]),
     },
-    /** Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside) */
-    onCancel: { type: Function as PropType<() => void>, default: () => {} },
-    /** Callback function to call after close (programmatically close or user canceled) */
+    /** Callback function to call on close (programmatically close or user canceled) */
     onClose: { type: Function as PropType<() => void>, default: () => {} },
     /**
      * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
@@ -95,7 +98,7 @@ const props = defineProps({
     },
     /** Accessibility aria-label to be passed to the div wrapper element */
     ariaLabel: { type: String, default: () => getOption("modal.ariaLabel") },
-    /** Destroy modal on hide */
+    /** Destroy modal on hide - default `true` for programmatic usage */
     destroyOnHide: {
         type: Boolean,
         default: () => getOption("modal.destroyOnHide", false),
@@ -146,7 +149,7 @@ const props = defineProps({
     events: { type: Object, default: () => ({}) },
     /** DOM element where the modal component will be created on (for programmatic usage) */
     container: {
-        type: [Object, String] as PropType<string | HTMLElement>,
+        type: [Object, String] as PropType<string | HTMLElement | null>,
         default: () => getOption("modal.container", "body"),
     },
     /**
@@ -224,22 +227,25 @@ const emits = defineEmits<{
 }>();
 
 const rootRef = ref();
+const contentRef = ref();
+
+const isActive = defineModel<boolean>("active", { default: false });
+
+function handleClose(...args: any[]): void {
+    if (typeof props.onClose === "function" && isActive.value)
+        props.onClose.apply(args);
+    isActive.value = false;
+    emits("close", args);
+}
 
 /** add programmatic usage to this component */
-const { isActive, close, cancel } = useProgrammaticComponent(
-    rootRef,
-    props,
-    emits,
-    {
-        destroyOnHide: props.destroyOnHide,
-        cancelOptions: getOption("modal.cancelable", [
-            "escape",
-            "x",
-            "outside",
-            "button",
-        ]),
-    },
-);
+const { close, cancel } = useProgrammaticComponent(rootRef, {
+    container: props.container,
+    programmatic: props.programmatic,
+    cancelable: props.cancelable,
+    destroy: props.destroyOnHide,
+    onClose: handleClose,
+});
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
@@ -248,19 +254,6 @@ const _teleport = computed(() =>
         ? { to: "body", disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
-
-const savedScrollTop = ref(null);
-const isAnimating = ref(!props.active);
-
-watch(isActive, (value) => {
-    handleScroll();
-    if (value && rootRef.value && props.autoFocus)
-        nextTick(() => rootRef.value.focus());
-    // mark the modal as destoyed after it get closed
-    if (!value && props.destroyOnHide)
-        // wait for transition finish
-        setTimeout(() => removeElement(rootRef.value));
-});
 
 const showX = computed(() =>
     Array.isArray(props.cancelable)
@@ -272,8 +265,25 @@ const customStyle = computed(() =>
     !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
 );
 
+const savedScrollTop = ref(null);
+
+watch(isActive, (value) => {
+    if (props.overlay) handleScroll();
+    // if autoFocus focus the element
+    if (value && rootRef.value && props.autoFocus)
+        nextTick(() => rootRef.value.focus());
+    // destoyed the modal after it get closed
+    if (!value && props.destroyOnHide)
+        // wait for transition finish
+        setTimeout(() => removeElement(rootRef.value));
+});
+
+onMounted(() => {
+    if (isActive.value && props.overlay) handleScroll();
+});
+
 onBeforeUnmount(() => {
-    if (isClient) {
+    if (isClient && props.overlay) {
         // reset scroll
         const scrollto = savedScrollTop.value
             ? savedScrollTop.value
@@ -286,6 +296,33 @@ onBeforeUnmount(() => {
         document.body.style.top = null;
     }
 });
+
+// --- Events Feature ---
+
+if (isClient) {
+    // register onKeyPress event listener when is active
+    useEventListener("keyup", onKeyPress, rootRef.value, { trigger: isActive });
+
+    if (!props.overlay)
+        // register outside click event listener when is active
+        useClickOutside(contentRef, clickedOutside, {
+            trigger: isActive,
+        });
+}
+
+/** Keypress event that is bound to the document. */
+function onKeyPress(event: KeyboardEvent): void {
+    if (!isActive.value) return;
+    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
+}
+
+/** Close fixed sidebar if clicked outside. */
+function clickedOutside(event: Event): void {
+    if (!isActive.value || isAnimating.value) return;
+    if (props.overlay || !event.composedPath().includes(contentRef.value))
+        event.preventDefault();
+    cancel("outside");
+}
 
 function handleScroll(): void {
     if (!isClient) return;
@@ -318,6 +355,10 @@ function handleScroll(): void {
     document.body.style.top = null;
     savedScrollTop.value = null;
 }
+
+// --- Animation Feature ---
+
+const isAnimating = ref(!props.active);
 
 /** Transition after-enter hook */
 function afterEnter(): void {
@@ -360,9 +401,6 @@ const scrollClass = computed(() =>
     ),
 );
 
-// computed ref must be computed at least once for programmatic usage
-scrollClass.value;
-
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
@@ -387,12 +425,16 @@ defineExpose({ close, promise: props.promise });
                 :aria-label="ariaLabel"
                 :aria-modal="isActive">
                 <div
+                    v-if="overlay"
                     :class="overlayClasses"
                     tabindex="-1"
                     aria-hidden="true"
-                    @click="cancel('outside')" />
+                    @click="clickedOutside" />
 
-                <div :class="contentClasses" :style="customStyle">
+                <div
+                    ref="contentRef"
+                    :class="contentClasses"
+                    :style="customStyle">
                     <!-- injected component for programmatic usage -->
                     <component
                         v-bind="$props.props"

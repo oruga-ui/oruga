@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const selected = ref(new Date());
@@ -40,6 +40,7 @@ const locale = ref(); // Browser locale
                 icon="calendar"
                 trap-focus />
         </o-field>
+
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

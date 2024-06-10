@@ -363,8 +363,9 @@ const innerFieldClasses = defineClasses(
         <div v-if="horizontal" :class="bodyHorizontalClasses">
             <template
                 v-for="(element, index) in getInnerContent($slots.default)"
-                :key="element">
+                :key="index">
                 <component :is="element" v-if="isVNodeEmpty(element)" />
+
                 <OField
                     v-else
                     :variant="fieldVariant"

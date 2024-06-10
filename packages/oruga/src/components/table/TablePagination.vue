@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 
-import OPagination from "../pagination/Pagination.vue";
+import OPagination from "@/components/pagination/Pagination.vue";
 
 import type { ComponentClass } from "@/types";
 
@@ -35,7 +35,7 @@ const emits = defineEmits<{
 
 const currentPage = defineModel<number>("current");
 
-/** Paginator change listener. */
+/** paginator change listener */
 function pageChanged(page: number): void {
     const newPage = page > 0 ? page : 1;
     currentPage.value = newPage;

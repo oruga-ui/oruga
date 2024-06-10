@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 
 const data = [
@@ -44,6 +44,7 @@ const filteredDataArray = computed(() =>
                 <template #empty>No results found</template>
             </o-autocomplete>
         </o-field>
+
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

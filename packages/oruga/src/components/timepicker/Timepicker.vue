@@ -53,7 +53,12 @@ const props = defineProps({
         type: String,
         default: () => getOption("timepicker.size"),
     },
-    hourFormat: { type: String, default: undefined },
+    hourFormat: {
+        type: [String, Number] as PropType<"12" | "24" | 12 | 24>,
+        validator: (value: string | number) =>
+            ["12", "24", 12, 24, undefined].includes(value),
+        default: undefined,
+    },
     incrementHours: { type: Number, default: 1 },
     incrementMinutes: { type: Number, default: 1 },
     incrementSeconds: { type: Number, default: 1 },
@@ -268,7 +273,7 @@ const {
 
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
-const vmodel = defineModel<Date>();
+const vmodel = defineModel<Date>({ default: undefined });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -405,46 +410,43 @@ function isHourDisabled(hour: number): boolean {
             disabled = hour > maxHours;
         }
     }
-    if (props.unselectableTimes) {
-        if (!disabled) {
-            if (typeof props.unselectableTimes === "function") {
-                const date = new Date();
-                date.setHours(hour);
-                date.setMinutes(minutesSelected.value);
-                date.setSeconds(secondsSelected.value);
-                return props.unselectableTimes(date);
-            } else {
-                const unselectable = props.unselectableTimes.filter((time) => {
-                    if (props.enableSeconds && secondsSelected.value !== null) {
-                        return (
-                            time.getHours() === hour &&
-                            time.getMinutes() === minutesSelected.value &&
-                            time.getSeconds() === secondsSelected.value
-                        );
-                    } else if (minutesSelected.value !== null) {
-                        return (
-                            time.getHours() === hour &&
-                            time.getMinutes() === minutesSelected.value
-                        );
-                    }
-                    return false;
-                });
-                if (unselectable.length > 0) {
-                    disabled = true;
-                } else {
-                    disabled = minutes.value.every((minute) => {
-                        return (
-                            (props.unselectableTimes as Date[]).filter(
-                                (time) => {
-                                    return (
-                                        time.getHours() === hour &&
-                                        time.getMinutes() === minute.value
-                                    );
-                                },
-                            ).length > 0
-                        );
-                    });
+
+    if (props.unselectableTimes && !disabled) {
+        if (typeof props.unselectableTimes === "function") {
+            const date = new Date();
+            date.setHours(hour);
+            date.setMinutes(minutesSelected.value);
+            date.setSeconds(secondsSelected.value);
+            return props.unselectableTimes(date);
+        } else {
+            const unselectable = props.unselectableTimes.filter((time) => {
+                if (props.enableSeconds && secondsSelected.value !== null) {
+                    return (
+                        time.getHours() === hour &&
+                        time.getMinutes() === minutesSelected.value &&
+                        time.getSeconds() === secondsSelected.value
+                    );
+                } else if (minutesSelected.value !== null) {
+                    return (
+                        time.getHours() === hour &&
+                        time.getMinutes() === minutesSelected.value
+                    );
                 }
+                return false;
+            });
+            if (unselectable.length > 0) {
+                disabled = true;
+            } else {
+                disabled = minutes.value.every((minute) => {
+                    return (
+                        (props.unselectableTimes as Date[]).filter((time) => {
+                            return (
+                                time.getHours() === hour &&
+                                time.getMinutes() === minute.value
+                            );
+                        }).length > 0
+                    );
+                });
             }
         }
     }
@@ -471,37 +473,33 @@ function isMinuteDisabledForHour(hour: number, minute: number): boolean {
 function isMinuteDisabled(minute: number): boolean {
     if (hoursSelected.value === null) return false;
 
-    let disabled = false;
-    if (isHourDisabled(hoursSelected.value)) {
-        disabled = true;
-    } else {
-        disabled = isMinuteDisabledForHour(hoursSelected.value, minute);
-    }
-    if (props.unselectableTimes) {
-        if (!disabled) {
-            if (typeof props.unselectableTimes === "function") {
-                const date = new Date();
-                date.setHours(hoursSelected.value);
-                date.setMinutes(minute);
-                date.setSeconds(secondsSelected.value);
-                return props.unselectableTimes(date);
-            } else {
-                const unselectable = props.unselectableTimes.filter((time) => {
-                    if (props.enableSeconds && secondsSelected.value !== null) {
-                        return (
-                            time.getHours() === hoursSelected.value &&
-                            time.getMinutes() === minute &&
-                            time.getSeconds() === secondsSelected.value
-                        );
-                    } else {
-                        return (
-                            time.getHours() === hoursSelected.value &&
-                            time.getMinutes() === minute
-                        );
-                    }
-                });
-                disabled = unselectable.length > 0;
-            }
+    let disabled = isHourDisabled(hoursSelected.value)
+        ? true
+        : isMinuteDisabledForHour(hoursSelected.value, minute);
+
+    if (props.unselectableTimes && !disabled) {
+        if (typeof props.unselectableTimes === "function") {
+            const date = new Date();
+            date.setHours(hoursSelected.value);
+            date.setMinutes(minute);
+            date.setSeconds(secondsSelected.value);
+            return props.unselectableTimes(date);
+        } else {
+            const unselectable = props.unselectableTimes.filter((time) => {
+                if (props.enableSeconds && secondsSelected.value !== null) {
+                    return (
+                        time.getHours() === hoursSelected.value &&
+                        time.getMinutes() === minute &&
+                        time.getSeconds() === secondsSelected.value
+                    );
+                } else {
+                    return (
+                        time.getHours() === hoursSelected.value &&
+                        time.getMinutes() === minute
+                    );
+                }
+            });
+            disabled = unselectable.length > 0;
         }
     }
 }
@@ -534,24 +532,22 @@ function isSecondDisabled(second: number): boolean {
             }
         }
     }
-    if (props.unselectableTimes) {
-        if (!disabled) {
-            if (typeof props.unselectableTimes === "function") {
-                const date = new Date();
-                date.setHours(hoursSelected.value);
-                date.setMinutes(minutesSelected.value);
-                date.setSeconds(second);
-                return props.unselectableTimes(date);
-            } else {
-                const unselectable = props.unselectableTimes.filter((time) => {
-                    return (
-                        time.getHours() === hoursSelected.value &&
-                        time.getMinutes() === minutesSelected.value &&
-                        time.getSeconds() === second
-                    );
-                });
-                disabled = unselectable.length > 0;
-            }
+    if (props.unselectableTimes && !disabled) {
+        if (typeof props.unselectableTimes === "function") {
+            const date = new Date();
+            date.setHours(hoursSelected.value);
+            date.setMinutes(minutesSelected.value);
+            date.setSeconds(second);
+            return props.unselectableTimes(date);
+        } else {
+            const unselectable = props.unselectableTimes.filter((time) => {
+                return (
+                    time.getHours() === hoursSelected.value &&
+                    time.getMinutes() === minutesSelected.value &&
+                    time.getSeconds() === second
+                );
+            });
+            disabled = unselectable.length > 0;
         }
     }
 }
@@ -594,19 +590,18 @@ function updateDateSelected(
 /** Format date into string 'HH-MM-SS'*/
 function formatNative(value: Date): string {
     const date = new Date(value);
-    if (value && !isNaN(date.getTime())) {
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
-        return (
-            formatNumber(hours, true) +
-            ":" +
-            formatNumber(minutes, true) +
-            ":" +
-            formatNumber(seconds, true)
-        );
-    }
-    return "";
+    if (!value || isNaN(date.getTime())) return "";
+
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return (
+        formatNumber(hours, true) +
+        ":" +
+        formatNumber(minutes, true) +
+        ":" +
+        formatNumber(seconds, true)
+    );
 }
 
 // --- Event Handler ---

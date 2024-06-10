@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 // Is
@@ -101,7 +101,8 @@ const onProfileActivate = () => {
             :has-navigation="hasNavigation"
             :icon-prev="prevIcon"
             :icon-next="nextIcon"
-            :label-position="labelPosition">
+            :label-position="labelPosition"
+            destroy-on-hide>
             <o-step-item
                 value="1"
                 step="1"

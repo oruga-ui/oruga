@@ -15,6 +15,8 @@ declare module "../index" {
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: string | boolean | Record<string, any>;
+                /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
+                confirmKeys: string[];
                 /** Class of the menu empty placeholder item */
                 itemEmptyClass: ClassDefinition;
                 /** Class of the menu footer item */
@@ -333,7 +335,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to format a date into a string */
                 dateFormatter: (date: Date | Date[]) => string;
                 /** Custom function to parse a string into a date */
-                dateParser: (date: string) => Date;
+                dateParser: (date: string) => Date | Date[];
                 /** Date creator function, default is `new Date()` */
                 dateCreator: () => Date;
                 /** Define a list of weeks which can not be selected */
@@ -481,6 +483,8 @@ Use menuitem only in situations where your dropdown is related to a navigation m
             }>;
         field?: ComponentConfigBase &
             Partial<{
+                /**  */
+                messageTag: DynamicComponent;
                 /** "Class for field body when horizontal */
                 bodyHorizontalClass: ClassDefinition;
                 /** Class for components automatically attached together when inside a field */
@@ -677,7 +681,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 closeIcon: string;
                 /** Custom animation (transition name) */
                 animation: string;
-                /** Destroy modal on hide */
+                /** Destroy modal on hide - default `true` for programmatic usage */
                 destroyOnHide: boolean;
                 /** DOM element where the modal component will be created on (for programmatic usage) */
                 container: string | HTMLElement;
@@ -687,6 +691,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobileBreakpoint: string;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
                 ariaRole: string;
+                /** Show an overlay */
+                overlay: boolean;
                 /** Size of close icon */
                 closeIconSize: string;
                 /** Trap focus inside the modal */
@@ -786,6 +792,10 @@ Meaning that the container should be fixed. */
                 prevButtonClass: ClassDefinition;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
+                /** Enable rounded button style */
+                rounded: boolean;
+                /** Enable simple style */
+                simple: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to use for next button */
@@ -800,10 +810,6 @@ Meaning that the container should be fixed. */
                 buttonTag: DynamicComponent;
                 /** Pagination size */
                 size: string;
-                /** Rounded button style */
-                rounded: boolean;
-                /** Simple style */
-                simple: boolean;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
@@ -1083,7 +1089,7 @@ but will set body to position fixed, might break some layouts. */
                 itemTag: DynamicComponent;
                 /** Step navigation is animated */
                 animated: boolean;
-                /** Tab size */
+                /** Step size */
                 size: string;
                 /** Transition animation name */
                 animation: string[];
@@ -1137,14 +1143,14 @@ but will set body to position fixed, might break some layouts. */
                 ariaPageLabel: string;
                 /** Accessibility label for the pagination previous page button. */
                 ariaPreviousLabel: string;
-                /** Add a class to row based on the return */
-                rowClass: (row: unknown, index: number) => string;
                 /** Adds pagination to the table */
                 paginated: boolean;
-                /** Allow chevron icon and column to be visible */
+                /** Allow detail icon and column to be visible (if detailed) */
                 showDetailIcon: boolean;
                 /** Border to all cells */
                 bordered: boolean;
+                /** Class configuration for the internal loading component */
+                loadingClasses: Record<string, any>;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the sortable form wrapper on mobile */
@@ -1209,40 +1215,54 @@ but will set body to position fixed, might break some layouts. */
                 stickyHeaderClass: ClassDefinition;
                 /** Class of the Table wrapper when its content is scrollable */
                 scrollableClass: ClassDefinition;
-                /** Color of the checkbox when checkable */
+                /** Color of the checkbox when checkable (if checkable) */
                 checkboxVariant: string;
-                /** Columns won't be filtered with Javascript, use with searchable prop to the columns to filter in your backend */
+                /** Columns won't be filtered with Javascript, use with `searchable` prop to the columns to filter in your backend */
                 backendFiltering: boolean;
-                /** Columns won't be sorted with Javascript, use with sort event to sort in your backend */
+                /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
                 backendSorting: boolean;
-                /** Controls the visibility of the trigger that toggles the detailed rows. */
-                hasDetailedVisible: (row: unknown) => boolean;
-                /** Custom method to verify if a row is checkable, works when is checkable */
+                /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
+                isDetailedVisible: (row: unknown) => boolean;
+                /** Custom method to verify if a row is checkable (if checkable) */
                 isRowCheckable: (row: unknown) => boolean;
-                /** Enable simple style pagination if paginated */
+                /** Define individual class for a row */
+                rowClass: (row: unknown, index: number) => string;
+                /** Enable rounded pagination buttons (if paginated) */
+                paginationRounded: boolean;
+                /** Enable simple style pagination (if paginated) */
                 paginationSimple: boolean;
+                /** Filtering debounce time (in milliseconds) */
+                debounceSearch: number;
                 /** How many rows per page (if paginated) */
                 perPage: string | number;
-                /** Icon name of detail action */
+                /** Icon for the loading state */
+                loadingIcon: string;
+                /** Icon name of detail action (if detailed) */
                 detailIcon: string;
+                /** Icon of the column search input */
+                filterIcon: string;
                 /** Icon pack to use */
                 iconPack: string;
+                /** Label for the loading state */
+                loadingLabel: string;
                 /** Makes the cells narrower */
                 narrowed: boolean;
                 /** Mobile breakpoint as max-width value */
                 mobileBreakpoint: string;
-                /** Pagination buttons order if paginated */
+                /** Pagination buttons order (if paginated) */
                 paginationOrder: string;
                 /** Pagination position (if paginated) */
                 paginationPosition: string;
-                /** Position of the checkbox when checkable */
+                /** Placeholder of the column search input */
+                filterPlaceholder: string;
+                /** Position of the checkbox when checkable (if checkable) */
                 checkboxPosition: string;
-                /** Rounded pagination if paginated */
-                paginationRounded: boolean;
                 /** Rows appears as cards on mobile (collapse rows) */
                 mobileCards: boolean;
                 /** Rows are highlighted when hovering */
                 hoverable: boolean;
+                /** Select placeholder text when nothing is selected (if mobileCards) */
+                mobileSortPlaceholder: string;
                 /** Sets the default sort column and order — e.g. ['first_name', 'desc'] */
                 defaultSort: string | string[];
                 /** Sets the default sort column direction on the first click */
@@ -1253,14 +1273,12 @@ but will set body to position fixed, might break some layouts. */
                 sortIconSize: string;
                 /** Show header */
                 showHeader: boolean;
-                /** Size of pagination if paginated */
+                /** Size of pagination (if paginated) */
                 paginationSize: string;
-                /** Text when nothing is selected */
-                mobileSortPlaceholder: string;
+                /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */
+                selectable: boolean;
                 /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-                customRowKey: string;
-                /** Use a unique key of your data Object when use detailed or opened detailed. (id recommended) */
-                detailKey: string;
+                rowKey: string;
                 /** Whether table is striped */
                 striped: boolean;
             }>;

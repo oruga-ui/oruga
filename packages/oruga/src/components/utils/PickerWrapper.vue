@@ -120,14 +120,23 @@ const computedNativeType = computed(() =>
 watch(
     () => props.value,
     () => {
+        // reset input value if they not match
+        if (vmodel.value !== props.formattedValue)
+            vmodel.value = props.formattedValue;
         // toggle picker if not stay open
         if (!props.stayOpen) togglePicker(false);
-        // check validation if native
-        if (isMobileNative.value && !isValid.value) checkHtml5Validity();
+        if (!isValid.value) checkHtml5Validity();
     },
+    { flush: "post" },
 );
 
 const isActive = defineModel<boolean>("active", { default: false });
+
+const vmodel = ref(props.formattedValue);
+watch(
+    () => props.formattedValue,
+    (value) => (vmodel.value = value),
+);
 
 watch(isActive, onActiveChange);
 
@@ -208,8 +217,8 @@ defineExpose({ focus: setFocus });
                     <o-input
                         ref="inputRef"
                         v-bind="inputBind"
+                        v-model="vmodel"
                         autocomplete="off"
-                        :model-value="formattedValue"
                         :placeholder="picker.placeholder"
                         :size="picker.size"
                         :icon-pack="picker.iconPack"

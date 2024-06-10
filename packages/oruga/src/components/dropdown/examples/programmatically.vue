@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const active = ref(false);
@@ -18,6 +18,7 @@ const active = ref(false);
             <o-dropdown-item label="Another action" />
             <o-dropdown-item label="Something else" />
         </o-dropdown>
+
         <o-button
             label="Open / Close"
             type="primary"

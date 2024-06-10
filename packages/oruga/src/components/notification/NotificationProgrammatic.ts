@@ -42,7 +42,6 @@ const NotificationProgrammatic = {
 
         const defaultParams = {
             programmatic: { instances },
-            active: true, // set the active state to true
             position: getOption("notification.position", "top-right"),
         };
 
