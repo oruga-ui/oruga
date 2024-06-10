@@ -188,12 +188,12 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
           <section class="o-dpck__table">
             <header class="o-dpck__table__head">
               <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>S</span></div>
-              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>S</span></div>
               <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>M</span></div>
               <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>T</span></div>
               <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>W</span></div>
               <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>T</span></div>
               <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>F</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>S</span></div>
             </header>
             <div class="o-dpck__table__body">
               <div class="o-dpck__table__row">
