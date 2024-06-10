@@ -1,10 +1,20 @@
-import { afterEach, describe, expect, test } from "vitest";
+import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 import { mount, enableAutoUnmount } from "@vue/test-utils";
+
+import { timezoneMock } from "@/__tests__/mocks/timezoneMock";
 
 import ODatepicker from "@/components/datepicker/Datepicker.vue";
 
 describe("ODatepicker", () => {
     enableAutoUnmount(afterEach);
+
+    beforeEach(() => {
+        timezoneMock("en-GB", "Europe/London");
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
 
     test("render correctly", () => {
         const wrapper = mount(ODatepicker);
