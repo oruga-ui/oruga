@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const active = ref(false);
 const overlay = ref(true);
 const fullheight = ref(true);
 const fullwidth = ref(false);
-const position = ref("left");
+const position = ref<"left" | "top" | "bottom" | "right">("left");
 </script>
 
 <template>

@@ -6,7 +6,7 @@
             <o-button label="Add" size="medium" icon-left="plus" />
             <o-button label="Add" size="large" icon-left="plus" />
         </div>
-        <br />
+
         <div class="odocs-spaced">
             <o-button label="Delete" variant="danger" icon-left="trash" />
             <o-button label="Delete" variant="danger" icon-right="trash" />

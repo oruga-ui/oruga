@@ -6,19 +6,19 @@ import OInput from "@/components/input/Input.vue";
 describe("OInput", () => {
     enableAutoUnmount(afterEach);
 
-    test("is called", () => {
+    test("render correctly", () => {
         const wrapper = mount(OInput);
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("input");
+        expect(wrapper.html()).toMatchSnapshot();
+        expect(wrapper.classes("o-input__wrapper")).toBeTruthy();
     });
 
-    test("render correctly", async () => {
+    test("test basic", async () => {
         const wrapper = mount(OInput, {
             props: { icon: "placeholder", iconClickable: true },
         });
-        expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-input__wrapper")).toBeTruthy();
 
         const target = wrapper.find("input");
         expect(target.exists()).toBeTruthy();

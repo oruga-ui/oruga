@@ -7,6 +7,7 @@
                 <o-step-item label="Social" icon="user-plus" />
             </o-steps>
         </o-field>
+
         <o-field label="Info">
             <o-steps variant="info">
                 <o-step-item label="Account" icon="user-lock" />

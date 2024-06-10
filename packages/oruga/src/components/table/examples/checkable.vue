@@ -1,7 +1,35 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
+// @ts-expect-error Examples are loaded differently.
+import type { TableColumn } from "../../../../dist/oruga";
 
-const tableData = [
+const columns = ref<TableColumn[]>([
+    {
+        field: "id",
+        label: "ID",
+        width: "40",
+        numeric: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+    },
+    {
+        field: "gender",
+        label: "Gender",
+    },
+]);
+
+const data = ref([
     {
         id: 1,
         first_name: "Jesse",
@@ -37,37 +65,10 @@ const tableData = [
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-];
-
-const data = ref(tableData);
-const checkboxPosition = ref("left");
-const checkedRows = ref([tableData[1], tableData[3]]);
-
-const columns = ref([
-    {
-        field: "id",
-        label: "ID",
-        width: "40",
-        numeric: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-    },
-    {
-        field: "gender",
-        label: "Gender",
-    },
 ]);
+
+const checkboxPosition = ref("left");
+const checkedRows = ref([data.value[1], data.value[3]]);
 </script>
 
 <template>
@@ -88,16 +89,10 @@ const columns = ref([
         <o-table
             v-model:checked-rows="checkedRows"
             :data="data"
-            :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
+            :columns="columns"
             checkable
+            :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
             :checkbox-position="checkboxPosition">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row[column.field] }}
-            </o-table-column>
             <template #bottom-left>
                 <b>Total checked</b>: {{ checkedRows.length }}
             </template>

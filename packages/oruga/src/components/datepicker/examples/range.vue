@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const date = ref();
@@ -14,6 +14,7 @@ const date = ref();
                 trap-focus
                 range />
         </o-field>
+
         <p><b>Selected:</b> {{ date }}</p>
     </section>
 </template>

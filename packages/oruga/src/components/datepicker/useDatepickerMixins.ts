@@ -97,6 +97,7 @@ export function useDatepickerMixins(props: DatepickerProps) {
     const defaultDateFormatter = (date: Date | Date[]): string => {
         if (!date) return "";
         const targetDates = Array.isArray(date) ? date : [date];
+        if (!targetDates.length) return "";
         const dates = targetDates.map((date) => {
             const d = new Date(
                 date.getFullYear(),
@@ -112,57 +113,63 @@ export function useDatepickerMixins(props: DatepickerProps) {
     };
 
     /** Parse a string into a date */
-    const defaultDateParser = (date: string): Date => {
+    const defaultDateParser = (date: string): Date[] | Date => {
         if (!date) return null;
-        if (
-            dtf.value.formatToParts &&
-            typeof dtf.value.formatToParts === "function"
-        ) {
-            const formatRegex = (isTypeMonth.value ? dtfMonth.value : dtf.value)
-                .formatToParts(sampleTime.value)
-                .map((part) => {
-                    if (part.type === "literal") return part.value;
-                    return `((?!=<${part.type}>)\\d+)`;
-                })
-                .join("");
-            const dateGroups = matchWithGroups(formatRegex, date);
-
-            // We do a simple validation for the group.
-            // If it is not valid, it will fallback to Date.parse below
+        const targetDates = !props.multiple ? [date] : date.split(", ");
+        const dates = targetDates.map((date) => {
             if (
-                dateGroups.year &&
-                dateGroups.year.length === 4 &&
-                dateGroups.month &&
-                dateGroups.month <= 12
+                dtf.value.formatToParts &&
+                typeof dtf.value.formatToParts === "function"
             ) {
-                if (isTypeMonth.value)
-                    return new Date(dateGroups.year, dateGroups.month - 1);
-                else if (dateGroups.day && dateGroups.day <= 31) {
-                    return new Date(
-                        dateGroups.year,
-                        dateGroups.month - 1,
-                        dateGroups.day,
-                        12,
-                    );
+                const formatRegex = (
+                    isTypeMonth.value ? dtfMonth.value : dtf.value
+                )
+                    .formatToParts(sampleTime.value)
+                    .map((part) => {
+                        if (part.type === "literal") return part.value;
+                        return `((?!=<${part.type}>)\\d+)`;
+                    })
+                    .join("");
+                const dateGroups = matchWithGroups(formatRegex, date);
+
+                // We do a simple validation for the group.
+                // If it is not valid, it will fallback to Date.parse below
+                if (
+                    dateGroups.year &&
+                    dateGroups.year.length === 4 &&
+                    dateGroups.month &&
+                    dateGroups.month <= 12
+                ) {
+                    if (isTypeMonth.value)
+                        return new Date(dateGroups.year, dateGroups.month - 1);
+                    else if (dateGroups.day && dateGroups.day <= 31) {
+                        return new Date(
+                            dateGroups.year,
+                            dateGroups.month - 1,
+                            dateGroups.day,
+                            12,
+                        );
+                    }
                 }
             }
-        }
-        // Fallback if formatToParts is not supported or if we were not able to parse a valid date
-        if (!isTypeMonth.value) return new Date(Date.parse(date));
-        const s = date.split("/");
-        const year = s[0].length === 4 ? s[0] : s[1];
-        const month = s[0].length === 2 ? s[0] : s[1];
-        if (year && month) {
-            return new Date(
-                parseInt(year, 10),
-                parseInt(month, 10) - 1,
-                1,
-                0,
-                0,
-                0,
-                0,
-            );
-        }
+            // Fallback if formatToParts is not supported or if we were not able to parse a valid date
+            if (!isTypeMonth.value) return new Date(Date.parse(date));
+            const s = date.split("/");
+            const year = s[0].length === 4 ? s[0] : s[1];
+            const month = s[0].length === 2 ? s[0] : s[1];
+            if (year && month) {
+                return new Date(
+                    parseInt(year, 10),
+                    parseInt(month, 10) - 1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                );
+            }
+        });
+        return props.multiple ? dates : dates[0];
     };
 
     return { isDateSelectable, defaultDateParser, defaultDateFormatter };

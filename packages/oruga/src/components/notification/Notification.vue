@@ -4,7 +4,7 @@ import { computed, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { defineClasses, usePropBinding } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -72,11 +72,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("notification.animation", "fade"),
     },
-    /** Accessibility label for the close button */
-    ariaCloseLabel: {
-        type: String,
-        default: () => getOption("notification.ariaCloseLabel", "Close"),
-    },
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -109,6 +104,11 @@ const props = defineProps({
     closeIconSize: {
         type: String,
         default: () => getOption("notification.closeIconSize"),
+    },
+    /** Accessibility label for the close button */
+    ariaCloseLabel: {
+        type: String,
+        default: () => getOption("notification.ariaCloseLabel", "Close"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
@@ -161,9 +161,7 @@ const emits = defineEmits<{
     (e: "close", ...args: any[]): void;
 }>();
 
-const isActive = usePropBinding<boolean>("active", props, emits, {
-    passive: true,
-});
+const isActive = defineModel<boolean>("active", { default: true });
 
 /** Icon name (MDI) based on type. */
 const computedIcon = computed(() => {

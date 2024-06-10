@@ -6,15 +6,11 @@ import OMenu from "@/components/menu/Menu.vue";
 describe("OMenu tests", () => {
     enableAutoUnmount(afterEach);
 
-    test("is called", () => {
+    test("render correctly", () => {
         const wrapper = mount(OMenu);
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("menu");
-    });
-
-    test("render correctly", () => {
-        const wrapper = mount(OMenu);
         expect(wrapper.html()).toMatchSnapshot();
         expect(wrapper.classes("o-menu")).toBeTruthy();
     });

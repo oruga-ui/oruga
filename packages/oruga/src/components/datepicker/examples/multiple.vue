@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const dates = ref([]);
@@ -12,6 +12,7 @@ const dates = ref([]);
                 multiple
                 placeholder="Click to select..." />
         </o-field>
+
         <p><b>Selected:</b> {{ dates }}</p>
     </section>
 </template>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 
 const count = ref(1);
@@ -19,6 +19,7 @@ onMounted(() => {
                     <span> Issues 3 </span>
                 </template>
             </o-tab-item>
+
             <o-tab-item>
                 <template #header>
                     <o-icon icon="retweet" root-class="custom-icon" />

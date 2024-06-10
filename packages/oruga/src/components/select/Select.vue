@@ -5,11 +5,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import {
-    defineClasses,
-    useVModelBinding,
-    useInputHandler,
-} from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -235,9 +231,9 @@ const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = useVModelBinding<
-    string | number | boolean | object | Array<any>
->(props, emits, { passive: true });
+const vmodel = defineModel<string | number | boolean | object | Array<unknown>>(
+    { default: undefined },
+);
 
 const placeholderVisible = computed(() => vmodel.value === null);
 

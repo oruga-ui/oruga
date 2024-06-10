@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 
 const data = ref([]);
@@ -102,44 +102,44 @@ onMounted(() => {
             @page-change="onPageChange"
             @sort="onSort">
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="original_title"
                 label="Title"
                 sortable>
-                {{ props.row.original_title }}
+                {{ row.original_title }}
             </o-table-column>
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="vote_average"
                 label="Vote Average"
                 numeric
                 sortable>
-                <span class="tag" :class="type(props.row.vote_average)">
-                    {{ props.row.vote_average }}
+                <span class="tag" :class="type(row.vote_average)">
+                    {{ row.vote_average }}
                 </span>
             </o-table-column>
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="vote_count"
                 label="Vote Count"
                 numeric
                 sortable>
-                {{ props.row.vote_count }}
+                {{ row.vote_count }}
             </o-table-column>
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="release_date"
                 label="Release Date"
                 sortable
                 centered>
                 {{
-                    props.row.release_date
-                        ? new Date(props.row.release_date).toLocaleDateString()
+                    row.release_date
+                        ? new Date(row.release_date).toLocaleDateString()
                         : "unknown"
                 }}
             </o-table-column>
-            <o-table-column v-slot="props" label="Overview" width="500">
-                {{ props.row.overview }}
+            <o-table-column v-slot="{ row }" label="Overview" width="500">
+                {{ row.overview }}
             </o-table-column>
         </o-table>
     </section>

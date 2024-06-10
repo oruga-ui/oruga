@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 
-import OPagination from "../pagination/Pagination.vue";
-
-import { usePropBinding } from "@/composables";
+import OPagination from "@/components/pagination/Pagination.vue";
 
 import type { ComponentClass } from "@/types";
 
@@ -13,7 +11,7 @@ defineOptions({
     configField: "table",
 });
 
-const props = defineProps({
+defineProps({
     current: { type: Number, default: undefined },
     paginated: { type: Boolean, default: false },
     rootClass: {
@@ -35,9 +33,9 @@ const emits = defineEmits<{
     (e: "change", event: number): void;
 }>();
 
-const currentPage = usePropBinding("current", props, emits);
+const currentPage = defineModel<number>("current");
 
-/** Paginator change listener. */
+/** paginator change listener */
 function pageChanged(page: number): void {
     const newPage = page > 0 ? page : 1;
     currentPage.value = newPage;

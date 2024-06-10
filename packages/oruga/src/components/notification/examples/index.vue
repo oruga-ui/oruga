@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Programmatically from "./programmatically.vue";
 import ProgrammaticallyCode from "./programmatically.vue?raw";
 
