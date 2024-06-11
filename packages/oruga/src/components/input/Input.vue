@@ -1,4 +1,10 @@
-<script setup lang="ts" generic="IsNumber extends boolean = false">
+<script
+    setup
+    lang="ts"
+    generic="
+        IsNumber extends boolean,
+        ModelValue extends IsNumber extends true ? number : string
+    ">
 import {
     ref,
     computed,
@@ -31,15 +37,13 @@ defineOptions({
     inheritAttrs: false,
 });
 
-type ModelValueType = IsNumber extends true ? number : string;
-
 const props = defineProps({
     /**
      * @type string | number
      * @model
      */
     modelValue: {
-        type: [Number, String] as unknown as PropType<ModelValueType>,
+        type: [Number, String] as unknown as PropType<ModelValue>,
         default: undefined,
     },
     /** @type boolean */
@@ -217,13 +221,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValueType): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input change event
      * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: ModelValueType, event: Event): void;
+    (e: "input", value: ModelValue, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -274,10 +278,12 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<ModelValueType>({ default: undefined });
+const vmodel = defineModel<ModelValue>({
+    default: undefined,
+});
 // set default value
 if (!isDefined(vmodel.value))
-    vmodel.value = (props.number ? 0 : "") as ModelValueType;
+    vmodel.value = (props.number ? 0 : "") as ModelValue;
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -334,9 +340,7 @@ const computedStyles = computed(
 
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const input = (
-        props.number ? Number(value) : String(value)
-    ) as ModelValueType;
+    const input = (props.number ? Number(value) : String(value)) as ModelValue;
     emits("input", input, event);
 }
 
@@ -373,7 +377,7 @@ function iconClick(event: Event): void {
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
     else if (props.clearable)
-        vmodel.value = (props.number ? 0 : "") as ModelValueType;
+        vmodel.value = (props.number ? 0 : "") as ModelValue;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());

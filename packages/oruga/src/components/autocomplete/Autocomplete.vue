@@ -13,7 +13,6 @@ import {
     type Component,
     type ComponentInstance,
 } from "vue";
-import type { ComponentExposed } from "vue-component-type-helpers";
 
 import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -337,7 +336,7 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<ComponentExposed<typeof OInput>>();
+const inputRef = ref<ComponentInstance<typeof OInput>>();
 const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
