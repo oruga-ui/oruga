@@ -204,7 +204,6 @@ ${description ? "> " + description : ""}
                 return;
         }
 
-        if (pr.tags?.type) console.log(pr.tags?.type);
         const type = pr.tags?.type
             ? pr.tags?.type[0].description
             : pr.type?.name
