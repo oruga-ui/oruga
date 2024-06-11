@@ -31,7 +31,7 @@ defineOptions({
     inheritAttrs: false,
 });
 
-type InputValueType = IsNumber extends true ? number : string;
+type ModelValueType = IsNumber extends true ? number : string;
 
 const props = defineProps({
     /**
@@ -39,7 +39,7 @@ const props = defineProps({
      * @model
      */
     modelValue: {
-        type: [Number, String] as unknown as PropType<InputValueType>,
+        type: [Number, String] as unknown as PropType<ModelValueType>,
         default: undefined,
     },
     /** @type boolean */
@@ -217,13 +217,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: ModelValueType): void;
     /**
      * on input change event
      * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string | number, event: Event): void;
+    (e: "input", value: ModelValueType, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -274,10 +274,10 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<InputValueType>({ default: undefined });
+const vmodel = defineModel<ModelValueType>({ default: undefined });
 // set default value
 if (!isDefined(vmodel.value))
-    vmodel.value = (props.number ? 0 : "") as InputValueType;
+    vmodel.value = (props.number ? 0 : "") as ModelValueType;
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -336,7 +336,7 @@ function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     const input = (
         props.number ? Number(value) : String(value)
-    ) as InputValueType;
+    ) as ModelValueType;
     emits("input", input, event);
 }
 
@@ -373,7 +373,7 @@ function iconClick(event: Event): void {
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
     else if (props.clearable)
-        vmodel.value = (props.number ? 0 : "") as InputValueType;
+        vmodel.value = (props.number ? 0 : "") as ModelValueType;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());
@@ -469,12 +469,14 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 
 // --- Expose Public Functionalities ---
 
+const root = ref<HTMLElement>();
+
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, $el: root });
 </script>
 
 <template>
-    <div data-oruga="input" :class="rootClasses">
+    <div ref="root" data-oruga="input" :class="rootClasses">
         <input
             v-if="type !== 'textarea'"
             v-bind="$attrs"

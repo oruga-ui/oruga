@@ -90,7 +90,7 @@ const isMobileNative = computed(
     () => picker.value.mobileNative && isMobileAgent.any(),
 );
 
-const dropdownRef = ref<InstanceType<typeof ODropdown>>();
+const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
 const inputRef = ref<ComponentInstance<typeof OInput>>();
 const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
 

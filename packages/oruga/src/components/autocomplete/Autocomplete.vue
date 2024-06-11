@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends String | Number | Object">
+<script setup lang="ts" generic="Option extends String | Number | Object">
 import {
     computed,
     nextTick,
@@ -13,6 +13,7 @@ import {
     type Component,
     type ComponentInstance,
 } from "vue";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -76,7 +77,7 @@ const props = defineProps({
             getOption<DynamicComponent>("autocomplete.itemTag", "div"),
     },
     /** Options / suggestions */
-    data: { type: Array as PropType<T[]>, default: () => [] },
+    data: { type: Array as PropType<Option[]>, default: () => [] },
     /**
      * Size of the control
      * @values small, medium, large
@@ -281,19 +282,19 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: string): void;
     /**
      * on input change event
-     * @param value {string | number} input value
+     * @param value {string} input value
      */
-    (e: "input", value: string | number): void;
+    (e: "input", value: string): void;
     /**
      * selected element changed event
      * @param value {string | number | object} selected value
      */
-    (e: "select", value: T, evt: Event): void;
+    (e: "select", value: Option, evt: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
@@ -336,7 +337,7 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<ComponentInstance<typeof OInput>>();
+const inputRef = ref<ComponentExposed<typeof OInput>>();
 const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
@@ -359,8 +360,8 @@ const vmodel = defineModel<string>({ default: undefined });
 
 const isActive = ref(false);
 
-const selectedOption = ref<T>();
-const hoveredOption = ref<T>();
+const selectedOption = ref<Option>();
+const hoveredOption = ref<Option>();
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
@@ -470,7 +471,7 @@ function onDropdownClose(method: string): void {
  * If object, get value from path based on given field, or else just the value.
  * Apply a formatter function to the label if given.
  */
-function getValue(option: T): string {
+function getValue(option: Option): string {
     if (!option) return "";
 
     const property =
@@ -487,7 +488,7 @@ function getValue(option: T): string {
 }
 
 /** Set which option is currently hovered. */
-function setHovered(option: T | SpecialOption): void {
+function setHovered(option: Option | SpecialOption): void {
     if (option === undefined) return;
     hoveredOption.value = isSpecialOption(option) ? null : option;
     headerHovered.value = option === SpecialOption.Header;
@@ -505,7 +506,11 @@ function setHoveredIdToIndex(index: number): void {
  * Set which option is currently selected, update v-model,
  * update input value and close dropdown.
  */
-function setSelected(option: T, closeDropdown = true, event = undefined): void {
+function setSelected(
+    option: Option,
+    closeDropdown = true,
+    event = undefined,
+): void {
     if (option === undefined) return;
     selectedOption.value = option;
     emits("select", selectedOption.value, event);
@@ -683,7 +688,7 @@ function handleBlur(event: Event): void {
 }
 
 /** emit input change event */
-function onInput(value: string | number): void {
+function onInput(value: string): void {
     const currentValue = getValue(selectedOption.value);
     if (currentValue && currentValue === vmodel.value) return;
     debouncedInput(value);
@@ -695,7 +700,7 @@ watchEffect(() => {
     debouncedInput = useDebounce(emitInput, props.debounce);
 });
 
-function emitInput(value: string | number): void {
+function emitInput(value: string): void {
     emits("input", value);
     checkHtml5Validity();
 }
@@ -911,7 +916,8 @@ defineExpose({ focus: setFocus });
                 :aria-selected="toRaw(option) === toRaw(hoveredOption)"
                 :tabindex="-1"
                 @click="
-                    (value, event) => setSelected(value as T, !keepOpen, event)
+                    (value, event) =>
+                        setSelected(value as Option, !keepOpen, event)
                 ">
                 <!--
                     @slot Override the select option

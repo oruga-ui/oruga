@@ -224,8 +224,8 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const datepickerRef = ref<InstanceType<typeof ODatepicker>>();
-const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
+const datepickerRef = ref<ComponentInstance<typeof ODatepicker>>();
+const timepickerRef = ref<ComponentInstance<typeof OTimepicker>>();
 const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
 
 const timepickerProps = ref(props.timepicker);
