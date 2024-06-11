@@ -237,10 +237,10 @@ exports[`ODatepicker > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>9</span>
                   <!--v-if-->
                 </div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--today o-dpck__table__cell--selectable o-dpck__table__cell--today" role="button"><span>10</span>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>10</span>
                   <!--v-if-->
                 </div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>11</span>
+                <div class="o-dpck__table__cell o-dpck__table__cell--today o-dpck__table__cell--selectable o-dpck__table__cell--today" role="button"><span>11</span>
                   <!--v-if-->
                 </div>
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>12</span>
