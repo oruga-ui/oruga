@@ -281,6 +281,7 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 const vmodel = defineModel<ModelValue>({
     default: undefined,
 });
+
 // set default value
 if (!isDefined(vmodel.value))
     vmodel.value = (props.number ? 0 : "") as ModelValue;
@@ -293,7 +294,7 @@ const valueLength = computed(() =>
     typeof vmodel.value === "string"
         ? vmodel.value.length
         : typeof vmodel.value === "number"
-          ? vmodel.value.toString().length
+          ? String(vmodel.value).length
           : 0,
 );
 
