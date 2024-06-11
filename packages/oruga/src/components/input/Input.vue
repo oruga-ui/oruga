@@ -473,14 +473,12 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 
 // --- Expose Public Functionalities ---
 
-const root = ref<HTMLElement>();
-
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, $el: root });
+defineExpose({ focus: setFocus });
 </script>
 
 <template>
-    <div ref="root" data-oruga="input" :class="rootClasses">
+    <div data-oruga="input" :class="rootClasses">
         <input
             v-if="type !== 'textarea'"
             v-bind="$attrs"
