@@ -152,6 +152,20 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
 }
 
 /**
+ * Returns true if it is a DOM element
+ * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
+ */
+export function isElement(o: any): boolean {
+    return typeof HTMLElement === "object"
+        ? o instanceof HTMLElement //DOM2
+        : o &&
+              typeof o === "object" &&
+              o !== null &&
+              o.nodeType === 1 &&
+              typeof o.nodeName === "string";
+}
+
+/**
  * Clone an obj with Object.assign
  */
 export function clone<T extends object>(obj: T): T {
