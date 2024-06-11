@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "conventional-changelog": "^5.1.0",
-    "conventional-changelog-cli": "^4.1.0",
-    "replace-in-file": "^7.1.0"
+    "conventional-changelog": "^6.0.0",
+    "conventional-changelog-cli": "^5.0.0",
+    "replace-in-file": "^7.2.0"
   }
 }
