@@ -1,10 +1,19 @@
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { mount, enableAutoUnmount } from "@vue/test-utils";
 
 import ODatepicker from "@/components/datepicker/Datepicker.vue";
 
 describe("ODatepicker", () => {
     enableAutoUnmount(afterEach);
+
+    beforeEach(() => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date(2000, 0, 0));
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
 
     test("render correctly", () => {
         const wrapper = mount(ODatepicker);

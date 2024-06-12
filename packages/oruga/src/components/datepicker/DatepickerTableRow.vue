@@ -314,12 +314,6 @@ function cellClasses(day: Date): ClassBind[] {
             datepicker.value.nearbySelectableMonthDays &&
                 day.getMonth() !== props.month,
         ],
-        [
-            "tableCellTodayClass",
-            "o-dpck__table__cell--today",
-            null,
-            dateMatch(day, datepicker.value.dateCreator()),
-        ],
     );
 
     return [
