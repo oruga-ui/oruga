@@ -18,7 +18,7 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { getOption } from "@/utils/config";
-import { getValueByPath, getDisplayValue, uuid } from "@/utils/helpers";
+import { getValueByPath, getPropertyValue, uuid } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
@@ -75,12 +75,12 @@ const props = defineProps({
     groupField: { type: String, default: undefined },
     /** Property of the object (if `options` are an array of objects) to use as key to get items array of each group */
     groupOptions: { type: String, default: undefined },
-    /** Function to format an option to a string for display in the input (as alternative to field prop) */
+    /** Function to format an option to a string for display it in the input (as alternative to field prop) */
     formatter: {
         type: Function as PropType<(value: unknown, option: Option) => string>,
         default: undefined,
     },
-    /** Filter function to filter the options based on the input value - default is display text comparison */
+    /** Function to filter the options based on the input value - default is display text comparison */
     filter: {
         type: Function as PropType<
             (options: Option[], value: string) => Option[]
@@ -493,7 +493,7 @@ function onDropdownClose(method: string): void {
 
 /** get the formated option value for a column */
 function getValue(option?: Option): string {
-    return getDisplayValue(option, props.field, props.formatter);
+    return getPropertyValue(option, props.field, props.formatter);
 }
 
 // --- Select Feature ---

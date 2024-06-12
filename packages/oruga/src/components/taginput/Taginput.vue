@@ -46,12 +46,12 @@ const props = defineProps({
     groupField: { type: String, default: undefined },
     /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
     groupOptions: { type: String, default: undefined },
-    /** Function to format an option to a string for display in the input (as alternative to field prop) */
+    /** Function to format an option to a string for display it in the input (as alternative to field prop) */
     formatter: {
         type: Function as PropType<(value: unknown, option: Option) => string>,
         default: undefined,
     },
-    /** Filter function to filter the options based on the input value - default is display text comparison */
+    /** Function to filter the options based on the input value - default is display text comparison */
     filter: {
         type: Function as PropType<
             (options: Option[], value: string) => Option[]

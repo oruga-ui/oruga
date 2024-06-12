@@ -48,7 +48,7 @@ const props = defineProps({
         type: [String, Number, Boolean, Object, Array],
         default: undefined,
     },
-    /** The active state of the dropdown, use v-model:active to make it two-way binding. */
+    /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
     label: { type: String, default: undefined },

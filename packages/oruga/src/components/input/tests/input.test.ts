@@ -34,7 +34,7 @@ describe("OInput", () => {
 
         const value = "some value";
         await target.setValue(value);
-        await vi.runAllTimers(); // await debounse timer
+        await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
@@ -152,7 +152,7 @@ describe("OInput", () => {
 
         await input.setValue("bar");
         await input.trigger("blur");
-        await vi.runAllTimers(); // await debounse timer
+        await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")[0][0]).toBe("bar");
         expect(wrapper.emitted("blur")).toHaveLength(1);

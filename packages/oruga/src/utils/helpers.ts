@@ -175,7 +175,7 @@ export function isElement(o: any): boolean {
  * @param field  Property of the object to use as display text
  * @param formatter Function to format the option to a string
  */
-export function getDisplayValue<T>(
+export function getPropertyValue<T>(
     option?: T,
     field?: string,
     formatter?: (value: unknown, option: T) => string,
