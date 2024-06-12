@@ -211,54 +211,9 @@ sidebarDepth: 2
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                          | Default                                                                                   |
-| -------------------------------------- | ----------------------------------------------------------------------------------------- |
-| $table-background-color                | #fff                                                                                      |
-| $table-background                      | #f5f5f5                                                                                   |
-| $table-boder                           | 1px solid transparent                                                                     |
-| $table-border-radius                   | var(--#{$prefix}base-border-radius)                                                       |
-| $table-card-box-shadow                 | 0 2px 3px rgba(var(--#{$prefix}black), 0.1),  0 0 0 1px rgba(var(--#{$prefix}black), 0.1) |
-| $table-card-cell-font-weight           | 600                                                                                       |
-| $table-card-cell-padding               | 0 0.5em 0 0                                                                               |
-| $table-card-cell-text-align            | left                                                                                      |
-| $table-card-detail-margin              | -1rem 0 0 0                                                                               |
-| $table-card-margin                     | 0 0 1rem 0                                                                                |
-| $table-color                           | black                                                                                     |
-| $table-current-sort-border-color       | var(--#{$prefix}grey)                                                                     |
-| $table-current-sort-font-weight        | 700                                                                                       |
-| $table-current-sort-hover-border-color | var(--#{$prefix}grey)                                                                     |
-| $table-detail-background               | #fafafa                                                                                   |
-| $table-detail-box-shadow               | inset 0 1px 3px var(--#{$prefix}grey)                                                     |
-| $table-detail-chevron-color            | var(--#{$prefix}primary)                                                                  |
-| $table-detail-chevron-width            | 40px                                                                                      |
-| $table-detail-padding                  | 1rem                                                                                      |
-| $table-focus-border-color              | var(--#{$prefix}primary)                                                                  |
-| $table-focus-box-shadow                | 0 0 0 0.125em rgba(var(--#{$prefix}primary), 0.25)                                        |
-| $table-hoverable-background-color      | #fafafa                                                                                   |
-| $table-narrow-padding                  | 0.25em 0.5em                                                                              |
-| $table-row-active-background-color     | var(--#{$prefix}primary)                                                                  |
-| $table-row-active-color                | var(--#{$prefix}primary-invert)                                                           |
-| $table-sticky-header-height            | 300px                                                                                     |
-| $table-sticky-zindex                   | 1                                                                                         |
-| $table-striped-background-color        | #fafafa                                                                                   |
-| $table-td-border                       | 1px solid var(--#{$prefix}grey-lighter)                                                   |
-| $table-td-padding                      | 0.5em 0.75em                                                                              |
-| $table-th-border                       | 2px solid var(--#{$prefix}grey-lighter)                                                   |
-| $table-th-checkbox-width               | 40px                                                                                      |
-| $table-th-color                        | #363636                                                                                   |
-| $table-th-detail-width                 | 14px                                                                                      |
-| $table-th-font-weight                  | 600                                                                                       |
-| $table-th-padding                      | 0.5em 0.75em                                                                              |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_table.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                          | Default                                                                                   |
 | -------------------------------------- | ----------------------------------------------------------------------------------------- |

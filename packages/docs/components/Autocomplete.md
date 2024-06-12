@@ -117,18 +117,9 @@ title: Autocomplete
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable | Default |
-| ------------- | ------- |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable | Default |
 | ------------- | ------- |

@@ -86,34 +86,9 @@ title: Select
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                 | Default                                               |
-| ----------------------------- | ----------------------------------------------------- |
-| $select-background-color      | #fff                                                  |
-| $select-border-color          | var(--#{$prefix}grey-lighter)                         |
-| $select-border-style          | solid                                                 |
-| $select-border-width          | 1px                                                   |
-| $select-border-radius         | var(--#{$prefix}base-border-radius)                   |
-| $select-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
-| $select-box-shadow            | $control-box-shadow                                   |
-| $select-color                 | #363636                                               |
-| $select-icon-zindex           | 4                                                     |
-| $select-height                | $control-height                                       |
-| $select-line-height           | var(--#{$prefix}base-line-height)                     |
-| $select-margin                | 0                                                     |
-| $select-padding               | $control-padding-vertical $control-padding-horizontal |
-| $select-arrow-color           | $select-color                                         |
-| $select-arrow-size            | 1rem                                                  |
-| $select-placeholder-opacity   | var(--#{$prefix}base-disabled-opacity)                |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                 | Default                                               |
 | ----------------------------- | ----------------------------------------------------- |

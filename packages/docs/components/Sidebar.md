@@ -81,27 +81,9 @@ title: Sidebar
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                     | Default                                            |
-| --------------------------------- | -------------------------------------------------- |
-| $sidebar-overlay                  | hsla(0, 0%, 4%, 0.86)                              |
-| $sidebar-box-shadow               | 5px 0px 13px 3px rgba(var(--#{$prefix}black), 0.1) |
-| $sidebar-content-background-color | var(--#{$prefix}grey-lighter)                      |
-| $sidebar-border-radius            | var(--#{$prefix}base-border-radius)                |
-| $sidebar-border-width             | 1px                                                |
-| $sidebar-border-color             | rgba(0, 0, 0, 0.175)                               |
-| $sidebar-reduced-width            | 80px                                               |
-| $sidebar-width                    | 260px                                              |
-| $sidebar-zindex                   | 100                                                |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_sidebar.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                     | Default                                            |
 | --------------------------------- | -------------------------------------------------- |

@@ -113,40 +113,9 @@ sidebarDepth: 2
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                 | Default                                      |
-| ----------------------------- | -------------------------------------------- |
-| $slider-background            | transparent                                  |
-| $slider-margin                | 1em 0                                        |
-| $slider-mark-size             | 0.75rem                                      |
-| $slider-font-size             | var(--#{$prefix}base-font-size)              |
-| $slider-rounded-borded-radius | var( --#{$prefix}base-border-radius-rounded) |
-| $slider-thumb-background      | var(--#{$prefix}white)                       |
-| $slider-thumb-border          | 1px solid var(--#{$prefix}grey-light)        |
-| $slider-thumb-radius          | var(--#{$prefix}base-border-radius)          |
-| $slider-thumb-shadow          | none                                         |
-| $slider-thumb-to-track-ratio  | 2                                            |
-| $slider-thumb-transform       | scale(1.25)                                  |
-| $slider-tick-background       | var(--#{$prefix}primary)                     |
-| $slider-tick-radius           | var(--#{$prefix}base-border-radius)          |
-| $slider-tick-to-track-ratio   | 0.5                                          |
-| $slider-tick-width            | 3px                                          |
-| $slider-track-background      | var(--#{$prefix}grey-lighter)                |
-| $slider-fill-background       | var(--#{$prefix}primary)                     |
-| $slider-track-border-radius   | var(--#{$prefix}base-border-radius)          |
-| $slider-track-border          | 0px solid var(--#{$prefix}grey)              |
-| $slider-track-disabled        | 0.5                                          |
-| $slider-track-radius          | var(--#{$prefix}base-border-radius)          |
-| $slider-track-shadow          | 0px 0px 0px var(--#{$prefix}grey)            |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                 | Default                                      |
 | ----------------------------- | -------------------------------------------- |

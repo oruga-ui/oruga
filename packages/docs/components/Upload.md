@@ -72,23 +72,9 @@ title: Upload
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                        | Default                                 |
-| ------------------------------------ | --------------------------------------- |
-| $upload-draggable-border             | 1px dashed var(--#{$prefix}grey-light)  |
-| $upload-draggable-border-radius      | var(--#{$prefix}base-border-radius)     |
-| $upload-draggable-disabled-opacity   | var( --#{$prefix}base-disabled-opacity) |
-| $upload-draggable-hover-border-color | var(--#{$prefix}grey)                   |
-| $upload-draggable-padding            | 0.25em                                  |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_upload.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                        | Default                                 |
 | ------------------------------------ | --------------------------------------- |

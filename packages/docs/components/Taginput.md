@@ -108,26 +108,9 @@ title: Taginput
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                   | Default                             |
-| ------------------------------- | ----------------------------------- |
-| $taginput-counter-font-size     | 0.75rem                             |
-| $taginput-counter-margin        | 0.25rem 0 0 0.5rem                  |
-| $taginput-item-background-color | var(--#{$prefix}primary)            |
-| $taginput-item-color            | var(--#{$prefix}primary-invert)     |
-| $taginput-item-border-radius    | var(--#{$prefix}base-border-radius) |
-| $taginput-item-margin           | 0.275em                             |
-| $taginput-item-padding          | 0 0.75em 0 0.75em                   |
-| $taginput-margin-icon-to-text   | 0.1875em                            |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                   | Default                             |
 | ------------------------------- | ----------------------------------- |

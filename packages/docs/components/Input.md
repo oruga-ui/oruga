@@ -86,36 +86,9 @@ title: Input
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                | Default                                               |
-| ---------------------------- | ----------------------------------------------------- |
-| $input-background-color      | #ffffff                                               |
-| $input-border-color          | var(--#{$prefix}grey-lighter)                         |
-| $input-border-style          | solid                                                 |
-| $input-border-width          | 1px                                                   |
-| $input-border-radius         | var(--#{$prefix}base-border-radius)                   |
-| $input-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
-| $input-box-shadow            | $control-box-shadow                                   |
-| $input-color                 | #363636                                               |
-| $input-icon-zindex           | 4                                                     |
-| $input-height                | $control-height                                       |
-| $input-line-height           | var(--#{$prefix}base-line-height)                     |
-| $input-margin                | 0                                                     |
-| $input-padding               | $control-padding-vertical $control-padding-horizontal |
-| $input-counter-font-size     | 0.75rem                                               |
-| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
-| $input-textarea-max-height   | 600px                                                 |
-| $input-textarea-min-height   | 120px                                                 |
-| $input-textarea-padding      | 0.625em                                               |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_input.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                | Default                                               |
 | ---------------------------- | ----------------------------------------------------- |
