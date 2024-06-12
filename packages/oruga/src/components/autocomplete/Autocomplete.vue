@@ -288,7 +288,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number, object} updated modelValue prop
+     * @param value {string | number | object} updated modelValue prop
      */
     (e: "update:modelValue", value: Option): void;
     /**
@@ -373,7 +373,7 @@ const footerHovered = ref(false);
 const hoveredId = ref(null);
 const menuId = uuid();
 
-/** filter option by input value */
+/** options filtered by input value */
 const filteredOptions = computed<Option[]>(() =>
     typeof props.filter === "function"
         ? props.filter(props.options, inputValue.value)
@@ -384,8 +384,8 @@ const filteredOptions = computed<Option[]>(() =>
           ),
 );
 
-const visibleOptions = computed<{ items: any[]; group?: string }[]>(() => {
-    // create grouped format
+/** filtered options formatted as groups */
+const groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
     if (props.groupField) {
         if (props.groupOptions)
             return filteredOptions.value.map((item: object) => {
@@ -411,7 +411,7 @@ const visibleOptions = computed<{ items: any[]; group?: string }[]>(() => {
 /** is any option visible */
 const isEmpty = computed(
     () =>
-        !visibleOptions.value?.some(
+        !groupOptions.value?.some(
             (element) => element.items && element.items.length,
         ),
 );
@@ -453,7 +453,7 @@ watch(
         } else if (hoveredOption.value) {
             // reset hovered if list doesn't contain it
             const hoveredValue = getValue(hoveredOption.value);
-            const data = visibleOptions.value
+            const data = groupOptions.value
                 .map((d) => d.items)
                 .reduce((a, b) => [...a, ...b], []);
             const index = data.findIndex((d) => getValue(d) === hoveredValue);
@@ -479,7 +479,7 @@ function onDropdownClose(method: string): void {
         setSelected(hoveredOption.value, true);
 }
 
-/** get the formated row value for a column */
+/** get the formated option value for a column */
 function getValue(option?: Option): string {
     return getDisplayValue(option, props.field, props.formatter);
 }
@@ -492,8 +492,8 @@ function getValue(option?: Option): string {
  */
 function setSelected(
     option: Option,
-    closeDropdown = true,
-    event = undefined,
+    closeDropdown: boolean = true,
+    event: Event = undefined,
 ): void {
     selectedOption.value = option;
     emits("select", option, event);
@@ -506,22 +506,6 @@ function setSelected(
 
     if (closeDropdown) nextTick(() => (isActive.value = false));
     checkHtml5Validity();
-}
-
-/** Select first option */
-function hoverFirstOption(): void {
-    nextTick(() => {
-        const nonEmptyElements = visibleOptions.value.filter(
-            (element) => element.items?.length,
-        );
-        if (nonEmptyElements.length) {
-            const option = nonEmptyElements[0].items[0];
-            setHovered(option);
-            setHoveredIdToIndex(0);
-        } else {
-            setHovered(null);
-        }
-    });
 }
 
 /** Check if header or footer was selected. */
@@ -564,6 +548,21 @@ function setHoveredIdToIndex(index: number): void {
     hoveredId.value = element ? element.id : null;
 }
 
+/** set first option as hovered */
+function hoverFirstOption(): void {
+    nextTick(() => {
+        const nonEmptyElements = groupOptions.value.filter(
+            (element) => element.items?.length,
+        );
+        if (nonEmptyElements.length) {
+            const option = nonEmptyElements[0].items[0];
+            setHovered(option);
+            setHoveredIdToIndex(0);
+        } else {
+            setHovered(null);
+        }
+    });
+}
 // --- Event Handler ---
 
 /**
@@ -576,7 +575,7 @@ function navigateItem(direction: 1 | -1): void {
         return;
     }
 
-    const data = visibleOptions.value
+    const data = groupOptions.value
         .map((d) => d.items)
         .reduce((a, b) => [...a, ...b], []);
 
@@ -863,7 +862,7 @@ defineExpose({ focus: setFocus });
             <slot name="header" />
         </o-dropdown-item>
 
-        <template v-for="(element, groupindex) in visibleOptions">
+        <template v-for="(element, groupindex) in groupOptions">
             <o-dropdown-item
                 v-if="element.group"
                 :key="`${groupindex}_group`"
