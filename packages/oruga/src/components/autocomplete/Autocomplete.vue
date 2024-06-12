@@ -80,6 +80,7 @@ const props = defineProps({
         type: Function as PropType<(value: unknown, option: Option) => string>,
         default: undefined,
     },
+    /** Filter function to filter the options based on the input value - default is display text comparison */
     filter: {
         type: Function as PropType<
             (options: Option[], value: string) => Option[]

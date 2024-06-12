@@ -52,6 +52,13 @@ const props = defineProps({
         type: Function as PropType<(value: unknown, option: Option) => string>,
         default: undefined,
     },
+    /** Filter function to filter the options based on the input value - default is display text comparison */
+    filter: {
+        type: Function as PropType<
+            (options: Option[], value: string) => Option[]
+        >,
+        default: undefined,
+    },
     /**
      * Vertical size of the input control
      * @values small, medium, large
@@ -507,6 +514,10 @@ defineExpose({ focus: setFocus });
                 v-bind="autocompleteBind"
                 :options="options"
                 :field="field"
+                :group-field="groupField"
+                :group-options="groupOptions"
+                :formatter="formatter"
+                :filter="filter"
                 :icon="icon"
                 :icon-pack="iconPack"
                 :maxlength="maxlength"
@@ -516,9 +527,6 @@ defineExpose({ focus: setFocus });
                 :open-on-focus="openOnFocus"
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
-                :group-field="groupField"
-                :group-options="groupOptions"
-                :formatter="formatter"
                 :has-counter="false"
                 :use-html5-validation="useHtml5Validation"
                 :check-scroll="checkScroll"
