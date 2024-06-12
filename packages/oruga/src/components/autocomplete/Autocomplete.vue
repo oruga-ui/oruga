@@ -819,7 +819,6 @@ defineExpose({ focus: setFocus });
         :position="position"
         :teleport="teleport"
         :expanded="expanded"
-        :debounce="debounce"
         @close="onDropdownClose">
         <template #trigger>
             <o-input
@@ -845,6 +844,7 @@ defineExpose({ focus: setFocus });
                 :expanded="expanded"
                 :disabled="disabled"
                 :status-icon="statusIcon"
+                :debounce="debounce"
                 @update:model-value="onInput"
                 @focus="handleFocus"
                 @blur="handleBlur"

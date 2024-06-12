@@ -1,10 +1,18 @@
-import { afterEach, describe, expect, test } from "vitest";
+import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 import { shallowMount, mount, enableAutoUnmount } from "@vue/test-utils";
 
 import OInput from "@/components/input/Input.vue";
 
 describe("OInput", () => {
     enableAutoUnmount(afterEach);
+
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
 
     test("render correctly", () => {
         const wrapper = mount(OInput);
@@ -17,7 +25,7 @@ describe("OInput", () => {
 
     test("test basic", async () => {
         const wrapper = mount(OInput, {
-            props: { icon: "placeholder", iconClickable: true },
+            props: { icon: "placeholder", iconClickable: true, debounce: 0 },
         });
 
         const target = wrapper.find("input");
@@ -26,6 +34,7 @@ describe("OInput", () => {
 
         const value = "some value";
         await target.setValue(value);
+        await vi.runAllTimers(); // await debounse timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
@@ -134,6 +143,7 @@ describe("OInput", () => {
                 modelValue: "foo",
                 "onUpdate:modelValue": (e) =>
                     wrapper.setProps({ modelValue: e }),
+                debounce: 0,
             },
         });
 
@@ -142,6 +152,7 @@ describe("OInput", () => {
 
         await input.setValue("bar");
         await input.trigger("blur");
+        await vi.runAllTimers(); // await debounse timer
 
         expect(wrapper.emitted("input")[0][0]).toBe("bar");
         expect(wrapper.emitted("blur")).toHaveLength(1);

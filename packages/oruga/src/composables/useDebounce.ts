@@ -12,7 +12,7 @@ export function useDebounce<A extends Array<unknown>>(
 ): (...args: A) => void {
     let timeout: NodeJS.Timeout;
     return (...args: A) => {
-        const later = () => {
+        const later = (): void => {
             timeout = null;
             if (!immediate) func.apply(this, args);
         };

@@ -5,15 +5,15 @@ exports[`OTaginput tests > render correctly 1`] = `
   <div class="o-taginput__container">
     <!--
                 @slot Override selected items
-                @binding {unknown[]} items - selected items
+                @binding {(string, object)[]} items - selected items
             -->
-    <div data-oruga="autocomplete" class="o-drop o-drop--position-auto o-acp o-taginput__autocomplete">
+    <div data-oruga="autocomplete" class="o-drop o-drop--expanded o-drop--position-auto o-acp o-taginput__autocomplete">
       <div tabindex="-1" class="o-drop__trigger" aria-haspopup="listbox">
         <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
             -->
-        <div data-oruga="input" class="o-input__wrapper"><input has-counter="false" role="combobox" aria-autocomplete="list" aria-controls="mocked" aria-expanded="false" id="mocked" data-oruga-input="text" type="text" class="o-input o-taginput__input" autocomplete="off">
+        <div data-oruga="input" class="o-input__wrapper o-input__wrapper--expanded"><input has-counter="false" role="combobox" aria-autocomplete="list" aria-controls="mocked" aria-expanded="false" id="mocked" data-oruga-input="text" type="text" class="o-input o-taginput__input" autocomplete="off">
           <!--v-if-->
           <!--v-if-->
           <!--v-if-->
