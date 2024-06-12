@@ -134,22 +134,24 @@ const tags = ref([]);
 
 const allowNew = ref(false);
 const openOnFocus = ref(false);
+const keepFirst = ref(false);
 </script>
 
 <template>
     <section>
         <o-field grouped>
-            <o-switch v-model="allowNew"> Allow new items </o-switch>
-            <o-switch v-model="openOnFocus"> Open on focus </o-switch>
+            <o-switch v-model="allowNew">Allow new items</o-switch>
+            <o-switch v-model="keepFirst">Keep first</o-switch>
+            <o-switch v-model="openOnFocus">Open on focus</o-switch>
         </o-field>
 
         <o-field label="Enter some items">
             <o-taginput
                 v-model="tags"
                 :options="options"
-                allow-autocomplete
                 :allow-new="allowNew"
                 :open-on-focus="openOnFocus"
+                :keep-first="keepFirst"
                 field="user.first_name"
                 icon="tag"
                 placeholder="Add an item" />

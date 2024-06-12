@@ -140,7 +140,7 @@ const selected = ref(null);
     <section>
         <o-field grouped>
             <o-switch v-model="openOnFocus">Open dropdown on focus</o-switch>
-            <o-switch v-model="keepFirst">Keep-first</o-switch>
+            <o-switch v-model="keepFirst">Keep first</o-switch>
         </o-field>
 
         <o-field label="Find a name">

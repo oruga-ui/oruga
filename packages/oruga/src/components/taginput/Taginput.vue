@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="Option extends String | Object">
 import {
     computed,
-    nextTick,
     ref,
     useAttrs,
     watchEffect,
@@ -113,12 +112,10 @@ const props = defineProps({
     },
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
     keepFirst: { type: Boolean, default: false },
-    /** When autocomplete, it allow to add new items */
+    /** Allows to add new items */
     allowNew: { type: Boolean, default: false },
     /** Allows adding the same item multiple time */
     allowDuplicates: { type: Boolean, default: false },
-    /** Add autocomplete feature (if true, any Autocomplete props may be used too) */
-    allowAutocomplete: { type: Boolean, default: false },
     /** Allow removing last item when pressing given keys, if input is empty */
     removeOnKeys: {
         type: Array as PropType<string[]>,
@@ -386,37 +383,29 @@ function removeItem(index: number, event?: Event): void {
 function onSelect(option: Option): void {
     if (!option) return;
     addItem(option);
-    nextTick(() => (newItem.value = ""));
-}
-
-function onKeydown(event: KeyboardEvent): void {
-    if (
-        props.removeOnKeys.indexOf(event.key) !== -1 &&
-        !newItem.value?.length &&
-        itemsLength.value > 0
-    ) {
-        // remove last item
-        removeItem(itemsLength.value - 1);
-    }
-    // Stop if is to accept select only
-    if (props.allowAutocomplete && !props.allowNew) return;
-
-    if (props.confirmKeys.indexOf(event.key) >= 0) {
-        // Allow Tab to advance to next field regardless
-        if (event.key !== "Tab") event.preventDefault();
-        if (event.key === "Enter" && isComposing.value) return;
-        addItem();
-    }
 }
 
 function onInput(value: string): void {
     emits("input", value.trim());
 }
 
-function handleOnBlur(event: Event): void {
-    // Add item on-blur if not select only
-    if (!props.allowAutocomplete) addItem();
-    onBlur(event);
+function onKeydown(event: KeyboardEvent): void {
+    if (
+        props.removeOnKeys.indexOf(event.key) >= 0 &&
+        !newItem.value?.length &&
+        itemsLength.value > 0
+    ) {
+        // remove last item
+        removeItem(itemsLength.value - 1);
+    }
+
+    if (props.confirmKeys.indexOf(event.key) >= 0) {
+        // Allow Tab to advance to next field regardless
+        if (event.key !== "Tab") event.preventDefault();
+        if (event.key === "Enter" && isComposing.value) return;
+        // Add item if not select only
+        if (props.allowNew) addItem();
+    }
 }
 
 // --- Computed Component Classes ---
@@ -493,7 +482,9 @@ defineExpose({ focus: setFocus });
                 <span
                     v-for="(item, index) in items"
                     :key="getNormalizedItemText(item) + index"
-                    :class="itemClasses">
+                    :class="itemClasses"
+                    :tabindex="0"
+                    @keydown.enter="removeItem(index, $event)">
                     <span>{{ getNormalizedItemText(item) }}</span>
                     <o-icon
                         v-if="closable"
@@ -537,7 +528,7 @@ defineExpose({ focus: setFocus });
                 expanded
                 @input="onInput"
                 @focus="onFocus"
-                @blur="handleOnBlur"
+                @blur="onBlur"
                 @invalid="onInvalid"
                 @keydown="onKeydown"
                 @compositionstart="isComposing = true"
