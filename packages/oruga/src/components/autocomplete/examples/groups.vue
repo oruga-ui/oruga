@@ -30,6 +30,7 @@ const selected = ref("Apple");
         <o-field label="Find a food">
             <o-autocomplete
                 v-model="selected"
+                :input="selected"
                 :options="options"
                 group-field="type"
                 group-options="items"

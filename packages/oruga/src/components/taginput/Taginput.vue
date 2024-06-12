@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends String | Number | Object">
+<script setup lang="ts" generic="Option extends String | Object">
 import {
     computed,
     nextTick,
@@ -38,15 +38,20 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** @model */
-    modelValue: { type: Array as PropType<T[]>, default: () => [] },
+    modelValue: { type: Array as PropType<Option[]>, default: () => [] },
     /** Items data */
-    data: { type: Array as PropType<T[]>, default: () => [] },
+    options: { type: Array as PropType<Option[]>, default: () => [] },
     /** Property of the object (if data is array of objects) to use as display text */
     field: { type: String, default: "value" },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
     /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
     groupOptions: { type: String, default: undefined },
+    /** Function to format an option to a string for display in the input (as alternative to field prop) */
+    formatter: {
+        type: Function as PropType<(value: unknown, option: Option) => string>,
+        default: undefined,
+    },
     /**
      * Vertical size of the input control
      * @values small, medium, large
@@ -114,13 +119,13 @@ const props = defineProps({
     },
     /** Function to validate the value of the item before adding */
     beforeAdding: {
-        type: Function as PropType<(value: T | string) => boolean>,
+        type: Function as PropType<(value: Option | string) => boolean>,
         default: () => true,
     },
     /** Function to create a new item to push into v-model (items) */
     createItem: {
-        type: Function as PropType<(value: T | string) => T>,
-        default: (item: T | string) => item,
+        type: Function as PropType<(value: Option | string) => Option>,
+        default: (item: Option | string) => item,
     },
     /** Makes the component check if list reached scroll start or end and emit scroll events. */
     checkScroll: {
@@ -230,9 +235,9 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {(string | number | object)[]} updated modelValue prop
+     * @param value {(string | object)[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: T[]): void;
+    (e: "update:modelValue", value: Option[]): void;
     /**
      * on input change event
      * @param value {String} input value
@@ -240,14 +245,14 @@ const emits = defineEmits<{
     (e: "input", value: string): void;
     /**
      * new item got added
-     * @param value {string | number | object} added item
+     * @param value {string | object} added item
      */
-    (e: "add", value: T): void;
+    (e: "add", value: Option): void;
     /**
      * item got removed
-     * @param value {string | number | object} removed item
+     * @param value {string | object} removed item
      */
-    (e: "remove", value: T): void;
+    (e: "remove", value: Option): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -279,9 +284,9 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<T>>>();
+const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<Option>>>();
 
-const items = defineModel<T[]>({ default: () => [] });
+const items = defineModel<Option[]>({ default: () => [] });
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -323,12 +328,12 @@ const separatorsAsRegExp = computed(() =>
         : null,
 );
 
-function getNormalizedItemText(item: T): string {
+function getNormalizedItemText(item: Option): string {
     if (typeof item === "object") item = getValueByPath(item, props.field);
     return `${item}`;
 }
 
-function addItem(item?: T | string): void {
+function addItem(item?: Option | string): void {
     item = item || newItem.value.trim();
 
     if (item) {
@@ -371,7 +376,7 @@ function removeItem(index: number, event?: Event): void {
 
 // --- Event Handler ---
 
-function onSelect(option: T): void {
+function onSelect(option: Option): void {
     if (!option) return;
     addItem(option);
     nextTick(() => (newItem.value = ""));
@@ -397,8 +402,8 @@ function onKeydown(event: KeyboardEvent): void {
     }
 }
 
-function onInput(value: string | number): void {
-    emits("input", String(value).trim());
+function onInput(value: string): void {
+    emits("input", value.trim());
 }
 
 function handleOnBlur(event: Event): void {
@@ -475,7 +480,7 @@ defineExpose({ focus: setFocus });
         <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
             <!--
                 @slot Override selected items
-                @binding {unknown[]} items - selected items
+                @binding {(string, object)[]} items - selected items
             -->
             <slot name="selected" :items="items" :remove-item="removeItem">
                 <span
@@ -498,9 +503,9 @@ defineExpose({ focus: setFocus });
             <o-autocomplete
                 v-show="hasInput"
                 ref="autocompleteRef"
-                v-model="newItem"
+                v-model:input="newItem"
                 v-bind="autocompleteBind"
-                :data="data"
+                :options="options"
                 :field="field"
                 :icon="icon"
                 :icon-pack="iconPack"
@@ -513,6 +518,7 @@ defineExpose({ focus: setFocus });
                 :keep-open="keepOpen"
                 :group-field="groupField"
                 :group-options="groupOptions"
+                :formatter="formatter"
                 :has-counter="false"
                 :use-html5-validation="useHtml5Validation"
                 :check-scroll="checkScroll"
@@ -520,7 +526,7 @@ defineExpose({ focus: setFocus });
                 :confirm-keys="confirmKeys"
                 :placeholder="placeholder"
                 :validation-message="validationMessage"
-                :expanded="expanded"
+                expanded
                 @input="onInput"
                 @focus="onFocus"
                 @blur="handleOnBlur"
@@ -540,17 +546,16 @@ defineExpose({ focus: setFocus });
                     <slot name="header" />
                 </template>
 
-                <template v-if="$slots.default" #default="props">
+                <template
+                    v-if="$slots.default"
+                    #default="{ option, index, value }">
                     <!--
                         @slot Override the select option
                         @binding {object} option - option object
                         @binding {number} index - option index
                         @binding {unknown} value - option value
                     -->
-                    <slot
-                        :option="props.option"
-                        :index="props.index"
-                        :value="props.value" />
+                    <slot :option="option" :index="index" :value="value" />
                 </template>
 
                 <template v-if="$slots.empty" #empty>

@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Option extends String | Number | Object">
+<script setup lang="ts" generic="Option extends String | Object">
 import {
     computed,
     nextTick,
@@ -55,12 +55,17 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * the selected option
+     * The selected option, use v-model to make it two-way binding
      * @model
      */
     modelValue: {
-        type: [String, Number, Object] as PropType<Option>,
+        type: [String, Object] as PropType<Option>,
         default: undefined,
+    },
+    /** The value of the inner input, use v-model:input to make it two-way binding */
+    input: {
+        type: String,
+        default: "",
     },
     /** Options / suggestions */
     options: { type: Array as PropType<Option[]>, default: () => [] },
@@ -288,9 +293,14 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {string | object} updated modelValue prop
      */
     (e: "update:modelValue", value: Option): void;
+    /**
+     * input prop two-way binding
+     * @param value {string}  updated input prop
+     */
+    (e: "update:input", value: string): void;
     /**
      * on input change event
      * @param value {string} input value
@@ -298,7 +308,7 @@ const emits = defineEmits<{
     (e: "input", value: string): void;
     /**
      * selected element changed event
-     * @param value {string | number | object} selected value
+     * @param value {string | object} selected value
      */
     (e: "select", value: Option, evt: Event): void;
     /**
@@ -365,7 +375,8 @@ const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
 const isActive = ref(false);
 
 const selectedOption = defineModel<Option>({ default: undefined });
-const inputValue = ref(getValue(selectedOption.value));
+const vmodel = defineModel<string>("input", { default: "" });
+
 const hoveredOption = ref<Option>();
 const headerHovered = ref(false);
 const footerHovered = ref(false);
@@ -376,11 +387,11 @@ const menuId = uuid();
 /** options filtered by input value */
 const filteredOptions = computed<Option[]>(() =>
     typeof props.filter === "function"
-        ? props.filter(props.options, inputValue.value)
+        ? props.filter(props.options, vmodel.value)
         : props.options.filter((option) =>
               getValue(option)
                   .toLowerCase()
-                  .includes(inputValue.value.toLowerCase()),
+                  .includes(vmodel.value.toLowerCase()),
           ),
 );
 
@@ -401,7 +412,7 @@ const groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
     }
 
     // Return no options to avoid the full list to be shown when clearing input
-    if (!props.openOnFocus && !props.keepOpen && !inputValue.value) {
+    if (!props.openOnFocus && !props.keepOpen && !vmodel.value) {
         // ...already returned nothing and dropdown closed.
         return [{ items: [] }];
     }
@@ -426,7 +437,7 @@ watch(isEmpty, (empty) => {
  *   2. Close dropdown if value is clear or else open it
  */
 watch(
-    inputValue,
+    vmodel,
     (value) => {
         // clear selected if value does not match the selected option
         const currentValue = getValue(selectedOption.value);
@@ -499,10 +510,10 @@ function setSelected(
     emits("select", option, event);
 
     if (option) {
-        if (props.clearOnSelect) inputValue.value = "";
-        else inputValue.value = getValue(option);
+        if (props.clearOnSelect) vmodel.value = "";
+        else vmodel.value = getValue(option);
         setHovered(null);
-    } else inputValue.value = "";
+    } else vmodel.value = "";
 
     if (closeDropdown) nextTick(() => (isActive.value = false));
     checkHtml5Validity();
@@ -688,7 +699,7 @@ function onInput(value: string): void {
 // --- Icon Feature ---
 
 const computedIconRight = computed(() =>
-    props.clearable && inputValue.value && props.clearIcon
+    props.clearable && vmodel.value && props.clearIcon
         ? props.clearIcon
         : props.iconRight,
 );
@@ -813,7 +824,7 @@ defineExpose({ focus: setFocus });
             <o-input
                 ref="inputRef"
                 v-bind="inputBind"
-                v-model="inputValue"
+                v-model="vmodel"
                 :type="type"
                 :size="size"
                 :rounded="rounded"
