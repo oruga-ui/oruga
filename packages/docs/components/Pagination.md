@@ -84,25 +84,25 @@ title: Pagination
 
 > Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                             | Default                     |
-| ----------------------------------------- | --------------------------- |
-| $pagination-disabled-opacity              | $base-disabled-opacity      |
-| $pagination-ellipsis-color                | $grey-light                 |
-| $pagination-link-border-color             | $grey-lighter               |
-| $pagination-link-border-radius            | $base-border-radius         |
-| $pagination-link-border                   | 1px solid transparent       |
-| $pagination-link-color                    | #363636                     |
-| $pagination-link-current-background-color | $primary                    |
-| $pagination-link-current-border-color     | $primary                    |
-| // !!!$pagination-link-current-color      | #fff                        |
-| $pagination-link-height                   | 2.25em                      |
-| $pagination-link-hover-border-color       | $grey-light                 |
-| $pagination-link-line-height              | $base-line-height           |
-| $pagination-link-margin                   | 0.25rem                     |
-| $pagination-link-min-width                | 2.25em                      |
-| $pagination-link-padding                  | 0.5em 0.5em                 |
-| $pagination-margin                        | -0.25rem                    |
-| $pagination-rounded-border-radius         | $base-rounded-border-radius |
+| SASS Variable                             | Default                                      |
+| ----------------------------------------- | -------------------------------------------- |
+| $pagination-disabled-opacity              | var(--#{$prefix}base-disabled-opacity)       |
+| $pagination-ellipsis-color                | var(--#{$prefix}grey-light)                  |
+| $pagination-link-border-color             | var(--#{$prefix}grey-lighter)                |
+| $pagination-link-border-radius            | var(--#{$prefix}base-border-radius)          |
+| $pagination-link-border                   | 1px solid transparent                        |
+| $pagination-link-color                    | #363636                                      |
+| $pagination-link-current-background-color | var(--#{$prefix}primary)                     |
+| $pagination-link-current-border-color     | var(--#{$prefix}primary)                     |
+| $pagination-link-current-color            | #fff                                         |
+| $pagination-link-height                   | 2.25em                                       |
+| $pagination-link-hover-border-color       | var(--#{$prefix}grey-light)                  |
+| $pagination-link-line-height              | var(--#{$prefix}base-line-height)            |
+| $pagination-link-margin                   | 0.25rem                                      |
+| $pagination-link-min-width                | 2.25em                                       |
+| $pagination-link-padding                  | 0.5em 0.5em                                  |
+| $pagination-margin                        | -0.25rem                                     |
+| $pagination-rounded-border-radius         | var( --#{$prefix}base-border-radius-rounded) |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
 
@@ -110,25 +110,25 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                             | Default                     |
-| ----------------------------------------- | --------------------------- |
-| $pagination-disabled-opacity              | $base-disabled-opacity      |
-| $pagination-ellipsis-color                | $grey-light                 |
-| $pagination-link-border-color             | $grey-lighter               |
-| $pagination-link-border-radius            | $base-border-radius         |
-| $pagination-link-border                   | 1px solid transparent       |
-| $pagination-link-color                    | #363636                     |
-| $pagination-link-current-background-color | $primary                    |
-| $pagination-link-current-border-color     | $primary                    |
-| // !!!$pagination-link-current-color      | #fff                        |
-| $pagination-link-height                   | 2.25em                      |
-| $pagination-link-hover-border-color       | $grey-light                 |
-| $pagination-link-line-height              | $base-line-height           |
-| $pagination-link-margin                   | 0.25rem                     |
-| $pagination-link-min-width                | 2.25em                      |
-| $pagination-link-padding                  | 0.5em 0.5em                 |
-| $pagination-margin                        | -0.25rem                    |
-| $pagination-rounded-border-radius         | $base-rounded-border-radius |
+| SASS Variable                             | Default                                      |
+| ----------------------------------------- | -------------------------------------------- |
+| $pagination-disabled-opacity              | var(--#{$prefix}base-disabled-opacity)       |
+| $pagination-ellipsis-color                | var(--#{$prefix}grey-light)                  |
+| $pagination-link-border-color             | var(--#{$prefix}grey-lighter)                |
+| $pagination-link-border-radius            | var(--#{$prefix}base-border-radius)          |
+| $pagination-link-border                   | 1px solid transparent                        |
+| $pagination-link-color                    | #363636                                      |
+| $pagination-link-current-background-color | var(--#{$prefix}primary)                     |
+| $pagination-link-current-border-color     | var(--#{$prefix}primary)                     |
+| $pagination-link-current-color            | #fff                                         |
+| $pagination-link-height                   | 2.25em                                       |
+| $pagination-link-hover-border-color       | var(--#{$prefix}grey-light)                  |
+| $pagination-link-line-height              | var(--#{$prefix}base-line-height)            |
+| $pagination-link-margin                   | 0.25rem                                      |
+| $pagination-link-min-width                | 2.25em                                       |
+| $pagination-link-padding                  | 0.5em 0.5em                                  |
+| $pagination-margin                        | -0.25rem                                     |
+| $pagination-rounded-border-radius         | var( --#{$prefix}base-border-radius-rounded) |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
 

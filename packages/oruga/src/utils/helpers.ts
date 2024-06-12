@@ -176,9 +176,9 @@ export function isElement(o: any): boolean {
  * @param formatter Function to format the option to a string
  */
 export function getDisplayValue<T>(
-    option: T,
+    option?: T,
     field?: string,
-    formatter?: (value: unknown) => string,
+    formatter?: (value: unknown, option: T) => string,
 ): string {
     if (!option) return "";
 
@@ -188,9 +188,11 @@ export function getDisplayValue<T>(
             : option;
 
     const label =
-        typeof formatter === "function" ? formatter(property) : property;
+        typeof formatter === "function"
+            ? formatter(property, option)
+            : property;
 
-    return label || "";
+    return String(label || "");
 }
 
 /**

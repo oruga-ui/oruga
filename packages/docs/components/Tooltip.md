@@ -83,8 +83,8 @@ title: Tooltip
 | -------------------------------- | ---------------------------------- |
 | $tooltip-arrow-margin            | 2px                                |
 | $tooltip-arrow-size              | 5px                                |
-| $tooltip-background-color        | $primary                           |
-| $tooltip-color                   | $primary-invert                    |
+| $tooltip-background-color        | var(--#{$prefix}primary)           |
+| $tooltip-color                   | var(--#{$prefix}primary-invert)    |
 | $tooltip-content-box-shadow      | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) |
 | $tooltip-content-font-size       | 0.85rem                            |
 | $tooltip-content-max-width       | 300px                              |
@@ -104,8 +104,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | -------------------------------- | ---------------------------------- |
 | $tooltip-arrow-margin            | 2px                                |
 | $tooltip-arrow-size              | 5px                                |
-| $tooltip-background-color        | $primary                           |
-| $tooltip-color                   | $primary-invert                    |
+| $tooltip-background-color        | var(--#{$prefix}primary)           |
+| $tooltip-color                   | var(--#{$prefix}primary-invert)    |
 | $tooltip-content-box-shadow      | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) |
 | $tooltip-content-font-size       | 0.85rem                            |
 | $tooltip-content-max-width       | 300px                              |

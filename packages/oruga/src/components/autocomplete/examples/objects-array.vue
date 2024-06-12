@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
-const data = [
+const options = [
     {
         id: 1,
         user: { first_name: "Jesse", last_name: "Simmons" },
@@ -128,257 +128,12 @@ const data = [
         date: "2017/04/01 12:04:39",
         gender: "Female",
     },
-    {
-        id: 22,
-        user: { first_name: "Jesse", last_name: "Warren" },
-        date: "2016/08/20 01:36:38",
-        gender: "Male",
-    },
-    {
-        id: 23,
-        user: { first_name: "Carlos", last_name: "Ferguson" },
-        date: "2016/05/31 10:40:29",
-        gender: "Male",
-    },
-    {
-        id: 24,
-        user: { first_name: "Melissa", last_name: "Peters" },
-        date: "2016/07/23 00:41:54",
-        gender: "Female",
-    },
-    {
-        id: 25,
-        user: { first_name: "Arthur", last_name: "Garza" },
-        date: "2017/03/11 14:11:37",
-        gender: "Male",
-    },
-    {
-        id: 26,
-        user: { first_name: "Joe", last_name: "Berry" },
-        date: "2016/07/09 15:16:56",
-        gender: "Male",
-    },
-    {
-        id: 27,
-        user: { first_name: "Joseph", last_name: "Bishop" },
-        date: "2016/10/04 19:44:54",
-        gender: "Male",
-    },
-    {
-        id: 28,
-        user: { first_name: "Sarah", last_name: "Harper" },
-        date: "2016/09/23 05:09:11",
-        gender: "Female",
-    },
-    {
-        id: 29,
-        user: { first_name: "Christopher", last_name: "Fuller" },
-        date: "2016/04/12 00:05:35",
-        gender: "Male",
-    },
-    {
-        id: 30,
-        user: { first_name: "Alan", last_name: "Mendoza" },
-        date: "2016/04/22 10:48:02",
-        gender: "Male",
-    },
-    {
-        id: 31,
-        user: { first_name: "James", last_name: "Davis" },
-        date: "2017/01/16 15:17:03",
-        gender: "Male",
-    },
-    {
-        id: 32,
-        user: { first_name: "Scott", last_name: "Welch" },
-        date: "2016/10/04 23:31:51",
-        gender: "Male",
-    },
-    {
-        id: 33,
-        user: { first_name: "Mildred", last_name: "Myers" },
-        date: "2016/11/23 13:46:18",
-        gender: "Female",
-    },
-    {
-        id: 34,
-        user: { first_name: "Victor", last_name: "Martinez" },
-        date: "2016/04/06 17:05:07",
-        gender: "Male",
-    },
-    {
-        id: 35,
-        user: { first_name: "Susan", last_name: "Medina" },
-        date: "2016/12/09 10:33:37",
-        gender: "Female",
-    },
-    {
-        id: 36,
-        user: { first_name: "Judy", last_name: "Long" },
-        date: "2016/07/26 16:19:04",
-        gender: "Female",
-    },
-    {
-        id: 37,
-        user: { first_name: "Joan", last_name: "Myers" },
-        date: "2016/09/22 04:55:54",
-        gender: "Female",
-    },
-    {
-        id: 38,
-        user: { first_name: "Rachel", last_name: "Gonzales" },
-        date: "2016/07/15 13:56:38",
-        gender: "Female",
-    },
-    {
-        id: 39,
-        user: { first_name: "Roger", last_name: "Hunt" },
-        date: "2016/08/14 10:43:11",
-        gender: "Male",
-    },
-    {
-        id: 40,
-        user: { first_name: "Dorothy", last_name: "Howard" },
-        date: "2016/06/19 05:34:49",
-        gender: "Female",
-    },
-    {
-        id: 41,
-        user: { first_name: "Eugene", last_name: "Lynch" },
-        date: "2016/12/24 08:19:24",
-        gender: "Male",
-    },
-    {
-        id: 42,
-        user: { first_name: "Kathy", last_name: "Webb" },
-        date: "2017/04/01 21:09:05",
-        gender: "Female",
-    },
-    {
-        id: 43,
-        user: { first_name: "Antonio", last_name: "White" },
-        date: "2017/02/10 06:51:20",
-        gender: "Male",
-    },
-    {
-        id: 44,
-        user: { first_name: "Louis", last_name: "Spencer" },
-        date: "2016/10/08 02:20:22",
-        gender: "Male",
-    },
-    {
-        id: 45,
-        user: { first_name: "Andrea", last_name: "Marshall" },
-        date: "2016/09/04 10:59:57",
-        gender: "Female",
-    },
-    {
-        id: 46,
-        user: { first_name: "Eugene", last_name: "Sims" },
-        date: "2017/03/15 06:39:48",
-        gender: "Male",
-    },
-    {
-        id: 47,
-        user: { first_name: "Mildred", last_name: "Gibson" },
-        date: "2016/04/18 06:43:54",
-        gender: "Female",
-    },
-    {
-        id: 48,
-        user: { first_name: "Joan", last_name: "Arnold" },
-        date: "2016/12/16 04:52:23",
-        gender: "Female",
-    },
-    {
-        id: 49,
-        user: { first_name: "Jesse", last_name: "Schmidt" },
-        date: "2016/06/11 02:44:33",
-        gender: "Male",
-    },
-    {
-        id: 50,
-        user: { first_name: "David", last_name: "Frazier" },
-        date: "2017/02/15 21:46:30",
-        gender: "Male",
-    },
-    {
-        id: 51,
-        user: { first_name: "Nicholas", last_name: "Howell" },
-        date: "2016/11/01 15:08:31",
-        gender: "Male",
-    },
-    {
-        id: 52,
-        user: { first_name: "Douglas", last_name: "Chapman" },
-        date: "2017/02/08 03:33:24",
-        gender: "Male",
-    },
-    {
-        id: 53,
-        user: { first_name: "Bruce", last_name: "Simmons" },
-        date: "2016/07/14 12:11:17",
-        gender: "Male",
-    },
-    {
-        id: 54,
-        user: { first_name: "Antonio", last_name: "George" },
-        date: "2016/11/07 19:12:55",
-        gender: "Male",
-    },
-    {
-        id: 55,
-        user: { first_name: "Chris", last_name: "Marshall" },
-        date: "2016/07/03 12:11:45",
-        gender: "Male",
-    },
-    {
-        id: 56,
-        user: { first_name: "Ashley", last_name: "Hudson" },
-        date: "2016/10/14 21:08:05",
-        gender: "Female",
-    },
-    {
-        id: 57,
-        user: { first_name: "Alan", last_name: "Edwards" },
-        date: "2017/03/22 21:10:25",
-        gender: "Male",
-    },
-    {
-        id: 58,
-        user: { first_name: "George", last_name: "Clark" },
-        date: "2016/04/28 03:15:05",
-        gender: "Male",
-    },
-    {
-        id: 59,
-        user: { first_name: "Frank", last_name: "Porter" },
-        date: "2016/09/08 00:48:14",
-        gender: "Male",
-    },
-    {
-        id: 60,
-        user: { first_name: "Christopher", last_name: "Palmer" },
-        date: "2016/05/24 08:58:12",
-        gender: "Male",
-    },
 ];
 
 const keepFirst = ref(false);
 const openOnFocus = ref(false);
 
-const name = ref("");
 const selected = ref(null);
-
-const filteredDataObj = computed(() =>
-    data.filter(
-        (option) =>
-            option.user.first_name
-                .toString()
-                .toLowerCase()
-                .indexOf(name.value.toLowerCase()) >= 0,
-    ),
-);
 </script>
 
 <template>
@@ -390,13 +145,12 @@ const filteredDataObj = computed(() =>
 
         <o-field label="Find a name">
             <o-autocomplete
-                v-model="name"
+                v-model="selected"
+                :options="options"
                 placeholder="e.g. Anne"
                 :keep-first="keepFirst"
                 :open-on-focus="openOnFocus"
-                :data="filteredDataObj"
-                field="user.first_name"
-                @select="(option) => (selected = option)">
+                field="user.first_name">
                 <template #empty> No results found </template>
             </o-autocomplete>
         </o-field>

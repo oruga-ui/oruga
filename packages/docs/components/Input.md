@@ -44,6 +44,7 @@ title: Input
 | clearIcon          | Icon name to be added on the clear button                      | string           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>input: {<br>&nbsp;&nbsp;clearIcon: "close-circle"<br>}</code> |
 | clearable          | Add a button/icon to clear the inputed text                    | boolean          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>input: {<br>&nbsp;&nbsp;clearable: false<br>}</code>          |
 | counter            | Show character counter when maxlength prop is passed           | boolean          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>input: {<br>&nbsp;&nbsp;counter: false<br>}</code>            |
+| debounce           | Number of milliseconds to delay before to emit input event     | number           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;debounce: 400<br>}</code>      |
 | disabled           | Same as native disabled                                        | boolean          | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                               |
 | expanded           | Makes input full width when inside a grouped or addon field    | boolean          | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                               |
 | icon               | Icon to be shown                                               | string           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>input: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>           |
@@ -92,20 +93,20 @@ title: Input
 | SASS Variable                | Default                                               |
 | ---------------------------- | ----------------------------------------------------- |
 | $input-background-color      | #ffffff                                               |
-| $input-border-color          | $grey-lighter                                         |
+| $input-border-color          | var(--#{$prefix}grey-lighter)                         |
 | $input-border-style          | solid                                                 |
 | $input-border-width          | 1px                                                   |
-| $input-border-radius         | $base-border-radius                                   |
-| $input-rounded-border-radius | $base-rounded-border-radius                           |
-| $input-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1)                  |
+| $input-border-radius         | var(--#{$prefix}base-border-radius)                   |
+| $input-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
+| $input-box-shadow            | $control-box-shadow                                   |
 | $input-color                 | #363636                                               |
 | $input-icon-zindex           | 4                                                     |
-| $input-counter-font-size     | 0.75rem                                               |
-| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
 | $input-height                | $control-height                                       |
-| $input-line-height           | $base-line-height                                     |
+| $input-line-height           | var(--#{$prefix}base-line-height)                     |
 | $input-margin                | 0                                                     |
 | $input-padding               | $control-padding-vertical $control-padding-horizontal |
+| $input-counter-font-size     | 0.75rem                                               |
+| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
 | $input-textarea-max-height   | 600px                                                 |
 | $input-textarea-min-height   | 120px                                                 |
 | $input-textarea-padding      | 0.625em                                               |
@@ -119,20 +120,20 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | SASS Variable                | Default                                               |
 | ---------------------------- | ----------------------------------------------------- |
 | $input-background-color      | #ffffff                                               |
-| $input-border-color          | $grey-lighter                                         |
+| $input-border-color          | var(--#{$prefix}grey-lighter)                         |
 | $input-border-style          | solid                                                 |
 | $input-border-width          | 1px                                                   |
-| $input-border-radius         | $base-border-radius                                   |
-| $input-rounded-border-radius | $base-rounded-border-radius                           |
-| $input-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1)                  |
+| $input-border-radius         | var(--#{$prefix}base-border-radius)                   |
+| $input-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
+| $input-box-shadow            | $control-box-shadow                                   |
 | $input-color                 | #363636                                               |
 | $input-icon-zindex           | 4                                                     |
-| $input-counter-font-size     | 0.75rem                                               |
-| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
 | $input-height                | $control-height                                       |
-| $input-line-height           | $base-line-height                                     |
+| $input-line-height           | var(--#{$prefix}base-line-height)                     |
 | $input-margin                | 0                                                     |
 | $input-padding               | $control-padding-vertical $control-padding-horizontal |
+| $input-counter-font-size     | 0.75rem                                               |
+| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
 | $input-textarea-max-height   | 600px                                                 |
 | $input-textarea-min-height   | 120px                                                 |
 | $input-textarea-padding      | 0.625em                                               |

@@ -63,7 +63,7 @@ title: Skeleton
 | SASS Variable           | Default                                                                                      |
 | ----------------------- | -------------------------------------------------------------------------------------------- |
 | $skeleton-background    | linear-gradient( 90deg, $grey-lighter 25%,  rgba($grey-lighter, 0.5) 50%, $grey-lighter 75%) |
-| $skeleton-border-radius | $base-border-radius                                                                          |
+| $skeleton-border-radius | var(--#{$prefix}base-border-radius)                                                          |
 | $skeleton-duration      | 1.5s                                                                                         |
 | $skeleton-margin        | 0.5rem 0 0 0                                                                                 |
 
@@ -76,7 +76,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | SASS Variable           | Default                                                                                      |
 | ----------------------- | -------------------------------------------------------------------------------------------- |
 | $skeleton-background    | linear-gradient( 90deg, $grey-lighter 25%,  rgba($grey-lighter, 0.5) 50%, $grey-lighter 75%) |
-| $skeleton-border-radius | $base-border-radius                                                                          |
+| $skeleton-border-radius | var(--#{$prefix}base-border-radius)                                                          |
 | $skeleton-duration      | 1.5s                                                                                         |
 | $skeleton-margin        | 0.5rem 0 0 0                                                                                 |
 
