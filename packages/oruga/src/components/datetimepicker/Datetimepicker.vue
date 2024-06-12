@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch, type PropType } from "vue";
+import {
+    computed,
+    ref,
+    watch,
+    type ComponentInstance,
+    type PropType,
+} from "vue";
 
 import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
@@ -218,9 +224,9 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const datepickerRef = ref<InstanceType<typeof ODatepicker>>();
-const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
-const nativeInputRef = ref<InstanceType<typeof OInput>>();
+const datepickerRef = ref<ComponentInstance<typeof ODatepicker>>();
+const timepickerRef = ref<ComponentInstance<typeof OTimepicker>>();
+const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
 
 const timepickerProps = ref(props.timepicker);
 watch(timepickerProps.value, (value) => (timepickerProps.value = value), {

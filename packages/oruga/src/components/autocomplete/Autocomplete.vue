@@ -11,6 +11,7 @@ import {
     useSlots,
     type PropType,
     type Component,
+    type ComponentInstance,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -55,8 +56,11 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number], default: undefined },
+    /**
+     * The input value
+     * @model
+     */
+    modelValue: { type: String, default: undefined },
     /** Input type */
     type: { type: String, default: "text" },
     /** Menu tag name */
@@ -277,14 +281,14 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: string): void;
     /**
      * on input change event
-     * @param value {string | number} input value
+     * @param value {string} input value
      */
-    (e: "input", value: string | number): void;
+    (e: "input", value: string): void;
     /**
      * selected element changed event
      * @param value {string | number | object} selected value
@@ -332,8 +336,8 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<InstanceType<typeof OInput>>();
-const dropdownRef = ref<InstanceType<typeof ODropdown>>();
+const inputRef = ref<ComponentInstance<typeof OInput>>();
+const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const itemRefs = ref([]);
@@ -351,7 +355,7 @@ function setItemRef(
 const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
     useInputHandler(inputRef, emits, props);
 
-const vmodel = defineModel<string | number>({ default: undefined });
+const vmodel = defineModel<string>({ default: undefined });
 
 const isActive = ref(false);
 
@@ -679,7 +683,7 @@ function handleBlur(event: Event): void {
 }
 
 /** emit input change event */
-function onInput(value: string | number): void {
+function onInput(value: string): void {
     const currentValue = getValue(selectedOption.value);
     if (currentValue && currentValue === vmodel.value) return;
     debouncedInput(value);
@@ -691,7 +695,7 @@ watchEffect(() => {
     debouncedInput = useDebounce(emitInput, props.debounce);
 });
 
-function emitInput(value: string | number): void {
+function emitInput(value: string): void {
     emits("input", value);
     checkHtml5Validity();
 }
