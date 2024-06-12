@@ -36,7 +36,7 @@ To use *SASS/SCSS variables*, you must use the .scss version of a theme from the
 For example, the Oruga theme:
 
 ```js
-import '@oruga-ui/theme-oruga/dist/scss/oruga-full.scss';
+import '@oruga-ui/theme-oruga/dist/scss/oruga.scss';
 ```
 
 ::: warning
@@ -46,12 +46,8 @@ In order to work with SASS/SCSS you might also have to install `sass` and `sass-
 
 You can also use CSS variables. In most cases, any theme-specific SASS variable is converted to a CSS variable before being used.
 
-::: info
-For the Oruga Theme, you have to import the `oruga-full.css` stylesheet to use CSS variables.
-::: 
 
-
-For example to change global variable you can do
+For example to change global variable you can do:
 
 ```css
 :root {
@@ -70,7 +66,7 @@ or a specific component variable, such as button icon width
 
 ## Oruga Theme
 
-The default [Oruga Theme](https://github.com/oruga-ui/theme-oruga) provides some ready-to-use and completely dependency-free styling and comes with two different versions, `oruga.css` and `oruga-full.css`. This theme uses the component's default class configuration.
+The [Oruga Theme](https://github.com/oruga-ui/theme-oruga) provides a ready-to-use and completely dependency-free styling. 
 
 ::: code-group
 
@@ -88,28 +84,18 @@ yarn add @oruga-ui/theme-oruga
 
 :::
 
-* The minimal `oruga.css` provides a lightweight stylesheet that contains only minimal and essential CSS rules for Oruga components such as display, position, z-index and other basic attributes. 
-This could be the best starting point for creating your own theme if you want to do a full customisation.
+This theme uses the component's default class configuration and only provides a `oruga.css` or `oruga.scss` file.
+The stylesheet contains a full custom Oruga style for each component (the default style for this documentation). 
 
-* The `oruga-full.css` stylesheet provides the full custom Oruga style for each component (the default style for this documentation).
-
-For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customisation"](/documentation/customisation) if you want to know more about components customisation.
-
-::: info
-If you use the base stylesheet to browse the documentation, some examples won't work as you expect because sizes, variants and decorations are not included in the minimal Oruga stylesheet. 
-::: 
-
-
-
-### Differences between default and full css
-
-The default stylesheet contains only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. 
-
-For example to style a dropdown using override mode with _oruga_ default stylesheet using [TailwindCSS](https://tailwindcss.com/)
 
 ```js
 import '@oruga-ui/theme-oruga/dist/oruga.css'
 ```
+
+
+This can also be the best starting point for creating your own theme if you want to do a full customisation.
+For example to style a dropdown using override mode with _oruga_ default stylesheet using [TailwindCSS](https://tailwindcss.com/)
+
 
 ```css
 .dropdown {
@@ -125,24 +111,8 @@ import '@oruga-ui/theme-oruga/dist/oruga.css'
 }
 ```
 
-And here's how to style a dropdown using _oruga-full_ stylesheet
-
-```js
-import '@oruga-ui/theme-oruga/dist/oruga-full.css'
-```
-
-```css
-.dropdown-menu {
-    min-width: 12em;
-    @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
-}
-.dropdown-item {
-    @apply no-underline px-1 py-2 cursor-pointer;
-}
-```
 
 Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
-
 
 
 ### Deal with specificity
