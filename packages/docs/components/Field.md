@@ -66,25 +66,9 @@ title: Field
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                  | Default      |
-| ------------------------------ | ------------ |
-| $field-label-color             | #363636      |
-| $field-label-font-weight       | 600          |
-| $field-margin-bottom           | 0.75rem      |
-| $field-message-font-size       | 0.75rem      |
-| $field-message-margin-top      | 0.25rem      |
-| $field-margin-right            | 0.37rem      |
-| $field-horizontal-label-margin | 0 1.5rem 0 0 |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                  | Default      |
 | ------------------------------ | ------------ |

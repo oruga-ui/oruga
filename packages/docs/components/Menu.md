@@ -1,6 +1,10 @@
 ---
-title: Menu
+sidebarDepth: 2
 ---
+
+---
+
+## title: Menu
 
 # Menu
 
@@ -106,49 +110,26 @@ title: Menu
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                      | Default            |
-| ---------------------------------- | ------------------ |
-| $menu-item-color                   | $grey-dark         |
-| $menu-item-hover-color             | $black             |
-| $menu-item-hover-background-color  | $grey-light        |
-| $menu-item-active-color            | $primary-invert    |
-| $menu-item-active-background-color | $primary           |
-| $menu-item-disabled-color          | $grey-light        |
-| $menu-list-border-left             | 1px solid $primary |
-| $menu-list-line-height             | 1.25em             |
-| $menu-item-padding                 | 0.5em 0.75em       |
-| $menu-nested-list-margin           | 0.75em             |
-| $menu-nested-list-padding-left     | 0.75em             |
-| $menu-label-color                  | $grey              |
-| $menu-label-font-size              | 0.75em             |
-| $menu-label-spacing                | 1em                |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_menu.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                      | Default            |
-| ---------------------------------- | ------------------ |
-| $menu-item-color                   | $grey-dark         |
-| $menu-item-hover-color             | $black             |
-| $menu-item-hover-background-color  | $grey-light        |
-| $menu-item-active-color            | $primary-invert    |
-| $menu-item-active-background-color | $primary           |
-| $menu-item-disabled-color          | $grey-light        |
-| $menu-list-border-left             | 1px solid $primary |
-| $menu-list-line-height             | 1.25em             |
-| $menu-item-padding                 | 0.5em 0.75em       |
-| $menu-nested-list-margin           | 0.75em             |
-| $menu-nested-list-padding-left     | 0.75em             |
-| $menu-label-color                  | $grey              |
-| $menu-label-font-size              | 0.75em             |
-| $menu-label-spacing                | 1em                |
+| SASS Variable                      | Default                            |
+| ---------------------------------- | ---------------------------------- |
+| $menu-item-color                   | var(--#{$prefix}grey-dark)         |
+| $menu-item-hover-color             | var(--#{$prefix}black)             |
+| $menu-item-hover-background-color  | var(--#{$prefix}grey-light)        |
+| $menu-item-active-color            | var(--#{$prefix}primary-invert)    |
+| $menu-item-active-background-color | var(--#{$prefix}primary)           |
+| $menu-item-disabled-color          | var(--#{$prefix}grey-light)        |
+| $menu-list-border-left             | 1px solid var(--#{$prefix}primary) |
+| $menu-list-line-height             | 1.25em                             |
+| $menu-item-padding                 | 0.5em 0.75em                       |
+| $menu-nested-list-margin           | 0.75em                             |
+| $menu-nested-list-padding-left     | 0.75em                             |
+| $menu-label-color                  | $grey                              |
+| $menu-label-font-size              | 0.75em                             |
+| $menu-label-spacing                | 1em                                |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_menu.scss)
 
