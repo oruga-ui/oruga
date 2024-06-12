@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Option extends String | Number | Object">
+<script setup lang="ts" generic="T extends String | Number | Object">
 import {
     computed,
     nextTick,
@@ -76,7 +76,7 @@ const props = defineProps({
             getOption<DynamicComponent>("autocomplete.itemTag", "div"),
     },
     /** Options / suggestions */
-    data: { type: Array as PropType<Option[]>, default: () => [] },
+    data: { type: Array as PropType<T[]>, default: () => [] },
     /**
      * Size of the control
      * @values small, medium, large
@@ -293,7 +293,7 @@ const emits = defineEmits<{
      * selected element changed event
      * @param value {string | number | object} selected value
      */
-    (e: "select", value: Option, evt: Event): void;
+    (e: "select", value: T, evt: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
@@ -359,8 +359,8 @@ const vmodel = defineModel<string>({ default: undefined });
 
 const isActive = ref(false);
 
-const selectedOption = ref<Option>();
-const hoveredOption = ref<Option>();
+const selectedOption = ref<T>();
+const hoveredOption = ref<T>();
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
@@ -470,7 +470,7 @@ function onDropdownClose(method: string): void {
  * If object, get value from path based on given field, or else just the value.
  * Apply a formatter function to the label if given.
  */
-function getValue(option: Option): string {
+function getValue(option: T): string {
     if (!option) return "";
 
     const property =
@@ -487,7 +487,7 @@ function getValue(option: Option): string {
 }
 
 /** Set which option is currently hovered. */
-function setHovered(option: Option | SpecialOption): void {
+function setHovered(option: T | SpecialOption): void {
     if (option === undefined) return;
     hoveredOption.value = isSpecialOption(option) ? null : option;
     headerHovered.value = option === SpecialOption.Header;
@@ -505,11 +505,7 @@ function setHoveredIdToIndex(index: number): void {
  * Set which option is currently selected, update v-model,
  * update input value and close dropdown.
  */
-function setSelected(
-    option: Option,
-    closeDropdown = true,
-    event = undefined,
-): void {
+function setSelected(option: T, closeDropdown = true, event = undefined): void {
     if (option === undefined) return;
     selectedOption.value = option;
     emits("select", selectedOption.value, event);
@@ -915,8 +911,7 @@ defineExpose({ focus: setFocus });
                 :aria-selected="toRaw(option) === toRaw(hoveredOption)"
                 :tabindex="-1"
                 @click="
-                    (value, event) =>
-                        setSelected(value as Option, !keepOpen, event)
+                    (value, event) => setSelected(value as T, !keepOpen, event)
                 ">
                 <!--
                     @slot Override the select option
