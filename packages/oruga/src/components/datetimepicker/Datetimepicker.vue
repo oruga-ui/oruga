@@ -228,14 +228,18 @@ const datepickerRef = ref<ComponentInstance<typeof ODatepicker>>();
 const timepickerRef = ref<ComponentInstance<typeof OTimepicker>>();
 const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
 
-const timepickerProps = ref(props.timepicker);
-watch(timepickerProps.value, (value) => (timepickerProps.value = value), {
-    deep: true,
-});
-const datepickerProps = ref(props.datepicker);
-watch(datepickerProps.value, (value) => (datepickerProps.value = value), {
-    deep: true,
-});
+const timepickerProps = ref<TimepickerProps>(props.timepicker);
+watch(
+    () => props.timepicker,
+    (value) => (timepickerProps.value = value),
+    { deep: true },
+);
+const datepickerProps = ref<DatepickerProps>(props.datepicker);
+watch(
+    () => props.datepicker,
+    (value) => (datepickerProps.value = value),
+    { deep: true },
+);
 
 const isMobileNative = computed(
     () => props.mobileNative && isMobileAgent.any(),
@@ -251,6 +255,7 @@ const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     emits,
     props,
 );
+
 watch([() => isMobileNative.value, () => props.inline], () => {
     // $refs attached, it's time to refresh datepicker (input)
     if (datepickerRef.value) datepickerRef.value.$forceUpdate();
