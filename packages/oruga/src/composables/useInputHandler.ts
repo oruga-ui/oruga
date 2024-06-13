@@ -2,10 +2,10 @@ import {
     nextTick,
     ref,
     computed,
+    watch,
     type ExtractPropTypes,
     type MaybeRefOrGetter,
     type Component,
-    watch,
 } from "vue";
 import { injectField } from "@/components/field/fieldInjection";
 import { unrefElement } from "./unrefElement";
@@ -79,9 +79,8 @@ export function useInputHandler(
     /// by a <KeepAlive>
     const maybeElement = computed<ValidatableFormElement | undefined>(() => {
         const el = unrefElement<Component | HTMLElement>(inputRef);
-        if (!el) {
-            return undefined;
-        }
+        if (!el) return undefined;
+
         if (el.getAttribute("data-oruga-input"))
             // if element is the input element
             return el as ValidatableFormElement;
@@ -102,9 +101,8 @@ export function useInputHandler(
     /// expect it to be present, especially in event handlers.
     const element = computed(() => {
         const el = maybeElement.value;
-        if (!el) {
-            console.warn("useInputHandler: inputRef contains no element");
-        }
+        if (!el) console.warn("useInputHandler: inputRef contains no element");
+
         return el;
     });
 
@@ -147,13 +145,12 @@ export function useInputHandler(
         nextTick(() => {
             if (parentField?.value) {
                 // Set type only if not defined
-                if (!parentField.value.props.variant) {
+                if (!parentField.value.props.variant)
                     parentField.value.setVariant(variant);
-                }
+
                 // Set message only if not defined
-                if (!parentField.value.props.message) {
+                if (!parentField.value.props.message)
                     parentField.value.setMessage(message);
-                }
             }
         });
     }
@@ -256,15 +253,12 @@ export function useInputHandler(
                 // Clean up previous state.
                 if (validationAttributeObserver != null) {
                     // Process any pending events.
-                    if (validationAttributeObserver.takeRecords().length > 0) {
+                    if (validationAttributeObserver.takeRecords().length > 0)
                         onAttributeChange();
-                    }
                     validationAttributeObserver.disconnect();
                 }
 
-                if (!isDefined(el) || valid || !useValidation) {
-                    return;
-                }
+                if (!isDefined(el) || valid || !useValidation) return;
 
                 if (validationAttributeObserver == null) {
                     validationAttributeObserver = new MutationObserver(
