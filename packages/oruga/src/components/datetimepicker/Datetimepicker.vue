@@ -228,14 +228,18 @@ const datepickerRef = ref<ComponentInstance<typeof ODatepicker>>();
 const timepickerRef = ref<ComponentInstance<typeof OTimepicker>>();
 const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
 
-const timepickerProps = ref(props.timepicker);
-watch(timepickerProps, (value) => (timepickerProps.value = value), {
-    deep: true,
-});
-const datepickerProps = ref(props.datepicker);
-watch(datepickerProps, (value) => (datepickerProps.value = value), {
-    deep: true,
-});
+const timepickerProps = ref<TimepickerProps>(props.timepicker);
+watch(
+    () => props.timepicker,
+    (value) => (timepickerProps.value = value),
+    { deep: true },
+);
+const datepickerProps = ref<DatepickerProps>(props.datepicker);
+watch(
+    () => props.datepicker,
+    (value) => (datepickerProps.value = value),
+    { deep: true },
+);
 
 const isMobileNative = computed(
     () => props.mobileNative && isMobileAgent.any(),
