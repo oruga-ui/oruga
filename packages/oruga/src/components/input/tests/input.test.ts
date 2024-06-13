@@ -25,7 +25,7 @@ describe("OInput", () => {
 
     test("test basic", async () => {
         const wrapper = mount(OInput, {
-            props: { icon: "placeholder", iconClickable: true, debounce: 0 },
+            props: { icon: "placeholder", iconClickable: true },
         });
 
         const target = wrapper.find("input");
@@ -143,7 +143,6 @@ describe("OInput", () => {
                 modelValue: "foo",
                 "onUpdate:modelValue": (e) =>
                     wrapper.setProps({ modelValue: e }),
-                debounce: 0,
             },
         });
 
