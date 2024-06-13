@@ -31,6 +31,7 @@ import {
     removeDiacriticsFromString,
     sortBy,
     isDefined,
+    getPropertyValue,
 } from "@/utils/helpers";
 import {
     defineClasses,
@@ -910,8 +911,7 @@ function hasCustomFooterSlot(): boolean {
 
 /** get the formated row value for a column */
 function getColumnValue(row: T, column: TableColumn<T>): string {
-    const prop = column.field ? getValueByPath(row, column.field) : row;
-    return column.display ? column.display(prop, row) : String(prop);
+    return getPropertyValue(row, column.field, column.formatter);
 }
 
 // --- Select Feature ---

@@ -31,7 +31,7 @@ const props = defineProps({
         type: [Number, String],
         default: () => getOption("pagination.perPage", 20),
     },
-    /** Current page number, use v-model:current to make it two-way binding. */
+    /** Current page number, use v-model:current to make it two-way binding */
     current: { type: Number, default: 1 },
     /** Number of pagination items to show before current page. */
     rangeBefore: { type: Number, default: 1 },

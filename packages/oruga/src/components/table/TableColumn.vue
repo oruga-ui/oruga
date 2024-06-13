@@ -20,8 +20,8 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /** Define an object property key if data is an object */
     field: { type: String, default: undefined },
-    /** Provide a display function to edit the output */
-    display: {
+    /** Provide a formatter function to edit the output */
+    formatter: {
         type: Function as PropType<(value: unknown, row: T) => string>,
         default: undefined,
     },

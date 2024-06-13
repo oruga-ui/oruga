@@ -166,6 +166,36 @@ export function isElement(o: any): boolean {
 }
 
 /**
+ * Return display text for an option.
+ * If option is an object, get the property from path based on given field, or else just the property.
+ * Apply a formatter function to the property if given.
+ * Return the display label.
+ *
+ * @param option Object to the the label for
+ * @param field  Property of the object to use as display text
+ * @param formatter Function to format the option to a string
+ */
+export function getPropertyValue<T>(
+    option?: T,
+    field?: string,
+    formatter?: (value: unknown, option: T) => string,
+): string {
+    if (!option) return "";
+
+    const property =
+        field && typeof option === "object"
+            ? getValueByPath(option, field)
+            : option;
+
+    const label =
+        typeof formatter === "function"
+            ? formatter(property, option)
+            : property;
+
+    return String(label || "");
+}
+
+/**
  * Clone an obj with Object.assign
  */
 export function clone<T extends object>(obj: T): T {

@@ -37,7 +37,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** Whether siedbar is active or not, use v-model:active to make it two-way binding. */
+    /** Whether siedbar is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /**
      * Color of the sidebar

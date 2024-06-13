@@ -28,7 +28,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** Whether loading is active or not, use v-model:active to make it two-way binding. */
+    /** Whether loading is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Loader will overlay the full page. */
     fullPage: { type: Boolean, default: true },

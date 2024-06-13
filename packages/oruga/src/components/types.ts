@@ -586,6 +586,8 @@ See icon library documentation for custom classes. */
                 icon: string;
                 /** Native options to use in HTML5 validation */
                 autocomplete: string;
+                /** Number of milliseconds to delay before to emit input event */
+                debounce: number;
                 /** Show character counter when maxlength prop is passed */
                 counter: boolean;
                 /** Size of the control */

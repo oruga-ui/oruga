@@ -5,21 +5,21 @@ const isFetching = ref(false);
 const page = ref(1);
 const totalPages = ref(1);
 
-const data = ref([]);
+const options = ref([]);
 const selected = ref(null);
-const name = ref("");
+const value = ref("");
 
-async function getAsyncData(_name) {
-    if (name.value !== _name) {
-        name.value = _name;
-        data.value = [];
+async function getAsyncData(_value): Promise<void> {
+    if (value.value !== _value) {
+        value.value = _value;
+        options.value = [];
         page.value = 1;
         totalPages.value = 1;
     }
 
     // String cleared
-    if (!_name.length) {
-        data.value = [];
+    if (!_value.length) {
+        options.value = [];
         page.value = 1;
         totalPages.value = 1;
         return;
@@ -33,10 +33,10 @@ async function getAsyncData(_name) {
     isFetching.value = true;
     try {
         const _data = await fetch(
-            `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${_name}&page=${page.value}`,
+            `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${_value}&page=${page.value}`,
         ).then((response) => response.json());
 
-        data.value = [...data.value, ..._data.results];
+        options.value = [...options.value, ..._data.results];
         page.value += 1;
         totalPages.value = _data.total_pages;
     } catch (err) {
@@ -46,8 +46,8 @@ async function getAsyncData(_name) {
     }
 }
 
-function getMoreAsyncData() {
-    getAsyncData(name.value);
+function getMoreAsyncData(): void {
+    getAsyncData(value.value);
 }
 </script>
 
@@ -55,30 +55,29 @@ function getMoreAsyncData() {
     <section>
         <o-field label="Find a movie">
             <o-autocomplete
-                :data="data"
+                v-model="selected"
+                :options="options"
                 placeholder="e.g. Fight Club"
                 field="title"
-                :loading="isFetching"
+                expanded
                 check-scroll
                 open-on-focus
                 :debounce="500"
                 @input="getAsyncData"
-                @select="(option) => (selected = option)"
                 @scroll-end="getMoreAsyncData">
-                <template #default="props">
+                <template #default="{ option }">
                     <div class="media">
                         <div class="media-left">
                             <img
                                 width="32"
-                                :src="`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`" />
+                                :src="`https://image.tmdb.org/t/p/w500/${option.poster_path}`" />
                         </div>
                         <div class="media-content">
-                            {{ props.option.title }}
+                            {{ option.title }}
                             <br />
                             <small>
-                                Released at {{ props.option.release_date }},
-                                rated
-                                <b>{{ props.option.vote_average }}</b>
+                                Released at {{ option.release_date }}, rated
+                                <b>{{ option.vote_average }}</b>
                             </small>
                         </div>
                     </div>

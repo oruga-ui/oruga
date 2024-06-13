@@ -19,7 +19,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { defineClasses, useInputHandler } from "@/composables";
+import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -128,6 +128,11 @@ const props = defineProps({
     statusIcon: {
         type: Boolean,
         default: () => getOption("statusIcon", true),
+    },
+    /** Number of milliseconds to delay before to emit input event */
+    debounce: {
+        type: Number,
+        default: () => getOption("autocomplete.debounce", 400),
     },
     /** Native options to use in HTML5 validation */
     autocomplete: {
@@ -335,6 +340,16 @@ const computedStyles = computed(
             : {},
 );
 
+let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
+
+watch(
+    () => props.debounce,
+    () => {
+        debouncedInput = useDebounce(onInput, props.debounce || 0);
+    },
+    { immediate: true },
+);
+
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     const input = (props.number ? Number(value) : String(value)) as ModelValue;
@@ -492,7 +507,7 @@ defineExpose({ focus: setFocus });
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @input="debouncedInput" />
 
         <textarea
             v-else
@@ -509,7 +524,7 @@ defineExpose({ focus: setFocus });
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @input="debouncedInput" />
 
         <o-icon
             v-if="icon"
