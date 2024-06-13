@@ -79,6 +79,16 @@ const props = defineProps({
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("table.rowClass", (row, index) => "")(row, index),
     },
+    /** Adds native attributes to a column th element */
+    thAttrs: {
+        type: Function as PropType<(column: TableColumn<T>) => object>,
+        default: undefined,
+    },
+    /** Adds native attributes to column td element of a row */
+    tdAttrs: {
+        type: Function as PropType<(row: T, column: TableColumn<T>) => object>,
+        default: undefined,
+    },
     /**
      * Define a custom comparison function to check whether two row elements are equal.
      * By default a `rowKey` comparison is performed if given. Otherwise a simple object comparison is done.
@@ -856,13 +866,18 @@ watch([visibleRows, visibleColumns], () => {
     if (visibleColumns.value.length && visibleRows.value.length) {
         for (let i = 0; i < visibleColumns.value.length; i++) {
             const col = visibleColumns.value[i];
-            col.thAttrsData =
-                typeof col.thAttrs === "function" ? col.thAttrs(col) : {};
-            col.tdAttrsData = visibleRows.value.map((data) =>
-                typeof col.tdAttrs === "function"
-                    ? col.tdAttrs(data.value, col)
-                    : {},
-            );
+            // create additional th attrs data
+            const thAttrs =
+                typeof props.thAttrs === "function" ? props.thAttrs(col) : {};
+            col.thAttrsData = Object.assign(thAttrs, col.thAttrs);
+            // create additional td attrs data
+            col.tdAttrsData = visibleRows.value.map((data) => {
+                const tdAttrs =
+                    typeof props.tdAttrs === "function"
+                        ? props.tdAttrs(data.value, col)
+                        : {};
+                return Object.assign(tdAttrs, col.tdAttrs);
+            });
         }
     }
 });

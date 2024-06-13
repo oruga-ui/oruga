@@ -10,8 +10,8 @@ const columns = ref<TableColumn[]>([
         width: "40",
         numeric: true,
         sticky: true,
-        thAttrs: () => ({ class: "is-sticky-column-one" }),
-        tdAttrs: () => ({ class: "is-sticky-column-one" }),
+        thAttrs: { class: "is-sticky-column-one" },
+        tdAttrs: { class: "is-sticky-column-one" },
     },
     {
         field: "user.first_name",
@@ -26,8 +26,8 @@ const columns = ref<TableColumn[]>([
         label: "Date",
         position: "centered",
         sticky: true,
-        thAttrs: () => ({ class: "is-sticky-column-two" }),
-        tdAttrs: () => ({ class: "is-sticky-column-two" }),
+        thAttrs: { class: "is-sticky-column-two" },
+        tdAttrs: { class: "is-sticky-column-two" },
     },
     {
         field: "gender",

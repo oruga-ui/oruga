@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { toRaw, computed, getCurrentInstance, type PropType } from "vue";
+import { computed, getCurrentInstance, type PropType } from "vue";
 
 import { useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
@@ -66,22 +66,10 @@ const props = defineProps({
         type: Function as PropType<(row: T, filter: string) => boolean>,
         default: undefined,
     },
-    /**
-     * Adds native attributes to th
-     * @deprecated will be moved to table component in v0.9
-     */
-    thAttrs: {
-        type: Function as PropType<(column: typeof props) => object>,
-        default: () => ({}),
-    },
-    /**
-     * Adds native attributes to td
-     * @deprecated will be moved to table component in v0.9
-     */
-    tdAttrs: {
-        type: Function as PropType<(row: T, column: typeof props) => object>,
-        default: () => ({}),
-    },
+    /** Adds native attributes to th */
+    thAttrs: { type: Object, default: undefined },
+    /** Adds native attributes to td */
+    tdAttrs: { type: Object, default: undefined },
 });
 
 const style = computed(() => ({
@@ -94,22 +82,8 @@ const isHeaderUnselectable = computed(
 
 const vm = getCurrentInstance();
 
-const providedData = computed<TableColumnComponent>(() => ({
-    ...toRaw(props), // TODO: remove toRaw when tdAttrs/thAttrs are moved to table component
-    label: props.label,
-    field: props.field,
-    subheading: props.subheading,
-    meta: props.meta,
-    width: props.width,
-    numeric: props.numeric,
-    position: props.position,
-    searchable: props.searchable,
-    sortable: props.sortable,
-    visible: props.visible,
-    customSort: props.customSort,
-    customSearch: props.customSearch,
-    sticky: props.sticky,
-    headerSelectable: props.headerSelectable,
+const providedData = computed<TableColumnComponent<T>>(() => ({
+    ...props,
     $el: vm.proxy,
     $slots: vm.slots,
     style: style.value,
