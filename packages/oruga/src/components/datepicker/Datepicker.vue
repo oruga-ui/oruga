@@ -36,7 +36,7 @@ const props = defineProps({
         type: [Date, Array] as PropType<Date | Date[]>,
         default: undefined,
     },
-    /** The active state of the dropdown, use v-model:active to make it two-way binding. */
+    /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /**
      * Define picker mode
@@ -926,7 +926,7 @@ const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: () => pickerRef.value?.focus() });
+defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel.value });
 </script>
 
 <template>

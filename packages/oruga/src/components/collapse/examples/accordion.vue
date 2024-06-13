@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const isOpen = ref(0);
@@ -52,7 +52,9 @@ const collapses = ref([
 <style>
 .card {
     background-color: #fff;
-    box-shadow: 0 2px 3px hsla(0, 0%, 4%, 0.1), 0 0 0 1px hsla(0, 0%, 4%, 0.1);
+    box-shadow:
+        0 2px 3px hsla(0, 0%, 4%, 0.1),
+        0 0 0 1px hsla(0, 0%, 4%, 0.1);
     color: #4a4a4a;
     max-width: 100%;
     position: relative;

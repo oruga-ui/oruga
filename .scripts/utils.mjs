@@ -20,7 +20,7 @@ export function exist (path) {
   return fs.existsSync(path)
 }
 
-const filter = f => !f.includes("tests") && !f.includes("utils") && !f.includes(".ts") && !f.includes("examples") 
+const filter = (f) => !f.includes("tests") && !f.includes("examples") && !f.includes("utils") && !f.includes(".ts");
 
 export function getFolders(dir) {
   const folders = fs.readdirSync(dir)
@@ -32,8 +32,10 @@ export function getFolders(dir) {
 export function getComponents(dir) {
     const files = fs.readdirSync(dir, { recursive: true });
     return files
-      // filter only vue files and remove test and util files
+      // remove test and util folders
       .filter(filter)
+      // filter only vue files
+      .filter((f) => f.includes(".vue"))
       // remove path
       .map(f => path.basename(f))
       // remove .vue suffix

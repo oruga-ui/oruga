@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OCarousel tests > render correctly 1`] = `
+"<div class="o-car" data-oruga="carousel" role="region">
+  <div class="o-car__wrapper">
+    <div class="o-car__items" style="transform: translateX(0px);" tabindex="0" role="group" draggable="true" aria-roledescription="carousel">
+      <!--
+                    @slot Display carousel item
+                -->
+    </div>
+    <!--
+                @slot Override the arrows
+                @binding {boolean} has-prev has prev arrow button 
+                @binding {boolean} has-next has next arrow button 
+                @binding {(): void} prev switch to prev item function
+                @binding {(): void} next switch to next item function
+            --><span class="o-icon o-car__arrow__icon o-car__arrow__icon-prev" data-oruga="icon" role="button" tabindex="0" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span class="o-icon o-car__arrow__icon o-car__arrow__icon-next" data-oruga="icon" role="button" tabindex="0" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+  </div>
+  <!--
+            @slot Override the indicators
+            @binding {number} active active index 
+            @binding {(idx: number): void} switch-to switch to item function
+            @binding {number} indicator-index current indicator index
+        -->
+  <!--v-if-->
+  <!--v-if-->
+</div>"
+`;

@@ -104,42 +104,22 @@ title: Timepicker
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                          | Default                                               |
-| -------------------------------------- | ----------------------------------------------------- |
-| $timepicker-font-size                  | $base-font-size                                       |
-| $timepicker-box-line-height            | $base-line-height                                     |
-| $timepicker-box-padding                | 0.375rem 1rem                                         |
-| $timepicker-footer-padding             | 0 0.5rem                                              |
-| $timepicker-footer-margin              | 0.875rem 0 0 0                                        |
-| $timepicker-select-line-height         | $base-line-height                                     |
-| $timepicker-select-padding             | $control-padding-vertical $control-padding-horizontal |
-| $timepicker-select-color               | #363636                                               |
-| $timepicker-select-font-weight         | 600                                                   |
-| $timepicker-select-placeholder-opacity | $base-disabled-opacity                                |
-| $timepicker-separator-font-weight      | 600                                                   |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_timepicker.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                          | Default                                               |
 | -------------------------------------- | ----------------------------------------------------- |
-| $timepicker-font-size                  | $base-font-size                                       |
-| $timepicker-box-line-height            | $base-line-height                                     |
+| $timepicker-font-size                  | var(--#{$prefix}base-font-size)                       |
+| $timepicker-box-line-height            | var(--#{$prefix}base-line-height)                     |
 | $timepicker-box-padding                | 0.375rem 1rem                                         |
 | $timepicker-footer-padding             | 0 0.5rem                                              |
 | $timepicker-footer-margin              | 0.875rem 0 0 0                                        |
-| $timepicker-select-line-height         | $base-line-height                                     |
+| $timepicker-select-line-height         | var(--#{$prefix}base-line-height)                     |
 | $timepicker-select-padding             | $control-padding-vertical $control-padding-horizontal |
 | $timepicker-select-color               | #363636                                               |
 | $timepicker-select-font-weight         | 600                                                   |
-| $timepicker-select-placeholder-opacity | $base-disabled-opacity                                |
+| $timepicker-select-placeholder-opacity | var( --#{$prefix}base-disabled-opacity)               |
 | $timepicker-separator-font-weight      | 600                                                   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_timepicker.scss)

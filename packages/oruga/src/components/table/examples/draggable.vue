@@ -1,15 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
-import { useOruga } from "../../../../../oruga/dist/oruga";
+// @ts-expect-error Examples are loaded differently.
+import { useOruga } from "../../../../dist/oruga";
+// @ts-expect-error Examples are loaded differently.
+import type { TableColumn } from "../../../../dist/oruga";
 
 const oruga = useOruga();
 
-const draggingRow = ref(null);
-const draggingRowIndex = ref(null);
-const draggingColumnIndex = ref(null);
-const draggingColumn = ref(null);
-
-const columns = ref([
+const columns = ref<TableColumn[]>([
     {
         field: "id",
         label: "ID",
@@ -73,24 +71,29 @@ const data = ref([
     },
 ]);
 
-function dragstart(row, index, event) {
+const draggingRow = ref(null);
+const draggingRowIndex = ref(null);
+const draggingColumnIndex = ref(null);
+const draggingColumn = ref(null);
+
+function dragstart(row, index, event): void {
     draggingRow.value = row;
     draggingRowIndex.value = index;
     event.dataTransfer.effectAllowed = "copy";
 }
 
-function dragover(row, index, event) {
+function dragover(row, index, event): void {
+    event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     event.target.closest("tr").classList.add("is-selected");
-    event.preventDefault();
 }
 
-function dragleave(row, index, event) {
+function dragleave(row, index, event): void {
+    event.preventDefault();
     event.target.closest("tr").classList.remove("is-selected");
-    event.preventDefault();
 }
 
-function drop(row, index, event) {
+function drop(row, index, event): void {
     event.target.closest("tr").classList.remove("is-selected");
     const droppedOnRowIndex = index;
     oruga.notification.open(
@@ -100,24 +103,24 @@ function drop(row, index, event) {
     );
 }
 
-function columndragstart(column, index, event) {
+function columndragstart(column, index, event): void {
     draggingColumn.value = column;
     draggingColumnIndex.value = index;
     event.dataTransfer.effectAllowed = "copy";
 }
 
-function columndragover(column, index, event) {
+function columndragover(column, index, event): void {
+    event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
     event.target.closest("th").classList.add("is-selected");
-    event.preventDefault();
 }
 
-function columndragleave(column, index, event) {
+function columndragleave(column, index, event): void {
+    event.preventDefault();
     event.target.closest("th").classList.remove("is-selected");
-    event.preventDefault();
 }
 
-function columndrop(column, index, event) {
+function columndrop(column, index, event): void {
     event.target.closest("th").classList.remove("is-selected");
     const droppedOnColumnIndex = index;
     oruga.notification.open(
@@ -137,8 +140,10 @@ function columndrop(column, index, event) {
             <code>dragover</code>/<code>columndragover </code> and
             <code>drop</code>/<code>columndrop</code> events
         </p>
+
         <o-table
             :data="data"
+            :columns="columns"
             draggable
             draggable-column
             @dragstart="dragstart"
@@ -148,14 +153,12 @@ function columndrop(column, index, event) {
             @columndragstart="columndragstart"
             @columndrop="columndrop"
             @columndragover="columndragover"
-            @columndragleave="columndragleave">
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row[column.field] }}
-            </o-table-column>
-        </o-table>
+            @columndragleave="columndragleave" />
     </section>
 </template>
+
+<style lang="scss" scoped>
+:deep(.is-selected) {
+    background-color: lightblue;
+}
+</style>

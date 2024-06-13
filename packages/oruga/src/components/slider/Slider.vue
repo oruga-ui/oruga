@@ -198,12 +198,9 @@ const emits = defineEmits<{
     (e: "dragend"): void;
 }>();
 
-function emitValue(event: any): void {
-    const val = isRange.value
-        ? [minValue.value, maxValue.value]
-        : valueStart.value || 0;
-    emits(event, val);
-}
+const vmodel = computed(() =>
+    isRange.value ? [minValue.value, maxValue.value] : valueStart.value || 0,
+);
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed<SliderComponent>(() => ({
@@ -297,8 +294,9 @@ function setValues(newValue: number | number[]): void {
 function onInternalValueUpdate(): void {
     if (isRange.value)
         isThumbReversed.value = valueStart.value > valueEnd.value;
-    if (!props.lazy || !dragging.value) emitValue("update:modelValue");
-    if (dragging.value) emitValue("dragging");
+    if (!props.lazy || !dragging.value)
+        emits("update:modelValue", vmodel.value);
+    if (dragging.value) emits("dragging", vmodel.value);
 }
 
 function sliderSize(): number {
@@ -324,7 +322,7 @@ function onSliderClick(event: MouseEvent): void {
             thumbEndRef.value.setPosition(percent);
         }
     }
-    emitValue("change");
+    emits("change", vmodel.value);
 }
 
 function onDragStart(): void {
@@ -338,7 +336,7 @@ function onDragEnd(): void {
     setTimeout(() => (isTrackClickDisabled.value = false));
     dragging.value = false;
     emits("dragend");
-    if (props.lazy) emitValue("update:modelValue");
+    if (props.lazy) emits("update:modelValue", vmodel.value);
 }
 
 // --- Computed Component Classes ---
@@ -391,6 +389,11 @@ const thumbWrapperClasses = defineClasses(
         dragging,
     ],
 );
+
+// --- Expose Public Functionalities ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ value: vmodel.value });
 </script>
 
 <template>
@@ -419,7 +422,7 @@ const thumbWrapperClasses = defineClasses(
                 :slider-size="sliderSize"
                 :thumb-classes="thumbClasses"
                 :thumb-wrapper-classes="thumbWrapperClasses"
-                @change="emitValue('change')"
+                @change="emits('change', vmodel)"
                 @dragstart="onDragStart"
                 @dragend="onDragEnd" />
 
@@ -431,7 +434,7 @@ const thumbWrapperClasses = defineClasses(
                 :slider-size="sliderSize"
                 :thumb-classes="thumbClasses"
                 :thumb-wrapper-classes="thumbWrapperClasses"
-                @change="emitValue('change')"
+                @change="emits('change', vmodel)"
                 @dragstart="onDragStart"
                 @dragend="onDragEnd" />
         </div>

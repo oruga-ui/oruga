@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const radio = ref("small");
@@ -30,7 +30,7 @@ const radio = ref("small");
                 size="large"
                 label="Large" />
         </o-field>
-        
+
         <p><b>Selection:</b> {{ radio }}</p>
     </section>
 </template>

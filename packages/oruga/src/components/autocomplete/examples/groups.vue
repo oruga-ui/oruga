@@ -1,7 +1,7 @@
-<script setup>
-import { ref, computed } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 
-const data = [
+const options = [
     {
         type: "Fruit",
         items: ["Apple", "Banana", "Watermelon"],
@@ -12,32 +12,33 @@ const data = [
     },
 ];
 
-const name = ref("");
-const selected = ref(null);
-
-const filteredDataObj = computed(() =>
-    data.reduce((acc, element) => {
+function filter(data: typeof options, value: string): typeof options {
+    return data.reduce((acc, element) => {
         const items = element.items.filter(
-            (item) => item.toLowerCase().indexOf(name.value.toLowerCase()) >= 0,
+            (item) => item.toLowerCase().indexOf(value.toLowerCase()) >= 0,
         );
 
         return items.length ? [...acc, { type: element.type, items }] : acc;
-    }, []),
-);
+    }, []);
+}
+
+const selected = ref("Apple");
 </script>
 
 <template>
     <section>
         <o-field label="Find a food">
             <o-autocomplete
-                v-model="name"
+                v-model="selected"
+                :input="selected"
+                :options="options"
                 group-field="type"
                 group-options="items"
                 open-on-focus
-                :data="filteredDataObj"
                 field="user.first_name"
-                @select="(option) => (selected = option)" />
+                :filter="filter" />
         </o-field>
+
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

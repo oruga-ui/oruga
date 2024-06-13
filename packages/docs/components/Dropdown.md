@@ -1,6 +1,10 @@
 ---
-title: Dropdown
+sidebarDepth: 2
 ---
+
+---
+
+## title: Dropdown
 
 # Dropdown
 
@@ -39,7 +43,7 @@ title: Dropdown
 
 | Prop name        | Description                                                                                                                                                                      | Type                                   | Values                                                                                           | Default                                                                                                                                                                      |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active           | The active state of the dropdown, use v-model:active to make it two-way binding.                                                                                                 | boolean                                | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                  |
+| active           | The active state of the dropdown, use v-model:active to make it two-way binding                                                                                                  | boolean                                | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                  |
 | animation        | Custom animation (transition name)                                                                                                                                               | string                                 | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>                         |
 | ariaRole         | Role attribute to be passed to the list container for better accessibility.<br/>Use menu only in situations where your dropdown is related to a navigation menu.                 | string                                 | `list`, `listbox`, `menu`, `dialog`                                                              | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;ariaRole: "list"<br>}</code>                          |
 | checkScroll      | Makes the component check if menu reached scroll start or end and emit scroll events.                                                                                            | boolean                                | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;checkScroll: false<br>}</code>                        |
@@ -127,59 +131,25 @@ title: Dropdown
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                          | Default                                                                      |
-| -------------------------------------- | ---------------------------------------------------------------------------- |
-| $dropdown-disabled-opacity             | $base-disabled-opacity                                                       |
-| $dropdown-item-active-background-color | $primary                                                                     |
-| $dropdown-item-active-color            | $primary-invert                                                              |
-| $dropdown-item-color                   | #000000                                                                      |
-| $dropdown-item-disabled-opacity        | $base-disabled-opacity                                                       |
-| $dropdown-item-font-size               | $base-font-size                                                              |
-| $dropdown-item-hover-background-color  | #f5f5f5                                                                      |
-| $dropdown-item-hover-color             | #000000                                                                      |
-| $dropdown-item-line-height             | $base-line-height                                                            |
-| $dropdown-item-padding                 | 0.375rem 1rem                                                                |
-| $dropdown-item-font-weight             | 400                                                                          |
-| $dropdown-menu-background              | #ffffff                                                                      |
-| $dropdown-menu-border-radius           | $base-border-radius                                                          |
-| $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
-| $dropdown-menu-spacer                  | 0px                                                                          |
-| $dropdown-menu-margin                  | 0                                                                            |
-| $dropdown-menu-padding                 | 0.5rem 0 0.5rem 0                                                            |
-| $dropdown-menu-width                   | 12rem                                                                        |
-| $dropdown-menu-zindex                  | 20                                                                           |
-| $dropdown-mobile-max-height            | calc(100vh - 120px)                                                          |
-| $dropdown-mobile-max-width             | 460px                                                                        |
-| $dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                          |
-| $dropdown-mobile-overlay-zindex        | 40                                                                           |
-| $dropdown-mobile-width                 | calc(100vw - 40px)                                                           |
-| $dropdown-mobile-zindex                | 50                                                                           |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                          | Default                                                                      |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
-| $dropdown-disabled-opacity             | $base-disabled-opacity                                                       |
-| $dropdown-item-active-background-color | $primary                                                                     |
-| $dropdown-item-active-color            | $primary-invert                                                              |
+| $dropdown-disabled-opacity             | var(--#{$prefix}base-disabled-opacity)                                       |
+| $dropdown-item-active-background-color | var(--#{$prefix}primary)                                                     |
+| $dropdown-item-active-color            | var(--#{$prefix}primary-invert)                                              |
 | $dropdown-item-color                   | #000000                                                                      |
-| $dropdown-item-disabled-opacity        | $base-disabled-opacity                                                       |
-| $dropdown-item-font-size               | $base-font-size                                                              |
+| $dropdown-item-disabled-opacity        | var( --#{$prefix}base-disabled-opacity)                                      |
+| $dropdown-item-font-size               | var(--#{$prefix}base-font-size)                                              |
 | $dropdown-item-hover-background-color  | #f5f5f5                                                                      |
 | $dropdown-item-hover-color             | #000000                                                                      |
-| $dropdown-item-line-height             | $base-line-height                                                            |
+| $dropdown-item-line-height             | var(--#{$prefix}base-line-height)                                            |
 | $dropdown-item-padding                 | 0.375rem 1rem                                                                |
 | $dropdown-item-font-weight             | 400                                                                          |
 | $dropdown-menu-background              | #ffffff                                                                      |
-| $dropdown-menu-border-radius           | $base-border-radius                                                          |
+| $dropdown-menu-border-radius           | var(--#{$prefix}base-border-radius)                                          |
 | $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
 | $dropdown-menu-spacer                  | 0px                                                                          |
 | $dropdown-menu-margin                  | 0                                                                            |

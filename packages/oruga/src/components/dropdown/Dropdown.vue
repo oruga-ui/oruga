@@ -48,7 +48,7 @@ const props = defineProps({
         type: [String, Number, Boolean, Object, Array],
         default: undefined,
     },
-    /** The active state of the dropdown, use v-model:active to make it two-way binding. */
+    /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
     label: { type: String, default: undefined },
@@ -279,7 +279,7 @@ const emits = defineEmits<{
 
 const vmodel = defineModel<any>();
 
-const isActive = defineModel<boolean>("active");
+const isActive = defineModel<boolean>("active", { default: false });
 
 const autoPosition = ref(props.position);
 
@@ -314,45 +314,6 @@ const triggerRef = ref<HTMLElement>();
 const eventCleanups = [];
 let timer: NodeJS.Timeout;
 
-watch(
-    isActive,
-    (value) => {
-        // on active set event handler
-        if (value && isClient) {
-            setTimeout(() => {
-                if (cancelOptions.value.indexOf("outside") >= 0) {
-                    // set outside handler
-                    eventCleanups.push(
-                        useClickOutside(contentRef, onClickedOutside, [
-                            triggerRef,
-                        ]),
-                    );
-                }
-
-                if (cancelOptions.value.indexOf("escape") >= 0) {
-                    // set keyup handler
-                    eventCleanups.push(
-                        useEventListener("keyup", onKeyPress, document, {
-                            immediate: true,
-                        }),
-                    );
-                }
-            });
-        } else if (!value) {
-            // on close cleanup event handler
-            eventCleanups.forEach((fn) => fn());
-            eventCleanups.length = 0;
-        }
-    },
-    { immediate: true },
-);
-
-onUnmounted(() => {
-    // on close cleanup event handler
-    eventCleanups.forEach((fn) => fn());
-    eventCleanups.length = 0;
-});
-
 const cancelOptions = computed(() =>
     typeof props.closeable === "boolean"
         ? props.closeable
@@ -360,6 +321,45 @@ const cancelOptions = computed(() =>
             : []
         : props.closeable,
 );
+
+watch(
+    isActive,
+    (value) => {
+        // on active set event handler
+        if (value && isClient) {
+            if (cancelOptions.value.indexOf("outside") >= 0) {
+                // set outside handler
+                eventCleanups.push(
+                    useClickOutside(contentRef, onClickedOutside, {
+                        ignore: [triggerRef],
+                        immediate: true,
+                        passive: true,
+                    }),
+                );
+            }
+
+            if (cancelOptions.value.indexOf("escape") >= 0) {
+                // set keyup handler
+                eventCleanups.push(
+                    useEventListener("keyup", onKeyPress, document, {
+                        immediate: true,
+                    }),
+                );
+            }
+        } else if (!value) {
+            // on close cleanup event handler
+            eventCleanups.forEach((fn) => fn());
+            eventCleanups.length = 0;
+        }
+    },
+    { immediate: true, flush: "post" },
+);
+
+onUnmounted(() => {
+    // on close cleanup event handler
+    eventCleanups.forEach((fn) => fn());
+    eventCleanups.length = 0;
+});
 
 /** Close dropdown if clicked outside. */
 function onClickedOutside(): void {

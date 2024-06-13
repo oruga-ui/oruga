@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 </script>

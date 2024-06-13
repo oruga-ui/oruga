@@ -255,7 +255,7 @@ const draggableClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: vmodel.value });
 </script>
 
 <template>
@@ -280,9 +280,10 @@ defineExpose({ focus: setFocus });
             @dragenter.prevent="updateDragDropFocus(true)"
             @drop.prevent="onFileChange">
             <!--
-                @slot Default content
+                @slot Default content     
+                @binding {(event:Event): void} onclick - click handler, only needed if a button is used
             -->
-            <slot />
+            <slot :onclick="onClick" />
         </div>
 
         <input

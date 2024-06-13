@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
-import { useOruga } from "../../../../../oruga/dist/oruga";
+// @ts-expect-error Examples are loaded differently.
+import { useOruga } from "../../../../dist/oruga";
 
 const oruga = useOruga();
 
-const elementRef = ref();
-
+const elementRef = ref(null);
 const isFullPage = ref(true);
 
-function openLoading() {
+function openLoading(): void {
     const loadingComponent = oruga.loading.open({
         fullPage: isFullPage.value,
         container: isFullPage.value ? null : elementRef.value,

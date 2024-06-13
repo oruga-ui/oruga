@@ -39,7 +39,7 @@ title: Field
 
 | Prop name        | Description                                                                                                         | Type             | Values                                                                          | Default                                                                                                                                                     |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| addons           | Field automatically attach controls together                                                                        | boolean          | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                  |
+| addons           | Field automatically attach controls together                                                                        | boolean          | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                 |
 | groupMultiline   | Allow controls to fill up multiple lines, making it responsive                                                      | boolean          | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                 |
 | grouped          | Direct child components/elements of Field will be grouped horizontally<br/>(see which ones at the top of the page). | boolean          | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                 |
 | horizontal       | Group label and control on the same line for horizontal forms                                                       | boolean          | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                 |
@@ -66,25 +66,9 @@ title: Field
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                  | Default      |
-| ------------------------------ | ------------ |
-| $field-label-color             | #363636      |
-| $field-label-font-weight       | 600          |
-| $field-margin-bottom           | 0.75rem      |
-| $field-message-font-size       | 0.75rem      |
-| $field-message-margin-top      | 0.25rem      |
-| $field-margin-right            | 0.37rem      |
-| $field-horizontal-label-margin | 0 1.5rem 0 0 |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                  | Default      |
 | ------------------------------ | ------------ |

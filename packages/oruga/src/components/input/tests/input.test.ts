@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "vitest";
+import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 import { shallowMount, mount, enableAutoUnmount } from "@vue/test-utils";
 
 import OInput from "@/components/input/Input.vue";
@@ -6,19 +6,27 @@ import OInput from "@/components/input/Input.vue";
 describe("OInput", () => {
     enableAutoUnmount(afterEach);
 
-    test("is called", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    test("render correctly", () => {
         const wrapper = mount(OInput);
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("input");
+        expect(wrapper.html()).toMatchSnapshot();
+        expect(wrapper.classes("o-input__wrapper")).toBeTruthy();
     });
 
-    test("render correctly", async () => {
+    test("test basic", async () => {
         const wrapper = mount(OInput, {
             props: { icon: "placeholder", iconClickable: true },
         });
-        expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-input__wrapper")).toBeTruthy();
 
         const target = wrapper.find("input");
         expect(target.exists()).toBeTruthy();
@@ -26,6 +34,7 @@ describe("OInput", () => {
 
         const value = "some value";
         await target.setValue(value);
+        await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
@@ -142,6 +151,7 @@ describe("OInput", () => {
 
         await input.setValue("bar");
         await input.trigger("blur");
+        await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")[0][0]).toBe("bar");
         expect(wrapper.emitted("blur")).toHaveLength(1);

@@ -176,6 +176,7 @@ const headerTextClasses = defineClasses([
 
 <template>
     <Transition
+        v-if="parent"
         :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"

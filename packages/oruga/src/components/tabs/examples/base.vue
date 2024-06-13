@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const activeTab = ref(0);
@@ -11,6 +11,7 @@ const multiline = ref(false);
         <o-field grouped>
             <o-button label="Set Music" @click="activeTab = 1" />
         </o-field>
+
         <o-field grouped>
             <o-switch v-model="showBooks" label="Show Books item" />
             <o-switch v-model="multiline" label="Multiline" />

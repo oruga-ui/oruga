@@ -75,37 +75,16 @@ title: Tooltip
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                    | Default                            |
-| -------------------------------- | ---------------------------------- |
-| $tooltip-arrow-margin            | 2px                                |
-| $tooltip-arrow-size              | 5px                                |
-| $tooltip-background-color        | $primary                           |
-| $tooltip-color                   | $primary-invert                    |
-| $tooltip-content-box-shadow      | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) |
-| $tooltip-content-font-size       | 0.85rem                            |
-| $tooltip-content-max-width       | 300px                              |
-| $tooltip-content-multiline-width | 300px                              |
-| $tooltip-content-padding         | 0.35rem 0.75rem                    |
-| $tooltip-content-radius-large    | 6px                                |
-| $tooltip-content-weight-normal   | 400                                |
-| $tooltip-content-zindex          | 38                                 |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tooltip.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                    | Default                            |
 | -------------------------------- | ---------------------------------- |
 | $tooltip-arrow-margin            | 2px                                |
 | $tooltip-arrow-size              | 5px                                |
-| $tooltip-background-color        | $primary                           |
-| $tooltip-color                   | $primary-invert                    |
+| $tooltip-background-color        | var(--#{$prefix}primary)           |
+| $tooltip-color                   | var(--#{$prefix}primary-invert)    |
 | $tooltip-content-box-shadow      | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) |
 | $tooltip-content-font-size       | 0.85rem                            |
 | $tooltip-content-max-width       | 300px                              |

@@ -2,12 +2,7 @@
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    usePropBinding,
-    useVModelBinding,
-    useInputHandler,
-} from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -168,11 +163,13 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = useVModelBinding<
+const vmodel = defineModel<
     string | number | boolean | Array<string | number | boolean>
->(props, emits, { passive: true });
+>();
 
-const isIndeterminate = usePropBinding<boolean>("indeterminate", props, emits);
+const isIndeterminate = defineModel<boolean>("indeterminate", {
+    default: false,
+});
 
 const isChecked = computed(
     () =>
@@ -221,7 +218,7 @@ const labelClasses = defineClasses(["labelClass", "o-chk__label"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: vmodel.value });
 </script>
 
 <template>

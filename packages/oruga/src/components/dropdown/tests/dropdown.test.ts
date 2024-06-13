@@ -8,15 +8,11 @@ import ODropdown from "@/components/dropdown/Dropdown.vue";
 describe("Dropdown tests", () => {
     enableAutoUnmount(afterEach);
 
-    test("is called", () => {
+    test("render correctly", () => {
         const wrapper = mount(ODropdown);
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("dropdown");
-    });
-
-    test("render correctly", () => {
-        const wrapper = mount(ODropdown);
         expect(wrapper.html()).toMatchSnapshot();
         expect(wrapper.classes("o-drop")).toBeTruthy();
     });

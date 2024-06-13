@@ -1,7 +1,35 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
+// @ts-expect-error Examples are loaded differently.
+import type { TableColumn } from "../../../../dist/oruga";
 
-const tableData = [
+const columns = ref<TableColumn[]>([
+    {
+        field: "id",
+        label: "ID",
+        width: "40",
+        numeric: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+    },
+    {
+        field: "gender",
+        label: "Gender",
+    },
+]);
+
+const data = ref([
     {
         id: 1,
         first_name: "Jesse",
@@ -37,36 +65,9 @@ const tableData = [
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-];
-
-const data = ref(tableData);
-const selected = ref(tableData[1]);
-
-const columns = ref([
-    {
-        field: "id",
-        label: "ID",
-        width: "40",
-        numeric: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-    },
-    {
-        field: "gender",
-        label: "Gender",
-    },
 ]);
+
+const selected = ref(data.value[2]);
 </script>
 
 <template>
@@ -80,14 +81,10 @@ const columns = ref([
 
         <p><b>Selection:</b> {{ selected }}</p>
 
-        <o-table v-model:selected="selected" :data="data" focusable>
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row[column.field] }}
-            </o-table-column>
-        </o-table>
+        <o-table
+            v-model:selected="selected"
+            :data="data"
+            :columns="columns"
+            selectable />
     </section>
 </template>

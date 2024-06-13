@@ -3,22 +3,25 @@ import type {
     ComponentSlots,
 } from "vue-component-type-helpers";
 import type { ComponentPublicInstance, StyleValue } from "vue";
+import type { ObjectMap, ProviderItem } from "@/composables";
+
 import TableColumn from "./TableColumn.vue";
-import type { ProviderItem } from "@/composables";
 
-export type Column = ComponentProps<typeof TableColumn>;
+export type TableRow<T = unknown> = ObjectMap<T>[number];
 
-export type TableColumnSlots = ComponentSlots<typeof TableColumn>;
+export type TableColumn<T = unknown> = ComponentProps<typeof TableColumn<T>>;
 
-export type TableColumnComponent = Column & {
+type TableColumnSlots = ComponentSlots<typeof TableColumn>;
+
+export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $el: ComponentPublicInstance;
     $slots: TableColumnSlots;
     style: StyleValue;
     isHeaderUnselectable: boolean;
 };
 
-export type TableColumn = Omit<ProviderItem, "data"> &
-    TableColumnComponent & {
+export type TableColumnItem<T = unknown> = Omit<ProviderItem, "data"> &
+    TableColumnComponent<T> & {
         thAttrsData: object;
         tdAttrsData: Array<object>;
     };

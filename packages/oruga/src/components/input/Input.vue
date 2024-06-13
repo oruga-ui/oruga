@@ -1,4 +1,10 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+    generic="
+        IsNumber extends boolean,
+        ModelValue extends IsNumber extends true ? number : string
+    ">
 import {
     ref,
     computed,
@@ -13,7 +19,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { defineClasses, useInputHandler } from "@/composables";
+import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -32,10 +38,18 @@ defineOptions({
 });
 
 const props = defineProps({
+    /**
+     * @type string | number
+     * @model
+     */
+    modelValue: {
+        type: [Number, String] as unknown as PropType<ModelValue>,
+        default: undefined,
+    },
+    /** @type boolean */
+    number: { type: Boolean as PropType<IsNumber>, default: false },
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number], default: "" },
     /**
      * Input type, like native
      * @values Any native input type, and textarea
@@ -114,6 +128,11 @@ const props = defineProps({
     statusIcon: {
         type: Boolean,
         default: () => getOption("statusIcon", true),
+    },
+    /** Number of milliseconds to delay before to emit input event */
+    debounce: {
+        type: Number,
+        default: () => getOption("autocomplete.debounce", 400),
     },
     /** Native options to use in HTML5 validation */
     autocomplete: {
@@ -207,13 +226,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input change event
      * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string | number, event: Event): void;
+    (e: "input", value: ModelValue, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -264,7 +283,9 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<string | number>({ default: "" });
+const vmodel = defineModel<ModelValue>({
+    default: undefined,
+});
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -274,7 +295,7 @@ const valueLength = computed(() =>
     typeof vmodel.value === "string"
         ? vmodel.value.length
         : typeof vmodel.value === "number"
-          ? vmodel.value.toString().length
+          ? String(vmodel.value).length
           : 0,
 );
 
@@ -319,8 +340,20 @@ const computedStyles = computed(
             : {},
 );
 
+let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
+
+watch(
+    () => props.debounce,
+    () => {
+        debouncedInput = useDebounce(onInput, props.debounce || 0);
+    },
+    { immediate: true },
+);
+
 function onInput(event: Event): void {
-    emits("input", (event.target as HTMLInputElement).value, event);
+    const value = (event.target as HTMLInputElement).value;
+    const input = (props.number ? Number(value) : String(value)) as ModelValue;
+    emits("input", input, event);
 }
 
 // --- Icon Feature ---
@@ -335,13 +368,10 @@ const hasIconRight = computed(() => {
 });
 
 const computedIconRight = computed(() => {
-    if (props.passwordReveal) {
-        return passwordVisibleIcon.value;
-    } else if (props.clearable && vmodel.value && props.clearIcon) {
+    if (props.passwordReveal) return passwordVisibleIcon.value;
+    else if (props.clearable && vmodel.value && props.clearIcon)
         return props.clearIcon;
-    } else if (props.iconRight) {
-        return props.iconRight;
-    }
+    else if (props.iconRight) return props.iconRight;
     return statusVariantIcon.value;
 });
 
@@ -358,7 +388,8 @@ function iconClick(event: Event): void {
 
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
-    else if (props.clearable) vmodel.value = "";
+    else if (props.clearable)
+        vmodel.value = (props.number ? 0 : "") as ModelValue;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());
@@ -370,11 +401,9 @@ function rightIconClick(event: Event): void {
 const isPasswordVisible = ref(false);
 
 const inputType = computed(() => {
-    if (props.passwordReveal) {
+    if (props.passwordReveal)
         return isPasswordVisible.value ? "text" : "password";
-    } else {
-        return props.type;
-    }
+    else return props.type;
 });
 
 /** Current password-reveal icon name. */
@@ -457,7 +486,7 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: vmodel.value });
 </script>
 
 <template>
@@ -478,7 +507,7 @@ defineExpose({ focus: setFocus });
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @input="debouncedInput" />
 
         <textarea
             v-else
@@ -495,7 +524,7 @@ defineExpose({ focus: setFocus });
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @input="debouncedInput" />
 
         <o-icon
             v-if="icon"

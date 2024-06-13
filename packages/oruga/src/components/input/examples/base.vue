@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const name = ref("John Silver");
@@ -34,7 +34,12 @@ const name = ref("John Silver");
         </o-field>
 
         <o-field label="Number">
-            <o-input placeholder="Number" type="number" rounded />
+            <o-input
+                :model-value="42"
+                number
+                type="number"
+                placeholder="Number"
+                rounded />
         </o-field>
 
         <o-field label="Disabled">

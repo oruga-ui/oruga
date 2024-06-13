@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, useAttrs, type PropType, ref, watch, nextTick } from "vue";
+import {
+    computed,
+    useAttrs,
+    ref,
+    watch,
+    nextTick,
+    type PropType,
+    type ComponentInstance,
+} from "vue";
 
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
@@ -82,9 +90,9 @@ const isMobileNative = computed(
     () => picker.value.mobileNative && isMobileAgent.any(),
 );
 
-const dropdownRef = ref<InstanceType<typeof ODropdown>>();
-const inputRef = ref<InstanceType<typeof OInput>>();
-const nativeInputRef = ref<InstanceType<typeof OInput>>();
+const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
+const inputRef = ref<ComponentInstance<typeof OInput>>();
+const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
 
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : inputRef.value,

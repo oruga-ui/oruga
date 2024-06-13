@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch, type PropType } from "vue";
+import {
+    computed,
+    ref,
+    watch,
+    type ComponentInstance,
+    type PropType,
+} from "vue";
 
 import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
@@ -36,7 +42,7 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Date, default: undefined },
-    /** The active state of the dropdown, use v-model:active to make it two-way binding. */
+    /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Define props for the underlying datepicker component */
     datepicker: {
@@ -218,9 +224,9 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const datepickerRef = ref<InstanceType<typeof ODatepicker>>();
-const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
-const nativeInputRef = ref<InstanceType<typeof OInput>>();
+const datepickerRef = ref<ComponentInstance<typeof ODatepicker>>();
+const timepickerRef = ref<ComponentInstance<typeof OTimepicker>>();
+const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
 
 const timepickerProps = ref(props.timepicker);
 watch(timepickerProps, (value) => (timepickerProps.value = value), {
@@ -245,7 +251,6 @@ const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     emits,
     props,
 );
-
 watch([() => isMobileNative.value, () => props.inline], () => {
     // $refs attached, it's time to refresh datepicker (input)
     if (datepickerRef.value) datepickerRef.value.$forceUpdate();
@@ -571,7 +576,7 @@ const timepickerWrapperClasses = defineClasses([
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: vmodel.value });
 </script>
 
 <template>

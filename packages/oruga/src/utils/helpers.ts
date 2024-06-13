@@ -66,6 +66,45 @@ export function indexOf<T>(
 }
 
 /**
+ * Sort an array by key without mutating original data.
+ * Call the user sort function if it was passed.
+ */
+export function sortBy<T>(
+    array: T[],
+    key: string,
+    fn: (a: T, b: T, asc: boolean) => number,
+    isAsc: boolean,
+): T[] {
+    let sorted = [];
+    // Sorting without mutating original data
+    if (fn && typeof fn === "function") {
+        sorted = [...array].sort((a, b) => fn(a, b, isAsc));
+    } else {
+        sorted = [...array].sort((a, b) => {
+            // Get nested values from objects
+            let newA = getValueByPath(a, key);
+            let newB = getValueByPath(b, key);
+
+            // sort boolean type
+            if (typeof newA === "boolean" && typeof newB === "boolean") {
+                return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
+            }
+
+            if (!newA && newA !== 0) return 1;
+            if (!newB && newB !== 0) return -1;
+            if (newA === newB) return 0;
+
+            newA = typeof newA === "string" ? newA.toUpperCase() : newA;
+            newB = typeof newB === "string" ? newB.toUpperCase() : newB;
+
+            return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
+        });
+    }
+
+    return sorted;
+}
+
+/**
  * Deeply check if two values are equal
  */
 export function isEqual(valueA: unknown, valueB: unknown): boolean {
@@ -110,6 +149,50 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
     }
 
     return false;
+}
+
+/**
+ * Returns true if it is a DOM element
+ * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
+ */
+export function isElement(o: any): boolean {
+    return typeof HTMLElement === "object"
+        ? o instanceof HTMLElement //DOM2
+        : o &&
+              typeof o === "object" &&
+              o !== null &&
+              o.nodeType === 1 &&
+              typeof o.nodeName === "string";
+}
+
+/**
+ * Return display text for an option.
+ * If option is an object, get the property from path based on given field, or else just the property.
+ * Apply a formatter function to the property if given.
+ * Return the display label.
+ *
+ * @param option Object to the the label for
+ * @param field  Property of the object to use as display text
+ * @param formatter Function to format the option to a string
+ */
+export function getPropertyValue<T>(
+    option?: T,
+    field?: string,
+    formatter?: (value: unknown, option: T) => string,
+): string {
+    if (!option) return "";
+
+    const property =
+        field && typeof option === "object"
+            ? getValueByPath(option, field)
+            : option;
+
+    const label =
+        typeof formatter === "function"
+            ? formatter(property, option)
+            : property;
+
+    return String(label || "");
 }
 
 /**

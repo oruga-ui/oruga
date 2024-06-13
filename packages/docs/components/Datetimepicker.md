@@ -39,7 +39,7 @@ title: Datetimepicker
 
 | Prop name          | Description                                                                                                                                                                      | Type                      | Values                                            | Default                                                                                                                                                                              |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| active             | The active state of the dropdown, use v-model:active to make it two-way binding.                                                                                                 | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                          |
+| active             | The active state of the dropdown, use v-model:active to make it two-way binding                                                                                                  | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                          |
 | datepicker         | Define props for the underlying datepicker component                                                                                                                             | DatepickerProps           | -                                                 |                                                                                                                                                                                      |
 | datetimeCreator    | Date creator function, default is `new Date()`                                                                                                                                   | (date: Date) =&gt; Date   | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datetimepicker: {<br>&nbsp;&nbsp;datetimeCreator: (d: Date) => new Date(d), <br>}</code> |
 | datetimeFormatter  | Custom function to format a date into a string                                                                                                                                   | (date: Date) =&gt; string | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datetimepicker: {<br>&nbsp;&nbsp;dateFormatter: defaultFunction<br>}</code>              |
@@ -96,18 +96,9 @@ title: Datetimepicker
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable | Default |
-| ------------- | ------- |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datetimepicker.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable | Default |
 | ------------- | ------- |
