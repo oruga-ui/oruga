@@ -50,6 +50,11 @@ import type {
 } from "./types";
 import type { ComponentClass, ClassBind, OrugaOptions } from "@/types";
 
+enum SortDirection {
+    ASC = "asc",
+    DESC = "desc",
+}
+
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
  * @displayName Table
@@ -193,9 +198,9 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("table.backendSorting", false),
     },
-    /** Sets the default sort column and order — e.g. ['first_name', 'desc'] */
+    /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
     defaultSort: {
-        type: [String, Array] as PropType<string | string[]>,
+        type: [String, Array] as PropType<string | [string, "asc" | "desc"]>,
         default: () => getOption("table.defaultSort"),
     },
     /**
@@ -203,7 +208,8 @@ const props = defineProps({
      * @values asc, desc
      */
     defaultSortDirection: {
-        type: String,
+        type: String as PropType<"asc" | "desc">,
+        validator: (value: string) => ["asc", "desc"].indexOf(value) >= 0,
         default: () => getOption("table.defaultSortDirection", "asc"),
     },
     /** Sets the header sorting icon */
@@ -1070,8 +1076,6 @@ function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
 const currentSortColumn = ref<TableColumnItem<T>>();
 const isAsc = ref(true);
 
-onMounted(() => nextTick(() => checkSort()));
-
 /** check if has any sortable column */
 const hasSortableColumns = computed(() =>
     tableColumns.value.some((column) => column.sortable),
@@ -1082,44 +1086,23 @@ function isColumnSorted(column: TableColumnItem<T>): boolean {
     return currentSortColumn.value?.identifier === column.identifier;
 }
 
-/** call initSort only first time (For example async data) */
-function checkSort(): void {
-    if (tableColumns.value.length && !currentSortColumn.value) {
-        // is first time sort
-        initSort();
-    } else if (tableColumns.value.length) {
-        if (
-            currentSortColumn.value &&
-            Object.keys(currentSortColumn.value).length > 0
-        ) {
-            const column = tableColumns.value.find(
-                (column) => currentSortColumn.value.field === column.field,
-            );
-            if (column) currentSortColumn.value = column;
-        }
-    }
-}
+// call initSort only first time (for example async data)
+// initSort must be called after TableColumns got initialised first time
+onMounted(() => nextTick(() => initSort()));
 
 /** initial sorted column based on the default-sort prop */
 function initSort(): void {
+    if (!tableColumns.value.length || currentSortColumn.value) return;
     if (!props.defaultSort) return;
     let sortField = "";
     let sortDirection = props.defaultSortDirection;
     if (Array.isArray(props.defaultSort)) {
         sortField = props.defaultSort[0];
-        if (props.defaultSort[1]) {
-            sortDirection = props.defaultSort[1];
-        }
+        if (props.defaultSort[1]) sortDirection = props.defaultSort[1];
     } else {
         sortField = props.defaultSort;
     }
-    const sortColumn = tableColumns.value.find(
-        (column) => column.field === sortField,
-    );
-    if (sortColumn) {
-        isAsc.value = sortDirection.toLowerCase() !== "desc";
-        sort(sortColumn, true);
-    }
+    sortByField(sortField, sortDirection as SortDirection);
 }
 
 /**
@@ -1134,18 +1117,36 @@ function sort(
 ): void {
     if (!column || !column.sortable) return;
 
-    if (!updateDirection)
+    if (updateDirection)
         isAsc.value = isColumnSorted(column)
             ? !isAsc.value
-            : props.defaultSortDirection.toLowerCase() !== "desc";
+            : props.defaultSortDirection.toLowerCase() === SortDirection.ASC;
 
     // if not first time sort
     if (currentSortColumn.value)
-        emits("sort", column, isAsc.value ? "asc" : "desc", event);
+        emits(
+            "sort",
+            column,
+            isAsc.value ? SortDirection.ASC : SortDirection.DESC,
+            event,
+        );
 
     currentSortColumn.value = column;
     // recompute rows with updated currentSortColumn
     processTableData();
+}
+
+function sortByField(
+    field: string,
+    direction: SortDirection = SortDirection.ASC,
+): void {
+    const sortColumn = tableColumns.value.find(
+        (column) => column.field === field,
+    );
+    if (sortColumn) {
+        isAsc.value = direction.toLowerCase() === SortDirection.ASC;
+        sort(sortColumn);
+    }
 }
 
 function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
@@ -1559,7 +1560,7 @@ function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ rows: tableData });
+defineExpose({ rows: tableData, sort: sortByField });
 </script>
 
 <template>
@@ -1601,7 +1602,7 @@ defineExpose({ rows: tableData });
             :sort-icon-size="sortIconSize"
             :is-asc="isAsc"
             :mobile-sort-classes="mobileSortClasses"
-            @sort="(column, event) => sort(column, null, event)" />
+            @sort="(column, event) => sort(column, true, event)" />
 
         <template
             v-if="
@@ -1701,7 +1702,7 @@ defineExpose({ rows: tableData });
                             :class="thClasses(column)"
                             :style="isMobileActive ? {} : column.style"
                             :draggable="canDragColumn"
-                            @click.stop="sort(column, null, $event)"
+                            @click.stop="sort(column, true, $event)"
                             @dragstart="
                                 handleColumnDragStart(column, index, $event)
                             "

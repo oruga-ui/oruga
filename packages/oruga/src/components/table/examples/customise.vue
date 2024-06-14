@@ -82,21 +82,24 @@ const hasMobileCards = ref(true);
                 field="id"
                 label="ID"
                 width="40"
-                numeric>
+                numeric
+                sortable>
                 {{ row.id }}
             </o-table-column>
 
             <o-table-column
                 v-slot="{ row }"
                 field="first_name"
-                label="First Name">
+                label="First Name"
+                sortable>
                 {{ row.first_name }}
             </o-table-column>
 
             <o-table-column
                 v-slot="{ row }"
                 field="last_name"
-                label="Last Name">
+                label="Last Name"
+                sortable>
                 {{ row.last_name }}
             </o-table-column>
 
@@ -104,11 +107,12 @@ const hasMobileCards = ref(true);
                 v-slot="{ row }"
                 field="date"
                 label="Date"
-                position="centered">
+                position="centered"
+                sortable>
                 {{ new Date(row.date).toLocaleDateString() }}
             </o-table-column>
 
-            <o-table-column v-slot="{ row }" label="Gender">
+            <o-table-column v-slot="{ row }" label="Gender" sortable>
                 <o-icon
                     pack="fas"
                     :icon="row.gender === 'Male' ? 'mars' : 'venus'" />

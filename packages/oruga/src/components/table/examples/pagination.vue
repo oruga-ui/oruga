@@ -183,7 +183,7 @@ const isPaginationSimple = ref(false);
 const paginationPosition = ref("bottom");
 const sortIcon = ref("arrow-up");
 const sortIconSize = ref("small");
-const defaultSortDirection = ref("asc");
+const defaultSortDirection = ref<"asc" | "desc">("asc");
 const currentPage = ref(1);
 const perPage = ref(3);
 </script>
