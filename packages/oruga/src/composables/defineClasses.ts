@@ -79,46 +79,47 @@ export function defineClasses(
             return { [computedClass]: applied };
         }
 
-        // if suffix is defined, watch suffix changed and recalculate class
-        if (isDefined(suffix) && isRef(suffix)) {
-            scope.run(() => {
-                watch(
-                    () => toValue(suffix),
-                    (value, oldValue) => {
-                        // only recompute when value has really changed
-                        if (value === oldValue) return;
-                        // recompute the class bind property
-                        const classBind = getClassBind();
-                        // update class binding property by class index
-                        classes.value[index] = classBind;
-                    },
-                );
-            });
-        }
+        // run all watcher and computed properties in an active effect scope
+        scope.run(() => {
+            // recompute the class bind property when the class property change
+            watch(
+                () => vm.proxy.$props[className],
+                () => {
+                    // recompute the class bind property
+                    const classBind = getClassBind();
+                    // update class binding property by class index
+                    classes.value[index] = classBind;
+                },
+            );
 
-        // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
-        if (isDefined(apply) && isRef(apply)) {
-            scope.run(() => {
-                watch(
-                    () => toValue(apply),
-                    (applied, oldValue) => {
-                        // only change apply when value has really changed
-                        if (applied === oldValue) return;
+            // if suffix is defined, watch suffix changed and recalculate class
+            if (isDefined(suffix) && isRef(suffix)) {
+                watch(suffix, (value, oldValue) => {
+                    // only recompute when value has really changed
+                    if (value === oldValue) return;
+                    // recompute the class bind property
+                    const classBind = getClassBind();
+                    // update class binding property by class index
+                    classes.value[index] = classBind;
+                });
+            }
 
-                        // get class binding property by class index
-                        const classBind = classes.value[index];
-
-                        // update the apply class binding state
-                        Object.keys(classBind).forEach(
-                            (key) => (classBind[key] = applied),
-                        );
-
-                        // update the class binding property by class index
-                        classes.value[index] = classBind;
-                    },
-                );
-            });
-        }
+            // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
+            if (isDefined(apply) && isRef(apply)) {
+                watch(apply, (applied, oldValue) => {
+                    // only change apply when value has really changed
+                    if (applied === oldValue) return;
+                    // get class binding property by class index
+                    const classBind = classes.value[index];
+                    // update the apply class binding state
+                    Object.keys(classBind).forEach(
+                        (key) => (classBind[key] = applied),
+                    );
+                    // update the class binding property by class index
+                    classes.value[index] = classBind;
+                });
+            }
+        });
 
         // return computed class based on parameter
         return getClassBind();
