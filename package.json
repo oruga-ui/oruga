@@ -23,7 +23,7 @@
     "gen:volar": "node .scripts/gen-volar-dts.mjs --bundle --platform=node",
     "gen:types": "node .scripts/gen-comp-types.mjs --bundle --platform=node",
     "gen:docs": "npm run docs:gen --workspace @oruga-ui/docs-next",
-    "publish:lib": "npm run publish:lib --workspace @oruga-ui/oruga-next",
+    "publish": "npm run publish --workspace @oruga-ui/oruga-next",
     "release": "npm run version && npm run changelog",
     "version": "node .scripts/sync-version.js && git add .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && node .scripts/wait-confirm && git add CHANGELOG.md",

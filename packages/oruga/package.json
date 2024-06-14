@@ -53,16 +53,16 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build:vue": "rimraf dist && vite build && vite build --mode minify",
-    "build:vue:watch": "vite build --mode minify --watch",
-    "build:lib": "rimraf dist && npm run test:ts && npm run build:vue",
-    "build:lib:watch": "npm link && npm run build:vue:watch",
+    "build": "rimraf dist && vite build && vite build --mode minify",
+    "build:watch": "vite build --mode minify --watch",
+    "build:lib": "rimraf dist && npm run test:ts && npm run build",
+    "build:lib:watch": "npm link && npm run build:watch",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open --component",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --quiet --ignore-path .gitignore",
-    "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
+    "publish": "cp ../../README.md . && npm run build:lib && npm publish",
     "update": "ncu -u"
   },
   "peerDependencies": {
