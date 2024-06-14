@@ -61,4 +61,3 @@ import DraggableCode from "./draggable.vue?raw";
     <h3 id="draggable">Draggable rows/columns</h3>
     <ExampleViewer :component="Draggable" :code="DraggableCode" />
 </template>
-./draggable.vue

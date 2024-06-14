@@ -5,8 +5,7 @@ const data = ref([]);
 const total = ref(0);
 const loading = ref(false);
 const sortField = ref("vote_count");
-const sortOrder = ref("desc");
-const defaultSortOrder = ref("desc");
+const sortOrder = ref<"asc" | "desc">("desc");
 const page = ref(1);
 const perPage = ref(20);
 
@@ -93,7 +92,6 @@ onMounted(() => {
             :total="total"
             :per-page="perPage"
             backend-sorting
-            :default-sort-direction="defaultSortOrder"
             :default-sort="[sortField, sortOrder]"
             aria-next-label="Next page"
             aria-previous-label="Previous page"
