@@ -7,6 +7,6 @@ export type OptionsItem<T = unknown> = {
     value: T;
     attrs?: {
         disabled?: boolean;
-    } & Record<string, unknown>;
-    [index: string]: unknown;
+    } & Record<string, any>;
+    [index: string]: any;
 };
