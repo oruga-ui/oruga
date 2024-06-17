@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, onMounted, watch, ref, nextTick, type PropType } from "vue";
+import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -237,9 +237,7 @@ const vmodel = defineModel<T | T[]>({
     default: null,
 });
 
-const placeholderVisible = computed(() =>
-    props.multiple ? false : !vmodel.value,
-);
+const placeholderVisible = computed(() => !props.multiple && !vmodel.value);
 
 onMounted(() => {
     /**
@@ -350,7 +348,7 @@ const selectClasses = defineClasses(
         "arrowClass",
         "o-sel-arrow",
         null,
-        computed(() => !props.multiple && !hasIconRight.value),
+        computed(() => !hasIconRight.value && !props.multiple),
     ],
 );
 

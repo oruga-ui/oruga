@@ -174,22 +174,22 @@ describe("OSelect tests", () => {
         expect(select.attributes("disabled")).not.toBeUndefined();
     });
 
-    // test("react accordingly when value change ", async () => {
-    //     const wrapper = mount(OSelect, {
-    //         props: { options },
-    //     });
+    test("react accordingly when value change ", async () => {
+        const wrapper = mount(OSelect, {
+            props: { options },
+        });
 
-    //     const select = wrapper.find("select");
-    //     expect(select.exists()).toBeTruthy();
+        const select = wrapper.find("select");
+        expect(select.exists()).toBeTruthy();
 
-    //     await select.setValue(options[1].value);
-    //     let emits = wrapper.emitted("update:modelValue");
-    //     expect(emits).toHaveLength(1);
-    //     expect(emits[0]).toContain(options[1].value);
+        await select.setValue(options[1].value);
+        let emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
+        expect(emits[0]).toContain(options[1].value);
 
-    //     await select.setValue(options[2].value);
-    //     emits = wrapper.emitted("update:modelValue");
-    //     expect(emits).toHaveLength(2);
-    //     expect(emits[1]).toContain(options[2].value);
-    // });
+        await select.setValue(options[2].value);
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(2);
+        expect(emits[1]).toContain(options[2].value);
+    });
 });
