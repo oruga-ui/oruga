@@ -30,7 +30,7 @@ const props = defineProps({
     /** @model */
     modelValue: {
         type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
-        default: null,
+        default: undefined,
     },
     /** Select options, unnecessary when default slot is used */
     options: {
@@ -230,7 +230,7 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 
 const vmodel = defineModel<T | T[]>({ default: undefined });
 
-const placeholderVisible = computed(() => vmodel.value === null);
+const placeholderVisible = computed(() => !vmodel.value);
 
 /**
  * When v-model is changed:
@@ -244,7 +244,7 @@ watch(
         if (parentField?.value) parentField.value.setFilled(!!value);
         checkHtml5Validity();
     },
-    { immediate: true, flush: "post" },
+    { flush: "post" },
 );
 
 const selectOptions = computed<OptionsItem<T>[]>(() => {
@@ -278,6 +278,10 @@ const rightIconVariant = computed(() =>
 function iconClick(emit, event: Event): void {
     emits(emit, event);
     nextTick(() => setFocus());
+}
+
+function leftIconClick(event: Event): void {
+    if (props.iconClickable) iconClick("icon-click", event);
 }
 
 function rightIconClick(event: Event): void {
@@ -336,7 +340,9 @@ const selectClasses = defineClasses(
         "arrowClass",
         "o-sel-arrow",
         null,
-        computed(() => !props.iconRight && !props.multiple),
+        computed(
+            () => !props.iconRight && !props.multiple && !statusVariant.value,
+        ),
     ],
 );
 
@@ -359,7 +365,7 @@ defineExpose({ focus: setFocus, value: vmodel.value });
             :icon="icon"
             :pack="iconPack"
             :size="size"
-            @click="iconClick('icon-click', $event)" />
+            @click="leftIconClick($event)" />
 
         <select
             v-bind="$attrs"
