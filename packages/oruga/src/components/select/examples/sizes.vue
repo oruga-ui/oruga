@@ -1,35 +1,28 @@
 <template>
     <section>
-        <o-field label="Primary" variant="primary">
+        <o-field label="Small">
+            <o-select placeholder="Select a character" size="small">
+                <option value="flint">Flint</option>
+                <option value="silver">Silver</option>
+            </o-select>
+        </o-field>
+
+        <o-field label="Default">
             <o-select placeholder="Select a character">
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
             </o-select>
         </o-field>
 
-        <o-field label="Success" variant="success">
-            <o-select placeholder="Select a character">
+        <o-field label="Medium">
+            <o-select placeholder="Select a character" size="medium">
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
             </o-select>
         </o-field>
 
-        <o-field label="Info" variant="info">
-            <o-select placeholder="Select a character">
-                <option value="flint">Flint</option>
-                <option value="silver">Silver</option>
-            </o-select>
-        </o-field>
-
-        <o-field label="Warning" variant="warning">
-            <o-select placeholder="Select a character">
-                <option value="flint">Flint</option>
-                <option value="silver">Silver</option>
-            </o-select>
-        </o-field>
-
-        <o-field label="Danger" variant="danger">
-            <o-select placeholder="Select a character">
+        <o-field label="Large">
+            <o-select placeholder="Select a character" size="large">
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
             </o-select>

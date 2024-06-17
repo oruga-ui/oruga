@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -29,12 +29,12 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: {
-        type: [String, Number, Boolean, Object, Array],
-        default: null,
+        type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
+        default: undefined,
     },
     /** Select options, unnecessary when default slot is used */
     options: {
-        type: Array as PropType<string[] | OptionsItem[]>,
+        type: Array as PropType<string[] | OptionsItem<T>[]>,
         default: undefined,
     },
     /**
@@ -55,9 +55,9 @@ const props = defineProps({
     },
     /** Text when nothing is selected */
     placeholder: { type: String, default: undefined },
-    /** Allow multiple selection */
+    /** Allow multiple selection - same as native multiple */
     multiple: { type: Boolean, default: false },
-    /** Same as native disabled */
+    /** Disable the input - same as native disabled */
     disabled: { type: Boolean, default: false },
     /** Makes input full width when inside a grouped or addon field */
     expanded: { type: Boolean, default: false },
@@ -191,10 +191,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number | boolean | object | Array<any>} updated modelValue prop
      */
-    (
-        e: "update:modelValue",
-        value: string | number | boolean | object | Array<any>,
-    ): void;
+    (e: "update:modelValue", value: T | T[]): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -225,36 +222,33 @@ const emits = defineEmits<{
 const selectRef = ref<HTMLInputElement>();
 
 // use form input functionality
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
+const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
     useInputHandler(selectRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<string | number | boolean | object | Array<unknown>>(
-    { default: undefined },
-);
+const vmodel = defineModel<T | T[]>({ default: undefined });
 
-const placeholderVisible = computed(() => vmodel.value === null);
+const placeholderVisible = computed(() => !props.multiple && !vmodel.value);
 
 onMounted(() => {
     /**
      * When v-model is changed:
      *  1. Set parent field filled state.
-     *  2. Resize textarea input
-     *  3. Check html5 valdiation
+     *  2. Check html5 valdiation
      */
     watch(
-        () => vmodel.value,
+        vmodel,
         (value) => {
             if (parentField?.value) parentField.value.setFilled(!!value);
-            checkHtml5Validity();
+            if (!isValid.value) checkHtml5Validity();
         },
-        { immediate: true },
+        { immediate: true, flush: "post" },
     );
 });
 
-const selectOptions = computed<OptionsItem[]>(() => {
+const selectOptions = computed<OptionsItem<T>[]>(() => {
     if (!props.options || !Array.isArray(props.options)) return [];
 
     return props.options.map((option) =>
@@ -282,12 +276,16 @@ const rightIconVariant = computed(() =>
         : statusVariant.value,
 );
 
-function iconClick(emit, event): void {
+function iconClick(emit, event: Event): void {
     emits(emit, event);
     nextTick(() => setFocus());
 }
 
-function rightIconClick(event): void {
+function leftIconClick(event: Event): void {
+    if (props.iconClickable) iconClick("icon-click", event);
+}
+
+function rightIconClick(event: Event): void {
     if (props.iconRightClickable) iconClick("icon-right-click", event);
 }
 
@@ -343,7 +341,7 @@ const selectClasses = defineClasses(
         "arrowClass",
         "o-sel-arrow",
         null,
-        computed(() => !props.iconRight && !props.multiple),
+        computed(() => !hasIconRight.value && !props.multiple),
     ],
 );
 
@@ -366,7 +364,7 @@ defineExpose({ focus: setFocus, value: vmodel.value });
             :icon="icon"
             :pack="iconPack"
             :size="size"
-            @click="iconClick('icon-click', $event)" />
+            @click="leftIconClick($event)" />
 
         <select
             v-bind="$attrs"
