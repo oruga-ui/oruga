@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends String | Number | Boolean">
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -22,7 +22,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** @model */
-    modelValue: { type: [String, Number, Boolean], default: undefined },
+    modelValue: { type: [String, Number, Boolean] as PropType<T>, default: undefined },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -42,7 +42,7 @@ const props = defineProps({
     /** Input label, unnecessary when default slot is used */
     label: { type: String, default: undefined },
     /** Same as native value */
-    nativeValue: { type: [String, Number, Boolean], default: undefined },
+    nativeValue: { type: [String, Number, Boolean] as PropType<T>, default: undefined },
     /** Same as native disabled */
     disabled: { type: Boolean, default: false },
     /** Same as native required */
@@ -107,13 +107,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string, number, boolean} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number | boolean): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on input change event
      * @param value {string, number, boolean} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string | number | boolean, event: Event): void;
+    (e: "input", value: T, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -140,7 +140,7 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = defineModel<string | number | boolean>({ default: undefined });
+const vmodel = defineModel<T>({ default: undefined });
 
 const isChecked = computed(() => vmodel.value === props.nativeValue);
 
