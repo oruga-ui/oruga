@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends String | Number | Boolean">
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -21,8 +21,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number, Boolean, Array], default: undefined },
+    /**
+     * @type string|number|boolean|array
+     * @model
+     * */
+    modelValue: {
+        type: [String, Number, Boolean, Array] as PropType<T | T[]>,
+        default: undefined,
+    },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -43,18 +49,36 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /** Same as native indeterminate */
     indeterminate: { type: Boolean, default: false },
-    /** Same as native value */
-    nativeValue: { type: [String, Number, Boolean], default: undefined },
+    /**
+     * Same as native value
+     * @type string|number|boolean
+     */
+    nativeValue: {
+        type: [String, Number, Boolean] as PropType<T>,
+        default: undefined,
+    },
     /** Same as native disabled */
     disabled: { type: Boolean, default: false },
     /** Same as native required */
     required: { type: Boolean, default: false },
     /** Same as native name */
     name: { type: String, default: undefined },
-    /** Overrides the returned value when it's checked */
-    trueValue: { type: [String, Number, Boolean], default: true },
-    /** Overrides the returned value when it's not checked */
-    falseValue: { type: [String, Number, Boolean], default: false },
+    /**
+     * Overrides the returned value when it's checked
+     * @type string|number|boolean
+     */
+    trueValue: {
+        type: [String, Number, Boolean] as PropType<T>,
+        default: true,
+    },
+    /**
+     * Overrides the returned value when it's not checked
+     * @type string|number|boolean
+     */
+    falseValue: {
+        type: [String, Number, Boolean] as PropType<T>,
+        default: false,
+    },
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete: {
         type: String,
@@ -118,20 +142,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string, number, boolean, array} updated modelValue prop
      */
-    (
-        e: "update:modelValue",
-        value: string | number | boolean | Array<string | number | boolean>,
-    ): void;
+    (e: "update:modelValue", value: T | T[]): void;
     /**
      * on input change event
      * @param value {string, number, boolean, array} input value
      * @param event {Event} native event
      */
-    (
-        e: "input",
-        value: string | number | boolean | Array<string | number | boolean>,
-        event: Event,
-    ): void;
+    (e: "input", value: T | T[], event: Event): void;
     /**
      * indeterminate prop two-way binding
      * @param value {boolean} updated indeterminate prop
@@ -163,9 +180,7 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = defineModel<
-    string | number | boolean | Array<string | number | boolean>
->();
+const vmodel = defineModel<T | T[]>({ default: undefined });
 
 const isIndeterminate = defineModel<boolean>("indeterminate", {
     default: false,
@@ -175,7 +190,7 @@ const isChecked = computed(
     () =>
         vmodel.value === props.trueValue ||
         (Array.isArray(vmodel.value) &&
-            vmodel.value.includes(props.nativeValue)),
+            vmodel.value.includes(props.nativeValue as T)),
 );
 
 function onInput(event: Event): void {
