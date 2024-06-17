@@ -283,9 +283,7 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<ModelValue>({
-    default: undefined,
-});
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -311,9 +309,9 @@ onMounted(() => {
         (value) => {
             if (parentField?.value) parentField.value.setFilled(!!value);
             if (props.autosize) resize();
-            if (!isValid.value) nextTick(() => checkHtml5Validity());
+            if (!isValid.value) checkHtml5Validity();
         },
-        { immediate: true },
+        { immediate: true, flush: "post" },
     );
 });
 

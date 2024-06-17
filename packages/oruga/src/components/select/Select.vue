@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, watch, ref, nextTick, type PropType } from "vue";
+import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -222,7 +222,7 @@ const emits = defineEmits<{
 const selectRef = ref<HTMLInputElement>();
 
 // use form input functionality
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
+const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
     useInputHandler(selectRef, emits, props);
 
 // inject parent field component if used inside one
@@ -230,22 +230,23 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 
 const vmodel = defineModel<T | T[]>({ default: undefined });
 
-const placeholderVisible = computed(() => !vmodel.value);
+const placeholderVisible = computed(() => !props.multiple && !vmodel.value);
 
-/**
- * When v-model is changed:
- *  1. Set parent field filled state.
- *  2. Resize textarea input
- *  3. Check html5 valdiation
- */
-watch(
-    vmodel,
-    (value) => {
-        if (parentField?.value) parentField.value.setFilled(!!value);
-        checkHtml5Validity();
-    },
-    { flush: "post" },
-);
+onMounted(() => {
+    /**
+     * When v-model is changed:
+     *  1. Set parent field filled state.
+     *  2. Check html5 valdiation
+     */
+    watch(
+        vmodel,
+        (value) => {
+            if (parentField?.value) parentField.value.setFilled(!!value);
+            if (!isValid.value) checkHtml5Validity();
+        },
+        { immediate: true, flush: "post" },
+    );
+});
 
 const selectOptions = computed<OptionsItem<T>[]>(() => {
     if (!props.options || !Array.isArray(props.options)) return [];
@@ -340,9 +341,7 @@ const selectClasses = defineClasses(
         "arrowClass",
         "o-sel-arrow",
         null,
-        computed(
-            () => !props.iconRight && !props.multiple && !statusVariant.value,
-        ),
+        computed(() => !hasIconRight.value && !props.multiple),
     ],
 );
 

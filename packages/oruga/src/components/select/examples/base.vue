@@ -14,7 +14,7 @@ const options: OptionsItem[] = [
 <template>
     <section>
         <o-field label="Simple">
-            <o-select placeholder="Select a name">
+            <o-select placeholder="Select a name" required>
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
             </o-select>
