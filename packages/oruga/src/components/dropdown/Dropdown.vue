@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T, IsMultiple extends boolean">
 import {
     computed,
     nextTick,
@@ -24,7 +24,7 @@ import {
     useClickOutside,
 } from "@/composables";
 
-import type { DropdownComponent } from "./types";
+import type { DropdownComponent, DropdownProps } from "./types";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
 
@@ -40,14 +40,24 @@ defineOptions({
     configField: "dropdown",
 });
 
+type ModelValue = IsMultiple extends true ? T : T[];
+
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: {
-        type: [String, Number, Boolean, Object, Array],
+        type: [
+            String,
+            Number,
+            Boolean,
+            Object,
+            Array,
+        ] as unknown as PropType<ModelValue>,
         default: undefined,
     },
+    /** Allows multiple selections */
+    multiple: { type: Boolean as PropType<IsMultiple>, default: false },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
@@ -93,8 +103,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("dropdown.animation", "fade"),
     },
-    /** Allows multiple selections */
-    multiple: { type: Boolean, default: false },
     /** Trap focus inside the dropdown. */
     trapFocus: {
         type: Boolean,
@@ -252,20 +260,17 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {[String, Number, Boolean, Object, Array]} updated modelValue prop
      */
-    (
-        e: "update:modelValue",
-        value: [string, number, boolean, object, Array<any>],
-    ): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on change event - fired after modelValue:update
-     * @param value {any} selected value
+     * on change event - fired after update:modelValue
+     * @param value {[String, Number, Boolean, Object, Array]} selected value
      */
-    (e: "change", value: any): void;
+    (e: "change", value: ModelValue): void;
     /**
      * on close event
      * @param method {string} close method
@@ -277,7 +282,7 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const vmodel = defineModel<any>();
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 const isActive = defineModel<boolean>("active", { default: false });
 
@@ -464,26 +469,28 @@ function checkDropdownScroll(): void {
  *   2. Emit input event to update the user v-model.
  *   3. Close the dropdown.
  */
-function selectItem(value: any): void {
+function selectItem(value: T): void {
     if (props.multiple) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
                 // add a value
-                vmodel.value = [...vmodel.value, value];
+                vmodel.value = [...vmodel.value, value] as ModelValue;
             } else {
                 // remove a value
-                vmodel.value = vmodel.value.filter((val) => val !== value);
+                vmodel.value = vmodel.value.filter(
+                    (val) => val !== value,
+                ) as ModelValue;
             }
         } else {
             // init new value array
-            vmodel.value = [value];
+            vmodel.value = [value] as ModelValue;
         }
         // emit change after vmodel has changed
         nextTick(() => emits("change", vmodel.value));
     } else {
         if (vmodel.value !== value) {
             // update a single value
-            vmodel.value = value;
+            vmodel.value = value as ModelValue;
             // emit change after vmodel has changed
             nextTick(() => emits("change", vmodel.value));
         }
@@ -497,8 +504,8 @@ function selectItem(value: any): void {
 }
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<DropdownComponent>(() => ({
-    props,
+const provideData = computed<DropdownComponent<T, IsMultiple>>(() => ({
+    props: props as DropdownProps<T, IsMultiple>,
     selected: vmodel.value,
     selectItem,
 }));
