@@ -1,10 +1,10 @@
 <script setup lang="ts" generic="T">
-import { computed, watch, ref, nextTick, type PropType } from "vue";
+import { computed, onMounted, watch, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
+import { isDefined, uuid } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -30,7 +30,7 @@ const props = defineProps({
     /** @model */
     modelValue: {
         type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
-        default: undefined,
+        default: null,
     },
     /** Select options, unnecessary when default slot is used */
     options: {
@@ -222,30 +222,40 @@ const emits = defineEmits<{
 const selectRef = ref<HTMLInputElement>();
 
 // use form input functionality
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
+const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
     useInputHandler(selectRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<T | T[]>({ default: undefined });
+// if id is given set as `for` property on o-field wrapper
+if (props.id) parentField?.value?.setInputId(props.id);
 
-const placeholderVisible = computed(() => !vmodel.value);
+const vmodel = defineModel<T | T[]>({
+    get: (v) => (isDefined(v) ? v : props.multiple ? [] : ""),
+    set: (v) => (isDefined(v) ? v : props.multiple ? [] : null),
+    default: null,
+});
 
-/**
- * When v-model is changed:
- *  1. Set parent field filled state.
- *  2. Resize textarea input
- *  3. Check html5 valdiation
- */
-watch(
-    vmodel,
-    (value) => {
-        if (parentField?.value) parentField.value.setFilled(!!value);
-        checkHtml5Validity();
-    },
-    { flush: "post" },
+const placeholderVisible = computed(() =>
+    props.multiple ? false : !vmodel.value,
 );
+
+onMounted(() => {
+    /**
+     * When v-model is changed:
+     *  1. Set parent field filled state.
+     *  2. Check html5 valdiation
+     */
+    watch(
+        vmodel,
+        (value) => {
+            if (parentField?.value) parentField.value.setFilled(!!value);
+            if (!isValid.value) checkHtml5Validity();
+        },
+        { immediate: true, flush: "post" },
+    );
+});
 
 const selectOptions = computed<OptionsItem<T>[]>(() => {
     if (!props.options || !Array.isArray(props.options)) return [];
@@ -340,9 +350,7 @@ const selectClasses = defineClasses(
         "arrowClass",
         "o-sel-arrow",
         null,
-        computed(
-            () => !props.iconRight && !props.multiple && !statusVariant.value,
-        ),
+        computed(() => !props.multiple && !hasIconRight.value),
     ],
 );
 
@@ -382,7 +390,7 @@ defineExpose({ focus: setFocus, value: vmodel.value });
             @focus="onFocus"
             @invalid="onInvalid">
             <template v-if="placeholder || $slots.placeholder">
-                <option v-if="placeholderVisible" :value="null" disabled hidden>
+                <option v-if="placeholderVisible" value="" disabled hidden>
                     <!--
                         @slot Override the placeholder
                     -->
