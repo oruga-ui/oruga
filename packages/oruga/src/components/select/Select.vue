@@ -228,6 +228,9 @@ const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
+// if id is given set as `for` property on o-field wrapper
+if (props.id) parentField?.value?.setInputId(props.id);
+
 const vmodel = defineModel<T | T[]>({ default: undefined });
 
 const placeholderVisible = computed(() => !props.multiple && !vmodel.value);
