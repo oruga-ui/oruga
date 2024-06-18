@@ -29,12 +29,12 @@ describe("OInput", () => {
             props: { icon: "placeholder", iconClickable: true },
         });
 
-        const target = wrapper.find("input");
-        expect(target.exists()).toBeTruthy();
-        expect(target.classes()).toContain("o-input");
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        expect(input.classes()).toContain("o-input");
 
         const value = "some value";
-        await target.setValue(value);
+        await input.setValue(value);
         await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
@@ -45,10 +45,10 @@ describe("OInput", () => {
     test("render textarea element when type is textarea", () => {
         const wrapper = mount(OInput, { props: { type: "textarea" } });
 
-        const target = wrapper.find("textarea");
-        expect(target.exists()).toBeTruthy();
-        expect(target.classes()).toContain("o-input");
-        expect(target.attributes().style).toBeFalsy();
+        const input = wrapper.find("textarea");
+        expect(input.exists()).toBeTruthy();
+        expect(input.classes()).toContain("o-input");
+        expect(input.attributes().style).toBeFalsy();
     });
 
     test("add inline style and call resize for textarea when autosize is true", async () => {
