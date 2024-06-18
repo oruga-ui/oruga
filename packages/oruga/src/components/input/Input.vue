@@ -484,7 +484,7 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel.value });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
