@@ -50,6 +50,28 @@ describe("OSwitch tests", () => {
         expect(wrapper.classes("o-switch--danger")).toBeTruthy();
     });
 
+    test("render accordingly when has passiveVariant prop", () => {
+        const wrapper = mount(OSwitch, {
+            props: { passiveVariant: "danger" },
+        });
+
+        expect(wrapper.classes("o-switch--danger-passive")).toBeTruthy();
+    });
+
+    test("render accordingly when has rounded prop", () => {
+        const wrapper = mount(OSwitch, {
+            props: { rounded: true },
+        });
+
+        const span1 = wrapper.find("span.o-switch__check");
+        expect(span1.exists()).toBeTruthy();
+        expect(span1.classes("o-switch--rounded")).not.toBeUndefined();
+
+        const span2 = wrapper.find("span.o-switch__check-switch");
+        expect(span2.exists()).toBeTruthy();
+        expect(span2.classes("o-switch--rounded")).not.toBeUndefined();
+    });
+
     test("render accordingly when is disabled", () => {
         const wrapper = mount(OSwitch, {
             props: { disabled: true },
