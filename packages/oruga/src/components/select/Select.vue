@@ -237,7 +237,9 @@ const vmodel = defineModel<T | T[]>({
     default: null,
 });
 
-const placeholderVisible = computed(() => !props.multiple && !vmodel.value);
+const placeholderVisible = computed(
+    () => !props.multiple && !isDefined(vmodel.value),
+);
 
 onMounted(() => {
     /**
