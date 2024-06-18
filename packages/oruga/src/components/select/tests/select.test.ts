@@ -1,5 +1,6 @@
-import { describe, test, expect, afterEach } from "vitest";
+import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import type { OptionsItem } from "../types";
 
@@ -114,6 +115,7 @@ describe("OSelect tests", () => {
                 multiple: true,
                 autocomplete: "on",
                 nativeSize: 3,
+                required: true,
                 modelValue: [],
             },
         });
@@ -123,6 +125,7 @@ describe("OSelect tests", () => {
         expect(select.attributes("multiple")).not.toBeUndefined();
         expect(select.attributes("autocomplete")).toBe("on");
         expect(select.attributes("size")).toBe("3");
+        expect(select.attributes("required")).not.toBeUndefined();
     });
 
     test("render accordingly when has size prop", () => {
@@ -186,10 +189,24 @@ describe("OSelect tests", () => {
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits[0]).toContain(options[1].value);
+        expect(wrapper.vm.value).toEqual(options[1].value);
 
         await select.setValue(options[2].value);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
         expect(emits[1]).toContain(options[2].value);
+        expect(wrapper.vm.value).toEqual(options[2].value);
+    });
+
+    test("react accordingly when method focus() is called", async () => {
+        const wrapper = mount(OSelect);
+
+        const select = wrapper.find("select");
+        select.element.focus = vi.fn();
+
+        wrapper.vm.focus();
+        await nextTick(() => {
+            expect(select.element.focus).toHaveBeenCalled();
+        });
     });
 });
