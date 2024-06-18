@@ -1,5 +1,6 @@
 import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 import { shallowMount, mount, enableAutoUnmount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import OInput from "@/components/input/Input.vue";
 
@@ -38,6 +39,7 @@ describe("OInput", () => {
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+        expect(wrapper.vm.value).toEqual(value);
     });
 
     test("render textarea element when type is textarea", () => {
@@ -196,5 +198,17 @@ describe("OInput", () => {
         const emitted = wrapper.emitted("update:modelValue");
 
         expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
+    });
+
+    test("react accordingly when method focus() is called", async () => {
+        const wrapper = mount(OInput);
+
+        const input = wrapper.find("input");
+        input.element.focus = vi.fn();
+
+        wrapper.vm.focus();
+        await nextTick(() => {
+            expect(input.element.focus).toHaveBeenCalled();
+        });
     });
 });
