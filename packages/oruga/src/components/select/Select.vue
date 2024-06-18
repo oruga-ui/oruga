@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends String | Number | Boolean | Object">
 import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -59,6 +59,8 @@ const props = defineProps({
     multiple: { type: Boolean, default: false },
     /** Disable the input - same as native disabled */
     disabled: { type: Boolean, default: false },
+    /** Same as native required */
+    required: { type: Boolean, default: false },
     /** Makes input full width when inside a grouped or addon field */
     expanded: { type: Boolean, default: false },
     /** Makes the element rounded */
@@ -355,7 +357,7 @@ const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel.value });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
@@ -380,6 +382,7 @@ defineExpose({ focus: setFocus, value: vmodel.value });
             :multiple="multiple"
             :size="nativeSize"
             :disabled="disabled"
+            :required="required"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid">
