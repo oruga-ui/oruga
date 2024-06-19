@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | object">
 import { computed, ref, watch, toValue, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -30,8 +30,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number], default: 0 },
+    /**
+     * @model
+     * @type string|number|object
+     */
+    modelValue: {
+        type: [String, Number, Object] as PropType<T>,
+        default: 0,
+    },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -168,19 +174,19 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on tab change event
      * @param value {string | number} new tab value
      * @param value {string | number} old tab value
      */
-    (e: "change", newValue: string | number, oldValue: string | number): void;
+    (e: "change", newValue: T, oldValue: T): void;
 }>();
 
 const rootRef = ref();
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<TabsComponent>(() => ({
+const provideData = computed<TabsComponent<T>>(() => ({
     activeValue: vmodel.value,
     type: props.type,
     vertical: props.vertical,
@@ -203,13 +209,13 @@ const items = computed<TabItem[]>(() =>
     })),
 );
 
-const vmodel = defineModel<string | number>();
+const vmodel = defineModel<T>({ default: undefined });
 
 /**  When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (vmodel.value !== value) performAction(value);
+        if (vmodel.value !== value) performAction(value as T);
     },
 );
 
@@ -232,7 +238,7 @@ const isTransitioning = computed(() =>
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: TabItem): void {
-    if (vmodel.value !== item.value) performAction(item.value);
+    if (vmodel.value !== item.value) performAction(item.value as T);
 }
 
 /** Go to the next item or wrap around */
@@ -281,7 +287,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
 }
 
 /** Activate next child and deactivate prev child */
-function performAction(newId: number | string): void {
+function performAction(newId: T): void {
     const oldId = vmodel.value;
     const oldItem = activeItem.value;
     const newItem =
@@ -398,7 +404,7 @@ function itemHeaderClasses(
             <div
                 v-for="childItem in items"
                 v-show="childItem.visible"
-                :key="childItem.value"
+                :key="childItem.identifier"
                 :class="itemWrapperClasses"
                 role="tab"
                 :aria-controls="`${childItem.value}-content`"
