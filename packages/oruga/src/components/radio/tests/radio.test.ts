@@ -96,7 +96,6 @@ describe("ORadio tests", () => {
         let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits[0]).toContainEqual(value1);
-        await nextTick();
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
@@ -144,7 +143,6 @@ describe("ORadio tests", () => {
         let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits[0]).toContainEqual(value1);
-        await nextTick();
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
@@ -192,7 +190,6 @@ describe("ORadio tests", () => {
         let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits[0]).toContainEqual(value1);
-        await nextTick();
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 

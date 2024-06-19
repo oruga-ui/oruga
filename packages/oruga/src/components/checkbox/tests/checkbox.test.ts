@@ -71,7 +71,6 @@ describe("OCheckbox tests", () => {
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits[0]).toContainEqual(true);
-        await nextTick();
         expect(wrapper.vm.value).toEqual(true);
 
         await input.setValue(false);
