@@ -1,5 +1,6 @@
 import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 import { shallowMount, mount, enableAutoUnmount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import OInput from "@/components/input/Input.vue";
 
@@ -28,25 +29,26 @@ describe("OInput", () => {
             props: { icon: "placeholder", iconClickable: true },
         });
 
-        const target = wrapper.find("input");
-        expect(target.exists()).toBeTruthy();
-        expect(target.classes()).toContain("o-input");
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        expect(input.classes()).toContain("o-input");
 
         const value = "some value";
-        await target.setValue(value);
+        await input.setValue(value);
         await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+        expect(wrapper.vm.value).toEqual(value);
     });
 
     test("render textarea element when type is textarea", () => {
         const wrapper = mount(OInput, { props: { type: "textarea" } });
 
-        const target = wrapper.find("textarea");
-        expect(target.exists()).toBeTruthy();
-        expect(target.classes()).toContain("o-input");
-        expect(target.attributes().style).toBeFalsy();
+        const input = wrapper.find("textarea");
+        expect(input.exists()).toBeTruthy();
+        expect(input.classes()).toContain("o-input");
+        expect(input.attributes().style).toBeFalsy();
     });
 
     test("add inline style and call resize for textarea when autosize is true", async () => {
@@ -196,5 +198,17 @@ describe("OInput", () => {
         const emitted = wrapper.emitted("update:modelValue");
 
         expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
+    });
+
+    test("react accordingly when method focus() is called", async () => {
+        const wrapper = mount(OInput);
+
+        const input = wrapper.find("input");
+        input.element.focus = vi.fn();
+
+        wrapper.vm.focus();
+        await nextTick(() => {
+            expect(input.element.focus).toHaveBeenCalled();
+        });
     });
 });

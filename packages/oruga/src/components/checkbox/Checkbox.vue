@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends String | Number | Boolean">
+<script setup lang="ts" generic="T extends String | Number | Boolean | Object">
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -22,11 +22,11 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * @type string|number|boolean|array
+     * @type string|number|boolean|object|array
      * @model
      * */
     modelValue: {
-        type: [String, Number, Boolean, Array] as PropType<T | T[]>,
+        type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
         default: undefined,
     },
     /**
@@ -51,10 +51,10 @@ const props = defineProps({
     indeterminate: { type: Boolean, default: false },
     /**
      * Same as native value
-     * @type string|number|boolean
+     * @type string|number|boolean|object
      */
     nativeValue: {
-        type: [String, Number, Boolean] as PropType<T>,
+        type: [String, Number, Boolean, Object] as PropType<T>,
         default: undefined,
     },
     /** Same as native disabled */
@@ -65,18 +65,18 @@ const props = defineProps({
     name: { type: String, default: undefined },
     /**
      * Overrides the returned value when it's checked
-     * @type string|number|boolean
+     * @type string|number|boolean|object
      */
     trueValue: {
-        type: [String, Number, Boolean] as PropType<T>,
+        type: [String, Number, Boolean, Object] as PropType<T>,
         default: true,
     },
     /**
      * Overrides the returned value when it's not checked
-     * @type string|number|boolean
+     * @type string|number|boolean|object
      */
     falseValue: {
-        type: [String, Number, Boolean] as PropType<T>,
+        type: [String, Number, Boolean, Object] as PropType<T>,
         default: false,
     },
     /** Same as native autocomplete options to use in HTML5 validation */
@@ -140,12 +140,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string, number, boolean, array} updated modelValue prop
+     * @param value {string, number, boolean, object, array} updated modelValue prop
      */
     (e: "update:modelValue", value: T | T[]): void;
     /**
      * on input change event
-     * @param value {string, number, boolean, array} input value
+     * @param value {string, number, boolean, object, array} input value
      * @param event {Event} native event
      */
     (e: "input", value: T | T[], event: Event): void;
@@ -233,7 +233,7 @@ const labelClasses = defineClasses(["labelClass", "o-chk__label"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel.value });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
