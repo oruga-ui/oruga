@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | object">
 import { computed, toValue, nextTick, ref, watch, type PropType } from "vue";
 
 import OButton from "../button/Button.vue";
@@ -26,8 +26,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number], default: undefined },
+    /**
+     * @model
+     * @type string|number|object
+     */
+    modelValue: {
+        type: [String, Number, Object] as PropType<T>,
+        default: undefined,
+    },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -224,15 +230,15 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string | number | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on step change event
-     * @param value {string | number} new step value
-     * @param value {string | number} old step value
+     * @param value {string | number | object} new step value
+     * @param value {string | number | object} old step value
      */
-    (e: "change", newValue: string | number, oldValue: string | number): void;
+    (e: "change", newValue: T, oldValue: T): void;
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -240,7 +246,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const rootRef = ref();
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<StepsComponent>(() => ({
+const provideData = computed<StepsComponent<T>>(() => ({
     activeValue: vmodel.value,
     vertical: props.vertical,
     animated: props.animated,
@@ -262,13 +268,13 @@ const items = computed<StepItem[]>(() =>
     })),
 );
 
-const vmodel = defineModel<string | number>();
+const vmodel = defineModel<T>({ default: undefined });
 
 /** When v-model is changed set the new active step. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (vmodel.value !== value) performAction(value);
+        if (vmodel.value !== value) performAction(value as T);
     },
 );
 
@@ -337,11 +343,11 @@ function next(): void {
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem): void {
-    if (vmodel.value !== item.value) performAction(item.value);
+    if (vmodel.value !== item.value) performAction(item.value as T);
 }
 
 /** Activate next child and deactivate prev child */
-function performAction(newId: number | string): void {
+function performAction(newId: T): void {
     const oldId = activeItem.value.value;
     const oldItem = activeItem.value;
     const newItem =
@@ -354,7 +360,7 @@ function performAction(newId: number | string): void {
 
     nextTick(() => {
         vmodel.value = newId;
-        emits("change", newId, oldId);
+        emits("change", newId, oldId as T);
     });
 }
 
@@ -482,7 +488,7 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
             <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
-                :key="childItem.value"
+                :key="childItem.identifier"
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "
