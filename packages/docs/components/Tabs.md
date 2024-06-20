@@ -105,9 +105,10 @@ sidebarDepth: 2
 
 ### Slots
 
-| Name    | Description      | Bindings |
-| ------- | ---------------- | -------- |
-| default | Tab item content |          |
+| Name    | Description           | Bindings |
+| ------- | --------------------- | -------- |
+| default | Tab item content      |          |
+| header  | Override header label |          |
 
 </div>
 
