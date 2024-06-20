@@ -1,15 +1,58 @@
-// import { OBreadcrumb } from "../Breadcrumb.vue";
+import { describe, test, expect, vi, afterEach } from "vitest";
+import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
+import { setTimeout } from "timers/promises";
+
+import { OBreadcrumb } from "@/components/breadcrumb/Breadcrumb.vue";
 // import { OBreadcrumbItem } from "../Breadcrumbitem.vue";
 
-// describe("<Breadcrumb>", () => {
-//     it("works", () => {
-//         cy.mount(OBreadcrumb as any, {
-//             slots: {
-//                 default: {
-//                     render: () => "Hello Cypress!",
-//                 },
-//             },
-//         });
-//         cy.get("button").contains("Hello Cypress!").click();
-//     });
-// });
+describe("<Breadcrumb>", () => {
+    enableAutoUnmount(afterEach);
+
+    it("is called", () => {
+        const wrapper = mount(OBreadcrumb);
+        expect(!!wrapper.vm).toBeTruthy();
+        expect(wrapper.exists()).toBeTruthy();
+        expect(wrapper.attributes("data-oruga")).toBe("breadcrumb");
+    });
+
+    it("rendeer correctly", () => {
+        const wrapper = mount(OBreadcrumb);
+        expect(wrapper.html()).toMatchSnapshot();
+        expect(wrapper.classes("o-breadcrumb")).toBeTruthy();
+    });
+    it("render items", () => {
+        // const triggerHTML = "<breadcrumb-item tag="a" href='/'>Home</breadcrumb-item>";
+        const triggerHTML =
+            '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>";
+
+        const wrapper = mount(OBreadcrumb, {
+            slot: triggerHTML
+        });
+        const trigger = wrapper.find(".breadcrumb-item")
+        // expect(trigger.html()).toBe(triggerHTML)
+        expect(trigger.exists()).toBeTruthy()
+        expect(trigger.text()).contain("Home")
+    });
+    it("is centered", () => {
+        const triggerHTML =
+        '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>";
+
+        const wrapper = mount(OBreadcrumb, {
+            slot: triggerHTML,
+            props: { align : "centered"}
+        });
+    });
+    // it("is large ", () => {
+       
+    // });
+    // it("is active", () => {
+       
+    // });
+    // it("has icon", () => {
+       
+    // });
+    // it("has href link", () => {
+       
+    // });
+});

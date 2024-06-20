@@ -30,7 +30,7 @@ const props = defineProps({
     },
     /**
      * Position of the breadcrumb
-     * @values left, center, right
+     * @values left, centered, right
      */
     align: {
         type: String,
