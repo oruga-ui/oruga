@@ -203,19 +203,19 @@ const headerTextClasses = defineClasses([
                     @slot Tab item content
                 -->
                 <slot />
-            </div>
 
-            <!--
-                Do not render these slots here.
-                These are only for documentation purposes.
-                Slots are defined in tabs component.
-            -->
-            <template v-if="false">
                 <!--
-                    @slot Override header label
+                    Do not render these slots here.
+                    These are only for documentation purposes.
+                    Slots are defined in tabs component.
                 -->
-                <slot name="header" />
-            </template>
+                <template v-if="false">
+                    <!--
+                        @slot Override header label
+                    -->
+                    <slot name="header" />
+                </template>
+            </div>
         </template>
     </Transition>
 </template>
