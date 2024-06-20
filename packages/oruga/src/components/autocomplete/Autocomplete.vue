@@ -10,7 +10,6 @@ import {
     useSlots,
     type PropType,
     type Component,
-    type ComponentInstance,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -28,6 +27,7 @@ import {
 } from "@/composables";
 
 import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 enum SpecialOption {
     Header,
@@ -358,8 +358,8 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<ComponentInstance<typeof OInput<false, string>>>();
-const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
+const inputRef = ref<ComponentExposed<typeof OInput>>();
+const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const itemRefs = ref([]);
@@ -633,7 +633,7 @@ function navigateItem(direction: 1 | -1): void {
     hoveredId.value = element.id;
 
     // define scroll position
-    const dropdownMenu = unrefElement((dropdownRef.value as any).$content);
+    const dropdownMenu = unrefElement(dropdownRef.value.$content);
     const visMin = dropdownMenu.scrollTop;
     const visMax =
         dropdownMenu.scrollTop +
@@ -729,14 +729,14 @@ onMounted(() => {
         useEventListener(
             "scroll",
             checkDropdownScroll,
-            (dropdownRef.value as any).$content,
+            dropdownRef.value.$content,
             { immediate: true },
         );
 });
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
-    const dropdown = unrefElement((dropdownRef.value as any).$content);
+    const dropdown = unrefElement(dropdownRef.value.$content);
     if (!dropdown) return;
     const trashhold = dropdown.offsetTop;
     const headerHeight = headerRef.value?.clientHeight || 0;
