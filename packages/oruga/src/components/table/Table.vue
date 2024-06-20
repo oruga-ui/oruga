@@ -198,17 +198,21 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("table.backendSorting", false),
     },
-    /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
+    /**
+     * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc']
+     * @type string | [string, 'asc' | 'desc']
+     */
     defaultSort: {
-        type: [String, Array] as PropType<string | [string, "asc" | "desc"]>,
+        type: [String, Array] as PropType<string | [string, SortDirection]>,
         default: () => getOption("table.defaultSort"),
     },
     /**
      * Sets the default sort column direction on the first click
+     * @type 'asc'|'desc'
      * @values asc, desc
      */
     defaultSortDirection: {
-        type: String as PropType<"asc" | "desc">,
+        type: String as PropType<SortDirection>,
         validator: (value: string) => ["asc", "desc"].indexOf(value) >= 0,
         default: () => getOption("table.defaultSortDirection", "asc"),
     },
@@ -604,7 +608,7 @@ const emits = defineEmits<{
     (
         e: "sort",
         column: TableColumn<T>,
-        direction: "asc" | "desc",
+        direction: SortDirection,
         event: Event,
     ): void;
     /**
@@ -1138,7 +1142,7 @@ function sort(
 
 function sortByField(
     field: string,
-    direction: SortDirection = SortDirection.ASC,
+    direction: "asc" | "desc" = SortDirection.ASC,
 ): void {
     const sortColumn = tableColumns.value.find(
         (column) => column.field === field,

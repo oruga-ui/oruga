@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends String | Number | Boolean | Object">
+<script setup lang="ts" generic="T extends string | number | boolean | object">
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -22,8 +22,8 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * @type string|number|boolean|object
      * @model
+     * @type string|number|boolean|object
      */
     modelValue: {
         type: [String, Number, Boolean, Object] as PropType<T>,
@@ -170,12 +170,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string, number, boolean, object} updated modelValue prop
+     * @param value {string | number | boolean | object} updated modelValue prop
      */
     (e: "update:modelValue", value: T): void;
     /**
      * on input change event
-     * @param value {string, number, boolean, object} input value
+     * @param value {string | number | boolean | object} input value
      * @param event {Event} native event
      */
     (e: "input", value: T, event: Event): void;
@@ -196,7 +196,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref();
+const inputRef = ref<HTMLInputElement>();
 
 // use form input functionalities
 const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(

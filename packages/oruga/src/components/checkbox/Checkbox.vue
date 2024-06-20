@@ -22,8 +22,8 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * @type string|number|boolean|object|array
      * @model
+     * @type string|number|boolean|object|array
      * */
     modelValue: {
         type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
@@ -140,12 +140,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string, number, boolean, object, array} updated modelValue prop
+     * @param value {string | number | boolean | object | array} updated modelValue prop
      */
     (e: "update:modelValue", value: T | T[]): void;
     /**
      * on input change event
-     * @param value {string, number, boolean, object, array} input value
+     * @param value {string | number | boolean | object | array} input value
      * @param event {Event} native event
      */
     (e: "input", value: T | T[], event: Event): void;
@@ -171,7 +171,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref();
+const inputRef = ref<HTMLInputElement>();
 
 // use form input functionalities
 const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
