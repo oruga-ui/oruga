@@ -50,11 +50,6 @@ import type {
 } from "./types";
 import type { ComponentClass, ClassBind, OrugaOptions } from "@/types";
 
-enum SortDirection {
-    ASC = "asc",
-    DESC = "desc",
-}
-
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
  * @displayName Table
@@ -67,6 +62,8 @@ defineOptions({
     configField: "table",
     inheritAttrs: false,
 });
+
+type SortDirection = "asc" | "desc";
 
 const props = defineProps({
     /** Override existing theme classes completely */
@@ -1124,31 +1121,23 @@ function sort(
     if (updateDirection)
         isAsc.value = isColumnSorted(column)
             ? !isAsc.value
-            : props.defaultSortDirection.toLowerCase() === SortDirection.ASC;
+            : props.defaultSortDirection.toLowerCase() === "asc";
 
     // if not first time sort
     if (currentSortColumn.value)
-        emits(
-            "sort",
-            column,
-            isAsc.value ? SortDirection.ASC : SortDirection.DESC,
-            event,
-        );
+        emits("sort", column, isAsc.value ? "asc" : "desc", event);
 
     currentSortColumn.value = column;
     // recompute rows with updated currentSortColumn
     processTableData();
 }
 
-function sortByField(
-    field: string,
-    direction: "asc" | "desc" = SortDirection.ASC,
-): void {
+function sortByField(field: string, direction: SortDirection = "asc"): void {
     const sortColumn = tableColumns.value.find(
         (column) => column.field === field,
     );
     if (sortColumn) {
-        isAsc.value = direction.toLowerCase() === SortDirection.ASC;
+        isAsc.value = direction.toLowerCase() === "asc";
         sort(sortColumn);
     }
 }
