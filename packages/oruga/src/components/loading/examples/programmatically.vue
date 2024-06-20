@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-// @ts-expect-error Examples are loaded differently.
+// @ts-ignore Examples are loaded differently.
 import { useOruga } from "../../../../dist/oruga";
 
 const oruga = useOruga();
