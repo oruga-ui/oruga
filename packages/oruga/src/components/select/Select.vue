@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number | boolean | object">
+<script setup lang="ts" generic="T">
 import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -27,10 +27,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /**
-     * @model
-     * @type string|number|boolean|object|array
-     */
+    /** @model */
     modelValue: {
         type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
         default: undefined,
@@ -194,7 +191,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object | array} updated modelValue prop
+     * @param value {T | T[]} updated modelValue prop
      */
     (e: "update:modelValue", value: T | T[]): void;
     /**
