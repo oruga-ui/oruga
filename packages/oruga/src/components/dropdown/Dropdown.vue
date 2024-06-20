@@ -43,14 +43,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /**
-     * @model
-     * @type string|number|object|array
-     */
-    modelValue: {
-        type: [String, Number, Object, Array] as PropType<T | T[]>,
-        default: undefined,
-    },
+    // /**
+    //  * @model
+    //  * @type string|number|object|array
+    //  */
+    // modelValue: {
+    //     type: [String, Number, Object, Array] as PropType<T | T[]>,
+    //     default: undefined,
+    // },
     /** Allows multiple selections */
     multiple: { type: Boolean, default: false },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */

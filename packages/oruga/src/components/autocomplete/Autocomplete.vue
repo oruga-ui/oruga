@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Option extends String | Object">
+<script setup lang="ts" generic="Option extends string | object">
 import {
     computed,
     nextTick,
@@ -404,7 +404,9 @@ const filteredOptions = computed<Option[]>(() =>
 const groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
     if (props.groupField) {
         if (props.groupOptions)
-            return filteredOptions.value.map((item: object) => {
+            return filteredOptions.value.map((item: Option) => {
+                if (typeof item === "string")
+                    return { group: item, items: [item] };
                 const group = getValueByPath(item, props.groupField);
                 const items = getValueByPath(item, props.groupOptions);
                 return { group, items };
@@ -631,7 +633,7 @@ function navigateItem(direction: 1 | -1): void {
     hoveredId.value = element.id;
 
     // define scroll position
-    const dropdownMenu = unrefElement(dropdownRef.value.$content);
+    const dropdownMenu = unrefElement((dropdownRef.value as any).$content);
     const visMin = dropdownMenu.scrollTop;
     const visMax =
         dropdownMenu.scrollTop +
@@ -727,14 +729,14 @@ onMounted(() => {
         useEventListener(
             "scroll",
             checkDropdownScroll,
-            dropdownRef.value.$content,
+            (dropdownRef.value as any).$content,
             { immediate: true },
         );
 });
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
-    const dropdown = unrefElement(dropdownRef.value.$content);
+    const dropdown = unrefElement((dropdownRef.value as any).$content);
     if (!dropdown) return;
     const trashhold = dropdown.offsetTop;
     const headerHeight = headerRef.value?.clientHeight || 0;
