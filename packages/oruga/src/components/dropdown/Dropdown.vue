@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends string | number | object">
 import {
     computed,
     nextTick,
@@ -43,9 +43,12 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
+    /**
+     * @model
+     * @type string|number|object|array
+     */
     modelValue: {
-        type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
+        type: [String, Number, Object, Array] as PropType<T | T[]>,
         default: undefined,
     },
     /** Allows multiple selections */
@@ -250,7 +253,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T | T[]} updated modelValue prop
+     * @param value {string | number | object | array} updated modelValue prop
      */
     (e: "update:modelValue", value: T | T[]): void;
     /**
@@ -260,7 +263,7 @@ const emits = defineEmits<{
     (e: "update:active", value: boolean): void;
     /**
      * on change event - fired after update:modelValue
-     * @param value {T | T[]} selected value
+     * @param value {string | number | object | array} selected value
      */
     (e: "change", value: T | T[]): void;
     /**

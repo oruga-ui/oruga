@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends string | number | object">
 import { computed, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -18,9 +18,12 @@ defineOptions({
 });
 
 const props = defineProps({
-    /** The value that will be returned on events and v-model - default is a uuid */
+    /**
+     * Item value (it will be used as v-model of wrapper component) - default is a uuid
+     * @type string|number|object
+     */
     value: {
-        type: [String, Number, Boolean, Object, Array] as PropType<T>,
+        type: [String, Number, Object] as PropType<T>,
         default: () => uuid(),
     },
     /** Item label, unnecessary when default slot is used */
@@ -71,7 +74,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * onclick event
-     * @param value {T} value prop data
+     * @param value {string | number | object} value prop data
      * @param event {event} Native Event
      */
     (e: "click", value: T, event: Event): void;
