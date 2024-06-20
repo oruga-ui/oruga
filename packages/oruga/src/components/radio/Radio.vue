@@ -23,7 +23,7 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /**
      * @model
-     * @type string|number|boolean|object|array
+     * @type string|number|boolean|object
      */
     modelValue: {
         type: [String, Number, Boolean, Object] as PropType<T>,
