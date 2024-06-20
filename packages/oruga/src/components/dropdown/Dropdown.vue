@@ -564,7 +564,7 @@ const menuClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ $trigger: triggerRef, $content: contentRef });
+defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
 </script>
 
 <template>
