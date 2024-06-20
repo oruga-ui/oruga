@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends String | Number | Boolean | Object">
+<script setup lang="ts" generic="T">
 import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -191,7 +191,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object | Array<any>} updated modelValue prop
+     * @param value {T | T[]} updated modelValue prop
      */
     (e: "update:modelValue", value: T | T[]): void;
     /**

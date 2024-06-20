@@ -64,7 +64,7 @@ sidebarDepth: 2
 | override          | Override existing theme classes completely        | boolean                   | -                                                 |                                                                                                                                                                |
 | pauseHover        | Pause autoplay on hover                           | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
 | repeat            | Repeat from the beginning after reaching the end  | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
-| v-model           |                                                   | number                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                        |
+| v-model           | The index of the current active element           | number                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                        |
 
 ### Events
 

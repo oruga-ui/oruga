@@ -56,6 +56,7 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /**
      * The selected option, use v-model to make it two-way binding
+     * @type string|object
      * @model
      */
     modelValue: {
@@ -67,7 +68,10 @@ const props = defineProps({
         type: String,
         default: "",
     },
-    /** Options / suggestions */
+    /**
+     * Options / suggestions
+     * @type string[]|object[]
+     * */
     options: { type: Array as PropType<Option[]>, default: () => [] },
     /** Property of the object (if `options` are an array of objects) to use as display text, and to keep track of selected option */
     field: { type: String, default: undefined },
@@ -793,7 +797,7 @@ function itemOptionClasses(option): ClassBind[] {
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel.value });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>

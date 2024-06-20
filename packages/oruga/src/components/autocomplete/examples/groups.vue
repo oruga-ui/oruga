@@ -22,7 +22,7 @@ function filter(data: typeof options, value: string): typeof options {
     }, []);
 }
 
-const selected = ref("Apple");
+const selected = ref();
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const selected = ref("Apple");
         <o-field label="Find a food">
             <o-autocomplete
                 v-model="selected"
-                :input="selected"
+                :input="'Apple'"
                 :options="options"
                 group-field="type"
                 group-options="items"
