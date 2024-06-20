@@ -180,8 +180,26 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("datepicker.trapFocus", true),
     },
-    /** Position of the dropdown relative to the input */
-    position: { type: String, default: undefined },
+    /**
+     * Position of the dropdown relative to the input
+     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     */
+    position: {
+        type: String,
+        default: undefined,
+        validator: (value: string) =>
+            [
+                "auto",
+                "top",
+                "bottom",
+                "left",
+                "right",
+                "top-right",
+                "top-left",
+                "bottom-left",
+                "bottom-right",
+            ].indexOf(value) > -1,
+    },
     /** Enable dropdown mobile modal */
     mobileModal: {
         type: Boolean,
@@ -926,7 +944,7 @@ const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel.value });
+defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 </script>
 
 <template>

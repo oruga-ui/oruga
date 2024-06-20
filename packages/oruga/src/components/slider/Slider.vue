@@ -27,7 +27,7 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: {
-        type: [Number, Array] as PropType<number | number[]>,
+        type: [Number, Array] as PropType<number | [number, number]>,
         default: 0,
     },
     /** Minimum value */
@@ -181,26 +181,26 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: number | number[]): void;
+    (e: "update:modelValue", value: number | [number, number]): void;
     /**
      * on value change event
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "change", value: number | number[]): void;
+    (e: "change", value: number | [number, number]): void;
     /**
      * on dragging event
      * @param value {number | number[]} updated modelValue prop
      * */
-    (e: "dragging", value: number | number[]): void;
+    (e: "dragging", value: number | [number, number]): void;
     /** on drag start event */
     (e: "dragstart"): void;
     /** on drag end event */
     (e: "dragend"): void;
 }>();
 
-const vmodel = computed(() =>
-    isRange.value ? [minValue.value, maxValue.value] : valueStart.value || 0,
-);
+const sliderRef = ref();
+const thumbStartRef = ref();
+const thumbEndRef = ref();
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed<SliderComponent>(() => ({
@@ -211,10 +211,6 @@ const provideData = computed<SliderComponent>(() => ({
 /** Provide functionalities and data to child item components */
 useProviderParent(undefined, { data: provideData });
 
-const sliderRef = ref();
-const thumbStartRef = ref();
-const thumbEndRef = ref();
-
 const valueStart = ref<number>(null);
 const valueEnd = ref<number>(null);
 const dragging = ref(false);
@@ -223,49 +219,29 @@ const isRange = ref(false);
 const isThumbReversed = ref();
 const isTrackClickDisabled = ref();
 
-setValues(props.modelValue);
-
-watch([valueStart, valueEnd], () => onInternalValueUpdate());
-
-/** When min, max or v-model is changed set the new active step. */
-watch([() => props.min, () => props.max, () => props.modelValue], () =>
-    setValues(props.modelValue),
-);
-
-const tickValues = computed(() => {
-    if (!props.ticks || props.min > props.max || props.step === 0) return [];
-    const result = [];
-    for (let i = props.min + props.step; i < props.max; i = i + props.step) {
-        result.push(i);
-    }
-    return result;
-});
-
 const minValue = computed(() => Math.min(valueStart.value, valueEnd.value));
 
 const maxValue = computed(() => Math.max(valueStart.value, valueEnd.value));
 
-const barSize = computed(() =>
-    isRange.value
-        ? `${
-              (100 * (maxValue.value - minValue.value)) /
-              (props.max - props.min)
-          }%`
-        : `${
-              (100 * (valueStart.value - props.min)) / (props.max - props.min)
-          }%`,
+const vmodel = computed<number | [number, number]>(() =>
+    isRange.value ? [minValue.value, maxValue.value] : valueStart.value || 0,
 );
 
-const barStart = computed(() =>
-    isRange.value
-        ? `${(100 * (minValue.value - props.min)) / (props.max - props.min)}%`
-        : "0%",
-);
+/** update vmodel value on internal value change */
+watch([valueStart, valueEnd], () => {
+    if (isRange.value)
+        isThumbReversed.value = valueStart.value > valueEnd.value;
+    if (!props.lazy || !dragging.value)
+        emits("update:modelValue", vmodel.value); // update external vmodel
+    if (dragging.value) emits("dragging", vmodel.value);
+});
 
-const barStyle = computed(() => ({
-    width: barSize.value,
-    left: barStart.value,
-}));
+/** When min, max or v-model is changed set the new active step. */
+watch(
+    [() => props.min, () => props.max, () => props.modelValue],
+    () => setValues(props.modelValue),
+    { immediate: true }, // initialise valueStart and valueEnd
+);
 
 function setValues(newValue: number | number[]): void {
     if (props.min > props.max) return;
@@ -291,22 +267,46 @@ function setValues(newValue: number | number[]): void {
     }
 }
 
-function onInternalValueUpdate(): void {
-    if (isRange.value)
-        isThumbReversed.value = valueStart.value > valueEnd.value;
-    if (!props.lazy || !dragging.value)
-        emits("update:modelValue", vmodel.value);
-    if (dragging.value) emits("dragging", vmodel.value);
-}
+const tickValues = computed(() => {
+    if (!props.ticks || props.min > props.max || props.step === 0) return [];
+    const result = [];
+    for (let i = props.min + props.step; i < props.max; i = i + props.step) {
+        result.push(i);
+    }
+    return result;
+});
 
-function sliderSize(): number {
+const barSize = computed(() =>
+    isRange.value
+        ? `${
+              (100 * (maxValue.value - minValue.value)) /
+              (props.max - props.min)
+          }%`
+        : `${
+              (100 * (valueStart.value - props.min)) / (props.max - props.min)
+          }%`,
+);
+
+const barStart = computed(() =>
+    isRange.value
+        ? `${(100 * (minValue.value - props.min)) / (props.max - props.min)}%`
+        : "0%",
+);
+
+const barStyle = computed(() => ({
+    width: barSize.value,
+    left: barStart.value,
+}));
+
+function getSliderSize(): number {
     return sliderRef.value.getBoundingClientRect().width;
 }
 
 function onSliderClick(event: MouseEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
     const sliderOffsetLeft = sliderRef.value.getBoundingClientRect().left;
-    const percent = ((event.clientX - sliderOffsetLeft) / sliderSize()) * 100;
+    const percent =
+        ((event.clientX - sliderOffsetLeft) / getSliderSize()) * 100;
     const targetValue = props.min + (percent * (props.max - props.min)) / 100;
     const diffFirst = Math.abs(targetValue - valueStart.value);
     if (!isRange.value) {
@@ -393,7 +393,7 @@ const thumbWrapperClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ value: vmodel.value });
+defineExpose({ value: vmodel });
 </script>
 
 <template>
@@ -419,7 +419,7 @@ defineExpose({ value: vmodel.value });
                 ref="thumbStartRef"
                 v-model="valueStart"
                 :slider-props="props"
-                :slider-size="sliderSize"
+                :slider-size="getSliderSize"
                 :thumb-classes="thumbClasses"
                 :thumb-wrapper-classes="thumbWrapperClasses"
                 @change="emits('change', vmodel)"
@@ -431,7 +431,7 @@ defineExpose({ value: vmodel.value });
                 ref="thumbEndRef"
                 v-model="valueEnd"
                 :slider-props="props"
-                :slider-size="sliderSize"
+                :slider-size="getSliderSize"
                 :thumb-classes="thumbClasses"
                 :thumb-wrapper-classes="thumbWrapperClasses"
                 @change="emits('change', vmodel)"

@@ -9,7 +9,7 @@ const locale = ref(); // Browser locale
 <template>
     <section>
         <o-field grouped>
-            <o-field>
+            <o-field label="Locale">
                 <o-select v-model="locale" placeholder="Locale">
                     <option :value="undefined"></option>
                     <option value="de-DE">de-DE</option>
@@ -26,8 +26,8 @@ const locale = ref(); // Browser locale
                     <option value="ru-RU">ru-RU</option>
                 </o-select>
             </o-field>
-            <o-field>
-                <o-switch v-model="showWeekNumber" label="Show week number" />
+            <o-field label="Show week number">
+                <o-switch v-model="showWeekNumber" />
             </o-field>
         </o-field>
 

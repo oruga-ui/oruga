@@ -102,7 +102,6 @@ export function useInputHandler(
     const element = computed(() => {
         const el = maybeElement.value;
         if (!el) console.warn("useInputHandler: inputRef contains no element");
-
         return el;
     });
 
