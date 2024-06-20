@@ -9,6 +9,7 @@ import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
+import { type OptionsItem } from "../select";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -340,7 +341,7 @@ function pad(value: number): string {
     return (value < 10 ? "0" : "") + value;
 }
 
-const hours = computed(() => {
+const hours = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementHours || props.incrementHours < 1)
         throw new Error("Hour increment cannot be null or less than 1.");
     const hours = [];
@@ -364,12 +365,13 @@ const hours = computed(() => {
         hours.push({
             label: formatNumber(label, false),
             value: value,
+            attrs: { disabled: isHourDisabled(value) },
         });
     }
     return hours;
 });
 
-const minutes = computed(() => {
+const minutes = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementMinutes || props.incrementMinutes < 1)
         throw new Error("Minute increment cannot be null or less than 1.");
     const minutes = [];
@@ -377,12 +379,13 @@ const minutes = computed(() => {
         minutes.push({
             label: formatNumber(i, true),
             value: i,
+            attrs: { disabled: isMinuteDisabled(i) },
         });
     }
     return minutes;
 });
 
-const seconds = computed(() => {
+const seconds = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementSeconds || props.incrementSeconds < 1)
         throw new Error("Second increment cannot be null or less than 1.");
     const seconds = [];
@@ -390,6 +393,7 @@ const seconds = computed(() => {
         seconds.push({
             label: formatNumber(i, true),
             value: i,
+            attrs: { disabled: isSecondDisabled(i) },
         });
     }
     return seconds;
@@ -729,7 +733,7 @@ const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel.value });
+defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 </script>
 
 <template>
@@ -761,56 +765,42 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel.value });
             -->
             <slot name="trigger" />
         </template>
+
         <o-select
             v-bind="selectBind"
             v-model="hoursSelected"
+            :options="hours"
             override
             :disabled="disabled"
             placeholder="00"
-            @change="onHoursChange($event.target.value)">
-            <option
-                v-for="hour in hours"
-                :key="hour.value"
-                :value="hour.value"
-                :disabled="isHourDisabled(hour.value)">
-                {{ hour.label }}
-            </option>
-        </o-select>
+            @change="onHoursChange($event.target.value)" />
+
         <span :class="separatorClasses">{{ hourLiteral }}</span>
+
         <o-select
             v-bind="selectBind"
             v-model="minutesSelected"
+            :options="minutes"
             override
             :disabled="disabled"
             placeholder="00"
-            @change="onMinutesChange($event.target.value)">
-            <option
-                v-for="minute in minutes"
-                :key="minute.value"
-                :value="minute.value"
-                :disabled="isMinuteDisabled(minute.value)">
-                {{ minute.label }}
-            </option>
-        </o-select>
+            @change="onMinutesChange($event.target.value)" />
+
         <template v-if="enableSeconds">
             <span :class="separatorClasses">{{ minuteLiteral }}</span>
+
             <o-select
                 v-bind="selectBind"
                 v-model="secondsSelected"
+                :options="seconds"
                 override
                 :disabled="disabled"
                 placeholder="00"
-                @change="onSecondsChange($event.target.value)">
-                <option
-                    v-for="second in seconds"
-                    :key="second.value"
-                    :value="second.value"
-                    :disabled="isSecondDisabled(second.value)">
-                    {{ second.label }}
-                </option>
-            </o-select>
+                @change="onSecondsChange($event.target.value)" />
+
             <span :class="separatorClasses">{{ secondLiteral }}</span>
         </template>
+
         <o-select
             v-if="!isHourFormat24"
             v-bind="selectBind"

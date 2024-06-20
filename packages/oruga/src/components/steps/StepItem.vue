@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | object">
 import { computed, ref, useSlots, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -21,8 +21,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** Item value (it will be used as v-model of wrapper component) */
-    value: { type: [String, Number], default: () => uuid() },
+    /**
+     * Item value (it will be used as v-model of wrapper component)
+     * @type string|number|object
+     */
+    value: {
+        type: [String, Number, Object] as PropType<T>,
+        default: () => uuid(),
+    },
     /** Item label */
     label: { type: String, default: undefined },
     /** Step marker content (when there is no icon) */
@@ -108,7 +114,7 @@ const providedData = computed<StepItemComponent>(() => ({
 }));
 
 // Inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<StepsComponent>({
+const { parent, item } = useProviderChild<StepsComponent<T>>({
     data: providedData,
 });
 
@@ -183,8 +189,8 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
                 :role="ariaRole"
                 aria-roledescription="item">
                 <!-- 
-                @slot Step item content
-            -->
+                    @slot Step item content
+                -->
                 <slot />
             </div>
         </template>

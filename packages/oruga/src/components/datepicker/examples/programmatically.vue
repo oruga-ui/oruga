@@ -6,7 +6,7 @@ const active = ref(false);
 
 <template>
     <section>
-        <o-field expanded>
+        <o-field expanded addons>
             <o-datepicker
                 v-model:active="active"
                 expanded

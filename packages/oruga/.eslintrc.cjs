@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     "@typescript-eslint/no-explicit-any": ["warn"],
     "@typescript-eslint/ban-types": ["warn"],
+    "@typescript-eslint/ban-ts-comment": ["warn"],
     "@typescript-eslint/explicit-function-return-type": ["warn"],
     "vue/padding-line-between-blocks": ["error", "always"],
     "vue/multi-word-component-names": ["off"],

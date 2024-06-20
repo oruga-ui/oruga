@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | boolean | object">
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -21,8 +21,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number, Boolean], default: undefined },
+    /**
+     * @model
+     * @type string|number|boolean|object
+     */
+    modelValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: undefined,
+    },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -41,8 +47,14 @@ const props = defineProps({
     },
     /** Input label, unnecessary when default slot is used */
     label: { type: String, default: undefined },
-    /** Same as native value */
-    nativeValue: { type: [String, Number, Boolean], default: undefined },
+    /**
+     * Same as native value
+     * @type string|number|boolean|object
+     */
+    nativeValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: undefined,
+    },
     /** Same as native disabled */
     disabled: { type: Boolean, default: false },
     /** Same as native required */
@@ -105,15 +117,15 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string, number, boolean} updated modelValue prop
+     * @param value {string | number | boolean | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number | boolean): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on input change event
-     * @param value {string, number, boolean} input value
+     * @param value {string | number | boolean | object} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string | number | boolean, event: Event): void;
+    (e: "input", value: T, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -131,7 +143,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref();
+const inputRef = ref<HTMLInputElement>();
 
 // use form input functionalities
 const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
@@ -140,7 +152,7 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = defineModel<string | number | boolean>({ default: undefined });
+const vmodel = defineModel<T>({ default: undefined });
 
 const isChecked = computed(() => vmodel.value === props.nativeValue);
 
@@ -183,7 +195,7 @@ const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel.value });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>

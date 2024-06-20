@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Option extends String | Object">
+<script setup lang="ts" generic="Option extends string | object">
 import {
     computed,
     ref,
@@ -36,9 +36,15 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
+    /**
+     * @model
+     * @type string[]|object[]
+     */
     modelValue: { type: Array as PropType<Option[]>, default: () => [] },
-    /** Items data */
+    /**
+     * Items data
+     * @type string[]|object[]
+     */
     options: { type: Array as PropType<Option[]>, default: () => [] },
     /** Property of the object (if data is array of objects) to use as display text */
     field: { type: String, default: "value" },
@@ -239,12 +245,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {(string | object)[]} updated modelValue prop
+     * @param value {string[] | object[]} updated modelValue prop
      */
     (e: "update:modelValue", value: Option[]): void;
     /**
      * on input change event
-     * @param value {String} input value
+     * @param value {string} input value
      */
     (e: "input", value: string): void;
     /**
