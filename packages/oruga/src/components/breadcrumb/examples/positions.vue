@@ -2,7 +2,7 @@
     <section class="odocs-spaced">
         <!--  Position left -->
         <o-breadcrumb tag="div" align="left">
-            <o-breadcrumb-item tag="a" href="/" active="primary"
+            <o-breadcrumb-item tag="a" href="/" active="true" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
             <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"

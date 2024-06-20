@@ -42,12 +42,41 @@ describe("<Breadcrumb>", () => {
             slot: triggerHTML,
             props: { align : "centered"}
         });
+
+        expect(wrapper.classes("o-breadcrumb-item__centered")).toBeTruthy()
     });
     // it("is large ", () => {
-       
+    //     const triggerHTML =
+    //     '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>";
+
+    //     const wrapper = mount(OBreadcrumb, {
+    //         slot: triggerHTML,
+    //         props: { size : "large"}
+    //     });
+
+    //     expect(wrapper.classes("o-breadcrumb-item__large")).toBeTruthy()
     // });
     // it("is active", () => {
-       
+    //     const triggerHTML =
+    //     '<breadcrumb-item tag="a" active="true" active-variant"primary" href="/">Home</breadcrumb-item>";
+
+    //     const wrapper = mount(OBreadcrumb, {
+    //         slot: triggerHTML,
+    //     });
+
+    //     expect(wrapper.classes("o-breadcrumb-item__primary")).toBeTruthy()
+    //     expect(wrapper.classes("o-breadcrumb-item__primary")).toBeTruthy()
+    // });
+    // it("is disabled", () => {
+    //     const triggerHTML =
+    //     '<breadcrumb-item tag="a" disabled="true" href="/">Home</breadcrumb-item>";
+
+    //     const wrapper = mount(OBreadcrumb, {
+    //         slot: triggerHTML,
+    //         props: { size : "large"}
+    //     });
+
+    //     expect(wrapper.classes("o-breadcrumb-item__primary")).toBeTruthy()
     // });
     // it("has icon", () => {
        
