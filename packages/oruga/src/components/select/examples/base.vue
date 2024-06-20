@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// @ts-expect-error Examples are loaded differently.
+// @ts-ignore Examples are loaded differently.
 import type { OptionsItem } from "../../../../dist/oruga";
 
 const options: OptionsItem[] = [
