@@ -21,7 +21,7 @@ const props = defineProps({
     /** The value that will be returned on events and v-model - default is a uuid */
     value: {
         type: [String, Number, Boolean, Object, Array] as PropType<T>,
-        default: undefined,
+        default: () => uuid(),
     },
     /** Item label, unnecessary when default slot is used */
     label: { type: String, default: undefined },
@@ -71,13 +71,11 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * onclick event
-     * @param value {[String, Number, Boolean, Object, Array]} value prop data
+     * @param value {T} value prop data
      * @param event {event} Native Event
      */
     (e: "click", value: T, event: Event): void;
 }>();
-
-const itemValue = computed(() => (props.value || uuid()) as T);
 
 // Inject functionalities and data from the parent component
 const { parent } = useProviderChild<DropdownComponent<T>>();
@@ -90,16 +88,16 @@ const isActive = computed(() => {
     if (parent.value.selected === null) return false;
     if (parent.value.props.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected: T) =>
-            isEqual(itemValue.value, selected),
+            isEqual(props.value, selected),
         );
-    return isEqual(itemValue.value, parent.value.selected);
+    return isEqual(props.value, parent.value.selected);
 });
 
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(itemValue.value);
-    emits("click", itemValue.value, event);
+    parent.value.selectItem(props.value as T);
+    emits("click", props.value as T, event);
 }
 
 // --- Computed Component Classes ---
