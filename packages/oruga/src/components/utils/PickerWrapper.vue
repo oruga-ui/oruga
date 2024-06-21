@@ -109,7 +109,7 @@ const {
 
 /**
  * Show input as text for placeholder,
- * when placeholder and native value is given and input is not focused.
+ * when placeholder and no native value is given and input is not focused.
  */
 const computedNativeType = computed(() =>
     !picker.value.placeholder || props.nativeValue || isFocused.value
@@ -205,6 +205,9 @@ defineExpose({ focus: setFocus });
 
 <template>
     <div :data-oruga="dataOruga" :class="rootClasses">
+        {{ isMobileNative }}
+        {{ props.nativeValue }}
+        {{ computedNativeType }}
         <o-dropdown
             v-if="!isMobileNative"
             ref="dropdownRef"
@@ -263,8 +266,7 @@ defineExpose({ focus: setFocus });
             ref="nativeInputRef"
             v-bind="inputBind"
             v-model="vmodel"
-            :type="computedNativeType"
-            autocomplete="off"
+            type="date"
             :min="nativeMin"
             :max="nativeMax"
             :step="nativeStep"
