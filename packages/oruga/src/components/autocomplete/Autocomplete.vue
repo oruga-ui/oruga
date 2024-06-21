@@ -11,6 +11,7 @@ import {
     type PropType,
     type Component,
 } from "vue";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -27,7 +28,6 @@ import {
 } from "@/composables";
 
 import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
-import type { ComponentExposed } from "vue-component-type-helpers";
 
 enum SpecialOption {
     Header,
