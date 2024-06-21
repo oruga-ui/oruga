@@ -113,20 +113,25 @@ const {
  * when placeholder and no native value is given and input is not focused.
  */
 const computedNativeType = computed(() =>
-    !picker.value.placeholder || props.nativeValue || isFocused.value
+    !picker.value.placeholder || props.formattedValue || isFocused.value
         ? props.nativeType
         : "text",
 );
 
 /** input value based on mobile native or formatted desktop value */
 const inputValue = computed(() =>
-    isMobileNative.value ? props.nativeValue : props.formattedValue,
+    isMobileNative.value && isFocused.value
+        ? props.nativeValue
+        : props.formattedValue,
 );
 
 /** internal o-input vmodel value */
 const vmodel = ref(inputValue.value);
 // update the o-input vmodel value when input value change
-watch(inputValue, (value) => (vmodel.value = value));
+watch([inputValue, computedNativeType], () => {
+    vmodel.value = inputValue.value;
+    console.log("updat input", inputValue.value);
+});
 
 /**
  * When v-model is changed:
@@ -190,7 +195,7 @@ function onActiveChange(value: boolean): void {
 
 function hanldeNativeFocus(): void {
     onFocus();
-    if (!isFocused.value) doClick();
+    // if (!isFocused.value) doClick();
 }
 
 // --- Computed Component Classes ---
@@ -214,10 +219,6 @@ defineExpose({ focus: setFocus });
 
 <template>
     <div :data-oruga="dataOruga" :class="rootClasses">
-        {{ isMobileNative }}
-        {{ typeof props.nativeValue }}
-        {{ props.nativeValue }}
-        {{ computedNativeType }}
         <o-dropdown
             v-if="!isMobileNative"
             ref="dropdownRef"
@@ -277,7 +278,7 @@ defineExpose({ focus: setFocus });
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
-                    type="date"
+                    :type="computedNativeType"
                     :min="nativeMin"
                     :max="nativeMax"
                     :step="nativeStep"
@@ -299,5 +300,9 @@ defineExpose({ focus: setFocus });
                     @icon-right-click="$emit('icon-right-click', $event)" />
             </slot>
         </template>
+
+        {{ isMobileNative }} - {{ typeof inputValue }}-
+        {{ props.formattedValue }} -
+        {{ computedNativeType }}
     </div>
 </template>
