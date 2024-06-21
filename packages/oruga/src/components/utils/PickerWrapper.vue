@@ -82,10 +82,10 @@ const picker = computed<any>(() => props.pickerProps);
 
 const isMobileNative = computed(
     () =>
-        true &&
-        !picker.value.inline &&
-        picker.value.mobileNative &&
-        isMobileAgent.any(),
+        true ||
+        (!picker.value.inline &&
+            picker.value.mobileNative &&
+            isMobileAgent.any()),
 );
 
 const dropdownRef = ref<InstanceType<typeof ODropdown>>();
