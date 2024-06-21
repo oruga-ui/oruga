@@ -28,14 +28,16 @@ const props = defineProps({
     pickerProps: { type: Object, required: true },
     /** data-oruga attribute value */
     dataOruga: { type: String, required: true },
-    /** the input value */
+    /** the internal input value */
     value: { type: [Date, Array], default: undefined },
     /** the active state of the dropdown */
     active: { type: Boolean, default: false },
-    formattedValue: { type: String, default: undefined },
+    /** display value to show when client is desktop */
+    displayValue: { type: String, default: undefined },
+    /** native value when client is mobile native */
+    nativeValue: { type: [String, Number], default: undefined },
     nativeType: { type: String, required: true },
     nativeStep: { type: String, default: undefined },
-    nativeValue: { type: [String, Number], default: undefined },
     nativeMin: { type: [String, Number], default: undefined },
     nativeMax: { type: [String, Number], default: undefined },
     stayOpen: { type: Boolean, default: false },
@@ -79,7 +81,10 @@ const emits = defineEmits<{
 const picker = computed<any>(() => props.pickerProps);
 
 const isMobileNative = computed(
-    () => picker.value.mobileNative && isMobileAgent.any(),
+    () =>
+        !picker.value.inline &&
+        picker.value.mobileNative &&
+        isMobileAgent.any(),
 );
 
 const dropdownRef = ref<InstanceType<typeof ODropdown>>();
@@ -112,6 +117,16 @@ const computedNativeType = computed(() =>
         : "text",
 );
 
+/** input value based on mobile native or desktop value */
+const propValue = computed(() =>
+    isMobileNative.value ? props.nativeValue : props.displayValue,
+);
+
+/** internal o-input vmodel value */
+const vmodel = ref(propValue.value);
+// update the o-input vmodel value when input value change
+watch(propValue, (value) => (vmodel.value = value));
+
 /**
  * When v-model is changed:
  *  1. Update internal value.
@@ -121,8 +136,7 @@ watch(
     () => props.value,
     () => {
         // reset input value if they not match
-        if (vmodel.value !== props.formattedValue)
-            vmodel.value = props.formattedValue;
+        if (vmodel.value !== propValue.value) vmodel.value = propValue.value;
         // toggle picker if not stay open
         if (!props.stayOpen) togglePicker(false);
         if (!isValid.value) checkHtml5Validity();
@@ -131,12 +145,6 @@ watch(
 );
 
 const isActive = defineModel<boolean>("active", { default: false });
-
-const vmodel = ref(props.formattedValue);
-watch(
-    () => props.formattedValue,
-    (value) => (vmodel.value = value),
-);
 
 watch(isActive, onActiveChange);
 
@@ -198,7 +206,7 @@ defineExpose({ focus: setFocus });
 <template>
     <div :data-oruga="dataOruga" :class="rootClasses">
         <o-dropdown
-            v-if="!isMobileNative || picker.inline"
+            v-if="!isMobileNative"
             ref="dropdownRef"
             v-bind="dropdownBind"
             v-model:active="isActive"
@@ -254,9 +262,9 @@ defineExpose({ focus: setFocus });
             v-else
             ref="nativeInputRef"
             v-bind="inputBind"
+            v-model="vmodel"
             :type="computedNativeType"
             autocomplete="off"
-            :model-value="nativeValue"
             :min="nativeMin"
             :max="nativeMax"
             :step="nativeStep"
