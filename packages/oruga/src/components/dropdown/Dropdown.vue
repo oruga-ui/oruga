@@ -43,10 +43,11 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    // /**
-    //  * @model
-    //  * @type string|number|object|array
-    //  */
+    /**
+     * TODO: add modelValue to documentation
+     * @model
+     * @type string|number|object|array
+     */
     // modelValue: {
     //     type: [String, Number, Object, Array] as PropType<T | T[]>,
     //     default: undefined,
