@@ -32,8 +32,8 @@ const props = defineProps({
     value: { type: [Date, Array], default: undefined },
     /** the active state of the dropdown */
     active: { type: Boolean, default: false },
-    /** display value to show when client is desktop */
-    displayValue: { type: String, default: undefined },
+    /** formatted display value to show when client is desktop */
+    formattedValue: { type: String, default: undefined },
     /** native value when client is mobile native */
     nativeValue: { type: [String, Number], default: undefined },
     nativeType: { type: String, required: true },
@@ -118,14 +118,14 @@ const computedNativeType = computed(() =>
 );
 
 /** input value based on mobile native or desktop value */
-const propValue = computed(() =>
-    isMobileNative.value ? props.nativeValue : props.displayValue,
+const inputValue = computed(() =>
+    isMobileNative.value ? props.nativeValue : props.formattedValue,
 );
 
 /** internal o-input vmodel value */
-const vmodel = ref(propValue.value);
+const vmodel = ref(inputValue.value);
 // update the o-input vmodel value when input value change
-watch(propValue, (value) => (vmodel.value = value));
+watch(inputValue, (value) => (vmodel.value = value));
 
 /**
  * When v-model is changed:
@@ -136,7 +136,7 @@ watch(
     () => props.value,
     () => {
         // reset input value if they not match
-        if (vmodel.value !== propValue.value) vmodel.value = propValue.value;
+        if (vmodel.value !== inputValue.value) vmodel.value = inputValue.value;
         // toggle picker if not stay open
         if (!props.stayOpen) togglePicker(false);
         if (!isValid.value) checkHtml5Validity();
@@ -267,7 +267,7 @@ defineExpose({ focus: setFocus });
             ref="nativeInputRef"
             v-bind="inputBind"
             v-model="vmodel"
-            type="date"
+            :type="computedNativeType"
             :min="nativeMin"
             :max="nativeMax"
             :step="nativeStep"
