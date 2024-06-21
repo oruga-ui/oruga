@@ -117,7 +117,7 @@ const computedNativeType = computed(() =>
         : "text",
 );
 
-/** input value based on mobile native or desktop value */
+/** input value based on mobile native or formatted desktop value */
 const inputValue = computed(() =>
     isMobileNative.value ? props.nativeValue : props.formattedValue,
 );
@@ -136,7 +136,10 @@ watch(
     () => props.value,
     () => {
         // reset input value if they not match
-        if (vmodel.value !== inputValue.value) vmodel.value = inputValue.value;
+        if (vmodel.value !== inputValue.value) {
+            console.log("handle");
+            vmodel.value = inputValue.value;
+        }
         // toggle picker if not stay open
         if (!props.stayOpen) togglePicker(false);
         if (!isValid.value) checkHtml5Validity();
@@ -182,6 +185,11 @@ function onInputClick(event): void {
 function onActiveChange(value: boolean): void {
     if (value) onFocus();
     else if (!value) onBlur();
+}
+
+function hanldeNativeFocus(): void {
+    if (!isFocused.value) doClick();
+    onFocus();
 }
 
 // --- Computed Component Classes ---
@@ -282,7 +290,7 @@ defineExpose({ focus: setFocus });
             :readonly="false"
             :use-html5-validation="false"
             @change="$emit('native-change', $event.target.value)"
-            @focus="onFocus"
+            @focus="hanldeNativeFocus"
             @blur="onBlur"
             @invalid="onInvalid"
             @icon-click="$emit('icon-click', $event)"
