@@ -82,6 +82,7 @@ const picker = computed<any>(() => props.pickerProps);
 
 const isMobileNative = computed(
     () =>
+        true &&
         !picker.value.inline &&
         picker.value.mobileNative &&
         isMobileAgent.any(),
@@ -188,8 +189,8 @@ function onActiveChange(value: boolean): void {
 }
 
 function hanldeNativeFocus(): void {
-    if (!isFocused.value) doClick();
     onFocus();
+    if (!isFocused.value) doClick();
 }
 
 // --- Computed Component Classes ---
@@ -270,30 +271,33 @@ defineExpose({ focus: setFocus });
         </o-dropdown>
 
         <!-- Native Picker -->
-        <o-input
-            v-else
-            ref="nativeInputRef"
-            v-bind="inputBind"
-            v-model="vmodel"
-            :type="computedNativeType"
-            :min="nativeMin"
-            :max="nativeMax"
-            :step="nativeStep"
-            :placeholder="picker.placeholder"
-            :size="picker.size"
-            :icon-pack="picker.iconPack"
-            :icon="picker.icon"
-            :icon-right="picker.iconRight"
-            :icon-right-clickable="picker.iconRightClickable"
-            :rounded="picker.rounded"
-            :disabled="picker.disabled"
-            :readonly="false"
-            :use-html5-validation="false"
-            @change="$emit('native-change', $event.target.value)"
-            @focus="hanldeNativeFocus"
-            @blur="onBlur"
-            @invalid="onInvalid"
-            @icon-click="$emit('icon-click', $event)"
-            @icon-right-click="$emit('icon-right-click', $event)" />
+        <template v-else>
+            <slot name="trigger">
+                <o-input
+                    ref="nativeInputRef"
+                    v-bind="inputBind"
+                    v-model="vmodel"
+                    :type="computedNativeType"
+                    :min="nativeMin"
+                    :max="nativeMax"
+                    :step="nativeStep"
+                    :placeholder="picker.placeholder"
+                    :size="picker.size"
+                    :icon-pack="picker.iconPack"
+                    :icon="picker.icon"
+                    :icon-right="picker.iconRight"
+                    :icon-right-clickable="picker.iconRightClickable"
+                    :rounded="picker.rounded"
+                    :disabled="picker.disabled"
+                    :readonly="false"
+                    :use-html5-validation="false"
+                    @change="$emit('native-change', $event.target.value)"
+                    @focus="hanldeNativeFocus"
+                    @blur="onBlur"
+                    @invalid="onInvalid"
+                    @icon-click="$emit('icon-click', $event)"
+                    @icon-right-click="$emit('icon-right-click', $event)" />
+            </slot>
+        </template>
     </div>
 </template>
