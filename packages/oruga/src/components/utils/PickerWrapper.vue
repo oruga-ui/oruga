@@ -113,25 +113,26 @@ const {
  * when placeholder and no native value is given and input is not focused.
  */
 const computedNativeType = computed(() =>
-    !picker.value.placeholder || props.formattedValue || isFocused.value
+    !picker.value.placeholder || props.nativeValue || isFocused.value
         ? props.nativeType
         : "text",
 );
 
 /** input value based on mobile native or formatted desktop value */
 const inputValue = computed(() =>
-    isMobileNative.value && isFocused.value
-        ? props.nativeValue
-        : props.formattedValue,
+    isMobileNative.value ? props.nativeValue : props.formattedValue,
 );
 
-/** internal o-input vmodel value */
 const vmodel = ref(inputValue.value);
-// update the o-input vmodel value when input value change
-watch([inputValue, computedNativeType], () => {
-    vmodel.value = inputValue.value;
-    console.log("updat input", inputValue.value);
-});
+watch(inputValue, (value) => (vmodel.value = value));
+
+// /** internal o-input vmodel value */
+// const vmodel = ref(inputValue.value);
+// // update the o-input vmodel value when input value change
+// watch([inputValue, computedNativeType], () => {
+//     vmodel.value = inputValue.value;
+//     console.log("updat input", inputValue.value);
+// });
 
 /**
  * When v-model is changed:
@@ -301,8 +302,8 @@ defineExpose({ focus: setFocus });
             </slot>
         </template>
 
-        {{ isMobileNative }} - {{ typeof inputValue }}-
-        {{ props.formattedValue }} -
+        {{ isMobileNative }} - {{ typeof nativeValue }}-
+        {{ props.nativeValue }} -
         {{ computedNativeType }}
     </div>
 </template>
