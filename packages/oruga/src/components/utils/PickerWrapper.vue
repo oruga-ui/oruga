@@ -206,6 +206,7 @@ defineExpose({ focus: setFocus });
 <template>
     <div :data-oruga="dataOruga" :class="rootClasses">
         {{ isMobileNative }}
+        {{ typeof props.nativeValue }}
         {{ props.nativeValue }}
         {{ computedNativeType }}
         <o-dropdown
