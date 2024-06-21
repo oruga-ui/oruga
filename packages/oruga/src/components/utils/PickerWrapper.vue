@@ -142,10 +142,10 @@ watch(
     () => props.value,
     () => {
         // reset input value if they not match
-        if (vmodel.value !== inputValue.value) {
-            console.log("handle");
-            vmodel.value = inputValue.value;
-        }
+        // if (vmodel.value !== inputValue.value) {
+        //     console.log("handle");
+        //     vmodel.value = inputValue.value;
+        // }
         // toggle picker if not stay open
         if (!props.stayOpen) togglePicker(false);
         if (!isValid.value) checkHtml5Validity();
