@@ -277,7 +277,7 @@ defineExpose({ focus: setFocus });
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
-                    :type="computedNativeType"
+                    type="date"
                     :min="nativeMin"
                     :max="nativeMax"
                     :step="nativeStep"
