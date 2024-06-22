@@ -109,15 +109,15 @@ const {
     isFocused,
 } = useInputHandler(elementRef, emits, picker.value);
 
-const defaultNativeType =
-    !picker.value.placeholder || props.nativeValue ? props.nativeType : "text";
-
 /**
  * Show input as text for placeholder,
  * when placeholder and no native value is given and input is not focused.
  */
 const computedNativeType = computed(() =>
-    !picker.value.placeholder || props.nativeValue || isFocused.value
+    !picker.value.placeholder ||
+    props.nativeValue ||
+    isActive.value ||
+    isFocused.value
         ? props.nativeType
         : "text",
 );
@@ -179,8 +179,11 @@ function onKeyPress(event: KeyboardEvent): void {
 /** Toggle picker */
 function togglePicker(active: boolean): void {
     if (isMobileNative.value) {
-        setFocus(); // focus the underlaying input element
-        doClick(); // click to open the underlaying input element
+        isActive.value = active;
+        if (active) {
+            setFocus(); // focus the underlaying input element
+            doClick(); // click to open the underlaying input element
+        }
     } else if (dropdownRef.value) {
         if (active || picker.value.closeOnClick)
             nextTick(() => (isActive.value = active));
@@ -199,9 +202,7 @@ function onActiveChange(value: boolean): void {
 }
 
 function clickNative(event: Event): void {
-    if (nativeInputRef.value.type === "text") {
-        // @ts-ignore
-        nativeInputRef.value.type = props.nativeType;
+    if (computedNativeType.value === "text") {
         event.preventDefault();
         event.stopPropagation();
         togglePicker(true);
@@ -212,9 +213,8 @@ function hanldeNativeFocus(): void {
     onFocus();
 }
 
-function handleNativeBlur(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.type !== "text" && !input.value) input.type = "text";
+function handleNativeBlur(): void {
+    isActive.value = false;
     useOruga().notification.open({
         variant: "info",
         duration: 2000,
@@ -306,7 +306,7 @@ defineExpose({ focus: setFocus });
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
-                    :type="defaultNativeType"
+                    :type="computedNativeType"
                     :min="nativeMin"
                     :max="nativeMax"
                     :step="nativeStep"
