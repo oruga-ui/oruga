@@ -197,22 +197,26 @@ function onActiveChange(value: boolean): void {
     else if (!value) onBlur();
 }
 
-function hanldeNativeFocus(event: Event): void {
-    onFocus();
-}
-
 function clickNative(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.type === "text") {
         input.type = props.nativeType;
         event.preventDefault();
         event.stopPropagation();
+        isActive.value = true;
+        setFocus();
     }
 }
+
+function hanldeNativeFocus(): void {
+    onFocus();
+}
+
 function handleNativeBlur(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.type !== "text" && !input.value) input.type = "text";
     onBlur();
+    isActive.value = false;
 }
 
 // --- Computed Component Classes ---
@@ -307,12 +311,12 @@ defineExpose({ focus: setFocus });
                     :icon-right-clickable="picker.iconRightClickable"
                     :rounded="picker.rounded"
                     :disabled="picker.disabled"
-                    :readonly="false"
+                    :readonly="!isActive"
                     autocomplete="off"
                     :use-html5-validation="false"
                     @click="clickNative($event)"
                     @change="$emit('native-change', $event.target.value)"
-                    @focus="hanldeNativeFocus($event)"
+                    @focus="hanldeNativeFocus"
                     @blur="handleNativeBlur"
                     @invalid="onInvalid"
                     @icon-click="$emit('icon-click', $event)"
