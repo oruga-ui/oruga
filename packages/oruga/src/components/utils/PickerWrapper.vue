@@ -307,7 +307,7 @@ defineExpose({ focus: setFocus });
                     :icon-right-clickable="picker.iconRightClickable"
                     :rounded="picker.rounded"
                     :disabled="picker.disabled"
-                    :readonly="computedNativeType === 'text'"
+                    :readonly="false"
                     autocomplete="off"
                     :use-html5-validation="false"
                     @click="clickNative($event)"
