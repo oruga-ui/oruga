@@ -296,6 +296,7 @@ defineExpose({ focus: setFocus });
         <template v-else>
             <slot name="trigger">
                 <o-input
+                    :key="isActive"
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
@@ -325,7 +326,7 @@ defineExpose({ focus: setFocus });
         </template>
 
         {{ isMobileNative }} - {{ typeof nativeValue }}-
-        {{ props.nativeValue }} - {{ computedNativeType }}-
-        {{ inputValue }}
+        {{ props.nativeValue }} - {{ computedNativeType }}- {{ inputValue }} -
+        {{ isActive }}
     </div>
 </template>
