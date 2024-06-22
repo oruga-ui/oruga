@@ -198,15 +198,17 @@ function onActiveChange(value: boolean): void {
 }
 
 function hanldeNativeFocus(event: Event): void {
+    onFocus();
+}
+
+function clickNative(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.type === "text") {
         input.type = props.nativeType;
         event.preventDefault();
         event.stopPropagation();
     }
-    onFocus();
 }
-
 function handleNativeBlur(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.type !== "text" && !input.value) input.type = "text";
@@ -308,6 +310,7 @@ defineExpose({ focus: setFocus });
                     :readonly="computedNativeType === 'text'"
                     autocomplete="off"
                     :use-html5-validation="false"
+                    @click="clickNative($event)"
                     @change="$emit('native-change', $event.target.value)"
                     @focus="hanldeNativeFocus($event)"
                     @blur="handleNativeBlur"
