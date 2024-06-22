@@ -199,7 +199,11 @@ function onActiveChange(value: boolean): void {
 
 function hanldeNativeFocus(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.type === "text") input.type = props.nativeType;
+    if (input.type === "text") {
+        input.type = props.nativeType;
+        event.preventDefault();
+        event.stopPropagation();
+    }
     onFocus();
 }
 
