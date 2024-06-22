@@ -14,6 +14,7 @@ import {
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
+import { useOruga } from "@/utils/programmatic";
 
 /**
  * This is a internal used component.
@@ -203,8 +204,7 @@ function clickNative(event: Event): void {
         input.type = props.nativeType;
         event.preventDefault();
         event.stopPropagation();
-        isActive.value = true;
-        setFocus();
+        togglePicker(true);
     }
 }
 
@@ -215,8 +215,12 @@ function hanldeNativeFocus(): void {
 function handleNativeBlur(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.type !== "text" && !input.value) input.type = "text";
+    useOruga().notification.open({
+        variant: "info",
+        duration: 2000,
+        message: "blur",
+    });
     onBlur();
-    isActive.value = false;
 }
 
 // --- Computed Component Classes ---
@@ -296,7 +300,6 @@ defineExpose({ focus: setFocus });
         <template v-else>
             <slot name="trigger">
                 <o-input
-                    :key="isActive"
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
@@ -312,7 +315,7 @@ defineExpose({ focus: setFocus });
                     :icon-right-clickable="picker.iconRightClickable"
                     :rounded="picker.rounded"
                     :disabled="picker.disabled"
-                    :readonly="!isActive"
+                    :readonly="false"
                     autocomplete="off"
                     :use-html5-validation="false"
                     @click="clickNative($event)"
