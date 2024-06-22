@@ -302,6 +302,7 @@ defineExpose({ focus: setFocus });
                     :rounded="picker.rounded"
                     :disabled="picker.disabled"
                     :readonly="false"
+                    autocomplete="off"
                     :use-html5-validation="false"
                     @change="$emit('native-change', $event.target.value)"
                     @focus="hanldeNativeFocus($event)"
