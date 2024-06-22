@@ -108,6 +108,9 @@ const {
     isFocused,
 } = useInputHandler(elementRef, emits, picker.value);
 
+const defaultNativeType =
+    !picker.value.placeholder || props.nativeValue ? props.nativeType : "text";
+
 /**
  * Show input as text for placeholder,
  * when placeholder and no native value is given and input is not focused.
@@ -194,9 +197,16 @@ function onActiveChange(value: boolean): void {
     else if (!value) onBlur();
 }
 
-function hanldeNativeFocus(): void {
+function hanldeNativeFocus(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.type === "text") input.type = props.nativeType;
     onFocus();
-    // if (!isFocused.value) doClick();
+}
+
+function handleNativeBlur(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.type !== "text" && !input.value) input.type = "text";
+    onBlur();
 }
 
 // --- Computed Component Classes ---
@@ -279,7 +289,7 @@ defineExpose({ focus: setFocus });
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
-                    :type="computedNativeType"
+                    :type="defaultNativeType"
                     :min="nativeMin"
                     :max="nativeMax"
                     :step="nativeStep"
@@ -294,8 +304,8 @@ defineExpose({ focus: setFocus });
                     :readonly="false"
                     :use-html5-validation="false"
                     @change="$emit('native-change', $event.target.value)"
-                    @focus="hanldeNativeFocus"
-                    @blur="onBlur"
+                    @focus="hanldeNativeFocus($event)"
+                    @blur="handleNativeBlur"
                     @invalid="onInvalid"
                     @icon-click="$emit('icon-click', $event)"
                     @icon-right-click="$emit('icon-right-click', $event)" />
@@ -303,7 +313,7 @@ defineExpose({ focus: setFocus });
         </template>
 
         {{ isMobileNative }} - {{ typeof nativeValue }}-
-        {{ props.nativeValue }} -
-        {{ computedNativeType }}
+        {{ props.nativeValue }} - {{ computedNativeType }}-
+        {{ inputValue }}
     </div>
 </template>
