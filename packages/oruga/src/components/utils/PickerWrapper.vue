@@ -199,9 +199,9 @@ function onActiveChange(value: boolean): void {
 }
 
 function clickNative(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.type === "text") {
-        input.type = props.nativeType;
+    if (nativeInputRef.value.type === "text") {
+        // @ts-ignore
+        nativeInputRef.value.type = props.nativeType;
         event.preventDefault();
         event.stopPropagation();
         togglePicker(true);
@@ -243,7 +243,10 @@ defineExpose({ focus: setFocus });
 </script>
 
 <template>
-    <div :data-oruga="dataOruga" :class="rootClasses">
+    <div
+        :data-oruga="dataOruga"
+        :class="rootClasses"
+        @click="clickNative($event)">
         <o-dropdown
             v-if="!isMobileNative"
             ref="dropdownRef"
@@ -318,7 +321,6 @@ defineExpose({ focus: setFocus });
                     :readonly="false"
                     autocomplete="off"
                     :use-html5-validation="false"
-                    @click="clickNative($event)"
                     @change="$emit('native-change', $event.target.value)"
                     @focus="hanldeNativeFocus"
                     @blur="handleNativeBlur"
