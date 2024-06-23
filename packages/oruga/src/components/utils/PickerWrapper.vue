@@ -14,7 +14,6 @@ import {
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
-import { useOruga } from "@/utils/programmatic";
 
 /**
  * This is a internal used component.
@@ -79,14 +78,13 @@ const emits = defineEmits<{
 }>();
 
 /** the computed picker contains all chared props from the datepicker and the timepicker  */
-const picker = computed<any>(() => props.pickerProps);
+const picker = computed(() => props.pickerProps);
 
 const isMobileNative = computed(
     () =>
-        true ||
-        (!picker.value.inline &&
-            picker.value.mobileNative &&
-            isMobileAgent.any()),
+        !picker.value.inline &&
+        picker.value.mobileNative &&
+        isMobileAgent.any(),
 );
 
 const dropdownRef = ref<InstanceType<typeof ODropdown>>();
@@ -102,45 +100,28 @@ const {
     input,
     checkHtml5Validity,
     setFocus,
-    doClick,
     onBlur,
     onFocus,
     onInvalid,
     isValid,
-    isFocused,
 } = useInputHandler<HTMLInputElement>(elementRef, emits, picker.value);
-
-const defaultNativeType =
-    !picker.value.placeholder || props.nativeValue ? props.nativeType : "text";
 
 /**
  * Show input as text for placeholder,
- * when placeholder and no native value is given and input is not focused.
+ * when placeholder and no native value is given.
  */
-const computedNativeType = computed(() =>
-    !picker.value.placeholder ||
-    props.nativeValue ||
-    isActive.value ||
-    isFocused.value
-        ? props.nativeType
-        : "text",
-);
+const defaultNativeType =
+    !picker.value.placeholder || props.nativeValue ? props.nativeType : "text";
 
 /** input value based on mobile native or formatted desktop value */
 const inputValue = computed(() =>
     isMobileNative.value ? props.nativeValue : props.formattedValue,
 );
 
+/** internal o-input vmodel value */
 const vmodel = ref(inputValue.value);
+// update the o-input vmodel value when input value change
 watch(inputValue, (value) => (vmodel.value = value));
-
-// /** internal o-input vmodel value */
-// const vmodel = ref(inputValue.value);
-// // update the o-input vmodel value when input value change
-// watch([inputValue, computedNativeType], () => {
-//     vmodel.value = inputValue.value;
-//     console.log("updat input", inputValue.value);
-// });
 
 /**
  * When v-model is changed:
@@ -151,10 +132,8 @@ watch(
     () => props.value,
     () => {
         // reset input value if they not match
-        // if (vmodel.value !== inputValue.value) {
-        //     console.log("handle");
-        //     vmodel.value = inputValue.value;
-        // }
+        if (vmodel.value !== inputValue.value) vmodel.value = inputValue.value;
+
         // toggle picker if not stay open
         if (!props.stayOpen) togglePicker(false);
         if (!isValid.value) checkHtml5Validity();
@@ -182,13 +161,7 @@ function onKeyPress(event: KeyboardEvent): void {
 
 /** Toggle picker */
 function togglePicker(active: boolean): void {
-    if (isMobileNative.value) {
-        isActive.value = active;
-        if (active) {
-            setFocus(); // focus the underlaying input element
-            doClick(); // click to open the underlaying input element
-        }
-    } else if (dropdownRef.value) {
+    if (dropdownRef.value) {
         if (active || picker.value.closeOnClick)
             nextTick(() => (isActive.value = active));
     }
@@ -206,6 +179,9 @@ function onActiveChange(value: boolean): void {
 }
 
 function clickNative(event: Event): void {
+    // do nothing if client is not mobile
+    if (!isMobileNative.value) return;
+
     if (input.value.type === "text") {
         event.preventDefault();
         event.stopPropagation();
@@ -219,40 +195,29 @@ function clickNative(event: Event): void {
 
         // focus the underlaying input element
         setFocus();
-
-        useOruga().notification.open({
-            variant: "success",
-            duration: 2000,
-            message: "click",
-        });
     }
 }
 
 function hanldeNativeFocus(event: Event): void {
+    // do nothing if client is not mobile
+    if (!isMobileNative.value) return;
+
     if (input.value.type === "text") {
+        // prevent focus when input is not editable jet
         event.preventDefault();
         event.stopPropagation();
-        return;
-    }
-    useOruga().notification.open({
-        variant: "warning",
-        duration: 2000,
-        message: "focus",
-    });
-    onFocus();
+    } else onFocus();
 }
 
 function handleNativeBlur(): void {
+    // do nothing if client is not mobile
+    if (!isMobileNative.value) return;
+
     if (input.value.value !== props.nativeValue) {
         // make the input uneditable
         input.value.readOnly = true;
         input.value.type = "text";
     }
-    useOruga().notification.open({
-        variant: "info",
-        duration: 2000,
-        message: "blur",
-    });
     onBlur();
 }
 
@@ -276,10 +241,7 @@ defineExpose({ focus: setFocus });
 </script>
 
 <template>
-    <div
-        :data-oruga="dataOruga"
-        :class="rootClasses"
-        @click="clickNative($event)">
+    <div :data-oruga="dataOruga" :class="rootClasses" @click="clickNative">
         <o-dropdown
             v-if="!isMobileNative"
             ref="dropdownRef"
@@ -362,9 +324,5 @@ defineExpose({ focus: setFocus });
                     @icon-right-click="$emit('icon-right-click', $event)" />
             </slot>
         </template>
-
-        {{ isMobileNative }} - {{ typeof nativeValue }}-
-        {{ props.nativeValue }} - {{ computedNativeType }}- {{ inputValue }} -
-        {{ isActive }}
     </div>
 </template>
