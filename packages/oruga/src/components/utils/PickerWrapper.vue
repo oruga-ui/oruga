@@ -109,6 +109,9 @@ const {
     isFocused,
 } = useInputHandler(elementRef, emits, picker.value);
 
+const defaultType =
+    !picker.value.placeholder || props.nativeValue ? props.nativeType : "text";
+
 /**
  * Show input as text for placeholder,
  * when placeholder and no native value is given and input is not focused.
@@ -203,13 +206,25 @@ function onActiveChange(value: boolean): void {
 
 function clickNative(event: Event): void {
     if (computedNativeType.value === "text") {
+        nativeInputRef.value.$el.readOnly = false;
+        nativeInputRef.value.$el.type = props.nativeType;
         event.preventDefault();
         event.stopPropagation();
         togglePicker(true);
+        useOruga().notification.open({
+            variant: "success",
+            duration: 2000,
+            message: "click",
+        });
     }
 }
 
 function hanldeNativeFocus(): void {
+    useOruga().notification.open({
+        variant: "warning",
+        duration: 2000,
+        message: "focus",
+    });
     onFocus();
 }
 
@@ -306,7 +321,7 @@ defineExpose({ focus: setFocus });
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
-                    :type="computedNativeType"
+                    :type="defaultType"
                     :min="nativeMin"
                     :max="nativeMax"
                     :step="nativeStep"
@@ -318,7 +333,7 @@ defineExpose({ focus: setFocus });
                     :icon-right-clickable="picker.iconRightClickable"
                     :rounded="picker.rounded"
                     :disabled="picker.disabled"
-                    :readonly="computedNativeType === 'test'"
+                    :readonly="true"
                     autocomplete="off"
                     :use-html5-validation="false"
                     @change="$emit('native-change', $event.target.value)"
