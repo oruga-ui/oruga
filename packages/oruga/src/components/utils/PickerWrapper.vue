@@ -99,6 +99,7 @@ const elementRef = computed(() =>
 
 // use form input functionality for native input
 const {
+    input,
     checkHtml5Validity,
     setFocus,
     doClick,
@@ -107,7 +108,7 @@ const {
     onInvalid,
     isValid,
     isFocused,
-} = useInputHandler(elementRef, emits, picker.value);
+} = useInputHandler<HTMLInputElement>(elementRef, emits, picker.value);
 
 const defaultType =
     !picker.value.placeholder || props.nativeValue ? props.nativeType : "text";
@@ -205,9 +206,9 @@ function onActiveChange(value: boolean): void {
 }
 
 function clickNative(event: Event): void {
-    if (nativeInputRef.value.$el.type === "text") {
-        nativeInputRef.value.$el.readOnly = false;
-        nativeInputRef.value.$el.type = props.nativeType;
+    if (input.value.type === "text") {
+        input.value.readOnly = false;
+        input.value.type = props.nativeType;
         event.preventDefault();
         event.stopPropagation();
         togglePicker(true);
