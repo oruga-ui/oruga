@@ -180,11 +180,6 @@ function clickNative(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
-    useOruga().notification.open({
-        message: input.value.type,
-        duration: 2000,
-        variant: "info",
-    });
     // when input is not editable jet
     if (input.value.type === "text") {
         event.preventDefault();
@@ -196,12 +191,6 @@ function clickNative(event: Event): void {
         // make the input editable
         input.value.readOnly = false;
         input.value.type = props.nativeType;
-
-        useOruga().notification.open({
-            message: "click",
-            duration: 2000,
-            variant: "warning",
-        });
 
         // focus the underlaying input element
         setFocus();
@@ -224,16 +213,10 @@ function handleNativeBlur(): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
-    if (input.value.value !== props.nativeValue) {
+    if (!input.value.value) {
         // make the input uneditable
         input.value.readOnly = true;
         input.value.type = "text";
-
-        useOruga().notification.open({
-            message: input.value.value + "+" + props.nativeValue,
-            duration: 2000,
-            variant: "warning",
-        });
     }
     onBlur();
 }
@@ -243,12 +226,7 @@ function handleNativeChange(event: Event): void {
         ? (event.target as HTMLInputElement).value
         : null;
 
-    if (value === null) input.value.value = null;
-    useOruga().notification.open({
-        message: JSON.stringify(value),
-        duration: 2000,
-        variant: "warning",
-    });
+    if (!value) input.value.value = value;
     emits("native-change", value);
 }
 // --- Computed Component Classes ---
