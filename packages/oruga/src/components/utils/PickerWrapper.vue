@@ -14,7 +14,7 @@ import {
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
-import { useOruga } from "@/utils/programmatic";
+// import { useOruga } from "@/utils/programmatic";
 
 /**
  * This is a internal used component.

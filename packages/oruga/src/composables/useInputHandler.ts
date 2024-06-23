@@ -126,6 +126,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         });
     }
 
+    /** Unset focused and emit blur event. */
     function onBlur(event?: Event): void {
         isFocused.value = false;
         if (parentField?.value) parentField.value.setFocus(false);
@@ -133,6 +134,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         checkHtml5Validity();
     }
 
+    /** Set focused and emit focus event. */
     function onFocus(event?: Event): void {
         isFocused.value = true;
         if (parentField?.value) parentField.value.setFocus(true);
