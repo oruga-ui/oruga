@@ -237,6 +237,7 @@ function handleNativeChange(event: Event): void {
         ? (event.target as HTMLInputElement).value
         : null;
 
+    if (value === null) input.value.value = null;
     useOruga().notification.open({
         message: JSON.stringify(value),
         duration: 2000,
