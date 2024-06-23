@@ -232,6 +232,14 @@ function handleNativeBlur(): void {
     onBlur();
 }
 
+function handleNativeChange(event: Event): void {
+    useOruga().notification.open({
+        message: "change" + "+" + (event.target as HTMLInputElement).value,
+        duration: 2000,
+        variant: "warning",
+    });
+    emits("native-change", (event.target as HTMLInputElement).value);
+}
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
@@ -327,7 +335,7 @@ defineExpose({ focus: setFocus });
                     :readonly="true"
                     autocomplete="off"
                     :use-html5-validation="false"
-                    @change="$emit('native-change', $event.target.value)"
+                    @change="handleNativeChange"
                     @focus="hanldeNativeFocus"
                     @blur="handleNativeBlur"
                     @invalid="onInvalid"
