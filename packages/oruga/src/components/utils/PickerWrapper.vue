@@ -224,9 +224,9 @@ function handleNativeBlur(): void {
         input.value.type = "text";
 
         useOruga().notification.open({
-            message: input.value.type,
+            message: input.value.value + "+" + props.nativeValue,
             duration: 2000,
-            variant: input.value.value + "+" + props.nativeValue,
+            variant: "warning",
         });
     }
     onBlur();
