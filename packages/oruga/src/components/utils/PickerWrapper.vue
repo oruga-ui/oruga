@@ -190,12 +190,18 @@ function clickNative(event: Event): void {
         event.preventDefault();
         event.stopPropagation();
 
+        // blur the current state to remove active native keyboards
+        input.value.blur();
+
         // make the input editable
         input.value.readOnly = false;
         input.value.type = props.nativeType;
 
-        // blur the current state to remove active native keyboards
-        input.value.blur();
+        useOruga().notification.open({
+            message: "click",
+            duration: 2000,
+            variant: "warning",
+        });
 
         // focus the underlaying input element
         setFocus();
