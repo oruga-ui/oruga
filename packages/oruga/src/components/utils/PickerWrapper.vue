@@ -211,6 +211,7 @@ function clickNative(event: Event): void {
         input.value.type = props.nativeType;
         event.preventDefault();
         event.stopPropagation();
+        input.value.blur();
         togglePicker(true);
         useOruga().notification.open({
             variant: "success",
@@ -220,14 +221,13 @@ function clickNative(event: Event): void {
     }
 }
 
-function hanldeNativeFocus(event: Event): void {
+function hanldeNativeFocus(): void {
     useOruga().notification.open({
         variant: "warning",
         duration: 2000,
         message: "focus",
     });
-    clickNative(event);
-    // onFocus();
+    onFocus();
 }
 
 function handleNativeBlur(): void {
