@@ -25,7 +25,7 @@ defineOptions({
 
 const props = defineProps({
     /** parent picker component props  */
-    pickerProps: { type: Object, required: true },
+    picker: { type: Object, required: true },
     /** data-oruga attribute value */
     dataOruga: { type: String, required: true },
     /** the internal input value */
@@ -77,13 +77,10 @@ const emits = defineEmits<{
     (e: "icon-right-click", evt: Event): void;
 }>();
 
-/** the computed picker contains all chared props from the datepicker and the timepicker  */
-const picker = computed(() => props.pickerProps);
-
 const isMobileNative = computed(
     () =>
-        !picker.value.inline &&
-        picker.value.mobileNative &&
+        !props.picker.inline &&
+        props.picker.mobileNative &&
         isMobileAgent.any(),
 );
 
@@ -104,14 +101,14 @@ const {
     onFocus,
     onInvalid,
     isValid,
-} = useInputHandler<HTMLInputElement>(elementRef, emits, picker.value);
+} = useInputHandler<HTMLInputElement>(elementRef, emits, props.picker);
 
 /**
  * Show input as text for placeholder,
  * when placeholder and no native value is given.
  */
 const defaultNativeType =
-    !picker.value.placeholder || props.nativeValue ? props.nativeType : "text";
+    !props.picker.placeholder || props.nativeValue ? props.nativeType : "text";
 
 /** input value based on mobile native or formatted desktop value */
 const inputValue = computed(() =>
@@ -145,9 +142,9 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 watch(isActive, onActiveChange);
 
-const ariaRole = computed(() => (!picker.value.inline ? "dialog" : undefined));
+const ariaRole = computed(() => (!props.picker.inline ? "dialog" : undefined));
 
-const triggers = computed(() => (picker.value.openOnFocus ? ["click"] : []));
+const triggers = computed(() => (props.picker.openOnFocus ? ["click"] : []));
 
 if (isClient) useEventListener("keyup", onKeyPress);
 
@@ -162,7 +159,7 @@ function onKeyPress(event: KeyboardEvent): void {
 /** Toggle picker */
 function togglePicker(active: boolean): void {
     if (dropdownRef.value) {
-        if (active || picker.value.closeOnClick)
+        if (active || props.picker.closeOnClick)
             nextTick(() => (isActive.value = active));
     }
 }
@@ -226,12 +223,12 @@ function handleNativeBlur(): void {
 const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...attrs,
-    ...picker.value.inputClasses,
+    ...props.picker.inputClasses,
 }));
 
 const dropdownBind = computed(() => ({
     "root-class": getActiveClasses(props.dropdownClasses),
-    ...picker.value.dropdownClasses,
+    ...props.picker.dropdownClasses,
 }));
 
 // --- Expose Public Functionalities ---
