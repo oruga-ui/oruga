@@ -51,9 +51,9 @@ const constraintValidationAttributes = [
 /**
  * Form input handler functionalities
  */
-export function useInputHandler(
+export function useInputHandler<T extends ValidatableFormElement>(
     /** input ref element - can be a html element or a vue component*/
-    inputRef: MaybeRefOrGetter<ValidatableFormElement | Component>,
+    inputRef: MaybeRefOrGetter<T | Component>,
     /** emitted input events */
     emits: {
         /** on input focus event */
@@ -77,14 +77,14 @@ export function useInputHandler(
     /// Allows access to the native element in cases where it might be missing,
     /// e.g. because the component hasn't been mounted yet or has been suspended
     /// by a <KeepAlive>
-    const maybeElement = computed<ValidatableFormElement | undefined>(() => {
+    const maybeElement = computed<T | undefined>(() => {
         const el = unrefElement<Component | HTMLElement>(inputRef);
         if (!el) {
             return undefined;
         }
         if (el.getAttribute("data-oruga-input"))
             // if element is the input element
-            return el as ValidatableFormElement;
+            return el as T;
 
         const inputs = el.querySelector("[data-oruga-input]");
 
@@ -95,7 +95,7 @@ export function useInputHandler(
             return undefined;
         }
         // return underlaying the input element
-        return inputs as ValidatableFormElement;
+        return inputs as T;
     });
 
     /// Should be used for most accesses to the native element; we generally
@@ -294,6 +294,7 @@ export function useInputHandler(
     }
 
     return {
+        input: element,
         isFocused,
         isValid,
         setFocus,
