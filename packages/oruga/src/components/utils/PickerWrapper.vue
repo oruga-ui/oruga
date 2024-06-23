@@ -107,7 +107,7 @@ const {
  * Show input as text for placeholder,
  * when placeholder and no native value is given.
  */
-const defaultNativeType =
+const initialNativeType =
     !props.picker.placeholder || props.nativeValue ? props.nativeType : "text";
 
 /** input value based on mobile native or formatted desktop value */
@@ -117,7 +117,7 @@ const inputValue = computed(() =>
 
 /** internal o-input vmodel value */
 const vmodel = ref(inputValue.value);
-// update the o-input vmodel value when input value change
+// update the o-input vmodel value when prop value change
 watch(inputValue, (value) => (vmodel.value = value));
 
 /**
@@ -179,6 +179,7 @@ function clickNative(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
+    // when input is not editable jet
     if (input.value.type === "text") {
         event.preventDefault();
         event.stopPropagation();
@@ -199,8 +200,9 @@ function hanldeNativeFocus(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
+    // when input is not editable jet
     if (input.value.type === "text") {
-        // prevent focus when input is not editable jet
+        // prevent focus
         event.preventDefault();
         event.stopPropagation();
     } else onFocus();
@@ -298,7 +300,7 @@ defineExpose({ focus: setFocus });
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
-                    :type="defaultNativeType"
+                    :type="initialNativeType"
                     :min="nativeMin"
                     :max="nativeMax"
                     :step="nativeStep"
@@ -310,7 +312,7 @@ defineExpose({ focus: setFocus });
                     :icon-right-clickable="picker.iconRightClickable"
                     :rounded="picker.rounded"
                     :disabled="picker.disabled"
-                    :readonly="true"
+                    :readonly="initialNativeType === 'text'"
                     autocomplete="off"
                     :use-html5-validation="false"
                     @change="$emit('native-change', $event.target.value)"
