@@ -110,7 +110,7 @@ const {
     isFocused,
 } = useInputHandler<HTMLInputElement>(elementRef, emits, picker.value);
 
-const defaultType =
+const defaultNativeType =
     !picker.value.placeholder || props.nativeValue ? props.nativeType : "text";
 
 /**
@@ -207,12 +207,19 @@ function onActiveChange(value: boolean): void {
 
 function clickNative(event: Event): void {
     if (input.value.type === "text") {
-        input.value.readOnly = false;
-        input.value.type = props.nativeType;
         event.preventDefault();
         event.stopPropagation();
+
+        // make the input editable
+        input.value.readOnly = false;
+        input.value.type = props.nativeType;
+
+        // blur the current state to remove active native keyboards
         input.value.blur();
-        togglePicker(true);
+
+        // focus the underlaying input element
+        setFocus();
+
         useOruga().notification.open({
             variant: "success",
             duration: 2000,
@@ -221,7 +228,12 @@ function clickNative(event: Event): void {
     }
 }
 
-function hanldeNativeFocus(): void {
+function hanldeNativeFocus(event: Event): void {
+    if (input.value.type === "text") {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+    }
     useOruga().notification.open({
         variant: "warning",
         duration: 2000,
@@ -231,7 +243,11 @@ function hanldeNativeFocus(): void {
 }
 
 function handleNativeBlur(): void {
-    isActive.value = false;
+    if (input.value.value !== props.nativeValue) {
+        // make the input uneditable
+        input.value.readOnly = true;
+        input.value.type = "text";
+    }
     useOruga().notification.open({
         variant: "info",
         duration: 2000,
@@ -323,7 +339,7 @@ defineExpose({ focus: setFocus });
                     ref="nativeInputRef"
                     v-bind="inputBind"
                     v-model="vmodel"
-                    :type="defaultType"
+                    :type="defaultNativeType"
                     :min="nativeMin"
                     :max="nativeMax"
                     :step="nativeStep"
