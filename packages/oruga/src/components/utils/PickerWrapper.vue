@@ -219,13 +219,14 @@ function clickNative(event: Event): void {
     }
 }
 
-function hanldeNativeFocus(): void {
+function hanldeNativeFocus(event: Event): void {
     useOruga().notification.open({
         variant: "warning",
         duration: 2000,
         message: "focus",
     });
-    onFocus();
+    clickNative(event);
+    // onFocus();
 }
 
 function handleNativeBlur(): void {
