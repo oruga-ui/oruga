@@ -222,6 +222,12 @@ function handleNativeBlur(): void {
         // make the input uneditable
         input.value.readOnly = true;
         input.value.type = "text";
+
+        useOruga().notification.open({
+            message: input.value.type,
+            duration: 2000,
+            variant: input.value.value + "+" + props.nativeValue,
+        });
     }
     onBlur();
 }
