@@ -205,7 +205,7 @@ function onActiveChange(value: boolean): void {
 }
 
 function clickNative(event: Event): void {
-    if (computedNativeType.value === "text") {
+    if (nativeInputRef.value.$el.type === "text") {
         nativeInputRef.value.$el.readOnly = false;
         nativeInputRef.value.$el.type = props.nativeType;
         event.preventDefault();
