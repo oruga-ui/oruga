@@ -233,12 +233,16 @@ function handleNativeBlur(): void {
 }
 
 function handleNativeChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value
+        ? (event.target as HTMLInputElement).value
+        : null;
+
     useOruga().notification.open({
-        message: "change" + "+" + (event.target as HTMLInputElement).value,
+        message: JSON.stringify(value),
         duration: 2000,
         variant: "warning",
     });
-    emits("native-change", (event.target as HTMLInputElement).value);
+    emits("native-change", value);
 }
 // --- Computed Component Classes ---
 
