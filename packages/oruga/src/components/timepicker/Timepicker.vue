@@ -590,7 +590,8 @@ function updateDateSelected(
 /** Format date into string 'HH-MM-SS'*/
 function formatNative(value: Date): string {
     const date = new Date(value);
-    if (!value || isNaN(date.getTime())) return "";
+    // return null if no value is given or value can't parse to proper date
+    if (!value || !date || isNaN(date.getTime())) return null;
 
     const hours = date.getHours();
     const minutes = date.getMinutes();
