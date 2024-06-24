@@ -203,7 +203,7 @@ function clickNative(event: Event): void {
 
             // focus the underlaying input element again to open native keyboards for type 'date'
             setFocus();
-        });
+        }, 50);
     }
 }
 
