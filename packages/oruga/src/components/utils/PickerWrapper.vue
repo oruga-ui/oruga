@@ -109,7 +109,9 @@ const {
  * when placeholder and no native value is given.
  */
 const initialNativeType =
-    !props.picker.placeholder || props.nativeValue ? props.nativeType : "text";
+    !props.picker.placeholder || !!props.nativeValue
+        ? props.nativeType
+        : "text";
 
 /** input value based on mobile native or formatted desktop value */
 const inputValue = computed(() =>
