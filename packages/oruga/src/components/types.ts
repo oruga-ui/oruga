@@ -1269,9 +1269,9 @@ but will set body to position fixed, might break some layouts. */
                 /** Select placeholder text when nothing is selected (if mobileCards) */
                 mobileSortPlaceholder: string;
                 /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
-                defaultSort: string | [string, "asc" | "desc"];
+                defaultSort: string | [string, SortDirection];
                 /** Sets the default sort column direction on the first click */
-                defaultSortDirection: "asc" | "desc";
+                defaultSortDirection: SortDirection;
                 /** Sets the header sorting icon */
                 sortIcon: string;
                 /** Sets the size of the sorting icon */
