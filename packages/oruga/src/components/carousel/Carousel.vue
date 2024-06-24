@@ -40,10 +40,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /**
-     * The index of the current active element
-     * @model
-     */
+    /** The index of the current active element */
     modelValue: { type: Number, default: 0 },
     /** Enable drag mode */
     dragable: { type: Boolean, default: true },

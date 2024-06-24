@@ -40,7 +40,7 @@ const HOUR_FORMAT_24 = "24";
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
+    /** The input value state */
     modelValue: { type: Date, default: undefined },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },

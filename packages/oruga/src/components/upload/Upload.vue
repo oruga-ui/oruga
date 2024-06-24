@@ -26,7 +26,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * @model
+     * The input value state
      * @type object|object[]|File|File[]
      */
     modelValue: {
