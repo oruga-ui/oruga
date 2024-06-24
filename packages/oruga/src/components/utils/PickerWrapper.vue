@@ -98,7 +98,6 @@ const {
     input,
     checkHtml5Validity,
     setFocus,
-    doClick,
     onBlur,
     onFocus,
     onInvalid,
@@ -194,7 +193,7 @@ function clickNative(event: Event): void {
         event.preventDefault();
         event.stopPropagation();
 
-        // blur the current state to remove active native keyboards
+        // blur the current state to remove active native keyboards for type 'text'
         input.value.blur();
 
         nextTick(() => {
@@ -202,9 +201,8 @@ function clickNative(event: Event): void {
             input.value.readOnly = false;
             input.value.type = props.nativeType;
 
-            // focus the underlaying input element
+            // focus the underlaying input element again to open native keyboards for type 'date'
             setFocus();
-            doClick();
         });
     }
 }
