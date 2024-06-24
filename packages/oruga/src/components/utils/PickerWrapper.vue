@@ -156,7 +156,7 @@ function onKeyPress(event: KeyboardEvent): void {
         togglePicker(false);
 }
 
-// --- EVENT HANDLER ---
+// --- PICKER EVENT HANDLER ---
 
 /** Toggle picker */
 function togglePicker(active: boolean): void {
@@ -177,7 +177,9 @@ function onActiveChange(value: boolean): void {
     else if (!value) onBlur();
 }
 
-function clickNative(event: Event): void {
+// --- NATIVE EVENT HANDLER ---
+
+function onNativeClick(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
@@ -200,7 +202,7 @@ function clickNative(event: Event): void {
     }
 }
 
-function hanldeNativeFocus(event: Event): void {
+function onNativeFocus(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
@@ -214,7 +216,7 @@ function hanldeNativeFocus(event: Event): void {
     else onFocus();
 }
 
-function handleNativeBlur(): void {
+function onNativeBlur(): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
@@ -261,7 +263,7 @@ defineExpose({ focus: setFocus });
 </script>
 
 <template>
-    <div :data-oruga="dataOruga" :class="rootClasses" @click="clickNative">
+    <div :data-oruga="dataOruga" :class="rootClasses" @click="onNativeClick">
         <o-dropdown
             v-if="!isMobileNative"
             ref="dropdownRef"
@@ -337,8 +339,8 @@ defineExpose({ focus: setFocus });
                     autocomplete="off"
                     :use-html5-validation="false"
                     @change="handleNativeChange"
-                    @focus="hanldeNativeFocus"
-                    @blur="handleNativeBlur"
+                    @focus="onNativeFocus"
+                    @blur="onNativeBlur"
                     @invalid="onInvalid"
                     @icon-click="$emit('icon-click', $event)"
                     @icon-right-click="$emit('icon-right-click', $event)" />
