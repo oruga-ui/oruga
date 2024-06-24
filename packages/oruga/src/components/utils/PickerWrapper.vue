@@ -255,7 +255,7 @@ function handleNativeChange(event: Event): void {
     // when the input does not have any value
     if (!value) {
         input.value.value = value;
-        handleNativeBlur();
+        input.value.blur();
     }
 
     emits("native-change", value);
