@@ -98,6 +98,7 @@ const {
     input,
     checkHtml5Validity,
     setFocus,
+    doClick,
     onBlur,
     onFocus,
     onInvalid,
@@ -183,7 +184,7 @@ function clickNative(event: Event): void {
     if (!isMobileNative.value) return;
 
     useOruga().notification.open({
-        message: "click",
+        message: "click" + "+" + input.value.type,
         variant: "warning",
         duration: 2000,
     });
@@ -203,6 +204,7 @@ function clickNative(event: Event): void {
 
             // focus the underlaying input element
             setFocus();
+            doClick();
         });
     }
 }
@@ -223,7 +225,7 @@ function hanldeNativeFocus(event: Event): void {
         event.preventDefault();
         event.stopPropagation();
     }
-    // only emit focus if editable
+    // only emit focus event if editable
     else onFocus();
 }
 
@@ -243,6 +245,7 @@ function handleNativeBlur(): void {
         input.value.readOnly = true;
         input.value.type = "text";
     }
+    // emit blur event
     onBlur();
 }
 
