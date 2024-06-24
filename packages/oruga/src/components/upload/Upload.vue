@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+    generic="T extends object | typeof File | object[] | (typeof File)[]">
 import { computed, ref, watch, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -22,11 +25,12 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
+    /**
+     * @model
+     * @type object|object[]|File|File[]
+     */
     modelValue: {
-        type: [Object, Array] as PropType<
-            object | typeof File | object[] | (typeof File)[]
-        >,
+        type: [Object, Array] as PropType<T>,
         default: undefined,
     },
     /** Same as native, also push new item to v-model instead of replacing */
@@ -94,7 +98,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Object | Object[] | File | File[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: object | object[] | File | File[]): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -114,7 +118,7 @@ const emits = defineEmits<{
 
 const inputRef = ref<HTMLInputElement>();
 
-const vmodel = defineModel<object | object[] | File | File[]>();
+const vmodel = defineModel<T>({ default: undefined });
 
 // use form input functionality
 const { checkHtml5Validity, onFocus, onBlur, isValid, setFocus } =
@@ -162,7 +166,7 @@ function onFileChange(event: Event | DragEvent): void {
             // add file when type is valid
             if (checkType(file)) values.push(file);
         }
-        vmodel.value = values;
+        vmodel.value = values as T;
     }
     // single uplaod
     else {
@@ -171,7 +175,7 @@ function onFileChange(event: Event | DragEvent): void {
         else {
             const file = value[0];
             // add file when type is valid
-            if (checkType(file)) vmodel.value = file;
+            if (checkType(file)) vmodel.value = file as T;
             // else clear input
             else if (vmodel.value) {
                 vmodel.value = null;
@@ -255,7 +259,7 @@ const draggableClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel.value });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>

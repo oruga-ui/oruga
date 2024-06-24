@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const numbers = ref([2, 5]);
-const numbers2 = ref([2, 6]);
+const numbers = ref<[number, number]>([2, 5]);
+const numbers2 = ref<[number, number]>([2, 6]);
 </script>
 
 <template>

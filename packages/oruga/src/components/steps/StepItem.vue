@@ -189,8 +189,8 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
                 :role="ariaRole"
                 aria-roledescription="item">
                 <!-- 
-                @slot Step item content
-            -->
+                    @slot Step item content
+                -->
                 <slot />
             </div>
         </template>
