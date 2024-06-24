@@ -190,12 +190,14 @@ function clickNative(event: Event): void {
         // blur the current state to remove active native keyboards
         input.value.blur();
 
-        // make the input editable
-        input.value.readOnly = false;
-        input.value.type = props.nativeType;
+        nextTick(() => {
+            // make the input editable
+            input.value.readOnly = false;
+            input.value.type = props.nativeType;
 
-        // focus the underlaying input element
-        setFocus();
+            // focus the underlaying input element
+            setFocus();
+        });
     }
 }
 
