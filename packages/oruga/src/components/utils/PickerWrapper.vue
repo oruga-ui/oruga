@@ -14,7 +14,7 @@ import {
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
-// import { useOruga } from "@/utils/programmatic";
+import { useOruga } from "@/utils/programmatic";
 
 /**
  * This is a internal used component.
@@ -181,6 +181,12 @@ function onActiveChange(value: boolean): void {
 function clickNative(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
+
+    useOruga().notification.open({
+        message: "click",
+        variant: "warning",
+        duration: 2000,
+    });
 
     // when input is not editable jet
     if (input.value.type === "text") {

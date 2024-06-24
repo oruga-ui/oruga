@@ -823,6 +823,7 @@ function next(): void {
 function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) value = value[0];
     const date = new Date(value);
+    // return null if no value is given or value can't parse to proper date
     if (!value || !date || isNaN(date.getTime())) return null;
 
     if (isTypeMonth.value) {
