@@ -252,7 +252,14 @@ function handleNativeChange(event: Event): void {
         ? (event.target as HTMLInputElement).value
         : null;
 
-    if (!value) input.value.value = value;
+    // when the input does not have any value
+    if (!value) {
+        input.value.value = value;
+        // make the input uneditable
+        input.value.readOnly = true;
+        input.value.type = "text";
+    }
+
     emits("native-change", value);
 }
 // --- Computed Component Classes ---
