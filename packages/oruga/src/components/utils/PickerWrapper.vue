@@ -183,7 +183,7 @@ function clickNative(event: Event): void {
     if (!isMobileNative.value) return;
 
     useOruga().notification.open({
-        message: "click" + "+" + input.value.type,
+        message: "click" + "+" + JSON.stringify(input.value.value),
         variant: "warning",
         duration: 2000,
     });
