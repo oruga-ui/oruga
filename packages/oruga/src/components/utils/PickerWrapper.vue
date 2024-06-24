@@ -196,7 +196,7 @@ function clickNative(event: Event): void {
         // blur the current state to remove active native keyboards for type 'text'
         input.value.blur();
 
-        nextTick(() => {
+        setTimeout(() => {
             // make the input editable
             input.value.readOnly = false;
             input.value.type = props.nativeType;
