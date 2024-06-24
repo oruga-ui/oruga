@@ -255,9 +255,7 @@ function handleNativeChange(event: Event): void {
     // when the input does not have any value
     if (!value) {
         input.value.value = value;
-        // make the input uneditable
-        input.value.readOnly = true;
-        input.value.type = "text";
+        handleNativeBlur();
     }
 
     emits("native-change", value);
