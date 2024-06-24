@@ -14,7 +14,6 @@ import {
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
-import { useOruga } from "@/utils/programmatic";
 
 /**
  * This is a internal used component.
@@ -135,7 +134,7 @@ watch(
         if (vmodel.value !== inputValue.value) vmodel.value = inputValue.value;
 
         // toggle picker if not stay open
-        if (!props.stayOpen) togglePicker(false);
+        if (!isMobileNative.value && !props.stayOpen) togglePicker(false);
         if (!isValid.value) checkHtml5Validity();
     },
     { flush: "post" },
@@ -182,12 +181,6 @@ function clickNative(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
-    useOruga().notification.open({
-        message: "click" + "+" + JSON.stringify(input.value.value),
-        variant: "warning",
-        duration: 2000,
-    });
-
     // when input is not editable jet
     if (input.value.type === "text") {
         event.preventDefault();
@@ -211,12 +204,6 @@ function hanldeNativeFocus(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
-    useOruga().notification.open({
-        message: "focus",
-        variant: "success",
-        duration: 2000,
-    });
-
     // when input is not editable jet
     if (input.value.type === "text") {
         // prevent focus
@@ -230,12 +217,6 @@ function hanldeNativeFocus(event: Event): void {
 function handleNativeBlur(): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
-
-    useOruga().notification.open({
-        message: "blur",
-        variant: "info",
-        duration: 2000,
-    });
 
     // when the input does not have any value
     if (!input.value.value) {
