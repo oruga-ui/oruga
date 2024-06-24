@@ -211,18 +211,33 @@ function hanldeNativeFocus(event: Event): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
+    useOruga().notification.open({
+        message: "focus",
+        variant: "success",
+        duration: 2000,
+    });
+
     // when input is not editable jet
     if (input.value.type === "text") {
         // prevent focus
         event.preventDefault();
         event.stopPropagation();
-    } else onFocus();
+    }
+    // only emit focus if editable
+    else onFocus();
 }
 
 function handleNativeBlur(): void {
     // do nothing if client is not mobile
     if (!isMobileNative.value) return;
 
+    useOruga().notification.open({
+        message: "blur",
+        variant: "info",
+        duration: 2000,
+    });
+
+    // when the input does not have any value
     if (!input.value.value) {
         // make the input uneditable
         input.value.readOnly = true;
@@ -236,7 +251,7 @@ function handleNativeChange(event: Event): void {
         ? (event.target as HTMLInputElement).value
         : null;
 
-    if (!value) input.value.value = null;
+    if (!value) input.value.value = value;
     emits("native-change", value);
 }
 // --- Computed Component Classes ---
