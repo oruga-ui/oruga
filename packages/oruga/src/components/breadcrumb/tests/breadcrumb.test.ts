@@ -29,7 +29,7 @@ describe("<Breadcrumb>", () => {
         const wrapper = mount(OBreadcrumb, {
             slot: triggerHTML
         });
-        const trigger = wrapper.find(".breadcrumb-item")
+        const trigger = wrapper.find(".o-breadcrumb-item")
         // expect(trigger.html()).toBe(triggerHTML)
         expect(trigger.exists()).toBeTruthy()
         expect(trigger.text()).contain("Home")
@@ -43,45 +43,18 @@ describe("<Breadcrumb>", () => {
             props: { align : "centered"}
         });
 
-        expect(wrapper.classes("o-breadcrumb-item__centered")).toBeTruthy()
+        expect(wrapper.classes("o-breadcrumb__centered")).toBeTruthy()
     });
-    // it("is large ", () => {
-    //     const triggerHTML =
-    //     '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>";
+    it("is large ", () => {
+        const triggerHTML =
+        '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>";
 
-    //     const wrapper = mount(OBreadcrumb, {
-    //         slot: triggerHTML,
-    //         props: { size : "large"}
-    //     });
+        const wrapper = mount(OBreadcrumb, {
+            slot: triggerHTML,
+            props: { size : "large"}
+        });
 
-    //     expect(wrapper.classes("o-breadcrumb-item__large")).toBeTruthy()
-    // });
-    // it("is active", () => {
-    //     const triggerHTML =
-    //     '<breadcrumb-item tag="a" active="true" active-variant"primary" href="/">Home</breadcrumb-item>";
-
-    //     const wrapper = mount(OBreadcrumb, {
-    //         slot: triggerHTML,
-    //     });
-
-    //     expect(wrapper.classes("o-breadcrumb-item__primary")).toBeTruthy()
-    //     expect(wrapper.classes("o-breadcrumb-item__primary")).toBeTruthy()
-    // });
-    // it("is disabled", () => {
-    //     const triggerHTML =
-    //     '<breadcrumb-item tag="a" disabled="true" href="/">Home</breadcrumb-item>";
-
-    //     const wrapper = mount(OBreadcrumb, {
-    //         slot: triggerHTML,
-    //         props: { size : "large"}
-    //     });
-
-    //     expect(wrapper.classes("o-breadcrumb-item__primary")).toBeTruthy()
-    // });
-    // it("has icon", () => {
-       
-    // });
-    // it("has href link", () => {
-       
-    // });
+        expect(wrapper.classes("o-breadcrumb__large")).toBeTruthy()
+    });
+ 
 });
