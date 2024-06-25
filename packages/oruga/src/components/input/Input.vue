@@ -39,8 +39,8 @@ defineOptions({
 
 const props = defineProps({
     /**
+     * The input value state
      * @type string | number
-     * @model
      */
     modelValue: {
         type: [Number, String] as unknown as PropType<ModelValue>,
