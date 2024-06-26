@@ -279,15 +279,16 @@ ${description ? "> " + description : ""}
 
         if (value === "undefined") value = "";
         else if (
-            value.indexOf("getOption") >= 0 &&
-            value.indexOf("const ") < 0 &&
-            value.indexOf("if ") < 0 &&
-            value.indexOf("else ") < 0
+            value.includes("getOption") &&
+            !value.includes("const ") &&
+            !value.includes("if ") &&
+            !value.includes("else ")
         ) {
             let configParts = null;
+
             const clear = (s) => s.replace(/'|"/g, "");
             // get default params
-            value = value.replace(/\r\n/g, "");
+            value = value.replace(/\r\n/g, "").replaceAll("\n", "");
             let f = "";
             if (value.includes("getOption("))
                 f = value.substring(
