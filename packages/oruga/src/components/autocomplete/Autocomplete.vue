@@ -54,10 +54,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /**
-     * The selected option, use v-model to make it two-way binding
-     * @type string|object
-     */
+    /** The selected option, use v-model to make it two-way binding */
     modelValue: {
         type: [String, Object] as PropType<Option>,
         default: undefined,
@@ -378,7 +375,10 @@ const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
 
 const isActive = ref(false);
 
+/** The selected option, use v-model to make it two-way binding */
 const selectedOption = defineModel<Option>({ default: undefined });
+
+/** The value of the inner input, use v-model:input to make it two-way binding */
 const vmodel = defineModel<string>("input", { default: "" });
 
 const hoveredOption = ref<Option>();

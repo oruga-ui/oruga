@@ -24,7 +24,7 @@ import {
     useClickOutside,
 } from "@/composables";
 
-import type { DropdownComponent, DropdownProps } from "./types";
+import type { DropdownComponent } from "./types";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
 
@@ -44,14 +44,14 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** The selected item value */
-    modelValue: {
-        type: [String, Number, Object, Array] as PropType<T | T[]>,
-        default: undefined,
-    },
+    // modelValue: {
+    //     type: [String, Number, Object, Array] as PropType<T | T[]>,
+    //     default: undefined,
+    // },
     /** Allows multiple selections */
     multiple: { type: Boolean, default: false },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
+    // active: { type: Boolean, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
     label: { type: String, default: undefined },
     /** Dropdown is disabled */
@@ -274,8 +274,10 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
+/** The selected item value */
 const vmodel = defineModel<T | T[]>({ default: undefined });
 
+/** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
 
 const autoPosition = ref(props.position);
@@ -495,7 +497,7 @@ function selectItem(value: T): void {
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed<DropdownComponent<T>>(() => ({
-    props: props as DropdownProps,
+    props: props,
     selected: vmodel.value,
     selectItem,
 }));
