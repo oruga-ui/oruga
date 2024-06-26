@@ -44,14 +44,14 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** The selected item value */
-    // modelValue: {
-    //     type: [String, Number, Object, Array] as PropType<T | T[]>,
-    //     default: undefined,
-    // },
+    modelValue: {
+        type: [String, Number, Object, Array] as PropType<T | T[]>,
+        default: undefined,
+    },
     /** Allows multiple selections */
     multiple: { type: Boolean, default: false },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
-    // active: { type: Boolean, default: false },
+    active: { type: Boolean, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
     label: { type: String, default: undefined },
     /** Dropdown is disabled */
