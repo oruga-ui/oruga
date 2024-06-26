@@ -7,6 +7,10 @@ import { createChecker } from "vue-component-meta";
 
 import { componentDirectory, getFolders, getComponents, exist } from "./utils.mjs";
 
+const replaceValues = [
+    [" SortDirection", ' "asc" | "desc"']
+];
+  
 const __dirname = process.cwd()
   
 if(!exist(path.resolve(__dirname, componentDirectory))) 
@@ -74,7 +78,7 @@ const components = component_folders.map(folder => {
 });
 
     
-const code = `import type {
+let code = `import type {
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
@@ -97,6 +101,11 @@ declare module "../index" {
     }
 }
 `;
+  
+// replace lookup values
+replaceValues.forEach((lookup) => {
+    code = code.replaceAll(lookup[0], lookup[1]);
+})         
 
 const file = path.resolve(__dirname, componentDirectory, "types.ts");
 fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')
