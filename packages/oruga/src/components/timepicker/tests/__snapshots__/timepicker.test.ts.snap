@@ -31,7 +31,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
         -->
           <div class="" data-oruga="select">
             <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select o-tpck__select-placeholder" autocomplete="off">
-              <option disabled="" hidden="">
+              <option disabled="" hidden="" value="">
                 <!--
                         @slot Override the placeholder
                     -->00
@@ -68,7 +68,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
           </div><span class="o-tpck__separtor">:</span>
           <div class="" data-oruga="select">
             <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select o-tpck__select-placeholder" autocomplete="off">
-              <option disabled="" hidden="">
+              <option disabled="" hidden="" value="">
                 <!--
                         @slot Override the placeholder
                     -->00
