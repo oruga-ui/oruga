@@ -27,7 +27,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * @model
+     * The selected item value
      * @type string|number|object
      */
     modelValue: {

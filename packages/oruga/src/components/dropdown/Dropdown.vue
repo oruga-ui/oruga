@@ -43,7 +43,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
+    /** The selected item value */
     modelValue: {
         type: [String, Number, Boolean, Object, Array],
         default: undefined,

@@ -26,7 +26,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
+    /** The input value state */
     modelValue: { type: Date as PropType<Date>, default: undefined },
     /** The active state of the dropdown */
     active: { type: Boolean, default: false },
