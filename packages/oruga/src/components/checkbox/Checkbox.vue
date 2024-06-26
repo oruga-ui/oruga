@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends String | Number | Boolean | Object">
+<script setup lang="ts" generic="T extends string | number | boolean | object">
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -22,9 +22,9 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * @model
+     * The input value state
      * @type string|number|boolean|object|array
-     * */
+     */
     modelValue: {
         type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
         default: undefined,

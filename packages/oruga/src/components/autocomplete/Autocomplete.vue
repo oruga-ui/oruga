@@ -57,7 +57,6 @@ const props = defineProps({
     /**
      * The selected option, use v-model to make it two-way binding
      * @type string|object
-     * @model
      */
     modelValue: {
         type: [String, Object] as PropType<Option>,

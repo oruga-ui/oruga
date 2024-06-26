@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as path from "path";
 import * as fs from "fs";
+import * as path from "path";
+import * as process from "process";
 
 import renderMethods from "vue-docgen-cli/lib/templates/methods.js";
 import renderEvents from "vue-docgen-cli/lib/templates/events.js";
@@ -11,6 +12,20 @@ import { mdclean } from "vue-docgen-cli/lib/templates/utils.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const THEMES = require("./.vitepress/themes.json");
+
+import { createChecker } from "vue-component-meta";
+const __dirname = process.cwd();
+
+// create component meta checker
+const checker = createChecker(
+    path.resolve(__dirname, "../oruga/tsconfig.json"),
+    {
+        forceUseTs: true,
+        printer: { newLine: 1 },
+    },
+);
+
+const META_PROP_IGNORE = ["key", "ref", "ref_for", "ref_key", "class", "style"];
 
 // Components to be ignored for creating docs
 const IGNORE = [
@@ -63,9 +78,62 @@ export default {
     defaultExamples: false,
     getDestFile: (file, config) => {
         const component = getComponent(file);
-        if (!component || IGNORE.indexOf(component) >= 0) return;
+        if (!component || IGNORE.includes(component)) return;
         if (file.includes("/tests/")) return;
         return path.join(config.outDir, `${component}.md`);
+    },
+    apiOptions: {
+        /** add custom script handler to override prop documentation with vue-component-meta */
+        addScriptHandlers: [
+            (documentation) => {
+                const filePath = documentation.componentFullfilePath;
+                const component = getComponent(filePath);
+                if (!filePath || filePath.includes("tests")) return;
+                if (!component || IGNORE.includes(component)) return;
+
+                // analyse component with vue-component-meta
+                const meta = checker.getComponentMeta(filePath);
+                // convert from vue-component-meta to vue-docgen-api type
+                meta.props
+                    .filter((p) => !META_PROP_IGNORE.includes(p.name))
+                    .forEach((prop) => {
+                        const docProp = documentation.propsMap.get(prop.name);
+                        const isDefaultFunc =
+                            docProp?.defaultValue?.func || false;
+
+                        // create vue-docgen-api prop doc object
+                        const metaProp = {
+                            name: prop.name,
+                            required: prop.required,
+                            type: { name: prop.type },
+                            description: prop.description,
+                            defaultValue: {
+                                func: isDefaultFunc,
+                                value: isDefaultFunc
+                                    ? "() => " + prop.default
+                                    : prop.default,
+                            },
+                            tags: prop.tags
+                                ?.map((tag) => ({
+                                    [tag.name]: [
+                                        {
+                                            name: tag.name,
+                                            title: tag.name,
+                                            content: tag.text,
+                                            description: tag.text || true,
+                                        },
+                                    ],
+                                }))
+                                .reduce((a, b) => ({ ...a, ...b }), {}),
+                            values: prop.tags
+                                ?.find((tag) => tag.name === "values")
+                                ?.text?.split(", "),
+                        };
+                        // override vue-docgen-api prop doc object
+                        documentation.propsMap.set(prop.name, metaProp);
+                    });
+            },
+        ],
     },
     templates: {
         props: (props) => props,
@@ -195,13 +263,7 @@ ${description ? "> " + description : ""}
 
         const name = pr.name === "modelValue" ? "v-model" : pr.name;
         if (name.endsWith("Class") || name.endsWith("Classes")) {
-            if (
-                !(
-                    IGNORE_CLASSES[name.toLowerCase()] &&
-                    IGNORE_CLASSES[name.toLowerCase()].indexOf(name) >= 0
-                )
-            )
-                return;
+            if (!IGNORE_CLASSES[tag]?.includes(name.toLowerCase())) return;
         }
 
         const type = pr.tags?.type

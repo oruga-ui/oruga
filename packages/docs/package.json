@@ -42,6 +42,7 @@
     "typescript": "5.4.5",
     "vitepress": "^1.2.3",
     "vue": "^3.4.27",
+    "vue-component-meta": "^2.0.22",
     "vue-docgen-cli": "4.79.0",
     "vue-tsc": "^2.0.21"
   }
