@@ -187,10 +187,13 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("datepicker.mobileModal", true),
     },
-    /** Enable mobile native input if mobile agent */
+    /**
+     * Enable mobile native input if mobile agent
+     * (Default will be switched to `false` in 0.9)
+     */
     mobileNative: {
         type: Boolean,
-        default: () => getOption("datepicker.mobileNative", true),
+        default: () => getOption("datepicker.mobileNative", true), // TODO: make false
     },
     /**
      * Icon pack to use
@@ -601,7 +604,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-const vmodel = defineModel<Date | Date[]>({ default: undefined });
+const vmodel = defineModel<Date | Date[]>({ default: null });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -822,9 +825,9 @@ function next(): void {
 
 function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) value = value[0];
-
-    if (!value) return "";
     const date = new Date(value);
+    // return null if no value is given or value can't parse to proper date
+    if (!value || !date || isNaN(date.getTime())) return null;
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'
@@ -935,7 +938,7 @@ defineExpose({ focus: () => pickerRef.value?.focus() });
         v-model:active="isActive"
         data-oruga="datepicker"
         :value="vmodel"
-        :picker-props="props"
+        :picker="props"
         :formatted-value="formattedValue"
         :native-type="!isTypeMonth ? 'date' : 'month'"
         :native-value="formatNative(vmodel)"
