@@ -20,3 +20,10 @@ jobs:
         run: npm install      
       - name: Build lib
         run: npm run build:lib
+      - name: Run component tests 🧪
+        run: npm run test
+      - name: Upload coverage 📈
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: oruga-next
