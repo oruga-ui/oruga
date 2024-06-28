@@ -1,3 +1,13 @@
+## [0.8.12](https://github.com/oruga-ui/oruga/compare/v0.8.11...v0.8.12) (2024-06-28)
+
+
+### Bug Fixes
+
+* **datetimepicker:** fix datetimepicker initialisation bug ([#948](https://github.com/oruga-ui/oruga/issues/948)) ([92b30f1](https://github.com/oruga-ui/oruga/commit/92b30f16d7f2839f7f69c2ebf6bd9c7f0e11bedf))
+* **picker:** fix native input value ([#986](https://github.com/oruga-ui/oruga/issues/986)) ([09154d5](https://github.com/oruga-ui/oruga/commit/09154d5a9adc919a6bcd3f78448dd16baa008bc9))
+
+
+
 ## [0.8.11](https://github.com/oruga-ui/oruga/compare/v0.8.10...v0.8.11) (2024-06-05)
 
 
