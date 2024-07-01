@@ -33,17 +33,19 @@ defineOptions({
 
 const props = defineProps({
     /** parent picker component props  */
-    pickerProps: { type: Object, required: true },
+    picker: { type: Object, required: true },
     /** data-oruga attribute value */
     dataOruga: { type: String, required: true },
-    /** the input value */
+    /** the internal input value */
     value: { type: [Date, Array], default: undefined },
     /** the active state of the dropdown */
     active: { type: Boolean, default: false },
+    /** formatted display value to show when client is desktop */
     formattedValue: { type: String, default: undefined },
+    /** native value when client is mobile native */
+    nativeValue: { type: [String, Number], default: undefined },
     nativeType: { type: String, required: true },
     nativeStep: { type: String, default: undefined },
-    nativeValue: { type: [String, Number], default: undefined },
     nativeMin: { type: [String, Number], default: undefined },
     nativeMax: { type: [String, Number], default: undefined },
     stayOpen: { type: Boolean, default: false },
@@ -83,11 +85,11 @@ const emits = defineEmits<{
     (e: "icon-right-click", evt: Event): void;
 }>();
 
-/** the computed picker contains all chared props from the datepicker and the timepicker  */
-const picker = computed<any>(() => props.pickerProps);
-
 const isMobileNative = computed(
-    () => picker.value.mobileNative && isMobileAgent.any(),
+    () =>
+        !props.picker.inline &&
+        props.picker.mobileNative &&
+        isMobileAgent.any(),
 );
 
 const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
@@ -100,25 +102,33 @@ const elementRef = computed(() =>
 
 // use form input functionality for native input
 const {
+    input,
     checkHtml5Validity,
     setFocus,
-    doClick,
     onBlur,
     onFocus,
     onInvalid,
     isValid,
-    isFocused,
-} = useInputHandler(elementRef, emits, picker.value);
+} = useInputHandler<HTMLInputElement>(elementRef, emits, props.picker);
 
 /**
  * Show input as text for placeholder,
- * when placeholder and native value is given and input is not focused.
+ * when placeholder and no native value is given.
  */
-const computedNativeType = computed(() =>
-    !picker.value.placeholder || props.nativeValue || isFocused.value
+const initialNativeType =
+    !props.picker.placeholder || !!props.nativeValue
         ? props.nativeType
-        : "text",
+        : "text";
+
+/** input value based on mobile native or formatted desktop value */
+const inputValue = computed(() =>
+    isMobileNative.value ? props.nativeValue : props.formattedValue,
 );
+
+/** internal o-input vmodel value */
+const vmodel = ref(inputValue.value);
+// update the o-input vmodel value when prop value change
+watch(inputValue, (value) => (vmodel.value = value));
 
 /**
  * When v-model is changed:
@@ -129,10 +139,10 @@ watch(
     () => props.value,
     () => {
         // reset input value if they not match
-        if (vmodel.value !== props.formattedValue)
-            vmodel.value = props.formattedValue;
+        if (vmodel.value !== inputValue.value) vmodel.value = inputValue.value;
+
         // toggle picker if not stay open
-        if (!props.stayOpen) togglePicker(false);
+        if (!isMobileNative.value && !props.stayOpen) togglePicker(false);
         if (!isValid.value) checkHtml5Validity();
     },
     { flush: "post" },
@@ -140,17 +150,11 @@ watch(
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = ref(props.formattedValue);
-watch(
-    () => props.formattedValue,
-    (value) => (vmodel.value = value),
-);
-
 watch(isActive, onActiveChange);
 
-const ariaRole = computed(() => (!picker.value.inline ? "dialog" : undefined));
+const ariaRole = computed(() => (!props.picker.inline ? "dialog" : undefined));
 
-const triggers = computed(() => (picker.value.openOnFocus ? ["click"] : []));
+const triggers = computed(() => (props.picker.openOnFocus ? ["click"] : []));
 
 if (isClient) useEventListener("keyup", onKeyPress);
 
@@ -160,15 +164,12 @@ function onKeyPress(event: KeyboardEvent): void {
         togglePicker(false);
 }
 
-// --- EVENT HANDLER ---
+// --- PICKER EVENT HANDLER ---
 
 /** Toggle picker */
 function togglePicker(active: boolean): void {
-    if (isMobileNative.value) {
-        setFocus(); // focus the underlaying input element
-        doClick(); // click to open the underlaying input element
-    } else if (dropdownRef.value) {
-        if (active || picker.value.closeOnClick)
+    if (dropdownRef.value) {
+        if (active || props.picker.closeOnClick)
             nextTick(() => (isActive.value = active));
     }
 }
@@ -184,17 +185,83 @@ function onActiveChange(value: boolean): void {
     else if (!value) onBlur();
 }
 
+// --- NATIVE EVENT HANDLER ---
+
+function onNativeClick(event: Event): void {
+    // do nothing if client is not mobile
+    if (!isMobileNative.value) return;
+
+    // when input is not editable jet
+    if (input.value.type === "text") {
+        event.preventDefault();
+        event.stopPropagation();
+
+        // blur the current state to remove active native keyboards for type 'text'
+        input.value.blur();
+
+        setTimeout(() => {
+            // make the input editable
+            input.value.readOnly = false;
+            input.value.type = props.nativeType;
+
+            // focus the underlaying input element again to open native keyboards for type 'date'
+            setFocus();
+        }, 50);
+    }
+}
+
+function onNativeFocus(event: Event): void {
+    // do nothing if client is not mobile
+    if (!isMobileNative.value) return;
+
+    // when input is not editable jet
+    if (input.value.type === "text") {
+        // prevent focus
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    // only emit focus event if editable
+    else onFocus();
+}
+
+function onNativeBlur(): void {
+    // do nothing if client is not mobile
+    if (!isMobileNative.value) return;
+
+    // when the input does not have any value
+    if (!input.value.value) {
+        // make the input uneditable
+        input.value.readOnly = true;
+        input.value.type = "text";
+    }
+    // emit blur event
+    onBlur();
+}
+
+function handleNativeChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value
+        ? (event.target as HTMLInputElement).value
+        : null;
+
+    // when the input does not have any value
+    if (!value) {
+        input.value.value = value;
+        input.value.blur();
+    }
+
+    emits("native-change", value);
+}
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...attrs,
-    ...picker.value.inputClasses,
+    ...props.picker.inputClasses,
 }));
 
 const dropdownBind = computed(() => ({
     "root-class": getActiveClasses(props.dropdownClasses),
-    ...picker.value.dropdownClasses,
+    ...props.picker.dropdownClasses,
 }));
 
 // --- Expose Public Functionalities ---
@@ -204,9 +271,9 @@ defineExpose({ focus: setFocus });
 </script>
 
 <template>
-    <div :data-oruga="dataOruga" :class="rootClasses">
+    <div :data-oruga="dataOruga" :class="rootClasses" @click="onNativeClick">
         <o-dropdown
-            v-if="!isMobileNative || picker.inline"
+            v-if="!isMobileNative"
             ref="dropdownRef"
             v-bind="dropdownBind"
             v-model:active="isActive"
@@ -258,31 +325,34 @@ defineExpose({ focus: setFocus });
         </o-dropdown>
 
         <!-- Native Picker -->
-        <o-input
-            v-else
-            ref="nativeInputRef"
-            v-bind="inputBind"
-            :type="computedNativeType"
-            autocomplete="off"
-            :model-value="nativeValue"
-            :min="nativeMin"
-            :max="nativeMax"
-            :step="nativeStep"
-            :placeholder="picker.placeholder"
-            :size="picker.size"
-            :icon-pack="picker.iconPack"
-            :icon="picker.icon"
-            :icon-right="picker.iconRight"
-            :icon-right-clickable="picker.iconRightClickable"
-            :rounded="picker.rounded"
-            :disabled="picker.disabled"
-            :readonly="false"
-            :use-html5-validation="false"
-            @change="$emit('native-change', $event.target.value)"
-            @focus="onFocus"
-            @blur="onBlur"
-            @invalid="onInvalid"
-            @icon-click="$emit('icon-click', $event)"
-            @icon-right-click="$emit('icon-right-click', $event)" />
+        <template v-else>
+            <slot name="trigger">
+                <o-input
+                    ref="nativeInputRef"
+                    v-bind="inputBind"
+                    v-model="vmodel"
+                    :type="initialNativeType"
+                    :min="nativeMin"
+                    :max="nativeMax"
+                    :step="nativeStep"
+                    :placeholder="picker.placeholder"
+                    :size="picker.size"
+                    :icon-pack="picker.iconPack"
+                    :icon="picker.icon"
+                    :icon-right="picker.iconRight"
+                    :icon-right-clickable="picker.iconRightClickable"
+                    :rounded="picker.rounded"
+                    :disabled="picker.disabled"
+                    :readonly="initialNativeType == 'text'"
+                    autocomplete="off"
+                    :use-html5-validation="false"
+                    @change="handleNativeChange"
+                    @focus="onNativeFocus"
+                    @blur="onNativeBlur"
+                    @invalid="onInvalid"
+                    @icon-click="$emit('icon-click', $event)"
+                    @icon-right-click="$emit('icon-right-click', $event)" />
+            </slot>
+        </template>
     </div>
 </template>

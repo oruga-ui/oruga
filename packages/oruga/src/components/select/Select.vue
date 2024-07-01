@@ -4,7 +4,7 @@ import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
+import { isDefined, uuid } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -30,7 +30,7 @@ const props = defineProps({
     /** The input value state */
     modelValue: {
         type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
-        default: undefined,
+        default: null,
     },
     /** Select options, unnecessary when default slot is used */
     options: {
@@ -233,9 +233,15 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
 
-const vmodel = defineModel<T | T[]>({ default: undefined });
+const vmodel = defineModel<T | T[]>({
+    get: (v) => (isDefined(v) ? v : props.multiple ? [] : ""),
+    set: (v) => (isDefined(v) ? v : props.multiple ? [] : null),
+    default: null,
+});
 
-const placeholderVisible = computed(() => !props.multiple && !vmodel.value);
+const placeholderVisible = computed(
+    () => !props.multiple && (!isDefined(vmodel.value) || vmodel.value === ""),
+);
 
 onMounted(() => {
     /**
@@ -387,7 +393,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             @focus="onFocus"
             @invalid="onInvalid">
             <template v-if="placeholder || $slots.placeholder">
-                <option v-if="placeholderVisible" :value="null" disabled hidden>
+                <option v-if="placeholderVisible" value="" disabled hidden>
                     <!--
                         @slot Override the placeholder
                     -->

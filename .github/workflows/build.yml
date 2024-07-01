@@ -27,3 +27,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: oruga-next
+          
