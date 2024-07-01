@@ -357,7 +357,7 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<ComponentInstance<typeof OInput<false, string>>>();
+const inputRef = ref<ComponentInstance<typeof OInput>>();
 const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
