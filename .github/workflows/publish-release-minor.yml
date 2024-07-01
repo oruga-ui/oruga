@@ -1,4 +1,4 @@
-name: Generate new release
+name: Generate new minor release
 on:
   push:
     tags:
@@ -10,8 +10,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Always release the tip of the default branch
-          ref: develop
+          # Always release the tip of the master branch
+          ref: master
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
