@@ -135,6 +135,7 @@ const tags = ref([]);
 const allowNew = ref(false);
 const openOnFocus = ref(false);
 const keepFirst = ref(false);
+const keepOpen = ref(true);
 </script>
 
 <template>
@@ -143,6 +144,7 @@ const keepFirst = ref(false);
             <o-switch v-model="allowNew">Allow new items</o-switch>
             <o-switch v-model="keepFirst">Keep first</o-switch>
             <o-switch v-model="openOnFocus">Open on focus</o-switch>
+            <o-switch v-model="keepOpen">Keep open</o-switch>
         </o-field>
 
         <o-field label="Enter some items">
@@ -151,6 +153,7 @@ const keepFirst = ref(false);
                 :options="options"
                 :allow-new="allowNew"
                 :open-on-focus="openOnFocus"
+                :keep-open="keepOpen"
                 :keep-first="keepFirst"
                 field="user.first_name"
                 icon="tag"

@@ -94,7 +94,7 @@ const props = defineProps({
     /** Keep open dropdown list after select */
     keepOpen: {
         type: Boolean,
-        default: () => getOption("autocomplete.keepOpen", false),
+        default: () => getOption("taginput.keepOpen", false),
     },
     /** Input placeholder */
     placeholder: { type: String, default: undefined },
