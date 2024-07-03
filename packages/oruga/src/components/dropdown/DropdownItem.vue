@@ -46,7 +46,7 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: getOption("dropdown.itemAriaRole", "listitem"),
+        default: () => getOption("dropdown.itemAriaRole", "listitem"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the dropdown item */
