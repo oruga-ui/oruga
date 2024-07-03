@@ -130,8 +130,9 @@ const options = [
     },
 ];
 
-const keepFirst = ref(false);
 const openOnFocus = ref(false);
+const keepFirst = ref(false);
+const keepOpen = ref(true);
 
 const selected = ref(null);
 </script>
@@ -141,6 +142,7 @@ const selected = ref(null);
         <o-field grouped>
             <o-switch v-model="openOnFocus">Open dropdown on focus</o-switch>
             <o-switch v-model="keepFirst">Keep first</o-switch>
+            <o-switch v-model="keepOpen">KeepOpen</o-switch>
         </o-field>
 
         <o-field label="Find a name">
@@ -150,6 +152,7 @@ const selected = ref(null);
                 placeholder="e.g. Anne"
                 :keep-first="keepFirst"
                 :open-on-focus="openOnFocus"
+                :keep-open="keepOpen"
                 field="user.first_name">
                 <template #empty> No results found </template>
             </o-autocomplete>
