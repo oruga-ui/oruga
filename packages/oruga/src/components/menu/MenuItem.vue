@@ -74,7 +74,7 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: getOption("menu.itemAriaRole", "menuitem"),
+        default: () => getOption("menu.itemAriaRole", "menuitem"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the menu item */

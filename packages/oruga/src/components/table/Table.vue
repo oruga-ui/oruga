@@ -346,7 +346,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("table.loadingLabel"),
     },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("table.mobileBreakpoint"),
@@ -1053,7 +1053,7 @@ function isRowFiltered(row: T): boolean {
         if (typeof column?.customSearch === "function")
             return column.customSearch(row, filter);
 
-        const value = getValueByPath(row, key);
+        const value = typeof row === "object" ? getValueByPath(row, key) : row;
         if (value == null) return false;
         // if number compare values
         if (Number.isInteger(value)) return value === Number(filter);

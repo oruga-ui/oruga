@@ -107,7 +107,7 @@ const props = defineProps({
     },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
-    /** HTML element ID of the dropdown menu element */
+    /** HTML element Id of the dropdown menu element */
     menuId: { type: String, default: null },
     /** Tabindex of the dropdown menu element */
     menuTabindex: { type: Number, default: null },
@@ -160,7 +160,7 @@ const props = defineProps({
         validator: (value: string) =>
             ["list", "listbox", "menu", "dialog"].indexOf(value) > -1,
     },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("dropdown.mobileBreakpoint"),

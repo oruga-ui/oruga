@@ -105,14 +105,14 @@ if (isClient && window.ResizeObserver) {
     resizeObserver.value = new window.ResizeObserver(updatePositioning);
 }
 
-// on content or disable state change update event listener
+// on disable state change update event listener
 watch(
     () => props.disabled,
     () => {
         if (!props.disabled) addHandler();
         else removeHandler();
     },
-    { immediate: true },
+    { immediate: true, flush: "post" },
 );
 
 // update positioning if props change
@@ -122,10 +122,8 @@ watch(
         () => props.disablePositioning,
         () => props.disabled,
     ],
-    () => {
-        nextTick(() => updatePositioning());
-    },
-    { immediate: true },
+    () => updatePositioning(),
+    { immediate: true, flush: "post" },
 );
 
 // remove any event listener on unmount
