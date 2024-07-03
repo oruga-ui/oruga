@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | object">
 import {
     computed,
     nextTick,
@@ -45,9 +45,11 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /** The selected item value */
     modelValue: {
-        type: [String, Number, Boolean, Object, Array],
+        type: [String, Number, Object, Array] as PropType<T | T[]>,
         default: undefined,
     },
+    /** Allows multiple selections */
+    multiple: { type: Boolean, default: false },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
@@ -93,8 +95,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("dropdown.animation", "fade"),
     },
-    /** Allows multiple selections */
-    multiple: { type: Boolean, default: false },
     /** Trap focus inside the dropdown. */
     trapFocus: {
         type: Boolean,
@@ -250,22 +250,19 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {[String, Number, Boolean, Object, Array]} updated modelValue prop
+     * @param value {string | number | object | array} updated modelValue prop
      */
-    (
-        e: "update:modelValue",
-        value: [string, number, boolean, object, Array<any>],
-    ): void;
+    (e: "update:modelValue", value: T | T[]): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on change event - fired after modelValue:update
-     * @param value {any} selected value
+     * on change event - fired after update:modelValue
+     * @param value {string | number | object | array} selected value
      */
-    (e: "change", value: any): void;
+    (e: "change", value: T | T[]): void;
     /**
      * on close event
      * @param method {string} close method
@@ -277,8 +274,10 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const vmodel = defineModel<any>();
+/** The selected item value */
+const vmodel = defineModel<T | T[]>({ default: undefined });
 
+/** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
 
 const autoPosition = ref(props.position);
@@ -464,26 +463,26 @@ function checkDropdownScroll(): void {
  *   2. Emit input event to update the user v-model.
  *   3. Close the dropdown.
  */
-function selectItem(value: any): void {
+function selectItem(value: T): void {
     if (props.multiple) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
                 // add a value
-                vmodel.value = [...vmodel.value, value];
+                vmodel.value = [...vmodel.value, value] as T;
             } else {
                 // remove a value
-                vmodel.value = vmodel.value.filter((val) => val !== value);
+                vmodel.value = vmodel.value.filter((val) => val !== value) as T;
             }
         } else {
             // init new value array
-            vmodel.value = [value];
+            vmodel.value = [value] as T;
         }
         // emit change after vmodel has changed
         nextTick(() => emits("change", vmodel.value));
     } else {
         if (vmodel.value !== value) {
             // update a single value
-            vmodel.value = value;
+            vmodel.value = value as T;
             // emit change after vmodel has changed
             nextTick(() => emits("change", vmodel.value));
         }
@@ -497,7 +496,7 @@ function selectItem(value: any): void {
 }
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<DropdownComponent>(() => ({
+const provideData = computed<DropdownComponent<T>>(() => ({
     props,
     selected: vmodel.value,
     selectItem,
@@ -567,7 +566,7 @@ const menuClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ $trigger: triggerRef, $content: contentRef });
+defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Option extends String | Object">
+<script setup lang="ts" generic="Option extends string | object">
 import {
     computed,
     nextTick,
@@ -10,8 +10,8 @@ import {
     useSlots,
     type PropType,
     type Component,
-    type ComponentInstance,
 } from "vue";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -54,10 +54,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /**
-     * The selected option, use v-model to make it two-way binding
-     * @type string|object
-     */
+    /** The selected option, use v-model to make it two-way binding */
     modelValue: {
         type: [String, Object] as PropType<Option>,
         default: undefined,
@@ -357,8 +354,8 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<ComponentInstance<typeof OInput<false, string>>>();
-const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
+const inputRef = ref<ComponentExposed<typeof OInput>>();
+const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const itemRefs = ref([]);
@@ -378,7 +375,10 @@ const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
 
 const isActive = ref(false);
 
+/** The selected option, use v-model to make it two-way binding */
 const selectedOption = defineModel<Option>({ default: undefined });
+
+/** The value of the inner input, use v-model:input to make it two-way binding */
 const vmodel = defineModel<string>("input", { default: "" });
 
 const hoveredOption = ref<Option>();
@@ -403,7 +403,9 @@ const filteredOptions = computed<Option[]>(() =>
 const groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
     if (props.groupField) {
         if (props.groupOptions)
-            return filteredOptions.value.map((item: object) => {
+            return filteredOptions.value.map((item: Option) => {
+                if (typeof item === "string")
+                    return { group: item, items: [item] };
                 const group = getValueByPath(item, props.groupField);
                 const items = getValueByPath(item, props.groupOptions);
                 return { group, items };

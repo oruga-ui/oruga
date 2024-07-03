@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends string | number | object">
 import { computed, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -18,10 +18,13 @@ defineOptions({
 });
 
 const props = defineProps({
-    /** The value that will be returned on events and v-model - default is a uuid */
+    /**
+     * Item value (it will be used as v-model of wrapper component) - default is a uuid
+     * @type string|number|object
+     */
     value: {
-        type: [String, Number, Boolean, Object, Array] as PropType<T>,
-        default: undefined, // () => uuid(),
+        type: [String, Number, Object] as PropType<T>,
+        default: () => uuid(),
     },
     /** Item label, unnecessary when default slot is used */
     label: { type: String, default: undefined },
@@ -43,7 +46,7 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: getOption("dropdown.itemAriaRole", "listitem"),
+        default: () => getOption("dropdown.itemAriaRole", "listitem"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the dropdown item */
@@ -71,13 +74,11 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * onclick event
-     * @param value {[String, Number, Boolean, Object, Array]} value prop data
+     * @param value {string | number | object} value prop data
      * @param event {event} Native Event
      */
     (e: "click", value: T, event: Event): void;
 }>();
-
-const itemValue = computed(() => (props.value || uuid()) as T);
 
 // Inject functionalities and data from the parent component
 const { parent } = useProviderChild<DropdownComponent<T>>();
@@ -89,17 +90,17 @@ const isClickable = computed(
 const isActive = computed(() => {
     if (parent.value.selected === null) return false;
     if (parent.value.props.multiple && Array.isArray(parent.value.selected))
-        return parent.value.selected.some((selected) =>
-            isEqual(itemValue.value, selected),
+        return parent.value.selected.some((selected: T) =>
+            isEqual(props.value, selected),
         );
-    return isEqual(itemValue.value, parent.value.selected);
+    return isEqual(props.value, parent.value.selected);
 });
 
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(itemValue.value);
-    emits("click", itemValue.value, event);
+    parent.value.selectItem(props.value as T);
+    emits("click", props.value as T, event);
 }
 
 // --- Computed Component Classes ---
