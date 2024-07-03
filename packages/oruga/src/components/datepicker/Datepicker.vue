@@ -205,13 +205,10 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("datepicker.mobileModal", true),
     },
-    /**
-     * Enable mobile native input if mobile agent
-     * (Default will be switched to `false` in 0.9)
-     */
+    /** Enable mobile native input if mobile agent */
     mobileNative: {
         type: Boolean,
-        default: () => getOption("datepicker.mobileNative", true), // TODO: make false
+        default: () => getOption("datepicker.mobileNative", false),
     },
     /**
      * Icon pack to use
