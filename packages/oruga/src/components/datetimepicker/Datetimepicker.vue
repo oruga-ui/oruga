@@ -41,7 +41,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** The input value state */
-    modelValue: { type: Date, default: undefined },
+    modelValue: { type: Date, default: null },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Define props for the underlying datepicker component */
@@ -264,7 +264,7 @@ watch([() => isMobileNative.value, () => props.inline], () => {
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<Date>({ default: undefined });
+const vmodel = defineModel<Date>({ default: null });
 
 function updateVModel(value: Date | Date[]): void {
     if (!value) {
