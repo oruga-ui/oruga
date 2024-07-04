@@ -53,11 +53,11 @@ export function useVModel<T>(
         (value) => {
             if (
                 (!isUpdating && value !== vm.proxy.$props[name!]) ||
-                options.deep
+                options?.deep
             )
                 vm.emit(`update:${name}`, value);
         },
-        { deep: options.deep },
+        { deep: options?.deep },
     );
 
     return proxy;
