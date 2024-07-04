@@ -129,7 +129,13 @@ describe("OSwitch tests", () => {
         const trueValue = { a: "a", b: "b" };
         const falseValue = { y: "y", x: "X" };
         const wrapper = mount<typeof OSwitch<object>>(OSwitch, {
-            props: { modelValue: falseValue, trueValue, falseValue },
+            props: {
+                modelValue: falseValue,
+                trueValue,
+                falseValue,
+                "onUpdate:modelValue": (e) =>
+                    wrapper.setProps({ modelValue: e }),
+            },
         });
 
         const input = wrapper.find("input");
@@ -144,6 +150,7 @@ describe("OSwitch tests", () => {
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
+        expect(emits[0]).toContainEqual(trueValue);
         expect(emits[1]).toContainEqual(falseValue);
         expect(wrapper.vm.value).toEqual(falseValue);
     });

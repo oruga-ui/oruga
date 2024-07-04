@@ -60,10 +60,7 @@ const props = defineProps({
         default: undefined,
     },
     /** The value of the inner input, use v-model:input to make it two-way binding */
-    input: {
-        type: String,
-        default: "",
-    },
+    input: { type: String, default: "" },
     /**
      * Options / suggestions
      * @type string[]|object[]
@@ -694,9 +691,9 @@ function handleBlur(event: Event): void {
 }
 
 /** emit input change event */
-function onInput(value: string): void {
+function onInput(value: string | number): void {
     if (props.keepFirst && !selectedOption.value) hoverFirstOption();
-    emits("input", value);
+    emits("input", String(value));
     checkHtml5Validity();
 }
 

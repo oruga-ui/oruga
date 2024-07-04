@@ -9,3 +9,4 @@ export * from "./useProgrammatic";
 export * from "./useClickOutside";
 export * from "./useScrollingParent";
 export * from "./useObjectMap";
+export * from "./useVModel";

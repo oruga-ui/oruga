@@ -17,6 +17,7 @@ import {
     defineClasses,
     getActiveClasses,
     useInputHandler,
+    useVModel,
 } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -298,7 +299,8 @@ const emits = defineEmits<{
 
 const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<T>>>();
 
-const items = defineModel<T[]>({ default: () => [] });
+// const items = defineModel<T[]>({ default: () => [] });
+const items = useVModel<T[]>();
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
