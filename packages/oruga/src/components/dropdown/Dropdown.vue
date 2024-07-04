@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends string | number | object">
 import {
     computed,
     nextTick,
