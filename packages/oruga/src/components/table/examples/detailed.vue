@@ -103,11 +103,7 @@ const columnsVisible = ref({
 });
 const showDetailIcon = ref(true);
 const showDefaultDetail = ref(true);
-const detailedRows = ref([]);
-
-function onRowsCreated(rows) {
-    detailedRows.value = [rows.find((row) => row.value.name === "Board Games")];
-}
+const detailedRows = ref([data.value[0]]);
 </script>
 
 <template>
@@ -132,8 +128,7 @@ function onRowsCreated(rows) {
             :detailed-rows="detailedRows"
             :default-sort="['name', 'asc']"
             :custom-detail-row="!showDefaultDetail"
-            :show-detail-icon="showDetailIcon"
-            @rows="onRowsCreated">
+            :show-detail-icon="showDetailIcon">
             <o-table-column
                 v-slot="{ row, toggleDetails }"
                 field="name"

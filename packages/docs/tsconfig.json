@@ -12,8 +12,7 @@
   },
   "include": [
     ".vitepress/**/*",
-    "docgen.config.ts",
-    "volar.d.ts"
+    "docgen.config.ts"
   ],
   "exclude": [
     "node_modules"
