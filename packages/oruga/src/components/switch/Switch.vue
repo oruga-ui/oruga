@@ -2,7 +2,7 @@
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { defineClasses, useInputHandler } from "@/composables";
+import { defineClasses, useInputHandler, useVModel } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -205,7 +205,8 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = defineModel<T>({ default: undefined });
+// const vmodel = defineModel<T>({ default: undefined });
+const vmodel = useVModel<T>();
 
 const isChecked = computed(
     () =>

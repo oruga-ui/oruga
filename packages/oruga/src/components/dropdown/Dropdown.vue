@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number | object">
+<script setup lang="ts" generic="T">
 import {
     computed,
     nextTick,
@@ -22,6 +22,7 @@ import {
     useMatchMedia,
     useEventListener,
     useClickOutside,
+    useVModel,
 } from "@/composables";
 
 import type { DropdownComponent } from "./types";
@@ -156,7 +157,7 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: getOption("dropdown.ariaRole", "list"),
+        default: () => getOption("dropdown.ariaRole", "list"),
         validator: (value: string) =>
             ["list", "listbox", "menu", "dialog"].indexOf(value) > -1,
     },
@@ -275,7 +276,8 @@ const emits = defineEmits<{
 }>();
 
 /** The selected item value */
-const vmodel = defineModel<T | T[]>({ default: undefined });
+// const vmodel = defineModel<T | T[]>({ default: undefined });
+const vmodel = useVModel<T | T[]>();
 
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -468,21 +470,21 @@ function selectItem(value: T): void {
         if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
                 // add a value
-                vmodel.value = [...vmodel.value, value] as T;
+                vmodel.value = [...vmodel.value, value];
             } else {
                 // remove a value
-                vmodel.value = vmodel.value.filter((val) => val !== value) as T;
+                vmodel.value = vmodel.value.filter((val) => val !== value);
             }
         } else {
             // init new value array
-            vmodel.value = [value] as T;
+            vmodel.value = [value];
         }
         // emit change after vmodel has changed
         nextTick(() => emits("change", vmodel.value));
     } else {
         if (vmodel.value !== value) {
             // update a single value
-            vmodel.value = value as T;
+            vmodel.value = value;
             // emit change after vmodel has changed
             nextTick(() => emits("change", vmodel.value));
         }
