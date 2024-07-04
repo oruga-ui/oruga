@@ -100,7 +100,7 @@ const props = defineProps({
     },
     /** Accessibility aria-label to to be passed to the slider thumb element. */
     ariaLabel: {
-        type: [String, Array] as PropType<string | string[]>,
+        type: String,
         default: () => getOption("slider.ariaLabel"),
     },
     // class props (will not be displayed in the docs)

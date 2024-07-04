@@ -172,13 +172,13 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string | number | object} updated modelValue prop
      */
     (e: "update:modelValue", value: T): void;
     /**
      * on tab change event
-     * @param value {string | number} new tab value
-     * @param value {string | number} old tab value
+     * @param value {string | number | object} new tab value
+     * @param value {string | number | object} old tab value
      */
     (e: "change", newValue: T, oldValue: T): void;
 }>();

@@ -360,7 +360,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconRight: string;
                 /** Icon to be shown */
                 icon: string;
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Open dropdown on focus */
                 openOnFocus: boolean;
@@ -468,7 +468,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 checkScroll: boolean;
                 /** Max height of dropdown content */
                 maxHeight: string | number;
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Position of the dropdown relative to the trigger */
                 position: string;
@@ -517,7 +517,7 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 groupedClass: ClassDefinition;
                 /** Class when fields fill up multiple lines */
                 groupMultilineClass: ClassDefinition;
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Vertical size of input */
                 labelsize: string;
@@ -689,7 +689,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 container: string | HTMLElement;
                 /** Is Modal cancleable by clicking 'X', pressing escape or clicking outside */
                 cancelable: boolean | string[];
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
                 ariaRole: string;
@@ -806,7 +806,7 @@ Meaning that the container should be fixed. */
                 iconPrev: string;
                 /** Items count for each page */
                 perPage: string | number;
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Pagination button tag name */
                 buttonTag: DynamicComponent;
@@ -940,7 +940,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 expandOnHover: boolean;
                 /** Is Sidebar cancleable by pressing escape or clicking outside. */
                 cancelable: boolean | string[];
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Show a small sidebar */
                 reduce: boolean;
@@ -978,7 +978,7 @@ but will set body to position fixed, might break some layouts. */
         slider?: ComponentConfigBase &
             Partial<{
                 /** Accessibility aria-label to to be passed to the slider thumb element. */
-                ariaLabel: string | string[];
+                ariaLabel: string;
                 /** Class of slider tick */
                 tickClass: ClassDefinition;
                 /** Class of the filled part of the slider */
@@ -1080,7 +1080,7 @@ but will set body to position fixed, might break some layouts. */
                 iconNext: string;
                 /** Icon to use for navigation button */
                 iconPrev: string;
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Position of the marker label */
                 labelPosition: string;
@@ -1252,7 +1252,7 @@ but will set body to position fixed, might break some layouts. */
                 loadingLabel: string;
                 /** Makes the cells narrower */
                 narrowed: boolean;
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Pagination buttons order (if paginated) */
                 paginationOrder: string;
@@ -1358,7 +1358,9 @@ but will set body to position fixed, might break some layouts. */
                 ariaCloseLabel: string;
                 /** Add close/delete button to the item */
                 closable: boolean;
-                /** Allow removing last item when pressing given keys, if input is empty */
+                /** Allow removing last item when pressing given keys
+(https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
+if input is empty */
                 removeOnKeys: string[];
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
@@ -1447,7 +1449,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconRight: string;
                 /** Icon to be shown */
                 icon: string;
-                /** Mobile breakpoint as max-width value */
+                /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Open dropdown on focus */
                 openOnFocus: boolean;

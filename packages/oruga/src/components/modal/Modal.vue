@@ -59,7 +59,10 @@ const props = defineProps({
         default: () => getOption("modal.animation", "zoom-out"),
     },
     /** Show an overlay  */
-    overlay: { type: Boolean, default: getOption("modal.overlay", true) },
+    overlay: {
+        type: Boolean,
+        default: () => getOption("modal.overlay", true),
+    },
     /**
      * Is Modal cancleable by clicking 'X', pressing escape or clicking outside
      * @values escape, x, outside, button, true, false
@@ -97,7 +100,10 @@ const props = defineProps({
             ["dialog", "alertdialog"].indexOf(value) >= 0,
     },
     /** Accessibility aria-label to be passed to the div wrapper element */
-    ariaLabel: { type: String, default: () => getOption("modal.ariaLabel") },
+    ariaLabel: {
+        type: String,
+        default: () => getOption("modal.ariaLabel"),
+    },
     /** Destroy modal on hide - default `true` for programmatic usage */
     destroyOnHide: {
         type: Boolean,
@@ -121,7 +127,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("modal.closeIconSize", "medium"),
     },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("modal.mobileBreakpoint"),

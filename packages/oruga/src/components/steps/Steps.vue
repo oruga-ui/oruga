@@ -124,7 +124,7 @@ const props = defineProps({
     },
     /** Rounded step markers */
     rounded: { type: Boolean, default: true },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("steps.mobileBreakpoint"),
@@ -322,9 +322,7 @@ const nextItem = computed(() => {
     return nextItem;
 });
 
-/**
- * Return if the step should be clickable or not.
- */
+/** Return if the step should be clickable or not. */
 function isItemClickable(item: StepItem): boolean {
     if (item.clickable === undefined)
         return item.index < activeItem.value?.index;

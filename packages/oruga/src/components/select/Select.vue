@@ -91,7 +91,7 @@ const props = defineProps({
     iconRightClickable: { type: Boolean, default: false },
     /** Variant of right icon */
     iconRightVariant: { type: String, default: undefined },
-    /** Same as native id. Also set the for label for o-field wrapper. */
+    /** Same as native id. Also set the `for` label for o-field wrapper. */
     id: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
@@ -191,7 +191,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T | T[]} updated modelValue prop
+     * @param value {string | number | boolean | object | array} updated modelValue prop
      */
     (e: "update:modelValue", value: T | T[]): void;
     /**

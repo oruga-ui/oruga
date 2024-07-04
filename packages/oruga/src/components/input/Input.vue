@@ -139,7 +139,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("input.autocomplete", "off"),
     },
-    /** Same as native id. Also set the for label for o-field wrapper. */
+    /** Same as native id. Also set the `for` label for o-field wrapper. */
     id: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {

@@ -59,10 +59,10 @@ sidebarDepth: 2
 
 ### Events
 
-| Event name        | Properties                                                                                    | Description                     |
-| ----------------- | --------------------------------------------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `string \| number` - updated modelValue prop                                        | modelValue prop two-way binding |
-| change            | **value** `string \| number` - new tab value<br/>**value** `string \| number` - old tab value | on tab change event             |
+| Event name        | Properties                                                                                                        | Description                     |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| update:modelValue | **value** `string \| number \| object` - updated modelValue prop                                                  | modelValue prop two-way binding |
+| change            | **value** `string \| number \| object` - new tab value<br/>**value** `string \| number \| object` - old tab value | on tab change event             |
 
 ### Slots
 
