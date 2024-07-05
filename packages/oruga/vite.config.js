@@ -38,6 +38,11 @@ export default defineConfig(({ mode }) => ({
     root: __dirname,
     resolve: {
         alias: {
+            // add '@/oruga' alias to sry entry point
+            "@/oruga": fileURLToPath(
+                new URL("./src/index.ts", import.meta.url),
+            ),
+            // add '@' alias to src
             "@": fileURLToPath(new URL("./src", import.meta.url)),
         },
     },

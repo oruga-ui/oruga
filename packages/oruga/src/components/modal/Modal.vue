@@ -47,7 +47,7 @@ const props = defineProps({
     /** Display modal as full screen */
     fullScreen: { type: Boolean, default: false },
     /** Text content, unnecessary when default slot is used */
-    content: { type: String, default: undefined },
+    content: { type: [String, Object], default: undefined },
     /** Width of the Modal */
     width: {
         type: [String, Number],
