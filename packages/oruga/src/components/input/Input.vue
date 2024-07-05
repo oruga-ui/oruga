@@ -74,13 +74,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on input change event
      * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: ModelValue, event: Event): void;
+    (e: "input", value: T, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -199,7 +199,7 @@ watch(
 
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const input = (props.number ? Number(value) : String(value)) as ModelValue;
+    const input = (props.number ? Number(value) : String(value)) as T;
     emits("input", input, event);
 }
 
