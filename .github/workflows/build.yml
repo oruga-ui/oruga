@@ -19,4 +19,4 @@ jobs:
       - name: Install dependencies 📦
         run: npm install      
       - name: Build lib
-          
+        run: npm run build:lib
