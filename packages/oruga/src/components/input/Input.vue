@@ -38,7 +38,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<InputProps>(), {
     modelValue: undefined,
-    number: false,
+    // number: false,
     override: undefined,
     type: "text",
     size: getOption("input.size"),
@@ -74,13 +74,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input change event
      * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T, event: Event): void;
+    (e: "input", value: ModelValue, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -131,7 +131,7 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-// const vmodel = defineModel<T>({ default: undefined });
+// const vmodel = defineModel<ModelValue>({ default: undefined });
 const vmodel = useVModel<ModelValue>();
 
 // if id is given set as `for` property on o-field wrapper
@@ -199,7 +199,7 @@ watch(
 
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const input = (props.number ? Number(value) : String(value)) as T;
+    const input = (props.number ? Number(value) : String(value)) as ModelValue;
     emits("input", input, event);
 }
 
