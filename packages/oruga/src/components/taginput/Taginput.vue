@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Option extends string | object">
+<script setup lang="ts" generic="T extends string | object">
 import {
     computed,
     ref,
@@ -17,6 +17,7 @@ import {
     defineClasses,
     getActiveClasses,
     useInputHandler,
+    useVModel,
 } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -40,12 +41,12 @@ const props = defineProps({
      * The input value state
      * @type string[]|object[]
      */
-    modelValue: { type: Array as PropType<Option[]>, default: () => [] },
+    modelValue: { type: Array as PropType<T[]>, default: () => [] },
     /**
      * Items data
      * @type string[]|object[]
      */
-    options: { type: Array as PropType<Option[]>, default: () => [] },
+    options: { type: Array as PropType<T[]>, default: () => [] },
     /** Property of the object (if data is array of objects) to use as display text */
     field: { type: String, default: "value" },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
@@ -54,14 +55,12 @@ const props = defineProps({
     groupOptions: { type: String, default: undefined },
     /** Function to format an option to a string for display it in the input (as alternative to field prop) */
     formatter: {
-        type: Function as PropType<(value: unknown, option: Option) => string>,
+        type: Function as PropType<(value: unknown, option: T) => string>,
         default: undefined,
     },
     /** Function to filter the options based on the input value - default is display text comparison */
     filter: {
-        type: Function as PropType<
-            (options: Option[], value: string) => Option[]
-        >,
+        type: Function as PropType<(options: T[], value: string) => T[]>,
         default: undefined,
     },
     /**
@@ -94,7 +93,7 @@ const props = defineProps({
     /** Keep open dropdown list after select */
     keepOpen: {
         type: Boolean,
-        default: () => getOption("autocomplete.keepOpen", false),
+        default: () => getOption("taginput.keepOpen", false),
     },
     /** Input placeholder */
     placeholder: { type: String, default: undefined },
@@ -122,20 +121,24 @@ const props = defineProps({
     allowNew: { type: Boolean, default: false },
     /** Allows adding the same item multiple time */
     allowDuplicates: { type: Boolean, default: false },
-    /** Allow removing last item when pressing given keys, if input is empty */
+    /**
+     * Allow removing last item when pressing given keys
+     * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
+     * if input is empty
+     */
     removeOnKeys: {
         type: Array as PropType<string[]>,
         default: () => getOption("taginput.removeOnKeys", ["Backspace"]),
     },
     /** Function to validate the value of the item before adding */
     beforeAdding: {
-        type: Function as PropType<(value: Option | string) => boolean>,
+        type: Function as PropType<(value: T | string) => boolean>,
         default: () => true,
     },
     /** Function to create a new item to push into v-model (items) */
     createItem: {
-        type: Function as PropType<(value: Option | string) => Option>,
-        default: (item: Option | string) => item,
+        type: Function as PropType<(value: T | string) => T>,
+        default: (item: T | string) => item,
     },
     /** Makes the component check if list reached scroll start or end and emit scroll events. */
     checkScroll: {
@@ -247,7 +250,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string[] | object[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: Option[]): void;
+    (e: "update:modelValue", value: T[]): void;
     /**
      * on input change event
      * @param value {string} input value
@@ -257,12 +260,12 @@ const emits = defineEmits<{
      * new item got added
      * @param value {string | object} added item
      */
-    (e: "add", value: Option): void;
+    (e: "add", value: T): void;
     /**
      * item got removed
      * @param value {string | object} removed item
      */
-    (e: "remove", value: Option): void;
+    (e: "remove", value: T): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -294,9 +297,10 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<Option>>>();
+const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<T>>>();
 
-const items = defineModel<Option[]>({ default: () => [] });
+// const items = defineModel<T[]>({ default: () => [] });
+const items = useVModel<T[]>();
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -338,12 +342,12 @@ const separatorsAsRegExp = computed(() =>
         : null,
 );
 
-function getNormalizedItemText(item: Option): string {
+function getNormalizedItemText(item: T): string {
     if (typeof item === "object") item = getValueByPath(item, props.field);
     return `${item}`;
 }
 
-function addItem(item?: Option | string): void {
+function addItem(item?: T | string): void {
     item = item || newItem.value.trim();
 
     if (item) {
@@ -386,7 +390,7 @@ function removeItem(index: number, event?: Event): void {
 
 // --- Event Handler ---
 
-function onSelect(option: Option): void {
+function onSelect(option: T): void {
     if (!option) return;
     addItem(option);
 }
@@ -474,7 +478,7 @@ const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: items.value });
+defineExpose({ focus: setFocus, value: items });
 </script>
 
 <template>

@@ -59,10 +59,10 @@ sidebarDepth: 2
 
 ### Events
 
-| Event name        | Properties                                                                                    | Description                     |
-| ----------------- | --------------------------------------------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `string \| number` - updated modelValue prop                                        | modelValue prop two-way binding |
-| change            | **value** `string \| number` - new tab value<br/>**value** `string \| number` - old tab value | on tab change event             |
+| Event name        | Properties                                                                                                        | Description                     |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| update:modelValue | **value** `string \| number \| object` - updated modelValue prop                                                  | modelValue prop two-way binding |
+| change            | **value** `string \| number \| object` - new tab value<br/>**value** `string \| number \| object` - old tab value | on tab change event             |
 
 ### Slots
 
@@ -84,17 +84,17 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description                                                              | Type                   | Values | Default                                                                                                                                            |
-| --------- | ------------------------------------------------------------------------ | ---------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility. | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tab"<br>}</code>     |
-| disabled  | Item will be disabled                                                    | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
-| icon      | Icon on the left                                                         | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>     |
-| iconPack  | Icon pack                                                                | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
-| label     | Item label                                                               | string                 | -      |                                                                                                                                                    |
-| override  | Override existing theme classes completely                               | boolean                | -      |                                                                                                                                                    |
-| tag       | Tabs item tag name                                                       | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
-| value     | Item value (it will be used as v-model of wrapper component)             | string\|number\|object | -      | Default function (see source code)                                                                                                                 |
-| visible   | Show/hide item                                                           | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
+| Prop name | Description                                                                      | Type                   | Values | Default                                                                                                                                            |
+| --------- | -------------------------------------------------------------------------------- | ---------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility.         | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tab"<br>}</code>     |
+| disabled  | Item will be disabled                                                            | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| icon      | Icon on the left                                                                 | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>     |
+| iconPack  | Icon pack                                                                        | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| label     | Item label                                                                       | string                 | -      |                                                                                                                                                    |
+| override  | Override existing theme classes completely                                       | boolean                | -      |                                                                                                                                                    |
+| tag       | Tabs item tag name                                                               | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
+| value     | Item value (it will be used as v-model of wrapper component) - default is a uuid | string\|number\|object | -      | Default function (see source code)                                                                                                                 |
+| visible   | Show/hide item                                                                   | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
 
 ### Events
 

@@ -34,7 +34,7 @@ const props = defineProps({
     /** The input value state */
     modelValue: {
         type: [Date, Array] as PropType<Date | Date[]>,
-        default: undefined,
+        default: null,
     },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
@@ -205,13 +205,10 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("datepicker.mobileModal", true),
     },
-    /**
-     * Enable mobile native input if mobile agent
-     * (Default will be switched to `false` in 0.9)
-     */
+    /** Enable mobile native input if mobile agent */
     mobileNative: {
         type: Boolean,
-        default: () => getOption("datepicker.mobileNative", true), // TODO: make false
+        default: () => getOption("datepicker.mobileNative", false),
     },
     /**
      * Icon pack to use
@@ -243,7 +240,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("datepicker.iconNext", "chevron-right"),
     },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("datepicker.mobileBreakpoint"),

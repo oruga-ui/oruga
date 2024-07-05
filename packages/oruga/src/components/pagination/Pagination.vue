@@ -89,7 +89,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("pagination.iconNext", "chevron-right"),
     },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("pagination.mobileBreakpoint"),

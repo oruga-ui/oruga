@@ -12,7 +12,12 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { defineClasses, useDebounce, useInputHandler } from "@/composables";
+import {
+    defineClasses,
+    useDebounce,
+    useInputHandler,
+    useVModel,
+} from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -61,20 +66,20 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     validationMessage: undefined,
 });
 
-type ModelValue = typeof props.number extends true ? number : string;
+type T = typeof props.number extends true ? number : string;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on input change event
      * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: ModelValue, event: Event): void;
+    (e: "input", value: T, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -125,7 +130,8 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<ModelValue>({ default: undefined });
+// const vmodel = defineModel<T>({ default: undefined });
+const vmodel = useVModel<T>();
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -192,7 +198,7 @@ watch(
 
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const input = (props.number ? Number(value) : String(value)) as ModelValue;
+    const input = (props.number ? Number(value) : String(value)) as T;
     emits("input", input, event);
 }
 
@@ -228,8 +234,7 @@ function iconClick(event: Event): void {
 
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
-    else if (props.clearable)
-        vmodel.value = (props.number ? 0 : "") as ModelValue;
+    else if (props.clearable) vmodel.value = (props.number ? 0 : "") as T;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());

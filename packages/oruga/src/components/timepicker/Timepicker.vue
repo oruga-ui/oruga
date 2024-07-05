@@ -27,7 +27,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** The input value state */
-    modelValue: { type: Date as PropType<Date>, default: undefined },
+    modelValue: { type: Date as PropType<Date>, default: null },
     /** The active state of the dropdown */
     active: { type: Boolean, default: false },
     /** Min time to select */
@@ -50,10 +50,7 @@ const props = defineProps({
      * Size of the button
      * @values small, medium, large
      */
-    size: {
-        type: String,
-        default: () => getOption("timepicker.size"),
-    },
+    size: { type: String, default: () => getOption("timepicker.size") },
     hourFormat: {
         type: [String, Number] as PropType<"12" | "24" | 12 | 24>,
         validator: (value: string | number) =>
@@ -106,10 +103,7 @@ const props = defineProps({
         default: () => [],
     },
     /** Reset the time inputs when meridian changes */
-    resetOnMeridianChange: {
-        type: Boolean,
-        default: false,
-    },
+    resetOnMeridianChange: { type: Boolean, default: false },
     /** Dropdown trapFocus */
     trapFocus: {
         type: Boolean,
@@ -147,7 +141,7 @@ const props = defineProps({
     },
     /** Make the icon right clickable */
     iconRightClickable: { type: Boolean, default: false },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("timepicker.mobileBreakpoint"),
@@ -274,7 +268,7 @@ const {
 
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
-const vmodel = defineModel<Date>({ default: undefined });
+const vmodel = defineModel<Date>({ default: null });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });

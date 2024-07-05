@@ -22,7 +22,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * Item value (it will be used as v-model of wrapper component)
+     * Item value (it will be used as v-model of wrapper component) - default is a uuid
      * @type string|number|object
      */
     value: {

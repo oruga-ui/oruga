@@ -1,17 +1,17 @@
-name: Generate new minor release
+name: Generate new pre-release
 on:
   push:
     tags:
-      - 'm*'
+      - 'v[0-9].[0-9]+.[0-9]+-?**'
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Always release the tip of the master branch
-          ref: master
+          # Always release the tag version
+          ref: ${{ GITHUB_REF }}
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

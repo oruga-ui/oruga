@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Option extends String | Object">
+<script setup lang="ts" generic="T extends string | object">
 import {
     computed,
     nextTick,
@@ -10,8 +10,8 @@ import {
     useSlots,
     type PropType,
     type Component,
-    type ComponentInstance,
 } from "vue";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -54,24 +54,18 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /**
-     * The selected option, use v-model to make it two-way binding
-     * @type string|object
-     */
+    /** The selected option, use v-model to make it two-way binding */
     modelValue: {
-        type: [String, Object] as PropType<Option>,
+        type: [String, Object] as PropType<T>,
         default: undefined,
     },
     /** The value of the inner input, use v-model:input to make it two-way binding */
-    input: {
-        type: String,
-        default: "",
-    },
+    input: { type: String, default: "" },
     /**
      * Options / suggestions
      * @type string[]|object[]
      * */
-    options: { type: Array as PropType<Option[]>, default: () => [] },
+    options: { type: Array as PropType<T[]>, default: () => [] },
     /** Property of the object (if `options` are an array of objects) to use as display text, and to keep track of selected option */
     field: { type: String, default: undefined },
     /** Property of the object (if `options` are an array of objects) to use as display text of group */
@@ -80,14 +74,12 @@ const props = defineProps({
     groupOptions: { type: String, default: undefined },
     /** Function to format an option to a string for display it in the input (as alternative to field prop) */
     formatter: {
-        type: Function as PropType<(value: unknown, option: Option) => string>,
+        type: Function as PropType<(value: unknown, option: T) => string>,
         default: undefined,
     },
     /** Function to filter the options based on the input value - default is display text comparison */
     filter: {
-        type: Function as PropType<
-            (options: Option[], value: string) => Option[]
-        >,
+        type: Function as PropType<(options: T[], value: string) => T[]>,
         default: undefined,
     },
     /** Input type */
@@ -299,7 +291,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: Option): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * input prop two-way binding
      * @param value {string}  updated input prop
@@ -314,7 +306,7 @@ const emits = defineEmits<{
      * selected element changed event
      * @param value {string | object} selected value
      */
-    (e: "select", value: Option, evt: Event): void;
+    (e: "select", value: T, evt: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
@@ -357,8 +349,8 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<ComponentInstance<typeof OInput>>();
-const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
+const inputRef = ref<ComponentExposed<typeof OInput>>();
+const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const itemRefs = ref([]);
@@ -378,10 +370,13 @@ const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
 
 const isActive = ref(false);
 
-const selectedOption = defineModel<Option>({ default: undefined });
+/** The selected option, use v-model to make it two-way binding */
+const selectedOption = defineModel<T>({ default: undefined });
+
+/** The value of the inner input, use v-model:input to make it two-way binding */
 const vmodel = defineModel<string>("input", { default: "" });
 
-const hoveredOption = ref<Option>();
+const hoveredOption = ref<T>();
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
@@ -389,7 +384,7 @@ const hoveredId = ref(null);
 const menuId = uuid();
 
 /** options filtered by input value */
-const filteredOptions = computed<Option[]>(() =>
+const filteredOptions = computed<T[]>(() =>
     typeof props.filter === "function"
         ? props.filter(props.options, vmodel.value)
         : props.options.filter((option) =>
@@ -403,7 +398,9 @@ const filteredOptions = computed<Option[]>(() =>
 const groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
     if (props.groupField) {
         if (props.groupOptions)
-            return filteredOptions.value.map((item: object) => {
+            return filteredOptions.value.map((item: T) => {
+                if (typeof item === "string" || typeof item === "number")
+                    return { group: item, items: [item] };
                 const group = getValueByPath(item, props.groupField);
                 const items = getValueByPath(item, props.groupOptions);
                 return { group, items };
@@ -495,7 +492,7 @@ function onDropdownClose(method: string): void {
 }
 
 /** get the formated option value for a column */
-function getValue(option?: Option): string {
+function getValue(option?: T): string {
     return getPropertyValue(option, props.field, props.formatter);
 }
 
@@ -506,7 +503,7 @@ function getValue(option?: Option): string {
  * update input value and close dropdown.
  */
 function setSelected(
-    option: Option,
+    option: T,
     closeDropdown: boolean = true,
     event: Event = undefined,
 ): void {
@@ -550,7 +547,7 @@ function selectHeaderOrFooterByClick(
 // --- Hover Feature ---
 
 /** Set which option is currently hovered. */
-function setHovered(option: Option | SpecialOption): void {
+function setHovered(option: T | SpecialOption): void {
     hoveredOption.value = isSpecialOption(option) ? null : option;
     headerHovered.value = option === SpecialOption.Header;
     footerHovered.value = option === SpecialOption.Footer;
@@ -694,9 +691,9 @@ function handleBlur(event: Event): void {
 }
 
 /** emit input change event */
-function onInput(value: string): void {
+function onInput(value: string | number): void {
     if (props.keepFirst && !selectedOption.value) hoverFirstOption();
-    emits("input", value);
+    emits("input", String(value));
     checkHtml5Validity();
 }
 
@@ -912,8 +909,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                 :aria-selected="toRaw(option) === toRaw(hoveredOption)"
                 :tabindex="-1"
                 @click="
-                    (value, event) =>
-                        setSelected(value as Option, !keepOpen, event)
+                    (value, event) => setSelected(value as T, !keepOpen, event)
                 ">
                 <!--
                     @slot Override the select option

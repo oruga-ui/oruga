@@ -46,7 +46,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("field.labelsize"),
     },
-    /** Same as native for set on the label */
+    /** Same as native `for` set on the label */
     labelFor: { type: String, default: undefined },
     /** Help message text */
     message: { type: String, default: undefined },
@@ -65,7 +65,7 @@ const props = defineProps({
     horizontal: { type: Boolean, default: false },
     /** Field automatically attach controls together */
     addons: { type: Boolean, default: false },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("field.mobileBreakpoint"),

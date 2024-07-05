@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-// @ts-ignore Examples are loaded differently.
-import type { TableColumn } from "../../../../dist/oruga";
+import type { TableColumn } from "@/oruga";
 
 const columns = ref<TableColumn[]>([
     {

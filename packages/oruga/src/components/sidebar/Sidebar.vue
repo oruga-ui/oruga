@@ -116,7 +116,7 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("sidebar.destroyOnHide", false),
     },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("sidebar.mobileBreakpoint"),

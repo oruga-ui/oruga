@@ -11,11 +11,10 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "baseUrl": ".",
-    "types": ["node", "vite/client", "./volar.d.ts"],
+    "types": ["node", "vite/client", "./components.d.ts"],
     "paths": {
-      "@/*": [
-        "src/*",
-      ]
+      "@/*": ["src/*"],
+      "@/oruga": ["src/index"],
     },
     "lib": [
       "esnext",

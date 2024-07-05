@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | object">
 import {
     computed,
     nextTick,
@@ -22,6 +22,7 @@ import {
     useMatchMedia,
     useEventListener,
     useClickOutside,
+    useVModel,
 } from "@/composables";
 
 import type { DropdownComponent } from "./types";
@@ -45,9 +46,11 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /** The selected item value */
     modelValue: {
-        type: [String, Number, Boolean, Object, Array],
+        type: [String, Number, Object, Array] as PropType<T | T[]>,
         default: undefined,
     },
+    /** Allows multiple selections */
+    multiple: { type: Boolean, default: false },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
@@ -93,8 +96,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("dropdown.animation", "fade"),
     },
-    /** Allows multiple selections */
-    multiple: { type: Boolean, default: false },
     /** Trap focus inside the dropdown. */
     trapFocus: {
         type: Boolean,
@@ -107,7 +108,7 @@ const props = defineProps({
     },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
-    /** HTML element ID of the dropdown menu element */
+    /** HTML element Id of the dropdown menu element */
     menuId: { type: String, default: null },
     /** Tabindex of the dropdown menu element */
     menuTabindex: { type: Number, default: null },
@@ -156,11 +157,11 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: getOption("dropdown.ariaRole", "list"),
+        default: () => getOption("dropdown.ariaRole", "list"),
         validator: (value: string) =>
             ["list", "listbox", "menu", "dialog"].indexOf(value) > -1,
     },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("dropdown.mobileBreakpoint"),
@@ -250,22 +251,19 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {[String, Number, Boolean, Object, Array]} updated modelValue prop
+     * @param value {string | number | object | array} updated modelValue prop
      */
-    (
-        e: "update:modelValue",
-        value: [string, number, boolean, object, Array<any>],
-    ): void;
+    (e: "update:modelValue", value: T | T[]): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on change event - fired after modelValue:update
-     * @param value {any} selected value
+     * on change event - fired after update:modelValue
+     * @param value {string | number | object | array} selected value
      */
-    (e: "change", value: any): void;
+    (e: "change", value: T | T[]): void;
     /**
      * on close event
      * @param method {string} close method
@@ -277,8 +275,11 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const vmodel = defineModel<any>();
+/** The selected item value */
+// const vmodel = defineModel<T | T[]>({ default: undefined });
+const vmodel = useVModel<T | T[]>();
 
+/** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
 
 const autoPosition = ref(props.position);
@@ -464,7 +465,7 @@ function checkDropdownScroll(): void {
  *   2. Emit input event to update the user v-model.
  *   3. Close the dropdown.
  */
-function selectItem(value: any): void {
+function selectItem(value: T): void {
     if (props.multiple) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
@@ -497,7 +498,7 @@ function selectItem(value: any): void {
 }
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<DropdownComponent>(() => ({
+const provideData = computed<DropdownComponent<T>>(() => ({
     props,
     selected: vmodel.value,
     selectItem,
@@ -567,7 +568,7 @@ const menuClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ $trigger: triggerRef, $content: contentRef });
+defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
 </script>
 
 <template>
