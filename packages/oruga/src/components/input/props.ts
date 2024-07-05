@@ -1,18 +1,34 @@
 import type { ComponentClass } from "@/types";
 
-export type InputProps<IsNumber extends boolean> = {
+type ConditionalModelValue =
+    | {
+          /**
+           * The input value state
+           * @type string | number
+           */
+          modelValue?: number;
+          /**
+           * Convert the modelValue into type `number`
+           * @type boolean
+           */
+          number: true;
+      }
+    | {
+          /**
+           * The input value state
+           * @type string | number
+           */
+          modelValue?: string;
+          /**
+           * Convert the modelValue into type `number`
+           * @type boolean
+           */
+          number?: false;
+      };
+
+export type InputProps = ConditionalModelValue & {
     /** Override existing theme classes completely */
     override?: boolean;
-    /**
-     * The input value state
-     * @type string | number
-     */
-    modelValue?: IsNumber extends true ? number : string;
-    /**
-     * Convert the modelValue into type `number`
-     * @type boolean
-     */
-    number?: IsNumber;
     /**
      * Input type, like native
      * @values Any native input type, and textarea

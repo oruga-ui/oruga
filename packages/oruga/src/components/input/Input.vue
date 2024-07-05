@@ -1,4 +1,5 @@
-<script setup lang="ts" generic="IsNumber extends boolean = false">
+<script setup lang="ts" generic="T">
+// just adding generic="T" is needed to enable conditional type usage
 import {
     ref,
     computed,
@@ -35,9 +36,9 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
+const props = withDefaults(defineProps<InputProps>(), {
     modelValue: undefined,
-    // number: false,
+    number: false,
     override: undefined,
     type: "text",
     size: getOption("input.size"),
@@ -66,20 +67,20 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     validationMessage: undefined,
 });
 
-type T = typeof props.number extends true ? number : string;
+type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input change event
      * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T, event: Event): void;
+    (e: "input", value: ModelValue, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -131,7 +132,7 @@ const {
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
 // const vmodel = defineModel<T>({ default: undefined });
-const vmodel = useVModel<T>();
+const vmodel = useVModel<ModelValue>();
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -198,7 +199,7 @@ watch(
 
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const input = (props.number ? Number(value) : String(value)) as T;
+    const input = (props.number ? Number(value) : String(value)) as ModelValue;
     emits("input", input, event);
 }
 
@@ -234,7 +235,8 @@ function iconClick(event: Event): void {
 
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
-    else if (props.clearable) vmodel.value = (props.number ? 0 : "") as T;
+    else if (props.clearable)
+        vmodel.value = (props.number ? 0 : "") as ModelValue;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());
