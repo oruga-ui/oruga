@@ -11,7 +11,7 @@ import Inspector from "./components/Inspector.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
 
-import Oruga, { useOruga } from "../../../oruga/dist/oruga";
+import Oruga, { useOruga } from "@/oruga";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import * as bootstrapTheme from "@oruga-ui/theme-bootstrap";

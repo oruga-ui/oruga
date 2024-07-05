@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-// @ts-ignore Examples are loaded differently.
-import { useOruga } from "../../../../dist/oruga";
-// @ts-ignore Examples are loaded differently.
-import type { TableColumn } from "../../../../dist/oruga";
+import { useOruga } from "@/oruga";
+import type { TableColumn } from "@/oruga";
 
 const oruga = useOruga();
 
@@ -25,7 +23,7 @@ const columns = ref<TableColumn[]>([
     {
         field: "date",
         label: "Date",
-        centered: true,
+        // centered: true,
     },
     {
         field: "gender",

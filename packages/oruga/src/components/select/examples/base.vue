@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// @ts-ignore Examples are loaded differently.
-import type { OptionsItem } from "../../../../dist/oruga";
+import type { OptionsItem } from "@/oruga";
 
 const options: OptionsItem[] = [
     { label: "Flint", value: "flint" },
