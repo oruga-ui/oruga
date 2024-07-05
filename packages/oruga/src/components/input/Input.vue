@@ -1,5 +1,4 @@
-<script setup lang="ts" generic="T">
-// just adding generic="T" is needed to enable conditional type usage
+<script setup lang="ts" generic="IsNumber extends boolean = false">
 import {
     ref,
     computed,
@@ -36,7 +35,7 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<InputProps>(), {
+const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     modelValue: undefined,
     // number: false,
     override: undefined,
@@ -58,7 +57,7 @@ const props = withDefaults(defineProps<InputProps>(), {
     iconRightClickable: false,
     iconRightVariant: undefined,
     clearable: getOption("input.clearable", false),
-    clearIcon: getOption("input.clearIcon", "close-circle"),
+    clearIcon: getOption("input.clearIcon", "close-c ircle"),
     statusIcon: getOption("statusIcon", true),
     debounce: getOption("autocomplete.debounce", 400),
     autocomplete: getOption("input.autocomplete", "off"),
@@ -139,11 +138,9 @@ if (props.id) parentField?.value?.setInputId(props.id);
 
 /** Get value length */
 const valueLength = computed(() =>
-    typeof vmodel.value === "string"
-        ? vmodel.value.length
-        : typeof vmodel.value === "number"
-          ? String(vmodel.value).length
-          : 0,
+    typeof vmodel.value === "string" || typeof vmodel.value === "number"
+        ? String(vmodel.value).length
+        : 0,
 );
 
 onMounted(() => {
