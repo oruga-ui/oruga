@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onBeforeMount, onBeforeUnmount } from "vue";
-// @ts-ignore Examples are loaded differently.
-import { useOruga } from "../../../../dist/oruga";
+import { useOruga } from "@/oruga";
 
 const customIconPacks = {
     ionicons: {

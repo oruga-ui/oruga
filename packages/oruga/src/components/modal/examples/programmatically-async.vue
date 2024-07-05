@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// @ts-ignore Examples are loaded differently.
-import { useOruga } from "../../../../dist/oruga";
+import { useOruga } from "@/oruga";
 import ModalForm from "./_modal-form-async.vue";
 
 const oruga = useOruga();

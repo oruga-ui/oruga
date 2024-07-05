@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// @ts-ignore Examples are loaded differently.
-import { useOruga } from "../../../../dist/oruga";
+import { useOruga } from "@/oruga";
 import NotificationForm from "./_notification-form.vue";
 
 const oruga = useOruga();

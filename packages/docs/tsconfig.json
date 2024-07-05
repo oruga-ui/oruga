@@ -7,8 +7,10 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "baseUrl": ".",
-    "types": ["node", "vite/client", "vitepress/client"]
-
+    "types": ["node", "vite/client", "vitepress/client"],
+    "paths": {
+      "@/oruga": ["../oruga/src"],
+    },
   },
   "include": [
     ".vitepress/**/*",
