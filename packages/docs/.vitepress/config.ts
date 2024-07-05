@@ -132,7 +132,7 @@ export default defineConfig({
             alias: {
                 // add '@/oruga' alias to strict oruga package
                 "@/oruga": fileURLToPath(
-                    new URL("./../../oruga/src", import.meta.url),
+                    new URL("./../../oruga/src/index.ts", import.meta.url),
                 ),
                 // add '@' alias to oruga package
                 "@": fileURLToPath(
