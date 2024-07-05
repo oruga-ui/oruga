@@ -1,4 +1,4 @@
-name: Run Type Check
+name: Type Check
 on:
   push:
     branches: [ develop ]

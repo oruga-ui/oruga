@@ -1,4 +1,4 @@
-name: Run Build
+name: Build Oruga
 on:
   push:
     branches: [ develop ]
