@@ -28,7 +28,7 @@ defineOptions({
 const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
-    // multiple: false ,
+    // multiple: false,
     variant: () => getOption("upload.variant"),
     disabled: false,
     accept: undefined,
