@@ -1,14 +1,17 @@
 <script
     setup
     lang="ts"
-    generic="T extends object | typeof File | object[] | (typeof File)[]">
-import { computed, ref, watch, type PropType } from "vue";
+    generic="
+        T extends object | typeof File,
+        IsMultiple extends boolean = false
+    ">
+import { computed, ref, watch } from "vue";
 
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
-import { defineClasses, useInputHandler } from "@/composables";
+import { defineClasses, useInputHandler, useVModel } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { UploadProps } from "./props";
 
 /**
  * Upload one or more files
@@ -22,83 +25,28 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The input value state
-     * @type object|object[]|File|File[]
-     */
-    modelValue: {
-        type: [Object, Array] as PropType<T>,
-        default: undefined,
-    },
-    /** Same as native, also push new item to v-model instead of replacing */
-    multiple: { type: Boolean, default: false },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("upload.variant"),
-    },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Same as native accept */
-    accept: { type: String, default: undefined },
-    /** Accepts drag & drop and change its style */
-    dragDrop: { type: Boolean, default: false },
-    /** Upload will be expanded (full-width) */
-    expanded: { type: Boolean, default: false },
-    /** Replace last chosen files every time (like native file input element) */
-    native: { type: Boolean, default: true },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** The message which is shown when a validation error occurs */
-    validationMessage: { type: String, default: undefined },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Upload when draggable */
-    draggableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Upload variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Upload when expanded */
-    expandedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Upload when disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Upload when hovered */
-    hoveredClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
+    override: undefined,
+    modelValue: undefined,
+    // multiple: false ,
+    variant: () => getOption("upload.variant"),
+    disabled: false,
+    accept: undefined,
+    dragDrop: false,
+    expanded: false,
+    native: true,
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    validationMessage: undefined,
 });
+
+type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {object | object[] | File | File[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -118,7 +66,8 @@ const emits = defineEmits<{
 
 const inputRef = ref<HTMLInputElement>();
 
-const vmodel = defineModel<T>({ default: undefined });
+// const vmodel = defineModel<ModelValue>({ default: undefined });
+const vmodel = useVModel<ModelValue>();
 
 // use form input functionality
 const { checkHtml5Validity, onFocus, onBlur, isValid, setFocus } =
@@ -166,7 +115,7 @@ function onFileChange(event: Event | DragEvent): void {
             // add file when type is valid
             if (checkType(file)) values.push(file);
         }
-        vmodel.value = values as T;
+        vmodel.value = values as ModelValue;
     }
     // single uplaod
     else {
@@ -175,7 +124,7 @@ function onFileChange(event: Event | DragEvent): void {
         else {
             const file = value[0];
             // add file when type is valid
-            if (checkType(file)) vmodel.value = file as T;
+            if (checkType(file)) vmodel.value = file as ModelValue;
             // else clear input
             else if (vmodel.value) {
                 vmodel.value = null;
@@ -295,7 +244,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             ref="inputRef"
             type="file"
             data-oruga-input="file"
-            :multiple="multiple"
+            :multiple="props.multiple"
             :accept="accept"
             :disabled="disabled"
             @change="onFileChange"
