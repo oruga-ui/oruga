@@ -1,43 +1,5 @@
 import type { ComponentClass } from "@/types";
 
-// type ConditionalModelValue =
-//     | {
-//           /**s
-//            * The input value state
-//            * @type string | number
-//            */
-//           modelValue?: string;
-//           /**
-//            * Convert the modelValue into type `number`
-//            * @type boolean
-//            */
-//           number?: never;
-//       }
-//     | {
-//           /**s
-//            * The input value state
-//            * @type string | number
-//            */
-//           modelValue?: number;
-//           /**
-//            * Convert the modelValue into type `number`
-//            * @type boolean
-//            */
-//           number: true;
-//       }
-//     | {
-//           /**
-//            * The input value state
-//            * @type string | number
-//            */
-//           modelValue?: string;
-//           /**
-//            * Convert the modelValue into type `number`
-//            * @type boolean
-//            */
-//           number: false;
-//       };
-
 export type InputProps<IsNumber extends boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
