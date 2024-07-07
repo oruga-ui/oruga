@@ -109,7 +109,7 @@ const props = defineProps({
      * @values auto, top, bottom
      */
     position: {
-        type: String,
+        type: String as PropType<"auto" | "top" | "bottom">,
         default: () => getOption("autocomplete.position", "auto"),
         validator: (value: string) =>
             ["auto", "top", "bottom"].indexOf(value) >= 0,
