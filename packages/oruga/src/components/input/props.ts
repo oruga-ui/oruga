@@ -9,7 +9,7 @@ export type InputProps<IsNumber extends boolean> = {
      */
     modelValue?: IsNumber extends true ? number : string;
     /**
-     * Convert the modelValue into type `number`
+     * Convert the ´modelValue` into type `number`
      * @type boolean
      */
     number?: IsNumber;

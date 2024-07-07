@@ -57,7 +57,7 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     iconRightClickable: false,
     iconRightVariant: undefined,
     clearable: getOption("input.clearable", false),
-    clearIcon: getOption("input.clearIcon", "close-c ircle"),
+    clearIcon: getOption("input.clearIcon", "close-circle"),
     statusIcon: getOption("statusIcon", true),
     debounce: getOption("autocomplete.debounce", 400),
     autocomplete: getOption("input.autocomplete", "off"),
