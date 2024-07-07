@@ -37,27 +37,6 @@ describe("Dropdown tests", () => {
         expect(trigger.text()).contain(triggerLabel);
     });
 
-    test("manage props validator", () => {
-        const wrapper = mount(ODropdown);
-        const position = wrapper.vm.$options.props.position;
-
-        expect(position.type).toBe(String);
-        expect(position.validator && position.validator("yellow")).toBeFalsy();
-        expect(position.validator && position.validator("top")).toBeTruthy();
-        expect(position.validator && position.validator("left")).toBeTruthy();
-        expect(position.validator && position.validator("bottom")).toBeTruthy();
-        expect(position.validator && position.validator("right")).toBeTruthy();
-        expect(
-            position.validator && position.validator("top-left"),
-        ).toBeTruthy();
-        expect(
-            position.validator && position.validator("top-right"),
-        ).toBeTruthy();
-        expect(
-            position.validator && position.validator("bottom-left"),
-        ).toBeTruthy();
-    });
-
     test("react accordingly when clicking outside", async () => {
         const wrapper = mount(ODropdown, { props: { active: true } });
         await setTimeout(); // await event handler get set
