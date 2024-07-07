@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { OptionsItem } from "@/oruga";
 
-const options: OptionsItem[] = [
+const options: OptionsItem<string>[] = [
     { label: "Flint", value: "flint" },
     { label: "Silver", value: "silver" },
     { label: "Vane", value: "vane" },
