@@ -69,8 +69,8 @@ const props = withDefaults(defineProps<DatepickerProps<IsRange>>(), {
             () => undefined,
         )(date),
     dateCreator: () => getOption("datepicker.dateCreator", () => new Date())(),
-    selectableDates: () => [],
-    unselectableDates: () => [],
+    selectableDates: undefined,
+    unselectableDates: undefined,
     unselectableDaysOfWeek: () =>
         getOption("datepicker.unselectableDaysOfWeek", undefined),
     nearbyMonthDays: () => getOption("datepicker.nearbyMonthDays", true),
