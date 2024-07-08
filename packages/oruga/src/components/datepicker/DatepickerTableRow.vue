@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends boolean">
 import {
     computed,
     watch,
@@ -31,7 +31,7 @@ const props = defineProps({
     events: { type: Array as PropType<DatepickerEvent[]>, default: undefined },
     hoveredDateRange: { type: Array as PropType<Date[]>, default: () => [] },
     pickerProps: {
-        type: Object as PropType<DatepickerProps>,
+        type: Object as PropType<DatepickerProps<T>>,
         required: true,
     },
 });
@@ -45,7 +45,7 @@ const emits = defineEmits<{
 
 const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
 
-const datepicker = computed<DatepickerProps>(() => props.pickerProps);
+const datepicker = computed<DatepickerProps<T>>(() => props.pickerProps);
 
 const hasEvents = computed(() => !!props.events?.length);
 
