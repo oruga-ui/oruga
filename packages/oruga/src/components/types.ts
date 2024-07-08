@@ -62,7 +62,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Open dropdown list on focus */
                 openOnFocus: boolean;
                 /** Position of the dropdown */
-                position: string;
+                position: "auto" | "top" | "bottom";
                 /** Size of the control */
                 size: string;
                 /** The first option will always be pre-selected (easier to just hit enter or tab) */
@@ -223,13 +223,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | Record<string, any>;
+                teleport: string | boolean | object;
                 /** Class configuration for the internal dropdown component */
-                dropdownClasses: Record<string, any>;
+                dropdownClasses: { "onUpdate:modelValue"?: (value: string | number | object | (string | number | object)[]) => any; "onScroll-start"?: () => any; "onScroll-end"?: () => any; "onUpdate:active"?: (active: boolean) => any; ... 41 more ...; hoverableClass?: ComponentClass; } & VNodeProps & AllowedComponentProps & ComponentCustomProps;
                 /** Class configuration for the internal input component */
-                inputClasses: Record<string, any>;
+                inputClasses: { "onUpdate:modelValue"?: (value: string | number) => any; onInput?: (value: string | number, event: Event) => any; onFocus?: (event: Event) => any; onBlur?: (event: Event) => any; ... 44 more ...; variantClass?: ComponentClass; } & VNodeProps & AllowedComponentProps & ComponentCustomProps;
                 /** Class configuration for the internal select component */
-                selectClasses: Record<string, any>;
+                selectClasses: { "onUpdate:modelValue"?: (modelValue: string | number | object | (string | number | object)[]) => any; onFocus?: (event: Event) => any; onBlur?: (event: Event) => any; onInvalid?: (event: Event) => any; ... 39 more ...; rootVariantClass?: ComponentClass; } & VNodeProps & AllowedComponentProps & ComponentCustomProps;
                 /** Class of Datepicker header with days of the week inside the table */
                 tableHeadClass: ClassDefinition;
                 /** Class of table cell when it's selected */
@@ -413,7 +413,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | Record<string, any>;
+                teleport: string | boolean | object;
                 /** Class for the root element indicating position of dropdown */
                 positionClass: ClassDefinition;
                 /** Class for the root element indicating whether the dropdown is open */
@@ -463,7 +463,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Dropdown trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Dropdown will be triggered by any events */
-                triggers: string[];
+                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
                 /** Makes the component check if menu reached scroll start or end and emit scroll events. */
                 checkScroll: boolean;
                 /** Max height of dropdown content */
@@ -471,10 +471,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Position of the dropdown relative to the trigger */
-                position: string;
+                position: "auto" | "top" | "bottom" | "left" | "right" | "top-right" | "top-left" | "bottom-left" | "bottom-right";
                 /** Role attribute to be passed to the list container for better accessibility.
 Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: string;
+                ariaRole: "dialog" | "menu" | "list" | "listbox";
                 /** Role attribute to be passed to the list item for better accessibility.
 Use menuitem only in situations where your dropdown is related to a navigation menu. */
                 itemAriaRole: string;

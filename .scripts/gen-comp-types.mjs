@@ -55,7 +55,10 @@ const components = component_folders.map(folder => {
             if(prop.type === "ComponentClass")
                 prop.type = "ClassDefinition";
 
-            if(prop.name.includes("Classes")) return prop;
+            if(prop.name.includes("Classes")) {
+                prop.type = 'Record<string, any>';
+                return prop;
+            }
 
             // change property name based on config path
             if(prop.default && prop.default?.includes("getOption")) {
