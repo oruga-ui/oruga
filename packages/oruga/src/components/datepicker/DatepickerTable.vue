@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends boolean">
+<script setup lang="ts">
 import { computed, ref, type PropType } from "vue";
 
 import ODatepickerTableRow from "./DatepickerTableRow.vue";
@@ -24,7 +24,7 @@ const props = defineProps({
     dayNames: { type: Array as PropType<string[]>, required: true },
     monthNames: { type: Array as PropType<string[]>, required: true },
     pickerProps: {
-        type: Object as PropType<DatepickerProps<T>>,
+        type: Object as PropType<DatepickerProps>,
         required: true,
     },
 });
@@ -47,7 +47,7 @@ const selectedBeginDate = ref<Date>();
 const selectedEndDate = ref<Date>();
 const hoveredEndDate = ref<Date>();
 
-const datepicker = computed<DatepickerProps<T>>(() => props.pickerProps);
+const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 
 const visibleDayNames = computed(() => {
     const visibleDayNames = [];

@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends boolean">
+<script setup lang="ts">
 import {
     computed,
     ref,
@@ -28,7 +28,7 @@ const props = defineProps({
     monthNames: { type: Array as PropType<string[]>, required: true },
     focusedDate: { type: Object as PropType<FocusedDate>, required: true },
     pickerProps: {
-        type: Object as PropType<DatepickerProps<T>>,
+        type: Object as PropType<DatepickerProps>,
         required: true,
     },
 });
@@ -46,7 +46,7 @@ const selectedBeginDate = ref<Date>();
 const selectedEndDate = ref<Date>();
 const hoveredEndDate = ref<Date>();
 
-const datepicker = computed<DatepickerProps<T>>(() => props.pickerProps);
+const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 
 const hasEvents = computed(() => !!datepicker.value.events?.length);
 
