@@ -23,7 +23,7 @@ const columns = ref<TableColumn[]>([
     {
         field: "date",
         label: "Date",
-        // centered: true,
+        position: "centered",
     },
     {
         field: "gender",
