@@ -2,7 +2,9 @@ import { computed } from "vue";
 import { matchWithGroups } from "./utils";
 import type { DatepickerProps } from "./types";
 
-export function useDatepickerMixins(props: DatepickerProps) {
+export function useDatepickerMixins<T extends boolean>(
+    props: DatepickerProps<T>,
+) {
     /**
      * Check that selected date is within earliest/latest params and
      * is within a given month
@@ -94,7 +96,7 @@ export function useDatepickerMixins(props: DatepickerProps) {
     });
 
     /** Format date into string */
-    const defaultDateFormatter = (date: Date | Date[]): string => {
+    const defaultDateFormatter = (date: typeof props.modelValue): string => {
         if (!date) return "";
         const targetDates = Array.isArray(date) ? date : [date];
         if (!targetDates.length) return "";
@@ -113,7 +115,7 @@ export function useDatepickerMixins(props: DatepickerProps) {
     };
 
     /** Parse a string into a date */
-    const defaultDateParser = (date: string): Date[] | Date => {
+    const defaultDateParser = (date: string): typeof props.modelValue => {
         if (!date) return null;
         const targetDates = !props.multiple ? [date] : date.split(", ");
         const dates = targetDates.map((date) => {
@@ -169,7 +171,7 @@ export function useDatepickerMixins(props: DatepickerProps) {
                 );
             }
         });
-        return props.multiple ? dates : dates[0];
+        return (props.multiple ? dates : dates[0]) as typeof props.modelValue;
     };
 
     return { isDateSelectable, defaultDateParser, defaultDateFormatter };

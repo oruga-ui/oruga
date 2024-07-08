@@ -1,12 +1,15 @@
 import type { ComponentClass } from "@/types";
 
 export type UploadProps<
-    T extends string | number | object,
+    T extends object | typeof File,
     IsMultiple extends boolean,
 > = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state */
+    /**
+     * The input value state
+     * @type object | File
+     */
     modelValue?: IsMultiple extends true ? T[] : T;
     /** Same as native, also push new item to v-model instead of replacing */
     multiple?: IsMultiple;

@@ -1,7 +1,9 @@
 import type { ComponentProps } from "vue-component-type-helpers";
 import Datepicker from "./Datepicker.vue";
 
-export type DatepickerProps = ComponentProps<typeof Datepicker>;
+export type DatepickerProps<T extends boolean = false> = ComponentProps<
+    typeof Datepicker<T>
+>;
 
 export type DatepickerEvent = {
     date: Date;
