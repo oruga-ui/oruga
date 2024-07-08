@@ -58,10 +58,16 @@ const props = withDefaults(defineProps<DatepickerProps<IsRange>>(), {
     openOnFocus: () => getOption("datepicker.openOnFocus", true),
     closeOnClick: () => getOption("datepicker.closeOnClick", true),
     locale: () => getOption("locale"),
-    dateFormatter: (date: Date | Date[]) =>
-        getOption("datepicker.dateFormatter", defaultDateFormatter)(date),
+    dateFormatter: (date) =>
+        getOption<(date) => string>(
+            "datepicker.dateFormatter",
+            () => undefined,
+        )(date),
     dateParser: (date: string) =>
-        getOption("datepicker.dateParser", defaultDateParser)(date),
+        getOption<(date: string) => any>(
+            "datepicker.dateParser",
+            () => undefined,
+        )(date),
     dateCreator: () => getOption("datepicker.dateCreator", () => new Date())(),
     selectableDates: () => [],
     unselectableDates: () => [],
@@ -97,6 +103,7 @@ const props = withDefaults(defineProps<DatepickerProps<IsRange>>(), {
     dropdownClasses: () => getOption("datepicker.dropdownClasses", {}),
     selectClasses: () => getOption("datepicker.selectClasses", {}),
 });
+
 type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
@@ -170,11 +177,17 @@ const vmodel = useVModel<ModelValue>();
 const isActive = defineModel<boolean>("active", { default: false });
 
 /** modelValue formated into string */
-const formattedValue = computed(() =>
-    Array.isArray(vmodel.value)
-        ? (props.dateFormatter as any)([...vmodel.value], defaultDateFormatter)
-        : (props.dateFormatter as any)(vmodel.value, defaultDateFormatter),
-);
+const formattedValue = computed(() => {
+    // define function prop
+    const value = (
+        Array.isArray(vmodel.value) ? [...vmodel.value] : vmodel.value
+    ) as ModelValue;
+    // call prop function
+    const formatted = props.dateFormatter(value);
+    // call default if prop function is not given
+    if (typeof formatted === "undefined") return defaultDateFormatter(value);
+    else return formatted;
+});
 
 const isTypeMonth = computed(() => props.type === "month");
 
@@ -418,7 +431,10 @@ function formatNative(value: Date | Date[]): string {
 
 /** Parse string into date */
 function onChange(value: string): void {
-    const date = (props.dateParser as any)(value, defaultDateParser);
+    // call prop function
+    let date = props.dateParser(value);
+    // call default if prop function is not given
+    if (typeof date === "undefined") date = defaultDateParser(value);
 
     const isValid =
         isDate(date) ||

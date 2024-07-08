@@ -58,9 +58,9 @@ export type DatepickerProps<IsRange extends boolean = false> = {
     /** Date format locale */
     locale?: string;
     /** Custom function to format a date into a string */
-    dateFormatter?: (date: Date | Date[]) => string;
+    dateFormatter?: (date: IsRange extends true ? Date[] : Date) => string;
     /** Custom function to parse a string into a date */
-    dateParser?: (date: string) => Date | Date[];
+    dateParser?: (date: string) => IsRange extends true ? Date[] : Date;
     /** Date creator function, default is `new Date()` */
     dateCreator?: () => Date;
     /** Define a list of dates which can be selected */
