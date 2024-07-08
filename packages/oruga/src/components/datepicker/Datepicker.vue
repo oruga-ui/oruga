@@ -173,11 +173,12 @@ const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 /** modelvalue of selected date */
 // const vmodel = defineModel<ModelValue>({ default: null });
 const vmodel = useVModel<ModelValue>();
+
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
 /** modelValue formated into string */
-const formattedValue = computed(() => {
+const formattedValue = computed<string>(() => {
     // define function prop
     const value = (
         Array.isArray(vmodel.value) ? [...vmodel.value] : vmodel.value
@@ -332,7 +333,7 @@ const listOfYears = computed<OptionsItem<number>[]>(() => {
         }));
 });
 
-const showPrev = computed(() => {
+const showPrev = computed<boolean>(() => {
     if (!props.minDate) return true;
     if (isTypeMonth.value)
         return focusedDateData.value.year > props.minDate.getFullYear();
@@ -367,7 +368,7 @@ function prev(): void {
     }
 }
 
-const showNext = computed(() => {
+const showNext = computed<boolean>(() => {
     if (!props.maxDate) return true;
     if (isTypeMonth.value)
         return focusedDateData.value.year < props.maxDate.getFullYear();
