@@ -76,6 +76,8 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     teleport: () => getOption("dropdown.teleport", false),
 });
 
+type ModelValue = typeof props.modelValue;
+
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
@@ -102,8 +104,6 @@ const emits = defineEmits<{
     /** the list inside the dropdown reached it's end */
     (e: "scroll-end"): void;
 }>();
-
-type ModelValue = typeof props.modelValue;
 
 /** The selected item value */
 // const vmodel = defineModel<ModelValue>({ default: undefined });

@@ -36,9 +36,9 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
+    override: undefined,
     modelValue: undefined,
     // number: false,
-    override: undefined,
     type: "text",
     size: getOption("input.size"),
     variant: getOption("input.variant"),
