@@ -225,11 +225,11 @@ Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: string | boolean | object;
                 /** Class configuration for the internal dropdown component */
-                dropdownClasses: { "onUpdate:modelValue"?: (value: string | number | object | (string | number | object)[]) => any; "onScroll-start"?: () => any; "onScroll-end"?: () => any; "onUpdate:active"?: (active: boolean) => any; ... 41 more ...; hoverableClass?: ComponentClass; } & VNodeProps & AllowedComponentProps & ComponentCustomProps;
+                dropdownClasses: Record<string, any>;
                 /** Class configuration for the internal input component */
-                inputClasses: { "onUpdate:modelValue"?: (value: string | number) => any; onInput?: (value: string | number, event: Event) => any; onFocus?: (event: Event) => any; onBlur?: (event: Event) => any; ... 44 more ...; variantClass?: ComponentClass; } & VNodeProps & AllowedComponentProps & ComponentCustomProps;
+                inputClasses: Record<string, any>;
                 /** Class configuration for the internal select component */
-                selectClasses: { "onUpdate:modelValue"?: (modelValue: string | number | object | (string | number | object)[]) => any; onFocus?: (event: Event) => any; onBlur?: (event: Event) => any; onInvalid?: (event: Event) => any; ... 39 more ...; rootVariantClass?: ComponentClass; } & VNodeProps & AllowedComponentProps & ComponentCustomProps;
+                selectClasses: Record<string, any>;
                 /** Class of Datepicker header with days of the week inside the table */
                 tableHeadClass: ClassDefinition;
                 /** Class of table cell when it's selected */
