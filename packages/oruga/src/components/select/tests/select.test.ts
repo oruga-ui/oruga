@@ -9,7 +9,7 @@ import OSelect from "@/components/select/Select.vue";
 describe("OSelect tests", () => {
     enableAutoUnmount(afterEach);
 
-    const options: OptionsItem[] = [
+    const options: OptionsItem<string>[] = [
         { label: "Flint", value: "flint" },
         { label: "Silver", value: "silver" },
         { label: "Vane", value: "vane" },

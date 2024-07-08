@@ -109,7 +109,7 @@ const props = defineProps({
      * @values auto, top, bottom
      */
     position: {
-        type: String,
+        type: String as PropType<"auto" | "top" | "bottom">,
         default: () => getOption("autocomplete.position", "auto"),
         validator: (value: string) =>
             ["auto", "top", "bottom"].indexOf(value) >= 0,
@@ -691,7 +691,7 @@ function handleBlur(event: Event): void {
 }
 
 /** emit input change event */
-function onInput(value: string | number): void {
+function onInput(value: string): void {
     if (props.keepFirst && !selectedOption.value) hoverFirstOption();
     emits("input", String(value));
     checkHtml5Validity();

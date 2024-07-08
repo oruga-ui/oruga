@@ -1,11 +1,16 @@
-<script setup lang="ts" generic="T extends string | number | object">
+<script
+    setup
+    lang="ts"
+    generic="
+        T extends string | number | object,
+        IsMultiple extends boolean = false
+    ">
 import {
     computed,
     nextTick,
     ref,
     watch,
     onUnmounted,
-    type PropType,
     type Component,
 } from "vue";
 
@@ -25,9 +30,9 @@ import {
     useVModel,
 } from "@/composables";
 
+import type { DynamicComponent } from "@/types";
 import type { DropdownComponent } from "./types";
-
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { DropdownProps } from "./props";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -41,219 +46,44 @@ defineOptions({
     configField: "dropdown",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The selected item value */
-    modelValue: {
-        type: [String, Number, Object, Array] as PropType<T | T[]>,
-        default: undefined,
-    },
-    /** Allows multiple selections */
-    multiple: { type: Boolean, default: false },
-    /** The active state of the dropdown, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-    /** Trigger label, unnecessary when trgger slot is used */
-    label: { type: String, default: undefined },
-    /** Dropdown is disabled */
-    disabled: { type: Boolean, default: false },
-    /** Dropdown content (items) are shown inline, trigger is removed */
-    inline: { type: Boolean, default: false },
-    /** Dropdown content will be scrollable */
-    scrollable: { type: Boolean, default: false },
-    /** Max height of dropdown content */
-    maxHeight: {
-        type: [String, Number],
-        default: () => getOption("dropdown.maxHeight", 200),
-    },
-    /**
-     * Position of the dropdown relative to the trigger
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
-     */
-    position: {
-        type: String,
-        default: () => getOption("dropdown.position", "bottom-left"),
-        validator: (value: string) =>
-            [
-                "auto",
-                "top",
-                "bottom",
-                "left",
-                "right",
-                "top-right",
-                "top-left",
-                "bottom-left",
-                "bottom-right",
-            ].indexOf(value) > -1,
-    },
-    /** Dropdown content (items) are shown into a modal on mobile */
-    mobileModal: {
-        type: Boolean,
-        default: () => getOption("dropdown.mobileModal", true),
-    },
-    /** Custom animation (transition name) */
-    animation: {
-        type: String,
-        default: () => getOption("dropdown.animation", "fade"),
-    },
-    /** Trap focus inside the dropdown. */
-    trapFocus: {
-        type: Boolean,
-        default: () => getOption("dropdown.trapFocus", true),
-    },
-    /** Makes the component check if menu reached scroll start or end and emit scroll events. */
-    checkScroll: {
-        type: Boolean,
-        default: () => getOption("dropdown.checkScroll", false),
-    },
-    /** Dropdown will be expanded (full-width) */
-    expanded: { type: Boolean, default: false },
-    /** HTML element Id of the dropdown menu element */
-    menuId: { type: String, default: null },
-    /** Tabindex of the dropdown menu element */
-    menuTabindex: { type: Number, default: null },
-    /** Dropdown menu tag name */
-    menuTag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("dropdown.menuTag", "div"),
-    },
-    /** Dropdown trigger tag name */
-    triggerTag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () =>
-            getOption<DynamicComponent>("dropdown.triggerTag", "div"),
-    },
-    /**
-     * Dropdown will be triggered by any events
-     * @values click, hover, contextmenu, focus
-     */
-    triggers: {
-        type: Array as PropType<string[]>,
-        default: () => getOption("dropdown.triggers", ["click"]),
-        validator: (values: string[]) =>
-            values.filter(
-                (value) =>
-                    ["click", "hover", "contextmenu", "focus"].indexOf(value) >
-                    -1,
-            ).length === values.length,
-    },
-    /** Dropdown delay before it appears (number in ms) */
-    delay: { type: Number, default: undefined },
-    /**
-     * Dropdown close options (pressing escape, clicking the content or outside)
-     * @values true, false, escape, outside, content
-     */
-    closeable: {
-        type: [Array, Boolean] as PropType<string[] | boolean>,
-        default: () =>
-            getOption("dropdown.closeable", ["escape", "outside", "content"]),
-    },
-    /** Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key) */
-    tabindex: { type: Number, default: 0 },
-    /**
-     * Role attribute to be passed to the list container for better accessibility.
-     * Use menu only in situations where your dropdown is related to a navigation menu.
-     * @values list, listbox, menu, dialog
-     */
-    ariaRole: {
-        type: String,
-        default: () => getOption("dropdown.ariaRole", "list"),
-        validator: (value: string) =>
-            ["list", "listbox", "menu", "dialog"].indexOf(value) > -1,
-    },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("dropdown.mobileBreakpoint"),
-    },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("dropdown.teleport", false),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when the dropdown is teleported */
-    teleportClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the trigger element */
-    triggerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of dropdown menu when inline */
-    inlineClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the overlay when on mobile */
-    menuMobileOverlayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the dropdown menu */
-    menuClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of dropdown menu position */
-    menuPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of dropdown menu when active */
-    menuActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of dropdown when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of dropdown when disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of dropdown when expanded */
-    expandedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the root element indicating position of dropdown */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the root element indicating whether the dropdown is open */
-    activeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the root element when the dropdown is hoverable */
-    hoverableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
+    override: undefined,
+    modelValue: undefined,
+    // multiple: false,
+    active: false,
+    label: undefined,
+    disabled: false,
+    inline: false,
+    scrollable: false,
+    maxHeight: () => getOption("dropdown.maxHeight", 200),
+    position: () => getOption("dropdown.position", "bottom-left"),
+    mobileModal: () => getOption("dropdown.mobileModal", true),
+    animation: () => getOption("dropdown.animation", "fade"),
+    trapFocus: () => getOption("dropdown.trapFocus", true),
+    checkScroll: () => getOption("dropdown.checkScroll", false),
+    expanded: false,
+    menuId: null,
+    menuTabindex: null,
+    menuTag: () => getOption<DynamicComponent>("dropdown.menuTag", "div"),
+    triggerTag: () => getOption<DynamicComponent>("dropdown.triggerTag", "div"),
+    triggers: () => getOption("dropdown.triggers", ["click"]),
+    delay: undefined,
+    closeable: () =>
+        getOption("dropdown.closeable", ["escape", "outside", "content"]),
+    tabindex: 0,
+    ariaRole: () => getOption("dropdown.ariaRole", "list"),
+    mobileBreakpoint: () => getOption("dropdown.mobileBreakpoint"),
+    teleport: () => getOption("dropdown.teleport", false),
 });
+
+type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {string | number | object | array} updated modelValue prop
      */
-    (e: "update:modelValue", value: T | T[]): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -263,7 +93,7 @@ const emits = defineEmits<{
      * on change event - fired after update:modelValue
      * @param value {string | number | object | array} selected value
      */
-    (e: "change", value: T | T[]): void;
+    (e: "change", value: ModelValue): void;
     /**
      * on close event
      * @param method {string} close method
@@ -276,8 +106,8 @@ const emits = defineEmits<{
 }>();
 
 /** The selected item value */
-// const vmodel = defineModel<T | T[]>({ default: undefined });
-const vmodel = useVModel<T | T[]>();
+// const vmodel = defineModel<ModelValue>({ default: undefined });
+const vmodel = useVModel<ModelValue>();
 
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -470,21 +300,23 @@ function selectItem(value: T): void {
         if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
                 // add a value
-                vmodel.value = [...vmodel.value, value];
+                vmodel.value = [...vmodel.value, value] as ModelValue;
             } else {
                 // remove a value
-                vmodel.value = vmodel.value.filter((val) => val !== value);
+                vmodel.value = vmodel.value.filter(
+                    (val) => val !== value,
+                ) as ModelValue;
             }
         } else {
             // init new value array
-            vmodel.value = [value];
+            vmodel.value = [value] as ModelValue;
         }
         // emit change after vmodel has changed
         nextTick(() => emits("change", vmodel.value));
     } else {
         if (vmodel.value !== value) {
             // update a single value
-            vmodel.value = value;
+            vmodel.value = value as ModelValue;
             // emit change after vmodel has changed
             nextTick(() => emits("change", vmodel.value));
         }

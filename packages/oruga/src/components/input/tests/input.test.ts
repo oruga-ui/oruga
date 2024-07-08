@@ -177,7 +177,13 @@ describe("OInput", () => {
 
     test("check type number ", async () => {
         const wrapper = shallowMount(OInput, {
-            props: { type: "number", min: 0, max: 1000, modelValue: 10 },
+            props: {
+                type: "number",
+                min: 0,
+                max: 1000,
+                modelValue: 10,
+                number: true,
+            },
         });
 
         const input = wrapper.find("input");

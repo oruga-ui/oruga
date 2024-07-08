@@ -6,9 +6,9 @@ const selectedOptions = ref([]);
 
 <template>
     <section>
-        <p class="content"><b>selected</b>: {{ selectedOptions }}</p>
+        <p><b>selected</b>: {{ selectedOptions }}</p>
 
-        <o-dropdown v-model="selectedOptions" multiple>
+        <o-dropdown v-model:model-value="selectedOptions">
             <template #trigger>
                 <o-button
                     variant="primary"

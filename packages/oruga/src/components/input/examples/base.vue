@@ -30,7 +30,7 @@ const name = ref("John Silver");
         </o-field>
 
         <o-field>
-            <o-input placeholder="No label" />
+            <o-input model-value="" placeholder="No label" />
         </o-field>
 
         <o-field label="Number">
