@@ -158,6 +158,8 @@ function computeClass(
     // get component instance override property
     const config = props.override === true ? {} : getOptions();
 
+    // --- Classes Definition ---
+
     // get component config class definition
     let globalClass =
         getValueByPath<ClassDefinition>(
@@ -202,7 +204,7 @@ function computeClass(
         defaultValue = defaultValue + blankIfUndefined(suffix);
     }
 
-    // --- Override Behavior ---
+    // --- Override Definition ---
 
     // get instance or global config override property
     const globalOverride =
