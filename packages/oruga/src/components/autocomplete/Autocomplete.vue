@@ -691,7 +691,7 @@ function handleBlur(event: Event): void {
 }
 
 /** emit input change event */
-function onInput(value: string | number): void {
+function onInput(value: string): void {
     if (props.keepFirst && !selectedOption.value) hoverFirstOption();
     emits("input", String(value));
     checkHtml5Validity();
