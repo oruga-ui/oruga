@@ -23,12 +23,12 @@ describe("ODatepicker", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    test("parses keyboard input", () => {
+    test("parses keyboard input", async () => {
         const wrapper = mount(ODatepicker, { props: { readonly: false } });
 
         const target = wrapper.find("input");
         expect(target.exists()).toBeTruthy();
-        target.setValue("2024-04-10");
+        await target.setValue("2024-04-10");
 
         const updates = wrapper.emitted("update:modelValue");
         expect(updates).toHaveLength(1);
@@ -40,12 +40,14 @@ describe("ODatepicker", () => {
         );
     });
 
-    test("handles invalid keyboard input", () => {
-        const wrapper = mount(ODatepicker, { props: { readonly: false } });
+    test("handles invalid keyboard input", async () => {
+        const wrapper = mount(ODatepicker, {
+            props: { readonly: false, modelValue: new Date() },
+        });
 
         const target = wrapper.find("input");
         expect(target.exists()).toBeTruthy();
-        target.setValue("not-a-date");
+        await target.setValue("not-a-date");
 
         const updates = wrapper.emitted("update:modelValue");
         expect(updates).toHaveLength(1);
