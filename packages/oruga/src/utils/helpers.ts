@@ -33,21 +33,34 @@ export function bound(val: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, val));
 }
 
-export const isObject = <T>(obj: T): boolean =>
-    obj && typeof obj === "object" && !Array.isArray(obj);
+export const isObject = (value: unknown): boolean =>
+    value && typeof value === "object" && !Array.isArray(value);
 
-export const isDate = (d: unknown): d is Date =>
-    d && d instanceof Date && !isNaN(d.getTime());
+export const isDate = (value: unknown): value is Date =>
+    value && value instanceof Date && !isNaN(value.getTime());
 
-export const isDefined = <T>(d: T): boolean => d !== null && d !== undefined;
+export const isDefined = (value: unknown): boolean =>
+    value !== null && value !== undefined;
+
+/**
+ * Determines if the value of a prop that is either present (true) or not
+ * present (undefined). For example, the prop disabled should disable
+ * by just existing, but what if it is set to the string "false" — then it
+ * should not be disabled.
+ *
+ * @param value - Value to check for undefined.
+ * @returns boolean
+ */
+export const isTrueish = (value: unknown): boolean =>
+    isDefined(value) && value !== "false" && value !== false;
 
 export const blankIfUndefined = (value: string): string =>
-    typeof value !== "undefined" && value !== null ? value : "";
+    isDefined(value) ? value : "";
 
 export const defaultIfUndefined = <T>(
     value: T | undefined,
     defaultValue: T,
-): T => (typeof value !== "undefined" && value !== null ? value : defaultValue);
+): T => (isDefined(value) ? value : defaultValue);
 
 export const toCssDimension = (width: string | number): string | number =>
     !isDefined(width) ? null : isNaN(width as number) ? width : width + "px";

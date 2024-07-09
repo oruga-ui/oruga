@@ -13,7 +13,7 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import OInput from "../input/Input.vue";
 
-import { isMobileAgent } from "@/utils/helpers";
+import { isDefined, isMobileAgent, isTrueish } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     getActiveClasses,
@@ -33,7 +33,7 @@ defineOptions({
 
 const props = defineProps({
     /** parent picker component props  */
-    picker: { type: Object, required: true },
+    pickerProps: { type: Object, required: true },
     /** data-oruga attribute value */
     dataOruga: { type: String, required: true },
     /** the internal input value */
@@ -87,8 +87,8 @@ const emits = defineEmits<{
 
 const isMobileNative = computed(
     () =>
-        !props.picker.inline &&
-        props.picker.mobileNative &&
+        !isTrueish(props.pickerProps.inline) &&
+        isTrueish(props.pickerProps.mobileNative) &&
         isMobileAgent.any(),
 );
 
@@ -109,14 +109,14 @@ const {
     onFocus,
     onInvalid,
     isValid,
-} = useInputHandler<HTMLInputElement>(elementRef, emits, props.picker);
+} = useInputHandler<HTMLInputElement>(elementRef, emits, props.pickerProps);
 
 /**
  * Show input as text for placeholder,
  * when placeholder and no native value is given.
  */
 const initialNativeType =
-    !props.picker.placeholder || !!props.nativeValue
+    !isDefined(props.pickerProps.placeholder) || !!isTrueish(props.nativeValue)
         ? props.nativeType
         : "text";
 
@@ -152,9 +152,13 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 watch(isActive, onActiveChange);
 
-const ariaRole = computed(() => (!props.picker.inline ? "dialog" : undefined));
+const ariaRole = computed(() =>
+    !isTrueish(props.pickerProps.inline) ? "dialog" : undefined,
+);
 
-const triggers = computed(() => (props.picker.openOnFocus ? ["click"] : []));
+const triggers = computed(() =>
+    isTrueish(props.pickerProps.openOnFocus) ? ["click"] : [],
+);
 
 if (isClient) useEventListener("keyup", onKeyPress);
 
@@ -169,7 +173,7 @@ function onKeyPress(event: KeyboardEvent): void {
 /** Toggle picker */
 function togglePicker(active: boolean): void {
     if (dropdownRef.value) {
-        if (active || props.picker.closeOnClick)
+        if (active || isTrueish(props.pickerProps.closeOnClick))
             nextTick(() => (isActive.value = active));
     }
 }
@@ -238,7 +242,7 @@ function onNativeBlur(): void {
     onBlur();
 }
 
-function handleNativeChange(event: Event): void {
+function onNativeChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value
         ? (event.target as HTMLInputElement).value
         : null;
@@ -251,17 +255,18 @@ function handleNativeChange(event: Event): void {
 
     emits("native-change", value);
 }
+
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...attrs,
-    ...props.picker.inputClasses,
+    ...props.pickerProps.inputClasses,
 }));
 
 const dropdownBind = computed(() => ({
     "root-class": getActiveClasses(props.dropdownClasses),
-    ...props.picker.dropdownClasses,
+    ...props.pickerProps.dropdownClasses,
 }));
 
 // --- Expose Public Functionalities ---
@@ -277,33 +282,33 @@ defineExpose({ focus: setFocus });
             ref="dropdownRef"
             v-bind="dropdownBind"
             v-model:active="isActive"
-            :position="picker.position"
-            :disabled="picker.disabled"
-            :inline="picker.inline"
-            :mobile-modal="picker.mobileModal"
-            :trap-focus="picker.trapFocus"
+            :position="pickerProps.position"
+            :disabled="pickerProps.disabled"
+            :inline="pickerProps.inline"
+            :mobile-modal="pickerProps.mobileModal"
+            :trap-focus="pickerProps.trapFocus"
             :aria-role="ariaRole"
-            :aria-modal="!picker.inline"
+            :aria-modal="!pickerProps.inline"
             :tabindex="-1"
-            :teleport="picker.teleport"
+            :teleport="pickerProps.teleport"
             :triggers="triggers">
-            <template v-if="!picker.inline" #trigger>
+            <template v-if="!pickerProps.inline" #trigger>
                 <slot name="trigger">
                     <o-input
                         ref="inputRef"
                         v-bind="inputBind"
                         v-model="vmodel"
                         autocomplete="off"
-                        :placeholder="picker.placeholder"
-                        :size="picker.size"
-                        :icon-pack="picker.iconPack"
-                        :icon="picker.icon"
-                        :icon-right="picker.iconRight"
-                        :icon-right-clickable="picker.iconRightClickable"
-                        :expanded="picker.expanded"
-                        :rounded="picker.rounded"
-                        :disabled="picker.disabled"
-                        :readonly="picker.readonly"
+                        :placeholder="pickerProps.placeholder"
+                        :size="pickerProps.size"
+                        :icon-pack="pickerProps.iconPack"
+                        :icon="pickerProps.icon"
+                        :icon-right="pickerProps.iconRight"
+                        :icon-right-clickable="pickerProps.iconRightClickable"
+                        :expanded="pickerProps.expanded"
+                        :rounded="pickerProps.rounded"
+                        :disabled="pickerProps.disabled"
+                        :readonly="pickerProps.readonly"
                         :use-html5-validation="false"
                         @click="onInputClick"
                         @keyup.enter="togglePicker(true)"
@@ -318,7 +323,7 @@ defineExpose({ focus: setFocus });
                 override
                 tag="div"
                 :item-class="boxClass"
-                :disabled="picker.disabled"
+                :disabled="pickerProps.disabled"
                 :clickable="false">
                 <slot />
             </o-dropdown-item>
@@ -335,18 +340,18 @@ defineExpose({ focus: setFocus });
                     :min="nativeMin"
                     :max="nativeMax"
                     :step="nativeStep"
-                    :placeholder="picker.placeholder"
-                    :size="picker.size"
-                    :icon-pack="picker.iconPack"
-                    :icon="picker.icon"
-                    :icon-right="picker.iconRight"
-                    :icon-right-clickable="picker.iconRightClickable"
-                    :rounded="picker.rounded"
-                    :disabled="picker.disabled"
+                    :placeholder="pickerProps.placeholder"
+                    :size="pickerProps.size"
+                    :icon-pack="pickerProps.iconPack"
+                    :icon="pickerProps.icon"
+                    :icon-right="pickerProps.iconRight"
+                    :icon-right-clickable="pickerProps.iconRightClickable"
+                    :rounded="pickerProps.rounded"
+                    :disabled="pickerProps.disabled"
                     :readonly="initialNativeType == 'text'"
                     autocomplete="off"
                     :use-html5-validation="false"
-                    @change="handleNativeChange"
+                    @change="onNativeChange"
                     @focus="onNativeFocus"
                     @blur="onNativeBlur"
                     @invalid="onInvalid"

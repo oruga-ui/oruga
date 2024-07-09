@@ -1,9 +1,10 @@
 import { computed } from "vue";
 import { matchWithGroups } from "./utils";
 import type { DatepickerProps } from "./types";
+import { isTrueish } from "@/utils/helpers";
 
-export function useDatepickerMixins<T extends boolean>(
-    props: DatepickerProps<T>,
+export function useDatepickerMixins<R extends boolean, M extends boolean>(
+    props: DatepickerProps<R, M>,
 ) {
     /**
      * Check that selected date is within earliest/latest params and
@@ -111,13 +112,17 @@ export function useDatepickerMixins<T extends boolean>(
                 ? dtf.value.format(d)
                 : dtfMonth.value.format(d);
         });
-        return !props.multiple ? dates.join(" - ") : dates.join(", ");
+
+        return !isTrueish(props.multiple) && !isTrueish(props.range)
+            ? dates.join(" - ")
+            : dates.join(", ");
     };
 
     /** Parse a string into a date */
     const defaultDateParser = (date: string): typeof props.modelValue => {
         if (!date) return null;
-        const targetDates = !props.multiple ? [date] : date.split(", ");
+        const isArray = isTrueish(props.multiple) || isTrueish(props.range);
+        const targetDates = !isArray ? [date] : date.split(", ");
         const dates = targetDates.map((date) => {
             if (
                 dtf.value.formatToParts &&
@@ -171,7 +176,7 @@ export function useDatepickerMixins<T extends boolean>(
                 );
             }
         });
-        return (props.multiple ? dates : dates[0]) as typeof props.modelValue;
+        return (isArray ? dates : dates[0]) as typeof props.modelValue;
     };
 
     return { isDateSelectable, defaultDateParser, defaultDateFormatter };
