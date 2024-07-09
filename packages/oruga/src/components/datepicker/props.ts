@@ -4,13 +4,22 @@ import type { SelectProps } from "../select/types";
 import type { DropdownProps } from "../dropdown/types";
 import type { InputProps } from "../input/types";
 
-export type DatepickerProps<IsRange extends boolean = false> = {
+export type DatepickerProps<
+    IsRange extends boolean = false,
+    IsMultiple extends boolean = false,
+> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
-    modelValue?: IsRange extends true ? Date[] : Date;
+    modelValue?: IsRange extends true
+        ? Date[]
+        : IsMultiple extends true
+          ? Date[]
+          : Date;
     /** Enable date range selection */
     range?: IsRange;
+    /** Same as native, also push new item to v-model instead of replacing */
+    multiple?: IsMultiple;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
     /**
@@ -47,8 +56,6 @@ export type DatepickerProps<IsRange extends boolean = false> = {
     placeholder?: string;
     /** Same as native input readonly */
     readonly?: boolean;
-    /** Same as native, also push new item to v-model instead of replacing */
-    multiple?: boolean;
     /** Same as native disabled */
     disabled?: boolean;
     /** Open dropdown on focus */
@@ -58,9 +65,13 @@ export type DatepickerProps<IsRange extends boolean = false> = {
     /** Date format locale */
     locale?: string;
     /** Custom function to format a date into a string */
-    dateFormatter?: (date: IsRange extends true ? Date[] : Date) => string;
+    dateFormatter?: (
+        date: DatepickerProps<IsRange, IsMultiple>["modelValue"],
+    ) => string;
     /** Custom function to parse a string into a date */
-    dateParser?: (date: string) => IsRange extends true ? Date[] : Date;
+    dateParser?: (
+        date: string,
+    ) => DatepickerProps<IsRange, IsMultiple>["modelValue"];
     /** Date creator function, default is `new Date()` */
     dateCreator?: () => Date;
     /** Define a list of dates which can be selected */

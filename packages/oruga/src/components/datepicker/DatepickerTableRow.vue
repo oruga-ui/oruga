@@ -9,9 +9,11 @@ import {
 } from "vue";
 
 import { defineClasses } from "@/composables";
+import { isTrueish } from "@/utils/helpers";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { weeksInYear, firstWeekOffset } from "./utils";
+
 import type { DatepickerProps, DatepickerEvent } from "./types";
 import type { ClassBind } from "@/types";
 
@@ -179,7 +181,7 @@ function changeFocus(day, inc): void {
 }
 
 function setRangeHoverEndDate(day): void {
-    if (datepicker.value.range) emits("hover-enddate", day);
+    if (isTrueish(datepicker.value.range)) emits("hover-enddate", day);
 }
 
 // --- Computed Component Classes ---
@@ -225,7 +227,11 @@ function cellClasses(day: Date): ClassBind[] {
             "o-dpck__table__cell--selected",
             null,
             dateMatch(day, props.selectedDate) ||
-                dateWithin(day, props.selectedDate, datepicker.value.multiple),
+                dateWithin(
+                    day,
+                    props.selectedDate,
+                    isTrueish(datepicker.value.multiple),
+                ),
         ],
         [
             "tableCellFirstSelectedClass",
@@ -234,14 +240,18 @@ function cellClasses(day: Date): ClassBind[] {
             dateMatch(
                 day,
                 Array.isArray(props.selectedDate) && props.selectedDate[0],
-                datepicker.value.multiple,
+                isTrueish(datepicker.value.multiple),
             ),
         ],
         [
             "tableCellWithinSelectedClass",
             "o-dpck__table__cell--within-selected",
             null,
-            dateWithin(day, props.selectedDate, datepicker.value.multiple),
+            dateWithin(
+                day,
+                props.selectedDate,
+                isTrueish(datepicker.value.multiple),
+            ),
         ],
         [
             "tableCellLastSelectedClass",
@@ -250,7 +260,7 @@ function cellClasses(day: Date): ClassBind[] {
             dateMatch(
                 day,
                 Array.isArray(props.selectedDate) && props.selectedDate[1],
-                datepicker.value.multiple,
+                isTrueish(datepicker.value.multiple),
             ),
         ],
         [
@@ -376,6 +386,7 @@ const cellEventsClass = defineClasses([
             @keydown.enter.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
         </div>
+
         <template v-for="(weekDay, idx) in week" :key="idx">
             <div
                 v-if="
@@ -405,6 +416,7 @@ const cellEventsClass = defineClasses([
                         :class="eventClasses(event)" />
                 </div>
             </div>
+
             <div v-else :class="cellClasses(weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
             </div>

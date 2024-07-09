@@ -359,7 +359,6 @@ const hours = computed<OptionsItem<number>[]>(() => {
         hours.push({
             label: formatNumber(label, false),
             value: value,
-            attrs: { disabled: isHourDisabled(value) },
         });
     }
     return hours;
@@ -373,7 +372,6 @@ const minutes = computed<OptionsItem<number>[]>(() => {
         minutes.push({
             label: formatNumber(i, true),
             value: i,
-            attrs: { disabled: isMinuteDisabled(i) },
         });
     }
     return minutes;
@@ -387,7 +385,6 @@ const seconds = computed<OptionsItem<number>[]>(() => {
         seconds.push({
             label: formatNumber(i, true),
             value: i,
-            attrs: { disabled: isSecondDisabled(i) },
         });
     }
     return seconds;
@@ -500,6 +497,7 @@ function isMinuteDisabled(minute: number): boolean {
             disabled = unselectable.length > 0;
         }
     }
+    return disabled;
 }
 
 function isSecondDisabled(second: number): boolean {
@@ -548,6 +546,7 @@ function isSecondDisabled(second: number): boolean {
             disabled = unselectable.length > 0;
         }
     }
+    return disabled;
 }
 
 function isMeridienDisabled(meridienString: string): boolean {
@@ -737,7 +736,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         v-model:active="isActive"
         data-oruga="timepicker"
         :value="vmodel"
-        :picker="props"
+        :picker-props="props"
         :formatted-value="formattedValue"
         native-type="time"
         :native-value="formatNative(vmodel)"
@@ -775,11 +774,18 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         <o-select
             v-bind="selectBind"
             v-model="minutesSelected"
-            :options="minutes"
             override
             :disabled="disabled"
             placeholder="00"
-            @change="onMinutesChange($event.target.value)" />
+            @change="onMinutesChange($event.target.value)">
+            <option
+                v-for="minute in minutes"
+                :key="minute.value"
+                :value="minute.value"
+                :disabled="isMinuteDisabled(minute.value)">
+                {{ minute.label }}
+            </option>
+        </o-select>
 
         <template v-if="enableSeconds">
             <span :class="separatorClasses">{{ minuteLiteral }}</span>
@@ -787,11 +793,18 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             <o-select
                 v-bind="selectBind"
                 v-model="secondsSelected"
-                :options="seconds"
                 override
                 :disabled="disabled"
                 placeholder="00"
-                @change="onSecondsChange($event.target.value)" />
+                @change="onSecondsChange($event.target.value)">
+                <option
+                    v-for="second in seconds"
+                    :key="second.value"
+                    :value="second.value"
+                    :disabled="isSecondDisabled(second.value)">
+                    {{ second.label }}
+                </option>
+            </o-select>
 
             <span :class="separatorClasses">{{ secondLiteral }}</span>
         </template>

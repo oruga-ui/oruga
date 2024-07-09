@@ -1,4 +1,10 @@
-<script setup lang="ts" generic="IsRange extends boolean = false">
+<script
+    setup
+    lang="ts"
+    generic="
+        IsRange extends boolean = false,
+        IsMultiple extends boolean = false
+    ">
 import { computed, ref, watch } from "vue";
 
 import OButton from "../button/Button.vue";
@@ -34,75 +40,79 @@ defineOptions({
     configField: "datepicker",
 });
 
-const props = withDefaults(defineProps<DatepickerProps<IsRange>>(), {
-    override: undefined,
-    modelValue: null,
-    // range: false,
-    active: false,
-    type: "date",
-    dayNames: () => getOption("datepicker.dayNames", undefined),
-    monthNames: () => getOption("datepicker.monthNames", undefined),
-    size: () => getOption("datepicker.size"),
-    focusedDate: undefined,
-    events: undefined,
-    indicators: "dots",
-    minDate: undefined,
-    maxDate: undefined,
-    expanded: false,
-    rounded: false,
-    inline: false,
-    placeholder: undefined,
-    readonly: false,
-    multiple: false,
-    disabled: false,
-    openOnFocus: () => getOption("datepicker.openOnFocus", true),
-    closeOnClick: () => getOption("datepicker.closeOnClick", true),
-    locale: () => getOption("locale"),
-    dateFormatter: (date) =>
-        getOption<(date) => string>(
-            "datepicker.dateFormatter",
-            () => undefined,
-        )(date),
-    dateParser: (date: string) =>
-        getOption<(date: string) => any>(
-            "datepicker.dateParser",
-            () => undefined,
-        )(date),
-    dateCreator: () => getOption("datepicker.dateCreator", () => new Date())(),
-    selectableDates: undefined,
-    unselectableDates: undefined,
-    unselectableDaysOfWeek: () =>
-        getOption("datepicker.unselectableDaysOfWeek", undefined),
-    nearbyMonthDays: () => getOption("datepicker.nearbyMonthDays", true),
-    nearbySelectableMonthDays: () =>
-        getOption("datepicker.nearbySelectableMonthDays", false),
-    showWeekNumber: () => getOption("datepicker.showWeekNumber", false),
-    weekNumberClickable: () =>
-        getOption("datepicker.weekNumberClickable", false),
-    firstDayOfWeek: () => getOption("datepicker.firstDayOfWeek", 0),
-    rulesForFirstWeek: 4,
-    yearsRange: () => getOption("datepicker.yearsRange", [-100, 10]),
-    trapFocus: () => getOption("datepicker.trapFocus", true),
-    position: undefined,
-    mobileModal: () => getOption("datepicker.mobileModal", true),
-    mobileNative: () => getOption("datepicker.mobileNative", false),
-    iconPack: () => getOption("datepicker.iconPack", undefined),
-    icon: () => getOption("datepicker.icon", undefined),
-    iconRight: () => getOption("datepicker.iconRight", undefined),
-    iconRightClickable: false,
-    iconPrev: () => getOption("datepicker.iconPrev", "chevron-left"),
-    iconNext: () => getOption("datepicker.iconNext", "chevron-right"),
-    mobileBreakpoint: () => getOption("datepicker.mobileBreakpoint"),
-    teleport: () => getOption("datepicker.teleport", false),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
-    validationMessage: undefined,
-    ariaNextLabel: () => getOption("datepicker.ariaNextLabel", "Next Page"),
-    ariaPreviousLabel: () =>
-        getOption("datepicker.ariaNextLabel", "Previous Page"),
-    inputClasses: () => getOption("datepicker.inputClasses", {}),
-    dropdownClasses: () => getOption("datepicker.dropdownClasses", {}),
-    selectClasses: () => getOption("datepicker.selectClasses", {}),
-});
+const props = withDefaults(
+    defineProps<DatepickerProps<IsRange, IsMultiple>>(),
+    {
+        override: undefined,
+        modelValue: null,
+        // range: false,
+        // multiple: false,
+        active: false,
+        type: "date",
+        dayNames: () => getOption("datepicker.dayNames", undefined),
+        monthNames: () => getOption("datepicker.monthNames", undefined),
+        size: () => getOption("datepicker.size"),
+        focusedDate: undefined,
+        events: undefined,
+        indicators: "dots",
+        minDate: undefined,
+        maxDate: undefined,
+        expanded: false,
+        rounded: false,
+        inline: false,
+        placeholder: undefined,
+        readonly: false,
+        disabled: false,
+        openOnFocus: () => getOption("datepicker.openOnFocus", true),
+        closeOnClick: () => getOption("datepicker.closeOnClick", true),
+        locale: () => getOption("locale"),
+        dateFormatter: (date) =>
+            getOption<(date) => string>(
+                "datepicker.dateFormatter",
+                () => undefined,
+            )(date),
+        dateParser: (date: string) =>
+            getOption<(date: string) => any>(
+                "datepicker.dateParser",
+                () => undefined,
+            )(date),
+        dateCreator: () =>
+            getOption("datepicker.dateCreator", () => new Date())(),
+        selectableDates: undefined,
+        unselectableDates: undefined,
+        unselectableDaysOfWeek: () =>
+            getOption("datepicker.unselectableDaysOfWeek", undefined),
+        nearbyMonthDays: () => getOption("datepicker.nearbyMonthDays", true),
+        nearbySelectableMonthDays: () =>
+            getOption("datepicker.nearbySelectableMonthDays", false),
+        showWeekNumber: () => getOption("datepicker.showWeekNumber", false),
+        weekNumberClickable: () =>
+            getOption("datepicker.weekNumberClickable", false),
+        firstDayOfWeek: () => getOption("datepicker.firstDayOfWeek", 0),
+        rulesForFirstWeek: 4,
+        yearsRange: () => getOption("datepicker.yearsRange", [-100, 10]),
+        trapFocus: () => getOption("datepicker.trapFocus", true),
+        position: undefined,
+        mobileModal: () => getOption("datepicker.mobileModal", true),
+        mobileNative: () => getOption("datepicker.mobileNative", false),
+        iconPack: () => getOption("datepicker.iconPack", undefined),
+        icon: () => getOption("datepicker.icon", undefined),
+        iconRight: () => getOption("datepicker.iconRight", undefined),
+        iconRightClickable: false,
+        iconPrev: () => getOption("datepicker.iconPrev", "chevron-left"),
+        iconNext: () => getOption("datepicker.iconNext", "chevron-right"),
+        mobileBreakpoint: () => getOption("datepicker.mobileBreakpoint"),
+        teleport: () => getOption("datepicker.teleport", false),
+        useHtml5Validation: () => getOption("useHtml5Validation", true),
+        validationMessage: undefined,
+        ariaNextLabel: () => getOption("datepicker.ariaNextLabel", "Next Page"),
+        ariaPreviousLabel: () =>
+            getOption("datepicker.ariaNextLabel", "Previous Page"),
+        inputClasses: () => getOption("datepicker.inputClasses", {}),
+        dropdownClasses: () => getOption("datepicker.dropdownClasses", {}),
+        selectClasses: () => getOption("datepicker.selectClasses", {}),
+    },
+);
 
 type ModelValue = typeof props.modelValue;
 
@@ -520,13 +530,13 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         v-model:active="isActive"
         data-oruga="datepicker"
         :value="vmodel"
-        :picker="props"
+        :picker-props="props"
         :formatted-value="formattedValue"
         :native-type="!isTypeMonth ? 'date' : 'month'"
         :native-value="formatNative(vmodel)"
         :native-max="formatNative(maxDate)"
         :native-min="formatNative(minDate)"
-        :stay-open="multiple"
+        :stay-open="props.multiple"
         :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
         :box-class="boxClassBind"
