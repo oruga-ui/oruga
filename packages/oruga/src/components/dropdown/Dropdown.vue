@@ -18,7 +18,7 @@ import PositionWrapper from "../utils/PositionWrapper.vue";
 
 import { getOption } from "@/utils/config";
 import { vTrapFocus } from "@/directives/trapFocus";
-import { toCssDimension, isMobileAgent } from "@/utils/helpers";
+import { toCssDimension, isMobileAgent, isTrueish } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
@@ -296,9 +296,9 @@ function checkDropdownScroll(): void {
  *   3. Close the dropdown.
  */
 function selectItem(value: T): void {
-    if (props.multiple) {
+    if (isTrueish(props.multiple)) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
-            if (vmodel.value.indexOf(value) === -1) {
+            if (!vmodel.value.includes(value)) {
                 // add a value
                 vmodel.value = [...vmodel.value, value] as ModelValue;
             } else {

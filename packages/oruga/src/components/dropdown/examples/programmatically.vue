@@ -5,7 +5,7 @@ const active = ref(false);
 </script>
 
 <template>
-    <o-field expanded>
+    <o-field grouped>
         <o-dropdown v-model:active="active">
             <template #trigger="{ active }">
                 <o-button
