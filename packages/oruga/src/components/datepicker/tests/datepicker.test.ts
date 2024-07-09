@@ -8,7 +8,7 @@ describe("ODatepicker", () => {
 
     beforeEach(() => {
         vi.useFakeTimers();
-        vi.setSystemTime(new Date(2000, 0, 0));
+        vi.setSystemTime(new Date(2000, 0, 1));
     });
 
     afterEach(() => {
@@ -16,7 +16,9 @@ describe("ODatepicker", () => {
     });
 
     test("render correctly", () => {
-        const wrapper = mount(ODatepicker);
+        const wrapper = mount(ODatepicker, {
+            props: { modelValue: new Date(2000, 0, 1) },
+        });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("datepicker");

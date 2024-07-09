@@ -68,6 +68,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                     <!--
                 @slot Override the options, default is options prop
             -->
+                    <option value="2010">2010</option>
                     <option value="2009">2009</option>
                     <option value="2008">2008</option>
                     <option value="2007">2007</option>
@@ -178,7 +179,6 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                     <option value="1902">1902</option>
                     <option value="1901">1901</option>
                     <option value="1900">1900</option>
-                    <option value="1899">1899</option>
                   </select>
                   <!--v-if-->
                 </div>
@@ -198,12 +198,18 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
             <div class="o-dpck__table__body">
               <div class="o-dpck__table__row">
                 <!--v-if-->
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>26</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>27</span></div>
                 <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>28</span></div>
                 <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>29</span></div>
                 <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>30</span></div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>1</span>
+                <div class="o-dpck__table__cell o-dpck__table__cell--today o-dpck__table__cell--unselectable"><span>31</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selected o-dpck__table__cell--selectable" role="button"><span>1</span>
                   <!--v-if-->
                 </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>2</span>
                   <!--v-if-->
                 </div>
@@ -213,9 +219,6 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>4</span>
                   <!--v-if-->
                 </div>
-              </div>
-              <div class="o-dpck__table__row">
-                <!--v-if-->
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>5</span>
                   <!--v-if-->
                 </div>
@@ -228,6 +231,9 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>8</span>
                   <!--v-if-->
                 </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>9</span>
                   <!--v-if-->
                 </div>
@@ -237,9 +243,6 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>11</span>
                   <!--v-if-->
                 </div>
-              </div>
-              <div class="o-dpck__table__row">
-                <!--v-if-->
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>12</span>
                   <!--v-if-->
                 </div>
@@ -252,6 +255,9 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>15</span>
                   <!--v-if-->
                 </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>16</span>
                   <!--v-if-->
                 </div>
@@ -261,9 +267,6 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>18</span>
                   <!--v-if-->
                 </div>
-              </div>
-              <div class="o-dpck__table__row">
-                <!--v-if-->
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>19</span>
                   <!--v-if-->
                 </div>
@@ -276,6 +279,9 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>22</span>
                   <!--v-if-->
                 </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>23</span>
                   <!--v-if-->
                 </div>
@@ -285,9 +291,6 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>25</span>
                   <!--v-if-->
                 </div>
-              </div>
-              <div class="o-dpck__table__row">
-                <!--v-if-->
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>26</span>
                   <!--v-if-->
                 </div>
@@ -300,23 +303,20 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>29</span>
                   <!--v-if-->
                 </div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>30</span>
-                  <!--v-if-->
-                </div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--today o-dpck__table__cell--selectable" role="button"><span>31</span>
-                  <!--v-if-->
-                </div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>1</span></div>
               </div>
               <div class="o-dpck__table__row">
                 <!--v-if-->
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>30</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>31</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>1</span></div>
                 <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>2</span></div>
                 <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>3</span></div>
                 <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>4</span></div>
                 <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>5</span></div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>6</span></div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>7</span></div>
-                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>8</span></div>
               </div>
             </div>
           </section>
@@ -344,12 +344,8 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
             @slot Override the label, default is label prop 
         -->
                         <div class="" data-oruga="select">
-                          <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select o-tpck__select-placeholder" autocomplete="off">
-                            <option disabled="" hidden="" value="">
-                              <!--
-                        @slot Override the placeholder
-                    -->00
-                            </option>
+                          <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+                            <!--v-if-->
                             <!--
                 @slot Override the options, default is options prop
             -->
@@ -381,12 +377,8 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                           <!--v-if-->
                         </div><span class="o-tpck__separtor">:</span>
                         <div class="" data-oruga="select">
-                          <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select o-tpck__select-placeholder" autocomplete="off">
-                            <option disabled="" hidden="" value="">
-                              <!--
-                        @slot Override the placeholder
-                    -->00
-                            </option>
+                          <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+                            <!--v-if-->
                             <!--
                 @slot Override the options, default is options prop
             -->
