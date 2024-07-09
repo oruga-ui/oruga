@@ -82,7 +82,8 @@ function getMoreAsyncData(): void {
                         </div>
                     </div>
                 </template>
-                <template v-if="page > totalPages" #footer>
+
+                <template v-if="page > totalPages || !options.length" #footer>
                     <span class="ex-text-grey">
                         Thats it! No more movies found.
                     </span>

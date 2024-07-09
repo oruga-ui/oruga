@@ -2,7 +2,7 @@
 import { computed, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { uuid, isEqual } from "@/utils/helpers";
+import { uuid, isEqual, isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { DropdownComponent } from "./types";
@@ -89,7 +89,10 @@ const isClickable = computed(
 
 const isActive = computed(() => {
     if (parent.value.selected === null) return false;
-    if (parent.value.props.multiple && Array.isArray(parent.value.selected))
+    if (
+        isTrueish(parent.value.props.multiple) &&
+        Array.isArray(parent.value.selected)
+    )
         return parent.value.selected.some((selected: T) =>
             isEqual(props.value, selected),
         );
