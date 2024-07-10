@@ -112,17 +112,14 @@ describe("OSelect tests", () => {
     test("render accordingly when has native attributes", () => {
         const wrapper = mount(OSelect, {
             props: {
-                multiple: true,
                 autocomplete: "on",
                 nativeSize: 3,
                 required: true,
-                modelValue: [],
             },
         });
 
         const select = wrapper.find("select");
         expect(select.exists()).toBeTruthy();
-        expect(select.attributes("multiple")).not.toBeUndefined();
         expect(select.attributes("autocomplete")).toBe("on");
         expect(select.attributes("size")).toBe("3");
         expect(select.attributes("required")).not.toBeUndefined();
@@ -208,5 +205,48 @@ describe("OSelect tests", () => {
         await nextTick(() => {
             expect(select.element.focus).toHaveBeenCalled();
         });
+    });
+
+    test("render accordingly when with multiple prop", async () => {
+        const wrapper = mount(OSelect, {
+            props: {
+                options: options,
+                multiple: true,
+                modelValue: [],
+            },
+        });
+
+        const select = wrapper.find("select");
+        expect(select.exists()).toBeTruthy();
+        expect(select.classes("o-sel--multiple")).toBeTruthy();
+
+        // check all options are there
+        const optionValues = wrapper.findAll("option");
+        expect(optionValues.length).toBe(options.length);
+
+        // check nochting got emmited yet
+        let emit = wrapper.emitted("update:modelValue");
+        expect(emit).toBeUndefined();
+
+        // click one option
+        await wrapper.setValue([options[1].value]);
+
+        emit = wrapper.emitted("update:modelValue");
+        expect(emit).toHaveLength(1);
+        expect(emit[0][0]).toHaveLength(1);
+
+        // click second option
+        await wrapper.setValue([options[1].value, options[3].value]);
+
+        emit = wrapper.emitted("update:modelValue");
+        expect(emit).toHaveLength(2);
+        expect(emit[1][0]).toHaveLength(2);
+
+        // click first option again
+        await wrapper.setValue([options[1].value]);
+
+        emit = wrapper.emitted("update:modelValue");
+        expect(emit).toHaveLength(3);
+        expect(emit[2][0]).toHaveLength(1);
     });
 });

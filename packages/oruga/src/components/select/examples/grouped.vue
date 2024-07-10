@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const selected = ref<string[]>([]);
+const selected = ref<string>("");
 </script>
 
 <template>

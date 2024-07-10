@@ -10,7 +10,7 @@ import { computed, watch, onMounted, ref, nextTick } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { isDefined, uuid } from "@/utils/helpers";
+import { isDefined, isTrueish, uuid } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -110,7 +110,9 @@ const vmodel = defineModel<ModelValue>({
 });
 
 const placeholderVisible = computed(
-    () => !props.multiple && (!isDefined(vmodel.value) || vmodel.value === ""),
+    () =>
+        !isTrueish(props.multiple) &&
+        (!isDefined(vmodel.value) || vmodel.value === ""),
 );
 
 onMounted(() => {
@@ -143,8 +145,8 @@ const selectOptions = computed<OptionsItem<T>[]>(() => {
 
 const hasIconRight = computed(
     () =>
-        (props.iconRight && !props.multiple) ||
-        (props.statusIcon && statusVariantIcon.value),
+        (!!props.iconRight && !isTrueish(props.multiple)) ||
+        (props.statusIcon && !!statusVariantIcon.value),
 );
 
 const rightIcon = computed(() =>
@@ -190,8 +192,18 @@ const rootClasses = defineClasses(
 
 const selectClasses = defineClasses(
     ["selectClass", "o-sel"],
-    ["roundedClass", "o-sel--rounded", null, computed(() => props.rounded)],
-    ["multipleClass", "o-sel--multiple", null, computed(() => props.multiple)],
+    [
+        "roundedClass",
+        "o-sel--rounded",
+        null,
+        computed(() => isTrueish(props.rounded)),
+    ],
+    [
+        "multipleClass",
+        "o-sel--multiple",
+        null,
+        computed(() => isTrueish(props.multiple)),
+    ],
     [
         "sizeClass",
         "o-sel--",
@@ -204,25 +216,25 @@ const selectClasses = defineClasses(
         computed(() => statusVariant.value || props.variant),
         computed(() => !!statusVariant.value || !!props.variant),
     ],
-    ["disabledClass", "o-sel--disabled", null, computed(() => props.disabled)],
+    [
+        "disabledClass",
+        "o-sel--disabled",
+        null,
+        computed(() => isTrueish(props.disabled)),
+    ],
     [
         "iconLeftSpaceClass",
         "o-sel-iconspace-left",
         null,
         computed(() => !!props.icon),
     ],
-    [
-        "iconRightSpaceClass",
-        "o-sel-iconspace-right",
-        null,
-        computed(() => !!props.iconRight),
-    ],
+    ["iconRightSpaceClass", "o-sel-iconspace-right", null, hasIconRight],
     ["placeholderClass", "o-sel--placeholder", null, placeholderVisible],
     [
         "arrowClass",
         "o-sel-arrow",
         null,
-        computed(() => !hasIconRight.value && !props.multiple),
+        computed(() => !hasIconRight.value && !isTrueish(props.multiple)),
     ],
 );
 
