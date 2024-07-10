@@ -7,8 +7,8 @@ const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
 
 const props = defineProps({
     code: { type: String, required: true },
-    component: { type: Object, default: () => undefined },
-    showCode: { type: Boolean, default: () => true },
+    component: { type: Object, default: undefined },
+    showCode: { type: Boolean, default: true },
     open: { type: Boolean, default: false },
 });
 
@@ -61,7 +61,7 @@ const styleCode = computed(() =>
 
 const isOpen = ref(props.open);
 const tab = ref(
-    templateCode.value ? "HTML" : scriptCode.value ? "JS" : "STYLE",
+    templateCode.value ? "HTML" : scriptCode.value ? "SCRIPT" : "STYLE",
 );
 const nodeRef = ref<any>(null);
 
@@ -128,8 +128,9 @@ function copy(val: string) {
                 </div>
                 <div class="blocks">
                     <div
+                        v-if="templateCode"
                         class="language-html"
-                        :class="{ active: tab == 'HTML' }">
+                        :class="{ active: tab === 'HTML' }">
                         <button
                             title="Copy Code"
                             class="copy"
@@ -142,20 +143,24 @@ function copy(val: string) {
                                 )
                             " />
                     </div>
-                    <div class="language-js" :class="{ active: tab == 'JS' }">
+                    <div
+                        v-if="scriptCode"
+                        class="language-js"
+                        :class="{ active: tab === 'SCRIPT' }">
                         <button
                             title="Copy Code"
                             class="copy"
                             @click="copy(scriptCode)" />
-                        <span class="lang">html</span>
+                        <span class="lang">javascript</span>
                         <div
                             v-html="
                                 markdown.render('```js ' + scriptCode + ' ```')
                             " />
                     </div>
                     <div
+                        v-if="styleCode"
                         class="language-css"
-                        :class="{ active: tab == 'STYLE' }">
+                        :class="{ active: tab === 'STYLE' }">
                         <button
                             title="Copy Code"
                             class="copy"
