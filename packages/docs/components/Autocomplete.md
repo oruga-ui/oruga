@@ -1,7 +1,3 @@
----
-title: Autocomplete
----
-
 # Autocomplete
 
 <div class="vp-doc">

@@ -2,10 +2,6 @@
 sidebarDepth: 2
 ---
 
----
-
-## title: Menu
-
 # Menu
 
 <div class="vp-doc">

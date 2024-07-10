@@ -1,7 +1,3 @@
----
-title: Checkbox
----
-
 # Checkbox
 
 <div class="vp-doc">

@@ -1,7 +1,3 @@
----
-title: Datetimepicker
----
-
 # Datetimepicker
 
 <div class="vp-doc">

@@ -2,10 +2,6 @@
 sidebarDepth: 2
 ---
 
----
-
-## title: Tabs
-
 # Tabs
 
 <div class="vp-doc">

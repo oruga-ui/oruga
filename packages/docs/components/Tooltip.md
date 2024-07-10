@@ -1,7 +1,3 @@
----
-title: Tooltip
----
-
 # Tooltip
 
 <div class="vp-doc">

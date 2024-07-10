@@ -1,7 +1,3 @@
----
-title: Switch
----
-
 # Switch
 
 <div class="vp-doc">

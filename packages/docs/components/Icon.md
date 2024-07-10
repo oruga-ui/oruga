@@ -1,7 +1,3 @@
----
-title: Icon
----
-
 # Icon
 
 <div class="vp-doc">

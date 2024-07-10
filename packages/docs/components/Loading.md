@@ -1,7 +1,3 @@
----
-title: Loading
----
-
 # Loading
 
 <div class="vp-doc">

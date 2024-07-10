@@ -1,7 +1,3 @@
----
-title: Timepicker
----
-
 # Timepicker
 
 <div class="vp-doc">

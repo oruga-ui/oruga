@@ -159,14 +159,11 @@ export default {
             const requires = !component || IGNORE.indexOf(component) >= 0;
             return `
 ${
-    !isSubComponent
-        ? `
----
-title: ${displayName}
----
+    isSubComponent
+        ? ""
+        : `
 # ${deprecated ? `~~${displayName}~~` : displayName}
 `
-        : ""
 }
 ${
     requires

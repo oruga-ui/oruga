@@ -1,7 +1,3 @@
----
-title: Skeleton
----
-
 # Skeleton
 
 <div class="vp-doc">

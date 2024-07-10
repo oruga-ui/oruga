@@ -1,7 +1,3 @@
----
-title: Upload
----
-
 # Upload
 
 <div class="vp-doc">

@@ -2,10 +2,6 @@
 sidebarDepth: 2
 ---
 
----
-
-## title: Dropdown
-
 # Dropdown
 
 <div class="vp-doc">

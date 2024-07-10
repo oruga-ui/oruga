@@ -1,7 +1,3 @@
----
-title: Sidebar
----
-
 # Sidebar
 
 <div class="vp-doc">

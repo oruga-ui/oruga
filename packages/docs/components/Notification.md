@@ -2,10 +2,6 @@
 sidebarDepth: 2
 ---
 
----
-
-## title: Notification
-
 # Notification
 
 <div class="vp-doc">

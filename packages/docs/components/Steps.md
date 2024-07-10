@@ -2,10 +2,6 @@
 sidebarDepth: 2
 ---
 
----
-
-## title: Steps
-
 # Steps
 
 <div class="vp-doc">

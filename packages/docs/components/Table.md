@@ -2,10 +2,6 @@
 sidebarDepth: 2
 ---
 
----
-
-## title: Table
-
 # Table
 
 <div class="vp-doc">

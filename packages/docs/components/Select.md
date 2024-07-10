@@ -1,7 +1,3 @@
----
-title: Select
----
-
 # Select
 
 <div class="vp-doc">

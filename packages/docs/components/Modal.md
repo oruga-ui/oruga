@@ -1,7 +1,3 @@
----
-title: Modal
----
-
 # Modal
 
 <div class="vp-doc">

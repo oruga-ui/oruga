@@ -1,7 +1,3 @@
----
-title: Pagination
----
-
 # Pagination
 
 <div class="vp-doc">

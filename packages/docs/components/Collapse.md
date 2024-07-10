@@ -1,7 +1,3 @@
----
-title: Collapse
----
-
 # Collapse
 
 <div class="vp-doc">

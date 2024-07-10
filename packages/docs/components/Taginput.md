@@ -1,7 +1,3 @@
----
-title: Taginput
----
-
 # Taginput
 
 <div class="vp-doc">

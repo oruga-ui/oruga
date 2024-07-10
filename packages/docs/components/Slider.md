@@ -2,10 +2,6 @@
 sidebarDepth: 2
 ---
 
----
-
-## title: Slider
-
 # Slider
 
 <div class="vp-doc">

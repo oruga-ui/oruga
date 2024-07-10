@@ -2,10 +2,6 @@
 sidebarDepth: 2
 ---
 
----
-
-## title: Carousel
-
 # Carousel
 
 <div class="vp-doc">
