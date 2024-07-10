@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const dates = ref<Date[]>([]);
+const dates = ref<[Date, Date] | []>([]);
 </script>
 
 <template>
