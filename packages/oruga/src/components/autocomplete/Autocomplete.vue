@@ -477,11 +477,8 @@ watch(
 );
 
 const closeableOptions = computed(() => {
-    const options = ["escape"];
-    if (!props.keepOpen) {
-        options.push("content");
-        options.push("outside");
-    }
+    const options = ["escape", "outside"];
+    if (!props.keepOpen) options.push("content");
     return options;
 });
 
