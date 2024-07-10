@@ -535,6 +535,7 @@ defineExpose({ focus: setFocus, value: items });
                 :confirm-keys="confirmKeys"
                 :placeholder="placeholder"
                 :validation-message="validationMessage"
+                expanded
                 @input="onInput"
                 @focus="onFocus"
                 @blur="onBlur"
