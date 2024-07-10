@@ -333,9 +333,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Close dropdown on click */
                 closeOnClick: boolean;
                 /** Custom function to format a date into a string */
-                dateFormatter: (date: Date | Date[]) => string;
+                dateFormatter: (date: Date | [] | Date[] | [Date, Date]) => string;
                 /** Custom function to parse a string into a date */
-                dateParser: (date: string) => Date | Date[];
+                dateParser: (date: string) => Date | [] | Date[] | [Date, Date];
                 /** Date creator function, default is `new Date()` */
                 dateCreator: () => Date;
                 /** Define a list of weeks which can not be selected */
@@ -1362,6 +1362,10 @@ but will set body to position fixed, might break some layouts. */
 (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
 if input is empty */
                 removeOnKeys: string[];
+                /** Allows adding new items */
+                allowNew: boolean;
+                /** Allows adding the same item multiple time */
+                allowDuplicates: boolean;
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */

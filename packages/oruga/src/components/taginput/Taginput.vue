@@ -117,10 +117,16 @@ const props = defineProps({
     },
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
     keepFirst: { type: Boolean, default: false },
-    /** Allows to add new items */
-    allowNew: { type: Boolean, default: false },
+    /** Allows adding new items */
+    allowNew: {
+        type: Boolean,
+        default: () => getOption("taginput.allowNew", false),
+    },
     /** Allows adding the same item multiple time */
-    allowDuplicates: { type: Boolean, default: false },
+    allowDuplicates: {
+        type: Boolean,
+        default: () => getOption("taginput.allowDuplicates", false),
+    },
     /**
      * Allow removing last item when pressing given keys
      * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
@@ -130,8 +136,8 @@ const props = defineProps({
         type: Array as PropType<string[]>,
         default: () => getOption("taginput.removeOnKeys", ["Backspace"]),
     },
-    /** Function to validate the value of the item before adding */
-    beforeAdding: {
+    /** Function to validate the value of a new item before it got added */
+    validateItem: {
         type: Function as PropType<(value: T | string) => boolean>,
         default: () => true,
     },
@@ -365,9 +371,10 @@ function addItem(item?: T | string): void {
         // or previously added (if not allowDuplicates).
         const itemToAdd = props.createItem(item);
         const add = !props.allowDuplicates
-            ? items.value.indexOf(itemToAdd) === -1
+            ? !items.value.includes(itemToAdd)
             : true;
-        if (add && props.beforeAdding(item)) {
+
+        if (add && props.validateItem(item)) {
             items.value = [...items.value, itemToAdd];
             emits("add", itemToAdd);
         }

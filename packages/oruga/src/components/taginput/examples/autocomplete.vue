@@ -133,6 +133,7 @@ const options = [
 const tags = ref([]);
 
 const allowNew = ref(false);
+const allowDuplicates = ref(false);
 const openOnFocus = ref(false);
 const keepFirst = ref(false);
 const keepOpen = ref(true);
@@ -140,11 +141,22 @@ const keepOpen = ref(true);
 
 <template>
     <section>
-        <o-field grouped>
-            <o-switch v-model="allowNew">Allow new items</o-switch>
-            <o-switch v-model="keepFirst">Keep first</o-switch>
-            <o-switch v-model="openOnFocus">Open on focus</o-switch>
-            <o-switch v-model="keepOpen">Keep open</o-switch>
+        <o-field grouped group-multiline>
+            <o-field>
+                <o-switch v-model="allowNew">Allow new items</o-switch>
+            </o-field>
+            <o-field>
+                <o-switch v-model="allowDuplicates">Allow duplicates</o-switch>
+            </o-field>
+            <o-field>
+                <o-switch v-model="keepFirst">Keep first</o-switch>
+            </o-field>
+            <o-field>
+                <o-switch v-model="openOnFocus">Open on focus</o-switch>
+            </o-field>
+            <o-field>
+                <o-switch v-model="keepOpen">Keep open</o-switch>
+            </o-field>
         </o-field>
 
         <o-field label="Enter some items">
@@ -152,12 +164,14 @@ const keepOpen = ref(true);
                 v-model="tags"
                 :options="options"
                 :allow-new="allowNew"
+                :allow-duplicates="allowDuplicates"
                 :open-on-focus="openOnFocus"
                 :keep-open="keepOpen"
                 :keep-first="keepFirst"
                 field="user.first_name"
                 icon="tag"
-                placeholder="Add an item" />
+                placeholder="Add an item"
+                expanded />
         </o-field>
 
         <p><b>Items:</b> {{ tags }}</p>
