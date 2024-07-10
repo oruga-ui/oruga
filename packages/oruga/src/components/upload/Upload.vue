@@ -9,6 +9,7 @@ import { computed, ref, watch } from "vue";
 
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
+import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useInputHandler, useVModel } from "@/composables";
 
 import type { UploadProps } from "./props";
@@ -103,7 +104,7 @@ function onFileChange(event: Event | DragEvent): void {
     }
 
     // multiple upload
-    if (props.multiple) {
+    if (isTrueish(props.multiple)) {
         // always new values if native or undefined local
         const values =
             props.native || !vmodel.value || !Array.isArray(vmodel.value)
