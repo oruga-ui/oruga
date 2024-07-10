@@ -4,7 +4,7 @@
             <o-menu-item icon="info-circle" label="Info" />
             <o-menu-item icon="cog" expanded>
                 <template #label="props">
-                    Administrator
+                    <span>Administrator</span>
                     <o-icon
                         :icon="props.active ? 'chevron-up' : 'chevron-down'" />
                 </template>

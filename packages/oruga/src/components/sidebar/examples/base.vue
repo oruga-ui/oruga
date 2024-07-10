@@ -29,7 +29,7 @@ const position = ref<"left" | "top" | "bottom" | "right">("left");
             :overlay="overlay"
             :position="position">
             <o-button
-                v-if="fullwidth"
+                v-if="fullwidth || !overlay"
                 icon-left="times"
                 label="Close"
                 @click="close()" />
