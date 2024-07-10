@@ -12,7 +12,7 @@ export type DatepickerProps<
     override?: boolean;
     /** The input value state */
     modelValue?: IsRange extends true
-        ? Date[]
+        ? [Date, Date] | []
         : IsMultiple extends true
           ? Date[]
           : Date;

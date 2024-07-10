@@ -99,7 +99,7 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
     /** Format date into string */
     const defaultDateFormatter = (date: typeof props.modelValue): string => {
         if (!date) return "";
-        const targetDates = Array.isArray(date) ? date : [date];
+        const targetDates: Date[] = Array.isArray(date) ? date : [date];
         if (!targetDates.length) return "";
         const dates = targetDates.map((date) => {
             const d = new Date(
