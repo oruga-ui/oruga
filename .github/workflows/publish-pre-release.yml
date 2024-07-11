@@ -33,4 +33,5 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           bodyFile: 'RELEASE_BODY.md'
+          prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
