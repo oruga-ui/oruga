@@ -118,10 +118,10 @@ watch(
     { immediate: true }, // initialise valueStart and valueEnd
 );
 
-function setValues(newValue: ModelValue): void {
+function setValues(newValue: number | number[]): void {
     if (props.min > props.max) return;
 
-    if (isTrueish(props.range)) {
+    if (Array.isArray(newValue)) {
         const smallValue =
             typeof newValue[0] !== "number" || isNaN(newValue[0])
                 ? props.min
@@ -133,10 +133,9 @@ function setValues(newValue: ModelValue): void {
         valueStart.value = isThumbReversed.value ? largeValue : smallValue;
         valueEnd.value = isThumbReversed.value ? smallValue : largeValue;
     } else {
-        const value: number = Array.isArray(newValue) ? newValue[0] : newValue;
-        valueStart.value = isNaN(value)
+        valueStart.value = isNaN(newValue)
             ? props.min
-            : Math.min(props.max, Math.max(props.min, value));
+            : Math.min(props.max, Math.max(props.min, newValue));
         valueEnd.value = null;
     }
 }
