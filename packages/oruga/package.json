@@ -92,7 +92,7 @@
     "eslint-plugin-vue": "^9.24.1",
     "eslint-plugin-vuejs-accessibility": "^2.2.1",
     "jest-axe": "^8.0.0",
-    "jsdom": "^24.0.0",
+    "jsdom": "^24.1.0",
     "npm-check-updates": "^16.14.18",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",

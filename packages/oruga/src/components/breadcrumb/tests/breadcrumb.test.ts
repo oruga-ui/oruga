@@ -9,22 +9,22 @@ import { OBreadcrumb } from "@/components/breadcrumb/Breadcrumb.vue";
 describe("<Breadcrumb>", () => {
     enableAutoUnmount(afterEach);
 
-    it("is called", () => {
+    test("is called", () => {
         const wrapper = mount(OBreadcrumb);
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("breadcrumb");
     });
 
-    it("rendeer correctly", () => {
+    test("rendeer correctly", () => {
         const wrapper = mount(OBreadcrumb);
         expect(wrapper.html()).toMatchSnapshot();
         expect(wrapper.classes("o-breadcrumb")).toBeTruthy();
     });
-    it("render items", () => {
+    test("render items", () => {
         // const triggerHTML = "<breadcrumb-item tag="a" href='/'>Home</breadcrumb-item>";
         const triggerHTML =
-            '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>";
+            '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>';
 
         const wrapper = mount(OBreadcrumb, {
             slot: triggerHTML
@@ -34,9 +34,9 @@ describe("<Breadcrumb>", () => {
         expect(trigger.exists()).toBeTruthy()
         expect(trigger.text()).contain("Home")
     });
-    it("is centered", () => {
+    test("is centered", () => {
         const triggerHTML =
-        '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>";
+        '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>';
 
         const wrapper = mount(OBreadcrumb, {
             slot: triggerHTML,
@@ -45,9 +45,9 @@ describe("<Breadcrumb>", () => {
 
         expect(wrapper.classes("o-breadcrumb__centered")).toBeTruthy()
     });
-    it("is large ", () => {
+    test("is large ", () => {
         const triggerHTML =
-        '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>";
+        '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>';
 
         const wrapper = mount(OBreadcrumb, {
             slot: triggerHTML,

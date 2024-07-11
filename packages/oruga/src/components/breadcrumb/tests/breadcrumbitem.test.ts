@@ -5,7 +5,7 @@ import { OBreadcrumb } from "@/components/breadcrumb/Breadcrumb.vue";
 // import { OBreadcrumbItem } from "../Breadcrumbitem.vue";
 
 describe("<BreadcrumbItem>", () => {
-    it("is active", () => {
+    test("is active", () => {
         const triggerHTML =
             '<breadcrumb-item tag="a" active="true" active-variant"primary" href="/">Home</breadcrumb-item>';
 
@@ -17,7 +17,7 @@ describe("<BreadcrumbItem>", () => {
 
         expect(trigger.classes("o-breadcrumb-item__primary")).toBeTruthy();
     });
-    it("is disabled", () => {
+    test("is disabled", () => {
         const triggerHTML =
             '<breadcrumb-item tag="a" disabled="true" href="/">Home</breadcrumb-item>';
 
@@ -30,6 +30,6 @@ describe("<BreadcrumbItem>", () => {
 
         expect(trigger.classes("o-breadcrumb-item__disabled")).toBeTruthy();
     });
-    it("has icon", () => {});
-    it("has href link", () => {});
+    test("has icon", () => {});
+    test("has href link", () => {});
 });
