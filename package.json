@@ -35,8 +35,5 @@
     "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
     "replace-in-file": "^7.2.0"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.9.5"
   }
 }
