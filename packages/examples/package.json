@@ -45,7 +45,7 @@
   ],
   "scripts": {
     "build": "rimraf dist && vite build",
-    "publish:lib": "cp ../../README.md . && npm run build && npm publish",
+    "publish": "cp ../../README.md . && npm run build && npm publish",
     "update": "ncu -u"
   },
   "peerDependencies": {
