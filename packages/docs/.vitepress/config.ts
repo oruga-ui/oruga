@@ -130,8 +130,8 @@ export default defineConfig({
         // Vite config options
         resolve: {
             alias: {
-                // add '@/oruga' alias to strict oruga package
-                "@/oruga": fileURLToPath(
+                // add '@oruga-ui/oruga-next' alias to strict oruga package
+                "@oruga-ui/oruga-next": fileURLToPath(
                     new URL("./../../oruga/src/index.ts", import.meta.url),
                 ),
                 // add '@' alias to oruga package
