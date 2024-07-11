@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const name = ref("");
@@ -131,7 +131,7 @@ const inspectData = [
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-field v-bind="props" label="Field">
+        <o-field v-bind="props" label="Field" grouped>
             <o-input v-model="name" name="name" placeholder="Name" expanded />
             <o-input
                 name="email"

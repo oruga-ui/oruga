@@ -1,10 +1,8 @@
-<script setup lang="ts" generic="T extends String | Number | Object">
+<script setup lang="ts" generic="T extends string | object">
 import {
     computed,
-    nextTick,
     ref,
     useAttrs,
-    watch,
     watchEffect,
     type ComponentInstance,
     type PropType,
@@ -19,6 +17,7 @@ import {
     defineClasses,
     getActiveClasses,
     useInputHandler,
+    useVModel,
 } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -38,16 +37,32 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
+    /**
+     * The input value state
+     * @type string[]|object[]
+     */
     modelValue: { type: Array as PropType<T[]>, default: () => [] },
-    /** Items data */
-    data: { type: Array as PropType<T[]>, default: () => [] },
+    /**
+     * Items data
+     * @type string[]|object[]
+     */
+    options: { type: Array as PropType<T[]>, default: () => [] },
     /** Property of the object (if data is array of objects) to use as display text */
     field: { type: String, default: "value" },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
     /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
     groupOptions: { type: String, default: undefined },
+    /** Function to format an option to a string for display it in the input (as alternative to field prop) */
+    formatter: {
+        type: Function as PropType<(value: unknown, option: T) => string>,
+        default: undefined,
+    },
+    /** Function to filter the options based on the input value - default is display text comparison */
+    filter: {
+        type: Function as PropType<(options: T[], value: string) => T[]>,
+        default: undefined,
+    },
     /**
      * Vertical size of the input control
      * @values small, medium, large
@@ -78,7 +93,7 @@ const props = defineProps({
     /** Keep open dropdown list after select */
     keepOpen: {
         type: Boolean,
-        default: () => getOption("autocomplete.keepOpen", false),
+        default: () => getOption("taginput.keepOpen", false),
     },
     /** Input placeholder */
     placeholder: { type: String, default: undefined },
@@ -102,19 +117,27 @@ const props = defineProps({
     },
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
     keepFirst: { type: Boolean, default: false },
-    /** When autocomplete, it allow to add new items */
-    allowNew: { type: Boolean, default: false },
+    /** Allows adding new items */
+    allowNew: {
+        type: Boolean,
+        default: () => getOption("taginput.allowNew", false),
+    },
     /** Allows adding the same item multiple time */
-    allowDuplicates: { type: Boolean, default: false },
-    /** Add autocomplete feature (if true, any Autocomplete props may be used too) */
-    allowAutocomplete: { type: Boolean, default: false },
-    /** Allow removing last item when pressing given keys, if input is empty */
+    allowDuplicates: {
+        type: Boolean,
+        default: () => getOption("taginput.allowDuplicates", false),
+    },
+    /**
+     * Allow removing last item when pressing given keys
+     * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
+     * if input is empty
+     */
     removeOnKeys: {
         type: Array as PropType<string[]>,
         default: () => getOption("taginput.removeOnKeys", ["Backspace"]),
     },
-    /** Function to validate the value of the item before adding */
-    beforeAdding: {
+    /** Function to validate the value of a new item before it got added */
+    validateItem: {
         type: Function as PropType<(value: T | string) => boolean>,
         default: () => true,
     },
@@ -231,22 +254,22 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {(string | number | object)[]} updated modelValue prop
+     * @param value {string[] | object[]} updated modelValue prop
      */
     (e: "update:modelValue", value: T[]): void;
     /**
      * on input change event
-     * @param value {String} input value
+     * @param value {string} input value
      */
     (e: "input", value: string): void;
     /**
      * new item got added
-     * @param value {string | number | object} added item
+     * @param value {string | object} added item
      */
     (e: "add", value: T): void;
     /**
      * item got removed
-     * @param value {string | number | object} removed item
+     * @param value {string | object} removed item
      */
     (e: "remove", value: T): void;
     /**
@@ -282,7 +305,8 @@ const emits = defineEmits<{
 
 const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<T>>>();
 
-const items = defineModel<T[]>({ default: [] });
+// const items = defineModel<T[]>({ default: () => [] });
+const items = useVModel<T[]>();
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -296,14 +320,6 @@ const isComposing = ref(false);
 
 const valueLength = computed(() => newItem.value.trim().length);
 const itemsLength = computed(() => items.value.length);
-
-/** When modelValue is changed set internal value. */
-watch(
-    () => props.modelValue,
-    (value) => {
-        items.value = Array.isArray(value) ? value.slice(0) : value || [];
-    },
-);
 
 /** Show the input field if a maxitems hasn't been set or reached. */
 const hasInput = computed(
@@ -355,10 +371,11 @@ function addItem(item?: T | string): void {
         // or previously added (if not allowDuplicates).
         const itemToAdd = props.createItem(item);
         const add = !props.allowDuplicates
-            ? items.value.indexOf(itemToAdd) === -1
+            ? !items.value.includes(itemToAdd)
             : true;
-        if (add && props.beforeAdding(item)) {
-            items.value.push(itemToAdd);
+
+        if (add && props.validateItem(item)) {
+            items.value = [...items.value, itemToAdd];
             emits("add", itemToAdd);
         }
     }
@@ -371,7 +388,8 @@ function addItem(item?: T | string): void {
 }
 
 function removeItem(index: number, event?: Event): void {
-    const item = items.value.splice(index, 1)[0];
+    const item = items.value.at(index);
+    items.value = items.value.toSpliced(index, 1);
     emits("remove", item);
     if (event) event.stopPropagation();
     if (props.openOnFocus && autocompleteRef.value) setFocus();
@@ -382,37 +400,29 @@ function removeItem(index: number, event?: Event): void {
 function onSelect(option: T): void {
     if (!option) return;
     addItem(option);
-    nextTick(() => (newItem.value = ""));
+}
+
+function onInput(value: string): void {
+    emits("input", value.trim());
 }
 
 function onKeydown(event: KeyboardEvent): void {
     if (
-        props.removeOnKeys.indexOf(event.key) !== -1 &&
+        props.removeOnKeys.indexOf(event.key) >= 0 &&
         !newItem.value?.length &&
         itemsLength.value > 0
     ) {
         // remove last item
         removeItem(itemsLength.value - 1);
     }
-    // Stop if is to accept select only
-    if (props.allowAutocomplete && !props.allowNew) return;
 
     if (props.confirmKeys.indexOf(event.key) >= 0) {
         // Allow Tab to advance to next field regardless
         if (event.key !== "Tab") event.preventDefault();
         if (event.key === "Enter" && isComposing.value) return;
-        addItem();
+        // Add item if not select only
+        if (props.allowNew) addItem();
     }
-}
-
-function onInput(value: string | number): void {
-    emits("input", String(value).trim());
-}
-
-function handleOnBlur(event: Event): void {
-    // Add item on-blur if not select only
-    if (!props.allowAutocomplete) addItem();
-    onBlur(event);
 }
 
 // --- Computed Component Classes ---
@@ -475,7 +485,7 @@ const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: items });
 </script>
 
 <template>
@@ -483,13 +493,15 @@ defineExpose({ focus: setFocus });
         <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
             <!--
                 @slot Override selected items
-                @binding {unknown[]} items - selected items
+                @binding {(string, object)[]} items - selected items
             -->
             <slot name="selected" :items="items" :remove-item="removeItem">
                 <span
                     v-for="(item, index) in items"
                     :key="getNormalizedItemText(item) + index"
-                    :class="itemClasses">
+                    :class="itemClasses"
+                    :tabindex="0"
+                    @keydown.enter="removeItem(index, $event)">
                     <span>{{ getNormalizedItemText(item) }}</span>
                     <o-icon
                         v-if="closable"
@@ -506,10 +518,14 @@ defineExpose({ focus: setFocus });
             <o-autocomplete
                 v-show="hasInput"
                 ref="autocompleteRef"
-                v-model="newItem"
+                v-model:input="newItem"
                 v-bind="autocompleteBind"
-                :data="data"
+                :options="options"
                 :field="field"
+                :group-field="groupField"
+                :group-options="groupOptions"
+                :formatter="formatter"
+                :filter="filter"
                 :icon="icon"
                 :icon-pack="iconPack"
                 :maxlength="maxlength"
@@ -519,8 +535,6 @@ defineExpose({ focus: setFocus });
                 :open-on-focus="openOnFocus"
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
-                :group-field="groupField"
-                :group-options="groupOptions"
                 :has-counter="false"
                 :use-html5-validation="useHtml5Validation"
                 :check-scroll="checkScroll"
@@ -528,10 +542,10 @@ defineExpose({ focus: setFocus });
                 :confirm-keys="confirmKeys"
                 :placeholder="placeholder"
                 :validation-message="validationMessage"
-                :expanded="expanded"
+                expanded
                 @input="onInput"
                 @focus="onFocus"
-                @blur="handleOnBlur"
+                @blur="onBlur"
                 @invalid="onInvalid"
                 @keydown="onKeydown"
                 @compositionstart="isComposing = true"
@@ -548,17 +562,16 @@ defineExpose({ focus: setFocus });
                     <slot name="header" />
                 </template>
 
-                <template v-if="$slots.default" #default="props">
+                <template
+                    v-if="$slots.default"
+                    #default="{ option, index, value }">
                     <!--
                         @slot Override the select option
                         @binding {object} option - option object
                         @binding {number} index - option index
                         @binding {unknown} value - option value
                     -->
-                    <slot
-                        :option="props.option"
-                        :index="props.index"
-                        :value="props.value" />
+                    <slot :option="option" :index="index" :value="value" />
                 </template>
 
                 <template v-if="$slots.empty" #empty>

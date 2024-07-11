@@ -1,14 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
 import CustomIconPack from "./custom-icon-pack.vue";
 import CustomIconPackCode from "./custom-icon-pack.vue?raw";
 
-import { ref } from "vue";
-
-const customIconConfigCode = ref(
-    `<script setup>
+const customIconConfigCode = `
+<script setup lang="ts">
 const customIconConfig = {
     customIconPacks: {
         fas: {
@@ -28,11 +26,11 @@ app.use(Oruga, {
     iconPack: "fas",
     ...customIconConfig
 });
-/script>`,
-);
+/script>
+`;
 
-const faIconConfigCode = ref(
-    `<script setup>
+const faIconConfigCode = `
+<script setup lang="ts">
 import { library } from "@fortawesome/fontawesome-svg-core";
 // internal icons
 import {
@@ -75,9 +73,9 @@ import Oruga from "@oruga-ui/oruga";
 app.use(Oruga, {
     iconComponent: "vue-fontawesome",
     iconPack: "fas"
-})
-/script>`,
-);
+});
+/script>
+`;
 </script>
 
 <template>

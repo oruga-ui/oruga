@@ -1,8 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const inline = ref(false);
 const active = ref(false);
+const teleport = ref(false);
+const position = ref<"left" | "top" | "bottom" | "right">("left");
 
 const inspectData = [
     {
@@ -104,7 +106,6 @@ const inspectData = [
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data) => {
-            position.value = "static";
             data.variant = "warning";
         },
     },
@@ -134,7 +135,9 @@ const inspectData = [
         <o-sidebar
             v-bind="props"
             v-model:active="active"
-            :inline="inline"
+            :inline
+            :teleport
+            :position
             variant="primary">
             <img
                 width="128"

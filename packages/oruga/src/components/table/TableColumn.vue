@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { toRaw, computed, getCurrentInstance, type PropType } from "vue";
+<script setup lang="ts" generic="T">
+import { computed, getCurrentInstance, type PropType } from "vue";
 
 import { useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
@@ -20,6 +20,11 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /** Define an object property key if data is an object */
     field: { type: String, default: undefined },
+    /** Provide a formatter function to edit the output */
+    formatter: {
+        type: Function as PropType<(value: unknown, row: T) => string>,
+        default: undefined,
+    },
     /** Define a column sub heading  */
     subheading: { type: String, default: undefined },
     /** Add addtional meta information for the column for custom purpose*/
@@ -47,40 +52,24 @@ const props = defineProps({
     sortable: { type: Boolean, default: false },
     /** Define whether the column is visible or not */
     visible: { type: Boolean, default: true },
-    /** Define a custom sort function */
-    customSort: {
-        type: Function as PropType<
-            (a: unknown, b: unknown, isAsc: boolean) => number
-        >,
-        default: undefined,
-    },
-    /** Define a custom funtion for the filter search */
-    customSearch: {
-        type: Function as PropType<(row: unknown, filter: string) => boolean>,
-        default: undefined,
-    },
     /** Whether the column is sticky or not */
     sticky: { type: Boolean, default: false },
     /** Make header selectable */
     headerSelectable: { type: Boolean, default: false },
-    /**
-     * Adds native attributes to th
-     * @deprecated will be moved to table component in v0.9
-     */
-    thAttrs: {
-        type: Function as PropType<(column: typeof props) => object>,
-        default: () => ({}),
+    /** Define a custom sort function */
+    customSort: {
+        type: Function as PropType<(a: T, b: T, isAsc: boolean) => number>,
+        default: undefined,
     },
-    /**
-     * Adds native attributes to td
-     * @deprecated will be moved to table component in v0.9
-     */
-    tdAttrs: {
-        type: Function as PropType<
-            (row: unknown, column: typeof props) => object
-        >,
-        default: () => ({}),
+    /** Define a custom filter funtion for the search */
+    customSearch: {
+        type: Function as PropType<(row: T, filter: string) => boolean>,
+        default: undefined,
     },
+    /** Adds native attributes to th */
+    thAttrs: { type: Object, default: undefined },
+    /** Adds native attributes to td */
+    tdAttrs: { type: Object, default: undefined },
 });
 
 const style = computed(() => ({
@@ -93,22 +82,8 @@ const isHeaderUnselectable = computed(
 
 const vm = getCurrentInstance();
 
-const providedData = computed<TableColumnComponent>(() => ({
-    ...toRaw(props), // TODO: remove toRaw when tdAttrs/thAttrs are moved to table component
-    label: props.label,
-    field: props.field,
-    subheading: props.subheading,
-    meta: props.meta,
-    width: props.width,
-    numeric: props.numeric,
-    position: props.position,
-    searchable: props.searchable,
-    sortable: props.sortable,
-    visible: props.visible,
-    customSort: props.customSort,
-    customSearch: props.customSearch,
-    sticky: props.sticky,
-    headerSelectable: props.headerSelectable,
+const providedData = computed<TableColumnComponent<T>>(() => ({
+    ...props,
     $el: vm.proxy,
     $slots: vm.slots,
     style: style.value,
@@ -130,11 +105,11 @@ const { item } = useProviderChild({ data: providedData });
         <template v-if="false">
             <!--
                 @slot Default Slot
-                @binding {unknown} row - row data 
-                @binding {Column} column - column definition 
+                @binding {T} row - row data 
+                @binding {TableColumn} column - column definition 
                 @binding {number} index - row index 
                 @binding {number} colindex - column index 
-                @binding {(row): void} toggle-details - toggle details function 
+                @binding {(): void} toggle-details - toggle details function 
             -->
             <slot
                 :row="null"
@@ -144,22 +119,22 @@ const { item } = useProviderChild({ data: providedData });
                 :toggle-details="null" />
             <!--
                 @slot Override header label 
-                @binding {Column} column - column definition 
+                @binding {TableColumn} column - column definition 
                 @binding {number} index - column index 
             -->
             <slot name="header" :column="null" :index="null" />
             <!--
                 @slot Override subheading label 
-                @binding {Column} column - column definition 
+                @binding {TableColumn} column - column definition 
                 @binding {number} index - column index 
             -->
             <slot name="subheading" :column="null" :index="null" />
 
             <!--
                 @slot Override searchable input 
-                @binding {Column} column - column definition 
+                @binding {TableColumn} column - column definition 
                 @binding {number} index - column index 
-                @binding {Record<string,string>} filters - active filters object
+                @binding {object} filters - active filters object
             -->
             <slot
                 name="searchable"

@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OLoading tests > render correctly 1`] = `
+"<transition-stub name="fade" appear="false" persisted="false" css="true">
+  <div data-oruga="loading" role="dialog" class="o-load o-load--fullpage">
+    <div class="o-load__overlay" tabindex="-1" aria-hidden="true"></div>
+    <!-- 
+                @slot Override icon and label
+                @binding {close} close - function to close the component
+            --><span class="o-icon o-icon--spin o-icon--medium o-load__icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-loading mdi-36px"></i></span>
+    <!--v-if-->
+  </div>
+</transition-stub>"
+`;

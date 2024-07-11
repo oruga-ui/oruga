@@ -1,3 +1,62 @@
+## [0.8.12](https://github.com/oruga-ui/oruga/compare/v0.8.11...v0.8.12) (2024-06-28)
+
+
+### Bug Fixes
+
+* **datetimepicker:** fix datetimepicker initialisation bug ([#948](https://github.com/oruga-ui/oruga/issues/948)) ([92b30f1](https://github.com/oruga-ui/oruga/commit/92b30f16d7f2839f7f69c2ebf6bd9c7f0e11bedf))
+* **picker:** fix native input value ([#986](https://github.com/oruga-ui/oruga/issues/986)) ([09154d5](https://github.com/oruga-ui/oruga/commit/09154d5a9adc919a6bcd3f78448dd16baa008bc9))
+
+
+
+## [0.8.11](https://github.com/oruga-ui/oruga/compare/v0.8.10...v0.8.11) (2024-06-05)
+
+
+### Bug Fixes
+
+* **datepicker:** always validate programmatic date updates ([#927](https://github.com/oruga-ui/oruga/issues/927)) ([20ceedd](https://github.com/oruga-ui/oruga/commit/20ceedda2566211b5c790a12a687a01ce26380b5))
+* **datepicker:** update focused date on editing directly ([#941](https://github.com/oruga-ui/oruga/issues/941)) ([1af13cf](https://github.com/oruga-ui/oruga/commit/1af13cf1cc97703aa58820d99b403791b554f9ba))
+* **taginput:** solve defineModel macro array constrains ([#942](https://github.com/oruga-ui/oruga/issues/942)) ([404c5f6](https://github.com/oruga-ui/oruga/commit/404c5f6d1aa61cbbbe7dfce089bf203ffde4259e))
+
+
+### Features
+
+* **inputs:** detect constraint validation attribute changes ([#930](https://github.com/oruga-ui/oruga/issues/930)) ([4de3bd7](https://github.com/oruga-ui/oruga/commit/4de3bd74f512a3a1b07363b0cb062d6f2b5cc95d))
+
+
+
+## [0.8.10](https://github.com/oruga-ui/oruga/compare/v0.8.9...v0.8.10) (2024-06-03)
+
+
+### Bug Fixes
+
+* **datetimpicker:** fix inline value edit | make picker props reactive ([#932](https://github.com/oruga-ui/oruga/issues/932)) ([1e93773](https://github.com/oruga-ui/oruga/commit/1e93773fbbe38859ecac3deee8e651c340d01012))
+
+
+### Features
+
+* **modal:** set default `destroyOnHide` to `true` for programmatic usage ([#937](https://github.com/oruga-ui/oruga/issues/937)) ([0b0bdca](https://github.com/oruga-ui/oruga/commit/0b0bdca61e72bf471d2e8788d8737a47803f79b4))
+* **steps:** add `destroyOnHide` prop ([#934](https://github.com/oruga-ui/oruga/issues/934)) ([d06ea1e](https://github.com/oruga-ui/oruga/commit/d06ea1ecf462b54c626a72286ba123d2a1489031))
+* **tabs:** add `destroyOnHide` prop ([#926](https://github.com/oruga-ui/oruga/issues/926)) ([e87882b](https://github.com/oruga-ui/oruga/commit/e87882bcb633ba288228f77ddf885a3373bbd860))
+
+
+
+## [0.8.9](https://github.com/oruga-ui/oruga/compare/v0.8.8...v0.8.9) (2024-05-01)
+
+
+### Bug Fixes
+
+* **field:** fix bug when prop `horizontal` is set ([#915](https://github.com/oruga-ui/oruga/issues/915)) ([962bfea](https://github.com/oruga-ui/oruga/commit/962bfea1d447aac2b6a2c3174e2becf49ebac926))
+* **table:** fix filtering when table is not sorted ([#911](https://github.com/oruga-ui/oruga/issues/911)) ([10ee451](https://github.com/oruga-ui/oruga/commit/10ee45119d107ae35c9c25fc17f9dfe8d12116c3))
+* **Table:** fix table async example backend sort function ([#910](https://github.com/oruga-ui/oruga/issues/910)) ([18f3c00](https://github.com/oruga-ui/oruga/commit/18f3c002bc295601948d111b005bc3f1e221cba5))
+* **taginput:** fix infinite recursive update when updating modeValue ([#917](https://github.com/oruga-ui/oruga/issues/917)) ([e2e3c4a](https://github.com/oruga-ui/oruga/commit/e2e3c4a2d9347a3e01709379a4c6ee7bb98eba5f))
+
+
+### Features
+
+* **table:** make debounceSearch a global option ([#912](https://github.com/oruga-ui/oruga/issues/912)) ([517598f](https://github.com/oruga-ui/oruga/commit/517598f5220db093c282a108a427a36f97502e7d))
+
+
+
 ## [0.8.8](https://github.com/oruga-ui/oruga/compare/v0.8.7...v0.8.8) (2024-04-23)
 
 

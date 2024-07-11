@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const selected = ref(null);
@@ -306,14 +306,8 @@ const inspectData = [
             v-bind="props"
             v-model:selected="selected"
             :data="props.isEmpty ? [] : data"
+            :columns="columns"
             detailed>
-            <o-table-column
-                v-for="(column, index) in columns"
-                :key="index"
-                v-bind="column"
-                v-slot="{ row }">
-                {{ row[column.field] }}
-            </o-table-column>
             <template #footer> This is the footer </template>
             <template #detail> DETAILS </template>
         </o-table>

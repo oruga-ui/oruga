@@ -123,7 +123,7 @@ yarn add @oruga-ui/theme-oruga
 :::
 
 ```scss
-@import '@oruga-ui/theme-oruga/dist/scss/oruga-full.scss';
+@import '@oruga-ui/theme-oruga/dist/scss/oruga.scss';
 ```
 
 ### Volar support

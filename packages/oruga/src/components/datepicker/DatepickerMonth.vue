@@ -8,7 +8,7 @@ import {
     type ComponentPublicInstance,
 } from "vue";
 
-import { isDefined } from "@/utils/helpers";
+import { isDefined, isTrueish } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
 import type { DatepickerProps, DatepickerEvent, FocusedDate } from "./types";
@@ -96,7 +96,7 @@ const monthDates = computed(() => {
 });
 
 const hoveredDateRange = computed(() => {
-    if (!datepicker.value.range || !selectedEndDate.value) return [];
+    if (!isTrueish(datepicker.value.range) || !selectedEndDate.value) return [];
 
     return (
         hoveredEndDate.value < selectedBeginDate.value
@@ -217,14 +217,10 @@ function onKeydown(event: KeyboardEvent, weekDay: Date): void {
  */
 function selectDate(date: Date): void {
     if (datepicker.value.disabled || datepicker.value.readonly) return;
-    if (
-        !datepicker.value.range &&
-        !datepicker.value.multiple &&
-        isDateSelectable(date)
-    )
-        emits("update:modelValue", date);
-    else if (datepicker.value.range) handleSelectRangeDate(date);
-    else if (datepicker.value.multiple) handleSelectMultipleDates(date);
+    else if (isTrueish(datepicker.value.range)) handleSelectRangeDate(date);
+    else if (isTrueish(datepicker.value.multiple))
+        handleSelectMultipleDates(date);
+    else emits("update:modelValue", date);
 }
 
 /*
@@ -256,7 +252,9 @@ function handleSelectRangeDate(date: Date): void {
 }
 
 const multipleSelectedDates = computed(() =>
-    datepicker.value.multiple && props.modelValue ? props.modelValue : [],
+    isTrueish(datepicker.value.multiple) && props.modelValue
+        ? props.modelValue
+        : [],
 );
 
 function handleSelectMultipleDates(date: Date): void {
@@ -293,7 +291,7 @@ function changeFocus(month: Date, inc: number): void {
 }
 
 function onRangeHoverEndDate(day: Date): void {
-    if (datepicker.value.range) hoveredEndDate.value = day;
+    if (isTrueish(datepicker.value.range)) hoveredEndDate.value = day;
 }
 
 // --- Computed Component Classes ---
@@ -354,12 +352,20 @@ function cellClasses(day: Date): ClassBind[] {
             "monthCellSelectedClass",
             "o-dpck__month__cell--selected",
             null,
-            dateMatch(day, props.modelValue, datepicker.value.multiple) ||
-                dateWithin(day, props.modelValue, datepicker.value.multiple) ||
+            dateMatch(
+                day,
+                props.modelValue,
+                isTrueish(datepicker.value.multiple),
+            ) ||
+                dateWithin(
+                    day,
+                    props.modelValue,
+                    isTrueish(datepicker.value.multiple),
+                ) ||
                 dateMultipleSelected(
                     day,
                     multipleSelectedDates.value,
-                    datepicker.value.multiple,
+                    isTrueish(datepicker.value.multiple),
                 ),
         ],
 
@@ -370,14 +376,18 @@ function cellClasses(day: Date): ClassBind[] {
             dateMatch(
                 day,
                 Array.isArray(props.modelValue) && props.modelValue[0],
-                datepicker.value.multiple,
+                isTrueish(datepicker.value.multiple),
             ),
         ],
         [
             "monthCellWithinSelectedClass",
             "o-dpck__month__cell--within-selected",
             null,
-            dateWithin(day, props.modelValue, datepicker.value.multiple),
+            dateWithin(
+                day,
+                props.modelValue,
+                isTrueish(datepicker.value.multiple),
+            ),
         ],
         [
             "monthCellLastSelectedClass",
@@ -386,7 +396,7 @@ function cellClasses(day: Date): ClassBind[] {
             dateMatch(
                 day,
                 Array.isArray(props.modelValue) && props.modelValue[1],
-                datepicker.value.multiple,
+                isTrueish(datepicker.value.multiple),
             ),
         ],
         [

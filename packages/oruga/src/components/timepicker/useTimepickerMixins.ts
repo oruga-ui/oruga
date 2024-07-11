@@ -2,10 +2,10 @@ import { computed } from "vue";
 import { matchWithGroups } from "../datepicker/utils";
 import type { TimepickerProps } from "./types";
 
-const AM = "AM";
-const PM = "PM";
-const HOUR_FORMAT_24 = "24";
-const HOUR_FORMAT_12 = "12";
+const AM = "AM" as const;
+const PM = "PM" as const;
+const HOUR_FORMAT_24 = "24" as const;
+const HOUR_FORMAT_12 = "12" as const;
 
 export function useTimepickerMixins(props: TimepickerProps) {
     const localeOptions = computed(
@@ -15,6 +15,12 @@ export function useTimepickerMixins(props: TimepickerProps) {
                 minute: "numeric",
                 second: props.enableSeconds ? "numeric" : undefined,
             }).resolvedOptions() as Intl.DateTimeFormatOptions,
+    );
+
+    const isHourFormat24 = computed(
+        () =>
+            (props.hourFormat && props.hourFormat === HOUR_FORMAT_24) ||
+            (!props.hourFormat && !localeOptions.value.hour12),
     );
 
     const dtf = computed(
@@ -27,16 +33,6 @@ export function useTimepickerMixins(props: TimepickerProps) {
                     : undefined,
                 hourCycle: !isHourFormat24.value ? "h12" : "h23",
             }),
-    );
-
-    const computedHourFormat = computed(
-        () =>
-            props.hourFormat ||
-            (localeOptions.value.hour12 ? HOUR_FORMAT_12 : HOUR_FORMAT_24),
-    );
-
-    const isHourFormat24 = computed(
-        () => computedHourFormat.value === HOUR_FORMAT_24,
     );
 
     const sampleTime = computed(() => {

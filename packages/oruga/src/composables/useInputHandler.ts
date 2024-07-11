@@ -2,6 +2,7 @@ import {
     nextTick,
     ref,
     computed,
+    watch,
     type ExtractPropTypes,
     type MaybeRefOrGetter,
     type Component,
@@ -10,6 +11,7 @@ import { injectField } from "@/components/field/fieldInjection";
 import { unrefElement } from "./unrefElement";
 import { getOption } from "@/utils/config";
 import { isSSR } from "@/utils/ssr";
+import { isDefined } from "@/utils/helpers";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.
@@ -35,12 +37,23 @@ function asValidatableFormElement(el: unknown): ValidatableFormElement | null {
         : null;
 }
 
+const constraintValidationAttributes = [
+    "disabled",
+    "required",
+    "pattern",
+    "maxlength",
+    "minlength",
+    "max",
+    "min",
+    "step",
+];
+
 /**
  * Form input handler functionalities
  */
-export function useInputHandler(
+export function useInputHandler<T extends ValidatableFormElement>(
     /** input ref element - can be a html element or a vue component*/
-    inputRef: MaybeRefOrGetter<ValidatableFormElement | Component>,
+    inputRef: MaybeRefOrGetter<T | Component>,
     /** emitted input events */
     emits: {
         /** on input focus event */
@@ -61,15 +74,16 @@ export function useInputHandler(
     // inject parent field component if used inside one
     const { parentField } = injectField();
 
-    const element = computed<ValidatableFormElement>(() => {
+    /// Allows access to the native element in cases where it might be missing,
+    /// e.g. because the component hasn't been mounted yet or has been suspended
+    /// by a <KeepAlive>
+    const maybeElement = computed<T | undefined>(() => {
         const el = unrefElement<Component | HTMLElement>(inputRef);
-        if (!el) {
-            console.warn("useInputHandler: inputRef contains no element");
-            return undefined;
-        }
+        if (!el) return undefined;
+
         if (el.getAttribute("data-oruga-input"))
             // if element is the input element
-            return el as ValidatableFormElement;
+            return el as T;
 
         const inputs = el.querySelector("[data-oruga-input]");
 
@@ -80,7 +94,15 @@ export function useInputHandler(
             return undefined;
         }
         // return underlaying the input element
-        return inputs as ValidatableFormElement;
+        return inputs as T;
+    });
+
+    /// Should be used for most accesses to the native element; we generally
+    /// expect it to be present, especially in event handlers.
+    const element = computed(() => {
+        const el = maybeElement.value;
+        if (!el) console.warn("useInputHandler: inputRef contains no element");
+        return el;
     });
 
     // --- Input Focus Feature ---
@@ -101,6 +123,7 @@ export function useInputHandler(
         });
     }
 
+    /** Unset focused and emit blur event. */
     function onBlur(event?: Event): void {
         isFocused.value = false;
         if (parentField?.value) parentField.value.setFocus(false);
@@ -108,6 +131,7 @@ export function useInputHandler(
         checkHtml5Validity();
     }
 
+    /** Set focused and emit focus event. */
     function onFocus(event?: Event): void {
         isFocused.value = true;
         if (parentField?.value) parentField.value.setFocus(true);
@@ -122,13 +146,12 @@ export function useInputHandler(
         nextTick(() => {
             if (parentField?.value) {
                 // Set type only if not defined
-                if (!parentField.value.props.variant) {
+                if (!parentField.value.props.variant)
                     parentField.value.setVariant(variant);
-                }
+
                 // Set message only if not defined
-                if (!parentField.value.props.message) {
+                if (!parentField.value.props.message)
                     parentField.value.setMessage(message);
-                }
             }
         });
     }
@@ -138,7 +161,7 @@ export function useInputHandler(
      * If validation fail, send 'danger' type,
      * and error message to parent if it's a Field.
      */
-    function checkHtml5Validity(): boolean {
+    function checkHtml5Validity(): void {
         if (!props.useHtml5Validation) return;
 
         if (!element.value) return;
@@ -149,8 +172,6 @@ export function useInputHandler(
             setInvalid();
             isValid.value = false;
         }
-
-        return isValid.value;
     }
 
     function setInvalid(): void {
@@ -203,7 +224,72 @@ export function useInputHandler(
         emits("invalid", event);
     }
 
+    if (!isSSR) {
+        // Respond to attribute changes that might clear constraint validation errors.
+        // For instance, removing the `required` attribute on an empty field means that it's no
+        // longer invalid, so we might as well clear the validation message.
+        // In order to follow our usual convention, we won't add new validation messages
+        // until the next time the user interacts with the control.
+
+        // Technically, having the `required` attribute on one element in a radio button
+        // group affects the validity of the entire group.
+        // See https://html.spec.whatwg.org/multipage/input.html#radio-button-group.
+        // We're not checking for that here because it would require more expensive logic.
+        // Because of that, this will only work properly if the `required` attributes of all radio
+        // buttons in the group are synchronized with each other, which is likely anyway.
+        // (We're also expecting the use of radio buttons with our default validation message handling
+        // to be fairly uncommon because the overall visual experience is clunky with such a configuration.)
+        const onAttributeChange = (): void => {
+            if (!isValid.value) checkHtml5Validity();
+        };
+        let validationAttributeObserver: MutationObserver | null = null;
+        watch(
+            [maybeElement, isValid, () => props.useHtml5Validation],
+            (data) => {
+                // Not using destructuring assignment because browser support is just a little too weak at the moment
+                const el = data[0];
+                const valid = data[1];
+                const useValidation = data[2];
+
+                // Clean up previous state.
+                if (validationAttributeObserver != null) {
+                    // Process any pending events.
+                    if (validationAttributeObserver.takeRecords().length > 0)
+                        onAttributeChange();
+                    validationAttributeObserver.disconnect();
+                }
+
+                if (!isDefined(el) || valid || !useValidation) return;
+
+                if (validationAttributeObserver == null) {
+                    validationAttributeObserver = new MutationObserver(
+                        onAttributeChange,
+                    );
+                }
+                validationAttributeObserver.observe(el, {
+                    attributeFilter: constraintValidationAttributes,
+                });
+
+                // Note that this doesn't react to changes in the list of ancestors.
+                // Based on testing, Vue seems to rarely, if ever, re-parent DOM nodes;
+                // it generally prefers to create new ones under the new parent.
+                // That means this simpler solution is likely good enough for now.
+                let ancestor: Node | null = el;
+                while ((ancestor = ancestor.parentNode)) {
+                    // Form controls can be disabled by their ancestor fieldsets.
+                    if (ancestor instanceof HTMLFieldSetElement) {
+                        validationAttributeObserver.observe(ancestor, {
+                            attributeFilter: ["disabled"],
+                        });
+                    }
+                }
+            },
+            { immediate: true },
+        );
+    }
+
     return {
+        input: element,
         isFocused,
         isValid,
         setFocus,

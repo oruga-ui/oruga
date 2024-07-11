@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | object">
 import { computed, ref, useSlots, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -21,8 +21,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** Item value (it will be used as v-model of wrapper component) */
-    value: { type: [String, Number], default: () => uuid() },
+    /**
+     * Item value (it will be used as v-model of wrapper component) - default is a uuid
+     * @type string|number|object
+     */
+    value: {
+        type: [String, Number, Object] as PropType<T>,
+        default: () => uuid(),
+    },
     /** Item label */
     label: { type: String, default: undefined },
     /** Item will be disabled */
@@ -109,7 +115,7 @@ const providedData = computed<TabItemComponent>(() => ({
 }));
 
 // Inject functionalities and data from the parent component
-const { parent, item } = useProviderChild<TabsComponent>({
+const { parent, item } = useProviderChild<TabsComponent<T>>({
     data: providedData,
 });
 
@@ -176,25 +182,40 @@ const headerTextClasses = defineClasses([
 
 <template>
     <Transition
+        v-if="parent"
         :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <div
-            v-show="isActive && visible"
-            ref="rootRef"
-            v-bind="$attrs"
-            :class="elementClasses"
-            :data-id="`tabs-${item.identifier}`"
-            data-oruga="tabs-item"
-            :tabindex="isActive ? 0 : -1"
-            :role="ariaRole"
-            aria-roledescription="item">
-            <!-- 
-                @slot Tab item content
-            -->
-            <slot />
-        </div>
+        <template v-if="!parent.destroyOnHide || (isActive && visible)">
+            <div
+                v-show="isActive && visible"
+                ref="rootRef"
+                v-bind="$attrs"
+                :class="elementClasses"
+                :data-id="`tabs-${item.identifier}`"
+                data-oruga="tabs-item"
+                :tabindex="isActive ? 0 : -1"
+                :role="ariaRole"
+                aria-roledescription="item">
+                <!-- 
+                    @slot Tab item content
+                -->
+                <slot />
+
+                <!--
+                    Do not render these slots here.
+                    These are only for documentation purposes.
+                    Slots are defined in tabs component.
+                -->
+                <template v-if="false">
+                    <!--
+                        @slot Override header label
+                    -->
+                    <slot name="header" />
+                </template>
+            </div>
+        </template>
     </Transition>
 </template>

@@ -1,4 +1,4 @@
-import { expect, vi } from "vitest";
+import { afterEach, beforeEach, expect, vi } from "vitest";
 import { toHaveNoViolations } from "jest-axe";
 
 expect.extend(toHaveNoViolations);
@@ -25,4 +25,19 @@ Object.defineProperty(window, "matchMedia", {
         removeEventListener: vi.fn(),
         dispatchEvent: vi.fn(),
     })),
+});
+
+beforeEach(() => {
+    // mock time zone to unify test for everyone
+    const DateTimeFormat = Intl.DateTimeFormat;
+    vi.spyOn(global.Intl, "DateTimeFormat").mockImplementation(
+        (_?, options?) =>
+            new DateTimeFormat("en-GB", {
+                ...options,
+            }),
+    );
+});
+
+afterEach(() => {
+    vi.restoreAllMocks();
 });

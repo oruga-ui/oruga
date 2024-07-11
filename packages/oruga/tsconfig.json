@@ -11,11 +11,10 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "baseUrl": ".",
-    "types": ["node", "vite/client"],
+    "types": ["node", "vite/client", "./components.d.ts"],
     "paths": {
-      "@/*": [
-        "src/*",
-      ]
+      "@/*": ["src/*"],
+      "@oruga-ui/oruga-next": ["src/index"],
     },
     "lib": [
       "esnext",
@@ -32,6 +31,7 @@
     "tests/**/*.tsx",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }

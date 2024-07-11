@@ -64,12 +64,7 @@ const max = computed(() => slider.value.max);
 const min = computed(() => slider.value.min);
 const step = computed(() => slider.value.step);
 const indicator = computed(() => slider.value.indicator);
-
-const ariaLabel = computed(() =>
-    Array.isArray(slider.value.ariaLabel)
-        ? slider.value.ariaLabel[0]
-        : slider.value.ariaLabel,
-);
+const ariaLabel = computed(() => slider.value.ariaLabel);
 
 const precision = computed(() => {
     const precisions = [min.value, max.value, step.value].map((item) => {
@@ -235,7 +230,7 @@ defineExpose({ setPosition });
                 :aria-disabled="disabled"
                 aria-orientation="horizontal"
                 @mousedown="onButtonDown"
-                @touchstart="onButtonDown"
+                @touchstart.passive="onButtonDown"
                 @focus="onFocus"
                 @blur="onBlur"
                 @keydown.left.prevent="onLeftKeyDown"

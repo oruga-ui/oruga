@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const carousels = [
     { text: "Slide 1", color: "#445e00" },
     { text: "Slide 2", color: "#006724" },

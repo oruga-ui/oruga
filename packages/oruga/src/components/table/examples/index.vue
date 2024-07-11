@@ -1,9 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
-
-import ColumnProp from "./column-prop.vue";
-import ColumnPropCode from "./column-prop.vue?raw";
 
 import Customise from "./customise.vue";
 import CustomiseCode from "./customise.vue?raw";
@@ -29,16 +26,13 @@ import DetailedCode from "./detailed.vue?raw";
 import Searchable from "./searchable.vue";
 import SearchableCode from "./searchable.vue?raw";
 
-import DraggableRowsColumns from "./draggable-rows-columns.vue";
-import DraggableRowsColumnsCode from "./draggable-rows-columns.vue?raw";
+import Draggable from "./draggable.vue";
+import DraggableCode from "./draggable.vue?raw";
 </script>
 
 <template>
     <h3 id="base-column">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
-
-    <h3 id="base-props">Column prop</h3>
-    <ExampleViewer :component="ColumnProp" :code="ColumnPropCode" />
 
     <h3 id="customise">Customise</h3>
     <ExampleViewer :component="Customise" :code="CustomiseCode" />
@@ -65,7 +59,5 @@ import DraggableRowsColumnsCode from "./draggable-rows-columns.vue?raw";
     <ExampleViewer :component="Searchable" :code="SearchableCode" />
 
     <h3 id="draggable">Draggable rows/columns</h3>
-    <ExampleViewer
-        :component="DraggableRowsColumns"
-        :code="DraggableRowsColumnsCode" />
+    <ExampleViewer :component="Draggable" :code="DraggableCode" />
 </template>

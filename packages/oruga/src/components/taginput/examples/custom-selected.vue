@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const items = ref([]);
@@ -26,7 +26,8 @@ function getType(item) {
                 ref="input"
                 v-model="items"
                 icon="tag"
-                placeholder="Add an item">
+                placeholder="Add an item"
+                allow-new>
                 <template #selected="{ items, removeItem }">
                     <o-button
                         v-for="(item, index) in items"
