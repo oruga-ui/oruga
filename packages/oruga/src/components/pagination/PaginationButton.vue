@@ -22,7 +22,7 @@ const props = defineProps({
         type: [String, Object, Function] as PropType<DynamicComponent>,
         default: "button" as DynamicComponent,
     },
-    class: { type: String, default: undefined },
+    rootClass: { type: Array as PropType<ClassBind[]>, default: () => [] },
     linkClass: {
         type: Array as PropType<ClassBind[]>,
         required: true,
@@ -36,8 +36,8 @@ const props = defineProps({
 // --- Computed Component Classes ---
 
 const linkClasses = computed(() => [
+    ...props.rootClass,
     ...props.linkClass,
-    props.class,
     ...(props.isCurrent ? props.linkCurrentClass : []),
 ]);
 </script>

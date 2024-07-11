@@ -1,43 +1,54 @@
-import { afterEach, describe, expect, test } from "vitest";
+import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
 import { shallowMount, mount, enableAutoUnmount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import OInput from "@/components/input/Input.vue";
 
 describe("OInput", () => {
     enableAutoUnmount(afterEach);
 
-    test("is called", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    test("render correctly", () => {
         const wrapper = mount(OInput);
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("input");
+        expect(wrapper.html()).toMatchSnapshot();
+        expect(wrapper.classes("o-input__wrapper")).toBeTruthy();
     });
 
-    test("render correctly", async () => {
+    test("test basic", async () => {
         const wrapper = mount(OInput, {
             props: { icon: "placeholder", iconClickable: true },
         });
-        expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-input__wrapper")).toBeTruthy();
 
-        const target = wrapper.find("input");
-        expect(target.exists()).toBeTruthy();
-        expect(target.classes()).toContain("o-input");
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        expect(input.classes()).toContain("o-input");
 
         const value = "some value";
-        await target.setValue(value);
+        await input.setValue(value);
+        await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
         expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+        expect(wrapper.vm.value).toEqual(value);
     });
 
     test("render textarea element when type is textarea", () => {
         const wrapper = mount(OInput, { props: { type: "textarea" } });
 
-        const target = wrapper.find("textarea");
-        expect(target.exists()).toBeTruthy();
-        expect(target.classes()).toContain("o-input");
-        expect(target.attributes().style).toBeFalsy();
+        const input = wrapper.find("textarea");
+        expect(input.exists()).toBeTruthy();
+        expect(input.classes()).toContain("o-input");
+        expect(input.attributes().style).toBeFalsy();
     });
 
     test("add inline style and call resize for textarea when autosize is true", async () => {
@@ -142,6 +153,7 @@ describe("OInput", () => {
 
         await input.setValue("bar");
         await input.trigger("blur");
+        await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")[0][0]).toBe("bar");
         expect(wrapper.emitted("blur")).toHaveLength(1);
@@ -165,7 +177,13 @@ describe("OInput", () => {
 
     test("check type number ", async () => {
         const wrapper = shallowMount(OInput, {
-            props: { type: "number", min: 0, max: 1000, modelValue: 10 },
+            props: {
+                type: "number",
+                min: 0,
+                max: 1000,
+                modelValue: 10,
+                number: true,
+            },
         });
 
         const input = wrapper.find("input");
@@ -186,5 +204,17 @@ describe("OInput", () => {
         const emitted = wrapper.emitted("update:modelValue");
 
         expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
+    });
+
+    test("react accordingly when method focus() is called", async () => {
+        const wrapper = mount(OInput);
+
+        const input = wrapper.find("input");
+        input.element.focus = vi.fn();
+
+        wrapper.vm.focus();
+        await nextTick(() => {
+            expect(input.element.focus).toHaveBeenCalled();
+        });
     });
 });

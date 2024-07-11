@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | object">
 import { computed, toValue, nextTick, ref, watch, type PropType } from "vue";
 
 import OButton from "../button/Button.vue";
@@ -26,8 +26,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number], default: undefined },
+    /**
+     * The selected item value
+     * @type string|number|object
+     */
+    modelValue: {
+        type: [String, Number, Object] as PropType<T>,
+        default: undefined,
+    },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -37,17 +43,17 @@ const props = defineProps({
         default: () => getOption("steps.variant"),
     },
     /**
-     * Tab size
+     * Step size
      * @values small, medium, large
      */
     size: {
         type: String,
         default: () => getOption("steps.size"),
     },
-    /** Show tab in vertical layout */
+    /** Show step in vertical layout */
     vertical: { type: Boolean, default: false },
     /**
-     * Position of the tab
+     * Position of the step
      * @values left, centered, right
      */
     position: {
@@ -78,6 +84,8 @@ const props = defineProps({
      * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
      */
     hasNavigation: { type: Boolean, default: true },
+    /** Destroy stepItem on hide */
+    destroyOnHide: { type: Boolean, default: false },
     /** Step navigation is animated */
     animated: {
         type: Boolean,
@@ -90,7 +98,7 @@ const props = defineProps({
     animation: {
         type: Array as PropType<Array<string>>,
         default: () =>
-            getOption("tabs.animation", [
+            getOption("steps.animation", [
                 "slide-next",
                 "slide-prev",
                 "slide-down",
@@ -116,7 +124,7 @@ const props = defineProps({
     },
     /** Rounded step markers */
     rounded: { type: Boolean, default: true },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("steps.mobileBreakpoint"),
@@ -222,15 +230,15 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string | number | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: T): void;
     /**
-     * on tab change event
-     * @param value {string | number} new tab value
-     * @param value {string | number} old tab value
+     * on step change event
+     * @param value {string | number | object} new step value
+     * @param value {string | number | object} old step value
      */
-    (e: "change", newValue: string | number, oldValue: string | number): void;
+    (e: "change", newValue: T, oldValue: T): void;
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -238,12 +246,13 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const rootRef = ref();
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<StepsComponent>(() => ({
+const provideData = computed<StepsComponent<T>>(() => ({
     activeValue: vmodel.value,
     vertical: props.vertical,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
+    destroyOnHide: props.destroyOnHide,
 }));
 
 /** Provide functionalities and data to child item components */
@@ -259,13 +268,13 @@ const items = computed<StepItem[]>(() =>
     })),
 );
 
-const vmodel = defineModel<string | number>();
+const vmodel = defineModel<T>({ default: undefined });
 
-/** When v-model is changed set the new active tab. */
+/** When v-model is changed set the new active step. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (vmodel.value !== value) performAction(value);
+        if (vmodel.value !== value) performAction(value as T);
     },
 );
 
@@ -313,9 +322,7 @@ const nextItem = computed(() => {
     return nextItem;
 });
 
-/**
- * Return if the step should be clickable or not.
- */
+/** Return if the step should be clickable or not. */
 function isItemClickable(item: StepItem): boolean {
     if (item.clickable === undefined)
         return item.index < activeItem.value?.index;
@@ -334,11 +341,11 @@ function next(): void {
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem): void {
-    if (vmodel.value !== item.value) performAction(item.value);
+    if (vmodel.value !== item.value) performAction(item.value as T);
 }
 
 /** Activate next child and deactivate prev child */
-function performAction(newId: number | string): void {
+function performAction(newId: T): void {
     const oldId = activeItem.value.value;
     const oldItem = activeItem.value;
     const newItem =
@@ -351,7 +358,7 @@ function performAction(newId: number | string): void {
 
     nextTick(() => {
         vmodel.value = newId;
-        emits("change", newId, oldId);
+        emits("change", newId, oldId as T);
     });
 }
 
@@ -479,7 +486,7 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
             <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
-                :key="childItem.value"
+                :key="childItem.identifier"
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "

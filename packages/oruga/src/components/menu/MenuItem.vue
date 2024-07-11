@@ -32,7 +32,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** The active state of the menu item, use v-model:active to make it two-way binding. */
+    /** The active state of the menu item, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Menu item label */
     label: { type: String, default: undefined },
@@ -74,7 +74,7 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: getOption("menu.itemAriaRole", "menuitem"),
+        default: () => getOption("menu.itemAriaRole", "menuitem"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the menu item */

@@ -11,7 +11,7 @@ import Inspector from "./components/Inspector.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
 
-import Oruga, { useOruga } from "../../../oruga/dist/oruga";
+import Oruga, { useOruga } from "@oruga-ui/oruga-next";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import * as bootstrapTheme from "@oruga-ui/theme-bootstrap";
@@ -54,10 +54,11 @@ export default {
     ...DefaultTheme,
     Layout,
     enhanceApp({ app }: { app: App }) {
+        // add fortawesome icons
         library.add(fas);
-
         app.component("VueFontawesome", FontAwesomeIcon);
 
+        // add documentation components
         app.component("InspectorWrapper", InspectorWrapper);
         app.component("Inspector", Inspector);
         app.component("ExampleViewer", ExampleViewer);

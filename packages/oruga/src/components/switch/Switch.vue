@@ -1,12 +1,8 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | boolean | object">
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    useVModelBinding,
-    useInputHandler,
-} from "@/composables";
+import { defineClasses, useInputHandler, useVModel } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -25,8 +21,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number, Boolean], default: undefined },
+    /**
+     * The input value state
+     * @type string|number|boolean|object
+     */
+    modelValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: undefined,
+    },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -53,18 +55,36 @@ const props = defineProps({
     },
     /** Input label, unnecessary when default slot is used */
     label: { type: String, default: undefined },
-    /** Same as native value */
-    nativeValue: { type: [String, Number, Boolean], default: undefined },
+    /**
+     * Same as native value
+     * @type string|number|boolean|object
+     */
+    nativeValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: undefined,
+    },
     /** Same as native disabled */
     disabled: { type: Boolean, default: false },
     /** Same as native required */
     required: { type: Boolean, default: false },
     /** Name attribute on native checkbox */
     name: { type: String, default: undefined },
-    /** Overrides the returned value when it's checked */
-    trueValue: { type: [String, Number, Boolean], default: true },
-    /** Overrides the returned value when it's not checked */
-    falseValue: { type: [String, Number, Boolean], default: false },
+    /**
+     * Overrides the returned value when it's checked
+     * @type string|number|boolean|object
+     */
+    trueValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: true,
+    },
+    /**
+     * Overrides the returned value when it's not checked
+     * @type string|number|boolean|object
+     */
+    falseValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: false,
+    },
     /** Rounded style */
     rounded: { type: Boolean, default: true },
     /** Label position */
@@ -150,15 +170,15 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean} updated modelValue prop
+     * @param value {string | number | boolean | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number | boolean): void;
+    (e: "update:modelValue", value: T): void;
     /**
      * on input change event
-     * @param value {string, number, boolean} input value
+     * @param value {string | number | boolean | object} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string | number | boolean, event: Event): void;
+    (e: "input", value: T, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -176,7 +196,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref();
+const inputRef = ref<HTMLInputElement>();
 
 // use form input functionalities
 const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
@@ -185,9 +205,8 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = useVModelBinding<string | number | boolean>(props, emits, {
-    passive: true,
-});
+// const vmodel = defineModel<T>({ default: undefined });
+const vmodel = useVModel<T>();
 
 const isChecked = computed(
     () =>
@@ -257,7 +276,7 @@ const labelClasses = defineClasses(["labelClass", "o-switch__label"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | object">
 import { computed, ref, useSlots, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -21,8 +21,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** Item value (it will be used as v-model of wrapper component) */
-    value: { type: [String, Number], default: () => uuid() },
+    /**
+     * Item value (it will be used as v-model of wrapper component) - default is a uuid
+     * @type string|number|object
+     */
+    value: {
+        type: [String, Number, Object] as PropType<T>,
+        default: () => uuid(),
+    },
     /** Item label */
     label: { type: String, default: undefined },
     /** Step marker content (when there is no icon) */
@@ -91,9 +97,9 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
-    /** on tab item activate event */
+    /** on step item activate event */
     (e: "activate"): void;
-    /** on tab item deactivate event */
+    /** on step item deactivate event */
     (e: "deactivate"): void;
 }>();
 
@@ -108,7 +114,7 @@ const providedData = computed<StepItemComponent>(() => ({
 }));
 
 // Inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<StepsComponent>({
+const { parent, item } = useProviderChild<StepsComponent<T>>({
     data: providedData,
 });
 
@@ -165,25 +171,28 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
 
 <template>
     <Transition
+        v-if="parent"
         :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <div
-            v-show="isActive && visible"
-            ref="rootRef"
-            v-bind="$attrs"
-            :class="elementClasses"
-            :data-id="`steps-${item.identifier}`"
-            data-oruga="steps-item"
-            :tabindex="isActive ? 0 : -1"
-            :role="ariaRole"
-            aria-roledescription="item">
-            <!-- 
-                @slot Step item content
-            -->
-            <slot />
-        </div>
+        <template v-if="!parent.destroyOnHide || (isActive && visible)">
+            <div
+                v-show="isActive && visible"
+                ref="rootRef"
+                v-bind="$attrs"
+                :class="elementClasses"
+                :data-id="`steps-${item.identifier}`"
+                data-oruga="steps-item"
+                :tabindex="isActive ? 0 : -1"
+                :role="ariaRole"
+                aria-roledescription="item">
+                <!-- 
+                    @slot Step item content
+                -->
+                <slot />
+            </div>
+        </template>
     </Transition>
 </template>

@@ -16,5 +16,7 @@ jobs:
         with:
           node-version: 20.x
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install @commitlint/cli
-      - run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
+      - name: Install dependencies 📦
+        run: npm install @commitlint/cli
+      - name: Run commit message check 💬
+        run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD

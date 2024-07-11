@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as path from "path";
 import * as fs from "fs";
+import * as path from "path";
+import * as process from "process";
 
 import renderMethods from "vue-docgen-cli/lib/templates/methods.js";
 import renderEvents from "vue-docgen-cli/lib/templates/events.js";
@@ -11,6 +12,20 @@ import { mdclean } from "vue-docgen-cli/lib/templates/utils.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const THEMES = require("./.vitepress/themes.json");
+
+import { createChecker } from "vue-component-meta";
+const __dirname = process.cwd();
+
+// create component meta checker
+const checker = createChecker(
+    path.resolve(__dirname, "../oruga/tsconfig.json"),
+    {
+        forceUseTs: true,
+        printer: { newLine: 1 },
+    },
+);
+
+const META_PROP_IGNORE = ["key", "ref", "ref_for", "ref_key", "class", "style"];
 
 // Components to be ignored for creating docs
 const IGNORE = [
@@ -63,9 +78,62 @@ export default {
     defaultExamples: false,
     getDestFile: (file, config) => {
         const component = getComponent(file);
-        if (!component || IGNORE.indexOf(component) >= 0) return;
+        if (!component || IGNORE.includes(component)) return;
         if (file.includes("/tests/")) return;
         return path.join(config.outDir, `${component}.md`);
+    },
+    apiOptions: {
+        /** add custom script handler to override prop documentation with vue-component-meta */
+        addScriptHandlers: [
+            (documentation) => {
+                const filePath = documentation.componentFullfilePath;
+                const component = getComponent(filePath);
+                if (!filePath || filePath.includes("tests")) return;
+                if (!component || IGNORE.includes(component)) return;
+
+                // analyse component with vue-component-meta
+                const meta = checker.getComponentMeta(filePath);
+                // convert from vue-component-meta to vue-docgen-api type
+                meta.props
+                    .filter((p) => !META_PROP_IGNORE.includes(p.name))
+                    .forEach((prop) => {
+                        const docProp = documentation.propsMap.get(prop.name);
+                        const isDefaultFunc =
+                            docProp?.defaultValue?.func || false;
+
+                        // create vue-docgen-api prop doc object
+                        const metaProp = {
+                            name: prop.name,
+                            required: prop.required,
+                            type: { name: prop.type },
+                            description: prop.description,
+                            defaultValue: {
+                                func: isDefaultFunc,
+                                value: isDefaultFunc
+                                    ? "() => " + prop.default
+                                    : prop.default,
+                            },
+                            tags: prop.tags
+                                ?.map((tag) => ({
+                                    [tag.name]: [
+                                        {
+                                            name: tag.name,
+                                            title: tag.name,
+                                            content: tag.text,
+                                            description: tag.text || true,
+                                        },
+                                    ],
+                                }))
+                                .reduce((a, b) => ({ ...a, ...b }), {}),
+                            values: prop.tags
+                                ?.find((tag) => tag.name === "values")
+                                ?.text?.split(", "),
+                        };
+                        // override vue-docgen-api prop doc object
+                        documentation.propsMap.set(prop.name, metaProp);
+                    });
+            },
+        ],
     },
     templates: {
         props: (props) => props,
@@ -91,14 +159,11 @@ export default {
             const requires = !component || IGNORE.indexOf(component) >= 0;
             return `
 ${
-    !isSubComponent
-        ? `
----
-title: ${displayName}
----
+    isSubComponent
+        ? ""
+        : `
 # ${deprecated ? `~~${displayName}~~` : displayName}
 `
-        : ""
 }
 ${
     requires
@@ -191,46 +256,46 @@ ${description ? "> " + description : ""}
     );
 
     props.forEach((pr) => {
-        const p = pr.name;
-        if (p.endsWith("Class") || p.endsWith("Classes")) {
-            if (
-                !(
-                    IGNORE_CLASSES[name.toLowerCase()] &&
-                    IGNORE_CLASSES[name.toLowerCase()].indexOf(p) >= 0
-                )
-            )
-                return;
-        }
         if (pr.tags?.ignore) return;
 
-        const n = pr.type?.name ? pr.type.name : "";
-        let d = pr.defaultValue?.value ? pr.defaultValue.value : "";
-        const v = pr.values
+        const name = pr.name === "modelValue" ? "v-model" : pr.name;
+        if (name.endsWith("Class") || name.endsWith("Classes")) {
+            if (!IGNORE_CLASSES[tag]?.includes(name.toLowerCase())) return;
+        }
+
+        const type = pr.tags?.type
+            ? pr.tags?.type[0].description
+            : pr.type?.name
+              ? pr.type.name
+              : "";
+        let value = pr.defaultValue?.value ? pr.defaultValue.value : "";
+        const values = pr.values
             ? pr.values.map((pv) => `\`${pv}\``).join(", ")
             : "-";
-        const t = pr.description ? pr.description : "";
+        const description = pr.description ? pr.description : "";
 
-        if (d === "undefined") d = "";
+        if (value === "undefined") value = "";
         else if (
-            d.indexOf("getOption") >= 0 &&
-            d.indexOf("const ") < 0 &&
-            d.indexOf("if ") < 0 &&
-            d.indexOf("else ") < 0
+            value.includes("getOption") &&
+            !value.includes("const ") &&
+            !value.includes("if ") &&
+            !value.includes("else ")
         ) {
             let configParts = null;
+
             const clear = (s) => s.replace(/'|"/g, "");
             // get default params
-            d = d.replace(/\r\n/g, "");
+            value = value.replace(/\r\n/g, "").replaceAll("\n", "");
             let f = "";
-            if (d.includes("getOption("))
-                f = d.substring(
-                    d.lastIndexOf("getOption(") + "getOption(".length,
+            if (value.includes("getOption("))
+                f = value.substring(
+                    value.lastIndexOf("getOption(") + "getOption(".length,
                 );
-            else if (d.includes("getOption<"))
-                f = d.substring(d.indexOf(">(") + ">(".length);
+            else if (value.includes("getOption<"))
+                f = value.substring(value.indexOf(">(") + ">(".length);
 
             // remove new line (+)
-            d = d.replace(/=>(.*?)getOption/g, "=> getOption");
+            value = value.replace(/=>(.*?)getOption/g, "=> getOption");
             // remove function prop invokation
             if (f.lastIndexOf("(") > 0) f = f.substring(0, f.lastIndexOf("("));
             if (f.lastIndexOf(")") > 0) f = f.substring(0, f.lastIndexOf(")"));
@@ -243,24 +308,23 @@ ${description ? "> " + description : ""}
                 configParts = params[0].trim().split(".");
             }
             if (configParts && configParts[0] && configParts[1]) {
-                const value = `${clear(configParts[1])}: ${params[1]}`;
-                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${clear(
+                const config = `${clear(configParts[1])}: ${params[1]}`;
+                value = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${clear(
                     configParts[0],
-                )}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
+                )}: {<br>&nbsp;&nbsp;${config}<br>}</code>`;
             } else if (configParts && configParts.length == 1) {
-                const value = `${clear(configParts[0])}: ${params[1]}`;
-                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
+                const config = `${clear(configParts[0])}: ${params[1]}`;
+                value = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${config}<br>}</code>`;
             }
-        } else if (d.includes("=>")) {
-            d = "Default function (see source code)";
+        } else if (value.includes("=>")) {
+            value = "Default function (see source code)";
         } else {
-            d = `<code style='white-space: nowrap; padding: 0;'>${d}</code>`;
+            value = `<code style='white-space: nowrap; padding: 0;'>${value}</code>`;
         }
 
         ret +=
-            `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(
-                v,
-            )} | ${d} |` + "\n";
+            `| ${mdclean(name)} | ${mdclean(description)} | ${mdclean(type)} | ${mdclean(values)} | ${value} |` +
+            "\n";
     });
     return ret;
 }

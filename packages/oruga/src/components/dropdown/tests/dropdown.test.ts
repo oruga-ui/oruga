@@ -8,15 +8,11 @@ import ODropdown from "@/components/dropdown/Dropdown.vue";
 describe("Dropdown tests", () => {
     enableAutoUnmount(afterEach);
 
-    test("is called", () => {
+    test("render correctly", () => {
         const wrapper = mount(ODropdown);
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("dropdown");
-    });
-
-    test("render correctly", () => {
-        const wrapper = mount(ODropdown);
         expect(wrapper.html()).toMatchSnapshot();
         expect(wrapper.classes("o-drop")).toBeTruthy();
     });
@@ -39,27 +35,6 @@ describe("Dropdown tests", () => {
         const trigger = wrapper.find(".o-drop__trigger");
         expect(trigger.exists()).toBeTruthy();
         expect(trigger.text()).contain(triggerLabel);
-    });
-
-    test("manage props validator", () => {
-        const wrapper = mount(ODropdown);
-        const position = wrapper.vm.$options.props.position;
-
-        expect(position.type).toBe(String);
-        expect(position.validator && position.validator("yellow")).toBeFalsy();
-        expect(position.validator && position.validator("top")).toBeTruthy();
-        expect(position.validator && position.validator("left")).toBeTruthy();
-        expect(position.validator && position.validator("bottom")).toBeTruthy();
-        expect(position.validator && position.validator("right")).toBeTruthy();
-        expect(
-            position.validator && position.validator("top-left"),
-        ).toBeTruthy();
-        expect(
-            position.validator && position.validator("top-right"),
-        ).toBeTruthy();
-        expect(
-            position.validator && position.validator("bottom-left"),
-        ).toBeTruthy();
     });
 
     test("react accordingly when clicking outside", async () => {

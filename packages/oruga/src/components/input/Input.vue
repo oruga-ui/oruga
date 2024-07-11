@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="IsNumber extends boolean = false">
 import {
     ref,
     computed,
@@ -6,18 +6,22 @@ import {
     watch,
     onMounted,
     type StyleValue,
-    type PropType,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { defineClasses, useInputHandler } from "@/composables";
+import {
+    defineClasses,
+    useDebounce,
+    useInputHandler,
+    useVModel,
+} from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ComponentClass } from "@/types";
+import type { InputProps } from "./props";
 
 /**
  * Get user Input. Use with Field to access all functionalities
@@ -31,189 +35,51 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number], default: "" },
-    /**
-     * Input type, like native
-     * @values Any native input type, and textarea
-     */
-    type: { type: String, default: "text" },
-    /**
-     * Size of the control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("input.size"),
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("input.variant"),
-    },
-    /** Input placeholder */
-    placeholder: { type: String, default: undefined },
-    /** Makes input full width when inside a grouped or addon field */
-    expanded: { type: Boolean, default: false },
-    /** Makes the element rounded */
-    rounded: { type: Boolean, default: false },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Adds the reveal password functionality */
-    passwordReveal: { type: Boolean, default: false },
-    /** Same as native maxlength, plus character counter */
-    maxlength: { type: [Number, String], default: undefined },
-    /** Show character counter when maxlength prop is passed */
-    counter: {
-        type: Boolean,
-        default: () => getOption("input.counter", false),
-    },
-    /** Automatically adjust height in textarea */
-    autosize: { type: Boolean, default: false },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("input.iconPack", undefined),
-    },
-    /** Icon to be shown */
-    icon: {
-        type: String,
-        default: () => getOption("input.icon", undefined),
-    },
-    /** Makes the icon clickable */
-    iconClickable: { type: Boolean, default: false },
-    /** Icon to be added on the right side */
-    iconRight: {
-        type: String,
-        default: () => getOption("input.iconRight", undefined),
-    },
-    /** Make the icon right clickable */
-    iconRightClickable: { type: Boolean, default: false },
-    /** Variant of right icon */
-    iconRightVariant: { type: String, default: undefined },
-    /** Add a button/icon to clear the inputed text */
-    clearable: {
-        type: Boolean,
-        default: () => getOption("input.clearable", false),
-    },
-    /** Icon name to be added on the clear button */
-    clearIcon: {
-        type: String,
-        default: () => getOption("input.clearIcon", "close-circle"),
-    },
-    /** Show status icon using field and variant prop */
-    statusIcon: {
-        type: Boolean,
-        default: () => getOption("statusIcon", true),
-    },
-    /** Native options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("input.autocomplete", "off"),
-    },
-    /** Same as native id. Also set the for label for o-field wrapper. */
-    id: { type: String, default: () => uuid() },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** The message which is shown when a validation error occurs */
-    validationMessage: { type: String, default: undefined },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of input when expanded */
-    expandedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of input when type textarea */
-    textareaClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the left icon space inside the input */
-    iconLeftSpaceClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the right icon space inside the input */
-    iconRightSpaceClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the native input element */
-    inputClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of input when rounded */
-    roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of input when disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the left icon */
-    iconLeftClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the right icon */
-    iconRightClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class to display when a right icon is used */
-    hasIconRightClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the counter element */
-    counterClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the input size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the input variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
+    override: undefined,
+    modelValue: undefined,
+    // number: false,
+    type: "text",
+    size: getOption("input.size"),
+    variant: getOption("input.variant"),
+    placeholder: undefined,
+    expanded: false,
+    rounded: false,
+    disabled: false,
+    passwordReveal: false,
+    maxlength: undefined,
+    counter: getOption("input.counter", false),
+    autosize: false,
+    iconPack: getOption("input.iconPack", undefined),
+    icon: getOption("input.icon", undefined),
+    iconClickable: false,
+    iconRight: getOption("input.iconRight", undefined),
+    iconRightClickable: false,
+    iconRightVariant: undefined,
+    clearable: getOption("input.clearable", false),
+    clearIcon: getOption("input.clearIcon", "close-circle"),
+    statusIcon: getOption("statusIcon", true),
+    debounce: getOption("autocomplete.debounce", 400),
+    autocomplete: getOption("input.autocomplete", "off"),
+    id: uuid(),
+    useHtml5Validation: getOption("useHtml5Validation", true),
+    validationMessage: undefined,
 });
+
+type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input change event
      * @param value {string | number} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string | number, event: Event): void;
+    (e: "input", value: ModelValue, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -264,18 +130,17 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<string | number>({ default: "" });
+// const vmodel = defineModel<ModelValue>({ default: undefined });
+const vmodel = useVModel<ModelValue>();
 
 // if id is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
 
 /** Get value length */
 const valueLength = computed(() =>
-    typeof vmodel.value === "string"
-        ? vmodel.value.length
-        : typeof vmodel.value === "number"
-          ? vmodel.value.toString().length
-          : 0,
+    typeof vmodel.value === "string" || typeof vmodel.value === "number"
+        ? String(vmodel.value).length
+        : 0,
 );
 
 onMounted(() => {
@@ -290,9 +155,9 @@ onMounted(() => {
         (value) => {
             if (parentField?.value) parentField.value.setFilled(!!value);
             if (props.autosize) resize();
-            if (!isValid.value) nextTick(() => checkHtml5Validity());
+            if (!isValid.value) checkHtml5Validity();
         },
-        { immediate: true },
+        { immediate: true, flush: "post" },
     );
 });
 
@@ -319,8 +184,20 @@ const computedStyles = computed(
             : {},
 );
 
+let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
+
+watch(
+    () => props.debounce,
+    () => {
+        debouncedInput = useDebounce(onInput, props.debounce || 0);
+    },
+    { immediate: true },
+);
+
 function onInput(event: Event): void {
-    emits("input", (event.target as HTMLInputElement).value, event);
+    const value = (event.target as HTMLInputElement).value;
+    const input = (props.number ? Number(value) : String(value)) as ModelValue;
+    emits("input", input, event);
 }
 
 // --- Icon Feature ---
@@ -335,13 +212,10 @@ const hasIconRight = computed(() => {
 });
 
 const computedIconRight = computed(() => {
-    if (props.passwordReveal) {
-        return passwordVisibleIcon.value;
-    } else if (props.clearable && vmodel.value && props.clearIcon) {
+    if (props.passwordReveal) return passwordVisibleIcon.value;
+    else if (props.clearable && vmodel.value && props.clearIcon)
         return props.clearIcon;
-    } else if (props.iconRight) {
-        return props.iconRight;
-    }
+    else if (props.iconRight) return props.iconRight;
     return statusVariantIcon.value;
 });
 
@@ -358,7 +232,8 @@ function iconClick(event: Event): void {
 
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
-    else if (props.clearable) vmodel.value = "";
+    else if (props.clearable)
+        vmodel.value = (props.number ? 0 : "") as ModelValue;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());
@@ -370,11 +245,9 @@ function rightIconClick(event: Event): void {
 const isPasswordVisible = ref(false);
 
 const inputType = computed(() => {
-    if (props.passwordReveal) {
+    if (props.passwordReveal)
         return isPasswordVisible.value ? "text" : "password";
-    } else {
-        return props.type;
-    }
+    else return props.type;
 });
 
 /** Current password-reveal icon name. */
@@ -457,7 +330,7 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
@@ -478,7 +351,7 @@ defineExpose({ focus: setFocus });
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @input="debouncedInput" />
 
         <textarea
             v-else
@@ -495,7 +368,7 @@ defineExpose({ focus: setFocus });
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @input="debouncedInput" />
 
         <o-icon
             v-if="icon"

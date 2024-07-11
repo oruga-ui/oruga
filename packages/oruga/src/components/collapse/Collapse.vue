@@ -3,7 +3,7 @@ import { type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { defineClasses, usePropBinding } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -18,7 +18,7 @@ defineOptions({
     configField: "collapse",
 });
 
-const props = defineProps({
+defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** Whether collapse is open or not, use v-model:open to make it two-way binding */
@@ -69,7 +69,7 @@ const emits = defineEmits<{
     (e: "close"): void;
 }>();
 
-const isOpen = usePropBinding<boolean>("open", props, emits, { passive: true });
+const isOpen = defineModel<boolean>("open", { default: true });
 
 /** Toggle and emit events */
 function toggle(): void {

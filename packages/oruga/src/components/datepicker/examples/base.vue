@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const selected = ref(new Date());
@@ -9,7 +9,7 @@ const locale = ref(); // Browser locale
 <template>
     <section>
         <o-field grouped>
-            <o-field>
+            <o-field label="Locale">
                 <o-select v-model="locale" placeholder="Locale">
                     <option :value="undefined"></option>
                     <option value="de-DE">de-DE</option>
@@ -26,8 +26,8 @@ const locale = ref(); // Browser locale
                     <option value="ru-RU">ru-RU</option>
                 </o-select>
             </o-field>
-            <o-field>
-                <o-switch v-model="showWeekNumber" label="Show week number" />
+            <o-field label="Show week number">
+                <o-switch v-model="showWeekNumber" />
             </o-field>
         </o-field>
 
@@ -40,6 +40,7 @@ const locale = ref(); // Browser locale
                 icon="calendar"
                 trap-focus />
         </o-field>
+
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

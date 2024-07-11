@@ -1,25 +1,23 @@
-<script setup>
-import { reactive } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 
-const settings = reactive({
-    rounded: false,
-    tooltip: true,
-    variant: "warning",
-    size: "medium",
-});
+const rounded = ref(false);
+const tooltip = ref(true);
+const variant = ref("warning");
+const size = ref("medium");
 </script>
 
 <template>
     <section>
         <o-field grouped>
             <o-field>
-                <o-switch v-model="settings.rounded" label="Rounded" />
+                <o-switch v-model="rounded" label="Rounded" />
             </o-field>
             <o-field>
-                <o-switch v-model="settings.tooltip" label="With Tooltip" />
+                <o-switch v-model="tooltip" label="With Tooltip" />
             </o-field>
             <o-field label="Size">
-                <o-select v-model="settings.size">
+                <o-select v-model="size">
                     <option value="small">small</option>
                     <option value="default">default</option>
                     <option value="medium">medium</option>
@@ -27,7 +25,7 @@ const settings = reactive({
                 </o-select>
             </o-field>
             <o-field label="Variant">
-                <o-select v-model="settings.variant">
+                <o-select v-model="variant">
                     <option value="default">default</option>
                     <option value="primary">primary</option>
                     <option value="success">success</option>
@@ -40,10 +38,10 @@ const settings = reactive({
 
         <o-field label="Tooltip type & Default Variant">
             <o-slider
-                :rounded="settings.rounded"
-                :tooltip="settings.tooltip"
-                :variant="settings.variant"
-                :size="settings.size" />
+                :rounded="rounded"
+                :tooltip="tooltip"
+                :variant="variant"
+                :size="size" />
         </o-field>
     </section>
 </template>

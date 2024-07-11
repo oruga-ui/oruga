@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { h } from "vue";
-import { useOruga } from "../../../../../oruga/dist/oruga";
+import { useOruga } from "@oruga-ui/oruga-next";
 import ModalForm from "./_modal-form.vue";
 
 const oruga = useOruga();
 
-function imageModal() {
+function imageModal(): void {
     const vnode = h("p", { style: { "text-align": "center" } }, [
         h("img", {
             src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
@@ -17,7 +17,7 @@ function imageModal() {
     });
 }
 
-function cardModal() {
+function cardModal(): void {
     oruga.modal.open({
         component: ModalForm,
         trapFocus: true,

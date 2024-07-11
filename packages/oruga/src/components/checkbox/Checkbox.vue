@@ -1,13 +1,8 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number | boolean | object">
 import { computed, ref, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    usePropBinding,
-    useVModelBinding,
-    useInputHandler,
-} from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -26,8 +21,14 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: [String, Number, Boolean, Array], default: undefined },
+    /**
+     * The input value state
+     * @type string|number|boolean|object|array
+     */
+    modelValue: {
+        type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
+        default: undefined,
+    },
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -48,18 +49,36 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /** Same as native indeterminate */
     indeterminate: { type: Boolean, default: false },
-    /** Same as native value */
-    nativeValue: { type: [String, Number, Boolean], default: undefined },
+    /**
+     * Same as native value
+     * @type string|number|boolean|object
+     */
+    nativeValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: undefined,
+    },
     /** Same as native disabled */
     disabled: { type: Boolean, default: false },
     /** Same as native required */
     required: { type: Boolean, default: false },
     /** Same as native name */
     name: { type: String, default: undefined },
-    /** Overrides the returned value when it's checked */
-    trueValue: { type: [String, Number, Boolean], default: true },
-    /** Overrides the returned value when it's not checked */
-    falseValue: { type: [String, Number, Boolean], default: false },
+    /**
+     * Overrides the returned value when it's checked
+     * @type string|number|boolean|object
+     */
+    trueValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: true,
+    },
+    /**
+     * Overrides the returned value when it's not checked
+     * @type string|number|boolean|object
+     */
+    falseValue: {
+        type: [String, Number, Boolean, Object] as PropType<T>,
+        default: false,
+    },
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete: {
         type: String,
@@ -121,22 +140,15 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string, number, boolean, array} updated modelValue prop
+     * @param value {string | number | boolean | object | array} updated modelValue prop
      */
-    (
-        e: "update:modelValue",
-        value: string | number | boolean | Array<string | number | boolean>,
-    ): void;
+    (e: "update:modelValue", value: T | T[]): void;
     /**
      * on input change event
-     * @param value {string, number, boolean, array} input value
+     * @param value {string | number | boolean | object | array} input value
      * @param event {Event} native event
      */
-    (
-        e: "input",
-        value: string | number | boolean | Array<string | number | boolean>,
-        event: Event,
-    ): void;
+    (e: "input", value: T | T[], event: Event): void;
     /**
      * indeterminate prop two-way binding
      * @param value {boolean} updated indeterminate prop
@@ -159,7 +171,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref();
+const inputRef = ref<HTMLInputElement>();
 
 // use form input functionalities
 const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
@@ -168,17 +180,17 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     props,
 );
 
-const vmodel = useVModelBinding<
-    string | number | boolean | Array<string | number | boolean>
->(props, emits, { passive: true });
+const vmodel = defineModel<T | T[]>({ default: undefined });
 
-const isIndeterminate = usePropBinding<boolean>("indeterminate", props, emits);
+const isIndeterminate = defineModel<boolean>("indeterminate", {
+    default: false,
+});
 
 const isChecked = computed(
     () =>
         vmodel.value === props.trueValue ||
         (Array.isArray(vmodel.value) &&
-            vmodel.value.includes(props.nativeValue)),
+            vmodel.value.includes(props.nativeValue as T)),
 );
 
 function onInput(event: Event): void {
@@ -221,7 +233,7 @@ const labelClasses = defineClasses(["labelClass", "o-chk__label"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>

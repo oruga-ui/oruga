@@ -1,12 +1,16 @@
 // The file is not designed to run directly. `cwd` should be project root.
-import fs from 'fs'
-import path from 'path'
-import process from 'process'
+import fs from 'fs';
+import path from 'path';
+import process from 'process';
 
 import { createChecker } from "vue-component-meta";
 
 import { componentDirectory, getFolders, getComponents, exist } from "./utils.mjs";
 
+const replaceValues = [
+    [" SortDirection", ' "asc" | "desc"']
+];
+  
 const __dirname = process.cwd()
   
 if(!exist(path.resolve(__dirname, componentDirectory))) 
@@ -51,7 +55,10 @@ const components = component_folders.map(folder => {
             if(prop.type === "ComponentClass")
                 prop.type = "ClassDefinition";
 
-            if(prop.name.includes("Classes")) return prop;
+            if(prop.name.includes("Classes")) {
+                prop.type = 'Record<string, any>';
+                return prop;
+            }
 
             // change property name based on config path
             if(prop.default && prop.default?.includes("getOption")) {
@@ -74,7 +81,7 @@ const components = component_folders.map(folder => {
 });
 
     
-const code = `import type {
+let code = `import type {
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
@@ -97,6 +104,11 @@ declare module "../index" {
     }
 }
 `;
+  
+// replace lookup values
+replaceValues.forEach((lookup) => {
+    code = code.replaceAll(lookup[0], lookup[1]);
+})         
 
 const file = path.resolve(__dirname, componentDirectory, "types.ts");
 fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')

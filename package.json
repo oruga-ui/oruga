@@ -1,12 +1,13 @@
 {
   "name": "root",
-  "version": "0.8.8",
+  "version": "0.8.12",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "workspaces": [
     "packages/oruga",
+    "packages/examples",
     "packages/docs"
   ],
   "scripts": {
@@ -23,7 +24,9 @@
     "gen:volar": "node .scripts/gen-volar-dts.mjs --bundle --platform=node",
     "gen:types": "node .scripts/gen-comp-types.mjs --bundle --platform=node",
     "gen:docs": "npm run docs:gen --workspace @oruga-ui/docs-next",
-    "publish:lib": "npm run publish:lib --workspace @oruga-ui/oruga-next",
+    "publish": "concurrently \"npm run publish:lib\" \"npm run publish:examples\"",
+    "publish:lib": "npm run publish --workspace @oruga-ui/oruga-next",
+    "publish:examples": "npm run publish --workspace @oruga-ui/examples",
     "release": "npm run version && npm run changelog",
     "version": "node .scripts/sync-version.js && git add .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && node .scripts/wait-confirm && git add CHANGELOG.md",
@@ -31,11 +34,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "conventional-changelog": "^5.1.0",
-    "conventional-changelog-cli": "^4.1.0",
-    "replace-in-file": "^7.1.0"
-  },
-  "dependencies": {
-    "jest-axe": "^8.0.0"
+    "conventional-changelog": "^6.0.0",
+    "conventional-changelog-cli": "^5.0.0",
+    "replace-in-file": "^7.2.0"
   }
 }

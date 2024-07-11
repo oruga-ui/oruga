@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OTooltip tests > render correctly 1`] = `
+"<div class="o-tip" data-oruga="tooltip">
+  <!--teleport start-->
+  <transition-stub name="fade" appear="false" persisted="true" css="true">
+    <div class="o-tip__content o-tip__content--auto" style="display: none;"><span class="o-tip__arrow o-tip__arrow--auto"></span>
+      <!--
+                        @slot Tooltip content, default is label prop
+                    -->
+    </div>
+  </transition-stub>
+  <!--teleport end-->
+  <div class="o-tip__trigger" aria-haspopup="true">
+    <!--
+                @slot Tooltip trigger slot
+                @binding {boolean} active - tooltip active state
+            -->
+  </div>
+</div>"
+`;

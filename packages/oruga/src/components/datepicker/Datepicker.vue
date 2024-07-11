@@ -1,5 +1,11 @@
-<script setup lang="ts">
-import { computed, ref, watch, type PropType } from "vue";
+<script
+    setup
+    lang="ts"
+    generic="
+        IsRange extends boolean = false,
+        IsMultiple extends boolean = false
+    ">
+import { computed, ref, watch } from "vue";
 
 import OButton from "../button/Button.vue";
 import OSelect from "../select/Select.vue";
@@ -9,13 +15,19 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getOption } from "@/utils/config";
 import { isDate } from "@/utils/helpers";
-import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
+import {
+    defineClasses,
+    getActiveClasses,
+    useMatchMedia,
+    useVModel,
+} from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
 
-import type { DatepickerEvent, FocusedDate } from "./types";
-import type { ComponentClass, OrugaOptions } from "@/types";
+import type { FocusedDate } from "./types";
+import type { DatepickerProps } from "./props";
+import type { OptionsItem } from "../select";
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
@@ -28,518 +40,88 @@ defineOptions({
     configField: "datepicker",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: {
-        type: [Date, Array] as PropType<Date | Date[]>,
-        default: undefined,
-    },
-    /** The active state of the dropdown, use v-model:active to make it two-way binding. */
-    active: { type: Boolean, default: false },
-    /**
-     * Define picker mode
-     * @values date, month
-     */
-    type: {
-        type: String,
-        default: "date",
-        validator: (value: string) => ["month", "date"].indexOf(value) >= 0,
-    },
-    /** Set custom day names, else use names based on locale */
-    dayNames: {
-        type: Array as PropType<string[]>,
-        default: () => getOption("datepicker.dayNames", undefined),
-    },
-    /** Set custom month names, else use names based on locale */
-    monthNames: {
-        type: Array as PropType<string[]>,
-        default: () => getOption("datepicker.monthNames", undefined),
-    },
-    /**
-     * Size of the control input
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("datepicker.size"),
-    },
-    /** Set default date to focus on */
-    focusedDate: { type: Date, default: undefined },
-    /** Events to display on picker */
-    events: { type: Array as PropType<DatepickerEvent[]>, default: undefined },
-    /** Event indicators for style class definiton */
-    indicators: { type: String, default: "dots" },
-    /** Min date to select */
-    minDate: { type: Date, default: undefined },
-    /** Max date to select */
-    maxDate: { type: Date, default: undefined },
-    /** Enable date range selection */
-    range: { type: Boolean, default: false },
-    /** Makes input full width when inside a grouped or addon field */
-    expanded: { type: Boolean, default: false },
-    /** Makes the input rounded */
-    rounded: { type: Boolean, default: false },
-    /** Display datepicker inline */
-    inline: { type: Boolean, default: false },
-    /** Input placeholder */
-    placeholder: { type: String, default: undefined },
-    /** Same as native input readonly */
-    readonly: { type: Boolean, default: false },
-    /** Same as native, also push new item to v-model instead of replacing */
-    multiple: { type: Boolean, default: false },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Open dropdown on focus */
-    openOnFocus: {
-        type: Boolean,
-        default: () => getOption("datepicker.openOnFocus", true),
-    },
-    /** Close dropdown on click */
-    closeOnClick: {
-        type: Boolean,
-        default: () => getOption("datepicker.closeOnClick", true),
-    },
-    /** Date format locale */
-    locale: {
-        type: String,
-        default: () => getOption("locale"),
-    },
-    /** Custom function to format a date into a string */
-    dateFormatter: {
-        type: Function as PropType<(date: Date | Date[]) => string>,
-        default: (
-            date: Date | Date[],
-            defaultFunction: (date: Date | Date[]) => string,
-        ) => getOption("datepicker.dateFormatter", defaultFunction)(date),
-    },
-    /** Custom function to parse a string into a date */
-    dateParser: {
-        type: Function as PropType<(date: string) => Date>,
-        default: (date: string, defaultFunction: (date: string) => Date) =>
-            getOption("datepicker.dateParser", defaultFunction)(date),
-    },
-    /** Date creator function, default is `new Date()` */
-    dateCreator: {
-        type: Function as PropType<() => Date>,
-        default: () => getOption("datepicker.dateCreator", () => new Date())(),
-    },
-    /** Define a list of dates which can be selected */
-    selectableDates: {
-        type: [Array, Function] as PropType<Date[] | ((date: Date) => boolean)>,
-        default: () => [],
-    },
-    /** Define a list of dates which can not be selected */
-    unselectableDates: {
-        type: [Array, Function] as PropType<Date[] | ((date: Date) => boolean)>,
-        default: () => [],
-    },
-    /** Define a list of weeks which can not be selected */
-    unselectableDaysOfWeek: {
-        type: Array as PropType<number[]>,
-        default: () =>
+const props = withDefaults(
+    defineProps<DatepickerProps<IsRange, IsMultiple>>(),
+    {
+        override: undefined,
+        modelValue: null,
+        // range: false,
+        // multiple: false,
+        active: false,
+        type: "date",
+        dayNames: () => getOption("datepicker.dayNames", undefined),
+        monthNames: () => getOption("datepicker.monthNames", undefined),
+        size: () => getOption("datepicker.size"),
+        focusedDate: undefined,
+        events: undefined,
+        indicators: "dots",
+        minDate: undefined,
+        maxDate: undefined,
+        expanded: false,
+        rounded: false,
+        inline: false,
+        placeholder: undefined,
+        readonly: false,
+        disabled: false,
+        openOnFocus: () => getOption("datepicker.openOnFocus", true),
+        closeOnClick: () => getOption("datepicker.closeOnClick", true),
+        locale: () => getOption("locale"),
+        dateFormatter: (date) =>
+            getOption<(date) => string>(
+                "datepicker.dateFormatter",
+                () => undefined,
+            )(date),
+        dateParser: (date: string) =>
+            getOption<(date: string) => any>(
+                "datepicker.dateParser",
+                () => undefined,
+            )(date),
+        dateCreator: () =>
+            getOption("datepicker.dateCreator", () => new Date())(),
+        selectableDates: undefined,
+        unselectableDates: undefined,
+        unselectableDaysOfWeek: () =>
             getOption("datepicker.unselectableDaysOfWeek", undefined),
-    },
-    /** Show nearby month days */
-    nearbyMonthDays: {
-        type: Boolean,
-        default: () => getOption("datepicker.nearbyMonthDays", true),
-    },
-    /** Define if nearby month days can be selected */
-    nearbySelectableMonthDays: {
-        type: Boolean,
-        default: () => getOption("datepicker.nearbySelectableMonthDays", false),
-    },
-    /** Show weeek numbers */
-    showWeekNumber: {
-        type: Boolean,
-        default: () => getOption("datepicker.showWeekNumber", false),
-    },
-    /** Define if weeek numbers are clickable */
-    weekNumberClickable: {
-        type: Boolean,
-        default: () => getOption("datepicker.weekNumberClickable", false),
-    },
-    /** Set the first day of a week */
-    firstDayOfWeek: {
-        type: Number,
-        default: () => getOption("datepicker.firstDayOfWeek", 0),
-    },
-    /** Rules for the first week : 1 for the 1st January, 4 for the 4th January */
-    rulesForFirstWeek: { type: Number, default: () => 4 },
-    /** Define the range of years to show */
-    yearsRange: {
-        type: Array as PropType<number[]>,
-        default: () => getOption("datepicker.yearsRange", [-100, 10]),
-    },
-    /** Trap dropdown on focus */
-    trapFocus: {
-        type: Boolean,
-        default: () => getOption("datepicker.trapFocus", true),
-    },
-    /** Position of the dropdown relative to the input */
-    position: { type: String, default: undefined },
-    /** Enable dropdown mobile modal */
-    mobileModal: {
-        type: Boolean,
-        default: () => getOption("datepicker.mobileModal", true),
-    },
-    /** Enable mobile native input if mobile agent */
-    mobileNative: {
-        type: Boolean,
-        default: () => getOption("datepicker.mobileNative", true),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("datepicker.iconPack", undefined),
-    },
-    /** Icon to be shown */
-    icon: {
-        type: String,
-        default: () => getOption("datepicker.icon", undefined),
-    },
-    /** Icon to be added on the right side */
-    iconRight: {
-        type: String,
-        default: () => getOption("datepicker.iconRight", undefined),
-    },
-    /** Make the icon right clickable */
-    iconRightClickable: { type: Boolean, default: false },
-    /** Icon name for previous icon */
-    iconPrev: {
-        type: String,
-        default: () => getOption("datepicker.iconPrev", "chevron-left"),
-    },
-    /** Icon name for next icon */
-    iconNext: {
-        type: String,
-        default: () => getOption("datepicker.iconNext", "chevron-right"),
-    },
-    /** Mobile breakpoint as max-width value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("datepicker.mobileBreakpoint"),
-    },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("datepicker.teleport", false),
-    },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** The message which is shown when a validation error occurs */
-    validationMessage: { type: String, default: undefined },
-    /** Accessibility next button aria label */
-    ariaNextLabel: {
-        type: String,
-        default: () => getOption("datepicker.ariaNextLabel", "Next Page"),
-    },
-    /** Accessibility previous button aria label  */
-    ariaPreviousLabel: {
-        type: String,
-        default: () => getOption("datepicker.ariaNextLabel", "Previous Page"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker box where you choose the date */
-    boxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker header inside the box */
-    headerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker buttons inside the box */
-    headerButtonsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker buttons inside the box when a size is choosen */
-    headerButtonsSizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the prev button inside the Datepicker box */
-    prevButtonClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the next button inside the Datepicker box */
-    nextButtonClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the month and year selects container inside the Datepicker box */
-    listsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker footer */
-    footerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker table inside the box */
-    tableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of Datepicker header with days of the week inside the table */
-    tableHeadClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the cell inside the table header */
-    tableHeadCellClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table body inside the box */
-    tableBodyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table row */
-    tableRowClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell */
-    tableCellClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell when nearby month days are hidden */
-    tableCellInvisibleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of table cell when it's selected */
-    tableCellSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the first selected table cell when in range */
-    tableCellFirstSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cells within the range when the range is selected */
-    tableCellWithinSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the last selected table cell during range selection */
-    tableCellLastSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the first hovered table cell during range selection */
-    tableCellFirstHoveredClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell when hovered during range selection */
-    tableCellWithinHoveredClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the last table cell hovered during range selection */
-    tableCellLastHoveredClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell of the current day */
-    tableCellTodayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell that is selectable */
-    tableCellSelectableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell that is unselectable */
-    tableCellUnselectableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell when nearby days (prev/next month) are selectable */
-    tableCellNearbyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the cell of a row when at least one event is present */
-    tableCellEventsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the events container */
-    tableEventsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the event */
-    tableEventClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the event indicator when a `variant` is specified */
-    tableEventVariantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the event indicator */
-    tableEventIndicatorsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker table inside the box when type is month */
-    monthClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table body inside the box when type is month */
-    monthBodyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table container when type is month */
-    monthTableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell when type is month */
-    monthCellClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of table cell when it's selected when type is month */
-    monthCellSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the first selected table cell when in range when type is month */
-    monthCellFirstSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cells within the range when the range is selected when type is month */
-    monthCellWithinSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the last selected table cell during range selection when type is month */
-    monthCellLastSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the first hovered table cell during range selection when type is month */
-    monthCellWithinHoveredRangeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell when hovered during range selection when type is month */
-    monthCellFirstHoveredClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell when hovered during range selection and cell is in range when type is month */
-    monthCellWithinHoveredClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the last table cell hovered during range selection when type is month */
-    monthCellLastHoveredClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell of the current day when type is month */
-    monthCellTodayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell that is selectable when type is month */
-    monthCellSelectableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the table cell that is unselectable when type is month */
-    monthCellUnselectableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /**Class of the events container when type is month */
-    monthCellEventsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Datepicker when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /**
-     * Class configuration for the internal input component
-     * @ignore
-     */
-    inputClasses: {
-        type: Object,
-        default: () =>
-            getOption<OrugaOptions["input"]>("datepicker.inputClasses", {}),
-    },
-    /**
-     * Class configuration for the internal dropdown component
-     * @ignore
-     */
-    dropdownClasses: {
-        type: Object,
-        default: () =>
-            getOption<OrugaOptions["dropdown"]>(
-                "datepicker.dropdownClasses",
-                {},
-            ),
-    },
-    /**
-     * Class configuration for the internal select component
-     * @ignore
-     */
-    selectClasses: {
-        type: Object,
-        default: () =>
-            getOption<OrugaOptions["select"]>("datepicker.selectClasses", {}),
-    },
-});
+        nearbyMonthDays: () => getOption("datepicker.nearbyMonthDays", true),
+        nearbySelectableMonthDays: () =>
+            getOption("datepicker.nearbySelectableMonthDays", false),
+        showWeekNumber: () => getOption("datepicker.showWeekNumber", false),
+        weekNumberClickable: () =>
+            getOption("datepicker.weekNumberClickable", false),
+        firstDayOfWeek: () => getOption("datepicker.firstDayOfWeek", 0),
+        rulesForFirstWeek: 4,
+        yearsRange: () => getOption("datepicker.yearsRange", [-100, 10]),
+        trapFocus: () => getOption("datepicker.trapFocus", true),
+        position: undefined,
+        mobileModal: () => getOption("datepicker.mobileModal", true),
+        mobileNative: () => getOption("datepicker.mobileNative", false),
+        iconPack: () => getOption("datepicker.iconPack", undefined),
+        icon: () => getOption("datepicker.icon", undefined),
+        iconRight: () => getOption("datepicker.iconRight", undefined),
+        iconRightClickable: false,
+        iconPrev: () => getOption("datepicker.iconPrev", "chevron-left"),
+        iconNext: () => getOption("datepicker.iconNext", "chevron-right"),
+        mobileBreakpoint: () => getOption("datepicker.mobileBreakpoint"),
+        teleport: () => getOption("datepicker.teleport", false),
+        useHtml5Validation: () => getOption("useHtml5Validation", true),
+        validationMessage: undefined,
+        ariaNextLabel: () => getOption("datepicker.ariaNextLabel", "Next Page"),
+        ariaPreviousLabel: () =>
+            getOption("datepicker.ariaNextLabel", "Previous Page"),
+        inputClasses: () => getOption("datepicker.inputClasses", {}),
+        dropdownClasses: () => getOption("datepicker.dropdownClasses", {}),
+        selectClasses: () => getOption("datepicker.selectClasses", {}),
+    },
+);
+
+type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {Date | Date[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: Date | Date[]): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -599,51 +181,54 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-const vmodel = defineModel<Date | Date[]>();
+// const vmodel = defineModel<ModelValue>({ default: null });
+const vmodel = useVModel<ModelValue>();
 
 /** Dropdown active state */
-const isActive = defineModel<boolean>("active");
+const isActive = defineModel<boolean>("active", { default: false });
 
 /** modelValue formated into string */
-const formattedValue = computed(() =>
-    Array.isArray(vmodel.value)
-        ? (props.dateFormatter as any)([...vmodel.value], defaultDateFormatter)
-        : (props.dateFormatter as any)(vmodel.value, defaultDateFormatter),
-);
+const formattedValue = computed<string>(() => {
+    // define function prop
+    const value = (
+        Array.isArray(vmodel.value) ? [...vmodel.value] : vmodel.value
+    ) as ModelValue;
+    // call prop function
+    const formatted = props.dateFormatter(value);
+    // call default if prop function is not given
+    if (typeof formatted === "undefined") return defaultDateFormatter(value);
+    else return formatted;
+});
 
 const isTypeMonth = computed(() => props.type === "month");
 
 /**
  * When v-model is changed:
  *   1. Update internal value.
- *   2. If it's invalid, validate again.
  */
 watch(
     () => props.modelValue,
     (value) => {
-        // updateInternalState
-        if (vmodel.value !== value) {
-            const isArray = Array.isArray(value);
-            const currentDate = isArray
-                ? !value.length
-                    ? props.dateCreator()
-                    : value[value.length - 1]
-                : !value
-                  ? props.dateCreator()
-                  : value;
-            if (
-                !isArray ||
-                (isArray &&
-                    Array.isArray(vmodel.value) &&
-                    value.length > vmodel.value.length)
-            ) {
-                focusedDateData.value = {
-                    day: currentDate.getDate(),
-                    month: currentDate.getMonth(),
-                    year: currentDate.getFullYear(),
-                };
-            }
-        }
+        const isArray = Array.isArray(value);
+        const currentDate: Date = isArray
+            ? value.length
+                ? value[value.length - 1]
+                : props.dateCreator()
+            : value
+              ? value
+              : props.dateCreator();
+        if (
+            !isArray ||
+            (isArray &&
+                Array.isArray(vmodel.value) &&
+                value.length > vmodel.value.length)
+        )
+            // updateInternalState
+            focusedDateData.value = {
+                day: currentDate.getDate(),
+                month: currentDate.getMonth(),
+                year: currentDate.getFullYear(),
+            };
     },
 );
 
@@ -660,7 +245,7 @@ watch(
     },
 );
 
-const _initialDate =
+const _initialDate: Date =
     (Array.isArray(props.modelValue)
         ? props.modelValue[0]
         : props.modelValue) ||
@@ -699,7 +284,7 @@ const computedMonthNames = computed(() =>
         : getMonthNames(props.locale),
 );
 
-const listOfMonths = computed(() => {
+const listOfMonths = computed<OptionsItem<number>[]>(() => {
     let minMonth = 0;
     let maxMonth = 12;
     if (
@@ -715,9 +300,9 @@ const listOfMonths = computed(() => {
         maxMonth = props.maxDate.getMonth();
     }
     return computedMonthNames.value.map((name, index) => ({
-        name: name,
-        index: index,
-        disabled: index < minMonth || index > maxMonth,
+        label: name,
+        value: index,
+        attrs: { disabled: index < minMonth || index > maxMonth },
     }));
 });
 
@@ -730,7 +315,7 @@ const computedDayNames = computed(() => {
  * Returns an array of years for the year dropdown. If earliest/latest
  * dates are set by props, range of years will fall within those dates.
  */
-const listOfYears = computed(() => {
+const listOfYears = computed<OptionsItem<number>[]>(() => {
     let latestYear = focusedDateData.value.year + props.yearsRange[1];
     if (props.maxDate && props.maxDate.getFullYear() < latestYear) {
         latestYear = Math.max(
@@ -750,10 +335,15 @@ const listOfYears = computed(() => {
     return Array.from(
         { length: latestYear - earliestYear + 1 || 1 },
         (value, index) => earliestYear + index,
-    ).reverse();
+    )
+        .reverse()
+        .map((year) => ({
+            label: String(year),
+            value: year,
+        }));
 });
 
-const showPrev = computed(() => {
+const showPrev = computed<boolean>(() => {
     if (!props.minDate) return true;
     if (isTypeMonth.value)
         return focusedDateData.value.year > props.minDate.getFullYear();
@@ -788,7 +378,7 @@ function prev(): void {
     }
 }
 
-const showNext = computed(() => {
+const showNext = computed<boolean>(() => {
     if (!props.maxDate) return true;
     if (isTypeMonth.value)
         return focusedDateData.value.year < props.maxDate.getFullYear();
@@ -824,9 +414,9 @@ function next(): void {
 
 function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) value = value[0];
-
-    if (!value) return "";
     const date = new Date(value);
+    // return null if no value is given or value can't parse to proper date
+    if (!value || !date || isNaN(date.getTime())) return null;
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'
@@ -852,19 +442,19 @@ function formatNative(value: Date | Date[]): string {
 
 /** Parse string into date */
 function onChange(value: string): void {
-    const date = (props.dateParser as any)(value, defaultDateParser);
+    // call prop function
+    let date = props.dateParser(value);
+    // call default if prop function is not given
+    if (typeof date === "undefined") date = defaultDateParser(value);
 
-    if (
+    const isValid =
         isDate(date) ||
         (Array.isArray(date) &&
             date.length === 2 &&
             isDate(date[0]) &&
-            isDate(date[1]))
-    ) {
-        vmodel.value = date;
-    } else {
-        vmodel.value = null;
-    }
+            isDate(date[1]));
+
+    vmodel.value = (isValid ? date : null) as ModelValue;
 }
 
 /** Parse date from string */
@@ -874,7 +464,7 @@ function onChangeNativePicker(value: string): void {
         const year = parseInt(s[0], 10);
         const month = parseInt(s[1]) - 1;
         const day = parseInt(s[2]);
-        vmodel.value = new Date(year, month, day);
+        vmodel.value = new Date(year, month, day) as ModelValue;
     } else {
         vmodel.value = null;
     }
@@ -931,7 +521,7 @@ const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: () => pickerRef.value?.focus() });
+defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 </script>
 
 <template>
@@ -946,7 +536,7 @@ defineExpose({ focus: () => pickerRef.value?.focus() });
         :native-value="formatNative(vmodel)"
         :native-max="formatNative(maxDate)"
         :native-min="formatNative(minDate)"
-        :stay-open="multiple"
+        :stay-open="props.multiple"
         :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
         :box-class="boxClassBind"
@@ -999,27 +589,15 @@ defineExpose({ focus: () => pickerRef.value?.focus() });
                             v-model="focusedDateData.month"
                             :disabled="disabled"
                             :size="size"
-                            v-bind="selectClasses">
-                            <option
-                                v-for="month in listOfMonths"
-                                :key="month.name"
-                                :value="month.index"
-                                :disabled="month.disabled">
-                                {{ month.name }}
-                            </option>
-                        </o-select>
+                            v-bind="selectClasses"
+                            :options="listOfMonths" />
+
                         <o-select
                             v-model="focusedDateData.year"
                             :disabled="disabled"
                             :size="size"
-                            v-bind="selectClasses">
-                            <option
-                                v-for="year in listOfYears"
-                                :key="year"
-                                :value="year">
-                                {{ year }}
-                            </option>
-                        </o-select>
+                            v-bind="selectClasses"
+                            :options="listOfYears" />
                     </div>
                 </div>
             </slot>

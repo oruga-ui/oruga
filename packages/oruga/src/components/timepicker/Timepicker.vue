@@ -5,16 +5,11 @@ import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    useVModelBinding,
-    useMatchMedia,
-    usePropBinding,
-    getActiveClasses,
-} from "@/composables";
+import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
+import { type OptionsItem } from "../select";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -31,8 +26,8 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: { type: Date as PropType<Date>, default: undefined },
+    /** The input value state */
+    modelValue: { type: Date as PropType<Date>, default: null },
     /** The active state of the dropdown */
     active: { type: Boolean, default: false },
     /** Min time to select */
@@ -55,11 +50,13 @@ const props = defineProps({
      * Size of the button
      * @values small, medium, large
      */
-    size: {
-        type: String,
-        default: () => getOption("timepicker.size"),
+    size: { type: String, default: () => getOption("timepicker.size") },
+    hourFormat: {
+        type: [String, Number] as PropType<"12" | "24" | 12 | 24>,
+        validator: (value: string | number) =>
+            ["12", "24", 12, 24, undefined].includes(value),
+        default: undefined,
     },
-    hourFormat: { type: String, default: undefined },
     incrementHours: { type: Number, default: 1 },
     incrementMinutes: { type: Number, default: 1 },
     incrementSeconds: { type: Number, default: 1 },
@@ -106,10 +103,7 @@ const props = defineProps({
         default: () => [],
     },
     /** Reset the time inputs when meridian changes */
-    resetOnMeridianChange: {
-        type: Boolean,
-        default: false,
-    },
+    resetOnMeridianChange: { type: Boolean, default: false },
     /** Dropdown trapFocus */
     trapFocus: {
         type: Boolean,
@@ -147,7 +141,7 @@ const props = defineProps({
     },
     /** Make the icon right clickable */
     iconRightClickable: { type: Boolean, default: false },
-    /** Mobile breakpoint as max-width value */
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("timepicker.mobileBreakpoint"),
@@ -220,7 +214,7 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits<{
+defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {Date} updated modelValue prop
@@ -274,10 +268,10 @@ const {
 
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
-const vmodel = useVModelBinding<Date>(props, emits);
+const vmodel = defineModel<Date>({ default: null });
 
 /** Dropdown active state */
-const isActive = usePropBinding<boolean>("active", props, emits);
+const isActive = defineModel<boolean>("active", { default: false });
 
 const hoursSelected = ref();
 const minutesSelected = ref();
@@ -341,7 +335,7 @@ function pad(value: number): string {
     return (value < 10 ? "0" : "") + value;
 }
 
-const hours = computed(() => {
+const hours = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementHours || props.incrementHours < 1)
         throw new Error("Hour increment cannot be null or less than 1.");
     const hours = [];
@@ -370,7 +364,7 @@ const hours = computed(() => {
     return hours;
 });
 
-const minutes = computed(() => {
+const minutes = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementMinutes || props.incrementMinutes < 1)
         throw new Error("Minute increment cannot be null or less than 1.");
     const minutes = [];
@@ -383,7 +377,7 @@ const minutes = computed(() => {
     return minutes;
 });
 
-const seconds = computed(() => {
+const seconds = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementSeconds || props.incrementSeconds < 1)
         throw new Error("Second increment cannot be null or less than 1.");
     const seconds = [];
@@ -411,46 +405,43 @@ function isHourDisabled(hour: number): boolean {
             disabled = hour > maxHours;
         }
     }
-    if (props.unselectableTimes) {
-        if (!disabled) {
-            if (typeof props.unselectableTimes === "function") {
-                const date = new Date();
-                date.setHours(hour);
-                date.setMinutes(minutesSelected.value);
-                date.setSeconds(secondsSelected.value);
-                return props.unselectableTimes(date);
-            } else {
-                const unselectable = props.unselectableTimes.filter((time) => {
-                    if (props.enableSeconds && secondsSelected.value !== null) {
-                        return (
-                            time.getHours() === hour &&
-                            time.getMinutes() === minutesSelected.value &&
-                            time.getSeconds() === secondsSelected.value
-                        );
-                    } else if (minutesSelected.value !== null) {
-                        return (
-                            time.getHours() === hour &&
-                            time.getMinutes() === minutesSelected.value
-                        );
-                    }
-                    return false;
-                });
-                if (unselectable.length > 0) {
-                    disabled = true;
-                } else {
-                    disabled = minutes.value.every((minute) => {
-                        return (
-                            (props.unselectableTimes as Date[]).filter(
-                                (time) => {
-                                    return (
-                                        time.getHours() === hour &&
-                                        time.getMinutes() === minute.value
-                                    );
-                                },
-                            ).length > 0
-                        );
-                    });
+
+    if (props.unselectableTimes && !disabled) {
+        if (typeof props.unselectableTimes === "function") {
+            const date = new Date();
+            date.setHours(hour);
+            date.setMinutes(minutesSelected.value);
+            date.setSeconds(secondsSelected.value);
+            return props.unselectableTimes(date);
+        } else {
+            const unselectable = props.unselectableTimes.filter((time) => {
+                if (props.enableSeconds && secondsSelected.value !== null) {
+                    return (
+                        time.getHours() === hour &&
+                        time.getMinutes() === minutesSelected.value &&
+                        time.getSeconds() === secondsSelected.value
+                    );
+                } else if (minutesSelected.value !== null) {
+                    return (
+                        time.getHours() === hour &&
+                        time.getMinutes() === minutesSelected.value
+                    );
                 }
+                return false;
+            });
+            if (unselectable.length > 0) {
+                disabled = true;
+            } else {
+                disabled = minutes.value.every((minute) => {
+                    return (
+                        (props.unselectableTimes as Date[]).filter((time) => {
+                            return (
+                                time.getHours() === hour &&
+                                time.getMinutes() === minute.value
+                            );
+                        }).length > 0
+                    );
+                });
             }
         }
     }
@@ -477,39 +468,36 @@ function isMinuteDisabledForHour(hour: number, minute: number): boolean {
 function isMinuteDisabled(minute: number): boolean {
     if (hoursSelected.value === null) return false;
 
-    let disabled = false;
-    if (isHourDisabled(hoursSelected.value)) {
-        disabled = true;
-    } else {
-        disabled = isMinuteDisabledForHour(hoursSelected.value, minute);
-    }
-    if (props.unselectableTimes) {
-        if (!disabled) {
-            if (typeof props.unselectableTimes === "function") {
-                const date = new Date();
-                date.setHours(hoursSelected.value);
-                date.setMinutes(minute);
-                date.setSeconds(secondsSelected.value);
-                return props.unselectableTimes(date);
-            } else {
-                const unselectable = props.unselectableTimes.filter((time) => {
-                    if (props.enableSeconds && secondsSelected.value !== null) {
-                        return (
-                            time.getHours() === hoursSelected.value &&
-                            time.getMinutes() === minute &&
-                            time.getSeconds() === secondsSelected.value
-                        );
-                    } else {
-                        return (
-                            time.getHours() === hoursSelected.value &&
-                            time.getMinutes() === minute
-                        );
-                    }
-                });
-                disabled = unselectable.length > 0;
-            }
+    let disabled = isHourDisabled(hoursSelected.value)
+        ? true
+        : isMinuteDisabledForHour(hoursSelected.value, minute);
+
+    if (props.unselectableTimes && !disabled) {
+        if (typeof props.unselectableTimes === "function") {
+            const date = new Date();
+            date.setHours(hoursSelected.value);
+            date.setMinutes(minute);
+            date.setSeconds(secondsSelected.value);
+            return props.unselectableTimes(date);
+        } else {
+            const unselectable = props.unselectableTimes.filter((time) => {
+                if (props.enableSeconds && secondsSelected.value !== null) {
+                    return (
+                        time.getHours() === hoursSelected.value &&
+                        time.getMinutes() === minute &&
+                        time.getSeconds() === secondsSelected.value
+                    );
+                } else {
+                    return (
+                        time.getHours() === hoursSelected.value &&
+                        time.getMinutes() === minute
+                    );
+                }
+            });
+            disabled = unselectable.length > 0;
         }
     }
+    return disabled;
 }
 
 function isSecondDisabled(second: number): boolean {
@@ -540,26 +528,25 @@ function isSecondDisabled(second: number): boolean {
             }
         }
     }
-    if (props.unselectableTimes) {
-        if (!disabled) {
-            if (typeof props.unselectableTimes === "function") {
-                const date = new Date();
-                date.setHours(hoursSelected.value);
-                date.setMinutes(minutesSelected.value);
-                date.setSeconds(second);
-                return props.unselectableTimes(date);
-            } else {
-                const unselectable = props.unselectableTimes.filter((time) => {
-                    return (
-                        time.getHours() === hoursSelected.value &&
-                        time.getMinutes() === minutesSelected.value &&
-                        time.getSeconds() === second
-                    );
-                });
-                disabled = unselectable.length > 0;
-            }
+    if (props.unselectableTimes && !disabled) {
+        if (typeof props.unselectableTimes === "function") {
+            const date = new Date();
+            date.setHours(hoursSelected.value);
+            date.setMinutes(minutesSelected.value);
+            date.setSeconds(second);
+            return props.unselectableTimes(date);
+        } else {
+            const unselectable = props.unselectableTimes.filter((time) => {
+                return (
+                    time.getHours() === hoursSelected.value &&
+                    time.getMinutes() === minutesSelected.value &&
+                    time.getSeconds() === second
+                );
+            });
+            disabled = unselectable.length > 0;
         }
     }
+    return disabled;
 }
 
 function isMeridienDisabled(meridienString: string): boolean {
@@ -600,19 +587,19 @@ function updateDateSelected(
 /** Format date into string 'HH-MM-SS'*/
 function formatNative(value: Date): string {
     const date = new Date(value);
-    if (value && !isNaN(date.getTime())) {
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
-        return (
-            formatNumber(hours, true) +
-            ":" +
-            formatNumber(minutes, true) +
-            ":" +
-            formatNumber(seconds, true)
-        );
-    }
-    return "";
+    // return null if no value is given or value can't parse to proper date
+    if (!value || !date || isNaN(date.getTime())) return null;
+
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return (
+        formatNumber(hours, true) +
+        ":" +
+        formatNumber(minutes, true) +
+        ":" +
+        formatNumber(seconds, true)
+    );
 }
 
 // --- Event Handler ---
@@ -740,7 +727,7 @@ const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: () => pickerRef.value?.focus() });
+defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 </script>
 
 <template>
@@ -772,22 +759,18 @@ defineExpose({ focus: () => pickerRef.value?.focus() });
             -->
             <slot name="trigger" />
         </template>
+
         <o-select
             v-bind="selectBind"
             v-model="hoursSelected"
+            :options="hours"
             override
             :disabled="disabled"
             placeholder="00"
-            @change="onHoursChange($event.target.value)">
-            <option
-                v-for="hour in hours"
-                :key="hour.value"
-                :value="hour.value"
-                :disabled="isHourDisabled(hour.value)">
-                {{ hour.label }}
-            </option>
-        </o-select>
+            @change="onHoursChange($event.target.value)" />
+
         <span :class="separatorClasses">{{ hourLiteral }}</span>
+
         <o-select
             v-bind="selectBind"
             v-model="minutesSelected"
@@ -803,8 +786,10 @@ defineExpose({ focus: () => pickerRef.value?.focus() });
                 {{ minute.label }}
             </option>
         </o-select>
+
         <template v-if="enableSeconds">
             <span :class="separatorClasses">{{ minuteLiteral }}</span>
+
             <o-select
                 v-bind="selectBind"
                 v-model="secondsSelected"
@@ -820,8 +805,10 @@ defineExpose({ focus: () => pickerRef.value?.focus() });
                     {{ second.label }}
                 </option>
             </o-select>
+
             <span :class="separatorClasses">{{ secondLiteral }}</span>
         </template>
+
         <o-select
             v-if="!isHourFormat24"
             v-bind="selectBind"

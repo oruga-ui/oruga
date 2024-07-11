@@ -1,20 +1,22 @@
-<script setup lang="ts">
-import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
+<script
+    setup
+    lang="ts"
+    generic="
+        T extends string | number | object,
+        IsMultiple extends boolean = false
+    ">
+import { computed, watch, onMounted, ref, nextTick } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
-import {
-    defineClasses,
-    useVModelBinding,
-    useInputHandler,
-} from "@/composables";
+import { isDefined, isTrueish, uuid } from "@/utils/helpers";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
 import type { OptionsItem } from "./types";
-import type { ComponentClass } from "@/types";
+import type { SelectProps } from "./props";
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -28,177 +30,40 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** @model */
-    modelValue: {
-        type: [String, Number, Boolean, Object, Array],
-        default: null,
-    },
-    /** Select options, unnecessary when default slot is used */
-    options: {
-        type: Array as PropType<string[] | OptionsItem[]>,
-        default: undefined,
-    },
-    /**
-     * Vertical size of input
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("select.size"),
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("select.variant"),
-    },
-    /** Text when nothing is selected */
-    placeholder: { type: String, default: undefined },
-    /** Allow multiple selection */
-    multiple: { type: Boolean, default: false },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Makes input full width when inside a grouped or addon field */
-    expanded: { type: Boolean, default: false },
-    /** Makes the element rounded */
-    rounded: { type: Boolean, default: false },
-    /** Same as native size */
-    nativeSize: { type: [String, Number], default: undefined },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("select.iconPack", undefined),
-    },
-    /** Icon to be shown */
-    icon: {
-        type: String,
-        default: () => getOption("select.icon", undefined),
-    },
-    /** Makes the icon clickable */
-    iconClickable: { type: Boolean, default: false },
-    /** Icon to be added on the right side */
-    iconRight: {
-        type: String,
-        default: () => getOption("select.iconRight", undefined),
-    },
-    /** Make the icon right clickable */
-    iconRightClickable: { type: Boolean, default: false },
-    /** Variant of right icon */
-    iconRightVariant: { type: String, default: undefined },
-    /** Same as native id. Also set the for label for o-field wrapper. */
-    id: { type: String, default: () => uuid() },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** The message which is shown when a validation error occurs */
-    validationMessage: { type: String, default: undefined },
-    /** Same as native autocomplete options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("select.autocomplete", "off"),
-    },
-    /** Show status icon using field and variant prop */
-    statusIcon: {
-        type: Boolean,
-        default: () => getOption("statusIcon", true),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the native select element */
-    selectClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the left icon space inside the select */
-    iconLeftSpaceClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the right icon space inside the select */
-    iconRightSpaceClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of select when rounded */
-    roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the select when multiple mode is active */
-    multipleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of select when expanded */
-    expandedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of select when disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the left icon */
-    iconLeftClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the right icon */
-    iconRightClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the select size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the select variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the select placeholder */
-    placeholderClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the select arrow */
-    arrowClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the select variant for the root element*/
-    rootVariantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
+    override: undefined,
+    modelValue: null,
+    // multiple: false,
+    options: undefined,
+    size: () => getOption("select.size"),
+    variant: () => getOption("select.variant"),
+    placeholder: undefined,
+    disabled: false,
+    required: false,
+    expanded: false,
+    rounded: false,
+    nativeSize: undefined,
+    iconPack: () => getOption("select.iconPack", undefined),
+    icon: () => getOption("select.icon", undefined),
+    iconClickable: false,
+    iconRight: () => getOption("select.iconRight", undefined),
+    iconRightClickable: false,
+    iconRightVariant: undefined,
+    id: uuid(),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    validationMessage: undefined,
+    autocomplete: () => getOption("select.autocomplete", "off"),
+    statusIcon: () => getOption("statusIcon", true),
 });
+
+type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object | Array<any>} updated modelValue prop
+     * @param value {string | number | boolean | object | array} updated modelValue prop
      */
-    (
-        e: "update:modelValue",
-        value: string | number | boolean | object | Array<any>,
-    ): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -229,36 +94,44 @@ const emits = defineEmits<{
 const selectRef = ref<HTMLInputElement>();
 
 // use form input functionality
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
+const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
     useInputHandler(selectRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = useVModelBinding<
-    string | number | boolean | object | Array<any>
->(props, emits, { passive: true });
+// if id is given set as `for` property on o-field wrapper
+if (props.id) parentField?.value?.setInputId(props.id);
 
-const placeholderVisible = computed(() => vmodel.value === null);
+const vmodel = defineModel<ModelValue>({
+    get: (v) => (isDefined(v) ? v : props.multiple ? [] : ""),
+    set: (v) => (isDefined(v) ? v : props.multiple ? [] : null),
+    default: null,
+});
+
+const placeholderVisible = computed(
+    () =>
+        !isTrueish(props.multiple) &&
+        (!isDefined(vmodel.value) || vmodel.value === ""),
+);
 
 onMounted(() => {
     /**
      * When v-model is changed:
      *  1. Set parent field filled state.
-     *  2. Resize textarea input
-     *  3. Check html5 valdiation
+     *  2. Check html5 valdiation
      */
     watch(
-        () => vmodel.value,
+        vmodel,
         (value) => {
             if (parentField?.value) parentField.value.setFilled(!!value);
-            checkHtml5Validity();
+            if (!isValid.value) checkHtml5Validity();
         },
-        { immediate: true },
+        { immediate: true, flush: "post" },
     );
 });
 
-const selectOptions = computed<OptionsItem[]>(() => {
+const selectOptions = computed<OptionsItem<T>[]>(() => {
     if (!props.options || !Array.isArray(props.options)) return [];
 
     return props.options.map((option) =>
@@ -272,8 +145,8 @@ const selectOptions = computed<OptionsItem[]>(() => {
 
 const hasIconRight = computed(
     () =>
-        (props.iconRight && !props.multiple) ||
-        (props.statusIcon && statusVariantIcon.value),
+        (!!props.iconRight && !isTrueish(props.multiple)) ||
+        (props.statusIcon && !!statusVariantIcon.value),
 );
 
 const rightIcon = computed(() =>
@@ -286,12 +159,16 @@ const rightIconVariant = computed(() =>
         : statusVariant.value,
 );
 
-function iconClick(emit, event): void {
+function iconClick(emit, event: Event): void {
     emits(emit, event);
     nextTick(() => setFocus());
 }
 
-function rightIconClick(event): void {
+function leftIconClick(event: Event): void {
+    if (props.iconClickable) iconClick("icon-click", event);
+}
+
+function rightIconClick(event: Event): void {
     if (props.iconRightClickable) iconClick("icon-right-click", event);
 }
 
@@ -315,8 +192,18 @@ const rootClasses = defineClasses(
 
 const selectClasses = defineClasses(
     ["selectClass", "o-sel"],
-    ["roundedClass", "o-sel--rounded", null, computed(() => props.rounded)],
-    ["multipleClass", "o-sel--multiple", null, computed(() => props.multiple)],
+    [
+        "roundedClass",
+        "o-sel--rounded",
+        null,
+        computed(() => isTrueish(props.rounded)),
+    ],
+    [
+        "multipleClass",
+        "o-sel--multiple",
+        null,
+        computed(() => isTrueish(props.multiple)),
+    ],
     [
         "sizeClass",
         "o-sel--",
@@ -329,25 +216,25 @@ const selectClasses = defineClasses(
         computed(() => statusVariant.value || props.variant),
         computed(() => !!statusVariant.value || !!props.variant),
     ],
-    ["disabledClass", "o-sel--disabled", null, computed(() => props.disabled)],
+    [
+        "disabledClass",
+        "o-sel--disabled",
+        null,
+        computed(() => isTrueish(props.disabled)),
+    ],
     [
         "iconLeftSpaceClass",
         "o-sel-iconspace-left",
         null,
         computed(() => !!props.icon),
     ],
-    [
-        "iconRightSpaceClass",
-        "o-sel-iconspace-right",
-        null,
-        computed(() => !!props.iconRight),
-    ],
+    ["iconRightSpaceClass", "o-sel-iconspace-right", null, hasIconRight],
     ["placeholderClass", "o-sel--placeholder", null, placeholderVisible],
     [
         "arrowClass",
         "o-sel-arrow",
         null,
-        computed(() => !props.iconRight && !props.multiple),
+        computed(() => !hasIconRight.value && !isTrueish(props.multiple)),
     ],
 );
 
@@ -358,7 +245,7 @@ const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
@@ -370,7 +257,7 @@ defineExpose({ focus: setFocus });
             :icon="icon"
             :pack="iconPack"
             :size="size"
-            @click="iconClick('icon-click', $event)" />
+            @click="leftIconClick($event)" />
 
         <select
             v-bind="$attrs"
@@ -380,14 +267,15 @@ defineExpose({ focus: setFocus });
             data-oruga-input="select"
             :class="selectClasses"
             :autocomplete="autocomplete"
-            :multiple="multiple"
+            :multiple="props.multiple"
             :size="nativeSize"
             :disabled="disabled"
+            :required="required"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid">
             <template v-if="placeholder || $slots.placeholder">
-                <option v-if="placeholderVisible" :value="null" disabled hidden>
+                <option v-if="placeholderVisible" value="" disabled hidden>
                     <!--
                         @slot Override the placeholder
                     -->

@@ -7,13 +7,14 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "baseUrl": ".",
-    "types": ["node", "vite/client", "vitepress/client", "./volar.d.ts"]
-
+    "types": ["node", "vite/client", "vitepress/client"],
+    "paths": {
+      "@oruga-ui/oruga-next": ["../oruga/src"],
+    },
   },
   "include": [
     ".vitepress/**/*",
-    "docgen.config.ts",
-    "volar.d.ts"
+    "docgen.config.ts"
   ],
   "exclude": [
     "node_modules"

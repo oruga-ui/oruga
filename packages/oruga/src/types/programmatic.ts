@@ -19,5 +19,5 @@ export interface ProgrammaticInstance<T = ComponentInternalInstance> {
  */
 export interface ProgrammaticExpose {
     close(...args: any[]): void;
-    promise: Promise<unknown>;
+    promise: Promise<void>;
 }

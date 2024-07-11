@@ -4,8 +4,8 @@ import Dropdown from "./Dropdown.vue";
 
 export type DropdownProps = ComponentProps<typeof Dropdown>;
 
-export type DropdownComponent<T = unknown> = {
+export type DropdownComponent<T> = {
     props: DropdownProps;
-    selected: T[];
+    selected: T | T[];
     selectItem: (value: T) => void;
 };
