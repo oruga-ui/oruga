@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { h } from "vue";
-import { useOruga } from "@/oruga";
+import { useOruga } from "@oruga-ui/oruga-next";
 import Form from "./_sidebar-form.vue";
 
 const oruga = useOruga();

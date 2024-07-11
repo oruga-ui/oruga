@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { TableColumn } from "@/oruga";
+import type { TableColumn } from "@oruga-ui/oruga-next";
 
 const columns = ref<TableColumn[]>([
     {

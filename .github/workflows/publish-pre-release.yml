@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies 📦
         run: npm install
       - name: Build lib
-        run: npm run publish:lib
+        run: npm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm i extract-changelog-release

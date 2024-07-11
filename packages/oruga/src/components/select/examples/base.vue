@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OptionsItem } from "@/oruga";
+import type { OptionsItem } from "@oruga-ui/oruga-next";
 
 const options: OptionsItem<string>[] = [
     { label: "Flint", value: "flint" },

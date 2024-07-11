@@ -1,20 +1,22 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
+    "outDir": "dist",
     "importHelpers": true,
     "moduleResolution": "Node",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": false,
+    "resolveJsonModule": true,
+    "allowJs": true,
     "baseUrl": ".",
-    "types": ["node", "vite/client", "./components.d.ts"],
+    "types": ["node", "vite/client"],
     "paths": {
-      "@/*": ["src/*"],
-      "@oruga-ui/oruga-next": ["src/index"],
+      "@/*": ["../oruga/src/*"],
+      "@oruga-ui/oruga-next": ["../oruga/src/index"],
     },
     "lib": [
       "esnext",
@@ -25,10 +27,9 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx",
     "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
+    "../oruga/src/**/*.ts",
+    "../oruga/src/**/*.vue",
   ],
   "exclude": [
     "node_modules",

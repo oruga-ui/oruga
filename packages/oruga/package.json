@@ -35,7 +35,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/oruga-ui/oruga.git"
+    "url": "https://github.com/oruga-ui/oruga"
   },
   "bugs": {
     "url": "https://github.com/oruga-ui/oruga/issues"
@@ -62,7 +62,7 @@
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open --component",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --quiet --ignore-path .gitignore",
-    "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
+    "publish": "cp ../../README.md . && npm run build:lib && npm publish",
     "update": "ncu -u"
   },
   "peerDependencies": {
@@ -102,9 +102,9 @@
     "vite-plugin-dts": "^3.9.1",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.6.0",
-    "vue": "^3.4.30",
-    "vue-component-meta": "^2.0.22",
-    "vue-component-type-helpers": "^2.0.22",
-    "vue-tsc": "^2.0.22"
+    "vue": "^3.4.31",
+    "vue-component-meta": "^2.0.24",
+    "vue-component-type-helpers": "^2.0.24",
+    "vue-tsc": "^2.0.24"
   }
 }
