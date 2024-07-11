@@ -1,7 +1,3 @@
----
-sidebarDepth: 2
----
-
 # Dropdown
 
 <div class="vp-doc">
@@ -133,19 +129,19 @@ sidebarDepth: 2
 
 | SASS Variable                          | Default                                                                      |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
-| $dropdown-disabled-opacity             | var(--#{$prefix}base-disabled-opacity)                                       |
-| $dropdown-item-active-background-color | var(--#{$prefix}primary)                                                     |
-| $dropdown-item-active-color            | var(--#{$prefix}primary-invert)                                              |
+| $dropdown-disabled-opacity             | $base-disabled-opacity                                                       |
+| $dropdown-item-active-background-color | $primary                                                                     |
+| $dropdown-item-active-color            | $primary-invert                                                              |
 | $dropdown-item-color                   | #000000                                                                      |
-| $dropdown-item-disabled-opacity        | var( --#{$prefix}base-disabled-opacity)                                      |
-| $dropdown-item-font-size               | var(--#{$prefix}base-font-size)                                              |
+| $dropdown-item-disabled-opacity        | $base-disabled-opacity                                                       |
+| $dropdown-item-font-size               | $base-font-size                                                              |
 | $dropdown-item-hover-background-color  | #f5f5f5                                                                      |
 | $dropdown-item-hover-color             | #000000                                                                      |
-| $dropdown-item-line-height             | var(--#{$prefix}base-line-height)                                            |
+| $dropdown-item-line-height             | $base-line-height                                                            |
 | $dropdown-item-padding                 | 0.375rem 1rem                                                                |
 | $dropdown-item-font-weight             | 400                                                                          |
 | $dropdown-menu-background              | #ffffff                                                                      |
-| $dropdown-menu-border-radius           | var(--#{$prefix}base-border-radius)                                          |
+| $dropdown-menu-border-radius           | $base-border-radius                                                          |
 | $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
 | $dropdown-menu-spacer                  | 0px                                                                          |
 | $dropdown-menu-margin                  | 0                                                                            |

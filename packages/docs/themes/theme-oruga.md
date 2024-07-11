@@ -4,12 +4,15 @@
 
 ```scss
 // Settings
+$whitelist: () !default;
+$css-vars: true !default;
 $prefix: "oruga-" !default;
 
 // Animations
-$animation-speed: 150ms !default;
-$animation-speed-fast: 300ms !default;
-$animation-timing: ease-out !default;
+$speed: 300ms !default;
+$speed-slow: 150ms !default;
+$speed-slower: 250ms !default;
+$easing: ease-out !default;
 
 // Font
 $base-font-family: 
@@ -36,7 +39,7 @@ $base-line-height: 1.5 !default;
 
 // Base Style
 $base-border-radius: 4px !default;
-$base-border-radius-rounded: 9999px !default;
+$base-rounded-border-radius: 9999px !default;
 $base-line-height: 1.5 !default;
 $base-disabled-opacity: 0.5 !default;
 
@@ -44,7 +47,6 @@ $control-border-width: 1px !default;
 $control-height: 2.25em !default;
 $control-padding-vertical: calc(0.375em - #{$control-border-width});
 $control-padding-horizontal: calc(0.625em - #{$control-border-width});
-$control-box-shadow: inset 0 1px 2px hsla(0, 0%, 4%, 0.1);
 
 // Sizes
 $sizes: (

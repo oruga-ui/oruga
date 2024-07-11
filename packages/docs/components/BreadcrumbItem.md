@@ -1,7 +1,3 @@
----
-title: Breadcrumb Item
----
-
 # Breadcrumb Item
 
 <div class="vp-doc">
@@ -42,7 +38,7 @@ title: Breadcrumb Item
 | active        | breadcrumb item is active, works only when tag provided is a | boolean          | `true`, `false`                                             | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;active: undefined<br>}</code>        |
 | activeVariant |                                                              | string           | -                                                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;activeVariant: undefined<br>}</code> |
 | disabled      | breadcrumb item is disabled                                  | boolean          | `true`, `false`                                             | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;disabled: undefined<br>}</code>      |
-| iconBoth      |                                                              | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                   |
+| iconBoth      | Show the icon in both sides, left - right                    | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                   |
 | iconLeft      | Icon name to show on the left                                | string           | -                                                           |                                                                                                                                                               |
 | iconPack      | Icon pack to use                                             | string           | `mdi`, `fa`, `fas and any other custom icon pack`           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
 | iconRight     | Icon name to show on the right                               | string           | -                                                           |                                                                                                                                                               |
