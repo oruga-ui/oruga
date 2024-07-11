@@ -5,11 +5,11 @@ import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
 import { getOption } from "@/utils/config";
+import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderParent } from "@/composables";
 
 import type { SliderComponent } from "./types";
 import type { SelectProps } from "./props";
-import { isTrueish } from "@/utils/helpers";
 
 /**
  * A slider to select a value or range from a given range
