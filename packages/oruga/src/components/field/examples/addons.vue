@@ -1,16 +1,16 @@
 <template>
     <section>
-        <o-field variant="danger">
+        <o-field variant="danger" addons>
             <o-input placeholder="Search..." type="search" icon="search" />
             <o-button variant="primary" label="Search" />
         </o-field>
 
-        <o-field>
+        <o-field addons>
             <o-input placeholder="This is expanded" expanded />
             <o-button label="@gmail.com" />
         </o-field>
 
-        <o-field>
+        <o-field addons>
             <o-select placeholder="Currency">
                 <option>$</option>
                 <option>£</option>
@@ -20,7 +20,7 @@
             <o-button variant="success" label="Transfer" />
         </o-field>
 
-        <o-field>
+        <o-field addons>
             <o-button icon-left="bold" />
             <o-button icon-left="italic" />
             <o-button icon-left="underline" />
@@ -31,7 +31,7 @@
             <o-input placeholder="Search..." type="search" icon="search" />
         </o-field>
 
-        <o-field>
+        <o-field addons>
             <o-button variant="primary" label="Button" />
             <o-dropdown>
                 <template #trigger>
@@ -44,7 +44,7 @@
             </o-dropdown>
         </o-field>
 
-        <o-field>
+        <o-field addons>
             <o-button variant="primary" label="Button" />
             <o-dropdown>
                 <template #trigger>
@@ -58,7 +58,7 @@
             <o-button variant="primary" label="Button" />
         </o-field>
 
-        <o-field>
+        <o-field addons>
             <o-dropdown>
                 <template #trigger>
                     <o-button icon-right="caret-down" label="Filters" />

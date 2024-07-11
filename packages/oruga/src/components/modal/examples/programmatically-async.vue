@@ -1,10 +1,10 @@
-<script setup>
-import { useOruga } from "../../../../../oruga/dist/oruga";
+<script setup lang="ts">
+import { useOruga } from "@oruga-ui/oruga-next";
 import ModalForm from "./_modal-form-async.vue";
 
 const oruga = useOruga();
 
-const promptModal = async () => {
+const promptModal = async (): Promise<void> => {
     const instance = oruga.modal.open({
         component: ModalForm,
         props: {
@@ -28,7 +28,7 @@ const promptModal = async () => {
     });
 };
 
-const promptModalCloseAll = async () => {
+const promptModalCloseAll = async (): Promise<void> => {
     const instance = oruga.modal.open({
         component: ModalForm,
         props: {

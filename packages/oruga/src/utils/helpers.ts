@@ -33,21 +33,34 @@ export function bound(val: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, val));
 }
 
-export const isObject = <T>(obj: T): boolean =>
-    obj && typeof obj === "object" && !Array.isArray(obj);
+export const isObject = (value: unknown): boolean =>
+    value && typeof value === "object" && !Array.isArray(value);
 
-export const isDate = (d: unknown): d is Date =>
-    d && d instanceof Date && !isNaN(d.getTime());
+export const isDate = (value: unknown): value is Date =>
+    value && value instanceof Date && !isNaN(value.getTime());
 
-export const isDefined = <T>(d: T): boolean => d !== null && d !== undefined;
+export const isDefined = (value: unknown): boolean =>
+    value !== null && value !== undefined;
+
+/**
+ * Determines if the value of a prop that is either present (true) or not
+ * present (undefined). For example, the prop disabled should disable
+ * by just existing, but what if it is set to the string "false" — then it
+ * should not be disabled.
+ *
+ * @param value - Value to check for undefined.
+ * @returns boolean
+ */
+export const isTrueish = (value: unknown): boolean =>
+    isDefined(value) && value !== "false" && value !== false;
 
 export const blankIfUndefined = (value: string): string =>
-    typeof value !== "undefined" && value !== null ? value : "";
+    isDefined(value) ? value : "";
 
 export const defaultIfUndefined = <T>(
     value: T | undefined,
     defaultValue: T,
-): T => (typeof value !== "undefined" && value !== null ? value : defaultValue);
+): T => (isDefined(value) ? value : defaultValue);
 
 export const toCssDimension = (width: string | number): string | number =>
     !isDefined(width) ? null : isNaN(width as number) ? width : width + "px";
@@ -63,6 +76,45 @@ export function indexOf<T>(
     if (!array) return -1;
     if (!fn || typeof fn !== "function") return array.indexOf(obj);
     return array.findIndex((value, index, arr) => fn(value, arr));
+}
+
+/**
+ * Sort an array by key without mutating original data.
+ * Call the user sort function if it was passed.
+ */
+export function sortBy<T>(
+    array: T[],
+    key: string,
+    fn: (a: T, b: T, asc: boolean) => number,
+    isAsc: boolean,
+): T[] {
+    let sorted = [];
+    // Sorting without mutating original data
+    if (fn && typeof fn === "function") {
+        sorted = [...array].sort((a, b) => fn(a, b, isAsc));
+    } else {
+        sorted = [...array].sort((a, b) => {
+            // Get nested values from objects
+            let newA = getValueByPath(a, key);
+            let newB = getValueByPath(b, key);
+
+            // sort boolean type
+            if (typeof newA === "boolean" && typeof newB === "boolean") {
+                return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
+            }
+
+            if (!newA && newA !== 0) return 1;
+            if (!newB && newB !== 0) return -1;
+            if (newA === newB) return 0;
+
+            newA = typeof newA === "string" ? newA.toUpperCase() : newA;
+            newB = typeof newB === "string" ? newB.toUpperCase() : newB;
+
+            return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
+        });
+    }
+
+    return sorted;
 }
 
 /**
@@ -110,6 +162,50 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
     }
 
     return false;
+}
+
+/**
+ * Returns true if it is a DOM element
+ * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
+ */
+export function isElement(o: any): boolean {
+    return typeof HTMLElement === "object"
+        ? o instanceof HTMLElement //DOM2
+        : o &&
+              typeof o === "object" &&
+              o !== null &&
+              o.nodeType === 1 &&
+              typeof o.nodeName === "string";
+}
+
+/**
+ * Return display text for an option.
+ * If option is an object, get the property from path based on given field, or else just the property.
+ * Apply a formatter function to the property if given.
+ * Return the display label.
+ *
+ * @param option Object to the the label for
+ * @param field  Property of the object to use as display text
+ * @param formatter Function to format the option to a string
+ */
+export function getPropertyValue<T>(
+    option?: T,
+    field?: string,
+    formatter?: (value: unknown, option: T) => string,
+): string {
+    if (!option) return "";
+
+    const property =
+        field && typeof option === "object"
+            ? getValueByPath(option, field)
+            : option;
+
+    const label =
+        typeof formatter === "function"
+            ? formatter(property, option)
+            : property;
+
+    return String(label || "");
 }
 
 /**

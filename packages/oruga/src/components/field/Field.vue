@@ -46,7 +46,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("field.labelsize"),
     },
-    /** Same as native for set on the label */
+    /** Same as native `for` set on the label */
     labelFor: { type: String, default: undefined },
     /** Help message text */
     message: { type: String, default: undefined },
@@ -64,8 +64,8 @@ const props = defineProps({
     /** Group label and control on the same line for horizontal forms */
     horizontal: { type: Boolean, default: false },
     /** Field automatically attach controls together */
-    addons: { type: Boolean, default: true },
-    /** Mobile breakpoint as max-width value */
+    addons: { type: Boolean, default: false },
+    /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
         default: () => getOption("field.mobileBreakpoint"),
@@ -363,8 +363,9 @@ const innerFieldClasses = defineClasses(
         <div v-if="horizontal" :class="bodyHorizontalClasses">
             <template
                 v-for="(element, index) in getInnerContent($slots.default)"
-                :key="element">
+                :key="index">
                 <component :is="element" v-if="isVNodeEmpty(element)" />
+
                 <OField
                     v-else
                     :variant="fieldVariant"

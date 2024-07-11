@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const data = ref([
@@ -103,12 +103,7 @@ const columnsVisible = ref({
 });
 const showDetailIcon = ref(true);
 const showDefaultDetail = ref(true);
-
-const table = ref(null);
-
-const toggle = (row) => {
-    table.value.toggleDetails(row);
-};
+const detailedRows = ref([data.value[0]]);
 </script>
 
 <template>
@@ -119,74 +114,71 @@ const toggle = (row) => {
                 v-model="showDefaultDetail"
                 label="Custom detail column" />
             <div v-for="(column, index) in columnsVisible" :key="index">
-                <o-checkbox v-model="column.display" :label="column.title" />
+                <o-checkbox
+                    v-model="column.display"
+                    :label="`Show column '${column.title}'`" />
             </div>
         </o-field>
 
         <o-table
-            ref="table"
             :data="data"
             detailed
             hoverable
-            :custom-detail-row="!showDefaultDetail"
-            :opened-detailed="['Board Games']"
+            row-key="name"
+            :detailed-rows="detailedRows"
             :default-sort="['name', 'asc']"
-            detail-key="name"
+            :custom-detail-row="!showDefaultDetail"
             :show-detail-icon="showDetailIcon">
             <o-table-column
-                v-slot="props"
+                v-slot="{ row, toggleDetails }"
                 field="name"
                 :visible="columnsVisible['name'].display"
                 :label="columnsVisible['name'].title"
                 width="300"
                 sortable>
                 <template v-if="showDetailIcon">
-                    {{ props.row.name }}
+                    {{ row.name }}
                 </template>
 
                 <template v-else>
-                    <a @click="toggle(props.row)">
-                        {{ props.row.name }}
-                    </a>
+                    <button @click="toggleDetails()">
+                        {{ row.name }}
+                    </button>
                 </template>
             </o-table-column>
 
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="sold"
                 :visible="columnsVisible['sold'].display"
                 :label="columnsVisible['sold'].title"
                 sortable
                 position="centered">
-                {{ props.row.sold }}
+                {{ row.sold }}
             </o-table-column>
 
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 field="available"
                 :visible="columnsVisible['available'].display"
                 :label="columnsVisible['available'].title"
                 sortable
                 position="centered">
-                {{ props.row.available }}
+                {{ row.available }}
             </o-table-column>
 
             <o-table-column
-                v-slot="props"
+                v-slot="{ row }"
                 :visible="columnsVisible['cleared'].display"
                 :label="columnsVisible['cleared'].title"
                 position="centered">
                 <span>
-                    {{
-                        Math.round(
-                            (props.row.sold / props.row.available) * 100,
-                        )
-                    }}%
+                    {{ Math.round((row.sold / row.available) * 100) }}%
                 </span>
             </o-table-column>
 
-            <template #detail="props">
-                <tr v-for="item in props.row.items" :key="item.name">
+            <template #detail="{ row }">
+                <tr v-for="item in row.items" :key="item.name">
                     <td v-if="showDetailIcon"></td>
                     <td v-show="columnsVisible['name'].display">
                         &nbsp;&nbsp;&nbsp;&nbsp;{{ item.name }}

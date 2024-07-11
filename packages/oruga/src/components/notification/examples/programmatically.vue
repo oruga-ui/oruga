@@ -1,14 +1,14 @@
-<script setup>
-import { useOruga } from "../../../../../oruga/dist/oruga";
+<script setup lang="ts">
+import { useOruga } from "@oruga-ui/oruga-next";
 import NotificationForm from "./_notification-form.vue";
 
 const oruga = useOruga();
 
-function simple() {
+function simple(): void {
     oruga.notification.open("Something happened");
 }
 
-function success() {
+function success(): void {
     oruga.notification.open({
         message: "Something happened correctly!",
         variant: "success",
@@ -16,7 +16,7 @@ function success() {
     });
 }
 
-function toast() {
+function toast(): void {
     oruga.notification.open({
         message: "Something happened correctly!",
         rootClass: "toast toast-notification",
@@ -24,7 +24,7 @@ function toast() {
     });
 }
 
-function queueToast() {
+function queueToast(): void {
     oruga.notification.open({
         message: "Something happened correctly!",
         rootClass: "toast toast-notification",
@@ -33,7 +33,7 @@ function queueToast() {
     });
 }
 
-function danger() {
+function danger(): void {
     oruga.notification.open({
         duration: 5000,
         message: `Something's not good, also I'm on <b>bottom</b>`,
@@ -46,7 +46,7 @@ function danger() {
     });
 }
 
-async function component() {
+async function component(): Promise<void> {
     const instance = oruga.notification.open({
         component: NotificationForm,
         position: "bottom-right",

@@ -1,9 +1,3 @@
-/**
- * Return month names according to a specified locale
- * @param  {String} locale A bcp47 localerouter. undefined will use the user browser locale
- * @param  {String} format long (ex. March), short (ex. Mar) or narrow (M)
- * @return {Array<String>} An array of month names
- */
 type MonthType =
     | "numeric"
     | "2-digit"
@@ -12,6 +6,12 @@ type MonthType =
     | "narrow"
     | undefined;
 
+/**
+ * Return month names according to a specified locale
+ * @param  {String} locale A bcp47 localerouter. undefined will use the user browser locale
+ * @param  {String} format long (ex. March), short (ex. Mar) or narrow (M)
+ * @return {Array<String>} An array of month names
+ */
 export function getMonthNames(
     locale: string = undefined,
     format: MonthType = "long",
@@ -22,10 +22,11 @@ export function getMonthNames(
     }
     const dtf = new Intl.DateTimeFormat(locale, {
         month: format,
-        // timeZone: 'UTC'
     });
     return dates.map((d) => dtf.format(d));
 }
+
+type WeekdayType = "long" | "short" | "narrow" | undefined;
 
 /**
  * Return weekday names according to a specified locale
@@ -34,9 +35,6 @@ export function getMonthNames(
  * @param  {String} format long (ex. Thursday), short (ex. Thu) or narrow (T)
  * @return {Array<String>} An array of weekday names
  */
-
-type WeekdayType = "long" | "short" | "narrow" | undefined;
-
 export function getWeekdayNames(
     locale: string = undefined,
     firstDayOfWeek: number = 0,
@@ -53,7 +51,6 @@ export function getWeekdayNames(
     }
     const dtf = new Intl.DateTimeFormat(locale, {
         weekday: format,
-        // timeZone: 'UTC'
     });
     return dates.map((d) => dtf.format(d));
 }

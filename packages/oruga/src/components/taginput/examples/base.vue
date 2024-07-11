@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const tags = ref(["Pistoia", "Valdinievole"]);
@@ -9,6 +9,7 @@ const tags = ref(["Pistoia", "Valdinievole"]);
         <o-field label="Add some items">
             <o-taginput
                 v-model="tags"
+                allow-new
                 icon="tag"
                 placeholder="Add an item"
                 aria-close-label="Delete this item" />

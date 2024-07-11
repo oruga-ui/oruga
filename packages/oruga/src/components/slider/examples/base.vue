@@ -1,14 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 
 const sliderValue = ref(10);
 
 const sliderType = computed(() => {
-    if (sliderValue.value > 25 && sliderValue.value < 75) {
-        return "warning";
-    } else if (sliderValue.value >= 75) {
-        return "success";
-    }
+    if (sliderValue.value > 25 && sliderValue.value < 75) return "warning";
+    else if (sliderValue.value >= 75) return "success";
     return "danger";
 });
 </script>

@@ -1,0 +1,21 @@
+name: Unit Tests
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies 📦
+        run: npm install   
+      - name: Run unit tests 🧪
+        run: npm run test
+          

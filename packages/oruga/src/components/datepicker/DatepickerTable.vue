@@ -3,7 +3,7 @@ import { computed, ref, type PropType } from "vue";
 
 import ODatepickerTableRow from "./DatepickerTableRow.vue";
 
-import { isDefined } from "@/utils/helpers";
+import { isTrueish, isDefined } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
@@ -109,7 +109,7 @@ function eventsInThisWeek(week: Date[]): DatepickerEvent[] {
 }
 
 const hoveredDateRange = computed(() => {
-    if (!datepicker.value.range || selectedEndDate.value) return [];
+    if (!isTrueish(datepicker.value.range) || selectedEndDate.value) return [];
     return (
         hoveredEndDate.value < selectedBeginDate.value
             ? [hoveredEndDate.value, selectedBeginDate.value]
@@ -155,10 +155,10 @@ function validateFocusedDay(): void {
 /** Emit input event with selected date as payload for v-model in parent */
 function onSelectedDate(date: Date): void {
     if (datepicker.value.disabled) return;
-    if (!datepicker.value.range && !datepicker.value.multiple)
-        emits("update:modelValue", date);
-    else if (datepicker.value.range) handleSelectRangeDate(date);
-    else if (datepicker.value.multiple) handleSelectMultipleDates(date);
+    else if (isTrueish(datepicker.value.range)) handleSelectRangeDate(date);
+    else if (isTrueish(datepicker.value.multiple))
+        handleSelectMultipleDates(date);
+    else emits("update:modelValue", date);
 }
 
 /*
@@ -194,9 +194,9 @@ function handleSelectRangeDate(date: Date): void {
  * Otherwise, add date to list of selected dates
  */
 function handleSelectMultipleDates(date: Date): void {
-    if (!Array.isArray(props.modelValue)) return;
-
-    let multipleSelectedDates = props.modelValue;
+    let multipleSelectedDates = Array.isArray(props.modelValue)
+        ? props.modelValue
+        : [];
     const multipleSelect = multipleSelectedDates.filter(
         (selectedDate) =>
             selectedDate.getDate() === date.getDate() &&

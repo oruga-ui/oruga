@@ -52,7 +52,6 @@ const props = defineProps({
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
      */
-
     iconPack: {
         type: String,
         default: () => getOption("button.iconPack", undefined),
@@ -76,7 +75,10 @@ const props = defineProps({
     loading: { type: Boolean, default: false },
     /** Enable inverted style */
     inverted: { type: Boolean, default: false },
-    /** Button type, like native */
+    /**
+     * Button type, like native
+     * @values button, submit, reset
+     */
     nativeType: {
         type: String,
         default: "button",

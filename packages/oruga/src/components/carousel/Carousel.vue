@@ -18,7 +18,6 @@ import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    useVModelBinding,
     useEventListener,
     useProviderParent,
 } from "@/composables";
@@ -41,7 +40,7 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
-    /** @model */
+    /** The index of the current active element */
     modelValue: { type: Number, default: 0 },
     /** Enable drag mode */
     dragable: { type: Boolean, default: true },
@@ -246,7 +245,7 @@ const provideData = computed<CarouselComponent>(() => ({
 /** Provide functionalities and data to child item components */
 const { childItems } = useProviderParent(rootRef, { data: provideData });
 
-const activeIndex = useVModelBinding<number>(props, emits);
+const activeIndex = defineModel<number>({ default: 0 });
 const scrollIndex = ref(props.modelValue);
 
 const resizeObserver = ref(null);

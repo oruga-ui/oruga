@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const minDatetime = ref(null);
@@ -23,6 +23,7 @@ const maxDatetime = ref(null);
                     editable />
             </o-field>
         </o-field>
+
         <o-field label="Select datetime">
             <o-datetimepicker
                 rounded

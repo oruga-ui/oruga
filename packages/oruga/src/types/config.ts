@@ -10,7 +10,7 @@ export type ClassFunction = (
 ) => string | undefined;
 
 export type ClassObject = {
-    class: string;
+    class: ComponentClass;
     /**
      * In case you want to override existing Oruga default classes for this class,
      * you can set the field override to true.
@@ -22,11 +22,7 @@ export type TransformFunction = (classes: string) => string;
 
 export type ComponentClass = string | Array<string> | ClassFunction;
 
-export type ClassDefinition =
-    | string
-    | Array<string>
-    | ClassFunction
-    | ClassObject;
+export type ClassDefinition = ComponentClass | ClassObject;
 
 export type ComponentConfigBase = Partial<{
     /**

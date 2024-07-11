@@ -1,0 +1,466 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ODatetimepicker tests > render correctly 1`] = `
+"<div data-oruga="datetimepicker" class="o-dpck o-dtpck__date">
+  <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--position-bottom-left" aria-modal="true">
+    <div tabindex="-1" class="o-drop__trigger" aria-haspopup="dialog">
+      <!--
+                @slot Override the trigger element, default is label prop
+                @binding {boolean} active - dropdown active state
+            -->
+      <div data-oruga="input" class="o-input__wrapper"><input class="o-dtpck__date o-input" id="mocked" data-oruga-input="text" type="text" autocomplete="off">
+        <!--v-if-->
+        <!--v-if-->
+        <!--v-if-->
+      </div>
+    </div>
+    <!--teleport start-->
+    <transition-stub name="fade" appear="false" persisted="false" css="true">
+      <!--v-if-->
+    </transition-stub>
+    <transition-stub name="fade" appear="false" persisted="true" css="true">
+      <div class="o-drop__menu o-drop__menu--bottom-left" role="dialog" aria-hidden="true" aria-modal="true" style="display: none;">
+        <!--
+                        @slot Place dropdown items here
+                        @binding {boolean} active - dropdown active state
+                        @binding {boolean} toggle - toggle active state function
+                    -->
+        <div class="o-drop__item o-dpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" override="">
+          <!--
+            @slot Override the label, default is label prop 
+        -->
+          <header class="o-dpck__header">
+            <!--
+                @slot Override the header
+            -->
+            <div class="o-dpck__header__buttons"><button type="button" class="o-btn o-btn--outlined o-dpck__header__previous" role="button" data-oruga="button" aria-label="Previous Page"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+                <!--v-if-->
+                <!--v-if--></span>
+              </button><button type="button" class="o-btn o-btn--outlined o-dpck__header__next" role="button" data-oruga="button" aria-label="Next Page"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+                <!--v-if-->
+                <!--v-if--></span>
+              </button>
+              <div class="o-dpck__header__list">
+                <div class="o-ctrl-sel" data-oruga="select">
+                  <!--v-if--><select id="mocked" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                    <!--v-if-->
+                    <!--
+                @slot Override the options, default is options prop
+            -->
+                    <option value="0">January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
+                    <option value="3">April</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
+                    <option value="7">August</option>
+                    <option value="8">September</option>
+                    <option value="9">October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                  </select>
+                  <!--v-if-->
+                </div>
+                <div class="o-ctrl-sel" data-oruga="select">
+                  <!--v-if--><select id="mocked" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                    <!--v-if-->
+                    <!--
+                @slot Override the options, default is options prop
+            -->
+                    <option value="2010">2010</option>
+                    <option value="2009">2009</option>
+                    <option value="2008">2008</option>
+                    <option value="2007">2007</option>
+                    <option value="2006">2006</option>
+                    <option value="2005">2005</option>
+                    <option value="2004">2004</option>
+                    <option value="2003">2003</option>
+                    <option value="2002">2002</option>
+                    <option value="2001">2001</option>
+                    <option value="2000">2000</option>
+                    <option value="1999">1999</option>
+                    <option value="1998">1998</option>
+                    <option value="1997">1997</option>
+                    <option value="1996">1996</option>
+                    <option value="1995">1995</option>
+                    <option value="1994">1994</option>
+                    <option value="1993">1993</option>
+                    <option value="1992">1992</option>
+                    <option value="1991">1991</option>
+                    <option value="1990">1990</option>
+                    <option value="1989">1989</option>
+                    <option value="1988">1988</option>
+                    <option value="1987">1987</option>
+                    <option value="1986">1986</option>
+                    <option value="1985">1985</option>
+                    <option value="1984">1984</option>
+                    <option value="1983">1983</option>
+                    <option value="1982">1982</option>
+                    <option value="1981">1981</option>
+                    <option value="1980">1980</option>
+                    <option value="1979">1979</option>
+                    <option value="1978">1978</option>
+                    <option value="1977">1977</option>
+                    <option value="1976">1976</option>
+                    <option value="1975">1975</option>
+                    <option value="1974">1974</option>
+                    <option value="1973">1973</option>
+                    <option value="1972">1972</option>
+                    <option value="1971">1971</option>
+                    <option value="1970">1970</option>
+                    <option value="1969">1969</option>
+                    <option value="1968">1968</option>
+                    <option value="1967">1967</option>
+                    <option value="1966">1966</option>
+                    <option value="1965">1965</option>
+                    <option value="1964">1964</option>
+                    <option value="1963">1963</option>
+                    <option value="1962">1962</option>
+                    <option value="1961">1961</option>
+                    <option value="1960">1960</option>
+                    <option value="1959">1959</option>
+                    <option value="1958">1958</option>
+                    <option value="1957">1957</option>
+                    <option value="1956">1956</option>
+                    <option value="1955">1955</option>
+                    <option value="1954">1954</option>
+                    <option value="1953">1953</option>
+                    <option value="1952">1952</option>
+                    <option value="1951">1951</option>
+                    <option value="1950">1950</option>
+                    <option value="1949">1949</option>
+                    <option value="1948">1948</option>
+                    <option value="1947">1947</option>
+                    <option value="1946">1946</option>
+                    <option value="1945">1945</option>
+                    <option value="1944">1944</option>
+                    <option value="1943">1943</option>
+                    <option value="1942">1942</option>
+                    <option value="1941">1941</option>
+                    <option value="1940">1940</option>
+                    <option value="1939">1939</option>
+                    <option value="1938">1938</option>
+                    <option value="1937">1937</option>
+                    <option value="1936">1936</option>
+                    <option value="1935">1935</option>
+                    <option value="1934">1934</option>
+                    <option value="1933">1933</option>
+                    <option value="1932">1932</option>
+                    <option value="1931">1931</option>
+                    <option value="1930">1930</option>
+                    <option value="1929">1929</option>
+                    <option value="1928">1928</option>
+                    <option value="1927">1927</option>
+                    <option value="1926">1926</option>
+                    <option value="1925">1925</option>
+                    <option value="1924">1924</option>
+                    <option value="1923">1923</option>
+                    <option value="1922">1922</option>
+                    <option value="1921">1921</option>
+                    <option value="1920">1920</option>
+                    <option value="1919">1919</option>
+                    <option value="1918">1918</option>
+                    <option value="1917">1917</option>
+                    <option value="1916">1916</option>
+                    <option value="1915">1915</option>
+                    <option value="1914">1914</option>
+                    <option value="1913">1913</option>
+                    <option value="1912">1912</option>
+                    <option value="1911">1911</option>
+                    <option value="1910">1910</option>
+                    <option value="1909">1909</option>
+                    <option value="1908">1908</option>
+                    <option value="1907">1907</option>
+                    <option value="1906">1906</option>
+                    <option value="1905">1905</option>
+                    <option value="1904">1904</option>
+                    <option value="1903">1903</option>
+                    <option value="1902">1902</option>
+                    <option value="1901">1901</option>
+                    <option value="1900">1900</option>
+                  </select>
+                  <!--v-if-->
+                </div>
+              </div>
+            </div>
+          </header>
+          <section class="o-dpck__table">
+            <header class="o-dpck__table__head">
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>S</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>M</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>T</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>W</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>T</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>F</span></div>
+              <div class="o-dpck__table__cell o-dpck__table__head-cell"><span>S</span></div>
+            </header>
+            <div class="o-dpck__table__body">
+              <div class="o-dpck__table__row">
+                <!--v-if-->
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>26</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>27</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>28</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>29</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>30</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--today o-dpck__table__cell--unselectable"><span>31</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selected o-dpck__table__cell--selectable" role="button"><span>1</span>
+                  <!--v-if-->
+                </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>2</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>3</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>4</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>5</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>6</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>7</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>8</span>
+                  <!--v-if-->
+                </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>9</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>10</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>11</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>12</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>13</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>14</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>15</span>
+                  <!--v-if-->
+                </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>16</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>17</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>18</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>19</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>20</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>21</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>22</span>
+                  <!--v-if-->
+                </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>23</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>24</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>25</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>26</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>27</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>28</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>29</span>
+                  <!--v-if-->
+                </div>
+              </div>
+              <div class="o-dpck__table__row">
+                <!--v-if-->
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>30</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--selectable" role="button" tabindex="0"><span>31</span>
+                  <!--v-if-->
+                </div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>1</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>2</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>3</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>4</span></div>
+                <div class="o-dpck__table__cell o-dpck__table__cell--unselectable"><span>5</span></div>
+              </div>
+            </div>
+          </section>
+          <footer class="o-dpck__footer">
+            <!--
+                @slot Define an additional footer
+            -->
+            <div class="o-dtpck__time">
+              <div data-oruga="timepicker" class="o-tpck">
+                <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--inline o-drop--position-bottom-left o-drop--active" aria-modal="false">
+                  <!--v-if-->
+                  <!--teleport start-->
+                  <transition-stub name="fade" appear="false" persisted="false" css="true">
+                    <!--v-if-->
+                  </transition-stub>
+                  <transition-stub name="fade" appear="false" persisted="true" css="true">
+                    <div class="o-drop__menu o-drop__menu--bottom-left o-drop__menu--active" role="list" aria-hidden="true" aria-modal="false">
+                      <!--
+                        @slot Place dropdown items here
+                        @binding {boolean} active - dropdown active state
+                        @binding {boolean} toggle - toggle active state function
+                    -->
+                      <div class="o-drop__item o-tpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" override="">
+                        <!--
+            @slot Override the label, default is label prop 
+        -->
+                        <div class="" data-oruga="select">
+                          <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+                            <!--v-if-->
+                            <!--
+                @slot Override the options, default is options prop
+            -->
+                            <option value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                          </select>
+                          <!--v-if-->
+                        </div><span class="o-tpck__separtor">:</span>
+                        <div class="" data-oruga="select">
+                          <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+                            <!--v-if-->
+                            <!--
+                @slot Override the options, default is options prop
+            -->
+                            <option value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                            <option value="49">49</option>
+                            <option value="50">50</option>
+                            <option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+                            <option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+                            <option value="59">59</option>
+                          </select>
+                          <!--v-if-->
+                        </div>
+                        <!--v-if-->
+                        <!--v-if-->
+                        <!--v-if-->
+                      </div>
+                    </div>
+                  </transition-stub>
+                  <!--teleport end-->
+                </div>
+              </div>
+            </div>
+            <!--v-if-->
+          </footer>
+        </div>
+      </div>
+    </transition-stub>
+    <!--teleport end-->
+  </div>
+</div>"
+`;

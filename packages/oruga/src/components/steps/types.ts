@@ -17,12 +17,13 @@ export type StepItemComponent = StepItemProps & {
     deactivate: (index: number) => void;
 };
 
-export type StepsComponent = {
-    activeValue: string | number;
+export type StepsComponent<T extends string | number | object> = {
+    activeValue: T;
     vertical: boolean;
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
+    destroyOnHide: boolean;
 };
 
 export type StepItem = Omit<ProviderItem, "data"> & StepItemComponent;

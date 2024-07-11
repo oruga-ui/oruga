@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
     email: { type: String, default: "" },
     password: { type: String, default: "" },

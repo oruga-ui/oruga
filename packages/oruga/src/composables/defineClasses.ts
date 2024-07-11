@@ -18,6 +18,7 @@ import { isDefined, blankIfUndefined, getValueByPath } from "@/utils/helpers";
 import type {
     ClassBind,
     ClassDefinition,
+    ComponentClass,
     ComponentProps,
     TransformFunction,
 } from "@/types";
@@ -79,46 +80,47 @@ export function defineClasses(
             return { [computedClass]: applied };
         }
 
-        // if suffix is defined, watch suffix changed and recalculate class
-        if (isDefined(suffix) && isRef(suffix)) {
-            scope.run(() => {
-                watch(
-                    () => toValue(suffix),
-                    (value, oldValue) => {
-                        // only recompute when value has really changed
-                        if (value === oldValue) return;
-                        // recompute the class bind property
-                        const classBind = getClassBind();
-                        // update class binding property by class index
-                        classes.value[index] = classBind;
-                    },
-                );
-            });
-        }
+        // run all watcher and computed properties in an active effect scope
+        scope.run(() => {
+            // recompute the class bind property when the class property change
+            watch(
+                () => vm.proxy.$props[className],
+                () => {
+                    // recompute the class bind property
+                    const classBind = getClassBind();
+                    // update class binding property by class index
+                    classes.value[index] = classBind;
+                },
+            );
 
-        // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
-        if (isDefined(apply) && isRef(apply)) {
-            scope.run(() => {
-                watch(
-                    () => toValue(apply),
-                    (applied, oldValue) => {
-                        // only change apply when value has really changed
-                        if (applied === oldValue) return;
+            // if suffix is defined, watch suffix changed and recalculate class
+            if (isDefined(suffix) && isRef(suffix)) {
+                watch(suffix, (value, oldValue) => {
+                    // only recompute when value has really changed
+                    if (value === oldValue) return;
+                    // recompute the class bind property
+                    const classBind = getClassBind();
+                    // update class binding property by class index
+                    classes.value[index] = classBind;
+                });
+            }
 
-                        // get class binding property by class index
-                        const classBind = classes.value[index];
-
-                        // update the apply class binding state
-                        Object.keys(classBind).forEach(
-                            (key) => (classBind[key] = applied),
-                        );
-
-                        // update the class binding property by class index
-                        classes.value[index] = classBind;
-                    },
-                );
-            });
-        }
+            // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
+            if (isDefined(apply) && isRef(apply)) {
+                watch(apply, (applied, oldValue) => {
+                    // only change apply when value has really changed
+                    if (applied === oldValue) return;
+                    // get class binding property by class index
+                    const classBind = classes.value[index];
+                    // update the apply class binding state
+                    Object.keys(classBind).forEach(
+                        (key) => (classBind[key] = applied),
+                    );
+                    // update the class binding property by class index
+                    classes.value[index] = classBind;
+                });
+            }
+        });
 
         // return computed class based on parameter
         return getClassBind();
@@ -147,67 +149,41 @@ function computeClass(
     suffix = "",
 ): string {
     // get component props
-    const props = getProps(vm).props; // TODO: remove `.props` when object escape get reverted
+    const props = getProps(vm);
 
-    const configField = vm.proxy?.$options.configField;
-    if (!configField)
+    const componentKey: string = vm.proxy?.$options.configField;
+    if (!componentKey)
         throw new Error("component must define the 'configField' option.");
 
     // get component instance override property
     const config = props.override === true ? {} : getOptions();
 
-    // get global config override property
-    const globalOverride =
-        props.override || getValueByPath(config, "override", false);
-    // get component config override property
-    const localOverride = getValueByPath(
-        config,
-        `${configField}.override`,
-        globalOverride,
-    );
-    // get field specific config override property
-    const overrideClass = getValueByPath(
-        config,
-        `${configField}.${field}.override`,
-        localOverride,
-    );
+    // --- Classes Definition ---
 
-    // get global tranform class
-    const globalTransformClasses = getValueByPath<TransformFunction>(
-        config,
-        "transformClasses",
-        undefined,
-    );
-    // get field specific tranform class
-    const localTransformClasses = getValueByPath<TransformFunction>(
-        config,
-        `${configField}.transformClasses`,
-        undefined,
-    );
-
-    // get config class definition
+    // get component config class definition
     let globalClass =
         getValueByPath<ClassDefinition>(
             config,
-            `${configField}.${field}.class`,
+            `${componentKey}.${field}.class`,
             "",
         ) ||
-        getValueByPath<ClassDefinition>(config, `${configField}.${field}`, "");
-    // get instance class override
-    let currentClass = getValueByPath<ClassDefinition>(props, field, "");
+        getValueByPath<ClassDefinition>(config, `${componentKey}.${field}`, "");
 
-    // procsess instance class
-    if (Array.isArray(currentClass)) {
-        currentClass = currentClass.join(" ");
+    // get instance class definition
+    let localClass = getValueByPath<ComponentClass>(props, field, "");
+
+    // procsess local instance class
+    if (Array.isArray(localClass)) {
+        localClass = localClass.join(" ");
     }
-    if (typeof currentClass === "function") {
+    if (typeof localClass === "function") {
         const props = getProps(vm);
-        currentClass = currentClass(suffix, props);
+        localClass = localClass(suffix, props);
     } else {
-        currentClass = suffixProcessor(currentClass as string, suffix);
+        localClass = suffixProcessor(localClass as string, suffix);
     }
 
-    // process confic class
+    // process global config class
     if (Array.isArray(globalClass)) {
         globalClass = globalClass.join(" ");
     }
@@ -218,7 +194,7 @@ function computeClass(
         globalClass = suffixProcessor(globalClass as string, suffix);
     }
 
-    // process default value
+    // process component instance default value
     if (defaultValue.includes("{*}")) {
         defaultValue = defaultValue.replace(
             /\{\*\}/g,
@@ -228,16 +204,51 @@ function computeClass(
         defaultValue = defaultValue + blankIfUndefined(suffix);
     }
 
+    // --- Override Definition ---
+
+    // get instance or global config override property
+    const globalOverride =
+        props.override || getValueByPath(config, "override", false);
+    // get component config override property
+    const localOverride = getValueByPath(
+        config,
+        `${componentKey}.override`,
+        globalOverride,
+    );
+    // get component field config override property
+    const overrideClass = getValueByPath(
+        config,
+        `${componentKey}.${field}.override`,
+        localOverride,
+    );
+
+    // --- Define Applied Classes ---
+
     // if override is false add default value
     // add global config classes
     // add instance classes
     let appliedClasses = (
         `${!overrideClass ? defaultValue : ""} ` +
         `${blankIfUndefined(globalClass)} ` +
-        `${blankIfUndefined(currentClass)}`
+        `${blankIfUndefined(localClass)}`
     )
         .trim()
         .replace(/\s\s+/g, " ");
+
+    // --- Tranform Classes ---
+
+    // get global config tranform class
+    const globalTransformClasses = getValueByPath<TransformFunction>(
+        config,
+        "transformClasses",
+        undefined,
+    );
+    // get component config tranform class
+    const localTransformClasses = getValueByPath<TransformFunction>(
+        config,
+        `${componentKey}.transformClasses`,
+        undefined,
+    );
 
     // apply component local transformclass if available
     if (localTransformClasses) {
@@ -269,6 +280,5 @@ const getProps = (vm: ComponentInternalInstance): ComponentProps => {
         .map((key) => props[key])
         .reduce((a, b) => ({ ...a, ...b }), props);
 
-    // TODO: revert object escape
-    return { props };
+    return props;
 };

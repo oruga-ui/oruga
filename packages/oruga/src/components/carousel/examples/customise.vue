@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, reactive } from "vue";
 
 const carousels = [
@@ -61,12 +61,12 @@ const settings = reactive({
         </o-field>
 
         <o-carousel v-model="carousel" v-bind="settings">
-            <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
+            <o-carousel-item v-for="(slide, i) in carousels" :key="i">
                 <section
                     class="ex-slide"
-                    :style="{ 'background-color': carousel.color }">
-                    <h1>{{ carousel.title }}</h1>
-                    <o-input :placeholder="carousel.title"></o-input>
+                    :style="{ 'background-color': slide.color }">
+                    <h1>{{ slide.text }}</h1>
+                    <o-input :placeholder="slide.text" />
                     <p>A link that <a href="#arrow">goes to arrow</a></p>
                 </section>
             </o-carousel-item>

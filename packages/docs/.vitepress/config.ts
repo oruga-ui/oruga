@@ -1,5 +1,6 @@
 import { defineConfig } from "vitepress";
 
+import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 
@@ -118,9 +119,26 @@ export default defineConfig({
             message: "Released under the MIT License.",
             copyright: `Copyright © 2020-${new Date().getFullYear()} Walter Tommasi`,
         },
-        /*carbonAds: {
-        code: 'CESI42JW',
-        placement: 'orugaio'
-      }*/
+        /*
+        carbonAds: {
+            code: 'CESI42JW',
+            placement: 'orugaio'
+        }
+        */
+    },
+    vite: {
+        // Vite config options
+        resolve: {
+            alias: {
+                // add '@oruga-ui/oruga-next' alias to strict oruga package
+                "@oruga-ui/oruga-next": fileURLToPath(
+                    new URL("./../../oruga/src/index.ts", import.meta.url),
+                ),
+                // add '@' alias to oruga package
+                "@": fileURLToPath(
+                    new URL("./../../oruga/src", import.meta.url),
+                ),
+            },
+        },
     },
 });

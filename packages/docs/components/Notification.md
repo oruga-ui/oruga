@@ -1,5 +1,5 @@
 ---
-title: Notification
+sidebarDepth: 2
 ---
 
 # Notification
@@ -82,27 +82,18 @@ title: Notification
 
 ### Props
 
-| Prop name | Description                                                                                                                                                                                          | Type                  | Values                                                                  | Default                                                                                                                                                  |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active    | Whether notification is active or not, use v-model:active to make it two-way binding.                                                                                                                | boolean               | -                                                                       | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                               |
-| component | Component to be injected.<br/>Close notification within the component by emitting a 'close' event — $emit('close').                                                                                  | Component             | -                                                                       |                                                                                                                                                          |
-| container | DOM element the toast will be created on (for programmatic usage).<br/>Note that this also changes the position of the toast from fixed to absolute.<br/>Meaning that the container should be fixed. | string \| HTMLElement | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;container: "body"<br>}</code> |
-| duration  | Hide notification after duration (in miliseconds)                                                                                                                                                    | number                | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;duration: 2000<br>}</code>    |
-| events    | Events to be binded to the injected component.                                                                                                                                                       | object                | -                                                                       | <code style='white-space: nowrap; padding: 0;'>{}</code>                                                                                                 |
-| infinite  | Show the Notification infinitely until it is dismissed.                                                                                                                                              | boolean               | -                                                                       | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
-| onCancel  | Callback function to call after user canceled (pressed escape / clicked outside).                                                                                                                    | () =&gt; void         | -                                                                       | Default function (see source code)                                                                                                                       |
-| onClose   | Callback function to call after close (programmatically close or user canceled).                                                                                                                     | () =&gt; void         | -                                                                       | Default function (see source code)                                                                                                                       |
-| override  | Override existing theme classes completely                                                                                                                                                           | boolean               | -                                                                       |                                                                                                                                                          |
-| position  | Which position the notification will appear when programmatically.                                                                                                                                   | string                | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |
-| props     | Props to be binded to the injected component.                                                                                                                                                        | object                | -                                                                       |                                                                                                                                                          |
-| queue     | If notice should queue with others notices (snackbar/toast/notification).                                                                                                                            | boolean               | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;queue: undefined<br>}</code>  |
-
-### Events
-
-| Event name    | Properties                                | Description                 |
-| ------------- | ----------------------------------------- | --------------------------- |
-| update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         | **value** `any` - close event data        | on component close event    |
+| Prop name | Description                                                                                                                                                                                          | Type                          | Values                                                                  | Default                                                                                                                                                  |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| component | Component to be injected.<br/>Close notification within the component by emitting a 'close' event — $emit('close').                                                                                  | Component                     | -                                                                       |                                                                                                                                                          |
+| container | DOM element the toast will be created on (for programmatic usage).<br/>Note that this also changes the position of the toast from fixed to absolute.<br/>Meaning that the container should be fixed. | string \| HTMLElement \| null | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;container: "body"<br>}</code> |
+| duration  | Hide notification after duration (in miliseconds)                                                                                                                                                    | number                        | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;duration: 2000<br>}</code>    |
+| events    | Events to be binded to the injected component.                                                                                                                                                       | object                        | -                                                                       | <code style='white-space: nowrap; padding: 0;'>{}</code>                                                                                                 |
+| infinite  | Show the Notification infinitely until it is dismissed.                                                                                                                                              | boolean                       | -                                                                       | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| onClose   | Callback function to call on close (programmatically close or user canceled).                                                                                                                        | () =&gt; void                 | -                                                                       | Default function (see source code)                                                                                                                       |
+| override  | Override existing theme classes completely                                                                                                                                                           | boolean                       | -                                                                       |                                                                                                                                                          |
+| position  | Which position the notification will appear.                                                                                                                                                         | string                        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |
+| props     | Props to be binded to the injected component.                                                                                                                                                        | object                        | -                                                                       |                                                                                                                                                          |
+| queue     | If notice should queue with others notices (snackbar/toast/notification).                                                                                                                            | boolean                       | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;queue: undefined<br>}</code>  |
 
 ### Slots
 
@@ -119,51 +110,27 @@ title: Notification
 
 ## Sass variables
 
-<div class="theme-orugabase">
+<div class="theme-oruga">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+> Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                        | Default                     |
-| ------------------------------------ | --------------------------- |
-| $notification-background-color       | $primary                    |
-| $notification-border-radius          | 4px                         |
-| $notification-padding                | 1.75em 1.75em               |
-| $notification-margin-bottom          | 1.5rem                      |
-| $notification-animantion             | append-animate 0.3s linear  |
-| $notification-color                  | $white                      |
-| $notification-close-border-radius    | $base-rounded-border-radius |
-| $notification-close-right            | 0.5rem                      |
-| $notification-close-top              | 0.5rem                      |
-| $notification-close-size             | 20px                        |
-| $notification-close-color            | $white                      |
-| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)        |
-| $notification-icon-margin-right      | 1rem                        |
-| $notification-notices-padding        | 2em                         |
-| $notification-notices-zindex         | 1000                        |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable                        | Default                     |
-| ------------------------------------ | --------------------------- |
-| $notification-background-color       | $primary                    |
-| $notification-border-radius          | 4px                         |
-| $notification-padding                | 1.75em 1.75em               |
-| $notification-margin-bottom          | 1.5rem                      |
-| $notification-animantion             | append-animate 0.3s linear  |
-| $notification-color                  | $white                      |
-| $notification-close-border-radius    | $base-rounded-border-radius |
-| $notification-close-right            | 0.5rem                      |
-| $notification-close-top              | 0.5rem                      |
-| $notification-close-size             | 20px                        |
-| $notification-close-color            | $white                      |
-| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)        |
-| $notification-icon-margin-right      | 1rem                        |
-| $notification-notices-padding        | 2em                         |
-| $notification-notices-zindex         | 1000                        |
+| SASS Variable                        | Default                                      |
+| ------------------------------------ | -------------------------------------------- |
+| $notification-background-color       | var(--#{$prefix}primary)                     |
+| $notification-border-radius          | 4px                                          |
+| $notification-padding                | 1.75em 1.75em                                |
+| $notification-margin-bottom          | 1.5rem                                       |
+| $notification-animantion             | append-animate 0.3s linear                   |
+| $notification-color                  | var(--#{$prefix}white)                       |
+| $notification-close-border-radius    | var( --#{$prefix}base-border-radius-rounded) |
+| $notification-close-right            | 0.5rem                                       |
+| $notification-close-top              | 0.5rem                                       |
+| $notification-close-size             | 20px                                         |
+| $notification-close-color            | var(--#{$prefix}white)                       |
+| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)                         |
+| $notification-icon-margin-right      | 1rem                                         |
+| $notification-notices-padding        | 2em                                          |
+| $notification-notices-zindex         | 1000                                         |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
 

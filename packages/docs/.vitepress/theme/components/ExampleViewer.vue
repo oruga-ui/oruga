@@ -7,8 +7,8 @@ const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
 
 const props = defineProps({
     code: { type: String, required: true },
-    component: { type: Object, default: () => undefined },
-    showCode: { type: Boolean, default: () => true },
+    component: { type: Object, default: undefined },
+    showCode: { type: Boolean, default: true },
     open: { type: Boolean, default: false },
 });
 
@@ -18,14 +18,14 @@ const codeComputed = computed(() => {
     const code = props.code;
     return code
         .replace(/\.\.\//g, "")
-        .replace("oruga/dist/oruga", "@oruga-ui/oruga-next");
+        .replace("@/oruga", "@oruga-ui/oruga-next");
 });
 
 const scriptCode = computed(() =>
-    codeComputed.value.includes("<script setup>")
+    codeComputed.value.includes('<script setup lang="ts">')
         ? codeComputed.value.substring(
-              codeComputed.value.indexOf("<script setup>") +
-                  "<script setup>".length,
+              codeComputed.value.indexOf('<script setup lang="ts">') +
+                  '<script setup lang="ts">'.length,
               codeComputed.value.lastIndexOf("/script>") - 1,
           )
         : "",
@@ -61,7 +61,7 @@ const styleCode = computed(() =>
 
 const isOpen = ref(props.open);
 const tab = ref(
-    templateCode.value ? "HTML" : scriptCode.value ? "JS" : "STYLE",
+    templateCode.value ? "HTML" : scriptCode.value ? "SCRIPT" : "STYLE",
 );
 const nodeRef = ref<any>(null);
 
@@ -128,8 +128,9 @@ function copy(val: string) {
                 </div>
                 <div class="blocks">
                     <div
+                        v-if="templateCode"
                         class="language-html"
-                        :class="{ active: tab == 'HTML' }">
+                        :class="{ active: tab === 'HTML' }">
                         <button
                             title="Copy Code"
                             class="copy"
@@ -142,20 +143,24 @@ function copy(val: string) {
                                 )
                             " />
                     </div>
-                    <div class="language-js" :class="{ active: tab == 'JS' }">
+                    <div
+                        v-if="scriptCode"
+                        class="language-js"
+                        :class="{ active: tab === 'SCRIPT' }">
                         <button
                             title="Copy Code"
                             class="copy"
                             @click="copy(scriptCode)" />
-                        <span class="lang">html</span>
+                        <span class="lang">javascript</span>
                         <div
                             v-html="
                                 markdown.render('```js ' + scriptCode + ' ```')
                             " />
                     </div>
                     <div
+                        v-if="styleCode"
                         class="language-css"
-                        :class="{ active: tab == 'STYLE' }">
+                        :class="{ active: tab === 'STYLE' }">
                         <button
                             title="Copy Code"
                             class="copy"
@@ -195,5 +200,8 @@ function copy(val: string) {
             background-color: #0d1117;
         }
     }
+}
+.vp-doc .vp-code-group .blocks .lang {
+    color: var(--vp-code-copy-code-hover-border-color);
 }
 </style>

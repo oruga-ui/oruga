@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 const active = ref(false);
 </script>
 
 <template>
-    <o-field expanded>
+    <o-field grouped>
         <o-dropdown v-model:active="active">
             <template #trigger="{ active }">
                 <o-button
@@ -18,6 +18,7 @@ const active = ref(false);
             <o-dropdown-item label="Another action" />
             <o-dropdown-item label="Something else" />
         </o-dropdown>
+
         <o-button
             label="Open / Close"
             type="primary"

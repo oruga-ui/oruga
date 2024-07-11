@@ -1,5 +1,7 @@
-<script setup>
-const filtered = [
+<script setup lang="ts">
+import { ref } from "vue";
+
+const options = [
     {
         type: "Frameworks",
         items: ["Vue.js"],
@@ -22,7 +24,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "Q",
-                    char: "Q",
                     shiftKey: true,
                 }),
             );
@@ -85,7 +86,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "Q",
-                    char: "Q",
                     shiftKey: true,
                 }),
             );
@@ -102,7 +102,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "|",
-                    char: "|",
                     shiftKey: true,
                 }),
             );
@@ -119,7 +118,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "Q",
-                    char: "Q",
                     shiftKey: true,
                 }),
             );
@@ -136,7 +134,6 @@ const inspectData = [
                     bubbles: true,
                     cancelable: true,
                     key: "Q",
-                    char: "Q",
                     shiftKey: true,
                 }),
             );
@@ -149,21 +146,23 @@ const inspectData = [
         componentRef: "Input",
     },
 ];
+
+const selected = ref();
 </script>
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-autocomplete
             v-bind="props"
+            v-model="selected"
+            :options="options"
             group-field="type"
             group-options="items"
             placeholder="e.g. Vue.js"
-            :data="filtered"
             icon="search"
             clearable
             selectable-header
-            selectable-footer
-            @select="(option) => (selected = option)">
+            selectable-footer>
             <template #empty>No results found</template>
             <template #header>Header slot (optional)</template>
             <template #footer>Footer slot (optional)</template>
