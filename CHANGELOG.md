@@ -1,3 +1,64 @@
+# [0.9.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.8.11...v0.9.0-pre.1) (2024-07-12)
+
+
+### Bug Fixes
+
+* **autocomplete:** adjust prop `keepOpen` behavior ([#1015](https://github.com/oruga-ui/oruga/issues/1015)) ([e01ad35](https://github.com/oruga-ui/oruga/commit/e01ad3577f42f8838c81ddcb5e7811c0d3713d23))
+* **dropdown:** adjust prop `multiple` behavior ([#1012](https://github.com/oruga-ui/oruga/issues/1012)) ([3e4291a](https://github.com/oruga-ui/oruga/commit/3e4291ac94556603543a92bd17bec2f5b8cc60db))
+* **select:** adjust prop `multiple` behavior ([#1014](https://github.com/oruga-ui/oruga/issues/1014)) ([6e25bee](https://github.com/oruga-ui/oruga/commit/6e25bee220819e9abd4b739bd17592859c490894))
+* **select:** adjust prop `placeholder` behavior ([#964](https://github.com/oruga-ui/oruga/issues/964)) ([1c8b580](https://github.com/oruga-ui/oruga/commit/1c8b58083dc1f33bf5a6d9a9efe3a17ba0c049ac))
+* **table:** solve searchable filter bug ([#949](https://github.com/oruga-ui/oruga/issues/949)) ([858c5c7](https://github.com/oruga-ui/oruga/commit/858c5c72a2207dbb6133458a54a3630ae946e4af))
+
+
+### Features
+
+* remove deprecated `ConfigPlugin` export ([#873](https://github.com/oruga-ui/oruga/issues/873)) ([66c09f4](https://github.com/oruga-ui/oruga/commit/66c09f45b5c2ecc45d024c8fc38ead20c0c0c2d3))
+* expose `value` for every *form* component ([#957](https://github.com/oruga-ui/oruga/issues/957)) ([9a43312](https://github.com/oruga-ui/oruga/commit/9a433124836a50d280dcd9df02574722aa142717))
+* **autocomplete:** update type generics ([#956](https://github.com/oruga-ui/oruga/issues/956)) ([26de252](https://github.com/oruga-ui/oruga/commit/26de252197e7cae61178c1593c158ff7c8e9ca75))
+* **checkbox:** add type generics ([#968](https://github.com/oruga-ui/oruga/issues/968)) ([c2c9d05](https://github.com/oruga-ui/oruga/commit/c2c9d055f8981725888e34606af7bec80803b6ee))
+* **datepicker:** change `mobileNative` default to `false` ([#993](https://github.com/oruga-ui/oruga/issues/993)) ([46e2c89](https://github.com/oruga-ui/oruga/commit/46e2c8940857842e51c9f9c165dfe6ddd47e4b1e))
+* **datepicker:** make `modelValue` conditional typed by prop `range`  ([#1006](https://github.com/oruga-ui/oruga/issues/1006)) ([96f1784](https://github.com/oruga-ui/oruga/commit/96f1784e5f626d2b9767d7ebcb345d7c476bbe41))
+* **datepicker:** make `datepicker` conditional typed by prop `multiple` ([#1011](https://github.com/oruga-ui/oruga/issues/1011)) ([8689a40](https://github.com/oruga-ui/oruga/commit/8689a40163130bc5c3ea97b761e6af7d9429b4d9))
+* **dropdown:** update type generics ([#984](https://github.com/oruga-ui/oruga/issues/984)) ([df7074b](https://github.com/oruga-ui/oruga/commit/df7074b4783e693d20f0537d9e371c26920a5044))
+* **dropdown:** make `modelValue` conditional typed by prop `multiple` ([#1003](https://github.com/oruga-ui/oruga/issues/1003)) ([66bbbcc](https://github.com/oruga-ui/oruga/commit/66bbbccc6524c14bd49072069bfd8898b594594b))
+* **field:** set prop `addons` default to `false` ([#914](https://github.com/oruga-ui/oruga/issues/914)) ([3871879](https://github.com/oruga-ui/oruga/commit/3871879b4bb40eb4d073e657fa5607dad1c1d8c3))
+* **input:** add `number` prop for vmodel casting ([#884](https://github.com/oruga-ui/oruga/issues/884)) ([ded99f9](https://github.com/oruga-ui/oruga/commit/ded99f9de574e3bf427c38223836214413639363))
+* **input:** make `modelValue` conditional typed by prop `number`  ([#991](https://github.com/oruga-ui/oruga/issues/991)) ([53924f1](https://github.com/oruga-ui/oruga/commit/53924f10b9348d96a80d6404560a7a9972e9d8c0))
+* **radio:** add type generics ([#969](https://github.com/oruga-ui/oruga/issues/969)) ([f241391](https://github.com/oruga-ui/oruga/commit/f241391053e3a6ae623327dc854ccadf881edca8))
+* **select:** add native `required` prop ([#971](https://github.com/oruga-ui/oruga/issues/971)) ([e3df9f1](https://github.com/oruga-ui/oruga/commit/e3df9f19b4417a1b02d2e4218c6082e89d145f2b))
+* **select:** add type generics | add unit tests ([#963](https://github.com/oruga-ui/oruga/issues/963)) ([a5bdedc](https://github.com/oruga-ui/oruga/commit/a5bdedc2c63200eb0e1ec4d19cee02172500fc05))
+* **select:** make `modelValue` conditional typed by prop `multiple` ([#1004](https://github.com/oruga-ui/oruga/issues/1004)) ([d3dc6dd](https://github.com/oruga-ui/oruga/commit/d3dc6ddec9e7120fa28779d3e73818dcef28c52a))
+* **select:** register `id` to field wrapper ([#966](https://github.com/oruga-ui/oruga/issues/966)) ([72f253c](https://github.com/oruga-ui/oruga/commit/72f253ccd14b46c699a9452b4c55a6ac877ada8b))
+* **slider:** make `modelValue` conditional typed by prop `range` ([#1018](https://github.com/oruga-ui/oruga/issues/1018)) ([eafc3f3](https://github.com/oruga-ui/oruga/commit/eafc3f3466a690f28b524f2781b8eb92760ffa76))
+* **steps:** add type generics ([#977](https://github.com/oruga-ui/oruga/issues/977)) ([f07a7cc](https://github.com/oruga-ui/oruga/commit/f07a7ccde7f1a3f11a6b7b5292d839dd1cde0050))
+* **switch:** add type generics ([#973](https://github.com/oruga-ui/oruga/issues/973)) ([cb67396](https://github.com/oruga-ui/oruga/commit/cb6739600bd294684955a4b57ea949b2aa84da34))
+* **table:** add `before` and `after` slot | add column `display` prop ([#947](https://github.com/oruga-ui/oruga/issues/947)) ([8f64934](https://github.com/oruga-ui/oruga/commit/8f64934ae0fc61fc437c3568d276fcf52b290662))
+* **table:** enhance loading spinner ([#946](https://github.com/oruga-ui/oruga/issues/946)) ([a1b7d45](https://github.com/oruga-ui/oruga/commit/a1b7d45495c19edc8b5ffa77466be504dd13be32))
+* **table:** add type generics ([#919](https://github.com/oruga-ui/oruga/issues/919)) ([c85bee6](https://github.com/oruga-ui/oruga/commit/c85bee62fcc98d48d7d51e5f2beeecd766d81de4))
+* **table:** expose `sort` function ([#959](https://github.com/oruga-ui/oruga/issues/959)) ([e9030bd](https://github.com/oruga-ui/oruga/commit/e9030bdbec26aeef91a15500959f792d8ab9742f))
+* **table:** update `thAttrs` and `tdAttrs` properties ([#958](https://github.com/oruga-ui/oruga/issues/958)) ([9dced98](https://github.com/oruga-ui/oruga/commit/9dced984f198bc13cb34cc68835b277ec794a7e7))
+* **tabs:** add type generics ([#978](https://github.com/oruga-ui/oruga/issues/978)) ([a9ded34](https://github.com/oruga-ui/oruga/commit/a9ded34592bc337019270b3ec90bddd95a737650))
+* **taginput:** update type generics ([#956](https://github.com/oruga-ui/oruga/issues/956)) ([26de252](https://github.com/oruga-ui/oruga/commit/26de252197e7cae61178c1593c158ff7c8e9ca75))
+* **taginput:** enhance `allowNew` and `allowDuplicates` props ([#1016](https://github.com/oruga-ui/oruga/issues/1016)) ([1eeeb42](https://github.com/oruga-ui/oruga/commit/1eeeb421d7ffefe9743abfcb20f45e5dec17c892))
+* **upload:** add type generics ([#982](https://github.com/oruga-ui/oruga/issues/982)) ([38bc75d](https://github.com/oruga-ui/oruga/commit/38bc75d1702764de36d6fc6b55ce138bffdfe7bb))
+* **upload:** make `modelValue` conditional typed by prop `mulitple` ([#1005](https://github.com/oruga-ui/oruga/issues/1005)) ([a93abfe](https://github.com/oruga-ui/oruga/commit/a93abfe71182689ec37db4c9b5dc67f5bd451a6d))
+* **programmatic:** add programmatic component ([#944](https://github.com/oruga-ui/oruga/issues/944)) ([2840a7e](https://github.com/oruga-ui/oruga/commit/2840a7e9354af31a42419c2e2112be7f7296cdc3))
+* **reactivity:** make components `classes` props reactive ([#960](https://github.com/oruga-ui/oruga/issues/960)) ([c0e429d](https://github.com/oruga-ui/oruga/commit/c0e429dc8db9b4fab5138d25773abb8d355d3996))
+* **themes:** remove theme config function `props` object encapsulation ([#760](https://github.com/oruga-ui/oruga/issues/760)) ([317fafb](https://github.com/oruga-ui/oruga/commit/317fafbcb1f071004733776ad17c2fcbea145350))
+* **examples:** add package `@oruga-ui/examples` ([#1019](https://github.com/oruga-ui/oruga/issues/1019)) ([5d18d26](https://github.com/oruga-ui/oruga/commit/5d18d26b15c5360a0eefcc3a4c98fe36e4efa781))
+
+
+### Reverts
+
+* **defineModel:** reuse `useVModel` composable for generics where the type is `T | T[]` ([#998](https://github.com/oruga-ui/oruga/issues/998)) ([c00abf5](https://github.com/oruga-ui/oruga/commit/c00abf5ad767a2121eb486ca4a7f3cd665089665))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+
 ## [0.8.12](https://github.com/oruga-ui/oruga/compare/v0.8.11...v0.8.12) (2024-06-28)
 
 
