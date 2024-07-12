@@ -6,6 +6,7 @@ import {
     watch,
     onMounted,
     type StyleValue,
+    useAttrs,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -266,6 +267,13 @@ function togglePasswordVisibility(): void {
 
 // --- Computed Component Classes ---
 
+const attrs = useAttrs();
+
+const inputBind = computed(() => ({
+    ...parentField?.value?.inputAria,
+    ...attrs,
+}));
+
 const rootClasses = defineClasses(
     ["rootClass", "o-input__wrapper"],
     [
@@ -337,7 +345,7 @@ defineExpose({ focus: setFocus, value: vmodel });
     <div data-oruga="input" :class="rootClasses">
         <input
             v-if="type !== 'textarea'"
-            v-bind="$attrs"
+            v-bind="inputBind"
             :id="id"
             ref="inputRef"
             v-model="vmodel"
@@ -355,7 +363,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 
         <textarea
             v-else
-            v-bind="$attrs"
+            v-bind="inputBind"
             :id="id"
             ref="textareaRef"
             v-model="vmodel"

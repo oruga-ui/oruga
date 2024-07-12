@@ -22,6 +22,7 @@ import {
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
+import { injectField } from "../field/fieldInjection";
 
 /**
  * This is a internal used component.
@@ -91,6 +92,9 @@ const isMobileNative = computed(
         isTrueish(props.pickerProps.mobileNative) &&
         isMobileAgent.any(),
 );
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
 
 const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
 const inputRef = ref<ComponentInstance<typeof OInput>>();
@@ -259,7 +263,9 @@ function onNativeChange(event: Event): void {
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
+
 const inputBind = computed(() => ({
+    ...parentField?.value?.inputAria,
     ...attrs,
     ...props.pickerProps.inputClasses,
 }));

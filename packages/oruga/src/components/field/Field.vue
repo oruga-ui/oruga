@@ -9,7 +9,7 @@ import {
 } from "vue";
 
 import { getOption } from "@/utils/config";
-import { isVNodeEmpty } from "@/utils/helpers";
+import { isVNodeEmpty, uuid } from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import { injectField, provideField } from "./fieldInjection";
@@ -180,13 +180,15 @@ watch(
     () => fieldMessage.value,
     (value) => {
         if (parentField?.value?.hasInnerField) {
-            if (!parentField.value.fieldVariant)
+            if (!parentField.value.variant)
                 parentField.value.setVariant(fieldVariant.value);
-            if (!parentField.value.fieldMessage)
-                parentField.value.setMessage(value);
+            if (!parentField.value.message) parentField.value.setMessage(value);
         }
     },
 );
+
+/** a uniqe id for the message slot to associate an input to the field message */
+const messageId = uuid();
 
 /** this can be set from outside to update the focus state */
 const isFocused = ref(false);
@@ -248,14 +250,21 @@ function setInputId(value: string): void {
     inputId.value = value;
 }
 
+const inputAria = computed(() =>
+    fieldVariant.value === "error"
+        ? { "aria-errormessage": messageId }
+        : { "aria-describedby": messageId },
+);
+
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed(() => ({
     $el: rootRef.value,
     props,
     hasInnerField: hasInnerField.value,
     hasMessage: hasMessage.value,
-    fieldVariant: fieldVariant.value,
-    fieldMessage: fieldMessage.value,
+    variant: fieldVariant.value,
+    message: fieldMessage.value,
+    inputAria: inputAria.value,
     addInnerField,
     setInputId,
     setFocus,
@@ -403,6 +412,7 @@ const innerFieldClasses = defineClasses(
         <component
             :is="messageTag"
             v-if="hasMessage && !horizontal"
+            :id="messageId"
             :class="messageClasses">
             <!--
                 @slot Override the message
