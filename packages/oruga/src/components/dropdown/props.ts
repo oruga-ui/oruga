@@ -114,4 +114,8 @@ type DropdownClasses = Partial<{
     activeClass: ComponentClass;
     /** Class for the root element when the dropdown is hoverable */
     hoverableClass: ComponentClass;
+    /** Class of the body when dropdown is open and scroll is clip */
+    scrollClipClass: ComponentClass;
+    /** Class of the body when dropdown is open and scroll is not clip */
+    noScrollClass: ComponentClass;
 }>;

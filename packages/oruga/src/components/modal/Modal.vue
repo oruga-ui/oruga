@@ -4,7 +4,6 @@ import {
     computed,
     watch,
     nextTick,
-    onBeforeUnmount,
     onMounted,
     type Component,
     type PropType,
@@ -18,10 +17,10 @@ import { removeElement, toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    getActiveClasses,
     useClickOutside,
     useEventListener,
     useMatchMedia,
+    usePreventScrolling,
     useProgrammaticComponent,
 } from "@/composables";
 
@@ -80,7 +79,7 @@ const props = defineProps({
      * @values keep, clip
      */
     scroll: {
-        type: String,
+        type: String as PropType<"keep" | "clip">,
         default: () => getOption("modal.scroll", "keep"),
         validator: (value: string) => ["keep", "clip"].indexOf(value) >= 0,
     },
@@ -207,12 +206,12 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the modal when scroll is clip */
+    /** Class of the body when modal is open and scroll is clip */
     scrollClipClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the modal when scroll is not clip */
+    /** Class of the body when modal is open and scroll is not clip */
     noScrollClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -271,10 +270,10 @@ const customStyle = computed(() =>
     !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
 );
 
-const savedScrollTop = ref(null);
+const toggleScroll = usePreventScrolling(props.scroll === "keep");
 
 watch(isActive, (value) => {
-    if (props.overlay) handleScroll();
+    if (props.overlay) toggleScroll(isActive.value);
     // if autoFocus focus the element
     if (value && rootRef.value && props.autoFocus)
         nextTick(() => rootRef.value.focus());
@@ -285,22 +284,7 @@ watch(isActive, (value) => {
 });
 
 onMounted(() => {
-    if (isActive.value && props.overlay) handleScroll();
-});
-
-onBeforeUnmount(() => {
-    if (isClient && props.overlay) {
-        // reset scroll
-        const scrollto = savedScrollTop.value
-            ? savedScrollTop.value
-            : document.documentElement.scrollTop;
-        if (scrollClass.value) {
-            document.body.classList.remove(...scrollClass.value);
-            document.documentElement.classList.remove(...scrollClass.value);
-        }
-        document.documentElement.scrollTop = scrollto;
-        document.body.style.top = null;
-    }
+    if (isActive.value && props.overlay) toggleScroll(isActive.value);
 });
 
 // --- Events Feature ---
@@ -328,38 +312,6 @@ function clickedOutside(event: Event): void {
     if (props.overlay || !event.composedPath().includes(contentRef.value))
         event.preventDefault();
     cancel("outside");
-}
-
-function handleScroll(): void {
-    if (!isClient) return;
-
-    if (props.scroll === "clip") {
-        if (scrollClass.value) {
-            if (isActive.value)
-                document.documentElement.classList.add(...scrollClass.value);
-            else
-                document.documentElement.classList.remove(...scrollClass.value);
-        }
-        return;
-    }
-
-    savedScrollTop.value = savedScrollTop.value
-        ? savedScrollTop.value
-        : document.documentElement.scrollTop;
-
-    if (scrollClass.value) {
-        if (isActive.value) document.body.classList.add(...scrollClass.value);
-        else document.body.classList.remove(...scrollClass.value);
-    }
-
-    if (isActive.value) {
-        document.body.style.top = `-${savedScrollTop.value}px`;
-        return;
-    }
-
-    document.documentElement.scrollTop = savedScrollTop.value;
-    document.body.style.top = null;
-    savedScrollTop.value = null;
 }
 
 // --- Animation Feature ---
@@ -397,15 +349,6 @@ const contentClasses = defineClasses(
 );
 
 const closeClasses = defineClasses(["closeClass", "o-modal__close"]);
-
-const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
-const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
-
-const scrollClass = computed(() =>
-    getActiveClasses(
-        props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
-    ),
-);
 
 // --- Expose Public Functionalities ---
 
