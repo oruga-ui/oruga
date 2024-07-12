@@ -27,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/oruga-ui/oruga"
+    "url": "git+https://github.com/oruga-ui/oruga.git"
   },
   "bugs": {
     "url": "https://github.com/oruga-ui/oruga/issues"
@@ -46,6 +46,7 @@
   "scripts": {
     "build": "rimraf dist && vite build",
     "publish": "cp ../../README.md . && npm run build && npm publish",
+    "publish:pre": "cp ../../README.md . && npm run build && npm publish --tag pre",
     "update": "ncu -u"
   },
   "peerDependencies": {
