@@ -27,8 +27,9 @@ import {
     useEventListener,
 } from "@/composables";
 
-import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
 import { injectField } from "../field/fieldInjection";
+
+import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
 
 enum SpecialOption {
     Header,

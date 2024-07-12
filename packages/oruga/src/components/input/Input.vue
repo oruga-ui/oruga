@@ -5,8 +5,8 @@ import {
     nextTick,
     watch,
     onMounted,
-    type StyleValue,
     useAttrs,
+    type StyleValue,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";

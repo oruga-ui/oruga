@@ -4,8 +4,9 @@ import { computed, ref, useAttrs, type PropType } from "vue";
 import { getOption } from "@/utils/config";
 import { defineClasses, useInputHandler, useVModel } from "@/composables";
 
-import type { ComponentClass } from "@/types";
 import { injectField } from "../field/fieldInjection";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Switch between two opposing states
