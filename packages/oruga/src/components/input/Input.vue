@@ -270,7 +270,7 @@ function togglePasswordVisibility(): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAria,
+    ...parentField?.value?.inputAttrs,
     ...attrs,
 }));
 

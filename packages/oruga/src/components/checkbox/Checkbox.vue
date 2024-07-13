@@ -207,7 +207,7 @@ function onInput(event: Event): void {
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAria,
+    ...parentField?.value?.inputAttrs,
     ...attrs,
 }));
 

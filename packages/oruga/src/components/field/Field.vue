@@ -250,7 +250,7 @@ function setInputId(value: string): void {
     inputId.value = value;
 }
 
-const inputAria = computed(() =>
+const inputAttrs = computed(() =>
     fieldVariant.value === "error"
         ? { "aria-errormessage": messageId }
         : { "aria-describedby": messageId },
@@ -264,7 +264,7 @@ const provideData = computed(() => ({
     hasMessage: hasMessage.value,
     variant: fieldVariant.value,
     message: fieldMessage.value,
-    inputAria: inputAria.value,
+    inputAttrs: inputAttrs.value,
     addInnerField,
     setInputId,
     setFocus,

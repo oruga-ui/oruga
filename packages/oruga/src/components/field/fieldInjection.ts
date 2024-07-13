@@ -18,7 +18,7 @@ type FieldData = {
     variant: string;
     hasMessage: boolean;
     message: string;
-    inputAria: object;
+    inputAttrs: object;
     addInnerField: () => void;
     setInputId: (value: string) => void;
     setFocus: (value: boolean) => void;
