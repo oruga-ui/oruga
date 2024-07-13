@@ -30,20 +30,8 @@ export function usePreventScrolling(
 
     const savedScrollTop = ref(null);
 
-    onBeforeUnmount(() => {
-        if (!isClient) return;
-
-        // reset scroll
-        const scrollto = savedScrollTop.value
-            ? savedScrollTop.value
-            : document.body.scrollTop;
-        if (scrollClass.value) {
-            document.body.classList.remove(...scrollClass.value);
-            document.body.classList.remove(...scrollClass.value);
-        }
-        document.body.scrollTop = scrollto;
-        document.body.style.top = null;
-    });
+    // reset scroll
+    onBeforeUnmount(() => toggleScroll(false));
 
     function toggleScroll(active: boolean): void {
         if (!isClient) return;
