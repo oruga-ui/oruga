@@ -23,7 +23,7 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Install dependencies 📦
         run: npm install
-      - name: Build lib
+      - name: Publish release
         run: npm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
