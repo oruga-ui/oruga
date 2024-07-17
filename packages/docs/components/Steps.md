@@ -1,7 +1,3 @@
----
-sidebarDepth: 2
----
-
 # Steps
 
 <div class="vp-doc">
@@ -125,25 +121,25 @@ sidebarDepth: 2
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                       | Default                                      |
-| ----------------------------------- | -------------------------------------------- |
-| $steps-details-background-color     | hsl(0, 0%, 100%)                             |
-| $steps-details-padding              | 0.2em                                        |
-| $steps-marker-background            | var(--#{$prefix}grey-light)                  |
-| $steps-marker-color                 | var(--#{$prefix}primary-invert)              |
-| $steps-marker-border                | 0.2em solid #fff                             |
-| $steps-marker-font-weight           | 700                                          |
-| $steps-marker-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded) |
-| $steps-color                        | var(--#{$prefix}grey-lighter)                |
-| $steps-previous-color               | var(--#{$prefix}primary)                     |
-| $steps-active-color                 | var(--#{$prefix}primary)                     |
-| $steps-divider-height               | 0.2em                                        |
-| $steps-vertical-padding             | 1em 0                                        |
-| $steps-item-line-height             | var(--#{$prefix}base-line-height)            |
-| $steps-link-color                   | hsl(0, 0%, 29%)                              |
-| $steps-content-padding              | 1rem                                         |
-| $steps-font-size                    | var(--#{$prefix}base-font-size)              |
-| $steps-details-title-font-weight    | 600                                          |
+| SASS Variable                       | Default                     |
+| ----------------------------------- | --------------------------- |
+| $steps-details-background-color     | hsl(0, 0%, 100%)            |
+| $steps-details-padding              | 0.2em                       |
+| $steps-marker-background            | $grey-light                 |
+| $steps-marker-color                 | $primary-invert             |
+| $steps-marker-border                | 0.2em solid #fff            |
+| $steps-marker-font-weight           | 700                         |
+| $steps-marker-rounded-border-radius | $base-rounded-border-radius |
+| $steps-color                        | $grey-lighter               |
+| $steps-previous-color               | $primary                    |
+| $steps-active-color                 | $primary                    |
+| $steps-divider-height               | 0.2em                       |
+| $steps-vertical-padding             | 1em 0                       |
+| $steps-item-line-height             | $base-line-height           |
+| $steps-link-color                   | hsl(0, 0%, 29%)             |
+| $steps-content-padding              | 1rem                        |
+| $steps-font-size                    | $base-font-size             |
+| $steps-details-title-font-weight    | 600                         |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_steps.scss)
 

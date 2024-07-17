@@ -73,17 +73,16 @@
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                     | Default                                |
-| --------------------------------- | -------------------------------------- |
-| $radio-active-background-color    | $primary                               |
-| $radio-checked-box-shadow-length  | 0 0 0.5em                              |
-| $radio-checked-box-shadow-opacity | 0.8                                    |
-| $radio-box-shadow                 | $control-box-shadow                    |
-| $radio-disabled-opacity           | var(--#{$prefix}base-disabled-opacity) |
-| $radio-label-padding              | 0 0 0 0.5em                            |
-| $radio-margin-sibiling            | 0.5em                                  |
-| $radio-size                       | 1rem                                   |
-| $radio-line-height                | 1.25                                   |
+| SASS Variable                     | Default                |
+| --------------------------------- | ---------------------- |
+| $radio-active-background-color    | $primary               |
+| $radio-checked-box-shadow-length  | 0 0 0.5em              |
+| $radio-checked-box-shadow-opacity | 0.8                    |
+| $radio-disabled-opacity           | $base-disabled-opacity |
+| $radio-label-padding              | 0 0 0 0.5em            |
+| $radio-margin-sibiling            | 0.5em                  |
+| $radio-size                       | 1rem                   |
+| $radio-line-height                | 1.25                   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_radio.scss)
 

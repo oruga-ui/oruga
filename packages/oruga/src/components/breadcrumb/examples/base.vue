@@ -1,0 +1,67 @@
+<script setup>
+// import { reactive } from "vue";
+// import { useRoute,useRouter } from 'vitepress';
+
+// const clickMe = () => {
+//     alert("Clicked!");
+// };
+
+// const settings = reactive({
+//     rounded: false,
+//     tooltip: true,
+//     variant: "warning",
+//     size: "medium",
+// });
+</script>
+
+<template>
+    <section>
+        <!--  align="center" -->
+        <o-breadcrumb
+            separator="has-arrow-separator"
+            size="medium"
+            align="center">
+            <o-breadcrumb-item
+                tag="a"
+                href="/"
+                active="true"
+                active-variant="primary"
+                >Homee
+            </o-breadcrumb-item>
+            <o-breadcrumb-item tag="a" href="/documentation/" disabled="true"
+                >Docs
+            </o-breadcrumb-item>
+            <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html"
+                >Breadcrumb
+            </o-breadcrumb-item>
+        </o-breadcrumb>
+        <o-breadcrumb
+            tag="div"
+            separator="has-arrow-separator"
+            size="medium"
+            align="center">
+            <o-breadcrumb-item 
+                tag="router-link"  
+                to="/" 
+                active-variant="primary"
+                >Home
+            </o-breadcrumb-item>
+            <o-breadcrumb-item
+                tag="router-link"
+                to="/documentation/"
+                disabled="true"
+                active-variant="primary"
+                >Docs
+            </o-breadcrumb-item>
+            <o-breadcrumb-item
+                tag="router-link"
+                to="/components/Breadcrumb.html"
+                active-variant="primary"
+                >Breadcrumb
+            </o-breadcrumb-item>
+        </o-breadcrumb>
+        <!-- <o-breadcrumb>
+            <h1>Hello World</h1>
+        </o-breadcrumb> -->
+    </section>
+</template>

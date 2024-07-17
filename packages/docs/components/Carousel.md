@@ -1,7 +1,3 @@
----
-sidebarDepth: 2
----
-
 # Carousel
 
 <div class="vp-doc">
@@ -56,7 +52,7 @@ sidebarDepth: 2
 | interval          | Timer interval for `autoplay`                     | number                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;interval: 3500<br>}</code>              |
 | itemsToList       | Number of items to switch at once                 | number                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;itemsToList: 1<br>}</code>              |
 | itemsToShow       | Number of items to show at once                   | number                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;itemsToShow: 1<br>}</code>              |
-| v-model           | The index of the current active element           | number                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                        |
+| v-model           |                                                   | number                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                        |
 | overlay           | Show an overlay                                   | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
 | override          | Override existing theme classes completely        | boolean                   | -                                                 |                                                                                                                                                                |
 | pauseHover        | Pause autoplay on hover                           | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
@@ -119,33 +115,33 @@ sidebarDepth: 2
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                          | Default                                                                         |
-| -------------------------------------- | ------------------------------------------------------------------------------- |
-| $carousel-arrow-background             | var(--#{$prefix}white)                                                          |
-| $carousel-arrow-color                  | var(--#{$prefix}primary)                                                        |
-| $carousel-arrow-icon-spaced            | 1.5rem                                                                          |
-| $carousel-arrow-top                    | 50%                                                                             |
-| $carousel-arrow-size                   | 1.5rem                                                                          |
-| $carousel-arrow-border-radius          | var( --#{$prefix}base-border-radius-rounded)                                    |
-| $carousel-arrow-border                 | 1px solid $carousel-arrow-background                                            |
-| $carousel-arrow-transition             | var(--#{$prefix}transition-duration)  var(--#{$prefix}transition-timing)        |
-| $carousel-indicators-background        | rgba(var(--#{$prefix}white), 0.5)                                               |
-| $carousel-indicators-padding           | 0.5rem                                                                          |
-| $carousel-indicator-margin             | 0 0.5rem 0 0                                                                    |
-| $carousel-indicator-color              | var(--#{$prefix}primary)                                                        |
-| $carousel-indicator-background         | var(--#{$prefix}white)                                                          |
-| $carousel-indicator-border             | 1px solid $carousel-indicator-color                                             |
-| $carousel-indicator-active-background  | $carousel-indicator-color                                                       |
-| $carousel-indicator-active-border      | 1px solid $carousel-indicator-color                                             |
-| $carousel-indicator-transition         | var(--#{$prefix}transition-duration)  var(--#{$prefix}transition-timing)        |
-| $carousel-indicator-size               | 10px                                                                            |
-| $carousel-indicator-dots-border-radius | var( --#{$prefix}base-border-radius)                                            |
-| $carousel-indicator-lines-height       | 5px                                                                             |
-| $carousel-indicator-lines-width        | 25px                                                                            |
-| $carousel-items-transition             | all var(--#{$prefix}transition-duration)  var(--#{$prefix}transition-timing) 0s |
-| $carousel-item-border                  | 2px solid transparent                                                           |
-| $carousel-overlay-background           | hsla(0, 0%, 4%, 0.86)                                                           |
-| $carousel-overlay-zindex               | 40                                                                              |
+| SASS Variable                          | Default                              |
+| -------------------------------------- | ------------------------------------ |
+| $carousel-arrow-background             | $white                               |
+| $carousel-arrow-color                  | $primary                             |
+| $carousel-arrow-icon-spaced            | 1.5rem                               |
+| $carousel-arrow-top                    | 50%                                  |
+| $carousel-arrow-size                   | 1.5rem                               |
+| $carousel-arrow-border-radius          | $base-rounded-border-radius          |
+| $carousel-arrow-border                 | 1px solid $carousel-arrow-background |
+| $carousel-arrow-transition             | $speed-slow $easing                  |
+| $carousel-indicators-background        | rgba($white, 0.5)                    |
+| $carousel-indicators-padding           | 0.5rem                               |
+| $carousel-indicator-margin             | 0 0.5rem 0 0                         |
+| $carousel-indicator-color              | $primary                             |
+| $carousel-indicator-background         | $white                               |
+| $carousel-indicator-border             | 1px solid $carousel-indicator-color  |
+| $carousel-indicator-active-background  | $carousel-indicator-color            |
+| $carousel-indicator-active-border      | 1px solid $carousel-indicator-color  |
+| $carousel-indicator-transition         | $speed-slow $easing                  |
+| $carousel-indicator-size               | 10px                                 |
+| $carousel-indicator-dots-border-radius | $base-border-radius                  |
+| $carousel-indicator-lines-height       | 5px                                  |
+| $carousel-indicator-lines-width        | 25px                                 |
+| $carousel-items-transition             | all $speed-slower ease-out 0s        |
+| $carousel-item-border                  | 2px solid transparent                |
+| $carousel-overlay-background           | hsla(0, 0%, 4%, 0.86)                |
+| $carousel-overlay-zindex               | 40                                   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)
 

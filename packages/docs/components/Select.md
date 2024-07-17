@@ -90,21 +90,22 @@
 | SASS Variable                 | Default                                               |
 | ----------------------------- | ----------------------------------------------------- |
 | $select-background-color      | #fff                                                  |
-| $select-border-color          | var(--#{$prefix}grey-lighter)                         |
-| $select-border-style          | solid                                                 |
+| $select-border-color          | $grey-lighter                                         |
 | $select-border-width          | 1px                                                   |
-| $select-border-radius         | var(--#{$prefix}base-border-radius)                   |
-| $select-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
-| $select-box-shadow            | $control-box-shadow                                   |
+| $select-border-style          | solid                                                 |
+| $select-border-radius         | $base-border-radius                                   |
+| $select-rounded-border-radius | $base-rounded-border-radius                           |
+| $select-box-shadow            | none                                                  |
 | $select-color                 | #363636                                               |
 | $select-icon-zindex           | 4                                                     |
 | $select-height                | $control-height                                       |
-| $select-line-height           | var(--#{$prefix}base-line-height)                     |
-| $select-margin                | 0                                                     |
-| $select-padding               | $control-padding-vertical $control-padding-horizontal |
-| $select-arrow-color           | $select-color                                         |
 | $select-arrow-size            | 1rem                                                  |
-| $select-placeholder-opacity   | var(--#{$prefix}base-disabled-opacity)                |
+| $select-line-height           | $base-line-height                                     |
+| $select-margin                | 0                                                     |
+| $select-max-width             | 100%                                                  |
+| $select-width                 | 100%                                                  |
+| $select-placeholder-opacity   | $base-disabled-opacity                                |
+| $select-padding               | $control-padding-vertical $control-padding-horizontal |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
 

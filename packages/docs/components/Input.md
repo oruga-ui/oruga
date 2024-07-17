@@ -89,20 +89,20 @@
 | SASS Variable                | Default                                               |
 | ---------------------------- | ----------------------------------------------------- |
 | $input-background-color      | #ffffff                                               |
-| $input-border-color          | var(--#{$prefix}grey-lighter)                         |
+| $input-border-color          | $grey-lighter                                         |
 | $input-border-style          | solid                                                 |
 | $input-border-width          | 1px                                                   |
-| $input-border-radius         | var(--#{$prefix}base-border-radius)                   |
-| $input-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
-| $input-box-shadow            | $control-box-shadow                                   |
+| $input-border-radius         | $base-border-radius                                   |
+| $input-rounded-border-radius | $base-rounded-border-radius                           |
+| $input-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1)                  |
 | $input-color                 | #363636                                               |
 | $input-icon-zindex           | 4                                                     |
-| $input-height                | $control-height                                       |
-| $input-line-height           | var(--#{$prefix}base-line-height)                     |
-| $input-margin                | 0                                                     |
-| $input-padding               | $control-padding-vertical $control-padding-horizontal |
 | $input-counter-font-size     | 0.75rem                                               |
 | $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
+| $input-height                | $control-height                                       |
+| $input-line-height           | $base-line-height                                     |
+| $input-margin                | 0                                                     |
+| $input-padding               | $control-padding-vertical $control-padding-horizontal |
 | $input-textarea-max-height   | 600px                                                 |
 | $input-textarea-min-height   | 120px                                                 |
 | $input-textarea-padding      | 0.625em                                               |
