@@ -52,10 +52,10 @@ export type SelectProps<
     iconRightVariant?: string;
     /** Same as native id. Also set the `for` label for o-field wrapper. */
     id?: string;
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
-    /** The message which is shown when a validation error occurs */
-    validationMessage?: string;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?: string;
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete?: string;
     /** Show status icon using field and variant prop */

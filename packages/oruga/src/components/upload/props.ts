@@ -28,10 +28,10 @@ export type UploadProps<
     expanded?: boolean;
     /** Replace last chosen files every time (like native file input element) */
     native?: boolean;
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
-    /** The message which is shown when a validation error occurs */
-    validationMessage?: string;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?: string;
 } & UploadClasses;
 
 // class props (will not be displayed in the docs)

@@ -104,7 +104,7 @@ const props = withDefaults(
         mobileBreakpoint: () => getOption("datepicker.mobileBreakpoint"),
         teleport: () => getOption("datepicker.teleport", false),
         useHtml5Validation: () => getOption("useHtml5Validation", true),
-        validationMessage: undefined,
+        customValidity: "",
         ariaNextLabel: () => getOption("datepicker.ariaNextLabel", "Next Page"),
         ariaPreviousLabel: () =>
             getOption("datepicker.ariaNextLabel", "Previous Page"),

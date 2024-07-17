@@ -156,13 +156,13 @@ const props = defineProps({
         type: [Boolean, String, Object],
         default: () => getOption("timepicker.teleport", false),
     },
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation: {
         type: Boolean,
         default: () => getOption("useHtml5Validation", true),
     },
-    /** The message which is shown when a validation error occurs */
-    validationMessage: { type: String, default: undefined },
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity: { type: String, default: "" },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {
