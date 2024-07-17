@@ -67,7 +67,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
     props: Readonly<
         ExtractPropTypes<{
             useHtml5Validation?: boolean;
-            validationMessage?: string;
+            customValidity?: string;
         }>
     >,
 ) {
@@ -176,8 +176,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
 
     function setInvalid(): void {
         const variant = "danger";
-        const message =
-            props.validationMessage || element.value.validationMessage;
+        const message = element.value.validationMessage;
         setFieldValidity(variant, message);
     }
 
@@ -225,6 +224,33 @@ export function useInputHandler<T extends ValidatableFormElement>(
     }
 
     if (!isSSR) {
+        watch(
+            [
+                maybeElement,
+                (): string => props.customValidity ?? "",
+                (): boolean => props.useHtml5Validation ?? true,
+            ],
+            (newItems, oldItems) => {
+                const newElement = newItems[0];
+                const newMessage = newItems[1];
+                const newUseValidation = newItems[2];
+                const oldElement = oldItems[0];
+                const oldUseValidation = oldItems[2];
+                if (newElement !== oldElement) {
+                    // Since we're no longer managing the element, we might
+                    // as well clean up any custom validity we set up.
+                    oldElement?.setCustomValidity("");
+                    if (newUseValidation) {
+                        newElement?.setCustomValidity(newMessage);
+                    }
+                } else if (oldUseValidation && !newUseValidation) {
+                    newElement?.setCustomValidity("");
+                } else if (newUseValidation) {
+                    newElement?.setCustomValidity(newMessage);
+                }
+            },
+        );
+
         // Respond to attribute changes that might clear constraint validation errors.
         // For instance, removing the `required` attribute on an empty field means that it's no
         // longer invalid, so we might as well clear the validation message.

@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     expanded: false,
     native: true,
     useHtml5Validation: () => getOption("useHtml5Validation", true),
-    validationMessage: undefined,
+    customValidity: "",
 });
 
 type ModelValue = typeof props.modelValue;
