@@ -28,6 +28,7 @@ import {
     useEventListener,
     useClickOutside,
     useVModel,
+    usePreventScrolling,
 } from "@/composables";
 
 import type { DynamicComponent } from "@/types";
@@ -137,6 +138,8 @@ const menuStyle = computed(() => ({
 
 const hoverable = computed(() => props.triggers.indexOf("hover") >= 0);
 
+const toggleScroll = usePreventScrolling();
+
 // --- Event Handler ---
 
 const contentRef = ref<HTMLElement | Component>();
@@ -182,6 +185,7 @@ watch(
             eventCleanups.forEach((fn) => fn());
             eventCleanups.length = 0;
         }
+        if (isMobile.value) toggleScroll(value);
     },
     { immediate: true, flush: "post" },
 );

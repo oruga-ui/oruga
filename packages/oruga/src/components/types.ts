@@ -432,6 +432,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 expandedClass: ClassDefinition;
                 /** Class of dropdown when on mobile */
                 mobileClass: ClassDefinition;
+                /** Class of the body when dropdown is open and scroll is clip */
+                scrollClipClass: ClassDefinition;
+                /** Class of the body when dropdown is open and scroll is not clip */
+                noScrollClass: ClassDefinition;
                 /** Class of the dropdown item */
                 itemClass: ClassDefinition;
                 /** Class of the dropdown item when active */
@@ -665,6 +669,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 activeClass: ClassDefinition;
                 /** Class of modal component when on mobile */
                 mobileClass: ClassDefinition;
+                /** Class of the body when modal is open and scroll is clip */
+                scrollClipClass: ClassDefinition;
+                /** Class of the body when modal is open and scroll is not clip */
+                noScrollClass: ClassDefinition;
                 /** Class of the close button */
                 closeClass: ClassDefinition;
                 /** Class of the modal content */
@@ -673,10 +681,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 overlayClass: ClassDefinition;
                 /** Class of the modal when fullscreen */
                 fullScreenClass: ClassDefinition;
-                /** Class of the modal when scroll is clip */
-                scrollClipClass: ClassDefinition;
-                /** Class of the modal when scroll is not clip */
-                noScrollClass: ClassDefinition;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Close icon name */
@@ -701,7 +705,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 trapFocus: boolean;
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
-                scroll: string;
+                scroll: "keep" | "clip";
                 /** Width of the Modal */
                 width: string | number;
             }>;
@@ -1012,7 +1016,7 @@ but will set body to position fixed, might break some layouts. */
                 /** Color of the tooltip */
                 tooltipVariant: string;
                 /** Define v-model format */
-                format: string;
+                format: "raw" | "percent";
                 /** Rounded thumb */
                 rounded: boolean;
                 /** Show tooltip when thumb is being dragged */
