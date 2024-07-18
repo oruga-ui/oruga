@@ -50,10 +50,13 @@ export function injectField(): {
 } {
     const parentField = inject($FieldKey, undefined);
 
-    /**
-     * Get the type prop from parent if it's a Field.
-     */
-    const statusVariant = computed<string>(() => {
+    /** Get the message prop from parent if it's a Field. */
+    const statusMessage = computed<string>(() =>
+        parentField.value?.hasMessage ? parentField.value.message : "",
+    );
+
+    /** Get the type prop from parent if it's a Field. */
+    const statusVariant = computed<string | undefined>(() => {
         if (!parentField?.value?.variant) return undefined;
         if (typeof parentField.value.variant === "string")
             return parentField.value.variant;
@@ -64,11 +67,6 @@ export function injectField(): {
         }
         return undefined;
     });
-
-    /** Get the message prop from parent if it's a Field. */
-    const statusMessage = computed<string>(() =>
-        parentField.value?.hasMessage ? parentField.value.message : "",
-    );
 
     /** Icon name based on the variant. */
     const statusVariantIcon = computed<string>(() => {
