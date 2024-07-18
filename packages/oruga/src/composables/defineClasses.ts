@@ -35,7 +35,9 @@ type ComputedClass = readonly [
 export const getActiveClasses = (classes: ClassBind[]): string[] => {
     if (!classes) return [];
     return classes.flatMap((bind) =>
-        Object.keys(bind).filter((key) => key && bind[key]),
+        Object.keys(bind)
+            .filter((key) => key && bind[key])
+            .flatMap((v) => v.split(" ")),
     );
 };
 
