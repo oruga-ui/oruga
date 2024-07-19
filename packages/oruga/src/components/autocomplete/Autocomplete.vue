@@ -27,6 +27,8 @@ import {
     useEventListener,
 } from "@/composables";
 
+import { injectField } from "../field/fieldInjection";
+
 import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
 
 enum SpecialOption {
@@ -367,6 +369,9 @@ function setItemRef(
 // use form input functionalities
 const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
     useInputHandler(inputRef, emits, props);
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
 
 const isActive = ref(false);
 
@@ -747,7 +752,9 @@ function checkDropdownScroll(): void {
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
+
 const inputBind = computed(() => ({
+    ...parentField?.value?.inputAttrs,
     ...attrs,
     ...props.inputClasses,
 }));

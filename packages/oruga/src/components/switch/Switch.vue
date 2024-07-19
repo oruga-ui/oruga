@@ -1,8 +1,10 @@
 <script setup lang="ts" generic="T extends string | number | boolean | object">
-import { computed, ref, type PropType } from "vue";
+import { computed, ref, useAttrs, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, useInputHandler, useVModel } from "@/composables";
+
+import { injectField } from "../field/fieldInjection";
 
 import type { ComponentClass } from "@/types";
 
@@ -204,6 +206,8 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     emits,
     props,
 );
+// inject parent field component if used inside one
+const { parentField } = injectField();
 
 // const vmodel = defineModel<T>({ default: undefined });
 const vmodel = useVModel<T>();
@@ -220,6 +224,13 @@ function onInput(event: Event): void {
 }
 
 // --- Computed Component Classes ---
+
+const attrs = useAttrs();
+
+const inputBind = computed(() => ({
+    ...parentField?.value?.inputAttrs,
+    ...attrs,
+}));
 
 const rootClasses = defineClasses(
     ["rootClass", "o-switch"],
@@ -289,7 +300,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         @click="setFocus"
         @keydown.prevent.enter="setFocus">
         <input
-            v-bind="$attrs"
+            v-bind="inputBind"
             ref="inputRef"
             v-model="vmodel"
             type="checkbox"

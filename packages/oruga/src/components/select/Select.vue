@@ -5,7 +5,7 @@
         T extends string | number | object,
         IsMultiple extends boolean = false
     ">
-import { computed, watch, onMounted, ref, nextTick } from "vue";
+import { computed, watch, onMounted, ref, nextTick, useAttrs } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -174,6 +174,13 @@ function rightIconClick(event: Event): void {
 
 // --- Computed Component Classes ---
 
+const attrs = useAttrs();
+
+const inputBind = computed(() => ({
+    ...parentField?.value?.inputAttrs,
+    ...attrs,
+}));
+
 const rootClasses = defineClasses(
     ["rootClass", "o-ctrl-sel"],
     [
@@ -260,7 +267,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             @click="leftIconClick($event)" />
 
         <select
-            v-bind="$attrs"
+            v-bind="inputBind"
             :id="id"
             ref="selectRef"
             v-model="vmodel"

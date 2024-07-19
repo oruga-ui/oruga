@@ -15,9 +15,10 @@ type FieldData = {
     $el: Element;
     props: FieldProps;
     hasInnerField: boolean;
+    variant: string;
     hasMessage: boolean;
-    fieldVariant: string;
-    fieldMessage: string;
+    message: string;
+    inputAttrs: object;
     addInnerField: () => void;
     setInputId: (value: string) => void;
     setFocus: (value: boolean) => void;
@@ -41,28 +42,31 @@ export function provideField(data: ProvidedField): void {
 }
 
 /** Inject parent field component if used inside one. **/
-export function injectField() {
+export function injectField(): {
+    parentField?: ComputedRef<FieldData> | undefined;
+    statusVariant: ComputedRef<string>;
+    statusVariantIcon: ComputedRef<string>;
+    statusMessage: ComputedRef<string>;
+} {
     const parentField = inject($FieldKey, undefined);
 
-    /**
-     * Get the type prop from parent if it's a Field.
-     */
-    const statusVariant = computed(() => {
-        if (!parentField?.value?.fieldVariant) return undefined;
-        if (typeof parentField.value.fieldVariant === "string")
-            return parentField.value.fieldVariant;
-        if (Array.isArray(parentField.value.fieldVariant)) {
-            for (const key in parentField.value.fieldVariant as any) {
-                if (parentField.value.fieldVariant[key]) return key;
+    /** Get the message prop from parent if it's a Field. */
+    const statusMessage = computed<string>(() =>
+        parentField.value?.hasMessage ? parentField.value.message : "",
+    );
+
+    /** Get the type prop from parent if it's a Field. */
+    const statusVariant = computed<string | undefined>(() => {
+        if (!parentField?.value?.variant) return undefined;
+        if (typeof parentField.value.variant === "string")
+            return parentField.value.variant;
+        if (Array.isArray(parentField.value.variant)) {
+            for (const key in parentField.value.variant as any) {
+                if (parentField.value.variant[key]) return key;
             }
         }
         return undefined;
     });
-
-    /** Get the message prop from parent if it's a Field. */
-    const statusMessage = computed(() =>
-        parentField.value?.hasMessage ? parentField.value.fieldMessage : "",
-    );
 
     /** Icon name based on the variant. */
     const statusVariantIcon = computed<string>(() => {

@@ -5,12 +5,14 @@
         T extends object | typeof File,
         IsMultiple extends boolean = false
     ">
-import { computed, ref, watch } from "vue";
+import { computed, ref, useAttrs, watch } from "vue";
 
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useInputHandler, useVModel } from "@/composables";
+
+import { injectField } from "../field/fieldInjection";
 
 import type { UploadProps } from "./props";
 
@@ -67,12 +69,15 @@ const emits = defineEmits<{
 
 const inputRef = ref<HTMLInputElement>();
 
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
-
 // use form input functionality
 const { checkHtml5Validity, onFocus, onBlur, isValid, setFocus } =
     useInputHandler(inputRef, emits, props);
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
+
+// const vmodel = defineModel<ModelValue>({ default: undefined });
+const vmodel = useVModel<ModelValue>();
 
 const dragDropFocus = ref(false);
 
@@ -184,6 +189,13 @@ function onClick(event: Event): void {
 
 // --- Computed Component Classes ---
 
+const attrs = useAttrs();
+
+const inputBind = computed(() => ({
+    ...parentField?.value?.inputAttrs,
+    ...attrs,
+}));
+
 const rootClasses = defineClasses(
     ["rootClass", "o-upl"],
     ["expandedClass", "o-upl--expanded", null, computed(() => props.expanded)],
@@ -241,7 +253,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         </div>
 
         <input
-            v-bind="$attrs"
+            v-bind="inputBind"
             ref="inputRef"
             type="file"
             data-oruga-input="file"
