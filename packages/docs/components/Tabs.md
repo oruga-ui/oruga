@@ -145,7 +145,6 @@ sidebarDepth: 2
 | $tabs-toggle-link-border-width              | 1px                                    |
 | $tabs-toggle-link-hover-background-color    | hsl(0, 0%, 96%)                        |
 | $tabs-toggle-link-hover-border-color        | hsl(0, 0%, 71%)                        |
-| $tabs-toggle-link-radius                    | var(--#{$prefix}base-border-radius)    |
 | $tabs-toggle-link-active-background-color   | var(--#{$prefix}primary)               |
 | $tabs-toggle-link-active-border-color       | var(--#{$prefix}primary)               |
 | $tabs-toggle-link-active-color              | var(--#{$prefix}primary-invert)        |

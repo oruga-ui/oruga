@@ -126,6 +126,7 @@ sidebarDepth: 2
 | $menu-label-color                  | $grey                              |
 | $menu-label-font-size              | 0.75em                             |
 | $menu-label-spacing                | 1em                                |
+| $menu-icon-spacer                  | 0.5rem                             |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_menu.scss)
 
