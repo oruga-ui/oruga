@@ -1,6 +1,8 @@
 import type { ComponentClass } from "@/types";
 import type { OptionsItem } from "./types";
 
+type SelectType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
 export type SelectProps<
     T extends string | number | object,
     IsMultiple extends boolean,
@@ -8,7 +10,7 @@ export type SelectProps<
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
-    modelValue?: IsMultiple extends true ? T[] : T;
+    modelValue?: SelectType<T, IsMultiple>;
     /** Select options, unnecessary when default slot is used */
     options?: string[] | OptionsItem<T>[];
     /** Allow multiple selection - converts the `modelValue` into an array */
@@ -55,7 +57,12 @@ export type SelectProps<
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */
-    customValidity?: string;
+    customValidity?:
+        | string
+        | ((
+              currentValue: SelectType<T, IsMultiple> | null | undefined,
+              state: ValidityState,
+          ) => string);
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete?: string;
     /** Show status icon using field and variant prop */

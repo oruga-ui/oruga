@@ -148,7 +148,16 @@ const props = defineProps({
         default: () => getOption("useHtml5Validation", true),
     },
     /** Custom HTML 5 validation error to set on the form control */
-    customValidity: { type: String, default: "" },
+    customValidity: {
+        type: [String, Function] as PropType<
+            | string
+            | ((
+                  currentValue: Date | null | undefined,
+                  state: ValidityState,
+              ) => string)
+        >,
+        default: "",
+    },
     // class props (will not be displayed in the docs)
     /** Class of the Datepicker wrapper */
     datepickerWrapperClass: {
