@@ -13,7 +13,7 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import OInput from "../input/Input.vue";
 
-import { isDefined, isMobileAgent, isTrueish } from "@/utils/helpers";
+import { isDate, isDefined, isMobileAgent, isTrueish } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     getActiveClasses,
@@ -160,11 +160,23 @@ watch(
 /** Set the vmodel value and update the prop value */
 function setValue(value: string): void {
     // parse to date
-    const date = props.parser(value, isMobileNative.value);
+    let date = props.parser(value, isMobileNative.value);
+
+    // check min/max dates
+    if (Array.isArray(date)) date = date.map(checkMinMaxDate);
+    else date = checkMinMaxDate(date);
+
     // reparse to string for internal value
     inputValue.value = props.formatter(date, isMobileNative.value);
     // update the prop value
     emits("update:value", date);
+}
+
+function checkMinMaxDate(date: Date): Date {
+    if (!isDate(date)) return date;
+    if (props.min && date < props.min) date = props.min;
+    else if (props.max && date > props.max) date = props.max;
+    return date;
 }
 
 const isActive = defineModel<boolean>("active", { default: false });

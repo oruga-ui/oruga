@@ -12,7 +12,7 @@ import OTimepicker from "../timepicker/Timepicker.vue";
 import OInput from "../input/Input.vue";
 
 import { getOption } from "@/utils/config";
-import { isMobileAgent } from "@/utils/helpers";
+import { isMobileAgent, pad } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { matchWithGroups } from "../datepicker/utils";
@@ -388,15 +388,15 @@ function formatNative(value: Date): string {
         return (
             year +
             "-" +
-            ((month < 10 ? "0" : "") + month) +
+            pad(month) +
             "-" +
-            ((day < 10 ? "0" : "") + day) +
+            pad(day) +
             "T" +
-            ((hours < 10 ? "0" : "") + hours) +
+            pad(hours) +
             ":" +
-            ((minutes < 10 ? "0" : "") + minutes) +
+            pad(minutes) +
             ":" +
-            ((seconds < 10 ? "0" : "") + seconds)
+            pad(seconds)
         );
     }
     return "";

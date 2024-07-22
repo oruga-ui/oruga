@@ -14,7 +14,7 @@ import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getOption } from "@/utils/config";
-import { isDate } from "@/utils/helpers";
+import { isDate, pad } from "@/utils/helpers";
 import {
     defineClasses,
     getActiveClasses,
@@ -425,19 +425,13 @@ function formatNative(value: Date | Date[]): string {
         // Format date into string 'YYYY-MM'
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
-        return year + "-" + ((month < 10 ? "0" : "") + month);
+        return year + "-" + pad(month);
     } else {
         // Format date into string 'YYYY-MM-DD'
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
         const day = date.getDate();
-        return (
-            year +
-            "-" +
-            ((month < 10 ? "0" : "") + month) +
-            "-" +
-            ((day < 10 ? "0" : "") + day)
-        );
+        return year + "-" + pad(month) + "-" + pad(day);
     }
 }
 
