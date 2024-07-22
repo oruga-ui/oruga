@@ -596,6 +596,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             -->
             <slot name="trigger" />
         </template>
+
         <header :class="headerClasses">
             <!--
                 @slot Override the header
@@ -630,18 +631,18 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         <o-select
                             v-if="!isTypeMonth"
                             v-model="focusedDateData.month"
+                            v-bind="selectClasses"
                             :disabled="disabled"
                             :size="size"
-                            v-bind="selectClasses"
                             :options="listOfMonths"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next" />
 
                         <o-select
                             v-model="focusedDateData.year"
+                            v-bind="selectClasses"
                             :disabled="disabled"
                             :size="size"
-                            v-bind="selectClasses"
                             :options="listOfYears"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next"
@@ -653,6 +654,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 </div>
             </slot>
         </header>
+
         <!--
             @slot Override the body
         -->
@@ -675,6 +677,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 @range-start="(date) => $emit('range-start', date)"
                 @range-end="(date) => $emit('range-end', date)" />
         </slot>
+
         <footer v-if="$slots.footer" :class="footerClasses">
             <!--
                 @slot Define an additional footer

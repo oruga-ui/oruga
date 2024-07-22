@@ -637,6 +637,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                     :mobile-native="isMobileNative"
                     :locale="locale" />
             </div>
+
             <template v-if="$slots.footer !== undefined">
                 <!--
                     @slot Define an additional footer
