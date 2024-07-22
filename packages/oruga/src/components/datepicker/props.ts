@@ -4,6 +4,12 @@ import type { SelectProps } from "../select/types";
 import type { DropdownProps } from "../dropdown/types";
 import type { InputProps } from "../input/types";
 
+type DatepickerType<IsRange, IsMultiple> = IsRange extends true
+    ? [Date, Date] | []
+    : IsMultiple extends true
+      ? Date[]
+      : Date;
+
 export type DatepickerProps<
     IsRange extends boolean = false,
     IsMultiple extends boolean = false,
@@ -11,11 +17,7 @@ export type DatepickerProps<
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
-    modelValue?: IsRange extends true
-        ? [Date, Date] | []
-        : IsMultiple extends true
-          ? Date[]
-          : Date;
+    modelValue?: DatepickerType<IsRange, IsMultiple>;
     /** Enable date range selection */
     range?: IsRange;
     /** Same as native, also push new item to v-model instead of replacing */
@@ -140,7 +142,15 @@ export type DatepickerProps<
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */
-    customValidity?: string;
+    customValidity?:
+        | string
+        | ((
+              currentValue:
+                  | DatepickerType<IsRange, IsMultiple>
+                  | null
+                  | undefined,
+              state: ValidityState,
+          ) => string);
     /** Accessibility next button aria label */
     ariaNextLabel?: string;
     /** Accessibility previous button aria label  */
