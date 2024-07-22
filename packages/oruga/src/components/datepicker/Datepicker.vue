@@ -187,19 +187,6 @@ const vmodel = useVModel<ModelValue>();
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-/** modelValue formated into string */
-const formattedValue = computed<string>(() => {
-    // define function prop
-    const value = (
-        Array.isArray(vmodel.value) ? [...vmodel.value] : vmodel.value
-    ) as ModelValue;
-    // call prop function
-    const formatted = props.dateFormatter(value);
-    // call default if prop function is not given
-    if (typeof formatted === "undefined") return defaultDateFormatter(value);
-    else return formatted;
-});
-
 const isTypeMonth = computed(() => props.type === "month");
 
 /**
@@ -208,7 +195,7 @@ const isTypeMonth = computed(() => props.type === "month");
  */
 watch(
     () => props.modelValue,
-    (value) => {
+    (value: ModelValue) => {
         const isArray = Array.isArray(value);
         const currentDate: Date = isArray
             ? value.length
@@ -306,10 +293,11 @@ const listOfMonths = computed<OptionsItem<number>[]>(() => {
     }));
 });
 
-const computedDayNames = computed(() => {
-    if (Array.isArray(props.dayNames)) return props.dayNames;
-    return getWeekdayNames(props.locale);
-});
+const computedDayNames = computed(() =>
+    Array.isArray(props.dayNames)
+        ? props.dayNames
+        : getWeekdayNames(props.locale),
+);
 
 /*
  * Returns an array of years for the year dropdown. If earliest/latest
@@ -412,6 +400,21 @@ function next(): void {
     }
 }
 
+// --- FORMATTER / PARSER ---
+
+/** Format date into string */
+function format(value: Date | Date[], isNative: boolean): string {
+    if (isNative) return formatNative(value);
+
+    // define function prop
+    const date = (Array.isArray(value) ? [...value] : value) as ModelValue;
+    // call prop function
+    const formatted = props.dateFormatter(date);
+    // call default if prop function is not given
+    if (typeof formatted === "undefined") return defaultDateFormatter(date);
+    else return formatted;
+}
+
 function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) value = value[0];
     const date = new Date(value);
@@ -438,10 +441,10 @@ function formatNative(value: Date | Date[]): string {
     }
 }
 
-// --- Event Handler ---
-
 /** Parse string into date */
-function onChange(value: string): void {
+function parse(value: string, isNative: boolean): ModelValue {
+    if (isNative) return parseNative(value);
+
     // call prop function
     let date = props.dateParser(value);
     // call default if prop function is not given
@@ -454,19 +457,65 @@ function onChange(value: string): void {
             isDate(date[0]) &&
             isDate(date[1]));
 
-    vmodel.value = (isValid ? date : null) as ModelValue;
+    return (isValid ? date : null) as ModelValue;
 }
 
 /** Parse date from string */
-function onChangeNativePicker(value: string): void {
+function parseNative(value: string): ModelValue {
     const s = value ? value.split("-") : [];
     if (s.length === 3) {
         const year = parseInt(s[0], 10);
         const month = parseInt(s[1]) - 1;
         const day = parseInt(s[2]);
-        vmodel.value = new Date(year, month, day) as ModelValue;
+        return new Date(year, month, day) as ModelValue;
     } else {
-        vmodel.value = null;
+        return null;
+    }
+}
+
+// --- Event Handler ---
+
+/** move to the previous focused date */
+function prevDate(): void {
+    if (props.disabled) return;
+
+    if (isTypeMonth.value) {
+        focusedDateData.value.year -= 1;
+    } else {
+        const date = new Date(
+            focusedDateData.value.year,
+            focusedDateData.value.month,
+            focusedDateData.value.day,
+        );
+        date.setDate(date.getDate() - 1);
+        focusedDateData.value.day = date.getDate();
+        focusedDateData.value.month = date.getMonth();
+        focusedDateData.value.year = date.getFullYear();
+
+        // todo: show selected hovered date
+        // vmodel.value = date as ModelValue;
+    }
+}
+
+/** move to the next focused date */
+function nextDate(): void {
+    if (props.disabled) return;
+
+    if (isTypeMonth.value) {
+        focusedDateData.value.year += 1;
+    } else {
+        const date = new Date(
+            focusedDateData.value.year,
+            focusedDateData.value.month,
+            focusedDateData.value.day,
+        );
+        date.setDate(date.getDate() + 1);
+        focusedDateData.value.day = date.getDate();
+        focusedDateData.value.month = date.getMonth();
+        focusedDateData.value.year = date.getFullYear();
+
+        // todo: show selected hovered date
+        // vmodel.value = date as ModelValue;
     }
 }
 
@@ -528,23 +577,23 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
     <OPickerWrapper
         ref="pickerRef"
         v-model:active="isActive"
+        v-model:value="vmodel"
         data-oruga="datepicker"
-        :value="vmodel"
         :picker-props="props"
-        :formatted-value="formattedValue"
-        :native-type="!isTypeMonth ? 'date' : 'month'"
-        :native-value="formatNative(vmodel)"
-        :native-max="formatNative(maxDate)"
-        :native-min="formatNative(minDate)"
+        :formatter="format"
+        :parser="parse"
+        :type="!isTypeMonth ? 'date' : 'month'"
+        :max="maxDate"
+        :min="minDate"
         :stay-open="props.multiple"
         :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
         :box-class="boxClassBind"
-        @change="onChange"
-        @native-change="onChangeNativePicker"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @invalid="$emit('invalid', $event)"
+        @left="prevDate"
+        @right="nextDate"
         @icon-click="$emit('icon-click', $event)"
         @icon-right-click="$emit('icon-right-click', $event)">
         <template v-if="$slots.trigger" #trigger>
@@ -590,14 +639,22 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             v-bind="selectClasses"
-                            :options="listOfMonths" />
+                            :options="listOfMonths"
+                            @keydown.left.stop.prevent="prev"
+                            @keydown.right.stop.prevent="next" />
 
                         <o-select
                             v-model="focusedDateData.year"
                             :disabled="disabled"
                             :size="size"
                             v-bind="selectClasses"
-                            :options="listOfYears" />
+                            :options="listOfYears"
+                            @keydown.left.stop.prevent="prev"
+                            @keydown.right.stop.prevent="next"
+                            @keydown.up.stop.prevent="focusedDateData.year += 1"
+                            @keydown.down.stop.prevent="
+                                focusedDateData.year -= 1
+                            " />
                     </div>
                 </div>
             </slot>
