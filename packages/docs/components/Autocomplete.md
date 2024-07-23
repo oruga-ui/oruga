@@ -119,8 +119,9 @@
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable | Default |
-| ------------- | ------- |
+| SASS Variable                             | Default |
+| ----------------------------------------- | ------- |
+| $autocomplete-item-hover-background-color | #f5f5f5 |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 
