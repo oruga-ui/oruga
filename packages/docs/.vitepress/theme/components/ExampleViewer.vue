@@ -193,6 +193,7 @@ function copy(val: string) {
         text-align: center;
         padding: 0.5rem;
         background-color: var(--vp-button-alt-bg);
+        width: 100%;
     }
 
     .odocs-panel-content {

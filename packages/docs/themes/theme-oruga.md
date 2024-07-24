@@ -5,6 +5,7 @@
 ```scss
 // Settings
 $prefix: "oruga-" !default;
+$enable-host: false !default;
 
 // Animations
 $animation-speed: 150ms !default;

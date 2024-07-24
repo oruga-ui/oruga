@@ -151,13 +151,13 @@ sidebarDepth: 2
 | $dropdown-menu-margin                  | 0                                                                            |
 | $dropdown-menu-padding                 | 0.5rem 0 0.5rem 0                                                            |
 | $dropdown-menu-width                   | 12rem                                                                        |
-| $dropdown-menu-zindex                  | 20                                                                           |
+| $dropdown-menu-zindex                  | 50                                                                           |
 | $dropdown-mobile-max-height            | calc(100vh - 120px)                                                          |
 | $dropdown-mobile-max-width             | 460px                                                                        |
 | $dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                          |
-| $dropdown-mobile-overlay-zindex        | 40                                                                           |
+| $dropdown-mobile-overlay-zindex        | 55                                                                           |
 | $dropdown-mobile-width                 | calc(100vw - 40px)                                                           |
-| $dropdown-mobile-zindex                | 50                                                                           |
+| $dropdown-mobile-zindex                | 60                                                                           |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 
