@@ -256,6 +256,7 @@ defineEmits<{
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const {
+    dtf,
     defaultTimeFormatter,
     defaultTimeParser,
     pmString,
@@ -338,13 +339,9 @@ const hours = computed<OptionsItem<number>[]>(() => {
             value = i + 1;
             label = value;
             if (meridienSelected.value === amString.value) {
-                if (value === 12) {
-                    value = 0;
-                }
+                if (value === 12) value = 0;
             } else if (meridienSelected.value === pmString.value) {
-                if (value !== 12) {
-                    value += 12;
-                }
+                if (value !== 12) value += 12;
             }
         }
         hours.push({
@@ -756,6 +753,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
         :box-class="boxClassBind"
+        :dtf="dtf"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @invalid="$emit('invalid', $event)"

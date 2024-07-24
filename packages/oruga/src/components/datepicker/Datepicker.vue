@@ -174,7 +174,8 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const { defaultDateFormatter, defaultDateParser } = useDatepickerMixins(props);
+const { dtf, defaultDateFormatter, defaultDateParser } =
+    useDatepickerMixins(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
@@ -583,6 +584,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
         :box-class="boxClassBind"
+        :dtf="dtf"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @invalid="$emit('invalid', $event)"

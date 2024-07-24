@@ -15,7 +15,7 @@ import { getOption } from "@/utils/config";
 import { isMobileAgent, pad } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
-import { matchWithGroups } from "../datepicker/utils";
+import { useDateimepickerMixins } from "./useDatetimepickerMixin";
 
 import type { DatepickerProps } from "../datepicker/types";
 import type { TimepickerProps } from "../timepicker/types";
@@ -32,10 +32,6 @@ defineOptions({
     configField: "datetimepicker",
     inheritAttrs: false,
 });
-
-const AM = "AM";
-const PM = "PM";
-const HOUR_FORMAT_24 = "24";
 
 const props = defineProps({
     /** Override existing theme classes completely */
@@ -90,16 +86,16 @@ const props = defineProps({
     /** Custom function to format a date into a string */
     datetimeFormatter: {
         type: Function as PropType<(date: Date) => string>,
-        default: (
-            date: Date | Date[],
-            defaultFunction: (date: Date | Date[]) => string,
-        ) => getOption("datetimepicker.dateFormatter", defaultFunction)(date),
+        default: (date: Date | Date[]) =>
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            getOption("datetimepicker.dateFormatter", (_) => undefined)(date),
     },
     /** Custom function to parse a string into a date */
     datetimeParser: {
         type: Function as PropType<(date: string) => Date>,
-        default: (date: string, defaultFunction: (date: string) => Date) =>
-            getOption("datetimepicker.dateParser", defaultFunction)(date),
+        default: (date: string) =>
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            getOption("datetimepicker.dateParser", (_) => undefined)(date),
     },
     /** Date creator function, default is `new Date()` */
     datetimeCreator: {
@@ -261,6 +257,9 @@ watch([() => isMobileNative.value, () => props.inline], () => {
     if (datepickerRef.value) datepickerRef.value.$forceUpdate();
 });
 
+const { defaultDatetimeFormatter, defaultDatetimeParser } =
+    useDateimepickerMixins(props);
+
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
@@ -271,10 +270,8 @@ function updateVModel(value: Date | Date[]): void {
         vmodel.value = undefined;
         return;
     }
-    if (Array.isArray(value)) {
-        updateVModel(value[0]);
-        return;
-    }
+    if (Array.isArray(value)) return updateVModel(value[0]);
+
     let date = new Date(value.getTime());
     if (!props.modelValue) {
         date = props.datetimeCreator(value);
@@ -400,150 +397,6 @@ function formatNative(value: Date): string {
         );
     }
     return "";
-}
-
-// --- Time Format Feature ---
-
-const enableSeconds = computed(() =>
-    timepickerRef.value?.enableSeconds
-        ? timepickerRef.value.enableSeconds
-        : false,
-);
-
-const localeOptions = computed(
-    () =>
-        new Intl.DateTimeFormat(props.locale, {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-            second: enableSeconds.value ? "numeric" : undefined,
-        }).resolvedOptions() as Intl.DateTimeFormatOptions,
-);
-
-const isHourFormat24 = computed(
-    () =>
-        (timepickerProps.value?.hourFormat &&
-            timepickerProps.value.hourFormat === HOUR_FORMAT_24) ||
-        (!timepickerProps.value?.hourFormat && !localeOptions.value.hour12),
-);
-
-const dtf = computed(
-    () =>
-        new Intl.DateTimeFormat(props.locale, {
-            year: localeOptions.value.year || "numeric",
-            month: localeOptions.value.month || "numeric",
-            day: localeOptions.value.day || "numeric",
-            hour: localeOptions.value.hour || "numeric",
-            minute: localeOptions.value.minute || "numeric",
-            second: enableSeconds.value
-                ? localeOptions.value.second || "numeric"
-                : undefined,
-            hourCycle: !isHourFormat24.value ? "h12" : "h23",
-        }),
-);
-
-const amString = computed(() => {
-    if (
-        dtf.value.formatToParts &&
-        typeof dtf.value.formatToParts === "function"
-    ) {
-        const d = props.datetimeCreator(new Date());
-        d.setHours(10);
-        const dayPeriod = dtf.value
-            .formatToParts(d)
-            .find((part) => part.type === "dayPeriod");
-        if (dayPeriod) return dayPeriod.value;
-    }
-    return AM;
-});
-
-const pmString = computed(() => {
-    if (
-        dtf.value.formatToParts &&
-        typeof dtf.value.formatToParts === "function"
-    ) {
-        const d = props.datetimeCreator(new Date());
-        d.setHours(20);
-        const dayPeriod = dtf.value
-            .formatToParts(d)
-            .find((part) => part.type === "dayPeriod");
-        if (dayPeriod) return dayPeriod.value;
-    }
-    return PM;
-});
-
-function defaultDatetimeParser(value: string): Date {
-    function defaultParser(date: string): Date {
-        if (
-            dtf.value.formatToParts &&
-            typeof dtf.value.formatToParts === "function"
-        ) {
-            const dayPeriods = [AM, PM, AM.toLowerCase(), PM.toLowerCase()];
-            if (timepickerRef.value) {
-                dayPeriods.push(amString.value);
-                dayPeriods.push(pmString.value);
-            }
-            const parts = dtf.value.formatToParts(new Date());
-            const formatRegex = parts
-                .map((part, idx) => {
-                    if (part.type === "literal") {
-                        if (
-                            idx + 1 < parts.length &&
-                            parts[idx + 1].type === "hour"
-                        ) {
-                            return `[^\\d]+`;
-                        }
-                        return part.value.replace(/ /g, "\\s?");
-                    } else if (part.type === "dayPeriod") {
-                        return `((?!=<${part.type}>)(${dayPeriods.join(
-                            "|",
-                        )})?)`;
-                    }
-                    return `((?!=<${part.type}>)\\d+)`;
-                })
-                .join("");
-            const datetimeGroups = matchWithGroups(formatRegex, date);
-
-            // We do a simple validation for the group.
-            // If it is not valid, it will fallback to Date.parse below
-            if (
-                datetimeGroups.year &&
-                datetimeGroups.year.length === 4 &&
-                datetimeGroups.month &&
-                datetimeGroups.month <= 12 &&
-                datetimeGroups.day &&
-                datetimeGroups.day <= 31 &&
-                datetimeGroups.hour &&
-                datetimeGroups.hour >= 0 &&
-                datetimeGroups.hour < 24 &&
-                datetimeGroups.minute &&
-                datetimeGroups.minute >= 0 &&
-                datetimeGroups.minute <= 59
-            ) {
-                const d = new Date(
-                    datetimeGroups.year,
-                    datetimeGroups.month - 1,
-                    datetimeGroups.day,
-                    datetimeGroups.hour,
-                    datetimeGroups.minute,
-                    datetimeGroups.second || 0,
-                );
-                return d;
-            }
-        }
-
-        return new Date(Date.parse(date));
-    }
-    const date = (props.datetimeParser as any)(value, defaultParser);
-    return date;
-}
-
-function defaultDatetimeFormatter(date: Date): string {
-    return (props.datetimeFormatter as any)(date, (date: Date) =>
-        date ? dtf.value.format(date) : "",
-    );
 }
 
 // --- Event Handler ---

@@ -7,6 +7,7 @@ const PM = "PM" as const;
 const HOUR_FORMAT_24 = "24" as const;
 const HOUR_FORMAT_12 = "12" as const;
 
+/** Time Format Feature */
 export function useTimepickerMixins(props: TimepickerProps) {
     const localeOptions = computed(
         () =>
@@ -196,7 +197,10 @@ export function useTimepickerMixins(props: TimepickerProps) {
         const timeSplit = time.split(":");
         let hours = parseInt(timeSplit[0], 10);
         const minutes = parseInt(timeSplit[1], 10);
-        const seconds = props.enableSeconds ? parseInt(timeSplit[2], 10) : 0;
+        const seconds =
+            props.enableSeconds && timeSplit.length >= 3
+                ? parseInt(timeSplit[2], 10)
+                : 0;
         if (
             isNaN(hours) ||
             hours < 0 ||
@@ -224,6 +228,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
     }
 
     return {
+        dtf,
         defaultTimeFormatter,
         defaultTimeParser,
         pmString,

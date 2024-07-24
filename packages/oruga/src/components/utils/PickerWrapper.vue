@@ -64,6 +64,8 @@ const props = defineProps({
     min: { type: Date, default: undefined },
     max: { type: Date, default: undefined },
     stayOpen: { type: Boolean, default: false },
+    // the DateTimeFormat object to watch for to update the parsed input value
+    dtf: { type: Object, default: undefined },
     rootClasses: { type: Array as PropType<ClassBind[]>, required: true },
     dropdownClasses: { type: Array as PropType<ClassBind[]>, required: true },
     boxClass: { type: Array as PropType<ComponentClass>, required: true },
@@ -155,6 +157,12 @@ watch(
         if (!isValid.value) checkHtml5Validity();
     },
     { immediate: true },
+);
+
+// update the parsed input value when the dtf change
+watch(
+    () => props.dtf,
+    () => setValue(inputValue.value),
 );
 
 /** Set the vmodel value and update the prop value */
