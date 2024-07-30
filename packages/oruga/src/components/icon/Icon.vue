@@ -5,7 +5,7 @@ import { getOption } from "@/utils/config";
 import getIcons from "@/utils/icons";
 import { defineClasses } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * Icons take an important role of any application
@@ -23,7 +23,7 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /** Icon component name */
     component: {
-        type: String,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("iconComponent"),
     },
     /**
