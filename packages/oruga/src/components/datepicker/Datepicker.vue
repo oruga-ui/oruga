@@ -637,6 +637,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             :options="listOfMonths"
+                            :use-html5-validation="false"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next" />
 
@@ -646,6 +647,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             :options="listOfYears"
+                            :use-html5-validation="false"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next"
                             @keydown.up.stop.prevent="focusedDateData.year += 1"

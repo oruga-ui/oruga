@@ -784,6 +784,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             override
             :disabled="disabled"
             placeholder="00"
+            :use-html5-validation="false"
             @change="onHoursChange($event.target.value)" />
 
         <span :class="separatorClasses">{{ hourLiteral }}</span>
@@ -794,6 +795,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             override
             :disabled="disabled"
             placeholder="00"
+            :use-html5-validation="false"
             @change="onMinutesChange($event.target.value)">
             <option
                 v-for="minute in minutes"
@@ -813,6 +815,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 override
                 :disabled="disabled"
                 placeholder="00"
+                :use-html5-validation="false"
                 @change="onSecondsChange($event.target.value)">
                 <option
                     v-for="second in seconds"
@@ -832,6 +835,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             v-model="meridienSelected"
             override
             :disabled="disabled"
+            :use-html5-validation="false"
             @change="onMeridienChange($event.target.value)">
             <option
                 v-for="meridien in meridiens"
