@@ -70,7 +70,7 @@ const emits = defineEmits<{
 const inputRef = ref<HTMLInputElement>();
 
 // use form input functionality
-const { checkHtml5Validity, onFocus, onBlur, isValid, setFocus } =
+const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
     useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
@@ -262,6 +262,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             :disabled="disabled"
             @change="onFileChange"
             @focus="onFocus"
-            @blur="onBlur" />
+            @blur="onBlur"
+            @invalid="onInvalid" />
     </label>
 </template>

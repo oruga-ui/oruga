@@ -590,14 +590,16 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             v-bind="selectClasses"
-                            :options="listOfMonths" />
+                            :options="listOfMonths"
+                            :use-html5-validation="false" />
 
                         <o-select
                             v-model="focusedDateData.year"
                             :disabled="disabled"
                             :size="size"
                             v-bind="selectClasses"
-                            :options="listOfYears" />
+                            :options="listOfYears"
+                            :use-html5-validation="false" />
                     </div>
                 </div>
             </slot>
