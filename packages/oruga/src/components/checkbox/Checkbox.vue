@@ -86,10 +86,21 @@ const props = defineProps({
         type: String,
         default: () => getOption("checkbox.autocomplete", "off"),
     },
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation: {
         type: Boolean,
         default: () => getOption("useHtml5Validation", true),
+    },
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity: {
+        type: [String, Function] as PropType<
+            | string
+            | ((
+                  currentValue: boolean | null | undefined,
+                  state: ValidityState,
+              ) => string)
+        >,
+        default: "",
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
