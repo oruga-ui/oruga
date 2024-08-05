@@ -17,6 +17,7 @@ defineEmits(["close"]);
                 icon="times"
                 @click="$emit('close')" />
         </header>
+
         <section>
             <o-field label="Email">
                 <o-input
@@ -39,6 +40,7 @@ defineEmits(["close"]);
                 <o-checkbox label="Remember me" />
             </o-field>
         </section>
+
         <footer>
             <o-button label="Close" type="button" @click="$emit('close')" />
             <o-button label="Login" variant="primary" />
