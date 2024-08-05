@@ -76,11 +76,11 @@ const eventsInThisMonth = computed(() => {
 });
 
 /** Return array of all weeks in the specified month */
-const weeksInThisMonth = computed(() => {
+const weeksInThisMonth = computed<Date[][]>(() => {
     validateFocusedDay();
     const month = focusedDateModel.value.month;
     const year = focusedDateModel.value.year;
-    const weeksInThisMonth = [];
+    const weeksInThisMonth: Date[][] = [];
 
     let startingDay = 1;
 
@@ -108,7 +108,7 @@ function eventsInThisWeek(week: Date[]): DatepickerEvent[] {
     });
 }
 
-const hoveredDateRange = computed(() => {
+const hoveredDateRange = computed<Date[]>(() => {
     if (!isTrueish(datepicker.value.range) || selectedEndDate.value) return [];
     return (
         hoveredEndDate.value < selectedBeginDate.value
