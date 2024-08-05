@@ -65,7 +65,7 @@ const collapses = ref([
                 </template>
 
                 <div class="card">
-                    <div class="card-content" v-html="collapse.text" />
+                    <p class="card-content" v-html="collapse.text" />
                 </div>
             </o-collapse>
         </article>

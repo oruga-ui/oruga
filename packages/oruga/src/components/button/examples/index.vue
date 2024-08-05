@@ -25,10 +25,10 @@ import TagsCode from "./tags.vue?raw";
     <h3 id="styles">States and Styles</h3>
     <ExampleViewer :component="Styles" :code="StylesCode" />
 
-    <h3 id="styles">Outlined</h3>
+    <h3 id="outlined">Outlined</h3>
     <ExampleViewer :component="Outlined" :code="OutlinedCode" />
 
-    <h3 id="styles">Inverted</h3>
+    <h3 id="inverted">Inverted</h3>
     <ExampleViewer :component="Inverted" :code="InvertedCode" />
 
     <h3 id="icons">Icons</h3>

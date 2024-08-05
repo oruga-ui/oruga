@@ -26,7 +26,6 @@ const settings = reactive({
                     <option value="large">large</option>
                 </o-select>
             </o-field>
-
             <o-field label="Variant">
                 <o-select v-model="settings.variant">
                     <option value="default">default</option>
@@ -38,19 +37,15 @@ const settings = reactive({
                     <option value="danger">danger</option>
                 </o-select>
             </o-field>
-
             <o-field label="Inverted">
                 <o-switch v-model="settings.inverted" />
             </o-field>
-
             <o-field label="Outlined">
                 <o-switch v-model="settings.outlined" />
             </o-field>
-
             <o-field label="Rounded">
                 <o-switch v-model="settings.rounded" />
             </o-field>
-
             <o-field label="Disabled">
                 <o-switch v-model="settings.disabled" />
             </o-field>

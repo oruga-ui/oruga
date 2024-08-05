@@ -8,9 +8,6 @@ import VariantsCode from "./variants.vue?raw";
 import Interminate from "./interminate.vue";
 import InterminateCode from "./interminate.vue?raw";
 
-// import Inverted from "./inverted.vue";
-// import InvertedCode from "./inverted.vue?raw";
-
 import Sizes from "./sizes.vue";
 import SizesCode from "./sizes.vue?raw";
 
@@ -27,9 +24,6 @@ import ArrayCode from "./array.vue?raw";
 
     <h3 id="variants">Interminate</h3>
     <ExampleViewer :component="Interminate" :code="InterminateCode" />
-
-    <!-- <h3 id="variants">Inverted</h3>
-    <ExampleViewer :component="Inverted" :code="InvertedCode" /> -->
 
     <h3 id="sizes">Sizes</h3>
     <ExampleViewer :component="Sizes" :code="SizesCode" />

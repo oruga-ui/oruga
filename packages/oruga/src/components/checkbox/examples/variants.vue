@@ -24,11 +24,11 @@
         </o-field>
 
         <o-field>
-            <o-checkbox :model-value="true" variant="danger" label="Danger" />
+            <o-checkbox :model-value="true" variant="warning" label="Warning" />
         </o-field>
 
         <o-field>
-            <o-checkbox :model-value="true" variant="warning" label="Warning" />
+            <o-checkbox :model-value="true" variant="danger" label="Danger" />
         </o-field>
     </section>
 </template>
