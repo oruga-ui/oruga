@@ -61,7 +61,7 @@ Browse [online documentation here](https://oruga-ui.com/documentation/).
 
 🕹 To see Oruga in action, go to the [Example section](https://oruga-ui.com/documentation/#examples) in the documentation.
 
-Note: the documentation source code is in the `docs` directory, it serves as the demo as well.
+Note: the source code of the documentation examples can be found in the `examples` directories for each component, it serves as the demo as well.
 
 ## Quick start
 
