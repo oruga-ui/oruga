@@ -13,6 +13,9 @@ import SizesCode from "./sizes.vue?raw";
 
 import Variants from "./variants.vue";
 import VariantsCode from "./variants.vue?raw";
+
+import WithIcons from "./with-icons.vue";
+import WithIconsCode from "./with-icons.vue?raw";
 </script>
 
 <template>
@@ -30,4 +33,7 @@ import VariantsCode from "./variants.vue?raw";
 
     <h3 id="variants">Variants</h3>
     <ExampleViewer :component="Variants" :code="VariantsCode" />
+
+    <h3 id="icons">With Icons</h3>
+    <ExampleViewer :component="WithIcons" :code="WithIconsCode" />
 </template>
