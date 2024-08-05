@@ -9,6 +9,15 @@
                 allow-duplicates />
         </o-field>
 
+        <o-field label="Secondary">
+            <o-taginput
+                :model-value="['One']"
+                :data="['One', 'Two', 'Three', 'Four']"
+                variant="secondary"
+                allow-new
+                allow-duplicates />
+        </o-field>
+
         <o-field label="Success">
             <o-taginput
                 :model-value="['One']"
