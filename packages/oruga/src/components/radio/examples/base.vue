@@ -12,16 +12,19 @@ const radio = ref("Jack");
                 name="name"
                 native-value="Flint"
                 label="Flint" />
+
             <o-radio
                 v-model="radio"
                 name="name"
                 native-value="Silver"
                 label="Silver" />
+
             <o-radio
                 v-model="radio"
                 name="name"
                 native-value="Jack"
                 label="Jack" />
+
             <o-radio
                 v-model="radio"
                 name="name"
