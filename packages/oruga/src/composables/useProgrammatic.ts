@@ -85,8 +85,8 @@ export function useProgrammaticComponent(
     function cancel(method: string): void {
         // check if method is cancelable
         if (
-            !options.cancelable ||
             (typeof options.cancelable === "boolean" && !options.cancelable) ||
+            !options.cancelable ||
             (Array.isArray(options.cancelable) &&
                 !options.cancelable.includes(method))
         )
