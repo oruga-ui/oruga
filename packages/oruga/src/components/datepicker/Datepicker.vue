@@ -401,7 +401,7 @@ function next(): void {
     }
 }
 
-// --- FORMATTER / PARSER ---
+// --- Formatter / Parser ---
 
 /** Format date into string */
 function format(value: Date | Date[], isNative: boolean): string {

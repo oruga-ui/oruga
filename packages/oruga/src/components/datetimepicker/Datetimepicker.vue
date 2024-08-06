@@ -12,7 +12,7 @@ import OTimepicker from "../timepicker/Timepicker.vue";
 import OInput from "../input/Input.vue";
 
 import { getOption } from "@/utils/config";
-import { isMobileAgent, pad } from "@/utils/helpers";
+import { isDate, isMobileAgent, pad } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { useDateimepickerMixins } from "./useDatetimepickerMixin";
@@ -267,7 +267,7 @@ const vmodel = defineModel<Date>({ default: null });
 
 function updateVModel(value: Date | Date[]): void {
     if (!value) {
-        vmodel.value = undefined;
+        vmodel.value = null;
         return;
     }
     if (Array.isArray(value)) return updateVModel(value[0]);
@@ -359,19 +359,37 @@ const maxTime = computed(() => {
     return props.maxDatetime;
 });
 
-const datepickerSize = computed(() =>
-    datepickerProps.value?.size ? datepickerProps.value.size : props.size,
+const datepickerSize = computed(
+    () => datepickerProps.value?.size || props.size,
 );
 
-const timepickerSize = computed(() =>
-    timepickerProps.value?.size ? timepickerProps.value.size : props.size,
+const timepickerSize = computed(
+    () => timepickerProps.value?.size || props.size,
 );
 
-const timepickerDisabled = computed(() =>
-    timepickerProps.value?.disabled
-        ? timepickerProps.value.disabled
-        : props.disabled,
+const timepickerDisabled = computed(
+    () => timepickerProps.value?.disabled || props.disabled,
 );
+
+// --- Formatter / Parser ---
+
+/** Format date into string */
+function format(value: Date): string {
+    // call prop function
+    const date = props.datetimeFormatter(value);
+    // call default if prop function is not given
+    if (typeof date === "undefined") return defaultDatetimeFormatter(value);
+    else return date;
+}
+
+/** Parse string into date */
+function parse(value: string): Date {
+    // call prop function
+    let date = props.datetimeParser(value);
+    // call default if prop function is not given
+    if (typeof date === "undefined") date = defaultDatetimeParser(value);
+    return isDate(date) ? date : null;
+}
 
 function formatNative(value: Date): string {
     const date = new Date(value);
@@ -453,8 +471,8 @@ defineExpose({ focus: setFocus, value: vmodel });
         :readonly="readonly"
         :expanded="expanded"
         :close-on-click="false"
-        :date-formatter="defaultDatetimeFormatter"
-        :date-parser="defaultDatetimeParser"
+        :date-formatter="format"
+        :date-parser="parse"
         :min-date="minDate"
         :max-date="maxDate"
         :icon="icon"

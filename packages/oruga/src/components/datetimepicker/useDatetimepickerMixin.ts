@@ -72,85 +72,74 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
         return PM;
     });
 
-    function defaultDatetimeParser(value: string): Date {
-        function defaultParser(date: string): Date {
-            if (
-                dtf.value.formatToParts &&
-                typeof dtf.value.formatToParts === "function"
-            ) {
-                const dayPeriods = [
-                    AM,
-                    PM,
-                    AM.toLowerCase(),
-                    PM.toLowerCase(),
-                    amString.value,
-                    pmString.value,
-                ];
-                const parts = dtf.value.formatToParts(new Date());
-                const formatRegex = parts
-                    .map((part, idx) => {
-                        if (part.type === "literal") {
-                            if (
-                                idx + 1 < parts.length &&
-                                parts[idx + 1].type === "hour"
-                            ) {
-                                return `[^\\d]+`;
-                            }
-                            return part.value.replace(/ /g, "\\s?");
-                        } else if (part.type === "dayPeriod") {
-                            return `((?!=<${part.type}>)(${dayPeriods.join(
-                                "|",
-                            )})?)`;
-                        }
-                        return `((?!=<${part.type}>)\\d+)`;
-                    })
-                    .join("");
-                const datetimeGroups = matchWithGroups(formatRegex, date);
-
-                // We do a simple validation for the group.
-                // If it is not valid, it will fallback to Date.parse below
-                if (
-                    datetimeGroups.year &&
-                    datetimeGroups.year.length === 4 &&
-                    datetimeGroups.month &&
-                    datetimeGroups.month <= 12 &&
-                    datetimeGroups.day &&
-                    datetimeGroups.day <= 31 &&
-                    datetimeGroups.hour &&
-                    datetimeGroups.hour >= 0 &&
-                    datetimeGroups.hour < 24 &&
-                    datetimeGroups.minute &&
-                    datetimeGroups.minute >= 0 &&
-                    datetimeGroups.minute <= 59
-                ) {
-                    const d = new Date(
-                        datetimeGroups.year,
-                        datetimeGroups.month - 1,
-                        datetimeGroups.day,
-                        datetimeGroups.hour,
-                        datetimeGroups.minute,
-                        datetimeGroups.second || 0,
-                    );
-                    return d;
-                }
-            }
-
-            return new Date(Date.parse(date));
-        }
-
-        // call prop function
-        const date = props.datetimeParser(value);
-        // call default if prop function is not given
-        if (typeof date === "undefined") return defaultParser(value);
-        else return date;
+    function defaultDatetimeFormatter(date: Date): string {
+        if (!date) return "";
+        return dtf.value.format(date);
     }
 
-    function defaultDatetimeFormatter(value: Date): string {
-        // call prop function
-        const date = props.datetimeFormatter(value);
-        // call default if prop function is not given
-        if (typeof date === "undefined") return dtf.value.format(value);
-        else return date;
+    function defaultDatetimeParser(date: string): Date {
+        if (
+            dtf.value.formatToParts &&
+            typeof dtf.value.formatToParts === "function"
+        ) {
+            const dayPeriods = [
+                AM,
+                PM,
+                AM.toLowerCase(),
+                PM.toLowerCase(),
+                amString.value,
+                pmString.value,
+            ];
+            const parts = dtf.value.formatToParts(new Date());
+            const formatRegex = parts
+                .map((part, idx) => {
+                    if (part.type === "literal") {
+                        if (
+                            idx + 1 < parts.length &&
+                            parts[idx + 1].type === "hour"
+                        ) {
+                            return `[^\\d]+`;
+                        }
+                        return part.value.replace(/ /g, "\\s?");
+                    } else if (part.type === "dayPeriod") {
+                        return `((?!=<${part.type}>)(${dayPeriods.join(
+                            "|",
+                        )})?)`;
+                    }
+                    return `((?!=<${part.type}>)\\d+)`;
+                })
+                .join("");
+            const datetimeGroups = matchWithGroups(formatRegex, date);
+
+            // We do a simple validation for the group.
+            // If it is not valid, it will fallback to Date.parse below
+            if (
+                datetimeGroups.year &&
+                datetimeGroups.year.length === 4 &&
+                datetimeGroups.month &&
+                datetimeGroups.month <= 12 &&
+                datetimeGroups.day &&
+                datetimeGroups.day <= 31 &&
+                datetimeGroups.hour &&
+                datetimeGroups.hour >= 0 &&
+                datetimeGroups.hour < 24 &&
+                datetimeGroups.minute &&
+                datetimeGroups.minute >= 0 &&
+                datetimeGroups.minute <= 59
+            ) {
+                return new Date(
+                    datetimeGroups.year,
+                    datetimeGroups.month - 1,
+                    datetimeGroups.day,
+                    datetimeGroups.hour,
+                    datetimeGroups.minute,
+                    datetimeGroups.second || 0,
+                );
+            }
+        }
+
+        // Fallback if formatToParts is not supported or if we were not able to parse a valid date
+        return new Date(Date.parse(date));
     }
 
     return {

@@ -5,7 +5,7 @@ import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
-import { pad } from "@/utils/helpers";
+import { isDate, pad } from "@/utils/helpers";
 import {
     defineClasses,
     useMatchMedia,
@@ -294,7 +294,7 @@ watch(
 
 /** Update internal value. */
 function updateValue(value: Date | Date[]): void {
-    value = Array.isArray(value) ? value[0] : value;
+    if (Array.isArray(value)) return updateValue(value[0]);
     if (vmodel.value !== value) vmodel.value = value as Date;
     if (value) {
         hoursSelected.value = value.getHours();
@@ -578,7 +578,7 @@ function updateDateSelected(
     }
 }
 
-// --- FORMATTER / PARSER ---
+// --- Formatter / Parser ---
 
 /** Format date into string */
 function format(value: Date | Date[], isNative: boolean): string {
@@ -619,8 +619,7 @@ function parse(value: string, isNative: boolean): Date {
     let date = props.timeParser(value);
     // call default if prop function is not given
     if (typeof date === "undefined") date = defaultTimeParser(value);
-
-    return date ? date : null;
+    return isDate(date) ? date : null;
 }
 
 /** Parse time from string */
