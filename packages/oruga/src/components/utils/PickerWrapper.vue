@@ -147,9 +147,9 @@ const inputValue = ref("");
  */
 watch(
     () => props.value,
-    () => {
+    (value) => {
         // update internal value
-        inputValue.value = props.formatter(props.value, isMobileNative.value);
+        inputValue.value = props.formatter(value, isMobileNative.value);
 
         // toggle picker if not stay open
         if (!isMobileNative.value && !props.stayOpen) togglePicker(false);

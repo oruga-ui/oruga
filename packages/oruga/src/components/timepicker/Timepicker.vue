@@ -6,7 +6,12 @@ import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
 import { pad } from "@/utils/helpers";
-import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
+import {
+    defineClasses,
+    useMatchMedia,
+    getActiveClasses,
+    // useVModel,
+} from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
@@ -270,6 +275,7 @@ const {
 
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
+/** modelvalue of selected date */
 const vmodel = defineModel<Date>({ default: null });
 
 /** Dropdown active state */
@@ -280,29 +286,29 @@ const minutesSelected = ref();
 const secondsSelected = ref();
 const meridienSelected = ref();
 
-/**
- * When v-model is changed:
- *   1. Update internal value.
- *   2. If it's invalid, validate again.
- */
 watch(
     () => props.modelValue,
-    (value) => {
-        if (value) {
-            hoursSelected.value = value.getHours();
-            minutesSelected.value = value.getMinutes();
-            secondsSelected.value = value.getSeconds();
-            meridienSelected.value =
-                value.getHours() >= 12 ? pmString.value : amString.value;
-        } else {
-            hoursSelected.value = null;
-            minutesSelected.value = null;
-            secondsSelected.value = null;
-            meridienSelected.value = amString.value;
-        }
-    },
+    (value) => updateValue(value),
     { immediate: true },
 );
+
+/** Update internal value. */
+function updateValue(value: Date | Date[]): void {
+    value = Array.isArray(value) ? value[0] : value;
+    if (vmodel.value !== value) vmodel.value = value as Date;
+    if (value) {
+        hoursSelected.value = value.getHours();
+        minutesSelected.value = value.getMinutes();
+        secondsSelected.value = value.getSeconds();
+        meridienSelected.value =
+            value.getHours() >= 12 ? pmString.value : amString.value;
+    } else {
+        hoursSelected.value = null;
+        minutesSelected.value = null;
+        secondsSelected.value = null;
+        meridienSelected.value = amString.value;
+    }
+}
 
 const step = computed(() => (props.enableSeconds ? "1" : null));
 
@@ -741,8 +747,8 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
     <OPickerWrapper
         ref="pickerRef"
         v-model:active="isActive"
-        data-oruga="timepicker"
         :value="vmodel"
+        data-oruga="timepicker"
         :picker-props="props"
         :formatter="format"
         :parser="parse"
@@ -754,6 +760,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         :root-classes="rootClasses"
         :box-class="boxClassBind"
         :dtf="dtf"
+        @update:value="updateValue"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @invalid="$emit('invalid', $event)"
