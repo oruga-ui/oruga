@@ -17,9 +17,7 @@ describe("OTimepicker tests", () => {
     });
 
     test("parses keyboard input", async () => {
-        const wrapper = mount(OTimepicker, {
-            props: { modelValue: new Date(2000, 0, 1), readonly: false },
-        });
+        const wrapper = mount(OTimepicker);
 
         let input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
@@ -54,7 +52,7 @@ describe("OTimepicker tests", () => {
 
     test("handles invalid keyboard input", async () => {
         const wrapper = mount(OTimepicker, {
-            props: { readonly: false, modelValue: new Date() },
+            props: { modelValue: new Date() },
         });
 
         const input = wrapper.find("input");
