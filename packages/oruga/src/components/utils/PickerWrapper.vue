@@ -64,7 +64,7 @@ const props = defineProps({
     min: { type: Date, default: undefined },
     max: { type: Date, default: undefined },
     stayOpen: { type: Boolean, default: false },
-    // the DateTimeFormat object to watch for to update the parsed input value
+    /** the DateTimeFormat object to watch for to update the parsed input value */
     dtf: { type: Object, default: undefined },
     rootClasses: { type: Array as PropType<ClassBind[]>, required: true },
     dropdownClasses: { type: Array as PropType<ClassBind[]>, required: true },

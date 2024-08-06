@@ -6,12 +6,7 @@ import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
 import { isDate, pad } from "@/utils/helpers";
-import {
-    defineClasses,
-    useMatchMedia,
-    getActiveClasses,
-    // useVModel,
-} from "@/composables";
+import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
@@ -582,7 +577,7 @@ function updateDateSelected(
 
 /** Format date into string */
 function format(value: Date | Date[], isNative: boolean): string {
-    if (Array.isArray(value)) value = value[0];
+    if (Array.isArray(value)) return format(value[0], isNative);
     if (isNative) return formatNative(value);
 
     // call prop function
@@ -594,7 +589,8 @@ function format(value: Date | Date[], isNative: boolean): string {
 
 /** Format date into string 'HH-MM-SS'*/
 function formatNative(value: Date | Date[]): string {
-    if (Array.isArray(value)) value = value[0];
+    if (Array.isArray(value)) return formatNative(value[0]);
+
     const date = new Date(value);
     // return null if no value is given or value can't parse to proper date
     if (!value || !date || isNaN(date.getTime())) return null;
