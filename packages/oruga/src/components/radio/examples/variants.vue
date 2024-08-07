@@ -9,6 +9,7 @@ const radio = ref("default");
         <o-field>
             <o-radio v-model="radio" native-value="default" label="Default" />
         </o-field>
+
         <o-field>
             <o-radio
                 v-model="radio"
@@ -16,13 +17,7 @@ const radio = ref("default");
                 variant="primary"
                 label="Primary" />
         </o-field>
-        <o-field>
-            <o-radio
-                v-model="radio"
-                native-value="info"
-                variant="info"
-                label="Info" />
-        </o-field>
+
         <o-field>
             <o-radio
                 v-model="radio"
@@ -30,6 +25,15 @@ const radio = ref("default");
                 variant="success"
                 label="Success" />
         </o-field>
+
+        <o-field>
+            <o-radio
+                v-model="radio"
+                native-value="info"
+                variant="info"
+                label="Info" />
+        </o-field>
+
         <o-field>
             <o-radio
                 v-model="radio"
@@ -37,6 +41,7 @@ const radio = ref("default");
                 variant="warning"
                 label="Warning" />
         </o-field>
+
         <o-field>
             <o-radio
                 v-model="radio"

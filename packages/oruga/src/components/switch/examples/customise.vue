@@ -23,7 +23,9 @@ const position = ref("right");
                 <o-select v-model="variant" expanded placeholder="Variant">
                     <option value="null">Default</option>
                     <option value="primary">Primary</option>
+                    <option value="secondary">Secondary</option>
                     <option value="success">Success</option>
+                    <option value="info">Info</option>
                     <option value="warning">Warning</option>
                     <option value="danger">Danger</option>
                 </o-select>
@@ -35,7 +37,9 @@ const position = ref("right");
                     placeholder="Passive Variant">
                     <option value="null">Default</option>
                     <option value="primary">Primary</option>
+                    <option value="secondary">Secondary</option>
                     <option value="success">Success</option>
+                    <option value="info">Info</option>
                     <option value="warning">Warning</option>
                     <option value="danger">Danger</option>
                 </o-select>

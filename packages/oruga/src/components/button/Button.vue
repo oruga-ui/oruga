@@ -194,7 +194,7 @@ const rootClasses = defineClasses(
         "variantClass",
         "o-btn--",
         computed(() => props.variant),
-        computed(() => !!props.variant),
+        computed(() => !!props.variant && !props.outlined && !props.inverted),
     ],
     [
         "outlinedClass",

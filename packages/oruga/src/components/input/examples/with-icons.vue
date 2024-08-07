@@ -3,11 +3,11 @@ import { ref } from "vue";
 
 const email = ref("");
 
-function searchIconClick() {
+function searchIconClick(): void {
     alert("You wanna make a search?");
 }
 
-function clearIconClick() {
+function clearIconClick(): void {
     email.value = "";
     alert("Email cleared!");
 }

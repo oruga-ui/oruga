@@ -4,6 +4,10 @@
             <o-input placeholder="Primary" />
         </o-field>
 
+        <o-field label="Secondary" variant="secondary">
+            <o-input placeholder="Secondary" />
+        </o-field>
+
         <o-field label="Success" variant="success">
             <o-input placeholder="Success" />
         </o-field>

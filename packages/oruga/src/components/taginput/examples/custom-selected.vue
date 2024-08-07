@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const items = ref([]);
 
-function getType(item) {
+function getType(item): string {
     const random = "Z".charCodeAt(0) - item.toUpperCase().charCodeAt(0);
     if (random >= 1 && random < 5) {
         return "primary";

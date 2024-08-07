@@ -11,9 +11,9 @@ function imageModal(): void {
             src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
         }),
     ]);
+
     oruga.modal.open({
         content: [vnode],
-        destroyOnHide: true,
     });
 }
 
@@ -21,7 +21,7 @@ function cardModal(): void {
     oruga.modal.open({
         component: ModalForm,
         trapFocus: true,
-        destroyOnHide: false,
+        cancelable: false,
     });
 }
 </script>
