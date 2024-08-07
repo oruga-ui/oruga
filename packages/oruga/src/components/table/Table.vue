@@ -350,7 +350,7 @@ const props = defineProps({
      */
     emptyIconSize: {
         type: String,
-        default: () => getOption("modal.emptyIconSize", "large"),
+        default: () => getOption("table.emptyIconSize", "large"),
     },
     /** Enable loading state */
     loading: { type: Boolean, default: false },
