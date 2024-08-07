@@ -342,7 +342,7 @@ const props = defineProps({
     /** Icon to be shown when the table is empty */
     emptyIcon: {
         type: String,
-        default: () => getOption("table.emptyIcon", "frown"),
+        default: () => getOption("table.emptyIcon"),
     },
     /**
      * Size of empty icon
@@ -1991,6 +1991,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             -->
                             <slot name="empty">
                                 <o-icon
+                                    v-if="emptyIcon"
                                     :icon="emptyIcon"
                                     :size="emptyIconSize"
                                     both />
