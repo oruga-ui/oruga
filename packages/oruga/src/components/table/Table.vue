@@ -119,8 +119,6 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("table.hoverable", false),
     },
-    /** Enable loading state */
-    loading: { type: Boolean, default: false },
     /** Set which row is selected, use `v-model:selected` to make it two-way binding (if selectable) */
     selected: { type: Object as PropType<T>, default: undefined },
     /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */
@@ -336,6 +334,26 @@ const props = defineProps({
     },
     /** Add a native event to filter */
     filtersEvent: { type: String, default: "" },
+    /** Label to be shown when the table is empty */
+    emptyLabel: {
+        type: String,
+        default: () => getOption("table.emptyLabel"),
+    },
+    /** Icon to be shown when the table is empty */
+    emptyIcon: {
+        type: String,
+        default: () => getOption("table.emptyIcon"),
+    },
+    /**
+     * Size of empty icon
+     * @values small, medium, large
+     */
+    emptyIconSize: {
+        type: String,
+        default: () => getOption("table.emptyIconSize", "large"),
+    },
+    /** Enable loading state */
+    loading: { type: Boolean, default: false },
     /** Icon for the loading state */
     loadingIcon: {
         type: String,
@@ -712,7 +730,6 @@ const emits = defineEmits<{
      * @param event {DragEvent} native drop event
      */
     (e: "drop", row: T, index: number, event: DragEvent): void;
-
     /**
      * on row dragleave event
      * @param row {T} row data
@@ -1415,7 +1432,7 @@ const tableClasses = defineClasses(
     ],
     [
         "emptyClass",
-        "o-table--table__empty",
+        "o-table--empty",
         null,
         computed(() => !visibleRows.value.length),
     ],
@@ -1970,7 +1987,14 @@ defineExpose({ rows: tableData, sort: sortByField });
                             <!--
                                 @slot Define content if table is empty
                             -->
-                            <slot name="empty" />
+                            <slot name="empty">
+                                <o-icon
+                                    v-if="emptyIcon"
+                                    :icon="emptyIcon"
+                                    :size="emptyIconSize"
+                                    both />
+                                {{ emptyLabel }}
+                            </slot>
                         </td>
                     </tr>
                 </tbody>
