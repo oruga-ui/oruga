@@ -1160,7 +1160,6 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
 const tableCheckedRows = defineModel<T[]>("checkedRows", {
     default: [],
 });
-const lastCheckedRowIndex = ref(null);
 
 /** check if all rows in the page are checked */
 const isAllChecked = computed(() => {
@@ -1208,21 +1207,24 @@ function checkAll(): void {
     const checkedRows = visibleRows.value.filter((row) =>
         props.isRowCheckable(row.value),
     );
+    // if all rows are already checked, check nothing
+    // else set all rows as checked
     tableCheckedRows.value = isAllChecked.value
         ? []
         : checkedRows.map((row) => row.value);
-    emits("check-all", tableCheckedRows.value);
+    // emit event after the reactive checked rows list got updated
+    nextTick(() => emits("check-all", tableCheckedRows.value));
 }
 
 /** row checkbox click listener */
-function checkRow(row: TableRow<T>, index: number): void {
+function checkRow(row: TableRow<T>): void {
     if (!props.isRowCheckable(row.value)) return;
-    lastCheckedRowIndex.value = index;
 
-    if (!isChecked(row)) addCheckedRow(row);
-    else removeCheckedRow(row);
+    if (isChecked(row)) removeCheckedRow(row);
+    else addCheckedRow(row);
 
-    emits("check", tableCheckedRows.value, row.value);
+    // emit event after the reactive checked rows list got updated
+    nextTick(() => emits("check", tableCheckedRows.value, row.value));
 }
 
 // --- Detail Row Feature ---
@@ -1883,9 +1885,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     :name="`row_${index}_check`"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
-                                    @update:model-value="
-                                        checkRow(row, index)
-                                    " />
+                                    @update:model-value="checkRow(row)" />
                             </td>
 
                             <!-- row data columns -->
@@ -1929,9 +1929,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
-                                    @update:model-value="
-                                        checkRow(row, index)
-                                    " />
+                                    @update:model-value="checkRow(row)" />
                             </td>
                         </tr>
 
