@@ -13,11 +13,11 @@
         </o-field>
 
         <o-field>
-            <o-checkbox variant="info" indeterminate label="Info" />
+            <o-checkbox variant="success" indeterminate label="Success" />
         </o-field>
 
         <o-field>
-            <o-checkbox variant="success" indeterminate label="Success" />
+            <o-checkbox variant="info" indeterminate label="Info" />
         </o-field>
 
         <o-field>

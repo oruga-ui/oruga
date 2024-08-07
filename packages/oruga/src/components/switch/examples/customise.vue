@@ -25,6 +25,7 @@ const position = ref("right");
                     <option value="primary">Primary</option>
                     <option value="secondary">Secondary</option>
                     <option value="success">Success</option>
+                    <option value="info">Info</option>
                     <option value="warning">Warning</option>
                     <option value="danger">Danger</option>
                 </o-select>
@@ -38,6 +39,7 @@ const position = ref("right");
                     <option value="primary">Primary</option>
                     <option value="secondary">Secondary</option>
                     <option value="success">Success</option>
+                    <option value="info">Info</option>
                     <option value="warning">Warning</option>
                     <option value="danger">Danger</option>
                 </o-select>

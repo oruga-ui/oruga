@@ -16,11 +16,11 @@
         </o-field>
 
         <o-field>
-            <o-checkbox :model-value="true" variant="info" label="Info" />
+            <o-checkbox :model-value="true" variant="success" label="Success" />
         </o-field>
 
         <o-field>
-            <o-checkbox :model-value="true" variant="success" label="Success" />
+            <o-checkbox :model-value="true" variant="info" label="Info" />
         </o-field>
 
         <o-field>

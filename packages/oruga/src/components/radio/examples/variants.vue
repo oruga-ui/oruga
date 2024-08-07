@@ -21,17 +21,17 @@ const radio = ref("default");
         <o-field>
             <o-radio
                 v-model="radio"
-                native-value="info"
-                variant="info"
-                label="Info" />
+                native-value="success"
+                variant="success"
+                label="Success" />
         </o-field>
 
         <o-field>
             <o-radio
                 v-model="radio"
-                native-value="success"
-                variant="success"
-                label="Success" />
+                native-value="info"
+                variant="info"
+                label="Info" />
         </o-field>
 
         <o-field>

@@ -20,7 +20,7 @@
 
         <o-notification
             closable
-            variant="info"
+            variant="success"
             aria-close-label="Close notification">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
@@ -29,7 +29,7 @@
 
         <o-notification
             closable
-            variant="success"
+            variant="info"
             aria-close-label="Close notification">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
