@@ -86,9 +86,9 @@ export type DatepickerProps<
     nearbyMonthDays?: boolean;
     /** Define if nearby month days can be selected */
     nearbySelectableMonthDays?: boolean;
-    /** Show weeek numbers */
+    /** Show week numbers */
     showWeekNumber?: boolean;
-    /** Define if weeek numbers are clickable */
+    /** Define if week numbers are clickable */
     weekNumberClickable?: boolean;
     /** Set the first day of a week */
     firstDayOfWeek?: number;
