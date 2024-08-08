@@ -119,15 +119,9 @@
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                             | Default                |
-| ----------------------------------------- | ---------------------- |
-| $autocomplete-item-color                  | #000000                |
-| $autocomplete-item-disabled-opacity       | $base-disabled-opacity |
-| $autocomplete-item-font-size              | $base-font-size        |
-| $autocomplete-item-hover-background-color | #f5f5f5                |
-| $autocomplete-item-hover-color            | #000000                |
-| $autocomplete-item-line-height            | $base-line-height      |
-| $autocomplete-item-padding                | 0.375rem 1rem          |
+| SASS Variable                             | Default |
+| ----------------------------------------- | ------- |
+| $autocomplete-item-hover-background-color | #f5f5f5 |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 

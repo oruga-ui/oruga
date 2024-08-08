@@ -342,7 +342,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 unselectableDaysOfWeek: number[];
                 /** Define if nearby month days can be selected */
                 nearbySelectableMonthDays: boolean;
-                /** Define if weeek numbers are clickable */
+                /** Define if week numbers are clickable */
                 weekNumberClickable: boolean;
                 /** Define the range of years to show */
                 yearsRange: number[];
@@ -372,7 +372,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 firstDayOfWeek: number;
                 /** Show nearby month days */
                 nearbyMonthDays: boolean;
-                /** Show weeek numbers */
+                /** Show week numbers */
                 showWeekNumber: boolean;
                 /** Size of the control input */
                 size: string;

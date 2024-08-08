@@ -35,7 +35,7 @@
 
 | Prop name        | Description                                                                                                                                                                         | Type                                           | Values                                              | Default                                                                                                                                                              |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active           |                                                                                                                                                                                     | boolean                                        | -                                                   | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                          |
+| active           | Whether modal is active or not, use v-model:active to make it two-way binding                                                                                                       | boolean                                        | -                                                   | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                          |
 | animation        | Custom animation (transition name)                                                                                                                                                  | string                                         | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;animation: "zoom-out"<br>}</code>                |
 | ariaLabel        | Accessibility aria-label to be passed to the div wrapper element                                                                                                                    | string                                         | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaLabel: undefined<br>}</code>                 |
 | ariaRole         | Role attribute to be passed to the div wrapper for better accessibility.                                                                                                            | string                                         | `dialog`, `alertdialog`                             | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaRole: undefined<br>}</code>                  |
@@ -82,20 +82,20 @@
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                              | Default                     |
-| ------------------------------------------ | --------------------------- |
-| $modal-content-background-color            | $white                      |
-| $modal-content-border-radius               | $base-border-radius         |
-| $modal-overlay-background-color            | hsla(0, 0%, 4%, 0.86)       |
-| $modal-close-border-radius                 | $base-rounded-border-radius |
-| $modal-close-right                         | 20px                        |
-| $modal-close-top                           | 20px                        |
-| $modal-close-size                          | 32px                        |
-| $modal-close-color                         | $white                      |
-| $modal-content-fullscreen-background-color | #f5f5f5                     |
-| $modal-content-max-height                  | calc(100vh - 160px)         |
-| $modal-content-margin                      | 0 auto                      |
-| $modal-zindex                              | 40                          |
+| SASS Variable                              | Default                                      |
+| ------------------------------------------ | -------------------------------------------- |
+| $modal-content-background-color            | var(--#{$prefix}white)                       |
+| $modal-content-border-radius               | var(--#{$prefix}base-border-radius)          |
+| $modal-overlay-background-color            | hsla(0, 0%, 4%, 0.86)                        |
+| $modal-close-border-radius                 | var( --#{$prefix}base-border-radius-rounded) |
+| $modal-close-right                         | 20px                                         |
+| $modal-close-top                           | 20px                                         |
+| $modal-close-size                          | 32px                                         |
+| $modal-close-color                         | var(--#{$prefix}white)                       |
+| $modal-content-fullscreen-background-color | #f5f5f5                                      |
+| $modal-content-max-height                  | calc(100vh - 160px)                          |
+| $modal-content-margin                      | 0 auto                                       |
+| $modal-zindex                              | 40                                           |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_modal.scss)
 
