@@ -25,7 +25,6 @@ import OTablePagination from "./TablePagination.vue";
 import { getOption } from "@/utils/config";
 import {
     getValueByPath,
-    indexOf,
     toCssDimension,
     escapeRegExpChars,
     removeDiacriticsFromString,
@@ -176,9 +175,9 @@ const props = defineProps({
         type: String,
         default: () => getOption("table.checkboxVariant"),
     },
-    /** Custom method to verify if a row is checked (if checkable). Useful for backend pagination. */
+    /** Custom method to verify if a row is checked (if checkable) */
     isRowChecked: {
-        type: Function as PropType<(row: T, data: T[]) => boolean>,
+        type: Function as PropType<(row: T) => boolean>,
         default: undefined,
     },
     /** Custom method to verify if a row is checkable (if checkable) */
@@ -953,6 +952,20 @@ function getColumnValue(row: T, column: TableColumn<T>): string {
     return getPropertyValue(row, column.field, column.formatter);
 }
 
+/** check if two rows are eqal by a custom compare function or the rowKey attribute */
+function isRowEqual(
+    sourceRow: MaybeRefOrGetter<T>,
+    targetRow?: MaybeRefOrGetter<T>,
+): boolean {
+    const el1 = toValue(sourceRow);
+    const el2 = toValue(targetRow);
+    if (!isDefined(targetRow)) return false;
+    if (typeof props.customCompare === "function")
+        return props.customCompare(el1, el2);
+    if (props.rowKey) return el1[props.rowKey] == el2[props.rowKey];
+    return el1 == el2;
+}
+
 // --- Select Feature ---
 
 const tableSelectedRow = defineModel<T>("selected", { default: undefined });
@@ -1016,19 +1029,6 @@ function selectRow(row: TableRow<T>, index: number, event: Event): void {
     tableSelectedRow.value = row.value;
     // emit new and old row
     emits("select", row.value, tableSelectedRow.value);
-}
-
-function isRowEqual(
-    sourceRow: MaybeRefOrGetter<T>,
-    targetRow?: MaybeRefOrGetter<T>,
-): boolean {
-    const el1 = toValue(sourceRow);
-    const el2 = toValue(targetRow);
-    if (!isDefined(targetRow)) return false;
-    if (typeof props.customCompare === "function")
-        return props.customCompare(el1, el2);
-    if (props.rowKey) return el1[props.rowKey] == el2[props.rowKey];
-    return el1 == el2;
 }
 
 // --- Filter Feature ---
@@ -1184,13 +1184,8 @@ const isAllChecked = computed(() => {
         props.isRowCheckable(row.value),
     );
     if (validVisibleData.length === 0) return false;
-    return !validVisibleData.some(
-        (currentVisibleRow) =>
-            indexOf(
-                tableCheckedRows.value,
-                currentVisibleRow.value,
-                props.isRowChecked,
-            ) < 0,
+    return !validVisibleData.some((currentVisibleRow) =>
+        isChecked(currentVisibleRow),
     );
 });
 
@@ -1201,7 +1196,9 @@ const isAllUncheckable = computed(
 
 /** check if the row is checked (is added to the array) */
 function isChecked(row: TableRow<T>): boolean {
-    return indexOf(tableCheckedRows.value, row.value, props.isRowChecked) >= 0;
+    if (typeof props.isRowChecked === "function")
+        return props.isRowChecked(row.value);
+    else tableCheckedRows.value.some((r) => isRowEqual(r, row.value));
 }
 
 /** add a checked row to the the array */
@@ -1211,7 +1208,9 @@ function addCheckedRow(row: TableRow<T>): void {
 
 /** remove a checked row from the array */
 function removeCheckedRow(row: TableRow<T>): void {
-    const idx = indexOf(tableCheckedRows.value, row.value, props.isRowChecked);
+    const idx = tableCheckedRows.value.findIndex((r) =>
+        isRowEqual(r, row.value),
+    );
     if (idx >= 0)
         tableCheckedRows.value = tableCheckedRows.value.toSpliced(idx, 1);
 }

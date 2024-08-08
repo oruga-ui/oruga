@@ -1252,8 +1252,12 @@ but will set body to position fixed, might break some layouts. */
                 filterIcon: string;
                 /** Icon pack to use */
                 iconPack: string;
+                /** Icon to be shown when the table is empty */
+                emptyIcon: string;
                 /** Label for the loading state */
                 loadingLabel: string;
+                /** Label to be shown when the table is empty */
+                emptyLabel: string;
                 /** Makes the cells narrower */
                 narrowed: boolean;
                 /** Mobile breakpoint as `max-width` value */
@@ -1282,6 +1286,8 @@ but will set body to position fixed, might break some layouts. */
                 sortIconSize: string;
                 /** Show header */
                 showHeader: boolean;
+                /** Size of empty icon */
+                emptyIconSize: string;
                 /** Size of pagination (if paginated) */
                 paginationSize: string;
                 /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */

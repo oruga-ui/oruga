@@ -66,19 +66,6 @@ export const toCssDimension = (width: string | number): string | number =>
     !isDefined(width) ? null : isNaN(width as number) ? width : width + "px";
 
 /**
- * Extension of indexOf method by equality function if specified
- */
-export function indexOf<T>(
-    array: T[],
-    obj: T,
-    fn: (value: T, array: T[]) => boolean,
-): number {
-    if (!array) return -1;
-    if (!fn || typeof fn !== "function") return array.indexOf(obj);
-    return array.findIndex((value, index, arr) => fn(value, arr));
-}
-
-/**
  * Sort an array by key without mutating original data.
  * Call the user sort function if it was passed.
  */
