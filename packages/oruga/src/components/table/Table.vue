@@ -1184,7 +1184,7 @@ const isAllChecked = computed(() => {
         props.isRowCheckable(row.value),
     );
     if (validVisibleData.length === 0) return false;
-    return !validVisibleData.some((currentVisibleRow) =>
+    return validVisibleData.every((currentVisibleRow) =>
         isChecked(currentVisibleRow),
     );
 });
@@ -1198,7 +1198,7 @@ const isAllUncheckable = computed(
 function isChecked(row: TableRow<T>): boolean {
     if (typeof props.isRowChecked === "function")
         return props.isRowChecked(row.value);
-    else tableCheckedRows.value.some((r) => isRowEqual(r, row.value));
+    else return tableCheckedRows.value.some((r) => isRowEqual(r, row.value));
 }
 
 /** add a checked row to the the array */
@@ -1220,14 +1220,16 @@ function removeCheckedRow(row: TableRow<T>): void {
  * Add or remove all rows in current page.
  */
 function checkAll(): void {
-    const checkedRows = visibleRows.value.filter((row) =>
-        props.isRowCheckable(row.value),
-    );
-    // if all rows are already checked, check nothing
-    // else set all rows as checked
-    tableCheckedRows.value = isAllChecked.value
-        ? []
-        : checkedRows.map((row) => row.value);
+    if (isAllChecked.value)
+        // if all rows are already checked, check nothing
+        tableCheckedRows.value = [];
+    else {
+        // else set all visible rows as checked
+        tableCheckedRows.value = visibleRows.value
+            .filter((row) => props.isRowCheckable(row.value))
+            .map((row) => row.value);
+    }
+
     // emit event after the reactive checked rows list got updated
     nextTick(() => emits("check-all", tableCheckedRows.value));
 }
