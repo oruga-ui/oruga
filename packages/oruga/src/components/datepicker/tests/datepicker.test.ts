@@ -26,36 +26,52 @@ describe("ODatepicker", () => {
     });
 
     test("parses keyboard input", async () => {
-        const wrapper = mount(ODatepicker, { props: { readonly: false } });
+        const wrapper = mount(ODatepicker);
 
-        const target = wrapper.find("input");
-        expect(target.exists()).toBeTruthy();
-        await target.setValue("2024-04-10");
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        await input.setValue("2024-04-10");
 
-        const updates = wrapper.emitted("update:modelValue");
-        expect(updates).toHaveLength(1);
-        expect(updates[0]).toHaveLength(1);
-        const updateValue = updates[0][0];
-        expect(updateValue).toBeInstanceOf(Date);
-        expect((updateValue as Date).toISOString()).toBe(
-            "2024-04-10T00:00:00.000Z",
-        );
+        let date = new Date(Date.UTC(2024, 3, 10));
+
+        let emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
+        expect(emits[0]).toHaveLength(1);
+        expect(emits[0][0]).toBeInstanceOf(Date);
+        expect((emits[0][0] as Date).toISOString()).toBe(date.toISOString());
+        expect(input.element.value).toBe("10/04/2024");
+        await input.setValue("2021-04-18");
+
+        date = new Date(Date.UTC(2021, 3, 18));
+
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(2);
+        expect(emits[1]).toHaveLength(1);
+        expect(emits[1][0]).toBeInstanceOf(Date);
+        expect((emits[1][0] as Date).toISOString()).toBe(date.toISOString());
+        expect(input.element.value).toBe("18/04/2021");
     });
 
     test("handles invalid keyboard input", async () => {
         const wrapper = mount(ODatepicker, {
-            props: { readonly: false, modelValue: new Date() },
+            props: { modelValue: new Date() },
         });
 
-        const target = wrapper.find("input");
-        expect(target.exists()).toBeTruthy();
-        await target.setValue("not-a-date");
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        await input.setValue("not-a-date");
 
-        const updates = wrapper.emitted("update:modelValue");
-        expect(updates).toHaveLength(1);
-        expect(updates[0]).toHaveLength(1);
-        const updateValue = updates[0][0];
-        expect(updateValue).toBeNull();
+        let emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
+        expect(emits[0]).toHaveLength(1);
+        expect(emits[0][0]).toBeNull();
+        expect(input.element.value).toBe("");
+
+        await input.setValue("21/06/wrong");
+
+        emits = wrapper.emitted("update:modelValue");
+        expect(emits).toHaveLength(1);
+        expect(input.element.value).toBe("");
     });
 
     test("react accordingly when an date is selected with multiple prop", async () => {

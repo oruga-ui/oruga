@@ -7,6 +7,7 @@ const PM = "PM" as const;
 const HOUR_FORMAT_24 = "24" as const;
 const HOUR_FORMAT_12 = "12" as const;
 
+/** Time Format Feature */
 export function useTimepickerMixins(props: TimepickerProps) {
     const localeOptions = computed(
         () =>
@@ -49,7 +50,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = sampleTime.value;
+            const d = new Date(sampleTime.value);
             d.setHours(10);
             const dayPeriod = dtf.value
                 .formatToParts(d)
@@ -64,7 +65,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = sampleTime.value;
+            const d = new Date(sampleTime.value);
             d.setHours(20);
             const dayPeriod = dtf.value
                 .formatToParts(d)
@@ -83,7 +84,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = sampleTime.value;
+            const d = new Date(sampleTime.value);
             const parts = dtf.value.formatToParts(d);
             const literal = parts.find(
                 (part, idx) => idx > 0 && parts[idx - 1].type === "hour",
@@ -98,7 +99,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = sampleTime.value;
+            const d = new Date(sampleTime.value);
             const parts = dtf.value.formatToParts(d);
             const literal = parts.find(
                 (part, idx) => idx > 0 && parts[idx - 1].type === "minute",
@@ -113,7 +114,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = sampleTime.value;
+            const d = new Date(sampleTime.value);
             const parts = dtf.value.formatToParts(d);
             const literal = parts.find(
                 (part, idx) => idx > 0 && parts[idx - 1].type === "second",
@@ -124,6 +125,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
     });
 
     function defaultTimeFormatter(time: Date): string {
+        if (!time) return "00:00";
         return dtf.value.format(time);
     }
 
@@ -178,7 +180,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
                 ) {
                     timeGroups.hour += 12;
                 }
-                const date = sampleTime.value;
+                const date = new Date(sampleTime.value);
                 date.setHours(timeGroups.hour);
                 date.setMinutes(timeGroups.minute);
                 date.setSeconds(timeGroups.second || 0);
@@ -196,7 +198,10 @@ export function useTimepickerMixins(props: TimepickerProps) {
         const timeSplit = time.split(":");
         let hours = parseInt(timeSplit[0], 10);
         const minutes = parseInt(timeSplit[1], 10);
-        const seconds = props.enableSeconds ? parseInt(timeSplit[2], 10) : 0;
+        const seconds =
+            props.enableSeconds && timeSplit.length >= 3
+                ? parseInt(timeSplit[2], 10)
+                : 0;
         if (
             isNaN(hours) ||
             hours < 0 ||
@@ -209,7 +214,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
         ) {
             return null;
         }
-        const date = sampleTime.value;
+        const date = new Date(sampleTime.value);
         date.setSeconds(seconds);
         date.setMinutes(minutes);
         if (props.hourFormat === HOUR_FORMAT_12) {
@@ -224,6 +229,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
     }
 
     return {
+        dtf,
         defaultTimeFormatter,
         defaultTimeParser,
         pmString,

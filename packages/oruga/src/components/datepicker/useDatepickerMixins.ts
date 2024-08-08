@@ -3,6 +3,7 @@ import { matchWithGroups } from "./utils";
 import type { DatepickerProps } from "./types";
 import { isTrueish } from "@/utils/helpers";
 
+/** Time Format Feature */
 export function useDatepickerMixins<R extends boolean, M extends boolean>(
     props: DatepickerProps<R, M>,
 ) {
@@ -179,5 +180,10 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
         return (isArray ? dates : dates[0]) as typeof props.modelValue;
     };
 
-    return { isDateSelectable, defaultDateParser, defaultDateFormatter };
+    return {
+        dtf,
+        isDateSelectable,
+        defaultDateParser,
+        defaultDateFormatter,
+    };
 }

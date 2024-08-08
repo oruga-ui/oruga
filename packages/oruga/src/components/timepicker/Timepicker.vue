@@ -5,6 +5,7 @@ import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
+import { isDate, pad } from "@/utils/helpers";
 import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
@@ -81,16 +82,16 @@ const props = defineProps({
     /** Custom function to format a date into a string */
     timeFormatter: {
         type: Function as PropType<(date: Date) => string>,
-        default: (
-            date: Date | Date[],
-            defaultFunction: (date: Date | Date[]) => string,
-        ) => getOption("timepicker.timeFormatter", defaultFunction)(date),
+        default: (date: Date | Date[]) =>
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            getOption("timepicker.timeFormatter", (_) => undefined)(date),
     },
     /** Custom function to parse a string into a date */
     timeParser: {
         type: Function as PropType<(date: string) => Date>,
-        default: (date: string, defaultFunction: (date: string) => Date) =>
-            getOption("timepicker.timeParser", defaultFunction)(date),
+        default: (date: string) =>
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            getOption("timepicker.timeParser", (_) => undefined)(date),
     },
     /** time creator function, default is `new Date()` */
     timeCreator: {
@@ -255,6 +256,7 @@ defineEmits<{
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const {
+    dtf,
     defaultTimeFormatter,
     defaultTimeParser,
     pmString,
@@ -268,6 +270,7 @@ const {
 
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
+/** modelvalue of selected date */
 const vmodel = defineModel<Date>({ default: null });
 
 /** Dropdown active state */
@@ -278,44 +281,38 @@ const minutesSelected = ref();
 const secondsSelected = ref();
 const meridienSelected = ref();
 
-/**
- * When v-model is changed:
- *   1. Update internal value.
- *   2. If it's invalid, validate again.
- */
 watch(
     () => props.modelValue,
-    (value) => {
-        if (value) {
-            hoursSelected.value = value.getHours();
-            minutesSelected.value = value.getMinutes();
-            secondsSelected.value = value.getSeconds();
-            meridienSelected.value =
-                value.getHours() >= 12 ? pmString.value : amString.value;
-        } else {
-            hoursSelected.value = null;
-            minutesSelected.value = null;
-            secondsSelected.value = null;
-            meridienSelected.value = amString.value;
-        }
-    },
+    (value) => updateValue(value),
     { immediate: true },
 );
 
-/** Format date into string */
-const formattedValue = computed(() =>
-    (props.timeFormatter as any)(props.modelValue, defaultTimeFormatter),
-);
+/** Update internal value. */
+function updateValue(value: Date | Date[]): void {
+    if (Array.isArray(value)) return updateValue(value[0]);
+    if (vmodel.value !== value) vmodel.value = value as Date;
+    if (value) {
+        hoursSelected.value = value.getHours();
+        minutesSelected.value = value.getMinutes();
+        secondsSelected.value = value.getSeconds();
+        meridienSelected.value =
+            value.getHours() >= 12 ? pmString.value : amString.value;
+    } else {
+        hoursSelected.value = null;
+        minutesSelected.value = null;
+        secondsSelected.value = null;
+        meridienSelected.value = amString.value;
+    }
+}
 
-const nativeStep = computed(() => (props.enableSeconds ? "1" : null));
+const step = computed(() => (props.enableSeconds ? "1" : null));
 
 watch(
     () => props.hourFormat,
     () => {
-        if (hoursSelected.value !== null) {
+        if (hoursSelected.value !== null)
             meridienSelected.value =
                 hoursSelected.value >= 12 ? pmString.value : amString.value;
-        }
     },
 );
 
@@ -331,10 +328,6 @@ function formatNumber(value: number, prependZero: boolean): string {
     return isHourFormat24.value || prependZero ? pad(value) : String(value);
 }
 
-function pad(value: number): string {
-    return (value < 10 ? "0" : "") + value;
-}
-
 const hours = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementHours || props.incrementHours < 1)
         throw new Error("Hour increment cannot be null or less than 1.");
@@ -347,13 +340,9 @@ const hours = computed<OptionsItem<number>[]>(() => {
             value = i + 1;
             label = value;
             if (meridienSelected.value === amString.value) {
-                if (value === 12) {
-                    value = 0;
-                }
+                if (value === 12) value = 0;
             } else if (meridienSelected.value === pmString.value) {
-                if (value !== 12) {
-                    value += 12;
-                }
+                if (value !== 12) value += 12;
             }
         }
         hours.push({
@@ -584,8 +573,24 @@ function updateDateSelected(
     }
 }
 
+// --- Formatter / Parser ---
+
+/** Format date into string */
+function format(value: Date | Date[], isNative: boolean): string {
+    if (Array.isArray(value)) return format(value[0], isNative);
+    if (isNative) return formatNative(value);
+
+    // call prop function
+    const formatted = props.timeFormatter(value);
+    // call default if prop function is not given
+    if (typeof formatted === "undefined") return defaultTimeFormatter(value);
+    else return formatted;
+}
+
 /** Format date into string 'HH-MM-SS'*/
-function formatNative(value: Date): string {
+function formatNative(value: Date | Date[]): string {
+    if (Array.isArray(value)) return formatNative(value[0]);
+
     const date = new Date(value);
     // return null if no value is given or value can't parse to proper date
     if (!value || !date || isNaN(date.getTime())) return null;
@@ -600,6 +605,35 @@ function formatNative(value: Date): string {
         ":" +
         formatNumber(seconds, true)
     );
+}
+
+/** Parse string into date */
+function parse(value: string, isNative: boolean): Date {
+    if (isNative) return parseNative(value);
+
+    // call prop function
+    let date = props.timeParser(value);
+    // call default if prop function is not given
+    if (typeof date === "undefined") date = defaultTimeParser(value);
+    return isDate(date) ? date : null;
+}
+
+/** Parse time from string */
+function parseNative(date: string): Date {
+    if (!date) return null;
+
+    let time = null;
+    if (vmodel.value) {
+        time = new Date(vmodel.value);
+    } else {
+        time = props.timeCreator();
+        time.setMilliseconds(0);
+    }
+    const t = date.split(":");
+    time.setHours(parseInt(t[0], 10));
+    time.setMinutes(parseInt(t[1], 10));
+    time.setSeconds(t[2] ? parseInt(t[2], 10) : 0);
+    return new Date(time.getTime());
 }
 
 // --- Event Handler ---
@@ -657,32 +691,6 @@ function onSecondsChange(value: string): void {
     );
 }
 
-/** Parse string into date */
-function onChange(value: string): void {
-    const date = (props.timeParser as any)(value, defaultTimeParser);
-    vmodel.value = date ? date : null;
-}
-
-/** Parse time from string */
-function onChangeNativePicker(date: string): void {
-    if (date) {
-        let time = null;
-        if (vmodel.value) {
-            time = new Date(vmodel.value);
-        } else {
-            time = props.timeCreator();
-            time.setMilliseconds(0);
-        }
-        const t = date.split(":");
-        time.setHours(parseInt(t[0], 10));
-        time.setMinutes(parseInt(t[1], 10));
-        time.setSeconds(t[2] ? parseInt(t[2], 10) : 0);
-        vmodel.value = new Date(time.getTime());
-    } else {
-        vmodel.value = null;
-    }
-}
-
 // --- Computed Component Classes ---
 
 const selectSelectClasses = defineClasses([
@@ -734,20 +742,20 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
     <OPickerWrapper
         ref="pickerRef"
         v-model:active="isActive"
-        data-oruga="timepicker"
         :value="vmodel"
+        data-oruga="timepicker"
         :picker-props="props"
-        :formatted-value="formattedValue"
-        native-type="time"
-        :native-value="formatNative(vmodel)"
-        :native-max="formatNative(maxTime)"
-        :native-min="formatNative(minTime)"
-        :native-step="nativeStep"
+        :formatter="format"
+        :parser="parse"
+        type="time"
+        :max="maxTime"
+        :min="minTime"
+        :step="step"
         :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
         :box-class="boxClassBind"
-        @change="onChange"
-        @native-change="onChangeNativePicker"
+        :dtf="dtf"
+        @update:value="updateValue"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @invalid="$emit('invalid', $event)"

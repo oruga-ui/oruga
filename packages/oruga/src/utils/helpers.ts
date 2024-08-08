@@ -22,6 +22,8 @@ export const sign = Math.sign || signPoly;
  */
 export const mod = (n: number, mod: number): number => ((n % mod) + mod) % mod;
 
+export const pad = (value: number): string => (value < 10 ? "0" : "") + value;
+
 /**
  * Asserts a value is beetween min and max
  * @param val
