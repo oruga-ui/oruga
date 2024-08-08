@@ -142,13 +142,22 @@ const props = defineProps({
         type: [Boolean, String, Object],
         default: () => getOption("datetimepicker.teleport", false),
     },
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation: {
         type: Boolean,
         default: () => getOption("useHtml5Validation", true),
     },
-    /** The message which is shown when a validation error occurs */
-    validationMessage: { type: String, default: undefined },
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity: {
+        type: [String, Function] as PropType<
+            | string
+            | ((
+                  currentValue: Date | null | undefined,
+                  state: ValidityState,
+              ) => string)
+        >,
+        default: "",
+    },
     // class props (will not be displayed in the docs)
     /** Class of the Datepicker wrapper */
     datepickerWrapperClass: {
@@ -486,9 +495,11 @@ defineExpose({ focus: setFocus, value: vmodel });
         :mobile-native="isMobileNative"
         :locale="locale"
         :teleport="teleport"
+        :use-html5-validation="false"
         @update:model-value="updateVModel"
         @focus="onFocus"
         @blur="onBlur"
+        @invalid="onInvalid"
         @change-month="$emit('change-month', $event)"
         @change-year="$emit('change-year', $event)"
         @icon-click="$emit('icon-click', $event)"

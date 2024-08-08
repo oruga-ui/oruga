@@ -4,6 +4,12 @@ import type { SelectProps } from "../select/types";
 import type { DropdownProps } from "../dropdown/types";
 import type { InputProps } from "../input/types";
 
+type DatepickerType<IsRange, IsMultiple> = IsRange extends true
+    ? [Date, Date] | []
+    : IsMultiple extends true
+      ? Date[]
+      : Date;
+
 export type DatepickerProps<
     IsRange extends boolean = false,
     IsMultiple extends boolean = false,
@@ -11,11 +17,7 @@ export type DatepickerProps<
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
-    modelValue?: IsRange extends true
-        ? [Date, Date] | []
-        : IsMultiple extends true
-          ? Date[]
-          : Date;
+    modelValue?: DatepickerType<IsRange, IsMultiple>;
     /** Enable date range selection */
     range?: IsRange;
     /** Same as native, also push new item to v-model instead of replacing */
@@ -84,9 +86,9 @@ export type DatepickerProps<
     nearbyMonthDays?: boolean;
     /** Define if nearby month days can be selected */
     nearbySelectableMonthDays?: boolean;
-    /** Show weeek numbers */
+    /** Show week numbers */
     showWeekNumber?: boolean;
-    /** Define if weeek numbers are clickable */
+    /** Define if week numbers are clickable */
     weekNumberClickable?: boolean;
     /** Set the first day of a week */
     firstDayOfWeek?: number;
@@ -137,10 +139,18 @@ export type DatepickerProps<
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
-    /** The message which is shown when a validation error occurs */
-    validationMessage?: string;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?:
+        | string
+        | ((
+              currentValue:
+                  | DatepickerType<IsRange, IsMultiple>
+                  | null
+                  | undefined,
+              state: ValidityState,
+          ) => string);
     /** Accessibility next button aria label */
     ariaNextLabel?: string;
     /** Accessibility previous button aria label  */

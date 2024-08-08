@@ -64,7 +64,7 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     autocomplete: getOption("input.autocomplete", "off"),
     id: uuid(),
     useHtml5Validation: getOption("useHtml5Validation", true),
-    validationMessage: undefined,
+    customValidity: "",
 });
 
 type ModelValue = typeof props.modelValue;

@@ -354,6 +354,7 @@ defineExpose({ focus: setFocus });
                         :readonly="pickerProps.readonly"
                         autocomplete="off"
                         :use-html5-validation="false"
+                        @invalid="onInvalid"
                         @click="onInputClick"
                         @keyup.enter="togglePicker(true)"
                         @change="onChange"

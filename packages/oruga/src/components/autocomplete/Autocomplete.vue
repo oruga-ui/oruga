@@ -226,13 +226,22 @@ const props = defineProps({
         type: String,
         default: () => getOption("autocomplete.autocomplete", "off"),
     },
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation: {
         type: Boolean,
         default: () => getOption("useHtml5Validation", true),
     },
-    /** The message which is shown when a validation error occurs */
-    validationMessage: { type: String, default: undefined },
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity: {
+        type: [String, Function] as PropType<
+            | string
+            | ((
+                  currentValue: T | null | undefined,
+                  state: ValidityState,
+              ) => string)
+        >,
+        default: "",
+    },
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.

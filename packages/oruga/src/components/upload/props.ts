@@ -1,5 +1,7 @@
 import type { ComponentClass } from "@/types";
 
+type UploadType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
 export type UploadProps<
     T extends object | typeof File,
     IsMultiple extends boolean,
@@ -10,7 +12,7 @@ export type UploadProps<
      * The input value state
      * @type object | File
      */
-    modelValue?: IsMultiple extends true ? T[] : T;
+    modelValue?: UploadType<T, IsMultiple>;
     /** Same as native, also push new item to v-model instead of replacing */
     multiple?: IsMultiple;
     /**
@@ -28,10 +30,15 @@ export type UploadProps<
     expanded?: boolean;
     /** Replace last chosen files every time (like native file input element) */
     native?: boolean;
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
-    /** The message which is shown when a validation error occurs */
-    validationMessage?: string;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?:
+        | string
+        | ((
+              currentValue: UploadType<T, IsMultiple> | null | undefined,
+              state: ValidityState,
+          ) => string);
 } & UploadClasses;
 
 // class props (will not be displayed in the docs)

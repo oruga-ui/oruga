@@ -2,7 +2,9 @@ import {
     nextTick,
     ref,
     computed,
+    triggerRef,
     watch,
+    watchEffect,
     type ExtractPropTypes,
     type MaybeRefOrGetter,
     type Component,
@@ -66,8 +68,11 @@ export function useInputHandler<T extends ValidatableFormElement>(
     /** validation configuration props */
     props: Readonly<
         ExtractPropTypes<{
+            modelValue?: unknown;
             useHtml5Validation?: boolean;
-            validationMessage?: string;
+            customValidity?:
+                | string
+                | ((currentValue: any, v: ValidityState) => string);
         }>
     >,
 ) {
@@ -163,8 +168,8 @@ export function useInputHandler<T extends ValidatableFormElement>(
      */
     function checkHtml5Validity(): void {
         if (!props.useHtml5Validation) return;
-
         if (!element.value) return;
+
         if (element.value.validity.valid) {
             setFieldValidity(null, null);
             isValid.value = true;
@@ -176,19 +181,21 @@ export function useInputHandler<T extends ValidatableFormElement>(
 
     function setInvalid(): void {
         const variant = "danger";
-        const message =
-            props.validationMessage || element.value.validationMessage;
+        const message = element.value.validationMessage;
         setFieldValidity(variant, message);
     }
 
     function onInvalid(event: Event): void {
         checkHtml5Validity();
         const validatable = asValidatableFormElement(event.target);
+
         if (validatable && parentField?.value && props.useHtml5Validation) {
             // We provide our own error message on the field, so we should suppress the browser's default tooltip.
             // We still want to focus the form's first invalid input, though.
             event.preventDefault();
+
             let isFirstInvalid = false;
+
             if (validatable.form != null) {
                 const formElements = validatable.form.elements;
                 for (let i = 0; i < formElements.length; ++i) {
@@ -201,6 +208,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
                     }
                 }
             }
+
             if (isFirstInvalid) {
                 const fieldElement = parentField.value.$el;
                 const invalidHandler = getOption("invalidHandler");
@@ -225,12 +233,67 @@ export function useInputHandler<T extends ValidatableFormElement>(
     }
 
     if (!isSSR) {
-        // Respond to attribute changes that might clear constraint validation errors.
-        // For instance, removing the `required` attribute on an empty field means that it's no
-        // longer invalid, so we might as well clear the validation message.
-        // In order to follow our usual convention, we won't add new validation messages
-        // until the next time the user interacts with the control.
+        /**
+         * Provides a way to force the watcher on `updateCustomValidationMessage` to re-run
+         *
+         * There are some cases (e.g. changes to the element's validation attributes) that can
+         * force changes to the element's `validityState`, which isn't a reactive property.
+         * Note that just calling the watcher's internal function directly (outside the watcher)
+         * wouldn't be a complete solution; the watcher would then miss any new reactive dependencies
+         * that show up, e.g. because `props.customValidity` starts taking a branch that the watcher
+         * hasn't seen before.
+         */
+        const forceValidationUpdate = ref(null);
 
+        // Propagate any custom constraint validation message to the underlying DOM element.
+        // Note that using watchEffect will implicitly pick up any reactive dependencies used
+        // inside props.customValidity, which should help the computed message stay up to date.
+        watchEffect((): void => {
+            forceValidationUpdate.value;
+            if (!(props.useHtml5Validation ?? true)) return;
+
+            const element = maybeElement.value;
+            if (!isDefined(element)) return;
+
+            const validity = props.customValidity ?? "";
+            if (typeof validity === "string") {
+                element.setCustomValidity(validity);
+            } else {
+                // The custom validation message may depend on `element.validity`,
+                // which isn't a reactive property. `element.validity` depends on
+                // the element's current value and the native constraint validation
+                // attributes. We can use `props.modelValue` as a reasonable proxy
+                // for the DOM element's value, and `props.modelValue` _is_ reactive,
+                // so we can read it to help solve that reactivity problem.
+                element.setCustomValidity(
+                    validity(props.modelValue, element.validity),
+                );
+            }
+
+            // Updates the user-visible validation message if necessary
+            if (!isValid.value) checkHtml5Validity();
+        });
+
+        // Clean up validation state if we stop controlling it.
+        watch(
+            [maybeElement, (): boolean => props.useHtml5Validation ?? true],
+            (newItems, oldItems) => {
+                const newElement = newItems[0];
+                const newUseValidation = newItems[1];
+                const oldElement = oldItems[0];
+                const oldUseValidation = oldItems[1];
+                if (newElement !== oldElement) {
+                    // Since we're no longer managing the element, we might
+                    // as well clean up any custom validity we set up.
+                    oldElement?.setCustomValidity("");
+                } else if (oldUseValidation && !newUseValidation) {
+                    newElement?.setCustomValidity("");
+                }
+            },
+        );
+
+        // Respond to attribute changes that could affect validation messages.
+        //
         // Technically, having the `required` attribute on one element in a radio button
         // group affects the validity of the entire group.
         // See https://html.spec.whatwg.org/multipage/input.html#radio-button-group.
@@ -240,51 +303,82 @@ export function useInputHandler<T extends ValidatableFormElement>(
         // (We're also expecting the use of radio buttons with our default validation message handling
         // to be fairly uncommon because the overall visual experience is clunky with such a configuration.)
         const onAttributeChange = (): void => {
-            if (!isValid.value) checkHtml5Validity();
+            triggerRef(forceValidationUpdate);
         };
+
         let validationAttributeObserver: MutationObserver | null = null;
+
         watch(
-            [maybeElement, isValid, () => props.useHtml5Validation],
-            (data) => {
+            [
+                maybeElement,
+                isValid,
+                (): boolean => props.useHtml5Validation ?? true,
+                ():
+                    | string
+                    | ((s: ValidityState, v: any) => string)
+                    | undefined => props.customValidity,
+            ],
+            (newData, oldData) => {
                 // Not using destructuring assignment because browser support is just a little too weak at the moment
-                const el = data[0];
-                const valid = data[1];
-                const useValidation = data[2];
+                const el = newData[0];
+                const valid = newData[1];
+                const useValidation = newData[2];
+                const functionalValidation = newData[3] instanceof Function;
+                const oldEl = oldData[0];
+
+                const needWatcher =
+                    isDefined(el) &&
+                    useValidation &&
+                    // For inputs known to be invalid, changes in constraint validation properties
+                    // may make it so the field is now valid and the message needs to be hidden.
+                    // For browser-implemented constraint validation (e.g. the `required` attribute),
+                    // we just care about the message displayed to the user, which is hidden for valid inputs
+                    // until the next interaction with the control.
+                    (!valid ||
+                        // For inputs with complex custom validation, any changes to validation-related attributes
+                        // may affect the results of `props.customValidity`.
+                        functionalValidation);
 
                 // Clean up previous state.
-                if (validationAttributeObserver != null) {
+                if (
+                    (!needWatcher || el !== oldEl) &&
+                    validationAttributeObserver != null
+                ) {
                     // Process any pending events.
                     if (validationAttributeObserver.takeRecords().length > 0)
                         onAttributeChange();
                     validationAttributeObserver.disconnect();
                 }
 
-                if (!isDefined(el) || valid || !useValidation) return;
+                // Update the watcher.
+                // Note that this branch is also used for the initial setup of the watcher.
+                // We're assuming that `maybeElement` will start out null when the watcher is created, which will
+                // cause the watcher to be triggered (with `oldEl == undefined`) once the component is mounted.
+                if (needWatcher && isDefined(el) && el !== oldEl) {
+                    if (validationAttributeObserver == null) {
+                        validationAttributeObserver = new MutationObserver(
+                            onAttributeChange,
+                        );
+                    }
+                    validationAttributeObserver.observe(el, {
+                        attributeFilter: constraintValidationAttributes,
+                    });
 
-                if (validationAttributeObserver == null) {
-                    validationAttributeObserver = new MutationObserver(
-                        onAttributeChange,
-                    );
-                }
-                validationAttributeObserver.observe(el, {
-                    attributeFilter: constraintValidationAttributes,
-                });
-
-                // Note that this doesn't react to changes in the list of ancestors.
-                // Based on testing, Vue seems to rarely, if ever, re-parent DOM nodes;
-                // it generally prefers to create new ones under the new parent.
-                // That means this simpler solution is likely good enough for now.
-                let ancestor: Node | null = el;
-                while ((ancestor = ancestor.parentNode)) {
-                    // Form controls can be disabled by their ancestor fieldsets.
-                    if (ancestor instanceof HTMLFieldSetElement) {
-                        validationAttributeObserver.observe(ancestor, {
-                            attributeFilter: ["disabled"],
-                        });
+                    // Note that this doesn't react to changes in the list of ancestors.
+                    // Based on testing, Vue seems to rarely, if ever, re-parent DOM nodes;
+                    // it generally prefers to create new ones under the new parent.
+                    // That means this simpler solution is likely good enough for now.
+                    let ancestor: Node | null = el;
+                    while ((ancestor = ancestor.parentNode)) {
+                        // Form controls can be disabled by their ancestor fieldsets.
+                        if (ancestor instanceof HTMLFieldSetElement) {
+                            validationAttributeObserver.observe(ancestor, {
+                                attributeFilter: ["disabled"],
+                            });
+                        }
                     }
                 }
             },
-            { immediate: true },
         );
     }
 

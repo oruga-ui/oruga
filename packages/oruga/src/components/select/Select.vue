@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     iconRightVariant: undefined,
     id: uuid(),
     useHtml5Validation: () => getOption("useHtml5Validation", true),
-    validationMessage: undefined,
+    customValidation: "",
     autocomplete: () => getOption("select.autocomplete", "off"),
     statusIcon: () => getOption("statusIcon", true),
 });
