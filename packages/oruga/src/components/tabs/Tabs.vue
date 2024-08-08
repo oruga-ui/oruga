@@ -401,6 +401,7 @@ function itemHeaderClasses(
                 @slot Additional slot before tabs
             -->
             <slot name="start" />
+
             <div
                 v-for="childItem in items"
                 v-show="childItem.visible"
@@ -451,6 +452,7 @@ function itemHeaderClasses(
                     </span>
                 </component>
             </div>
+
             <!--
                 @slot Additional slot after tabs
             -->

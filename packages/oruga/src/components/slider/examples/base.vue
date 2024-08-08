@@ -29,9 +29,7 @@ const sliderType = computed(() => {
         </o-field>
 
         <o-field label="Custom tooltip label">
-            <o-slider
-                :model-value="30"
-                :custom-formatter="(val) => val + '%'" />
+            <o-slider :model-value="30" :formatter="(val) => val + '%'" />
         </o-field>
 
         <o-field label="Rounded thumb">

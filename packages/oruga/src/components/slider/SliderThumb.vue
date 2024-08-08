@@ -88,8 +88,8 @@ const currentPosition = computed(
 const wrapperStyle = computed(() => ({ left: currentPosition.value }));
 
 const formattedValue = computed(() => {
-    if (typeof slider.value.customFormatter !== "undefined")
-        return slider.value.customFormatter(props.modelValue);
+    if (typeof slider.value.formatter !== "undefined")
+        return slider.value.formatter(props.modelValue);
 
     if (slider.value.format === "percent")
         return new Intl.NumberFormat(slider.value.locale, {
