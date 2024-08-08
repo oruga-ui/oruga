@@ -402,7 +402,6 @@ function itemHeaderClasses(
             -->
             <slot name="start" />
 
-            <!--  add keydown evtnt handler to navigate tabs - vortrag frontend circle -->
             <div
                 v-for="childItem in items"
                 v-show="childItem.visible"
@@ -453,6 +452,7 @@ function itemHeaderClasses(
                     </span>
                 </component>
             </div>
+
             <!--
                 @slot Additional slot after tabs
             -->
