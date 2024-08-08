@@ -35,7 +35,7 @@
 
 | Prop name        | Description                                                                                                                                                                         | Type                                           | Values                                                                          | Default                                                                                                                                                            |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| active           | Whether siedbar is active or not, use v-model:active to make it two-way binding                                                                                                     | boolean                                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                        |
+| active           |                                                                                                                                                                                     | boolean                                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                        |
 | animation        | Custom animation (transition name)                                                                                                                                                  | string                                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;animation: undefined<br>}</code>             |
 | cancelable       | Is Sidebar cancleable by pressing escape or clicking outside.                                                                                                                       | boolean \| string[]                            | `escape`, `outside`, `true`, `false`                                            | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;cancelable: ["escape","outside"]<br>}</code> |
 | component        | Component to be injected, used to open a component sidebar programmatically.<br/>Close sidebar within the component by emitting a 'close' event — emits('close')                    | any                                            | -                                                                               |                                                                                                                                                                    |
@@ -81,17 +81,17 @@
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                     | Default                                            |
-| --------------------------------- | -------------------------------------------------- |
-| $sidebar-overlay                  | hsla(0, 0%, 4%, 0.86)                              |
-| $sidebar-box-shadow               | 5px 0px 13px 3px rgba(var(--#{$prefix}black), 0.1) |
-| $sidebar-content-background-color | var(--#{$prefix}grey-lighter)                      |
-| $sidebar-border-radius            | var(--#{$prefix}base-border-radius)                |
-| $sidebar-border-width             | 1px                                                |
-| $sidebar-border-color             | rgba(0, 0, 0, 0.175)                               |
-| $sidebar-reduced-width            | 80px                                               |
-| $sidebar-width                    | 260px                                              |
-| $sidebar-zindex                   | 100                                                |
+| SASS Variable                     | Default                            |
+| --------------------------------- | ---------------------------------- |
+| $sidebar-overlay                  | hsla(0, 0%, 4%, 0.86)              |
+| $sidebar-box-shadow               | 5px 0px 13px 3px rgba($black, 0.1) |
+| $sidebar-content-background-color | $grey-lighter                      |
+| $sidebar-border-radius            | $base-border-radius                |
+| $sidebar-border-width             | 1px                                |
+| $sidebar-border-color             | rgba(0, 0, 0, 0.175)               |
+| $sidebar-reduced-width            | 80px                               |
+| $sidebar-width                    | 260px                              |
+| $sidebar-zindex                   | 100                                |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_sidebar.scss)
 
