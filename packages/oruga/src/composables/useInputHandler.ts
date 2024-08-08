@@ -188,11 +188,14 @@ export function useInputHandler<T extends ValidatableFormElement>(
     function onInvalid(event: Event): void {
         checkHtml5Validity();
         const validatable = asValidatableFormElement(event.target);
+
         if (validatable && parentField?.value && props.useHtml5Validation) {
             // We provide our own error message on the field, so we should suppress the browser's default tooltip.
             // We still want to focus the form's first invalid input, though.
             event.preventDefault();
+
             let isFirstInvalid = false;
+
             if (validatable.form != null) {
                 const formElements = validatable.form.elements;
                 for (let i = 0; i < formElements.length; ++i) {
@@ -205,6 +208,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
                     }
                 }
             }
+
             if (isFirstInvalid) {
                 const fieldElement = parentField.value.$el;
                 const invalidHandler = getOption("invalidHandler");
@@ -246,13 +250,11 @@ export function useInputHandler<T extends ValidatableFormElement>(
         // inside props.customValidity, which should help the computed message stay up to date.
         watchEffect((): void => {
             forceValidationUpdate.value;
-            if (!(props.useHtml5Validation ?? true)) {
-                return;
-            }
+            if (!(props.useHtml5Validation ?? true)) return;
+
             const element = maybeElement.value;
-            if (!isDefined(element)) {
-                return;
-            }
+            if (!isDefined(element)) return;
+
             const validity = props.customValidity ?? "";
             if (typeof validity === "string") {
                 element.setCustomValidity(validity);
@@ -267,6 +269,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
                     validity(props.modelValue, element.validity),
                 );
             }
+
             // Updates the user-visible validation message if necessary
             if (!isValid.value) checkHtml5Validity();
         });
@@ -302,7 +305,9 @@ export function useInputHandler<T extends ValidatableFormElement>(
         const onAttributeChange = (): void => {
             triggerRef(forceValidationUpdate);
         };
+
         let validationAttributeObserver: MutationObserver | null = null;
+
         watch(
             [
                 maybeElement,
