@@ -3,5 +3,5 @@
 ## Packages for Oruga
 
 1. **docs** - Oruga documentation
-2. **examples** - Oruga Components example bundle
+2. **examples** - Oruga components example bundle
 2. **oruga** - Main source code for Oruga
