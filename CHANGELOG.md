@@ -1,3 +1,24 @@
+# [0.9.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.1...v0.9.0-pre.2) (2024-08-08)
+
+
+### Bug Fixes
+
+* **datetimepicker:** solve editing directly not working correctly ([#1026](https://github.com/oruga-ui/oruga/issues/1026)) ([05e392e](https://github.com/oruga-ui/oruga/commit/05e392ea81d40e609d85f8aa628c37c380919776))
+* **dropdown:** prevent background scrolling on mobile ([#1022](https://github.com/oruga-ui/oruga/issues/1022)) ([bc1b497](https://github.com/oruga-ui/oruga/commit/bc1b49729f67b7e9ea6ea9cfd778e934b8e06e96))
+* **icon:** adjust `component` prop type ([#1028](https://github.com/oruga-ui/oruga/issues/1028)) ([a656182](https://github.com/oruga-ui/oruga/commit/a656182c3e29fa87950745dbe8357cabc8e18043))
+* **table:** emit `check` and `check-all` after reactive value got updated ([#1031](https://github.com/oruga-ui/oruga/issues/1031)) ([bf708ee](https://github.com/oruga-ui/oruga/commit/bf708eedc8ba319d86e33ae214c8ad407f6693f6))
+* **table:** solve an issue with `isRowChecked` prop ([#1032](https://github.com/oruga-ui/oruga/issues/1032)) ([9bcc478](https://github.com/oruga-ui/oruga/commit/9bcc478ac3cf2e051f414e2fa870e62d3953b7d2))
+* **theme:** solve an issue with class as string array definition ([#1024](https://github.com/oruga-ui/oruga/issues/1024)) ([754e1ee](https://github.com/oruga-ui/oruga/commit/754e1eecdfe4a68704e1a8b0c32b3f97150aab52))
+
+
+### Features
+
+* allow custom constraint validation errors ([#1023](https://github.com/oruga-ui/oruga/issues/1023)) ([a465a22](https://github.com/oruga-ui/oruga/commit/a465a22977276edb8f273ef8ccbd63761e56dc55))
+* **field:** programmatically associate inputs with field messages ([#1021](https://github.com/oruga-ui/oruga/issues/1021)) ([6fc309f](https://github.com/oruga-ui/oruga/commit/6fc309ff3b4fb324b3c69d193b7b116c1cb9913e))
+* **table:** add icon/label to `empty` slot ([#1030](https://github.com/oruga-ui/oruga/issues/1030)) ([79a7ab9](https://github.com/oruga-ui/oruga/commit/79a7ab905e81988544b3c5390f0ca879f71229cb))
+* **slider**: rename `customFormatter` prop to `formatter` prop ([#1033](https://github.com/oruga-ui/oruga/pull/1033))
+
+
 # [0.9.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.8.11...v0.9.0-pre.1) (2024-07-12)
 
 
