@@ -31,7 +31,6 @@ import {
     sortBy,
     isDefined,
     getPropertyValue,
-    isEqual,
 } from "@/utils/helpers";
 import {
     defineClasses,
@@ -1199,7 +1198,7 @@ const isAllUncheckable = computed(
 function isChecked(row: TableRow<T>): boolean {
     if (typeof props.isRowChecked === "function")
         return props.isRowChecked(row.value);
-    else tableCheckedRows.value.some((r) => isEqual(r, row.value));
+    else tableCheckedRows.value.some((r) => isRowEqual(r, row.value));
 }
 
 /** add a checked row to the the array */
