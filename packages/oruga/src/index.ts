@@ -10,6 +10,9 @@ import { registerPlugin, registerComponentProgrammatic } from "./utils/plugins";
 export * from "./types";
 export * from "./components/types";
 
+// export all helper functions
+export * from "./utils/helpers";
+
 // export all vue components
 export * from "./components";
 // export all components as vue plugin

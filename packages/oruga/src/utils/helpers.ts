@@ -22,6 +22,7 @@ export const sign = Math.sign || signPoly;
  */
 export const mod = (n: number, mod: number): number => ((n % mod) + mod) % mod;
 
+/** add a prefix `0` to a 1 digit number */
 export const pad = (value: number): string => (value < 10 ? "0" : "") + value;
 
 /**
@@ -35,12 +36,21 @@ export function bound(val: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, val));
 }
 
+/**
+ * checks if the value is of type object
+ */
 export const isObject = (value: unknown): boolean =>
     value && typeof value === "object" && !Array.isArray(value);
 
+/**
+ * checks if the value is of type date
+ */
 export const isDate = (value: unknown): value is Date =>
     value && value instanceof Date && !isNaN(value.getTime());
 
+/**
+ * checks if the value is not null or undefined
+ */
 export const isDefined = (value: unknown): boolean =>
     value !== null && value !== undefined;
 
@@ -64,8 +74,15 @@ export const defaultIfUndefined = <T>(
     defaultValue: T,
 ): T => (isDefined(value) ? value : defaultValue);
 
-export const toCssDimension = (width: string | number): string | number =>
-    !isDefined(width) ? null : isNaN(width as number) ? width : width + "px";
+export const toCssDimension = (
+    width: string | number,
+    dimension: string = "px",
+): string | number =>
+    !isDefined(width)
+        ? null
+        : isNaN(width as number)
+          ? width
+          : width + dimension;
 
 /**
  * Sort an array by key without mutating original data.
@@ -282,18 +299,6 @@ export function removeElement(el: Element): void {
     } else if (typeof el.parentNode !== "undefined" && el.parentNode !== null) {
         el.parentNode.removeChild(el);
     }
-}
-
-export function createAbsoluteElement(el: Element): HTMLDivElement {
-    const root = document.createElement("div");
-    root.style.position = "absolute";
-    root.style.left = "0px";
-    root.style.top = "0px";
-    const wrapper = document.createElement("div");
-    root.appendChild(wrapper);
-    wrapper.appendChild(el);
-    document.body.appendChild(root);
-    return root;
 }
 
 /**
