@@ -41,7 +41,7 @@ export type SelectProps<IsRange extends boolean> = {
     /** Update v-model only when dragging is finished */
     lazy?: boolean;
     /** Function to format the tooltip label for display */
-    customFormatter?: Function;
+    formatter?: (value: number) => string;
     /** Increases slider size on focus */
     biggerSliderFocus?: boolean;
     /** Show indicators */

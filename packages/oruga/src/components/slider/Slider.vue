@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<SelectProps<IsRange>>(), {
     rounded: () => getOption("slider.rounded", false),
     disabled: false,
     lazy: false,
-    customFormatter: undefined,
+    formatter: undefined,
     biggerSliderFocus: false,
     indicator: false,
     format: () => getOption("slider.format", "raw"),
