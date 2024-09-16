@@ -102,6 +102,7 @@ const onProfileActivate = () => {
             :icon-prev="prevIcon"
             :icon-next="nextIcon"
             :label-position="labelPosition"
+            :position="stepsPosition"
             destroy-on-hide>
             <o-step-item
                 value="1"
