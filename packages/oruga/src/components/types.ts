@@ -230,6 +230,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 inputClasses: Record<string, any>;
                 /** Class configuration for the internal select component */
                 selectClasses: Record<string, any>;
+                /** Class for the HTML input element */
+                inputClass: ClassDefinition;
+                /** Class for the underlaying dropdown component */
+                dropdownClass: ClassDefinition;
                 /** Class of Datepicker header with days of the week inside the table */
                 tableHeadClass: ClassDefinition;
                 /** Class of table cell when it's selected */
@@ -1435,6 +1439,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 inputClasses: Record<string, any>;
                 /** Class configuration for the internal select component */
                 selectClasses: Record<string, any>;
+                /** Class for the HTML input element */
+                inputClass: ClassDefinition;
+                /** Class for the underlaying dropdown component */
+                dropdownClass: ClassDefinition;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the Timepicker component box where you choose the date */
