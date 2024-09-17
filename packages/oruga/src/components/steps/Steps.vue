@@ -150,6 +150,11 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the steps variant */
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the tooltip trigger */
     verticalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -373,6 +378,12 @@ const rootClasses = defineClasses(
         computed(() => !!props.size),
     ],
     [
+        "variantClass",
+        "o-steps--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+    [
         "verticalClass",
         "o-steps__wrapper-vertical",
         null,
@@ -382,12 +393,12 @@ const rootClasses = defineClasses(
         "positionClass",
         "o-steps__wrapper-position-",
         computed(() => props.position),
-        computed(() => props.position && props.vertical),
+        computed(() => !!props.position && props.vertical),
     ],
     ["mobileClass", "o-steps--mobile", null, isMobile],
 );
 
-const wrapperClasses = defineClasses(
+const listClasses = defineClasses(
     ["stepsClass", "o-steps"],
     [
         "animatedClass",
@@ -438,8 +449,8 @@ function stepLinkClasses(childItem: StepItem): ClassBind[] {
         [
             "stepLinkLabelPositionClass",
             "o-steps__link-label-",
-            props.labelPosition,
-            !!props.labelPosition,
+            computed(() => props.labelPosition),
+            computed(() => !!props.labelPosition),
         ],
         [
             "stepLinkClickableClass",
@@ -482,7 +493,7 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
 
 <template>
     <div :class="rootClasses" data-oruga="steps">
-        <ol :class="wrapperClasses">
+        <ol :class="listClasses">
             <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
