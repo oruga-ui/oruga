@@ -10,19 +10,19 @@ const numbers2 = ref<[number, number]>([2, 6]);
         <o-field>
             <o-slider
                 v-model="numbers"
+                ticks
                 range
                 :min="1"
                 :max="15"
-                :step="0.5"
-                ticks />
+                :step="0.5" />
         </o-field>
         <p>{{ numbers }}</p>
 
         <o-field>
             <o-slider
                 v-model="numbers2"
-                range
                 variant="danger"
+                range
                 :min="-2"
                 :max="8"
                 :step="2" />

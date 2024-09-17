@@ -259,6 +259,10 @@ type DatepickerClasses = Partial<{
     monthCellEventsClass: ComponentClass;
     /** Class of the Datepicker when on mobile */
     mobileClass: ComponentClass;
+    /** Class for the underlaying dropdown component */
+    dropdownClass: ComponentClass;
+    /** Class for the HTML input element */
+    inputClass: ComponentClass;
     /**
      * Class configuration for the internal input component
      * @ignore

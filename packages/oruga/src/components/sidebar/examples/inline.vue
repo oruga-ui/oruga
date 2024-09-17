@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+const mobile = ref<"reduced" | "fullwidth" | "hidden">("reduced");
 const expandOnHover = ref(false);
-const mobile = ref("reduced");
 const reduce = ref(false);
 </script>
 

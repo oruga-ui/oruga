@@ -51,5 +51,17 @@ const name = ref("John Silver");
         <o-field label="Disabled">
             <o-input placeholder="Disabled" disabled />
         </o-field>
+
+        <o-field label="Expanded">
+            <o-input placeholder="Expanded" expanded />
+        </o-field>
+
+        <o-field label="Counter">
+            <o-input
+                placeholder="Counter"
+                :maxlength="10"
+                :maxitems="5"
+                counter />
+        </o-field>
     </section>
 </template>

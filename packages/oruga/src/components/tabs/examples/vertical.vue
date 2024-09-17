@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const expanded = ref(false);
 const atRight = ref(false);
+const expanded = ref(false);
 const size = ref(null);
 const type = ref("default");
 </script>

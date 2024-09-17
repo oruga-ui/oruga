@@ -198,6 +198,16 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the underlaying dropdown component */
+    dropdownClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class for the HTML input element */
+    inputClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /**
      * Class configuration for the internal input component
      * @ignore
@@ -733,8 +743,8 @@ const separatorClasses = defineClasses(["separatorClass", "o-tpck__separtor"]);
 
 const footerClasses = defineClasses(["footerClass", "o-tpck__footer"]);
 
-const dropdownClass = defineClasses([
-    "dropdownClasses.rootClass",
+const pickerDropdownClasses = defineClasses([
+    "dropdownClass",
     "o-tpck__dropdown",
 ]);
 
@@ -760,8 +770,8 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         :max="maxTime"
         :min="minTime"
         :step="step"
-        :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
+        :dropdown-classes="pickerDropdownClasses"
         :box-class="boxClassBind"
         :dtf="dtf"
         @update:value="updateValue"
