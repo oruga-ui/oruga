@@ -83,7 +83,7 @@ function sort(event?: Event): void {
 
 <template>
     <div :class="mobileSortClasses">
-        <o-field>
+        <o-field addons>
             <o-select v-model="mobileSort" expanded>
                 <template v-if="placeholder">
                     <option

@@ -1068,6 +1068,8 @@ but will set body to position fixed, might break some layouts. */
                 stepsClass: ClassDefinition;
                 /** Class of the Steps markers trigger when are rounded */
                 stepMarkerRoundedClass: ClassDefinition;
+                /** Class of the steps variant */
+                variantClass: ClassDefinition;
                 /** Class of the tooltip trigger */
                 verticalClass: ClassDefinition;
                 /** Color of the control */
