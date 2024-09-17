@@ -918,8 +918,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 overlayClass: ClassDefinition;
                 /** Class of the sidebar position */
                 positionClass: ClassDefinition;
-                /** Class of the sidebar variant */
-                variantClass: ClassDefinition;
                 /** Class of the sidebar when expanded on hover */
                 expandOnHoverClass: ClassDefinition;
                 /** Class of the sidebar when is fullheight */
@@ -930,12 +928,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 inlineClass: ClassDefinition;
                 /** Class of the sidebar when reduced */
                 reduceClass: ClassDefinition;
-                /** Color of the sidebar */
-                variant: string;
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Custom layout on mobile */
-                mobile: string;
+                mobile: "fullwidth" | "reduced" | "hidden";
                 /** Destroy sidebar on hide */
                 destroyOnHide: boolean;
                 /** DOM element where the sidebar component will be created on (for programmatic usage). */
@@ -958,7 +954,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 position: "top" | "bottom" | "left" | "right";
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
-                scroll: string;
+                scroll: "keep" | "clip";
             }>;
         skeleton?: ComponentConfigBase &
             Partial<{
