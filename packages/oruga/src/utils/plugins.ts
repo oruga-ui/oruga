@@ -16,7 +16,7 @@ export const registerPlugin = (app: App, plugin: Plugin): void => {
 /** register a component to the vue app instance */
 export const registerComponent = (
     app: App,
-    component: ReturnType<typeof defineComponent>,
+    component: ReturnType<typeof defineComponent>, // type Component isn't correct since vue 3.5 any more
 ): void => {
     app.component(component.name, component);
 };
