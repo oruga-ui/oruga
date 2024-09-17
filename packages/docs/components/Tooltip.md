@@ -62,8 +62,8 @@
 
 | Name    | Description                            | Bindings                                    |
 | ------- | -------------------------------------- | ------------------------------------------- |
-| content | Tooltip content, default is label prop |                                             |
 | default | Tooltip trigger slot                   | **active** `boolean` - tooltip active state |
+| content | Tooltip content, default is label prop |                                             |
 
 </div>
 

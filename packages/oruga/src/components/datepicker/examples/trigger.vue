@@ -10,7 +10,7 @@ const selectedString = computed(() =>
 <template>
     <section>
         <o-field label="Select a date" grouped>
-            <o-datepicker v-model="selected">
+            <o-datepicker v-model="selected" teleport>
                 <template #trigger>
                     <o-button icon-left="calendar" type="primary" />
                 </template>

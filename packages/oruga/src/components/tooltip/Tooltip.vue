@@ -354,6 +354,24 @@ const contentClasses = defineClasses(
 
 <template>
     <div :class="rootClasses" data-oruga="tooltip">
+        <component
+            :is="triggerTag"
+            ref="triggerRef"
+            :class="triggerClasses"
+            aria-haspopup="true"
+            @click="onClick"
+            @contextmenu="onContextMenu"
+            @mouseenter="onHover"
+            @focus.capture="onFocus"
+            @blur.capture="onClose"
+            @mouseleave="onClose">
+            <!--
+                @slot Tooltip trigger slot
+                @binding {boolean} active - tooltip active state
+            -->
+            <slot :active="isActive" />
+        </component>
+
         <PositionWrapper
             v-slot="{ setContent }"
             v-model:position="autoPosition"
@@ -376,23 +394,5 @@ const contentClasses = defineClasses(
                 </div>
             </transition>
         </PositionWrapper>
-
-        <component
-            :is="triggerTag"
-            ref="triggerRef"
-            :class="triggerClasses"
-            aria-haspopup="true"
-            @click="onClick"
-            @contextmenu="onContextMenu"
-            @mouseenter="onHover"
-            @focus.capture="onFocus"
-            @blur.capture="onClose"
-            @mouseleave="onClose">
-            <!--
-                @slot Tooltip trigger slot
-                @binding {boolean} active - tooltip active state
-            -->
-            <slot :active="isActive" />
-        </component>
     </div>
 </template>
