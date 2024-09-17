@@ -81,6 +81,16 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for field label when horizontal */
+    horizontalLabelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** "Class for field body when horizontal */
+    horizontalBodyClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class when fields are grouped together */
     groupedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -101,18 +111,13 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class for field label when horizontal */
-    labelHorizontalClass: {
+    /** Class of the label field variant */
+    labelVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
     /** Class for field body */
     bodyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** "Class for field body when horizontal */
-    bodyHorizontalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -127,12 +132,7 @@ const props = defineProps({
         default: undefined,
     },
     /** Class of the message field variant */
-    variantMessageClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the label field variant */
-    variantLabelClass: {
+    messageVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
