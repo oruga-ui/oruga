@@ -9,7 +9,7 @@ import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderParent } from "@/composables";
 
 import type { SliderComponent } from "./types";
-import type { SelectProps } from "./props";
+import type { SliderProps } from "./props";
 
 /**
  * A slider to select a value or range from a given range
@@ -23,7 +23,7 @@ defineOptions({
     configField: "slider",
 });
 
-const props = withDefaults(defineProps<SelectProps<IsRange>>(), {
+const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     override: undefined,
     modelValue: undefined,
     // range: false,

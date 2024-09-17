@@ -76,7 +76,7 @@ const props = defineProps({
     /** Define individual class for a row */
     rowClass: {
         type: Function as PropType<(row: T, index: number) => string>,
-        default: (row: T, index: number) =>
+        default: (row, index) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("table.rowClass", (row, index) => "")(row, index),
     },
@@ -864,7 +864,7 @@ const tableTotal = computed(() =>
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 /** visible rows based on current page */
-const visibleRows = computed(() => {
+const visibleRows = computed<TableRow<T>[]>(() => {
     if (!props.paginated || props.backendPagination) return tableRows.value;
 
     const currentPage = tableCurrentPage.value;
@@ -1672,6 +1672,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                     -->
                     <slot name="caption" />
                 </caption>
+
                 <thead v-if="tableColumns.length && showHeader">
                     <!--
                         @slot Define preheader content here
@@ -1755,6 +1756,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                 </span>
                             </template>
                         </th>
+
                         <!-- checkable column right -->
                         <th
                             v-if="checkable && checkboxPosition === 'right'"
@@ -1782,6 +1784,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             </template>
                         </th>
                     </tr>
+
                     <tr v-if="hasSearchableColumns">
                         <!-- detailed toggle column -->
                         <th
@@ -1819,6 +1822,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         <!-- checkable column right -->
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
+
                     <tr v-if="hasCustomSubheadings">
                         <!-- detailed toggle column -->
                         <th
@@ -1847,6 +1851,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
                 </thead>
+
                 <tbody>
                     <template
                         v-for="(row, index) in visibleRows"

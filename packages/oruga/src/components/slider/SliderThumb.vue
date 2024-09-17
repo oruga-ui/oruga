@@ -1,11 +1,11 @@
-<script setup lang="ts">
-import { computed, ref, type PropType } from "vue";
+<script setup lang="ts" generic="IsRange extends boolean = false">
+import { computed, ref } from "vue";
 
 import OTooltip from "../tooltip/Tooltip.vue";
 
 import { isClient } from "@/utils/ssr";
 
-import type { SliderProps } from "./types";
+import type { SliderProps } from "./props";
 import type { ClassBind } from "@/types";
 
 /**
@@ -18,20 +18,14 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
+const props = defineProps<{
     /** parent slider component props  */
-    sliderProps: { type: Object as PropType<SliderProps>, required: true },
-    modelValue: { type: Number, required: true },
-    sliderSize: { type: Function as PropType<() => number>, required: true },
-    thumbWrapperClasses: {
-        type: Array as PropType<ClassBind[]>,
-        required: true,
-    },
-    thumbClasses: {
-        type: Array as PropType<ClassBind[]>,
-        required: true,
-    },
-});
+    sliderProps: SliderProps<IsRange>;
+    modelValue: number;
+    sliderSize: () => number;
+    thumbWrapperClasses: ClassBind[];
+    thumbClasses: ClassBind[];
+}>();
 
 const emits = defineEmits<{
     /**
@@ -47,9 +41,6 @@ const emits = defineEmits<{
     (e: "dragend"): void;
 }>();
 
-/** the computed picker contains all chared props from the datepicker and the timepicker  */
-const slider = computed<SliderProps>(() => props.sliderProps);
-
 const isFocused = ref(false);
 const dragging = ref(false);
 const startX = ref(0);
@@ -57,14 +48,14 @@ const startPosition = ref(0);
 const newPosition = ref(null);
 const oldValue = ref(props.modelValue);
 
-const tooltip = computed(() => slider.value.tooltip);
-const tooltipAlways = computed(() => slider.value.tooltipAlways);
-const disabled = computed(() => slider.value.disabled);
-const max = computed(() => slider.value.max);
-const min = computed(() => slider.value.min);
-const step = computed(() => slider.value.step);
-const indicator = computed(() => slider.value.indicator);
-const ariaLabel = computed(() => slider.value.ariaLabel);
+const tooltip = computed(() => props.sliderProps.tooltip);
+const tooltipAlways = computed(() => props.sliderProps.tooltipAlways);
+const disabled = computed(() => props.sliderProps.disabled);
+const max = computed(() => props.sliderProps.max);
+const min = computed(() => props.sliderProps.min);
+const step = computed(() => props.sliderProps.step);
+const indicator = computed(() => props.sliderProps.indicator);
+const ariaLabel = computed(() => props.sliderProps.ariaLabel);
 
 const precision = computed(() => {
     const precisions = [min.value, max.value, step.value].map((item) => {
@@ -75,9 +66,9 @@ const precision = computed(() => {
 });
 
 const computedTooltipVariant = computed(() =>
-    slider.value.tooltipVariant
-        ? slider.value.tooltipVariant
-        : slider.value.variant,
+    props.sliderProps.tooltipVariant
+        ? props.sliderProps.tooltipVariant
+        : props.sliderProps.variant,
 );
 
 const currentPosition = computed(
@@ -88,15 +79,17 @@ const currentPosition = computed(
 const wrapperStyle = computed(() => ({ left: currentPosition.value }));
 
 const formattedValue = computed(() => {
-    if (typeof slider.value.formatter !== "undefined")
-        return slider.value.formatter(props.modelValue);
+    if (typeof props.sliderProps.formatter !== "undefined")
+        return props.sliderProps.formatter(props.modelValue);
 
-    if (slider.value.format === "percent")
-        return new Intl.NumberFormat(slider.value.locale, {
+    if (props.sliderProps.format === "percent")
+        return new Intl.NumberFormat(props.sliderProps.locale, {
             style: "percent",
         }).format((props.modelValue - min.value) / (max.value - min.value));
 
-    return new Intl.NumberFormat(slider.value.locale).format(props.modelValue);
+    return new Intl.NumberFormat(props.sliderProps.locale).format(
+        props.modelValue,
+    );
 });
 
 function onFocus(): void {
