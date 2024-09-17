@@ -150,7 +150,7 @@ describe("Menu integration tests", () => {
         expect(itemTwo.emitted("update:expanded")).toBeUndefined();
     });
 
-    test.only("react accordingly when menu is not activable", async () => {
+    test("react accordingly when menu is not activable", async () => {
         const wrapper = mount(MenuExample, {
             props: { items, activable: false },
         });
