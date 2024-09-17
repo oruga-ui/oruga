@@ -126,6 +126,7 @@ const labelClasses = defineClasses(["listLabelClass", "o-menu__label"]);
                 <span>{{ label }}</span>
             </slot>
         </div>
+
         <ul :class="listClasses" :role="ariaRole">
             <!--
                 @slot Place menu items here 

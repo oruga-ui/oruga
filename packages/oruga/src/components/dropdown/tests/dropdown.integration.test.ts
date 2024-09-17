@@ -1,12 +1,9 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-import type { ComponentInstance } from "vue";
+import type { ComponentPublicInstance } from "vue";
 
 import DropdownExample from "./DropdownExample.vue";
 import ODropdownItem from "@/components/dropdown/DropdownItem.vue";
-import ODropdown from "@/components/dropdown/Dropdown.vue";
-
-type ComponenType = ComponentInstance<typeof ODropdown<string>>;
 
 describe("Dropdown integration tests", () => {
     const values = ["A", "B", "C"];
@@ -46,7 +43,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeTruthy();
 
-        const dropdown = wrapper.findComponent<ComponenType>(ODropdown);
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("change")).toHaveLength(1);
         expect(dropdown.emitted("change")[0][0]).toBe(values[2]);
@@ -70,7 +69,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown = wrapper.findComponent<ComponenType>(ODropdown);
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toBeUndefined();
         expect(dropdown.emitted("change")).toBeUndefined();
         expect(dropdown.emitted("close")).toHaveLength(1);
@@ -93,7 +94,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown = wrapper.findComponent<ComponenType>(ODropdown);
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("change")).toHaveLength(1);
         expect(dropdown.emitted("change")[0][0]).toHaveLength(1);
@@ -142,7 +145,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown = wrapper.findComponent<ComponenType>(ODropdown);
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("change")).toHaveLength(1);
         expect(dropdown.emitted("close")).toBeUndefined();
@@ -165,7 +170,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown = wrapper.findComponent<ComponenType>(ODropdown);
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.classes("o-drop--disabled")).toBeTruthy();
         expect(dropdown.emitted("update:modelValue")).toBeUndefined();
         expect(dropdown.emitted("change")).toBeUndefined();
@@ -191,7 +198,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeTruthy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown = wrapper.findComponent<ComponenType>(ODropdown);
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("update:modelValue")[0][0]).toStrictEqual(
             values[1],

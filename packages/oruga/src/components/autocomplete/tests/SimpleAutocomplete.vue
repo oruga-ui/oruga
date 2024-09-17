@@ -1,50 +1,35 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { ref, computed } from "vue";
 import OAutocomplete from "../Autocomplete.vue";
 import OField from "../../field/Field.vue";
-export default defineComponent({
-    components: {
-        [OAutocomplete.name]: OAutocomplete,
-        [OField.name]: OField,
-    },
-    data() {
-        return {
-            data: [
-                "Angular",
-                "Angular 2",
-                "Aurelia",
-                "Backbone",
-                "Ember",
-                "jQuery",
-                "Meteor",
-                "Node.js",
-                "Polymer",
-                "React",
-                "RxJS",
-                "Vue.js",
-            ],
-            name: "",
-            selected: null,
-        };
-    },
-    computed: {
-        filteredDataArray(): string[] {
-            return this.data.filter((option: any) => {
-                return (
-                    option
-                        .toString()
-                        .toLowerCase()
-                        .indexOf(this.name.toLowerCase()) >= 0
-                );
-            });
-        },
-    },
-    methods: {
-        select(option: any) {
-            this.selected = option;
-        },
-    },
-});
+
+const data = [
+    "Angular",
+    "Angular 2",
+    "Aurelia",
+    "Backbone",
+    "Ember",
+    "jQuery",
+    "Meteor",
+    "Node.js",
+    "Polymer",
+    "React",
+    "RxJS",
+    "Vue.js",
+];
+const name = ref("");
+const selected = ref(null);
+
+const filteredDataArray = computed((): string[] =>
+    data.filter(
+        (option: string) =>
+            option.toLowerCase().indexOf(name.value.toLowerCase()) >= 0,
+    ),
+);
+
+function select(option: string): void {
+    selected.value = option;
+}
 </script>
 
 <template>
@@ -62,5 +47,3 @@ export default defineComponent({
         </o-autocomplete>
     </o-field>
 </template>
-
-<style></style>

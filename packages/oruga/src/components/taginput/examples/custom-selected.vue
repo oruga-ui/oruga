@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const items = ref([]);
+const items = ref<string[]>([]);
 
-function getType(item): string {
+function getType(item: string): string {
     const random = "Z".charCodeAt(0) - item.toUpperCase().charCodeAt(0);
     if (random >= 1 && random < 5) {
         return "primary";

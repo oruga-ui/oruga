@@ -2,8 +2,9 @@
 import {
     computed,
     ref,
+    useTemplateRef,
     watch,
-    type ComponentInstance,
+    type ComponentPublicInstance,
     type PropType,
 } from "vue";
 
@@ -229,9 +230,10 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const datepickerRef = ref<ComponentInstance<typeof ODatepicker>>();
-const timepickerRef = ref<ComponentInstance<typeof OTimepicker>>();
-const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
+const datepickerRef = useTemplateRef<ComponentPublicInstance>("datepickerRef");
+const timepickerRef = useTemplateRef<ComponentPublicInstance>("timepickerRef");
+const nativeInputRef =
+    useTemplateRef<ComponentPublicInstance>("nativeInputRef");
 
 const timepickerProps = ref<TimepickerProps>(props.timepicker);
 watch(
