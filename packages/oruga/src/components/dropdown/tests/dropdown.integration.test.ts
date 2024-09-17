@@ -43,8 +43,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeTruthy();
 
-        const dropdown =
-            wrapper.findComponent<ComponentPublicInstance>("ODropdown");
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("change")).toHaveLength(1);
         expect(dropdown.emitted("change")[0][0]).toBe(values[2]);
@@ -68,8 +69,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown =
-            wrapper.findComponent<ComponentPublicInstance>("ODropdown");
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toBeUndefined();
         expect(dropdown.emitted("change")).toBeUndefined();
         expect(dropdown.emitted("close")).toHaveLength(1);
@@ -92,8 +94,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown =
-            wrapper.findComponent<ComponentPublicInstance>("ODropdown");
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("change")).toHaveLength(1);
         expect(dropdown.emitted("change")[0][0]).toHaveLength(1);
@@ -142,8 +145,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown =
-            wrapper.findComponent<ComponentPublicInstance>("ODropdown");
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("change")).toHaveLength(1);
         expect(dropdown.emitted("close")).toBeUndefined();
@@ -166,8 +170,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeFalsy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown =
-            wrapper.findComponent<ComponentPublicInstance>("ODropdown");
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.classes("o-drop--disabled")).toBeTruthy();
         expect(dropdown.emitted("update:modelValue")).toBeUndefined();
         expect(dropdown.emitted("change")).toBeUndefined();
@@ -193,8 +198,9 @@ describe("Dropdown integration tests", () => {
         expect(items[1].classes("o-drop__item--active")).toBeTruthy();
         expect(items[2].classes("o-drop__item--active")).toBeFalsy();
 
-        const dropdown =
-            wrapper.findComponent<ComponentPublicInstance>("ODropdown");
+        const dropdown = wrapper.findComponent<ComponentPublicInstance>(
+            '[data-oruga="dropdown"]',
+        );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("update:modelValue")[0][0]).toStrictEqual(
             values[1],
