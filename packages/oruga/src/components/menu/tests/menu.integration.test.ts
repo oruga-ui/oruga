@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import type { ComponentPublicInstance } from "vue";
 
 import MenuExample from "./MenuExample.vue";
 import OMenuItem from "@/components/menu/MenuItem.vue";
-import type { ComponentPublicInstance } from "vue";
 
 describe("Menu integration tests", () => {
     const items = [
