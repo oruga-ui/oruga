@@ -81,6 +81,16 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for field label when horizontal */
+    horizontalLabelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** "Class for field body when horizontal */
+    horizontalBodyClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class when fields are grouped together */
     groupedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -101,18 +111,13 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class for field label when horizontal */
-    labelHorizontalClass: {
+    /** Class of the label field variant */
+    labelVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
     /** Class for field body */
     bodyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** "Class for field body when horizontal */
-    bodyHorizontalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -127,12 +132,7 @@ const props = defineProps({
         default: undefined,
     },
     /** Class of the message field variant */
-    variantMessageClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the label field variant */
-    variantLabelClass: {
+    messageVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -294,7 +294,7 @@ const rootClasses = defineClasses(
 const messageClasses = defineClasses(
     ["messageClass", "o-field__message"],
     [
-        "variantMessageClass",
+        "messageVariantClass",
         "o-field__message-",
         fieldVariant,
         computed(() => !!fieldVariant.value),
@@ -310,22 +310,22 @@ const labelClasses = defineClasses(
         computed(() => !!props.labelSize),
     ],
     [
-        "variantLabelClass",
+        "labelVariantClass",
         "o-field__label-",
         fieldVariant,
         computed(() => !!fieldVariant.value),
     ],
 );
 
-const labelHorizontalClasses = defineClasses([
-    "labelHorizontalClass",
+const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
+
+const horizontalLabelClasses = defineClasses([
+    "horizontalLabelClass",
     "o-field__horizontal-label",
 ]);
 
-const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
-
-const bodyHorizontalClasses = defineClasses([
-    "bodyHorizontalClass",
+const horizontalBodyClasses = defineClasses([
+    "horizontalBodyClass",
     "o-field__horizontal-body",
 ]);
 
@@ -350,7 +350,7 @@ const innerFieldClasses = defineClasses(
 
 <template>
     <div ref="rootRef" data-oruga="field" :class="rootClasses">
-        <div v-if="horizontal" :class="labelHorizontalClasses">
+        <div v-if="horizontal" :class="horizontalLabelClasses">
             <label v-if="hasLabel" :for="inputId" :class="labelClasses">
                 <!--
                     @slot Override the label
@@ -369,7 +369,7 @@ const innerFieldClasses = defineClasses(
             </label>
         </template>
 
-        <div v-if="horizontal" :class="bodyHorizontalClasses">
+        <div v-if="horizontal" :class="horizontalBodyClasses">
             <template
                 v-for="(element, index) in getInnerContent($slots.default)"
                 :key="index">
