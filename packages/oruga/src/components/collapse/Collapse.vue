@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { type PropType } from "vue";
+import { useId, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -28,8 +27,8 @@ defineProps({
         type: String,
         default: () => getOption("collapse.animation", "fade"),
     },
-    /** Id property of the content container */
-    contentId: { type: String, default: () => uuid() },
+    /** Id property of the content container - default is an uuid */
+    contentId: { type: String, default: () => useId() },
     /**
      * Trigger position
      * @values top, bottom

@@ -9,66 +9,6 @@ declare module "../index" {
     interface OrugaOptions {
         autocomplete?: ComponentConfigBase &
             Partial<{
-                /** Add a button/icon to clear the inputed text */
-                clearable: boolean;
-                /** Append the component to another part of the DOM.
-Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | Record<string, any>;
-                /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
-                confirmKeys: string[];
-                /** Class of the menu empty placeholder item */
-                itemEmptyClass: ClassDefinition;
-                /** Class of the menu footer item */
-                itemFooterClass: ClassDefinition;
-                /** Class of the menu header item */
-                itemHeaderClass: ClassDefinition;
-                /** Class of the menu items */
-                itemClass: ClassDefinition;
-                /** Class of the menu items group title */
-                itemGroupTitleClass: ClassDefinition;
-                /** Class of the menu items on hover */
-                itemHoverClass: ClassDefinition;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Classes to apply on internal input component */
-                inputClasses: Record<string, any>;
-                /** Clear input text on select */
-                clearOnSelect: boolean;
-                /** Dropdown content (items) are shown into a modal on mobile */
-                mobileModal: boolean;
-                /** Icon name to be added on the clear button */
-                clearIcon: string;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Icon to be added on the right side */
-                iconRight: string;
-                /** Icon to be shown */
-                icon: string;
-                /** Keep open dropdown list after select */
-                keepOpen: boolean;
-                /** Makes the component check if list reached scroll start or end and emit scroll events. */
-                checkScroll: boolean;
-                /** Max height of dropdown content */
-                maxHeight: string | number;
-                /** Menu item tag name */
-                itemTag: DynamicComponent;
-                /** Menu tag name */
-                menuTag: DynamicComponent;
-                /** Native options to use in HTML5 validation */
-                autocomplete: string;
-                /** Number of milliseconds to delay before to emit input event */
-                debounce: number;
-                /** Open dropdown list on focus */
-                openOnFocus: boolean;
-                /** Position of the dropdown */
-                position: "auto" | "top" | "bottom";
-                /** Size of the control */
-                size: string;
-                /** The first option will always be pre-selected (easier to just hit enter or tab) */
-                keepFirst: boolean;
-                /** Transition name to apply on dropdown list */
-                animation: string;
             }>;
         button?: ComponentConfigBase &
             Partial<{
@@ -218,170 +158,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         datepicker?: ComponentConfigBase &
             Partial<{
-                /** Accessibility next button aria label */
-                ariaNextLabel: string;
-                /** Append the component to another part of the DOM.
-Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
-                /** Class configuration for the internal dropdown component */
-                dropdownClasses: Record<string, any>;
-                /** Class configuration for the internal input component */
-                inputClasses: Record<string, any>;
-                /** Class configuration for the internal select component */
-                selectClasses: Record<string, any>;
-                /** Class for the HTML input element */
-                inputClass: ClassDefinition;
-                /** Class for the underlaying dropdown component */
-                dropdownClass: ClassDefinition;
-                /** Class of Datepicker header with days of the week inside the table */
-                tableHeadClass: ClassDefinition;
-                /** Class of table cell when it's selected */
-                tableCellSelectedClass: ClassDefinition;
-                /** Class of table cell when it's selected when type is month */
-                monthCellSelectedClass: ClassDefinition;
-                /** Class of the cell inside the table header */
-                tableHeadCellClass: ClassDefinition;
-                /** Class of the cell of a row when at least one event is present */
-                tableCellEventsClass: ClassDefinition;
-                /** Class of the Datepicker box where you choose the date */
-                boxClass: ClassDefinition;
-                /** Class of the Datepicker buttons inside the box */
-                headerButtonsClass: ClassDefinition;
-                /** Class of the Datepicker buttons inside the box when a size is choosen */
-                headerButtonsSizeClass: ClassDefinition;
-                /** Class of the Datepicker footer */
-                footerClass: ClassDefinition;
-                /** Class of the Datepicker header inside the box */
-                headerClass: ClassDefinition;
-                /** Class of the Datepicker size */
-                sizeClass: ClassDefinition;
-                /** Class of the Datepicker table inside the box */
-                tableClass: ClassDefinition;
-                /** Class of the Datepicker table inside the box when type is month */
-                monthClass: ClassDefinition;
-                /** Class of the Datepicker when on mobile */
-                mobileClass: ClassDefinition;
-                /** Class of the event */
-                tableEventClass: ClassDefinition;
-                /** Class of the event indicator */
-                tableEventIndicatorsClass: ClassDefinition;
-                /** Class of the event indicator when a `variant` is specified */
-                tableEventVariantClass: ClassDefinition;
-                /** Class of the events container */
-                tableEventsClass: ClassDefinition;
-                /** Class of the events container when type is month */
-                monthCellEventsClass: ClassDefinition;
-                /** Class of the first hovered table cell during range selection */
-                tableCellFirstHoveredClass: ClassDefinition;
-                /** Class of the first hovered table cell during range selection when type is month */
-                monthCellWithinHoveredRangeClass: ClassDefinition;
-                /** Class of the first selected table cell when in range */
-                tableCellFirstSelectedClass: ClassDefinition;
-                /** Class of the first selected table cell when in range when type is month */
-                monthCellFirstSelectedClass: ClassDefinition;
-                /** Class of the last selected table cell during range selection */
-                tableCellLastSelectedClass: ClassDefinition;
-                /** Class of the last selected table cell during range selection when type is month */
-                monthCellLastSelectedClass: ClassDefinition;
-                /** Class of the last table cell hovered during range selection */
-                tableCellLastHoveredClass: ClassDefinition;
-                /** Class of the last table cell hovered during range selection when type is month */
-                monthCellLastHoveredClass: ClassDefinition;
-                /** Class of the month and year selects container inside the Datepicker box */
-                listsClass: ClassDefinition;
-                /** Class of the next button inside the Datepicker box */
-                nextButtonClass: ClassDefinition;
-                /** Class of the prev button inside the Datepicker box */
-                prevButtonClass: ClassDefinition;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the table body inside the box */
-                tableBodyClass: ClassDefinition;
-                /** Class of the table body inside the box when type is month */
-                monthBodyClass: ClassDefinition;
-                /** Class of the table cell */
-                tableCellClass: ClassDefinition;
-                /** Class of the table cell of the current day */
-                tableCellTodayClass: ClassDefinition;
-                /** Class of the table cell of the current day when type is month */
-                monthCellTodayClass: ClassDefinition;
-                /** Class of the table cell that is selectable */
-                tableCellSelectableClass: ClassDefinition;
-                /** Class of the table cell that is selectable when type is month */
-                monthCellSelectableClass: ClassDefinition;
-                /** Class of the table cell that is unselectable */
-                tableCellUnselectableClass: ClassDefinition;
-                /** Class of the table cell that is unselectable when type is month */
-                monthCellUnselectableClass: ClassDefinition;
-                /** Class of the table cell when hovered during range selection */
-                tableCellWithinHoveredClass: ClassDefinition;
-                /** Class of the table cell when hovered during range selection and cell is in range when type is month */
-                monthCellWithinHoveredClass: ClassDefinition;
-                /** Class of the table cell when hovered during range selection when type is month */
-                monthCellFirstHoveredClass: ClassDefinition;
-                /** Class of the table cell when nearby days (prev/next month) are selectable */
-                tableCellNearbyClass: ClassDefinition;
-                /** Class of the table cell when nearby month days are hidden */
-                tableCellInvisibleClass: ClassDefinition;
-                /** Class of the table cell when type is month */
-                monthCellClass: ClassDefinition;
-                /** Class of the table cells within the range when the range is selected */
-                tableCellWithinSelectedClass: ClassDefinition;
-                /** Class of the table cells within the range when the range is selected when type is month */
-                monthCellWithinSelectedClass: ClassDefinition;
-                /** Class of the table container when type is month */
-                monthTableClass: ClassDefinition;
-                /** Class of the table row */
-                tableRowClass: ClassDefinition;
-                /** Close dropdown on click */
-                closeOnClick: boolean;
-                /** Custom function to format a date into a string */
-                dateFormatter: (date: Date | [] | Date[] | [Date, Date]) => string;
-                /** Custom function to parse a string into a date */
-                dateParser: (date: string) => Date | [] | Date[] | [Date, Date];
-                /** Date creator function, default is `new Date()` */
-                dateCreator: () => Date;
-                /** Define a list of weeks which can not be selected */
-                unselectableDaysOfWeek: number[];
-                /** Define if nearby month days can be selected */
-                nearbySelectableMonthDays: boolean;
-                /** Define if week numbers are clickable */
-                weekNumberClickable: boolean;
-                /** Define the range of years to show */
-                yearsRange: number[];
-                /** Enable dropdown mobile modal */
-                mobileModal: boolean;
-                /** Enable mobile native input if mobile agent */
-                mobileNative: boolean;
-                /** Icon name for next icon */
-                iconNext: string;
-                /** Icon name for previous icon */
-                iconPrev: string;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Icon to be added on the right side */
-                iconRight: string;
-                /** Icon to be shown */
-                icon: string;
-                /** Mobile breakpoint as `max-width` value */
-                mobileBreakpoint: string;
-                /** Open dropdown on focus */
-                openOnFocus: boolean;
-                /** Set custom day names, else use names based on locale */
-                dayNames: string[];
-                /** Set custom month names, else use names based on locale */
-                monthNames: string[];
-                /** Set the first day of a week */
-                firstDayOfWeek: number;
-                /** Show nearby month days */
-                nearbyMonthDays: boolean;
-                /** Show week numbers */
-                showWeekNumber: boolean;
-                /** Size of the control input */
-                size: string;
-                /** Trap dropdown on focus */
-                trapFocus: boolean;
             }>;
         datetimepicker?: ComponentConfigBase &
             Partial<{
@@ -414,32 +190,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
-                /** Append the component to another part of the DOM.
-Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
-                /** Class for the root element indicating position of dropdown */
-                positionClass: ClassDefinition;
-                /** Class for the root element indicating whether the dropdown is open */
-                activeClass: ClassDefinition;
-                /** Class for the root element when the dropdown is hoverable */
-                hoverableClass: ClassDefinition;
-                /** Class of dropdown menu position */
-                menuPositionClass: ClassDefinition;
-                /** Class of dropdown menu when active */
-                menuActiveClass: ClassDefinition;
-                /** Class of dropdown menu when inline */
-                inlineClass: ClassDefinition;
-                /** Class of dropdown when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of dropdown when expanded */
-                expandedClass: ClassDefinition;
-                /** Class of dropdown when on mobile */
-                mobileClass: ClassDefinition;
-                /** Class of the body when dropdown is open and scroll is clip */
-                scrollClipClass: ClassDefinition;
-                /** Class of the body when dropdown is open and scroll is not clip */
-                noScrollClass: ClassDefinition;
                 /** Class of the dropdown item */
                 itemClass: ClassDefinition;
                 /** Class of the dropdown item when active */
@@ -448,53 +198,18 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
-                /** Class of the dropdown menu */
-                menuClass: ClassDefinition;
-                /** Class of the overlay when on mobile */
-                menuMobileOverlayClass: ClassDefinition;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the trigger element */
-                triggerClass: ClassDefinition;
-                /** Class when the dropdown is teleported */
-                teleportClass: ClassDefinition;
-                /** Custom animation (transition name) */
-                animation: string;
-                /** Dropdown close options (pressing escape, clicking the content or outside) */
-                closeable: boolean | string[];
-                /** Dropdown content (items) are shown into a modal on mobile */
-                mobileModal: boolean;
                 /** Dropdown item tag name */
                 itemTag: DynamicComponent;
-                /** Dropdown menu tag name */
-                menuTag: DynamicComponent;
-                /** Dropdown trigger tag name */
-                triggerTag: DynamicComponent;
-                /** Dropdown will be triggered by any events */
-                triggers: ("focus" | "click" | "hover" | "contextmenu")[];
-                /** Makes the component check if menu reached scroll start or end and emit scroll events. */
-                checkScroll: boolean;
-                /** Max height of dropdown content */
-                maxHeight: string | number;
-                /** Mobile breakpoint as `max-width` value */
-                mobileBreakpoint: string;
-                /** Position of the dropdown relative to the trigger */
-                position: "auto" | "top" | "bottom" | "left" | "right" | "top-right" | "top-left" | "bottom-left" | "bottom-right";
-                /** Role attribute to be passed to the list container for better accessibility.
-Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: "dialog" | "menu" | "list" | "listbox";
                 /** Role attribute to be passed to the list item for better accessibility.
 Use menuitem only in situations where your dropdown is related to a navigation menu. */
                 itemAriaRole: string;
-                /** Trap focus inside the dropdown. */
-                trapFocus: boolean;
             }>;
         field?: ComponentConfigBase &
             Partial<{
                 /**  */
                 messageTag: DynamicComponent;
                 /** "Class for field body when horizontal */
-                bodyHorizontalClass: ClassDefinition;
+                horizontalBodyClass: ClassDefinition;
                 /** Class for components automatically attached together when inside a field */
                 addonsClass: ClassDefinition;
                 /** Class for field body */
@@ -504,7 +219,7 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 /** Class for field label size */
                 labelSizeClass: ClassDefinition;
                 /** Class for field label when horizontal */
-                labelHorizontalClass: ClassDefinition;
+                horizontalLabelClass: ClassDefinition;
                 /** Class for the field message */
                 messageClass: ClassDefinition;
                 /** Class for the filled field */
@@ -514,9 +229,9 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 /** Class of file component when on mobile */
                 mobileClass: ClassDefinition;
                 /** Class of the label field variant */
-                variantLabelClass: ClassDefinition;
+                labelVariantClass: ClassDefinition;
                 /** Class of the message field variant */
-                variantMessageClass: ClassDefinition;
+                messageVariantClass: ClassDefinition;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class to align label and control in horizontal forms */
@@ -552,54 +267,6 @@ See icon library documentation for custom classes. */
             }>;
         input?: ComponentConfigBase &
             Partial<{
-                /** Add a button/icon to clear the inputed text */
-                clearable: boolean;
-                /** Class of input when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of input when expanded */
-                expandedClass: ClassDefinition;
-                /** Class of input when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of input when type textarea */
-                textareaClass: ClassDefinition;
-                /** Class of the counter element */
-                counterClass: ClassDefinition;
-                /** Class of the input size */
-                sizeClass: ClassDefinition;
-                /** Class of the input variant */
-                variantClass: ClassDefinition;
-                /** Class of the left icon */
-                iconLeftClass: ClassDefinition;
-                /** Class of the left icon space inside the input */
-                iconLeftSpaceClass: ClassDefinition;
-                /** Class of the native input element */
-                inputClass: ClassDefinition;
-                /** Class of the right icon */
-                iconRightClass: ClassDefinition;
-                /** Class of the right icon space inside the input */
-                iconRightSpaceClass: ClassDefinition;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class to display when a right icon is used */
-                hasIconRightClass: ClassDefinition;
-                /** Color of the control */
-                variant: string;
-                /** Icon name to be added on the clear button */
-                clearIcon: string;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Icon to be added on the right side */
-                iconRight: string;
-                /** Icon to be shown */
-                icon: string;
-                /** Native options to use in HTML5 validation */
-                autocomplete: string;
-                /** Number of milliseconds to delay before to emit input event */
-                debounce: number;
-                /** Show character counter when maxlength prop is passed */
-                counter: boolean;
-                /** Size of the control */
-                size: string;
             }>;
         loading?: ComponentConfigBase &
             Partial<{
@@ -851,48 +518,6 @@ Meaning that the container should be fixed. */
             }>;
         select?: ComponentConfigBase &
             Partial<{
-                /** Class of select when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of select when expanded */
-                expandedClass: ClassDefinition;
-                /** Class of select when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of the left icon */
-                iconLeftClass: ClassDefinition;
-                /** Class of the left icon space inside the select */
-                iconLeftSpaceClass: ClassDefinition;
-                /** Class of the native select element */
-                selectClass: ClassDefinition;
-                /** Class of the right icon */
-                iconRightClass: ClassDefinition;
-                /** Class of the right icon space inside the select */
-                iconRightSpaceClass: ClassDefinition;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the select arrow */
-                arrowClass: ClassDefinition;
-                /** Class of the select placeholder */
-                placeholderClass: ClassDefinition;
-                /** Class of the select size */
-                sizeClass: ClassDefinition;
-                /** Class of the select variant */
-                variantClass: ClassDefinition;
-                /** Class of the select variant for the root element */
-                rootVariantClass: ClassDefinition;
-                /** Class of the select when multiple mode is active */
-                multipleClass: ClassDefinition;
-                /** Color of the control */
-                variant: string;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Icon to be added on the right side */
-                iconRight: string;
-                /** Icon to be shown */
-                icon: string;
-                /** Same as native autocomplete options to use in HTML5 validation */
-                autocomplete: string;
-                /** Vertical size of input */
-                size: string;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
@@ -981,48 +606,12 @@ but will set body to position fixed, might break some layouts. */
             }>;
         slider?: ComponentConfigBase &
             Partial<{
-                /** Accessibility aria-label to to be passed to the slider thumb element. */
-                ariaLabel: string;
-                /** Class of slider tick */
+                /**  */
                 tickClass: ClassDefinition;
-                /** Class of the filled part of the slider */
-                fillClass: ClassDefinition;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the slider track */
-                trackClass: ClassDefinition;
-                /** Class of the slider variant */
-                variantClass: ClassDefinition;
-                /** Class of the thumb */
-                thumbClass: ClassDefinition;
-                /** Class of the thumb wrapper */
-                thumbWrapperClass: ClassDefinition;
-                /** Class of the vertical slider size */
-                sizeClass: ClassDefinition;
                 /** Class of tick label */
                 tickLabelClass: ClassDefinition;
-                /** Class to display on the wrapper element when the slider is dragged */
-                thumbWrapperDraggingClass: ClassDefinition;
-                /** Class when slider is disabled */
-                disabledClass: ClassDefinition;
                 /** Class when slider tick is hidden */
                 tickHiddenClass: ClassDefinition;
-                /** Class when the slider is rounded */
-                thumbRoundedClass: ClassDefinition;
-                /** Class when the thumb gets dragged */
-                thumbDraggingClass: ClassDefinition;
-                /** Color of the slider */
-                variant: string;
-                /** Color of the tooltip */
-                tooltipVariant: string;
-                /** Define v-model format */
-                format: "raw" | "percent";
-                /** Rounded thumb */
-                rounded: boolean;
-                /** Show tooltip when thumb is being dragged */
-                tooltip: boolean;
-                /** Vertical size of slider */
-                size: string;
             }>;
         steps?: ComponentConfigBase &
             Partial<{
@@ -1366,64 +955,6 @@ but will set body to position fixed, might break some layouts. */
             }>;
         taginput?: ComponentConfigBase &
             Partial<{
-                /** Accessibility label for the close button */
-                ariaCloseLabel: string;
-                /** Add close/delete button to the item */
-                closable: boolean;
-                /** Allow removing last item when pressing given keys
-(https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
-if input is empty */
-                removeOnKeys: string[];
-                /** Allows adding new items */
-                allowNew: boolean;
-                /** Allows adding the same item multiple time */
-                allowDuplicates: boolean;
-                /** Append the component to another part of the DOM.
-Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | Record<string, any>;
-                /** Array of chars used to split when pasting a new string */
-                separators: string[];
-                /** Array of keys
-(https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
-which will add a item when typing */
-                confirmKeys: string[];
-                /** Class configuration for the underlying autocomplete component */
-                autocompleteClasses: Record<string, any>;
-                /** Class of input when expanded */
-                expandedClass: ClassDefinition;
-                /** Class of the close button of entered item */
-                closeClass: ClassDefinition;
-                /** Class of the counter element */
-                counterClass: ClassDefinition;
-                /** Class of the entered item */
-                itemClass: ClassDefinition;
-                /** Class of the entered item variant */
-                variantClass: ClassDefinition;
-                /** Class of the input container */
-                containerClass: ClassDefinition;
-                /** Class of the input container size */
-                sizeClass: ClassDefinition;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Color of the each item */
-                variant: string;
-                /** Icon name of close icon on selected item */
-                closeIcon: string;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Icon to be shown */
-                icon: string;
-                /** Keep open dropdown list after select */
-                keepOpen: boolean;
-                /** Makes the component check if list reached scroll start or end and emit scroll events. */
-                checkScroll: boolean;
-                /** Native options to use in HTML5 validation */
-                autocomplete: string;
-                /** Show counter when maxlength or maxtags props are passed */
-                counter: boolean;
-                /** Vertical size of the input control */
-                size: string;
             }>;
         timepicker?: ComponentConfigBase &
             Partial<{
@@ -1519,20 +1050,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         upload?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the Upload variant */
-                variantClass: ClassDefinition;
-                /** Class of the Upload when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the Upload when draggable */
-                draggableClass: ClassDefinition;
-                /** Class of the Upload when expanded */
-                expandedClass: ClassDefinition;
-                /** Class of the Upload when hovered */
-                hoveredClass: ClassDefinition;
-                /** Color of the control */
-                variant: string;
             }>;
     }
 }
