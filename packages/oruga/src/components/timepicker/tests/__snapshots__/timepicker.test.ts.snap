@@ -8,7 +8,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
             -->
-      <div data-oruga="input" class="o-input__wrapper"><input id="mocked" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
+      <div data-oruga="input" class="o-input__wrapper"><input id="v-0" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
         <!--v-if-->
         <!--v-if-->
         <!--v-if-->
@@ -30,7 +30,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
             @slot Override the label, default is label prop 
         -->
           <div class="" data-oruga="select">
-            <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select id="v-2" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop
@@ -63,7 +63,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
             <!--v-if-->
           </div><span class="o-tpck__separtor">:</span>
           <div class="" data-oruga="select">
-            <!--v-if--><select id="mocked" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select id="v-27" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop
