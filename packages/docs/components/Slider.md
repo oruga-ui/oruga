@@ -37,29 +37,28 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name         | Description                                                           | Type                         | Values                                                                          | Default                                                                                                                                                    |
-| ----------------- | --------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaLabel         | Accessibility aria-label to to be passed to the slider thumb element. | string                       | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;ariaLabel: undefined<br>}</code>      |
-| biggerSliderFocus | Increases slider size on focus                                        | boolean                      | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
-| disabled          | Slider will be disabled                                               | boolean                      | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
-| format            | Define v-model format                                                 | "raw" \| "percent"           | `row`, `percent`                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;format: "raw"<br>}</code>             |
-| formatter         | Function to format the tooltip label for display                      | (value: number) =&gt; string | -                                                                               |                                                                                                                                                            |
-| indicator         | Show indicators                                                       | boolean                      | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
-| lazy              | Update v-model only when dragging is finished                         | boolean                      | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
-| locale            | Date format locale                                                    | string \| string[]           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;locale: undefined<br>}</code>                 |
-| max               | Maximum value                                                         | number                       | -                                                                               | <code style='white-space: nowrap; padding: 0;'>100</code>                                                                                                  |
-| min               | Minimum value                                                         | number                       | -                                                                               | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                    |
-| v-model           | The input value state                                                 | number \| [number, number]   | -                                                                               |                                                                                                                                                            |
-| override          | Override existing theme classes completely                            | boolean                      | -                                                                               |                                                                                                                                                            |
-| range             | Enable range slider                                                   | boolean                      | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                     |
-| rounded           | Rounded thumb                                                         | boolean                      | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;rounded: false<br>}</code>            |
-| size              | Vertical size of slider                                               | string                       | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;size: undefined<br>}</code>           |
-| step              | Step interval of ticks                                                | number                       | -                                                                               | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                    |
-| ticks             | Show tick marks                                                       | boolean                      | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
-| tooltip           | Show tooltip when thumb is being dragged                              | boolean                      | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;tooltip: true<br>}</code>             |
-| tooltipAlways     | Tooltip displays always                                               | boolean                      | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
-| tooltipVariant    | Color of the tooltip                                                  | string                       | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;tooltipVariant: undefined<br>}</code> |
-| variant           | Color of the slider                                                   | string                       | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>        |
+| Prop name         | Description | Type | Values | Default                                                                                                                                                    |
+| ----------------- | ----------- | ---- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaLabel         |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;ariaLabel: undefined<br>}</code>      |
+| biggerSliderFocus |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
+| disabled          |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
+| format            |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;format: "raw"<br>}</code>             |
+| formatter         |             |      | -      |                                                                                                                                                            |
+| indicator         |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
+| lazy              |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
+| locale            |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;locale: undefined<br>}</code>                 |
+| max               |             |      | -      | <code style='white-space: nowrap; padding: 0;'>100</code>                                                                                                  |
+| min               |             |      | -      | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                    |
+| v-model           |             |      | -      |                                                                                                                                                            |
+| override          |             |      | -      |                                                                                                                                                            |
+| rounded           |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;rounded: false<br>}</code>            |
+| size              |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;size: undefined<br>}</code>           |
+| step              |             |      | -      | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                    |
+| ticks             |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
+| tooltip           |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;tooltip: true<br>}</code>             |
+| tooltipAlways     |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
+| tooltipVariant    |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;tooltipVariant: undefined<br>}</code> |
+| variant           |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>        |
 
 ### Events
 
@@ -145,7 +144,27 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                | Default                            |
+| ---------------------------- | ---------------------------------- |
+| $slider-colors               | var.$colors                        |
+| $slider-radius               | css.getVar("radius")               |
+| $slider-background           | css.getVar("grey-lighter")         |
+| $slider-color                | css.getVar("primary")              |
+| $slider-track-border         | 0px solid css.getVar("grey")       |
+| $slider-track-shadow         | 0px 0px 0px css.getVar("grey")     |
+| $slider-thumb-background     | css.getVar("scheme-main")          |
+| $slider-thumb-radius         | css.getVar("radius")               |
+| $slider-thumb-border         | 1px solid css.getVar("grey-light") |
+| $slider-thumb-shadow         | none                               |
+| $slider-thumb-to-track-ratio | 2                                  |
+| $slider-tick-to-track-ratio  | 0.5                                |
+| $slider-tick-width           | 3px                                |
+| $slider-tick-radius          | css.getVar("radius")               |
+| $slider-tick-background      | css.getVar("grey-light")           |
+| $slider-tick-label-size      | 0.75rem                            |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_slider.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_

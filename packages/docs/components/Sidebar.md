@@ -98,7 +98,18 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                        | Default                                                                                             |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| $sidebar-colors                      | var.$colors                                                                                         |
+| $sidebar-z                           | 40                                                                                                  |
+| $sidebar-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
+| $sidebar-shadow                      | css.getVar("shadow")                                                                                |
+| $sidebar-width                       | 260px                                                                                               |
+| $sidebar-height                      | 260px                                                                                               |
+| $sidebar-mobile-width                | 80px                                                                                                |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_sidebar.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_

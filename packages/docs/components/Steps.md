@@ -151,7 +151,24 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                   | Default                             |
+| ------------------------------- | ----------------------------------- |
+| $steps-colors                   | var.$colors                         |
+| $steps-mobile-breakpoint        | vars.$tablet                        |
+| $steps-marker-background        | css.getVar("grey-light")            |
+| $steps-marker-color             | css.getVar("scheme-main")           |
+| $steps-marker-border            | 0.2em solid css.getVar("white")     |
+| $steps-default-color            | css.getVar("grey-lighter")          |
+| $steps-previous-color           | css.getVar("scheme-main")           |
+| $steps-previous-background      | css.getVar("primary")               |
+| $steps-active-color             | css.getVar("primary")               |
+| $steps-active-background        | css.getVar("scheme-main")           |
+| $steps-divider-height           | 0.2em                               |
+| $steps-details-background-color | css.getVar("body-background-color") |
+| $steps-vertical-padding         | 1em 0                               |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_steps.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
