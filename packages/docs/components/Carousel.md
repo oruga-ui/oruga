@@ -153,7 +153,21 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                  | Default                                 |
+| ------------------------------ | --------------------------------------- |
+| $carousel-arrow-background     | css.getVar("scheme-main")               |
+| $carousel-arrow-color          | css.getVar("primary")                   |
+| $carousel-arrow-icon-spaced    | 1.5rem                                  |
+| $carousel-arrow-top            | 50%                                     |
+| $carousel-indicator-background | rgba(css.getVar("scheme-invert"), 0.5)  |
+| $carousel-indicator-border     | css.getVar("scheme-main")               |
+| $carousel-indicator-color      | css.getVar("primary")                   |
+| $carousel-indicator-spaced     | 0.5rem                                  |
+| $carousel-overlay-background   | rgba(css.getVar("scheme-invert"), 0.86) |
+| $carousel-overlay-z            | 40                                      |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_carousel.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
