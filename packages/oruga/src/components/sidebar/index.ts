@@ -1,7 +1,7 @@
 import type { App, Plugin } from "vue";
 
 import Sidebar from "./Sidebar.vue";
-import useSidebarProgrammatic from "./SidebarProgrammatic";
+import useSidebarProgrammatic from "./useSidebarProgrammatic";
 
 import {
     registerComponent,

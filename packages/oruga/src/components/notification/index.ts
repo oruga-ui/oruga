@@ -1,7 +1,7 @@
 import type { App, Plugin } from "vue";
 
 import Notification from "./Notification.vue";
-import useNotificationProgrammatic from "./NotificationProgrammatic";
+import useNotificationProgrammatic from "./useNotificationProgrammatic";
 
 import {
     registerComponent,

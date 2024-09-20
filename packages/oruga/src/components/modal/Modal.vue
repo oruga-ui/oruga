@@ -202,9 +202,9 @@ const emits = defineEmits<{
     (e: "update:active", value: boolean): void;
     /**
      * on component close event
-     * @param value {any} - close event data
+     * @param value {unknown} - close event data
      */
-    (e: "close", ...args: any[]): void;
+    (e: "close", ...args: unknown[]): void;
 }>();
 
 const rootRef = ref();
@@ -291,7 +291,7 @@ function cancel(method: string): void {
  * 2. set active to false
  * 3. emit close event
  */
-function close(...args: any[]): void {
+function close(...args: unknown[]): void {
     if (typeof props.onClose === "function" && isActive.value)
         props.onClose.apply(args);
     isActive.value = false;

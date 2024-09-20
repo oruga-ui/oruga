@@ -2,56 +2,55 @@ import { type ComponentInternalInstance } from "vue";
 import { useProgrammatic, type ProgrammaticExpose } from "../programmatic";
 import InstanceRegistry from "@/utils/InstanceRegistry";
 
-import Modal from "./Modal.vue";
+import Loading from "./Loading.vue";
 
 import type { ComponentProps } from "vue-component-type-helpers";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        modal: typeof useModalProgrammatic;
+        loading: typeof LoadingProgrammatic;
     }
 }
 
-/** modal component programmatic instance registry **/
+/** loading component programmatic instance registry **/
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
-/** all properties of the modal component */
-export type ModalProps = ComponentProps<typeof Modal>;
+/** all properties of the loading component */
+export type LoadingProps = ComponentProps<typeof Loading>;
 
-/** useModalProgrammatic composable options */
-type ModalProgrammaticOptions = Readonly<Omit<ModalProps, "content">> & {
-    content?: string | Array<unknown>;
+type LoadingProgrammaticOptions = Readonly<Omit<LoadingProps, "label">> & {
+    label?: string | Array<unknown>;
 };
 
-const useModalProgrammatic = {
+const LoadingProgrammatic = {
     /**
      * create a new programmatic modal component
-     * @param options modal content string or modal component props object
+     * @param options loading label string or loading component props object
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
      */
     open(
-        options: string | ModalProgrammaticOptions,
+        options: string | LoadingProgrammaticOptions,
         target?: string | HTMLElement,
     ): ProgrammaticExpose {
-        const _options: ModalProgrammaticOptions =
-            typeof options === "string" ? { content: options } : options;
+        const _options: LoadingProgrammaticOptions =
+            typeof options === "string" ? { label: options } : options;
 
         let slot;
         // render content as slot when is an array
-        if (Array.isArray(_options.content)) {
-            slot = _options.content;
-            delete _options.content;
+        if (Array.isArray(_options.label)) {
+            slot = _options.label;
+            delete _options.label;
         }
 
-        const componentProps: ModalProps = {
+        const componentProps: LoadingProps = {
             active: true, // set the active state to true
-            ...(_options as ModalProps),
+            ...(_options as LoadingProps),
         };
 
         // create programmatic component
         return useProgrammatic.open(
-            Modal,
+            Loading,
             {
                 instances, // custom programmatic instance registry
                 target, // target the component get rendered into
@@ -61,10 +60,10 @@ const useModalProgrammatic = {
             slot,
         );
     },
-    /** close all instances in the programmatic modal instance registry */
+    /** close all instances in the programmatic loading instance registry */
     closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed.close(...args));
     },
 };
 
-export default useModalProgrammatic;
+export default LoadingProgrammatic;

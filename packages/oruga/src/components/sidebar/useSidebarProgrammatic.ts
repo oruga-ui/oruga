@@ -23,7 +23,7 @@ type SidebarProgrammaticOptions = Readonly<SidebarProps>;
 const useSidebarProgrammatic = {
     /**
      * create a new programmatic modal component
-     * @param options modal content string or options object
+     * @param options sidebar component props object
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
      */

@@ -31,7 +31,7 @@ type NotifcationProgrammaticOptions = Readonly<
 const useNotificationProgrammatic = {
     /**
      * create a new programmatic modal component
-     * @param options modal content string or options object
+     * @param options notification message string or notification component props object
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
      */

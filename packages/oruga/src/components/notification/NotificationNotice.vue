@@ -222,7 +222,7 @@ function setAutoClose(): void {
  * 2. set active to false
  * 3. clear timer
  */
-function close(...args: any[]): void {
+function close(...args: unknown[]): void {
     if (typeof props.onClose === "function" && isActive.value)
         props.onClose.apply(args);
     isActive.value = false;

@@ -156,9 +156,9 @@ const emits = defineEmits<{
     (e: "update:active", value: boolean): void;
     /**
      * on component close event
-     * @param value {any} - close event data
+     * @param value {unknown} - close event data
      */
-    (e: "close", ...args: any[]): void;
+    (e: "close", ...args: unknown[]): void;
 }>();
 
 const isActive = defineModel<boolean>("active", { default: true });
@@ -182,7 +182,7 @@ const computedIcon = computed(() => {
 });
 
 /** Close the Message and emit events. */
-function close(...args: any[]): void {
+function close(...args: unknown[]): void {
     isActive.value = false;
     emits("close", ...args);
 }

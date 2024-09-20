@@ -5,11 +5,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import {
-    defineClasses,
-    useEventListener,
-    useProgrammaticComponent,
-} from "@/composables";
+import { defineClasses, useEventListener } from "@/composables";
 
 import type { ComponentClass, ProgrammaticInstance } from "@/types";
 
@@ -123,9 +119,9 @@ const emits = defineEmits<{
     (e: "update:fullPage", value: boolean): void;
     /**
      * on component close event
-     * @param value {any} - close event data
+     * @param value {unknown} - close event data
      */
-    (e: "close", ...args: any[]): void;
+    (e: "close", ...args: unknown[]): void;
 }>();
 
 const rootRef = ref();
@@ -133,22 +129,6 @@ const rootRef = ref();
 const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 const isActive = defineModel<boolean>("active", { default: false });
-
-function handleClose(...args: any[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
-    isActive.value = false;
-    emits("close", args);
-}
-
-/** add programmatic usage to this component */
-const { close, cancel } = useProgrammaticComponent(rootRef, {
-    container: props.container,
-    programmatic: props.programmatic,
-    cancelable: props.cancelable,
-    destroy: false,
-    onClose: handleClose,
-});
 
 onMounted(() => {
     if (props.programmatic && props.container) isFullPage.value = false;
@@ -167,6 +147,34 @@ if (isClient) {
 function onKeyPress(event: KeyboardEvent): void {
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") cancel("escape");
+}
+
+/**
+ * Check if method is cancelable.
+ * Class close with action `cancel`.
+ * @param method Cancel method
+ */
+function cancel(method: string): void {
+    // check if method is cancelable
+    if (
+        (typeof props.cancelable === "boolean" && !props.cancelable) ||
+        !props.cancelable ||
+        (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
+    )
+        return;
+    close({ action: "cancel", method });
+}
+
+/**
+ * 1. call onClose handler if given
+ * 2. set active to false
+ * 3. emit close event
+ */
+function close(...args: unknown[]): void {
+    if (typeof props.onClose === "function" && isActive.value)
+        props.onClose.apply(args);
+    isActive.value = false;
+    emits("close", args);
 }
 
 // --- Computed Component Classes ---
