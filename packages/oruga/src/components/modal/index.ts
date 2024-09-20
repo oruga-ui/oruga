@@ -20,4 +20,4 @@ export default {
 } as Plugin;
 
 /** export modal components & composables */
-export { useModalProgrammatic, Modal as OModal };
+export { Modal as OModal, useModalProgrammatic };

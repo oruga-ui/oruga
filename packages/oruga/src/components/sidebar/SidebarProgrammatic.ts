@@ -1,49 +1,52 @@
-import { createVNode, render } from "vue";
+import { type ComponentInternalInstance } from "vue";
+import { useProgrammatic, type ProgrammaticExpose } from "../programmatic";
+import InstanceRegistry from "@/utils/InstanceRegistry";
 
 import Sidebar from "./Sidebar.vue";
-import type { SidebarProps } from "./types";
 
-import InstanceRegistry from "@/utils/InstanceRegistry";
-import { VueInstance } from "@/utils/plugins";
-import { merge } from "@/utils/helpers";
-import type { OrugaOptions, ProgrammaticExpose } from "@/types";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        sidebar: typeof SidebarProgrammatic;
+        sidebar: typeof useSidebarProgrammatic;
     }
 }
 
-const instances = new InstanceRegistry<typeof Sidebar>();
+// sidebar component programmatic instance registry
+const instances = new InstanceRegistry<ComponentInternalInstance>();
 
-type SidebarProgrammaticProps = Readonly<
-    SidebarProps & OrugaOptions["sidebar"]
->;
+/** all properties of the sidebar component */
+export type SidebarProps = ComponentProps<typeof Sidebar>;
 
-const SidebarProgrammatic = {
-    open(params: SidebarProgrammaticProps): ProgrammaticExpose {
-        const defaultParams = {
-            programmatic: { instances },
+type SidebarProgrammaticOptions = Readonly<SidebarProps>;
+
+const useSidebarProgrammatic = {
+    /**
+     * create a new programmatic modal component
+     * @param options modal content string or options object
+     * @param target specify a target the component get rendered into
+     * @returns ProgrammaticExpose
+     */
+    open(
+        options: SidebarProgrammaticOptions,
+        target?: string | HTMLElement,
+    ): ProgrammaticExpose {
+        const componentProps: SidebarProps = {
             active: true, // set the active state to true
+            ...options,
         };
 
-        const propsData = merge(defaultParams, params);
-        propsData.promise = new Promise((p1, p2) => {
-            propsData.programmatic.resolve = p1;
-            propsData.programmatic.reject = p2;
+        // create programmatic component
+        return useProgrammatic.open(Sidebar, {
+            instances, // custom programmatic instance registry
+            target, // target the component get rendered into
+            props: componentProps, // component specific props
         });
-
-        const app = VueInstance;
-        const vnode = createVNode(Sidebar, propsData);
-        vnode.appContext = app._context;
-        render(vnode, document.createElement("div"));
-
-        // return exposed functionalities
-        return vnode.component.exposed as ProgrammaticExpose;
     },
-    closeAll(...args: any[]): void {
+    /** close all instances in the programmatic sidebar instance registry */
+    closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed.close(...args));
     },
 };
 
-export default SidebarProgrammatic;
+export default useSidebarProgrammatic;

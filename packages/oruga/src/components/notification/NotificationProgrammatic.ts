@@ -21,7 +21,7 @@ const instances = new InstanceRegistry<ComponentInternalInstance>();
 export type NotifcationProps = ComponentProps<typeof Notification>;
 export type NotifcationNoticeProps = ComponentProps<typeof NotificationNotice>;
 
-type NotifcationProgrammaticProps = Readonly<
+type NotifcationProgrammaticOptions = Readonly<
     Omit<NotifcationNoticeProps, "container">
 > &
     Readonly<Omit<NotifcationProps, "message">> & {
@@ -36,10 +36,10 @@ const useNotificationProgrammatic = {
      * @returns ProgrammaticExpose
      */
     open(
-        options: string | NotifcationProgrammaticProps,
+        options: string | NotifcationProgrammaticOptions,
         target?: string | HTMLElement,
     ): ProgrammaticExpose {
-        const _options: NotifcationProgrammaticProps =
+        const _options: NotifcationProgrammaticOptions =
             typeof options === "string" ? { message: options } : options;
 
         let slot;
@@ -69,7 +69,7 @@ const useNotificationProgrammatic = {
             slot,
         );
     },
-    /** close all instances in the programmatic modal instance registry */
+    /** close all instances in the programmatic notification instance registry */
     closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed.close(...args));
     },
