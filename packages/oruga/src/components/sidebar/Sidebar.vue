@@ -38,16 +38,12 @@ const props = defineProps({
     override: { type: Boolean, default: undefined },
     /** Whether siedbar is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
-    /**
-     * Color of the sidebar
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("sidebar.variant"),
-    },
+
     /** Show an overlay like modal */
-    overlay: { type: Boolean, default: getOption("sidebar.overlay", false) },
+    overlay: {
+        type: Boolean,
+        default: () => getOption("sidebar.overlay", false),
+    },
     /** Display the Sidebear inline */
     inline: { type: Boolean, default: false },
     /**
@@ -57,33 +53,38 @@ const props = defineProps({
     position: {
         type: String as PropType<"top" | "right" | "bottom" | "left">,
         default: () => getOption("sidebar.position", "left"),
+        validator: (value: string) =>
+            ["top", "right", "bottom", "left"].indexOf(value) >= 0,
     },
     /** Show sidebar in fullheight */
     fullheight: {
         type: Boolean,
-        default: getOption("sidebar.fullheight", false),
+        default: () => getOption("sidebar.fullheight", false),
     },
     /** Show sidebar in fullwidth */
     fullwidth: {
         type: Boolean,
-        default: getOption("sidebar.fullwidth", false),
+        default: () => getOption("sidebar.fullwidth", false),
     },
     /** Show a small sidebar */
-    reduce: { type: Boolean, default: getOption("sidebar.reduce", false) },
+    reduce: {
+        type: Boolean,
+        default: () => getOption("sidebar.reduce", false),
+    },
     /**
      * Custom layout on mobile
      * @values fullwidth, reduced, hidden
      */
     mobile: {
-        type: String,
-        default: getOption("sidebar.mobile"),
+        type: String as PropType<"fullwidth" | "reduced" | "hidden">,
+        default: () => getOption("sidebar.mobile"),
         validator: (value: string) =>
             ["fullwidth", "reduced", "hidden"].indexOf(value) >= 0,
     },
     /** Expand sidebar on hover when reduced or mobile is reduce */
     expandOnHover: {
         type: Boolean,
-        default: getOption("sidebar.expandOnHover", false),
+        default: () => getOption("sidebar.expandOnHover", false),
     },
     /** Custom animation (transition name) */
     animation: {
@@ -99,14 +100,17 @@ const props = defineProps({
         default: () => getOption("sidebar.cancelable", ["escape", "outside"]),
     },
     /** Callback function to call on close (programmatically close or user canceled) */
-    onClose: { type: Function as PropType<() => void>, default: () => {} },
+    onClose: {
+        type: Function as PropType<() => void>,
+        default: () => {},
+    },
     /**
      * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
      * but will set body to position fixed, might break some layouts.
      * @values keep, clip
      */
     scroll: {
-        type: String,
+        type: String as PropType<"clip" | "keep">,
         default: () => getOption("sidebar.scroll", "clip"),
         validator: (value: string) => ["clip", "keep"].indexOf(value) >= 0,
     },
@@ -194,11 +198,6 @@ const props = defineProps({
     },
     /** Class of the sidebar when expanded on hover */
     expandOnHoverClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar variant */
-    variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -403,7 +402,7 @@ function beforeLeave(): void {
 
 const rootClasses = defineClasses(
     ["rootClass", "o-side"],
-    ["mobileClass", "o-side--mobile", null, isMobile],
+    ["mobileClass", "o-side--mobile", computed(() => props.mobile), isMobile],
     ["activeClass", "o-side--active", null, isActive],
     [
         "teleportClass",
@@ -418,12 +417,6 @@ const overlayClasses = defineClasses(["overlayClass", "o-side__overlay"]);
 
 const contentClasses = defineClasses(
     ["contentClass", "o-side__content"],
-    [
-        "variantClass",
-        "o-side__content--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
     [
         "positionClass",
         "o-side__content--",

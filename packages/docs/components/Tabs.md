@@ -155,7 +155,22 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                                     | Default                                                   |
+| ------------------------------------------------- | --------------------------------------------------------- |
+| $tabs-focused-outline                             | none                                                      |
+| $tabs-link-focus-border-bottom-color              | css.getVar( "tabs-link-hover-border-bottom-color")        |
+| $tabs-link-focus-active-border-bottom-color       | css.getVar( "tabs-link-active-border-bottom-color")       |
+| $tabs-boxed-link-focus-active-background-color    | css.getVar( "tabs-boxed-link-active-background-color")    |
+| $tabs-boxed-link-focus-background-color           | css.getVar( "tabs-boxed-link-hover-background-color")     |
+| $tabs-boxed-link-focus-active-border-bottom-color | css.getVar( "tabs-boxed-link-active-border-bottom-color") |
+| $tabs-boxed-link-focus-border-bottom-color        | css.getVar( "tabs-boxed-link-hover-border-bottom-color")  |
+| $tabs-toggle-link-focus-active-background-color   | css.getVar( "tabs-toggle-link-active-background-color")   |
+| $tabs-toggle-link-focus-background-color          | css.getVar( "tabs-toggle-link-hover-background-color")    |
+| $tabs-toggle-link-focus-active-border-color       | css.getVar( "tabs-toggle-link-active-border-color")       |
+| $tabs-toggle-link-focus-border-color              | css.getVar( "tabs-toggle-link-hover-border-color")        |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tabs.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_

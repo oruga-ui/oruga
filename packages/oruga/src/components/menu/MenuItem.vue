@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, toRaw, type PropType } from "vue";
+import { ref, computed, toValue, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -161,11 +161,11 @@ function triggerReset(child?: ProviderItem): void {
     // The point of this method is to collect references to the clicked item and any parent,
     // this way we can skip resetting those elements.
     if (typeof itemParent.value?.triggerReset === "function") {
-        itemParent.value.triggerReset(toRaw(item.value));
+        itemParent.value.triggerReset(toValue(item.value));
     }
     // else if not a sub item reset parent menu
     else if (typeof parent.value.resetMenu === "function") {
-        parent.value.resetMenu([toRaw(item.value), child]);
+        parent.value.resetMenu([toValue(item.value), child]);
     }
 }
 

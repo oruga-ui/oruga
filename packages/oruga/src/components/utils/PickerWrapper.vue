@@ -305,11 +305,13 @@ const attrs = useAttrs();
 const inputBind = computed(() => ({
     ...parentField?.value?.inputAttrs,
     ...attrs,
+    inputClass: props.pickerProps.inputClass,
     ...props.pickerProps.inputClasses,
 }));
 
 const dropdownBind = computed(() => ({
     "root-class": getActiveClasses(props.dropdownClasses),
+    "teleport-class": getActiveClasses(props.rootClasses),
     ...props.pickerProps.dropdownClasses,
 }));
 
@@ -330,6 +332,7 @@ defineExpose({ focus: setFocus });
             :disabled="pickerProps.disabled"
             :inline="pickerProps.inline"
             :mobile-modal="pickerProps.mobileModal"
+            :mobile-breakpoint="pickerProps.mobileBreakpoint"
             :trap-focus="pickerProps.trapFocus"
             :aria-role="ariaRole"
             :aria-modal="!pickerProps.inline"

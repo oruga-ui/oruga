@@ -104,9 +104,10 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 if (props.id) parentField?.value?.setInputId(props.id);
 
 const vmodel = defineModel<ModelValue>({
-    get: (v) => (isDefined(v) ? v : props.multiple ? [] : ""),
-    set: (v) => (isDefined(v) ? v : props.multiple ? [] : null),
-    default: null,
+    get: (v) => (isDefined(v) ? v : ((props.multiple ? [] : "") as ModelValue)),
+    set: (v) =>
+        isDefined(v) ? v : ((props.multiple ? [] : null) as ModelValue),
+    default: null as ModelValue,
 });
 
 const placeholderVisible = computed(

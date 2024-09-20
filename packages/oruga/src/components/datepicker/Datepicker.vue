@@ -554,8 +554,8 @@ const listsClasses = defineClasses(["listsClass", "o-dpck__header__list"]);
 
 const footerClasses = defineClasses(["footerClass", "o-dpck__footer"]);
 
-const dropdownClass = defineClasses([
-    "dropdownClasses.rootClass",
+const pickerDropdownClasses = defineClasses([
+    "dropdownClass",
     "o-tpck__dropdown",
 ]);
 
@@ -581,8 +581,8 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         :max="maxDate"
         :min="minDate"
         :stay-open="props.multiple"
-        :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
+        :dropdown-classes="pickerDropdownClasses"
         :box-class="boxClassBind"
         :dtf="dtf"
         @focus="$emit('focus', $event)"
@@ -612,7 +612,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         :aria-label="ariaPreviousLabel"
                         :icon-pack="iconPack"
                         :icon-left="iconPrev"
-                        outlined
                         @click.prevent="prev"
                         @keydown.enter.prevent="prev"
                         @keydown.space.prevent="prev" />
@@ -624,7 +623,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         :aria-label="ariaNextLabel"
                         :icon-pack="iconPack"
                         :icon-left="iconNext"
-                        outlined
                         @click.prevent="next"
                         @keydown.enter.prevent="next"
                         @keydown.space.prevent="next" />

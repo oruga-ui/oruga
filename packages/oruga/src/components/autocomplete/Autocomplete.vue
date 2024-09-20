@@ -409,7 +409,7 @@ const filteredOptions = computed<T[]>(() =>
 );
 
 /** filtered options formatted as groups */
-const groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
+const _groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
     if (props.groupField) {
         if (props.groupOptions)
             return filteredOptions.value.map((item: T) => {
@@ -437,7 +437,7 @@ const groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
 /** is any option visible */
 const isEmpty = computed(
     () =>
-        !groupOptions.value?.some(
+        !_groupOptions.value?.some(
             (element) => element.items && element.items.length,
         ),
 );
@@ -479,7 +479,7 @@ watch(
         } else if (hoveredOption.value) {
             // reset hovered if list doesn't contain it
             const hoveredValue = getValue(hoveredOption.value);
-            const data = groupOptions.value
+            const data = _groupOptions.value
                 .map((d) => d.items)
                 .reduce((a, b) => [...a, ...b], []);
             const index = data.findIndex((d) => getValue(d) === hoveredValue);
@@ -574,7 +574,7 @@ function setHoveredIdToIndex(index: number): void {
 /** set first option as hovered */
 function hoverFirstOption(): void {
     nextTick(() => {
-        const nonEmptyElements = groupOptions.value.filter(
+        const nonEmptyElements = _groupOptions.value.filter(
             (element) => element.items?.length,
         );
         if (nonEmptyElements.length) {
@@ -598,7 +598,7 @@ function navigateItem(direction: 1 | -1): void {
         return;
     }
 
-    const data = groupOptions.value
+    const data = _groupOptions.value
         .map((d) => d.items)
         .reduce((a, b) => [...a, ...b], []);
 
@@ -888,7 +888,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             <slot name="header" />
         </o-dropdown-item>
 
-        <template v-for="(element, groupindex) in groupOptions">
+        <template v-for="(element, groupindex) in _groupOptions">
             <o-dropdown-item
                 v-if="element.group"
                 :key="`${groupindex}_group`"
