@@ -377,7 +377,6 @@ defineExpose({ close, promise: props.promise });
                     v-if="overlay"
                     :class="overlayClasses"
                     tabindex="-1"
-                    aria-hidden="true"
                     @click="clickedOutside" />
 
                 <div
