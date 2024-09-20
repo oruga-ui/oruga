@@ -5,6 +5,7 @@ export interface OrugaProgrammatic {
     [key: string]: Record<string, any>;
 }
 
+/** @deprecate **/
 export interface ProgrammaticInstance<T = ComponentInternalInstance> {
     instances: InstanceRegistry<T>;
     /** Promise resolve function */
@@ -14,6 +15,7 @@ export interface ProgrammaticInstance<T = ComponentInternalInstance> {
 }
 
 /**
+ * @deprecated
  * Pollyfill for the InstanceType of programmatic components,
  * because the exposed data isn't included.
  */

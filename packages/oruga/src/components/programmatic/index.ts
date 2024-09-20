@@ -1,11 +1,14 @@
 import type { App, Plugin } from "vue";
 
-import Programmatic from "./Programmatic";
+import Programmatic from "./useProgrammatic";
 
 import { registerComponentProgrammatic } from "@/utils/plugins";
 
 /** export programmatic specific types */
-export type { ProgrammaticProps } from "./Programmatic";
+export type {
+    ProgrammaticOptions,
+    ProgrammaticExpose,
+} from "./useProgrammatic";
 
 /** export programmatic plugin */
 export default {
@@ -14,4 +17,5 @@ export default {
     },
 } as Plugin;
 
-// no component export here
+/** export composables here */
+export { useProgrammatic } from "./useProgrammatic";

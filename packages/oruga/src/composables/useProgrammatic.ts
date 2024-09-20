@@ -33,6 +33,7 @@ type ProgrammaticOptions = {
 };
 
 /**
+ * @deprecated
  * This provides functionalities for programmatic usage.
  * The component get appended to the container.
  * This defines a cancel and close handler, as well as escape handler.
@@ -117,6 +118,7 @@ export function useProgrammaticComponent(
                         window.requestAnimationFrame(() => {
                             // remove the component from the container or the body tag
                             if (element.value) removeElement(element.value);
+                            setTimeout(() => console.log(vm), 1000);
                         });
                     else {
                         if (element.value) removeElement(element.value);

@@ -13,7 +13,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { vTrapFocus } from "@/directives/trapFocus";
 import { getOption } from "@/utils/config";
-import { removeElement, toCssDimension } from "@/utils/helpers";
+import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -21,10 +21,9 @@ import {
     useEventListener,
     useMatchMedia,
     usePreventScrolling,
-    useProgrammaticComponent,
 } from "@/composables";
 
-import type { ComponentClass, ProgrammaticInstance } from "@/types";
+import type { ComponentClass } from "@/types";
 
 /**
  * Classic modal overlay to include any content you may need
@@ -46,7 +45,7 @@ const props = defineProps({
     /** Display modal as full screen */
     fullScreen: { type: Boolean, default: false },
     /** Text content, unnecessary when default slot is used */
-    content: { type: [String, Object], default: undefined },
+    content: { type: String, default: undefined },
     /** Width of the Modal */
     width: {
         type: [String, Number],
@@ -103,11 +102,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("modal.ariaLabel"),
     },
-    /** Destroy modal on hide - default `true` for programmatic usage */
-    destroyOnHide: {
-        type: Boolean,
-        default: () => getOption("modal.destroyOnHide", false),
-    },
     /** Automatically focus modal when active */
     autoFocus: {
         type: Boolean,
@@ -149,27 +143,9 @@ const props = defineProps({
         default: undefined,
     },
     /** Props to be binded to the injected component */
-    props: { type: Object, default: undefined },
+    props: { type: Object, default: undefined }, // todo: type this right
     /** Events to be binded to the injected component */
     events: { type: Object, default: () => ({}) },
-    /** DOM element where the modal component will be created on (for programmatic usage) */
-    container: {
-        type: [Object, String] as PropType<string | HTMLElement | null>,
-        default: () => getOption("modal.container", "body"),
-    },
-    /**
-     * This is used internally for programmatic usage
-     * @ignore
-     */
-    programmatic: {
-        type: Object as PropType<ProgrammaticInstance>,
-        default: undefined,
-    },
-    /**
-     * This is used internally for programmatic usage
-     * @ignore
-     */
-    promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {
@@ -236,22 +212,6 @@ const contentRef = ref();
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-function handleClose(...args: any[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
-    isActive.value = false;
-    emits("close", args);
-}
-
-/** add programmatic usage to this component */
-const { close, cancel } = useProgrammaticComponent(rootRef, {
-    container: props.container,
-    programmatic: props.programmatic,
-    cancelable: props.cancelable,
-    destroy: props.destroyOnHide,
-    onClose: handleClose,
-});
-
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
@@ -277,10 +237,6 @@ watch(isActive, (value) => {
     // if autoFocus focus the element
     if (value && rootRef.value && props.autoFocus)
         nextTick(() => rootRef.value.focus());
-    // destoyed the modal after it get closed
-    if (!value && props.destroyOnHide)
-        // wait for transition finish
-        setTimeout(() => removeElement(rootRef.value));
 });
 
 onMounted(() => {
@@ -312,6 +268,34 @@ function clickedOutside(event: Event): void {
     if (props.overlay || !event.composedPath().includes(contentRef.value))
         event.preventDefault();
     cancel("outside");
+}
+
+/**
+ * Check if method is cancelable.
+ * Class close with action `cancel`.
+ * @param method Cancel method
+ */
+function cancel(method: string): void {
+    // check if method is cancelable
+    if (
+        (typeof props.cancelable === "boolean" && !props.cancelable) ||
+        !props.cancelable ||
+        (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
+    )
+        return;
+    close({ action: "cancel", method });
+}
+
+/**
+ * 1. call onClose handler if given
+ * 2. set active to false
+ * 3. emit close event
+ */
+function close(...args: any[]): void {
+    if (typeof props.onClose === "function" && isActive.value)
+        props.onClose.apply(args);
+    isActive.value = false;
+    emits("close", args);
 }
 
 // --- Animation Feature ---
@@ -353,7 +337,7 @@ const closeClasses = defineClasses(["closeClass", "o-modal__close"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ close, promise: props.promise });
+defineExpose({ close });
 </script>
 
 <template>
