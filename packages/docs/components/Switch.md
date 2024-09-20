@@ -97,7 +97,17 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                   | Default                  |
+| ------------------------------- | ------------------------ |
+| $switch-colors                  | var.$colors              |
+| $switch-width                   | 2.75em                   |
+| $switch-padding                 | 0.2em                    |
+| $switch-background-color        | css.getVar("grey-light") |
+| $switch-active-background-color | css.getVar("primary")    |
+| $switch-shadow                  | css.getVar("shadow")     |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_switch.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_

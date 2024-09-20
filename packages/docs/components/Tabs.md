@@ -80,17 +80,17 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description                                                                      | Type                   | Values | Default                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------- | ---------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility.         | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tab"<br>}</code>     |
-| disabled  | Item will be disabled                                                            | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
-| icon      | Icon on the left                                                                 | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>     |
-| iconPack  | Icon pack                                                                        | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
-| label     | Item label                                                                       | string                 | -      |                                                                                                                                                    |
-| override  | Override existing theme classes completely                                       | boolean                | -      |                                                                                                                                                    |
-| tag       | Tabs item tag name                                                               | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
-| value     | Item value (it will be used as v-model of wrapper component) - default is a uuid | string\|number\|object | -      | Default function (see source code)                                                                                                                 |
-| visible   | Show/hide item                                                                   | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
+| Prop name | Description                                                                       | Type                   | Values | Default                                                                                                                                            |
+| --------- | --------------------------------------------------------------------------------- | ---------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility.          | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tab"<br>}</code>     |
+| disabled  | Item will be disabled                                                             | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| icon      | Icon on the left                                                                  | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>     |
+| iconPack  | Icon pack                                                                         | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| label     | Item label                                                                        | string                 | -      |                                                                                                                                                    |
+| override  | Override existing theme classes completely                                        | boolean                | -      |                                                                                                                                                    |
+| tag       | Tabs item tag name                                                                | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
+| value     | Item value (it will be used as v-model of wrapper component) - default is an uuid | string\|number\|object | -      | Default function (see source code)                                                                                                                 |
+| visible   | Show/hide item                                                                    | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
 
 ### Events
 
@@ -155,7 +155,22 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                                     | Default                                                   |
+| ------------------------------------------------- | --------------------------------------------------------- |
+| $tabs-focused-outline                             | none                                                      |
+| $tabs-link-focus-border-bottom-color              | css.getVar( "tabs-link-hover-border-bottom-color")        |
+| $tabs-link-focus-active-border-bottom-color       | css.getVar( "tabs-link-active-border-bottom-color")       |
+| $tabs-boxed-link-focus-active-background-color    | css.getVar( "tabs-boxed-link-active-background-color")    |
+| $tabs-boxed-link-focus-background-color           | css.getVar( "tabs-boxed-link-hover-background-color")     |
+| $tabs-boxed-link-focus-active-border-bottom-color | css.getVar( "tabs-boxed-link-active-border-bottom-color") |
+| $tabs-boxed-link-focus-border-bottom-color        | css.getVar( "tabs-boxed-link-hover-border-bottom-color")  |
+| $tabs-toggle-link-focus-active-background-color   | css.getVar( "tabs-toggle-link-active-background-color")   |
+| $tabs-toggle-link-focus-background-color          | css.getVar( "tabs-toggle-link-hover-background-color")    |
+| $tabs-toggle-link-focus-active-border-color       | css.getVar( "tabs-toggle-link-active-border-color")       |
+| $tabs-toggle-link-focus-border-color              | css.getVar( "tabs-toggle-link-hover-border-color")        |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tabs.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_

@@ -103,7 +103,7 @@ sidebarDepth: 2
 | label     | Item label, unnecessary when default slot is used                                                                                                               | string                 | -                                |                                                                                                                                                             |
 | tabindex  | Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key)                                                                       | number\|string         | -                                | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                     |
 | tag       | Dropdown item tag name                                                                                                                                          | DynamicComponent       | -                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;itemTag: "div"<br>}</code>           |
-| value     | Item value (it will be used as v-model of wrapper component) - default is a uuid                                                                                | string\|number\|object | -                                | Default function (see source code)                                                                                                                          |
+| value     | Item value (it will be used as v-model of wrapper component) - default is an uuid                                                                               | string\|number\|object | -                                | Default function (see source code)                                                                                                                          |
 
 ### Events
 
@@ -164,7 +164,16 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                         | Default                                                                                             |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| $dropdown-mobile-breakpoint           | vars.$desktop                                                                                       |
+| $dropdown-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
+| $dropdown-disabled-opacity            | 0.5                                                                                                 |
+| $dropdown-gap                         | 0px                                                                                                 |
+| $dropdown-z                           | 40                                                                                                  |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_dropdown.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_

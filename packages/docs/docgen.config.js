@@ -329,11 +329,22 @@ ${description ? "> " + description : ""}
     return ret;
 }
 
+function getThemePath(theme, suffix) {
+    // local package node_module path
+    let path = `./node_modules/${theme.path}${suffix}`;
+    if (fs.existsSync(path)) return path;
+    // root node_module path
+    path = `./../../node_modules/${theme.path}${suffix}`;
+    if (fs.existsSync(path)) return path;
+    // return empty path
+    return "";
+}
+
 function tmplThemeStyle(config, name) {
     const renderThemeVariables = (theme) => {
         const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
-        const componentPath = `${theme.path}/scss/components/${name}`;
-        if (!fs.existsSync(componentPath)) return noStyle;
+        const componentPath = getThemePath(theme, `/scss/components/${name}`);
+        if (!componentPath) return noStyle;
         const cssFile = path.resolve(config.cwd, componentPath);
         const content = fs.readFileSync(cssFile, "utf8");
         const docsRegex = "/* @docs */";
@@ -382,12 +393,18 @@ ${renderThemeVariables(theme)}
 
 function createThemeDocs() {
     THEMES.map((theme) => {
-        let componentPath = `${theme.path}/scss/utils/_variables.scss`;
-        if (!fs.existsSync(componentPath))
-            componentPath = `${theme.path}/scss/utilities/_variables.scss`;
-        if (!fs.existsSync(componentPath))
-            componentPath = `${theme.path}/scss/components/utils/_variables.scss`;
-        if (!fs.existsSync(componentPath)) {
+        let componentPath = getThemePath(theme, "/scss/utils/_variables.scss");
+        if (!componentPath)
+            componentPath = getThemePath(
+                theme,
+                "/scss/utilities/_variables.scss",
+            );
+        if (!componentPath)
+            componentPath = getThemePath(
+                theme,
+                "/scss/components/utils/_variables.scss",
+            );
+        if (!componentPath) {
             const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
             fs.writeFileSync(`./themes/${theme.key}.md`, noStyle);
             return;

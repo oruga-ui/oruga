@@ -142,7 +142,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ----------------------------- | ------- |
 | $notification-margin-bottom   | 1.5rem  |
 | $notification-notices-padding | 2em     |
-| $notification-notices-zindex  | 1000    |
+| $notification-notices-z       | 1000    |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_notification.scss)
 

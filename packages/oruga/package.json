@@ -69,6 +69,9 @@
   "peerDependencies": {
     "vue": "^3.0.0"
   },
+  "dependencies": {
+    "vue-component-type-helpers": "^2.1.6"
+  },
   "devDependencies": {
     "@babel/core": "7.25.2",
     "@babel/preset-env": "7.25.4",
@@ -87,9 +90,6 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-config-standard-with-typescript": "^43.0.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.1.0",
     "eslint-plugin-vue": "^9.28.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
     "jest-axe": "^9.0.0",
@@ -105,7 +105,6 @@
     "vitest": "^2.1.1",
     "vue": "^3.5.6",
     "vue-component-meta": "^2.1.6",
-    "vue-component-type-helpers": "^2.1.6",
     "vue-tsc": "^2.1.6"
   }
 }

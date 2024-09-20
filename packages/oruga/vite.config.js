@@ -116,7 +116,14 @@ export default defineConfig(({ mode }) => ({
             ],
         },
     },
-    plugins: [tsconfigPaths(), vue(), dts({ outDir: "./dist/types" })],
+    plugins: [
+        tsconfigPaths(),
+        vue(),
+        dts({
+            outDir: "./dist/types",
+            bundledPackages: ["vue-component-type-helpers"],
+        }),
+    ],
     test: {
         setupFiles: [resolve("./src/__tests__/vitest.setup.ts")],
         environment: "jsdom",

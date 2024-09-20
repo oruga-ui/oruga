@@ -85,7 +85,15 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable             | Default                  |
+| ------------------------- | ------------------------ |
+| $upload-colors            | file.$file-colors        |
+| $upload-bg                | transparent              |
+| $upload-draggable-padding | 0.5rem                   |
+| $upload-border-color      | css.getVar("grey-light") |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_upload.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_

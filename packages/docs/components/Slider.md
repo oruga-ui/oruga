@@ -144,7 +144,27 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                | Default                            |
+| ---------------------------- | ---------------------------------- |
+| $slider-colors               | var.$colors                        |
+| $slider-radius               | css.getVar("radius")               |
+| $slider-background           | css.getVar("grey-lighter")         |
+| $slider-color                | css.getVar("primary")              |
+| $slider-track-border         | 0px solid css.getVar("grey")       |
+| $slider-track-shadow         | 0px 0px 0px css.getVar("grey")     |
+| $slider-thumb-background     | css.getVar("scheme-main")          |
+| $slider-thumb-radius         | css.getVar("radius")               |
+| $slider-thumb-border         | 1px solid css.getVar("grey-light") |
+| $slider-thumb-shadow         | none                               |
+| $slider-thumb-to-track-ratio | 2                                  |
+| $slider-tick-to-track-ratio  | 0.5                                |
+| $slider-tick-width           | 3px                                |
+| $slider-tick-radius          | css.getVar("radius")               |
+| $slider-tick-background      | css.getVar("grey-light")           |
+| $slider-tick-label-size      | 0.75rem                            |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_slider.scss)
+
 </div><div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
