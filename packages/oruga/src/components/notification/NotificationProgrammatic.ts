@@ -1,74 +1,78 @@
-import { createVNode, render } from "vue";
-
-import NotificationNotice from "./NotificationNotice.vue";
-import type { NotifcationNoticeProps, NotifcationProps } from "./types";
-
+import type { ComponentInternalInstance } from "vue";
+import { useProgrammatic, type ProgrammaticExpose } from "../programmatic";
 import InstanceRegistry from "@/utils/InstanceRegistry";
-import { VueInstance } from "@/utils/plugins";
-import { merge } from "@/utils/helpers";
 import { getOption } from "@/utils/config";
-import type { OrugaOptions, ProgrammaticExpose } from "@/types";
+
+import Notification from "./Notification.vue";
+import NotificationNotice from "./NotificationNotice.vue";
+
+import type { ComponentProps } from "vue-component-type-helpers";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        notification: typeof NotificationProgrammatic;
+        notification: typeof useNotificationProgrammatic;
     }
 }
 
-const instances = new InstanceRegistry<typeof NotificationNotice>();
+// notification component programmatic instance registry
+const instances = new InstanceRegistry<ComponentInternalInstance>();
+
+/** all properties of the notification component */
+export type NotifcationProps = ComponentProps<typeof Notification>;
+export type NotifcationNoticeProps = ComponentProps<typeof NotificationNotice>;
 
 type NotifcationProgrammaticProps = Readonly<
-    | string
-    | (NotifcationNoticeProps &
-          NotifcationProps &
-          OrugaOptions["notification"] &
-          Record<string, unknown>)
->;
+    Omit<NotifcationNoticeProps, "container">
+> &
+    Readonly<Omit<NotifcationProps, "message">> & {
+        message?: string | Array<unknown>;
+    };
 
-const NotificationProgrammatic = {
-    open(params: NotifcationProgrammaticProps): ProgrammaticExpose {
-        const componentParams =
-            typeof params === "string"
-                ? {
-                      message: params,
-                  }
-                : { ...params };
+const useNotificationProgrammatic = {
+    /**
+     * create a new programmatic modal component
+     * @param options modal content string or options object
+     * @param target specify a target the component get rendered into
+     * @returns ProgrammaticExpose
+     */
+    open(
+        options: string | NotifcationProgrammaticProps,
+        target?: string | HTMLElement,
+    ): ProgrammaticExpose {
+        const _options: NotifcationProgrammaticProps =
+            typeof options === "string" ? { message: options } : options;
 
         let slot;
-        if (Array.isArray(componentParams.message)) {
-            slot = componentParams.message;
-            delete componentParams.message;
+        // render message as slot when is an array
+        if (Array.isArray(_options.message)) {
+            slot = _options.message;
+            delete _options.message;
         }
 
-        const defaultParams = {
-            programmatic: { instances },
+        const componentProps: NotifcationNoticeProps = {
             position: getOption("notification.position", "top-right"),
+            notification: _options.notification
+                ? _options.notification
+                : _options,
+            container: null, // this will be overridden by the `useProgrammatic` composable
         };
 
-        const notificationParams = componentParams.notification
-            ? componentParams.notification
-            : componentParams;
-
-        const propsData = merge(defaultParams, componentParams);
-        propsData.notification = merge({}, notificationParams);
-        propsData.promise = new Promise((p1, p2) => {
-            propsData.programmatic.resolve = p1;
-            propsData.programmatic.reject = p2;
-        });
-
-        const defaultSlot = () => slot;
-
-        const app = VueInstance;
-        const vnode = createVNode(NotificationNotice, propsData, defaultSlot);
-        vnode.appContext = app._context;
-        render(vnode, document.createElement("div"));
-
-        // return exposed functionalities
-        return vnode.component.exposed as ProgrammaticExpose;
+        // create programmatic component
+        return useProgrammatic.open(
+            NotificationNotice,
+            {
+                instances, // custom programmatic instance registry
+                target, // target the component get rendered into
+                props: componentProps, // component specific props
+            },
+            // component default slot render
+            slot,
+        );
     },
-    closeAll(...args: any[]): void {
+    /** close all instances in the programmatic modal instance registry */
+    closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed.close(...args));
     },
 };
 
-export default NotificationProgrammatic;
+export default useNotificationProgrammatic;

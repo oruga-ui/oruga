@@ -72,11 +72,12 @@ export const useProgrammatic = {
         let vnode = createVNode(
             ProgrammaticComponent,
             {
-                instances, // global programmatic instance - can be overriden by given in options
-                ...options, // custom component options
-                component,
+                instances: options.instances ?? instances, // programmatic registry instance - can be overriden by given in options
+                component, // the component which should be rendered
+                props: { ...options.props, container: target }, // component props including the target as `container`
+                onClose: options.onClose, // custom onClose handler
                 destroy, // node destory cleanup handler
-            },
+            } as ProgrammaticComponentProps<C>,
             slot ? (): unknown => slot : null, // default slot render function
         );
         vnode.appContext = VueInstance._context; // set app context
