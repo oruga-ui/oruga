@@ -50,11 +50,6 @@ const props = defineProps({
         type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption<DynamicComponent>("tabs.itemTag", "button"),
     },
-    /** Role attribute to be passed to the div wrapper for better accessibility. */
-    ariaRole: {
-        type: String,
-        default: () => getOption("tabs.ariaRole", "tab"),
-    },
     /** Sets a class to the item header */
     headerClass: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
@@ -191,13 +186,15 @@ const headerTextClasses = defineClasses([
         <template v-if="!parent.destroyOnHide || (isActive && visible)">
             <div
                 v-show="isActive && visible"
-                ref="rootRef"
                 v-bind="$attrs"
+                :id="`tabpanel-${item.identifier}`"
+                ref="rootRef"
                 :class="elementClasses"
                 :data-id="`tabs-${item.identifier}`"
                 data-oruga="tabs-item"
+                role="tabpanel"
+                :aria-labelledby="`tab-${item.identifier}`"
                 :tabindex="isActive ? 0 : -1"
-                :role="ariaRole"
                 aria-roledescription="item">
                 <!-- 
                     @slot Tab item content
