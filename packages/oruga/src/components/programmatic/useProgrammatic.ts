@@ -63,7 +63,7 @@ export const useProgrammatic = {
         // clear vnode
         function destroy(): void {
             // clear the container and all connected child node by rendering null into it
-            // if (container) render(null, container);
+            if (container) render(null, container);
             container = null; // reset the variable
             vnode = null; // reset the vnode
         }
@@ -80,7 +80,7 @@ export const useProgrammatic = {
             } as ProgrammaticComponentProps<C>,
             slot ? (): unknown => slot : null, // default slot render function
         );
-        vnode.appContext = VueInstance._context; // set app context
+        if (VueInstance?._context) vnode.appContext = VueInstance._context; // set app context
 
         // render a new vue instance into the cache container
         render(vnode, container);

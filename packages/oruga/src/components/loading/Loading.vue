@@ -7,7 +7,7 @@ import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import { defineClasses, useEventListener } from "@/composables";
 
-import type { ComponentClass, ProgrammaticInstance } from "@/types";
+import type { ComponentClass } from "@/types";
 
 /**
  * A simple loading overlay
@@ -57,27 +57,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("loading.iconSize", "medium"),
     },
-    /**
-     * DOM element where the loading component will be created on (for programmatic usage).
-     * Note that this also changes fullPage to false.
-     */
-    container: {
-        type: [Object, String] as PropType<string | HTMLElement | null>,
-        default: () => getOption("loading.container", "body"),
-    },
-    /**
-     * This is used internally for programmatic usage
-     * @ignore
-     */
-    programmatic: {
-        type: Object as PropType<ProgrammaticInstance>,
-        default: undefined,
-    },
-    /**
-     * This is used internally for programmatic usage.
-     * @ignore
-     */
-    promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {
@@ -130,9 +109,6 @@ const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-onMounted(() => {
-    if (props.programmatic && props.container) isFullPage.value = false;
-});
 
 // --- Events Feature ---
 
@@ -193,7 +169,7 @@ const labelClasses = defineClasses(["labelClass", "o-load__label"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ close, promise: props.promise });
+defineExpose({ close });
 </script>
 
 <template>

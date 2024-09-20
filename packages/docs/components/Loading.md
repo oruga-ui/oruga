@@ -53,7 +53,7 @@
 | --------------- | ------------------------------------------- | ----------------------------- |
 | update:active   | **value** `boolean` - updated active prop   | active prop two-way binding   |
 | update:fullPage | **value** `boolean` - updated fullPage prop | fullPage prop two-way binding |
-| close           | **value** `any` - close event data          | on component close event      |
+| close           | **value** `unknown` - close event data      | on component close event      |
 
 ### Slots
 

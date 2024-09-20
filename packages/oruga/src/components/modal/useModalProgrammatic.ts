@@ -48,7 +48,7 @@ const useModalProgrammatic = {
         }
 
         const componentProps: ModalProps = {
-            active: true, // set the active state to true
+            active: true, // set the active default state to true
             ...(_options as ModalProps),
         };
 

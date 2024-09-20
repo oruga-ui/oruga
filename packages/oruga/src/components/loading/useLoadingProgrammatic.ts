@@ -47,7 +47,8 @@ const LoadingProgrammatic = {
         }
 
         const componentProps: LoadingProps = {
-            active: true, // set the active state to true
+            active: true, // set the active default state to true
+            fullPage: false, // set the full page default state to false
             ...(_options as LoadingProps),
         };
 
