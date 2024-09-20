@@ -68,7 +68,7 @@ const LoadingProgrammatic = {
     },
     /** close the last registred instance in the loading programmatic instance registry */
     close(...args: unknown[]): void {
-        instances.fist()?.exposed.close(...args);
+        instances.last()?.exposed.close(...args);
     },
     /** close all instances in the programmatic loading instance registry */
     closeAll(...args: unknown[]): void {
