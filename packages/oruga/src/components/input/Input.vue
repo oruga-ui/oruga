@@ -134,7 +134,7 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 // const vmodel = defineModel<ModelValue>({ default: undefined });
 const vmodel = useVModel<ModelValue>();
 
-// if id is given set as `for` property on o-field wrapper
+// if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
 
 /** Get value length */
