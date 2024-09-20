@@ -1,5 +1,8 @@
 import { ref } from "vue";
-import type { OrugaProgrammatic } from "@/types";
+
+export interface OrugaProgrammatic {
+    [key: string]: Record<string, any>;
+}
 
 /** Oruga object for programmatic components */
 const oruga = ref<OrugaProgrammatic>({} as OrugaProgrammatic);

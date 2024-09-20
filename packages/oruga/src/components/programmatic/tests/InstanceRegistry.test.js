@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import InstanceRegistry from "./InstanceRegistry";
+import InstanceRegistry from "../InstanceRegistry";
 
 describe("InstanceRegistry", () => {
     describe(".add", () => {

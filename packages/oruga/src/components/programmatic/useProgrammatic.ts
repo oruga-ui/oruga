@@ -5,7 +5,7 @@ import {
     type ComponentInternalInstance,
 } from "vue";
 
-import InstanceRegistry from "@/utils/InstanceRegistry";
+import InstanceRegistry from "@/components/programmatic/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
 import { isElement } from "@/utils/helpers";
 

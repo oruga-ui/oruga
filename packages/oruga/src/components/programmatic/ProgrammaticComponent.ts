@@ -9,7 +9,7 @@ import {
     type VNode,
 } from "vue";
 
-import type InstanceRegistry from "@/utils/InstanceRegistry";
+import type InstanceRegistry from "@/components/programmatic/InstanceRegistry";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 import { isClient } from "@/utils/ssr";

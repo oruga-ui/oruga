@@ -1,6 +1,9 @@
 import type { ComponentInternalInstance } from "vue";
-import { useProgrammatic, type ProgrammaticExpose } from "../programmatic";
-import InstanceRegistry from "@/utils/InstanceRegistry";
+import {
+    InstanceRegistry,
+    useProgrammatic,
+    type ProgrammaticExpose,
+} from "../programmatic";
 import { getOption } from "@/utils/config";
 
 import Notification from "./Notification.vue";

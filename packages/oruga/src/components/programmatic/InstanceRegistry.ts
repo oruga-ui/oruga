@@ -1,4 +1,3 @@
-// todo move to programmatic folder
 export default class InstanceRegistry<T> {
     entries: Array<T>;
 
