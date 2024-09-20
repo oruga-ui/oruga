@@ -49,6 +49,10 @@ const useSidebarProgrammatic = {
             onClose: options.onClose, // on close event handler
         });
     },
+    /** close the last registred instance in the sidebar programmatic instance registry */
+    close(...args: unknown[]): void {
+        instances.fist()?.exposed.close(...args);
+    },
     /** close all instances in the programmatic sidebar instance registry */
     closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed.close(...args));

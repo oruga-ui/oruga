@@ -5,6 +5,14 @@ export default class InstanceRegistry<T> {
         this.entries = [];
     }
 
+    fist(): T {
+        return this.entries.at(0);
+    }
+
+    last(): T {
+        return this.entries.at(-1);
+    }
+
     add(entry: T): void {
         this.entries.push(entry);
     }

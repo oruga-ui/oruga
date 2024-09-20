@@ -28,6 +28,38 @@ describe("InstanceRegistry", () => {
         });
     });
 
+    describe(".first", () => {
+        it("get first registered first entry", () => {
+            const myEntry1 = { key: 1 };
+            const myEntry2 = { key: 2 };
+            const myEntry3 = { key: 3 };
+            const registry = new InstanceRegistry();
+
+            registry.add(myEntry1);
+            registry.add(myEntry2);
+            registry.add(myEntry3);
+
+            expect(registry.entries).toHaveLength(3);
+            expect(registry.fist()).toBe(myEntry1);
+        });
+    });
+
+    describe(".last", () => {
+        it("get last registered first entry", () => {
+            const myEntry1 = { key: 1 };
+            const myEntry2 = { key: 2 };
+            const myEntry3 = { key: 3 };
+            const registry = new InstanceRegistry();
+
+            registry.add(myEntry1);
+            registry.add(myEntry2);
+            registry.add(myEntry3);
+
+            expect(registry.entries).toHaveLength(3);
+            expect(registry.last()).toBe(myEntry3);
+        });
+    });
+
     describe(".walk", () => {
         it("walks all the entries", () => {
             const myEntry = { key: 1 };
