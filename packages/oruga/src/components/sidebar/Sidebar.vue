@@ -99,11 +99,6 @@ const props = defineProps({
         type: [Array, Boolean] as PropType<string[] | boolean>,
         default: () => getOption("sidebar.cancelable", ["escape", "outside"]),
     },
-    /** Callback function to call on close (programmatically close or user canceled) */
-    onClose: {
-        type: Function as PropType<() => void>,
-        default: () => {},
-    },
     /**
      * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
      * but will set body to position fixed, might break some layouts.
@@ -325,7 +320,7 @@ function clickedOutside(event: Event): void {
 
 /**
  * Check if method is cancelable.
- * Class close with action `cancel`.
+ * Call close() with action `cancel`.
  * @param method Cancel method
  */
 function cancel(method: string): void {
@@ -339,14 +334,8 @@ function cancel(method: string): void {
     close({ action: "cancel", method });
 }
 
-/**
- * 1. call onClose handler if given
- * 2. set active to false
- * 3. emit close event
- */
+/** set active to false and emit close event */
 function close(...args: unknown[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
     isActive.value = false;
     emits("close", args);
 }
@@ -509,9 +498,9 @@ defineExpose({ close });
                     <slot :close="close">
                         <!-- injected component for programmatic usage -->
                         <component
-                            v-bind="$props.props"
                             :is="component"
                             v-if="component"
+                            v-bind="$props.props"
                             v-on="$props.events"
                             @close="close" />
                     </slot>

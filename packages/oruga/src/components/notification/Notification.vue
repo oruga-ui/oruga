@@ -181,7 +181,7 @@ const computedIcon = computed(() => {
     }
 });
 
-/** Close the Message and emit events. */
+/** set active to false and emit close event */
 function close(...args: unknown[]): void {
     isActive.value = false;
     emits("close", ...args);

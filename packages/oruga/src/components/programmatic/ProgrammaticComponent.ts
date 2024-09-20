@@ -57,28 +57,22 @@ export const ProgrammaticComponent = defineComponent(
         // getting a hold of the internal instance in setup()
         const vm = getCurrentInstance();
 
-        let resolve: (value?: unknown) => void = null;
         // create response promise
-        const promise = new Promise((p1) => {
-            resolve = p1;
-        });
+        let resolve: (value?: unknown) => void = null;
+        const promise = new Promise<unknown>((p1) => (resolve = p1));
 
-        onMounted(() => {
-            // add component instance to instance register
-            props.instances.add(vm);
-        });
+        // add component instance to instance register
+        onMounted(() => props.instances.add(vm));
 
-        onUnmounted(() => {
-            // remove component instance from instance register
-            props.instances.remove(vm);
-            // call promise resolve
-            resolve.apply(null);
-        });
+        // remove component instance from instance register
+        onUnmounted(() => props.instances.remove(vm));
 
         function close(...args: unknown[]): void {
             // call `onClose` handler if given
-            if (typeof props.onClose === "function")
-                props.onClose.apply(null, args);
+            if (typeof props.onClose === "function") props.onClose(...args);
+
+            // call promise resolve
+            resolve(...args);
 
             // call `destory` after animation is finished
             setTimeout(() => {

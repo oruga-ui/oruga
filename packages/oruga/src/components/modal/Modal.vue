@@ -70,8 +70,6 @@ const props = defineProps({
         default: () =>
             getOption("modal.cancelable", ["escape", "x", "outside"]),
     },
-    /** Callback function to call on close (programmatically close or user canceled) */
-    onClose: { type: Function as PropType<() => void>, default: () => {} },
     /**
      * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
      * but will set body to position fixed, might break some layouts.
@@ -143,9 +141,9 @@ const props = defineProps({
         default: undefined,
     },
     /** Props to be binded to the injected component */
-    props: { type: Object, default: undefined }, // todo: type this right
+    props: { type: Object, default: () => ({}) }, // todo: type this right
     /** Events to be binded to the injected component */
-    events: { type: Object, default: () => ({}) },
+    events: { type: Object, default: () => ({}) }, // todo: type this right
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {
@@ -272,7 +270,7 @@ function clickedOutside(event: Event): void {
 
 /**
  * Check if method is cancelable.
- * Class close with action `cancel`.
+ * Call close() with action `cancel`.
  * @param method Cancel method
  */
 function cancel(method: string): void {
@@ -286,14 +284,8 @@ function cancel(method: string): void {
     close({ action: "cancel", method });
 }
 
-/**
- * 1. call onClose handler if given
- * 2. set active to false
- * 3. emit close event
- */
+/** set active to false and emit close event */
 function close(...args: unknown[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
     isActive.value = false;
     emits("close", args);
 }
@@ -370,9 +362,9 @@ defineExpose({ close });
                     :style="customStyle">
                     <!-- injected component for programmatic usage -->
                     <component
-                        v-bind="$props.props"
                         :is="component"
                         v-if="component"
+                        v-bind="$props.props"
                         v-on="$props.events"
                         @close="close" />
                     <!--

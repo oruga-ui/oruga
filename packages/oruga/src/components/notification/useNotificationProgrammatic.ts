@@ -2,6 +2,7 @@ import type { ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 import { getOption } from "@/utils/config";
@@ -17,7 +18,7 @@ declare module "../../index" {
     }
 }
 
-// notification component programmatic instance registry
+/** notification component programmatic instance registry */
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** all properties of the notification component */
@@ -29,7 +30,7 @@ type NotifcationProgrammaticOptions = Readonly<
 > &
     Readonly<Omit<NotifcationProps, "message">> & {
         message?: string | Array<unknown>;
-    };
+    } & ProgrammaticComponentOptions<typeof NotificationNotice>;
 
 const useNotificationProgrammatic = {
     /**
@@ -67,6 +68,7 @@ const useNotificationProgrammatic = {
                 instances, // custom programmatic instance registry
                 target, // target the component get rendered into
                 props: componentProps, // component specific props
+                onClose: _options.onClose, // on close event handler
             },
             // component default slot render
             slot,

@@ -2,6 +2,7 @@ import { type ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 
@@ -15,13 +16,14 @@ declare module "../../index" {
     }
 }
 
-// sidebar component programmatic instance registry
+/** sidebar component programmatic instance registry */
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** all properties of the sidebar component */
 export type SidebarProps = ComponentProps<typeof Sidebar>;
 
-type SidebarProgrammaticOptions = Readonly<SidebarProps>;
+type SidebarProgrammaticOptions = Readonly<SidebarProps> &
+    ProgrammaticComponentOptions<typeof Sidebar>;
 
 const useSidebarProgrammatic = {
     /**
@@ -44,6 +46,7 @@ const useSidebarProgrammatic = {
             instances, // custom programmatic instance registry
             target, // target the component get rendered into
             props: componentProps, // component specific props
+            onClose: options.onClose, // on close event handler
         });
     },
     /** close all instances in the programmatic sidebar instance registry */

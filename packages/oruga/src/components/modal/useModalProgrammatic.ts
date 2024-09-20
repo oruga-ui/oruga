@@ -2,6 +2,7 @@ import { type ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 
@@ -24,7 +25,7 @@ export type ModalProps = ComponentProps<typeof Modal>;
 /** useModalProgrammatic composable options */
 type ModalProgrammaticOptions = Readonly<Omit<ModalProps, "content">> & {
     content?: string | Array<unknown>;
-};
+} & ProgrammaticComponentOptions<typeof Modal>;
 
 const useModalProgrammatic = {
     /**
@@ -59,6 +60,7 @@ const useModalProgrammatic = {
                 instances, // custom programmatic instance registry
                 target, // target the component get rendered into
                 props: componentProps, // component specific props
+                onClose: _options.onClose, // on close event handler
             },
             // component default slot render
             slot,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, type PropType } from "vue";
+import { ref, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -37,8 +37,6 @@ const props = defineProps({
     },
     /** Is Loading cancable by pressing escape or clicking outside. */
     cancelable: { type: Boolean, default: false },
-    /** Callback function to call on close (programmatically close or user canceled). */
-    onClose: { type: Function as PropType<() => void>, default: () => {} },
     /** Icon name to show, unnecessary when default slot is used. */
     icon: {
         type: String,
@@ -109,7 +107,6 @@ const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-
 // --- Events Feature ---
 
 if (isClient) {
@@ -127,13 +124,12 @@ function onKeyPress(event: KeyboardEvent): void {
 
 /**
  * Check if method is cancelable.
- * Class close with action `cancel`.
+ * Call close() with action `cancel`.
  * @param method Cancel method
  */
 function cancel(method: string): void {
     // check if method is cancelable
     if (
-        (typeof props.cancelable === "boolean" && !props.cancelable) ||
         !props.cancelable ||
         (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
     )
@@ -141,14 +137,8 @@ function cancel(method: string): void {
     close({ action: "cancel", method });
 }
 
-/**
- * 1. call onClose handler if given
- * 2. set active to false
- * 3. emit close event
- */
+/** set active to false and emit close event */
 function close(...args: unknown[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
     isActive.value = false;
     emits("close", args);
 }

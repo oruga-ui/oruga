@@ -68,8 +68,6 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("notification.queue"),
     },
-    /** Callback function to call on close (programmatically close or user canceled). */
-    onClose: { type: Function as PropType<() => void>, default: () => {} },
     /**
      * Component to be injected.
      * Close notification within the component by emitting a 'close' event — $emit('close').
@@ -107,6 +105,14 @@ const props = defineProps({
         default: undefined,
     },
 });
+
+const emits = defineEmits<{
+    /**
+     * on component close event
+     * @param value {unknown} - close event data
+     */
+    (e: "close", ...args: unknown[]): void;
+}>();
 
 const notificationRef = ref();
 
@@ -217,16 +223,11 @@ function setAutoClose(): void {
     }
 }
 
-/**
- * 1. call onClose handler if given
- * 2. set active to false
- * 3. clear timer
- */
+/** set active to false and emit close event */
 function close(...args: unknown[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
     isActive.value = false;
     if (timer.value) clearTimeout(timer.value);
+    emits("close", args);
 }
 
 // --- Computed Component Classes ---

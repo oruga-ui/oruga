@@ -22,7 +22,7 @@ declare module "../../index" {
     }
 }
 
-// programmatic global instance registry if no custom is defined
+/** programmatic global instance registry if no custom is defined */
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useProgrammatic composable `open` function options */
@@ -33,6 +33,11 @@ export type ProgrammaticOptions<C extends string | Component> = {
      */
     target?: string | HTMLElement;
 } & Omit<ProgrammaticComponentProps<C>, "destroy" | "component">;
+
+/** subtype which can be used for programmatically call components */
+export type ProgrammaticComponentOptions<C> = Readonly<
+    Omit<ProgrammaticOptions<C>, "instances" | "props">
+>;
 
 /** useProgrammatic composable `open` function return value */
 export type ProgrammaticExpose = ComponentExposed<typeof ProgrammaticComponent>;

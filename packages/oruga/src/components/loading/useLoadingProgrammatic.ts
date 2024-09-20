@@ -2,6 +2,7 @@ import { type ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 
@@ -23,7 +24,7 @@ export type LoadingProps = ComponentProps<typeof Loading>;
 
 type LoadingProgrammaticOptions = Readonly<Omit<LoadingProps, "label">> & {
     label?: string | Array<unknown>;
-};
+} & ProgrammaticComponentOptions<typeof Loading>;
 
 const LoadingProgrammatic = {
     /**
@@ -59,6 +60,7 @@ const LoadingProgrammatic = {
                 instances, // custom programmatic instance registry
                 target, // target the component get rendered into
                 props: componentProps, // component specific props
+                onClose: _options.onClose, // on close event handler
             },
             // component default slot render
             slot,
