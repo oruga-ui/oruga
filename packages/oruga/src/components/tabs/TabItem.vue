@@ -1,8 +1,8 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { computed, ref, useSlots, type PropType } from "vue";
+import { computed, ref, useSlots, useId, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { isEqual, uuid } from "@/utils/helpers";
+import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { TabsComponent, TabItemComponent } from "./types";
@@ -22,12 +22,12 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /**
-     * Item value (it will be used as v-model of wrapper component) - default is a uuid
+     * Item value (it will be used as v-model of wrapper component) - default is an uuid
      * @type string|number|object
      */
     value: {
         type: [String, Number, Object] as PropType<T>,
-        default: () => uuid(),
+        default: () => useId(),
     },
     /** Item label */
     label: { type: String, default: undefined },

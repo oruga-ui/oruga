@@ -4,12 +4,13 @@ import {
     ref,
     useSlots,
     watch,
+    useId,
     type PropType,
     type VNodeArrayChildren,
 } from "vue";
 
 import { getOption } from "@/utils/config";
-import { isVNodeEmpty, uuid } from "@/utils/helpers";
+import { isVNodeEmpty } from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import { injectField, provideField } from "./fieldInjection";
@@ -188,7 +189,7 @@ watch(
 );
 
 /** a uniqe id for the message slot to associate an input to the field message */
-const messageId = uuid();
+const messageId = useId();
 
 /** this can be set from outside to update the focus state */
 const isFocused = ref(false);

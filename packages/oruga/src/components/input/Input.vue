@@ -6,13 +6,13 @@ import {
     watch,
     onMounted,
     useAttrs,
+    useId,
     type StyleValue,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
 import {
     defineClasses,
     useDebounce,
@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     statusIcon: getOption("statusIcon", true),
     debounce: getOption("autocomplete.debounce", 400),
     autocomplete: getOption("input.autocomplete", "off"),
-    id: uuid(),
+    id: () => useId(),
     useHtml5Validation: getOption("useHtml5Validation", true),
     customValidity: "",
 });

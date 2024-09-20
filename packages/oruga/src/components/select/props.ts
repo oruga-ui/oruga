@@ -52,7 +52,7 @@ export type SelectProps<
     iconRightClickable?: boolean;
     /** Variant of right icon */
     iconRightVariant?: string;
-    /** Same as native id. Also set the `for` label for o-field wrapper. */
+    /** Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. */
     id?: string;
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;

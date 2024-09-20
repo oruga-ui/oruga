@@ -2,7 +2,7 @@
 
 exports[`OSelect tests > render correctly 1`] = `
 "<div class="o-ctrl-sel" data-oruga="select">
-  <!--v-if--><select id="mocked" data-oruga-input="select" class="o-sel o-sel--placeholder o-sel-arrow" autocomplete="off">
+  <!--v-if--><select id="v-0" data-oruga-input="select" class="o-sel o-sel--placeholder o-sel-arrow" autocomplete="off">
     <!--v-if-->
     <!--
                 @slot Override the options, default is options prop
