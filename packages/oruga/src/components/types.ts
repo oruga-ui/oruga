@@ -907,25 +907,25 @@ but will set body to position fixed, might break some layouts. */
                 /** Class of the tab content when transitioning */
                 transitioningClass: ClassDefinition;
                 /** Class of the tab item */
-                itemClass: ClassDefinition;
-                /** Class of the tab item header */
-                itemHeaderClass: ClassDefinition;
-                /** Class of the tab item header icon */
-                itemHeaderIconClass: ClassDefinition;
-                /** Class of the tab item header text */
-                itemHeaderTextClass: ClassDefinition;
-                /** Class of the tab item header type */
-                itemHeaderTypeClass: ClassDefinition;
-                /** Class of the tab item header when active */
-                itemHeaderActiveClass: ClassDefinition;
-                /** Class of the tab item header when disabled */
-                itemHeaderDisabledClass: ClassDefinition;
-                /** Class of the tab item wrapper */
-                itemWrapperClass: ClassDefinition;
+                navItemClass: ClassDefinition;
+                /** Class of the tab item */
+                tabClass: ClassDefinition;
+                /** Class of the tab item */
+                tabPanelClass: ClassDefinition;
+                /** Class of the tab item icon */
+                tabIconClass: ClassDefinition;
+                /** Class of the tab item label */
+                tabLabelClass: ClassDefinition;
+                /** Class of the tab item type */
+                tabTypeClass: ClassDefinition;
+                /** Class of the tab item when active */
+                tabActiveClass: ClassDefinition;
+                /** Class of the tab item when disabled */
+                tabDisabledClass: ClassDefinition;
                 /** Class of the Tabs component nav position */
                 navPositionClass: ClassDefinition;
                 /** Class of the Tabs component nav tabs */
-                navTabsClass: ClassDefinition;
+                navClass: ClassDefinition;
                 /** Color of the control */
                 variant: string;
                 /** Icon on the left */
@@ -934,8 +934,6 @@ but will set body to position fixed, might break some layouts. */
                 iconPack: string;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
                 ariaRole: string;
-                /** Sets a class to the item header */
-                headerClass: string;
                 /** Show tab in vertical layout */
                 vertical: boolean;
                 /** Size of the navigation */

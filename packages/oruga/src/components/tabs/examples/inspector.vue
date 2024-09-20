@@ -11,21 +11,6 @@ const inspectData = [
         description: "Root class of the element",
     },
     {
-        class: "navSizeClass",
-        description: "Size of the navigation",
-        properties: ["size"],
-        suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
-            data.size = "large";
-        },
-    },
-    {
-        class: "navTypeClass",
-        description: "Type of the navigation",
-        properties: ["type"],
-        suffixes: ["default", "boxed", "toggle"],
-    },
-    {
         class: "verticalClass",
         description: "Class of Tabs component when vertical",
         properties: ["vertical"],
@@ -61,68 +46,23 @@ const inspectData = [
         },
     },
     {
-        class: "itemWrapperClass",
-        description: "Class of the tab item wrapper",
-        specificity: "when <b>expandedClass</b> is applied",
+        class: "navClass",
+        description: "Class of the Tabs navigation",
     },
     {
-        class: "contentClass",
-        description: "Class of the tab content",
-    },
-    {
-        class: "transitioningClass",
-        description: "Class of the tab content when transitioning",
-    },
-    {
-        class: "itemClass",
-        description: "Class of the tab item",
-        subitem: true,
-    },
-    {
-        class: "itemHeaderClass",
-        description: "Class of the tab item header",
-        specificity:
-            "when <b>verticalClass</b> or <b>expandedClass</b> or <b>positionClass</b> is applied",
-        subitem: true,
-    },
-    {
-        class: "itemHeaderActiveClass",
-        description: "Class of the tab item header when active",
-        subitem: true,
-        suffixes: ["default", "boxed", "toggle"],
-    },
-    {
-        class: "itemHeaderDisabledClass",
-        description: "Class of the tab item header when disabled",
-        properties: ["disabled"],
-        subitem: true,
-        suffixes: ["default", "boxed", "toggle"],
+        class: "navSizeClass",
+        description: "Size of the navigation",
+        properties: ["size"],
+        suffixes: ["small", "medium", "large"],
         action: (cmp, data) => {
-            data.disabled = true;
+            data.size = "large";
         },
     },
     {
-        class: "itemHeaderTypeClass",
-        description: "Class of the tab item header type",
+        class: "navTypeClass",
+        description: "Type of the navigation",
         properties: ["type"],
-        subitem: true,
-        suffixes: ["default", "boxed", "toggle"],
-    },
-    {
-        class: "itemHeaderIconClass",
-        description: "Class of the tab item header icon",
-        properties: ["icon"],
-        subitem: true,
-    },
-    {
-        class: "itemHeaderTextClass",
-        description: "Class of the tab item header text",
-        subitem: true,
-    },
-    {
-        class: "navTabsClass",
-        description: "Class of the Tabs component nav tabs",
-        specificity: "when <b>positionClass</b> is applied",
+        suffixes: ["default", "boxed", "toggle", "pills"],
     },
     {
         class: "navPositionClass",
@@ -133,6 +73,64 @@ const inspectData = [
             data.vertical = false;
             data.position = "right";
         },
+    },
+    {
+        class: "navItemClass",
+        description: "Class of the navigation item",
+    },
+    {
+        class: "tabClass",
+        description: "Class of the tab item",
+        subitem: true,
+    },
+    {
+        class: "tabActiveClass",
+        description: "Class of the tab item when active",
+        subitem: true,
+        action: (cmp, data) => {
+            data.active = true;
+        },
+    },
+    {
+        class: "tabDisabledClass",
+        description: "Class of the tab item when disabled",
+        properties: ["disabled"],
+        subitem: true,
+        action: (cmp, data) => {
+            data.disabled = true;
+        },
+    },
+    {
+        class: "tabTypeClass",
+        description: "Class of the tab item type",
+        properties: ["type"],
+        subitem: true,
+        suffixes: ["default", "boxed", "toggle", "pills"],
+    },
+    {
+        class: "tabIconClass",
+        description: "Class of the tab item icon",
+        properties: ["icon"],
+        subitem: true,
+    },
+    {
+        class: "tabLabelClass",
+        description: "Class of the tab item label",
+        properties: ["label"],
+        subitem: true,
+    },
+    {
+        class: "contentClass",
+        description: "Class of the tab content",
+    },
+    {
+        class: "transitioningClass",
+        description: "Class of the tab content when transitioning",
+    },
+    {
+        class: "tabPanelClass",
+        description: "Class of the tab item panel",
+        subitem: true,
     },
 ];
 </script>
