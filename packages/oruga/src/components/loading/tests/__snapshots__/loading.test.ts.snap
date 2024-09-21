@@ -3,7 +3,7 @@
 exports[`OLoading tests > render correctly 1`] = `
 "<transition-stub name="fade" appear="false" persisted="false" css="true">
   <div data-oruga="loading" role="dialog" class="o-load o-load--fullpage">
-    <div class="o-load__overlay" tabindex="-1" aria-hidden="true"></div>
+    <div class="o-load__overlay" tabindex="-1"></div>
     <!-- 
                 @slot Override icon and label
                 @binding {close} close - function to close the component
