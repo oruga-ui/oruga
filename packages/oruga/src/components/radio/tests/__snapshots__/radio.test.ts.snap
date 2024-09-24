@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ORadio tests > render correctly 1`] = `
-"<label class="o-radio o-radio--checked" data-oruga="radio" role="radio" aria-checked="true"><input type="radio" data-oruga-input="radio" class="o-radio__input o-radio__input--checked" autocomplete="off">
+"<label class="o-radio o-radio--checked" data-oruga="radio" role="radio" aria-checked="true"><input id="v-0" type="radio" data-oruga-input="radio" class="o-radio__input o-radio__input--checked" autocomplete="off">
   <!--v-if-->
 </label>"
 `;
