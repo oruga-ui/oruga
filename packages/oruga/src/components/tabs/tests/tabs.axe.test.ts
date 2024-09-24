@@ -2,7 +2,7 @@ import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
 
-import TabsExample from "./TabsExample.vue";
+import TabsExample from "./TabsAxeExample.vue";
 
 describe("Tabs axe tests", () => {
     enableAutoUnmount(afterEach);
