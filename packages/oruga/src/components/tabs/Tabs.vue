@@ -6,14 +6,10 @@ import OSlotComponent from "../utils/SlotComponent";
 
 import { getOption } from "@/utils/config";
 import { mod, isDefined } from "@/utils/helpers";
-import {
-    defineClasses,
-    getActiveClasses,
-    useProviderParent,
-} from "@/composables";
+import { defineClasses, useProviderParent } from "@/composables";
 
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
-import type { ComponentClass, ClassBind } from "@/types";
+import type { ComponentClass } from "@/types";
 
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease
@@ -71,7 +67,7 @@ const props = defineProps({
     },
     /**
      * Tab type
-     * @values boxed, toggle
+     * @values default, boxed, toggle, pills
      */
     type: { type: String, default: () => getOption("tabs.type", "default") },
     /** Tabs will be expanded (full-width) */
@@ -133,7 +129,7 @@ const props = defineProps({
         default: undefined,
     },
     /** Class of the Tabs component nav tabs */
-    navTabsClass: {
+    navClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -152,6 +148,11 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item */
+    navItemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the tab content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -159,11 +160,6 @@ const props = defineProps({
     },
     /** Class of the tab content when transitioning */
     transitioningClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab item wrapper */
-    itemWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -236,8 +232,8 @@ const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
 );
 
-/** Item click listener, emit input event and change active child. */
-function itemClick(item: TabItem): void {
+/** Tab item click listener, emit input event and change active child. */
+function tabClick(item: TabItem): void {
     if (vmodel.value !== item.value) performAction(item.value as T);
 }
 
@@ -283,7 +279,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
         if (items.value[newIndex].visible && !items.value[newIndex].disabled)
             break;
     }
-    itemClick(items.value[newIndex]);
+    tabClick(items.value[newIndex]);
 }
 
 /** Activate next child and deactivate prev child */
@@ -329,13 +325,8 @@ const rootClasses = defineClasses(
     ],
 );
 
-const itemWrapperClasses = defineClasses([
-    "itemWrapperClass",
-    "o-tabs__nav-item-wrapper",
-]);
-
 const navClasses = defineClasses(
-    ["navTabsClass", "o-tabs__nav"],
+    ["navClass", "o-tabs__nav"],
     [
         "navSizeClass",
         "o-tabs__nav--",
@@ -356,6 +347,8 @@ const navClasses = defineClasses(
     ],
 );
 
+const navItemClasses = defineClasses(["navItemClass", "o-tabs__nav-item"]);
+
 const contentClasses = defineClasses(
     ["contentClass", "o-tabs__content"],
     [
@@ -365,30 +358,6 @@ const contentClasses = defineClasses(
         isTransitioning,
     ],
 );
-
-function itemHeaderClasses(
-    childItem: (typeof items.value)[number],
-): ClassBind[] {
-    const classes = defineClasses(
-        ["itemHeaderClass", "o-tabs__nav-item"],
-        ["itemHeaderTypeClass", "o-tabs__nav-item-", props.type, !!props.type],
-        [
-            "itemHeaderActiveClass",
-            "o-tabs__nav-item-{*}--active",
-            props.type,
-            isActive(childItem),
-        ],
-        [
-            "itemHeaderDisabledClass",
-            "o-tabs__nav-item-{*}--disabled",
-            props.type,
-            childItem.disabled,
-        ],
-    );
-    const headerClass = { [childItem.headerClass || ""]: true };
-
-    return [headerClass, ...classes.value];
-}
 </script>
 
 <template>
@@ -407,7 +376,7 @@ function itemHeaderClasses(
                 v-show="childItem.visible"
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
-                :class="itemWrapperClasses"
+                :class="navItemClasses"
                 role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="isActive(childItem) ? 'true' : 'false'">
@@ -416,9 +385,9 @@ function itemHeaderClasses(
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
-                    :class="itemHeaderClasses(childItem)"
-                    @click="itemClick(childItem)"
-                    @keydown.enter="itemClick(childItem)"
+                    :class="childItem.tabClasses"
+                    @click="tabClick(childItem)"
+                    @keydown.enter="tabClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"
@@ -431,9 +400,9 @@ function itemHeaderClasses(
                     v-else
                     role="button"
                     :tabindex="0"
-                    :class="itemHeaderClasses(childItem)"
-                    @click="itemClick(childItem)"
-                    @keydown.enter="itemClick(childItem)"
+                    :class="childItem.tabClasses"
+                    @click="tabClick(childItem)"
+                    @keydown.enter="tabClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"
@@ -442,13 +411,11 @@ function itemHeaderClasses(
                     @keydown.end.prevent="endPressed">
                     <o-icon
                         v-if="childItem.icon"
-                        :root-class="
-                            getActiveClasses(childItem.headerIconClasses)
-                        "
+                        :class="childItem.tabIconClasses"
                         :icon="childItem.icon"
                         :pack="childItem.iconPack"
                         :size="size" />
-                    <span :class="childItem.headerTextClasses">
+                    <span :class="childItem.tabLabelClasses">
                         {{ childItem.label }}
                     </span>
                 </component>

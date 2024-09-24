@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const dropFiles = ref([]);
-const deleteDropFile = (index) => {
+const dropFiles = ref<File[]>([]);
+
+function deleteDropFile(index): void {
     dropFiles.value.splice(index, 1);
-};
+}
 </script>
 
 <template>
     <section>
         <o-field>
             <o-upload v-model="dropFiles" multiple drag-drop>
-                <section class="ex-center">
+                <center>
                     <p>
                         <o-icon icon="upload" size="is-large" />
                     </p>
                     <p>Drop your files here or click to upload</p>
-                </section>
+                </center>
             </o-upload>
         </o-field>
 
@@ -33,9 +34,3 @@ const deleteDropFile = (index) => {
         </div>
     </section>
 </template>
-
-<style lang="scss">
-.ex-center {
-    text-align: center;
-}
-</style>
