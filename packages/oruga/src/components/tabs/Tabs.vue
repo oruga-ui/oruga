@@ -374,10 +374,11 @@ const contentClasses = defineClasses(
             <div
                 v-for="childItem in items"
                 v-show="childItem.visible"
+                :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
                 :class="navItemClasses"
                 role="tab"
-                :aria-controls="`${childItem.value}-content`"
+                :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="isActive(childItem) ? 'true' : 'false'">
                 <o-slot-component
                     v-if="childItem.$slots.header"
