@@ -3,6 +3,7 @@ import {
     render,
     type Component,
     type ComponentInternalInstance,
+    type EmitsToProps,
 } from "vue";
 
 import InstanceRegistry from "@/components/programmatic/InstanceRegistry";
@@ -12,9 +13,9 @@ import { isElement } from "@/utils/helpers";
 import {
     ProgrammaticComponent,
     type ProgrammaticComponentProps,
+    type ProgrammaticComponentEmits,
+    type ProgrammaticComponentExpose,
 } from "./ProgrammaticComponent";
-
-import type { ComponentExposed } from "vue-component-type-helpers";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -32,15 +33,16 @@ export type ProgrammaticOptions<C extends string | Component> = {
      * @default `document.body`
      */
     target?: string | HTMLElement;
-} & Omit<ProgrammaticComponentProps<C>, "destroy" | "component">;
+} & Omit<ProgrammaticComponentProps<C>, "component"> & // component props
+    EmitsToProps<Omit<ProgrammaticComponentEmits, "destroy">>; // component emit props
 
-/** subtype which can be used for programmatically call components */
-export type ProgrammaticComponentOptions<C> = Readonly<
-    Omit<ProgrammaticOptions<C>, "instances" | "props">
+/** public options interface for programmatically called components */
+export type PublicProgrammaticComponentOptions = EmitsToProps<
+    Pick<ProgrammaticComponentEmits, "close">
 >;
 
 /** useProgrammatic composable `open` function return value */
-export type ProgrammaticExpose = ComponentExposed<typeof ProgrammaticComponent>;
+export type ProgrammaticExpose = ProgrammaticComponentExpose;
 
 export const useProgrammatic = {
     /**
@@ -54,9 +56,11 @@ export const useProgrammatic = {
         options?: ProgrammaticOptions<C>,
         slot?: unknown,
     ): ProgrammaticExpose {
+        options = { instances, ...options };
+
         // define the target container - either HTML `body` or by a given query selector
         const target =
-            typeof options?.target === "string"
+            typeof options.target === "string"
                 ? document.querySelector<HTMLElement>(options.target)
                 : isElement(options?.target)
                   ? (options.target as HTMLElement)
@@ -66,7 +70,7 @@ export const useProgrammatic = {
         let container = document.createElement("div");
 
         // clear vnode
-        function destroy(): void {
+        function onDestroy(): void {
             // clear the container and all connected child node by rendering null into it
             if (container) render(null, container);
             container = null; // reset the variable
@@ -77,11 +81,11 @@ export const useProgrammatic = {
         let vnode = createVNode(
             ProgrammaticComponent,
             {
-                instances: options.instances ?? instances, // programmatic registry instance - can be overriden by given in options
+                instances: options.instances, // programmatic registry instance - can be overriden by given in options
                 component, // the component which should be rendered
                 props: { ...options.props, container: target }, // component props including the target as `container`
                 onClose: options.onClose, // custom onClose handler
-                destroy, // node destory cleanup handler
+                onDestroy, // node destory cleanup handler
             } as ProgrammaticComponentProps<C>,
             slot ? (): unknown => slot : null, // default slot render function
         );

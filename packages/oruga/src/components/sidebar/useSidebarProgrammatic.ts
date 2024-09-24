@@ -2,7 +2,7 @@ import { type ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
-    type ProgrammaticComponentOptions,
+    type PublicProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 
@@ -22,8 +22,9 @@ const instances = new InstanceRegistry<ComponentInternalInstance>();
 /** all properties of the sidebar component */
 export type SidebarProps = ComponentProps<typeof Sidebar>;
 
+/** useSidebarProgrammatic composable options */
 type SidebarProgrammaticOptions = Readonly<SidebarProps> &
-    ProgrammaticComponentOptions<typeof Sidebar>;
+    PublicProgrammaticComponentOptions;
 
 const useSidebarProgrammatic = {
     /**

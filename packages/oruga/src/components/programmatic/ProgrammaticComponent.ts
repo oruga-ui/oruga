@@ -8,51 +8,63 @@ import {
     type ComponentInternalInstance,
     type VNode,
 } from "vue";
+import type {
+    // ComponentExposed,
+    ComponentProps,
+} from "vue-component-type-helpers";
 
 import type InstanceRegistry from "@/components/programmatic/InstanceRegistry";
-import type { ComponentProps } from "vue-component-type-helpers";
-
 import { isClient } from "@/utils/ssr";
 
-// type ComponentPropsType<C> = C extends ComponentInternalInstance
-//     ? C["props"]
-//     : C extends DefineComponent
-//       ? C["$props"]
-//       : Record<string, unknown>;
+export type ProgrammaticComponentProps<C extends string | Component = unknown> =
+    {
+        /**
+         * Component to be injected.
+         * Terminate the component by emitting a 'close' event — emits('close')
+         */
+        component: C;
+        /**
+         * Props to be binded to the injected component.
+         * Both attributes and properties can be used in props.
+         * Vue automatically picks the right way to assign it.
+         * `class` and `style` have the same object / array value support like in templates.
+         * Event listeners should be passed as onXxx.
+         * @see https://vuejs.org/api/render-function.html#h
+         */
+        props?: ComponentProps<C>;
+        /** Programmatic component registry instance */
+        instances?: InstanceRegistry<ComponentInternalInstance>;
+    };
 
-export type ProgrammaticComponentProps<C extends string | Component> = {
+export type ProgrammaticComponentEmits = {
     /**
-     * Component to be injected.
-     * Terminate the component by emitting a 'close' event — emits('close')
+     * On component close event.
+     * This get called when the component emits `close` or the exposed `close` function get called.
      */
-    component: C;
-    /**
-     * Props to be binded to the injected component.
-     * Both attributes and properties can be used in props.
-     * Vue automatically picks the right way to assign it.
-     * `class` and `style` have the same object / array value support like in templates.
-     * Event listeners should be passed as onXxx.
-     * @see https://vuejs.org/api/render-function.html#h
-     */
-    props?: ComponentProps<C>;
-    /** Callback function to call on close event */
-    onClose?: (...args: unknown[]) => void;
-    /**
-     * This is used internally for programmatic usage
-     * @ignore
-     */
-    instances: InstanceRegistry<ComponentInternalInstance>;
-    /**
-     * This is used internally for programmatic usage
-     * @ignore
-     */
-    destroy: () => void;
+    close?: (...args: unknown[]) => void;
+    /** On component destroy event which get called when the component should be destroyed. */
+    destroy?: () => void;
 };
 
-export const ProgrammaticComponent = defineComponent(
+// there is a bug with functional defineComponent and extracting the exposed type
+// export type ProgrammaticComponentExpose = ComponentExposed<
+//     typeof ProgrammaticComponent
+// >;
+
+export type ProgrammaticComponentExpose = {
+    /** call close event function */
+    close: (...args: unknown[]) => void;
+    /** promise which get called on close event */
+    promise: Promise<unknown>;
+};
+
+export const ProgrammaticComponent = defineComponent<
+    ProgrammaticComponentProps,
+    ProgrammaticComponentEmits
+>(
     <C extends string | Component>(
         props: ProgrammaticComponentProps<C>,
-        { expose, slots },
+        { expose, emit, slots },
     ) => {
         // getting a hold of the internal instance in setup()
         const vm = getCurrentInstance();
@@ -62,28 +74,28 @@ export const ProgrammaticComponent = defineComponent(
         const promise = new Promise<unknown>((p1) => (resolve = p1));
 
         // add component instance to instance register
-        onMounted(() => props.instances.add(vm));
+        onMounted(() => props.instances?.add(vm));
 
         // remove component instance from instance register
-        onUnmounted(() => props.instances.remove(vm));
+        onUnmounted(() => props.instances?.remove(vm));
 
         function close(...args: unknown[]): void {
-            // call `onClose` handler if given
-            if (typeof props.onClose === "function") props.onClose(...args);
+            // emit `onClose` event
+            emit("close", ...args);
 
             // call promise resolve
             resolve(...args);
 
-            // call `destory` after animation is finished
+            // emit `destory` event after animation is finished
             setTimeout(() => {
                 if (isClient)
-                    window.requestAnimationFrame(() => props.destroy());
-                else props.destroy();
+                    window.requestAnimationFrame(() => emit("destroy"));
+                else emit("destroy");
             });
         }
 
         /** expose public functionalities for programmatic usage */
-        expose({ close, promise });
+        expose({ close, promise } satisfies ProgrammaticComponentExpose);
 
         // return render function which renders given component
         return (): VNode =>
@@ -93,6 +105,12 @@ export const ProgrammaticComponent = defineComponent(
                 slots["default"],
             );
     },
-    // manual runtime props declaration is currently still needed.
-    { props: ["component", "props", "onClose", "destroy", "instances"] },
+    {
+        // manual runtime props declaration is currently still needed.
+        props: ["component", "props", "instances"],
+        // manual runtime emits declaration
+        emits: ["close", "destroy"],
+        // manual runtime slot declaration
+        slots: ["default"],
+    },
 );

@@ -2,7 +2,7 @@ import { type ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
-    type ProgrammaticComponentOptions,
+    type PublicProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 
@@ -25,7 +25,7 @@ export type ModalProps = ComponentProps<typeof Modal>;
 /** useModalProgrammatic composable options */
 type ModalProgrammaticOptions = Readonly<Omit<ModalProps, "content">> & {
     content?: string | Array<unknown>;
-} & ProgrammaticComponentOptions<typeof Modal>;
+} & PublicProgrammaticComponentOptions;
 
 const useModalProgrammatic = {
     /**

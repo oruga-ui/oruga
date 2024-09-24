@@ -9,7 +9,7 @@ import InstanceRegistry from "./InstanceRegistry";
 export type {
     ProgrammaticOptions,
     ProgrammaticExpose,
-    ProgrammaticComponentOptions,
+    PublicProgrammaticComponentOptions,
 } from "./useProgrammatic";
 export { InstanceRegistry };
 

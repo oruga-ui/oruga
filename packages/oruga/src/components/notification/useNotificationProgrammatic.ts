@@ -2,7 +2,7 @@ import type { ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
-    type ProgrammaticComponentOptions,
+    type PublicProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 import { getOption } from "@/utils/config";
@@ -25,12 +25,13 @@ const instances = new InstanceRegistry<ComponentInternalInstance>();
 export type NotifcationProps = ComponentProps<typeof Notification>;
 export type NotifcationNoticeProps = ComponentProps<typeof NotificationNotice>;
 
+/** useNotificationProgrammatic composable options */
 type NotifcationProgrammaticOptions = Readonly<
     Omit<NotifcationNoticeProps, "container">
 > &
     Readonly<Omit<NotifcationProps, "message">> & {
         message?: string | Array<unknown>;
-    } & ProgrammaticComponentOptions<typeof NotificationNotice>;
+    } & PublicProgrammaticComponentOptions;
 
 const useNotificationProgrammatic = {
     /**
