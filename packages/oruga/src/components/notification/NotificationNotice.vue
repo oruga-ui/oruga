@@ -80,14 +80,6 @@ const props = defineProps({
     props: { type: Object, default: undefined },
     /** Events to be binded to the injected component. */
     events: { type: Object, default: () => ({}) },
-    /**
-     * Props passed to the internal notification component.
-     * @ignore
-     */
-    notification: {
-        type: Object as PropType<InstanceType<typeof ONotification>["$props"]>,
-        default: () => ({}),
-    },
     // class props (will not be displayed in the docs)
     /** Root class of the notice */
     noticeClass: {
@@ -100,7 +92,7 @@ const props = defineProps({
         default: undefined,
     },
     /** Class of the custom container element */
-    noticeCustomContainerClass: {
+    noticeContainerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -161,9 +153,7 @@ onBeforeMount(() => {
         props.container.appendChild(parentBottom.value);
 
         if (props.container.tagName !== "BODY") {
-            const classes = getActiveClasses(
-                noticeCustomContainerClasses.value,
-            );
+            const classes = getActiveClasses(noticeContainerClasses.value);
             if (classes?.length)
                 classes
                     .filter((c) => !!c)
@@ -245,9 +235,9 @@ const positionBottomClasses = defineClasses([
     "bottom",
 ]);
 
-const noticeCustomContainerClasses = defineClasses([
-    "noticeCustomContainerClass",
-    "o-notices__custom-container",
+const noticeContainerClasses = defineClasses([
+    "noticeContainerClass",
+    "o-notices__container",
 ]);
 
 // --- Expose Public Functionalities ---
@@ -258,9 +248,10 @@ defineExpose({ close });
 
 <template>
     <o-notification
-        v-bind="notification"
+        v-bind="$attrs"
         ref="notificationRef"
         v-model:active="isActive"
+        :override="override"
         :position="position"
         @close="close">
         <template #inner="{ close }">

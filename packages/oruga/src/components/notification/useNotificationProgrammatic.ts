@@ -56,9 +56,7 @@ const useNotificationProgrammatic = {
 
         const componentProps: NotifcationNoticeProps = {
             position: getOption("notification.position", "top-right"),
-            notification: _options.notification
-                ? _options.notification
-                : _options,
+            ..._options, // pass all props to the internal notification component
             container: null, // this will be overridden by the `useProgrammatic` composable
         };
 

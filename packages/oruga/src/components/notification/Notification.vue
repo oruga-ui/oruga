@@ -116,7 +116,7 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the close button container */
+    /** Class of the close button */
     closeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
