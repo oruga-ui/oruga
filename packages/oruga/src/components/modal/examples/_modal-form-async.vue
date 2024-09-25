@@ -14,23 +14,25 @@ defineEmits(["close"]);
                 <p class="modal-card-title">{{ title }}</p>
                 <o-icon
                     clickable
-                    native-type="button"
+                    type="button"
                     icon="times"
-                    @click="
+                    @click.prevent="
                         $emit('close', { action: 'cancel', method: 'x' })
                     " />
             </header>
+
             <section class="modal-card-body">
                 <p>{{ message }}</p>
             </section>
+
             <footer class="modal-card-foot">
                 <o-button
                     label="No"
-                    @click="$emit('close', { action: 'no' })" />
+                    @click.prevent="$emit('close', { action: 'no' })" />
                 <o-button
                     label="Yes"
                     variant="primary"
-                    @click="$emit('close', { action: 'yes' })" />
+                    @click.prevent="$emit('close', { action: 'yes' })" />
             </footer>
         </div>
     </form>

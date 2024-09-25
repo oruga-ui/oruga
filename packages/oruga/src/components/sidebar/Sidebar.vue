@@ -17,10 +17,9 @@ import {
     useClickOutside,
     useEventListener,
     useMatchMedia,
-    useProgrammaticComponent,
 } from "@/composables";
 
-import type { ComponentClass, ProgrammaticInstance } from "@/types";
+import type { ComponentClass } from "@/types";
 
 /**
  * A sidebar to use as left/right overlay or static
@@ -100,11 +99,6 @@ const props = defineProps({
         type: [Array, Boolean] as PropType<string[] | boolean>,
         default: () => getOption("sidebar.cancelable", ["escape", "outside"]),
     },
-    /** Callback function to call on close (programmatically close or user canceled) */
-    onClose: {
-        type: Function as PropType<() => void>,
-        default: () => {},
-    },
     /**
      * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
      * but will set body to position fixed, might break some layouts.
@@ -146,24 +140,6 @@ const props = defineProps({
     props: { type: Object, default: undefined },
     /** Events to be binded to the injected component. */
     events: { type: Object, default: () => ({}) },
-    /** DOM element where the sidebar component will be created on (for programmatic usage). */
-    container: {
-        type: [Object, String] as PropType<string | HTMLElement | null>,
-        default: () => getOption("sidebar.container", "body"),
-    },
-    /**
-     * This is used internally for programmatic usage.
-     * @ignore
-     */
-    programmatic: {
-        type: Object as PropType<ProgrammaticInstance>,
-        default: undefined,
-    },
-    /**
-     * This is used internally for programmatic usage.
-     * @ignore
-     */
-    promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {
@@ -255,31 +231,15 @@ const emits = defineEmits<{
     (e: "update:active", value: boolean): void;
     /**
      * on component close event
-     * @param value {any} - close event data
+     * @param value {unknown} - close event data
      */
-    (e: "close", ...args: any[]): void;
+    (e: "close", ...args: unknown[]): void;
 }>();
 
 const rootRef = ref();
 const contentRef = ref();
 
 const isActive = defineModel<boolean>("active", { default: false });
-
-function handleClose(...args: any[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
-    isActive.value = false;
-    emits("close", args);
-}
-
-/** add programmatic usage to this component */
-const { close, cancel } = useProgrammaticComponent(rootRef, {
-    container: props.container,
-    programmatic: props.programmatic,
-    cancelable: props.cancelable,
-    destroy: props.destroyOnHide,
-    onClose: handleClose,
-});
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
@@ -356,6 +316,28 @@ function clickedOutside(event: Event): void {
     if (props.overlay || !event.composedPath().includes(contentRef.value))
         event.preventDefault();
     cancel("outside");
+}
+
+/**
+ * Check if method is cancelable.
+ * Call close() with action `cancel`.
+ * @param method Cancel method
+ */
+function cancel(method: string): void {
+    // check if method is cancelable
+    if (
+        (typeof props.cancelable === "boolean" && !props.cancelable) ||
+        !props.cancelable ||
+        (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
+    )
+        return;
+    close({ action: "cancel", method });
+}
+
+/** set active to false and emit close event */
+function close(...args: unknown[]): void {
+    isActive.value = false;
+    emits("close", args);
 }
 
 function handleScroll(): void {
@@ -486,7 +468,7 @@ const scrollClass = computed(() =>
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ close, promise: props.promise });
+defineExpose({ close });
 </script>
 
 <template>
@@ -515,9 +497,9 @@ defineExpose({ close, promise: props.promise });
                     <slot :close="close">
                         <!-- injected component for programmatic usage -->
                         <component
-                            v-bind="$props.props"
                             :is="component"
                             v-if="component"
+                            v-bind="$props.props"
                             v-on="$props.events"
                             @close="close" />
                     </slot>

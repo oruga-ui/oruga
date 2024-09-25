@@ -1,8 +1,18 @@
-export default class InstanceRegistry<T> {
+import type { ComponentInternalInstance } from "vue";
+
+export default class InstanceRegistry<T = ComponentInternalInstance> {
     entries: Array<T>;
 
     constructor() {
         this.entries = [];
+    }
+
+    fist(): T {
+        return this.entries.at(0);
+    }
+
+    last(): T {
+        return this.entries.at(-1);
     }
 
     add(entry: T): void {

@@ -13,9 +13,8 @@ const promptModal = async (): Promise<void> => {
         },
         trapFocus: true,
     });
-    // Note utilizing the promise requires Promise be supported by the browser
-    // If you are running Vue 2 on IE 11 this will not be the case unless you
-    // add a polyfill in your build.
+
+    // wait until the modal got closed
     const result = await instance.promise;
 
     oruga.notification.open({
@@ -59,11 +58,11 @@ const promptModalCloseAll = async (): Promise<void> => {
             label="Open prompt"
             size="medium"
             variant="primary"
-            @click="promptModal()" />
+            @click.prevent="promptModal()" />
         <o-button
             label="Open prompt (closeAll timeout)"
             size="medium"
             variant="primary"
-            @click="promptModalCloseAll()" />
+            @click.prevent="promptModalCloseAll()" />
     </section>
 </template>

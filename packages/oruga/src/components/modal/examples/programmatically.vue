@@ -32,12 +32,12 @@ function cardModal(): void {
             label="Open modal (HTML)"
             size="medium"
             variant="primary"
-            @click="imageModal()" />
+            @click.prevent="imageModal()" />
 
         <o-button
             label="Open modal (Component)"
             size="medium"
             variant="primary"
-            @click="cardModal()" />
+            @click.prevent="cardModal()" />
     </section>
 </template>

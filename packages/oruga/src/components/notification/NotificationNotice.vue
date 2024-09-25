@@ -8,15 +8,12 @@ import {
     type Component,
 } from "vue";
 
-import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    getActiveClasses,
-    useProgrammaticComponent,
-} from "@/composables";
+import ONotification from "./Notification.vue";
 
-import type { NotifcationProps } from "./types";
-import type { ProgrammaticInstance, ComponentClass } from "@/types";
+import { getOption } from "@/utils/config";
+import { defineClasses, getActiveClasses } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Notification Notice is an extension of the Notification component and is used for the programmatic usage
@@ -32,6 +29,16 @@ defineOptions({
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
+    /**
+     * DOM element the toast will be created on (for programmatic usage).
+     * Note that this also changes the position of the toast from fixed to absolute.
+     * Meaning that the container should be fixed.
+     * @ignore internal property
+     */
+    container: {
+        type: Object as PropType<HTMLElement>,
+        required: true,
+    },
     /**
      * Which position the notification will appear.
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
@@ -61,8 +68,6 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("notification.queue"),
     },
-    /** Callback function to call on close (programmatically close or user canceled). */
-    onClose: { type: Function as PropType<() => void>, default: () => {} },
     /**
      * Component to be injected.
      * Close notification within the component by emitting a 'close' event — $emit('close').
@@ -75,36 +80,6 @@ const props = defineProps({
     props: { type: Object, default: undefined },
     /** Events to be binded to the injected component. */
     events: { type: Object, default: () => ({}) },
-    /**
-     * DOM element the toast will be created on (for programmatic usage).
-     * Note that this also changes the position of the toast from fixed to absolute.
-     * Meaning that the container should be fixed.
-     */
-    container: {
-        type: [Object, String] as PropType<string | HTMLElement | null>,
-        default: () => getOption("notification.container", "body"),
-    },
-    /**
-     * Props passed to the internal notification component.
-     * @ignore
-     */
-    notification: {
-        type: Object as PropType<NotifcationProps>,
-        default: () => ({}),
-    },
-    /**
-     * This is used internally for programmatic usage.
-     * @ignore
-     */
-    programmatic: {
-        type: Object as PropType<ProgrammaticInstance>,
-        default: undefined,
-    },
-    /**
-     * This is used internally for programmatic usage.
-     * @ignore
-     */
-    promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
     /** Root class of the notice */
     noticeClass: {
@@ -117,34 +92,23 @@ const props = defineProps({
         default: undefined,
     },
     /** Class of the custom container element */
-    noticeCustomContainerClass: {
+    noticeContainerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
 });
 
+const emits = defineEmits<{
+    /**
+     * on component close event
+     * @param value {unknown} - close event data
+     */
+    (e: "close", ...args: unknown[]): void;
+}>();
+
 const notificationRef = ref();
 
 const isActive = ref(true);
-
-function handleClose(...args: any[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
-    isActive.value = false;
-    if (timer.value) clearTimeout(timer.value);
-}
-
-/** add programmatic usage to this component */
-const { close, container } = useProgrammaticComponent(
-    () => notificationRef.value.$el,
-    {
-        container: props.container,
-        programmatic: props.programmatic,
-        cancelable: true,
-        destroy: true,
-        onClose: handleClose,
-    },
-);
 
 const parentTop = ref(null);
 const parentBottom = ref(null);
@@ -162,10 +126,10 @@ onBeforeMount(() => {
         const topClasses = getActiveClasses(positionTopClasses.value);
         const bottomClasses = getActiveClasses(positionBottomClasses.value);
 
-        parentTop.value = container.value.querySelector(
+        parentTop.value = props.container.querySelector(
             `.${rootClasses.join(".")}.${topClasses.join(".")}`,
         );
-        parentBottom.value = container.value.querySelector(
+        parentBottom.value = props.container.querySelector(
             `.${rootClasses.join(".")}.${bottomClasses.join(".")}`,
         );
 
@@ -185,13 +149,11 @@ onBeforeMount(() => {
             )} ${bottomClasses.join(" ")}`;
         }
 
-        container.value.appendChild(parentTop.value);
-        container.value.appendChild(parentBottom.value);
+        props.container.appendChild(parentTop.value);
+        props.container.appendChild(parentBottom.value);
 
-        if (container.value.tagName !== "BODY") {
-            const classes = getActiveClasses(
-                noticeCustomContainerClasses.value,
-            );
+        if (props.container.tagName !== "BODY") {
+            const classes = getActiveClasses(noticeContainerClasses.value);
             if (classes?.length)
                 classes
                     .filter((c) => !!c)
@@ -251,6 +213,13 @@ function setAutoClose(): void {
     }
 }
 
+/** set active to false and emit close event */
+function close(...args: unknown[]): void {
+    isActive.value = false;
+    if (timer.value) clearTimeout(timer.value);
+    emits("close", args);
+}
+
 // --- Computed Component Classes ---
 
 const noticeClasses = defineClasses(["noticeClass", "o-notices"]);
@@ -266,22 +235,23 @@ const positionBottomClasses = defineClasses([
     "bottom",
 ]);
 
-const noticeCustomContainerClasses = defineClasses([
-    "noticeCustomContainerClass",
-    "o-notices__custom-container",
+const noticeContainerClasses = defineClasses([
+    "noticeContainerClass",
+    "o-notices__container",
 ]);
 
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ close: handleClose, promise: props.promise });
+defineExpose({ close });
 </script>
 
 <template>
     <o-notification
-        v-bind="notification"
+        v-bind="$attrs"
         ref="notificationRef"
         v-model:active="isActive"
+        :override="override"
         :position="position"
         @close="close">
         <template #inner="{ close }">

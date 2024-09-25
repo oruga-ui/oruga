@@ -14,10 +14,13 @@ defineEmits(["close"]);
                 <p class="modal-card-title">Login</p>
                 <o-icon
                     clickable
-                    native-type="button"
+                    type="button"
                     icon="times"
-                    @click="$emit('close')" />
+                    @click.prevent="
+                        $emit('close', { action: 'cancel', method: 'x' })
+                    " />
             </header>
+
             <section class="modal-card-body">
                 <o-field label="Email">
                     <o-input
@@ -40,9 +43,16 @@ defineEmits(["close"]);
                     <o-checkbox label="Remember me" />
                 </o-field>
             </section>
+
             <footer class="modal-card-foot">
-                <o-button label="Close" type="button" @click="$emit('close')" />
-                <o-button label="Login" variant="primary" />
+                <o-button
+                    label="Close"
+                    type="button"
+                    @click.prevent="$emit('close', { action: 'no' })" />
+                <o-button
+                    label="Login"
+                    variant="primary"
+                    @click.prevent="$emit('close', { action: 'login' })" />
             </footer>
         </div>
     </form>

@@ -1,17 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, type PropType } from "vue";
+import { ref, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import {
-    defineClasses,
-    useEventListener,
-    useProgrammaticComponent,
-} from "@/composables";
+import { defineClasses, useEventListener } from "@/composables";
 
-import type { ComponentClass, ProgrammaticInstance } from "@/types";
+import type { ComponentClass } from "@/types";
 
 /**
  * A simple loading overlay
@@ -41,8 +37,6 @@ const props = defineProps({
     },
     /** Is Loading cancable by pressing escape or clicking outside. */
     cancelable: { type: Boolean, default: false },
-    /** Callback function to call on close (programmatically close or user canceled). */
-    onClose: { type: Function as PropType<() => void>, default: () => {} },
     /** Icon name to show, unnecessary when default slot is used. */
     icon: {
         type: String,
@@ -61,27 +55,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("loading.iconSize", "medium"),
     },
-    /**
-     * DOM element where the loading component will be created on (for programmatic usage).
-     * Note that this also changes fullPage to false.
-     */
-    container: {
-        type: [Object, String] as PropType<string | HTMLElement | null>,
-        default: () => getOption("loading.container", "body"),
-    },
-    /**
-     * This is used internally for programmatic usage
-     * @ignore
-     */
-    programmatic: {
-        type: Object as PropType<ProgrammaticInstance>,
-        default: undefined,
-    },
-    /**
-     * This is used internally for programmatic usage.
-     * @ignore
-     */
-    promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {
@@ -123,9 +96,9 @@ const emits = defineEmits<{
     (e: "update:fullPage", value: boolean): void;
     /**
      * on component close event
-     * @param value {any} - close event data
+     * @param value {unknown} - close event data
      */
-    (e: "close", ...args: any[]): void;
+    (e: "close", ...args: unknown[]): void;
 }>();
 
 const rootRef = ref();
@@ -133,26 +106,6 @@ const rootRef = ref();
 const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 const isActive = defineModel<boolean>("active", { default: false });
-
-function handleClose(...args: any[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
-    isActive.value = false;
-    emits("close", args);
-}
-
-/** add programmatic usage to this component */
-const { close, cancel } = useProgrammaticComponent(rootRef, {
-    container: props.container,
-    programmatic: props.programmatic,
-    cancelable: props.cancelable,
-    destroy: false,
-    onClose: handleClose,
-});
-
-onMounted(() => {
-    if (props.programmatic && props.container) isFullPage.value = false;
-});
 
 // --- Events Feature ---
 
@@ -167,6 +120,27 @@ if (isClient) {
 function onKeyPress(event: KeyboardEvent): void {
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") cancel("escape");
+}
+
+/**
+ * Check if method is cancelable.
+ * Call close() with action `cancel`.
+ * @param method Cancel method
+ */
+function cancel(method: string): void {
+    // check if method is cancelable
+    if (
+        !props.cancelable ||
+        (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
+    )
+        return;
+    close({ action: "cancel", method });
+}
+
+/** set active to false and emit close event */
+function close(...args: unknown[]): void {
+    isActive.value = false;
+    emits("close", args);
 }
 
 // --- Computed Component Classes ---
@@ -185,7 +159,7 @@ const labelClasses = defineClasses(["labelClass", "o-load__label"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ close, promise: props.promise });
+defineExpose({ close });
 </script>
 
 <template>
