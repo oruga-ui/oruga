@@ -8,6 +8,7 @@ import {
     toRaw,
     onMounted,
     useSlots,
+    useId,
     type PropType,
     type Component,
 } from "vue";
@@ -18,7 +19,7 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { getOption } from "@/utils/config";
-import { getValueByPath, getPropertyValue, uuid } from "@/utils/helpers";
+import { getValueByPath, getPropertyValue } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
@@ -395,7 +396,7 @@ const headerHovered = ref(false);
 const footerHovered = ref(false);
 
 const hoveredId = ref(null);
-const menuId = uuid();
+const menuId = useId();
 
 /** options filtered by input value */
 const filteredOptions = computed<T[]>(() =>

@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends string | number | boolean | object">
-import { computed, ref, useAttrs, type PropType } from "vue";
+import { computed, ref, useAttrs, useId, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
@@ -86,6 +86,8 @@ const props = defineProps({
         type: String,
         default: () => getOption("checkbox.autocomplete", "off"),
     },
+    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
+    id: { type: String, default: () => useId() },
     /** Enable HTML 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -198,6 +200,9 @@ const { parentField } = injectField();
 
 const vmodel = defineModel<T | T[]>({ default: undefined });
 
+// if not `label` is given and `id` is given set as `for` property on o-field wrapper
+if (!props.label && props.id) parentField?.value?.setInputId(props.id);
+
 const isIndeterminate = defineModel<boolean>("indeterminate", {
     default: false,
 });
@@ -270,6 +275,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         @keydown.prevent.enter="setFocus">
         <input
             v-bind="inputBind"
+            :id="id"
             ref="inputRef"
             v-model="vmodel"
             type="checkbox"

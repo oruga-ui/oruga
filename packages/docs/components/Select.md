@@ -45,7 +45,7 @@
 | iconRight          |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;iconRight: undefined<br>}</code> |
 | iconRightClickable |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | iconRightVariant   |             |      | -      |                                                                                                                                                       |
-| id                 |             |      | -      | <code style='white-space: nowrap; padding: 0;'>uuid()</code>                                                                                          |
+| id                 |             |      | -      | Default function (see source code)                                                                                                                    |
 | v-model            |             |      | -      | <code style='white-space: nowrap; padding: 0;'>null</code>                                                                                            |
 | nativeSize         |             |      | -      |                                                                                                                                                       |
 | options            |             |      | -      |                                                                                                                                                       |

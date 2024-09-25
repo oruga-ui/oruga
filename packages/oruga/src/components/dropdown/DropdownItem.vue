@@ -1,8 +1,8 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { computed, type PropType } from "vue";
+import { useId, computed, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { uuid, isEqual, isTrueish } from "@/utils/helpers";
+import { isEqual, isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { DropdownComponent } from "./types";
@@ -19,12 +19,12 @@ defineOptions({
 
 const props = defineProps({
     /**
-     * Item value (it will be used as v-model of wrapper component) - default is a uuid
+     * Item value (it will be used as v-model of wrapper component) - default is an uuid
      * @type string|number|object
      */
     value: {
         type: [String, Number, Object] as PropType<T>,
-        default: () => uuid(),
+        default: () => useId(),
     },
     /** Item label, unnecessary when default slot is used */
     label: { type: String, default: undefined },

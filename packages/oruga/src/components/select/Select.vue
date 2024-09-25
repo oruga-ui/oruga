@@ -5,12 +5,20 @@
         T extends string | number | object,
         IsMultiple extends boolean = false
     ">
-import { computed, watch, onMounted, ref, nextTick, useAttrs } from "vue";
+import {
+    computed,
+    watch,
+    onMounted,
+    ref,
+    nextTick,
+    useAttrs,
+    useId,
+} from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import { isDefined, isTrueish, uuid } from "@/utils/helpers";
+import { isDefined, isTrueish } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -49,7 +57,7 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     iconRight: () => getOption("select.iconRight", undefined),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    id: uuid(),
+    id: () => useId(),
     useHtml5Validation: () => getOption("useHtml5Validation", true),
     customValidation: "",
     autocomplete: () => getOption("select.autocomplete", "off"),
@@ -100,7 +108,7 @@ const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-// if id is given set as `for` property on o-field wrapper
+// if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
 
 const vmodel = defineModel<ModelValue>({
@@ -137,8 +145,8 @@ const selectOptions = computed<OptionsItem<T>[]>(() => {
 
     return props.options.map((option) =>
         typeof option === "string"
-            ? { value: option, label: option, key: uuid() }
-            : { ...option, key: uuid() },
+            ? { value: option, label: option, key: useId() }
+            : { ...option, key: useId() },
     );
 });
 

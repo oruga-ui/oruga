@@ -173,7 +173,6 @@ defineExpose({ close });
             <div
                 :class="overlayClasses"
                 :tabindex="-1"
-                aria-hidden="true"
                 @click="cancel('outside')" />
             <!-- 
                 @slot Override icon and label

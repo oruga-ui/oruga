@@ -50,7 +50,7 @@
 | iconRight          |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>input: {<br>&nbsp;&nbsp;iconRight: undefined<br>}</code>      |
 | iconRightClickable |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                               |
 | iconRightVariant   |             |      | -      |                                                                                                                                                           |
-| id                 |             |      | -      | <code style='white-space: nowrap; padding: 0;'>uuid()</code>                                                                                              |
+| id                 |             |      | -      | Default function (see source code)                                                                                                                        |
 | maxlength          |             |      | -      |                                                                                                                                                           |
 | v-model            |             |      | -      |                                                                                                                                                           |
 | override           |             |      | -      |                                                                                                                                                           |

@@ -483,7 +483,6 @@ defineExpose({ close });
                 v-if="overlay && isActive"
                 :class="overlayClasses"
                 :tabindex="-1"
-                aria-hidden="true"
                 @click="clickedOutside" />
 
             <transition

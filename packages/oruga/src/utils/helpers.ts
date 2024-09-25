@@ -1,11 +1,6 @@
 import { Comment, Fragment, Text } from "vue";
 
 /**
- * Generates a random string
- */
-export const uuid = (): string => Math.random().toString(36).substring(2, 15);
-
-/**
  * +/- function to native math sign
  */
 function signPoly(value: number): number {
