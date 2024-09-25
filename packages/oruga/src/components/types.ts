@@ -282,9 +282,6 @@ See icon library documentation for custom classes. */
                 rootClass: ClassDefinition;
                 /** Custom animation (transition name) */
                 animation: string;
-                /** DOM element where the loading component will be created on (for programmatic usage).
-Note that this also changes fullPage to false. */
-                container: string | HTMLElement;
                 /** Enable spin effect on icon */
                 iconSpin: boolean;
                 /** Icon name to show, unnecessary when default slot is used. */
@@ -358,10 +355,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 closeIcon: string;
                 /** Custom animation (transition name) */
                 animation: string;
-                /** Destroy modal on hide - default `true` for programmatic usage */
-                destroyOnHide: boolean;
-                /** DOM element where the modal component will be created on (for programmatic usage) */
-                container: string | HTMLElement;
                 /** Is Modal cancleable by clicking 'X', pressing escape or clicking outside */
                 cancelable: boolean | string[];
                 /** Mobile breakpoint as `max-width` value */
@@ -384,12 +377,12 @@ but will set body to position fixed, might break some layouts. */
             Partial<{
                 /** Accessibility label for the close button */
                 ariaCloseLabel: string;
-                /** Class of the close button container */
+                /** Class of the close button */
                 closeClass: ClassDefinition;
                 /** Class of the content element */
                 contentClass: ClassDefinition;
                 /** Class of the custom container element */
-                noticeCustomContainerClass: ClassDefinition;
+                noticeContainerClass: ClassDefinition;
                 /** Class of the element when positioned */
                 positionClass: ClassDefinition;
                 /** Class of the icon on the left */
@@ -408,10 +401,6 @@ but will set body to position fixed, might break some layouts. */
                 variant: string;
                 /** Custom animation (transition name) */
                 animation: string;
-                /** DOM element the toast will be created on (for programmatic usage).
-Note that this also changes the position of the toast from fixed to absolute.
-Meaning that the container should be fixed. */
-                container: string | HTMLElement;
                 /** Hide notification after duration (in miliseconds) */
                 duration: number;
                 /** Icon pack to use */
@@ -563,8 +552,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobile: "fullwidth" | "reduced" | "hidden";
                 /** Destroy sidebar on hide */
                 destroyOnHide: boolean;
-                /** DOM element where the sidebar component will be created on (for programmatic usage). */
-                container: string | HTMLElement;
                 /** Expand sidebar on hover when reduced or mobile is reduce */
                 expandOnHover: boolean;
                 /** Is Sidebar cancleable by pressing escape or clicking outside. */
@@ -932,8 +919,6 @@ but will set body to position fixed, might break some layouts. */
                 icon: string;
                 /** Icon pack */
                 iconPack: string;
-                /** Role attribute to be passed to the div wrapper for better accessibility. */
-                ariaRole: string;
                 /** Show tab in vertical layout */
                 vertical: boolean;
                 /** Size of the navigation */
