@@ -14,9 +14,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
     </div>
   </div>
   <!--teleport start-->
-  <transition-stub name="fade" appear="false" persisted="false" css="true">
-    <!--v-if-->
-  </transition-stub>
+  <!--v-if-->
   <transition-stub name="fade" appear="false" persisted="true" css="true">
     <div id="v-0" tabindex="-1" class="o-drop__menu o-drop__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-hidden="true" aria-modal="false">
       <!--

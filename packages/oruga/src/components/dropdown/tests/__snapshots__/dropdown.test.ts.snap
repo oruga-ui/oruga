@@ -9,9 +9,7 @@ exports[`Dropdown tests > render correctly 1`] = `
             -->
   </div>
   <!--teleport start-->
-  <transition-stub name="fade" appear="false" persisted="false" css="true">
-    <!--v-if-->
-  </transition-stub>
+  <!--v-if-->
   <transition-stub name="fade" appear="false" persisted="true" css="true">
     <div class="o-drop__menu o-drop__menu--bottom-left" role="list" aria-hidden="true" aria-modal="true" style="display: none;">
       <!--

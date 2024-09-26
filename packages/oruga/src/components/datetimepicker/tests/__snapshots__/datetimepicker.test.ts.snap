@@ -15,9 +15,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
       </div>
     </div>
     <!--teleport start-->
-    <transition-stub name="fade" appear="false" persisted="false" css="true">
-      <!--v-if-->
-    </transition-stub>
+    <!--v-if-->
     <transition-stub name="fade" appear="false" persisted="true" css="true">
       <div class="o-drop__menu o-drop__menu--bottom-left" role="dialog" aria-hidden="true" aria-modal="true" style="display: none;">
         <!--
@@ -329,9 +327,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--inline o-drop--position-bottom-left o-drop--active" aria-modal="false">
                   <!--v-if-->
                   <!--teleport start-->
-                  <transition-stub name="fade" appear="false" persisted="false" css="true">
-                    <!--v-if-->
-                  </transition-stub>
+                  <!--v-if-->
                   <transition-stub name="fade" appear="false" persisted="true" css="true">
                     <div class="o-drop__menu o-drop__menu--bottom-left o-drop__menu--active" role="list" aria-hidden="true" aria-modal="false">
                       <!--

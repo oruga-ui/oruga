@@ -38,6 +38,8 @@ export type DropdownProps<
         | "bottom-right";
     /** Dropdown content (items) are shown into a modal on mobile */
     mobileModal?: boolean;
+    /** Dropdown content (items) are shown into a modal on desktop */
+    desktopModal?: boolean;
     /** Custom animation (transition name) */
     animation?: string;
     /** Trap focus inside the dropdown. */
@@ -94,8 +96,6 @@ type DropdownClasses = Partial<{
     triggerClass: ComponentClass;
     /** Class of dropdown menu when inline */
     inlineClass: ComponentClass;
-    /** Class of the overlay when on mobile */
-    menuMobileOverlayClass: ComponentClass;
     /** Class of the dropdown menu */
     menuClass: ComponentClass;
     /** Class of dropdown menu position */
@@ -104,6 +104,10 @@ type DropdownClasses = Partial<{
     menuActiveClass: ComponentClass;
     /** Class of dropdown when on mobile */
     mobileClass: ComponentClass;
+    /** Class of dropdown when on is shown as modal */
+    modalClass: ComponentClass;
+    /** Class of the overlay when is shown as modal */
+    overlayClass: ComponentClass;
     /** Class of dropdown when disabled */
     disabledClass: ComponentClass;
     /** Class of dropdown when expanded */

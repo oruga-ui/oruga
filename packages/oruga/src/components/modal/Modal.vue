@@ -249,7 +249,7 @@ if (isClient) {
 
     if (!props.overlay)
         // register outside click event listener when is active
-        useClickOutside(contentRef, clickedOutside, {
+        useClickOutside(contentRef, onClickedOutside, {
             trigger: isActive,
         });
 }
@@ -261,7 +261,7 @@ function onKeyPress(event: KeyboardEvent): void {
 }
 
 /** Close fixed sidebar if clicked outside. */
-function clickedOutside(event: Event): void {
+function onClickedOutside(event: Event): void {
     if (!isActive.value || isAnimating.value) return;
     if (props.overlay || !event.composedPath().includes(contentRef.value))
         event.preventDefault();
@@ -353,7 +353,7 @@ defineExpose({ close });
                     v-if="overlay"
                     :class="overlayClasses"
                     tabindex="-1"
-                    @click="clickedOutside" />
+                    @click="onClickedOutside" />
 
                 <div
                     ref="contentRef"
