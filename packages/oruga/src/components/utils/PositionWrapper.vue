@@ -50,14 +50,14 @@ const props = defineProps({
                 "top-left",
                 "bottom-left",
                 "bottom-right",
-            ].indexOf(value) > -1,
+            ].includes(value),
         default: undefined,
     },
     /** Used for calculation position auto */
     defaultPosition: {
         type: String as PropType<Position>,
         validator: (value: string) =>
-            ["top", "bottom", "left", "right"].indexOf(value) > -1,
+            ["top", "bottom", "left", "right"].includes(value),
         default: "top",
     },
     /** disable the position calculation */

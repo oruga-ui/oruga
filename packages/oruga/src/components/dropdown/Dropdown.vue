@@ -11,7 +11,6 @@ import {
     ref,
     watch,
     onUnmounted,
-    useTemplateRef,
     type Component,
 } from "vue";
 
@@ -108,8 +107,8 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const contentRef = useTemplateRef<HTMLElement | Component>("contentRef");
-const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
+const contentRef = ref<HTMLElement | Component>();
+const triggerRef = ref<HTMLElement>();
 
 /** The selected item value */
 // const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -166,7 +165,7 @@ watch(
     (value) => {
         // on active set event handler if not open as modal
         if (value && isClient && !isModal.value) {
-            if (cancelOptions.value.indexOf("outside") >= 0) {
+            if (cancelOptions.value.includes("outside")) {
                 // set outside handler
                 eventCleanups.push(
                     useClickOutside(contentRef, onClickedOutside, {
@@ -177,7 +176,7 @@ watch(
                 );
             }
 
-            if (cancelOptions.value.indexOf("escape") >= 0) {
+            if (cancelOptions.value.includes("escape")) {
                 // set keyup handler
                 eventCleanups.push(
                     useEventListener("keyup", onKeyPress, document, {
@@ -443,9 +442,8 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
             :disabled="!isActive"
             default-position="bottom"
             :disable-positioning="!isModal">
-            <transition :name="animation">
+            <transition v-if="isModal" :name="animation">
                 <div
-                    v-if="isModal"
                     v-show="isActive"
                     :class="overlayClasses"
                     tabindex="-1"
