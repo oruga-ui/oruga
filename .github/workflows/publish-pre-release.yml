@@ -22,14 +22,18 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Install dependencies 📦
         run: npm install
-      - name: Publish pre-release
-        run: npm run publish:pre
+      - name: Publish Oruga pre-release🐛
+        run: npm run publish:lib:pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: npm i extract-changelog-release
-      - name: Generate Release Body
+      - name: Publish Examples pre-release 🦋
+        run: npm run publish:examples:pre
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Generate Release Body 📋
+        run: npm i extract-changelog-release
         run: npx extract-changelog-release > RELEASE_BODY.md
-      - uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1
         with:
           bodyFile: 'RELEASE_BODY.md'
           prerelease: true
