@@ -196,9 +196,9 @@ export function filterOptionsItems<V>(
         if (typeof customFilter === "function")
             return customFilter(option.value, toValue(value));
         else
-            return option.label
+            return String(option.label)
                 .toLowerCase()
-                .includes(toValue(value).toLowerCase());
+                .includes(toValue(value)?.toLowerCase());
     }
 
     function filterOptions(

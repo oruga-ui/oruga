@@ -107,15 +107,6 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     inputClasses: () => getOption("autocomplete.inputClasses", {}),
 });
 
-/**
- * Define a custom comparison function to check whether two row elements are equal.
- * By default a `rowKey` comparison is performed if given. Otherwise a simple object comparison is done.
- */
-//  customCompare: {
-//     type: Function as PropType<(a: T, b: T) => boolean>,
-//     default: undefined,
-// }
-
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
@@ -216,9 +207,6 @@ const menuId = useId();
 const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     const normalizedOptions = normalizeOptions<T>(props.options);
     const groupedOptions = toOptionsGroup(normalizedOptions);
-    console.log(props.options);
-    console.log(normalizedOptions);
-    console.log(groupedOptions);
     return groupedOptions;
 });
 
@@ -226,7 +214,7 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
  * Applies an reactive filter for the options based on the input vmodel value.
  * Options are filtered by setting the hidden attribute.
  */
-// filterOptionsItems(groupedOptions, vmodel, props.filter);
+filterOptionsItems(groupedOptions, vmodel, props.filter);
 
 /** is no option visible */
 const isEmpty = computed(() => checkOptionsEmpty(groupedOptions));
@@ -324,7 +312,7 @@ function selectHeaderOrFooterByClick(
 
 // --- Hover Feature ---
 
-const hoveredOption = ref<OptionsItem<T>>();
+const hoveredOption = ref<OptionsItem<T> | null>();
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
@@ -340,7 +328,7 @@ watch(
             // reset hovered if list doesn't contain it
             const hoveredValue = findOption(
                 groupedOptions,
-                hoveredOption.value.value,
+                toValue(hoveredOption).value,
             );
             if (hoveredValue) setHovered(hoveredValue);
             else setHovered(null);
@@ -392,7 +380,7 @@ function navigateItem(direction: 1 | -1): void {
     if (footerRef.value && props.selectableFooter) options.push(undefined);
 
     // define current index
-    let index = options.findIndex((o) => o.key === toValue(hoveredOption).key);
+    let index = options.findIndex((o) => o.key === toValue(hoveredOption)?.key);
     if (headerHovered.value) index = 0 + direction;
     else if (footerHovered.value) index = options.length - 1 + direction;
     else index = index + direction;
@@ -457,7 +445,7 @@ function onKeydown(event: KeyboardEvent): void {
         if (event.key === ",") event.preventDefault();
         // Close dropdown on select by Tab
         const closeDropdown = !props.keepOpen || event.key === "Tab";
-        if (hoveredOption.value === null) {
+        if (!hoveredOption.value) {
             // header and footer uses headerHovered && footerHovered. If header or footer
             // was selected then fire event otherwise just return so a value isn't selected
             selectHeaderOrFooterByClick(event, null, closeDropdown);
@@ -583,7 +571,7 @@ function itemOptionClasses(option: OptionsItem): ClassBind[] {
         "itemHoverClass",
         "o-acp__item--hover",
         null,
-        computed(() => option.key === toValue(hoveredOption).key),
+        computed(() => option.key === toValue(hoveredOption)?.key),
     ]);
 
     return [...itemClasses.value, ...optionClasses.value];
@@ -706,13 +694,15 @@ defineExpose({ focus: setFocus, value: vmodel });
                 v-bind="option.attrs"
                 :id="`${menuId}-${option.key}`"
                 :key="option.key"
-                :ref="(el) => setItemRef(option, groupIndex, optionIndex)"
+                :ref="(el) => setItemRef(el, groupIndex, optionIndex)"
                 :tag="itemTag"
                 :value="option.value"
                 :class="itemOptionClasses(option)"
                 tabindex="-1"
                 aria-role="option"
-                :aria-selected="option.key === hoveredOption.key"
+                :aria-selected="
+                    hoveredOption ? option.key === hoveredOption.key : null
+                "
                 @click="
                     (value, event) => setSelected(option, !keepOpen, event)
                 ">
