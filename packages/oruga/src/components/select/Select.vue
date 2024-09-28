@@ -5,25 +5,21 @@
         T extends string | number | object,
         IsMultiple extends boolean = false
     ">
-import {
-    computed,
-    watch,
-    onMounted,
-    ref,
-    nextTick,
-    useAttrs,
-    useId,
-} from "vue";
+import { computed, watch, ref, nextTick, useAttrs, useId } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { isDefined, isTrueish } from "@/utils/helpers";
-import { defineClasses, useInputHandler } from "@/composables";
+import {
+    defineClasses,
+    isGroupOption,
+    normalizeOptions,
+    useInputHandler,
+} from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { OptionsItem } from "./types";
 import type { SelectProps } from "./props";
 
 /**
@@ -118,37 +114,28 @@ const vmodel = defineModel<ModelValue>({
     default: null as ModelValue,
 });
 
+/**
+ * When v-model is changed:
+ *  1. Set parent field filled state.
+ *  2. Check html5 valdiation
+ */
+watch(
+    vmodel,
+    (value) => {
+        if (parentField?.value) parentField.value.setFilled(!!value);
+        if (!isValid.value) checkHtml5Validity();
+    },
+    { immediate: true, flush: "post" },
+);
+
+/** normalized programamtic options */
+const normalizedptions = computed(() => normalizeOptions<T>(props.options));
+
 const placeholderVisible = computed(
     () =>
         !isTrueish(props.multiple) &&
         (!isDefined(vmodel.value) || vmodel.value === ""),
 );
-
-onMounted(() => {
-    /**
-     * When v-model is changed:
-     *  1. Set parent field filled state.
-     *  2. Check html5 valdiation
-     */
-    watch(
-        vmodel,
-        (value) => {
-            if (parentField?.value) parentField.value.setFilled(!!value);
-            if (!isValid.value) checkHtml5Validity();
-        },
-        { immediate: true, flush: "post" },
-    );
-});
-
-const selectOptions = computed<OptionsItem<T>[]>(() => {
-    if (!props.options || !Array.isArray(props.options)) return [];
-
-    return props.options.map((option) =>
-        typeof option === "string"
-            ? { value: option, label: option, key: useId() }
-            : { ...option, key: useId() },
-    );
-});
 
 // --- Icon Feature ---
 
@@ -305,13 +292,29 @@ defineExpose({ focus: setFocus, value: vmodel });
                 @slot Override the options, default is options prop
             -->
             <slot>
-                <option
-                    v-for="option in selectOptions"
-                    :key="option.key"
-                    :value="option.value"
-                    v-bind="option.attrs">
-                    {{ option.label }}
-                </option>
+                <template v-for="option in normalizedptions" :key="option.key">
+                    <optgroup
+                        v-if="isGroupOption(option)"
+                        v-show="!option.hidden"
+                        :label="option.group">
+                        <option
+                            v-for="_option in option.options"
+                            v-show="!_option.hidden"
+                            :key="_option.key"
+                            :value="_option.value"
+                            v-bind="_option.attrs">
+                            {{ _option.label }}
+                        </option>
+                    </optgroup>
+
+                    <option
+                        v-else
+                        v-show="!option.hidden"
+                        :value="option.value"
+                        v-bind="option.attrs">
+                        {{ option.label }}
+                    </option>
+                </template>
             </slot>
         </select>
 

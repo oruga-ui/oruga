@@ -1,5 +1,5 @@
 import type { ComponentClass } from "@/types";
-import type { OptionsItem } from "./types";
+import type { OptionsPropWithGroups } from "@/composables";
 
 type SelectType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -11,10 +11,10 @@ export type SelectProps<
     override?: boolean;
     /** The input value state */
     modelValue?: SelectType<T, IsMultiple>;
-    /** Select options, unnecessary when default slot is used */
-    options?: string[] | OptionsItem<T>[];
     /** Allow multiple selection - converts the `modelValue` into an array */
     multiple?: IsMultiple;
+    /** Select options, unnecessary when default slot is used */
+    options?: OptionsPropWithGroups<T>;
     /**
      * Vertical size of input
      * @values small, medium, large

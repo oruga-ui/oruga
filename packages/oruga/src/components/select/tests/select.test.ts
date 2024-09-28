@@ -2,7 +2,7 @@ import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
-import type { OptionsItem } from "../types";
+import type { OptionsItem } from "@/composables";
 
 import OSelect from "@/components/select/Select.vue";
 

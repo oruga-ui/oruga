@@ -1,4 +1,5 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
+import type { OptionsPropWithGroups } from "@/composables";
 
 export type DropdownProps<
     T extends string | number | object,
@@ -6,10 +7,12 @@ export type DropdownProps<
 > = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected item value */
+    /** The selected option value */
     modelValue?: IsMultiple extends true ? T[] : T;
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
+    /** Dropdown options, unnecessary when default slot is used */
+    options?: OptionsPropWithGroups<T>;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Trigger label, unnecessary when trgger slot is used */

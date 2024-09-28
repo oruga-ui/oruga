@@ -1,15 +1,14 @@
-<script setup lang="ts" generic="T extends string | object">
+<script setup lang="ts" generic="T extends string | number | object">
 import {
     computed,
     nextTick,
     ref,
     watch,
     useAttrs,
-    toRaw,
     onMounted,
+    toValue,
     useSlots,
     useId,
-    type PropType,
     type Component,
 } from "vue";
 import type { ComponentExposed } from "vue-component-type-helpers";
@@ -19,18 +18,27 @@ import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { getOption } from "@/utils/config";
-import { getValueByPath, getPropertyValue } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
     defineClasses,
+    normalizeOptions,
+    toOptionsGroup,
+    toOptionsList,
+    findOption,
+    checkOptionsEmpty,
+    firstValidOption,
+    filterOptionsItems,
     useInputHandler,
     useEventListener,
+    type OptionsItem,
+    type OptionsGroupItem,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
+import type { DynamicComponent, ClassBind } from "@/types";
+import type { AutocompleteProps } from "./props";
 
 enum SpecialOption {
     Header,
@@ -54,249 +62,59 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The selected option, use v-model to make it two-way binding */
-    modelValue: {
-        type: [String, Object] as PropType<T>,
-        default: undefined,
-    },
-    /** The value of the inner input, use v-model:input to make it two-way binding */
-    input: { type: String, default: "" },
-    /**
-     * Options / suggestions
-     * @type string[]|object[]
-     * */
-    options: { type: Array as PropType<T[]>, default: () => [] },
-    /** Property of the object (if `options` are an array of objects) to use as display text, and to keep track of selected option */
-    field: { type: String, default: undefined },
-    /** Property of the object (if `options` are an array of objects) to use as display text of group */
-    groupField: { type: String, default: undefined },
-    /** Property of the object (if `options` are an array of objects) to use as key to get items array of each group */
-    groupOptions: { type: String, default: undefined },
-    /** Function to format an option to a string for display it in the input (as alternative to field prop) */
-    formatter: {
-        type: Function as PropType<(value: unknown, option: T) => string>,
-        default: undefined,
-    },
-    /** Function to filter the options based on the input value - default is display text comparison */
-    filter: {
-        type: Function as PropType<(options: T[], value: string) => T[]>,
-        default: undefined,
-    },
-    /** Input type */
-    type: { type: String, default: "text" },
-    /** Menu tag name */
-    menuTag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () =>
-            getOption<DynamicComponent>("autocomplete.menuTag", "div"),
-    },
-    /** Menu item tag name */
-    itemTag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () =>
-            getOption<DynamicComponent>("autocomplete.itemTag", "div"),
-    },
-    /**
-     * Size of the control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("autocomplete.size"),
-    },
-    /**
-     * Position of the dropdown
-     * @values auto, top, bottom
-     */
-    position: {
-        type: String as PropType<"auto" | "top" | "bottom">,
-        default: () => getOption("autocomplete.position", "auto"),
-        validator: (value: string) =>
-            ["auto", "top", "bottom"].indexOf(value) >= 0,
-    },
-    /** Input placeholder */
-    placeholder: { type: String, default: undefined },
-    /** Makes input full width when inside a grouped or addon field */
-    expanded: { type: Boolean, default: false },
-    /** Makes the element rounded */
-    rounded: { type: Boolean, default: false },
-    /** Same as native input disabled */
-    disabled: { type: Boolean, default: false },
-    /** Same as native maxlength, plus character counter */
-    maxlength: { type: [String, Number], default: undefined },
-    /** Makes the component check if list reached scroll start or end and emit scroll events. */
-    checkScroll: {
-        type: Boolean,
-        default: () => getOption("autocomplete.checkScroll", false),
-    },
-    /** Number of milliseconds to delay before to emit input event */
-    debounce: {
-        type: Number,
-        default: () => getOption("autocomplete.debounce", 400),
-    },
-    /** The first option will always be pre-selected (easier to just hit enter or tab) */
-    keepFirst: {
-        type: Boolean,
-        default: () => getOption("autocomplete.keepFirst", false),
-    },
-    /** Clear input text on select */
-    clearOnSelect: {
-        type: Boolean,
-        default: () => getOption("autocomplete.clearOnSelect", false),
-    },
-    /** Open dropdown list on focus */
-    openOnFocus: {
-        type: Boolean,
-        default: () => getOption("autocomplete.openOnFocus", false),
-    },
-    /** Keep open dropdown list after select */
-    keepOpen: {
-        type: Boolean,
-        default: () => getOption("autocomplete.keepOpen", false),
-    },
-    /** Max height of dropdown content */
-    maxHeight: {
-        type: [String, Number],
-        default: () => getOption("autocomplete.maxHeight"),
-    },
-    /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
-    confirmKeys: {
-        type: Array as PropType<string[]>,
-        default: () => getOption("autocomplete.confirmKeys", ["Tab", "Enter"]),
-    },
-    /** Dropdown content (items) are shown into a modal on mobile */
-    mobileModal: {
-        type: Boolean,
-        default: () => getOption("autocomplete.mobileModal", false),
-    },
-    /** Transition name to apply on dropdown list */
-    animation: {
-        type: String,
-        default: () => getOption("autocomplete.animation", "fade"),
-    },
-    /** Trigger the select event for the first pre-selected option when clicking outside and `keep-first` is enabled */
-    selectOnClickOutside: { type: Boolean, default: false },
-    /** Allows the header in the autocomplete to be selectable */
-    selectableHeader: { type: Boolean, default: false },
-    /** Allows the footer in the autocomplete to be selectable */
-    selectableFooter: { type: Boolean, default: false },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("autocomplete.iconPack", undefined),
-    },
-    /** Icon to be shown */
-    icon: {
-        type: String,
-        default: () => getOption("autocomplete.icon", undefined),
-    },
-    /** Makes the icon clickable */
-    iconClickable: { type: Boolean, default: false },
-    /** Icon to be added on the right side */
-    iconRight: {
-        type: String,
-        default: () => getOption("autocomplete.iconRight", undefined),
-    },
-    /** Make the icon right clickable */
-    iconRightClickable: { type: Boolean, default: false },
-    /** Variant of right icon */
-    iconRightVariant: { type: String, default: undefined },
-    /** Add a button/icon to clear the inputed text */
-    clearable: {
-        type: Boolean,
-        default: () => getOption("autocomplete.clearable", false),
-    },
-    /** Icon name to be added on the clear button */
-    clearIcon: {
-        type: String,
-        default: () => getOption("autocomplete.clearIcon", "close-circle"),
-    },
-    /** Show status icon using field and variant prop */
-    statusIcon: {
-        type: Boolean,
-        default: () => getOption("statusIcon", true),
-    },
-    /** Native options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("autocomplete.autocomplete", "off"),
-    },
-    /** Enable HTML 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** Custom HTML 5 validation error to set on the form control */
-    customValidity: {
-        type: [String, Function] as PropType<
-            | string
-            | ((
-                  currentValue: T | null | undefined,
-                  state: ValidityState,
-              ) => string)
-        >,
-        default: "",
-    },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("autocomplete.teleport", false),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu items */
-    itemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu items on hover */
-    itemHoverClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu items group title */
-    itemGroupTitleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu empty placeholder item */
-    itemEmptyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu header item */
-    itemHeaderClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu footer item */
-    itemFooterClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /**
-     * Classes to apply on internal input component
-     * @ignore
-     */
-    inputClasses: {
-        type: Object,
-        default: () => getOption("autocomplete.inputClasses", {}),
-    },
+const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    input: "",
+    options: undefined,
+    filter: undefined,
+    type: "text",
+    menuTag: () => getOption<DynamicComponent>("autocomplete.menuTag", "div"),
+    itemTag: () => getOption<DynamicComponent>("autocomplete.itemTag", "div"),
+    size: () => getOption("autocomplete.size"),
+    position: () => getOption("autocomplete.position", "auto"),
+    placeholder: undefined,
+    expanded: false,
+    rounded: false,
+    disabled: false,
+    maxlength: undefined,
+    checkScroll: () => getOption("autocomplete.checkScroll", false),
+    debounce: () => getOption("autocomplete.debounce", 400),
+    keepFirst: () => getOption("autocomplete.keepFirst", false),
+    clearOnSelect: () => getOption("autocomplete.clearOnSelect", false),
+    openOnFocus: () => getOption("autocomplete.openOnFocus", false),
+    keepOpen: () => getOption("autocomplete.keepOpen", false),
+    maxHeight: () => getOption("autocomplete.maxHeight"),
+    confirmKeys: () => getOption("autocomplete.confirmKeys", ["Tab", "Enter"]),
+    mobileModal: () => getOption("autocomplete.mobileModal", false),
+    animation: () => getOption("autocomplete.animation", "fade"),
+    selectOnClickOutside: false,
+    selectableHeader: false,
+    selectableFooter: false,
+    iconPack: () => getOption("autocomplete.iconPack", undefined),
+    icon: () => getOption("autocomplete.icon", undefined),
+    iconClickable: false,
+    iconRight: () => getOption("autocomplete.iconRight", undefined),
+    iconRightClickable: false,
+    iconRightVariant: undefined,
+    clearable: () => getOption("autocomplete.clearable", false),
+    clearIcon: () => getOption("autocomplete.clearIcon", "close-circle"),
+    statusIcon: () => getOption("statusIcon", true),
+    autocomplete: () => getOption("autocomplete.autocomplete", "off"),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    customValidity: undefined,
+    teleport: () => getOption("autocomplete.teleport", false),
+    inputClasses: () => getOption("autocomplete.inputClasses", {}),
 });
+
+/**
+ * Define a custom comparison function to check whether two row elements are equal.
+ * By default a `rowKey` comparison is performed if given. Otherwise a simple object comparison is done.
+ */
+//  customCompare: {
+//     type: Function as PropType<(a: T, b: T) => boolean>,
+//     default: undefined,
+// }
 
 const emits = defineEmits<{
     /**
@@ -385,79 +203,54 @@ const { parentField } = injectField();
 
 const isActive = ref(false);
 
-/** The selected option, use v-model to make it two-way binding */
-const selectedOption = defineModel<T>({ default: undefined });
+/** the selected value, use v-model to make it two-way binding */
+const selectedValue = defineModel<T>({ default: undefined });
 
-/** The value of the inner input, use v-model:input to make it two-way binding */
+/** the value of the inner input, use v-model:input to make it two-way binding */
 const vmodel = defineModel<string>("input", { default: "" });
 
-const hoveredOption = ref<T>();
-const headerHovered = ref(false);
-const footerHovered = ref(false);
-
-const hoveredId = ref(null);
+/** create a unique id for the menu */
 const menuId = useId();
 
-/** options filtered by input value */
-const filteredOptions = computed<T[]>(() =>
-    typeof props.filter === "function"
-        ? props.filter(props.options, vmodel.value)
-        : props.options.filter((option) =>
-              getValue(option)
-                  .toLowerCase()
-                  .includes(vmodel.value.toLowerCase()),
-          ),
-);
-
-/** filtered options formatted as groups */
-const _groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
-    if (props.groupField) {
-        if (props.groupOptions)
-            return filteredOptions.value.map((item: T) => {
-                if (typeof item === "string" || typeof item === "number")
-                    return { group: item, items: [item] };
-                const group = getValueByPath(item, props.groupField);
-                const items = getValueByPath(item, props.groupOptions);
-                return { group, items };
-            });
-        else
-            return Object.keys(filteredOptions.value).map((group: string) => ({
-                group,
-                items: filteredOptions.value[group],
-            }));
-    }
-
-    // Return no options to avoid the full list to be shown when clearing input
-    if (!props.openOnFocus && !props.keepOpen && !vmodel.value) {
-        // ...already returned nothing and dropdown closed.
-        return [{ items: [] }];
-    }
-    return [{ items: filteredOptions.value }];
+/** normalized programamtic options */
+const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options);
+    const groupedOptions = toOptionsGroup(normalizedOptions);
+    console.log(props.options);
+    console.log(normalizedOptions);
+    console.log(groupedOptions);
+    return groupedOptions;
 });
 
-/** is any option visible */
-const isEmpty = computed(
-    () =>
-        !_groupOptions.value?.some(
-            (element) => element.items && element.items.length,
-        ),
-);
+/**
+ * Applies an reactive filter for the options based on the input vmodel value.
+ * Options are filtered by setting the hidden attribute.
+ */
+// filterOptionsItems(groupedOptions, vmodel, props.filter);
+
+/** is no option visible */
+const isEmpty = computed(() => checkOptionsEmpty(groupedOptions));
 
 watch(isEmpty, (empty) => {
     if (isFocused.value) isActive.value = !empty || !!slots.empty;
 });
 
 /**
- * When updating input's value
- *   1. If value isn't the same as selected, set null
- *   2. Close dropdown if value is clear or else open it
+ * When updating input's value:
+ * 1. If value isn't the same as selected, set null
+ * 2. Close dropdown if value is clear or else open it
  */
 watch(
     vmodel,
     (value) => {
-        // clear selected if value does not match the selected option
-        const currentValue = getValue(selectedOption.value);
-        if (currentValue && currentValue !== value && !props.clearOnSelect)
+        // find the option for the current selected value
+        const currentOption = findOption(groupedOptions, selectedValue);
+        // clear selected if option label does not match the selected value
+        if (
+            currentOption &&
+            currentOption.label !== value &&
+            !props.clearOnSelect
+        )
             setSelected(null, false);
 
         // Close dropdown if data is empty
@@ -465,28 +258,6 @@ watch(
         // Close dropdown if input is clear or else open it
         else if (isFocused.value && (!props.openOnFocus || value))
             isActive.value = !!value;
-    },
-    { flush: "post" },
-);
-
-/** Select first option if "keep-first" */
-watch(
-    () => props.options,
-    () => {
-        // Keep first option always pre-selected
-        if (props.keepFirst) {
-            if (isActive.value) hoverFirstOption();
-            else setHovered(null);
-        } else if (hoveredOption.value) {
-            // reset hovered if list doesn't contain it
-            const hoveredValue = getValue(hoveredOption.value);
-            const data = _groupOptions.value
-                .map((d) => d.items)
-                .reduce((a, b) => [...a, ...b], []);
-            const index = data.findIndex((d) => getValue(d) === hoveredValue);
-            if (index >= 0) setHoveredIdToIndex(index);
-            else setHovered(null);
-        }
     },
     { flush: "post" },
 );
@@ -503,11 +274,6 @@ function onDropdownClose(method: string): void {
         setSelected(hoveredOption.value, true);
 }
 
-/** get the formated option value for a column */
-function getValue(option?: T): string {
-    return getPropertyValue(option, props.field, props.formatter);
-}
-
 // --- Select Feature ---
 
 /**
@@ -515,16 +281,16 @@ function getValue(option?: T): string {
  * update input value and close dropdown.
  */
 function setSelected(
-    option: T,
+    option: OptionsItem<T>,
     closeDropdown: boolean = true,
     event: Event = undefined,
 ): void {
-    selectedOption.value = option;
-    emits("select", option, event);
+    selectedValue.value = option?.value;
+    emits("select", option?.value, event);
 
     if (option) {
         if (props.clearOnSelect) vmodel.value = "";
-        else vmodel.value = getValue(option);
+        else vmodel.value = option.label;
         setHovered(null);
     } else vmodel.value = "";
 
@@ -558,30 +324,50 @@ function selectHeaderOrFooterByClick(
 
 // --- Hover Feature ---
 
+const hoveredOption = ref<OptionsItem<T>>();
+const headerHovered = ref(false);
+const footerHovered = ref(false);
+
+/** Select first option if "keep-first" */
+watch(
+    () => props.options,
+    () => {
+        // Keep first option always pre-selected
+        if (props.keepFirst) {
+            if (isActive.value) hoverFirstOption();
+            else setHovered(null);
+        } else if (hoveredOption.value) {
+            // reset hovered if list doesn't contain it
+            const hoveredValue = findOption(
+                groupedOptions,
+                hoveredOption.value.value,
+            );
+            if (hoveredValue) setHovered(hoveredValue);
+            else setHovered(null);
+        }
+    },
+    { flush: "post" },
+);
+
 /** Set which option is currently hovered. */
-function setHovered(option: T | SpecialOption): void {
+function setHovered(option: OptionsItem<T> | SpecialOption | null): void {
     hoveredOption.value = isSpecialOption(option) ? null : option;
     headerHovered.value = option === SpecialOption.Header;
     footerHovered.value = option === SpecialOption.Footer;
-    hoveredId.value = null;
 }
 
 /** Set which option is the aria-activedescendant by index. */
-function setHoveredIdToIndex(index: number): void {
-    const element = unrefElement(itemRefs.value[index]);
-    hoveredId.value = element ? element.id : null;
-}
+// function setHoveredIdToIndex(index: number): void {
+//     const element = unrefElement(itemRefs.value[index]);
+//     hoveredId.value = element ? element.id : null;
+// }
 
 /** set first option as hovered */
 function hoverFirstOption(): void {
     nextTick(() => {
-        const nonEmptyElements = _groupOptions.value.filter(
-            (element) => element.items?.length,
-        );
-        if (nonEmptyElements.length) {
-            const option = nonEmptyElements[0].items[0];
+        const option = firstValidOption(groupedOptions);
+        if (option) {
             setHovered(option);
-            setHoveredIdToIndex(0);
         } else {
             setHovered(null);
         }
@@ -599,31 +385,33 @@ function navigateItem(direction: 1 | -1): void {
         return;
     }
 
-    const data = _groupOptions.value
-        .map((d) => d.items)
-        .reduce((a, b) => [...a, ...b], []);
+    const options = toOptionsList(groupedOptions);
 
     // add header / footer if selectable
-    if (headerRef.value && props.selectableHeader) data.unshift(undefined);
-    if (footerRef.value && props.selectableFooter) data.push(undefined);
+    if (headerRef.value && props.selectableHeader) options.unshift(undefined);
+    if (footerRef.value && props.selectableFooter) options.push(undefined);
 
     // define current index
-    let index = data.map(toRaw).indexOf(toRaw(hoveredOption.value));
+    let index = options.findIndex((o) => o.key === toValue(hoveredOption).key);
     if (headerHovered.value) index = 0 + direction;
-    else if (footerHovered.value) index = data.length - 1 + direction;
+    else if (footerHovered.value) index = options.length - 1 + direction;
     else index = index + direction;
 
     // check if index overflow
-    index = index > data.length - 1 ? data.length - 1 : index;
+    index = index > options.length - 1 ? options.length - 1 : index;
     // check if index underflow
     index = index < 0 ? 0 : index;
 
     // set hover state
-    if (footerRef.value && props.selectableFooter && index === data.length - 1)
+    if (
+        footerRef.value &&
+        props.selectableFooter &&
+        index === options.length - 1
+    )
         setHovered(SpecialOption.Footer);
     else if (headerRef.value && props.selectableHeader && index === 0)
         setHovered(SpecialOption.Header);
-    else setHovered(data[index] !== undefined ? data[index] : null);
+    else setHovered(options[index] || null);
 
     // get items from input
     let items = itemRefs.value || [];
@@ -634,9 +422,6 @@ function navigateItem(direction: 1 | -1): void {
 
     const element = unrefElement(items[index]);
     if (!element) return;
-
-    // set aria-activedescendant
-    hoveredId.value = element.id;
 
     // define scroll position
     const dropdownMenu = unrefElement(dropdownRef.value.$content);
@@ -704,7 +489,7 @@ function handleBlur(event: Event): void {
 
 /** emit input change event */
 function onInput(value: string): void {
-    if (props.keepFirst && !selectedOption.value) hoverFirstOption();
+    if (props.keepFirst && !selectedValue.value) hoverFirstOption();
     emits("input", String(value));
     checkHtml5Validity();
 }
@@ -793,12 +578,12 @@ const itemFooterClasses = defineClasses(
     ["itemHoverClass", "o-acp__item--hover", null, footerHovered],
 );
 
-function itemOptionClasses(option): ClassBind[] {
+function itemOptionClasses(option: OptionsItem): ClassBind[] {
     const optionClasses = defineClasses([
         "itemHoverClass",
         "o-acp__item--hover",
         null,
-        computed(() => toRaw(option) === toRaw(hoveredOption.value)),
+        computed(() => option.key === toValue(hoveredOption).key),
     ]);
 
     return [...itemClasses.value, ...optionClasses.value];
@@ -813,7 +598,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 <template>
     <o-dropdown
         ref="dropdownRef"
-        v-model="selectedOption"
+        v-model="selectedValue"
         v-model:active="isActive"
         data-oruga="autocomplete"
         :class="rootClasses"
@@ -851,7 +636,9 @@ defineExpose({ focus: setFocus, value: vmodel });
                 :autocomplete="autocomplete"
                 :use-html5-validation="false"
                 role="combobox"
-                :aria-activedescendant="hoveredId"
+                :aria-activedescendant="
+                    hoveredOption ? `${menuId}-${hoveredOption.key}` : null
+                "
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
                 :aria-controls="menuId"
                 :aria-expanded="isActive"
@@ -874,11 +661,11 @@ defineExpose({ focus: setFocus, value: vmodel });
             v-if="$slots.header"
             :id="`${menuId}-header`"
             ref="headerRef"
-            :value="SpecialOption.Header"
             :tag="itemTag"
+            :value="SpecialOption.Header"
+            tabindex="-1"
             aria-role="option"
             :aria-selected="headerHovered"
-            :tabindex="-1"
             :class="[...itemClasses, ...itemHeaderClasses]"
             @click="
                 (v, e) => selectHeaderOrFooterByClick(e, SpecialOption.Header)
@@ -889,12 +676,14 @@ defineExpose({ focus: setFocus, value: vmodel });
             <slot name="header" />
         </o-dropdown-item>
 
-        <template v-for="(element, groupindex) in _groupOptions">
+        <template v-for="(group, groupIndex) in groupedOptions">
             <o-dropdown-item
-                v-if="element.group"
-                :key="`${groupindex}_group`"
+                v-if="group.group"
+                v-show="!group.hidden"
+                v-bind="group.attrs"
+                :key="group.key"
                 :tag="itemTag"
-                :tabindex="-1"
+                tabindex="-1"
                 :class="[...itemClasses, ...itemGroupClasses]">
                 <!--
                     @slot Override the option grpup
@@ -904,26 +693,28 @@ defineExpose({ focus: setFocus, value: vmodel });
                 <slot
                     v-if="$slots.group"
                     name="group"
-                    :group="element.group"
-                    :index="groupindex" />
+                    :group="group.group"
+                    :index="groupIndex" />
                 <span v-else>
-                    {{ element.group }}
+                    {{ group.group }}
                 </span>
             </o-dropdown-item>
 
             <o-dropdown-item
-                v-for="(option, index) in element.items"
-                :id="`${menuId}-${groupindex}-${index}`"
-                :key="`${groupindex}_${index}`"
-                :ref="(el) => setItemRef(el, groupindex, index)"
-                :value="option"
+                v-for="(option, optionIndex) in group.options"
+                v-show="!option.hidden"
+                v-bind="option.attrs"
+                :id="`${menuId}-${option.key}`"
+                :key="option.key"
+                :ref="(el) => setItemRef(option, groupIndex, optionIndex)"
                 :tag="itemTag"
+                :value="option.value"
                 :class="itemOptionClasses(option)"
+                tabindex="-1"
                 aria-role="option"
-                :aria-selected="toRaw(option) === toRaw(hoveredOption)"
-                :tabindex="-1"
+                :aria-selected="option.key === hoveredOption.key"
                 @click="
-                    (value, event) => setSelected(value as T, !keepOpen, event)
+                    (value, event) => setSelected(option, !keepOpen, event)
                 ">
                 <!--
                     @slot Override the select option
@@ -934,10 +725,10 @@ defineExpose({ focus: setFocus, value: vmodel });
                 <slot
                     v-if="$slots.default"
                     :option="option"
-                    :value="getValue(option)"
-                    :index="index" />
+                    :value="option.value"
+                    :index="optionIndex" />
                 <span v-else>
-                    {{ getValue(option) }}
+                    {{ option.label }}
                 </span>
             </o-dropdown-item>
         </template>
@@ -956,11 +747,11 @@ defineExpose({ focus: setFocus, value: vmodel });
             v-if="$slots.footer"
             :id="`${menuId}-footer`"
             ref="footerRef"
-            :value="SpecialOption.Footer"
             :tag="itemTag"
+            :value="SpecialOption.Footer"
+            tabindex="-1"
             aria-role="option"
             :aria-selected="footerHovered"
-            :tabindex="-1"
             :class="[...itemClasses, ...itemFooterClasses]"
             @click="
                 (v, e) => selectHeaderOrFooterByClick(e, SpecialOption.Footer)
