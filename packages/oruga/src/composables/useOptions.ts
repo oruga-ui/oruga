@@ -1,4 +1,5 @@
-import { toValue, useId, watch, type MaybeRefOrGetter } from "vue";
+import { toValue, useId, type MaybeRefOrGetter } from "vue";
+import { isEqual } from "@/utils/helpers";
 
 /**
  * Options should always be formatted as an array of objects with label and value properties.
@@ -185,48 +186,44 @@ export function toOptionsList<V>(
  * @param value Value to filter for
  * @param customFilter optional filter function
  */
-export function filterOptionsItems<V>(
-    options:
-        | MaybeRefOrGetter<OptionsItem<V>[]>
-        | MaybeRefOrGetter<OptionsGroupItem<V>[]>,
+export function filterOptionsItems<
+    V,
+    O extends OptionsItem<V>[] | OptionsGroupItem<V>[],
+>(
+    options: MaybeRefOrGetter<O>,
     value: MaybeRefOrGetter<string>,
     customFilter?: (option: V, value: string) => boolean,
-): void {
-    function filter(option: OptionsItem<V>): boolean {
+): O {
+    function filter(option: OptionsItem<V>, value: string): boolean {
         if (typeof customFilter === "function")
             return customFilter(option.value, toValue(value));
         else
-            return String(option.label)
+            return !String(option.label)
                 .toLowerCase()
-                .includes(toValue(value)?.toLowerCase());
+                .includes(value?.toLowerCase());
     }
 
     function filterOptions(
         options: OptionsItem<V>[] | OptionsGroupItem<V>[],
+        value: string,
     ): void {
         options.forEach((option: OptionsItem<V> | OptionsGroupItem<V>) => {
             if (isGroupOption(option)) {
-                filterOptions(option.options);
+                filterOptions(option.options, value);
                 // hide the whole group if every group options is hidden
-                const attrs = {
-                    hidden: option.options.every(
-                        (option) => option.attrs?.hidden,
-                    ),
-                };
-                option.attrs = { ...option.attrs, ...attrs };
+                option.hidden = option.options.every((option) => option.hidden);
             } else {
                 // hide the option if filtered
-                const attrs = {
-                    hidden: filter(option),
-                };
-                option.attrs = { ...option.attrs, ...attrs };
+                option.hidden = filter(option, value);
             }
         });
     }
 
-    watch([options, value], () => filterOptions(toValue(options)), {
-        immediate: true,
-    });
+    // filter options by value
+    filterOptions(toValue(options), toValue(value));
+
+    // return options as new array
+    return [...toValue(options)] as O;
 }
 
 /**
@@ -236,9 +233,7 @@ export function filterOptionsItems<V>(
  * @returns boolean
  */
 export function checkOptionsEmpty(
-    options:
-        | MaybeRefOrGetter<OptionsItem[]>
-        | MaybeRefOrGetter<OptionsGroupItem[]>,
+    options: MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>,
 ): boolean {
     // check if options are empty
     if (!Array.isArray(toValue(options))) return true;
@@ -276,7 +271,7 @@ export function findOption<V>(
             if (found !== undefined) return found;
         }
         // check if option has value
-        else if (toValue(value) == option.value) return option;
+        else if (isEqual(toValue(value), option.value)) return option;
     }
 
     return undefined;

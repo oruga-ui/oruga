@@ -9,6 +9,8 @@ import {
     toValue,
     useSlots,
     useId,
+    triggerRef,
+    watchEffect,
     type Component,
 } from "vue";
 import type { ComponentExposed } from "vue-component-type-helpers";
@@ -214,7 +216,18 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
  * Applies an reactive filter for the options based on the input vmodel value.
  * Options are filtered by setting the hidden attribute.
  */
-filterOptionsItems(groupedOptions, vmodel, props.filter);
+watchEffect(() => {
+    // filter options by input value
+    filterOptionsItems(groupedOptions, vmodel, props.filter);
+    // trigger reactive update of groupedOptions
+    triggerRef(groupedOptions);
+});
+
+// set initial vmodel if selected is given
+if (selectedValue.value) {
+    const selectedOption = findOption(groupedOptions, selectedValue);
+    if (selectedOption) vmodel.value = selectedOption.label;
+}
 
 /** is no option visible */
 const isEmpty = computed(() => checkOptionsEmpty(groupedOptions));
@@ -344,23 +357,13 @@ function setHovered(option: OptionsItem<T> | SpecialOption | null): void {
     footerHovered.value = option === SpecialOption.Footer;
 }
 
-/** Set which option is the aria-activedescendant by index. */
-// function setHoveredIdToIndex(index: number): void {
-//     const element = unrefElement(itemRefs.value[index]);
-//     hoveredId.value = element ? element.id : null;
-// }
-
 /** set first option as hovered */
 function hoverFirstOption(): void {
-    nextTick(() => {
-        const option = firstValidOption(groupedOptions);
-        if (option) {
-            setHovered(option);
-        } else {
-            setHovered(null);
-        }
-    });
+    const option = firstValidOption(groupedOptions);
+    if (option) setHovered(option);
+    else setHovered(null);
 }
+
 // --- Event Handler ---
 
 /**
@@ -651,6 +654,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             ref="headerRef"
             :tag="itemTag"
             :value="SpecialOption.Header"
+            :clickable="selectableHeader"
             tabindex="-1"
             aria-role="option"
             :aria-selected="headerHovered"
@@ -671,6 +675,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                 v-bind="group.attrs"
                 :key="group.key"
                 :tag="itemTag"
+                :clickable="false"
                 tabindex="-1"
                 :class="[...itemClasses, ...itemGroupClasses]">
                 <!--
@@ -739,6 +744,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             ref="footerRef"
             :tag="itemTag"
             :value="SpecialOption.Footer"
+            :clickable="selectableFooter"
             tabindex="-1"
             aria-role="option"
             :aria-selected="footerHovered"
