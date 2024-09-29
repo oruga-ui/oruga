@@ -117,7 +117,7 @@ const emits = defineEmits<{
     (e: "update:modelValue", value: T): void;
     /**
      * input prop two-way binding
-     * @param value {string}  updated input prop
+     * @param value {string} updated input prop
      */
     (e: "update:input", value: string): void;
     /**
@@ -200,7 +200,7 @@ const isActive = ref(false);
 const selectedValue = defineModel<T>({ default: undefined });
 
 /** the value of the inner input, use v-model:input to make it two-way binding */
-const vmodel = defineModel<string>("input", { default: "" });
+const inputValue = defineModel<string>("input", { default: "" });
 
 /** create a unique id for the menu */
 const menuId = useId();
@@ -213,20 +213,20 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
 });
 
 /**
- * Applies an reactive filter for the options based on the input vmodel value.
+ * Applies an reactive filter for the options based on the input value.
  * Options are filtered by setting the hidden attribute.
  */
 watchEffect(() => {
     // filter options by input value
-    filterOptionsItems(groupedOptions, vmodel, props.filter);
+    filterOptionsItems(groupedOptions, inputValue, props.filter);
     // trigger reactive update of groupedOptions
     triggerRef(groupedOptions);
 });
 
-// set initial vmodel if selected is given
+// set initial inputValue if selected is given
 if (selectedValue.value) {
     const selectedOption = findOption(groupedOptions, selectedValue);
-    if (selectedOption) vmodel.value = selectedOption.label;
+    if (selectedOption) inputValue.value = selectedOption.label;
 }
 
 /** is no option visible */
@@ -242,7 +242,7 @@ watch(isEmpty, (empty) => {
  * 2. Close dropdown if value is clear or else open it
  */
 watch(
-    vmodel,
+    inputValue,
     (value) => {
         // find the option for the current selected value
         const currentOption = findOption(groupedOptions, selectedValue);
@@ -290,10 +290,10 @@ function setSelected(
     emits("select", option?.value, event);
 
     if (option) {
-        if (props.clearOnSelect) vmodel.value = "";
-        else vmodel.value = option.label;
+        if (props.clearOnSelect) inputValue.value = "";
+        else inputValue.value = option.label;
         setHovered(null);
-    } else vmodel.value = "";
+    } else inputValue.value = "";
 
     if (closeDropdown) nextTick(() => (isActive.value = false));
     checkHtml5Validity();
@@ -481,14 +481,14 @@ function handleBlur(event: Event): void {
 /** emit input change event */
 function onInput(value: string): void {
     if (props.keepFirst && !selectedValue.value) hoverFirstOption();
-    emits("input", String(value));
+    emits("input", value.trim());
     checkHtml5Validity();
 }
 
 // --- Icon Feature ---
 
 const computedIconRight = computed(() =>
-    props.clearable && vmodel.value && props.clearIcon
+    props.clearable && inputValue.value && props.clearIcon
         ? props.clearIcon
         : props.iconRight,
 );
@@ -583,7 +583,7 @@ function itemOptionClasses(option: OptionsItem): ClassBind[] {
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ focus: setFocus, value: inputValue });
 </script>
 
 <template>
@@ -614,7 +614,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             <o-input
                 ref="inputRef"
                 v-bind="inputBind"
-                v-model="vmodel"
+                v-model="inputValue"
                 :type="type"
                 :size="size"
                 :rounded="rounded"

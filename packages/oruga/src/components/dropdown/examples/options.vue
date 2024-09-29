@@ -24,7 +24,6 @@ const selected = ref<string>();
             </template>
         </o-dropdown>
 
-        
         <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>
