@@ -1,15 +1,20 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { computed, ref, watch, toValue, nextTick, type PropType } from "vue";
+import { computed, ref, watch, toValue, nextTick, onMounted } from "vue";
 
+import OTabItem from "../tabs/TabItem.vue";
 import OIcon from "../icon/Icon.vue";
 import OSlotComponent from "../utils/SlotComponent";
 
 import { getOption } from "@/utils/config";
 import { mod, isDefined } from "@/utils/helpers";
-import { defineClasses, useProviderParent } from "@/composables";
+import {
+    defineClasses,
+    normalizeOptions,
+    useProviderParent,
+} from "@/composables";
 
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
-import type { ComponentClass } from "@/types";
+import type { TabsProps } from "./props";
 
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease
@@ -23,146 +28,27 @@ defineOptions({
     configField: "tabs",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The selected item value
-     * @type string|number|object
-     */
-    modelValue: {
-        type: [String, Number, Object] as PropType<T>,
-        default: 0,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("tabs.variant"),
-    },
-    /**
-     * Tab size
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("tabs.size"),
-    },
-    /** Show tab in vertical layout */
-    vertical: {
-        type: Boolean,
-        default: () => getOption("tabs.vertical", false),
-    },
-    /**
-     * Position of the tabs
-     * @values left, centered, right
-     */
-    position: {
-        type: String,
-        default: undefined,
-        validator: (value: string) =>
-            ["left", "centered", "right"].indexOf(value) >= 0,
-    },
-    /**
-     * Tab type
-     * @values default, boxed, toggle, pills
-     */
-    type: { type: String, default: () => getOption("tabs.type", "default") },
-    /** Tabs will be expanded (full-width) */
-    expanded: { type: Boolean, default: false },
-    /** Destroy tabItem on hide */
-    destroyOnHide: { type: Boolean, default: false },
-    /** Tab will have an animation */
-    animated: {
-        type: Boolean,
-        default: () => getOption("tabs.animated", true),
-    },
-    /**
-     * Transition animation name
-     * @values [next, prev], [right, left, down, up]
-     */
-    animation: {
-        type: Array as PropType<Array<string>>,
-        default: () =>
-            getOption("tabs.animation", [
-                "slide-next",
-                "slide-prev",
-                "slide-down",
-                "slide-up",
-            ]),
-        validator: (value: Array<string>) =>
-            value.length === 2 || value.length === 4,
-    },
-    /** Apply animation on the initial render */
-    animateInitially: {
-        type: Boolean,
-        default: () => getOption("tabs.animateInitially", false),
-    },
-    /** Show tab items multiline when there is no space */
-    multiline: { type: Boolean, default: false },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of Tabs component when when is vertical and its position changes */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of Tabs component when expanded */
-    expandedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of Tabs component when vertical */
-    verticalClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of Tabs component when multiline */
-    multilineClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Tabs component nav tabs */
-    navClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Size of the navigation */
-    navSizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Tabs component nav position */
-    navPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Type of the navigation */
-    navTypeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab item */
-    navItemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab content */
-    contentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab content when transitioning */
-    transitioningClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<TabsProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    options: undefined,
+    variant: () => getOption("tabs.variant"),
+    size: () => getOption("tabs.size"),
+    vertical: () => getOption("tabs.vertical", false),
+    position: undefined,
+    type: () => getOption("tabs.type", "default"),
+    expanded: false,
+    destroyOnHide: false,
+    animated: () => getOption("tabs.animated", true),
+    animation: () =>
+        getOption("tabs.animation", [
+            "slide-next",
+            "slide-prev",
+            "slide-down",
+            "slide-up",
+        ]),
+    animateInitially: () => getOption("tabs.animateInitially", false),
+    multiline: false,
 });
 
 const emits = defineEmits<{
@@ -207,6 +93,9 @@ const items = computed<TabItem[]>(() =>
 
 const vmodel = defineModel<T>({ default: undefined });
 
+/** normalized programamtic options */
+const groupedOptions = computed(() => normalizeOptions<T>(props.options));
+
 /**  When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
@@ -231,6 +120,15 @@ function isActive(item: TabItem): boolean {
 const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
 );
+
+onMounted(() => {
+    // set first tab as default if not defined
+    if (!vmodel.value) {
+        vmodel.value = items.value[0]?.value as T;
+    }
+});
+
+// --- EVENT HANDLER ---
 
 /** Tab item click listener, emit input event and change active child. */
 function tabClick(item: TabItem): void {
@@ -431,7 +329,15 @@ const contentClasses = defineClasses(
             <!--
                 @slot Place tab items here
             -->
-            <slot />
+            <slot>
+                <o-tab-item
+                    v-for="option in groupedOptions"
+                    v-show="!option.hidden"
+                    v-bind="option.attrs"
+                    :key="option.key"
+                    :value="option.value"
+                    :label="option.label" />
+            </slot>
         </section>
     </div>
 </template>

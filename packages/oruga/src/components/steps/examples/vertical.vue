@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const labelPosition = ref("bottom");
+const labelPosition = ref<"left" | "right" | "bottom">("bottom");
 const position = ref(null);
 const size = ref(null);
 </script>

@@ -50,7 +50,7 @@ export type OptionsProp<V = unknown> =
           : V extends number
             ? number[]
             : Record<string | number, string>)
-    | OptionsPropItem<V>;
+    | OptionsPropItem<V>[];
 
 /**
  * Option groups should always be formatted as an array of objects with group and nested options.

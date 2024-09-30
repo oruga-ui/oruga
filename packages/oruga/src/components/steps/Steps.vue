@@ -1,15 +1,22 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { computed, toValue, nextTick, ref, watch, type PropType } from "vue";
+import { computed, toValue, nextTick, ref, watch } from "vue";
 
+import OStepItem from "../steps/StepItem.vue";
 import OButton from "../button/Button.vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { isDefined } from "@/utils/helpers";
-import { defineClasses, useProviderParent, useMatchMedia } from "@/composables";
+import {
+    defineClasses,
+    normalizeOptions,
+    useProviderParent,
+    useMatchMedia,
+} from "@/composables";
 
 import type { StepItem, StepItemComponent, StepsComponent } from "./types";
-import type { ComponentClass, ClassBind } from "@/types";
+import type { ClassBind } from "@/types";
+import type { StepsProps } from "./props";
 
 /**
  * Responsive horizontal process steps
@@ -23,213 +30,34 @@ defineOptions({
     configField: "steps",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The selected item value
-     * @type string|number|object
-     */
-    modelValue: {
-        type: [String, Number, Object] as PropType<T>,
-        default: undefined,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("steps.variant"),
-    },
-    /**
-     * Step size
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("steps.size"),
-    },
-    /** Show step in vertical layout */
-    vertical: { type: Boolean, default: false },
-    /**
-     * Position of the step
-     * @values left, centered, right
-     */
-    position: {
-        type: String,
-        default: undefined,
-        validator: (value: string) =>
-            ["left", "centered", "right"].indexOf(value) >= 0,
-    },
-    /**
-     * Icon pack to use for the navigation
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("steps.iconPack"),
-    },
-    /** Icon to use for navigation button */
-    iconPrev: {
-        type: String,
-        default: () => getOption("steps.iconPrev", "chevron-left"),
-    },
-    /** Icon to use for navigation button */
-    iconNext: {
-        type: String,
-        default: () => getOption("steps.iconNext", "chevron-right"),
-    },
-    /**
-     * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
-     */
-    hasNavigation: { type: Boolean, default: true },
-    /** Destroy stepItem on hide */
-    destroyOnHide: { type: Boolean, default: false },
-    /** Step navigation is animated */
-    animated: {
-        type: Boolean,
-        default: () => getOption("steps.animated", true),
-    },
-    /**
-     * Transition animation name
-     * @values [next, prev], [right, left, down, up]
-     */
-    animation: {
-        type: Array as PropType<Array<string>>,
-        default: () =>
-            getOption("steps.animation", [
-                "slide-next",
-                "slide-prev",
-                "slide-down",
-                "slide-up",
-            ]),
-        validator: (value: Array<string>) =>
-            value.length === 2 || value.length === 4,
-    },
-    /** Apply animation on the initial render */
-    animateInitially: {
-        type: Boolean,
-        default: () => getOption("steps.animateInitially", false),
-    },
-    /**
-     * Position of the marker label
-     * @values bottom, right, left
-     */
-    labelPosition: {
-        type: String,
-        default: () => getOption("steps.labelPosition", "bottom"),
-        validator: (value: string) =>
-            ["bottom", "right", "left"].indexOf(value) > -1,
-    },
-    /** Rounded step markers */
-    rounded: { type: Boolean, default: true },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("steps.mobileBreakpoint"),
-    },
-    /** Accessibility next button aria label */
-    ariaNextLabel: {
-        type: String,
-        default: () => getOption("steps.ariaNextLabel"),
-    },
-    /** Accessibility previous button aria label  */
-    ariaPreviousLabel: {
-        type: String,
-        default: () => getOption("steps.ariaPreviousLabel"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Size of the steps */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the steps variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip trigger */
-    verticalClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component when is vertical and its position changes */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the steps container */
-    stepsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of Steps component when animation gets triggered */
-    animatedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps markers trigger when are rounded */
-    stepMarkerRoundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component dividers */
-    stepDividerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component marker */
-    stepMarkerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component content */
-    stepContentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component content when transition is happening */
-    stepContentTransitioningClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component navigation element */
-    stepNavigationClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component link */
-    stepLinkClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component link when clickable */
-    stepLinkClickableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Step component link label */
-    stepLinkLabelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Step component link label when positioned */
-    stepLinkLabelPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of steps component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<StepsProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    options: undefined,
+
+    variant: () => getOption("steps.variant"),
+    size: () => getOption("steps.size"),
+    vertical: false,
+    position: undefined,
+    iconPack: () => getOption("steps.iconPack"),
+    iconPrev: () => getOption("steps.iconPrev", "chevron-left"),
+    iconNext: () => getOption("steps.iconNext", "chevron-right"),
+    hasNavigation: true,
+    destroyOnHide: false,
+    animated: () => getOption("steps.animated", true),
+    animation: () =>
+        getOption("steps.animation", [
+            "slide-next",
+            "slide-prev",
+            "slide-down",
+            "slide-up",
+        ]),
+    animateInitially: () => getOption("steps.animateInitially", false),
+    labelPosition: () => getOption("steps.labelPosition", "bottom"),
+    rounded: true,
+    mobileBreakpoint: () => getOption("steps.mobileBreakpoint"),
+    ariaNextLabel: () => getOption("steps.ariaNextLabel"),
+    ariaPreviousLabel: () => getOption("steps.ariaPreviousLabel"),
 });
 
 const emits = defineEmits<{
@@ -274,6 +102,9 @@ const items = computed<StepItem[]>(() =>
 );
 
 const vmodel = defineModel<T>({ default: undefined });
+
+/** normalized programamtic options */
+const groupedOptions = computed(() => normalizeOptions<T>(props.options));
 
 /** When v-model is changed set the new active step. */
 watch(
@@ -535,7 +366,15 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
             <!--
                 @slot Place step items here
             -->
-            <slot />
+            <slot>
+                <o-step-item
+                    v-for="option in groupedOptions"
+                    v-show="!option.hidden"
+                    v-bind="option.attrs"
+                    :key="option.key"
+                    :value="option.value"
+                    :label="option.label" />
+            </slot>
         </section>
 
         <!--
