@@ -13,12 +13,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    useDebounce,
-    useInputHandler,
-    useVModel,
-} from "@/composables";
+import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -67,7 +62,7 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     customValidity: "",
 });
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = InputProps<IsNumber>["modelValue"];
 
 const emits = defineEmits<{
     /**
@@ -131,8 +126,7 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);

@@ -34,7 +34,7 @@ const components = component_folders.map(folder => {
     const folderPath = path.resolve(__dirname, componentDirectory, folder);
 
     // get all components in component folder
-    const components = getComponents(folderPath)
+    const components = getComponents(folderPath);
 
     // get all configruable props from all components in folder
     const props = components.flatMap(comp => {

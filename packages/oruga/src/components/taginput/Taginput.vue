@@ -17,7 +17,6 @@ import {
     defineClasses,
     getActiveClasses,
     useInputHandler,
-    useVModel,
 } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -265,57 +264,55 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string[] | object[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: T[]): void;
+    "update:modelValue": [value: T[]];
     /**
      * on input change event
-     * @param value {string} input value
      */
-    (e: "input", value: string): void;
+    input: [value: string];
     /**
      * new item got added
      * @param value {string | object} added item
      */
-    (e: "add", value: T): void;
+    add: [value: T];
     /**
      * item got removed
      * @param value {string | object} removed item
      */
-    (e: "remove", value: T): void;
+    remove: [value: T];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
     /** the list inside the dropdown reached the start */
-    (e: "scroll-start"): void;
+    "scroll-start": [];
     /** the list inside the dropdown reached it's end */
-    (e: "scroll-end"): void;
+    "scroll-end": [];
 }>();
 
 const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<T>>>();
 
-// const items = defineModel<T[]>({ default: () => [] });
-const items = useVModel<T[]>();
+const items = defineModel<T[]>({ default: () => [] });
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(

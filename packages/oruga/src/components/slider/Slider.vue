@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     ariaLabel: () => getOption("slider.ariaLabel"),
 });
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = SliderProps<IsRange>["modelValue"];
 
 const emits = defineEmits<{
     /**

@@ -10,7 +10,7 @@ import { computed, ref, useAttrs, watch } from "vue";
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
 import { isTrueish } from "@/utils/helpers";
-import { defineClasses, useInputHandler, useVModel } from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     customValidity: "",
 });
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**
@@ -76,8 +76,7 @@ const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 const dragDropFocus = ref(false);
 

@@ -15,12 +15,7 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getOption } from "@/utils/config";
 import { isDate, pad } from "@/utils/helpers";
-import {
-    defineClasses,
-    getActiveClasses,
-    useMatchMedia,
-    useVModel,
-} from "@/composables";
+import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
@@ -114,64 +109,64 @@ const props = withDefaults(
     },
 );
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {Date | Date[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:modelValue": [value: ModelValue];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on range start is selected event
      * @param value {Date} range start date
      */
-    (e: "range-start", value: Date): void;
+    "range-start": [value: Date];
     /**
      * on range end is selected event
      * @param value {Date} range end date
      */
-    (e: "range-end", value: Date): void;
+    "range-end": [value: Date];
     /**
      * on month change event
      * @param value {number} month number
      */
-    (e: "change-month", value: number): void;
+    "change-month": [value: number];
     /**
      * on year change event
      * @param value {number} year number
      */
-    (e: "change-year", value: number): void;
+    "change-year": [value: number];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
 const { dtf, defaultDateFormatter, defaultDateParser } =
@@ -182,8 +177,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-// const vmodel = defineModel<ModelValue>({ default: null });
-const vmodel = useVModel<ModelValue>();
+const vmodel = defineModel<ModelValue>({ default: null });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });

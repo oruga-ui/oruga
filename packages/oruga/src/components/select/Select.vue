@@ -64,7 +64,7 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     statusIcon: () => getOption("statusIcon", true),
 });
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**

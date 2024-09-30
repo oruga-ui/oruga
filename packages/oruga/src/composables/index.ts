@@ -8,5 +8,4 @@ export * from "./useParentProvider";
 export * from "./useClickOutside";
 export * from "./useScrollingParent";
 export * from "./useObjectMap";
-export * from "./useVModel";
 export * from "./usePreventScrolling";
