@@ -75,6 +75,7 @@
     "@babel/core": "7.25.2",
     "@babel/preset-env": "7.25.4",
     "@rollup/plugin-babel": "6.0.4",
+    "@tsconfig/node20": "^20.1.4",
     "@types/jest-axe": "^3.5.9",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20.14.10",
