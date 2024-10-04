@@ -24,7 +24,7 @@ export function useClickOutside(
     handler: (evt: PointerEvent) => void,
     options: ClickOutsideOptions = {},
 ): () => void {
-    if (!window) return;
+    if (!window) return () => {};
 
     // set default options
     const listenerOptions = Object.assign({ ignore: [] }, options);

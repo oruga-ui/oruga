@@ -196,7 +196,7 @@ watch(
 const contentRef = ref<HTMLElement>();
 const triggerRef = ref<HTMLElement>();
 
-const eventCleanups = ref([]);
+const eventCleanups: (() => void)[] = [];
 
 watch(isActive, (value) => {
     // on active set event handler
@@ -204,7 +204,7 @@ watch(isActive, (value) => {
         setTimeout(() => {
             if (cancelOptions.value.indexOf("outside") >= 0) {
                 // set outside handler
-                eventCleanups.value.push(
+                eventCleanups.push(
                     useClickOutside(contentRef, onClickedOutside, {
                         ignore: [triggerRef],
                         immediate: true,
@@ -215,7 +215,7 @@ watch(isActive, (value) => {
 
             if (cancelOptions.value.indexOf("escape") >= 0) {
                 // set keyup handler
-                eventCleanups.value.push(
+                eventCleanups.push(
                     useEventListener("keyup", onKeyPress, document, {
                         immediate: true,
                     }),
@@ -224,8 +224,8 @@ watch(isActive, (value) => {
         });
     } else if (!value) {
         // on close cleanup event handler
-        eventCleanups.value.forEach((fn) => fn());
-        eventCleanups.value.length = 0;
+        eventCleanups.forEach((fn) => fn());
+        eventCleanups.length = 0;
     }
 });
 

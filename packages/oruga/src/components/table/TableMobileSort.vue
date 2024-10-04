@@ -38,9 +38,7 @@ const emits = defineEmits<{
     (e: "sort", column: TableColumnItem<T>, event: Event);
 }>();
 
-const mobileSort = ref<string>(
-    getValueByPath(props.currentSortColumn, "identifier"),
-);
+const mobileSort = ref<string | undefined>(props.currentSortColumn?.identifier);
 
 const showPlaceholder = computed(
     () =>
@@ -56,27 +54,26 @@ const sortableColumns = computed(() =>
 );
 
 const isCurrentSort = computed(
-    () =>
-        getValueByPath(props.currentSortColumn, "identifier") ===
-        mobileSort.value,
+    () => props.currentSortColumn?.identifier === mobileSort.value,
 );
 
 watch(mobileSort, (value) => {
-    if (props.currentSortColumn.identifier === value) return;
-    sort();
+    if (props.currentSortColumn?.identifier === value) return;
+    sort(new Event("sort"));
 });
 
 watch(
     () => props.currentSortColumn,
     (column) => {
-        mobileSort.value = getValueByPath(column, "identifier");
+        mobileSort.value = column?.identifier;
     },
 );
 
-function sort(event?: Event): void {
+function sort(event: Event): void {
     const column = sortableColumns.value.find(
         (c) => getValueByPath(c, "identifier") === mobileSort.value,
     );
+    if (!column) return;
     emits("sort", column, event);
 }
 </script>

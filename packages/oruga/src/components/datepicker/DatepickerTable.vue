@@ -41,7 +41,9 @@ const emits = defineEmits<{
 
 const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
 
-const focusedDateModel = defineModel<FocusedDate>("focusedDate");
+const focusedDateModel = defineModel<FocusedDate>("focusedDate", {
+    required: true,
+});
 
 const selectedBeginDate = ref<Date>();
 const selectedEndDate = ref<Date>();
@@ -50,7 +52,7 @@ const hoveredEndDate = ref<Date>();
 const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 
 const visibleDayNames = computed(() => {
-    const visibleDayNames = [];
+    const visibleDayNames: string[] = [];
     let index = datepicker.value.firstDayOfWeek;
     while (visibleDayNames.length < props.dayNames.length) {
         const currentDayName = props.dayNames[index % props.dayNames.length];
@@ -110,6 +112,7 @@ function eventsInThisWeek(week: Date[]): DatepickerEvent[] {
 
 const hoveredDateRange = computed<Date[]>(() => {
     if (!isTrueish(datepicker.value.range) || selectedEndDate.value) return [];
+    if (!hoveredEndDate.value || !selectedBeginDate.value) return [];
     return (
         hoveredEndDate.value < selectedBeginDate.value
             ? [hoveredEndDate.value, selectedBeginDate.value]
@@ -132,7 +135,7 @@ function validateFocusedDay(): void {
         focusedDateModel.value.month + 1,
         0,
     ).getDate();
-    let firstFocusable = null;
+    let firstFocusable: Date | null = null;
     while (!firstFocusable && ++day < monthDays) {
         const date = new Date(
             focusedDateModel.value.year,

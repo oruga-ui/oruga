@@ -84,8 +84,8 @@ const vm = getCurrentInstance();
 
 const providedData = computed<TableColumnComponent<T>>(() => ({
     ...props,
-    $el: vm.proxy,
-    $slots: vm.slots,
+    $el: vm?.proxy || undefined,
+    $slots: vm?.slots,
     style: style.value,
     isHeaderUnselectable: isHeaderUnselectable.value,
 }));

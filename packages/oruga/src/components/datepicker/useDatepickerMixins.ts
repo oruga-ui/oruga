@@ -12,7 +12,7 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
      * is within a given month
      */
     function isDateSelectable(date: Date, month: number): boolean {
-        const validity = [];
+        const validity: boolean[] = [];
 
         if (props.minDate) validity.push(date >= props.minDate);
         if (props.maxDate) validity.push(date <= props.maxDate);

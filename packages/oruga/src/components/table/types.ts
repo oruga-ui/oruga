@@ -14,8 +14,8 @@ export type TableColumn<T = unknown> = ComponentProps<typeof TableColumn<T>>;
 type TableColumnSlots = ComponentSlots<typeof TableColumn>;
 
 export type TableColumnComponent<T = unknown> = TableColumn<T> & {
-    $el: ComponentPublicInstance;
-    $slots: TableColumnSlots;
+    $el: ComponentPublicInstance | undefined;
+    $slots: TableColumnSlots | undefined;
     style: StyleValue;
     isHeaderUnselectable: boolean;
 };

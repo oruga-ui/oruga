@@ -95,10 +95,12 @@ const { childItems } = useProviderParent<MenuItemComponent>(rootRef, {
     data: provideData,
 });
 
-function resetMenu(excludedItems: ProviderItem[] = []): void {
+function resetMenu(
+    excludedItems: ProviderItem<MenuItemComponent>[] = [],
+): void {
     childItems.value.forEach((item) => {
         if (!excludedItems.map((i) => i?.identifier).includes(item.identifier))
-            item.data.reset();
+            item.data?.reset();
     });
 }
 

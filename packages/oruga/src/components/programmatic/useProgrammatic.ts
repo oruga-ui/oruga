@@ -1,9 +1,10 @@
 import {
     createVNode,
     render,
-    type Component,
     type ComponentInternalInstance,
     type EmitsToProps,
+    type VNode,
+    type VNodeTypes,
 } from "vue";
 
 import InstanceRegistry from "@/components/programmatic/InstanceRegistry";
@@ -27,7 +28,7 @@ declare module "../../index" {
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useProgrammatic composable `open` function options */
-export type ProgrammaticOptions<C extends string | Component> = {
+export type ProgrammaticOptions<C extends VNodeTypes> = {
     /**
      * Specify a target the component get rendered into
      * @default `document.body`
@@ -51,7 +52,7 @@ export const useProgrammatic = {
      * @param options render options
      * @param slot default slot content - see {@link https://vuejs.org/api/render-function.html#render-function-apis |Vue render function}
      */
-    open<C extends string | Component>(
+    open<C extends VNodeTypes>(
         component: C,
         options?: ProgrammaticOptions<C>,
         slot?: unknown,
@@ -59,15 +60,17 @@ export const useProgrammatic = {
         options = { instances, ...options };
 
         // define the target container - either HTML `body` or by a given query selector
-        const target =
+        let target =
             typeof options.target === "string"
                 ? document.querySelector<HTMLElement>(options.target)
                 : isElement(options?.target)
-                  ? (options.target as HTMLElement)
-                  : document.body;
+                  ? options.target
+                  : null;
+
+        if (!target) target = document.body;
 
         // cache container
-        let container = document.createElement("div");
+        let container: HTMLDivElement | null = document.createElement("div");
 
         // clear vnode
         function onDestroy(): void {
@@ -78,7 +81,7 @@ export const useProgrammatic = {
         }
 
         // create dynamic component
-        let vnode = createVNode(
+        let vnode: VNode | null = createVNode(
             ProgrammaticComponent,
             {
                 instances: options.instances, // programmatic registry instance - can be overriden by given in options
@@ -98,15 +101,15 @@ export const useProgrammatic = {
         target.append(...container.children);
 
         // return exposed functionalities
-        return vnode.component.exposed as ProgrammaticExpose;
+        return vnode.component!.exposed as ProgrammaticExpose;
     },
     /** close the last registred instance in the global programmatic instance registry */
     close(...args: unknown[]): void {
-        instances.last()?.exposed.close(...args);
+        instances.last()?.exposed?.close(...args);
     },
     /** close all instances in the global programmatic instance registry */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed.close(...args));
+        instances.walk((entry) => entry.exposed?.close(...args));
     },
 };
 

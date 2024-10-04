@@ -27,8 +27,8 @@ import type {
 type ComputedClass = readonly [
     className: string,
     defaultClass: string,
-    suffix?: MaybeRefOrGetter<string>,
-    apply?: MaybeRefOrGetter<boolean>,
+    suffix?: MaybeRefOrGetter<string | undefined> | null,
+    apply?: MaybeRefOrGetter<boolean> | null,
 ];
 
 /** Helperfunction to get all active classes from a class binding list */
@@ -69,14 +69,14 @@ export function defineClasses(
         function getClassBind(): ClassBind {
             // compute class based on definition parameter
             const computedClass = computeClass(
-                vm,
+                vm!,
                 className,
                 defaultClass,
-                toValue(suffix),
+                toValue(suffix) || undefined,
             );
 
             // if apply is not defined or true
-            const applied = !isDefined(apply) || toValue(apply);
+            const applied = !isDefined(apply) || toValue(apply) || false;
 
             // return class bind property
             return { [computedClass]: applied };
@@ -86,7 +86,7 @@ export function defineClasses(
         scope.run(() => {
             // recompute the class bind property when the class property change
             watch(
-                () => vm.proxy.$props[className],
+                () => vm.proxy?.$props[className],
                 () => {
                     // recompute the class bind property
                     const classBind = getClassBind();
@@ -147,7 +147,7 @@ export function defineClasses(
 function computeClass(
     vm: ComponentInternalInstance,
     field: string,
-    defaultValue?: string,
+    defaultValue: string,
     suffix = "",
 ): string {
     // get component props
@@ -163,7 +163,7 @@ function computeClass(
     // --- Classes Definition ---
 
     // get component config class definition
-    let globalClass =
+    let globalClass: ClassDefinition | undefined =
         getValueByPath<ClassDefinition>(
             config,
             `${componentKey}.${field}.class`,
@@ -172,7 +172,11 @@ function computeClass(
         getValueByPath<ClassDefinition>(config, `${componentKey}.${field}`, "");
 
     // get instance class definition
-    let localClass = getValueByPath<ComponentClass>(props, field, "");
+    let localClass: ComponentClass | undefined = getValueByPath<ComponentClass>(
+        props,
+        field,
+        "",
+    );
 
     // procsess local instance class
     if (Array.isArray(localClass)) {
@@ -273,7 +277,7 @@ function suffixProcessor(input: string, suffix: string): string {
 }
 
 const getProps = (vm: ComponentInternalInstance): ComponentProps => {
-    let props = vm.proxy.$props;
+    let props = vm.proxy?.$props || {};
 
     // get all props which ends with "Props", these are compressed parent props
     // append these parent props as root level prop

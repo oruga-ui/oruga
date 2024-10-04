@@ -955,7 +955,7 @@ function getColumnValue(row: T, column: TableColumn<T>): string {
 /** check if two rows are eqal by a custom compare function or the rowKey attribute */
 function isRowEqual(
     sourceRow: MaybeRefOrGetter<T>,
-    targetRow?: MaybeRefOrGetter<T>,
+    targetRow: MaybeRefOrGetter<T>,
 ): boolean {
     const el1 = toValue(sourceRow);
     const el2 = toValue(targetRow);
@@ -990,7 +990,7 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
     const row = visibleRows.value[index];
 
     if (!props.isRowSelectable(row.value)) {
-        let newIndex = null;
+        let newIndex: number | null = null;
         if (pos > 0) {
             for (
                 let i = index;
@@ -1006,7 +1006,7 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
                     newIndex = i;
             }
         }
-        if (newIndex >= 0) {
+        if (newIndex != null && newIndex >= 0) {
             selectRow(visibleRows.value[newIndex], index, event);
         }
     } else {
@@ -1164,9 +1164,9 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
     if (!column) return rows;
     return sortBy<TableRow<T>>(
         rows,
-        column?.field ? "value." + column.field : undefined,
+        column?.field ? "value." + column.field : "",
         column?.customSort
-            ? (a, b, asc): number => column.customSort(a.value, b.value, asc)
+            ? (a, b, asc): number => column.customSort!(a.value, b.value, asc)
             : undefined,
         isAsc.value,
     );

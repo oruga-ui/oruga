@@ -88,7 +88,7 @@ const isClickable = computed(
 );
 
 const isActive = computed(() => {
-    if (parent.value.selected === null) return false;
+    if (parent.value.selected === undefined) return false;
     if (
         isTrueish(parent.value.props.multiple) &&
         Array.isArray(parent.value.selected)

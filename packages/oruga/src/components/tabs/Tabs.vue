@@ -201,7 +201,7 @@ const items = computed<TabItem[]>(() =>
     sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
-        ...toValue(column.data),
+        ...toValue(column.data!),
     })),
 );
 
@@ -308,7 +308,7 @@ const rootClasses = defineClasses(
         "positionClass",
         "o-tabs--",
         computed(() => props.position),
-        computed(() => props.position && props.vertical),
+        computed(() => !!props.position && props.vertical),
     ],
     [
         "expandedClass",
@@ -337,7 +337,7 @@ const navClasses = defineClasses(
         "navPositionClass",
         "o-tabs__nav--",
         computed(() => props.position),
-        computed(() => props.position && !props.vertical),
+        computed(() => !!props.position && !props.vertical),
     ],
     [
         "navTypeClass",

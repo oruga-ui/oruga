@@ -337,7 +337,7 @@ const hasInput = computed(
 
 watchEffect(() => {
     // blur if input is empty
-    if (!hasInput.value) onBlur();
+    if (!hasInput.value) onBlur(new Event("blur"));
 });
 
 /**
@@ -357,8 +357,9 @@ const separatorsAsRegExp = computed(() =>
         : null,
 );
 
-function getNormalizedItemText(item: T): string {
-    if (typeof item === "object") item = getValueByPath(item, props.field);
+function getNormalizedItemText(item: T | string): string {
+    if (typeof item === "object")
+        item = getValueByPath<string>(item, props.field, String(item));
     return `${item}`;
 }
 
@@ -398,6 +399,7 @@ function addItem(item?: T | string): void {
 
 function removeItem(index: number, event?: Event): void {
     const item = items.value.at(index);
+    if (!item) return;
     items.value = items.value.toSpliced(index, 1);
     emits("remove", item);
     if (event) event.stopPropagation();

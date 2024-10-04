@@ -28,7 +28,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** The input value state */
-    modelValue: { type: Date as PropType<Date>, default: null },
+    modelValue: { type: Date as PropType<Date | null>, default: null },
     /** The active state of the dropdown */
     active: { type: Boolean, default: false },
     /** Min time to select */
@@ -290,15 +290,15 @@ const {
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-const vmodel = defineModel<Date>({ default: null });
+const vmodel = defineModel<Date | null>({ default: null });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const hoursSelected = ref();
-const minutesSelected = ref();
-const secondsSelected = ref();
-const meridienSelected = ref();
+const hoursSelected = ref<number>();
+const minutesSelected = ref<number>();
+const secondsSelected = ref<number>();
+const meridienSelected = ref<string>();
 
 watch(
     () => props.modelValue,
@@ -307,7 +307,7 @@ watch(
 );
 
 /** Update internal value. */
-function updateValue(value: Date | Date[]): void {
+function updateValue(value: Date | Date[] | null): void {
     if (Array.isArray(value)) return updateValue(value[0]);
     if (vmodel.value !== value) vmodel.value = value as Date;
     if (value) {
@@ -317,21 +317,23 @@ function updateValue(value: Date | Date[]): void {
         meridienSelected.value =
             value.getHours() >= 12 ? pmString.value : amString.value;
     } else {
-        hoursSelected.value = null;
-        minutesSelected.value = null;
-        secondsSelected.value = null;
+        hoursSelected.value = undefined;
+        minutesSelected.value = undefined;
+        secondsSelected.value = undefined;
         meridienSelected.value = amString.value;
     }
 }
 
-const step = computed(() => (props.enableSeconds ? "1" : null));
+const step = computed(() => (props.enableSeconds ? "1" : undefined));
 
 watch(
     () => props.hourFormat,
     () => {
         if (hoursSelected.value !== null)
             meridienSelected.value =
-                hoursSelected.value >= 12 ? pmString.value : amString.value;
+                (hoursSelected.value || 0) >= 12
+                    ? pmString.value
+                    : amString.value;
     },
 );
 
@@ -350,7 +352,7 @@ function formatNumber(value: number, prependZero: boolean): string {
 const hours = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementHours || props.incrementHours < 1)
         throw new Error("Hour increment cannot be null or less than 1.");
-    const hours = [];
+    const hours: OptionsItem<number>[] = [];
     const numberOfHours = isHourFormat24.value ? 24 : 12;
     for (let i = 0; i < numberOfHours; i += props.incrementHours) {
         let value = i;
@@ -375,7 +377,7 @@ const hours = computed<OptionsItem<number>[]>(() => {
 const minutes = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementMinutes || props.incrementMinutes < 1)
         throw new Error("Minute increment cannot be null or less than 1.");
-    const minutes = [];
+    const minutes: OptionsItem<number>[] = [];
     for (let i = 0; i < 60; i += props.incrementMinutes) {
         minutes.push({
             label: formatNumber(i, true),
@@ -388,7 +390,7 @@ const minutes = computed<OptionsItem<number>[]>(() => {
 const seconds = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementSeconds || props.incrementSeconds < 1)
         throw new Error("Second increment cannot be null or less than 1.");
-    const seconds = [];
+    const seconds: OptionsItem<number>[] = [];
     for (let i = 0; i < 60; i += props.incrementSeconds) {
         seconds.push({
             label: formatNumber(i, true),
@@ -418,8 +420,10 @@ function isHourDisabled(hour: number): boolean {
         if (typeof props.unselectableTimes === "function") {
             const date = new Date();
             date.setHours(hour);
-            date.setMinutes(minutesSelected.value);
-            date.setSeconds(secondsSelected.value);
+            if (minutesSelected.value != undefined)
+                date.setMinutes(minutesSelected.value);
+            if (secondsSelected.value != undefined)
+                date.setSeconds(secondsSelected.value);
             return props.unselectableTimes(date);
         } else {
             const unselectable = props.unselectableTimes.filter((time) => {
@@ -474,18 +478,20 @@ function isMinuteDisabledForHour(hour: number, minute: number): boolean {
 }
 
 function isMinuteDisabled(minute: number): boolean {
-    if (hoursSelected.value === null) return false;
+    if (hoursSelected.value === undefined) return false;
 
-    let disabled = isHourDisabled(hoursSelected.value)
-        ? true
-        : isMinuteDisabledForHour(hoursSelected.value, minute);
+    let disabled =
+        !hoursSelected.value || isHourDisabled(hoursSelected.value)
+            ? true
+            : isMinuteDisabledForHour(hoursSelected.value, minute);
 
     if (props.unselectableTimes && !disabled) {
         if (typeof props.unselectableTimes === "function") {
             const date = new Date();
             date.setHours(hoursSelected.value);
             date.setMinutes(minute);
-            date.setSeconds(secondsSelected.value);
+            if (secondsSelected.value != undefined)
+                date.setSeconds(secondsSelected.value);
             return props.unselectableTimes(date);
         } else {
             const unselectable = props.unselectableTimes.filter((time) => {
@@ -509,7 +515,7 @@ function isMinuteDisabled(minute: number): boolean {
 }
 
 function isSecondDisabled(second: number): boolean {
-    if (minutesSelected.value == null) return false;
+    if (minutesSelected.value == undefined) return false;
     let disabled = false;
 
     if (isMinuteDisabled(minutesSelected.value)) {
@@ -539,7 +545,8 @@ function isSecondDisabled(second: number): boolean {
     if (props.unselectableTimes && !disabled) {
         if (typeof props.unselectableTimes === "function") {
             const date = new Date();
-            date.setHours(hoursSelected.value);
+            if (hoursSelected.value != undefined)
+                date.setHours(hoursSelected.value);
             date.setMinutes(minutesSelected.value);
             date.setSeconds(second);
             return props.unselectableTimes(date);
@@ -576,7 +583,7 @@ function updateDateSelected(
         minutes != null &&
         ((!isHourFormat24.value && meridiens !== null) || isHourFormat24.value)
     ) {
-        let time: Date = null;
+        let time: Date | null = null;
         if (vmodel.value) {
             time = new Date(vmodel.value);
         } else {
@@ -611,8 +618,8 @@ function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) return formatNative(value[0]);
 
     const date = new Date(value);
-    // return null if no value is given or value can't parse to proper date
-    if (!value || !date || isNaN(date.getTime())) return null;
+    // return empty string if no value is given or value can't parse to proper date
+    if (!value || !date || isNaN(date.getTime())) return "";
 
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -634,14 +641,14 @@ function parse(value: string, isNative: boolean): Date {
     let date = props.timeParser(value);
     // call default if prop function is not given
     if (typeof date === "undefined") date = defaultTimeParser(value);
-    return isDate(date) ? date : null;
+    return isDate(date) ? date : new Date();
 }
 
 /** Parse time from string */
 function parseNative(date: string): Date {
-    if (!date) return null;
+    if (!date) return new Date();
 
-    let time = null;
+    let time: Date | null = null;
     if (vmodel.value) {
         time = new Date(vmodel.value);
     } else {
@@ -658,19 +665,19 @@ function parseNative(date: string): Date {
 // --- Event Handler ---
 
 function onMeridienChange(value: string): void {
-    if (hoursSelected.value !== null && props.resetOnMeridianChange) {
-        hoursSelected.value = null;
-        minutesSelected.value = null;
-        secondsSelected.value = null;
+    if (hoursSelected.value !== undefined && props.resetOnMeridianChange) {
+        hoursSelected.value = undefined;
+        minutesSelected.value = undefined;
+        secondsSelected.value = undefined;
         vmodel.value = null;
-    } else if (hoursSelected.value !== null) {
+    } else if (hoursSelected.value !== undefined) {
         if (value === pmString.value) hoursSelected.value += 12;
         else if (value === amString.value) hoursSelected.value -= 12;
     }
     updateDateSelected(
-        hoursSelected.value,
-        minutesSelected.value,
-        props.enableSeconds ? secondsSelected.value : 0,
+        hoursSelected.value || 0,
+        minutesSelected.value || 0,
+        props.enableSeconds ? secondsSelected.value || 0 : 0,
         value,
     );
 }
@@ -683,8 +690,8 @@ function onHoursChange(value: string): void {
 
     updateDateSelected(
         parseInt(value, 10),
-        minutesSelected.value,
-        props.enableSeconds ? secondsSelected.value : 0,
+        minutesSelected.value || 0,
+        props.enableSeconds ? secondsSelected.value || 0 : 0,
         meridienSelected.value,
     );
 }
@@ -694,17 +701,17 @@ function onMinutesChange(value: string): void {
         secondsSelected.value = props.defaultSeconds;
 
     updateDateSelected(
-        hoursSelected.value,
+        hoursSelected.value || 0,
         parseInt(value, 10),
-        props.enableSeconds ? secondsSelected.value : 0,
+        props.enableSeconds ? secondsSelected.value || 0 : 0,
         meridienSelected.value,
     );
 }
 
 function onSecondsChange(value: string): void {
     updateDateSelected(
-        hoursSelected.value,
-        minutesSelected.value,
+        hoursSelected.value || 0,
+        minutesSelected.value || 0,
         parseInt(value, 10),
         meridienSelected.value,
     );

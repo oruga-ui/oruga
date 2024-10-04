@@ -5,7 +5,7 @@ import type { DropdownProps } from "../dropdown/types";
 import type { InputProps } from "../input/types";
 
 type DatepickerType<IsRange, IsMultiple> = IsRange extends true
-    ? [Date, Date] | []
+    ? [Date, Date] | Date[]
     : IsMultiple extends true
       ? Date[]
       : Date;
@@ -17,7 +17,7 @@ export type DatepickerProps<
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
-    modelValue?: DatepickerType<IsRange, IsMultiple>;
+    modelValue?: DatepickerType<IsRange, IsMultiple> | null;
     /** Enable date range selection */
     range?: IsRange;
     /** Same as native, also push new item to v-model instead of replacing */

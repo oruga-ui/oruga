@@ -10,14 +10,14 @@ export function useDebounce<A extends Array<unknown>>(
     wait: number,
     immediate?: boolean,
 ): (...args: A) => void {
-    let timeout: NodeJS.Timeout;
+    let timeout: NodeJS.Timeout | null;
     return (...args: A) => {
         const later = (): void => {
             timeout = null;
             if (!immediate) func.apply(this, args);
         };
         const callNow = immediate && !timeout;
-        clearTimeout(timeout);
+        if (timeout) clearTimeout(timeout);
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(this, args);
     };

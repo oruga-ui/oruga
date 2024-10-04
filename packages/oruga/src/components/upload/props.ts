@@ -12,7 +12,7 @@ export type UploadProps<
      * The input value state
      * @type object | File
      */
-    modelValue?: UploadType<T, IsMultiple>;
+    modelValue?: UploadType<T, IsMultiple> | null;
     /** Same as native, also push new item to v-model instead of replacing */
     multiple?: IsMultiple;
     /**

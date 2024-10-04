@@ -1,30 +1,22 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import OCollapse from "../Collapse.vue";
-export default defineComponent({
-    components: {
-        [OCollapse.name]: OCollapse,
+
+const isOpen = ref(0);
+const collapses = ref([
+    {
+        title: "Title 1",
+        text: "Text 1",
     },
-    data() {
-        return {
-            isOpen: 0,
-            collapses: [
-                {
-                    title: "Title 1",
-                    text: "Text 1",
-                },
-                {
-                    title: "Title 2",
-                    text: "Text 2",
-                },
-                {
-                    title: "Title 3",
-                    text: "Text 3",
-                },
-            ],
-        };
+    {
+        title: "Title 2",
+        text: "Text 2",
     },
-});
+    {
+        title: "Title 3",
+        text: "Text 3",
+    },
+]);
 </script>
 
 <template>

@@ -96,7 +96,7 @@ describe("useProgrammatic tests", () => {
         expect(el).not.toBeNull();
 
         // close element through click
-        el.click();
+        el!.click();
         vi.runAllTimers();
 
         // check element does not edist
@@ -206,7 +206,7 @@ describe("useProgrammatic tests", () => {
         expect(button).not.toBeNull();
 
         // check if slot element exist
-        expect(button.innerHTML).toBe(`<p data-oruga="inner-slot">HELP</p>`);
+        expect(button!.innerHTML).toBe(`<p data-oruga="inner-slot">HELP</p>`);
         const innerSlot = document.body.querySelector(
             '[data-oruga="inner-slot"]',
         );

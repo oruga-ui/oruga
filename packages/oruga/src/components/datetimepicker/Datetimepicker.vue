@@ -235,7 +235,7 @@ const timepickerRef = useTemplateRef<ComponentPublicInstance>("timepickerRef");
 const nativeInputRef =
     useTemplateRef<ComponentPublicInstance>("nativeInputRef");
 
-const timepickerProps = ref<TimepickerProps>(props.timepicker);
+const timepickerProps = ref<TimepickerProps | undefined>(props.timepicker);
 watch(
     () => props.timepicker,
     (value) => (timepickerProps.value = value),
@@ -274,9 +274,9 @@ const { defaultDatetimeFormatter, defaultDatetimeParser } =
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<Date>({ default: null });
+const vmodel = defineModel<Date | null>({ default: null });
 
-function updateVModel(value: Date | Date[]): void {
+function updateVModel(value: Date | Date[] | null): void {
     if (!value) {
         vmodel.value = null;
         return;
@@ -351,7 +351,7 @@ const minTime = computed(() => {
         vmodel.value.getMonth() != props.minDatetime.getMonth() ||
         vmodel.value.getDate() != props.minDatetime.getDate()
     ) {
-        return timepickerProps.value ? timepickerProps.value.minTime : null;
+        return timepickerProps.value?.minTime;
     }
     return props.minDatetime;
 });
@@ -365,7 +365,7 @@ const maxTime = computed(() => {
         vmodel.value.getMonth() != props.maxDatetime.getMonth() ||
         vmodel.value.getDate() != props.maxDatetime.getDate()
     ) {
-        return timepickerProps.value ? timepickerProps.value.maxTime : null;
+        return timepickerProps.value?.maxTime;
     }
     return props.maxDatetime;
 });
@@ -394,7 +394,7 @@ function format(value: Date): string {
 }
 
 /** Parse string into date */
-function parse(value: string): Date {
+function parse(value: string): Date | null {
     // call prop function
     let date = props.datetimeParser(value);
     // call default if prop function is not given
@@ -402,8 +402,8 @@ function parse(value: string): Date {
     return isDate(date) ? date : null;
 }
 
-function formatNative(value: Date): string {
-    const date = new Date(value);
+function formatNative(value: Date | null): string {
+    const date = value ? new Date(value) : new Date();
     if (value && !isNaN(date.getTime())) {
         const year = date.getFullYear();
         const month = date.getMonth() + 1;

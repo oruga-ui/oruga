@@ -248,7 +248,7 @@ const { childItems } = useProviderParent(rootRef, { data: provideData });
 const activeIndex = defineModel<number>({ default: 0 });
 const scrollIndex = ref(props.modelValue);
 
-const resizeObserver = ref(null);
+const resizeObserver = ref<ResizeObserver | null>(null);
 const windowWidth = ref(0);
 
 const refresh_ = ref(0);
@@ -277,7 +277,8 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     if (isClient) {
-        if (window.ResizeObserver) resizeObserver.value.disconnect();
+        if (window.ResizeObserver && resizeObserver.value)
+            resizeObserver.value.disconnect();
         dragEnd();
         pauseTimer();
     }
@@ -392,7 +393,7 @@ function onModeChange(trigger: string, index: number): void {
 
 const isHovered = ref(false);
 const isPaused = ref(false);
-const timer = ref(null);
+const timer = ref<NodeJS.Timeout | null>(null);
 
 function onMouseEnter(): void {
     isHovered.value = true;

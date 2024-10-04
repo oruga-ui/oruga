@@ -6,7 +6,7 @@ import OTooltip from "../tooltip/Tooltip.vue";
 import { isClient } from "@/utils/ssr";
 
 import type { SliderProps } from "./props";
-import type { ClassBind } from "@/types";
+import type { ClassBind, WithRequired } from "@/types";
 
 /**
  * @displayName Slider Thumb
@@ -20,7 +20,7 @@ defineOptions({
 
 const props = defineProps<{
     /** parent slider component props  */
-    sliderProps: SliderProps<IsRange>;
+    sliderProps: WithRequired<SliderProps<IsRange>, "min" | "max" | "step">;
     modelValue: number;
     sliderSize: () => number;
     thumbWrapperClasses: ClassBind[];
@@ -45,7 +45,7 @@ const isFocused = ref(false);
 const dragging = ref(false);
 const startX = ref(0);
 const startPosition = ref(0);
-const newPosition = ref(null);
+const newPosition = ref<number>();
 const oldValue = ref(props.modelValue);
 
 const tooltip = computed(() => props.sliderProps.tooltip);
@@ -183,8 +183,8 @@ function onDragEnd(): void {
     }
 }
 
-function setPosition(percent: number): void {
-    if (percent === null || isNaN(percent)) return;
+function setPosition(percent: number | undefined): void {
+    if (percent === undefined || isNaN(percent)) return;
     if (percent < 0) percent = 0;
     else if (percent > 100) percent = 100;
 
@@ -214,7 +214,7 @@ defineExpose({ setPosition });
             <div
                 v-bind="$attrs"
                 :class="thumbClasses"
-                :tabindex="disabled ? null : 0"
+                :tabindex="disabled ? undefined : 0"
                 role="slider"
                 :aria-label="ariaLabel"
                 :aria-valuenow="modelValue"

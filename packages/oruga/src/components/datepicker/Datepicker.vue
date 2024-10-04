@@ -49,8 +49,8 @@ const props = withDefaults(
         // multiple: false,
         active: false,
         type: "date",
-        dayNames: () => getOption("datepicker.dayNames", undefined),
-        monthNames: () => getOption("datepicker.monthNames", undefined),
+        dayNames: () => getOption("datepicker.dayNames"),
+        monthNames: () => getOption("datepicker.monthNames"),
         size: () => getOption("datepicker.size"),
         focusedDate: undefined,
         events: undefined,
@@ -67,7 +67,7 @@ const props = withDefaults(
         closeOnClick: () => getOption("datepicker.closeOnClick", true),
         locale: () => getOption("locale"),
         dateFormatter: (date) =>
-            getOption<(date) => string>(
+            getOption<(date) => string | undefined>(
                 "datepicker.dateFormatter",
                 () => undefined,
             )(date),
@@ -81,7 +81,7 @@ const props = withDefaults(
         selectableDates: undefined,
         unselectableDates: undefined,
         unselectableDaysOfWeek: () =>
-            getOption("datepicker.unselectableDaysOfWeek", undefined),
+            getOption("datepicker.unselectableDaysOfWeek"),
         nearbyMonthDays: () => getOption("datepicker.nearbyMonthDays", true),
         nearbySelectableMonthDays: () =>
             getOption("datepicker.nearbySelectableMonthDays", false),
@@ -95,9 +95,9 @@ const props = withDefaults(
         position: undefined,
         mobileModal: () => getOption("datepicker.mobileModal", true),
         mobileNative: () => getOption("datepicker.mobileNative", false),
-        iconPack: () => getOption("datepicker.iconPack", undefined),
-        icon: () => getOption("datepicker.icon", undefined),
-        iconRight: () => getOption("datepicker.iconRight", undefined),
+        iconPack: () => getOption("datepicker.iconPack"),
+        icon: () => getOption("datepicker.icon"),
+        iconRight: () => getOption("datepicker.iconRight"),
         iconRightClickable: false,
         iconPrev: () => getOption("datepicker.iconPrev", "chevron-left"),
         iconNext: () => getOption("datepicker.iconNext", "chevron-right"),
@@ -419,8 +419,8 @@ function format(value: Date | Date[], isNative: boolean): string {
 function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) value = value[0];
     const date = new Date(value);
-    // return null if no value is given or value can't parse to proper date
-    if (!value || !date || isNaN(date.getTime())) return null;
+    // return empty string if no value is given or value can't parse to proper date
+    if (!value || !date || isNaN(date.getTime())) return "";
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'
@@ -464,7 +464,7 @@ function parseNative(value: string): ModelValue {
         const day = parseInt(s[2]);
         return new Date(year, month, day) as ModelValue;
     } else {
-        return null;
+        return new Date() as ModelValue;
     }
 }
 

@@ -13,10 +13,10 @@ type MonthType =
  * @return {Array<String>} An array of month names
  */
 export function getMonthNames(
-    locale: string = undefined,
+    locale?: string,
     format: MonthType = "long",
 ): string[] {
-    const dates = [];
+    const dates: Date[] = [];
     for (let i = 0; i < 12; i++) {
         dates.push(new Date(2000, i, 15));
     }
@@ -36,11 +36,11 @@ type WeekdayType = "long" | "short" | "narrow" | undefined;
  * @return {Array<String>} An array of weekday names
  */
 export function getWeekdayNames(
-    locale: string = undefined,
+    locale?: string,
     firstDayOfWeek: number = 0,
     format: WeekdayType = "narrow",
 ): string[] {
-    const dates = [];
+    const dates: Date[] = [];
     for (let i = 1, j = 0; j < 7; i++) {
         const d = new Date(2000, 0, i);
         const day = d.getDay();
@@ -68,26 +68,28 @@ export function matchWithGroups(pattern: string, str: string): any {
     return (
         pattern
             // get the pattern as a string
-            .toString()
+            ?.toString()
             // suss out the groups
             .match(/<(.+?)>/g)
             // remove the braces
-            .map((group) => {
+            ?.map((group) => {
                 const groupMatches = group.match(/<(.+)>/);
                 if (!groupMatches || groupMatches.length <= 0) {
                     return null;
                 }
-                return group.match(/<(.+)>/)[1];
+                const match = group.match(/<(.+)>/);
+                return match && match?.length > 1 ? match[1] : null;
             })
             // create an object with a property for each group having the group's match as the value
             .reduce((acc, curr, index) => {
+                if (curr === null) return acc;
                 if (matches && matches.length > index) {
                     acc[curr] = matches[index + 1];
                 } else {
                     acc[curr] = null;
                 }
                 return acc;
-            }, {})
+            }, {} as any)
     );
 }
 
@@ -100,7 +102,7 @@ export function weekBuilder(
 ): Date[] {
     const thisMonth = new Date(year, month);
 
-    const thisWeek = [];
+    const thisWeek: Date[] = [];
 
     const dayOfWeek = new Date(year, month, startingDate).getDay();
 

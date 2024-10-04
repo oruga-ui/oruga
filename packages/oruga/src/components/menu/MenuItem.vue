@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, toValue, type PropType } from "vue";
+import { ref, computed, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -127,7 +127,7 @@ const providedData = computed<MenuItemComponent>(() => ({
 }));
 
 // inject functionalities and data from the parent menu component
-const { parent, item } = useProviderChild<MenuComponent>({
+const { parent, item } = useProviderChild<MenuComponent, MenuItemComponent>({
     data: providedData,
 });
 
@@ -137,7 +137,7 @@ const providedItem = useProviderChild<MenuItemProvider>({
     needParent: false,
 });
 
-const itemParent = computed(() => providedItem.parent?.value);
+const itemParent = computed(() => providedItem.parent.value);
 
 const isActive = defineModel<boolean>("active", { default: false });
 
@@ -146,7 +146,7 @@ const isExpanded = defineModel<boolean>("expanded", { default: false });
 /** template identifier */
 const identifier = computed(() =>
     itemParent.value
-        ? `menu-item-${providedItem.item.value.identifier}`
+        ? `menu-item-${providedItem.item.value?.identifier}`
         : `menu-${item.value.identifier}`,
 );
 
@@ -157,15 +157,17 @@ function onClick(): void {
     if (parent.value.activable) isActive.value = !isActive.value;
 }
 
-function triggerReset(child?: ProviderItem): void {
+function triggerReset(child?: ProviderItem<MenuItemComponent>): void {
+    if (!item.value) return;
+
     // The point of this method is to collect references to the clicked item and any parent,
     // this way we can skip resetting those elements.
     if (typeof itemParent.value?.triggerReset === "function") {
-        itemParent.value.triggerReset(toValue(item.value));
+        itemParent.value.triggerReset(item.value);
     }
     // else if not a sub item reset parent menu
     else if (typeof parent.value.resetMenu === "function") {
-        parent.value.resetMenu([toValue(item.value), child]);
+        parent.value.resetMenu(child ? [item.value, child] : [item.value]);
     }
 }
 

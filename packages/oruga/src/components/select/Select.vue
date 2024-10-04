@@ -40,7 +40,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     override: undefined,
-    modelValue: null,
+    modelValue: undefined,
     // multiple: false,
     options: undefined,
     size: () => getOption("select.size"),
@@ -51,10 +51,10 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     expanded: false,
     rounded: false,
     nativeSize: undefined,
-    iconPack: () => getOption("select.iconPack", undefined),
-    icon: () => getOption("select.icon", undefined),
+    iconPack: () => getOption("select.iconPack"),
+    icon: () => getOption("select.icon"),
     iconClickable: false,
-    iconRight: () => getOption("select.iconRight", undefined),
+    iconRight: () => getOption("select.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
     id: () => useId(),
@@ -114,8 +114,8 @@ if (props.id) parentField?.value?.setInputId(props.id);
 const vmodel = defineModel<ModelValue>({
     get: (v) => (isDefined(v) ? v : ((props.multiple ? [] : "") as ModelValue)),
     set: (v) =>
-        isDefined(v) ? v : ((props.multiple ? [] : null) as ModelValue),
-    default: null as ModelValue,
+        isDefined(v) ? v : ((props.multiple ? [] : undefined) as ModelValue),
+    default: undefined as ModelValue,
 });
 
 const placeholderVisible = computed(
@@ -164,7 +164,7 @@ const rightIcon = computed(() =>
 
 const rightIconVariant = computed(() =>
     props.iconRight
-        ? props.iconRightVariant || props.variant || null
+        ? props.iconRightVariant || props.variant
         : statusVariant.value,
 );
 
