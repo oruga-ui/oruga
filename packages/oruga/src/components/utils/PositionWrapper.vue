@@ -51,7 +51,7 @@ const props = defineProps({
                 "bottom-left",
                 "bottom-right",
             ].includes(value),
-        default: undefined,
+        required: true,
     },
     /** Used for calculation position auto */
     defaultPosition: {
@@ -98,8 +98,8 @@ function setContent<T extends typeof contentRef.value>(el: T): typeof el {
 
 const initialPosition = props.position;
 
-const scrollingParent = ref(undefined);
-const resizeObserver = ref(null);
+const scrollingParent = ref<HTMLElement | null>(null);
+const resizeObserver = ref<ResizeObserver | null>(null);
 
 if (isClient && window.ResizeObserver) {
     resizeObserver.value = new window.ResizeObserver(updatePositioning);
@@ -133,7 +133,7 @@ onBeforeUnmount(() => removeHandler());
 function addHandler(): void {
     if (isClient && !scrollingParent.value && contentRef.value) {
         // get parent container
-        scrollingParent.value = getScrollingParent(unrefElement(contentRef));
+        scrollingParent.value = getScrollingParent(unrefElement(contentRef)!);
         // set event listener
         if (
             scrollingParent.value &&
@@ -144,7 +144,7 @@ function addHandler(): void {
                 updatePositioning,
                 { passive: true },
             );
-            if (window.ResizeObserver)
+            if (window.ResizeObserver && resizeObserver.value)
                 resizeObserver.value.observe(scrollingParent.value);
         } else {
             document.addEventListener("scroll", updatePositioning, {
@@ -161,7 +161,7 @@ function removeHandler(): void {
         if (window.ResizeObserver) resizeObserver.value?.disconnect();
         window.removeEventListener("resize", updatePositioning);
         document.removeEventListener("scroll", updatePositioning);
-        scrollingParent.value = undefined;
+        scrollingParent.value = null;
     }
 }
 
@@ -239,7 +239,7 @@ function getAutoPosition(): string {
         scrollingParent.value.clientHeight,
     );
 
-    const contentRect = unrefElement(contentRef).getBoundingClientRect();
+    const contentRect = unrefElement(contentRef)!.getBoundingClientRect();
     const triggerRect = unrefElement(props.trigger).getBoundingClientRect();
 
     // detect auto position

@@ -12,10 +12,6 @@ defineOptions({
 const props = defineProps({
     number: { type: Number, default: undefined },
     isCurrent: { type: Boolean, default: false },
-    click: {
-        type: Function as PropType<(event: Event) => void>,
-        required: true,
-    },
     ariaLabel: { type: String, default: undefined },
     disabled: { type: Boolean, default: false },
     tag: {
@@ -32,6 +28,10 @@ const props = defineProps({
         required: true,
     },
 });
+
+defineEmits<{
+    (e: "click", event: Event): void;
+}>();
 
 // --- Computed Component Classes ---
 
@@ -52,8 +52,8 @@ const linkClasses = computed(() => [
         v-bind="$attrs"
         :aria-label="ariaLabel"
         :aria-current="isCurrent"
-        @click.prevent="click"
-        @keydown.enter.prevent="click">
+        @click.prevent="$emit('click', $event)"
+        @keydown.enter.prevent="$emit('click', $event)">
         <slot>{{ number }}</slot>
     </component>
 </template>

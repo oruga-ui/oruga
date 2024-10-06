@@ -820,7 +820,7 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
     return provider.sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
-        ...toValue(column.data),
+        ...toValue(column.data!),
         thAttrsData: {},
         tdAttrsData: [],
     }));

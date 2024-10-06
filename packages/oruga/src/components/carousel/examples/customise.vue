@@ -47,6 +47,7 @@ const settings = reactive({
                 <o-input
                     v-model="carousel"
                     type="number"
+                    number
                     min="0"
                     :max="carousels.length - 1" />
             </o-field>
@@ -54,6 +55,7 @@ const settings = reactive({
                 <o-input
                     v-model="settings.interval"
                     type="number"
+                    number
                     min="0"
                     step="1000"
                     :disabled="!settings.autoplay" />

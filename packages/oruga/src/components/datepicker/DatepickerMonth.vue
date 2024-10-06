@@ -52,7 +52,10 @@ const hasEvents = computed(() => !!datepicker.value.events?.length);
 
 const monthRefs = ref(new Map());
 
-function setMonthRef(date: Date, el: Element | ComponentPublicInstance): void {
+function setMonthRef(
+    date: Date,
+    el: Element | ComponentPublicInstance | null,
+): void {
     const refKey = `month-${date.getMonth()}`;
     if (el) monthRefs.value.set(refKey, el);
 }
@@ -86,7 +89,7 @@ const eventsInThisYear = computed(() => {
 
 const monthDates = computed(() => {
     const year = props.focusedDate.year;
-    const months = [];
+    const months: Date[] = [];
     for (let i = 0; i < 12; i++) {
         const d = new Date(year, i, 1);
         d.setHours(0, 0, 0, 0);
@@ -99,6 +102,8 @@ const hoveredDateRange = computed(() => {
     if (!isTrueish(datepicker.value.range) || !selectedEndDate.value) return [];
 
     return (
+        hoveredEndDate.value &&
+        selectedBeginDate.value &&
         hoveredEndDate.value < selectedBeginDate.value
             ? [hoveredEndDate.value, selectedBeginDate.value]
             : [selectedBeginDate.value, hoveredEndDate.value]
@@ -113,7 +118,7 @@ function eventsDateMatch(day): DatepickerEvent[] {
 }
 
 function isDateSelectable(date: Date): boolean {
-    const validity = [];
+    const validity: boolean[] = [];
 
     if (datepicker.value.minDate)
         validity.push(date >= datepicker.value.minDate);
@@ -475,7 +480,9 @@ function cellClasses(day: Date): ClassBind[] {
                         :class="cellClasses(date)"
                         role="button"
                         :tabindex="
-                            focusedDate.month === date.getMonth() ? null : 0
+                            focusedDate.month === date.getMonth()
+                                ? undefined
+                                : 0
                         "
                         @click.prevent="selectDate(date)"
                         @mouseenter="onRangeHoverEndDate(date)"

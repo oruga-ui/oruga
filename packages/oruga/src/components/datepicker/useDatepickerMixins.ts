@@ -121,7 +121,7 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
 
     /** Parse a string into a date */
     const defaultDateParser = (date: string): typeof props.modelValue => {
-        if (!date) return null;
+        if (!date) return undefined;
         const isArray = isTrueish(props.multiple) || isTrueish(props.range);
         const targetDates = !isArray ? [date] : date.split(", ");
         const dates = targetDates.map((date) => {

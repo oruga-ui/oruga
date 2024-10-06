@@ -634,14 +634,14 @@ function formatNative(value: Date | Date[]): string {
 }
 
 /** Parse string into date */
-function parse(value: string, isNative: boolean): Date {
+function parse(value: string, isNative: boolean): Date | null {
     if (isNative) return parseNative(value);
 
     // call prop function
     let date = props.timeParser(value);
     // call default if prop function is not given
     if (typeof date === "undefined") date = defaultTimeParser(value);
-    return isDate(date) ? date : new Date();
+    return isDate(date) ? date : null;
 }
 
 /** Parse time from string */

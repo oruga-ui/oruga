@@ -44,7 +44,7 @@ const props = withDefaults(
     defineProps<DatepickerProps<IsRange, IsMultiple>>(),
     {
         override: undefined,
-        modelValue: null,
+        modelValue: undefined,
         // range: false,
         // multiple: false,
         active: false,
@@ -66,11 +66,7 @@ const props = withDefaults(
         openOnFocus: () => getOption("datepicker.openOnFocus", true),
         closeOnClick: () => getOption("datepicker.closeOnClick", true),
         locale: () => getOption("locale"),
-        dateFormatter: (date) =>
-            getOption<(date) => string | undefined>(
-                "datepicker.dateFormatter",
-                () => undefined,
-            )(date),
+        dateFormatter: getOption<(date) => string>("datepicker.dateFormatter"),
         dateParser: (date: string) =>
             getOption<(date: string) => any>(
                 "datepicker.dateParser",
@@ -108,9 +104,9 @@ const props = withDefaults(
         ariaNextLabel: () => getOption("datepicker.ariaNextLabel", "Next Page"),
         ariaPreviousLabel: () =>
             getOption("datepicker.ariaNextLabel", "Previous Page"),
-        inputClasses: () => getOption("datepicker.inputClasses", {}),
-        dropdownClasses: () => getOption("datepicker.dropdownClasses", {}),
-        selectClasses: () => getOption("datepicker.selectClasses", {}),
+        inputClasses: () => getOption("datepicker.inputClasses"),
+        dropdownClasses: () => getOption("datepicker.dropdownClasses"),
+        selectClasses: () => getOption("datepicker.selectClasses"),
     },
 );
 
@@ -437,7 +433,7 @@ function formatNative(value: Date | Date[]): string {
 }
 
 /** Parse string into date */
-function parse(value: string, isNative: boolean): ModelValue {
+function parse(value: string, isNative: boolean): Date | Date[] {
     if (isNative) return parseNative(value);
 
     // call prop function
@@ -452,20 +448,17 @@ function parse(value: string, isNative: boolean): ModelValue {
             isDate(date[0]) &&
             isDate(date[1]));
 
-    return (isValid ? date : null) as ModelValue;
+    return isValid && date ? date : new Date();
 }
 
 /** Parse date from string */
-function parseNative(value: string): ModelValue {
+function parseNative(value: string): Date {
     const s = value ? value.split("-") : [];
-    if (s.length === 3) {
-        const year = parseInt(s[0], 10);
-        const month = parseInt(s[1]) - 1;
-        const day = parseInt(s[2]);
-        return new Date(year, month, day) as ModelValue;
-    } else {
-        return new Date() as ModelValue;
-    }
+    if (s.length !== 3) return new Date();
+    const year = parseInt(s[0], 10);
+    const month = parseInt(s[1]) - 1;
+    const day = parseInt(s[2]);
+    return new Date(year, month, day);
 }
 
 // --- Event Handler ---
@@ -630,18 +623,19 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                     <div :class="listsClasses">
                         <o-select
                             v-if="!isTypeMonth"
-                            v-model="focusedDateData.month"
                             v-bind="selectClasses"
+                            v-model="focusedDateData.month"
                             :disabled="disabled"
                             :size="size"
                             :options="listOfMonths"
+                            :multiple="false"
                             :use-html5-validation="false"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next" />
 
                         <o-select
-                            v-model="focusedDateData.year"
                             v-bind="selectClasses"
+                            v-model="focusedDateData.year"
                             :disabled="disabled"
                             :size="size"
                             :options="listOfYears"

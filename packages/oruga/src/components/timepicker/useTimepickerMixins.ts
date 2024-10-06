@@ -129,7 +129,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
         return dtf.value.format(time);
     }
 
-    function defaultTimeParser(time: string): Date {
+    function defaultTimeParser(time: string): Date | null {
         if (!time) return null;
 
         if (

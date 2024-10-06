@@ -59,7 +59,7 @@
     "build:lib:watch": "npm link && npm run build:watch",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ts": "vue-tsc --noEmit --skipLibCheck",
+    "test:ts": "vue-tsc --noEmit --skipLibCheck --project tsconfig.app.json",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --quiet --ignore-path .gitignore",
     "publish": "cp ../../README.md . && npm run build:lib && npm publish",
     "publish:pre": "cp ../../README.md . && npm run build:lib && npm publish --tag pre",
@@ -103,7 +103,7 @@
     "vite-plugin-dts": "^4.2.1",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.1.1",
-    "vue": "^3.5.10",
+    "vue": "^3.5.11",
     "vue-component-meta": "^2.1.6",
     "vue-tsc": "^2.1.6"
   }

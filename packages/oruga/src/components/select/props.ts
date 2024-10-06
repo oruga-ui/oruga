@@ -5,7 +5,7 @@ type SelectType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type SelectProps<
     T extends string | number | object,
-    IsMultiple extends boolean,
+    IsMultiple extends boolean = false,
 > = {
     /** Override existing theme classes completely */
     override?: boolean;

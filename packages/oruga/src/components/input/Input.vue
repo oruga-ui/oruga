@@ -8,6 +8,7 @@ import {
     useAttrs,
     useId,
     type StyleValue,
+    useTemplateRef,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -110,10 +111,10 @@ const emits = defineEmits<{
 
 // --- Validation Feature ---
 
-const inputRef = ref<HTMLInputElement>();
-const textareaRef = ref<HTMLInputElement>();
+const inputRef = useTemplateRef<HTMLInputElement>("inputRef");
+const textareaRef = useTemplateRef<HTMLInputElement>("textareaRef");
 
-const elementRef = computed<HTMLInputElement>(() =>
+const elementRef = computed<HTMLInputElement | null>(() =>
     props.type === "textarea" ? textareaRef.value : inputRef.value,
 );
 
@@ -222,7 +223,7 @@ const computedIconRight = computed(() => {
 
 const computedIconRightVariant = computed(() =>
     props.passwordReveal || props.iconRight
-        ? props.iconRightVariant || props.variant || null
+        ? props.iconRightVariant || props.variant
         : statusVariant.value,
 );
 

@@ -212,14 +212,14 @@ const currentPage = defineModel<number>("current", { default: 1 });
 
 /** Total page size (count). */
 const pageCount = computed(() =>
-    Math.ceil(props.total / Number(props.perPage)),
+    Math.ceil((props.total || 0) / Number(props.perPage)),
 );
 
 /** If current page is trying to be greater than page count, set to last. */
 watch(
     () => pageCount.value,
     (value) => {
-        if (props.current > value) last();
+        if (props.current > value) last(new Event("change"));
     },
 );
 
@@ -257,7 +257,7 @@ const hasNext = computed(() => props.current < pageCount.value);
  * Also add the click event to the array.
  */
 const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
-    if (props.simple) return;
+    if (props.simple) return [];
 
     let left = Math.max(1, props.current - props.rangeBefore);
     if (left - 1 === 2) {
@@ -268,7 +268,7 @@ const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
         right++; // Do not show the ellipsis if there is only one to hide
     }
 
-    const pages = [];
+    const pages: ReturnType<typeof getPage>[] = [];
     for (let i = left; i <= right; i++) {
         pages.push(getPage(i));
     }
@@ -282,14 +282,14 @@ function getPage(
 ): {
     number: number;
     isCurrent: boolean;
-    click: (event: Event) => void;
+    onClick: (event: Event) => void;
     ariaLabel: string;
     tag: DynamicComponent;
 } {
     return {
         number: num,
         isCurrent: props.current === num,
-        click: (event: Event): void => changePage(num, event),
+        onClick: (event: Event): void => changePage(num, event),
         ariaLabel: ariaLabel || getAriaPageLabel(num, props.current === num),
         tag: props.buttonTag,
     };
@@ -308,26 +308,26 @@ function getAriaPageLabel(pageNumber: number, isCurrent: boolean): string {
             pageNumber +
             "."
         );
-    return null;
+    return "";
 }
 
 /** Previous button click listener. */
-function prev(event?: Event): void {
+function prev(event: Event): void {
     changePage(props.current - 1, event);
 }
 
 /** Next button click listener. */
-function next(event?: Event): void {
+function next(event: Event): void {
     changePage(props.current + 1, event);
 }
 
 /** First button click listener. */
-function first(event?: Event): void {
+function first(event: Event): void {
     changePage(1, event);
 }
 
 /** Last button click listener. */
-function last(event?: Event): void {
+function last(event: Event): void {
     changePage(pageCount.value, event);
 }
 

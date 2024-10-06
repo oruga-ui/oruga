@@ -53,7 +53,10 @@ const hasEvents = computed(() => !!props.events?.length);
 
 const dayRefs = ref(new Map());
 
-function setDayRef(date: Date, el: Element | ComponentPublicInstance): void {
+function setDayRef(
+    date: Date,
+    el: Element | ComponentPublicInstance | null,
+): void {
     const refKey = `day-${date.getMonth()}-${date.getDate()}`;
     if (el) dayRefs.value.set(refKey, el);
 }
@@ -188,7 +191,7 @@ function setRangeHoverEndDate(day): void {
 
 function dateMatch(
     dateOne: Date,
-    dateTwo: Date | Date[],
+    dateTwo?: Date | Date[],
     multiple = false,
 ): boolean {
     // if either date is null or undefined, return false
@@ -212,7 +215,7 @@ function dateMatch(
 
 function dateWithin(
     dateOne: Date,
-    dates: Date | Date[],
+    dates?: Date | Date[],
     multiple = false,
 ): boolean {
     if (!Array.isArray(dates) || multiple) return false;
@@ -239,7 +242,9 @@ function cellClasses(day: Date): ClassBind[] {
             null,
             dateMatch(
                 day,
-                Array.isArray(props.selectedDate) && props.selectedDate[0],
+                Array.isArray(props.selectedDate)
+                    ? props.selectedDate[0]
+                    : undefined,
                 isTrueish(datepicker.value.multiple),
             ),
         ],
@@ -259,7 +264,9 @@ function cellClasses(day: Date): ClassBind[] {
             null,
             dateMatch(
                 day,
-                Array.isArray(props.selectedDate) && props.selectedDate[1],
+                Array.isArray(props.selectedDate)
+                    ? props.selectedDate[1]
+                    : undefined,
                 isTrueish(datepicker.value.multiple),
             ),
         ],
@@ -269,8 +276,9 @@ function cellClasses(day: Date): ClassBind[] {
             null,
             dateMatch(
                 day,
-                Array.isArray(props.hoveredDateRange) &&
-                    props.hoveredDateRange[0],
+                Array.isArray(props.hoveredDateRange)
+                    ? props.hoveredDateRange[0]
+                    : undefined,
             ),
         ],
         [
@@ -285,8 +293,9 @@ function cellClasses(day: Date): ClassBind[] {
             null,
             dateMatch(
                 day,
-                Array.isArray(props.hoveredDateRange) &&
-                    props.hoveredDateRange[1],
+                Array.isArray(props.hoveredDateRange)
+                    ? props.hoveredDateRange[1]
+                    : undefined,
             ),
         ],
         [
@@ -380,7 +389,7 @@ const cellEventsClass = defineClasses([
             :style="{
                 cursor: datepicker.weekNumberClickable ? 'pointer' : 'auto',
             }"
-            :tabindex="datepicker.weekNumberClickable ? 0 : null"
+            :tabindex="datepicker.weekNumberClickable ? 0 : undefined"
             role="button"
             @click.prevent="clickWeekNumber(getWeekNumber(week[6]))"
             @keydown.enter.prevent="clickWeekNumber(getWeekNumber(week[6]))">
@@ -399,7 +408,7 @@ const cellEventsClass = defineClasses([
                 role="button"
                 :tabindex="
                     day === weekDay.getDate() && month === weekDay.getMonth()
-                        ? null
+                        ? undefined
                         : 0
                 "
                 @click.prevent="selectDate(weekDay)"
