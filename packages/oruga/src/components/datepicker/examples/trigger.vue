@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-const selected = ref(null);
+const selected = ref<Date | null>(null);
 const selectedString = computed(() =>
     selected.value ? selected.value.toDateString() : "",
 );

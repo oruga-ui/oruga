@@ -318,7 +318,7 @@ const emits = defineEmits<{
      * selected element changed event
      * @param value {string | object} selected value
      */
-    (e: "select", value: T, evt: Event): void;
+    (e: "select", value: T | undefined, evt?: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
@@ -365,10 +365,10 @@ const inputRef = ref<ComponentExposed<typeof OInput>>();
 const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
-const itemRefs = ref([]);
+const itemRefs = ref<(HTMLElement | Component)[]>([]);
 
 function setItemRef(
-    el: HTMLElement | Component,
+    el: HTMLElement | Component | null,
     groupIndex: number,
     itemIndex: number,
 ): void {
@@ -386,12 +386,12 @@ const { parentField } = injectField();
 const isActive = ref(false);
 
 /** The selected option, use v-model to make it two-way binding */
-const selectedOption = defineModel<T>({ default: undefined });
+const selectedOption = defineModel<T | undefined>({ default: undefined });
 
 /** The value of the inner input, use v-model:input to make it two-way binding */
 const vmodel = defineModel<string>("input", { default: "" });
 
-const hoveredOption = ref<T>();
+const hoveredOption = ref<T | null>();
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
@@ -416,8 +416,8 @@ const _groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
             return filteredOptions.value.map((item: T) => {
                 if (typeof item === "string" || typeof item === "number")
                     return { group: item, items: [item] };
-                const group = getValueByPath(item, props.groupField);
-                const items = getValueByPath(item, props.groupOptions);
+                const group = getValueByPath<string>(item, props.groupField!);
+                const items = getValueByPath(item, props.groupOptions!);
                 return { group, items };
             });
         else
@@ -458,7 +458,7 @@ watch(
         // clear selected if value does not match the selected option
         const currentValue = getValue(selectedOption.value);
         if (currentValue && currentValue !== value && !props.clearOnSelect)
-            setSelected(null, false);
+            setSelected(undefined, false);
 
         // Close dropdown if data is empty
         if (isEmpty.value && !slots.empty) isActive.value = false;
@@ -515,9 +515,9 @@ function getValue(option?: T): string {
  * update input value and close dropdown.
  */
 function setSelected(
-    option: T,
+    option: T | undefined,
     closeDropdown: boolean = true,
-    event: Event = undefined,
+    event?: Event,
 ): void {
     selectedOption.value = option;
     emits("select", option, event);
@@ -559,7 +559,7 @@ function selectHeaderOrFooterByClick(
 // --- Hover Feature ---
 
 /** Set which option is currently hovered. */
-function setHovered(option: T | SpecialOption): void {
+function setHovered(option: T | SpecialOption | null): void {
     hoveredOption.value = isSpecialOption(option) ? null : option;
     headerHovered.value = option === SpecialOption.Header;
     footerHovered.value = option === SpecialOption.Footer;
@@ -594,6 +594,7 @@ function hoverFirstOption(): void {
  * If dropdown is active, set hovered option, or else just open.
  */
 function navigateItem(direction: 1 | -1): void {
+    if (!dropdownRef.value?.$content) return;
     if (!isActive.value) {
         isActive.value = true;
         return;
@@ -675,7 +676,7 @@ function onKeydown(event: KeyboardEvent): void {
         if (hoveredOption.value === null) {
             // header and footer uses headerHovered && footerHovered. If header or footer
             // was selected then fire event otherwise just return so a value isn't selected
-            selectHeaderOrFooterByClick(event, null, closeDropdown);
+            selectHeaderOrFooterByClick(event, undefined, closeDropdown);
             return;
         }
         setSelected(hoveredOption.value, closeDropdown, event);
@@ -723,7 +724,7 @@ const computedIconRightClickable = computed(() =>
 
 function rightIconClick(event: Event): void {
     if (props.clearable) {
-        setSelected(null, false);
+        setSelected(undefined, false);
         if (props.openOnFocus) setFocus();
     } else emits("icon-right-click", event);
 }
@@ -735,13 +736,14 @@ onMounted(() => {
         useEventListener(
             "scroll",
             checkDropdownScroll,
-            dropdownRef.value.$content,
+            dropdownRef.value!.$content,
             { immediate: true },
         );
 });
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
+    if (!dropdownRef.value?.$content) return;
     const dropdown = unrefElement(dropdownRef.value.$content);
     if (!dropdown) return;
     const trashhold = dropdown.offsetTop;

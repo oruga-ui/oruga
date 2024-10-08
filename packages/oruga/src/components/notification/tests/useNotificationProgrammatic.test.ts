@@ -34,7 +34,7 @@ describe("useNotificationProgrammatic tests", () => {
         );
         expect(notification).not.toBeNull();
 
-        expect(notification.innerHTML).toContain(message);
+        expect(notification!.innerHTML).toContain(message);
 
         // close element through handler
         close();
@@ -74,9 +74,9 @@ describe("useNotificationProgrammatic tests", () => {
         expect(notification).not.toBeNull();
 
         // check element exist
-        const button = notification.querySelector<HTMLElement>("button");
+        const button = notification!.querySelector<HTMLElement>("button");
         expect(button).not.toBeNull();
-        expect(button.innerHTML).toContain("Fancy Label");
+        expect(button!.innerHTML).toContain("Fancy Label");
 
         let bodyElements = document.body.querySelectorAll("body > *");
         expect(bodyElements).toHaveLength(1);
@@ -113,13 +113,13 @@ describe("useNotificationProgrammatic tests", () => {
         );
         expect(notification).not.toBeNull();
 
-        const button = notification.querySelector<HTMLElement>(
+        const button = notification!.querySelector<HTMLElement>(
             '[data-oruga="programmatic"]',
         );
         expect(button).not.toBeNull();
 
         // close element on button click
-        button.click();
+        button!.click();
         vi.runAllTimers();
 
         // check element does not edist
@@ -143,7 +143,7 @@ describe("useNotificationProgrammatic tests", () => {
         expect(el).not.toBeNull();
 
         // close element on 'x' button click
-        el.click();
+        el!.click();
         vi.runAllTimers();
 
         // check element does not edist

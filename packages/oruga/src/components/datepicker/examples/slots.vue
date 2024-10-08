@@ -16,19 +16,21 @@ const months = [
     { name: "December", value: 11 },
 ];
 
-const date = ref(new Date());
-const month = ref(null);
+const date = ref<Date | null>(new Date());
+const month = ref<string>();
 
-function selectMonth(option) {
+function selectMonth(option): void {
     if (!option) return;
 
-    date.value = new Date(date.value);
+    date.value = date.value ? new Date(date.value) : new Date();
     date.value.setMonth(option.value);
 }
 
 onMounted(() => {
+    if (!date.value) return;
+
     month.value = months.filter(
-        (item) => item.value == date.value.getMonth(),
+        (item) => item.value == date.value!.getMonth(),
     )[0].name;
 });
 </script>

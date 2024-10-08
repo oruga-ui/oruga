@@ -37,7 +37,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
     );
 
     const sampleTime = computed(() => {
-        const d = props.timeCreator();
+        const d = props.timeCreator ? props.timeCreator() : new Date();
         d.setHours(10);
         d.setSeconds(0);
         d.setMinutes(0);

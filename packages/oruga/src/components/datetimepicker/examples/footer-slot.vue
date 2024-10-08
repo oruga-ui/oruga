@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const datetime = ref(new Date());
+const datetime = ref<Date | null>(new Date());
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const selectedOptions = ref(null);
+const selectedOptions = ref<string | string[] | null>(null);
 
 const inspectData = [
     {

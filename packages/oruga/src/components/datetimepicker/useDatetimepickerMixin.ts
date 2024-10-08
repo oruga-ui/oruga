@@ -47,7 +47,9 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = props.datetimeCreator(new Date());
+            const d = props.datetimeCreator
+                ? props.datetimeCreator(new Date())
+                : new Date();
             d.setHours(10);
             const dayPeriod = dtf.value
                 .formatToParts(d)
@@ -62,7 +64,9 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = props.datetimeCreator(new Date());
+            const d = props.datetimeCreator
+                ? props.datetimeCreator(new Date())
+                : new Date();
             d.setHours(20);
             const dayPeriod = dtf.value
                 .formatToParts(d)

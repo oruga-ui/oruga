@@ -36,9 +36,9 @@ describe("ODatetimepicker tests", () => {
 
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toHaveLength(1);
-        expect(emits[0][0]).toBeInstanceOf(Date);
-        expect((emits[0][0] as Date).toISOString()).toBe(date.toISOString());
+        expect(emits![0]).toHaveLength(1);
+        expect(emits![0][0]).toBeInstanceOf(Date);
+        expect((emits![0][0] as Date).toISOString()).toBe(date.toISOString());
         expect(input.element.value).toBe("08/06/2024, 10:51");
 
         await input.setValue("21/10/2021 12:23");
@@ -47,9 +47,9 @@ describe("ODatetimepicker tests", () => {
 
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits[1]).toHaveLength(1);
-        expect(emits[1][0]).toBeInstanceOf(Date);
-        expect((emits[1][0] as Date).toISOString()).toBe(date.toISOString());
+        expect(emits![1]).toHaveLength(1);
+        expect(emits![1][0]).toBeInstanceOf(Date);
+        expect((emits![1][0] as Date).toISOString()).toBe(date.toISOString());
         expect(input.element.value).toBe("21/10/2021, 12:23");
     });
 
@@ -64,8 +64,8 @@ describe("ODatetimepicker tests", () => {
 
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toHaveLength(1);
-        expect(emits[0][0]).toBeNull();
+        expect(emits![0]).toHaveLength(1);
+        expect(emits![0][0]).toBeNull();
         expect(input.element.value).toBe("");
 
         await input.setValue("21/06/wrong");

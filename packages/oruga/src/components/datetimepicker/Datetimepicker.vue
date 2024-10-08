@@ -38,7 +38,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** The input value state */
-    modelValue: { type: Date, default: null },
+    modelValue: { type: [Date, null], default: null },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Define props for the underlying datepicker component */

@@ -111,7 +111,7 @@ describe("useLoadingProgrammatic tests", () => {
         );
         expect(loading).not.toBeNull();
 
-        expect(loading.innerHTML).toContain(label);
+        expect(loading!.innerHTML).toContain(label);
 
         // close element on 'x' button click
         close();

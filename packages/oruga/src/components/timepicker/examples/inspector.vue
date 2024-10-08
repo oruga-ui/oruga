@@ -5,7 +5,7 @@ const timepicker = ref();
 
 // get programmatic oruga access
 const app = getCurrentInstance();
-const oruga = app.appContext.config.globalProperties.$oruga;
+const oruga = app?.appContext.config.globalProperties.$oruga;
 
 const triggerClass = oruga?.config
     ? oruga.config.getOption("dropdown.triggerClass", "o-drop__trigger")

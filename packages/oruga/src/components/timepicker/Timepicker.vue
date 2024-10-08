@@ -82,16 +82,16 @@ const props = defineProps({
     /** Custom function to format a date into a string */
     timeFormatter: {
         type: Function as PropType<(date: Date) => string>,
-        default: (date: Date | Date[]) =>
+        default: (date: Date) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("timepicker.timeFormatter", (_) => undefined)(date),
     },
     /** Custom function to parse a string into a date */
     timeParser: {
-        type: Function as PropType<(date: string) => Date>,
+        type: Function as PropType<(date: string) => Date | null>,
         default: (date: string) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("timepicker.timeParser", (_) => undefined)(date),
+            getOption("timepicker.timeParser", (_) => null)(date),
     },
     /** time creator function, default is `new Date()` */
     timeCreator: {

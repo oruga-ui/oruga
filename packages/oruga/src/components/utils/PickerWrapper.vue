@@ -55,7 +55,7 @@ const props = defineProps({
     /** parse input value to props value */
     parser: {
         type: Function as PropType<
-            (value: string, isNative: boolean) => Date | Date[]
+            (value: string, isNative: boolean) => Date | Date[] | null
         >,
         required: true,
     },
@@ -76,7 +76,7 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {Date, Array} updated active prop
      */
-    (e: "update:value", value: Date | Array<Date>): void;
+    (e: "update:value", value: Date | Array<Date> | null): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -174,10 +174,10 @@ function setValue(value: string): void {
 
     // check min/max dates
     if (Array.isArray(date)) date = date.map(checkMinMaxDate);
-    else date = checkMinMaxDate(date);
+    else if (date != null) date = checkMinMaxDate(date);
 
     // reparse to string for internal value
-    inputValue.value = props.formatter(date, isMobileNative.value);
+    inputValue.value = date ? props.formatter(date, isMobileNative.value) : "";
     // update the prop value
     emits("update:value", date);
 }
