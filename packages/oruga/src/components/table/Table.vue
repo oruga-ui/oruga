@@ -1070,7 +1070,8 @@ function isRowFiltered(row: T): boolean {
         if (typeof column?.customSearch === "function")
             return column.customSearch(row, filter);
 
-        const value = typeof row === "object" ? getValueByPath(row, key) : row;
+        const value =
+            typeof row === "object" && !!row ? getValueByPath(row, key) : row;
         if (value == null) return false;
         // if number compare values
         if (Number.isInteger(value)) return value === Number(filter);
@@ -1080,7 +1081,7 @@ function isRowFiltered(row: T): boolean {
                 (val) =>
                     re.test(removeDiacriticsFromString(val)) || re.test(val),
             );
-
+        if (typeof value !== "string") return value;
         return re.test(removeDiacriticsFromString(value)) || re.test(value);
     });
 }
@@ -1142,7 +1143,12 @@ function sort(
 
     // if not first time sort
     if (currentSortColumn.value)
-        emits("sort", column, isAsc.value ? "asc" : "desc", event);
+        emits(
+            "sort",
+            column,
+            isAsc.value ? "asc" : "desc",
+            event || new Event("sort"),
+        );
 
     currentSortColumn.value = column;
     // recompute rows with updated currentSortColumn
@@ -1594,7 +1600,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ getColumnValue(row, column) }}
+                        {{ getColumnValue(row as T, column) }}
                     </o-table-column>
                 </template>
 
@@ -1663,7 +1669,7 @@ defineExpose({ rows: tableData, sort: sortByField });
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
                 :class="tableClasses"
-                :tabindex="selectable ? 0 : null"
+                :tabindex="selectable ? 0 : undefined"
                 @keydown.self.prevent.up="onArrowPressed(-1, $event)"
                 @keydown.self.prevent.down="onArrowPressed(1, $event)">
                 <caption v-if="$slots.caption">
@@ -1808,7 +1814,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                         :props="{ column, index, filters }" />
                                 </template>
                                 <o-input
-                                    v-else
+                                    v-else-if="column.field"
                                     v-model="filters[column.field]"
                                     :name="`column_${column.field}_filter`"
                                     :type="column.numeric ? 'number' : 'search'"
