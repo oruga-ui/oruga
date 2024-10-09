@@ -18,7 +18,7 @@ const time = ref<Date | undefined>(new Date());
                     variant="danger"
                     icon-left="times"
                     outlined
-                    @click="time = null" />
+                    @click="time = undefined" />
             </o-timepicker>
         </o-field>
     </section>
