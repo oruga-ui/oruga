@@ -306,19 +306,21 @@ const emits = defineEmits<{
     (e: "update:modelValue", value: T): void;
     /**
      * input prop two-way binding
-     * @param value {string}  updated input prop
+     * @param value {string} updated input prop
      */
     (e: "update:input", value: string): void;
     /**
      * on input change event
      * @param value {string} input value
+     * @param event {Event} native event
      */
-    (e: "input", value: string): void;
+    (e: "input", value: string, event: Event): void;
     /**
      * selected element changed event
      * @param value {string | object} selected value
+     * @param event {Event} native event
      */
-    (e: "select", value: T | undefined, evt: Event): void;
+    (e: "select", value: T | undefined, event: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
@@ -704,9 +706,9 @@ function handleBlur(event: Event): void {
 }
 
 /** emit input change event */
-function onInput(value: string): void {
+function onInput(value: string, event: Event): void {
     if (props.keepFirst && !selectedOption.value) hoverFirstOption();
-    emits("input", String(value));
+    emits("input", value, event);
     checkHtml5Validity();
 }
 
@@ -851,17 +853,17 @@ defineExpose({ focus: setFocus, value: vmodel });
                 :placeholder="placeholder"
                 :maxlength="maxlength"
                 :autocomplete="autocomplete"
-                :use-html5-validation="false"
+                :expanded="expanded"
+                :disabled="disabled"
+                :status-icon="statusIcon"
+                :debounce="debounce"
                 role="combobox"
                 :aria-activedescendant="hoveredId"
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
                 :aria-controls="menuId"
                 :aria-expanded="isActive"
-                :expanded="expanded"
-                :disabled="disabled"
-                :status-icon="statusIcon"
-                :debounce="debounce"
-                @update:model-value="onInput"
+                :use-html5-validation="false"
+                @input="onInput"
                 @focus="handleFocus"
                 @blur="handleBlur"
                 @invalid="onInvalid"

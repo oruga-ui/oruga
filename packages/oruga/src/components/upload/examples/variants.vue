@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const file = ref<File | null>(null);
+const file = ref<File>();
 </script>
 
 <template>
