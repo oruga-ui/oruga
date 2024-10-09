@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const datetime = ref<Date | null>(new Date());
+const datetime = ref<Date | undefined>(new Date());
 </script>
 
 <template>
@@ -19,7 +19,9 @@ const datetime = ref<Date | null>(new Date());
                             <o-icon icon="calendar" />
                             <span>Today</span>
                         </o-button>
-                        <o-button variant="danger" @click="datetime = null">
+                        <o-button
+                            variant="danger"
+                            @click="datetime = undefined">
                             <o-icon icon="times" />
                             <span>Clear</span>
                         </o-button>

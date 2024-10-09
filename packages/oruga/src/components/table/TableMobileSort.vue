@@ -6,8 +6,6 @@ import OSelect from "@/components/select/Select.vue";
 import OIcon from "@/components/icon/Icon.vue";
 import OField from "@/components/field/Field.vue";
 
-import { getValueByPath } from "@/utils/helpers";
-
 import type { TableColumnItem } from "./types";
 import type { ClassBind } from "@/types";
 
@@ -43,10 +41,7 @@ const mobileSort = ref<string | undefined>(props.currentSortColumn?.identifier);
 const showPlaceholder = computed(
     () =>
         !props.columns ||
-        !props.columns.some(
-            (column) =>
-                getValueByPath(column, "identifier") === mobileSort.value,
-        ),
+        props.columns.every((column) => column.identifier !== mobileSort.value),
 );
 
 const sortableColumns = computed(() =>
@@ -71,7 +66,7 @@ watch(
 
 function sort(event: Event): void {
     const column = sortableColumns.value.find(
-        (c) => getValueByPath(c, "identifier") === mobileSort.value,
+        (column) => column.identifier === mobileSort.value,
     );
     if (!column) return;
     emits("sort", column, event);

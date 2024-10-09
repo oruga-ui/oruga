@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+    generic="IsRange extends boolean, IsMultiple extends boolean">
 import {
     computed,
     watch,
@@ -14,7 +17,8 @@ import { isTrueish } from "@/utils/helpers";
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { weeksInYear, firstWeekOffset } from "./utils";
 
-import type { DatepickerProps, DatepickerEvent } from "./types";
+import type { DatepickerEvent } from "./types";
+import type { DatepickerProps } from "./props";
 import type { ClassBind } from "@/types";
 
 defineOptions({
@@ -33,7 +37,7 @@ const props = defineProps({
     events: { type: Array as PropType<DatepickerEvent[]>, default: undefined },
     hoveredDateRange: { type: Array as PropType<Date[]>, default: () => [] },
     pickerProps: {
-        type: Object as PropType<DatepickerProps>,
+        type: Object as PropType<DatepickerProps<IsRange, IsMultiple>>,
         required: true,
     },
 });
@@ -46,8 +50,6 @@ const emits = defineEmits<{
 }>();
 
 const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
-
-const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 
 const hasEvents = computed(() => !!props.events?.length);
 
@@ -82,7 +84,7 @@ watch(
 );
 
 function clickWeekNumber(week: number): void {
-    if (datepicker.value.weekNumberClickable) emits("week-number-click", week);
+    if (props.pickerProps.weekNumberClickable) emits("week-number-click", week);
 }
 
 function getDayOfYear(input): number {
@@ -95,9 +97,9 @@ function getDayOfYear(input): number {
 }
 
 function getWeekNumber(mom): number {
-    const dow = datepicker.value.firstDayOfWeek; // first day of week
+    const dow = props.pickerProps.firstDayOfWeek; // first day of week
     // Rules for the first week : 1 for the 1st January, 4 for the 4th January
-    const doy = datepicker.value.rulesForFirstWeek;
+    const doy = props.pickerProps.rulesForFirstWeek;
     const weekOffset = firstWeekOffset(mom.getFullYear(), dow, doy);
     const week = Math.floor((getDayOfYear(mom) - weekOffset - 1) / 7) + 1;
     let resWeek;
@@ -163,7 +165,7 @@ function onKeydown(event: KeyboardEvent, weekDay: Date): void {
 
 /** Emit select event with chosen date as payload */
 function selectDate(date: Date): void {
-    if (datepicker.value.disabled || datepicker.value.readonly) return;
+    if (props.pickerProps.disabled || props.pickerProps.readonly) return;
     if (isDateSelectable(date, props.month)) emits("select", date);
 }
 
@@ -172,8 +174,8 @@ function changeFocus(day, inc): void {
     nextDay.setDate(day.getDate() + inc);
     // if next day is out of range or not selectable, move to next selectable date
     while (
-        (datepicker.value.minDate && nextDay < datepicker.value.minDate) ||
-        (datepicker.value.maxDate && nextDay > datepicker.value.maxDate) ||
+        (props.pickerProps.minDate && nextDay < props.pickerProps.minDate) ||
+        (props.pickerProps.maxDate && nextDay > props.pickerProps.maxDate) ||
         !isDateSelectable(nextDay, nextDay.getMonth())
     ) {
         // revert day selection until selectable day is reached
@@ -184,7 +186,7 @@ function changeFocus(day, inc): void {
 }
 
 function setRangeHoverEndDate(day): void {
-    if (isTrueish(datepicker.value.range)) emits("hover-enddate", day);
+    if (isTrueish(props.pickerProps.range)) emits("hover-enddate", day);
 }
 
 // --- Computed Component Classes ---
@@ -198,14 +200,14 @@ function dateMatch(
     // if using multiple flag, return false
     if (!dateOne || !dateTwo || multiple) return false;
 
-    if (Array.isArray(dateTwo)) {
+    if (Array.isArray(dateTwo))
         return dateTwo.some(
             (date) =>
                 dateOne.getDate() === date.getDate() &&
                 dateOne.getFullYear() === date.getFullYear() &&
                 dateOne.getMonth() === date.getMonth(),
         );
-    }
+
     return (
         dateOne.getDate() === dateTwo.getDate() &&
         dateOne.getFullYear() === dateTwo.getFullYear() &&
@@ -233,7 +235,7 @@ function cellClasses(day: Date): ClassBind[] {
                 dateWithin(
                     day,
                     props.selectedDate,
-                    isTrueish(datepicker.value.multiple),
+                    isTrueish(props.pickerProps.multiple),
                 ),
         ],
         [
@@ -245,7 +247,7 @@ function cellClasses(day: Date): ClassBind[] {
                 Array.isArray(props.selectedDate)
                     ? props.selectedDate[0]
                     : undefined,
-                isTrueish(datepicker.value.multiple),
+                isTrueish(props.pickerProps.multiple),
             ),
         ],
         [
@@ -255,7 +257,7 @@ function cellClasses(day: Date): ClassBind[] {
             dateWithin(
                 day,
                 props.selectedDate,
-                isTrueish(datepicker.value.multiple),
+                isTrueish(props.pickerProps.multiple),
             ),
         ],
         [
@@ -267,7 +269,7 @@ function cellClasses(day: Date): ClassBind[] {
                 Array.isArray(props.selectedDate)
                     ? props.selectedDate[1]
                     : undefined,
-                isTrueish(datepicker.value.multiple),
+                isTrueish(props.pickerProps.multiple),
             ),
         ],
         [
@@ -302,35 +304,41 @@ function cellClasses(day: Date): ClassBind[] {
             "tableCellTodayClass",
             "o-dpck__table__cell--today",
             null,
-            dateMatch(day, datepicker.value.dateCreator()),
+            dateMatch(
+                day,
+                props.pickerProps.dateCreator
+                    ? props.pickerProps.dateCreator()
+                    : new Date(),
+            ),
         ],
         [
             "tableCellSelectableClass",
             "o-dpck__table__cell--selectable",
             null,
             isDateSelectable(day, props.month) &&
-                !datepicker.value.disabled &&
-                !datepicker.value.readonly,
+                !props.pickerProps.disabled &&
+                !props.pickerProps.readonly,
         ],
         [
             "tableCellUnselectableClass",
             "o-dpck__table__cell--unselectable",
             null,
-            !isDateSelectable(day, props.month) || datepicker.value.disabled,
+            !isDateSelectable(day, props.month) || props.pickerProps.disabled,
         ],
 
         [
             "tableCellInvisibleClass",
             "o-dpck__table__cell--invisible",
             null,
-            !datepicker.value.nearbyMonthDays && day.getMonth() !== props.month,
+            !props.pickerProps.nearbyMonthDays &&
+                day.getMonth() !== props.month,
         ],
 
         [
             "tableCellNearbyClass",
             "o-dpck__table__cell--nearby",
             null,
-            datepicker.value.nearbySelectableMonthDays &&
+            props.pickerProps.nearbySelectableMonthDays &&
                 day.getMonth() !== props.month,
         ],
     );
@@ -354,8 +362,8 @@ function eventClasses(event: DatepickerEvent): ClassBind[] {
         [
             "tableEventIndicatorsClass",
             "o-dpck__table__event--",
-            datepicker.value.indicators,
-            !!datepicker.value.indicators,
+            props.pickerProps.indicators,
+            !!props.pickerProps.indicators,
         ],
     );
     return classes.value;
@@ -384,12 +392,12 @@ const cellEventsClass = defineClasses([
 <template>
     <div :class="tableRowClasses">
         <div
-            v-if="datepicker.showWeekNumber"
+            v-if="pickerProps.showWeekNumber"
             :class="tableCellClasses"
             :style="{
-                cursor: datepicker.weekNumberClickable ? 'pointer' : 'auto',
+                cursor: pickerProps.weekNumberClickable ? 'pointer' : 'auto',
             }"
-            :tabindex="datepicker.weekNumberClickable ? 0 : undefined"
+            :tabindex="pickerProps.weekNumberClickable ? 0 : undefined"
             role="button"
             @click.prevent="clickWeekNumber(getWeekNumber(week[6]))"
             @keydown.enter.prevent="clickWeekNumber(getWeekNumber(week[6]))">
@@ -399,8 +407,8 @@ const cellEventsClass = defineClasses([
         <template v-for="(weekDay, idx) in week" :key="idx">
             <div
                 v-if="
-                    !datepicker.disabled &&
-                    !datepicker.readonly &&
+                    !pickerProps.disabled &&
+                    !pickerProps.readonly &&
                     isDateSelectable(weekDay, month)
                 "
                 :ref="(el) => setDayRef(weekDay, el)"

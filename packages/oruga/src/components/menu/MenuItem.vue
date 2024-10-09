@@ -137,15 +137,13 @@ const providedItem = useProviderChild<MenuItemProvider>({
     needParent: false,
 });
 
-const itemParent = computed(() => providedItem.parent.value);
-
 const isActive = defineModel<boolean>("active", { default: false });
 
 const isExpanded = defineModel<boolean>("expanded", { default: false });
 
 /** template identifier */
 const identifier = computed(() =>
-    itemParent.value
+    providedItem.parent.value
         ? `menu-item-${providedItem.item.value?.identifier}`
         : `menu-${item.value.identifier}`,
 );
@@ -158,12 +156,10 @@ function onClick(): void {
 }
 
 function triggerReset(child?: ProviderItem<MenuItemComponent>): void {
-    if (!item.value) return;
-
     // The point of this method is to collect references to the clicked item and any parent,
     // this way we can skip resetting those elements.
-    if (typeof itemParent.value?.triggerReset === "function") {
-        itemParent.value.triggerReset(item.value);
+    if (typeof providedItem.parent.value?.triggerReset === "function") {
+        providedItem.parent.value.triggerReset(item.value);
     }
     // else if not a sub item reset parent menu
     else if (typeof parent.value.resetMenu === "function") {

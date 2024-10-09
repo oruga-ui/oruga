@@ -5,7 +5,7 @@ import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
-import { isDate, pad } from "@/utils/helpers";
+import { isDate, isDefined, pad } from "@/utils/helpers";
 import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
@@ -28,7 +28,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** The input value state */
-    modelValue: { type: Date as PropType<Date | null>, default: null },
+    modelValue: { type: Date as PropType<Date>, default: undefined },
     /** The active state of the dropdown */
     active: { type: Boolean, default: false },
     /** Min time to select */
@@ -88,10 +88,10 @@ const props = defineProps({
     },
     /** Custom function to parse a string into a date */
     timeParser: {
-        type: Function as PropType<(date: string) => Date | null>,
+        type: Function as PropType<(date: string) => Date | undefined>,
         default: (date: string) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("timepicker.timeParser", (_) => null)(date),
+            getOption("timepicker.timeParser", (_) => undefined)(date),
     },
     /** time creator function, default is `new Date()` */
     timeCreator: {
@@ -290,7 +290,7 @@ const {
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-const vmodel = defineModel<Date | null>({ default: null });
+const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -307,7 +307,7 @@ watch(
 );
 
 /** Update internal value. */
-function updateValue(value: Date | Date[] | null): void {
+function updateValue(value: Date | undefined): void {
     if (Array.isArray(value)) return updateValue(value[0]);
     if (vmodel.value !== value) vmodel.value = value as Date;
     if (value) {
@@ -329,7 +329,7 @@ const step = computed(() => (props.enableSeconds ? "1" : undefined));
 watch(
     () => props.hourFormat,
     () => {
-        if (hoursSelected.value !== null)
+        if (isDefined(hoursSelected.value))
             meridienSelected.value =
                 (hoursSelected.value || 0) >= 12
                     ? pmString.value
@@ -420,20 +420,20 @@ function isHourDisabled(hour: number): boolean {
         if (typeof props.unselectableTimes === "function") {
             const date = new Date();
             date.setHours(hour);
-            if (minutesSelected.value != undefined)
+            if (isDefined(minutesSelected.value))
                 date.setMinutes(minutesSelected.value);
-            if (secondsSelected.value != undefined)
+            if (isDefined(secondsSelected.value))
                 date.setSeconds(secondsSelected.value);
             return props.unselectableTimes(date);
         } else {
             const unselectable = props.unselectableTimes.filter((time) => {
-                if (props.enableSeconds && secondsSelected.value !== null) {
+                if (props.enableSeconds && isDefined(secondsSelected.value)) {
                     return (
                         time.getHours() === hour &&
                         time.getMinutes() === minutesSelected.value &&
                         time.getSeconds() === secondsSelected.value
                     );
-                } else if (minutesSelected.value !== null) {
+                } else if (isDefined(minutesSelected.value)) {
                     return (
                         time.getHours() === hour &&
                         time.getMinutes() === minutesSelected.value
@@ -495,7 +495,10 @@ function isMinuteDisabled(minute: number): boolean {
             return props.unselectableTimes(date);
         } else {
             const unselectable = props.unselectableTimes.filter((time) => {
-                if (props.enableSeconds && secondsSelected.value !== null) {
+                if (
+                    props.enableSeconds &&
+                    secondsSelected.value !== undefined
+                ) {
                     return (
                         time.getHours() === hoursSelected.value &&
                         time.getMinutes() === minute &&
@@ -579,11 +582,12 @@ function updateDateSelected(
     meridiens,
 ): void {
     if (
-        hours != null &&
-        minutes != null &&
-        ((!isHourFormat24.value && meridiens !== null) || isHourFormat24.value)
+        isDefined(hours) &&
+        isDefined(minutes) &&
+        ((!isHourFormat24.value && isDefined(meridiens)) ||
+            isHourFormat24.value)
     ) {
-        let time: Date | null = null;
+        let time: Date;
         if (vmodel.value) {
             time = new Date(vmodel.value);
         } else {
@@ -619,7 +623,7 @@ function formatNative(value: Date | Date[]): string {
 
     const date = new Date(value);
     // return empty string if no value is given or value can't parse to proper date
-    if (!value || !date || isNaN(date.getTime())) return "";
+    if (!value || !isDate(date)) return "";
 
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -634,21 +638,21 @@ function formatNative(value: Date | Date[]): string {
 }
 
 /** Parse string into date */
-function parse(value: string, isNative: boolean): Date | null {
+function parse(value: string, isNative: boolean): Date | undefined {
     if (isNative) return parseNative(value);
 
     // call prop function
     let date = props.timeParser(value);
     // call default if prop function is not given
     if (typeof date === "undefined") date = defaultTimeParser(value);
-    return isDate(date) ? date : null;
+    return isDate(date) ? date : undefined;
 }
 
 /** Parse time from string */
-function parseNative(date: string): Date {
-    if (!date) return new Date();
+function parseNative(date: string): Date | undefined {
+    if (!date) return undefined;
 
-    let time: Date | null = null;
+    let time: Date;
     if (vmodel.value) {
         time = new Date(vmodel.value);
     } else {
@@ -669,7 +673,7 @@ function onMeridienChange(value: string): void {
         hoursSelected.value = undefined;
         minutesSelected.value = undefined;
         secondsSelected.value = undefined;
-        vmodel.value = null;
+        vmodel.value = undefined;
     } else if (hoursSelected.value !== undefined) {
         if (value === pmString.value) hoursSelected.value += 12;
         else if (value === amString.value) hoursSelected.value -= 12;

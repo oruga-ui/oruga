@@ -36,7 +36,7 @@ defineOptions({
 const props = defineProps({
     /** the internal input value */
     value: {
-        type: [Date, Array] as PropType<Date | Date[] | null>,
+        type: [Date, Array] as PropType<Date | Date[] | undefined>,
         default: undefined,
     },
     /** the active state of the dropdown */
@@ -55,7 +55,7 @@ const props = defineProps({
     /** parse input value to props value */
     parser: {
         type: Function as PropType<
-            (value: string, isNative: boolean) => Date | Date[] | null
+            (value: string, isNative: boolean) => Date | Date[] | undefined
         >,
         required: true,
     },
@@ -76,7 +76,7 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {Date, Array} updated active prop
      */
-    (e: "update:value", value: Date | Array<Date> | null): void;
+    (e: "update:value", value: Date | Array<Date> | undefined): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -174,7 +174,7 @@ function setValue(value: string): void {
 
     // check min/max dates
     if (Array.isArray(date)) date = date.map(checkMinMaxDate);
-    else if (date != null) date = checkMinMaxDate(date);
+    else if (isDefined(date)) date = checkMinMaxDate(date);
 
     // reparse to string for internal value
     inputValue.value = date ? props.formatter(date, isMobileNative.value) : "";

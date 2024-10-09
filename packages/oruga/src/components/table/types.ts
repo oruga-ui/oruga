@@ -8,8 +8,6 @@ export type TableRow<T = unknown> = ObjectMap<T>[number];
 
 export type TableColumn<T = unknown> = TableColumnProps<T>;
 
-// type TableColumnSlots = ComponentSlots<typeof TableColumn>;
-
 export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $el: ComponentPublicInstance;
     $slots: Slots;

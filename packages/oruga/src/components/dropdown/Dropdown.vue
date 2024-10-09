@@ -150,7 +150,7 @@ const toggleScroll = usePreventScrolling();
 // --- Event Handler ---
 
 const eventCleanups: (() => void)[] = [];
-let timer: NodeJS.Timeout | null;
+let timer: NodeJS.Timeout | undefined;
 
 const cancelOptions = computed(() =>
     typeof props.closeable === "boolean"
@@ -264,7 +264,7 @@ function open(): void {
     if (props.delay) {
         timer = setTimeout(() => {
             isActive.value = true;
-            timer = null;
+            timer = undefined;
         }, props.delay);
     } else {
         isActive.value = true;

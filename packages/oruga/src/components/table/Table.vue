@@ -990,23 +990,23 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
     const row = visibleRows.value[index];
 
     if (!props.isRowSelectable(row.value)) {
-        let newIndex: number | null = null;
+        let newIndex: number | undefined = undefined;
         if (pos > 0) {
             for (
                 let i = index;
-                i < visibleRows.value.length && newIndex === null;
+                i < visibleRows.value.length && newIndex === undefined;
                 i++
             ) {
                 if (props.isRowSelectable(visibleRows.value[i].value))
                     newIndex = i;
             }
         } else {
-            for (let i = index; i >= 0 && newIndex === null; i--) {
+            for (let i = index; i >= 0 && newIndex === undefined; i--) {
                 if (props.isRowSelectable(visibleRows.value[i].value))
                     newIndex = i;
             }
         }
-        if (newIndex != null && newIndex >= 0) {
+        if (newIndex != undefined && newIndex >= 0) {
             selectRow(visibleRows.value[newIndex], index, event);
         }
     } else {

@@ -30,7 +30,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     override: undefined,
-    modelValue: null,
+    modelValue: undefined,
     // multiple: false,
     variant: () => getOption("upload.variant"),
     disabled: false,
@@ -105,7 +105,7 @@ function onFileChange(event: Event | DragEvent): void {
     // no file selected
     if (value.length === 0) {
         if (!vmodel.value) return;
-        if (props.native) vmodel.value = null;
+        if (props.native) vmodel.value = undefined;
     }
 
     // multiple upload
@@ -133,7 +133,7 @@ function onFileChange(event: Event | DragEvent): void {
             if (checkType(file)) vmodel.value = file as ModelValue;
             // else clear input
             else if (vmodel.value) {
-                vmodel.value = null;
+                vmodel.value = undefined;
                 clearInput();
             } else {
                 // Force input back to empty state and recheck validity

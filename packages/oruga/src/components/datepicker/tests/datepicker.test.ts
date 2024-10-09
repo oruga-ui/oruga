@@ -97,7 +97,7 @@ describe("ODatepicker", () => {
                 c.classes("o-dpck__table__cell--selectable") &&
                 !c.classes("o-dpck__table__cell--selected"),
         );
-        expect(cellToSelect1).not.toBeUndefined();
+        expect(cellToSelect1).toBeDefined();
         await cellToSelect1!.trigger("click");
 
         // check modelValue got updated
@@ -117,7 +117,7 @@ describe("ODatepicker", () => {
                 c.classes("o-dpck__table__cell--selectable") &&
                 !c.classes("o-dpck__table__cell--selected"),
         );
-        expect(cellToSelect2).not.toBeUndefined();
+        expect(cellToSelect2).toBeDefined();
         await cellToSelect2!.trigger("click");
 
         // check modelValue got updated
@@ -169,7 +169,7 @@ describe("ODatepicker", () => {
                 c.classes("o-dpck__table__cell--selectable") &&
                 !c.classes("o-dpck__table__cell--selected"),
         );
-        expect(cellToSelect).not.toBeUndefined();
+        expect(cellToSelect).toBeDefined();
         await cellToSelect!.trigger("click");
 
         // check nothing got emitted yet
@@ -219,7 +219,7 @@ describe("ODatepicker", () => {
                 c.classes("o-dpck__table__cell--selectable") &&
                 !c.classes("o-dpck__table__cell--selected"),
         );
-        expect(cellToSelect).not.toBeUndefined();
+        expect(cellToSelect).toBeDefined();
         // select another date
         await cellToSelect!.trigger("click");
 
@@ -233,7 +233,7 @@ describe("ODatepicker", () => {
                 c.classes("o-dpck__table__cell--selectable") &&
                 !c.classes("o-dpck__table__cell--selected"),
         );
-        expect(cellToSelect).not.toBeUndefined();
+        expect(cellToSelect).toBeDefined();
         await cellToSelect!.trigger("click");
 
         // check two dates are selected

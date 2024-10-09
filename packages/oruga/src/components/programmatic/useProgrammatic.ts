@@ -101,7 +101,7 @@ export const useProgrammatic = {
         target.append(...container.children);
 
         // return exposed functionalities
-        return vnode.component!.exposed as ProgrammaticExpose;
+        return vnode.component?.exposed as ProgrammaticExpose;
     },
     /** close the last registred instance in the global programmatic instance registry */
     close(...args: unknown[]): void {

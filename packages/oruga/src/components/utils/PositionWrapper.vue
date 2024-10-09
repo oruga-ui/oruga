@@ -98,11 +98,11 @@ function setContent<T extends typeof contentRef.value>(el: T): typeof el {
 
 const initialPosition = props.position;
 
-const scrollingParent = ref<HTMLElement | null>(null);
-const resizeObserver = ref<ResizeObserver | null>(null);
+const scrollingParent = ref<HTMLElement | null>();
+let resizeObserver: ResizeObserver | undefined;
 
 if (isClient && window.ResizeObserver) {
-    resizeObserver.value = new window.ResizeObserver(updatePositioning);
+    resizeObserver = new window.ResizeObserver(updatePositioning);
 }
 
 // on disable state change update event listener
@@ -144,8 +144,8 @@ function addHandler(): void {
                 updatePositioning,
                 { passive: true },
             );
-            if (window.ResizeObserver && resizeObserver.value)
-                resizeObserver.value.observe(scrollingParent.value);
+            if (window.ResizeObserver && resizeObserver)
+                resizeObserver.observe(scrollingParent.value);
         } else {
             document.addEventListener("scroll", updatePositioning, {
                 passive: true,
@@ -158,10 +158,11 @@ function addHandler(): void {
 /** remove event listener */
 function removeHandler(): void {
     if (isClient) {
-        if (window.ResizeObserver) resizeObserver.value?.disconnect();
+        if (window.ResizeObserver && resizeObserver)
+            resizeObserver?.disconnect();
         window.removeEventListener("resize", updatePositioning);
         document.removeEventListener("scroll", updatePositioning);
-        scrollingParent.value = null;
+        scrollingParent.value = undefined;
     }
 }
 

@@ -18,7 +18,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { useDateimepickerMixins } from "./useDatetimepickerMixin";
 
-import type { DatepickerProps } from "../datepicker/types";
+import type { DatepickerProps } from "../datepicker/props";
 import type { TimepickerProps } from "../timepicker/types";
 import type { ComponentClass } from "@/types";
 
@@ -38,7 +38,7 @@ const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
     /** The input value state */
-    modelValue: { type: [Date, null], default: null },
+    modelValue: { type: [Date], default: undefined },
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Define props for the underlying datepicker component */
@@ -93,19 +93,16 @@ const props = defineProps({
     },
     /** Custom function to parse a string into a date */
     datetimeParser: {
-        type: Function as PropType<(date: string) => Date>,
+        type: Function as PropType<(date: string) => Date | undefined>,
         default: (date: string) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("datetimepicker.dateParser", (_) => undefined)(date),
     },
     /** Date creator function, default is `new Date()` */
     datetimeCreator: {
-        type: Function as PropType<(date: Date) => Date>,
-        default: (date: Date) =>
-            getOption(
-                "datetimepicker.datetimeCreator",
-                (d: Date) => new Date(d),
-            )(date),
+        type: Function as PropType<() => Date>,
+        default: () =>
+            getOption("datetimepicker.datetimeCreator", () => new Date())(),
     },
     /** Dropdown position */
     position: { type: String, default: undefined },
@@ -175,9 +172,9 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {Date | Date[]} updated modelValue prop
+     * @param value {Date} updated modelValue prop
      */
-    (e: "update:modelValue", value: Date | Date[]): void;
+    (e: "update:modelValue", value: Date): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -241,7 +238,7 @@ watch(
     (value) => (timepickerProps.value = value),
     { deep: true },
 );
-const datepickerProps = ref<DatepickerProps>(props.datepicker);
+const datepickerProps = ref<DatepickerProps | undefined>(props.datepicker);
 watch(
     () => props.datepicker,
     (value) => (datepickerProps.value = value),
@@ -274,19 +271,17 @@ const { defaultDatetimeFormatter, defaultDatetimeParser } =
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<Date | null>({ default: null });
+const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
 
-function updateVModel(value: Date | Date[] | null): void {
+function updateVModel(value: Date | Date[] | undefined): void {
     if (!value) {
-        vmodel.value = null;
+        vmodel.value = undefined;
         return;
     }
     if (Array.isArray(value)) return updateVModel(value[0]);
 
     let date = new Date(value.getTime());
-    if (!props.modelValue) {
-        date = props.datetimeCreator(value);
-    } else {
+    if (props.modelValue) {
         // restore time part
         if (
             (value.getDate() !== props.modelValue.getDate() ||
@@ -314,8 +309,7 @@ function updateVModel(value: Date | Date[] | null): void {
 }
 
 const minDate = computed(() => {
-    if (!props.minDatetime)
-        return datepickerProps.value ? datepickerProps.value.minDate : null;
+    if (!props.minDatetime) return datepickerProps.value?.minDate;
     return new Date(
         props.minDatetime.getFullYear(),
         props.minDatetime.getMonth(),
@@ -328,8 +322,7 @@ const minDate = computed(() => {
 });
 
 const maxDate = computed(() => {
-    if (!props.maxDatetime)
-        return datepickerProps.value ? datepickerProps.value.maxDate : null;
+    if (!props.maxDatetime) return datepickerProps.value?.maxDate;
     return new Date(
         props.maxDatetime.getFullYear(),
         props.maxDatetime.getMonth(),
@@ -394,17 +387,20 @@ function format(value: Date): string {
 }
 
 /** Parse string into date */
-function parse(value: string): Date | null {
-    // call prop function
-    let date = props.datetimeParser(value);
-    // call default if prop function is not given
-    if (typeof date === "undefined") date = defaultDatetimeParser(value);
-    return isDate(date) ? date : null;
+function parse(value: string): Date | undefined {
+    const date =
+        typeof props.datetimeParser === "function"
+            ? // call prop function
+              props.datetimeParser(value)
+            : // call default if prop function is not given
+              defaultDatetimeParser(value);
+
+    return isDate(date) ? date : undefined;
 }
 
-function formatNative(value: Date | null): string {
-    const date = value ? new Date(value) : new Date();
-    if (value && !isNaN(date.getTime())) {
+function formatNative(value: typeof props.modelValue): string {
+    const date = value ? new Date(value) : undefined;
+    if (date && isDate(date)) {
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
         const day = date.getDate();
@@ -444,7 +440,7 @@ function onChangeNativePicker(event: Event): void {
         // type=datetime-local and cause the control to fail native validation
         updateVModel(new Date(year, month, day, hours, minutes));
     } else {
-        updateVModel(null);
+        updateVModel(undefined);
     }
 }
 

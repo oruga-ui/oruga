@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-const selected = ref<Date | null>(null);
+const selected = ref<Date>();
+
 const selectedString = computed(() =>
     selected.value ? selected.value.toDateString() : "",
 );
@@ -15,6 +16,7 @@ const selectedString = computed(() =>
                     <o-button icon-left="calendar" type="primary" />
                 </template>
             </o-datepicker>
+
             <o-input readonly :value="selectedString" expanded />
         </o-field>
     </section>

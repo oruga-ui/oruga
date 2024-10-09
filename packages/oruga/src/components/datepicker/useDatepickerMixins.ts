@@ -1,6 +1,6 @@
 import { computed } from "vue";
 import { matchWithGroups } from "./utils";
-import type { DatepickerProps } from "./types";
+import type { DatepickerProps } from "./props";
 import { isTrueish } from "@/utils/helpers";
 
 /** Time Format Feature */
@@ -89,7 +89,10 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
     );
 
     const sampleTime = computed(() => {
-        const d = props.dateCreator();
+        const d =
+            typeof props.dateCreator === "function"
+                ? props.dateCreator()
+                : new Date();
         d.setHours(10);
         d.setSeconds(0);
         d.setMinutes(0);

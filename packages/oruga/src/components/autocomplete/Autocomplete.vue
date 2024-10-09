@@ -318,7 +318,7 @@ const emits = defineEmits<{
      * selected element changed event
      * @param value {string | object} selected value
      */
-    (e: "select", value: T | undefined, evt?: Event): void;
+    (e: "select", value: T | undefined, evt: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
@@ -391,11 +391,11 @@ const selectedOption = defineModel<T | undefined>({ default: undefined });
 /** The value of the inner input, use v-model:input to make it two-way binding */
 const vmodel = defineModel<string>("input", { default: "" });
 
-const hoveredOption = ref<T | null>();
+const hoveredOption = ref<T>();
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
-const hoveredId = ref(null);
+const hoveredId = ref<number>();
 const menuId = useId();
 
 /** options filtered by input value */
@@ -476,7 +476,7 @@ watch(
         // Keep first option always pre-selected
         if (props.keepFirst) {
             if (isActive.value) hoverFirstOption();
-            else setHovered(null);
+            else setHovered(undefined);
         } else if (hoveredOption.value) {
             // reset hovered if list doesn't contain it
             const hoveredValue = getValue(hoveredOption.value);
@@ -485,7 +485,7 @@ watch(
                 .reduce((a, b) => [...a, ...b], []);
             const index = data.findIndex((d) => getValue(d) === hoveredValue);
             if (index >= 0) setHoveredIdToIndex(index);
-            else setHovered(null);
+            else setHovered(undefined);
         }
     },
     { flush: "post" },
@@ -520,12 +520,12 @@ function setSelected(
     event?: Event,
 ): void {
     selectedOption.value = option;
-    emits("select", option, event);
+    emits("select", option, event || new Event("select"));
 
     if (option) {
         if (props.clearOnSelect) vmodel.value = "";
         else vmodel.value = getValue(option);
-        setHovered(null);
+        setHovered(undefined);
     } else vmodel.value = "";
 
     if (closeDropdown) nextTick(() => (isActive.value = false));
@@ -543,7 +543,7 @@ function selectHeaderOrFooterByClick(
         (headerHovered.value || origin === SpecialOption.Header)
     ) {
         emits("select-header", event);
-        if (origin) setHovered(null);
+        if (origin) setHovered(undefined);
         if (closeDropdown) isActive.value = false;
     }
     if (
@@ -551,7 +551,7 @@ function selectHeaderOrFooterByClick(
         (footerHovered.value || origin === SpecialOption.Footer)
     ) {
         emits("select-footer", event);
-        if (origin) setHovered(null);
+        if (origin) setHovered(undefined);
         if (closeDropdown) isActive.value = false;
     }
 }
@@ -559,11 +559,11 @@ function selectHeaderOrFooterByClick(
 // --- Hover Feature ---
 
 /** Set which option is currently hovered. */
-function setHovered(option: T | SpecialOption | null): void {
-    hoveredOption.value = isSpecialOption(option) ? null : option;
+function setHovered(option: T | SpecialOption | undefined): void {
+    hoveredOption.value = isSpecialOption(option) ? undefined : option;
     headerHovered.value = option === SpecialOption.Header;
     footerHovered.value = option === SpecialOption.Footer;
-    hoveredId.value = null;
+    hoveredId.value = undefined;
 }
 
 /** Set which option is the aria-activedescendant by index. */
@@ -583,7 +583,7 @@ function hoverFirstOption(): void {
             setHovered(option);
             setHoveredIdToIndex(0);
         } else {
-            setHovered(null);
+            setHovered(undefined);
         }
     });
 }
@@ -732,11 +732,11 @@ function rightIconClick(event: Event): void {
 // --- InfitiveScroll Feature ---
 
 onMounted(() => {
-    if (isClient && props.checkScroll)
+    if (isClient && props.checkScroll && dropdownRef.value?.$content)
         useEventListener(
             "scroll",
             checkDropdownScroll,
-            dropdownRef.value!.$content,
+            dropdownRef.value.$content,
             { immediate: true },
         );
 });

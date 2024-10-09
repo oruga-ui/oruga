@@ -76,7 +76,7 @@ export function defineClasses(
             );
 
             // if apply is not defined or true
-            const applied = !isDefined(apply) || toValue(apply) || false;
+            const applied = !isDefined(apply) || toValue(apply);
 
             // return class bind property
             return { [computedClass]: applied };

@@ -16,7 +16,7 @@ const months = [
     { name: "December", value: 11 },
 ];
 
-const date = ref<Date | null>(new Date());
+const date = ref<Date | undefined>(new Date());
 const month = ref<string>();
 
 function selectMonth(option): void {
@@ -29,9 +29,9 @@ function selectMonth(option): void {
 onMounted(() => {
     if (!date.value) return;
 
-    month.value = months.filter(
+    month.value = months.find(
         (item) => item.value == date.value!.getMonth(),
-    )[0].name;
+    )?.name;
 });
 </script>
 
@@ -58,6 +58,7 @@ onMounted(() => {
                             :label="date?.getFullYear().toString()" />
                     </o-field>
                 </template>
+
                 <template #footer>
                     <div class="footer-container">
                         <o-button
@@ -69,7 +70,7 @@ onMounted(() => {
                             variant="danger"
                             icon-left="times"
                             label="Clear"
-                            @click="date = null" />
+                            @click="date = undefined" />
                     </div>
                 </template>
             </o-datepicker>

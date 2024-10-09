@@ -66,14 +66,9 @@ const props = withDefaults(
         openOnFocus: () => getOption("datepicker.openOnFocus", true),
         closeOnClick: () => getOption("datepicker.closeOnClick", true),
         locale: () => getOption("locale"),
-        dateFormatter: getOption<(date) => string>("datepicker.dateFormatter"),
-        dateParser: (date: string) =>
-            getOption<(date: string) => any>(
-                "datepicker.dateParser",
-                () => undefined,
-            )(date),
-        dateCreator: () =>
-            getOption("datepicker.dateCreator", () => new Date())(),
+        dateFormatter: getOption("datepicker.dateFormatter"),
+        dateParser: getOption("datepicker.dateParser"),
+        dateCreator: getOption("datepicker.dateCreator"),
         selectableDates: undefined,
         unselectableDates: undefined,
         unselectableDaysOfWeek: () =>
@@ -405,18 +400,19 @@ function format(value: Date | Date[], isNative: boolean): string {
 
     // define function prop
     const date = (Array.isArray(value) ? [...value] : value) as ModelValue;
-    // call prop function
-    const formatted = props.dateFormatter(date);
-    // call default if prop function is not given
-    if (typeof formatted === "undefined") return defaultDateFormatter(date);
-    else return formatted;
+
+    return typeof props.dateFormatter === "function"
+        ? // call prop function
+          props.dateFormatter(date)
+        : // call default if prop function is not given
+          defaultDateFormatter(date);
 }
 
 function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) value = value[0];
     const date = new Date(value);
     // return empty string if no value is given or value can't parse to proper date
-    if (!value || !date || isNaN(date.getTime())) return "";
+    if (!value || !isDate(date)) return "";
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'
@@ -433,13 +429,15 @@ function formatNative(value: Date | Date[]): string {
 }
 
 /** Parse string into date */
-function parse(value: string, isNative: boolean): Date | Date[] {
+function parse(value: string, isNative: boolean): Date | Date[] | undefined {
     if (isNative) return parseNative(value);
 
-    // call prop function
-    let date = props.dateParser(value);
-    // call default if prop function is not given
-    if (typeof date === "undefined") date = defaultDateParser(value);
+    const date =
+        typeof props.dateParser === "function"
+            ? // call prop function
+              props.dateParser(value)
+            : // call default if prop function is not given
+              defaultDateParser(value);
 
     const isValid =
         isDate(date) ||
@@ -448,13 +446,13 @@ function parse(value: string, isNative: boolean): Date | Date[] {
             isDate(date[0]) &&
             isDate(date[1]));
 
-    return isValid && date ? date : new Date();
+    return isValid ? date : undefined;
 }
 
 /** Parse date from string */
-function parseNative(value: string): Date {
+function parseNative(value: string): Date | undefined {
     const s = value ? value.split("-") : [];
-    if (s.length !== 3) return new Date();
+    if (s.length !== 3) return undefined;
     const year = parseInt(s[0], 10);
     const month = parseInt(s[1]) - 1;
     const day = parseInt(s[2]);
@@ -628,7 +626,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             :options="listOfMonths"
-                            :multiple="false"
                             :use-html5-validation="false"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next" />

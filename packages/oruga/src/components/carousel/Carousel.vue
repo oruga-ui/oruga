@@ -248,7 +248,7 @@ const { childItems } = useProviderParent(rootRef, { data: provideData });
 const activeIndex = defineModel<number>({ default: 0 });
 const scrollIndex = ref(props.modelValue);
 
-const resizeObserver = ref<ResizeObserver | null>(null);
+const resizeObserver = ref<ResizeObserver>();
 const windowWidth = ref(0);
 
 const refresh_ = ref(0);
@@ -392,8 +392,7 @@ function onModeChange(trigger: string, index: number): void {
 // --- Autoplay Feature ---
 
 const isHovered = ref(false);
-const isPaused = ref(false);
-const timer = ref<NodeJS.Timeout | null>(null);
+let timer: NodeJS.Timeout | undefined;
 
 function onMouseEnter(): void {
     isHovered.value = true;
@@ -423,19 +422,17 @@ watch(
 );
 
 function startTimer(): void {
-    if (!props.autoplay || timer.value) return;
-    isPaused.value = false;
-    timer.value = setInterval(() => {
+    if (!props.autoplay || timer) return;
+    timer = setInterval(() => {
         if (!props.repeat && !hasNext.value) pauseTimer();
         else onNext();
     }, props.interval);
 }
 
 function pauseTimer(): void {
-    isPaused.value = true;
-    if (timer.value) {
-        clearInterval(timer.value);
-        timer.value = null;
+    if (timer) {
+        clearInterval(timer);
+        timer = undefined;
     }
 }
 

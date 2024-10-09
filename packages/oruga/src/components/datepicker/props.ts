@@ -5,7 +5,7 @@ import type { DropdownProps } from "../dropdown/types";
 import type { InputProps } from "../input/types";
 
 type DatepickerType<IsRange, IsMultiple> = IsRange extends true
-    ? [Date, Date] | Date[]
+    ? [Date, Date] | []
     : IsMultiple extends true
       ? Date[]
       : Date;

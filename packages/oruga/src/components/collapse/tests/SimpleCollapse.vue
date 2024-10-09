@@ -2,8 +2,7 @@
 import { ref } from "vue";
 import OCollapse from "../Collapse.vue";
 
-const isOpen = ref(0);
-const collapses = ref([
+const collapses = [
     {
         title: "Title 1",
         text: "Text 1",
@@ -16,7 +15,9 @@ const collapses = ref([
         title: "Title 3",
         text: "Text 3",
     },
-]);
+];
+
+const isOpen = ref(0);
 </script>
 
 <template>
@@ -38,8 +39,8 @@ const collapses = ref([
                         {{ collapse.title }}
                     </p>
                     <a class="card-header-icon">
-                        <o-icon :icon="props.open ? 'caret-up' : 'caret-down'">
-                        </o-icon>
+                        <o-icon
+                            :icon="props.open ? 'caret-up' : 'caret-down'" />
                     </a>
                 </div>
             </template>

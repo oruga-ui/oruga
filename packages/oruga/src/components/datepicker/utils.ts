@@ -66,9 +66,9 @@ export function getWeekdayNames(
 export function matchWithGroups(pattern: string, str: string): any {
     const matches = str.match(pattern);
     return (
+        // get the pattern as a string
         pattern
-            // get the pattern as a string
-            ?.toString()
+            .toString()
             // suss out the groups
             .match(/<(.+?)>/g)
             // remove the braces

@@ -3,7 +3,7 @@ import { ref } from "vue";
 import OAutocomplete from "../Autocomplete.vue";
 import OField from "../../field/Field.vue";
 
-const data = [
+const options = [
     "Angular",
     "Angular 2",
     "Aurelia",
@@ -27,7 +27,7 @@ const selected = ref<string>();
         <o-autocomplete
             v-model="name"
             rounded
-            :data="data"
+            :options="options"
             placeholder="e.g. jQuery"
             icon="search"
             clearable

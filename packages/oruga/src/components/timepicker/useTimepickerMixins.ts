@@ -129,8 +129,8 @@ export function useTimepickerMixins(props: TimepickerProps) {
         return dtf.value.format(time);
     }
 
-    function defaultTimeParser(time: string): Date | null {
-        if (!time) return null;
+    function defaultTimeParser(time: string): Date | undefined {
+        if (!time) return undefined;
 
         if (
             dtf.value.formatToParts &&
@@ -212,7 +212,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
             minutes < 0 ||
             minutes > 59
         ) {
-            return null;
+            return undefined;
         }
         const date = new Date(sampleTime.value);
         date.setSeconds(seconds);

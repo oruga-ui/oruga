@@ -7,19 +7,14 @@ import {
     onMounted,
     useAttrs,
     useId,
-    type StyleValue,
     useTemplateRef,
+    type StyleValue,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    useDebounce,
-    useInputHandler,
-    useVModel,
-} from "@/composables";
+import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -75,13 +70,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: NonNullable<ModelValue>): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input change event
-     * @param value {string | number} input value
+     * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: NonNullable<ModelValue>, event: Event): void;
+    (e: "input", value: string, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -132,8 +127,13 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
+const vmodel = defineModel<ModelValue, string, string, ModelValue>({
+    // cast incomming value to string
+    get: (value) => (typeof value !== "undefined" ? String(value) : ""),
+    // cast outgoing value to number if prop number is true
+    set: (value) => (props.number ? Number(value) : String(value)),
+    default: undefined,
+});
 
 // if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -190,18 +190,13 @@ let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
 
 watch(
     () => props.debounce,
-    () => {
-        debouncedInput = useDebounce(onInput, props.debounce || 0);
-    },
+    (debounce) => (debouncedInput = useDebounce(onInput, debounce || 0)),
     { immediate: true },
 );
 
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const input = (
-        props.number ? Number(value) : String(value)
-    ) as NonNullable<ModelValue>;
-    emits("input", input, event);
+    emits("input", value, event);
 }
 
 // --- Icon Feature ---
