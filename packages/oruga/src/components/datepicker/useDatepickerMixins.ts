@@ -89,10 +89,7 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
     );
 
     const sampleTime = computed(() => {
-        const d =
-            typeof props.dateCreator === "function"
-                ? props.dateCreator()
-                : new Date();
+        const d = dateCreator();
         d.setHours(10);
         d.setSeconds(0);
         d.setMinutes(0);
@@ -100,8 +97,16 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
         return d;
     });
 
+    function dateCreator(): Date {
+        return typeof props.creator === "function"
+            ? props.creator()
+            : new Date();
+    }
+
     /** Format date into string */
-    const defaultDateFormatter = (date: typeof props.modelValue): string => {
+    function dateFormatter(date: typeof props.modelValue): string {
+        if (typeof props.formatter === "function") return props.formatter(date);
+
         if (!date) return "";
         const targetDates: Date[] = Array.isArray(date) ? date : [date];
         if (!targetDates.length) return "";
@@ -120,10 +125,12 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
         return !isTrueish(props.multiple) && !isTrueish(props.range)
             ? dates.join(" - ")
             : dates.join(", ");
-    };
+    }
 
     /** Parse a string into a date */
-    const defaultDateParser = (date: string): typeof props.modelValue => {
+    function dateParser(date: string): typeof props.modelValue {
+        if (typeof props.parser === "function") return props.parser(date);
+
         if (!date) return undefined;
         const isArray = isTrueish(props.multiple) || isTrueish(props.range);
         const targetDates = !isArray ? [date] : date.split(", ");
@@ -181,12 +188,13 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
             }
         });
         return (isArray ? dates : dates[0]) as typeof props.modelValue;
-    };
+    }
 
     return {
         dtf,
         isDateSelectable,
-        defaultDateParser,
-        defaultDateFormatter,
+        dateCreator,
+        dateParser,
+        dateFormatter,
     };
 }

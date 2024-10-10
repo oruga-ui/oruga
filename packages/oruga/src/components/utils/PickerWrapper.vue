@@ -7,6 +7,7 @@ import {
     nextTick,
     type PropType,
     type ComponentInstance,
+    triggerRef,
 } from "vue";
 
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -48,7 +49,7 @@ const props = defineProps({
     /** format props value to input value */
     formatter: {
         type: Function as PropType<
-            (value: Date | Date[], isNative: boolean) => string
+            (value: Date | Date[] | undefined, isNative: boolean) => string
         >,
         required: true,
     },
@@ -149,9 +150,7 @@ watch(
     () => props.value,
     (value) => {
         // update internal value
-        inputValue.value = value
-            ? props.formatter(value, isMobileNative.value)
-            : "";
+        inputValue.value = props.formatter(value, isMobileNative.value);
 
         // toggle picker if not stay open
         if (!isMobileNative.value && !props.stayOpen) togglePicker(false);
@@ -177,7 +176,10 @@ function setValue(value: string): void {
     else if (isDefined(date)) date = checkMinMaxDate(date);
 
     // reparse to string for internal value
-    inputValue.value = date ? props.formatter(date, isMobileNative.value) : "";
+    inputValue.value = props.formatter(date, isMobileNative.value);
+
+    triggerRef(inputValue);
+
     // update the prop value
     emits("update:value", date);
 }

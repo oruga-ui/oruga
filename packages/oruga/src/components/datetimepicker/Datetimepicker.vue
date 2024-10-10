@@ -85,21 +85,21 @@ const props = defineProps({
         default: () => getOption("locale"),
     },
     /** Custom function to format a date into a string */
-    datetimeFormatter: {
+    formatter: {
         type: Function as PropType<(date: Date) => string>,
         default: (date: Date | Date[]) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("datetimepicker.dateFormatter", (_) => undefined)(date),
     },
     /** Custom function to parse a string into a date */
-    datetimeParser: {
+    parser: {
         type: Function as PropType<(date: string) => Date | undefined>,
         default: (date: string) =>
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             getOption("datetimepicker.dateParser", (_) => undefined)(date),
     },
     /** Date creator function, default is `new Date()` */
-    datetimeCreator: {
+    creator: {
         type: Function as PropType<() => Date>,
         default: () =>
             getOption("datetimepicker.datetimeCreator", () => new Date())(),
@@ -265,8 +265,7 @@ watch([() => isMobileNative.value, () => props.inline], () => {
     if (datepickerRef.value) datepickerRef.value.$forceUpdate();
 });
 
-const { defaultDatetimeFormatter, defaultDatetimeParser } =
-    useDateimepickerMixins(props);
+const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -379,21 +378,12 @@ const timepickerDisabled = computed(
 
 /** Format date into string */
 function format(value: Date): string {
-    // call prop function
-    const date = props.datetimeFormatter(value);
-    // call default if prop function is not given
-    if (typeof date === "undefined") return defaultDatetimeFormatter(value);
-    else return date;
+    return datetimeFormatter(value);
 }
 
 /** Parse string into date */
 function parse(value: string): Date | undefined {
-    const date =
-        typeof props.datetimeParser === "function"
-            ? // call prop function
-              props.datetimeParser(value)
-            : // call default if prop function is not given
-              defaultDatetimeParser(value);
+    const date = datetimeParser(value);
 
     return isDate(date) ? date : undefined;
 }

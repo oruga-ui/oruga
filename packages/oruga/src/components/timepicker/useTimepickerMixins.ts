@@ -37,7 +37,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
     );
 
     const sampleTime = computed(() => {
-        const d = props.timeCreator ? props.timeCreator() : new Date();
+        const d = timeCreator();
         d.setHours(10);
         d.setSeconds(0);
         d.setMinutes(0);
@@ -124,12 +124,22 @@ export function useTimepickerMixins(props: TimepickerProps) {
         return undefined;
     });
 
-    function defaultTimeFormatter(time: Date): string {
+    function timeCreator(): Date {
+        return typeof props.creator === "function"
+            ? props.creator()
+            : new Date();
+    }
+
+    function timeFormatter(time: Date | undefined): string {
+        if (typeof props.formatter === "function") return props.formatter(time);
+
         if (!time) return "00:00";
         return dtf.value.format(time);
     }
 
-    function defaultTimeParser(time: string): Date | undefined {
+    function timeParser(time: string): Date | undefined {
+        if (typeof props.parser === "function") return props.parser(time);
+
         if (!time) return undefined;
 
         if (
@@ -230,8 +240,9 @@ export function useTimepickerMixins(props: TimepickerProps) {
 
     return {
         dtf,
-        defaultTimeFormatter,
-        defaultTimeParser,
+        timeCreator,
+        timeFormatter,
+        timeParser,
         pmString,
         amString,
         meridiens,

@@ -66,9 +66,9 @@ const props = withDefaults(
         openOnFocus: () => getOption("datepicker.openOnFocus", true),
         closeOnClick: () => getOption("datepicker.closeOnClick", true),
         locale: () => getOption("locale"),
-        dateFormatter: getOption("datepicker.dateFormatter"),
-        dateParser: getOption("datepicker.dateParser"),
-        dateCreator: getOption("datepicker.dateCreator"),
+        formatter: getOption("datepicker.formatter"),
+        parser: getOption("datepicker.parser"),
+        creator: getOption("datepicker.creator"),
         selectableDates: undefined,
         unselectableDates: undefined,
         unselectableDaysOfWeek: () =>
@@ -165,7 +165,7 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const { dtf, defaultDateFormatter, defaultDateParser } =
+const { dtf, dateCreator, dateFormatter, dateParser } =
     useDatepickerMixins(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -192,10 +192,10 @@ watch(
         const currentDate: Date = isArray
             ? value.length
                 ? value[value.length - 1]
-                : props.dateCreator()
+                : dateCreator()
             : value
               ? value
-              : props.dateCreator();
+              : dateCreator();
         if (
             !isArray ||
             (isArray &&
@@ -229,7 +229,7 @@ const _initialDate: Date =
         ? props.modelValue[0]
         : props.modelValue) ||
     props.focusedDate ||
-    props.dateCreator();
+    dateCreator();
 
 if (
     !props.modelValue &&
@@ -401,11 +401,7 @@ function format(value: Date | Date[], isNative: boolean): string {
     // define function prop
     const date = (Array.isArray(value) ? [...value] : value) as ModelValue;
 
-    return typeof props.dateFormatter === "function"
-        ? // call prop function
-          props.dateFormatter(date)
-        : // call default if prop function is not given
-          defaultDateFormatter(date);
+    return dateFormatter(date);
 }
 
 function formatNative(value: Date | Date[]): string {
@@ -432,12 +428,7 @@ function formatNative(value: Date | Date[]): string {
 function parse(value: string, isNative: boolean): Date | Date[] | undefined {
     if (isNative) return parseNative(value);
 
-    const date =
-        typeof props.dateParser === "function"
-            ? // call prop function
-              props.dateParser(value)
-            : // call default if prop function is not given
-              defaultDateParser(value);
+    const date = dateParser(value);
 
     const isValid =
         isDate(date) ||
