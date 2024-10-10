@@ -159,7 +159,7 @@ function addHandler(): void {
 function removeHandler(): void {
     if (isClient) {
         if (window.ResizeObserver && resizeObserver)
-            resizeObserver?.disconnect();
+            resizeObserver.disconnect();
         window.removeEventListener("resize", updatePositioning);
         document.removeEventListener("scroll", updatePositioning);
         scrollingParent.value = undefined;

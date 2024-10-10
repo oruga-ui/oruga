@@ -11,12 +11,12 @@
 
         <o-field>
             <o-upload drag-drop disabled>
-                <center>
+                <div style="text-align: center">
                     <p>
                         <o-icon icon="upload" size="is-large" />
                     </p>
                     <p>Drop your files here or click to upload</p>
-                </center>
+                </div>
             </o-upload>
         </o-field>
     </section>

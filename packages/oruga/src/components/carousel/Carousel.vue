@@ -248,8 +248,12 @@ const { childItems } = useProviderParent(rootRef, { data: provideData });
 const activeIndex = defineModel<number>({ default: 0 });
 const scrollIndex = ref(props.modelValue);
 
-const resizeObserver = ref<ResizeObserver>();
+let resizeObserver: ResizeObserver | undefined;
 const windowWidth = ref(0);
+
+if (isClient && window.ResizeObserver) {
+    resizeObserver = new window.ResizeObserver(onRefresh);
+}
 
 const refresh_ = ref(0);
 
@@ -266,10 +270,9 @@ watch([() => props.itemsToList, () => props.itemsToShow], () => onRefresh());
 
 onMounted(() => {
     if (isClient) {
-        if (window.ResizeObserver) {
-            resizeObserver.value = new window.ResizeObserver(onRefresh);
-            resizeObserver.value.observe(rootRef.value);
-        }
+        if (window.ResizeObserver && resizeObserver)
+            resizeObserver.observe(rootRef.value);
+
         onResized();
         startTimer();
     }
@@ -277,8 +280,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     if (isClient) {
-        if (window.ResizeObserver && resizeObserver.value)
-            resizeObserver.value.disconnect();
+        if (window.ResizeObserver && resizeObserver)
+            resizeObserver.disconnect();
+
         dragEnd();
         pauseTimer();
     }

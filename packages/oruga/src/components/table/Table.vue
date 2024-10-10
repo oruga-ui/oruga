@@ -1081,7 +1081,7 @@ function isRowFiltered(row: T): boolean {
                 (val) =>
                     re.test(removeDiacriticsFromString(val)) || re.test(val),
             );
-        if (typeof value !== "string") return value;
+        if (typeof value !== "string") return !!value;
         return re.test(removeDiacriticsFromString(value)) || re.test(value);
     });
 }

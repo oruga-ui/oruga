@@ -55,6 +55,7 @@ const useNotificationProgrammatic = {
 
         const componentProps: NotifcationNoticeProps = {
             position: getOption("notification.position", "top-right"),
+            container: document.body,
             ..._options, // pass all props to the internal notification component
         };
 

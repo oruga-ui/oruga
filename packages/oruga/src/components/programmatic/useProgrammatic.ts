@@ -60,14 +60,13 @@ export const useProgrammatic = {
         options = { instances, ...options };
 
         // define the target container - either HTML `body` or by a given query selector
-        let target =
+        const target =
             typeof options.target === "string"
-                ? document.querySelector<HTMLElement>(options.target)
+                ? document.querySelector<HTMLElement>(options.target) ||
+                  document.body
                 : isElement(options?.target)
                   ? options.target
-                  : null;
-
-        if (!target) target = document.body;
+                  : document.body;
 
         // cache container
         let container: HTMLDivElement | null = document.createElement("div");

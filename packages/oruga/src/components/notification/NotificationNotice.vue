@@ -37,7 +37,7 @@ const props = defineProps({
      */
     container: {
         type: Object as PropType<HTMLElement>,
-        default: document.body,
+        required: true,
     },
     /**
      * Which position the notification will appear.
