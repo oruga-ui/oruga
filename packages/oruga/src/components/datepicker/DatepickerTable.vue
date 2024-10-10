@@ -115,9 +115,9 @@ function eventsInThisWeek(week: Date[]): DatepickerEvent[] {
 
 const hoveredDateRange = computed<Date[]>(() => {
     if (!isTrueish(props.pickerProps.range) || selectedEndDate.value) return [];
-    if (!hoveredEndDate.value || !selectedBeginDate.value) return [];
+
     return (
-        hoveredEndDate.value < selectedBeginDate.value
+        (hoveredEndDate.value || 0) < (selectedBeginDate.value || 0)
             ? [hoveredEndDate.value, selectedBeginDate.value]
             : [selectedBeginDate.value, hoveredEndDate.value]
     ).filter(isDefined);
@@ -173,6 +173,7 @@ function onSelectedDate(date: Date): void {
  * If not set, only set the begin date.
  */
 function handleSelectRangeDate(date: Date): void {
+    console.log(selectedBeginDate.value, selectedEndDate.value, date);
     if (selectedBeginDate.value && selectedEndDate.value) {
         selectedBeginDate.value = date;
         selectedEndDate.value = undefined;

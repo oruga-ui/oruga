@@ -14,6 +14,8 @@ import {
 import { isDefined, isTrueish } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
+import { useDatepickerMixins } from "./useDatepickerMixins";
+
 import type { DatepickerEvent, FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
 import type { ClassBind } from "@/types";
@@ -45,6 +47,8 @@ const emits = defineEmits<{
     (e: "range-start", value: Date): void;
     (e: "range-end", value: Date): void;
 }>();
+
+const { dateCreator } = useDatepickerMixins(props.pickerProps);
 
 const selectedBeginDate = ref<Date>();
 const selectedEndDate = ref<Date>();
@@ -446,12 +450,7 @@ function cellClasses(day: Date): ClassBind[] {
             "monthCellTodayClass",
             "o-dpck__month__cell--today",
             null,
-            dateMatch(
-                day,
-                props.pickerProps.dateCreator
-                    ? props.pickerProps.dateCreator()
-                    : new Date(),
-            ),
+            dateMatch(day, dateCreator()),
         ],
         [
             "monthCellSelectableclass",

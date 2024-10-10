@@ -5,7 +5,6 @@ import {
     useTemplateRef,
     watch,
     type ComponentPublicInstance,
-    type PropType,
 } from "vue";
 
 import ODatepicker from "../datepicker/Datepicker.vue";
@@ -19,8 +18,8 @@ import { defineClasses, useInputHandler } from "@/composables";
 import { useDateimepickerMixins } from "./useDatetimepickerMixin";
 
 import type { DatepickerProps } from "../datepicker/props";
-import type { TimepickerProps } from "../timepicker/types";
-import type { ComponentClass } from "@/types";
+import type { TimepickerProps } from "../timepicker/props";
+import type { DatetimepickerProps } from "./props";
 
 /**
  * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
@@ -34,139 +33,35 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The input value state */
-    modelValue: { type: [Date], default: undefined },
-    /** The active state of the dropdown, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-    /** Define props for the underlying datepicker component */
-    datepicker: {
-        type: Object as PropType<DatepickerProps>,
-        default: undefined,
-    },
-    /** Define props for the underlying timepicker component */
-    timepicker: {
-        type: Object as PropType<TimepickerProps>,
-        default: undefined,
-    },
-    /** Min date to select */
-    minDatetime: { type: Date, default: undefined },
-    /** Max date to select */
-    maxDatetime: { type: Date, default: undefined },
-    /**
-     * Size of the input control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("datetimepicker.size"),
-    } /** Makes input full width when inside a grouped or addon field */,
-    expanded: { type: Boolean, default: false },
-    /** Makes the input rounded */
-    rounded: { type: Boolean, default: false },
-    /** Input placeholder */
-    placeholder: { type: String, default: undefined },
-    /** Same as native input readonly */
-    readonly: { type: Boolean, default: false },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Display datetimepicker inline */
-    inline: { type: Boolean, default: false },
-    /** Open dropdown on focus */
-    openOnFocus: {
-        type: Boolean,
-        default: () => getOption("datetimepicker.openOnFocus", true),
-    },
-    /** Date format locale */
-    locale: {
-        type: String,
-        default: () => getOption("locale"),
-    },
-    /** Custom function to format a date into a string */
-    formatter: {
-        type: Function as PropType<(date: Date) => string>,
-        default: (date: Date | Date[]) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("datetimepicker.dateFormatter", (_) => undefined)(date),
-    },
-    /** Custom function to parse a string into a date */
-    parser: {
-        type: Function as PropType<(date: string) => Date | undefined>,
-        default: (date: string) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("datetimepicker.dateParser", (_) => undefined)(date),
-    },
-    /** Date creator function, default is `new Date()` */
-    creator: {
-        type: Function as PropType<() => Date>,
-        default: () =>
-            getOption("datetimepicker.datetimeCreator", () => new Date())(),
-    },
-    /** Dropdown position */
-    position: { type: String, default: undefined },
-    /** Enable mobile native input if mobile agent */
-    mobileNative: {
-        type: Boolean,
-        default: () => getOption("datetimepicker.mobileNative", true),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("datetimepicker.iconPack", undefined),
-    },
-    /** Icon to be shown */
-    icon: {
-        type: String,
-        default: () => getOption("datetimepicker.icon", undefined),
-    },
-    /** Icon to be added on the right side */
-    iconRight: {
-        type: String,
-        default: () => getOption("datetimepicker.iconRight", undefined),
-    },
-    /** Make the icon right clickable */
-    iconRightClickable: { type: Boolean, default: false },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("datetimepicker.teleport", false),
-    },
-    /** Enable HTML 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** Custom HTML 5 validation error to set on the form control */
-    customValidity: {
-        type: [String, Function] as PropType<
-            | string
-            | ((
-                  currentValue: Date | null | undefined,
-                  state: ValidityState,
-              ) => string)
-        >,
-        default: "",
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the Datepicker wrapper */
-    datepickerWrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Timepicker wrapper */
-    timepickerWrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<DatetimepickerProps>(), {
+    override: undefined,
+    modelValue: undefined,
+    active: false,
+    datepicker: undefined,
+    timepicker: undefined,
+    minDatetime: undefined,
+    maxDatetime: undefined,
+    size: () => getOption("datetimepicker.size"),
+    expanded: false,
+    rounded: false,
+    placeholder: undefined,
+    readonly: false,
+    disabled: false,
+    inline: false,
+    openOnFocus: () => getOption("datetimepicker.openOnFocus", true),
+    locale: () => getOption("locale"),
+    formatter: getOption("datetimepicker.dateFormatter"),
+    parser: getOption("datetimepicker.dateParser"),
+    creator: getOption("datetimepicker.datetimeCreator"),
+    position: undefined,
+    mobileNative: () => getOption("datetimepicker.mobileNative", true),
+    iconPack: () => getOption("datetimepicker.iconPack"),
+    icon: () => getOption("datetimepicker.icon"),
+    iconRight: () => getOption("datetimepicker.iconRight"),
+    iconRightClickable: false,
+    teleport: () => getOption("datetimepicker.teleport", false),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    customValidity: "",
 });
 
 const emits = defineEmits<{
@@ -468,8 +363,8 @@ defineExpose({ focus: setFocus, value: vmodel });
         :readonly="readonly"
         :expanded="expanded"
         :close-on-click="false"
-        :date-formatter="format"
-        :date-parser="parse"
+        :formatter="format"
+        :parser="parse"
         :min-date="minDate"
         :max-date="maxDate"
         :icon="icon"

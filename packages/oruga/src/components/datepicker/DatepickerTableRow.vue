@@ -35,7 +35,7 @@ const props = defineProps({
         default: undefined,
     },
     events: { type: Array as PropType<DatepickerEvent[]>, default: undefined },
-    hoveredDateRange: { type: Array as PropType<Date[]>, default: () => [] },
+    hoveredDateRange: { type: Array as PropType<Date[]>, required: true },
     pickerProps: {
         type: Object as PropType<DatepickerProps<IsRange, IsMultiple>>,
         required: true,
@@ -49,7 +49,9 @@ const emits = defineEmits<{
     (e: "week-number-click", value: number): void;
 }>();
 
-const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
+const { isDateSelectable, dateCreator } = useDatepickerMixins(
+    props.pickerProps,
+);
 
 const hasEvents = computed(() => !!props.events?.length);
 
@@ -304,12 +306,7 @@ function cellClasses(day: Date): ClassBind[] {
             "tableCellTodayClass",
             "o-dpck__table__cell--today",
             null,
-            dateMatch(
-                day,
-                props.pickerProps.dateCreator
-                    ? props.pickerProps.dateCreator()
-                    : new Date(),
-            ),
+            dateMatch(day, dateCreator()),
         ],
         [
             "tableCellSelectableClass",

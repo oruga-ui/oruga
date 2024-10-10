@@ -15,12 +15,7 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getOption } from "@/utils/config";
 import { isDate, pad } from "@/utils/helpers";
-import {
-    defineClasses,
-    getActiveClasses,
-    useMatchMedia,
-    useVModel,
-} from "@/composables";
+import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
@@ -173,8 +168,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-// const vmodel = defineModel<ModelValue>({ default: null });
-const vmodel = useVModel<ModelValue>();
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -395,7 +389,7 @@ function next(): void {
 // --- Formatter / Parser ---
 
 /** Format date into string */
-function format(value: Date | Date[], isNative: boolean): string {
+function format(value: Date | Date[] | undefined, isNative: boolean): string {
     if (isNative) return formatNative(value);
 
     // define function prop
@@ -404,11 +398,13 @@ function format(value: Date | Date[], isNative: boolean): string {
     return dateFormatter(date);
 }
 
-function formatNative(value: Date | Date[]): string {
+function formatNative(value: Date | Date[] | undefined): string {
     if (Array.isArray(value)) value = value[0];
-    const date = new Date(value);
+
     // return empty string if no value is given or value can't parse to proper date
-    if (!value || !isDate(date)) return "";
+    if (!value) return "";
+    const date = new Date(value);
+    if (!isDate(date)) return "";
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'

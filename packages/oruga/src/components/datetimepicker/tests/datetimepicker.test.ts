@@ -65,7 +65,7 @@ describe("ODatetimepicker tests", () => {
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toHaveLength(1);
-        expect(emits![0][0]).toBeNull();
+        expect(emits![0][0]).toBeUndefined();
         expect(input.element.value).toBe("");
 
         await input.setValue("21/06/wrong");

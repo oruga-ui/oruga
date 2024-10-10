@@ -7,7 +7,6 @@ import {
     nextTick,
     type PropType,
     type ComponentInstance,
-    triggerRef,
 } from "vue";
 
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -175,10 +174,11 @@ function setValue(value: string): void {
     if (Array.isArray(date)) date = date.map(checkMinMaxDate);
     else if (isDefined(date)) date = checkMinMaxDate(date);
 
-    // reparse to string for internal value
-    inputValue.value = props.formatter(date, isMobileNative.value);
-
-    triggerRef(inputValue);
+    nextTick(
+        () =>
+            // reparse to string for internal value
+            (inputValue.value = props.formatter(date, isMobileNative.value)),
+    );
 
     // update the prop value
     emits("update:value", date);

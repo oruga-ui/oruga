@@ -130,14 +130,14 @@ export function useTimepickerMixins(props: TimepickerProps) {
             : new Date();
     }
 
-    function timeFormatter(time: Date | undefined): string {
+    function timeFormatter(time: typeof props.modelValue): string {
         if (typeof props.formatter === "function") return props.formatter(time);
 
         if (!time) return "00:00";
         return dtf.value.format(time);
     }
 
-    function timeParser(time: string): Date | undefined {
+    function timeParser(time: string): typeof props.modelValue {
         if (typeof props.parser === "function") return props.parser(time);
 
         if (!time) return undefined;

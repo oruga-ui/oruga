@@ -89,7 +89,6 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
         if (typeof props.parser === "function") return props.parser(date);
 
         if (!date) return undefined;
-
         if (
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
