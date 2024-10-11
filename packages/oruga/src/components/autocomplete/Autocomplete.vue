@@ -419,7 +419,7 @@ const _groupOptions = computed<{ items: any[]; group?: string }[]>(() => {
                 if (typeof item === "string" || typeof item === "number")
                     return { group: item, items: [item] };
                 const group = getValueByPath<string>(item, props.groupField!);
-                const items = getValueByPath(item, props.groupOptions!);
+                const items = getValueByPath(item, props.groupOptions!, []);
                 return { group, items };
             });
         else

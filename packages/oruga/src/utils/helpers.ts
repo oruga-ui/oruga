@@ -210,13 +210,6 @@ export function getPropertyValue<T>(
 }
 
 /**
- * Clone an obj with Object.assign
- */
-export function softClone<T extends object>(obj: T): T {
-    return Object.assign({}, obj);
-}
-
-/**
  * Merge function to replace Object.assign with deep merging possibility
  */
 export function merge(target: any, source: any, deep = false): any {
@@ -260,7 +253,9 @@ export function getValueByPath<T>(
     obj: Record<string, any>,
     path: string,
     defaultValue?: T,
-): typeof defaultValue extends undefined ? typeof defaultValue : T {
+): typeof defaultValue extends undefined
+    ? T
+    : NonNullable<typeof defaultValue> {
     const value: any = path
         .split(".")
         .reduce((o, i) => (typeof o !== "undefined" ? o[i] : undefined), obj);

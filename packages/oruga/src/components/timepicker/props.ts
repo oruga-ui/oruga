@@ -45,9 +45,9 @@ export type TimepickerProps = {
     /** Date format locale */
     locale?: string;
     /** Custom function to format a date into a string */
-    formatter?: (date: Date | undefined) => string;
+    formatter?: (date: TimepickerProps["modelValue"]) => string;
     /** Custom function to parse a string into a date */
-    parser?: (date: string) => Date | undefined;
+    parser?: (date: string) => TimepickerProps["modelValue"];
     /** time creator function, default is `new Date()` */
     creator?: () => Date;
     /** Define a list of times which can not be selected */

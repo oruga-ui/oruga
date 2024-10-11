@@ -990,7 +990,7 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
     const row = visibleRows.value[index];
 
     if (!props.isRowSelectable(row.value)) {
-        let newIndex: number | undefined = undefined;
+        let newIndex: number | undefined;
         if (pos > 0) {
             for (
                 let i = index;

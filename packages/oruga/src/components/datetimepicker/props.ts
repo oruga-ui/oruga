@@ -39,9 +39,9 @@ export type DatetimepickerProps = {
     /** Date format locale */
     locale?: string;
     /** Custom function to format a date into a string */
-    formatter?: (date: Date) => string;
+    formatter?: (date: DatetimepickerProps["modelValue"]) => string;
     /** Custom function to parse a string into a date */
-    parser?: (date: string) => Date | undefined;
+    parser?: (date: string) => DatetimepickerProps["modelValue"];
     /** Date creator function, default is `new Date()` */
     creator?: () => Date;
     /** Dropdown position */

@@ -304,7 +304,7 @@ const hasNext = computed(() => !!nextItem.value);
 const prevItem = computed(() => {
     if (!activeItem.value) return undefined;
 
-    let prevItem: StepItem | undefined = undefined;
+    let prevItem: StepItem | undefined;
     for (let idx = items.value.indexOf(activeItem.value) - 1; idx >= 0; idx--) {
         if (items.value[idx].visible) {
             prevItem = items.value[idx];
@@ -316,7 +316,7 @@ const prevItem = computed(() => {
 
 /** Retrieves the next visible item */
 const nextItem = computed(() => {
-    let nextItem: StepItem | undefined = undefined;
+    let nextItem: StepItem | undefined;
     let idx = activeItem.value ? items.value.indexOf(activeItem.value) + 1 : 0;
     for (; idx < items.value.length; idx++) {
         if (items.value[idx].visible) {

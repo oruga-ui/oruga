@@ -173,7 +173,6 @@ function onSelectedDate(date: Date): void {
  * If not set, only set the begin date.
  */
 function handleSelectRangeDate(date: Date): void {
-    console.log(selectedBeginDate.value, selectedEndDate.value, date);
     if (selectedBeginDate.value && selectedEndDate.value) {
         selectedBeginDate.value = date;
         selectedEndDate.value = undefined;

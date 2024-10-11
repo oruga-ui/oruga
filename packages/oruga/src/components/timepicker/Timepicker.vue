@@ -327,10 +327,7 @@ function isMinuteDisabled(minute: number): boolean {
             return props.unselectableTimes(date);
         } else {
             const unselectable = props.unselectableTimes.filter((time) => {
-                if (
-                    props.enableSeconds &&
-                    secondsSelected.value !== undefined
-                ) {
+                if (props.enableSeconds && isDefined(secondsSelected.value)) {
                     return (
                         time.getHours() === hoursSelected.value &&
                         time.getMinutes() === minute &&
@@ -350,7 +347,7 @@ function isMinuteDisabled(minute: number): boolean {
 }
 
 function isSecondDisabled(second: number): boolean {
-    if (minutesSelected.value == undefined) return false;
+    if (!isDefined(minutesSelected.value)) return false;
     let disabled = false;
 
     if (isMinuteDisabled(minutesSelected.value)) {
@@ -415,8 +412,8 @@ function updateDateSelected(
     if (
         isDefined(hours) &&
         isDefined(minutes) &&
-        ((!isHourFormat24.value && isDefined(meridiens)) ||
-            isHourFormat24.value)
+        ((!isDefined(isHourFormat24.value) && isDefined(meridiens)) ||
+            isDefined(isHourFormat24.value))
     ) {
         let time: Date;
         if (vmodel.value) {
@@ -499,7 +496,7 @@ function onMeridienChange(value: string): void {
         minutesSelected.value = undefined;
         secondsSelected.value = undefined;
         vmodel.value = undefined;
-    } else if (hoursSelected.value !== undefined) {
+    } else if (isDefined(hoursSelected.value)) {
         if (value === pmString.value) hoursSelected.value += 12;
         else if (value === amString.value) hoursSelected.value -= 12;
     }
