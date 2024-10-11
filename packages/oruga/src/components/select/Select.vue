@@ -305,7 +305,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                     :key="option.key"
                     v-bind="option.attrs"
                     :value="option.value"
-                    :data-selected="option.value === vmodel">
+                    :selected="option.value === vmodel">
                     {{ option.label }}
                 </option>
             </slot>

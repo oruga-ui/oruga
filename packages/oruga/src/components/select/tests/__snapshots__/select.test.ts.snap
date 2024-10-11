@@ -7,6 +7,11 @@ exports[`OSelect tests > render correctly 1`] = `
     <!--
                 @slot Override the options, default is options prop
             -->
+    <option value="flint">Flint</option>
+    <option value="silver">Silver</option>
+    <option value="vane">Vane</option>
+    <option value="billy">Billy</option>
+    <option disabled="" value="silver">Jack</option>
   </select>
   <!--v-if-->
 </div>"

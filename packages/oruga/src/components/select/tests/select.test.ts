@@ -18,7 +18,9 @@ describe("OSelect tests", () => {
     ];
 
     test("render correctly", () => {
-        const wrapper = mount(OSelect);
+        const wrapper = mount(OSelect, {
+            props: { options },
+        });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("select");
