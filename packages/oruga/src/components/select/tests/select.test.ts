@@ -18,7 +18,9 @@ describe("OSelect tests", () => {
     ];
 
     test("render correctly", () => {
-        const wrapper = mount(OSelect);
+        const wrapper = mount(OSelect, {
+            props: { options },
+        });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("select");
@@ -185,13 +187,13 @@ describe("OSelect tests", () => {
         await select.setValue(options[1].value);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toContain(options[1].value);
+        expect(emits![0]).toContain(options[1].value);
         expect(wrapper.vm.value).toEqual(options[1].value);
 
         await select.setValue(options[2].value);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits[1]).toContain(options[2].value);
+        expect(emits![1]).toContain(options[2].value);
         expect(wrapper.vm.value).toEqual(options[2].value);
     });
 
@@ -233,20 +235,20 @@ describe("OSelect tests", () => {
 
         emit = wrapper.emitted("update:modelValue");
         expect(emit).toHaveLength(1);
-        expect(emit[0][0]).toHaveLength(1);
+        expect(emit![0][0]).toHaveLength(1);
 
         // click second option
         await wrapper.setValue([options[1].value, options[3].value]);
 
         emit = wrapper.emitted("update:modelValue");
         expect(emit).toHaveLength(2);
-        expect(emit[1][0]).toHaveLength(2);
+        expect(emit![1][0]).toHaveLength(2);
 
         // click first option again
         await wrapper.setValue([options[1].value]);
 
         emit = wrapper.emitted("update:modelValue");
         expect(emit).toHaveLength(3);
-        expect(emit[2][0]).toHaveLength(1);
+        expect(emit![2][0]).toHaveLength(1);
     });
 });

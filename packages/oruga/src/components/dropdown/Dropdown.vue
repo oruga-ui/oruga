@@ -62,8 +62,8 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     trapFocus: () => getOption("dropdown.trapFocus", true),
     checkScroll: () => getOption("dropdown.checkScroll", false),
     expanded: false,
-    menuId: null,
-    menuTabindex: null,
+    menuId: undefined,
+    menuTabindex: undefined,
     menuTag: () => getOption<DynamicComponent>("dropdown.menuTag", "div"),
     triggerTag: () => getOption<DynamicComponent>("dropdown.triggerTag", "div"),
     triggers: () => getOption("dropdown.triggers", ["click"]),
@@ -149,8 +149,8 @@ const toggleScroll = usePreventScrolling();
 
 // --- Event Handler ---
 
-const eventCleanups = [];
-let timer: NodeJS.Timeout;
+const eventCleanups: (() => void)[] = [];
+let timer: NodeJS.Timeout | undefined;
 
 const cancelOptions = computed(() =>
     typeof props.closeable === "boolean"
@@ -264,7 +264,7 @@ function open(): void {
     if (props.delay) {
         timer = setTimeout(() => {
             isActive.value = true;
-            timer = null;
+            timer = undefined;
         }, props.delay);
     } else {
         isActive.value = true;
@@ -286,6 +286,7 @@ if (isClient && props.checkScroll)
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
     const dropdown = unrefElement(contentRef);
+    if (!dropdown) return;
     if (dropdown.clientHeight !== dropdown.scrollHeight) {
         if (
             dropdown.scrollTop + dropdown.clientHeight >=

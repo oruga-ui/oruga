@@ -134,7 +134,7 @@ const openOnFocus = ref(false);
 const keepFirst = ref(false);
 const keepOpen = ref(true);
 
-const selected = ref(null);
+const selected = ref<(typeof options)[number]>();
 </script>
 
 <template>

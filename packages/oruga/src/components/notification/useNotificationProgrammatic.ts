@@ -27,11 +27,10 @@ export type NotifcationNoticeProps = ComponentProps<typeof NotificationNotice>;
 
 /** useNotificationProgrammatic composable options */
 type NotifcationProgrammaticOptions = Readonly<
-    Omit<NotifcationNoticeProps, "container">
-> &
-    Readonly<Omit<NotifcationProps, "message">> & {
-        message?: string | Array<unknown>;
-    } & PublicProgrammaticComponentOptions;
+    Omit<NotifcationNoticeProps & NotifcationProps, "message" | "container">
+> & {
+    message?: string | Array<unknown>;
+} & PublicProgrammaticComponentOptions;
 
 const useNotificationProgrammatic = {
     /**
@@ -56,8 +55,8 @@ const useNotificationProgrammatic = {
 
         const componentProps: NotifcationNoticeProps = {
             position: getOption("notification.position", "top-right"),
+            container: document.body,
             ..._options, // pass all props to the internal notification component
-            container: null, // this will be overridden by the `useProgrammatic` composable
         };
 
         // create programmatic component
@@ -75,11 +74,11 @@ const useNotificationProgrammatic = {
     },
     /** close the last registred instance in the notification programmatic instance registry */
     close(...args: unknown[]): void {
-        instances.last()?.exposed.close(...args);
+        instances.last()?.exposed?.close(...args);
     },
     /** close all instances in the programmatic notification instance registry */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed.close(...args));
+        instances.walk((entry) => entry.exposed?.close(...args));
     },
 };
 

@@ -70,13 +70,13 @@ describe("OCheckbox tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toContainEqual(true);
+        expect(emits![0]).toContainEqual(true);
         expect(wrapper.vm.value).toEqual(true);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits[1]).toContainEqual(false);
+        expect(emits![1]).toContainEqual(false);
         expect(wrapper.vm.value).toEqual(false);
     });
 
@@ -93,13 +93,13 @@ describe("OCheckbox tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toContainEqual(trueValue);
+        expect(emits![0]).toContainEqual(trueValue);
         expect(wrapper.vm.value).toEqual(trueValue);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits[1]).toContainEqual(falseValue);
+        expect(emits![1]).toContainEqual(falseValue);
         expect(wrapper.vm.value).toEqual(falseValue);
     });
 
@@ -116,13 +116,13 @@ describe("OCheckbox tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toContainEqual(trueValue);
+        expect(emits![0]).toContainEqual(trueValue);
         expect(wrapper.vm.value).toEqual(trueValue);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits[1]).toContainEqual(falseValue);
+        expect(emits![1]).toContainEqual(falseValue);
         expect(wrapper.vm.value).toEqual(falseValue);
     });
 

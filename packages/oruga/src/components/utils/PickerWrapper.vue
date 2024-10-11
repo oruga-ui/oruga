@@ -36,7 +36,7 @@ defineOptions({
 const props = defineProps({
     /** the internal input value */
     value: {
-        type: [Date, Array] as PropType<Date | Date[]>,
+        type: [Date, Array] as PropType<Date | Date[] | undefined>,
         default: undefined,
     },
     /** the active state of the dropdown */
@@ -48,14 +48,14 @@ const props = defineProps({
     /** format props value to input value */
     formatter: {
         type: Function as PropType<
-            (value: Date | Date[], isNative: boolean) => string
+            (value: Date | Date[] | undefined, isNative: boolean) => string
         >,
         required: true,
     },
     /** parse input value to props value */
     parser: {
         type: Function as PropType<
-            (value: string, isNative: boolean) => Date | Date[]
+            (value: string, isNative: boolean) => Date | Date[] | undefined
         >,
         required: true,
     },
@@ -76,26 +76,26 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {Date, Array} updated active prop
      */
-    (e: "update:value", value: Date | Array<Date>): void;
+    (e: "update:value", value: Date | Array<Date> | undefined): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
     (e: "update:active", value: boolean): void;
     /** on input focus event */
-    (e: "focus", evt: Event): void;
+    (e: "focus", event: Event): void;
     /** on input blur event */
-    (e: "blur", evt: Event): void;
+    (e: "blur", event: Event): void;
     /** on input invalid event */
-    (e: "invalid", evt: Event): void;
+    (e: "invalid", event: Event): void;
     /** on icon click event */
-    (e: "icon-click", evt: Event): void;
+    (e: "icon-click", event: Event): void;
     /** on icon right click event */
-    (e: "icon-right-click", evt: Event): void;
+    (e: "icon-right-click", event: Event): void;
     /** on dropdown left button press event */
-    (e: "left", evt: Event): void;
+    (e: "left", event: Event): void;
     /** on dropdown right button press event */
-    (e: "right", evt: Event): void;
+    (e: "right", event: Event): void;
 }>();
 
 const isMobileNative = computed(
@@ -172,10 +172,14 @@ function setValue(value: string): void {
 
     // check min/max dates
     if (Array.isArray(date)) date = date.map(checkMinMaxDate);
-    else date = checkMinMaxDate(date);
+    else if (isDefined(date)) date = checkMinMaxDate(date);
 
-    // reparse to string for internal value
-    inputValue.value = props.formatter(date, isMobileNative.value);
+    nextTick(
+        () =>
+            // reparse to string for internal value
+            (inputValue.value = props.formatter(date, isMobileNative.value)),
+    );
+
     // update the prop value
     emits("update:value", date);
 }
@@ -223,8 +227,8 @@ function onInputClick(event): void {
 
 /** Emit 'blur' event on dropdown is not active (closed) */
 function onActiveChange(value: boolean): void {
-    if (value) onFocus();
-    else if (!value) onBlur();
+    if (value) onFocus(new Event("focus"));
+    else if (!value) onBlur(new Event("blur"));
 }
 
 // --- NATIVE EVENT HANDLER ---
@@ -235,7 +239,7 @@ function onChange(event: Event): void {
 
 function onNativeClick(event: Event): void {
     // do nothing if client is not mobile
-    if (!isMobileNative.value) return;
+    if (!isMobileNative.value || !input.value) return;
 
     // when input is not editable jet
     if (input.value.type === "text") {
@@ -246,6 +250,7 @@ function onNativeClick(event: Event): void {
         input.value.blur();
 
         setTimeout(() => {
+            if (!input.value) return;
             // make the input editable
             input.value.readOnly = false;
             input.value.type = props.type;
@@ -258,7 +263,7 @@ function onNativeClick(event: Event): void {
 
 function onNativeFocus(event: Event): void {
     // do nothing if client is not mobile
-    if (!isMobileNative.value) return;
+    if (!isMobileNative.value || !input.value) return;
 
     // when input is not editable jet
     if (input.value.type === "text") {
@@ -267,12 +272,12 @@ function onNativeFocus(event: Event): void {
         event.stopPropagation();
     }
     // only emit focus event if editable
-    else onFocus();
+    else onFocus(event);
 }
 
-function onNativeBlur(): void {
+function onNativeBlur(event: Event): void {
     // do nothing if client is not mobile
-    if (!isMobileNative.value) return;
+    if (!isMobileNative.value || !input.value) return;
 
     // when the input does not have any value
     if (!input.value.value) {
@@ -281,16 +286,16 @@ function onNativeBlur(): void {
         input.value.type = "text";
     }
     // emit blur event
-    onBlur();
+    onBlur(event);
 }
 
 function onNativeChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value
         ? (event.target as HTMLInputElement).value
-        : null;
+        : "";
 
     // when the input does not have any value
-    if (!value) {
+    if (!value && input.value) {
         input.value.value = value;
         input.value.blur();
     }

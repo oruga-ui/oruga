@@ -1,5 +1,5 @@
 import { ref, toRaw, type App } from "vue";
-import { getValueByPath, merge, clone, setValueByPath } from "./helpers";
+import { getValueByPath, merge, setValueByPath } from "./helpers";
 import { setVueInstance } from "./plugins";
 import type { OrugaOptions } from "@/types";
 
@@ -21,15 +21,20 @@ export const setOptions = (options: OrugaOptions): void => {
 };
 
 export const getOptions = (): OrugaOptions => {
-    return clone(toRaw(globalOptions.value));
+    return Object.assign({}, toRaw(globalOptions.value));
 };
 
-export const getOption = <T>(path: string, defaultValue?: T): T => {
+export const getOption = <T>(
+    path: string,
+    defaultValue?: T,
+): typeof defaultValue extends undefined
+    ? T
+    : NonNullable<typeof defaultValue> => {
     return getValueByPath(globalOptions.value, path, defaultValue);
 };
 
-export const setOption = <T>(path: string, defaultValue: T): void => {
-    setValueByPath(globalOptions.value, path, defaultValue);
+export const setOption = <T>(path: string, value: T): void => {
+    setValueByPath(globalOptions.value, path, value);
 };
 
 export const ConfigProgrammatic = {

@@ -5,8 +5,8 @@ const isFetching = ref(false);
 const page = ref(1);
 const totalPages = ref(1);
 
-const options = ref([]);
-const selected = ref(null);
+const options = ref<object[]>([]);
+const selected = ref<object>();
 const value = ref("");
 
 async function getAsyncData(_value): Promise<void> {

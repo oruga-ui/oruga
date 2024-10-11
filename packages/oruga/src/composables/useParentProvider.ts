@@ -15,12 +15,12 @@ import { unrefElement } from "./unrefElement";
 
 export type ProviderItem<T = unknown> = {
     index: number;
-    data: ComputedRef<T>;
+    data?: ComputedRef<T>;
     identifier: string;
 };
 
 type PovidedData<P, I = unknown> = {
-    registerItem: (data: ComputedRef<I>) => ProviderItem<I>;
+    registerItem: (data?: ComputedRef<I>) => ProviderItem<I>;
     unregisterItem: (item: ProviderItem<I>) => void;
     data?: ComputedRef<P>;
 };
@@ -44,7 +44,7 @@ type ProviderParentOptions<T = unknown> = {
  * @param options additional options
  */
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
-    rootRef?: Ref<HTMLElement | Component>,
+    rootRef?: Ref<HTMLElement | Component | undefined>,
     options?: ProviderParentOptions<ParentData>,
 ): {
     childItems: Ref<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
@@ -83,9 +83,10 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
                     .map((item) => `[data-id="${key}-${item.identifier}"]`)
                     .join(",");
                 const parent = unrefElement(rootRef);
+                if (!parent) return;
                 const children = parent.querySelectorAll(ids);
                 const sortedIds = Array.from(children).map((el) =>
-                    el.getAttribute("data-id").replace(`${key}-`, ""),
+                    el.getAttribute("data-id")?.replace(`${key}-`, ""),
                 );
 
                 childItems.value.forEach(
@@ -140,13 +141,53 @@ type ProviderChildOptions<T = unknown> = {
     register?: boolean;
 };
 
+export function useProviderChild<ParentData, ItemData = unknown>(
+    options?: Omit<ProviderChildOptions<ItemData>, "needParent" | "register">,
+): {
+    parent: Ref<ParentData>;
+    item: Ref<ProviderItem<ItemData>>;
+};
+
+export function useProviderChild<ParentData, ItemData = unknown>(
+    options: Omit<ProviderChildOptions<ItemData>, "needParent" | "register"> & {
+        needParent: true;
+    },
+): {
+    parent: Ref<ParentData>;
+    item: Ref<ProviderItem<ItemData> | undefined>;
+};
+
+export function useProviderChild<ParentData, ItemData = unknown>(
+    options: Omit<ProviderChildOptions<ItemData>, "needParent" | "register"> & {
+        needParent: true;
+        register: true;
+    },
+): {
+    parent: Ref<ParentData>;
+    item: Ref<ProviderItem<ItemData>>;
+};
+
+export function useProviderChild<ParentData, ItemData = unknown>(
+    options: Omit<ProviderChildOptions<ItemData>, "needParent"> & {
+        needParent?: false;
+    },
+): {
+    parent: Ref<ParentData | undefined>;
+    item: Ref<ProviderItem<ItemData> | undefined>;
+};
+
 /**
  * Inject functionalities and data from parent components
  * @param options additional options
  */
 export function useProviderChild<ParentData, ItemData = unknown>(
-    options: ProviderChildOptions<ItemData> = { needParent: true },
-): { parent: ComputedRef<ParentData>; item: Ref<ProviderItem<ItemData>> } {
+    options?: ProviderChildOptions<ItemData>,
+): {
+    parent: Ref<ParentData | undefined>;
+    item: Ref<ProviderItem<ItemData> | undefined>;
+} {
+    options = Object.assign({ needParent: true, register: true }, options);
+
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
     if (!vm)
@@ -158,28 +199,26 @@ export function useProviderChild<ParentData, ItemData = unknown>(
     const key = options?.key || configField;
 
     /** Inject parent component functionality if used inside one **/
-    const parent = inject<PovidedData<ParentData, ItemData>>(
+    const parent = inject<PovidedData<ParentData, ItemData> | undefined>(
         "$o-" + key,
         undefined,
     );
 
-    const needParent = options.needParent !== false;
-
-    const register = options.register !== false;
-
-    if (needParent && !parent) {
+    if (options.needParent && !parent)
         throw new Error(
-            `You should wrap ${vm.proxy.$options.name} in a ${key} component`,
+            `You should wrap ${vm.proxy?.$options.name} in a ${key} component`,
         );
-    }
 
     const item = ref<ProviderItem<ItemData>>();
 
-    if (parent && register) item.value = parent.registerItem(options.data);
+    if (parent && options.register)
+        item.value = parent.registerItem(options?.data);
 
     onUnmounted(() => {
         if (parent && item.value) parent.unregisterItem(item.value);
     });
 
-    return { parent: parent?.data, item: item };
+    const data = parent?.data || ref();
+
+    return { parent: data, item: item };
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, useTemplateRef } from "vue";
 
-const dropdownbtn = ref(null);
+const dropdownbtn = useTemplateRef<HTMLElement>("dropdownbtn");
 const currentMenu = ref("");
 const subitem = "dropdownitem";
 
@@ -21,7 +21,7 @@ const inspectData = [
         action: (cmp, data) => {
             data.teleport = true;
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -32,7 +32,7 @@ const inspectData = [
         specificity: "when <b>mobileClass</b> is applied",
         action: () => {
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -43,7 +43,7 @@ const inspectData = [
             "when <b>inlineClass</b> or <b>mobileClass</b> or <b>expandedClass</b> is applied",
         action: () => {
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -61,7 +61,7 @@ const inspectData = [
         properties: ["inline", "active"],
         action: () => {
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -81,7 +81,7 @@ const inspectData = [
         action: (cmp, data) => {
             data.position = "top-right";
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -91,7 +91,7 @@ const inspectData = [
         warning: "Switch to mobile view to see it in action!",
         action: () => {
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -109,7 +109,7 @@ const inspectData = [
         subitem: true,
         action: () => {
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -119,7 +119,7 @@ const inspectData = [
         subitem: true,
         action: () => {
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -130,7 +130,7 @@ const inspectData = [
         properties: ["disabled"],
         action: () => {
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },
@@ -141,7 +141,7 @@ const inspectData = [
         properties: ["clickable"],
         action: () => {
             setTimeout(() => {
-                dropdownbtn.value.click();
+                dropdownbtn.value?.click();
             }, 300);
         },
     },

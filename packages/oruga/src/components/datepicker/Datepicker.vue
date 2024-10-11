@@ -15,12 +15,7 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getOption } from "@/utils/config";
 import { isDate, pad } from "@/utils/helpers";
-import {
-    defineClasses,
-    getActiveClasses,
-    useMatchMedia,
-    useVModel,
-} from "@/composables";
+import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
@@ -44,13 +39,13 @@ const props = withDefaults(
     defineProps<DatepickerProps<IsRange, IsMultiple>>(),
     {
         override: undefined,
-        modelValue: null,
+        modelValue: undefined,
         // range: false,
         // multiple: false,
         active: false,
         type: "date",
-        dayNames: () => getOption("datepicker.dayNames", undefined),
-        monthNames: () => getOption("datepicker.monthNames", undefined),
+        dayNames: () => getOption("datepicker.dayNames"),
+        monthNames: () => getOption("datepicker.monthNames"),
         size: () => getOption("datepicker.size"),
         focusedDate: undefined,
         events: undefined,
@@ -66,22 +61,13 @@ const props = withDefaults(
         openOnFocus: () => getOption("datepicker.openOnFocus", true),
         closeOnClick: () => getOption("datepicker.closeOnClick", true),
         locale: () => getOption("locale"),
-        dateFormatter: (date) =>
-            getOption<(date) => string>(
-                "datepicker.dateFormatter",
-                () => undefined,
-            )(date),
-        dateParser: (date: string) =>
-            getOption<(date: string) => any>(
-                "datepicker.dateParser",
-                () => undefined,
-            )(date),
-        dateCreator: () =>
-            getOption("datepicker.dateCreator", () => new Date())(),
+        formatter: getOption("datepicker.formatter"),
+        parser: getOption("datepicker.parser"),
+        creator: getOption("datepicker.creator"),
         selectableDates: undefined,
         unselectableDates: undefined,
         unselectableDaysOfWeek: () =>
-            getOption("datepicker.unselectableDaysOfWeek", undefined),
+            getOption("datepicker.unselectableDaysOfWeek"),
         nearbyMonthDays: () => getOption("datepicker.nearbyMonthDays", true),
         nearbySelectableMonthDays: () =>
             getOption("datepicker.nearbySelectableMonthDays", false),
@@ -95,9 +81,9 @@ const props = withDefaults(
         position: undefined,
         mobileModal: () => getOption("datepicker.mobileModal", true),
         mobileNative: () => getOption("datepicker.mobileNative", false),
-        iconPack: () => getOption("datepicker.iconPack", undefined),
-        icon: () => getOption("datepicker.icon", undefined),
-        iconRight: () => getOption("datepicker.iconRight", undefined),
+        iconPack: () => getOption("datepicker.iconPack"),
+        icon: () => getOption("datepicker.icon"),
+        iconRight: () => getOption("datepicker.iconRight"),
         iconRightClickable: false,
         iconPrev: () => getOption("datepicker.iconPrev", "chevron-left"),
         iconNext: () => getOption("datepicker.iconNext", "chevron-right"),
@@ -108,9 +94,9 @@ const props = withDefaults(
         ariaNextLabel: () => getOption("datepicker.ariaNextLabel", "Next Page"),
         ariaPreviousLabel: () =>
             getOption("datepicker.ariaNextLabel", "Previous Page"),
-        inputClasses: () => getOption("datepicker.inputClasses", {}),
-        dropdownClasses: () => getOption("datepicker.dropdownClasses", {}),
-        selectClasses: () => getOption("datepicker.selectClasses", {}),
+        inputClasses: () => getOption("datepicker.inputClasses"),
+        dropdownClasses: () => getOption("datepicker.dropdownClasses"),
+        selectClasses: () => getOption("datepicker.selectClasses"),
     },
 );
 
@@ -174,7 +160,7 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const { dtf, defaultDateFormatter, defaultDateParser } =
+const { dtf, dateCreator, dateFormatter, dateParser } =
     useDatepickerMixins(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -182,8 +168,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-// const vmodel = defineModel<ModelValue>({ default: null });
-const vmodel = useVModel<ModelValue>();
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -201,10 +186,10 @@ watch(
         const currentDate: Date = isArray
             ? value.length
                 ? value[value.length - 1]
-                : props.dateCreator()
+                : dateCreator()
             : value
               ? value
-              : props.dateCreator();
+              : dateCreator();
         if (
             !isArray ||
             (isArray &&
@@ -238,7 +223,7 @@ const _initialDate: Date =
         ? props.modelValue[0]
         : props.modelValue) ||
     props.focusedDate ||
-    props.dateCreator();
+    dateCreator();
 
 if (
     !props.modelValue &&
@@ -305,7 +290,7 @@ const computedDayNames = computed(() =>
  * dates are set by props, range of years will fall within those dates.
  */
 const listOfYears = computed<OptionsItem<number>[]>(() => {
-    let latestYear = focusedDateData.value.year + props.yearsRange[1];
+    let latestYear = _initialDate.getFullYear() + props.yearsRange[1];
     if (props.maxDate && props.maxDate.getFullYear() < latestYear) {
         latestYear = Math.max(
             props.maxDate.getFullYear(),
@@ -313,7 +298,7 @@ const listOfYears = computed<OptionsItem<number>[]>(() => {
         );
     }
 
-    let earliestYear = focusedDateData.value.year + props.yearsRange[0];
+    let earliestYear = _initialDate.getFullYear() + props.yearsRange[0];
     if (props.minDate && props.minDate.getFullYear() > earliestYear) {
         earliestYear = Math.min(
             props.minDate.getFullYear(),
@@ -404,23 +389,22 @@ function next(): void {
 // --- Formatter / Parser ---
 
 /** Format date into string */
-function format(value: Date | Date[], isNative: boolean): string {
+function format(value: Date | Date[] | undefined, isNative: boolean): string {
     if (isNative) return formatNative(value);
 
     // define function prop
     const date = (Array.isArray(value) ? [...value] : value) as ModelValue;
-    // call prop function
-    const formatted = props.dateFormatter(date);
-    // call default if prop function is not given
-    if (typeof formatted === "undefined") return defaultDateFormatter(date);
-    else return formatted;
+
+    return dateFormatter(date);
 }
 
-function formatNative(value: Date | Date[]): string {
+function formatNative(value: Date | Date[] | undefined): string {
     if (Array.isArray(value)) value = value[0];
+
+    // return empty string if no value is given or value can't parse to proper date
+    if (!value) return "";
     const date = new Date(value);
-    // return null if no value is given or value can't parse to proper date
-    if (!value || !date || isNaN(date.getTime())) return null;
+    if (!isDate(date)) return "";
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'
@@ -437,13 +421,10 @@ function formatNative(value: Date | Date[]): string {
 }
 
 /** Parse string into date */
-function parse(value: string, isNative: boolean): ModelValue {
+function parse(value: string, isNative: boolean): Date | Date[] | undefined {
     if (isNative) return parseNative(value);
 
-    // call prop function
-    let date = props.dateParser(value);
-    // call default if prop function is not given
-    if (typeof date === "undefined") date = defaultDateParser(value);
+    const date = dateParser(value);
 
     const isValid =
         isDate(date) ||
@@ -452,20 +433,17 @@ function parse(value: string, isNative: boolean): ModelValue {
             isDate(date[0]) &&
             isDate(date[1]));
 
-    return (isValid ? date : null) as ModelValue;
+    return isValid ? date : undefined;
 }
 
 /** Parse date from string */
-function parseNative(value: string): ModelValue {
+function parseNative(value: string): Date | undefined {
     const s = value ? value.split("-") : [];
-    if (s.length === 3) {
-        const year = parseInt(s[0], 10);
-        const month = parseInt(s[1]) - 1;
-        const day = parseInt(s[2]);
-        return new Date(year, month, day) as ModelValue;
-    } else {
-        return null;
-    }
+    if (s.length !== 3) return undefined;
+    const year = parseInt(s[0], 10);
+    const month = parseInt(s[1]) - 1;
+    const day = parseInt(s[2]);
+    return new Date(year, month, day);
 }
 
 // --- Event Handler ---
@@ -630,8 +608,8 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                     <div :class="listsClasses">
                         <o-select
                             v-if="!isTypeMonth"
-                            v-model="focusedDateData.month"
                             v-bind="selectClasses"
+                            v-model="focusedDateData.month"
                             :disabled="disabled"
                             :size="size"
                             :options="listOfMonths"
@@ -640,8 +618,8 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             @keydown.right.stop.prevent="next" />
 
                         <o-select
-                            v-model="focusedDateData.year"
                             v-bind="selectClasses"
+                            v-model="focusedDateData.year"
                             :disabled="disabled"
                             :size="size"
                             :options="listOfYears"

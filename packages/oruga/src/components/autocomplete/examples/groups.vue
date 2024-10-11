@@ -13,13 +13,16 @@ const options = [
 ];
 
 function filter(data: typeof options, value: string): typeof options {
-    return data.reduce((acc, element) => {
-        const items = element.items.filter(
-            (item) => item.toLowerCase().indexOf(value.toLowerCase()) >= 0,
-        );
+    return data.reduce(
+        (acc, element) => {
+            const items = element.items.filter(
+                (item) => item.toLowerCase().indexOf(value.toLowerCase()) >= 0,
+            );
 
-        return items.length ? [...acc, { type: element.type, items }] : acc;
-    }, []);
+            return items.length ? [...acc, { type: element.type, items }] : acc;
+        },
+        [] as typeof options,
+    );
 }
 
 const selected = ref();

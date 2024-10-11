@@ -4,9 +4,9 @@ import {
     getCurrentInstance,
     onMounted,
     onUnmounted,
-    type Component,
     type ComponentInternalInstance,
     type VNode,
+    type VNodeTypes,
 } from "vue";
 import type {
     // ComponentExposed,
@@ -16,25 +16,24 @@ import type {
 import type InstanceRegistry from "@/components/programmatic/InstanceRegistry";
 import { isClient } from "@/utils/ssr";
 
-export type ProgrammaticComponentProps<C extends string | Component = unknown> =
-    {
-        /**
-         * Component to be injected.
-         * Terminate the component by emitting a 'close' event — emits('close')
-         */
-        component: C;
-        /**
-         * Props to be binded to the injected component.
-         * Both attributes and properties can be used in props.
-         * Vue automatically picks the right way to assign it.
-         * `class` and `style` have the same object / array value support like in templates.
-         * Event listeners should be passed as onXxx.
-         * @see https://vuejs.org/api/render-function.html#h
-         */
-        props?: ComponentProps<C>;
-        /** Programmatic component registry instance */
-        instances?: InstanceRegistry<ComponentInternalInstance>;
-    };
+export type ProgrammaticComponentProps<C extends VNodeTypes> = {
+    /**
+     * Component to be injected.
+     * Terminate the component by emitting a 'close' event — emits('close')
+     */
+    component: C;
+    /**
+     * Props to be binded to the injected component.
+     * Both attributes and properties can be used in props.
+     * Vue automatically picks the right way to assign it.
+     * `class` and `style` have the same object / array value support like in templates.
+     * Event listeners should be passed as onXxx.
+     * @see https://vuejs.org/api/render-function.html#h
+     */
+    props?: ComponentProps<C> | { container?: HTMLElement };
+    /** Programmatic component registry instance */
+    instances?: InstanceRegistry<ComponentInternalInstance>;
+};
 
 export type ProgrammaticComponentEmits = {
     /**
@@ -59,18 +58,20 @@ export type ProgrammaticComponentExpose = {
 };
 
 export const ProgrammaticComponent = defineComponent<
-    ProgrammaticComponentProps,
+    ProgrammaticComponentProps<any>,
     ProgrammaticComponentEmits
 >(
-    <C extends string | Component>(
+    <C extends VNodeTypes>(
         props: ProgrammaticComponentProps<C>,
         { expose, emit, slots },
     ) => {
         // getting a hold of the internal instance in setup()
         const vm = getCurrentInstance();
+        if (!vm)
+            throw new Error("ProgrammaticComponent initialisation failed.");
 
         // create response promise
-        let resolve: (value?: unknown) => void = null;
+        let resolve: (value?: unknown) => void;
         const promise = new Promise<unknown>((p1) => (resolve = p1));
 
         // add component instance to instance register

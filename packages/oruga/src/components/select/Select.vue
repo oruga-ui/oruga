@@ -5,15 +5,7 @@
         T extends string | number | object,
         IsMultiple extends boolean = false
     ">
-import {
-    computed,
-    watch,
-    onMounted,
-    ref,
-    nextTick,
-    useAttrs,
-    useId,
-} from "vue";
+import { computed, watch, ref, nextTick, useAttrs, useId } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -40,7 +32,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     override: undefined,
-    modelValue: null,
+    modelValue: undefined,
     // multiple: false,
     options: undefined,
     size: () => getOption("select.size"),
@@ -51,10 +43,10 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     expanded: false,
     rounded: false,
     nativeSize: undefined,
-    iconPack: () => getOption("select.iconPack", undefined),
-    icon: () => getOption("select.icon", undefined),
+    iconPack: () => getOption("select.iconPack"),
+    icon: () => getOption("select.icon"),
     iconClickable: false,
-    iconRight: () => getOption("select.iconRight", undefined),
+    iconRight: () => getOption("select.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
     id: () => useId(),
@@ -112,10 +104,15 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 if (props.id) parentField?.value?.setInputId(props.id);
 
 const vmodel = defineModel<ModelValue>({
-    get: (v) => (isDefined(v) ? v : ((props.multiple ? [] : "") as ModelValue)),
-    set: (v) =>
-        isDefined(v) ? v : ((props.multiple ? [] : null) as ModelValue),
-    default: null as ModelValue,
+    get: (value) =>
+        typeof value !== "undefined"
+            ? value
+            : ((props.multiple ? [] : "") as ModelValue),
+    set: (value) =>
+        typeof value !== "undefined"
+            ? value
+            : ((props.multiple ? [] : undefined) as ModelValue),
+    default: undefined,
 });
 
 const placeholderVisible = computed(
@@ -124,21 +121,19 @@ const placeholderVisible = computed(
         (!isDefined(vmodel.value) || vmodel.value === ""),
 );
 
-onMounted(() => {
-    /**
-     * When v-model is changed:
-     *  1. Set parent field filled state.
-     *  2. Check html5 valdiation
-     */
-    watch(
-        vmodel,
-        (value) => {
-            if (parentField?.value) parentField.value.setFilled(!!value);
-            if (!isValid.value) checkHtml5Validity();
-        },
-        { immediate: true, flush: "post" },
-    );
-});
+/**
+ * When v-model is changed:
+ *  1. Set parent field filled state.
+ *  2. Check html5 valdiation
+ */
+watch(
+    vmodel,
+    (value) => {
+        if (parentField?.value) parentField.value.setFilled(!!value);
+        if (!isValid.value) checkHtml5Validity();
+    },
+    { immediate: true, flush: "post" },
+);
 
 const selectOptions = computed<OptionsItem<T>[]>(() => {
     if (!props.options || !Array.isArray(props.options)) return [];
@@ -164,7 +159,7 @@ const rightIcon = computed(() =>
 
 const rightIconVariant = computed(() =>
     props.iconRight
-        ? props.iconRightVariant || props.variant || null
+        ? props.iconRightVariant || props.variant
         : statusVariant.value,
 );
 
@@ -308,8 +303,9 @@ defineExpose({ focus: setFocus, value: vmodel });
                 <option
                     v-for="option in selectOptions"
                     :key="option.key"
+                    v-bind="option.attrs"
                     :value="option.value"
-                    v-bind="option.attrs">
+                    :selected="option.value === vmodel">
                     {{ option.label }}
                 </option>
             </slot>

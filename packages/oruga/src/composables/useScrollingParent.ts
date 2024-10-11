@@ -3,7 +3,7 @@ import { isDefined } from "@/utils/helpers";
 /**
  * Given an element, returns the element who scrolls it.
  */
-export function getScrollingParent(target: HTMLElement): HTMLElement {
+export function getScrollingParent(target: HTMLElement): HTMLElement | null {
     if (target.style.position === "fixed" || !target)
         return document.documentElement;
 

@@ -19,10 +19,10 @@ describe("Dropdown integration tests", () => {
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(values.length);
         values.forEach((value, idx) => {
-            expect(items.at(idx).attributes("data-oruga")).toBe(
+            expect(items.at(idx)!.attributes("data-oruga")).toBe(
                 "dropdown-item",
             );
-            expect(items.at(idx).text()).toBe(value);
+            expect(items.at(idx)!.text()).toBe(value);
         });
     });
 
@@ -48,7 +48,7 @@ describe("Dropdown integration tests", () => {
         );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("change")).toHaveLength(1);
-        expect(dropdown.emitted("change")[0][0]).toBe(values[2]);
+        expect(dropdown.emitted("change")![0][0]).toBe(values[2]);
         expect(dropdown.emitted("close")).toHaveLength(1);
     });
 
@@ -99,8 +99,8 @@ describe("Dropdown integration tests", () => {
         );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
         expect(dropdown.emitted("change")).toHaveLength(1);
-        expect(dropdown.emitted("change")[0][0]).toHaveLength(1);
-        expect(dropdown.emitted("change")[0][0]).toContain(values[0]);
+        expect(dropdown.emitted("change")![0][0]).toHaveLength(1);
+        expect(dropdown.emitted("change")![0][0]).toContain(values[0]);
         expect(dropdown.emitted("close")).toBeUndefined();
 
         await items[2].trigger("click");
@@ -111,9 +111,9 @@ describe("Dropdown integration tests", () => {
 
         expect(dropdown.emitted("update:modelValue")).toHaveLength(2);
         expect(dropdown.emitted("change")).toHaveLength(2);
-        expect(dropdown.emitted("change")[1][0]).toHaveLength(2);
-        expect(dropdown.emitted("change")[1][0]).toContain(values[0]);
-        expect(dropdown.emitted("change")[1][0]).toContain(values[2]);
+        expect(dropdown.emitted("change")![1][0]).toHaveLength(2);
+        expect(dropdown.emitted("change")![1][0]).toContain(values[0]);
+        expect(dropdown.emitted("change")![1][0]).toContain(values[2]);
         expect(dropdown.emitted("close")).toBeUndefined();
 
         await items[0].trigger("click");
@@ -123,8 +123,8 @@ describe("Dropdown integration tests", () => {
 
         expect(dropdown.emitted("update:modelValue")).toHaveLength(3);
         expect(dropdown.emitted("change")).toHaveLength(3);
-        expect(dropdown.emitted("change")[2][0]).toHaveLength(1);
-        expect(dropdown.emitted("change")[2][0]).toContain(values[2]);
+        expect(dropdown.emitted("change")![2][0]).toHaveLength(1);
+        expect(dropdown.emitted("change")![2][0]).toContain(values[2]);
         expect(dropdown.emitted("close")).toBeUndefined();
     });
 
@@ -202,11 +202,11 @@ describe("Dropdown integration tests", () => {
             '[data-oruga="dropdown"]',
         );
         expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-        expect(dropdown.emitted("update:modelValue")[0][0]).toStrictEqual(
+        expect(dropdown.emitted("update:modelValue")![0][0]).toStrictEqual(
             values[1],
         );
         expect(dropdown.emitted("change")).toHaveLength(1);
-        expect(dropdown.emitted("change")[0][0]).toStrictEqual(values[1]);
+        expect(dropdown.emitted("change")![0][0]).toStrictEqual(values[1]);
         expect(dropdown.emitted("close")).toHaveLength(1);
     });
 });

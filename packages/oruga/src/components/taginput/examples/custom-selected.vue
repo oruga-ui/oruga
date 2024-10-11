@@ -16,6 +16,7 @@ function getType(item: string): string {
     } else if (random >= 20 && random < 25) {
         return "info";
     }
+    return "";
 }
 </script>
 

@@ -248,8 +248,12 @@ const { childItems } = useProviderParent(rootRef, { data: provideData });
 const activeIndex = defineModel<number>({ default: 0 });
 const scrollIndex = ref(props.modelValue);
 
-const resizeObserver = ref(null);
+let resizeObserver: ResizeObserver | undefined;
 const windowWidth = ref(0);
+
+if (isClient && window.ResizeObserver) {
+    resizeObserver = new window.ResizeObserver(onRefresh);
+}
 
 const refresh_ = ref(0);
 
@@ -266,10 +270,9 @@ watch([() => props.itemsToList, () => props.itemsToShow], () => onRefresh());
 
 onMounted(() => {
     if (isClient) {
-        if (window.ResizeObserver) {
-            resizeObserver.value = new window.ResizeObserver(onRefresh);
-            resizeObserver.value.observe(rootRef.value);
-        }
+        if (window.ResizeObserver && resizeObserver)
+            resizeObserver.observe(rootRef.value);
+
         onResized();
         startTimer();
     }
@@ -277,7 +280,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     if (isClient) {
-        if (window.ResizeObserver) resizeObserver.value.disconnect();
+        if (window.ResizeObserver && resizeObserver)
+            resizeObserver.disconnect();
+
         dragEnd();
         pauseTimer();
     }
@@ -391,8 +396,7 @@ function onModeChange(trigger: string, index: number): void {
 // --- Autoplay Feature ---
 
 const isHovered = ref(false);
-const isPaused = ref(false);
-const timer = ref(null);
+let timer: NodeJS.Timeout | undefined;
 
 function onMouseEnter(): void {
     isHovered.value = true;
@@ -422,19 +426,17 @@ watch(
 );
 
 function startTimer(): void {
-    if (!props.autoplay || timer.value) return;
-    isPaused.value = false;
-    timer.value = setInterval(() => {
+    if (!props.autoplay || timer) return;
+    timer = setInterval(() => {
         if (!props.repeat && !hasNext.value) pauseTimer();
         else onNext();
     }, props.interval);
 }
 
 function pauseTimer(): void {
-    isPaused.value = true;
-    if (timer.value) {
-        clearInterval(timer.value);
-        timer.value = null;
+    if (timer) {
+        clearInterval(timer);
+        timer = undefined;
     }
 }
 

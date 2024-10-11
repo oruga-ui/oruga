@@ -269,7 +269,7 @@ const items = computed<StepItem[]>(() =>
     sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
-        ...toValue(column.data),
+        ...toValue(column.data!),
     })),
 );
 
@@ -302,9 +302,9 @@ const hasNext = computed(() => !!nextItem.value);
 
 /** Retrieves the previous visible item */
 const prevItem = computed(() => {
-    if (!activeItem.value) return null;
+    if (!activeItem.value) return undefined;
 
-    let prevItem = null;
+    let prevItem: StepItem | undefined;
     for (let idx = items.value.indexOf(activeItem.value) - 1; idx >= 0; idx--) {
         if (items.value[idx].visible) {
             prevItem = items.value[idx];
@@ -316,7 +316,7 @@ const prevItem = computed(() => {
 
 /** Retrieves the next visible item */
 const nextItem = computed(() => {
-    let nextItem = null;
+    let nextItem: StepItem | undefined;
     let idx = activeItem.value ? items.value.indexOf(activeItem.value) + 1 : 0;
     for (; idx < items.value.length; idx++) {
         if (items.value[idx].visible) {
@@ -336,12 +336,12 @@ function isItemClickable(item: StepItem): boolean {
 
 /** Previous button click listener. */
 function prev(): void {
-    if (hasPrev.value) itemClick(prevItem.value);
+    if (hasPrev.value && prevItem.value) itemClick(prevItem.value);
 }
 
 /** Previous button click listener. */
 function next(): void {
-    if (hasNext.value) itemClick(nextItem.value);
+    if (hasNext.value && nextItem.value) itemClick(nextItem.value);
 }
 
 /** Item click listener, emit input event and change active child. */

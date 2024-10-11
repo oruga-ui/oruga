@@ -7,11 +7,11 @@ export default class InstanceRegistry<T = ComponentInternalInstance> {
         this.entries = [];
     }
 
-    fist(): T {
+    fist(): T | undefined {
         return this.entries.at(0);
     }
 
-    last(): T {
+    last(): T | undefined {
         return this.entries.at(-1);
     }
 

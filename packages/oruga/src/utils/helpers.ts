@@ -34,20 +34,20 @@ export function bound(val: number, min: number, max: number): number {
 /**
  * checks if the value is of type object
  */
-export const isObject = (value: unknown): boolean =>
-    value && typeof value === "object" && !Array.isArray(value);
+export const isObject = (value: unknown): value is object =>
+    !!value && typeof value === "object" && !Array.isArray(value);
 
 /**
  * checks if the value is of type date
  */
 export const isDate = (value: unknown): value is Date =>
-    value && value instanceof Date && !isNaN(value.getTime());
+    !!value && value instanceof Date && !isNaN(value.getTime());
 
 /**
  * checks if the value is not null or undefined
  */
-export const isDefined = (value: unknown): boolean =>
-    value !== null && value !== undefined;
+export const isDefined = <T>(value: T | undefined | null): value is T =>
+    value !== null && typeof value !== "undefined";
 
 /**
  * Determines if the value of a prop that is either present (true) or not
@@ -61,7 +61,7 @@ export const isDefined = (value: unknown): boolean =>
 export const isTrueish = (value: unknown): boolean =>
     isDefined(value) && value !== "false" && value !== false;
 
-export const blankIfUndefined = (value: string): string =>
+export const blankIfUndefined = (value: string | null | undefined): string =>
     isDefined(value) ? value : "";
 
 export const defaultIfUndefined = <T>(
@@ -70,14 +70,14 @@ export const defaultIfUndefined = <T>(
 ): T => (isDefined(value) ? value : defaultValue);
 
 export const toCssDimension = (
-    width: string | number,
+    width: string | number | undefined,
     dimension: string = "px",
-): string | number =>
+): string | undefined =>
     !isDefined(width)
-        ? null
+        ? undefined
         : isNaN(width as number)
-          ? width
-          : width + dimension;
+          ? String(width)
+          : String(width) + dimension;
 
 /**
  * Sort an array by key without mutating original data.
@@ -86,18 +86,18 @@ export const toCssDimension = (
 export function sortBy<T>(
     array: T[],
     key: string,
-    fn: (a: T, b: T, asc: boolean) => number,
-    isAsc: boolean,
+    fn?: (a: T, b: T, asc: boolean) => number,
+    isAsc: boolean = false,
 ): T[] {
-    let sorted = [];
+    let sorted: T[] = [];
     // Sorting without mutating original data
     if (fn && typeof fn === "function") {
         sorted = [...array].sort((a, b) => fn(a, b, isAsc));
     } else {
         sorted = [...array].sort((a, b) => {
             // Get nested values from objects
-            let newA = getValueByPath(a, key);
-            let newB = getValueByPath(b, key);
+            let newA: any = isObject(a) ? getValueByPath(a, key) : a;
+            let newB: any = isObject(b) ? getValueByPath(b, key) : b;
 
             // sort boolean type
             if (typeof newA === "boolean" && typeof newB === "boolean") {
@@ -169,14 +169,14 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
  * Returns true if it is a DOM element
  * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
  */
-export function isElement(o: any): boolean {
+export function isElement(el: any): el is Element {
     return typeof HTMLElement === "object"
-        ? o instanceof HTMLElement //DOM2
-        : o &&
-              typeof o === "object" &&
-              o !== null &&
-              o.nodeType === 1 &&
-              typeof o.nodeName === "string";
+        ? el instanceof HTMLElement //DOM2
+        : el &&
+              typeof el === "object" &&
+              el !== null &&
+              el.nodeType === 1 &&
+              typeof el.nodeName === "string";
 }
 
 /**
@@ -207,13 +207,6 @@ export function getPropertyValue<T>(
             : property;
 
     return String(label || "");
-}
-
-/**
- * Clone an obj with Object.assign
- */
-export function clone<T extends object>(obj: T): T {
-    return Object.assign({}, obj);
 }
 
 /**
@@ -256,17 +249,16 @@ export function mergeDeep(target: any, source: any): any {
 /**
  * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<T = any>(
+export function getValueByPath<T>(
     obj: Record<string, any>,
     path: string,
     defaultValue?: T,
-): T {
-    const value = path
+): typeof defaultValue extends undefined
+    ? T
+    : NonNullable<typeof defaultValue> {
+    const value: any = path
         .split(".")
-        .reduce(
-            (o, i) => (typeof o !== "undefined" ? o[i] : undefined),
-            obj,
-        ) as T;
+        .reduce((o, i) => (typeof o !== "undefined" ? o[i] : undefined), obj);
     return typeof value !== "undefined" ? value : defaultValue;
 }
 
