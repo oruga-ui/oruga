@@ -777,6 +777,11 @@ const rootClasses = defineClasses(["rootClass", "o-acp"]);
 
 const itemClasses = defineClasses(["itemClass", "o-acp__item"]);
 
+const itemHoverClasses = defineClasses([
+    "itemHoverClass",
+    "o-acp__item--hover",
+]);
+
 const itemEmptyClasses = defineClasses([
     "itemEmptyClass",
     "o-acp__item--empty",
@@ -797,15 +802,13 @@ const itemFooterClasses = defineClasses(
     ["itemHoverClass", "o-acp__item--hover", null, footerHovered],
 );
 
-function itemOptionClasses(option): ClassBind[] {
-    const optionClasses = defineClasses([
-        "itemHoverClass",
-        "o-acp__item--hover",
-        null,
-        computed(() => toRaw(option) === toRaw(hoveredOption.value)),
-    ]);
+function itemAppliedClasses(option: T): ClassBind[] {
+    const hoverClasses =
+        toRaw(option) === toRaw(hoveredOption.value)
+            ? itemHoverClasses.value
+            : [];
 
-    return [...itemClasses.value, ...optionClasses.value];
+    return [...itemClasses.value, ...hoverClasses];
 }
 
 // --- Expose Public Functionalities ---
@@ -922,7 +925,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                 :ref="(el) => setItemRef(el, groupindex, index)"
                 :value="option"
                 :tag="itemTag"
-                :class="itemOptionClasses(option)"
+                :class="itemAppliedClasses(option)"
                 aria-role="option"
                 :aria-selected="toRaw(option) === toRaw(hoveredOption)"
                 :tabindex="-1"

@@ -66,8 +66,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.ariaRole", "tab"),
     },
-    /** Sets a class to the item header */
-    headerClass: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
     /** Class of the content item */
     itemClass: {
@@ -109,6 +107,7 @@ const providedData = computed<StepItemComponent>(() => ({
     ...props,
     $slots: slots,
     isTransitioning: isTransitioning.value,
+    classes: itemClasses.value,
     activate,
     deactivate,
 }));
@@ -167,6 +166,23 @@ function beforeLeave(): void {
 // --- Computed Component Classes ---
 
 const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
+
+const itemClasses = defineClasses(
+    ["itemHeaderClass", "o-steps__nav-item"],
+    [
+        "itemHeaderVariantClass",
+        "o-steps__nav-item--",
+        parent.value.variant || props.variant,
+        !!parent.value.variant || !!props.variant,
+    ],
+    ["itemHeaderActiveClass", "o-steps__nav-item-active", null, isActive],
+    [
+        "itemHeaderPreviousClass",
+        "o-steps__nav-item-previous",
+        null,
+        computed(() => parent.value.activeIndex > item.value.index),
+    ],
+);
 </script>
 
 <template>

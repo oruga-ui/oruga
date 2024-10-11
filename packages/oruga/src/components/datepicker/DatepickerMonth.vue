@@ -7,6 +7,7 @@ import {
     ref,
     nextTick,
     watch,
+    effectScope,
     type PropType,
     type ComponentPublicInstance,
 } from "vue";
@@ -355,6 +356,8 @@ const monthCellClasses = defineClasses(
     ["monthCellEventsClass", "o-dpck__month__cell--events", null, hasEvents],
 );
 
+const scope = effectScope();
+
 /**
  * Build cellClasses for cell using validations
  */
@@ -380,7 +383,6 @@ function cellClasses(day: Date): ClassBind[] {
                     isTrueish(props.pickerProps.multiple),
                 ),
         ],
-
         [
             "monthCellFirstSelectedClass",
             "o-dpck__month__cell--first-selected",
@@ -466,6 +468,7 @@ function cellClasses(day: Date): ClassBind[] {
             null,
             !isDateSelectable(day) || props.pickerProps.disabled,
         ],
+        { scope },
     );
 
     return [...monthCellClasses.value, ...classes.value];

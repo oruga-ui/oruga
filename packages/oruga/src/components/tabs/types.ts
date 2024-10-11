@@ -13,9 +13,9 @@ export type TabItemSlots = ComponentSlots<typeof TabItem>;
 
 export type TabItemComponent = TabItemProps & {
     $slots: TabItemSlots;
-    tabClasses: ClassBind[];
-    tabIconClasses: ClassBind[];
-    tabLabelClasses: ClassBind[];
+    classes: ClassBind[];
+    iconClasses: ClassBind[];
+    labelClasses: ClassBind[];
     isTransitioning: boolean;
     activate: (index: number) => void;
     deactivate: (index: number) => void;

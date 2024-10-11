@@ -253,11 +253,13 @@ const rootRef = ref();
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed<StepsComponent<T>>(() => ({
     activeValue: vmodel.value,
+    activeIndex: activeItem.value.index,
     vertical: props.vertical,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
     destroyOnHide: props.destroyOnHide,
+    variant: props.variant,
 }));
 
 /** Provide functionalities and data to child item components */
@@ -443,51 +445,27 @@ const stepLinkLabelClasses = defineClasses([
     "o-steps__title",
 ]);
 
-function stepLinkClasses(childItem: StepItem): ClassBind[] {
-    const classes = defineClasses(
-        ["stepLinkClass", "o-steps__link"],
-        [
-            "stepLinkLabelPositionClass",
-            "o-steps__link-label-",
-            computed(() => props.labelPosition),
-            computed(() => !!props.labelPosition),
-        ],
-        [
-            "stepLinkClickableClass",
-            "o-steps__link-clickable",
-            null,
-            isItemClickable(childItem),
-        ],
-    );
+const stepLinkClasses = defineClasses(
+    ["stepLinkClass", "o-steps__link"],
+    [
+        "stepLinkLabelPositionClass",
+        "o-steps__link-label-",
+        computed(() => props.labelPosition),
+        computed(() => !!props.labelPosition),
+    ],
+);
 
-    return classes.value;
-}
+const stepLinkClickableClasses = defineClasses([
+    "stepLinkClickableClass",
+    "o-steps__link-clickable",
+]);
 
-function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
-    const classes = defineClasses(
-        ["itemHeaderClass", "o-steps__nav-item"],
-        [
-            "itemHeaderVariantClass",
-            "o-steps__nav-item--",
-            childItem.variant || props.variant,
-            !!childItem.variant || !!props.variant,
-        ],
-        [
-            "itemHeaderActiveClass",
-            "o-steps__nav-item-active",
-            null,
-            childItem.value === activeItem.value.value,
-        ],
-        [
-            "itemHeaderPreviousClass",
-            "o-steps__nav-item-previous",
-            null,
-            activeItem.value.index > childItem.index,
-        ],
-    );
+function stepLinkAppliedClasses(childItem: StepItem): ClassBind[] {
+    const activeClasses = isItemClickable(childItem)
+        ? stepLinkClickableClasses.value
+        : [];
 
-    const headerClass = { [childItem.headerClass || ""]: true };
-    return [headerClass, ...classes.value];
+    return [...stepLinkClasses.value, ...activeClasses];
 }
 </script>
 
@@ -501,14 +479,14 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "
-                :class="itemClasses(childItem)">
+                :class="childItem.classes">
                 <span v-if="index > 0" :class="stepDividerClasses"> </span>
 
                 <component
                     :is="childItem.tag"
                     role="button"
                     :tabindex="isItemClickable(childItem) ? 0 : null"
-                    :class="stepLinkClasses(childItem)"
+                    :class="stepLinkAppliedClasses(childItem)"
                     @click="isItemClickable(childItem) && itemClick(childItem)"
                     @keydown.enter="
                         isItemClickable(childItem) && itemClick(childItem)

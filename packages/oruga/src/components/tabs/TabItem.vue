@@ -100,9 +100,9 @@ const slots = useSlots();
 const providedData = computed<TabItemComponent>(() => ({
     ...props,
     $slots: slots,
-    tabClasses: tabClasses.value,
-    tabIconClasses: tabIconClasses.value,
-    tabLabelClasses: tabLabelClasses.value,
+    classes: tabClasses.value,
+    iconClasses: tabIconClasses.value,
+    labelClasses: tabLabelClasses.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,

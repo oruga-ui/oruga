@@ -538,7 +538,7 @@ const pickerDropdownClasses = defineClasses([
 ]);
 
 const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
+const boxClassBind = computed(() => getActiveClasses(boxClasses));
 
 // --- Expose Public Functionalities ---
 

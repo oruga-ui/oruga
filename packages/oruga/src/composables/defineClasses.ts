@@ -10,6 +10,7 @@ import {
     type MaybeRefOrGetter,
     type Ref,
     type ComponentInternalInstance,
+    type EffectScope,
 } from "vue";
 
 import { getOptions } from "@/utils/config";
@@ -32,21 +33,48 @@ type ComputedClass = readonly [
 ];
 
 /** Helperfunction to get all active classes from a class binding list */
-export const getActiveClasses = (classes: ClassBind[]): string[] => {
-    if (!classes) return [];
-    return classes.flatMap((bind) =>
+export const getActiveClasses = (
+    classes: MaybeRefOrGetter<ClassBind[]>,
+): string[] => {
+    if (!toValue(classes)) return [];
+    return toValue(classes).flatMap((bind) =>
         Object.keys(bind)
             .filter((key) => key && bind[key])
             .flatMap((v) => v.split(" ")),
     );
 };
 
+type DefineClassesOptions = {
+    /**
+     * Pass a custom effect scope.
+     * By default a new effect scope is created.
+     * @default effectScope()
+     */
+    scope?: EffectScope;
+};
+
+export function defineClasses(
+    ...args: [...ComputedClass[], DefineClassesOptions]
+): Ref<ClassBind[]>;
+
+export function defineClasses(...args: [...ComputedClass[]]): Ref<ClassBind[]>;
+
 /**
  * Calculate dynamic classes based on class definitions
  */
 export function defineClasses(
-    ...classDefinitions: ComputedClass[]
+    ...args: ComputedClass[] | [...ComputedClass[], DefineClassesOptions]
 ): Ref<ClassBind[]> {
+    // extract last argument if its the option object
+    const options = Array.isArray(args.at(-1))
+        ? undefined
+        : (args.at(-1) as DefineClassesOptions);
+
+    // get class defintion list based on options are given or not
+    const classDefinitions = (
+        Array.isArray(args.at(-1)) ? args : args.slice(0, -1)
+    ) as ComputedClass[];
+
     // getting a hold of the internal instance of the component in setup()
     const vm = getCurrentInstance();
     if (!vm)
@@ -55,7 +83,16 @@ export function defineClasses(
         );
 
     // create an effect scope object to capture reactive effects
-    const scope = effectScope();
+    const scope = options?.scope || effectScope();
+
+    // check if there is a current active effect scope
+    if (getCurrentScope())
+        // Registers a dispose callback on the current active effect scope.
+        // The callback will be invoked when the associated effect scope is stopped.
+        onScopeDispose(() => {
+            // stop all effects when appropriate
+            if (scope) scope.stop();
+        });
 
     // reactive classes container
     const classes = ref<ClassBind[]>([]);
@@ -127,15 +164,6 @@ export function defineClasses(
         // return computed class based on parameter
         return getClassBind();
     });
-
-    // check if there is a current active effect scope
-    if (getCurrentScope())
-        // Registers a dispose callback on the current active effect scope.
-        // The callback will be invoked when the associated effect scope is stopped.
-        onScopeDispose(() => {
-            // stop all effects when appropriate
-            if (scope) scope.stop();
-        });
 
     // return reactive classes
     return classes;

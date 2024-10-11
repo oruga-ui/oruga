@@ -1507,7 +1507,7 @@ const paginationWrapperClasses = defineClasses([
 ]);
 
 const paginationWrapperRootClasses = computed(() =>
-    getActiveClasses(paginationWrapperClasses.value),
+    getActiveClasses(paginationWrapperClasses),
 );
 
 const thSortIconClasses = defineClasses([
@@ -1515,65 +1515,29 @@ const thSortIconClasses = defineClasses([
     "o-table__th__sort-icon",
 ]);
 
-function thClasses(column: TableColumnItem<T>): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "thCurrentSortClass",
-            "o-table__th-current-sort",
-            null,
-            isColumnSorted(column),
-        ],
-        ["thSortableClass", "o-table__th--sortable", null, column.sortable],
-        [
-            "thUnselectableClass",
-            "o-table__th--unselectable",
-            null,
-            column.isHeaderUnselectable,
-        ],
-        [
-            "thPositionClass",
-            "o-table__th--",
-            column.position,
-            !!column.position,
-        ],
-        ["thStickyClass", "o-table__th--sticky", null, column.sticky],
-    );
+const trSelectedClasses = defineClasses([
+    "trSelectedClass",
+    "o-table__tr--selected",
+]);
 
-    return [...thBaseClasses.value, ...classes.value];
-}
+const trCheckedClasses = defineClasses([
+    "trCheckedClass",
+    "o-table__tr--checked",
+]);
 
 function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "trSelectedClass",
-            "o-table__tr--selected",
-            null,
-            isRowEqual(row.value, tableSelectedRow.value),
-        ],
-        ["trCheckedClass", "o-table__tr--checked", null, isChecked(row)],
-    );
+    const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
+        ? trSelectedClasses.value
+        : [];
+
+    const checkedClasses = isChecked(row) ? trCheckedClasses.value : [];
 
     const rowClass =
         typeof props.rowClass === "function"
             ? props.rowClass(row.value, index) || ""
             : "";
 
-    return [...classes.value, { [rowClass]: true }];
-}
-
-function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "tdPositionClass",
-            "o-table__td--",
-            column.position,
-            !!column.position,
-        ],
-
-        ["tdStickyClass", "o-table__td--sticky", null, column.sticky],
-    );
-
-    return [...tdBaseClasses.value, ...classes.value];
+    return [...selectedClasses, ...checkedClasses, { [rowClass]: true }];
 }
 
 // --- Expose Public Functionalities ---
@@ -1719,7 +1683,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-for="(column, index) in visibleColumns"
                             :key="`${column.identifier}_${index}_header`"
                             v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
+                            :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style"
                             :draggable="canDragColumn"
                             @click.stop="sort(column, true, $event)"
@@ -1803,7 +1767,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-for="(column, index) in visibleColumns"
                             :key="`${column.identifier}_${index}_searchable`"
                             v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
+                            :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style">
                             <template v-if="column.searchable">
                                 <template v-if="column.$slots?.searchable">
@@ -1925,7 +1889,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                 :component="column.$el"
                                 name="default"
                                 tag="td"
-                                :class="tdClasses(row, column)"
+                                :class="[...tdBaseClasses, ...column.tdClasses]"
                                 :style="isMobileActive ? {} : column.style"
                                 :data-label="column.label"
                                 :props="{
