@@ -5,15 +5,7 @@
         T extends string | number | object,
         IsMultiple extends boolean = false
     ">
-import {
-    computed,
-    watch,
-    onMounted,
-    ref,
-    nextTick,
-    useAttrs,
-    useId,
-} from "vue";
+import { computed, watch, ref, nextTick, useAttrs, useId } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -129,21 +121,19 @@ const placeholderVisible = computed(
         (!isDefined(vmodel.value) || vmodel.value === ""),
 );
 
-onMounted(() => {
-    /**
-     * When v-model is changed:
-     *  1. Set parent field filled state.
-     *  2. Check html5 valdiation
-     */
-    watch(
-        vmodel,
-        (value) => {
-            if (parentField?.value) parentField.value.setFilled(!!value);
-            if (!isValid.value) checkHtml5Validity();
-        },
-        { immediate: true, flush: "post" },
-    );
-});
+/**
+ * When v-model is changed:
+ *  1. Set parent field filled state.
+ *  2. Check html5 valdiation
+ */
+watch(
+    vmodel,
+    (value) => {
+        if (parentField?.value) parentField.value.setFilled(!!value);
+        if (!isValid.value) checkHtml5Validity();
+    },
+    { immediate: true, flush: "post" },
+);
 
 const selectOptions = computed<OptionsItem<T>[]>(() => {
     if (!props.options || !Array.isArray(props.options)) return [];
@@ -313,8 +303,9 @@ defineExpose({ focus: setFocus, value: vmodel });
                 <option
                     v-for="option in selectOptions"
                     :key="option.key"
+                    v-bind="option.attrs"
                     :value="option.value"
-                    v-bind="option.attrs">
+                    :data-selected="option.value === vmodel">
                     {{ option.label }}
                 </option>
             </slot>

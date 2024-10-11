@@ -1,23 +1,24 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
+import type { OptionsItem } from "@oruga-ui/oruga-next";
 
-const months = [
-    { name: "January", value: 0 },
-    { name: "February", value: 1 },
-    { name: "March", value: 2 },
-    { name: "April", value: 3 },
-    { name: "May", value: 4 },
-    { name: "June", value: 5 },
-    { name: "July", value: 6 },
-    { name: "August", value: 7 },
-    { name: "September", value: 8 },
-    { name: "October", value: 9 },
-    { name: "November", value: 10 },
-    { name: "December", value: 11 },
+const months: OptionsItem<number>[] = [
+    { label: "January", value: 0 },
+    { label: "February", value: 1 },
+    { label: "March", value: 2 },
+    { label: "April", value: 3 },
+    { label: "May", value: 4 },
+    { label: "June", value: 5 },
+    { label: "July", value: 6 },
+    { label: "August", value: 7 },
+    { label: "September", value: 8 },
+    { label: "October", value: 9 },
+    { label: "November", value: 10 },
+    { label: "December", value: 11 },
 ];
 
 const date = ref<Date | undefined>(new Date());
-const month = ref<string>();
+const month = ref<number>(date.value?.getMonth() || 0);
 
 function selectMonth(option): void {
     if (!option) return;
@@ -25,14 +26,6 @@ function selectMonth(option): void {
     date.value = date.value ? new Date(date.value) : new Date();
     date.value.setMonth(option.value);
 }
-
-onMounted(() => {
-    if (!date.value) return;
-
-    month.value = months.find(
-        (item) => item.value == date.value!.getMonth(),
-    )?.name;
-});
 </script>
 
 <template>
@@ -43,19 +36,18 @@ onMounted(() => {
                 :first-day-of-week="1"
                 placeholder="Click to select...">
                 <template #header>
-                    <o-field>
+                    <o-field grouped>
                         <o-autocomplete
                             v-model="month"
+                            :options="months"
                             root-class="grow"
                             open-on-focus
                             readonly
-                            :data="months"
-                            field="name"
                             expanded
                             @select="selectMonth" />
                         <o-button
-                            disabled
-                            :label="date?.getFullYear().toString()" />
+                            :label="date?.getFullYear().toString()"
+                            disabled />
                     </o-field>
                 </template>
 
@@ -88,6 +80,7 @@ onMounted(() => {
         margin-left: 0.5rem;
     }
 }
+
 .grow {
     flex-grow: 1;
 }
