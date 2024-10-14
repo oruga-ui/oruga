@@ -1,7 +1,6 @@
 /* eslint-env node */
 
 import vuePlugin from "eslint-plugin-vue";
-// import vueA11yPlugin from "eslint-plugin-vuejs-accessibility";
 import prettierPlugin from "eslint-plugin-prettier/recommended";
 import typescriptConfig from "@vue/eslint-config-typescript";
 import prettierConfig from "@vue/eslint-config-prettier";
@@ -9,14 +8,13 @@ import prettierConfig from "@vue/eslint-config-prettier";
 export default [
   // add more generic rulesets here
   ...vuePlugin.configs["flat/recommended"],
-  // ...vueA11yPlugin.configs["flat/recommended"],
   ...typescriptConfig(),
   prettierPlugin,
   prettierConfig,
 
   // your modifications
   {
-    ignores: ["**/.*", "**/dist", "**/coverage"],
+    ignores: ["**/.*", "**/dist", "**/.vitepress"],
     rules: {
       "@typescript-eslint/no-explicit-any": ["warn"],
       "@typescript-eslint/ban-ts-comment": ["warn"],
