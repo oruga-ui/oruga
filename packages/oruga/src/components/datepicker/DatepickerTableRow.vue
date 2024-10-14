@@ -8,6 +8,7 @@ import {
     nextTick,
     ref,
     effectScope,
+    onUnmounted,
     type PropType,
     type ComponentPublicInstance,
 } from "vue";
@@ -229,6 +230,9 @@ function dateWithin(
 
 const scope = effectScope();
 
+// stop all scope effects
+onUnmounted(() => scope.stop());
+
 /** Build cellClasses for cell using validations */
 function cellClasses(day: Date): ClassBind[] {
     const classes = defineClasses(
@@ -339,6 +343,7 @@ function cellClasses(day: Date): ClassBind[] {
             props.pickerProps.nearbySelectableMonthDays &&
                 day.getMonth() !== props.month,
         ],
+        // pass effect scope for rectivity binding
         { scope },
     );
 

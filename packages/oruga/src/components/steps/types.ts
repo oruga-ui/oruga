@@ -1,3 +1,4 @@
+import type { Slots } from "vue";
 import type {
     ComponentProps,
     ComponentSlots,
@@ -7,17 +8,22 @@ import type { ClassBind } from "@/types";
 
 import StepItem from "./StepItem.vue";
 
-export type StepItemProps = ComponentProps<typeof StepItem>;
+export type StepItemProps<T extends string | number | object> = ComponentProps<
+    typeof StepItem<T>
+>;
 
-export type StepItemSlots = ComponentSlots<typeof StepItem>;
+export type StepItemSlots<T extends string | number | object> = ComponentSlots<
+    typeof StepItem<T>
+>;
 
-export type StepItemComponent = StepItemProps & {
-    $slots: StepItemSlots;
-    isTransitioning: boolean;
-    classes: ClassBind[];
-    activate: (index: number) => void;
-    deactivate: (index: number) => void;
-};
+export type StepItemComponent<T extends string | number | object> =
+    StepItemProps<T> & {
+        $slots: Slots;
+        isTransitioning: boolean;
+        classes: ClassBind[];
+        activate: (index: number) => void;
+        deactivate: (index: number) => void;
+    };
 
 export type StepsComponent<T extends string | number | object> = {
     activeValue: T;
@@ -30,4 +36,8 @@ export type StepsComponent<T extends string | number | object> = {
     variant: string;
 };
 
-export type StepItem = Omit<ProviderItem, "data"> & StepItemComponent;
+export type StepItem<T extends string | number | object> = Omit<
+    ProviderItem,
+    "data"
+> &
+    StepItemComponent<T>;

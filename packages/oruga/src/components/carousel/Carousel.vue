@@ -564,10 +564,7 @@ const indicatorsClasses = defineClasses(
     ],
 );
 
-const indicatorWrapperClasses = defineClasses([
-    "indicatorClass",
-    "o-car__indicator",
-]);
+const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
 
 const indicatorItemClasses = defineClasses(
     ["indicatorItemClass", "o-car__indicator__item"],
@@ -675,7 +672,7 @@ function indicatorItemAppliedClasses(index: number): ClassBind[] {
                     <div
                         v-for="(_, index) in indicatorCount"
                         :key="index"
-                        :class="indicatorWrapperClasses"
+                        :class="indicatorClasses"
                         role="button"
                         tabindex="0"
                         @focus="onModeChange('hover', index)"

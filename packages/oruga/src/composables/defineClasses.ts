@@ -36,8 +36,9 @@ type ComputedClass = readonly [
 export const getActiveClasses = (
     classes: MaybeRefOrGetter<ClassBind[]>,
 ): string[] => {
-    if (!toValue(classes)) return [];
-    return toValue(classes).flatMap((bind) =>
+    const values = toValue(classes);
+    if (!values) return [];
+    return values.flatMap((bind) =>
         Object.keys(bind)
             .filter((key) => key && bind[key])
             .flatMap((v) => v.split(" ")),
@@ -48,6 +49,7 @@ type DefineClassesOptions = {
     /**
      * Pass a custom effect scope.
      * By default a new effect scope is created.
+     * An error will be thrown if no current scope or a custom scope is given.
      * @default effectScope()
      */
     scope?: EffectScope;
@@ -80,6 +82,11 @@ export function defineClasses(
     if (!vm)
         throw new Error(
             "defineClasses must be called within a component setup function.",
+        );
+    // check if there is no current active effect scope given
+    if (!getCurrentScope() && !options?.scope)
+        throw new Error(
+            "defineClasses must be called within a current active effect scope.",
         );
 
     // create an effect scope object to capture reactive effects

@@ -103,16 +103,16 @@ const emits = defineEmits<{
 
 const slots = useSlots();
 
-const providedData = computed<StepItemComponent>(() => ({
+const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     $slots: slots,
-    isTransitioning: isTransitioning.value,
     classes: itemClasses.value,
+    isTransitioning: isTransitioning.value,
     activate,
     deactivate,
 }));
 
-// Inject functionalities and data from the parent carousel component
+// inject functionalities and data from the parent carousel component
 const { parent, item } = useProviderChild<StepsComponent<T>>({
     data: providedData,
 });
@@ -172,15 +172,15 @@ const itemClasses = defineClasses(
     [
         "itemHeaderVariantClass",
         "o-steps__nav-item--",
-        parent.value.variant || props.variant,
-        !!parent.value.variant || !!props.variant,
+        computed(() => parent.value?.variant || props.variant),
+        computed(() => !!parent.value?.variant || !!props.variant),
     ],
     ["itemHeaderActiveClass", "o-steps__nav-item-active", null, isActive],
     [
         "itemHeaderPreviousClass",
         "o-steps__nav-item-previous",
         null,
-        computed(() => parent.value.activeIndex > item.value.index),
+        computed(() => item.value.index < parent.value?.activeIndex),
     ],
 );
 </script>

@@ -1465,8 +1465,6 @@ const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
 
-const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
-
 const thCheckboxClasses = defineClasses([
     "thCheckboxClass",
     "o-table__th-checkbox",
@@ -1478,37 +1476,6 @@ const thDetailedClasses = defineClasses([
 ]);
 
 const thSubheadingClasses = defineClasses(["thSubheadingClass", "o-table__th"]);
-
-const tdCheckboxClasses = defineClasses(
-    ["tdCheckboxClass", "o-table__td-checkbox"],
-    [
-        "thStickyClass",
-        "o-table__th--sticky",
-        null,
-        computed(() => props.stickyCheckbox),
-    ],
-);
-
-const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
-
-const tdDetailedChevronClasses = defineClasses([
-    "tdDetailedChevronClass",
-    "o-table__td-chevron",
-]);
-
-const mobileSortClasses = defineClasses([
-    "mobileSortClass",
-    "o-table__mobile-sort",
-]);
-
-const paginationWrapperClasses = defineClasses([
-    "paginationWrapperClass",
-    "o-table__pagination",
-]);
-
-const paginationWrapperRootClasses = computed(() =>
-    getActiveClasses(paginationWrapperClasses),
-);
 
 const thSortIconClasses = defineClasses([
     "thSortIconClass",
@@ -1524,6 +1491,39 @@ const trCheckedClasses = defineClasses([
     "trCheckedClass",
     "o-table__tr--checked",
 ]);
+
+const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
+
+const tdCheckboxClasses = defineClasses(
+    ["tdCheckboxClass", "o-table__td-checkbox"],
+    [
+        "thStickyClass",
+        "o-table__th--sticky",
+        null,
+        computed(() => props.stickyCheckbox),
+    ],
+);
+
+const tdDetailedChevronClasses = defineClasses([
+    "tdDetailedChevronClass",
+    "o-table__td-chevron",
+]);
+
+const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
+
+const mobileSortClasses = defineClasses([
+    "mobileSortClass",
+    "o-table__mobile-sort",
+]);
+
+const paginationWrapperClasses = defineClasses([
+    "paginationWrapperClass",
+    "o-table__pagination",
+]);
+
+const paginationWrapperRootClasses = computed(() =>
+    getActiveClasses(paginationWrapperClasses),
+);
 
 function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
     const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
