@@ -15,16 +15,15 @@ type FieldData = {
     $el: Element;
     props: FieldProps;
     hasInnerField: boolean;
-    variant: string;
-    hasMessage: boolean;
-    message: string;
+    variant?: string;
+    message?: string;
     inputAttrs: object;
     addInnerField: () => void;
     setInputId: (value: string) => void;
     setFocus: (value: boolean) => void;
     setFilled: (value: boolean) => void;
-    setVariant: (value: string) => void;
-    setMessage: (value: string) => void;
+    setVariant: (value?: string) => void;
+    setMessage: (value?: string) => void;
 };
 
 /** provide/inject type */
@@ -44,16 +43,17 @@ export function provideField(data: ProvidedField): void {
 /** Inject parent field component if used inside one. **/
 export function injectField(): {
     parentField?: ComputedRef<FieldData> | undefined;
-    statusVariant: ComputedRef<string>;
     statusVariantIcon: ComputedRef<string>;
-    statusMessage: ComputedRef<string>;
+    statusVariant: ComputedRef<string | undefined>;
+    statusMessage: ComputedRef<string | undefined>;
 } {
     const parentField = inject($FieldKey, undefined);
 
     /** Get the message prop from parent if it's a Field. */
-    const statusMessage = computed<string>(() =>
-        parentField.value?.hasMessage ? parentField.value.message : "",
-    );
+    const statusMessage = computed<string | undefined>(() => {
+        if (!parentField?.value?.message) return undefined;
+        return parentField?.value.message;
+    });
 
     /** Get the type prop from parent if it's a Field. */
     const statusVariant = computed<string | undefined>(() => {
@@ -68,15 +68,20 @@ export function injectField(): {
         return undefined;
     });
 
-    /** Icon name based on the variant. */
-    const statusVariantIcon = computed<string>(() => {
-        const statusVariantIcon = getOption("statusVariantIcon", {
+    const statusVariantIconConfig = getOption<Record<string, string>>(
+        "statusVariantIcon",
+        {
             success: "check",
             danger: "alert-circle",
             info: "information",
             warning: "alert",
-        });
-        return statusVariantIcon[statusVariant.value] || "";
+        },
+    );
+
+    /** Icon name based on the variant. */
+    const statusVariantIcon = computed<string>(() => {
+        if (!statusVariant.value) return "";
+        return statusVariantIconConfig[statusVariant.value] || "";
     });
 
     return {

@@ -12,12 +12,12 @@ function deleteDropFile(index): void {
     <section>
         <o-field>
             <o-upload v-model="dropFiles" multiple drag-drop>
-                <center>
+                <div style="text-align: center">
                     <p>
                         <o-icon icon="upload" size="is-large" />
                     </p>
                     <p>Drop your files here or click to upload</p>
-                </center>
+                </div>
             </o-upload>
         </o-field>
 

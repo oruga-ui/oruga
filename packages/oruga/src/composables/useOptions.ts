@@ -81,7 +81,7 @@ type NormalizedOptions<
         ? OptionsItem<V>[]
         : O extends OptionsGroupPropItem<V>
           ? OptionsGroupItem<V>[]
-          : never;
+          : never[];
 
 /**
  * A function to normalize an array of objects, array of strings, or object of

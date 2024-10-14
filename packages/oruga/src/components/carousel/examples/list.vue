@@ -68,6 +68,7 @@ const items = [
                 <o-input
                     v-model="settings.itemsToShow"
                     type="number"
+                    number
                     min="1"
                     :max="items.length" />
             </o-field>
@@ -75,6 +76,7 @@ const items = [
                 <o-input
                     v-model="settings.itemsToList"
                     type="number"
+                    number
                     min="1"
                     :max="items.length - 1" />
             </o-field>

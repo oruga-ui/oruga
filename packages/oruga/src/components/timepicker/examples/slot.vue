@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const time = ref(new Date());
+const time = ref<Date | undefined>(new Date());
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const time = ref(new Date());
                     variant="danger"
                     icon-left="times"
                     outlined
-                    @click="time = null" />
+                    @click="time = undefined" />
             </o-timepicker>
         </o-field>
     </section>

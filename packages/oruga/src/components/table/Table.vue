@@ -820,7 +820,7 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
     return provider.sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
-        ...toValue(column.data),
+        ...toValue(column.data!),
         thAttrsData: {},
         tdAttrsData: [],
     }));
@@ -955,7 +955,7 @@ function getColumnValue(row: T, column: TableColumn<T>): string {
 /** check if two rows are equal by a custom compare function or the rowKey attribute */
 function isRowEqual(
     sourceRow: MaybeRefOrGetter<T>,
-    targetRow?: MaybeRefOrGetter<T>,
+    targetRow: MaybeRefOrGetter<T>,
 ): boolean {
     const el1 = toValue(sourceRow);
     const el2 = toValue(targetRow);
@@ -990,23 +990,23 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
     const row = visibleRows.value[index];
 
     if (!props.isRowSelectable(row.value)) {
-        let newIndex = null;
+        let newIndex: number | undefined;
         if (pos > 0) {
             for (
                 let i = index;
-                i < visibleRows.value.length && newIndex === null;
+                i < visibleRows.value.length && newIndex === undefined;
                 i++
             ) {
                 if (props.isRowSelectable(visibleRows.value[i].value))
                     newIndex = i;
             }
         } else {
-            for (let i = index; i >= 0 && newIndex === null; i--) {
+            for (let i = index; i >= 0 && newIndex === undefined; i--) {
                 if (props.isRowSelectable(visibleRows.value[i].value))
                     newIndex = i;
             }
         }
-        if (newIndex >= 0) {
+        if (newIndex != undefined && newIndex >= 0) {
             selectRow(visibleRows.value[newIndex], index, event);
         }
     } else {
@@ -1070,7 +1070,8 @@ function isRowFiltered(row: T): boolean {
         if (typeof column?.customSearch === "function")
             return column.customSearch(row, filter);
 
-        const value = typeof row === "object" ? getValueByPath(row, key) : row;
+        const value =
+            typeof row === "object" && !!row ? getValueByPath(row, key) : row;
         if (value == null) return false;
         // if number compare values
         if (Number.isInteger(value)) return value === Number(filter);
@@ -1080,7 +1081,7 @@ function isRowFiltered(row: T): boolean {
                 (val) =>
                     re.test(removeDiacriticsFromString(val)) || re.test(val),
             );
-
+        if (typeof value !== "string") return !!value;
         return re.test(removeDiacriticsFromString(value)) || re.test(value);
     });
 }
@@ -1142,7 +1143,12 @@ function sort(
 
     // if not first time sort
     if (currentSortColumn.value)
-        emits("sort", column, isAsc.value ? "asc" : "desc", event);
+        emits(
+            "sort",
+            column,
+            isAsc.value ? "asc" : "desc",
+            event || new Event("sort"),
+        );
 
     currentSortColumn.value = column;
     // recompute rows with updated currentSortColumn
@@ -1164,9 +1170,9 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
     if (!column) return rows;
     return sortBy<TableRow<T>>(
         rows,
-        column?.field ? "value." + column.field : undefined,
+        column?.field ? "value." + column.field : "",
         column?.customSort
-            ? (a, b, asc): number => column.customSort(a.value, b.value, asc)
+            ? (a, b, asc): number => column.customSort!(a.value, b.value, asc)
             : undefined,
         isAsc.value,
     );
@@ -1459,8 +1465,6 @@ const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
 
-const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
-
 const thCheckboxClasses = defineClasses([
     "thCheckboxClass",
     "o-table__th-checkbox",
@@ -1473,6 +1477,23 @@ const thDetailedClasses = defineClasses([
 
 const thSubheadingClasses = defineClasses(["thSubheadingClass", "o-table__th"]);
 
+const thSortIconClasses = defineClasses([
+    "thSortIconClass",
+    "o-table__th__sort-icon",
+]);
+
+const trSelectedClasses = defineClasses([
+    "trSelectedClass",
+    "o-table__tr--selected",
+]);
+
+const trCheckedClasses = defineClasses([
+    "trCheckedClass",
+    "o-table__tr--checked",
+]);
+
+const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
+
 const tdCheckboxClasses = defineClasses(
     ["tdCheckboxClass", "o-table__td-checkbox"],
     [
@@ -1483,12 +1504,12 @@ const tdCheckboxClasses = defineClasses(
     ],
 );
 
-const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
-
 const tdDetailedChevronClasses = defineClasses([
     "tdDetailedChevronClass",
     "o-table__td-chevron",
 ]);
+
+const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
 
 const mobileSortClasses = defineClasses([
     "mobileSortClass",
@@ -1501,73 +1522,22 @@ const paginationWrapperClasses = defineClasses([
 ]);
 
 const paginationWrapperRootClasses = computed(() =>
-    getActiveClasses(paginationWrapperClasses.value),
+    getActiveClasses(paginationWrapperClasses),
 );
 
-const thSortIconClasses = defineClasses([
-    "thSortIconClass",
-    "o-table__th__sort-icon",
-]);
-
-function thClasses(column: TableColumnItem<T>): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "thCurrentSortClass",
-            "o-table__th-current-sort",
-            null,
-            isColumnSorted(column),
-        ],
-        ["thSortableClass", "o-table__th--sortable", null, column.sortable],
-        [
-            "thUnselectableClass",
-            "o-table__th--unselectable",
-            null,
-            column.isHeaderUnselectable,
-        ],
-        [
-            "thPositionClass",
-            "o-table__th--",
-            column.position,
-            !!column.position,
-        ],
-        ["thStickyClass", "o-table__th--sticky", null, column.sticky],
-    );
-
-    return [...thBaseClasses.value, ...classes.value];
-}
-
 function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "trSelectedClass",
-            "o-table__tr--selected",
-            null,
-            isRowEqual(row.value, tableSelectedRow.value),
-        ],
-        ["trCheckedClass", "o-table__tr--checked", null, isChecked(row)],
-    );
+    const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
+        ? trSelectedClasses.value
+        : [];
+
+    const checkedClasses = isChecked(row) ? trCheckedClasses.value : [];
 
     const rowClass =
         typeof props.rowClass === "function"
             ? props.rowClass(row.value, index) || ""
             : "";
 
-    return [...classes.value, { [rowClass]: true }];
-}
-
-function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "tdPositionClass",
-            "o-table__td--",
-            column.position,
-            !!column.position,
-        ],
-
-        ["tdStickyClass", "o-table__td--sticky", null, column.sticky],
-    );
-
-    return [...tdBaseClasses.value, ...classes.value];
+    return [...selectedClasses, ...checkedClasses, { [rowClass]: true }];
 }
 
 // --- Expose Public Functionalities ---
@@ -1594,7 +1564,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ getColumnValue(row, column) }}
+                        {{ getColumnValue(row as T, column) }}
                     </o-table-column>
                 </template>
 
@@ -1663,7 +1633,7 @@ defineExpose({ rows: tableData, sort: sortByField });
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
                 :class="tableClasses"
-                :tabindex="selectable ? 0 : null"
+                :tabindex="selectable ? 0 : undefined"
                 @keydown.self.prevent.up="onArrowPressed(-1, $event)"
                 @keydown.self.prevent.down="onArrowPressed(1, $event)">
                 <caption v-if="$slots.caption">
@@ -1713,7 +1683,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-for="(column, index) in visibleColumns"
                             :key="`${column.identifier}_${index}_header`"
                             v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
+                            :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style"
                             :draggable="canDragColumn"
                             @click.stop="sort(column, true, $event)"
@@ -1797,7 +1767,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-for="(column, index) in visibleColumns"
                             :key="`${column.identifier}_${index}_searchable`"
                             v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
+                            :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style">
                             <template v-if="column.searchable">
                                 <template v-if="column.$slots?.searchable">
@@ -1808,7 +1778,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                         :props="{ column, index, filters }" />
                                 </template>
                                 <o-input
-                                    v-else
+                                    v-else-if="column.field"
                                     v-model="filters[column.field]"
                                     :name="`column_${column.field}_filter`"
                                     :type="column.numeric ? 'number' : 'search'"
@@ -1919,7 +1889,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                 :component="column.$el"
                                 name="default"
                                 tag="td"
-                                :class="tdClasses(row, column)"
+                                :class="[...tdBaseClasses, ...column.tdClasses]"
                                 :style="isMobileActive ? {} : column.style"
                                 :data-label="column.label"
                                 :props="{

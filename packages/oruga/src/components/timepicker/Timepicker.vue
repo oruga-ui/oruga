@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import { computed, ref, watch, type PropType } from "vue";
+import { computed, ref, watch } from "vue";
 
 import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
-import { isDate, pad } from "@/utils/helpers";
-import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
+import { isDate, isDefined, pad } from "@/utils/helpers";
+import {
+    defineClasses,
+    useMatchMedia,
+    getActiveClasses,
+    type OptionsItem,
+} from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
-import { type OptionsItem } from "../select";
-import type { ComponentClass } from "@/types";
+import type { TimepickerProps } from "./props";
 
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
@@ -24,214 +28,49 @@ defineOptions({
     configField: "timepicker",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The input value state */
-    modelValue: { type: Date as PropType<Date>, default: null },
-    /** The active state of the dropdown */
-    active: { type: Boolean, default: false },
-    /** Min time to select */
-    minTime: { type: Date as PropType<Date>, default: undefined },
-    /** Max time to select */
-    maxTime: { type: Date as PropType<Date>, default: undefined },
-    /** Display datepicker inline */
-    inline: { type: Boolean, default: false },
-    /** Input placeholder */
-    placeholder: { type: String, default: undefined },
-    /** Makes input full width when inside a grouped or addon field */
-    expanded: { type: Boolean, default: false },
-    /** Makes the input rounded */
-    rounded: { type: Boolean, default: false },
-    /** Same as native input readonly */
-    readonly: { type: Boolean, default: false },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /**
-     * Size of the button
-     * @values small, medium, large
-     */
-    size: { type: String, default: () => getOption("timepicker.size") },
-    hourFormat: {
-        type: [String, Number] as PropType<"12" | "24" | 12 | 24>,
-        validator: (value: string | number) =>
-            ["12", "24", 12, 24, undefined].includes(value),
-        default: undefined,
-    },
-    incrementHours: { type: Number, default: 1 },
-    incrementMinutes: { type: Number, default: 1 },
-    incrementSeconds: { type: Number, default: 1 },
-    /** Open dropdown on focus */
-    openOnFocus: {
-        type: Boolean,
-        default: () => getOption("timepicker.openOnFocus", true),
-    },
-    /** Close dropdown on click */
-    closeOnClick: {
-        type: Boolean,
-        default: () => getOption("timepicker.closeOnClick", true),
-    },
-    enableSeconds: { type: Boolean, default: false },
-    defaultMinutes: { type: Number, default: undefined },
-    defaultSeconds: { type: Number, default: undefined },
-    /** Date format locale */
-    locale: {
-        type: String,
-        default: () => getOption("locale"),
-    },
-    /** Custom function to format a date into a string */
-    timeFormatter: {
-        type: Function as PropType<(date: Date) => string>,
-        default: (date: Date | Date[]) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("timepicker.timeFormatter", (_) => undefined)(date),
-    },
-    /** Custom function to parse a string into a date */
-    timeParser: {
-        type: Function as PropType<(date: string) => Date>,
-        default: (date: string) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("timepicker.timeParser", (_) => undefined)(date),
-    },
-    /** time creator function, default is `new Date()` */
-    timeCreator: {
-        type: Function as PropType<() => Date>,
-        default: () => getOption("timepicker.timeCreator", () => new Date())(),
-    },
-    /** Define a list of times which can not be selected */
-    unselectableTimes: {
-        type: [Array, Function] as PropType<Date[] | ((date: Date) => boolean)>,
-        default: () => [],
-    },
-    /** Reset the time inputs when meridian changes */
-    resetOnMeridianChange: { type: Boolean, default: false },
-    /** Dropdown trapFocus */
-    trapFocus: {
-        type: Boolean,
-        default: () => getOption("timepicker.trapFocus", true),
-    },
-    /** Dropdown position */
-    position: { type: String, default: undefined },
-    /** Enable dropdown mobile modal */
-    mobileModal: {
-        type: Boolean,
-        default: () => getOption("timepicker.mobileModal", true),
-    },
-    /** Enable mobile native input if mobile agent */
-    mobileNative: {
-        type: Boolean,
-        default: () => getOption("timepicker.mobileNative", true),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("timepicker.iconPack", undefined),
-    },
-    /** Icon to be shown */
-    icon: {
-        type: String,
-        default: () => getOption("timepicker.icon", undefined),
-    },
-    /** Icon to be added on the right side */
-    iconRight: {
-        type: String,
-        default: () => getOption("timepicker.iconRight", undefined),
-    },
-    /** Make the icon right clickable */
-    iconRightClickable: { type: Boolean, default: false },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("timepicker.mobileBreakpoint"),
-    },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("timepicker.teleport", false),
-    },
-    /** Enable HTML 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** Custom HTML 5 validation error to set on the form control */
-    customValidity: {
-        type: [String, Function] as PropType<
-            | string
-            | ((
-                  currentValue: Date | null | undefined,
-                  state: ValidityState,
-              ) => string)
-        >,
-        default: "",
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Timepicker component size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Timepicker component box where you choose the date */
-    boxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Timepicker separator */
-    separatorClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Timepicker footer */
-    footerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the underlaying dropdown component */
-    dropdownClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the HTML input element */
-    inputClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /**
-     * Class configuration for the internal input component
-     * @ignore
-     */
-    inputClasses: {
-        type: Object,
-        default: () => getOption("timepicker.inputClasses", {}),
-    },
-    /**
-     * Class configuration for the internal dropdown component
-     * @ignore
-     */
-    dropdownClasses: {
-        type: Object,
-        default: () => getOption("timepicker.dropdownClasses", {}),
-    },
-    /**
-     * Class configuration for the internal select component
-     * @ignore
-     */
-    selectClasses: {
-        type: Object,
-        default: () => getOption("timepicker.selectClasses", {}),
-    },
+const props = withDefaults(defineProps<TimepickerProps>(), {
+    override: undefined,
+    modelValue: undefined,
+    active: false,
+    minTime: undefined,
+    maxTime: undefined,
+    inline: false,
+    placeholder: undefined,
+    expanded: false,
+    rounded: false,
+    readonly: false,
+    disabled: false,
+    size: () => getOption("timepicker.size"),
+    hourFormat: undefined,
+    incrementHours: 1,
+    incrementMinutes: 1,
+    incrementSeconds: 1,
+    openOnFocus: () => getOption("timepicker.openOnFocus", true),
+    closeOnClick: () => getOption("timepicker.closeOnClick", true),
+    enableSeconds: false,
+    defaultMinutes: undefined,
+    defaultSeconds: undefined,
+    locale: () => getOption("locale"),
+    formatter: getOption("timepicker.formatter"),
+    parser: getOption("timepicker.parser"),
+    creator: getOption("timepicker.creator"),
+    unselectableTimes: undefined,
+    resetOnMeridianChange: false,
+    trapFocus: () => getOption("timepicker.trapFocus", true),
+    position: undefined,
+    mobileModal: () => getOption("timepicker.mobileModal", true),
+    mobileNative: () => getOption("timepicker.mobileNative", true),
+    iconPack: () => getOption("timepicker.iconPack"),
+    icon: () => getOption("timepicker.icon"),
+    iconRight: () => getOption("timepicker.iconRight"),
+    iconRightClickable: false,
+    mobileBreakpoint: () => getOption("timepicker.mobileBreakpoint"),
+    teleport: () => getOption("timepicker.teleport", false),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    customValidity: "",
+    inputClasses: () => getOption("timepicker.inputClasses"),
+    dropdownClasses: () => getOption("timepicker.dropdownClasses"),
+    selectClasses: () => getOption("timepicker.selectClasses"),
 });
 
 defineEmits<{
@@ -276,8 +115,9 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const {
     dtf,
-    defaultTimeFormatter,
-    defaultTimeParser,
+    timeCreator,
+    timeFormatter,
+    timeParser,
     pmString,
     amString,
     meridiens,
@@ -290,15 +130,15 @@ const {
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
 /** modelvalue of selected date */
-const vmodel = defineModel<Date>({ default: null });
+const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const hoursSelected = ref();
-const minutesSelected = ref();
-const secondsSelected = ref();
-const meridienSelected = ref();
+const hoursSelected = ref<number>();
+const minutesSelected = ref<number>();
+const secondsSelected = ref<number>();
+const meridienSelected = ref<string>();
 
 watch(
     () => props.modelValue,
@@ -307,7 +147,7 @@ watch(
 );
 
 /** Update internal value. */
-function updateValue(value: Date | Date[]): void {
+function updateValue(value: Date | undefined): void {
     if (Array.isArray(value)) return updateValue(value[0]);
     if (vmodel.value !== value) vmodel.value = value as Date;
     if (value) {
@@ -317,21 +157,23 @@ function updateValue(value: Date | Date[]): void {
         meridienSelected.value =
             value.getHours() >= 12 ? pmString.value : amString.value;
     } else {
-        hoursSelected.value = null;
-        minutesSelected.value = null;
-        secondsSelected.value = null;
+        hoursSelected.value = undefined;
+        minutesSelected.value = undefined;
+        secondsSelected.value = undefined;
         meridienSelected.value = amString.value;
     }
 }
 
-const step = computed(() => (props.enableSeconds ? "1" : null));
+const step = computed(() => (props.enableSeconds ? "1" : undefined));
 
 watch(
     () => props.hourFormat,
     () => {
-        if (hoursSelected.value !== null)
+        if (isDefined(hoursSelected.value))
             meridienSelected.value =
-                hoursSelected.value >= 12 ? pmString.value : amString.value;
+                (hoursSelected.value || 0) >= 12
+                    ? pmString.value
+                    : amString.value;
     },
 );
 
@@ -350,7 +192,7 @@ function formatNumber(value: number, prependZero: boolean): string {
 const hours = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementHours || props.incrementHours < 1)
         throw new Error("Hour increment cannot be null or less than 1.");
-    const hours = [];
+    const hours: OptionsItem<number>[] = [];
     const numberOfHours = isHourFormat24.value ? 24 : 12;
     for (let i = 0; i < numberOfHours; i += props.incrementHours) {
         let value = i;
@@ -375,7 +217,7 @@ const hours = computed<OptionsItem<number>[]>(() => {
 const minutes = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementMinutes || props.incrementMinutes < 1)
         throw new Error("Minute increment cannot be null or less than 1.");
-    const minutes = [];
+    const minutes: OptionsItem<number>[] = [];
     for (let i = 0; i < 60; i += props.incrementMinutes) {
         minutes.push({
             label: formatNumber(i, true),
@@ -388,7 +230,7 @@ const minutes = computed<OptionsItem<number>[]>(() => {
 const seconds = computed<OptionsItem<number>[]>(() => {
     if (!props.incrementSeconds || props.incrementSeconds < 1)
         throw new Error("Second increment cannot be null or less than 1.");
-    const seconds = [];
+    const seconds: OptionsItem<number>[] = [];
     for (let i = 0; i < 60; i += props.incrementSeconds) {
         seconds.push({
             label: formatNumber(i, true),
@@ -418,18 +260,18 @@ function isHourDisabled(hour: number): boolean {
         if (typeof props.unselectableTimes === "function") {
             const date = new Date();
             date.setHours(hour);
-            date.setMinutes(minutesSelected.value);
-            date.setSeconds(secondsSelected.value);
+            date.setMinutes(minutesSelected.value || 0);
+            date.setSeconds(secondsSelected.value || 0);
             return props.unselectableTimes(date);
         } else {
             const unselectable = props.unselectableTimes.filter((time) => {
-                if (props.enableSeconds && secondsSelected.value !== null) {
+                if (props.enableSeconds && isDefined(secondsSelected.value)) {
                     return (
                         time.getHours() === hour &&
                         time.getMinutes() === minutesSelected.value &&
                         time.getSeconds() === secondsSelected.value
                     );
-                } else if (minutesSelected.value !== null) {
+                } else if (isDefined(minutesSelected.value)) {
                     return (
                         time.getHours() === hour &&
                         time.getMinutes() === minutesSelected.value
@@ -474,22 +316,22 @@ function isMinuteDisabledForHour(hour: number, minute: number): boolean {
 }
 
 function isMinuteDisabled(minute: number): boolean {
-    if (hoursSelected.value === null) return false;
+    if (hoursSelected.value === undefined) return false;
 
-    let disabled = isHourDisabled(hoursSelected.value)
-        ? true
-        : isMinuteDisabledForHour(hoursSelected.value, minute);
+    let disabled =
+        isHourDisabled(hoursSelected.value) ||
+        isMinuteDisabledForHour(hoursSelected.value, minute);
 
     if (props.unselectableTimes && !disabled) {
         if (typeof props.unselectableTimes === "function") {
             const date = new Date();
             date.setHours(hoursSelected.value);
             date.setMinutes(minute);
-            date.setSeconds(secondsSelected.value);
+            date.setSeconds(secondsSelected.value || 0);
             return props.unselectableTimes(date);
         } else {
             const unselectable = props.unselectableTimes.filter((time) => {
-                if (props.enableSeconds && secondsSelected.value !== null) {
+                if (props.enableSeconds && isDefined(secondsSelected.value)) {
                     return (
                         time.getHours() === hoursSelected.value &&
                         time.getMinutes() === minute &&
@@ -509,7 +351,7 @@ function isMinuteDisabled(minute: number): boolean {
 }
 
 function isSecondDisabled(second: number): boolean {
-    if (minutesSelected.value == null) return false;
+    if (!isDefined(minutesSelected.value)) return false;
     let disabled = false;
 
     if (isMinuteDisabled(minutesSelected.value)) {
@@ -539,7 +381,7 @@ function isSecondDisabled(second: number): boolean {
     if (props.unselectableTimes && !disabled) {
         if (typeof props.unselectableTimes === "function") {
             const date = new Date();
-            date.setHours(hoursSelected.value);
+            date.setHours(hoursSelected.value || 0);
             date.setMinutes(minutesSelected.value);
             date.setSeconds(second);
             return props.unselectableTimes(date);
@@ -572,15 +414,16 @@ function updateDateSelected(
     meridiens,
 ): void {
     if (
-        hours != null &&
-        minutes != null &&
-        ((!isHourFormat24.value && meridiens !== null) || isHourFormat24.value)
+        isDefined(hours) &&
+        isDefined(minutes) &&
+        ((!isDefined(isHourFormat24.value) && isDefined(meridiens)) ||
+            isDefined(isHourFormat24.value))
     ) {
-        let time: Date = null;
+        let time: Date;
         if (vmodel.value) {
             time = new Date(vmodel.value);
         } else {
-            time = props.timeCreator();
+            time = timeCreator();
             time.setMilliseconds(0);
         }
         time.setHours(hours);
@@ -595,24 +438,21 @@ function updateDateSelected(
 // --- Formatter / Parser ---
 
 /** Format date into string */
-function format(value: Date | Date[], isNative: boolean): string {
+function format(value: Date | Date[] | undefined, isNative: boolean): string {
     if (Array.isArray(value)) return format(value[0], isNative);
     if (isNative) return formatNative(value);
 
-    // call prop function
-    const formatted = props.timeFormatter(value);
-    // call default if prop function is not given
-    if (typeof formatted === "undefined") return defaultTimeFormatter(value);
-    else return formatted;
+    return timeFormatter(value);
 }
 
 /** Format date into string 'HH-MM-SS'*/
-function formatNative(value: Date | Date[]): string {
+function formatNative(value: Date | Date[] | undefined): string {
     if (Array.isArray(value)) return formatNative(value[0]);
 
+    // return empty string if no value is given or value can't parse to proper date
+    if (!value) return "";
     const date = new Date(value);
-    // return null if no value is given or value can't parse to proper date
-    if (!value || !date || isNaN(date.getTime())) return null;
+    if (!isDate(date)) return "";
 
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -627,25 +467,22 @@ function formatNative(value: Date | Date[]): string {
 }
 
 /** Parse string into date */
-function parse(value: string, isNative: boolean): Date {
+function parse(value: string, isNative: boolean): Date | undefined {
     if (isNative) return parseNative(value);
 
-    // call prop function
-    let date = props.timeParser(value);
-    // call default if prop function is not given
-    if (typeof date === "undefined") date = defaultTimeParser(value);
-    return isDate(date) ? date : null;
+    const date = timeParser(value);
+    return isDate(date) ? date : undefined;
 }
 
 /** Parse time from string */
-function parseNative(date: string): Date {
-    if (!date) return null;
+function parseNative(date: string): Date | undefined {
+    if (!date) return undefined;
 
-    let time = null;
+    let time: Date;
     if (vmodel.value) {
         time = new Date(vmodel.value);
     } else {
-        time = props.timeCreator();
+        time = timeCreator();
         time.setMilliseconds(0);
     }
     const t = date.split(":");
@@ -658,19 +495,19 @@ function parseNative(date: string): Date {
 // --- Event Handler ---
 
 function onMeridienChange(value: string): void {
-    if (hoursSelected.value !== null && props.resetOnMeridianChange) {
-        hoursSelected.value = null;
-        minutesSelected.value = null;
-        secondsSelected.value = null;
-        vmodel.value = null;
-    } else if (hoursSelected.value !== null) {
+    if (isDefined(hoursSelected.value) && props.resetOnMeridianChange) {
+        hoursSelected.value = undefined;
+        minutesSelected.value = undefined;
+        secondsSelected.value = undefined;
+        vmodel.value = undefined;
+    } else if (isDefined(hoursSelected.value)) {
         if (value === pmString.value) hoursSelected.value += 12;
         else if (value === amString.value) hoursSelected.value -= 12;
     }
     updateDateSelected(
-        hoursSelected.value,
-        minutesSelected.value,
-        props.enableSeconds ? secondsSelected.value : 0,
+        hoursSelected.value || 0,
+        minutesSelected.value || 0,
+        props.enableSeconds ? secondsSelected.value || 0 : 0,
         value,
     );
 }
@@ -683,8 +520,8 @@ function onHoursChange(value: string): void {
 
     updateDateSelected(
         parseInt(value, 10),
-        minutesSelected.value,
-        props.enableSeconds ? secondsSelected.value : 0,
+        minutesSelected.value || 0,
+        props.enableSeconds ? secondsSelected.value || 0 : 0,
         meridienSelected.value,
     );
 }
@@ -694,17 +531,17 @@ function onMinutesChange(value: string): void {
         secondsSelected.value = props.defaultSeconds;
 
     updateDateSelected(
-        hoursSelected.value,
+        hoursSelected.value || 0,
         parseInt(value, 10),
-        props.enableSeconds ? secondsSelected.value : 0,
+        props.enableSeconds ? secondsSelected.value || 0 : 0,
         meridienSelected.value,
     );
 }
 
 function onSecondsChange(value: string): void {
     updateDateSelected(
-        hoursSelected.value,
-        minutesSelected.value,
+        hoursSelected.value || 0,
+        minutesSelected.value || 0,
         parseInt(value, 10),
         meridienSelected.value,
     );
@@ -723,8 +560,8 @@ const selectPlaceholderClasses = defineClasses([
 ]);
 
 const selectBind = computed(() => ({
-    "select-class": getActiveClasses(selectSelectClasses.value),
-    "placeholder-class": getActiveClasses(selectPlaceholderClasses.value),
+    "select-class": getActiveClasses(selectSelectClasses),
+    "placeholder-class": getActiveClasses(selectPlaceholderClasses),
     ...props.selectClasses,
 }));
 
@@ -749,7 +586,7 @@ const pickerDropdownClasses = defineClasses([
 ]);
 
 const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
+const boxClassBind = computed(() => getActiveClasses(boxClasses));
 
 // --- Expose Public Functionalities ---
 

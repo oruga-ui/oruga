@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsGrpupItem } from "@oruga-ui/oruga-next";
+import type { OptionsPropItem } from "@oruga-ui/oruga-next";
 
-const options: OptionsGrpupItem[] = [
+const options: OptionsPropItem[] = [
     {
         label: "Jesse Simmons",
         value: {

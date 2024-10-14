@@ -110,8 +110,8 @@ const notificationRef = ref();
 
 const isActive = ref(true);
 
-const parentTop = ref(null);
-const parentBottom = ref(null);
+const parentTop = ref<Element | null>(null);
+const parentBottom = ref<Element | null>(null);
 
 const timer = ref();
 
@@ -158,8 +158,8 @@ onBeforeMount(() => {
                 classes
                     .filter((c) => !!c)
                     .forEach((c: string) => {
-                        parentTop.value.classList.add(c);
-                        parentBottom.value.classList.add(c);
+                        parentTop.value?.classList.add(c);
+                        parentBottom.value?.classList.add(c);
                     });
         }
     }
@@ -187,13 +187,15 @@ const correctParent = computed(() => {
 });
 
 const shouldQueue = computed(() =>
-    props.queue
+    props.queue && parentTop.value && parentBottom.value
         ? parentTop.value.childElementCount > 0 ||
           parentBottom.value.childElementCount > 0
         : false,
 );
 
 function showNotice(): void {
+    if (!correctParent.value) return;
+
     if (shouldQueue.value) correctParent.value.innerHTML = "";
     correctParent.value.insertAdjacentElement(
         "afterbegin",

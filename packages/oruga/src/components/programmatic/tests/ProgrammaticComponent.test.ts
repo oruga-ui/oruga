@@ -84,7 +84,7 @@ describe("ProgrammaticComponent tests", () => {
 
         const closeEmits = wrapper.emitted("close");
         expect(closeEmits).toHaveLength(1);
-        expect(closeEmits[0][0]).toBe("abc");
+        expect(closeEmits![0][0]).toBe("abc");
         const destroyEmits = wrapper.emitted("destroy");
         expect(destroyEmits).toHaveLength(1);
 

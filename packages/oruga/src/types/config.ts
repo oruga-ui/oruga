@@ -2,6 +2,13 @@ import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
 import type { DynamicComponent } from "./utils";
 
+export type {
+    OptionsPropItem,
+    OptionsGroupPropItem,
+    OptionsProp,
+    OptionsPropWithGroups,
+} from "@/composables";
+
 export type ComponentProps = Record<string, any>;
 
 export type ClassFunction = (

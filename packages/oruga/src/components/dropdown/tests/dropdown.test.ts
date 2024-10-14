@@ -48,9 +48,10 @@ describe("Dropdown tests", () => {
         await nextTick(); // await dom update
 
         // check dropdown closed
-        expect(wrapper.emitted("update:active").length).toBe(1);
-        expect(wrapper.emitted("update:active")[0][0]).toBeFalsy();
-        expect(wrapper.emitted("close").length).toBe(1);
+        const activeEmits = wrapper.emitted("update:active");
+        expect(activeEmits).toHaveLength(1);
+        expect(activeEmits![0][0]).toBeFalsy();
+        expect(wrapper.emitted("close")).toHaveLength(1);
         expect(wrapper.classes("o-drop--active")).toBeFalsy();
     });
 

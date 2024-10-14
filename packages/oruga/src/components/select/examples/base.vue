@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { OptionsItem } from "@oruga-ui/oruga-next";
+import type { OptionsPropItem } from "@oruga-ui/oruga-next";
 
-const options: OptionsItem<string>[] = [
+const options: OptionsPropItem<string>[] = [
     { label: "Flint", value: "flint" },
     { label: "Silver", value: "silver" },
     { label: "Vane", value: "vane" },

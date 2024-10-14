@@ -67,15 +67,15 @@ export type DatepickerProps<
     /** Date format locale */
     locale?: string;
     /** Custom function to format a date into a string */
-    dateFormatter?: (
+    formatter?: (
         date: DatepickerProps<IsRange, IsMultiple>["modelValue"],
     ) => string;
     /** Custom function to parse a string into a date */
-    dateParser?: (
+    parser?: (
         date: string,
     ) => DatepickerProps<IsRange, IsMultiple>["modelValue"];
     /** Date creator function, default is `new Date()` */
-    dateCreator?: () => Date;
+    creator?: () => Date;
     /** Define a list of dates which can be selected */
     selectableDates?: Date[] | ((date: Date) => boolean);
     /** Define a list of dates which can not be selected */

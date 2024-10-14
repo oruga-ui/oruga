@@ -3,7 +3,7 @@ import type { ProviderItem } from "@/composables";
 export type MenuComponent = {
     activable: boolean;
     accordion: boolean;
-    resetMenu: (excludedItems?: ProviderItem[]) => void;
+    resetMenu: (excludedItems?: ProviderItem<MenuItemComponent>[]) => void;
 };
 
 export type MenuItemComponent = {
@@ -11,5 +11,5 @@ export type MenuItemComponent = {
 };
 
 export type MenuItemProvider = {
-    triggerReset: (child?: ProviderItem) => void;
+    triggerReset: (child?: ProviderItem<MenuItemComponent>) => void;
 };

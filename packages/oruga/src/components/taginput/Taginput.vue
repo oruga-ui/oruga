@@ -171,7 +171,7 @@ const hasInput = computed(
 
 watchEffect(() => {
     // blur if input is empty
-    if (!hasInput.value) onBlur();
+    if (!hasInput.value) onBlur(new Event("blur"));
 });
 
 /**
@@ -227,6 +227,7 @@ function addItem(item?: T | string): void {
 
 function removeItem(index: number, event?: Event): void {
     const item = selectedItems.value.at(index);
+    if (!item) return;
     selectedItems.value = selectedItems.value.toSpliced(index, 1);
     emits("remove", item);
     if (event) event.stopPropagation();
@@ -279,9 +280,9 @@ const autocompleteInputClasses = defineClasses([
 
 const autocompleteBind = computed(() => ({
     ...attrs,
-    "root-class": getActiveClasses(autocompleteRootClasses.value),
+    "root-class": getActiveClasses(autocompleteRootClasses),
     "input-classes": {
-        "input-class": getActiveClasses(autocompleteInputClasses.value),
+        "input-class": getActiveClasses(autocompleteInputClasses),
     },
     ...props.autocompleteClasses,
 }));

@@ -87,7 +87,7 @@ const items = computed<TabItem[]>(() =>
     sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
-        ...toValue(column.data),
+        ...toValue(column.data!),
     })),
 );
 
@@ -206,7 +206,7 @@ const rootClasses = defineClasses(
         "positionClass",
         "o-tabs--",
         computed(() => props.position),
-        computed(() => props.position && props.vertical),
+        computed(() => !!props.position && props.vertical),
     ],
     [
         "expandedClass",
@@ -235,7 +235,7 @@ const navClasses = defineClasses(
         "navPositionClass",
         "o-tabs__nav--",
         computed(() => props.position),
-        computed(() => props.position && !props.vertical),
+        computed(() => !!props.position && !props.vertical),
     ],
     [
         "navTypeClass",
@@ -283,7 +283,7 @@ const contentClasses = defineClasses(
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
-                    :class="childItem.tabClasses"
+                    :class="childItem.classes"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
                     @keydown.left.prevent="prev"
@@ -298,7 +298,7 @@ const contentClasses = defineClasses(
                     v-else
                     role="button"
                     :tabindex="0"
-                    :class="childItem.tabClasses"
+                    :class="childItem.classes"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
                     @keydown.left.prevent="prev"
@@ -309,11 +309,11 @@ const contentClasses = defineClasses(
                     @keydown.end.prevent="endPressed">
                     <o-icon
                         v-if="childItem.icon"
-                        :class="childItem.tabIconClasses"
+                        :class="childItem.iconClasses"
                         :icon="childItem.icon"
                         :pack="childItem.iconPack"
                         :size="size" />
-                    <span :class="childItem.tabLabelClasses">
+                    <span :class="childItem.labelClasses">
                         {{ childItem.label }}
                     </span>
                 </component>

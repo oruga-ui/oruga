@@ -52,11 +52,11 @@ const useSidebarProgrammatic = {
     },
     /** close the last registred instance in the sidebar programmatic instance registry */
     close(...args: unknown[]): void {
-        instances.last()?.exposed.close(...args);
+        instances.last()?.exposed?.close(...args);
     },
     /** close all instances in the programmatic sidebar instance registry */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed.close(...args));
+        instances.walk((entry) => entry.exposed?.close(...args));
     },
 };
 

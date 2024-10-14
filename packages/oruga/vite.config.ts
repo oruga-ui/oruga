@@ -29,13 +29,21 @@ const entries = {
     ...components.reduce((obj, name) => {
         obj[name] = resolve(__dirname, baseFolder + name);
         return obj;
-    }, {}),
+    }, {} as any),
 };
 
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
 export default defineConfig(({ mode }) => ({
     root: __dirname,
+    plugins: [
+        tsconfigPaths(),
+        vue(),
+        dts({
+            outDir: "./dist/types",
+            bundledPackages: ["vue-component-type-helpers"],
+        }),
+    ],
     resolve: {
         alias: {
             // add '@oruga-ui/oruga-next' alias to sry entry point
@@ -116,14 +124,6 @@ export default defineConfig(({ mode }) => ({
             ],
         },
     },
-    plugins: [
-        tsconfigPaths(),
-        vue(),
-        dts({
-            outDir: "./dist/types",
-            bundledPackages: ["vue-component-type-helpers"],
-        }),
-    ],
     test: {
         setupFiles: [resolve("./src/__tests__/vitest.setup.ts")],
         environment: "jsdom",

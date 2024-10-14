@@ -1,4 +1,7 @@
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+    generic="IsRange extends boolean, IsMultiple extends boolean">
 import { computed, ref, type PropType } from "vue";
 
 import ODatepickerTableRow from "./DatepickerTableRow.vue";
@@ -8,7 +11,9 @@ import { defineClasses } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { weekBuilder } from "./utils";
-import type { DatepickerProps, DatepickerEvent, FocusedDate } from "./types";
+
+import type { DatepickerEvent, FocusedDate } from "./types";
+import type { DatepickerProps } from "./props";
 
 defineOptions({
     name: "ODatepickerTable",
@@ -24,7 +29,7 @@ const props = defineProps({
     dayNames: { type: Array as PropType<string[]>, required: true },
     monthNames: { type: Array as PropType<string[]>, required: true },
     pickerProps: {
-        type: Object as PropType<DatepickerProps>,
+        type: Object as PropType<DatepickerProps<IsRange, IsMultiple>>,
         required: true,
     },
 });
@@ -41,30 +46,30 @@ const emits = defineEmits<{
 
 const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
 
-const focusedDateModel = defineModel<FocusedDate>("focusedDate");
+const focusedDateModel = defineModel<FocusedDate>("focusedDate", {
+    required: true,
+});
 
 const selectedBeginDate = ref<Date>();
 const selectedEndDate = ref<Date>();
 const hoveredEndDate = ref<Date>();
 
-const datepicker = computed<DatepickerProps>(() => props.pickerProps);
-
 const visibleDayNames = computed(() => {
-    const visibleDayNames = [];
-    let index = datepicker.value.firstDayOfWeek;
+    const visibleDayNames: string[] = [];
+    let index = props.pickerProps.firstDayOfWeek || 0;
     while (visibleDayNames.length < props.dayNames.length) {
         const currentDayName = props.dayNames[index % props.dayNames.length];
         visibleDayNames.push(currentDayName);
         index++;
     }
-    if (datepicker.value.showWeekNumber) visibleDayNames.unshift("");
+    if (props.pickerProps.showWeekNumber) visibleDayNames.unshift("");
     return visibleDayNames;
 });
 
 /** Return array of all events in the specified month */
 const eventsInThisMonth = computed(() => {
-    if (!datepicker.value.events) return [];
-    return datepicker.value.events
+    if (!props.pickerProps.events) return [];
+    return props.pickerProps.events
         .map((event) =>
             !event.date && event instanceof Date ? { date: event } : event,
         )
@@ -89,7 +94,7 @@ const weeksInThisMonth = computed<Date[][]>(() => {
             startingDay,
             month,
             year,
-            datepicker.value.firstDayOfWeek,
+            props.pickerProps.firstDayOfWeek || 0,
         );
         weeksInThisMonth.push(newWeek);
         startingDay += 7;
@@ -99,7 +104,7 @@ const weeksInThisMonth = computed<Date[][]>(() => {
 });
 
 function eventsInThisWeek(week: Date[]): DatepickerEvent[] {
-    if (!datepicker.value.events) return [];
+    if (!props.pickerProps.events) return [];
     return eventsInThisMonth.value.filter((event) => {
         const stripped = new Date(event.date);
         stripped.setHours(0, 0, 0, 0);
@@ -109,9 +114,10 @@ function eventsInThisWeek(week: Date[]): DatepickerEvent[] {
 }
 
 const hoveredDateRange = computed<Date[]>(() => {
-    if (!isTrueish(datepicker.value.range) || selectedEndDate.value) return [];
+    if (!isTrueish(props.pickerProps.range) || selectedEndDate.value) return [];
+
     return (
-        hoveredEndDate.value < selectedBeginDate.value
+        (hoveredEndDate.value || 0) < (selectedBeginDate.value || 0)
             ? [hoveredEndDate.value, selectedBeginDate.value]
             : [selectedBeginDate.value, hoveredEndDate.value]
     ).filter(isDefined);
@@ -132,7 +138,7 @@ function validateFocusedDay(): void {
         focusedDateModel.value.month + 1,
         0,
     ).getDate();
-    let firstFocusable = null;
+    let firstFocusable: Date | undefined;
     while (!firstFocusable && ++day < monthDays) {
         const date = new Date(
             focusedDateModel.value.year,
@@ -154,9 +160,9 @@ function validateFocusedDay(): void {
 
 /** Emit input event with selected date as payload for v-model in parent */
 function onSelectedDate(date: Date): void {
-    if (datepicker.value.disabled) return;
-    else if (isTrueish(datepicker.value.range)) handleSelectRangeDate(date);
-    else if (isTrueish(datepicker.value.multiple))
+    if (props.pickerProps.disabled) return;
+    else if (isTrueish(props.pickerProps.range)) handleSelectRangeDate(date);
+    else if (isTrueish(props.pickerProps.multiple))
         handleSelectMultipleDates(date);
     else emits("update:modelValue", date);
 }

@@ -2,8 +2,8 @@
 import { ref } from "vue";
 
 const labelPosition = ref<"left" | "right" | "bottom">("bottom");
-const position = ref(null);
-const size = ref(null);
+const position = ref<"left" | "centered" | "right">();
+const size = ref<string>();
 </script>
 
 <template>
@@ -17,7 +17,7 @@ const size = ref(null);
             </o-field>
             <o-field label="Size">
                 <o-select v-model="size" placeholder="Size">
-                    <option :value="null">Default</option>
+                    <option :value="undefined">Default</option>
                     <option value="small">Small</option>
                     <option value="medium">Medium</option>
                     <option value="large">Large</option>
