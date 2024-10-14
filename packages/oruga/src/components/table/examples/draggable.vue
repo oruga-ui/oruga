@@ -155,7 +155,7 @@ function columndrop(column, index, event): void {
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 :deep(.is-selected) {
     background-color: lightblue;
 }

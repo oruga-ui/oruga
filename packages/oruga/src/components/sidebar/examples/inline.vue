@@ -49,15 +49,15 @@ const reduce = ref(false);
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .sidebar-page {
     display: flex;
     flex-direction: row;
     width: 100%;
+}
 
-    .sidebar-layout {
-        padding: 1rem;
-        flex-basis: 50%;
-    }
+.sidebar-page .sidebar-layout {
+    padding: 1rem;
+    flex-basis: 50%;
 }
 </style>

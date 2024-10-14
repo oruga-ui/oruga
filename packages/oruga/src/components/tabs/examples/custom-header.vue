@@ -30,7 +30,7 @@ onMounted(() => {
     </section>
 </template>
 
-<style lang="scss">
+<style>
 .custom-icon {
     margin-right: 5px;
 }

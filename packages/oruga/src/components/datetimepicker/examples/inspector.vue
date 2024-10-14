@@ -47,7 +47,7 @@ const inspectData = [
     </inspector-wrapper>
 </template>
 
-<style lang="scss">
+<style>
 .datepicker__table {
     border-collapse: collapse;
 }
