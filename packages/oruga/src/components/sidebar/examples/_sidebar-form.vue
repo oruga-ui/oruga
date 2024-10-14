@@ -48,13 +48,13 @@ defineEmits(["close"]);
     </form>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 form {
     padding: 15px;
+}
 
-    header {
-        display: flex;
-        justify-content: space-between;
-    }
+form header {
+    display: flex;
+    justify-content: space-between;
 }
 </style>

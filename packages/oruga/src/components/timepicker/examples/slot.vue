@@ -24,7 +24,7 @@ const time = ref<Date | undefined>(new Date());
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 button {
     margin-left: 0.5rem;
 }

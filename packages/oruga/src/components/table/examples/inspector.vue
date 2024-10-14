@@ -314,7 +314,7 @@ const inspectData = [
     </inspector-wrapper>
 </template>
 
-<style lang="scss">
+<style>
 .inspector_table {
     border-collapse: collapse;
 }

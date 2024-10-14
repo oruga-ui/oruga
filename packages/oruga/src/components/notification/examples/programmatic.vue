@@ -33,7 +33,7 @@ async function component(): Promise<void> {
     </section>
 </template>
 
-<style lang="scss">
+<style>
 .toast-notification {
     margin: 0.5em 0;
     text-align: center;
