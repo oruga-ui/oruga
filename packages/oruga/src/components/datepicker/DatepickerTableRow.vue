@@ -7,6 +7,8 @@ import {
     watch,
     nextTick,
     ref,
+    effectScope,
+    onUnmounted,
     type PropType,
     type ComponentPublicInstance,
 } from "vue";
@@ -226,6 +228,11 @@ function dateWithin(
     return dateOne > dates[0] && dateOne < dates[1];
 }
 
+const scope = effectScope();
+
+// stop all scope effects
+onUnmounted(() => scope.stop());
+
 /** Build cellClasses for cell using validations */
 function cellClasses(day: Date): ClassBind[] {
     const classes = defineClasses(
@@ -322,7 +329,6 @@ function cellClasses(day: Date): ClassBind[] {
             null,
             !isDateSelectable(day, props.month) || props.pickerProps.disabled,
         ],
-
         [
             "tableCellInvisibleClass",
             "o-dpck__table__cell--invisible",
@@ -330,7 +336,6 @@ function cellClasses(day: Date): ClassBind[] {
             !props.pickerProps.nearbyMonthDays &&
                 day.getMonth() !== props.month,
         ],
-
         [
             "tableCellNearbyClass",
             "o-dpck__table__cell--nearby",
@@ -338,6 +343,8 @@ function cellClasses(day: Date): ClassBind[] {
             props.pickerProps.nearbySelectableMonthDays &&
                 day.getMonth() !== props.month,
         ],
+        // pass effect scope for rectivity binding
+        { scope },
     );
 
     return [

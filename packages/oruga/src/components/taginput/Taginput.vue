@@ -452,9 +452,9 @@ const autocompleteInputClasses = defineClasses([
 
 const autocompleteBind = computed(() => ({
     ...attrs,
-    "root-class": getActiveClasses(autocompleteRootClasses.value),
+    "root-class": getActiveClasses(autocompleteRootClasses),
     "input-classes": {
-        "input-class": getActiveClasses(autocompleteInputClasses.value),
+        "input-class": getActiveClasses(autocompleteInputClasses),
     },
     ...props.autocompleteClasses,
 }));

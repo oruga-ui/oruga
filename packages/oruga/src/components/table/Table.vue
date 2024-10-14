@@ -1465,8 +1465,6 @@ const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
 
-const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
-
 const thCheckboxClasses = defineClasses([
     "thCheckboxClass",
     "o-table__th-checkbox",
@@ -1479,6 +1477,23 @@ const thDetailedClasses = defineClasses([
 
 const thSubheadingClasses = defineClasses(["thSubheadingClass", "o-table__th"]);
 
+const thSortIconClasses = defineClasses([
+    "thSortIconClass",
+    "o-table__th__sort-icon",
+]);
+
+const trSelectedClasses = defineClasses([
+    "trSelectedClass",
+    "o-table__tr--selected",
+]);
+
+const trCheckedClasses = defineClasses([
+    "trCheckedClass",
+    "o-table__tr--checked",
+]);
+
+const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
+
 const tdCheckboxClasses = defineClasses(
     ["tdCheckboxClass", "o-table__td-checkbox"],
     [
@@ -1489,12 +1504,12 @@ const tdCheckboxClasses = defineClasses(
     ],
 );
 
-const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
-
 const tdDetailedChevronClasses = defineClasses([
     "tdDetailedChevronClass",
     "o-table__td-chevron",
 ]);
+
+const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
 
 const mobileSortClasses = defineClasses([
     "mobileSortClass",
@@ -1507,73 +1522,22 @@ const paginationWrapperClasses = defineClasses([
 ]);
 
 const paginationWrapperRootClasses = computed(() =>
-    getActiveClasses(paginationWrapperClasses.value),
+    getActiveClasses(paginationWrapperClasses),
 );
 
-const thSortIconClasses = defineClasses([
-    "thSortIconClass",
-    "o-table__th__sort-icon",
-]);
-
-function thClasses(column: TableColumnItem<T>): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "thCurrentSortClass",
-            "o-table__th-current-sort",
-            null,
-            isColumnSorted(column),
-        ],
-        ["thSortableClass", "o-table__th--sortable", null, column.sortable],
-        [
-            "thUnselectableClass",
-            "o-table__th--unselectable",
-            null,
-            column.isHeaderUnselectable,
-        ],
-        [
-            "thPositionClass",
-            "o-table__th--",
-            column.position,
-            !!column.position,
-        ],
-        ["thStickyClass", "o-table__th--sticky", null, column.sticky],
-    );
-
-    return [...thBaseClasses.value, ...classes.value];
-}
-
 function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "trSelectedClass",
-            "o-table__tr--selected",
-            null,
-            isRowEqual(row.value, tableSelectedRow.value),
-        ],
-        ["trCheckedClass", "o-table__tr--checked", null, isChecked(row)],
-    );
+    const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
+        ? trSelectedClasses.value
+        : [];
+
+    const checkedClasses = isChecked(row) ? trCheckedClasses.value : [];
 
     const rowClass =
         typeof props.rowClass === "function"
             ? props.rowClass(row.value, index) || ""
             : "";
 
-    return [...classes.value, { [rowClass]: true }];
-}
-
-function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "tdPositionClass",
-            "o-table__td--",
-            column.position,
-            !!column.position,
-        ],
-
-        ["tdStickyClass", "o-table__td--sticky", null, column.sticky],
-    );
-
-    return [...tdBaseClasses.value, ...classes.value];
+    return [...selectedClasses, ...checkedClasses, { [rowClass]: true }];
 }
 
 // --- Expose Public Functionalities ---
@@ -1719,7 +1683,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-for="(column, index) in visibleColumns"
                             :key="`${column.identifier}_${index}_header`"
                             v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
+                            :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style"
                             :draggable="canDragColumn"
                             @click.stop="sort(column, true, $event)"
@@ -1803,7 +1767,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-for="(column, index) in visibleColumns"
                             :key="`${column.identifier}_${index}_searchable`"
                             v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
+                            :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style">
                             <template v-if="column.searchable">
                                 <template v-if="column.$slots?.searchable">
@@ -1925,7 +1889,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                 :component="column.$el"
                                 name="default"
                                 tag="td"
-                                :class="tdClasses(row, column)"
+                                :class="[...tdBaseClasses, ...column.tdClasses]"
                                 :style="isMobileActive ? {} : column.style"
                                 :data-label="column.label"
                                 :props="{

@@ -337,7 +337,6 @@ const innerFieldClasses = defineClasses(
         null,
         computed(() => props.groupMultiline),
     ],
-
     ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
     [
         "addonsClass",

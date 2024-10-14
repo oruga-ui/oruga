@@ -460,9 +460,7 @@ const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
 const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
 
 const scrollClass = computed(() =>
-    getActiveClasses(
-        props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
-    ),
+    getActiveClasses(props.scroll === "clip" ? scrollClasses : noScrollClasses),
 );
 
 // --- Expose Public Functionalities ---

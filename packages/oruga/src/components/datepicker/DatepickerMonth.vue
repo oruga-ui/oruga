@@ -7,6 +7,8 @@ import {
     ref,
     nextTick,
     watch,
+    effectScope,
+    onUnmounted,
     type PropType,
     type ComponentPublicInstance,
 } from "vue";
@@ -355,6 +357,12 @@ const monthCellClasses = defineClasses(
     ["monthCellEventsClass", "o-dpck__month__cell--events", null, hasEvents],
 );
 
+// Registers a dispose callback on the current active effect scope.
+const scope = effectScope();
+
+// stop all scope effects
+onUnmounted(() => scope.stop());
+
 /**
  * Build cellClasses for cell using validations
  */
@@ -380,7 +388,6 @@ function cellClasses(day: Date): ClassBind[] {
                     isTrueish(props.pickerProps.multiple),
                 ),
         ],
-
         [
             "monthCellFirstSelectedClass",
             "o-dpck__month__cell--first-selected",
@@ -466,6 +473,8 @@ function cellClasses(day: Date): ClassBind[] {
             null,
             !isDateSelectable(day) || props.pickerProps.disabled,
         ],
+        // pass effect scope for rectivity binding
+        { scope },
     );
 
     return [...monthCellClasses.value, ...classes.value];

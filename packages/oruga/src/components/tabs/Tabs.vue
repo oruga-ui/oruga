@@ -385,7 +385,7 @@ const contentClasses = defineClasses(
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
-                    :class="childItem.tabClasses"
+                    :class="childItem.classes"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
                     @keydown.left.prevent="prev"
@@ -400,7 +400,7 @@ const contentClasses = defineClasses(
                     v-else
                     role="button"
                     :tabindex="0"
-                    :class="childItem.tabClasses"
+                    :class="childItem.classes"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
                     @keydown.left.prevent="prev"
@@ -411,11 +411,11 @@ const contentClasses = defineClasses(
                     @keydown.end.prevent="endPressed">
                     <o-icon
                         v-if="childItem.icon"
-                        :class="childItem.tabIconClasses"
+                        :class="childItem.iconClasses"
                         :icon="childItem.icon"
                         :pack="childItem.iconPack"
                         :size="size" />
-                    <span :class="childItem.tabLabelClasses">
+                    <span :class="childItem.labelClasses">
                         {{ childItem.label }}
                     </span>
                 </component>

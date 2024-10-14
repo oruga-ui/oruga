@@ -548,24 +548,6 @@ const arrowIconNextClasses = defineClasses([
     "o-car__arrow__icon-next",
 ]);
 
-function indicatorItemClasses(index): ClassBind[] {
-    return defineClasses(
-        ["indicatorItemClass", "o-car__indicator__item"],
-        [
-            "indicatorItemActiveClass",
-            "o-car__indicator__item--active",
-            null,
-            indicatorIndex.value === index,
-        ],
-        [
-            "indicatorItemStyleClass",
-            "o-car__indicator__item--",
-            props.indicatorStyle,
-            !!props.indicatorStyle,
-        ],
-    ).value;
-}
-
 const indicatorsClasses = defineClasses(
     ["indicatorsClass", "o-car__indicators"],
     [
@@ -583,6 +565,28 @@ const indicatorsClasses = defineClasses(
 );
 
 const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
+
+const indicatorItemClasses = defineClasses(
+    ["indicatorItemClass", "o-car__indicator__item"],
+    [
+        "indicatorItemStyleClass",
+        "o-car__indicator__item--",
+        props.indicatorStyle,
+        !!props.indicatorStyle,
+    ],
+);
+
+const indicatorItemActiveClasses = defineClasses([
+    "indicatorItemActiveClass",
+    "o-car__indicator__item--active",
+]);
+
+function indicatorItemAppliedClasses(index: number): ClassBind[] {
+    const activeClasses =
+        indicatorIndex.value === index ? indicatorItemActiveClasses.value : [];
+
+    return [...indicatorItemClasses.value, ...activeClasses];
+}
 </script>
 
 <template>
@@ -680,7 +684,7 @@ const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
                             @binding {index} index indicator index 
                         -->
                         <slot :index="index" name="indicator">
-                            <span :class="indicatorItemClasses(index)" />
+                            <span :class="indicatorItemAppliedClasses(index)" />
                         </slot>
                     </div>
                 </div>

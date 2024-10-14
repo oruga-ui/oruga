@@ -66,8 +66,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.ariaRole", "tab"),
     },
-    /** Sets a class to the item header */
-    headerClass: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
     /** Class of the content item */
     itemClass: {
@@ -105,15 +103,16 @@ const emits = defineEmits<{
 
 const slots = useSlots();
 
-const providedData = computed<StepItemComponent>(() => ({
+const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     $slots: slots,
+    classes: itemClasses.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,
 }));
 
-// Inject functionalities and data from the parent carousel component
+// inject functionalities and data from the parent carousel component
 const { parent, item } = useProviderChild<StepsComponent<T>>({
     data: providedData,
 });
@@ -167,6 +166,23 @@ function beforeLeave(): void {
 // --- Computed Component Classes ---
 
 const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
+
+const itemClasses = defineClasses(
+    ["itemHeaderClass", "o-steps__nav-item"],
+    [
+        "itemHeaderVariantClass",
+        "o-steps__nav-item--",
+        computed(() => parent.value?.variant || props.variant),
+        computed(() => !!parent.value?.variant || !!props.variant),
+    ],
+    ["itemHeaderActiveClass", "o-steps__nav-item-active", null, isActive],
+    [
+        "itemHeaderPreviousClass",
+        "o-steps__nav-item-previous",
+        null,
+        computed(() => item.value.index < parent.value?.activeIndex),
+    ],
+);
 </script>
 
 <template>

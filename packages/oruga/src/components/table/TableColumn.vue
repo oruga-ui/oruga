@@ -1,10 +1,10 @@
 <script setup lang="ts" generic="T">
 import { computed, getCurrentInstance } from "vue";
 
-import { useProviderChild } from "@/composables";
+import { defineClasses, useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
 
-import type { TableColumnComponent } from "./types";
+import type { TableColumnComponent, TableComponent } from "./types";
 import type { TableColumnProps } from "./props";
 
 /**
@@ -51,10 +51,67 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
     $el: vm!.proxy!,
     $slots: vm!.slots,
     style: style.value,
-    isHeaderUnselectable: isHeaderUnselectable.value,
+    thClasses: thClasses.value,
+    tdClasses: tdClasses.value,
 }));
 
-const { item } = useProviderChild({ data: providedData });
+const { parent, item } = useProviderChild<TableComponent<T>>({
+    data: providedData,
+});
+
+// --- Computed Component Classes ---
+
+const thClasses = defineClasses(
+    [
+        "thCurrentSortClass",
+        "o-table__th-current-sort",
+        null,
+        computed(
+            () =>
+                parent.value.currentSortColumn?.identifier ===
+                item.value.identifier,
+        ),
+    ],
+    [
+        "thSortableClass",
+        "o-table__th--sortable",
+        null,
+        computed(() => props.sortable),
+    ],
+    [
+        "thUnselectableClass",
+        "o-table__th--unselectable",
+        null,
+        isHeaderUnselectable,
+    ],
+    [
+        "thPositionClass",
+        "o-table__th--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+    [
+        "thStickyClass",
+        "o-table__th--sticky",
+        null,
+        computed(() => props.sticky),
+    ],
+);
+
+const tdClasses = defineClasses(
+    [
+        "tdPositionClass",
+        "o-table__td--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+    [
+        "tdStickyClass",
+        "o-table__td--sticky",
+        null,
+        computed(() => props.sticky),
+    ],
+);
 
 // --- SLOTS TYPED OBJECTS ---
 

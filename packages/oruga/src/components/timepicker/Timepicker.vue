@@ -556,8 +556,8 @@ const selectPlaceholderClasses = defineClasses([
 ]);
 
 const selectBind = computed(() => ({
-    "select-class": getActiveClasses(selectSelectClasses.value),
-    "placeholder-class": getActiveClasses(selectPlaceholderClasses.value),
+    "select-class": getActiveClasses(selectSelectClasses),
+    "placeholder-class": getActiveClasses(selectPlaceholderClasses),
     ...props.selectClasses,
 }));
 
@@ -582,7 +582,7 @@ const pickerDropdownClasses = defineClasses([
 ]);
 
 const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
+const boxClassBind = computed(() => getActiveClasses(boxClasses));
 
 // --- Expose Public Functionalities ---
 

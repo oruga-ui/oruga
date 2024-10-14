@@ -13,39 +13,39 @@ describe("Steps axe tests", () => {
             props: undefined,
         },
         {
-            title: "axe steps - isVertical",
-            props: { isVertical: true },
+            title: "axe steps - vertical",
+            props: { vertical: true },
         },
         {
-            title: "axe steps - isAnimated",
-            props: { isAnimated: true },
+            title: "axe steps - animated",
+            props: { animated: true },
         },
         {
-            title: "axe steps - isRounded",
-            props: { isRounded: true },
+            title: "axe steps - rounded",
+            props: { rounded: true },
         },
         {
-            title: "axe steps - hasNavigation",
+            title: "axe steps - has navigation",
             props: { hasNavigation: true },
         },
         {
-            title: "axe steps - labelPosition",
+            title: "axe steps - label  position",
             props: { labelPosition: "left" },
         },
         {
-            title: "axe steps - isStepsClickable",
+            title: "axe steps - is steps clickable",
             props: { isStepsClickable: true },
         },
         {
-            title: "axe steps - isProfileSuccess",
+            title: "axe steps - is profile success",
             props: { isProfileSuccess: true },
         },
         {
-            title: "axe steps - showSocial",
+            title: "axe steps - show social",
             props: { showSocial: true },
         },
         {
-            title: "axe steps - customNavigation",
+            title: "axe steps - custom navigation",
             props: { customNavigation: true },
         },
     ];
