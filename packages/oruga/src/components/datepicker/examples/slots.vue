@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsItem } from "@oruga-ui/oruga-next";
 
-const months: OptionsItem<number>[] = [
+const months = [
     { label: "January", value: 0 },
     { label: "February", value: 1 },
     { label: "March", value: 2 },
@@ -18,7 +17,6 @@ const months: OptionsItem<number>[] = [
 ];
 
 const date = ref<Date | undefined>(new Date());
-const month = ref<number>(date.value?.getMonth() || 0);
 
 function selectMonth(option): void {
     if (!option) return;
@@ -38,7 +36,6 @@ function selectMonth(option): void {
                 <template #header>
                     <o-field grouped>
                         <o-autocomplete
-                            v-model="month"
                             :options="months"
                             root-class="grow"
                             open-on-focus
