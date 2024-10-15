@@ -249,6 +249,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         // Note that using watchEffect will implicitly pick up any reactive dependencies used
         // inside props.customValidity, which should help the computed message stay up to date.
         watchEffect((): void => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             forceValidationUpdate.value;
             if (!(props.useHtml5Validation ?? true)) return;
 

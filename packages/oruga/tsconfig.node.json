@@ -11,6 +11,7 @@
     "types": ["node"]
   },
   "include": [
+    "eslint.config.*",
     "vite.config.*",
     "vitest.config.*",
     "cypress.config.*",

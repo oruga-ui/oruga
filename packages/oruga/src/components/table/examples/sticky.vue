@@ -135,7 +135,7 @@ const stickyHeaders = ref(true);
     </section>
 </template>
 
-<style lang="scss">
+<style>
 .is-sticky-column-one {
     background: #006724 !important;
     color: white !important;

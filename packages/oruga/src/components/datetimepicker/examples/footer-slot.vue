@@ -32,14 +32,13 @@ const datetime = ref<Date | undefined>(new Date());
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .footer-container {
     display: flex;
     justify-content: end;
     margin-top: 0.5rem;
-
-    button {
-        margin-left: 0.5rem;
-    }
+}
+.footer-container button {
+    margin-left: 0.5rem;
 }
 </style>
