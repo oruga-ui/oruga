@@ -21,7 +21,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@highlightjs/vue-plugin": "2.1.2",
     "@oruga-ui/theme-bootstrap": "0.6.2",
-    "@oruga-ui/theme-bulma": "0.4.3",
+    "@oruga-ui/theme-bulma": "0.4.2",
     "@oruga-ui/theme-oruga": "0.4.2",
     "highlight.js": "11.10.0",
     "markdown-it": "^14.1.0",
