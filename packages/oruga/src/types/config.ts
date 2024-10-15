@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
 import type { DynamicComponent } from "./utils";
