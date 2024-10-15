@@ -48,7 +48,7 @@ const currentMenu = ref({ icon: "users", text: "People" });
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .media {
     align-items: flex-start;
     display: flex;

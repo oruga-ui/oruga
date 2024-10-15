@@ -19,7 +19,7 @@
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .notification-content {
     display: flex;
 }
