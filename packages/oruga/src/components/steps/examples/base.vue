@@ -17,8 +17,8 @@ const prevIcon = ref("chevron-left");
 const nextIcon = ref("chevron-right");
 // Misc
 const showSocial = ref(false);
-const labelPosition = ref("bottom");
-const stepsPosition = ref("left");
+const labelPosition = ref<"bottom" | "left" | "right">("bottom");
+const stepsPosition = ref<"left" | "right" | "centered">("left");
 
 const onProfileActivate = () => {
     if (enableProfileActivateEvent.value) {

@@ -2,6 +2,9 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Options from "./options.vue";
+import OptionsCode from "./options.vue?raw";
+
 import Inline from "./inline.vue";
 import InlineCode from "./inline.vue?raw";
 
@@ -21,6 +24,9 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
+
+    <h3 id="options">Options</h3>
+    <ExampleViewer :component="Options" :code="OptionsCode" />
 
     <h3 id="inline">Inline</h3>
     <ExampleViewer :component="Inline" :code="InlineCode" />

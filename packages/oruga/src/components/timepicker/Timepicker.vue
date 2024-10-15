@@ -10,7 +10,7 @@ import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
-import { type OptionsItem } from "../select";
+import type { OptionsItem } from "@/types";
 import type { TimepickerProps } from "./props";
 
 /**
