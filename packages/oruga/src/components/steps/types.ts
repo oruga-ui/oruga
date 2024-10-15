@@ -25,7 +25,7 @@ export type StepItemComponent<T extends string | number | object> =
         deactivate: (index: number) => void;
     };
 
-export type StepsComponent<T extends string | number | object> = {
+export type StepsComponent<T> = {
     activeValue: T;
     activeIndex: number;
     vertical: boolean;
@@ -37,7 +37,7 @@ export type StepsComponent<T extends string | number | object> = {
 };
 
 export type StepItem<T extends string | number | object> = Omit<
-    ProviderItem,
+    ProviderItem<T>,
     "data"
 > &
     StepItemComponent<T>;

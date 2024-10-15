@@ -1,6 +1,8 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
+type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
 export type DropdownProps<
     T extends string | number | object,
     IsMultiple extends boolean,
@@ -8,7 +10,7 @@ export type DropdownProps<
     /** Override existing theme classes completely */
     override?: boolean;
     /** The selected option value */
-    modelValue?: IsMultiple extends true ? T[] : T;
+    modelValue?: ValueType<T, IsMultiple>;
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Dropdown options, unnecessary when default slot is used */

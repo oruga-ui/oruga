@@ -1,13 +1,5 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import {
-    computed,
-    toValue,
-    nextTick,
-    ref,
-    watch,
-    watchEffect,
-    type PropType,
-} from "vue";
+import { computed, toValue, nextTick, ref, watch, watchEffect } from "vue";
 
 import OStepItem from "../steps/StepItem.vue";
 import OButton from "../button/Button.vue";
@@ -22,8 +14,8 @@ import {
     useMatchMedia,
 } from "@/composables";
 
-import type { StepItem, StepItemComponent, StepsComponent } from "./types";
 import type { ClassBind } from "@/types";
+import type { StepItem, StepItemComponent, StepsComponent } from "./types";
 import type { StepsProps } from "./props";
 
 /**
@@ -42,7 +34,6 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     options: undefined,
-
     variant: () => getOption("steps.variant"),
     size: () => getOption("steps.size"),
     vertical: false,
@@ -68,26 +59,31 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
     ariaPreviousLabel: () => getOption("steps.ariaPreviousLabel", "Previous"),
 });
 
+type ModelValue = StepsProps<T>["modelValue"];
+
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {string | number | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on step change event
      * @param value {string | number | object} new step value
      * @param value {string | number | object} old step value
      */
-    (e: "change", newValue: T, oldValue: T): void;
+    (e: "change", newValue: ModelValue, oldValue: ModelValue): void;
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const rootRef = ref();
 
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
+
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<StepsComponent<T>>(() => ({
+const provideData = computed<StepsComponent<T | undefined>>(() => ({
     activeValue: vmodel.value,
     activeIndex: activeItem.value?.index || 0,
     vertical: props.vertical,
@@ -110,8 +106,6 @@ const items = computed<StepItem<T>[]>(() =>
         ...toValue(column.data!),
     })),
 );
-
-const vmodel = defineModel<T>({ default: undefined });
 
 /** normalized programamtic options */
 const groupedOptions = computed(() => normalizeOptions<T>(props.options));

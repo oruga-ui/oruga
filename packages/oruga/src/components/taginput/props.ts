@@ -4,14 +4,14 @@ import type { OptionsPropWithGroups } from "@/composables";
 export type TaginputProps<T extends string | number | object> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected items, use v-model to make it two-way binding */
+    /**
+     * The selected items, use v-model to make it two-way binding binding
+     * @type string[]|number[]|object[]
+     */
     modelValue?: T[];
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;
-    /**
-     * Taginput options
-     * @type string[]|object[]
-     */
+    /** Taginput options */
     options?: OptionsPropWithGroups<T>;
     /** Function to filter the options based on the input value - default is label string comparison */
     filter?: (options: T, value: string) => boolean;
@@ -121,5 +121,5 @@ type TaginputClasses = Partial<{
      * Class configuration for the underlying autocomplete component
      * @ignore
      */
-    autocompleteClasses: Object;
+    autocompleteClasses: object;
 }>;

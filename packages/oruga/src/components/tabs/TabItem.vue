@@ -1,12 +1,5 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import {
-    computed,
-    ref,
-    useSlots,
-    useId,
-    type PropType,
-    type Component,
-} from "vue";
+import { computed, ref, useSlots, useId, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
@@ -57,17 +50,6 @@ const props = defineProps({
         type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption<DynamicComponent>("tabs.itemTag", "button"),
     },
-    /** Text content, unnecessary when default slot is used */
-    content: { type: String, default: undefined },
-    /** Component to be injected. */
-    component: {
-        type: [Object, Function] as PropType<Component>,
-        default: undefined,
-    },
-    /** Props to be binded to the injected component */
-    props: { type: Object, default: () => ({}) }, // todo: type this right
-    /** Events to be binded to the injected component */
-    events: { type: Object, default: () => ({}) }, // todo: type this right
     // class props (will not be displayed in the docs)
     /** Class of the tab item */
     tabPanelClass: {
@@ -221,17 +203,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 <!-- 
                     @slot Tab item content
                 -->
-                <slot>
-                    <!-- injected component -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events" />
-
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </slot>
+                <slot />
 
                 <!--
                     Do not render these slots here.

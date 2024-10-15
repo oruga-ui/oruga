@@ -30,7 +30,6 @@ import {
     useMatchMedia,
     useEventListener,
     useClickOutside,
-    useVModel,
     usePreventScrolling,
 } from "@/composables";
 
@@ -82,7 +81,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     teleport: () => getOption("dropdown.teleport", false),
 });
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**
@@ -114,9 +113,8 @@ const emits = defineEmits<{
 const contentRef = ref<HTMLElement | Component>();
 const triggerRef = ref<HTMLElement>();
 
-/** The selected item value */
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });

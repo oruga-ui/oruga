@@ -4,17 +4,17 @@ import type { OptionsPropWithGroups } from "@/composables";
 export type AutocompleteProps<T extends string | number | object> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected option value, use v-model to make it two-way binding */
+    /**
+     * The selected option value, use v-model to make it two-way binding
+     * @type string|number|object
+     */
     modelValue?: T;
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;
-    /**
-     * Autocomplete options
-     * @type string[]|object[]
-     * */
+    /** Autocomplete options */
     options?: OptionsPropWithGroups<T>;
-    /** Function to filter the options based on the input value - default is label string comparison */
-    filter?: (options: T, value: string) => boolean;
+    /** Function to filter the option based on the input value - default is label string comparison */
+    filter?: (option: T, value: string) => boolean;
     /** Input type */
     type?: string;
     /** Menu tag name */
@@ -127,5 +127,5 @@ type AutocompleteClasses = Partial<{
      * Classes to apply on internal input component
      * @ignore
      */
-    inputClasses: Object;
+    inputClasses: object;
 }>;

@@ -1,5 +1,13 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { computed, ref, watch, toValue, nextTick, onMounted } from "vue";
+import {
+    computed,
+    ref,
+    watch,
+    watchEffect,
+    toValue,
+    nextTick,
+    onMounted,
+} from "vue";
 
 import OTabItem from "../tabs/TabItem.vue";
 import OIcon from "../icon/Icon.vue";
@@ -51,24 +59,29 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     multiline: false,
 });
 
+type ModelValue = TabsProps<T>["modelValue"];
+
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {string | number | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * on tab change event
      * @param value {string | number | object} new tab value
      * @param value {string | number | object} old tab value
      */
-    (e: "change", newValue: T, oldValue: T): void;
+    (e: "change", newValue: ModelValue, oldValue: ModelValue): void;
 }>();
 
 const rootRef = ref();
 
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
+
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<TabsComponent<T>>(() => ({
+const provideData = computed<TabsComponent<T | undefined>>(() => ({
     activeValue: vmodel.value,
     type: props.type,
     vertical: props.vertical,
@@ -79,19 +92,17 @@ const provideData = computed<TabsComponent<T>>(() => ({
 }));
 
 /** Provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<TabItemComponent>(rootRef, {
+const { sortedItems } = useProviderParent<TabItemComponent<T>>(rootRef, {
     data: provideData,
 });
 
-const items = computed<TabItem[]>(() =>
+const items = computed<TabItem<T>[]>(() =>
     sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
     })),
 );
-
-const vmodel = defineModel<T>({ default: undefined });
 
 /** normalized programamtic options */
 const groupedOptions = computed(() => normalizeOptions<T>(props.options));
@@ -104,16 +115,18 @@ watch(
     },
 );
 
-const activeItem = computed(() =>
-    isDefined(vmodel.value)
+const activeItem = ref(items.value[0]);
+
+watchEffect(() => {
+    activeItem.value = isDefined(vmodel.value)
         ? items.value.find((item) => item.value === vmodel.value) ||
           items.value[0]
-        : items.value[0],
-);
+        : items.value[0];
+});
 
 const activeIndex = computed(() => activeItem.value.index);
 
-function isActive(item: TabItem): boolean {
+function isActive(item: TabItem<T>): boolean {
     return item.value === activeItem.value.value;
 }
 
@@ -123,15 +136,13 @@ const isTransitioning = computed(() =>
 
 onMounted(() => {
     // set first tab as default if not defined
-    if (!vmodel.value) {
-        vmodel.value = items.value[0]?.value as T;
-    }
+    if (!vmodel.value) vmodel.value = items.value[0]?.value as T;
 });
 
 // --- EVENT HANDLER ---
 
 /** Tab item click listener, emit input event and change active child. */
-function tabClick(item: TabItem): void {
+function tabClick(item: TabItem<T>): void {
     if (vmodel.value !== item.value) performAction(item.value as T);
 }
 

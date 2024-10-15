@@ -6,7 +6,6 @@ import {
     useTemplateRef,
     useId,
     watchEffect,
-    type ComponentInstance,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -72,12 +71,14 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     autocompleteClasses: () => getOption("taginput.autocompleteClasses", {}),
 });
 
+type ModelValue = TaginputProps<T>["modelValue"];
+
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string[] | object[]} updated modelValue prop
+     * @param value {string[] | number[] | object[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: T[]): void;
+    (e: "update:modelValue", value: ModelValue[]): void;
     /**
      * input prop two-way binding
      * @param value {string} updated input prop
@@ -129,10 +130,7 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const autocompleteRef =
-    useTemplateRef<ComponentInstance<typeof OAutocomplete<T>>>(
-        "autocompleteRef",
-    );
+const autocompleteRef = useTemplateRef("autocompleteRef");
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -142,13 +140,13 @@ const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
 );
 
 /** the selected items, use v-model to make it two-way binding */
-const selectedItems = defineModel<T[]>({ default: undefined });
+const selectedItems = defineModel<ModelValue>({ default: undefined });
 
 /** the value of the inner input, use v-model:input to make it two-way binding */
 const inputValue = defineModel<string>("input", { default: "" });
 
 const inputLength = computed(() => inputValue.value.trim().length);
-const itemsLength = computed(() => selectedItems.value.length);
+const itemsLength = computed(() => selectedItems.value?.length || 0);
 
 const isComposing = ref(false);
 
@@ -160,6 +158,7 @@ const selectedOptions = computed(() => {
     if (!selectedItems.value) return [];
     return selectedItems.value.map((value) => {
         const option = findOption(normalizedOptions, value);
+        // return the found option or create a new option object
         if (option) return option;
         else return { label: value, value, key: useId() };
     });
@@ -206,16 +205,25 @@ function addItem(item?: T | string): void {
                 return;
             }
         }
-        // Add the item input if it is not blank
-        // or previously added (if not allowDuplicates).
         const itemToAdd = props.createItem(item);
-        const add = !props.allowDuplicates
-            ? !selectedItems.value.includes(itemToAdd)
-            : true;
 
-        if (add && props.validateItem(item)) {
-            selectedItems.value = [...selectedItems.value, itemToAdd];
-            emits("add", itemToAdd);
+        if (!selectedItems.value?.length) {
+            // Add the item input if not items are set yet
+            if (props.validateItem(item)) {
+                selectedItems.value = [itemToAdd];
+                emits("add", itemToAdd);
+            }
+        } else {
+            // Add the item input if it is not blank
+            // or previously added (if not allowDuplicates).
+            const add = !props.allowDuplicates
+                ? !selectedItems.value.includes(itemToAdd)
+                : true;
+
+            if (add && props.validateItem(item)) {
+                selectedItems.value = [...selectedItems.value, itemToAdd];
+                emits("add", itemToAdd);
+            }
         }
     }
 
@@ -227,6 +235,7 @@ function addItem(item?: T | string): void {
 }
 
 function removeItem(index: number, event?: Event): void {
+    if (!selectedItems.value?.length) return;
     const item = selectedItems.value.at(index);
     if (!item) return;
     selectedItems.value = selectedItems.value.toSpliced(index, 1);
@@ -344,18 +353,19 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 <span
                     v-for="(option, index) in selectedOptions"
                     :key="option.key"
-                    :class="itemClasses"
-                    :tabindex="0"
-                    @keydown.enter="removeItem(index, $event)">
+                    :class="itemClasses">
                     <span> {{ option.label }}</span>
                     <o-icon
                         v-if="closable"
                         :class="closeClasses"
-                        clickable
                         :pack="iconPack"
                         :icon="closeIcon"
+                        clickable
+                        tabindex="0"
+                        role="button"
                         :aria-label="ariaCloseLabel"
                         both
+                        @keydown.enter="removeItem(index, $event)"
                         @click="removeItem(index, $event)" />
                 </span>
             </slot>

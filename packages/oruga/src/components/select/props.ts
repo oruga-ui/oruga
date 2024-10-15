@@ -1,7 +1,7 @@
 import type { ComponentClass } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
-type SelectType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type SelectProps<
     T extends string | number | object,
@@ -10,7 +10,7 @@ export type SelectProps<
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
-    modelValue?: SelectType<T, IsMultiple>;
+    modelValue?: ValueType<T, IsMultiple>;
     /** Allow multiple selection - converts the `modelValue` into an array */
     multiple?: IsMultiple;
     /** Select options, unnecessary when default slot is used */
@@ -60,7 +60,7 @@ export type SelectProps<
     customValidity?:
         | string
         | ((
-              currentValue: SelectType<T, IsMultiple> | null | undefined,
+              currentValue: ValueType<T, IsMultiple> | null | undefined,
               state: ValidityState,
           ) => string);
     /** Same as native autocomplete options to use in HTML5 validation */

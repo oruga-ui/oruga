@@ -15,16 +15,12 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getOption } from "@/utils/config";
 import { isDate, pad } from "@/utils/helpers";
-import {
-    defineClasses,
-    getActiveClasses,
-    useMatchMedia,
-    type OptionsPropItem,
-} from "@/composables";
+import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
 
+import type { OptionsPropItem } from "@/types";
 import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
 
@@ -104,7 +100,7 @@ const props = withDefaults(
     },
 );
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**
@@ -171,7 +167,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
-/** modelvalue of selected date */
+/** modelvalue of selected date, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** Dropdown active state */

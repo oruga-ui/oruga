@@ -6,7 +6,6 @@ import {
     watch,
     useAttrs,
     onMounted,
-    toValue,
     useSlots,
     useId,
     triggerRef,
@@ -33,13 +32,16 @@ import {
     filterOptionsItems,
     useInputHandler,
     useEventListener,
-    type OptionsItem,
-    type OptionsGroupItem,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { DynamicComponent, ClassBind } from "@/types";
+import type {
+    DynamicComponent,
+    ClassBind,
+    OptionsItem,
+    OptionsGroupItem,
+} from "@/types";
 import type { AutocompleteProps } from "./props";
 
 enum SpecialOption {
@@ -109,12 +111,14 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     inputClasses: () => getOption("autocomplete.inputClasses", {}),
 });
 
+type ModelValue = AutocompleteProps<T>["modelValue"];
+
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | object} updated modelValue prop
+     * @param value {string | number | object} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * input prop two-way binding
      * @param value {string} updated input prop
@@ -128,10 +132,10 @@ const emits = defineEmits<{
     (e: "input", value: string, event: Event): void;
     /**
      * selected element changed event
-     * @param value {string | object} selected value
+     * @param value {string | number | object} selected value
      * @param event {Event} native event
      */
-    (e: "select", value: T | undefined, event: Event): void;
+    (e: "select", value: ModelValue, event: Event): void;
     /**
      * header is selected
      * @param event {Event} native event
@@ -198,10 +202,12 @@ const { parentField } = injectField();
 
 const isActive = ref(false);
 
-/** the selected value, use v-model to make it two-way binding */
-const selectedValue = defineModel<T | undefined>({ default: undefined });
+/** The selected value, use v-model to make it two-way binding */
+const selectedValue = defineModel<ModelValue>({
+    default: undefined,
+});
 
-/** the value of the inner input, use v-model:input to make it two-way binding */
+/** The value of the inner input, use v-model:input to make it two-way binding */
 const inputValue = defineModel<string>("input", { default: "" });
 
 /** create a unique id for the menu */
@@ -284,7 +290,7 @@ function onDropdownClose(method: string): void {
  * update input value and close dropdown.
  */
 function setSelected(
-    option?: OptionsItem<T>,
+    option: OptionsItem<T> | undefined,
     closeDropdown: boolean = true,
     event?: Event,
 ): void {
@@ -333,20 +339,16 @@ const footerHovered = ref(false);
 
 /** Select first option if "keep-first" */
 watch(
-    () => props.options,
-    () => {
+    groupedOptions,
+    (options) => {
         // Keep first option always pre-selected
         if (props.keepFirst) {
             if (isActive.value) hoverFirstOption();
             else setHovered(undefined);
         } else if (hoveredOption.value) {
-            // reset hovered if list doesn't contain it
-            const hoveredValue = findOption(
-                groupedOptions,
-                hoveredOption.value.value,
-            );
-            if (hoveredValue) setHovered(hoveredValue);
-            else setHovered(undefined);
+            // reset hovered with found option or undefined
+            const hoveredValue = findOption(options, hoveredOption.value.value);
+            setHovered(hoveredValue);
         }
     },
     { flush: "post" },
@@ -362,8 +364,8 @@ function setHovered(option: OptionsItem<T> | SpecialOption | undefined): void {
 /** set first option as hovered */
 function hoverFirstOption(): void {
     const option = firstValidOption(groupedOptions);
-    if (option) setHovered(option);
-    else setHovered(undefined);
+    // set found option or undefined hovered
+    setHovered(option);
 }
 
 // --- Event Handler ---
@@ -580,9 +582,7 @@ const itemFooterClasses = defineClasses(
 
 function itemAppliedClasses(option: OptionsItem<T>): ClassBind[] {
     const hoverClasses =
-        option.key === toValue(hoveredOption)?.key
-            ? itemHoverClasses.value
-            : [];
+        option.key === hoveredOption.value?.key ? itemHoverClasses.value : [];
 
     return [...itemClasses.value, ...hoverClasses];
 }
@@ -710,10 +710,9 @@ defineExpose({ focus: setFocus, value: inputValue });
                 :tag="itemTag"
                 :value="option.value"
                 :class="itemAppliedClasses(option)"
-                tabindex="-1"
                 aria-role="option"
                 :aria-selected="
-                    hoveredOption ? option.key === hoveredOption.key : null
+                    hoveredOption ? option.key === hoveredOption.key : undefined
                 "
                 @click="
                     (value, event) => setSelected(option, !keepOpen, event)

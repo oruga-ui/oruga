@@ -6,15 +6,11 @@ import OPickerWrapper from "../utils/PickerWrapper.vue";
 
 import { getOption } from "@/utils/config";
 import { isDate, isDefined, pad } from "@/utils/helpers";
-import {
-    defineClasses,
-    useMatchMedia,
-    getActiveClasses,
-    type OptionsItem,
-} from "@/composables";
+import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerMixins";
 
+import type { OptionsItem } from "@/types";
 import type { TimepickerProps } from "./props";
 
 /**

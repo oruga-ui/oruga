@@ -5,7 +5,7 @@ export type StepsProps<T extends string | number | object> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
-     * The selected item value
+     * The selected item value, use v-model to make it two-way binding
      * @type string|number|object
      */
     modelValue?: T;
