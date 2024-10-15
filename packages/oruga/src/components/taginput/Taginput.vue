@@ -156,13 +156,14 @@ const isComposing = ref(false);
 const normalizedOptions = computed(() => normalizeOptions<T>(props.options));
 
 /** map the selected items into option items */
-const selectedOptions = computed(() =>
-    selectedItems.value.map((value) => {
+const selectedOptions = computed(() => {
+    if (!selectedItems.value) return [];
+    return selectedItems.value.map((value) => {
         const option = findOption(normalizedOptions, value);
         if (option) return option;
         else return { label: value, value, key: useId() };
-    }),
-);
+    });
+});
 
 /** show the input field if a maxitems hasn't been set or reached */
 const hasInput = computed(

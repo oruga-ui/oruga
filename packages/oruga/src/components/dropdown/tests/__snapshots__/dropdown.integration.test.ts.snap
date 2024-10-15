@@ -17,17 +17,17 @@ exports[`Dropdown integration tests > is called 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
-      <div class="o-drop__item o-drop__item--clickable text-break" role="listitem" tabindex="0" data-oruga="dropdown-item">
+      <div class="o-drop__item o-drop__item--clickable text-break" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false">
         <!--
             @slot Override the label, default is label prop 
         -->A
       </div>
-      <div class="o-drop__item o-drop__item--clickable text-break" role="listitem" tabindex="0" data-oruga="dropdown-item">
+      <div class="o-drop__item o-drop__item--clickable text-break" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false">
         <!--
             @slot Override the label, default is label prop 
         -->B
       </div>
-      <div class="o-drop__item o-drop__item--clickable text-break" role="listitem" tabindex="0" data-oruga="dropdown-item">
+      <div class="o-drop__item o-drop__item--clickable text-break" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false">
         <!--
             @slot Override the label, default is label prop 
         -->C

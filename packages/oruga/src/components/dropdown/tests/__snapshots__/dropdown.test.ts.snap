@@ -17,6 +17,7 @@ exports[`Dropdown tests > render correctly 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
+      <!--v-if-->
     </div>
   </transition-stub>
   <!--teleport end-->

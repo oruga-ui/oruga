@@ -14,6 +14,7 @@ import {
     type Component,
 } from "vue";
 
+import ODropdownItem from "../dropdown/DropdownItem.vue";
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
 import { getOption } from "@/utils/config";

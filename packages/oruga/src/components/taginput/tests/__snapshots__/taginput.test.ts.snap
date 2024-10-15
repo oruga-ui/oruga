@@ -6,6 +6,7 @@ exports[`OTaginput tests > render correctly 1`] = `
     <!--
                 @slot Override selected items
                 @binding {(string, object)[]} items - selected items
+                @binding {object[]} options - selected options
             -->
     <div data-oruga="autocomplete" class="o-drop o-drop--expanded o-drop--position-auto o-acp o-taginput__autocomplete">
       <div tabindex="-1" class="o-drop__trigger" aria-haspopup="listbox">
@@ -13,7 +14,7 @@ exports[`OTaginput tests > render correctly 1`] = `
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
             -->
-        <div data-oruga="input" class="o-input__wrapper o-input__wrapper--expanded"><input has-counter="false" role="combobox" aria-autocomplete="list" aria-controls="v-0" aria-expanded="false" id="v-1" data-oruga-input="text" type="text" class="o-input o-taginput__input" autocomplete="off">
+        <div data-oruga="input" class="o-input__wrapper o-input__wrapper--expanded"><input has-counter="false" role="combobox" aria-autocomplete="list" aria-controls="v-0" aria-expanded="false" id="v-2" data-oruga-input="text" type="text" class="o-input o-taginput__input" autocomplete="off">
           <!--v-if-->
           <!--v-if-->
           <!--v-if-->
@@ -28,6 +29,7 @@ exports[`OTaginput tests > render correctly 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
+          <!--v-if-->
         </div>
       </transition-stub>
       <!--teleport end-->
