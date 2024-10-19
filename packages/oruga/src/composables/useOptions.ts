@@ -1,4 +1,4 @@
-import { toValue, useId, type MaybeRefOrGetter } from "vue";
+import { toValue, type MaybeRefOrGetter } from "vue";
 import { isEqual } from "@/utils/helpers";
 
 /**
@@ -105,7 +105,7 @@ export function normalizeOptions<
                 return {
                     label: String(option),
                     value: String(option),
-                    key: useId(),
+                    key: crypto.randomUUID(),
                 } as OptionsItem<V>;
 
             if (typeof option == "object") {
@@ -116,13 +116,13 @@ export function normalizeOptions<
                     return {
                         ...option,
                         options,
-                        key: useId(),
+                        key: crypto.randomUUID(),
                     } as OptionsGroupItem<V>;
                 } else if ("value" in option) {
                     // create options item
                     return {
                         ...option,
-                        key: useId(),
+                        key: crypto.randomUUID(),
                     } as OptionsItem<V>;
                 }
             }
@@ -134,7 +134,7 @@ export function normalizeOptions<
             // create option from object key/value
             label: options[value],
             value,
-            key: useId(),
+            key: crypto.randomUUID(),
         }),
     ) as R;
 }
@@ -164,7 +164,7 @@ export function toOptionsGroup<V>(
     if (isGroup) return [...options] as OptionsGroupItem<V>[];
 
     // create a list with a single group
-    return [{ options, key: useId() }] as OptionsGroupItem<V>[];
+    return [{ options, key: crypto.randomUUID() }] as OptionsGroupItem<V>[];
 }
 
 export function toOptionsList<V>(
