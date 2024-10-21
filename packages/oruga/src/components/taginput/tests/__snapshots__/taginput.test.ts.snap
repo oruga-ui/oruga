@@ -14,7 +14,7 @@ exports[`OTaginput tests > render correctly 1`] = `
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
             -->
-        <div data-oruga="input" class="o-input__wrapper o-input__wrapper--expanded"><input has-counter="false" role="combobox" aria-autocomplete="list" aria-controls="v-0" aria-expanded="false" id="v-2" data-oruga-input="text" type="text" class="o-input o-taginput__input" autocomplete="off">
+        <div data-oruga="input" class="o-input__wrapper o-input__wrapper--expanded"><input has-counter="false" role="combobox" aria-autocomplete="list" aria-controls="v-0" aria-expanded="false" id="v-1" data-oruga-input="text" type="text" class="o-input o-taginput__input" autocomplete="off">
           <!--v-if-->
           <!--v-if-->
           <!--v-if-->

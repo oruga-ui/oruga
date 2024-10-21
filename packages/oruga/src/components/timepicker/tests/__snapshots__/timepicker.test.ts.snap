@@ -61,7 +61,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
             <!--v-if-->
           </div><span class="o-tpck__separtor">:</span>
           <div class="" data-oruga="select">
-            <!--v-if--><select id="v-27" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select id="v-3" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop

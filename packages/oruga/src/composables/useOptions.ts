@@ -243,7 +243,7 @@ export function checkOptionsEmpty(
             // check if every options are hidden
             return checkOptionsEmpty(option.options);
         // check if option is hidden
-        else return option.attrs?.hidden;
+        else return !isOptionValid(option);
     });
 }
 
