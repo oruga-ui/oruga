@@ -1,10 +1,20 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { computed, ref, useSlots, useId, type PropType } from "vue";
+import {
+    computed,
+    ref,
+    useSlots,
+    useId,
+    type PropType,
+    type Component,
+} from "vue";
+
 import { getOption } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
+
 import type { StepsComponent, StepItemComponent } from "./types";
 import type { ComponentClass, DynamicComponent } from "@/types";
+
 /**
  * @displayName Step Item
  */
@@ -14,6 +24,7 @@ defineOptions({
     configField: "steps",
     inheritAttrs: false,
 });
+
 const props = defineProps({
     /** Override existing theme classes completely */
     override: { type: Boolean, default: undefined },
@@ -62,6 +73,17 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.ariaRole", "tab"),
     },
+    /** Text content, unnecessary when default slot is used */
+    content: { type: String, default: undefined },
+    /** Component to be injected. */
+    component: {
+        type: [Object, Function] as PropType<Component>,
+        default: undefined,
+    },
+    /** Props to be binded to the injected component */
+    props: { type: Object, default: () => ({}) }, // todo: type this right
+    /** Events to be binded to the injected component */
+    events: { type: Object, default: () => ({}) }, // todo: type this right
     // class props (will not be displayed in the docs)
     /** Class of the content item */
     itemClass: {
@@ -89,13 +111,16 @@ const props = defineProps({
         default: undefined,
     },
 });
+
 const emits = defineEmits<{
     /** on step item activate event */
     (e: "activate"): void;
     /** on step item deactivate event */
     (e: "deactivate"): void;
 }>();
+
 const slots = useSlots();
+
 const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     $slots: slots,
@@ -104,23 +129,30 @@ const providedData = computed<StepItemComponent<T>>(() => ({
     activate,
     deactivate,
 }));
+
 // inject functionalities and data from the parent carousel component
 const { parent, item } = useProviderChild<StepsComponent<T>>({
     data: providedData,
 });
+
 const transitionName = ref();
+
 const isActive = computed(() => isEqual(props.value, parent.value.activeValue));
+
 const isTransitioning = ref(false);
+
 const nextAnimation = computed(() => {
     const idx =
         parent.value.vertical && parent.value.animation.length === 4 ? 2 : 0;
     return parent.value.animation[idx];
 });
+
 const prevAnimation = computed(() => {
     const idx =
         parent.value.vertical && parent.value.animation.length === 4 ? 3 : 1;
     return parent.value.animation[idx];
 });
+
 /** Activate element, alter animation name based on the index. */
 function activate(oldIndex: number): void {
     transitionName.value =
@@ -128,6 +160,7 @@ function activate(oldIndex: number): void {
     // emit event
     emits("activate");
 }
+
 /** Deactivate element, alter animation name based on the index. */
 function deactivate(newIndex: number): void {
     transitionName.value =
@@ -135,16 +168,20 @@ function deactivate(newIndex: number): void {
     // emit event
     emits("deactivate");
 }
+
 /** Transition after-enter hook */
 function afterEnter(): void {
     isTransitioning.value = true;
 }
+
 /** Transition before-leave hook */
 function beforeLeave(): void {
     isTransitioning.value = true;
 }
+
 // --- Computed Component Classes ---
 const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
+
 const itemClasses = defineClasses(
     ["itemHeaderClass", "o-steps__nav-item"],
     [
@@ -185,7 +222,17 @@ const itemClasses = defineClasses(
                 <!-- 
                     @slot Step item content
                 -->
-                <slot />
+                <slot>
+                    <!-- injected component -->
+                    <component
+                        :is="component"
+                        v-if="component"
+                        v-bind="$props.props"
+                        v-on="$props.events" />
+
+                    <!-- default content prop -->
+                    <template v-else>{{ content }}</template>
+                </slot>
             </div>
         </template>
     </Transition>
