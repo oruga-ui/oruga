@@ -13,4 +13,6 @@ describe("OAutocomplete tests", () => {
         expect(wrapper.attributes("data-oruga")).toBe("autocomplete");
         expect(wrapper.html()).toMatchSnapshot();
     });
+
+    test.todo("handle options props correctly");
 });

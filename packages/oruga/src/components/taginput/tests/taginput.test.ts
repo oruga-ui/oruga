@@ -13,4 +13,6 @@ describe("OTaginput tests", () => {
         expect(wrapper.attributes("data-oruga")).toBe("taginput");
         expect(wrapper.html()).toMatchSnapshot();
     });
+
+    test.todo("handle options props correctly");
 });

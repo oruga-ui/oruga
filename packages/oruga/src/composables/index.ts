@@ -9,4 +9,5 @@ export * from "./useClickOutside";
 export * from "./useScrollingParent";
 export * from "./useObjectMap";
 export * from "./useVModel";
+export * from "./useOptions";
 export * from "./usePreventScrolling";

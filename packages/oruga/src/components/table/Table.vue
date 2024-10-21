@@ -952,7 +952,7 @@ function getColumnValue(row: T, column: TableColumn<T>): string {
     return getPropertyValue(row, column.field, column.formatter);
 }
 
-/** check if two rows are eqal by a custom compare function or the rowKey attribute */
+/** check if two rows are equal by a custom compare function or the rowKey attribute */
 function isRowEqual(
     sourceRow: MaybeRefOrGetter<T>,
     targetRow: MaybeRefOrGetter<T>,

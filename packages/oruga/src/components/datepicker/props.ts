@@ -16,7 +16,7 @@ export type DatepickerProps<
 > = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state */
+    /** The input value state, use v-model to make it two-way binding */
     modelValue?: DatepickerType<IsRange, IsMultiple>;
     /** Enable date range selection */
     range?: IsRange;

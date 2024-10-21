@@ -4,7 +4,6 @@ import path from 'path';
 
 // Components to be ignored
 const IGNORE = [
-  "FieldBody",
   "SliderThumb",
   "TableMobileSort",
   "TablePagination",

@@ -115,7 +115,7 @@ const emits = defineEmits<{
 
 const slots = useSlots();
 
-const providedData = computed<TabItemComponent>(() => ({
+const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     $slots: slots,
     classes: tabClasses.value,
