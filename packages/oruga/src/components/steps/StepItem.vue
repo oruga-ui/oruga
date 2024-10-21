@@ -1,6 +1,12 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { computed, ref, useSlots, useId, type PropType } from "vue";
-
+import {
+    computed,
+    ref,
+    useSlots,
+    useId,
+    type PropType,
+    type Component,
+} from "vue";
 import { getOption } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
@@ -66,6 +72,17 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.ariaRole", "tab"),
     },
+    /** Text content, unnecessary when default slot is used */
+    content: { type: String, default: undefined },
+    /** Component to be injected. */
+    component: {
+        type: [Object, Function] as PropType<Component>,
+        default: undefined,
+    },
+    /** Props to be binded to the injected component */
+    props: { type: Object, default: () => ({}) }, // todo: type this right
+    /** Events to be binded to the injected component */
+    events: { type: Object, default: () => ({}) }, // todo: type this right
     // class props (will not be displayed in the docs)
     /** Class of the content item */
     itemClass: {
@@ -207,7 +224,17 @@ const itemClasses = defineClasses(
                 <!-- 
                     @slot Step item content
                 -->
-                <slot />
+                <slot>
+                    <!-- injected component -->
+                    <component
+                        :is="component"
+                        v-if="component"
+                        v-bind="$props.props"
+                        v-on="$props.events" />
+
+                    <!-- default content prop -->
+                    <template v-else>{{ content }}</template>
+                </slot>
             </div>
         </template>
     </Transition>
