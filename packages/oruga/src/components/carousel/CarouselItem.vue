@@ -80,7 +80,7 @@ const itemClasses = defineClasses(
         data-oruga="carousel-item"
         :role="ariaRole"
         aria-roledescription="item"
-        :aria-selected="isActive || undefined"
+        :aria-selected="isActive"
         @click="onClick"
         @keypress.enter="onClick">
         <!--

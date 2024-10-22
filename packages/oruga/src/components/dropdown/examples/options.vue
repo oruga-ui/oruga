@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsPropItem } from "@oruga-ui/oruga-next";
+import type { OptionsProp } from "@oruga-ui/oruga-next";
 
-const options: OptionsPropItem<string>[] = [
+const options: OptionsProp<string> = [
     { label: "Flint", value: "flint" },
     { label: "Silver", value: "silver" },
     { label: "Vane", value: "vane" },

@@ -83,7 +83,7 @@ const rootRef = ref();
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<StepsComponent<T | undefined>>(() => ({
+const provideData = computed<StepsComponent<ModelValue>>(() => ({
     activeValue: vmodel.value,
     activeIndex: activeItem.value?.index || 0,
     vertical: props.vertical,

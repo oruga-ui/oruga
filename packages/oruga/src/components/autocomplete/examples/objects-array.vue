@@ -216,8 +216,7 @@ const selected = ref(options[3].value);
                 placeholder="e.g. Anne"
                 :keep-first="keepFirst"
                 :open-on-focus="openOnFocus"
-                :keep-open="keepOpen"
-                field="user.first_name">
+                :keep-open="keepOpen">
                 <template #empty> No results found </template>
             </o-autocomplete>
         </o-field>

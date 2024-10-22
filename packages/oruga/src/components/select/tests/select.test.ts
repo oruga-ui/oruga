@@ -251,4 +251,6 @@ describe("OSelect tests", () => {
         expect(emit).toHaveLength(3);
         expect(emit![2][0]).toHaveLength(1);
     });
+
+    test.todo("handle options props correctly");
 });

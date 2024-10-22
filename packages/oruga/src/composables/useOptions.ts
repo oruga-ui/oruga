@@ -3,8 +3,23 @@ import { isEqual } from "@/utils/helpers";
 
 /**
  * Options should always be formatted as an array of objects with label and value properties.
+ *
+ * @internal
  */
-export type OptionsItem<V = unknown> = {
+export type OptionsItem<V = unknown> = OptionsPropItem<V> & {
+    /** internal definiton if the element should be hidden */
+    hidden?: boolean;
+    /** internal genereated uniqe option key */
+    key?: string;
+};
+
+/**
+ * Options should always be formatted as an array of objects with label and value
+ * properties.
+ *
+ * @public
+ */
+export type OptionsPropItem<V = unknown> = {
     /** displayed option label */
     label: string;
     /** used option value */
@@ -13,15 +28,26 @@ export type OptionsItem<V = unknown> = {
     attrs?: {
         disabled?: boolean;
     } & Record<string, any>;
-    /** internal definiton if the element should be hidden */
-    hidden?: boolean;
-    /** internal genereated uniqe option key */
-    key?: string;
     [index: string]: any;
 };
 
 /**
+ * The types of options that can be passed to the options prop.
+ *
+ * @public
+ */
+export type OptionsProp<V = unknown> =
+    | (V extends string
+          ? string[]
+          : V extends number
+            ? number[]
+            : Record<string | number, string>)
+    | OptionsPropItem<V>[];
+
+/**
  * Option groups should always be formatted as an array of objects with group and nested options.
+ *
+ * @internal
  */
 export type OptionsGroupItem<V = unknown> = {
     /** displayed option group label */
@@ -36,42 +62,38 @@ export type OptionsGroupItem<V = unknown> = {
     key?: string;
 };
 
-export type OptionsPropItem<V = unknown> = Omit<
-    OptionsItem<V>,
-    "key" | "hidden"
->;
-
-/**
- * The types of options that can be passed to the options prop.
- */
-export type OptionsProp<V = unknown> =
-    | (V extends string
-          ? string[]
-          : V extends number
-            ? number[]
-            : Record<string | number, string>)
-    | OptionsPropItem<V>[];
-
 /**
  * Option groups should always be formatted as an array of objects with group and nested options.
+ *
+ * @public
  */
 export type OptionsGroupPropItem<V = unknown> = {
     /** displayed option group label */
     group: string;
     /** list of options */
-    options: OptionsProp<V>[];
+    options: OptionsProp<V>;
     /** additional attributes bound to the options grouü element */
     attrs?: Record<string, any>;
 };
 
 /**
+ * An array of option items with a group support — where the `option` of the
+ * groups can be any valid OptionsProp type.
+ *
+ * @public
+ */
+export type OptionsGroupProp<V = unknown> = OptionsGroupPropItem<V>[];
+
+/**
  * The types of options that can be passed to the options prop.
  * An array of option items with a group support — where the `option` of the
  * groups can be any valid OptionsProp type.
+ *
+ * @public
  */
 export type OptionsPropWithGroups<V = unknown> =
-    | OptionsPropItem<V>
-    | OptionsGroupPropItem<V>[];
+    | OptionsProp<V>
+    | OptionsGroupProp<V>;
 
 type NormalizedOptions<
     V,
@@ -99,35 +121,37 @@ export function normalizeOptions<
     if (!options) return [] as R;
 
     if (Array.isArray(options))
-        return options.map((option): OptionsItem | OptionsGroupItem => {
-            if (typeof option === "string" || typeof option === "number")
-                // create options item from primitive
-                return {
-                    label: String(option),
-                    value: String(option),
-                    key: crypto.randomUUID(),
-                } as OptionsItem<V>;
-
-            if (typeof option == "object") {
-                if ("group" in option) {
-                    // process group options
-                    const options = normalizeOptions(option.options);
-                    // create options group item
+        return options.map(
+            (option: O[number]): OptionsItem | OptionsGroupItem => {
+                if (typeof option === "string" || typeof option === "number")
+                    // create options item from primitive
                     return {
-                        ...option,
-                        options,
-                        key: crypto.randomUUID(),
-                    } as OptionsGroupItem<V>;
-                } else if ("value" in option) {
-                    // create options item
-                    return {
-                        ...option,
+                        label: String(option),
+                        value: String(option),
                         key: crypto.randomUUID(),
                     } as OptionsItem<V>;
+
+                if (typeof option == "object") {
+                    if ("group" in option) {
+                        // process group options
+                        const options = normalizeOptions(option.options);
+                        // create options group item
+                        return {
+                            ...option,
+                            options,
+                            key: crypto.randomUUID(),
+                        } as OptionsGroupItem<V>;
+                    } else if ("value" in option) {
+                        // create options item
+                        return {
+                            ...option,
+                            key: crypto.randomUUID(),
+                        } as OptionsItem<V>;
+                    }
                 }
-            }
-            return option as OptionsItem<V>;
-        }) as R;
+                return option as OptionsItem<V>;
+            },
+        ) as R;
 
     return Object.keys(options).map(
         (value: string): OptionsItem<string> => ({

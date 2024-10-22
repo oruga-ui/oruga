@@ -203,9 +203,7 @@ const { parentField } = injectField();
 const isActive = ref(false);
 
 /** The selected value, use v-model to make it two-way binding */
-const selectedValue = defineModel<ModelValue>({
-    default: undefined,
-});
+const selectedValue = defineModel<ModelValue>({ default: undefined });
 
 /** The value of the inner input, use v-model:input to make it two-way binding */
 const inputValue = defineModel<string>("input", { default: "" });

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { OptionsPropWithGroups } from "@oruga-ui/oruga-next";
 
-const options = [
+const options: OptionsPropWithGroups<string> = [
     {
         group: "Fruits",
         options: ["Apple", "Banana", "Watermelon"],

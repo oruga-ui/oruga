@@ -180,6 +180,7 @@ function beforeLeave(): void {
 }
 
 // --- Computed Component Classes ---
+
 const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
 
 const itemClasses = defineClasses(

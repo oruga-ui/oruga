@@ -6,10 +6,11 @@ import type { DynamicComponent } from "./utils";
 /** export option types */
 export type {
     OptionsItem,
-    OptionsGroupItem,
     OptionsPropItem,
+    OptionsGroupItem,
     OptionsGroupPropItem,
     OptionsProp,
+    OptionsGroupProp,
     OptionsPropWithGroups,
 } from "@/composables";
 

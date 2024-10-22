@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { OptionsProp } from "@oruga-ui/oruga-next";
 
-const options = [
+const options: OptionsProp<string> = [
     "Angular",
     "Angular 2",
     "Aurelia",
