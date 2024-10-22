@@ -36,7 +36,7 @@ export type OptionsPropItem<V = unknown> = {
  *
  * @public
  */
-export type OptionsProp<V = unknown> =
+export type OptionsProp<V = string | number | object> =
     | (string | number)[]
     | Record<string | number, string>
     | OptionsPropItem<V>[];
@@ -79,7 +79,8 @@ export type OptionsGroupPropItem<V = unknown> = {
  *
  * @public
  */
-export type OptionsGroupProp<V = unknown> = OptionsGroupPropItem<V>[];
+export type OptionsGroupProp<V = string | number | object> =
+    OptionsGroupPropItem<V>[];
 
 /**
  * The types of options that can be passed to the options prop.

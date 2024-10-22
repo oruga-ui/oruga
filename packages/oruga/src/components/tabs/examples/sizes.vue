@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { OptionsPropItem } from "@oruga-ui/oruga-next";
+import type { OptionsProp } from "@oruga-ui/oruga-next";
 
-const options: OptionsPropItem[] = [
+const options: OptionsProp = [
     {
         label: "Pictures",
         value: 0,
