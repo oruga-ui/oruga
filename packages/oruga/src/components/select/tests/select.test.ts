@@ -2,7 +2,7 @@ import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
-import type { OptionsItem } from "@/composables";
+import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
 
 import OSelect from "@/components/select/Select.vue";
 
@@ -26,21 +26,6 @@ describe("OSelect tests", () => {
         expect(wrapper.attributes("data-oruga")).toBe("select");
         expect(wrapper.find("select").exists()).toBeTruthy(); // has a select element
         expect(wrapper.html()).toMatchSnapshot();
-    });
-
-    test("render options correctly", () => {
-        const wrapper = mount(OSelect, {
-            props: { options },
-        });
-
-        const optionsElements = wrapper.findAll("option");
-        expect(optionsElements.length).toBe(options.length);
-        optionsElements.forEach((el, idx) => {
-            expect(el.text()).toBe(options[idx].label);
-            expect(el.attributes("disabled")).toBe(
-                options[idx].attrs?.disabled ? "" : undefined,
-            );
-        });
     });
 
     test("render accordingly when has left icon", async () => {
@@ -252,5 +237,148 @@ describe("OSelect tests", () => {
         expect(emit![2][0]).toHaveLength(1);
     });
 
-    test.todo("handle options props correctly");
+    describe("render options props correctly", () => {
+        test("handle options as primitves correctly", () => {
+            const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
+
+            const wrapper = mount(OSelect, { props: { options } });
+
+            const groupedElements = wrapper.findAll("optgroup");
+            expect(groupedElements).toHaveLength(0);
+
+            const optionElements = wrapper.findAll("option");
+            expect(optionElements).toHaveLength(options.length);
+
+            optionElements.forEach((el, idx) => {
+                expect(el.text()).toBe(String(options[idx]));
+                expect(el.attributes("value")).toBe(String(options[idx]));
+                expect(el.attributes("disabled")).toBe(undefined);
+            });
+        });
+
+        test("handle options as object correctly", () => {
+            const options: OptionsProp = {
+                flint: "Flint",
+                silver: "Silver",
+                vane: "Vane",
+                0: "Zero",
+                1: "One",
+                2: "Two",
+            };
+
+            const wrapper = mount(OSelect, { props: { options } });
+
+            const groupedElements = wrapper.findAll("optgroup");
+            expect(groupedElements).toHaveLength(0);
+
+            const optionElements = wrapper.findAll("option");
+            expect(optionElements).toHaveLength(Object.keys(options).length);
+
+            optionElements.forEach((el, idx) => {
+                expect(el.text()).toBe(Object.entries(options)[idx][1]);
+                expect(el.attributes("value")).toBe(
+                    Object.entries(options)[idx][0],
+                );
+                expect(el.attributes("disabled")).toBe(undefined);
+            });
+        });
+
+        test("handle options as options array correctly", () => {
+            const options: OptionsProp<string | number> = [
+                { label: "Flint", value: "flint" },
+                { label: "Silver", value: "silver", attrs: { disabled: true } },
+                { label: "Vane", value: "vane" },
+                { label: "Zero", value: 0 },
+                { label: "One", value: 1 },
+                { label: "Two", value: 2, attrs: { disabled: true } },
+            ];
+
+            const wrapper = mount(OSelect, { props: { options } });
+
+            const groupedElements = wrapper.findAll("optgroup");
+            expect(groupedElements).toHaveLength(0);
+
+            const optionElements = wrapper.findAll("option");
+            expect(optionElements).toHaveLength(options.length);
+
+            optionElements.forEach((el, idx) => {
+                expect(el.text()).toBe(options[idx].label);
+                expect(el.attributes("value")).toBe(String(options[idx].value));
+                expect(el.attributes("disabled")).toBe(
+                    options[idx].attrs?.disabled ? "" : undefined,
+                );
+            });
+        });
+
+        test("handle grouped options correctly", () => {
+            const options: OptionsGroupProp<string | number | object> = [
+                {
+                    group: "Black Sails",
+                    options: [
+                        { label: "Flint", value: "flint" },
+                        { label: "Silver", value: "silver" },
+                        { label: "Vane", value: "vane" },
+                        { label: "Billy", value: "billy" },
+                    ],
+                },
+                {
+                    group: "Breaking Bad",
+                    options: {
+                        heisenberg: "Heisenberg",
+                        jesse: "Jesse",
+                        saul: "Saul",
+                        mike: "Mike",
+                    },
+                },
+                {
+                    group: "Game of Thrones",
+                    attrs: { disabled: true },
+                    options: [
+                        "Tyrion Lannister",
+                        "Jamie Lannister",
+                        "Daenerys Targaryen",
+                        "Jon Snow",
+                    ],
+                },
+            ];
+
+            const wrapper = mount(OSelect, { props: { options } });
+
+            const groupedElements = wrapper.findAll("optgroup");
+            expect(groupedElements).toHaveLength(options.length);
+
+            groupedElements.forEach((el, idx) => {
+                expect(el.attributes("disabled")).toBe(
+                    options[idx].attrs?.disabled ? "" : undefined,
+                );
+            });
+
+            const optionElements = wrapper.findAll("option");
+            expect(optionElements).toHaveLength(12);
+
+            optionElements.forEach((el, idx) => {
+                let optionLabel;
+                let optionValue;
+                if (idx < 4) {
+                    optionLabel = (options[0].options[idx % 4] as OptionsItem)
+                        .label;
+                    optionValue = (options[0].options[idx % 4] as OptionsItem)
+                        .value;
+                } else if (idx < 8) {
+                    optionLabel = Object.entries(options[1].options)[
+                        idx % 4
+                    ][1];
+                    optionValue = Object.entries(options[1].options)[
+                        idx % 4
+                    ][0];
+                } else {
+                    optionLabel = options[2].options[idx % 4];
+                    optionValue = options[2].options[idx % 4];
+                }
+
+                expect(el.text()).toBe(optionLabel);
+                expect(el.attributes("value")).toBe(optionValue);
+            });
+        });
+    });
 });

@@ -37,11 +37,8 @@ export type OptionsPropItem<V = unknown> = {
  * @public
  */
 export type OptionsProp<V = unknown> =
-    | (V extends string
-          ? string[]
-          : V extends number
-            ? number[]
-            : Record<string | number, string>)
+    | (string | number)[]
+    | Record<string | number, string>
     | OptionsPropItem<V>[];
 
 /**

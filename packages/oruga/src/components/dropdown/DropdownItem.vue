@@ -129,6 +129,7 @@ const rootClasses = defineClasses(
         :tabindex="tabindex"
         data-oruga="dropdown-item"
         :aria-selected="isActive"
+        :aria-disabled="disabled"
         @click="selectItem">
         <!--
             @slot Override the label, default is label prop 

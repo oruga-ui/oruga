@@ -23,7 +23,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
-        <div class="o-drop__item o-dpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" override="">
+        <div class="o-drop__item o-dpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false" override="">
           <!--
             @slot Override the label, default is label prop 
         -->
@@ -335,7 +335,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
-                      <div class="o-drop__item o-tpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" override="">
+                      <div class="o-drop__item o-tpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false" override="">
                         <!--
             @slot Override the label, default is label prop 
         -->

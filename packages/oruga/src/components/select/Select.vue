@@ -301,14 +301,15 @@ defineExpose({ focus: setFocus, value: vmodel });
                     <optgroup
                         v-if="isGroupOption(option)"
                         v-show="!option.hidden"
+                        v-bind="option.attrs"
                         :label="option.group">
                         <option
                             v-for="_option in option.options"
                             v-show="!_option.hidden"
+                            v-bind="_option.attrs"
                             :key="_option.key"
                             :value="_option.value"
-                            :selected="option.value === vmodel"
-                            v-bind="_option.attrs">
+                            :selected="option.value === vmodel">
                             {{ _option.label }}
                         </option>
                     </optgroup>
@@ -316,9 +317,9 @@ defineExpose({ focus: setFocus, value: vmodel });
                     <option
                         v-else
                         v-show="!option.hidden"
+                        v-bind="option.attrs"
                         :value="option.value"
-                        :selected="option.value === vmodel"
-                        v-bind="option.attrs">
+                        :selected="option.value === vmodel">
                         {{ option.label }}
                     </option>
                 </template>
