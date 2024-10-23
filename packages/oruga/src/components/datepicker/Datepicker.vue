@@ -107,57 +107,57 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date | Date[]} updated modelValue prop
      */
-    "update:modelValue": [value: ModelValue];
+    (e: "update:modelValue", value: ModelValue): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    "update:active": [value: boolean];
+    (e: "update:active", value: boolean): void;
     /**
      * on range start is selected event
      * @param value {Date} range start date
      */
-    "range-start": [value: Date];
+    (e: "range-start", value: Date): void;
     /**
      * on range end is selected event
      * @param value {Date} range end date
      */
-    "range-end": [value: Date];
+    (e: "range-end", value: Date): void;
     /**
      * on month change event
      * @param value {number} month number
      */
-    "change-month": [value: number];
+    (e: "change-month", value: number): void;
     /**
      * on year change event
      * @param value {number} year number
      */
-    "change-year": [value: number];
+    (e: "change-year", value: number): void;
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    focus: [event: Event];
+    (e: "focus", event: Event): void;
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    blur: [event: Event];
+    (e: "blur", event: Event): void;
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    invalid: [event: Event];
+    (e: "invalid", event: Event): void;
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    "icon-click": [event: Event];
+    (e: "icon-click", event: Event): void;
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    "icon-right-click": [event: Event];
+    (e: "icon-right-click", event: Event): void;
 }>();
 
 const { dtf, dateCreator, dateFormatter, dateParser } =

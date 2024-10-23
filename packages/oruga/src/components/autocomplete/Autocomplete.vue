@@ -113,8 +113,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
 
 type ModelValue = AutocompleteProps<T>["modelValue"];
 
-
-    const emits = defineEmits<{
+const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {string | number | object} updated modelValue prop

@@ -84,11 +84,11 @@ const emits = defineEmits<{
      * @param value {string} updated input prop
      */
     (e: "update:input", value: string): void;
-  /**
+    /**
      * on input change event
      * @param value {string} input value
      */
-     (e: "input", value: string): void;
+    (e: "input", value: string): void;
     /**
      * new item got added
      * @param value {string | object} added item
