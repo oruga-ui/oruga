@@ -12,13 +12,13 @@ const replaceValues = [
 ];
   
 const __dirname = process.cwd()
-  
+
 if(!exist(path.resolve(__dirname, componentDirectory))) 
     throw new Error("Path not exist: " + componentDirectory);
 
 // create component meta checker
 const checker = createChecker(
-    path.resolve(__dirname, './packages/oruga/tsconfig.json'),
+    path.resolve(__dirname, './packages/oruga/tsconfig.app.json'),
     {
         forceUseTs: true,
         printer: { newLine: 1 },
@@ -38,8 +38,8 @@ const components = component_folders.map(folder => {
 
     // get all configruable props from all components in folder
     const props = components.flatMap(comp => {
-        const file = comp.toLocaleLowerCase()+".vue";
-        const componentPath = path.resolve(__dirname, componentDirectory, name, file);
+        const file = comp+".vue";
+        const componentPath = path.resolve(__dirname, componentDirectory, folder, file);
         const meta = checker.getComponentMeta(componentPath);
 
         return meta.props.filter(prop => {
