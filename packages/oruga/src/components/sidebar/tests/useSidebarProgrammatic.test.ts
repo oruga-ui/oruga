@@ -34,7 +34,7 @@ describe("useSidebarProgrammatic tests", () => {
         let sidebar = document.body.querySelector('[data-oruga="sidebar"]');
         expect(sidebar).not.toBeNull();
 
-        expect(sidebar.innerHTML).toContain("Fancy Label");
+        expect(sidebar?.innerHTML).toContain("Fancy Label");
 
         // close element through handler
         close();
@@ -67,7 +67,7 @@ describe("useSidebarProgrammatic tests", () => {
         let sidebar = document.body.querySelector('[data-oruga="sidebar"]');
         expect(sidebar).not.toBeNull();
 
-        expect(sidebar.innerHTML).toContain("Fancy Label");
+        expect(sidebar?.innerHTML).toContain("Fancy Label");
 
         let bodyElements = document.body.querySelectorAll("body > *");
         expect(bodyElements).toHaveLength(1);
@@ -100,13 +100,13 @@ describe("useSidebarProgrammatic tests", () => {
         let sidebar = document.body.querySelector('[data-oruga="sidebar"]');
         expect(sidebar).not.toBeNull();
 
-        const button = sidebar.querySelector<HTMLElement>(
+        const button = sidebar?.querySelector<HTMLElement>(
             '[data-oruga="programmatic"]',
         );
         expect(button).not.toBeNull();
 
         // close element on button click
-        button.click();
+        button?.click();
         vi.runAllTimers();
 
         // check element does not edist
@@ -128,7 +128,7 @@ describe("useSidebarProgrammatic tests", () => {
         expect(el).not.toBeNull();
 
         // close element on 'x' button click
-        el.click();
+        el?.click();
         vi.runAllTimers();
 
         // check element does not edist

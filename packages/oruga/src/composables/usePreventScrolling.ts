@@ -28,7 +28,7 @@ export function usePreventScrolling(
         ),
     );
 
-    const savedScrollTop = ref(null);
+    const savedScrollTop = ref<number>();
 
     // reset scroll
     onBeforeUnmount(() => toggleScroll(false));
@@ -49,8 +49,8 @@ export function usePreventScrolling(
                 document.body.style.top = `-${savedScrollTop.value}px`;
             } else {
                 document.documentElement.scrollTop = savedScrollTop.value;
-                document.body.style.top = null;
-                savedScrollTop.value = null;
+                document.body.style.top = "";
+                savedScrollTop.value = undefined;
             }
         }
     }

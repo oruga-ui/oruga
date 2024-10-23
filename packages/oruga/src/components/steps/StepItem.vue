@@ -1,5 +1,12 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { computed, ref, useSlots, useId, type PropType } from "vue";
+import {
+    computed,
+    ref,
+    useSlots,
+    useId,
+    type PropType,
+    type Component,
+} from "vue";
 
 import { getOption } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
@@ -66,8 +73,17 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.ariaRole", "tab"),
     },
-    /** Sets a class to the item header */
-    headerClass: { type: String, default: undefined },
+    /** Text content, unnecessary when default slot is used */
+    content: { type: String, default: undefined },
+    /** Component to be injected. */
+    component: {
+        type: [Object, Function] as PropType<Component>,
+        default: undefined,
+    },
+    /** Props to be binded to the injected component */
+    props: { type: Object, default: () => ({}) }, // todo: type this right
+    /** Events to be binded to the injected component */
+    events: { type: Object, default: () => ({}) }, // todo: type this right
     // class props (will not be displayed in the docs)
     /** Class of the content item */
     itemClass: {
@@ -105,15 +121,16 @@ const emits = defineEmits<{
 
 const slots = useSlots();
 
-const providedData = computed<StepItemComponent>(() => ({
+const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     $slots: slots,
+    classes: itemClasses.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,
 }));
 
-// Inject functionalities and data from the parent carousel component
+// inject functionalities and data from the parent carousel component
 const { parent, item } = useProviderChild<StepsComponent<T>>({
     data: providedData,
 });
@@ -140,7 +157,6 @@ const prevAnimation = computed(() => {
 function activate(oldIndex: number): void {
     transitionName.value =
         item.value.index < oldIndex ? nextAnimation.value : prevAnimation.value;
-
     // emit event
     emits("activate");
 }
@@ -149,7 +165,6 @@ function activate(oldIndex: number): void {
 function deactivate(newIndex: number): void {
     transitionName.value =
         newIndex < item.value.index ? nextAnimation.value : prevAnimation.value;
-
     // emit event
     emits("deactivate");
 }
@@ -167,6 +182,23 @@ function beforeLeave(): void {
 // --- Computed Component Classes ---
 
 const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
+
+const itemClasses = defineClasses(
+    ["itemHeaderClass", "o-steps__nav-item"],
+    [
+        "itemHeaderVariantClass",
+        "o-steps__nav-item--",
+        computed(() => parent.value?.variant || props.variant),
+        computed(() => !!parent.value?.variant || !!props.variant),
+    ],
+    ["itemHeaderActiveClass", "o-steps__nav-item-active", null, isActive],
+    [
+        "itemHeaderPreviousClass",
+        "o-steps__nav-item-previous",
+        null,
+        computed(() => item.value.index < parent.value?.activeIndex),
+    ],
+);
 </script>
 
 <template>
@@ -191,7 +223,17 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
                 <!-- 
                     @slot Step item content
                 -->
-                <slot />
+                <slot>
+                    <!-- injected component -->
+                    <component
+                        :is="component"
+                        v-if="component"
+                        v-bind="$props.props"
+                        v-on="$props.events" />
+
+                    <!-- default content prop -->
+                    <template v-else>{{ content }}</template>
+                </slot>
             </div>
         </template>
     </Transition>

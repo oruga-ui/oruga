@@ -51,7 +51,7 @@ const props = defineProps({
                 "bottom-left",
                 "bottom-right",
             ].includes(value),
-        default: undefined,
+        required: true,
     },
     /** Used for calculation position auto */
     defaultPosition: {
@@ -98,11 +98,11 @@ function setContent<T extends typeof contentRef.value>(el: T): typeof el {
 
 const initialPosition = props.position;
 
-const scrollingParent = ref(undefined);
-const resizeObserver = ref(null);
+const scrollingParent = ref<HTMLElement | null>();
+let resizeObserver: ResizeObserver | undefined;
 
 if (isClient && window.ResizeObserver) {
-    resizeObserver.value = new window.ResizeObserver(updatePositioning);
+    resizeObserver = new window.ResizeObserver(updatePositioning);
 }
 
 // on disable state change update event listener
@@ -133,7 +133,7 @@ onBeforeUnmount(() => removeHandler());
 function addHandler(): void {
     if (isClient && !scrollingParent.value && contentRef.value) {
         // get parent container
-        scrollingParent.value = getScrollingParent(unrefElement(contentRef));
+        scrollingParent.value = getScrollingParent(unrefElement(contentRef)!);
         // set event listener
         if (
             scrollingParent.value &&
@@ -144,8 +144,8 @@ function addHandler(): void {
                 updatePositioning,
                 { passive: true },
             );
-            if (window.ResizeObserver)
-                resizeObserver.value.observe(scrollingParent.value);
+            if (window.ResizeObserver && resizeObserver)
+                resizeObserver.observe(scrollingParent.value);
         } else {
             document.addEventListener("scroll", updatePositioning, {
                 passive: true,
@@ -158,7 +158,8 @@ function addHandler(): void {
 /** remove event listener */
 function removeHandler(): void {
     if (isClient) {
-        if (window.ResizeObserver) resizeObserver.value?.disconnect();
+        if (window.ResizeObserver && resizeObserver)
+            resizeObserver.disconnect();
         window.removeEventListener("resize", updatePositioning);
         document.removeEventListener("scroll", updatePositioning);
         scrollingParent.value = undefined;
@@ -239,7 +240,7 @@ function getAutoPosition(): string {
         scrollingParent.value.clientHeight,
     );
 
-    const contentRect = unrefElement(contentRef).getBoundingClientRect();
+    const contentRect = unrefElement(contentRef)!.getBoundingClientRect();
     const triggerRect = unrefElement(props.trigger).getBoundingClientRect();
 
     // detect auto position

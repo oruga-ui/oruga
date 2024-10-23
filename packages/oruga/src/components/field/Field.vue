@@ -241,10 +241,10 @@ function setFocus(value: boolean): void {
 function setFilled(value: boolean): void {
     isFilled.value = value;
 }
-function setVariant(value: string): void {
+function setVariant(value?: string): void {
     fieldVariant.value = value;
 }
-function setMessage(value: string): void {
+function setMessage(value?: string): void {
     fieldMessage.value = value;
 }
 function setInputId(value: string): void {
@@ -262,7 +262,6 @@ const provideData = computed(() => ({
     $el: rootRef.value,
     props,
     hasInnerField: hasInnerField.value,
-    hasMessage: hasMessage.value,
     variant: fieldVariant.value,
     message: fieldMessage.value,
     inputAttrs: inputAttrs.value,
@@ -338,7 +337,6 @@ const innerFieldClasses = defineClasses(
         null,
         computed(() => props.groupMultiline),
     ],
-
     ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
     [
         "addonsClass",

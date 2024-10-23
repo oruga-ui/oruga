@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const minDatetime = ref(null);
-const maxDatetime = ref(null);
+const minDatetime = ref<Date>();
+const maxDatetime = ref<Date>();
 </script>
 
 <template>

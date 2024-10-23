@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import type { TableColumn } from "@oruga-ui/oruga-next";
 
-const columns = ref<TableColumn[]>([
+const columns: TableColumn[] = [
     {
         field: "id",
         label: "ID",
@@ -29,9 +28,9 @@ const columns = ref<TableColumn[]>([
         field: "gender",
         label: "Gender",
     },
-]);
+];
 
-const data = ref([
+const data = [
     {
         id: 1,
         first_name: "Jesse",
@@ -67,7 +66,7 @@ const data = ref([
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-]);
+];
 </script>
 
 <template>
@@ -90,15 +89,16 @@ const data = ref([
                 v-bind="column">
                 <template
                     v-if="column.searchable && !column.numeric"
-                    #searchable="props">
+                    #searchable="{ filters }">
                     <o-input
-                        v-model="props.filters[props.column.field]"
+                        v-if="column.field"
+                        v-model="filters[column.field]"
                         placeholder="Search..."
                         icon="search"
                         size="small" />
                 </template>
-                <template #default="props">
-                    {{ props.row[column.field] }}
+                <template #default="{ row }">
+                    {{ column.field ? row[column.field] : "" }}
                 </template>
             </o-table-column>
         </o-table>

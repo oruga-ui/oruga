@@ -47,7 +47,7 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = props.datetimeCreator(new Date());
+            const d = datetimeCreator();
             d.setHours(10);
             const dayPeriod = dtf.value
                 .formatToParts(d)
@@ -62,7 +62,7 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
         ) {
-            const d = props.datetimeCreator(new Date());
+            const d = datetimeCreator();
             d.setHours(20);
             const dayPeriod = dtf.value
                 .formatToParts(d)
@@ -72,12 +72,23 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
         return PM;
     });
 
-    function defaultDatetimeFormatter(date: Date): string {
+    function datetimeCreator(): Date {
+        return typeof props.creator === "function"
+            ? props.creator()
+            : new Date();
+    }
+
+    function datetimeFormatter(date: Date): string {
+        if (typeof props.formatter === "function") return props.formatter(date);
+
         if (!date) return "";
         return dtf.value.format(date);
     }
 
-    function defaultDatetimeParser(date: string): Date {
+    function datetimeParser(date: string): Date | undefined {
+        if (typeof props.parser === "function") return props.parser(date);
+
+        if (!date) return undefined;
         if (
             dtf.value.formatToParts &&
             typeof dtf.value.formatToParts === "function"
@@ -144,7 +155,8 @@ export function useDateimepickerMixins(props: DatetimepickerProps) {
 
     return {
         dtf,
-        defaultDatetimeFormatter,
-        defaultDatetimeParser,
+        datetimeCreator,
+        datetimeFormatter,
+        datetimeParser,
     };
 }

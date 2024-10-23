@@ -5,7 +5,7 @@ import type { TableColumn } from "@oruga-ui/oruga-next";
 
 const oruga = useOruga();
 
-const columns = ref<TableColumn[]>([
+const columns: TableColumn[] = [
     {
         field: "id",
         label: "ID",
@@ -29,9 +29,9 @@ const columns = ref<TableColumn[]>([
         field: "gender",
         label: "Gender",
     },
-]);
+];
 
-const data = ref([
+const data = [
     {
         id: 1,
         first_name: "Jesse",
@@ -67,12 +67,12 @@ const data = ref([
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-]);
+];
 
-const draggingRow = ref(null);
-const draggingRowIndex = ref(null);
-const draggingColumnIndex = ref(null);
-const draggingColumn = ref(null);
+const draggingRow = ref<any>();
+const draggingRowIndex = ref<number>(0);
+const draggingColumn = ref<TableColumn>();
+const draggingColumnIndex = ref<number>(0);
 
 function dragstart(row, index, event): void {
     draggingRow.value = row;
@@ -95,7 +95,7 @@ function drop(row, index, event): void {
     event.target.closest("tr").classList.remove("is-selected");
     const droppedOnRowIndex = index;
     oruga.notification.open(
-        `Moved ${draggingRow.value.first_name} from row ${
+        `Moved ${draggingRow.value?.first_name} from row ${
             draggingRowIndex.value + 1
         } to ${droppedOnRowIndex + 1}`,
     );
@@ -122,7 +122,7 @@ function columndrop(column, index, event): void {
     event.target.closest("th").classList.remove("is-selected");
     const droppedOnColumnIndex = index;
     oruga.notification.open(
-        `Moved ${draggingColumn.value.field} from column ${
+        `Moved ${draggingColumn.value?.field} from column ${
             draggingColumnIndex.value + 1
         } to ${droppedOnColumnIndex + 1}`,
     );
@@ -155,7 +155,7 @@ function columndrop(column, index, event): void {
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 :deep(.is-selected) {
     background-color: lightblue;
 }

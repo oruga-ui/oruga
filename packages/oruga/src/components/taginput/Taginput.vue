@@ -1,25 +1,26 @@
-<script setup lang="ts" generic="T extends string | object = string">
+<script setup lang="ts" generic="T extends string | number | object = string">
 import {
     computed,
     ref,
     useAttrs,
+    useTemplateRef,
+    useId,
     watchEffect,
-    type ComponentInstance,
-    type PropType,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 
 import { getOption } from "@/utils/config";
-import { getValueByPath } from "@/utils/helpers";
 import {
     defineClasses,
     getActiveClasses,
+    normalizeOptions,
+    findOption,
     useInputHandler,
 } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { TaginputProps } from "./props";
 
 /**
  * A simple tag input field that can have autocomplete functionality
@@ -33,286 +34,103 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The input value state
-     * @type string[]|object[]
-     */
-    modelValue: { type: Array as PropType<T[]>, default: () => [] },
-    /**
-     * Items data
-     * @type string[]|object[]
-     */
-    options: { type: Array as PropType<T[]>, default: () => [] },
-    /** Property of the object (if data is array of objects) to use as display text */
-    field: { type: String, default: "value" },
-    /** Property of the object (if `data` is array of objects) to use as display text of group */
-    groupField: { type: String, default: undefined },
-    /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
-    groupOptions: { type: String, default: undefined },
-    /** Function to format an option to a string for display it in the input (as alternative to field prop) */
-    formatter: {
-        type: Function as PropType<(value: unknown, option: T) => string>,
-        default: undefined,
-    },
-    /** Function to filter the options based on the input value - default is display text comparison */
-    filter: {
-        type: Function as PropType<(options: T[], value: string) => T[]>,
-        default: undefined,
-    },
-    /**
-     * Vertical size of the input control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("taginput.size"),
-    },
-    /**
-     * Color of the each item
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("taginput.variant"),
-    },
-    /** Limits the number of items, plus item counter */
-    maxitems: { type: [String, Number], default: undefined },
-    /** Same as native maxlength, plus character counter */
-    maxlength: { type: [String, Number], default: undefined },
-    /** Show counter when maxlength or maxtags props are passed */
-    counter: {
-        type: Boolean,
-        default: () => getOption("taginput.counter", true),
-    },
-    /** Opens a dropdown with choices when the input field is focused */
-    openOnFocus: { type: Boolean, default: false },
-    /** Keep open dropdown list after select */
-    keepOpen: {
-        type: Boolean,
-        default: () => getOption("taginput.keepOpen", false),
-    },
-    /** Input placeholder */
-    placeholder: { type: String, default: undefined },
-    /** Makes input full width when inside a grouped or addon field */
-    expanded: { type: Boolean, default: false },
-    /** Same as native input disabled */
-    disabled: { type: Boolean, default: false },
-    /**
-     * Array of keys
-     * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
-     * which will add a item when typing
-     */
-    confirmKeys: {
-        type: Array as PropType<string[]>,
-        default: () => getOption("taginput.confirmKeys", [",", "Tab", "Enter"]),
-    },
-    /** Array of chars used to split when pasting a new string */
-    separators: {
-        type: Array as PropType<string[]>,
-        default: () => getOption("taginput.separators", [","]),
-    },
-    /** The first option will always be pre-selected (easier to just hit enter or tab) */
-    keepFirst: { type: Boolean, default: false },
-    /** Allows adding new items */
-    allowNew: {
-        type: Boolean,
-        default: () => getOption("taginput.allowNew", false),
-    },
-    /** Allows adding the same item multiple time */
-    allowDuplicates: {
-        type: Boolean,
-        default: () => getOption("taginput.allowDuplicates", false),
-    },
-    /**
-     * Allow removing last item when pressing given keys
-     * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
-     * if input is empty
-     */
-    removeOnKeys: {
-        type: Array as PropType<string[]>,
-        default: () => getOption("taginput.removeOnKeys", ["Backspace"]),
-    },
-    /** Function to validate the value of a new item before it got added */
-    validateItem: {
-        type: Function as PropType<(value: T | string) => boolean>,
-        default: () => true,
-    },
-    /** Function to create a new item to push into v-model (items) */
-    createItem: {
-        type: Function as PropType<(value: T | string) => T>,
-        default: (item: T | string) => item,
-    },
-    /** Makes the component check if list reached scroll start or end and emit scroll events. */
-    checkScroll: {
-        type: Boolean,
-        default: () => getOption("taginput.checkScroll", false),
-    },
-    /** Add close/delete button to the item */
-    closable: {
-        type: Boolean,
-        default: () => getOption("taginput.closable", true),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("taginput.iconPack"),
-    },
-    /** Icon to be shown */
-    icon: {
-        type: String,
-        default: () => getOption("taginput.icon"),
-    },
-    /** Icon name of close icon on selected item */
-    closeIcon: {
-        type: String,
-        default: () => getOption("taginput.closeIcon", "close"),
-    },
-    /** Accessibility label for the close button */
-    ariaCloseLabel: {
-        type: String,
-        default: () => getOption("taginput.ariaCloseLabel"),
-    },
-    /** Native options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("taginput.autocomplete", "off"),
-    },
-    /** Enable HTML 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** Custom HTML 5 validation error to set on the form control */
-    customValidity: {
-        type: [String, Function] as PropType<
-            | string
-            | ((
-                  currentValue: T[] | null | undefined,
-                  state: ValidityState,
-              ) => string)
-        >,
-        default: "",
-    },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("taginput.teleport", false),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of input when expanded */
-    expandedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the input container */
-    containerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the input container size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the entered item variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the close button of entered item */
-    closeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the entered item */
-    itemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the counter element */
-    counterClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /**
-     * Class configuration for the underlying autocomplete component
-     * @ignore
-     */
-    autocompleteClasses: {
-        type: Object,
-        default: () => getOption("taginput.autocompleteClasses", {}),
-    },
+const props = withDefaults(defineProps<TaginputProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    input: "",
+    options: undefined,
+    filter: undefined,
+    size: () => getOption("taginput.size"),
+    variant: () => getOption("taginput.variant"),
+    maxitems: undefined,
+    maxlength: undefined,
+    counter: () => getOption("taginput.counter", true),
+    openOnFocus: false,
+    keepOpen: () => getOption("taginput.keepOpen", false),
+    placeholder: undefined,
+    expanded: false,
+    disabled: false,
+    confirmKeys: () => getOption("taginput.confirmKeys", [",", "Tab", "Enter"]),
+    separators: () => getOption("taginput.separators", [","]),
+    keepFirst: false,
+    allowNew: () => getOption("taginput.allowNew", false),
+    allowDuplicates: () => getOption("taginput.allowDuplicates", false),
+    removeOnKeys: () => getOption("taginput.removeOnKeys", ["Backspace"]),
+    validateItem: () => true,
+    createItem: (item: T | string) => item as T,
+    checkScroll: () => getOption("taginput.checkScroll", false),
+    closable: () => getOption("taginput.closable", true),
+    iconPack: () => getOption("taginput.iconPack"),
+    icon: () => getOption("taginput.icon"),
+    closeIcon: () => getOption("taginput.closeIcon", "close"),
+    ariaCloseLabel: () => getOption("taginput.ariaCloseLabel"),
+    autocomplete: () => getOption("taginput.autocomplete", "off"),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    customValidity: undefined,
+    teleport: () => getOption("taginput.teleport", false),
+    autocompleteClasses: () => getOption("taginput.autocompleteClasses", {}),
 });
+
+type ModelValue = TaginputProps<T>["modelValue"];
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string[] | object[]} updated modelValue prop
+     * @param value {string[] | number[] | object[]} updated modelValue prop
      */
-    "update:modelValue": [value: T[]];
+    (e: "update:modelValue", value: ModelValue[]): void;
     /**
-     * on input change event
+     * input prop two-way binding
+     * @param value {string} updated input prop
      */
-    input: [value: string];
+    (e: "update:input", value: string): void;
+  /**
+     * on input change event
+     * @param value {string} input value
+     */
+     (e: "input", value: string): void;
     /**
      * new item got added
      * @param value {string | object} added item
      */
-    add: [value: T];
+    (e: "add", value: T): void;
     /**
      * item got removed
      * @param value {string | object} removed item
      */
-    remove: [value: T];
+    (e: "remove", value: T): void;
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    focus: [event: Event];
+    (e: "focus", event: Event): void;
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    blur: [event: Event];
+    (e: "blur", event: Event): void;
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    invalid: [event: Event];
+    (e: "invalid", event: Event): void;
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    "icon-click": [event: Event];
+    (e: "icon-click", event: Event): void;
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    "icon-right-click": [event: Event];
+    (e: "icon-right-click", event: Event): void;
     /** the list inside the dropdown reached the start */
-    "scroll-start": [];
+    (e: "scroll-start"): void;
     /** the list inside the dropdown reached it's end */
-    "scroll-end": [];
+    (e: "scroll-end"): void;
 }>();
 
-const autocompleteRef = ref<ComponentInstance<typeof OAutocomplete<T>>>();
-
-const items = defineModel<T[]>({ default: () => [] });
+const autocompleteRef = useTemplateRef("autocompleteRef");
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -321,20 +139,39 @@ const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
     props,
 );
 
-const newItem = ref<string>("");
+/** the selected items, use v-model to make it two-way binding */
+const selectedItems = defineModel<ModelValue>({ default: undefined });
+
+/** the value of the inner input, use v-model:input to make it two-way binding */
+const inputValue = defineModel<string>("input", { default: "" });
+
+const inputLength = computed(() => inputValue.value.trim().length);
+const itemsLength = computed(() => selectedItems.value?.length || 0);
+
 const isComposing = ref(false);
 
-const valueLength = computed(() => newItem.value.trim().length);
-const itemsLength = computed(() => items.value.length);
+/** normalized programamtic options */
+const normalizedOptions = computed(() => normalizeOptions<T>(props.options));
 
-/** Show the input field if a maxitems hasn't been set or reached. */
+/** map the selected items into option items */
+const selectedOptions = computed(() => {
+    if (!selectedItems.value) return [];
+    return selectedItems.value.map((value) => {
+        const option = findOption(normalizedOptions, value);
+        // return the found option or create a new option object
+        if (option) return option;
+        else return { label: value, value, key: useId() };
+    });
+});
+
+/** show the input field if a maxitems hasn't been set or reached */
 const hasInput = computed(
     () => props.maxitems == null || itemsLength.value < Number(props.maxitems),
 );
 
 watchEffect(() => {
     // blur if input is empty
-    if (!hasInput.value) onBlur();
+    if (!hasInput.value) onBlur(new Event("blur"));
 });
 
 /**
@@ -354,13 +191,8 @@ const separatorsAsRegExp = computed(() =>
         : null,
 );
 
-function getNormalizedItemText(item: T): string {
-    if (typeof item === "object") item = getValueByPath(item, props.field);
-    return `${item}`;
-}
-
 function addItem(item?: T | string): void {
-    item = item || newItem.value.trim();
+    item = item || inputValue.value.trim();
 
     if (item) {
         if (typeof item === "string") {
@@ -373,29 +205,40 @@ function addItem(item?: T | string): void {
                 return;
             }
         }
-        // Add the item input if it is not blank
-        // or previously added (if not allowDuplicates).
         const itemToAdd = props.createItem(item);
-        const add = !props.allowDuplicates
-            ? !items.value.includes(itemToAdd)
-            : true;
 
-        if (add && props.validateItem(item)) {
-            items.value = [...items.value, itemToAdd];
-            emits("add", itemToAdd);
+        if (!selectedItems.value?.length) {
+            // Add the item input if not items are set yet
+            if (props.validateItem(item)) {
+                selectedItems.value = [itemToAdd];
+                emits("add", itemToAdd);
+            }
+        } else {
+            // Add the item input if it is not blank
+            // or previously added (if not allowDuplicates).
+            const add = !props.allowDuplicates
+                ? !selectedItems.value.includes(itemToAdd)
+                : true;
+
+            if (add && props.validateItem(item)) {
+                selectedItems.value = [...selectedItems.value, itemToAdd];
+                emits("add", itemToAdd);
+            }
         }
     }
 
     // after autocomplete events
     requestAnimationFrame(() => {
-        newItem.value = "";
-        emits("input", newItem.value);
+        inputValue.value = "";
+        emits("input", "");
     });
 }
 
 function removeItem(index: number, event?: Event): void {
-    const item = items.value.at(index);
-    items.value = items.value.toSpliced(index, 1);
+    if (!selectedItems.value?.length) return;
+    const item = selectedItems.value.at(index);
+    if (!item) return;
+    selectedItems.value = selectedItems.value.toSpliced(index, 1);
     emits("remove", item);
     if (event) event.stopPropagation();
     if (props.openOnFocus && autocompleteRef.value) setFocus();
@@ -415,7 +258,7 @@ function onInput(value: string): void {
 function onKeydown(event: KeyboardEvent): void {
     if (
         props.removeOnKeys.indexOf(event.key) >= 0 &&
-        !newItem.value?.length &&
+        !inputValue.value?.length &&
         itemsLength.value > 0
     ) {
         // remove last item
@@ -447,9 +290,9 @@ const autocompleteInputClasses = defineClasses([
 
 const autocompleteBind = computed(() => ({
     ...attrs,
-    "root-class": getActiveClasses(autocompleteRootClasses.value),
+    "root-class": getActiveClasses(autocompleteRootClasses),
     "input-classes": {
-        "input-class": getActiveClasses(autocompleteInputClasses.value),
+        "input-class": getActiveClasses(autocompleteInputClasses),
     },
     ...props.autocompleteClasses,
 }));
@@ -491,7 +334,7 @@ const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: items });
+defineExpose({ focus: setFocus, value: selectedItems });
 </script>
 
 <template>
@@ -500,23 +343,29 @@ defineExpose({ focus: setFocus, value: items });
             <!--
                 @slot Override selected items
                 @binding {(string, object)[]} items - selected items
+                @binding {object[]} options - selected options
             -->
-            <slot name="selected" :items="items" :remove-item="removeItem">
+            <slot
+                name="selected"
+                :items="selectedItems"
+                :options="selectedOptions"
+                :remove-item="removeItem">
                 <span
-                    v-for="(item, index) in items"
-                    :key="getNormalizedItemText(item) + index"
-                    :class="itemClasses"
-                    :tabindex="0"
-                    @keydown.enter="removeItem(index, $event)">
-                    <span>{{ getNormalizedItemText(item) }}</span>
+                    v-for="(option, index) in selectedOptions"
+                    :key="option.key"
+                    :class="itemClasses">
+                    <span> {{ option.label }}</span>
                     <o-icon
                         v-if="closable"
                         :class="closeClasses"
-                        clickable
                         :pack="iconPack"
                         :icon="closeIcon"
+                        clickable
+                        tabindex="0"
+                        role="button"
                         :aria-label="ariaCloseLabel"
                         both
+                        @keydown.enter="removeItem(index, $event)"
                         @click="removeItem(index, $event)" />
                 </span>
             </slot>
@@ -524,14 +373,11 @@ defineExpose({ focus: setFocus, value: items });
             <o-autocomplete
                 v-show="hasInput"
                 ref="autocompleteRef"
-                v-model:input="newItem"
+                v-model:input="inputValue"
                 v-bind="autocompleteBind"
                 :options="options"
-                :field="field"
-                :group-field="groupField"
-                :group-options="groupOptions"
-                :formatter="formatter"
                 :filter="filter"
+                :placeholder="placeholder"
                 :icon="icon"
                 :icon-pack="iconPack"
                 :maxlength="maxlength"
@@ -541,12 +387,11 @@ defineExpose({ focus: setFocus, value: items });
                 :open-on-focus="openOnFocus"
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
+                :check-scroll="checkScroll"
+                :confirm-keys="confirmKeys"
+                :teleport="teleport"
                 :has-counter="false"
                 :use-html5-validation="false"
-                :check-scroll="checkScroll"
-                :teleport="teleport"
-                :confirm-keys="confirmKeys"
-                :placeholder="placeholder"
                 expanded
                 @input="onInput"
                 @focus="onFocus"
@@ -598,14 +443,14 @@ defineExpose({ focus: setFocus, value: items });
         <small
             v-if="counter && (maxitems || maxlength)"
             :class="counterClasses">
-            <template v-if="maxlength && valueLength > 0">
+            <template v-if="maxlength && inputLength > 0">
                 <!--
                     @slot Override the counter
                     @binding {number} items - items count
                     @binding {number} total - total count
                 -->
-                <slot name="counter" :items="valueLength" :total="maxlength">
-                    {{ valueLength }} / {{ maxlength }}
+                <slot name="counter" :items="inputLength" :total="maxlength">
+                    {{ inputLength }} / {{ maxlength }}
                 </slot>
             </template>
 

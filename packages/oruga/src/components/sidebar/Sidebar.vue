@@ -269,7 +269,7 @@ const hideOnMobile = computed(
     () => props.mobile === "hidden" && isMobile.value,
 );
 
-const savedScrollTop = ref(null);
+const savedScrollTop = ref<number>();
 
 watch(isActive, () => {
     if (props.overlay) handleScroll();
@@ -290,7 +290,7 @@ onBeforeUnmount(() => {
             document.documentElement.classList.remove(...scrollClass.value);
         }
         document.documentElement.scrollTop = scrollto;
-        document.body.style.top = null;
+        document.body.style.top = "";
     }
 });
 
@@ -369,8 +369,8 @@ function handleScroll(): void {
     }
 
     document.documentElement.scrollTop = savedScrollTop.value;
-    document.body.style.top = null;
-    savedScrollTop.value = null;
+    document.body.style.top = "";
+    savedScrollTop.value = undefined;
 }
 
 // --- Animation Feature ---
@@ -460,9 +460,7 @@ const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
 const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
 
 const scrollClass = computed(() =>
-    getActiveClasses(
-        props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
-    ),
+    getActiveClasses(props.scroll === "clip" ? scrollClasses : noScrollClasses),
 );
 
 // --- Expose Public Functionalities ---

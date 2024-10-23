@@ -7,6 +7,7 @@ import {
     onMounted,
     useAttrs,
     useId,
+    useTemplateRef,
     type StyleValue,
 } from "vue";
 
@@ -72,10 +73,10 @@ const emits = defineEmits<{
     (e: "update:modelValue", value: ModelValue): void;
     /**
      * on input change event
-     * @param value {string | number} input value
+     * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: ModelValue, event: Event): void;
+    (e: "input", value: string, event: Event): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -105,10 +106,10 @@ const emits = defineEmits<{
 
 // --- Validation Feature ---
 
-const inputRef = ref<HTMLInputElement>();
-const textareaRef = ref<HTMLInputElement>();
+const inputRef = useTemplateRef<HTMLInputElement>("inputRef");
+const textareaRef = useTemplateRef<HTMLInputElement>("textareaRef");
 
-const elementRef = computed<HTMLInputElement>(() =>
+const elementRef = computed<HTMLInputElement | null>(() =>
     props.type === "textarea" ? textareaRef.value : inputRef.value,
 );
 
@@ -126,7 +127,13 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = defineModel<ModelValue>({ default: undefined });
+const vmodel = defineModel<ModelValue, string, string, ModelValue>({
+    // cast incomming value to string
+    get: (value) => (typeof value !== "undefined" ? String(value) : ""),
+    // cast outgoing value to number if prop number is true
+    set: (value) => (props.number ? Number(value) : String(value)),
+    default: undefined,
+});
 
 // if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
@@ -183,16 +190,13 @@ let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
 
 watch(
     () => props.debounce,
-    () => {
-        debouncedInput = useDebounce(onInput, props.debounce || 0);
-    },
+    (debounce) => (debouncedInput = useDebounce(onInput, debounce || 0)),
     { immediate: true },
 );
 
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const input = (props.number ? Number(value) : String(value)) as ModelValue;
-    emits("input", input, event);
+    emits("input", value, event);
 }
 
 // --- Icon Feature ---
@@ -216,7 +220,7 @@ const computedIconRight = computed(() => {
 
 const computedIconRightVariant = computed(() =>
     props.passwordReveal || props.iconRight
-        ? props.iconRightVariant || props.variant || null
+        ? props.iconRightVariant || props.variant
         : statusVariant.value,
 );
 

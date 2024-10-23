@@ -23,7 +23,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
-        <div class="o-drop__item o-tpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" override="">
+        <div class="o-drop__item o-tpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false" override="">
           <!--
             @slot Override the label, default is label prop 
         -->
@@ -33,7 +33,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
               <!--
                 @slot Override the options, default is options prop
             -->
-              <option value="0">00</option>
+              <option selected="" value="0">00</option>
               <option value="1">01</option>
               <option value="2">02</option>
               <option value="3">03</option>
@@ -61,7 +61,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
             <!--v-if-->
           </div><span class="o-tpck__separtor">:</span>
           <div class="" data-oruga="select">
-            <!--v-if--><select id="v-27" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select id="v-3" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop

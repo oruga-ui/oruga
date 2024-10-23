@@ -5,7 +5,7 @@
         T extends object | typeof File,
         IsMultiple extends boolean = false
     ">
-import { computed, ref, useAttrs, watch } from "vue";
+import { computed, ref, useAttrs, useTemplateRef, watch } from "vue";
 
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
@@ -67,7 +67,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref<HTMLInputElement>();
+const inputRef = useTemplateRef<HTMLInputElement>("inputRef");
 
 // use form input functionality
 const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
@@ -87,7 +87,7 @@ const dragDropFocus = ref(false);
  */
 watch(vmodel, (value) => {
     if (!value || (Array.isArray(value) && value.length === 0))
-        inputRef.value.value = null;
+        if (inputRef.value) inputRef.value.value = "";
     if (!isValid.value && !props.dragDrop) checkHtml5Validity();
 });
 
@@ -100,11 +100,12 @@ function onFileChange(event: Event | DragEvent): void {
     if (props.dragDrop) updateDragDropFocus(false);
     const value =
         (event.target as HTMLInputElement).files ||
-        (event as DragEvent).dataTransfer.files;
+        (event as DragEvent).dataTransfer?.files ||
+        [];
     // no file selected
     if (value.length === 0) {
         if (!vmodel.value) return;
-        if (props.native) vmodel.value = null;
+        if (props.native) vmodel.value = undefined;
     }
 
     // multiple upload
@@ -132,7 +133,7 @@ function onFileChange(event: Event | DragEvent): void {
             if (checkType(file)) vmodel.value = file as ModelValue;
             // else clear input
             else if (vmodel.value) {
-                vmodel.value = null;
+                vmodel.value = undefined;
                 clearInput();
             } else {
                 // Force input back to empty state and recheck validity
@@ -148,7 +149,7 @@ function onFileChange(event: Event | DragEvent): void {
 
 /** Reset file input value */
 function clearInput(): void {
-    inputRef.value.value = null;
+    if (inputRef.value) inputRef.value.value = "";
 }
 
 /** Listen drag-drop to update internal variable */
@@ -182,7 +183,7 @@ function onClick(event: Event): void {
     // click input if not drag and drop is used
     if (!props.dragDrop) {
         event.preventDefault();
-        inputRef.value.click();
+        if (inputRef.value) inputRef.value.click();
     }
 }
 
@@ -213,7 +214,7 @@ const draggableClasses = defineClasses(
         "variantClass",
         "o-upl__draggable--hovered-",
         computed(() => props.variant),
-        computed(() => props.variant && dragDropFocus.value),
+        computed(() => !!props.variant && dragDropFocus.value),
     ],
 );
 

@@ -32,7 +32,7 @@ describe("useModalProgrammatic tests", () => {
         let modal = document.body.querySelector('[data-oruga="modal"]');
         expect(modal).not.toBeNull();
 
-        expect(modal.innerHTML).toContain(content);
+        expect(modal?.innerHTML).toContain(content);
 
         // close element through handler
         close();
@@ -94,13 +94,13 @@ describe("useModalProgrammatic tests", () => {
         let modal = document.body.querySelector('[data-oruga="modal"]');
         expect(modal).not.toBeNull();
 
-        const button = modal.querySelector<HTMLElement>(
+        const button = modal?.querySelector<HTMLElement>(
             '[data-oruga="programmatic"]',
         );
         expect(button).not.toBeNull();
 
         // close element on button click
-        button.click();
+        button?.click();
         vi.runAllTimers();
 
         // check element does not edist
@@ -120,7 +120,7 @@ describe("useModalProgrammatic tests", () => {
         expect(el).not.toBeNull();
 
         // close element on 'x' button click
-        el.click();
+        el?.click();
         vi.runAllTimers();
 
         // check element does not edist

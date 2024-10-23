@@ -92,7 +92,7 @@ const props = defineProps({
 const itemStyle = computed(() => ({
     height: toCssDimension(props.height),
     width: toCssDimension(props.width),
-    borderRadius: props.circle ? "50%" : null,
+    borderRadius: props.circle ? "50%" : undefined,
 }));
 
 // --- Computed Component Classes ---

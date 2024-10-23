@@ -14,6 +14,7 @@ import {
     type Component,
 } from "vue";
 
+import ODropdownItem from "../dropdown/DropdownItem.vue";
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
 import { getOption } from "@/utils/config";
@@ -23,6 +24,8 @@ import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
     defineClasses,
+    toOptionsGroup,
+    normalizeOptions,
     useProviderParent,
     useMatchMedia,
     useEventListener,
@@ -50,6 +53,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
     // multiple: false,
+    options: undefined,
     active: false,
     label: undefined,
     disabled: false,
@@ -61,8 +65,8 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     trapFocus: () => getOption("dropdown.trapFocus", true),
     checkScroll: () => getOption("dropdown.checkScroll", false),
     expanded: false,
-    menuId: null,
-    menuTabindex: null,
+    menuId: undefined,
+    menuTabindex: undefined,
     menuTag: () => getOption<DynamicComponent>("dropdown.menuTag", "div"),
     triggerTag: () => getOption<DynamicComponent>("dropdown.triggerTag", "div"),
     triggers: () => getOption("dropdown.triggers", ["click"]),
@@ -109,11 +113,18 @@ const emits = defineEmits<{
 const contentRef = ref<HTMLElement | Component>();
 const triggerRef = ref<HTMLElement>();
 
-/** The selected item value */
+/** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
+
+/** normalized programamtic options */
+const groupedOptions = computed(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options);
+    const groupedOptions = toOptionsGroup(normalizedOptions);
+    return groupedOptions;
+});
 
 const autoPosition = ref(props.position);
 
@@ -147,8 +158,8 @@ const toggleScroll = usePreventScrolling();
 
 // --- Event Handler ---
 
-const eventCleanups = [];
-let timer: NodeJS.Timeout;
+const eventCleanups: (() => void)[] = [];
+let timer: NodeJS.Timeout | undefined;
 
 const cancelOptions = computed(() =>
     typeof props.closeable === "boolean"
@@ -262,7 +273,7 @@ function open(): void {
     if (props.delay) {
         timer = setTimeout(() => {
             isActive.value = true;
-            timer = null;
+            timer = undefined;
         }, props.delay);
     } else {
         isActive.value = true;
@@ -284,6 +295,7 @@ if (isClient && props.checkScroll)
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
     const dropdown = unrefElement(contentRef);
+    if (!dropdown) return;
     if (dropdown.clientHeight !== dropdown.scrollHeight) {
         if (
             dropdown.scrollTop + dropdown.clientHeight >=
@@ -466,7 +478,27 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
-                    <slot :active="isActive" :toggle="toggle" />
+                    <slot :active="isActive" :toggle="toggle">
+                        <template v-for="group in groupedOptions">
+                            <o-dropdown-item
+                                v-if="group.group"
+                                v-show="!group.hidden"
+                                :key="group.key"
+                                v-bind="group.attrs"
+                                tabindex="-1">
+                                {{ group.group }}
+                            </o-dropdown-item>
+
+                            <o-dropdown-item
+                                v-for="option in group.options"
+                                v-show="!option.hidden"
+                                :key="option.key"
+                                :value="option.value"
+                                v-bind="option.attrs">
+                                {{ option.label }}
+                            </o-dropdown-item>
+                        </template>
+                    </slot>
                 </component>
             </transition>
         </PositionWrapper>

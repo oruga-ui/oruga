@@ -88,7 +88,7 @@ const isClickable = computed(
 );
 
 const isActive = computed(() => {
-    if (parent.value.selected === null) return false;
+    if (parent.value.selected === undefined) return false;
     if (
         isTrueish(parent.value.props.multiple) &&
         Array.isArray(parent.value.selected)
@@ -128,6 +128,8 @@ const rootClasses = defineClasses(
         :role="ariaRole"
         :tabindex="tabindex"
         data-oruga="dropdown-item"
+        :aria-selected="isActive"
+        :aria-disabled="disabled"
         @click="selectItem">
         <!--
             @slot Override the label, default is label prop 

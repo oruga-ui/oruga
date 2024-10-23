@@ -33,12 +33,12 @@ export function useVModel<T>(
         );
 
     /** reactive two-way binding model */
-    const proxy = ref<T>(vm.proxy.$props[name!]) as Ref<T>;
+    const proxy = ref<T>(vm.proxy?.$props[name!]) as Ref<T>;
 
     let isUpdating = false;
 
     watch(
-        () => vm.proxy.$props[name!],
+        () => vm.proxy?.$props[name!],
         (value) => {
             if (!isUpdating) {
                 isUpdating = true;
@@ -52,7 +52,7 @@ export function useVModel<T>(
         proxy,
         (value) => {
             if (
-                (!isUpdating && value !== vm.proxy.$props[name!]) ||
+                (!isUpdating && value !== vm.proxy?.$props[name!]) ||
                 options?.deep
             )
                 vm.emit(`update:${name}`, value);

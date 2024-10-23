@@ -5,7 +5,6 @@ import {
     useTemplateRef,
     watch,
     type ComponentPublicInstance,
-    type PropType,
 } from "vue";
 
 import ODatepicker from "../datepicker/Datepicker.vue";
@@ -18,9 +17,9 @@ import { defineClasses, useInputHandler } from "@/composables";
 
 import { useDateimepickerMixins } from "./useDatetimepickerMixin";
 
-import type { DatepickerProps } from "../datepicker/types";
-import type { TimepickerProps } from "../timepicker/types";
-import type { ComponentClass } from "@/types";
+import type { DatepickerProps } from "../datepicker/props";
+import type { TimepickerProps } from "../timepicker/props";
+import type { DatetimepickerProps } from "./props";
 
 /**
  * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
@@ -34,150 +33,43 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The input value state */
-    modelValue: { type: Date, default: null },
-    /** The active state of the dropdown, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-    /** Define props for the underlying datepicker component */
-    datepicker: {
-        type: Object as PropType<DatepickerProps>,
-        default: undefined,
-    },
-    /** Define props for the underlying timepicker component */
-    timepicker: {
-        type: Object as PropType<TimepickerProps>,
-        default: undefined,
-    },
-    /** Min date to select */
-    minDatetime: { type: Date, default: undefined },
-    /** Max date to select */
-    maxDatetime: { type: Date, default: undefined },
-    /**
-     * Size of the input control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("datetimepicker.size"),
-    } /** Makes input full width when inside a grouped or addon field */,
-    expanded: { type: Boolean, default: false },
-    /** Makes the input rounded */
-    rounded: { type: Boolean, default: false },
-    /** Input placeholder */
-    placeholder: { type: String, default: undefined },
-    /** Same as native input readonly */
-    readonly: { type: Boolean, default: false },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Display datetimepicker inline */
-    inline: { type: Boolean, default: false },
-    /** Open dropdown on focus */
-    openOnFocus: {
-        type: Boolean,
-        default: () => getOption("datetimepicker.openOnFocus", true),
-    },
-    /** Date format locale */
-    locale: {
-        type: String,
-        default: () => getOption("locale"),
-    },
-    /** Custom function to format a date into a string */
-    datetimeFormatter: {
-        type: Function as PropType<(date: Date) => string>,
-        default: (date: Date | Date[]) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("datetimepicker.dateFormatter", (_) => undefined)(date),
-    },
-    /** Custom function to parse a string into a date */
-    datetimeParser: {
-        type: Function as PropType<(date: string) => Date>,
-        default: (date: string) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("datetimepicker.dateParser", (_) => undefined)(date),
-    },
-    /** Date creator function, default is `new Date()` */
-    datetimeCreator: {
-        type: Function as PropType<(date: Date) => Date>,
-        default: (date: Date) =>
-            getOption(
-                "datetimepicker.datetimeCreator",
-                (d: Date) => new Date(d),
-            )(date),
-    },
-    /** Dropdown position */
-    position: { type: String, default: undefined },
-    /** Enable mobile native input if mobile agent */
-    mobileNative: {
-        type: Boolean,
-        default: () => getOption("datetimepicker.mobileNative", true),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("datetimepicker.iconPack", undefined),
-    },
-    /** Icon to be shown */
-    icon: {
-        type: String,
-        default: () => getOption("datetimepicker.icon", undefined),
-    },
-    /** Icon to be added on the right side */
-    iconRight: {
-        type: String,
-        default: () => getOption("datetimepicker.iconRight", undefined),
-    },
-    /** Make the icon right clickable */
-    iconRightClickable: { type: Boolean, default: false },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("datetimepicker.teleport", false),
-    },
-    /** Enable HTML 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** Custom HTML 5 validation error to set on the form control */
-    customValidity: {
-        type: [String, Function] as PropType<
-            | string
-            | ((
-                  currentValue: Date | null | undefined,
-                  state: ValidityState,
-              ) => string)
-        >,
-        default: "",
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the Datepicker wrapper */
-    datepickerWrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Timepicker wrapper */
-    timepickerWrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<DatetimepickerProps>(), {
+    override: undefined,
+    modelValue: undefined,
+    active: false,
+    datepicker: undefined,
+    timepicker: undefined,
+    minDatetime: undefined,
+    maxDatetime: undefined,
+    size: () => getOption("datetimepicker.size"),
+    expanded: false,
+    rounded: false,
+    placeholder: undefined,
+    readonly: false,
+    disabled: false,
+    inline: false,
+    openOnFocus: () => getOption("datetimepicker.openOnFocus", true),
+    locale: () => getOption("locale"),
+    formatter: getOption("datetimepicker.dateFormatter"),
+    parser: getOption("datetimepicker.dateParser"),
+    creator: getOption("datetimepicker.datetimeCreator"),
+    position: undefined,
+    mobileNative: () => getOption("datetimepicker.mobileNative", true),
+    iconPack: () => getOption("datetimepicker.iconPack"),
+    icon: () => getOption("datetimepicker.icon"),
+    iconRight: () => getOption("datetimepicker.iconRight"),
+    iconRightClickable: false,
+    teleport: () => getOption("datetimepicker.teleport", false),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    customValidity: "",
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {Date | Date[]} updated modelValue prop
+     * @param value {Date} updated modelValue prop
      */
-    (e: "update:modelValue", value: Date | Date[]): void;
+    (e: "update:modelValue", value: Date): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -235,13 +127,13 @@ const timepickerRef = useTemplateRef<ComponentPublicInstance>("timepickerRef");
 const nativeInputRef =
     useTemplateRef<ComponentPublicInstance>("nativeInputRef");
 
-const timepickerProps = ref<TimepickerProps>(props.timepicker);
+const timepickerProps = ref<TimepickerProps | undefined>(props.timepicker);
 watch(
     () => props.timepicker,
     (value) => (timepickerProps.value = value),
     { deep: true },
 );
-const datepickerProps = ref<DatepickerProps>(props.datepicker);
+const datepickerProps = ref<DatepickerProps | undefined>(props.datepicker);
 watch(
     () => props.datepicker,
     (value) => (datepickerProps.value = value),
@@ -268,25 +160,22 @@ watch([() => isMobileNative.value, () => props.inline], () => {
     if (datepickerRef.value) datepickerRef.value.$forceUpdate();
 });
 
-const { defaultDatetimeFormatter, defaultDatetimeParser } =
-    useDateimepickerMixins(props);
+const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<Date>({ default: null });
+const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
 
-function updateVModel(value: Date | Date[]): void {
+function updateVModel(value: Date | Date[] | undefined): void {
     if (!value) {
-        vmodel.value = null;
+        vmodel.value = undefined;
         return;
     }
     if (Array.isArray(value)) return updateVModel(value[0]);
 
     let date = new Date(value.getTime());
-    if (!props.modelValue) {
-        date = props.datetimeCreator(value);
-    } else {
+    if (props.modelValue) {
         // restore time part
         if (
             (value.getDate() !== props.modelValue.getDate() ||
@@ -314,8 +203,7 @@ function updateVModel(value: Date | Date[]): void {
 }
 
 const minDate = computed(() => {
-    if (!props.minDatetime)
-        return datepickerProps.value ? datepickerProps.value.minDate : null;
+    if (!props.minDatetime) return datepickerProps.value?.minDate;
     return new Date(
         props.minDatetime.getFullYear(),
         props.minDatetime.getMonth(),
@@ -328,8 +216,7 @@ const minDate = computed(() => {
 });
 
 const maxDate = computed(() => {
-    if (!props.maxDatetime)
-        return datepickerProps.value ? datepickerProps.value.maxDate : null;
+    if (!props.maxDatetime) return datepickerProps.value?.maxDate;
     return new Date(
         props.maxDatetime.getFullYear(),
         props.maxDatetime.getMonth(),
@@ -351,7 +238,7 @@ const minTime = computed(() => {
         vmodel.value.getMonth() != props.minDatetime.getMonth() ||
         vmodel.value.getDate() != props.minDatetime.getDate()
     ) {
-        return timepickerProps.value ? timepickerProps.value.minTime : null;
+        return timepickerProps.value?.minTime;
     }
     return props.minDatetime;
 });
@@ -365,7 +252,7 @@ const maxTime = computed(() => {
         vmodel.value.getMonth() != props.maxDatetime.getMonth() ||
         vmodel.value.getDate() != props.maxDatetime.getDate()
     ) {
-        return timepickerProps.value ? timepickerProps.value.maxTime : null;
+        return timepickerProps.value?.maxTime;
     }
     return props.maxDatetime;
 });
@@ -386,25 +273,19 @@ const timepickerDisabled = computed(
 
 /** Format date into string */
 function format(value: Date): string {
-    // call prop function
-    const date = props.datetimeFormatter(value);
-    // call default if prop function is not given
-    if (typeof date === "undefined") return defaultDatetimeFormatter(value);
-    else return date;
+    return datetimeFormatter(value);
 }
 
 /** Parse string into date */
-function parse(value: string): Date {
-    // call prop function
-    let date = props.datetimeParser(value);
-    // call default if prop function is not given
-    if (typeof date === "undefined") date = defaultDatetimeParser(value);
-    return isDate(date) ? date : null;
+function parse(value: string): Date | undefined {
+    const date = datetimeParser(value);
+
+    return isDate(date) ? date : undefined;
 }
 
-function formatNative(value: Date): string {
-    const date = new Date(value);
-    if (value && !isNaN(date.getTime())) {
+function formatNative(value: typeof props.modelValue): string {
+    const date = value ? new Date(value) : undefined;
+    if (date && isDate(date)) {
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
         const day = date.getDate();
@@ -444,7 +325,7 @@ function onChangeNativePicker(event: Event): void {
         // type=datetime-local and cause the control to fail native validation
         updateVModel(new Date(year, month, day, hours, minutes));
     } else {
-        updateVModel(null);
+        updateVModel(undefined);
     }
 }
 
@@ -482,8 +363,8 @@ defineExpose({ focus: setFocus, value: vmodel });
         :readonly="readonly"
         :expanded="expanded"
         :close-on-click="false"
-        :date-formatter="format"
-        :date-parser="parse"
+        :formatter="format"
+        :parser="parse"
         :min-date="minDate"
         :max-date="maxDate"
         :icon="icon"

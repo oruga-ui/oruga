@@ -37,7 +37,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
     );
 
     const sampleTime = computed(() => {
-        const d = props.timeCreator();
+        const d = timeCreator();
         d.setHours(10);
         d.setSeconds(0);
         d.setMinutes(0);
@@ -124,13 +124,23 @@ export function useTimepickerMixins(props: TimepickerProps) {
         return undefined;
     });
 
-    function defaultTimeFormatter(time: Date): string {
+    function timeCreator(): Date {
+        return typeof props.creator === "function"
+            ? props.creator()
+            : new Date();
+    }
+
+    function timeFormatter(time: typeof props.modelValue): string {
+        if (typeof props.formatter === "function") return props.formatter(time);
+
         if (!time) return "00:00";
         return dtf.value.format(time);
     }
 
-    function defaultTimeParser(time: string): Date {
-        if (!time) return null;
+    function timeParser(time: string): typeof props.modelValue {
+        if (typeof props.parser === "function") return props.parser(time);
+
+        if (!time) return undefined;
 
         if (
             dtf.value.formatToParts &&
@@ -212,7 +222,7 @@ export function useTimepickerMixins(props: TimepickerProps) {
             minutes < 0 ||
             minutes > 59
         ) {
-            return null;
+            return undefined;
         }
         const date = new Date(sampleTime.value);
         date.setSeconds(seconds);
@@ -230,8 +240,9 @@ export function useTimepickerMixins(props: TimepickerProps) {
 
     return {
         dtf,
-        defaultTimeFormatter,
-        defaultTimeParser,
+        timeCreator,
+        timeFormatter,
+        timeParser,
         pmString,
         amString,
         meridiens,

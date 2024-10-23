@@ -84,16 +84,20 @@ const provideData = computed<SliderComponent>(() => ({
 /** Provide functionalities and data to child item components */
 useProviderParent(undefined, { data: provideData });
 
-const valueStart = ref<number>(null);
-const valueEnd = ref<number>(null);
+const valueStart = ref<number>(0);
+const valueEnd = ref<number>(0);
 const dragging = ref(false);
 
 const isThumbReversed = ref();
 const isTrackClickDisabled = ref();
 
-const minValue = computed(() => Math.min(valueStart.value, valueEnd.value));
+const minValue = computed(() =>
+    Math.min(valueStart.value || props.min, valueEnd.value || props.max),
+);
 
-const maxValue = computed(() => Math.max(valueStart.value, valueEnd.value));
+const maxValue = computed(() =>
+    Math.max(valueStart.value || props.min, valueEnd.value || props.max),
+);
 
 const vmodel = computed<ModelValue>(
     () =>
@@ -105,7 +109,10 @@ const vmodel = computed<ModelValue>(
 /** update vmodel value on internal value change */
 watch([valueStart, valueEnd], () => {
     if (isTrueish(props.range))
-        isThumbReversed.value = valueStart.value > valueEnd.value;
+        isThumbReversed.value =
+            valueStart.value && valueEnd.value
+                ? valueStart.value > valueEnd.value
+                : false;
     if (!props.lazy || !dragging.value)
         emits("update:modelValue", vmodel.value); // update external vmodel
     if (dragging.value) emits("dragging", vmodel.value);
@@ -118,7 +125,7 @@ watch(
     { immediate: true }, // initialise valueStart and valueEnd
 );
 
-function setValues(newValue: number | number[]): void {
+function setValues(newValue: number | number[] | undefined): void {
     if (props.min > props.max) return;
 
     if (Array.isArray(newValue)) {
@@ -132,17 +139,20 @@ function setValues(newValue: number | number[]): void {
                 : Math.max(Math.min(props.max, newValue[1]), props.min);
         valueStart.value = isThumbReversed.value ? largeValue : smallValue;
         valueEnd.value = isThumbReversed.value ? smallValue : largeValue;
-    } else {
+    } else if (newValue !== undefined) {
         valueStart.value = isNaN(newValue)
             ? props.min
             : Math.min(props.max, Math.max(props.min, newValue));
-        valueEnd.value = null;
+        valueEnd.value = 0;
+    } else {
+        valueStart.value = 0;
+        valueEnd.value = 0;
     }
 }
 
 const tickValues = computed(() => {
     if (!props.ticks || props.min > props.max || props.step === 0) return [];
-    const result = [];
+    const result: number[] = [];
     for (let i = props.min + props.step; i < props.max; i = i + props.step) {
         result.push(i);
     }
