@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
 
-const options = [
+const options: OptionsGroupProp<string> = [
     {
-        type: "Frameworks",
-        items: ["Vue.js"],
+        group: "Frameworks",
+        options: ["Vue.js"],
     },
 ];
 
@@ -156,8 +157,6 @@ const selected = ref();
             v-bind="props"
             v-model="selected"
             :options="options"
-            group-field="type"
-            group-options="items"
             placeholder="e.g. Vue.js"
             icon="search"
             clearable

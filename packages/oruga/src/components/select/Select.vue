@@ -11,11 +11,15 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { isDefined, isTrueish } from "@/utils/helpers";
-import { defineClasses, useInputHandler } from "@/composables";
+import {
+    defineClasses,
+    isGroupOption,
+    normalizeOptions,
+    useInputHandler,
+} from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { OptionsItem } from "./types";
 import type { SelectProps } from "./props";
 
 /**
@@ -115,12 +119,6 @@ const vmodel = defineModel<ModelValue>({
     default: undefined,
 });
 
-const placeholderVisible = computed(
-    () =>
-        !isTrueish(props.multiple) &&
-        (!isDefined(vmodel.value) || vmodel.value === ""),
-);
-
 /**
  * When v-model is changed:
  *  1. Set parent field filled state.
@@ -135,15 +133,14 @@ watch(
     { immediate: true, flush: "post" },
 );
 
-const selectOptions = computed<OptionsItem<T>[]>(() => {
-    if (!props.options || !Array.isArray(props.options)) return [];
+/** normalized programamtic options */
+const normalizedptions = computed(() => normalizeOptions<T>(props.options));
 
-    return props.options.map((option) =>
-        typeof option === "string"
-            ? { value: option, label: option, key: useId() }
-            : { ...option, key: useId() },
-    );
-});
+const placeholderVisible = computed(
+    () =>
+        !isTrueish(props.multiple) &&
+        (!isDefined(vmodel.value) || vmodel.value === ""),
+);
 
 // --- Icon Feature ---
 
@@ -300,14 +297,32 @@ defineExpose({ focus: setFocus, value: vmodel });
                 @slot Override the options, default is options prop
             -->
             <slot>
-                <option
-                    v-for="option in selectOptions"
-                    :key="option.key"
-                    v-bind="option.attrs"
-                    :value="option.value"
-                    :selected="option.value === vmodel">
-                    {{ option.label }}
-                </option>
+                <template v-for="option in normalizedptions" :key="option.key">
+                    <optgroup
+                        v-if="isGroupOption(option)"
+                        v-show="!option.hidden"
+                        v-bind="option.attrs"
+                        :label="option.group">
+                        <option
+                            v-for="_option in option.options"
+                            v-show="!_option.hidden"
+                            v-bind="_option.attrs"
+                            :key="_option.key"
+                            :value="_option.value"
+                            :selected="option.value === vmodel">
+                            {{ _option.label }}
+                        </option>
+                    </optgroup>
+
+                    <option
+                        v-else
+                        v-show="!option.hidden"
+                        v-bind="option.attrs"
+                        :value="option.value"
+                        :selected="option.value === vmodel">
+                        {{ option.label }}
+                    </option>
+                </template>
             </slot>
         </select>
 

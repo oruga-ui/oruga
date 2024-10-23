@@ -58,7 +58,6 @@ function getMoreAsyncData(): void {
                 v-model="selected"
                 :options="options"
                 placeholder="e.g. Fight Club"
-                field="title"
                 expanded
                 check-scroll
                 open-on-focus

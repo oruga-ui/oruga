@@ -30,7 +30,6 @@ const META_PROP_IGNORE = ["key", "ref", "ref_for", "ref_key", "class", "style"];
 // Components to be ignored for creating docs
 const IGNORE = [
     "DropdownItem",
-    "FieldBody",
     "SliderThumb",
     "SliderTick",
     "TableMobileSort",

@@ -9,6 +9,66 @@ declare module "../index" {
     interface OrugaOptions {
         autocomplete?: ComponentConfigBase &
             Partial<{
+                /** Add a button/icon to clear the inputed text */
+                clearable: boolean;
+                /** Append the component to another part of the DOM.
+Set `true` to append the component to the body.
+In addition, any CSS selector string or an actual DOM node can be used. */
+                teleport: string | boolean | object;
+                /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
+                confirmKeys: string[];
+                /** Class of the menu empty placeholder item */
+                itemEmptyClass: ClassDefinition;
+                /** Class of the menu footer item */
+                itemFooterClass: ClassDefinition;
+                /** Class of the menu header item */
+                itemHeaderClass: ClassDefinition;
+                /** Class of the menu items */
+                itemClass: ClassDefinition;
+                /** Class of the menu items group title */
+                itemGroupTitleClass: ClassDefinition;
+                /** Class of the menu items on hover */
+                itemHoverClass: ClassDefinition;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Classes to apply on internal input component */
+                inputClasses: Record<string, any>;
+                /** Clear input text on select */
+                clearOnSelect: boolean;
+                /** Dropdown content (items) are shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Icon name to be added on the clear button */
+                clearIcon: string;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Icon to be added on the right side */
+                iconRight: string;
+                /** Icon to be shown */
+                icon: string;
+                /** Keep open dropdown list after select */
+                keepOpen: boolean;
+                /** Makes the component check if list reached scroll start or end and emit scroll events. */
+                checkScroll: boolean;
+                /** Max height of dropdown content */
+                maxHeight: string | number;
+                /** Menu item tag name */
+                itemTag: DynamicComponent;
+                /** Menu tag name */
+                menuTag: DynamicComponent;
+                /** Native options to use in HTML5 validation */
+                autocomplete: string;
+                /** Number of milliseconds to delay before to emit input event */
+                debounce: number;
+                /** Open dropdown list on focus */
+                openOnFocus: boolean;
+                /** Position of the dropdown */
+                position: "auto" | "top" | "bottom";
+                /** Size of the control */
+                size: string;
+                /** The first option will always be pre-selected (easier to just hit enter or tab) */
+                keepFirst: boolean;
+                /** Transition name to apply on dropdown list */
+                animation: string;
             }>;
         button?: ComponentConfigBase &
             Partial<{
@@ -549,7 +609,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Custom layout on mobile */
-                mobile: "fullwidth" | "reduced" | "hidden";
+                mobile: "hidden" | "fullwidth" | "reduced";
                 /** Destroy sidebar on hide */
                 destroyOnHide: boolean;
                 /** Expand sidebar on hover when reduced or mobile is reduce */
@@ -665,7 +725,7 @@ but will set body to position fixed, might break some layouts. */
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Position of the marker label */
-                labelPosition: string;
+                labelPosition: "bottom" | "left" | "right";
                 /** Role attribute to be passed to the div wrapper for better accessibility */
                 ariaRole: string;
                 /** Sets a class to the item header */
@@ -679,7 +739,7 @@ but will set body to position fixed, might break some layouts. */
                 /** Step size */
                 size: string;
                 /** Transition animation name */
-                animation: string[];
+                animation: [string, string] | [string, string, string, string];
             }>;
         switch?: ComponentConfigBase &
             Partial<{
@@ -932,7 +992,7 @@ but will set body to position fixed, might break some layouts. */
                 /** Tabs item tag name */
                 itemTag: DynamicComponent;
                 /** Transition animation name */
-                animation: string[];
+                animation: [string, string] | [string, string, string, string];
                 /** Type of the navigation */
                 navTypeClass: ClassDefinition;
             }>;

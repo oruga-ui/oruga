@@ -23,7 +23,7 @@ exports[`ODatepicker > render correctly 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
-        <div class="o-drop__item o-dpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" override="">
+        <div class="o-drop__item o-dpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false" override="">
           <!--
             @slot Override the label, default is label prop 
         -->
@@ -61,7 +61,7 @@ exports[`ODatepicker > render correctly 1`] = `
                   <!--v-if-->
                 </div>
                 <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select id="v-15" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                  <!--v-if--><select id="v-3" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop

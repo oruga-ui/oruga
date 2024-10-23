@@ -20,9 +20,9 @@ import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
 
+import type { OptionsPropItem } from "@/types";
 import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
-import type { OptionsItem } from "../select";
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
@@ -100,7 +100,7 @@ const props = withDefaults(
     },
 );
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**
@@ -167,7 +167,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
 
-/** modelvalue of selected date */
+/** modelvalue of selected date, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** Dropdown active state */
@@ -257,7 +257,7 @@ const computedMonthNames = computed(() =>
         : getMonthNames(props.locale),
 );
 
-const listOfMonths = computed<OptionsItem<number>[]>(() => {
+const listOfMonths = computed<OptionsPropItem<number>[]>(() => {
     let minMonth = 0;
     let maxMonth = 12;
     if (
@@ -289,7 +289,7 @@ const computedDayNames = computed(() =>
  * Returns an array of years for the year dropdown. If earliest/latest
  * dates are set by props, range of years will fall within those dates.
  */
-const listOfYears = computed<OptionsItem<number>[]>(() => {
+const listOfYears = computed<OptionsPropItem<number>[]>(() => {
     let latestYear = _initialDate.getFullYear() + props.yearsRange[1];
     if (props.maxDate && props.maxDate.getFullYear() < latestYear) {
         latestYear = Math.max(

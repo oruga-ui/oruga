@@ -7,6 +7,7 @@ import {
     type PropType,
     type Component,
 } from "vue";
+
 import { getOption } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
@@ -156,7 +157,6 @@ const prevAnimation = computed(() => {
 function activate(oldIndex: number): void {
     transitionName.value =
         item.value.index < oldIndex ? nextAnimation.value : prevAnimation.value;
-
     // emit event
     emits("activate");
 }
@@ -165,7 +165,6 @@ function activate(oldIndex: number): void {
 function deactivate(newIndex: number): void {
     transitionName.value =
         newIndex < item.value.index ? nextAnimation.value : prevAnimation.value;
-
     // emit event
     emits("deactivate");
 }

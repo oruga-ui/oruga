@@ -14,6 +14,7 @@ import {
     type Component,
 } from "vue";
 
+import ODropdownItem from "../dropdown/DropdownItem.vue";
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
 import { getOption } from "@/utils/config";
@@ -23,11 +24,12 @@ import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
     defineClasses,
+    toOptionsGroup,
+    normalizeOptions,
     useProviderParent,
     useMatchMedia,
     useEventListener,
     useClickOutside,
-    useVModel,
     usePreventScrolling,
 } from "@/composables";
 
@@ -51,6 +53,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
     // multiple: false,
+    options: undefined,
     active: false,
     label: undefined,
     disabled: false,
@@ -78,7 +81,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     teleport: () => getOption("dropdown.teleport", false),
 });
 
-type ModelValue = typeof props.modelValue;
+type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**
@@ -110,12 +113,18 @@ const emits = defineEmits<{
 const contentRef = ref<HTMLElement | Component>();
 const triggerRef = ref<HTMLElement>();
 
-/** The selected item value */
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
+
+/** normalized programamtic options */
+const groupedOptions = computed(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options);
+    const groupedOptions = toOptionsGroup(normalizedOptions);
+    return groupedOptions;
+});
 
 const autoPosition = ref(props.position);
 
@@ -469,7 +478,27 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
-                    <slot :active="isActive" :toggle="toggle" />
+                    <slot :active="isActive" :toggle="toggle">
+                        <template v-for="group in groupedOptions">
+                            <o-dropdown-item
+                                v-if="group.group"
+                                v-show="!group.hidden"
+                                :key="group.key"
+                                v-bind="group.attrs"
+                                tabindex="-1">
+                                {{ group.group }}
+                            </o-dropdown-item>
+
+                            <o-dropdown-item
+                                v-for="option in group.options"
+                                v-show="!option.hidden"
+                                :key="option.key"
+                                :value="option.value"
+                                v-bind="option.attrs">
+                                {{ option.label }}
+                            </o-dropdown-item>
+                        </template>
+                    </slot>
                 </component>
             </transition>
         </PositionWrapper>
