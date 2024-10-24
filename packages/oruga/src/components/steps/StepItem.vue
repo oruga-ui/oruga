@@ -1,19 +1,15 @@
-<script setup lang="ts" generic="T extends string | number | object">
-import {
-    computed,
-    ref,
-    useSlots,
-    useId,
-    type PropType,
-    type Component,
-} from "vue";
+<script
+    setup
+    lang="ts"
+    generic="T extends string | number | object, C extends Component">
+import { computed, ref, useSlots, useId, type Component } from "vue";
 
 import { getOption } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { StepsComponent, StepItemComponent } from "./types";
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { StepItemProps } from "./props";
 
 /**
  * @displayName Step Item
@@ -25,91 +21,22 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * Item value (it will be used as v-model of wrapper component) - default is an uuid
-     * @type string|number|object
-     */
-    value: {
-        type: [String, Number, Object] as PropType<T>,
-        default: () => useId(),
-    },
-    /** Item label */
-    label: { type: String, default: undefined },
-    /** Step marker content (when there is no icon) */
-    step: { type: [String, Number], default: undefined },
-    /**
-     * Default style for the step.
-     * This will override parent type.
-     * Could be used to set a completed step to "success" for example
-     */
-    variant: { type: String, default: undefined },
-    /**
-     * Item can be used directly to navigate.
-     * If undefined, previous steps are clickable while the others are not
-     */
-    clickable: { type: Boolean, default: undefined },
-    /** Show/hide item */
-    visible: { type: Boolean, default: true },
-    /** Icon on the left */
-    icon: {
-        type: String,
-        default: () => getOption("steps.icon"),
-    },
-    /** Icon pack */
-    iconPack: {
-        type: String,
-        default: () => getOption("steps.iconPack"),
-    },
-    /** Step item tag name */
-    tag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("steps.itemTag", "button"),
-    },
-    /** Role attribute to be passed to the div wrapper for better accessibility */
-    ariaRole: {
-        type: String,
-        default: () => getOption("steps.ariaRole", "tab"),
-    },
-    /** Text content, unnecessary when default slot is used */
-    content: { type: String, default: undefined },
-    /** Component to be injected. */
-    component: {
-        type: [Object, Function] as PropType<Component>,
-        default: undefined,
-    },
-    /** Props to be binded to the injected component */
-    props: { type: Object, default: () => ({}) }, // todo: type this right
-    /** Events to be binded to the injected component */
-    events: { type: Object, default: () => ({}) }, // todo: type this right
-    // class props (will not be displayed in the docs)
-    /** Class of the content item */
-    itemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the nav item */
-    itemHeaderClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the nav item when active */
-    itemHeaderActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the nav item behind the active one */
-    itemHeaderPreviousClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the nav item with variant (default value by parent steps component) */
-    itemHeaderVariantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
+    override: undefined,
+    value: undefined,
+    label: undefined,
+    step: undefined,
+    variant: undefined,
+    clickable: undefined,
+    visible: true,
+    icon: () => getOption("steps.icon"),
+    iconPack: () => getOption("steps.iconPack"),
+    tag: () => getOption("steps.itemTag", "button"),
+    ariaRole: () => getOption("steps.ariaRole", "tab"),
+    content: undefined,
+    component: undefined,
+    props: undefined,
+    events: undefined,
 });
 
 const emits = defineEmits<{
@@ -119,10 +46,13 @@ const emits = defineEmits<{
     (e: "deactivate"): void;
 }>();
 
+const itemValue = props.value || useId();
+
 const slots = useSlots();
 
 const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
+    value: itemValue,
     $slots: slots,
     classes: itemClasses.value,
     isTransitioning: isTransitioning.value,
@@ -137,7 +67,7 @@ const { parent, item } = useProviderChild<StepsComponent<T>>({
 
 const transitionName = ref();
 
-const isActive = computed(() => isEqual(props.value, parent.value.activeValue));
+const isActive = computed(() => isEqual(itemValue, parent.value.activeValue));
 
 const isTransitioning = ref(false);
 
@@ -229,7 +159,7 @@ const itemClasses = defineClasses(
                         :is="component"
                         v-if="component"
                         v-bind="$props.props"
-                        v-on="$props.events" />
+                        v-on="$props.events || {}" />
 
                     <!-- default content prop -->
                     <template v-else>{{ content }}</template>

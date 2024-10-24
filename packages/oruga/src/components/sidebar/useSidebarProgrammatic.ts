@@ -1,4 +1,8 @@
-import { type ComponentInternalInstance } from "vue";
+import {
+    type Component,
+    type ComponentInternalInstance,
+    type VNodeTypes,
+} from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
@@ -8,7 +12,7 @@ import {
 
 import Sidebar from "./Sidebar.vue";
 
-import type { ComponentProps } from "vue-component-type-helpers";
+import type { SidebarProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -19,11 +23,10 @@ declare module "../../index" {
 /** sidebar component programmatic instance registry */
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
-/** all properties of the sidebar component */
-export type SidebarProps = ComponentProps<typeof Sidebar>;
-
 /** useSidebarProgrammatic composable options */
-type SidebarProgrammaticOptions = Readonly<SidebarProps> &
+type SidebarProgrammaticOptions<C extends Component> = Readonly<
+    SidebarProps<C>
+> &
     PublicProgrammaticComponentOptions;
 
 const useSidebarProgrammatic = {
@@ -33,17 +36,17 @@ const useSidebarProgrammatic = {
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
      */
-    open(
-        options: SidebarProgrammaticOptions,
+    open<C extends Component>(
+        options: SidebarProgrammaticOptions<C>,
         target?: string | HTMLElement,
     ): ProgrammaticExpose {
-        const componentProps: SidebarProps = {
+        const componentProps: SidebarProps<C> = {
             active: true, // set the active default state to true
             ...options,
         };
 
         // create programmatic component
-        return useProgrammatic.open(Sidebar, {
+        return useProgrammatic.open(Sidebar as VNodeTypes, {
             instances, // custom programmatic instance registry
             target, // target the component get rendered into
             props: componentProps, // component specific props

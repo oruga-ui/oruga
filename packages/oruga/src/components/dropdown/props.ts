@@ -128,3 +128,41 @@ type DropdownClasses = Partial<{
     /** Class of the body when dropdown is open and scroll is not clip */
     noScrollClass: ComponentClass;
 }>;
+
+export type DropdownItemProps<T extends string | number | object> = {
+    /** Override existing theme classes completely */
+    override?: boolean;
+    /**
+     * Item value (it will be used as v-model of wrapper component) - default is an uuid
+     * @type string|number|object
+     */
+    value?: T;
+    /** Item label, unnecessary when default slot is used */
+    label?: string;
+    /** Item is disabled */
+    disabled?: boolean;
+    /** Item is clickable and emit an event */
+    clickable?: boolean;
+    /** Dropdown item tag name */
+    tag?: DynamicComponent;
+    /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
+    tabindex?: number | string;
+    /**
+     * Role attribute to be passed to the list item for better accessibility.
+     * Use menuitem only in situations where your dropdown is related to a navigation menu.
+     * @values listitem, menuitem, button
+     */
+    ariaRole?: string;
+} & DropdownItemClasses;
+
+// class props (will not be displayed in the docs)
+type DropdownItemClasses = Partial<{
+    /** Class of the dropdown item */
+    itemClass: ComponentClass;
+    /** Class of the dropdown item when active  */
+    itemActiveClass: ComponentClass;
+    /** Class of the dropdown item when clickable */
+    itemClickableClass: ComponentClass;
+    /** Class of the dropdown item when disabled */
+    itemDisabledClass: ComponentClass;
+}>;

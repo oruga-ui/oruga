@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, type PropType } from "vue";
+import { computed } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { NotificationProps } from "./props";
 
 /**
  * Bold notification blocks to alert your users of something
@@ -21,131 +21,21 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Whether modal is active or not, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: true },
-    /**
-     * Type (color) of the notification
-     * @values info, success, warning, danger
-     */
-    type: {
-        type: String,
-        default: undefined,
-        validator: (value: string) =>
-            ["info", "success", "warning", "danger", undefined].indexOf(value) >
-            -1,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("notification.variant"),
-    },
-    /**
-     * Which position the notification will appear when programmatically
-     * @values top-right, top, top-left, bottom-right, bottom, bottom-left
-     */
-    position: {
-        type: String,
-        default: () => getOption("notification.position", "top"),
-        validator: (value: string) =>
-            [
-                "top-right",
-                "top",
-                "top-left",
-                "bottom-right",
-                "bottom",
-                "bottom-left",
-            ].indexOf(value) > -1,
-    },
-    /** Message text (can contain HTML), unnecessary when default slot is used */
-    message: {
-        type: [String, Array] as PropType<string | string[]>,
-        default: undefined,
-    },
-    /** Custom animation (transition name) */
-    animation: {
-        type: String,
-        default: () => getOption("notification.animation", "fade"),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("notification.iconPack"),
-    },
-    /** Icon name to use */
-    icon: { type: String, default: undefined },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: {
-        type: String,
-        default: () => getOption("notification.iconSize", "large"),
-    },
-    /** Add close button to the item that closes the notification */
-    closable: { type: Boolean, default: false },
-    /** Close icon name */
-    closeIcon: {
-        type: String,
-        default: () => getOption("notification.closeIcon", "close"),
-    },
-    /**
-     * Size of close icon
-     * @values small, medium, large
-     */
-    closeIconSize: {
-        type: String,
-        default: () => getOption("notification.closeIconSize"),
-    },
-    /** Accessibility label for the close button */
-    ariaCloseLabel: {
-        type: String,
-        default: () => getOption("notification.ariaCloseLabel", "Close"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the close button */
-    closeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the content element */
-    contentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the icon on the left */
-    iconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the element when positioned */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the notification variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the wrapper element */
-    wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<NotificationProps>(), {
+    override: undefined,
+    message: undefined,
+    active: true,
+    type: undefined,
+    variant: () => getOption("notification.variant"),
+    position: () => getOption("notification.position", "top"),
+    animation: () => getOption("notification.animation", "fade"),
+    icon: undefined,
+    iconPack: () => getOption("notification.iconPack"),
+    iconSize: () => getOption("notification.iconSize", "large"),
+    closable: false,
+    closeIcon: () => getOption("notification.closeIcon", "close"),
+    closeIconSize: () => getOption("notification.closeIconSize"),
+    ariaCloseLabel: () => getOption("notification.ariaCloseLabel", "Close"),
 });
 
 const emits = defineEmits<{
@@ -262,7 +152,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                         @binding {(...args): void} close - function to close the notification
                     -->
                     <slot :close="close">
-                        <span v-if="message" v-html="message" />
+                        <span v-if="message">{{ message }} </span>
                     </slot>
                 </div>
             </div>

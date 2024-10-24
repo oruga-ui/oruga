@@ -1,7 +1,7 @@
 import type { ComponentClass } from "@/types";
-import type { SelectProps } from "../select/types";
-import type { DropdownProps } from "../dropdown/types";
-import type { InputProps } from "../input/types";
+import type { DropdownProps } from "../dropdown/props";
+import type { SelectProps } from "../select/props";
+import type { InputProps } from "../input/props";
 
 export type TimepickerProps = {
     /** Override existing theme classes completely */
@@ -112,15 +112,15 @@ type TimepickerClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: InputProps;
+    inputClasses: InputProps<false>;
     /**
      * Class configuration for the internal dropdown component
      * @ignore
      */
-    dropdownClasses: DropdownProps;
+    dropdownClasses: DropdownProps<string, false>;
     /**
      * Class configuration for the internal select component
      * @ignore
      */
-    selectClasses: SelectProps;
+    selectClasses: SelectProps<number | string, false>;
 }>;

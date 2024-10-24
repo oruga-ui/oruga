@@ -1,19 +1,12 @@
-<script setup lang="ts">
-import {
-    computed,
-    ref,
-    onMounted,
-    onBeforeMount,
-    type PropType,
-    type Component,
-} from "vue";
+<script setup lang="ts" generic="C extends Component">
+import { computed, ref, onMounted, onBeforeMount, type Component } from "vue";
 
 import ONotification from "./Notification.vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, getActiveClasses } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { NotificationNoticeProps } from "./props";
 
 /**
  * Notification Notice is an extension of the Notification component and is used for the programmatic usage
@@ -26,76 +19,16 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * DOM element the toast will be created on (for programmatic usage).
-     * Note that this also changes the position of the toast from fixed to absolute.
-     * Meaning that the container should be fixed.
-     * @ignore internal property
-     */
-    container: {
-        type: Object as PropType<HTMLElement>,
-        required: true,
-    },
-    /**
-     * Which position the notification will appear.
-     * @values top-right, top, top-left, bottom-right, bottom, bottom-left
-     */
-    position: {
-        type: String,
-        default: () => getOption("notification.position", "top"),
-        validator: (value: string) =>
-            [
-                "top-right",
-                "top",
-                "top-left",
-                "bottom-right",
-                "bottom",
-                "bottom-left",
-            ].indexOf(value) > -1,
-    },
-    /** Hide notification after duration (in miliseconds) */
-    duration: {
-        type: Number,
-        default: () => getOption("notification.duration", 2000),
-    },
-    /** Show the Notification infinitely until it is dismissed. */
-    infinite: { type: Boolean, default: false },
-    /** If notice should queue with others notices (snackbar/toast/notification). */
-    queue: {
-        type: Boolean,
-        default: () => getOption("notification.queue"),
-    },
-    /**
-     * Component to be injected.
-     * Close notification within the component by emitting a 'close' event — $emit('close').
-     */
-    component: {
-        type: [Object, Function] as PropType<Component>,
-        default: undefined,
-    },
-    /** Props to be binded to the injected component. */
-    props: { type: Object, default: undefined },
-    /** Events to be binded to the injected component. */
-    events: { type: Object, default: () => ({}) },
-    // class props (will not be displayed in the docs)
-    /** Root class of the notice */
-    noticeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the notice when positioned */
-    noticePositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the custom container element */
-    noticeContainerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
+    override: undefined,
+    // container: undefined,
+    position: () => getOption("notification.position", "top"),
+    duration: () => getOption("notification.duration", 2000),
+    infinite: false,
+    queue: () => getOption("notification.queue"),
+    component: undefined,
+    props: undefined,
+    events: undefined,
 });
 
 const emits = defineEmits<{
@@ -262,7 +195,7 @@ defineExpose({ close });
                 v-bind="$props.props"
                 :is="component"
                 v-if="component"
-                v-on="$props.events"
+                v-on="$props.events || {}"
                 @close="close" />
         </template>
         <slot />

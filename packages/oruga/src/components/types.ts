@@ -479,11 +479,11 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 scrollClipClass: ClassDefinition;
                 /** Class of the body when dropdown is open and scroll is not clip */
                 noScrollClass: ClassDefinition;
+                /** Dropdown item tag name */
+                itemTag: DynamicComponent;
                 /** Role attribute to be passed to the list item for better accessibility.
 Use menuitem only in situations where your dropdown is related to a navigation menu. */
                 itemAriaRole: string;
-                /** Dropdown item tag name */
-                itemTag: DynamicComponent;
                 /** Class of the dropdown item */
                 itemClass: ClassDefinition;
                 /** Class of the dropdown item when active */
@@ -536,23 +536,23 @@ Use menuitem only in situations where your dropdown is related to a navigation m
             }>;
         icon?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the icon size */
-                sizeClass: ClassDefinition;
-                /** Class of the icon variant */
-                variantClass: ClassDefinition;
-                /** Icon size */
-                size: string;
                 /** Color of the icon */
                 variant: string;
+                /** Icon size */
+                size: string;
                 /** Add class to icon font.
 See icon library documentation for custom classes. */
                 customClass: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
                 /** Class of the icon when clickable */
                 clickableClass: ClassDefinition;
                 /** Class of the element when spin */
                 spinClass: ClassDefinition;
+                /** Class of the icon size */
+                sizeClass: ClassDefinition;
+                /** Class of the icon variant */
+                variantClass: ClassDefinition;
             }>;
         input?: ComponentConfigBase &
             Partial<{
@@ -607,24 +607,31 @@ See icon library documentation for custom classes. */
             }>;
         loading?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Icon name to show, unnecessary when default slot is used. */
-                icon: string;
-                /** Class of the loading overlay */
-                overlayClass: ClassDefinition;
                 /** Custom animation (transition name) */
                 animation: string;
-                /** Class for the loading label */
-                labelClass: ClassDefinition;
+                /** Icon name to show, unnecessary when default slot is used. */
+                icon: string;
                 /** Enable spin effect on icon */
                 iconSpin: boolean;
                 /** Icon size */
                 iconSize: string;
+                /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
+but will set body to position fixed, might break some layouts. */
+                scroll: "keep" | "clip";
+                /** Class of the root element */
+                rootClass: ClassDefinition;
                 /** Class for the root element when fullpage */
                 fullPageClass: ClassDefinition;
+                /** Class of the loading overlay */
+                overlayClass: ClassDefinition;
                 /** Class for the loading icon */
                 iconClass: ClassDefinition;
+                /** Class for the loading label */
+                labelClass: ClassDefinition;
+                /** Class of the body when loading is fullpage and scroll is clip */
+                scrollClipClass: ClassDefinition;
+                /** Class of the body when loading is fullpage and scroll is not clip */
+                noScrollClass: ClassDefinition;
             }>;
         menu?: ComponentConfigBase &
             Partial<{
@@ -645,14 +652,14 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                 animation: string;
                 /** Role attribute to be passed to the list item for better accessibility. */
                 itemAriaRole: string;
-                /** Menu item tag name */
-                menuTag: DynamicComponent;
                 /** Class of the menu item */
                 itemClass: ClassDefinition;
                 /** Class of the active menu item */
                 itemActiveClass: ClassDefinition;
                 /** Class of the disabled menu item */
                 itemDisabledClass: ClassDefinition;
+                /** Menu item tag name */
+                menuTag: DynamicComponent;
                 /** Class of the icon of menu item */
                 itemIconTextClass: ClassDefinition;
                 /** Class of the menu item when is a submenu */
@@ -662,39 +669,21 @@ Use menu only in situations where your dropdown is related to a navigation menu.
             }>;
         modal?: ComponentConfigBase &
             Partial<{
+                /** Width of the Modal */
+                width: string | number;
+                /** Custom animation (transition name) */
+                animation: string;
+                /** Show an overlay */
+                overlay: boolean;
+                /** Is Modal cancleable by clicking 'X', pressing escape or clicking outside */
+                cancelable: boolean | string[];
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
                 scroll: "keep" | "clip";
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of modal component when on mobile */
-                mobileClass: ClassDefinition;
-                /** Class of the modal overlay */
-                overlayClass: ClassDefinition;
-                /** Class of modal component when its active */
-                activeClass: ClassDefinition;
-                /** Class of the body when modal is open and scroll is clip */
-                scrollClipClass: ClassDefinition;
-                /** Class of the body when modal is open and scroll is not clip */
-                noScrollClass: ClassDefinition;
-                /** Custom animation (transition name) */
-                animation: string;
                 /** Trap focus inside the modal */
                 trapFocus: boolean;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
-                ariaRole: string;
-                /** Mobile breakpoint as `max-width` value */
-                mobileBreakpoint: string;
-                /** Append the component to another part of the DOM.
-Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | Record<string, any>;
-                /** Is Modal cancleable by clicking 'X', pressing escape or clicking outside */
-                cancelable: boolean | string[];
-                /** Width of the Modal */
-                width: string | number;
-                /** Show an overlay */
-                overlay: boolean;
+                ariaRole: "dialog" | "alertdialog";
                 /** Accessibility aria-label to be passed to the div wrapper element */
                 ariaLabel: string;
                 /** Automatically focus modal when active */
@@ -703,43 +692,61 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 closeIcon: string;
                 /** Size of close icon */
                 closeIconSize: string;
+                /** Mobile breakpoint as `max-width` value */
+                mobileBreakpoint: string;
+                /** Append the component to another part of the DOM.
+Set `true` to append the component to the body.
+In addition, any CSS selector string or an actual DOM node can be used. */
+                teleport: string | boolean | object;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of modal component when its active */
+                activeClass: ClassDefinition;
+                /** Class of the modal overlay */
+                overlayClass: ClassDefinition;
                 /** Class of the modal content */
                 contentClass: ClassDefinition;
                 /** Class of the close button */
                 closeClass: ClassDefinition;
                 /** Class of the modal when fullscreen */
                 fullScreenClass: ClassDefinition;
+                /** Class of modal component when on mobile */
+                mobileClass: ClassDefinition;
+                /** Class of the body when modal is open and scroll is clip */
+                scrollClipClass: ClassDefinition;
+                /** Class of the body when modal is open and scroll is not clip */
+                noScrollClass: ClassDefinition;
             }>;
         notification?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the notification variant */
-                variantClass: ClassDefinition;
                 /** Color of the control */
                 variant: string;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Class of the element when positioned */
-                positionClass: ClassDefinition;
                 /** Which position the notification will appear when programmatically */
-                position: string;
+                position: "top" | "bottom" | "top-right" | "top-left" | "bottom-left" | "bottom-right";
                 /** Custom animation (transition name) */
                 animation: string;
+                /** Icon pack to use */
+                iconPack: string;
                 /** Icon size */
                 iconSize: string;
-                /** Class of the icon on the left */
-                iconClass: ClassDefinition;
                 /** Close icon name */
                 closeIcon: string;
                 /** Size of close icon */
                 closeIconSize: string;
-                /** Class of the content element */
-                contentClass: ClassDefinition;
-                /** Class of the close button */
-                closeClass: ClassDefinition;
                 /** Accessibility label for the close button */
                 ariaCloseLabel: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the close button */
+                closeClass: ClassDefinition;
+                /** Class of the content element */
+                contentClass: ClassDefinition;
+                /** Class of the icon on the left */
+                iconClass: ClassDefinition;
+                /** Class of the element when positioned */
+                positionClass: ClassDefinition;
+                /** Class of the notification variant */
+                variantClass: ClassDefinition;
                 /** Class of the wrapper element */
                 wrapperClass: ClassDefinition;
                 /** Hide notification after duration (in miliseconds) */
@@ -886,63 +893,61 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
-                /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-but will set body to position fixed, might break some layouts. */
-                scroll: "keep" | "clip";
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of sidebar component when on mobile */
-                mobileClass: ClassDefinition;
+                /** Show an overlay like modal */
+                overlay: boolean;
+                /** Sidebar position */
+                position: "left" | "right" | "top" | "bottom";
+                /** Show sidebar in fullheight */
+                fullheight: boolean;
+                /** Show sidebar in fullwidth */
+                fullwidth: boolean;
                 /** Show a small sidebar */
                 reduce: boolean;
                 /** Custom layout on mobile */
                 mobile: "fullwidth" | "reduced" | "hidden";
-                /** Class of sidebar when teleported */
-                teleportClass: ClassDefinition;
-                /** Class of the sidebar when its inlined */
-                inlineClass: ClassDefinition;
-                /** Class of the sidebar overlay */
-                overlayClass: ClassDefinition;
-                /** Class of the sidebar position */
-                positionClass: ClassDefinition;
-                /** Class of sidebar component when its active */
-                activeClass: ClassDefinition;
-                /** Class of the body when sidebar is not clipped */
-                noScrollClass: ClassDefinition;
-                /** Sidebar position */
-                position: "left" | "right" | "top" | "bottom";
+                /** Expand sidebar on hover when reduced or mobile is reduce */
+                expandOnHover: boolean;
                 /** Custom animation (transition name) */
                 animation: string;
+                /** Is Sidebar cancleable by pressing escape or clicking outside. */
+                cancelable: boolean | string[];
+                /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
+but will set body to position fixed, might break some layouts. */
+                scroll: "keep" | "clip";
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | Record<string, any>;
-                /** Is Sidebar cancleable by pressing escape or clicking outside. */
-                cancelable: boolean | string[];
-                /** Show an overlay like modal */
-                overlay: boolean;
+                teleport: string | boolean | object;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of sidebar component when its active */
+                activeClass: ClassDefinition;
+                /** Class of sidebar when teleported */
+                teleportClass: ClassDefinition;
+                /** Class of the sidebar overlay */
+                overlayClass: ClassDefinition;
                 /** Class of the sidebar content */
                 contentClass: ClassDefinition;
-                /** Show sidebar in fullwidth */
-                fullwidth: boolean;
-                /** Show sidebar in fullheight */
-                fullheight: boolean;
-                /** Expand sidebar on hover when reduced or mobile is reduce */
-                expandOnHover: boolean;
-                /** Destroy sidebar on hide */
-                destroyOnHide: boolean;
+                /** Class of the sidebar position */
+                positionClass: ClassDefinition;
                 /** Class of the sidebar when is fullheight */
                 fullheightClass: ClassDefinition;
                 /** Class of the sidebar when is fullwidth */
                 fullwidthClass: ClassDefinition;
+                /** Class of the sidebar when its inlined */
+                inlineClass: ClassDefinition;
                 /** Class of the sidebar when reduced */
                 reduceClass: ClassDefinition;
                 /** Class of the sidebar when expanded on hover */
                 expandOnHoverClass: ClassDefinition;
+                /** Class of sidebar component when on mobile */
+                mobileClass: ClassDefinition;
                 /** Class of the body when sidebar clipped */
                 crollClipClass: ClassDefinition;
+                /** Class of the body when sidebar is not clipped */
+                noScrollClass: ClassDefinition;
                 /** Class of the sidebar content when sidebar is hidden */
                 hiddenClass: ClassDefinition;
                 /** Class of the sidebar content when sidebar is visible */
@@ -1014,14 +1019,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         steps?: ComponentConfigBase &
             Partial<{
-                /** Icon pack */
-                iconPack: string;
                 /** Icon on the left */
                 icon: string;
-                /** Role attribute to be passed to the div wrapper for better accessibility */
-                ariaRole: string;
+                /** Icon pack */
+                iconPack: string;
                 /** Step item tag name */
                 itemTag: DynamicComponent;
+                /** Role attribute to be passed to the div wrapper for better accessibility */
+                ariaRole: string;
                 /** Class of the content item */
                 itemClass: ClassDefinition;
                 /** Class of the nav item */
@@ -1287,12 +1292,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         tabs?: ComponentConfigBase &
             Partial<{
-                /** Icon pack */
-                iconPack: string;
                 /** Icon on the left */
                 icon: string;
+                /** Icon pack */
+                iconPack: string;
                 /** Tabs item tag name */
                 itemTag: DynamicComponent;
+                /** Role attribute to be passed to the div wrapper for better accessibility */
+                ariaRole: string;
                 /** Class of the tab item */
                 tabPanelClass: ClassDefinition;
                 /** Class of the tab item */

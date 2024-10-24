@@ -36,7 +36,7 @@ defineProps({
     position: {
         type: String as PropType<"top" | "bottom">,
         default: () => getOption("collapse.position", "top"),
-        validator: (value: string) => ["top", "bottom"].indexOf(value) > -1,
+        validator: (value: string) => ["top", "bottom"].includes(value),
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
@@ -73,7 +73,8 @@ const isOpen = defineModel<boolean>("open", { default: true });
 /** Toggle and emit events */
 function toggle(): void {
     isOpen.value = !isOpen.value;
-    isOpen.value ? emits("open") : emits("close");
+    if (isOpen.value) emits("open");
+    else emits("close");
 }
 
 // --- Computed Component Classes ---

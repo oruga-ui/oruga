@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="C extends Component">
 import {
     ref,
     computed,
@@ -6,7 +6,6 @@ import {
     onMounted,
     onBeforeUnmount,
     type Component,
-    type PropType,
 } from "vue";
 
 import { getOption } from "@/utils/config";
@@ -19,7 +18,7 @@ import {
     useMatchMedia,
 } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { SidebarProps } from "./props";
 
 /**
  * A sidebar to use as left/right overlay or static
@@ -33,194 +32,25 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Whether siedbar is active or not, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-
-    /** Show an overlay like modal */
-    overlay: {
-        type: Boolean,
-        default: () => getOption("sidebar.overlay", false),
-    },
-    /** Display the Sidebear inline */
-    inline: { type: Boolean, default: false },
-    /**
-     * Sidebar position
-     * @values top, right, bottom, left
-     */
-    position: {
-        type: String as PropType<"top" | "right" | "bottom" | "left">,
-        default: () => getOption("sidebar.position", "left"),
-        validator: (value: string) =>
-            ["top", "right", "bottom", "left"].indexOf(value) >= 0,
-    },
-    /** Show sidebar in fullheight */
-    fullheight: {
-        type: Boolean,
-        default: () => getOption("sidebar.fullheight", false),
-    },
-    /** Show sidebar in fullwidth */
-    fullwidth: {
-        type: Boolean,
-        default: () => getOption("sidebar.fullwidth", false),
-    },
-    /** Show a small sidebar */
-    reduce: {
-        type: Boolean,
-        default: () => getOption("sidebar.reduce", false),
-    },
-    /**
-     * Custom layout on mobile
-     * @values fullwidth, reduced, hidden
-     */
-    mobile: {
-        type: String as PropType<"fullwidth" | "reduced" | "hidden">,
-        default: () => getOption("sidebar.mobile"),
-        validator: (value: string) =>
-            ["fullwidth", "reduced", "hidden"].indexOf(value) >= 0,
-    },
-    /** Expand sidebar on hover when reduced or mobile is reduce */
-    expandOnHover: {
-        type: Boolean,
-        default: () => getOption("sidebar.expandOnHover", false),
-    },
-    /** Custom animation (transition name) */
-    animation: {
-        type: String,
-        default: () => getOption("sidebar.animation"),
-    },
-    /**
-     * Is Sidebar cancleable by pressing escape or clicking outside.
-     * @values escape, outside, true, false
-     */
-    cancelable: {
-        type: [Array, Boolean] as PropType<string[] | boolean>,
-        default: () => getOption("sidebar.cancelable", ["escape", "outside"]),
-    },
-    /**
-     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-     * but will set body to position fixed, might break some layouts.
-     * @values keep, clip
-     */
-    scroll: {
-        type: String as PropType<"clip" | "keep">,
-        default: () => getOption("sidebar.scroll", "clip"),
-        validator: (value: string) => ["clip", "keep"].indexOf(value) >= 0,
-    },
-    /** Destroy sidebar on hide */
-    destroyOnHide: {
-        type: Boolean,
-        default: () => getOption("sidebar.destroyOnHide", false),
-    },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("sidebar.mobileBreakpoint"),
-    },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("sidebar.teleport", false),
-    },
-    /**
-     * Component to be injected, used to open a component sidebar programmatically.
-     * Close sidebar within the component by emitting a 'close' event — emits('close')
-     */
-    component: {
-        type: [Object, Function] as PropType<Component>,
-        default: undefined,
-    },
-    /** Props to be binded to the injected component. */
-    props: { type: Object, default: undefined },
-    /** Events to be binded to the injected component. */
-    events: { type: Object, default: () => ({}) },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of sidebar component when its active */
-    activeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of sidebar when teleported */
-    teleportClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar overlay */
-    overlayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar content */
-    contentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar position */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar when is fullheight */
-    fullheightClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar when is fullwidth */
-    fullwidthClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar when its inlined */
-    inlineClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar when reduced */
-    reduceClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar when expanded on hover */
-    expandOnHoverClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of sidebar component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the body when sidebar clipped */
-    crollClipClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the body when sidebar is not clipped */
-    noScrollClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar content when sidebar is hidden */
-    hiddenClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sidebar content when sidebar is visible */
-    visibleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<SidebarProps<C>>(), {
+    override: undefined,
+    active: false,
+    overlay: () => getOption("sidebar.overlay", false),
+    inline: false,
+    position: () => getOption("sidebar.position", "left"),
+    fullheight: () => getOption("sidebar.fullheight", false),
+    fullwidth: () => getOption("sidebar.fullwidth", false),
+    reduce: () => getOption("sidebar.reduce", false),
+    mobile: () => getOption("sidebar.mobile"),
+    expandOnHover: () => getOption("sidebar.expandOnHover", false),
+    animation: () => getOption("sidebar.animation"),
+    cancelable: () => getOption("sidebar.cancelable", ["escape", "outside"]),
+    scroll: () => getOption("sidebar.scroll", "clip"),
+    mobileBreakpoint: () => getOption("sidebar.mobileBreakpoint"),
+    teleport: () => getOption("sidebar.teleport", false),
+    component: undefined,
+    props: undefined,
+    events: undefined,
 });
 
 const emits = defineEmits<{
@@ -498,7 +328,7 @@ defineExpose({ close });
                             :is="component"
                             v-if="component"
                             v-bind="$props.props"
-                            v-on="$props.events"
+                            v-on="$props.events || {}"
                             @close="close" />
                     </slot>
                 </div>

@@ -8,7 +8,7 @@ import {
 
 import Loading from "./Loading.vue";
 
-import type { ComponentProps } from "vue-component-type-helpers";
+import type { LoadingProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -18,9 +18,6 @@ declare module "../../index" {
 
 /** loading component programmatic instance registry **/
 const instances = new InstanceRegistry<ComponentInternalInstance>();
-
-/** all properties of the loading component */
-export type LoadingProps = ComponentProps<typeof Loading>;
 
 /** useLoadingProgrammatic composable options */
 type LoadingProgrammaticOptions = Readonly<Omit<LoadingProps, "label">> & {

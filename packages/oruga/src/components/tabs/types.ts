@@ -1,31 +1,21 @@
-import type { Slots } from "vue";
-import type {
-    ComponentProps,
-    ComponentSlots,
-} from "vue-component-type-helpers";
+import type { Component, Slots } from "vue";
 import type { ProviderItem } from "@/composables";
 import type { ClassBind } from "@/types";
 
-import TabItem from "./TabItem.vue";
+import type { TabItemProps } from "./props";
 
-export type TabItemProps<T extends string | number | object> = ComponentProps<
-    typeof TabItem<T>
->;
-
-export type TabItemSlots<T extends string | number | object> = ComponentSlots<
-    typeof TabItem<T>
->;
-
-export type TabItemComponent<T extends string | number | object> =
-    TabItemProps<T> & {
-        $slots: Slots;
-        classes: ClassBind[];
-        iconClasses: ClassBind[];
-        labelClasses: ClassBind[];
-        isTransitioning: boolean;
-        activate: (index: number) => void;
-        deactivate: (index: number) => void;
-    };
+export type TabItemComponent<T extends string | number | object> = TabItemProps<
+    T,
+    Component
+> & {
+    $slots: Slots;
+    classes: ClassBind[];
+    iconClasses: ClassBind[];
+    labelClasses: ClassBind[];
+    isTransitioning: boolean;
+    activate: (index: number) => void;
+    deactivate: (index: number) => void;
+};
 
 export type TabsComponent<T> = {
     activeValue: T;

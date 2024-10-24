@@ -1,5 +1,6 @@
-import type { ComponentClass } from "@/types";
-import type { OptionsProp } from "@/composables";
+import type { Component } from "vue";
+import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
+import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
 
 export type StepsProps<T extends string | number | object> = {
     /** Override existing theme classes completely */
@@ -105,4 +106,64 @@ type StepsClasses = Partial<{
     stepLinkLabelPositionClass: ComponentClass;
     /** Class of steps component when on mobile */
     mobileClass: ComponentClass;
+}>;
+
+export type StepItemProps<
+    T extends string | number | object,
+    C extends Component,
+> = {
+    /** Override existing theme classes completely */
+    override?: boolean;
+    /**
+     * Item value (it will be used as v-model of wrapper component) - default is an uuid
+     * @type string|number|object
+     */
+    value?: T;
+    /** Item label */
+    label?: string;
+    /** Step marker content (when there is no icon) */
+    step?: string | number;
+    /**
+     * Default style for the step.
+     * This will override parent type.
+     * Could be used to set a completed step to "success" for example
+     */
+    variant?: string;
+    /**
+     * Item can be used directly to navigate.
+     * If undefined, previous steps are clickable while the others are not
+     */
+    clickable?: boolean;
+    /** Show/hide item */
+    visible?: boolean;
+    /** Icon on the left */
+    icon?: string;
+    /** Icon pack */
+    iconPack?: string;
+    /** Step item tag name */
+    tag?: DynamicComponent;
+    /** Role attribute to be passed to the div wrapper for better accessibility */
+    ariaRole?: string;
+    /** Text content, unnecessary when default slot is used */
+    content?: string;
+    /** Component to be injected. */
+    component?: C;
+    /** Props to be binded to the injected component */
+    props?: ComponentProps<C>;
+    /** Events to be binded to the injected component */
+    events?: ComponentEmit<C>;
+} & StepItemClasses;
+
+// class props (will not be displayed in the docs)
+type StepItemClasses = Partial<{
+    /** Class of the content item */
+    itemClass: ComponentClass;
+    /** Class of the nav item */
+    itemHeaderClass: ComponentClass;
+    /** Class of the nav item when active */
+    itemHeaderActiveClass: ComponentClass;
+    /** Class of the nav item behind the active one */
+    itemHeaderPreviousClass: ComponentClass;
+    /** Class of the nav item with variant (default value by parent steps component) */
+    itemHeaderVariantClass: ComponentClass;
 }>;

@@ -1,13 +1,5 @@
-<script setup lang="ts">
-import {
-    ref,
-    computed,
-    watch,
-    nextTick,
-    onMounted,
-    type Component,
-    type PropType,
-} from "vue";
+<script setup lang="ts" generic="C extends Component">
+import { ref, computed, watch, nextTick, onMounted, type Component } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -23,7 +15,7 @@ import {
     usePreventScrolling,
 } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { ModalProps } from "./props";
 
 /**
  * Classic modal overlay to include any content you may need
@@ -37,159 +29,27 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Whether modal is active or not, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-    /** Display modal as full screen */
-    fullScreen: { type: Boolean, default: false },
-    /** Text content, unnecessary when default slot is used */
-    content: { type: String, default: undefined },
-    /** Width of the Modal */
-    width: {
-        type: [String, Number],
-        default: () => getOption("modal.width", 960),
-    },
-    /** Custom animation (transition name) */
-    animation: {
-        type: String,
-        default: () => getOption("modal.animation", "zoom-out"),
-    },
-    /** Show an overlay  */
-    overlay: {
-        type: Boolean,
-        default: () => getOption("modal.overlay", true),
-    },
-    /**
-     * Is Modal cancleable by clicking 'X', pressing escape or clicking outside
-     * @values escape, x, outside, button, true, false
-     */
-    cancelable: {
-        type: [Array, Boolean] as PropType<string[] | boolean>,
-        default: () =>
-            getOption("modal.cancelable", ["escape", "x", "outside"]),
-    },
-    /**
-     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-     * but will set body to position fixed, might break some layouts.
-     * @values keep, clip
-     */
-    scroll: {
-        type: String as PropType<"keep" | "clip">,
-        default: () => getOption("modal.scroll", "keep"),
-        validator: (value: string) => ["keep", "clip"].includes(value),
-    },
-    /** Trap focus inside the modal */
-    trapFocus: {
-        type: Boolean,
-        default: () => getOption("modal.trapFocus", true),
-    },
-    /**
-     * Role attribute to be passed to the div wrapper for better accessibility.
-     * @values dialog, alertdialog
-     */
-    ariaRole: {
-        type: String,
-        default: () => getOption("modal.ariaRole"),
-        validator: (value: string) =>
-            ["dialog", "alertdialog"].indexOf(value) >= 0,
-    },
-    /** Accessibility aria-label to be passed to the div wrapper element */
-    ariaLabel: {
-        type: String,
-        default: () => getOption("modal.ariaLabel"),
-    },
-    /** Automatically focus modal when active */
-    autoFocus: {
-        type: Boolean,
-        default: () => getOption("modal.autoFocus", true),
-    },
-    /** Close icon name */
-    closeIcon: {
-        type: String,
-        default: () => getOption("modal.closeIcon", "close"),
-    },
-    /**
-     * Size of close icon
-     * @values small, medium, large
-     */
-    closeIconSize: {
-        type: String,
-        default: () => getOption("modal.closeIconSize", "medium"),
-    },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("modal.mobileBreakpoint"),
-    },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("modal.teleport", false),
-    },
-    /**
-     * Component to be injected, used to open a component modal programmatically.
-     * Close modal within the component by emitting a 'close' event — emits('close')
-     */
-    component: {
-        type: [Object, Function] as PropType<Component>,
-        default: undefined,
-    },
-    /** Props to be binded to the injected component */
-    props: { type: Object, default: () => ({}) }, // todo: type this right
-    /** Events to be binded to the injected component */
-    events: { type: Object, default: () => ({}) }, // todo: type this right
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of modal component when its active */
-    activeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the modal overlay */
-    overlayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the modal content */
-    contentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the close button */
-    closeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the modal when fullscreen */
-    fullScreenClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of modal component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the body when modal is open and scroll is clip */
-    scrollClipClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the body when modal is open and scroll is not clip */
-    noScrollClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<ModalProps<C>>(), {
+    override: undefined,
+    active: false,
+    fullScreen: false,
+    content: undefined,
+    width: () => getOption("modal.width", 960),
+    animation: () => getOption("modal.animation", "zoom-out"),
+    overlay: () => getOption("modal.overlay", true),
+    cancelable: () => getOption("modal.cancelable", ["escape", "x", "outside"]),
+    scroll: () => getOption("modal.scroll", "keep"),
+    trapFocus: () => getOption("modal.trapFocus", true),
+    ariaRole: () => getOption("modal.ariaRole"),
+    ariaLabel: () => getOption("modal.ariaLabel"),
+    autoFocus: () => getOption("modal.autoFocus", true),
+    closeIcon: () => getOption("modal.closeIcon", "close"),
+    closeIconSize: () => getOption("modal.closeIconSize", "medium"),
+    mobileBreakpoint: () => getOption("modal.mobileBreakpoint"),
+    teleport: () => getOption("modal.teleport", false),
+    component: undefined,
+    props: undefined,
+    events: undefined,
 });
 
 const emits = defineEmits<{
@@ -364,7 +224,7 @@ defineExpose({ close });
                         :is="component"
                         v-if="component"
                         v-bind="$props.props"
-                        v-on="$props.events"
+                        v-on="$props.events || {}"
                         @close="close" />
                     <!--
                         @slot Modal default content, default is content prop

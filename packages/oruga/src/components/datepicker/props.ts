@@ -1,8 +1,8 @@
 import type { ComponentClass } from "@/types";
 import type { DatepickerEvent } from "./types";
-import type { SelectProps } from "../select/types";
-import type { DropdownProps } from "../dropdown/types";
-import type { InputProps } from "../input/types";
+import type { DropdownProps } from "../dropdown/props";
+import type { SelectProps } from "../select/props";
+import type { InputProps } from "../input/props";
 
 type DatepickerType<IsRange, IsMultiple> = IsRange extends true
     ? [Date, Date] | []
@@ -267,15 +267,15 @@ type DatepickerClasses = Partial<{
      * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: InputProps;
+    inputClasses: InputProps<false>;
     /**
      * Class configuration for the internal dropdown component
      * @ignore
      */
-    dropdownClasses: DropdownProps;
+    dropdownClasses: DropdownProps<string, false>;
     /**
      * Class configuration for the internal select component
      * @ignore
      */
-    selectClasses: SelectProps;
+    selectClasses: SelectProps<number, false>;
 }>;

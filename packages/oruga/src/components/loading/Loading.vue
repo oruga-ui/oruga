@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, type PropType } from "vue";
+import { ref, watch } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -11,7 +11,7 @@ import {
     usePreventScrolling,
 } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { LoadingProps } from "./props";
 
 /**
  * A simple loading overlay
@@ -25,86 +25,17 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Whether loading is active or not, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-    /** Loader will overlay the full page. */
-    fullPage: { type: Boolean, default: true },
-    /** Notification label, unnecessary when default slot is used. */
-    label: { type: String, default: undefined },
-    /** Custom animation (transition name) */
-    animation: {
-        type: String,
-        default: () => getOption("loading.animation", "fade"),
-    },
-    /** Is Loading cancable by pressing escape or clicking outside. */
-    cancelable: { type: Boolean, default: false },
-    /** Icon name to show, unnecessary when default slot is used. */
-    icon: {
-        type: String,
-        default: () => getOption("loading.icon", "loading"),
-    },
-    /** Enable spin effect on icon */
-    iconSpin: {
-        type: Boolean,
-        default: () => getOption("loading.iconSpin", true),
-    },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: {
-        type: String,
-        default: () => getOption("loading.iconSize", "medium"),
-    },
-    /**
-     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-     * but will set body to position fixed, might break some layouts.
-     * @values keep, clip
-     */
-    scroll: {
-        type: String as PropType<"keep" | "clip">,
-        default: () => getOption("modal.scroll", "keep"),
-        validator: (value: string) => ["keep", "clip"].includes(value),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the root element when fullpage */
-    fullPageClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the loading overlay */
-    overlayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the loading icon */
-    iconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the loading label */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the body when loading is fullpage and scroll is clip */
-    scrollClipClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the body when loading is fullpage and scroll is not clip */
-    noScrollClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<LoadingProps>(), {
+    override: undefined,
+    active: false,
+    fullPage: true,
+    label: undefined,
+    animation: () => getOption("loading.animation", "fade"),
+    cancelable: false,
+    icon: () => getOption("loading.icon", "loading"),
+    iconSpin: () => getOption("loading.iconSpin", true),
+    iconSize: () => getOption("loading.iconSize", "medium"),
+    scroll: () => getOption("modal.scroll", "keep"),
 });
 
 const emits = defineEmits<{
