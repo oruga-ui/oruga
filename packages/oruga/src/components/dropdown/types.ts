@@ -1,10 +1,6 @@
-import type { DropdownProps } from "./props";
-
-export type DropdownComponent<
-    T extends string | number | object,
-    M extends boolean,
-> = {
-    props: DropdownProps<T, M>;
-    selected?: T | T[];
+export type DropdownComponent<T extends string | number | object> = {
+    disabled: boolean;
+    multiple: boolean;
+    selected: T | T[] | undefined;
     selectItem: (value: T) => void;
 };

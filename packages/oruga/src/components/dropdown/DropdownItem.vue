@@ -2,7 +2,7 @@
 import { useId, computed } from "vue";
 
 import { getOption } from "@/utils/config";
-import { isEqual, isTrueish } from "@/utils/helpers";
+import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { DynamicComponent } from "@/types";
@@ -41,18 +41,15 @@ const emits = defineEmits<{
 }>();
 
 // Inject functionalities and data from the parent component
-const { parent } = useProviderChild<DropdownComponent<T, false>>();
+const { parent } = useProviderChild<DropdownComponent<T>>();
 
 const isClickable = computed(
-    () => !parent.value.props.disabled && !props.disabled && props.clickable,
+    () => !parent.value.disabled && !props.disabled && props.clickable,
 );
 
 const isActive = computed(() => {
-    if (parent.value.selected === undefined) return false;
-    if (
-        isTrueish(parent.value.props.multiple) &&
-        Array.isArray(parent.value.selected)
-    )
+    if (!isDefined(parent.value.selected)) return false;
+    if (parent.value.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected: T) =>
             isEqual(itemValue, selected),
         );
@@ -74,7 +71,7 @@ const rootClasses = defineClasses(
         "itemDisabledClass",
         "o-drop__item--disabled",
         null,
-        computed(() => parent.value.props.disabled || props.disabled),
+        computed(() => parent.value.disabled || props.disabled),
     ],
     ["itemActiveClass", "o-drop__item--active", null, isActive],
     ["itemClickableClass", "o-drop__item--clickable", null, isClickable],
