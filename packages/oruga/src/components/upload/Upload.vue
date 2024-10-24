@@ -28,6 +28,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
+
 const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
@@ -41,8 +43,6 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     useHtml5Validation: () => getOption("useHtml5Validation", true),
     customValidity: "",
 });
-
-type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
@@ -76,7 +76,7 @@ const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const vmodel = defineModel<ModelValue>({ default: null });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 const dragDropFocus = ref(false);
 

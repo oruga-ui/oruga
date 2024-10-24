@@ -30,6 +30,8 @@ defineOptions({
     configField: "steps",
 });
 
+type ModelValue = StepsProps<T>["modelValue"];
+
 const props = withDefaults(defineProps<StepsProps<T>>(), {
     override: undefined,
     modelValue: undefined,
@@ -58,8 +60,6 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
     ariaNextLabel: () => getOption("steps.ariaNextLabel", "Next"),
     ariaPreviousLabel: () => getOption("steps.ariaPreviousLabel", "Previous"),
 });
-
-type ModelValue = StepsProps<T>["modelValue"];
 
 const emits = defineEmits<{
     /**
