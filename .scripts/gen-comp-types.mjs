@@ -16,31 +16,44 @@ const __dirname = process.cwd()
 if(!exist(path.resolve(__dirname, componentDirectory))) 
     throw new Error("Path not exist: " + componentDirectory);
 
+console.log("Creating vue-component-meta checker...")
 // create component meta checker
-const checker = createChecker(
+let checker = createChecker(
     path.resolve(__dirname, './packages/oruga/tsconfig.app.json'),
-    {
-        forceUseTs: true,
-        printer: { newLine: 1 },
-        // schema: { ignore: ['MyIgnoredNestedProps'] },
-    },
+    { forceUseTs: true, printer: { newLine: 1 } },
 );
 
 // get all component folders
 const component_folders = getFolders(componentDirectory);
+
+console.log(`Processing components...`);
 
 const components = component_folders.map(folder => {
     const name = folder.toLowerCase();
     const folderPath = path.resolve(__dirname, componentDirectory, folder);
 
     // get all components in component folder
-    const components = getComponents(folderPath);
+    const folderComponents = getComponents(folderPath);
 
-    // get all configruable props from all components in folder
-    const props = components.flatMap(comp => {
+    // get all configurable props from all components in folder
+    const props = folderComponents.flatMap(comp => {
         const file = comp+".vue";
         const componentPath = path.resolve(__dirname, componentDirectory, folder, file);
-        const meta = checker.getComponentMeta(componentPath);
+        let meta = checker.getComponentMeta(componentPath);
+       
+        if(!meta.props.length) {
+            console.warn(`Failure parsing component '${name}'. No properties found.`);
+            console.log("Recreating vue-component-meta checker...")
+            // Recreate component meta checker
+            // Due to some inconsistencies and unexpected empty extracted props, 
+            // creating a new checker helps to extract the props.
+            // The reason could be some internal memory out of bound exceptions.
+            checker = createChecker(
+                path.resolve(__dirname, './packages/oruga/tsconfig.app.json'),
+                { forceUseTs: true, printer: { newLine: 1 } },
+            );
+            meta = checker.getComponentMeta(componentPath);
+        }
 
         return meta.props.filter(prop => {
             // filter only class props and configurable props
@@ -51,6 +64,10 @@ const components = component_folders.map(folder => {
             }
             return false;
         }).map(prop => {
+            // remove undefined because we wrap the object with partial
+            if(prop.type.includes("| undefined"))
+                prop.type = prop.type.replace(" | undefined", '');
+
             // change type for class props
             if(prop.type === "ComponentClass")
                 prop.type = "ClassDefinition";
@@ -75,11 +92,14 @@ const components = component_folders.map(folder => {
     // filter duplicates
     .filter((item, idx, self) =>
         idx === self.findIndex(p => p.name === item.name)
-    );
+    )
 
+    console.log(`Processed '${name}' component with ${props.length} global props.`);
     return { name, props };
-});
+})
+.sort((a,b) => a.name.localeCompare(b.name))
 
+console.log(`Processed ${components.length} components.`);
     
 let code = `import type {
     ClassDefinition,
@@ -96,7 +116,7 @@ declare module "../index" {
             props.map(prop =>`
                 /** ${prop.description} */
                 ${prop.name}: ${prop.type};`
-            ).sort((a,b) => a.localeCompare(b)) .join("")
+            ).join("")
             }
             }>;`
         ).join(`
@@ -111,5 +131,7 @@ replaceValues.forEach((lookup) => {
 })         
 
 const file = path.resolve(__dirname, componentDirectory, "types.ts");
-fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')
+fs.writeFileSync(file, code, 'utf-8');
+
+console.log(`File '${file}' generated.`);
 

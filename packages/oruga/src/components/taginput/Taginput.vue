@@ -91,12 +91,12 @@ const emits = defineEmits<{
     (e: "input", value: string): void;
     /**
      * new item got added
-     * @param value {string | object} added item
+     * @param value {string | number | object} added item
      */
     (e: "add", value: T): void;
     /**
      * item got removed
-     * @param value {string | object} removed item
+     * @param value {string | number | object} removed item
      */
     (e: "remove", value: T): void;
     /**
@@ -355,6 +355,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
                     :key="option.key"
                     :class="itemClasses">
                     <span> {{ option.label }}</span>
+
                     <o-icon
                         v-if="closable"
                         :class="closeClasses"

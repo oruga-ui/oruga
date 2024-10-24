@@ -11,6 +11,7 @@ const IGNORE = [
   "DatepickerTable",
   "DatepickerTableRow",
   "DatepickerMonth",
+  "Programmatic"
 ];
   
 export const componentDirectory = './packages/oruga/src/components';
@@ -19,7 +20,7 @@ export function exist (path) {
   return fs.existsSync(path)
 }
 
-const filter = (f) => !f.includes("tests") && !f.includes("examples") && !f.includes("utils") && !f.includes(".ts");
+const filter = (f) => !f.includes("tests") && !f.includes("examples") && !f.includes("utils") && !f.includes(".ts") && !f.includes("programmatic");
 
 export function getFolders(dir) {
   const folders = fs.readdirSync(dir)
