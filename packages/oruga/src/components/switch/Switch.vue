@@ -211,7 +211,6 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-// const vmodel = defineModel<T>({ default: undefined });
 const vmodel = defineModel<T>({ default: undefined });
 
 // if not `label` is given and `id` is given set as `for` property on o-field wrapper

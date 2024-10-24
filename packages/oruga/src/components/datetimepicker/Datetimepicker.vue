@@ -374,6 +374,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         :size="datepickerSize"
         :placeholder="placeholder"
         :range="false"
+        :multiple="false"
         :disabled="disabled"
         :mobile-native="isMobileNative"
         :locale="locale"

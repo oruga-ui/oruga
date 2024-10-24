@@ -4,10 +4,7 @@ import type { OptionsPropWithGroups } from "@/composables";
 export type TaginputProps<T extends string | number | object> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /**
-     * The selected items, use v-model to make it two-way binding binding
-     * @type string[]|number[]|object[]
-     */
+    /** The selected items, use v-model to make it two-way binding binding */
     modelValue?: T[];
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;

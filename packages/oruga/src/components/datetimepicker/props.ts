@@ -64,7 +64,7 @@ export type DatetimepickerProps = {
      * Set `true` to append the component to the body.
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
-    teleport?: boolean | string | Object;
+    teleport?: boolean | string | object;
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */
