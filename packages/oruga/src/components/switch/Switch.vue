@@ -2,7 +2,7 @@
 import { computed, ref, useAttrs, useId, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
-import { defineClasses, useInputHandler, useVModel } from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -212,7 +212,7 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
 const { parentField } = injectField();
 
 // const vmodel = defineModel<T>({ default: undefined });
-const vmodel = useVModel<T>();
+const vmodel = defineModel<T>({ default: undefined });
 
 // if not `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField?.value?.setInputId(props.id);
