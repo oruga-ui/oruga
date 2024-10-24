@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { ref, type PropType } from "vue";
+import { ref, watch, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import { defineClasses, useEventListener } from "@/composables";
+import {
+    defineClasses,
+    useEventListener,
+    usePreventScrolling,
+} from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -55,6 +59,16 @@ const props = defineProps({
         type: String,
         default: () => getOption("loading.iconSize", "medium"),
     },
+    /**
+     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
+     * but will set body to position fixed, might break some layouts.
+     * @values keep, clip
+     */
+    scroll: {
+        type: String as PropType<"keep" | "clip">,
+        default: () => getOption("modal.scroll", "keep"),
+        validator: (value: string) => ["keep", "clip"].includes(value),
+    },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {
@@ -78,6 +92,16 @@ const props = defineProps({
     },
     /** Class for the loading label */
     labelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the body when loading is fullpage and scroll is clip */
+    scrollClipClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the body when loading is fullpage and scroll is not clip */
+    noScrollClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -106,6 +130,12 @@ const rootRef = ref();
 const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 const isActive = defineModel<boolean>("active", { default: false });
+
+const toggleScroll = usePreventScrolling(props.scroll === "keep");
+
+watch(isActive, (value) => {
+    if (isFullPage.value) toggleScroll(value);
+});
 
 // --- Events Feature ---
 

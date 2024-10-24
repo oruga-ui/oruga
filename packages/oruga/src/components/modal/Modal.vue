@@ -78,7 +78,7 @@ const props = defineProps({
     scroll: {
         type: String as PropType<"keep" | "clip">,
         default: () => getOption("modal.scroll", "keep"),
-        validator: (value: string) => ["keep", "clip"].indexOf(value) >= 0,
+        validator: (value: string) => ["keep", "clip"].includes(value),
     },
     /** Trap focus inside the modal */
     trapFocus: {
@@ -231,7 +231,7 @@ const customStyle = computed(() =>
 const toggleScroll = usePreventScrolling(props.scroll === "keep");
 
 watch(isActive, (value) => {
-    if (props.overlay) toggleScroll(isActive.value);
+    if (props.overlay) toggleScroll(value);
     // if autoFocus focus the element
     if (value && rootRef.value && props.autoFocus)
         nextTick(() => rootRef.value.focus());
