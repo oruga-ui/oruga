@@ -8,7 +8,6 @@ import { getOption } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { DynamicComponent } from "@/types";
 import type { TabsComponent, TabItemComponent } from "./types";
 import type { TabItemProps } from "./props";
 
@@ -30,7 +29,7 @@ const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     visible: true,
     icon: () => getOption("tabs.icon"),
     iconPack: () => getOption("tabs.iconPack"),
-    tag: () => getOption<DynamicComponent>("tabs.itemTag", "button"),
+    tag: () => getOption("tabs.itemTag", "button"),
     ariaRole: () => getOption("tabs.ariaRole", "tabpanel"),
     content: undefined,
     component: undefined,

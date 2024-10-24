@@ -145,7 +145,7 @@ export type StepItemProps<
     /** Role attribute to be passed to the div wrapper for better accessibility */
     ariaRole?: string;
     /** Text content, unnecessary when default slot is used */
-    content?: { type: string; default: undefined };
+    content?: string;
     /** Component to be injected. */
     component?: C;
     /** Props to be binded to the injected component */

@@ -8,7 +8,6 @@ import { getOption } from "@/utils/config";
 import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { DynamicComponent } from "@/types";
 import type { StepsComponent, StepItemComponent } from "./types";
 import type { StepItemProps } from "./props";
 
@@ -32,7 +31,7 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
     visible: true,
     icon: () => getOption("steps.icon"),
     iconPack: () => getOption("steps.iconPack"),
-    tag: () => getOption<DynamicComponent>("steps.itemTag", "button"),
+    tag: () => getOption("steps.itemTag", "button"),
     ariaRole: () => getOption("steps.ariaRole", "tab"),
     content: undefined,
     component: undefined,

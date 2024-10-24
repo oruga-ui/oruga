@@ -23,14 +23,14 @@ defineOptions({
 
 const props = withDefaults(defineProps<NotificationProps>(), {
     override: undefined,
+    message: undefined,
     active: true,
     type: undefined,
     variant: () => getOption("notification.variant"),
     position: () => getOption("notification.position", "top"),
-    message: undefined,
     animation: () => getOption("notification.animation", "fade"),
-    iconPack: () => getOption("notification.iconPack"),
     icon: undefined,
+    iconPack: () => getOption("notification.iconPack"),
     iconSize: () => getOption("notification.iconSize", "large"),
     closable: false,
     closeIcon: () => getOption("notification.closeIcon", "close"),

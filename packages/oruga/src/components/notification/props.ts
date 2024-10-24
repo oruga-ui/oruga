@@ -5,6 +5,8 @@ import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
 export type NotificationProps = {
     /** Override existing theme classes completely */
     override?: boolean;
+    /** Message text (can contain HTML), unnecessary when default slot is used */
+    message?: string | string[];
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /**
@@ -28,17 +30,15 @@ export type NotificationProps = {
         | "bottom-right"
         | "bottom"
         | "bottom-left";
-    /** Message text (can contain HTML), unnecessary when default slot is used */
-    message?: string | string[];
     /** Custom animation (transition name) */
     animation?: string;
+    /** Icon name to use */
+    icon?: string;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
      */
     iconPack?: string;
-    /** Icon name to use */
-    icon?: string;
     /**
      * Icon size
      * @values small, medium, large
