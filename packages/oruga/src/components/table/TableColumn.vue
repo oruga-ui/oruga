@@ -68,7 +68,7 @@ const thClasses = defineClasses(
         null,
         computed(
             () =>
-                parent.value.currentSortColumn?.identifier ===
+                parent.value?.currentSortColumn?.identifier ===
                 item.value.identifier,
         ),
     ],
