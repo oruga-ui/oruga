@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import { defineClasses, useEventListener } from "@/composables";
+import {
+    defineClasses,
+    useEventListener,
+    usePreventScrolling,
+} from "@/composables";
 
 import type { LoadingProps } from "./props";
 
@@ -31,6 +35,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     icon: () => getOption("loading.icon", "loading"),
     iconSpin: () => getOption("loading.iconSpin", true),
     iconSize: () => getOption("loading.iconSize", "medium"),
+    scroll: () => getOption("modal.scroll", "keep"),
 });
 
 const emits = defineEmits<{
@@ -56,6 +61,12 @@ const rootRef = ref();
 const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 const isActive = defineModel<boolean>("active", { default: false });
+
+const toggleScroll = usePreventScrolling(props.scroll === "keep");
+
+watch(isActive, (value) => {
+    if (isFullPage.value) toggleScroll(value);
+});
 
 // --- Events Feature ---
 

@@ -22,6 +22,12 @@ export type LoadingProps = {
      * @values small, medium, large
      */
     iconSize?: string;
+    /**
+     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
+     * but will set body to position fixed, might break some layouts.
+     * @values keep, clip
+     */
+    scroll?: "keep" | "clip";
 } & LoadingClasses;
 
 // class props (will not be displayed in the docs)
@@ -36,4 +42,8 @@ type LoadingClasses = Partial<{
     iconClass: ComponentClass;
     /** Class for the loading label */
     labelClass: ComponentClass;
+    /** Class of the body when loading is fullpage and scroll is clip */
+    scrollClipClass: ComponentClass;
+    /** Class of the body when loading is fullpage and scroll is not clip */
+    noScrollClass: ComponentClass;
 }>;

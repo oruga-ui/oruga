@@ -91,7 +91,7 @@ const customStyle = computed(() =>
 const toggleScroll = usePreventScrolling(props.scroll === "keep");
 
 watch(isActive, (value) => {
-    if (props.overlay) toggleScroll(isActive.value);
+    if (props.overlay) toggleScroll(value);
     // if autoFocus focus the element
     if (value && rootRef.value && props.autoFocus)
         nextTick(() => rootRef.value.focus());
