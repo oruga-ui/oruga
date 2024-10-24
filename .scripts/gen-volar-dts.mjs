@@ -42,6 +42,8 @@ export {};
 `;
 
   fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')
+  
+  console.log(`File '${file}' generated.`);
 }
 
 // generate export types volar file

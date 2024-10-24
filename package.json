@@ -28,7 +28,7 @@
     "publish:lib:pre": "npm run publish:pre --workspace @oruga-ui/oruga-next",
     "release": "npm run version && npm run changelog",
     "version": "node .scripts/sync-version.js && git add .",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && node .scripts/wait-confirm && git add CHANGELOG.md",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\""
   },
   "devDependencies": {
