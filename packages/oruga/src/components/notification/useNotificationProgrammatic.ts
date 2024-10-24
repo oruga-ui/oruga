@@ -1,4 +1,4 @@
-import type { ComponentInternalInstance } from "vue";
+import type { Component, ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
@@ -7,10 +7,9 @@ import {
 } from "../programmatic";
 import { getOption } from "@/utils/config";
 
-import Notification from "./Notification.vue";
 import NotificationNotice from "./NotificationNotice.vue";
 
-import type { ComponentProps } from "vue-component-type-helpers";
+import type { NotificationProps, NotificationNoticeProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -21,13 +20,12 @@ declare module "../../index" {
 /** notification component programmatic instance registry */
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
-/** all properties of the notification component */
-export type NotifcationProps = ComponentProps<typeof Notification>;
-export type NotifcationNoticeProps = ComponentProps<typeof NotificationNotice>;
-
 /** useNotificationProgrammatic composable options */
-type NotifcationProgrammaticOptions = Readonly<
-    Omit<NotifcationNoticeProps & NotifcationProps, "message" | "container">
+type NotifcationProgrammaticOptions<C extends Component> = Readonly<
+    Omit<
+        NotificationNoticeProps<C> & NotificationProps,
+        "message" | "container"
+    >
 > & {
     message?: string | Array<unknown>;
 } & PublicProgrammaticComponentOptions;
@@ -39,11 +37,11 @@ const useNotificationProgrammatic = {
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
      */
-    open(
-        options: string | NotifcationProgrammaticOptions,
+    open<C extends Component>(
+        options: string | NotifcationProgrammaticOptions<C>,
         target?: string | HTMLElement,
     ): ProgrammaticExpose {
-        const _options: NotifcationProgrammaticOptions =
+        const _options: NotifcationProgrammaticOptions<C> =
             typeof options === "string" ? { message: options } : options;
 
         let slot;
@@ -53,7 +51,7 @@ const useNotificationProgrammatic = {
             delete _options.message;
         }
 
-        const componentProps: NotifcationNoticeProps = {
+        const componentProps: NotificationNoticeProps<C> = {
             position: getOption("notification.position", "top-right"),
             container: document.body,
             ..._options, // pass all props to the internal notification component

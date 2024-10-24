@@ -1,5 +1,6 @@
-import type { ComponentClass } from "@/types";
-import type { OptionsProp } from "@/composables";
+import type { Component } from "vue";
+import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
+import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
 
 export type TabsProps<T extends string | number | object> = {
     /** Override existing theme classes completely */
@@ -76,4 +77,57 @@ type TabsClasses = Partial<{
     contentClass: ComponentClass;
     /** Class of the tab content when transitioning */
     transitioningClass: ComponentClass;
+}>;
+
+export type TabItemProps<
+    T extends string | number | object,
+    C extends Component,
+> = {
+    /** Override existing theme classes completely */
+    override?: boolean;
+    /**
+     * Item value (it will be used as v-model of wrapper component) - default is an uuid
+     * @type string|number|object
+     */
+    value?: T;
+    /** Item label */
+    label?: string;
+    /** Item will be disabled */
+    disabled?: boolean;
+    /** Show/hide item */
+    visible?: boolean;
+    /** Icon on the left */
+    icon?: string;
+    /** Icon pack */
+    iconPack?: string;
+    /** Tabs item tag name */
+    tag?: DynamicComponent;
+    /** Role attribute to be passed to the div wrapper for better accessibility */
+    ariaRole?: string;
+    /** Text content, unnecessary when default slot is used */
+    content?: string;
+    /** Component to be injected. */
+    component?: C;
+    /** Props to be binded to the injected component */
+    props?: ComponentProps<C>;
+    /** Events to be binded to the injected component */
+    events?: ComponentEmit<C>;
+} & TabItemClasses;
+
+// class props (will not be displayed in the docs)
+type TabItemClasses = Partial<{
+    /** Class of the tab item */
+    tabPanelClass: ComponentClass;
+    /** Class of the tab item */
+    tabClass: ComponentClass;
+    /** Class of the tab item when active */
+    tabActiveClass: ComponentClass;
+    /** Class of the tab item when disabled */
+    tabDisabledClass: ComponentClass;
+    /** Class of the tab item type */
+    tabTypeClass: ComponentClass;
+    /** Class of the tab item icon */
+    tabIconClass: ComponentClass;
+    /** Class of the tab item label */
+    tabLabelClass: ComponentClass;
 }>;

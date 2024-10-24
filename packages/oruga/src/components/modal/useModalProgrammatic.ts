@@ -1,4 +1,8 @@
-import { type ComponentInternalInstance } from "vue";
+import {
+    type Component,
+    type ComponentInternalInstance,
+    type VNodeTypes,
+} from "vue";
 import {
     InstanceRegistry,
     useProgrammatic,
@@ -8,7 +12,7 @@ import {
 
 import Modal from "./Modal.vue";
 
-import type { ComponentProps } from "vue-component-type-helpers";
+import type { ModalProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -19,11 +23,10 @@ declare module "../../index" {
 /** modal component programmatic instance registry **/
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
-/** all properties of the modal component */
-export type ModalProps = ComponentProps<typeof Modal>;
-
 /** useModalProgrammatic composable options */
-type ModalProgrammaticOptions = Readonly<Omit<ModalProps, "content">> & {
+type ModalProgrammaticOptions<C extends Component> = Readonly<
+    Omit<ModalProps<C>, "content">
+> & {
     content?: string | Array<unknown>;
 } & PublicProgrammaticComponentOptions;
 
@@ -34,11 +37,11 @@ const useModalProgrammatic = {
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
      */
-    open(
-        options: string | ModalProgrammaticOptions,
+    open<C extends Component>(
+        options: string | ModalProgrammaticOptions<C>,
         target?: string | HTMLElement,
     ): ProgrammaticExpose {
-        const _options: ModalProgrammaticOptions =
+        const _options: ModalProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
 
         let slot;
@@ -48,14 +51,14 @@ const useModalProgrammatic = {
             delete _options.content;
         }
 
-        const componentProps: ModalProps = {
+        const componentProps: ModalProps<C> = {
             active: true, // set the active default state to true
-            ...(_options as ModalProps),
+            ...(_options as ModalProps<C>),
         };
 
         // create programmatic component
         return useProgrammatic.open(
-            Modal,
+            Modal as VNodeTypes,
             {
                 instances, // custom programmatic instance registry
                 target, // target the component get rendered into

@@ -1,11 +1,10 @@
-import type { ComponentProps } from "vue-component-type-helpers";
+import type { DropdownProps } from "./props";
 
-import Dropdown from "./Dropdown.vue";
-
-export type DropdownProps = ComponentProps<typeof Dropdown>;
-
-export type DropdownComponent<T> = {
-    props: DropdownProps;
+export type DropdownComponent<
+    T extends string | number | object,
+    M extends boolean,
+> = {
+    props: DropdownProps<T, M>;
     selected?: T | T[];
     selectItem: (value: T) => void;
 };

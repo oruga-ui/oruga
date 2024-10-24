@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, type PropType } from "vue";
+import { computed } from "vue";
 
 import { getOption } from "@/utils/config";
 import getIcons from "@/utils/icons";
 import { defineClasses } from "@/composables";
 
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { IconProps } from "./props";
 
 /**
  * Icons take an important role of any application
@@ -18,87 +18,19 @@ defineOptions({
     configField: "icon",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Icon component name */
-    component: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("iconComponent"),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    pack: {
-        type: String,
-        default: () => getOption("iconPack", "mdi"),
-    },
-    /**
-     * 	Color of the icon
-     *  @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("icon.variant"),
-    },
-    /** Icon name */
-    icon: { type: String, default: undefined },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("icon.size"),
-    },
-    /**
-     * Overrides icon font size
-     * @values Depends on library: null (smallest), fa-sm, fa-lg, fa-xl, mdi-18px, mdi-24px, mdi-36px, mdi-48px
-     */
-    customSize: { type: String, default: undefined },
-    /**
-     * Add class to icon font.
-     * See icon library documentation for custom classes.
-     */
-    customClass: { type: String, default: undefined },
-    /** When true makes icon clickable */
-    clickable: { type: Boolean, default: false },
-    /** Enable spin effect on icon */
-    spin: { type: Boolean, default: false },
-    /** Rotation 0-360 */
-    rotation: { type: [Number, String], default: undefined },
-    /**
-     * This is used internally
-     * @ignore
-     */
-    both: { type: Boolean, default: false },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the icon when clickable */
-    clickableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the element when spin */
-    spinClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the icon size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the icon variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<IconProps>(), {
+    override: undefined,
+    icon: undefined,
+    component: () => getOption("iconComponent"),
+    pack: () => getOption("iconPack", "mdi"),
+    variant: () => getOption("icon.variant"),
+    size: () => getOption("icon.size"),
+    customSize: undefined,
+    customClass: undefined,
+    clickable: false,
+    spin: false,
+    rotation: undefined,
+    both: false,
 });
 
 const rootStyle = computed(() => {

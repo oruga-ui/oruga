@@ -1,12 +1,13 @@
 <script setup lang="ts" generic="T extends string | number | object">
-import { useId, computed, type PropType } from "vue";
+import { useId, computed } from "vue";
 
 import { getOption } from "@/utils/config";
 import { isEqual, isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
+import type { DynamicComponent } from "@/types";
 import type { DropdownComponent } from "./types";
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { DropdownItemProps } from "./props";
 
 /**
  * @displayName Dropdown Item
@@ -17,59 +18,18 @@ defineOptions({
     configField: "dropdown",
 });
 
-const props = defineProps({
-    /**
-     * Item value (it will be used as v-model of wrapper component) - default is an uuid
-     * @type string|number|object
-     */
-    value: {
-        type: [String, Number, Object] as PropType<T>,
-        default: () => useId(),
-    },
-    /** Item label, unnecessary when default slot is used */
-    label: { type: String, default: undefined },
-    /** Item is disabled */
-    disabled: { type: Boolean, default: false },
-    /** Item is clickable and emit an event */
-    clickable: { type: Boolean, default: true },
-    /** Dropdown item tag name */
-    tag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("dropdown.itemTag", "div"),
-    },
-    /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
-    tabindex: { type: [Number, String], default: 0 },
-    /**
-     * Role attribute to be passed to the list item for better accessibility.
-     * Use menuitem only in situations where your dropdown is related to a navigation menu.
-     * @values listitem, menuitem, button
-     */
-    ariaRole: {
-        type: String,
-        default: () => getOption("dropdown.itemAriaRole", "listitem"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the dropdown item */
-    itemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the dropdown item when active  */
-    itemActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the dropdown item when clickable */
-    itemClickableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the dropdown item when disabled */
-    itemDisabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
+    override: undefined,
+    value: undefined,
+    label: undefined,
+    disabled: false,
+    clickable: true,
+    tag: () => getOption<DynamicComponent>("dropdown.itemTag", "div"),
+    tabindex: 0,
+    ariaRole: () => getOption("dropdown.itemAriaRole", "listitem"),
 });
+
+const itemValue = props.value || useId();
 
 const emits = defineEmits<{
     /**
@@ -81,7 +41,7 @@ const emits = defineEmits<{
 }>();
 
 // Inject functionalities and data from the parent component
-const { parent } = useProviderChild<DropdownComponent<T>>();
+const { parent } = useProviderChild<DropdownComponent<T, false>>();
 
 const isClickable = computed(
     () => !parent.value.props.disabled && !props.disabled && props.clickable,
@@ -94,16 +54,16 @@ const isActive = computed(() => {
         Array.isArray(parent.value.selected)
     )
         return parent.value.selected.some((selected: T) =>
-            isEqual(props.value, selected),
+            isEqual(itemValue, selected),
         );
-    return isEqual(props.value, parent.value.selected);
+    return isEqual(itemValue, parent.value.selected);
 });
 
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(props.value as T);
-    emits("click", props.value as T, event);
+    parent.value.selectItem(itemValue as T);
+    emits("click", itemValue as T, event);
 }
 
 // --- Computed Component Classes ---

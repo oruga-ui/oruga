@@ -1,23 +1,11 @@
-import type { Slots } from "vue";
-import type {
-    ComponentProps,
-    ComponentSlots,
-} from "vue-component-type-helpers";
+import type { Component, Slots } from "vue";
 import type { ProviderItem } from "@/composables";
 import type { ClassBind } from "@/types";
 
-import StepItem from "./StepItem.vue";
-
-export type StepItemProps<T extends string | number | object> = ComponentProps<
-    typeof StepItem<T>
->;
-
-export type StepItemSlots<T extends string | number | object> = ComponentSlots<
-    typeof StepItem<T>
->;
+import type { StepItemProps } from "./props";
 
 export type StepItemComponent<T extends string | number | object> =
-    StepItemProps<T> & {
+    StepItemProps<T, Component> & {
         $slots: Slots;
         isTransitioning: boolean;
         classes: ClassBind[];
