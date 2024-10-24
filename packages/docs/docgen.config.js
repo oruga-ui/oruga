@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
@@ -15,15 +14,6 @@ const THEMES = require("./.vitepress/themes.json");
 
 import { createChecker } from "vue-component-meta";
 const __dirname = process.cwd();
-
-// create component meta checker
-const checker = createChecker(
-    path.resolve(__dirname, "../oruga/tsconfig.json"),
-    {
-        forceUseTs: true,
-        printer: { newLine: 1 },
-    },
-);
 
 const META_PROP_IGNORE = ["key", "ref", "ref_for", "ref_key", "class", "style"];
 
@@ -65,6 +55,12 @@ const getComponent = (filename) => {
         .replace(/\.vue$/, "");
 };
 
+// create component meta checker
+let checker = createChecker(
+    path.resolve(__dirname, "../oruga/tsconfig.app.json"),
+    { forceUseTs: true, printer: { newLine: 1 } },
+);
+
 createThemeDocs();
 
 export default {
@@ -90,8 +86,31 @@ export default {
                 if (!filePath || filePath.includes("tests")) return;
                 if (!component || IGNORE.includes(component)) return;
 
+                console.log(`Processing component ${component}...`);
+
                 // analyse component with vue-component-meta
-                const meta = checker.getComponentMeta(filePath);
+                let meta = checker.getComponentMeta(filePath);
+
+                if (!meta.props.length) {
+                    console.warn(
+                        `Failure parsing component '${component}': no properties found.`,
+                    );
+                    console.log("Recreating vue-component-meta checker...");
+                    // Recreate component meta checker
+                    // Due to some inconsistencies and unexpected empty extracted props,
+                    // creating a new checker helps to extract the props.
+                    // The reason could be some internal memory out of bound exceptions.
+                    checker = createChecker(
+                        path.resolve(__dirname, "../oruga/tsconfig.app.json"),
+                        { forceUseTs: true, printer: { newLine: 1 } },
+                    );
+                    meta = checker.getComponentMeta(filePath);
+                }
+                if (!meta.props.length)
+                    console.warn(
+                        `Warning: Could not create meta for '${component}'.`,
+                    );
+
                 // convert from vue-component-meta to vue-docgen-api type
                 meta.props
                     .filter((p) => !META_PROP_IGNORE.includes(p.name))
@@ -99,6 +118,10 @@ export default {
                         const docProp = documentation.propsMap.get(prop.name);
                         const isDefaultFunc =
                             docProp?.defaultValue?.func || false;
+
+                        // remove undefined because we wrap the object with partial
+                        if (prop.type.includes("| undefined"))
+                            prop.type = prop.type.replace(" | undefined", "");
 
                         // create vue-docgen-api prop doc object
                         const metaProp = {
@@ -228,6 +251,7 @@ function tmplClassProps(config, name) {
 <inspector-${name}-viewer />
 `;
     } catch (err) {
+        console.log(err);
         return "";
     }
 }
