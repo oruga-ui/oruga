@@ -28,6 +28,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
+
 const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
@@ -41,8 +43,6 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     useHtml5Validation: () => getOption("useHtml5Validation", true),
     customValidity: "",
 });
-
-type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**

@@ -34,6 +34,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
+
 const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
@@ -59,8 +61,6 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     autocomplete: () => getOption("select.autocomplete", "off"),
     statusIcon: () => getOption("statusIcon", true),
 });
-
-type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**

@@ -32,6 +32,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = InputProps<IsNumber>["modelValue"];
+
 const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     override: undefined,
     modelValue: undefined,
@@ -62,8 +64,6 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     useHtml5Validation: getOption("useHtml5Validation", true),
     customValidity: "",
 });
-
-type ModelValue = InputProps<IsNumber>["modelValue"];
 
 const emits = defineEmits<{
     /**

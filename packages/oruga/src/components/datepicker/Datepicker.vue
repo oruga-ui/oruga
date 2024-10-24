@@ -35,6 +35,8 @@ defineOptions({
     configField: "datepicker",
 });
 
+type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
+
 const props = withDefaults(
     defineProps<DatepickerProps<IsRange, IsMultiple>>(),
     {
@@ -99,8 +101,6 @@ const props = withDefaults(
         selectClasses: () => getOption("datepicker.selectClasses"),
     },
 );
-
-type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**

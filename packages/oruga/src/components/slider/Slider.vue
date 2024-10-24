@@ -23,6 +23,8 @@ defineOptions({
     configField: "slider",
 });
 
+type ModelValue = SliderProps<IsRange>["modelValue"];
+
 const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     override: undefined,
     modelValue: undefined,
@@ -46,8 +48,6 @@ const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     locale: () => getOption("locale"),
     ariaLabel: () => getOption("slider.ariaLabel"),
 });
-
-type ModelValue = SliderProps<IsRange>["modelValue"];
 
 const emits = defineEmits<{
     /**

@@ -49,6 +49,8 @@ defineOptions({
     configField: "dropdown",
 });
 
+type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
+
 const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
@@ -80,8 +82,6 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     mobileBreakpoint: () => getOption("dropdown.mobileBreakpoint"),
     teleport: () => getOption("dropdown.teleport", false),
 });
-
-type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
 
 const emits = defineEmits<{
     /**

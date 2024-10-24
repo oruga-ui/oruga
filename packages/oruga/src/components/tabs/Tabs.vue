@@ -36,6 +36,8 @@ defineOptions({
     configField: "tabs",
 });
 
+type ModelValue = TabsProps<T>["modelValue"];
+
 const props = withDefaults(defineProps<TabsProps<T>>(), {
     override: undefined,
     modelValue: undefined,
@@ -58,8 +60,6 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     animateInitially: () => getOption("tabs.animateInitially", false),
     multiline: false,
 });
-
-type ModelValue = TabsProps<T>["modelValue"];
 
 const emits = defineEmits<{
     /**

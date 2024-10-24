@@ -66,6 +66,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = AutocompleteProps<T>["modelValue"];
+
 const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     override: undefined,
     modelValue: undefined,
@@ -110,8 +112,6 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     teleport: () => getOption("autocomplete.teleport", false),
     inputClasses: () => getOption("autocomplete.inputClasses", {}),
 });
-
-type ModelValue = AutocompleteProps<T>["modelValue"];
 
 const emits = defineEmits<{
     /**

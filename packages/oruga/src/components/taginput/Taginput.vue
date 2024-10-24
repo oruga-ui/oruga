@@ -34,6 +34,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = TaginputProps<T>["modelValue"];
+
 const props = withDefaults(defineProps<TaginputProps<T>>(), {
     override: undefined,
     modelValue: undefined,
@@ -70,8 +72,6 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     teleport: () => getOption("taginput.teleport", false),
     autocompleteClasses: () => getOption("taginput.autocompleteClasses", {}),
 });
-
-type ModelValue = TaginputProps<T>["modelValue"];
 
 const emits = defineEmits<{
     /**
