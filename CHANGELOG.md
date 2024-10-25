@@ -1,3 +1,39 @@
+# [0.9.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.2...v0.9.0-pre.3) (2024-10-25)
+
+
+### Bug Fixes
+
+* **1038:** add `vue-component-type-helpers` as dependency ([#1054](https://github.com/oruga-ui/oruga/issues/1054)) ([33c0309](https://github.com/oruga-ui/oruga/commit/33c0309af7a9a76c1f5c7635bb45ea3e465548fb))
+* **a11y:** remove unnecessary `aria-hidden="true"` on  overlays ([#1059](https://github.com/oruga-ui/oruga/issues/1059)) ([f831f7f](https://github.com/oruga-ui/oruga/commit/f831f7f518a6d4391858a18b91b495460806b1e1))
+* **hydration:** replace custom `uuid` with vues native `useId` composable ([#1053](https://github.com/oruga-ui/oruga/issues/1053)) ([d7091ff](https://github.com/oruga-ui/oruga/commit/d7091ff63157b264918755be579d237f461b91b7))
+* **performance:** resolve a memory leak in `defineClasses` with wrong/missing effectScope ([#1067](https://github.com/oruga-ui/oruga/issues/1067)) ([a1f53c2](https://github.com/oruga-ui/oruga/commit/a1f53c2c2c223be5fef12312594ed1fb75ce3093))
+* **types:** solve a type generation problems ([#1072](https://github.com/oruga-ui/oruga/issues/1072)) ([54f1409](https://github.com/oruga-ui/oruga/commit/54f1409a7ba09ef3136d7ccc8881bb5997696c07))
+
+
+### Features
+
+* **1008:** unify component options/items definiton ([#1065](https://github.com/oruga-ui/oruga/issues/1065)) ([16dfd09](https://github.com/oruga-ui/oruga/commit/16dfd098cd34c2b1c5b6e1886c1ca44d3ba3bdec))
+* **a11y:** solve accessibility issues ([#1061](https://github.com/oruga-ui/oruga/issues/1061)) ([3615594](https://github.com/oruga-ui/oruga/commit/3615594f787ee0bd32271eeb2203f04c9f556bfa))
+* **dropdown:** add `modalDesktop` property ([#1064](https://github.com/oruga-ui/oruga/issues/1064)) ([4819fb7](https://github.com/oruga-ui/oruga/commit/4819fb70ab39a54b535e6af0a006e44b3a884fe9))
+* **field:** rename class names to match existing class name patterns ([#1047](https://github.com/oruga-ui/oruga/issues/1047)) ([a2e9b8a](https://github.com/oruga-ui/oruga/commit/a2e9b8a0bdc4d34dbb8a2071be900fe012715c2d))
+* **loading:** add body `noscroll` class when fullpage ([#1074](https://github.com/oruga-ui/oruga/issues/1074)) ([bbe2865](https://github.com/oruga-ui/oruga/commit/bbe2865521336ef074c0b1dee5f20433f1332848))
+* **picker:** improve date/time picker class drilling ([#1044](https://github.com/oruga-ui/oruga/issues/1044)) ([5ec65c8](https://github.com/oruga-ui/oruga/commit/5ec65c81dc004e0011f259a1abdd5534834852dc))
+* **programmatic:** unfiy  `useProgramamtic` interfaces ([#1058](https://github.com/oruga-ui/oruga/issues/1058)) ([80a0c5c](https://github.com/oruga-ui/oruga/commit/80a0c5c9ef49022791c54efae9bfa68d6a6b4139))
+* **sidebar:** remove `variant` prop | improve prop definitions ([#1046](https://github.com/oruga-ui/oruga/issues/1046)) ([c6bd1bc](https://github.com/oruga-ui/oruga/commit/c6bd1bc3a606381e3d865939aa541b4f5f4a8918))
+* **steps:** add root `variantClass` prop | update examples ([#1049](https://github.com/oruga-ui/oruga/issues/1049)) ([d795946](https://github.com/oruga-ui/oruga/commit/d7959461d49ff62345df76f2128582692af65055))
+* **table:** add `addons` to internal mobile sort field wrapper ([#1051](https://github.com/oruga-ui/oruga/issues/1051)) ([781849e](https://github.com/oruga-ui/oruga/commit/781849ee8390b17f4c096dff1cb91ea3dfcc37af))
+* **tabs|steps:** add `component` prop to item ([#1071](https://github.com/oruga-ui/oruga/issues/1071)) ([d3ea497](https://github.com/oruga-ui/oruga/commit/d3ea497942e4cace63bfb1960747dee8106431d7))
+* **tabs:** update class names ([#1062](https://github.com/oruga-ui/oruga/issues/1062)) ([4bfab60](https://github.com/oruga-ui/oruga/commit/4bfab60d2638d15b50a5cd8df8c0eaa476fcddac))
+* **type:** enhance `component` prop type ([#1075](https://github.com/oruga-ui/oruga/issues/1075)) ([73f3801](https://github.com/oruga-ui/oruga/commit/73f38010c9482ccde5ab656affcb256af021f178))
+* **types:** update tsconfig | add `strictNullChecks` definition ([#1066](https://github.com/oruga-ui/oruga/issues/1066)) ([923f887](https://github.com/oruga-ui/oruga/commit/923f887c4314acd33ed3c75a7cb45e0e061fe055))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+
 # [0.9.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.1...v0.9.0-pre.2) (2024-08-08)
 
 
@@ -17,6 +53,11 @@
 * **field:** programmatically associate inputs with field messages ([#1021](https://github.com/oruga-ui/oruga/issues/1021)) ([6fc309f](https://github.com/oruga-ui/oruga/commit/6fc309ff3b4fb324b3c69d193b7b116c1cb9913e))
 * **table:** add icon/label to `empty` slot ([#1030](https://github.com/oruga-ui/oruga/issues/1030)) ([79a7ab9](https://github.com/oruga-ui/oruga/commit/79a7ab905e81988544b3c5390f0ca879f71229cb))
 * **slider**: rename `customFormatter` prop to `formatter` prop ([#1033](https://github.com/oruga-ui/oruga/pull/1033))
+
+
+### Detailed Changes
+
+*following with the main release...*
 
 
 # [0.9.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.8.11...v0.9.0-pre.1) (2024-07-12)
