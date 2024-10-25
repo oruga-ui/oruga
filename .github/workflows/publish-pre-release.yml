@@ -34,7 +34,7 @@ jobs:
         run: npm i extract-changelog-release
       - name: Generate Release Body 📋
         run: npx extract-changelog-release > RELEASE_BODY.md
-        uses: ncipollo/release-action@v1
+      - uses: ncipollo/release-action@v1
         with:
           bodyFile: 'RELEASE_BODY.md'
           prerelease: true
