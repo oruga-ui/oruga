@@ -31,8 +31,9 @@ jobs:
         run: npm run publish:examples
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Generate Release Body 📋
+      - name: Install release dependency 📦
         run: npm i extract-changelog-release
+      - name: Generate Release Body 📋
         run: npx extract-changelog-release > RELEASE_BODY.md
         uses: ncipollo/release-action@v1
         with:
