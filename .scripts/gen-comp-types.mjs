@@ -42,7 +42,7 @@ const components = component_folders.map(folder => {
         let meta = checker.getComponentMeta(componentPath);
        
         if(!meta.props.length) {
-            console.warn(`Failure parsing component '${name}'. No properties found.`);
+            console.warn(`Failure parsing component '${name}': no properties found.`);
             console.log("Recreating vue-component-meta checker...")
             // Recreate component meta checker
             // Due to some inconsistencies and unexpected empty extracted props, 
