@@ -61,8 +61,8 @@
     "test:coverage": "vitest run --coverage",
     "test:ts": "vue-tsc --noEmit --skipLibCheck --project tsconfig.app.json",
     "lint": "eslint . --fix --quiet",
-    "publish": "cp ../../README.md . && npm run build:lib && npm publish",
-    "publish:pre": "cp ../../README.md . && npm run build:lib && npm publish --tag pre",
+    "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
+    "publish:lib:pre": "cp ../../README.md . && npm run build:lib && npm publish --tag pre",
     "update": "ncu -u"
   },
   "peerDependencies": {

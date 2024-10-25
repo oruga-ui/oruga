@@ -45,8 +45,8 @@
   ],
   "scripts": {
     "build": "rimraf dist && vite build",
-    "publish": "cp ../../README.md . && npm run build && npm publish",
-    "publish:pre": "cp ../../README.md . && npm run build && npm publish --tag pre",
+    "publish:examples": "cp ../../README.md . && npm run build && npm publish",
+    "publish:examples:pre": "cp ../../README.md . && npm run build && npm publish --tag pre",
     "update": "ncu -u"
   },
   "peerDependencies": {
