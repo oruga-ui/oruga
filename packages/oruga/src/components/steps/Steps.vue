@@ -286,7 +286,7 @@ const navigationClasses = defineClasses([
                 role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem.value">
-                <span v-if="index > 0" :class="dividerClasses"> </span>
+                <span v-if="index > 0" :class="dividerClasses" />
 
                 <component
                     :is="childItem.tag"
