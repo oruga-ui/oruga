@@ -120,10 +120,6 @@ watch(
 
 const activeItem = ref(items.value[0]);
 
-function isActive(item: StepItem<T>): boolean {
-    return item.value === activeItem.value.value;
-}
-
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
         ? items.value.find((item) => item.value === vmodel.value) ||
@@ -289,7 +285,7 @@ const navigationClasses = defineClasses([
                 :class="childItem.navClasses"
                 role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="isActive(childItem) ? 'true' : 'false'">
+                :aria-selected="childItem.value === activeItem.value">
                 <span v-if="index > 0" :class="dividerClasses"> </span>
 
                 <component

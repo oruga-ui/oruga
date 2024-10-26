@@ -126,10 +126,6 @@ watchEffect(() => {
 
 const activeIndex = computed(() => activeItem.value.index);
 
-function isActive(item: TabItem<T>): boolean {
-    return item.value === activeItem.value.value;
-}
-
 const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
 );
@@ -288,7 +284,7 @@ const contentClasses = defineClasses(
                 :class="navItemClasses"
                 role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="isActive(childItem) ? 'true' : 'false'">
+                :aria-selected="childItem.value === activeItem.value">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
