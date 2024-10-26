@@ -127,7 +127,7 @@ const tabClasses = defineClasses(
 
 const tabIconClasses = defineClasses(["tabIconClass", "o-tabs__tab-icon"]);
 
-const tabLabelClasses = defineClasses(["tabTextClass", "o-tabs__tab-text"]);
+const tabLabelClasses = defineClasses(["tabLabelClass", "o-tabs__tab-label"]);
 
 const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
 </script>

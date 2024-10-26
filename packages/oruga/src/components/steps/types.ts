@@ -8,7 +8,10 @@ export type StepItemComponent<T extends string | number | object> =
     StepItemProps<T, Component> & {
         $slots: Slots;
         isTransitioning: boolean;
+        navClasses: ClassBind[];
         classes: ClassBind[];
+        labelClasses: ClassBind[];
+        iconClasses: ClassBind[];
         activate: (index: number) => void;
         deactivate: (index: number) => void;
     };
@@ -16,6 +19,7 @@ export type StepItemComponent<T extends string | number | object> =
 export type StepsComponent<T> = {
     activeValue: T;
     activeIndex: number;
+    labelPosition: string;
     vertical: boolean;
     animated: boolean;
     animation: string[];

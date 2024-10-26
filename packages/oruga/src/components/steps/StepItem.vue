@@ -54,7 +54,10 @@ const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
     $slots: slots,
-    classes: itemClasses.value,
+    navClasses: navItemClasses.value,
+    classes: stepClasses.value,
+    labelClasses: stepLabelClasses.value,
+    iconClasses: stepIconClasses.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,
@@ -82,6 +85,11 @@ const prevAnimation = computed(() => {
         parent.value.vertical && parent.value.animation.length === 4 ? 3 : 1;
     return parent.value.animation[idx];
 });
+
+/** shows if the step is clickable or not */
+const isClickable = computed(
+    () => props.clickable || item.value.index < parent.value.activeIndex,
+);
 
 /** Activate element, alter animation name based on the index. */
 function activate(oldIndex: number): void {
@@ -111,24 +119,42 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
-
-const itemClasses = defineClasses(
-    ["itemHeaderClass", "o-steps__nav-item"],
+const navItemClasses = defineClasses(
+    ["navItemClass", "o-steps__nav-item"],
     [
-        "itemHeaderVariantClass",
+        "navItemVariantClass",
         "o-steps__nav-item--",
         computed(() => parent.value?.variant || props.variant),
         computed(() => !!parent.value?.variant || !!props.variant),
     ],
-    ["itemHeaderActiveClass", "o-steps__nav-item-active", null, isActive],
+    ["navItemActiveClass", "o-steps__nav-item-active", null, isActive],
     [
-        "itemHeaderPreviousClass",
+        "navItemPreviousClass",
         "o-steps__nav-item-previous",
         null,
         computed(() => item.value.index < parent.value?.activeIndex),
     ],
 );
+
+const stepClasses = defineClasses(
+    ["stepClass", "o-steps__step"],
+    [
+        "stepLabelPositionClass",
+        "o-steps__step-label-",
+        computed(() => parent.value?.labelPosition),
+        computed(() => !!parent.value?.labelPosition),
+    ],
+    ["stepClickableClass", "o-steps__step-clickable", null, isClickable],
+);
+
+const stepLabelClasses = defineClasses([
+    "stepLabelClass",
+    "o-steps__step-label",
+]);
+
+const stepIconClasses = defineClasses(["stepIconClass", "o-steps__step-icon"]);
+
+const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
 </script>
 
 <template>
@@ -142,13 +168,14 @@ const itemClasses = defineClasses(
         <template v-if="!parent.destroyOnHide || (isActive && visible)">
             <div
                 v-show="isActive && visible"
-                ref="rootRef"
                 v-bind="$attrs"
-                :class="elementClasses"
+                :id="`tabpanel-${item.identifier}`"
+                :class="panelClasses"
                 :data-id="`steps-${item.identifier}`"
                 data-oruga="steps-item"
-                :tabindex="isActive ? 0 : -1"
                 :role="ariaRole"
+                :aria-labelledby="`tab-${item.identifier}`"
+                :tabindex="isActive ? 0 : -1"
                 aria-roledescription="item">
                 <!-- 
                     @slot Step item content
