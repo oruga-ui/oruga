@@ -5,15 +5,15 @@ import type { ClassBind } from "@/types";
 import type { StepItemProps } from "./props";
 
 export type StepItemComponent<T> = StepItemProps<T, Component> & {
-        $slots: Slots;
-        isTransitioning: boolean;
-        navClasses: ClassBind[];
-        classes: ClassBind[];
-        labelClasses: ClassBind[];
-        iconClasses: ClassBind[];
-        activate: (index: number) => void;
-        deactivate: (index: number) => void;
-    };
+    $slots: Slots;
+    isTransitioning: boolean;
+    navClasses: ClassBind[];
+    classes: ClassBind[];
+    labelClasses: ClassBind[];
+    iconClasses: ClassBind[];
+    activate: (index: number) => void;
+    deactivate: (index: number) => void;
+};
 
 export type StepsComponent<T> = {
     activeValue: T;
