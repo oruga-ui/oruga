@@ -1,8 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OSteps tests > render correctly 1`] = `
-"<div class="o-steps__wrapper" data-oruga="steps">
-  <ol class="o-steps o-steps--animated"></ol>
+"<div class="o-steps" data-oruga="steps">
+  <ol class="o-steps__nav o-steps__nav--animated" role="tablist" aria-orientation="horizontal"></ol>
   <section class="o-steps__content">
     <!--
                 @slot Place step items here
