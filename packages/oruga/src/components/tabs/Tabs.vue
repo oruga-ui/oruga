@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number | object">
+<script setup lang="ts" generic="T">
 import {
     computed,
     ref,
@@ -288,15 +288,17 @@ const contentClasses = defineClasses(
                 :class="navItemClasses"
                 role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="isActive(childItem) ? 'true' : 'false'">
+                :aria-selected="
+                    isActive(childItem as TabItem<T>) ? 'true' : 'false'
+                ">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
                     :class="childItem.classes"
-                    @click="tabClick(childItem)"
-                    @keydown.enter="tabClick(childItem)"
+                    @click="tabClick(childItem as TabItem<T>)"
+                    @keydown.enter="tabClick(childItem as TabItem<T>)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"
@@ -310,8 +312,8 @@ const contentClasses = defineClasses(
                     role="button"
                     :tabindex="0"
                     :class="childItem.classes"
-                    @click="tabClick(childItem)"
-                    @keydown.enter="tabClick(childItem)"
+                    @click="tabClick(childItem as TabItem<T>)"
+                    @keydown.enter="tabClick(childItem as TabItem<T>)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"

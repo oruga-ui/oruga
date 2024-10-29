@@ -1,4 +1,4 @@
-export type DropdownComponent<T extends string | number | object> = {
+export type DropdownComponent<T> = {
     disabled: boolean;
     multiple: boolean;
     selected: T | T[] | undefined;

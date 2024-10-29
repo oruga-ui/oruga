@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
 
 const isFetching = ref(false);
 const page = ref(1);
 const totalPages = ref(1);
 
-const options = ref<object[]>([]);
+const options = ref<OptionsGroupProp>([]);
 const selected = ref<object>();
 const value = ref("");
 

@@ -2,7 +2,7 @@ import type { Component } from "vue";
 import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
 import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
 
-export type StepsProps<T extends string | number | object> = {
+export type StepsProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -108,10 +108,7 @@ type StepsClasses = Partial<{
     mobileClass: ComponentClass;
 }>;
 
-export type StepItemProps<
-    T extends string | number | object,
-    C extends Component,
-> = {
+export type StepItemProps<T, C extends Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

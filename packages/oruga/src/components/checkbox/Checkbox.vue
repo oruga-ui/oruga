@@ -1,12 +1,12 @@
-<script setup lang="ts" generic="T extends string | number | boolean | object">
-import { computed, ref, useAttrs, useId, type PropType } from "vue";
+<script setup lang="ts" generic="T">
+import { computed, ref, useAttrs, useId } from "vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ComponentClass } from "@/types";
+import type { CheckboxProps } from "./props";
 
 /**
  * Select a single or grouped options
@@ -20,136 +20,23 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The input value state
-     * @type string|number|boolean|object|array
-     */
-    modelValue: {
-        type: [String, Number, Boolean, Object, Array] as PropType<T | T[]>,
-        default: undefined,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("checkbox.variant"),
-    },
-    /**
-     * Size of the control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("checkbox.size"),
-    },
-    /** Input label, unnecessary when default slot is used */
-    label: { type: String, default: undefined },
-    /** Same as native indeterminate */
-    indeterminate: { type: Boolean, default: false },
-    /**
-     * Same as native value
-     * @type string|number|boolean|object
-     */
-    nativeValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Same as native required */
-    required: { type: Boolean, default: false },
-    /** Same as native name */
-    name: { type: String, default: undefined },
-    /**
-     * Overrides the returned value when it's checked
-     * @type string|number|boolean|object
-     */
-    trueValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: true,
-    },
-    /**
-     * Overrides the returned value when it's not checked
-     * @type string|number|boolean|object
-     */
-    falseValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: false,
-    },
-    /** Same as native autocomplete options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("checkbox.autocomplete", "off"),
-    },
-    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
-    id: { type: String, default: () => useId() },
-    /** Enable HTML 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    /** Custom HTML 5 validation error to set on the form control */
-    customValidity: {
-        type: [String, Function] as PropType<
-            | string
-            | ((
-                  currentValue: boolean | null | undefined,
-                  state: ValidityState,
-              ) => string)
-        >,
-        default: "",
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when checkbox is disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the root element when checked */
-    checkedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the checkbox input */
-    inputClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the checkbox input when checked */
-    inputCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when checkbox is indeterminate */
-    indeterminateClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the checkbox labe */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the checkbox size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the checkbox variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<CheckboxProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    variant: () => getOption("checkbox.variant"),
+    size: () => getOption("checkbox.size"),
+    label: undefined,
+    indeterminate: false,
+    nativeValue: undefined,
+    disabled: false,
+    required: false,
+    name: undefined,
+    trueValue: true,
+    falseValue: false,
+    autocomplete: () => getOption("checkbox.autocomplete", "off"),
+    id: () => useId(),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    customValidity: "",
 });
 
 const emits = defineEmits<{

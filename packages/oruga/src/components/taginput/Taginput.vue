@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number | object = string">
+<script setup lang="ts" generic="T = string">
 import {
     computed,
     ref,
