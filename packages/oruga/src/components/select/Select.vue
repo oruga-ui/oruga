@@ -1,10 +1,4 @@
-<script
-    setup
-    lang="ts"
-    generic="
-        T extends string | number | object,
-        IsMultiple extends boolean = false
-    ">
+<script setup lang="ts" generic="T, IsMultiple extends boolean = false">
 import { computed, watch, ref, nextTick, useAttrs, useId } from "vue";
 
 import OIcon from "../icon/Icon.vue";

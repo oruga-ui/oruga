@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number | object">
+<script setup lang="ts" generic="T">
 import { useId, computed } from "vue";
 
 import { getOption } from "@/utils/config";

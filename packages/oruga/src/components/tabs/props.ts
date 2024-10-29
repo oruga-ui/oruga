@@ -2,7 +2,7 @@ import type { Component } from "vue";
 import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
 import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
 
-export type TabsProps<T extends string | number | object> = {
+export type TabsProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -79,10 +79,7 @@ type TabsClasses = Partial<{
     transitioningClass: ComponentClass;
 }>;
 
-export type TabItemProps<
-    T extends string | number | object,
-    C extends Component,
-> = {
+export type TabItemProps<T, C extends Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

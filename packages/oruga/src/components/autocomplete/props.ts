@@ -1,7 +1,7 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
-export type AutocompleteProps<T extends string | number | object> = {
+export type AutocompleteProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

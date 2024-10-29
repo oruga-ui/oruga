@@ -1,7 +1,4 @@
-<script
-    setup
-    lang="ts"
-    generic="T extends string | number | object, C extends Component">
+<script setup lang="ts" generic="T, C extends Component">
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
 import { getOption } from "@/utils/config";

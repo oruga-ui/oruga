@@ -1,7 +1,7 @@
 import type { ComponentClass } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
-export type TaginputProps<T extends string | number | object> = {
+export type TaginputProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The selected items, use v-model to make it two-way binding binding */
