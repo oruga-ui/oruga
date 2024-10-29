@@ -22,7 +22,7 @@ export type OptionsItem<V = unknown> = OptionsPropItem<V> & {
 export type OptionsPropItem<V = unknown> = {
     /** displayed option label */
     label: string;
-    /** used option value */
+    /** the real option value */
     value: V;
     /** additional attributes bound to the option element */
     attrs?: {
@@ -109,7 +109,7 @@ type NormalizedOptions<
  *
  * @param options - An un-normalized {@link OptionsPropWithGroups}.
  *
- * @returns A list of {@link OptionsItem | OptionsGroupItem}.
+ * @returns A list of {@link OptionsItem} | {@link OptionsGroupItem}.
  */
 export function normalizeOptions<
     V,
