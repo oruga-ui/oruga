@@ -1,20 +1,25 @@
 <script setup lang="ts">
-import { onUnmounted, ref, watch, nextTick, type PropType } from "vue";
+import {
+    onUnmounted,
+    ref,
+    watch,
+    nextTick,
+    useTemplateRef,
+    type PropType,
+} from "vue";
 import { setValueByPath } from "../../../../oruga/src/utils/helpers";
+import type { InspectClass, InspectData } from "@/docs";
 
 const INSPECT_CLASS = "odocs-inspected-element";
 
 defineProps({
-    inspectData: { type: Array as PropType<unknown[]>, required: true },
+    inspectData: { type: Object as PropType<InspectData>, required: true },
     subitem: { type: String, default: undefined },
 });
 
-const component = ref<HTMLElement | null>(null);
+const component = useTemplateRef("component");
 
-const inspectClass = ref<{
-    className: string;
-    action: (cmp: HTMLElement, data: unknown) => void;
-}>({} as any);
+const inspectedClass = ref<InspectClass>({} as InspectClass);
 
 const classes = ref({});
 const data = ref({});
@@ -26,7 +31,7 @@ onUnmounted(() => {
     interval.value = undefined;
 });
 
-watch(inspectClass, ({ className, action }) => {
+watch(inspectedClass, ({ className, action }) => {
     // clear values
     clearInterval(interval.value);
     interval.value = undefined;
@@ -64,7 +69,7 @@ watch(inspectClass, ({ className, action }) => {
             <Inspector
                 :inspect-data="inspectData"
                 :subitem="subitem"
-                @inspect="inspectClass = $event" />
+                @inspect="inspectedClass = $event" />
         </ClientOnly>
     </div>
 </template>

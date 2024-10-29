@@ -108,7 +108,7 @@ export type AutocompleteProps<T extends string | number | object> = {
 } & AutocompleteClasses;
 
 // class props (will not be displayed in the docs)
-type AutocompleteClasses = Partial<{
+export type AutocompleteClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the menu items */

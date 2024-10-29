@@ -78,7 +78,7 @@ onMounted(() => {
     }
 });
 
-function copy(val: string) {
+function copy(val: string): void {
     setTimeout(() => navigator.clipboard.writeText(val), 300);
 }
 </script>

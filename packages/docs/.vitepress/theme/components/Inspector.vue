@@ -1,42 +1,44 @@
 <script setup lang="ts">
 import { computed, ref, type PropType } from "vue";
+import type {
+    InspectData,
+    InspectClassDescription,
+    InspectClass,
+} from "@/docs";
 
 const props = defineProps({
-    inspectData: {
-        type: Array as PropType<any[]>,
-        required: true,
-    },
-    subitem: {
-        type: String,
-        default: undefined,
-    },
+    inspectData: { type: Object as PropType<InspectData>, required: true },
+    subitem: { type: String, default: undefined },
 });
 
-const emits = defineEmits(["inspect"]);
+const emits = defineEmits<{
+    (e: "inspect", value: InspectClass): void;
+}>();
 
 const selectedElementIndex = ref<number>();
 
-const classesToInspect = computed(() => {
-    const data = props.inspectData;
-    return data.sort((propa, propb) =>
+const classesToInspect = computed(() =>
+    Object.values(props.inspectData).toSorted((propa, propb) =>
         propa.class < propb.class ? -1 : propa.class > propb.class ? 1 : 0,
-    );
-});
+    ),
+);
 
-function addDotToTheEnd(value: string) {
+function addDotToTheEnd(value: string): string {
     return !value.endsWith(".") ? value + "." : value;
 }
 
-function setByProperties(props: string[]) {
+function setByProperties(props: string[]): string | null {
     return props ? props.join("<br>") : null;
 }
 
-function inspectClass(index: number, selectedData: any) {
+function inspectClass(
+    index: number,
+    selectedClass: InspectClassDescription,
+): void {
     selectedElementIndex.value = index;
-    const selectedClass = selectedData.realClass || selectedData.class;
     emits("inspect", {
-        className: selectedClass,
-        action: selectedData.action,
+        className: selectedClass.relatedClass || selectedClass.class,
+        action: selectedClass.action,
     });
     document.getElementById("class-props")?.scrollIntoView();
 }
@@ -141,11 +143,11 @@ function inspectClass(index: number, selectedData: any) {
                     </td>
                     <td>
                         <span>{{ addDotToTheEnd(data.description) }}</span>
-                        <span v-if="data.componentRef">
+                        <span v-if="data.relatedComponent">
                             More detail
                             <a
                                 target="_blank"
-                                :href="`/components/${data.componentRef}.html#class-props`">
+                                :href="`/components/${data.relatedComponent}.html#class-props`">
                                 here
                             </a>
                         </span>
@@ -157,8 +159,9 @@ function inspectClass(index: number, selectedData: any) {
                             <i>
                                 <span>
                                     Classes applied have a higher specificity
-                                    than expected
-                                    <span v-html="data.specificity"> </span>
+                                    than expected when
+                                    <b v-html="data.specificity"></b>
+                                    is applied.
                                 </span>
                             </i>
                         </span>
