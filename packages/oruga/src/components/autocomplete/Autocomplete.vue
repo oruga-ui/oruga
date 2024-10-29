@@ -707,14 +707,13 @@ defineExpose({ focus: setFocus, value: inputValue });
                 :ref="(el) => setItemRef(el, groupIndex, optionIndex)"
                 :tag="itemTag"
                 :value="option.value"
-                :class="itemAppliedClasses(option as OptionsItem<T>)"
+                :class="itemAppliedClasses(option)"
                 aria-role="option"
                 :aria-selected="
                     hoveredOption ? option.key === hoveredOption.key : undefined
                 "
                 @click="
-                    (value, event) =>
-                        setSelected(option as OptionsItem<T>, !keepOpen, event)
+                    (value, event) => setSelected(option, !keepOpen, event)
                 ">
                 <!--
                     @slot Override the select option
