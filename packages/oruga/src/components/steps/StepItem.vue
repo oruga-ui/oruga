@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
     step: undefined,
     variant: undefined,
     clickable: undefined,
+    disabled: false,
     visible: true,
     icon: () => getOption("steps.icon"),
     iconPack: () => getOption("steps.iconPack"),
@@ -124,12 +125,18 @@ const navItemClasses = defineClasses(
         computed(() => parent.value?.variant || props.variant),
         computed(() => !!parent.value?.variant || !!props.variant),
     ],
-    ["navItemActiveClass", "o-steps__nav-item-active", null, isActive],
+    ["navItemActiveClass", "o-steps__nav-item--active", null, isActive],
     [
         "navItemPreviousClass",
-        "o-steps__nav-item-previous",
+        "o-steps__nav-item--previous",
         null,
         computed(() => item.value.index < parent.value?.activeIndex),
+    ],
+    [
+        "navItemNextClass",
+        "o-steps__nav-item--next",
+        null,
+        computed(() => item.value.index > parent.value?.activeIndex),
     ],
 );
 
@@ -141,7 +148,14 @@ const stepClasses = defineClasses(
         computed(() => parent.value?.labelPosition),
         computed(() => !!parent.value?.labelPosition),
     ],
-    ["stepClickableClass", "o-steps__step-clickable", null, isClickable],
+    ["stepActiveClass", "o-steps__step--active", null, isActive],
+    ["stepClickableClass", "o-steps__step--clickable", null, isClickable],
+    [
+        "stepDisabledClass",
+        "o-steps__step--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
 );
 
 const stepLabelClasses = defineClasses([

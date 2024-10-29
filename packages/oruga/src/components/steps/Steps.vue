@@ -118,7 +118,10 @@ watch(
     },
 );
 
-const activeItem = ref(items.value[0]);
+const activeItem = ref<StepItem<T>>(
+    items.value.find((item) => item.value === props.modelValue) ||
+        items.value[0],
+);
 
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
@@ -142,7 +145,11 @@ const prevItem = computed(() => {
     if (!activeItem.value) return undefined;
 
     let prevItem: StepItem<T> | undefined;
-    for (let idx = items.value.indexOf(activeItem.value) - 1; idx >= 0; idx--) {
+    let idx =
+        items.value.findIndex(
+            (item) => item.identifier === activeItem.value.identifier,
+        ) - 1;
+    for (; idx >= 0; idx--) {
         if (items.value[idx].visible) {
             prevItem = items.value[idx];
             break;
@@ -154,7 +161,11 @@ const prevItem = computed(() => {
 /** Retrieves the next visible item */
 const nextItem = computed(() => {
     let nextItem: StepItem<T> | undefined;
-    let idx = activeItem.value ? items.value.indexOf(activeItem.value) + 1 : 0;
+    let idx = activeItem.value
+        ? items.value.findIndex(
+              (item) => item.identifier === activeItem.value.identifier,
+          ) + 1
+        : 0;
     for (; idx < items.value.length; idx++) {
         if (items.value[idx].visible) {
             nextItem = items.value[idx];
@@ -188,11 +199,11 @@ function itemClick(item: StepItem<T>): void {
 }
 
 /** Activate next child and deactivate prev child */
-function performAction(newId: T): void {
-    const oldId = activeItem.value.value;
+function performAction(newValue: T): void {
+    const oldValue = activeItem.value.value;
     const oldItem = activeItem.value;
     const newItem =
-        items.value.find((item) => item.value === newId) || items.value[0];
+        items.value.find((item) => item.value === newValue) || items.value[0];
 
     if (oldItem && newItem) {
         oldItem.deactivate(newItem.index);
@@ -200,8 +211,8 @@ function performAction(newId: T): void {
     }
 
     nextTick(() => {
-        vmodel.value = newId;
-        emits("change", newId, oldId as T);
+        vmodel.value = newValue;
+        emits("change", newValue, oldValue as T);
     });
 }
 
@@ -278,12 +289,13 @@ const navigationClasses = defineClasses([
             <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
+                :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
+                :class="childItem.navClasses"
+                role="tab"
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "
-                :class="childItem.navClasses"
-                role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem.value">
                 <span v-if="index > 0" :class="dividerClasses" />

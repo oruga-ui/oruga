@@ -1,10 +1,12 @@
 import { describe, test, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import { shallowRef } from "vue";
+import { nextTick, shallowRef } from "vue";
 
 import OTabs from "../Tabs.vue";
 import OTabItem from "../TabItem.vue";
 import OButton from "@/components/button/Button.vue";
+
+import type { OptionsProp } from "@/composables";
 
 describe("OTab with OTabItem tests", () => {
     const componentWrapper = {
@@ -53,6 +55,7 @@ describe("OTab with OTabItem tests", () => {
         );
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
+        expect(wrapper.html()).toMatchSnapshot();
 
         expect(wrapper.attributes("data-oruga")).toBe("tabs");
 
@@ -128,5 +131,177 @@ describe("OTab with OTabItem tests", () => {
         expect(step.exists()).toBeTruthy();
         const button = step.find('[data-oruga="button"]');
         expect(button.text()).toBe("MyButton");
+    });
+
+    describe("handle navigation correctly", () => {
+        const options: OptionsProp<string> = [
+            { label: "Flint", value: "flint", attrs: { clickable: true } },
+            {
+                label: "Silver",
+                value: "silver",
+                attrs: { clickable: true },
+            },
+            { label: "Vane", value: "vane", attrs: { clickable: true } },
+            { label: "Billy", value: "billy", attrs: { clickable: true } },
+            { label: "Jack", value: "jack", attrs: { clickable: true } },
+        ];
+
+        test("render accordingly when item is clicked", async () => {
+            let currentIndex = 2;
+
+            const wrapper = mount(OTabs, {
+                props: { options, modelValue: options[currentIndex].value },
+            });
+            await nextTick();
+
+            const navElements = wrapper.findAll(".o-tabs__nav-item");
+            expect(navElements).toHaveLength(options.length);
+
+            navElements.forEach((el, idx) => {
+                expect(el.classes("o-tabs__nav-item--previous")).toBe(
+                    idx < currentIndex,
+                );
+                expect(el.classes("o-tabs__nav-item--active")).toBe(
+                    idx == currentIndex,
+                );
+                expect(el.classes("o-tabs__nav-item--next")).toBe(
+                    idx > currentIndex,
+                );
+            });
+
+            currentIndex = 4;
+            let navButton = navElements[currentIndex].find("button");
+            expect(navButton.exists()).toBeTruthy();
+
+            await navButton.trigger("click");
+
+            navElements.forEach((el, idx) => {
+                expect(el.classes("o-tabs__nav-item--previous")).toBe(
+                    idx < currentIndex,
+                );
+                expect(el.classes("o-tabs__nav-item--active")).toBe(
+                    idx == currentIndex,
+                );
+                expect(el.classes("o-tabs__nav-item--next")).toBe(
+                    idx > currentIndex,
+                );
+            });
+
+            currentIndex = 0;
+            navButton = navElements[currentIndex].find("button");
+            expect(navButton.exists()).toBeTruthy();
+
+            await navButton.trigger("click");
+
+            navElements.forEach((el, idx) => {
+                expect(el.classes("o-tabs__nav-item--previous")).toBe(
+                    idx < currentIndex,
+                );
+                expect(el.classes("o-tabs__nav-item--active")).toBe(
+                    idx == currentIndex,
+                );
+                expect(el.classes("o-tabs__nav-item--next")).toBe(
+                    idx > currentIndex,
+                );
+            });
+
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [options[4].value],
+                [options[0].value],
+            ]);
+
+            expect(wrapper.emitted("change")).toStrictEqual([
+                [options[4].value, options[2].value],
+                [options[0].value, options[4].value],
+            ]);
+        });
+    });
+
+    describe("handle options props correctly", () => {
+        test("handle options as primitves correctly", async () => {
+            const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
+
+            const wrapper = mount(OTabs, { props: { options } });
+            await nextTick();
+
+            const navElements = wrapper.findAll(".o-tabs__nav-item");
+            expect(navElements).toHaveLength(options.length);
+
+            const itemElements = wrapper.findAll('[data-oruga="tabs-item"]');
+            expect(itemElements).toHaveLength(options.length);
+
+            navElements.forEach((el, idx) => {
+                expect(el.text()).toBe(String(options[idx]));
+            });
+        });
+
+        test("handle options as object correctly", async () => {
+            const options: OptionsProp = {
+                flint: "Flint",
+                silver: "Silver",
+                vane: "Vane",
+                0: "Zero",
+                1: "One",
+                2: "Two",
+            };
+
+            const wrapper = mount(OTabs, { props: { options } });
+            await nextTick();
+
+            const navElements = wrapper.findAll(".o-tabs__nav-item");
+            expect(navElements).toHaveLength(Object.keys(options).length);
+
+            const optionElements = wrapper.findAll('[data-oruga="tabs-item"]');
+            expect(optionElements).toHaveLength(Object.keys(options).length);
+
+            navElements.forEach((el, idx) => {
+                expect(el.text()).toBe(Object.entries(options)[idx][1]);
+            });
+        });
+
+        test("handle options as options array correctly", async () => {
+            const options: OptionsProp<string | number> = [
+                { label: "Flint", value: "flint", attrs: { content: "flint" } },
+                {
+                    label: "Silver",
+                    value: "silver",
+                    attrs: { clickable: true, content: "silver" },
+                },
+                { label: "Vane", value: "vane", attrs: { content: "abc" } },
+                { label: "Zero", value: 0, attrs: { content: "x" } },
+                {
+                    label: "One",
+                    value: 1,
+                    attrs: { content: "y", disabled: true },
+                },
+                {
+                    label: "Two",
+                    value: 2,
+                    attrs: { clickable: true, content: "test" },
+                },
+            ];
+
+            const wrapper = mount(OTabs, { props: { options } });
+            await nextTick();
+
+            const navElements = wrapper.findAll(".o-tabs__nav-item");
+            expect(navElements).toHaveLength(Object.keys(options).length);
+
+            const optionElements = wrapper.findAll('[data-oruga="tabs-item"]');
+            expect(optionElements).toHaveLength(options.length);
+
+            navElements.forEach((el, idx) => {
+                expect(el.text()).toBe(options[idx].label);
+                const button = el.find("button");
+                expect(button.exists()).toBeTruthy();
+                expect(button.classes("o-tabs__tab--disabled")).toBe(
+                    options[idx].attrs?.disabled || false,
+                );
+            });
+
+            optionElements.forEach((el, idx) => {
+                expect(el.text()).toBe(options[idx].attrs?.content);
+            });
+        });
     });
 });

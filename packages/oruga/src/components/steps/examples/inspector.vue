@@ -43,46 +43,6 @@ const inspectData = [
         },
     },
     {
-        class: "stepClass",
-        description: "Class of the content item",
-        subitem: true,
-    },
-    {
-        class: "navItemClass",
-        description: "Class of the nav item",
-        specificity: "when <b>positionClass</b> is applied",
-        subitem: true,
-    },
-    {
-        class: "navItemActiveClass",
-        description: "Class of the nav item when active",
-        subitem: true,
-    },
-    {
-        class: "navItemPreviousClass",
-        description: "Class of the nav item behind the active one",
-        subitem: true,
-        action: () => {
-            activeStep.value = 2;
-        },
-    },
-    {
-        class: "navItemVariantClass",
-        description:
-            "Class of the nav item with variant (default value by parent steps component)",
-        subitem: true,
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
-            data.variant = "warning";
-        },
-    },
-    {
-        class: "stepsClass",
-        description: "Class of the steps container",
-        specificity: "when <b>positionClass</b> is applied",
-    },
-    {
         class: "animatedClass",
         description: "Class of Steps component when animation gets triggered",
         properties: ["animated"],
@@ -122,9 +82,74 @@ const inspectData = [
         warning: "Click on a marker to see it in action",
     },
     {
-        class: "navigationClass",
-        description: "Class of the Steps component navigation element",
+        class: "navClass",
+        description: "Class of the steps nav container",
+    },
+    {
+        class: "navItemClass",
+        description: "Class of the nav item",
         specificity: "when <b>positionClass</b> is applied",
+        subitem: true,
+    },
+    {
+        class: "navItemActiveClass",
+        description: "Class of the nav item when active",
+        subitem: true,
+    },
+    {
+        class: "navItemPreviousClass",
+        description: "Class of the nav item before the active one",
+        subitem: true,
+        action: () => {
+            activeStep.value = 2;
+        },
+    },
+    {
+        class: "navItemNextClass",
+        description: "CClass of the nav item after the active one",
+        subitem: true,
+        action: () => {
+            activeStep.value = 2;
+        },
+    },
+    {
+        class: "navItemVariantClass",
+        description:
+            "Class of the nav item with variant (default value by parent steps component)",
+        subitem: true,
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (cmp, data) => {
+            data.variant = "warning";
+        },
+    },
+    {
+        class: "stepClass",
+        description: "Class of the content item",
+        subitem: true,
+    },
+    {
+        class: "stepActiveClass",
+        description: "Class of the tab item when active",
+    },
+    {
+        class: "stepClickableClass",
+        description: "Class of the Steps component item when clickable",
+        properties: ["clickable"],
+    },
+    {
+        class: "stepDisabledClass",
+        description: "Class of the Steps component item when disabled",
+        properties: ["disabled"],
+    },
+    {
+        class: "stepLabelPositionClass",
+        description: "Class of the Step component item label when positioned",
+        properties: ["labelPosition"],
+        suffixes: ["bottom", "right", "left"],
+        action: (cmp, data) => {
+            data.labelPosition = "right";
+        },
     },
     {
         class: "stepLabelClass",
@@ -135,23 +160,14 @@ const inspectData = [
         description: "Class of the Step component item icon",
     },
     {
-        class: "stepClass",
-        description: "Class of the Steps component item",
-        specificity: "when <b>itemHeaderActiveClass</b> is applied",
+        class: "stepPanelClass",
+        description: "Class of the step item panel",
+        subitem: true,
     },
     {
-        class: "stepClickableClass",
-        description: "Class of the Steps component item when clickable",
-        properties: ["clickable"],
-    },
-    {
-        class: "stepLabelPositionClass",
-        description: "Class of the Step component item label when positioned",
-        properties: ["labelPosition"],
-        suffixes: ["bottom", "right", "left"],
-        action: (cmp, data) => {
-            data.labelPosition = "right";
-        },
+        class: "navigationClass",
+        description: "Class of the Steps component navigation element",
+        specificity: "when <b>positionClass</b> is applied",
     },
 ];
 </script>

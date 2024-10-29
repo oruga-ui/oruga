@@ -118,6 +118,8 @@ export type StepItemProps<T, C extends Component> = {
      * Could be used to set a completed step to "success" for example
      */
     variant?: string;
+    /** Item will be disabled */
+    disabled?: boolean;
     /**
      * Item can be used directly to navigate.
      * If undefined, previous steps are clickable while the others are not
@@ -149,19 +151,25 @@ type StepItemClasses = Partial<{
     navItemClass: ComponentClass;
     /** Class of the nav item when active */
     navItemActiveClass: ComponentClass;
-    /** Class of the nav item behind the active one */
+    /** Class of the nav item before the active one */
     navItemPreviousClass: ComponentClass;
+    /** Class of the nav item after the active one */
+    navItemNextClass: ComponentClass;
     /** Class of the nav item with variant (default value by parent steps component) */
     navItemVariantClass: ComponentClass;
-    /** Class of the Steps component item */
+    /** Class of the step item */
     stepClass: ComponentClass;
-    /** Class of the Steps component item when clickable */
+    /** Class of the tab item when active */
+    stepActiveClass: ComponentClass;
+    /** Class of the step item when clickable */
     stepClickableClass: ComponentClass;
-    /** Class of the Step component item label when positioned */
+    /** Class of the step item when disabled */
+    stepDisabledClass: ComponentClass;
+    /** Class of the step item label when positioned */
     stepLabelPositionClass: ComponentClass;
-    /** Class of the Step component item label */
+    /** Class of the step item label */
     stepLabelClass: ComponentClass;
-    /** Class of the Step component item icon */
+    /** Class of the step item icon */
     stepIconClass: ComponentClass;
     /** Class of the content item */
     stepPanelClass: ComponentClass;

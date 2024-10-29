@@ -6,11 +6,11 @@ import type { StepItemProps } from "./props";
 
 export type StepItemComponent<T> = StepItemProps<T, Component> & {
     $slots: Slots;
-    isTransitioning: boolean;
     navClasses: ClassBind[];
     classes: ClassBind[];
-    labelClasses: ClassBind[];
     iconClasses: ClassBind[];
+    labelClasses: ClassBind[];
+    isTransitioning: boolean;
     activate: (index: number) => void;
     deactivate: (index: number) => void;
 };
