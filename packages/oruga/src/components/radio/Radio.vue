@@ -1,12 +1,12 @@
-<script setup lang="ts" generic="T extends string | number | boolean | object">
-import { computed, ref, useAttrs, useId, type PropType } from "vue";
+<script setup lang="ts" generic="T">
+import { computed, ref, useAttrs, useId } from "vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ComponentClass } from "@/types";
+import type { RadioProps } from "./props";
 
 /**
  * Select an option from a set
@@ -20,102 +20,19 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The input value state
-     * @type string|number|boolean|object
-     */
-    modelValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("radio.variant"),
-    },
-    /**
-     * Size of the control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("radio.size"),
-    },
-    /** Input label, unnecessary when default slot is used */
-    label: { type: String, default: undefined },
-    /**
-     * Same as native value
-     * @type string|number|boolean|object
-     */
-    nativeValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Same as native required */
-    required: { type: Boolean, default: false },
-    /** Same as native name */
-    name: { type: String, default: undefined },
-    /** Same as native autocomplete options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("radio.autocomplete", "off"),
-    },
-    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
-    id: { type: String, default: () => useId() },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when radio is disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the root element when checked */
-    checkedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the native input element */
-    inputClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the native input element when checked */
-    inputCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the radio label */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the radio size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the radio variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<RadioProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    variant: () => getOption("radio.variant"),
+    size: () => getOption("radio.size"),
+    label: undefined,
+    nativeValue: undefined,
+    disabled: false,
+    required: false,
+    name: undefined,
+    autocomplete: () => getOption("radio.autocomplete", "off"),
+    id: () => useId(),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{

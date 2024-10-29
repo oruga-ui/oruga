@@ -4,10 +4,7 @@ import type { ClassBind } from "@/types";
 
 import type { TabItemProps } from "./props";
 
-export type TabItemComponent<T extends string | number | object> = TabItemProps<
-    T,
-    Component
-> & {
+export type TabItemComponent<T> = TabItemProps<T, Component> & {
     $slots: Slots;
     classes: ClassBind[];
     iconClasses: ClassBind[];
@@ -27,8 +24,4 @@ export type TabsComponent<T> = {
     destroyOnHide: boolean;
 };
 
-export type TabItem<T extends string | number | object> = Omit<
-    ProviderItem<T>,
-    "data"
-> &
-    TabItemComponent<T>;
+export type TabItem<T> = Omit<ProviderItem<T>, "data"> & TabItemComponent<T>;

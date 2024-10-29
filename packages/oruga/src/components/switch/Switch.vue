@@ -1,12 +1,12 @@
-<script setup lang="ts" generic="T extends string | number | boolean | object">
-import { computed, ref, useAttrs, useId, type PropType } from "vue";
+<script setup lang="ts" generic="T">
+import { computed, ref, useAttrs, useId } from "vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ComponentClass } from "@/types";
+import type { SwitchProps } from "./props";
 
 /**
  * Switch between two opposing states
@@ -20,155 +20,24 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The input value state
-     * @type string|number|boolean|object
-     */
-    modelValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("switch.variant"),
-    },
-    /**
-     * Color of the switch when is passive
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    passiveVariant: {
-        type: String,
-        default: () => getOption("switch.passiveVariant"),
-    },
-    /**
-     * Size of the control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("switch.size"),
-    },
-    /** Input label, unnecessary when default slot is used */
-    label: { type: String, default: undefined },
-    /**
-     * Same as native value
-     * @type string|number|boolean|object
-     */
-    nativeValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Same as native required */
-    required: { type: Boolean, default: false },
-    /** Name attribute on native checkbox */
-    name: { type: String, default: undefined },
-    /**
-     * Overrides the returned value when it's checked
-     * @type string|number|boolean|object
-     */
-    trueValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: true,
-    },
-    /**
-     * Overrides the returned value when it's not checked
-     * @type string|number|boolean|object
-     */
-    falseValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: false,
-    },
-    /** Rounded style */
-    rounded: { type: Boolean, default: true },
-    /** Label position */
-    position: { type: String, default: "right" },
-    /** Same as native autocomplete options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("switch.autocomplete", "off"),
-    },
-    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
-    id: { type: String, default: () => useId() },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when switch is disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the outer switch check */
-    switchClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the outer switch check when checked */
-    switchCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the inner switch check */
-    switchCheckClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch when rounded */
-    roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch passive variant */
-    passiveVariantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of switch label position */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Root class of the native input checkbox */
-    inputClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the native input element when checked */
-    inputCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch label */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<SwitchProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    variant: () => getOption("switch.variant"),
+    passiveVariant: () => getOption("switch.passiveVariant"),
+    size: () => getOption("switch.size"),
+    label: undefined,
+    nativeValue: undefined,
+    disabled: false,
+    required: false,
+    name: undefined,
+    trueValue: true,
+    falseValue: false,
+    rounded: true,
+    position: "right",
+    autocomplete: () => getOption("switch.autocomplete", "off"),
+    id: () => useId(),
+    useHtml5Validation: () => getOption("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{

@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number | object">
+<script setup lang="ts" generic="T">
 import { computed, toValue, nextTick, ref, watch, watchEffect } from "vue";
 
 import OStepItem from "../steps/StepItem.vue";
