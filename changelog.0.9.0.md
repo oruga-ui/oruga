@@ -5,59 +5,70 @@ TODO: add programamtic usage changes
 
 # Autocomplete
 
-<!> ~ prop: data -> options (type changed)
-<!> - prop: field
-<!> - prop: formatter
-<!> - prop: groupField
-<!> - prop: groupOptions
+ <!> ~ prop: data -> options (type changed)
+ <!> - prop: field (replaced by strict options type)
+ <!> - prop: formatter (replaced by strict options type)
+ <!> - prop: groupField (replaced by strict options type)
+ <!> - prop: groupOptions (replaced by strict options type)
+ + prop: input (v-model:input)
  + prop: filter
-
  - prop: validationMessage
  + prop: customValidity
- + prop: input (v-model:input)
  
  + event: update:input	
- 
- + type: accepts Number
+
+ + type: remove modelValue type restrictions
  
 # Button
 
+ <!> ~ prop: nativeType -> type (to match same props from other component)
+ <!> ~ prop: role -> ariaRole (to match same props from other component)
+
+
 # Carousel
+
+---
 
 # Checkbox
 
+ + prop: id
  - prop: validationMessage
  + prop: customValidity
- + prop: id
  
+ + type: remove modelValue type restrictions
  
 # Collapse
 
+---
 
 # Datepicker
-
- - prop: validationMessage
- + prop: customValidity
 
  <!> ~ prop: dateCreator -> creator
  <!> ~ prop: dateFormatter -> formatter
  <!> ~ prop: dateParser -> parser
+ - prop: validationMessage
+ + prop: customValidity
 
 # Datetimepicker
 
- - prop: validationMessage
- + prop: customValidity
- 
  <!> ~ prop: datetimeCreator -> creator
  <!> ~ prop: datetimeFormatter -> formatter
  <!> ~ prop: datetimeParser -> parser
-
+ - prop: validationMessage
+ + prop: customValidity
 
 # Dropdown
 
- + prop: desktopModal
  + prop: options
+ + prop: desktopModal
  
+ <!> ~ class: menuMobileOverlayClass -> overlayClass
+ + class: modalClass
+ + class: scrollClipClass
+ + class: noScrollClass
+
+ + type: remove modelValue type restrictions
+
 # Field 
  
  <!> ~ class: bodyHorizontalClass -> horizontalBodyClass 
@@ -66,30 +77,30 @@ TODO: add programamtic usage changes
  <!> ~ class: variantMessageClass -> messageVariantClass
  
 # Icon
- 
- - prop: customClass (use `class` instead)
- 
+
+---
+
 # Input 
  
- - prop: validationMessage
- + prop: customValidity
  + prop: debounce
  + prop: number
+ - prop: validationMessage
+ + prop: customValidity
  
  ~ event: input (only emits string values)
 
-
 # Loading
-
-+ class: noScrollClass
-+ class: scrollClipClass
 
 - prop: container (only available in programmatic usage)
 <!> - prop: onCancel
 <!> - prop: onClose (only available in programmatic usage)
 
++ class: noScrollClass
++ class: scrollClipClass
 
 # Menu
+
+---
 
 # Modal
 
@@ -99,13 +110,12 @@ TODO: add programamtic usage changes
  <!> - prop: onClose (only available in programmatic usage)
  + prop: overlay
  
- 
 # Notification
  
+ ~ prop: active (is not longer avaible in programmatic usage)
  - prop: container (only available in programmatic usage)
  <!> - prop: onCancel
  <!> - prop: onClose (only available in programmatic usage)
- ~ prop: active (is not longer avaible in programmatic usage)
  
 # Pagination
  
