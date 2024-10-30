@@ -96,10 +96,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rounded: boolean;
                 /** Icon pack to use */
                 iconPack: string;
+                /** Accessibility Role attribute to be passed to the button. */
+                ariaRole: string;
                 /** Button tag name */
                 tag: DynamicComponent;
-                /** Accessibility Role attribute to be passed to the button. */
-                role: string;
                 /** Class of the button elements wrapper */
                 wrapperClass: ClassDefinition;
                 /** Class of the button when outlined */
