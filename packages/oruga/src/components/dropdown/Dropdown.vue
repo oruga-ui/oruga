@@ -432,8 +432,9 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
             <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
+                @binding {() => void)} toggle - toggle dropdown active state
             -->
-            <slot name="trigger" :active="isActive">
+            <slot name="trigger" :active="isActive" :toggle="onClick">
                 {{ label }}
             </slot>
         </component>
