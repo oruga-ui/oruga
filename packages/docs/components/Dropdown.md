@@ -81,10 +81,10 @@ sidebarDepth: 2
 
 ### Slots
 
-| Name    | Description                                         | Bindings                                                                                             |
-| ------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| trigger | Override the trigger element, default is label prop | **active** `boolean` - dropdown active state                                                         |
-| default | Place dropdown items here                           | **active** `boolean` - dropdown active state<br/>**toggle** `boolean` - toggle active state function |
+| Name    | Description                                         | Bindings                                                                                                   |
+| ------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| trigger | Override the trigger element, default is label prop | **active** `boolean` - dropdown active state<br/>**toggle** `() =&gt; void` - toggle dropdown active state |
+| default | Place dropdown items here                           | **active** `boolean` - dropdown active state<br/>**toggle** `() =&gt; void` - toggle dropdown active state |
 
 </div>
 

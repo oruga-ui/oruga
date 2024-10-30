@@ -96,10 +96,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rounded: boolean;
                 /** Icon pack to use */
                 iconPack: string;
+                /** Accessibility Role attribute to be passed to the button. */
+                ariaRole: string;
                 /** Button tag name */
                 tag: DynamicComponent;
-                /** Accessibility Role attribute to be passed to the button. */
-                role: string;
                 /** Class of the button elements wrapper */
                 wrapperClass: ClassDefinition;
                 /** Class of the button when outlined */
@@ -766,10 +766,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class for the pagination size */
                 sizeClass: ClassDefinition;
-                /** Class of the prev button */
-                prevButtonClass: ClassDefinition;
-                /** Class of the next button */
-                nextButtonClass: ClassDefinition;
                 /** Class of pagination component when on mobile */
                 mobileClass: ClassDefinition;
                 /** Class of the pagination when rounded */
@@ -807,9 +803,15 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the pagination list items */
                 listItemClass: ClassDefinition;
                 /** Class of the link button */
-                linkClass: ClassDefinition;
+                buttonClass: ClassDefinition;
                 /** Class of the current link */
-                linkCurrentClass: ClassDefinition;
+                buttonCurrentClass: ClassDefinition;
+                /** Class of the disabled link */
+                buttonDisabledClass: ClassDefinition;
+                /** Class of the prev button */
+                buttonPrevClass: ClassDefinition;
+                /** Class of the next button */
+                buttonNextClass: ClassDefinition;
                 /** Class of the pagination ellipsis */
                 ellipsisClass: ClassDefinition;
                 /** Class of the info in `simple` mode */
@@ -818,8 +820,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 orderClass: ClassDefinition;
                 /** Class of the pagination in `simple` mode */
                 simpleClass: ClassDefinition;
-                /** Class of the disabled link */
-                linkDisabledClass: ClassDefinition;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
