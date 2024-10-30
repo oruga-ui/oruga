@@ -144,7 +144,37 @@ TODO: add programamtic usage changes
  
  + prop: options
  
- + type: add type object to modelValue 
+ + type: remove modelValue type restrictions
+
+ <!> ~ class: itemHeaderClass -> navItemClass
+ <!> ~ class: itemHeaderVariantClass -> navItemVariantClass
+ <!> ~ class: itemHeaderActiveClass -> navItemActiveClass
+ <!> ~ class: itemHeaderPreviousClass -> navItemPreviousClass
+ + class: navItemNextClass
+ <!> ~ class: stepLinkClass -> stepClass
+ <!> ~ class: stepLinkLabelPositionClass -> stepLabelPositionClass
+ <!> ~ class: stepLinkClickableClass -> stepClickableClass
+ + class: stepActiveClass
+ + class: stepDisabledClass
+ <!> ~ class: stepLinkLabelClass -> stepLabelClass
+ + class: stepIconClass
+ <!> ~ class: itemClass -> stepPanelClass
+ <!> ~ class: rootClass (default class changed)
+ <!> ~ class: verticalClass (default class changed)
+ <!> ~ class: positionClass (default class changed)
+ <!> ~ class: stepsClass -> navClass
+ <!> ~ class: animatedClass (default class changed)
+ <!> ~ class: stepDividerClass -> dividerClass
+ <!> ~ class: stepMarkerClass -> markerClass
+ <!> ~ class: stepMarkerRoundedClass -> markerRoundedClass
+ <!> ~ class: stepContentClass -> contentClass
+ <!> ~ class: stepContentTransitioningClass -> transitioningClass
+ <!> ~ class: stepNavigationClass -> navigationClass
+
+
+# StepItem
+
+ + prop: disabled
  
 # Switch
 
@@ -200,10 +230,14 @@ TODO: add programamtic usage changes
  <!> ~ class: itemHeaderIconClass -> tabIconClass
  <!> ~ class: itemHeaderTextClass -> tabLabelClass
  <!> ~ class: itemHeaderTypeClass -> tabTypeClass
+ <!> ~ class: tabTextClass -> tabLabelClass
+ + class: navItemActiveClass
+ + class: navItemPreviousClass
+ + class: navItemNextClass
  
  + props: options
  
- + type: add type object to modelValue 
+ + type: remove modelValue type restrictions
  
 # Taginput
 
