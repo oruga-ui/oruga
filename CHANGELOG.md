@@ -1,3 +1,15 @@
+# [0.9.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.3...v0.9.0-pre.4) (2024-10-30)
+
+
+### Features
+
+* **button:** props name adjustment ([#1088](https://github.com/oruga-ui/oruga/issues/1088)) ([1296348](https://github.com/oruga-ui/oruga/commit/1296348514847ae3ff6ca46fbd03a59233bdc067))
+* **dropdown:** add `toggle` prop to `trigger` slot ([#1086](https://github.com/oruga-ui/oruga/issues/1086)) ([c9b51f3](https://github.com/oruga-ui/oruga/commit/c9b51f3aec79454d33268ea979c262429190b5f1))
+* **pagination:** adjust class names to match other components class patterns ([#1087](https://github.com/oruga-ui/oruga/issues/1087)) ([54c3706](https://github.com/oruga-ui/oruga/commit/54c37068a2e14ae50a057abbce1c117723720c50))
+* **steps:** adjust class names to match other components class patterns ([#1084](https://github.com/oruga-ui/oruga/issues/1084)) ([6466757](https://github.com/oruga-ui/oruga/commit/6466757509443750c0f6a41adf64f4ed3e92da3c))
+
+
+
 # [0.9.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.2...v0.9.0-pre.3) (2024-10-25)
 
 
@@ -24,7 +36,7 @@
 * **table:** add `addons` to internal mobile sort field wrapper ([#1051](https://github.com/oruga-ui/oruga/issues/1051)) ([781849e](https://github.com/oruga-ui/oruga/commit/781849ee8390b17f4c096dff1cb91ea3dfcc37af))
 * **tabs|steps:** add `component` prop to item ([#1071](https://github.com/oruga-ui/oruga/issues/1071)) ([d3ea497](https://github.com/oruga-ui/oruga/commit/d3ea497942e4cace63bfb1960747dee8106431d7))
 * **tabs:** update class names ([#1062](https://github.com/oruga-ui/oruga/issues/1062)) ([4bfab60](https://github.com/oruga-ui/oruga/commit/4bfab60d2638d15b50a5cd8df8c0eaa476fcddac))
-* **type:** enhance `component` prop type ([#1075](https://github.com/oruga-ui/oruga/issues/1075)) ([73f3801](https://github.com/oruga-ui/oruga/commit/73f38010c9482ccde5ab656affcb256af021f178))
+* **types:** enhance `component` prop type ([#1075](https://github.com/oruga-ui/oruga/issues/1075)) ([73f3801](https://github.com/oruga-ui/oruga/commit/73f38010c9482ccde5ab656affcb256af021f178))
 * **types:** update tsconfig | add `strictNullChecks` definition ([#1066](https://github.com/oruga-ui/oruga/issues/1066)) ([923f887](https://github.com/oruga-ui/oruga/commit/923f887c4314acd33ed3c75a7cb45e0e061fe055))
 
 
