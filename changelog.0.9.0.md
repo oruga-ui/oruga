@@ -1,8 +1,3 @@
-TODO: add loading new classes
-TODO: compare default class changes
-TODO: check dropdown-item / NOtificationNotice description not rendered
-TODO: add programamtic usage changes
-
 # Autocomplete
 
  <!> ~ prop: data -> options (type changed)
@@ -91,12 +86,14 @@ TODO: add programamtic usage changes
 
 # Loading
 
-- prop: container (only available in programmatic usage)
-<!> - prop: onCancel
-<!> - prop: onClose (only available in programmatic usage)
+ - prop: container (only available in programmatic usage)
+ <!> - prop: onCancel
+ <!> - prop: onClose (only available in programmatic usage)
 
-+ class: noScrollClass
-+ class: scrollClipClass
+ + class: noScrollClass
+ + class: scrollClipClass
+
+ <!> ~ programmatic: interface changed 
 
 # Menu
 
@@ -109,6 +106,8 @@ TODO: add programamtic usage changes
  <!> - prop: onCancel
  <!> - prop: onClose (only available in programmatic usage)
  + prop: overlay
+
+ <!> ~ programmatic: interface changed
  
 # Notification
  
@@ -117,45 +116,52 @@ TODO: add programamtic usage changes
  <!> - prop: onCancel
  <!> - prop: onClose (only available in programmatic usage)
  
+ <!> ~ programmatic: interface changed
+
 # Pagination
- 
+
+ <!> ~ class: linkClass -> buttonClass 
+ <!> ~ class: linkCurrentClass -> buttonCurrentClass 
+ <!> ~ class: linkDisabledClass -> buttonDisabledClass 
+ <!> ~ class: prevButtonClass -> buttonPrevClass 
+ <!> ~ class: nextButtonClass -> buttonNextClass 
  
 # Radio
 
- + prop: customValidity (check this!?!?!)
  + prop: id
+ + prop: customValidity
  
- + type: add type object to modelValue 
+ + type: remove modelValue type restrictions
  
 # Select
 
+ <!> ~ prop: options (type changed)
  - prop: validationMessage
  + prop: customValidity
- + prop: customValidation (check this!?!?!)
- <!> ~ prop: options (type changed)
  
 # Sidebar
 
+ - prop: variant
  - prop: container (only available in programmatic usage)
  <!> - prop: destroyOnHide (no done by default for programmatic usage)
  <!> - prop: onCancel
  <!> - prop: onClose (only available in programmatic usage)
- - prop: variant
  
+ <!> ~ programmatic: interface changed
+
 # Skeleton
 
+---
 
 # Slider
 
- <!> ~ prop: customFormatter -> formatter
  + prop: range
+ <!> ~ prop: customFormatter -> formatter
 
 # Steps
  
  + prop: options
  
- + type: remove modelValue type restrictions
-
  <!> ~ class: itemHeaderClass -> navItemClass
  <!> ~ class: itemHeaderVariantClass -> navItemVariantClass
  <!> ~ class: itemHeaderActiveClass -> navItemActiveClass
@@ -172,8 +178,8 @@ TODO: add programamtic usage changes
  <!> ~ class: rootClass (default class changed)
  <!> ~ class: verticalClass (default class changed)
  <!> ~ class: positionClass (default class changed)
- <!> ~ class: stepsClass -> navClass
  <!> ~ class: animatedClass (default class changed)
+ <!> ~ class: stepsClass -> navClass
  <!> ~ class: stepDividerClass -> dividerClass
  <!> ~ class: stepMarkerClass -> markerClass
  <!> ~ class: stepMarkerRoundedClass -> markerRoundedClass
@@ -181,6 +187,7 @@ TODO: add programamtic usage changes
  <!> ~ class: stepContentTransitioningClass -> transitioningClass
  <!> ~ class: stepNavigationClass -> navigationClass
 
+ + type: remove modelValue type restrictions
 
 # StepItem
 
@@ -189,32 +196,26 @@ TODO: add programamtic usage changes
 # Switch
 
  + prop: id
- + prop: customValidation (check this
+ + prop: customValidity
  
- + type: add type object to modelValue 
+ + type: remove modelValue type restrictions
  
 # Table
 
- ~ prop: column (type changed)
- ~ prop: data (type changed)
+ <!> ~ prop: column (type changed)
  + prop: customCompare
- - prop: customRowKey
- - prop: customIsChecked
- - prop: detailKey
- + props: detailedRows
+ <!> ~ prop: customRowKey -> rowKey
+ <!> ~ prop: customIsChecked -> isRowChecked (to match other props name pattern)
+ <!> ~ props: hasDetailedVisible -> isDetailedVisible (to match other props name pattern)
+ - prop: detailKey (use rowKey instead)
  + props: emptyIcon
  + props: emptyIconSize
  + props: emptyLabel
  + props: filtersIcon
  + props: filtersPlaceholder
- - props: hasDetailedVisible
- + props: isDetailedVisible
- + props: isRowChecked
  + props: loadingIcon
  + props: loadingLabel
- - props: openedDetailed -> detailedRows
- + props: rowKey
- - props: rowClass
+ <!> ~ props: openedDetailed -> detailedRows (to match props name pattern)
  + props: selectable
  + props: tdAttrs
  + props: thAttrs
@@ -228,11 +229,12 @@ TODO: add programamtic usage changes
 
  + props: formatter
  
- ~ types: better type slots
+ ~ types: improve slots type
  
 # Tabs
 
- <!> ~ class: itemWrapperClass -> navClass (check - weg?!?!)
+ <!> ~ class: navTabsClass -> navClass
+ <!> ~ class: itemWrapperClass -> navItemClass
  <!> ~ class: itemClass -> tabPanelClass
  <!> ~ class: itemHeaderActiveClass -> tabActiveClass
  <!> ~ class: itemHeaderClass -> tabClass
@@ -251,30 +253,32 @@ TODO: add programamtic usage changes
  
 # Taginput
 
+ + prop: input (v-model:input)
+ - props: allowAutocomplete 
+ <!> ~ props: data -> options (type changed)
+ <!> - prop: field (replaced by strict options type)
+ <!> - prop: groupField (replaced by strict options type)
+ <!> - prop: groupOptions (replaced by strict options type)
+ <!> ~ props: beforeAdding -> validateItem
+ + prop: filter
  - prop: validationMessage
  + prop: customValidity
- 
- - props: allowAutocomplete
- <!> ~ props: beforeAdding -> validateItem
- <!> ~ props: data -> options (type changed)
- - prop: field
- - prop: groupField
- - prop: groupOptions
- + prop: filter
- + prop: input (v-model:input)
  
  + event: update:input
  
 # Timepicker
 
- - prop: validationMessage
- + prop: customValidity
- 
  <!> ~ prop: timeCreator -> creator
  <!> ~ prop: timeFormatter -> formatter
  <!> ~ prop: timeParser -> parser
+ - prop: validationMessage
+ + prop: customValidity
  
 # Tooltip
 
  - prop: validationMessage
  + prop: customValidity
+
+# Upload 
+
+---
