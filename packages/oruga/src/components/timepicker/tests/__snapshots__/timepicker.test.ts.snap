@@ -7,6 +7,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
       <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
+                @binding {() => void} toggle - toggle dropdown active state
             -->
       <div data-oruga="input" class="o-input__wrapper"><input id="v-0" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
         <!--v-if-->
@@ -21,7 +22,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
         <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
-                        @binding {boolean} toggle - toggle active state function
+                        @binding {() => void} toggle - toggle dropdown active state
                     -->
         <div class="o-tpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false">
           <!--

@@ -49,6 +49,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
     $slots: slots,
+    navClasses: navItemClasses.value,
     classes: tabClasses.value,
     iconClasses: tabIconClasses.value,
     labelClasses: tabLabelClasses.value,
@@ -110,9 +111,31 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
+const navItemClasses = defineClasses(
+    ["navItemClass", "o-tabs__nav-item"],
+    ["navItemActiveClass", "o-tabs__nav-item--active", null, isActive],
+    [
+        "navItemPreviousClass",
+        "o-tabs__nav-item--previous",
+        null,
+        computed(() => item.value.index < parent.value?.activeIndex),
+    ],
+    [
+        "navItemNextClass",
+        "o-tabs__nav-item--next",
+        null,
+        computed(() => item.value.index > parent.value?.activeIndex),
+    ],
+);
+
 const tabClasses = defineClasses(
     ["tabClass", "o-tabs__tab"],
-    ["tabTypeClass", "o-tabs__tab--", parent.value.type, !!parent.value.type],
+    [
+        "tabTypeClass",
+        "o-tabs__tab--",
+        computed(() => parent.value.type),
+        computed(() => !!parent.value.type),
+    ],
     ["tabActiveClass", "o-tabs__tab--active", null, isActive],
     [
         "tabDisabledClass",
@@ -124,7 +147,7 @@ const tabClasses = defineClasses(
 
 const tabIconClasses = defineClasses(["tabIconClass", "o-tabs__tab-icon"]);
 
-const tabLabelClasses = defineClasses(["tabTextClass", "o-tabs__tab-text"]);
+const tabLabelClasses = defineClasses(["tabLabelClass", "o-tabs__tab-label"]);
 
 const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
 </script>

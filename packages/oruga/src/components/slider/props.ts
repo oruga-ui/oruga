@@ -67,24 +67,24 @@ type SelectClasses = Partial<{
     trackClass: ComponentClass;
     /** Class of the filled part of the slider */
     fillClass: ComponentClass;
+    /** Class when slider is disabled */
+    disabledClass: ComponentClass;
+    /** Class of the slider variant */
+    variantClass: ComponentClass;
+    /** Class of the thumb wrapper */
+    thumbWrapperClass: ComponentClass;
+    /** Class to display on the wrapper element when the slider is dragged */
+    thumbWrapperDraggingClass: ComponentClass;
+    /** Class of the thumb */
+    thumbClass: ComponentClass;
     /** Class when the slider is rounded */
     thumbRoundedClass: ComponentClass;
     /** Class when the thumb gets dragged */
     thumbDraggingClass: ComponentClass;
-    /** Class when slider is disabled */
-    disabledClass: ComponentClass;
-    /** Class of the thumb wrapper */
-    thumbWrapperClass: ComponentClass;
-    /** Class of the thumb */
-    thumbClass: ComponentClass;
-    /** Class of the slider variant */
-    variantClass: ComponentClass;
     /** Class of slider tick */
     tickClass: ComponentClass;
     /** Class when slider tick is hidden */
     tickHiddenClass: ComponentClass;
     /** Class of tick label */
     tickLabelClass: ComponentClass;
-    /** Class to display on the wrapper element when the slider is dragged */
-    thumbWrapperDraggingClass: ComponentClass;
 }>;

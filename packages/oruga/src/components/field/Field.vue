@@ -331,13 +331,13 @@ const horizontalBodyClasses = defineClasses([
 
 const innerFieldClasses = defineClasses(
     ["rootClass", "o-field"],
+    ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
     [
         "groupMultilineClass",
         "o-field--grouped-multiline",
         null,
         computed(() => props.groupMultiline),
     ],
-    ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
     [
         "addonsClass",
         "o-field--addons",

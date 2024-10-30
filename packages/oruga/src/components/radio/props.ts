@@ -37,6 +37,13 @@ export type RadioProps<T> = {
     id?: string;
     /** Enable html 5 native validation */
     useHtml5Validation?: boolean;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?:
+        | string
+        | ((
+              currentValue: T | null | undefined,
+              state: ValidityState,
+          ) => string);
 } & RadioClasses;
 
 // class props (will not be displayed in the docs)

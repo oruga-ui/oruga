@@ -83,6 +83,7 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed<TabsComponent<ModelValue>>(() => ({
     activeValue: vmodel.value,
+    activeIndex: activeItem.value?.index || 0,
     type: props.type,
     vertical: props.vertical,
     animated: props.animated,
@@ -115,7 +116,10 @@ watch(
     },
 );
 
-const activeItem = ref(items.value[0]);
+const activeItem = ref<TabItem<T>>(
+    items.value.find((item) => item.value === props.modelValue) ||
+        items.value[0],
+);
 
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
@@ -125,10 +129,6 @@ watchEffect(() => {
 });
 
 const activeIndex = computed(() => activeItem.value.index);
-
-function isActive(item: TabItem<T>): boolean {
-    return item.value === activeItem.value.value;
-}
 
 const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
@@ -192,11 +192,11 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
 }
 
 /** Activate next child and deactivate prev child */
-function performAction(newId: T): void {
-    const oldId = vmodel.value;
+function performAction(newValue: T): void {
+    const oldValue = vmodel.value;
     const oldItem = activeItem.value;
     const newItem =
-        items.value.find((item) => item.value === newId) || items.value[0];
+        items.value.find((item) => item.value === newValue) || items.value[0];
 
     if (oldItem && newItem) {
         oldItem.deactivate(newItem.index);
@@ -204,8 +204,8 @@ function performAction(newId: T): void {
     }
 
     nextTick(() => {
-        vmodel.value = newId;
-        emits("change", newId, oldId);
+        vmodel.value = newValue;
+        emits("change", newValue, oldValue);
     });
 }
 
@@ -256,8 +256,6 @@ const navClasses = defineClasses(
     ],
 );
 
-const navItemClasses = defineClasses(["navItemClass", "o-tabs__nav-item"]);
-
 const contentClasses = defineClasses(
     ["contentClass", "o-tabs__content"],
     [
@@ -285,20 +283,18 @@ const contentClasses = defineClasses(
                 v-show="childItem.visible"
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
-                :class="navItemClasses"
+                :class="childItem.navClasses"
                 role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="
-                    isActive(childItem as TabItem<T>) ? 'true' : 'false'
-                ">
+                :aria-selected="childItem.value === activeItem.value">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
                     :class="childItem.classes"
-                    @click="tabClick(childItem as TabItem<T>)"
-                    @keydown.enter="tabClick(childItem as TabItem<T>)"
+                    @click="tabClick(childItem)"
+                    @keydown.enter="tabClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"
@@ -312,8 +308,8 @@ const contentClasses = defineClasses(
                     role="button"
                     :tabindex="0"
                     :class="childItem.classes"
-                    @click="tabClick(childItem as TabItem<T>)"
-                    @keydown.enter="tabClick(childItem as TabItem<T>)"
+                    @click="tabClick(childItem)"
+                    @keydown.enter="tabClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"

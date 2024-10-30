@@ -71,8 +71,6 @@ type TabsClasses = Partial<{
     navPositionClass: ComponentClass;
     /** Type of the navigation */
     navTypeClass: ComponentClass;
-    /** Class of the tab item */
-    navItemClass: ComponentClass;
     /** Class of the tab content */
     contentClass: ComponentClass;
     /** Class of the tab content when transitioning */
@@ -114,7 +112,13 @@ export type TabItemProps<T, C extends Component> = {
 // class props (will not be displayed in the docs)
 type TabItemClasses = Partial<{
     /** Class of the tab item */
-    tabPanelClass: ComponentClass;
+    navItemClass: ComponentClass;
+    /** Class of the nav item when active */
+    navItemActiveClass: ComponentClass;
+    /** Class of the nav item before the active one */
+    navItemPreviousClass: ComponentClass;
+    /** Class of the nav item after the active one */
+    navItemNextClass: ComponentClass;
     /** Class of the tab item */
     tabClass: ComponentClass;
     /** Class of the tab item when active */
@@ -127,4 +131,6 @@ type TabItemClasses = Partial<{
     tabIconClass: ComponentClass;
     /** Class of the tab item label */
     tabLabelClass: ComponentClass;
+    /** Class of the tab item */
+    tabPanelClass: ComponentClass;
 }>;

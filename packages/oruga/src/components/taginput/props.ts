@@ -85,7 +85,7 @@ export type TaginputProps<T> = {
     customValidity?:
         | string
         | ((
-              currentValue: T | null | undefined,
+              currentValue: T[] | null | undefined,
               state: ValidityState,
           ) => string);
     /**

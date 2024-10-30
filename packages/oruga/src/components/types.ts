@@ -96,10 +96,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rounded: boolean;
                 /** Icon pack to use */
                 iconPack: string;
+                /** Accessibility Role attribute to be passed to the button. */
+                ariaRole: string;
                 /** Button tag name */
                 tag: DynamicComponent;
-                /** Accessibility Role attribute to be passed to the button. */
-                role: string;
                 /** Class of the button elements wrapper */
                 wrapperClass: ClassDefinition;
                 /** Class of the button when outlined */
@@ -178,30 +178,30 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         checkbox?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Size of the control */
-                size: string;
-                /** Class of the checkbox input */
-                inputClass: ClassDefinition;
-                /** Class when checkbox is disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the checkbox size */
-                sizeClass: ClassDefinition;
-                /** Class of the checkbox variant */
-                variantClass: ClassDefinition;
                 /** Color of the control */
                 variant: string;
+                /** Size of the control */
+                size: string;
                 /** Same as native autocomplete options to use in HTML5 validation */
                 autocomplete: string;
-                /** Class of the checkbox labe */
-                labelClass: ClassDefinition;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class when checkbox is disabled */
+                disabledClass: ClassDefinition;
                 /** Class of the root element when checked */
                 checkedClass: ClassDefinition;
+                /** Class of the checkbox input */
+                inputClass: ClassDefinition;
                 /** Class of the checkbox input when checked */
                 inputCheckedClass: ClassDefinition;
                 /** Class when checkbox is indeterminate */
                 indeterminateClass: ClassDefinition;
+                /** Class of the checkbox labe */
+                labelClass: ClassDefinition;
+                /** Class of the checkbox size */
+                sizeClass: ClassDefinition;
+                /** Class of the checkbox variant */
+                variantClass: ClassDefinition;
             }>;
         collapse?: ComponentConfigBase &
             Partial<{
@@ -766,10 +766,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class for the pagination size */
                 sizeClass: ClassDefinition;
-                /** Class of the prev button */
-                prevButtonClass: ClassDefinition;
-                /** Class of the next button */
-                nextButtonClass: ClassDefinition;
                 /** Class of pagination component when on mobile */
                 mobileClass: ClassDefinition;
                 /** Class of the pagination when rounded */
@@ -807,9 +803,15 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the pagination list items */
                 listItemClass: ClassDefinition;
                 /** Class of the link button */
-                linkClass: ClassDefinition;
+                buttonClass: ClassDefinition;
                 /** Class of the current link */
-                linkCurrentClass: ClassDefinition;
+                buttonCurrentClass: ClassDefinition;
+                /** Class of the disabled link */
+                buttonDisabledClass: ClassDefinition;
+                /** Class of the prev button */
+                buttonPrevClass: ClassDefinition;
+                /** Class of the next button */
+                buttonNextClass: ClassDefinition;
                 /** Class of the pagination ellipsis */
                 ellipsisClass: ClassDefinition;
                 /** Class of the info in `simple` mode */
@@ -818,33 +820,31 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 orderClass: ClassDefinition;
                 /** Class of the pagination in `simple` mode */
                 simpleClass: ClassDefinition;
-                /** Class of the disabled link */
-                linkDisabledClass: ClassDefinition;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the radio size */
-                sizeClass: ClassDefinition;
-                /** Class of the native input element */
-                inputClass: ClassDefinition;
-                /** Class when radio is disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the radio variant */
-                variantClass: ClassDefinition;
-                /** Size of the control */
-                size: string;
                 /** Color of the control */
                 variant: string;
+                /** Size of the control */
+                size: string;
                 /** Same as native autocomplete options to use in HTML5 validation */
                 autocomplete: string;
-                /** Class of the radio label */
-                labelClass: ClassDefinition;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class when radio is disabled */
+                disabledClass: ClassDefinition;
                 /** Class of the root element when checked */
                 checkedClass: ClassDefinition;
+                /** Class of the native input element */
+                inputClass: ClassDefinition;
                 /** Class of the native input element when checked */
                 inputCheckedClass: ClassDefinition;
+                /** Class of the radio label */
+                labelClass: ClassDefinition;
+                /** Class of the radio size */
+                sizeClass: ClassDefinition;
+                /** Class of the radio variant */
+                variantClass: ClassDefinition;
             }>;
         select?: ComponentConfigBase &
             Partial<{
@@ -996,26 +996,26 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 trackClass: ClassDefinition;
                 /** Class of the filled part of the slider */
                 fillClass: ClassDefinition;
+                /** Class when slider is disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the slider variant */
+                variantClass: ClassDefinition;
+                /** Class of the thumb wrapper */
+                thumbWrapperClass: ClassDefinition;
+                /** Class to display on the wrapper element when the slider is dragged */
+                thumbWrapperDraggingClass: ClassDefinition;
+                /** Class of the thumb */
+                thumbClass: ClassDefinition;
                 /** Class when the slider is rounded */
                 thumbRoundedClass: ClassDefinition;
                 /** Class when the thumb gets dragged */
                 thumbDraggingClass: ClassDefinition;
-                /** Class when slider is disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the thumb wrapper */
-                thumbWrapperClass: ClassDefinition;
-                /** Class of the thumb */
-                thumbClass: ClassDefinition;
-                /** Class of the slider variant */
-                variantClass: ClassDefinition;
                 /** Class of slider tick */
                 tickClass: ClassDefinition;
                 /** Class when slider tick is hidden */
                 tickHiddenClass: ClassDefinition;
                 /** Class of tick label */
                 tickLabelClass: ClassDefinition;
-                /** Class to display on the wrapper element when the slider is dragged */
-                thumbWrapperDraggingClass: ClassDefinition;
             }>;
         steps?: ComponentConfigBase &
             Partial<{
@@ -1027,16 +1027,32 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemTag: DynamicComponent;
                 /** Role attribute to be passed to the div wrapper for better accessibility */
                 ariaRole: string;
-                /** Class of the content item */
-                itemClass: ClassDefinition;
                 /** Class of the nav item */
-                itemHeaderClass: ClassDefinition;
+                navItemClass: ClassDefinition;
                 /** Class of the nav item when active */
-                itemHeaderActiveClass: ClassDefinition;
-                /** Class of the nav item behind the active one */
-                itemHeaderPreviousClass: ClassDefinition;
+                navItemActiveClass: ClassDefinition;
+                /** Class of the nav item before the active one */
+                navItemPreviousClass: ClassDefinition;
+                /** Class of the nav item after the active one */
+                navItemNextClass: ClassDefinition;
                 /** Class of the nav item with variant (default value by parent steps component) */
-                itemHeaderVariantClass: ClassDefinition;
+                navItemVariantClass: ClassDefinition;
+                /** Class of the step item */
+                stepClass: ClassDefinition;
+                /** Class of the tab item when active */
+                stepActiveClass: ClassDefinition;
+                /** Class of the step item when clickable */
+                stepClickableClass: ClassDefinition;
+                /** Class of the step item when disabled */
+                stepDisabledClass: ClassDefinition;
+                /** Class of the step item label when positioned */
+                stepLabelPositionClass: ClassDefinition;
+                /** Class of the step item label */
+                stepLabelClass: ClassDefinition;
+                /** Class of the step item icon */
+                stepIconClass: ClassDefinition;
+                /** Class of the content item */
+                stepPanelClass: ClassDefinition;
                 /** Color of the control */
                 variant: string;
                 /** Step size */
@@ -1069,69 +1085,61 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 verticalClass: ClassDefinition;
                 /** Class of the Steps component when is vertical and its position changes */
                 positionClass: ClassDefinition;
-                /** Class of the steps container */
-                stepsClass: ClassDefinition;
-                /** Class of Steps component when animation gets triggered */
-                animatedClass: ClassDefinition;
-                /** Class of the Steps markers trigger when are rounded */
-                stepMarkerRoundedClass: ClassDefinition;
-                /** Class of the Steps component dividers */
-                stepDividerClass: ClassDefinition;
-                /** Class of the Steps component marker */
-                stepMarkerClass: ClassDefinition;
-                /** Class of the Steps component content */
-                stepContentClass: ClassDefinition;
-                /** Class of the Steps component content when transition is happening */
-                stepContentTransitioningClass: ClassDefinition;
-                /** Class of the Steps component navigation element */
-                stepNavigationClass: ClassDefinition;
-                /** Class of the Steps component link */
-                stepLinkClass: ClassDefinition;
-                /** Class of the Steps component link when clickable */
-                stepLinkClickableClass: ClassDefinition;
-                /** Class of the Step component link label */
-                stepLinkLabelClass: ClassDefinition;
-                /** Class of the Step component link label when positioned */
-                stepLinkLabelPositionClass: ClassDefinition;
                 /** Class of steps component when on mobile */
                 mobileClass: ClassDefinition;
+                /** Class of the steps nav container */
+                navClass: ClassDefinition;
+                /** Class of Steps component when animation gets triggered */
+                animatedClass: ClassDefinition;
+                /** Class of the Steps component dividers */
+                dividerClass: ClassDefinition;
+                /** Class of the Steps markers trigger when are rounded */
+                markerRoundedClass: ClassDefinition;
+                /** Class of the Steps component marker */
+                markerClass: ClassDefinition;
+                /** Class of the Steps component content */
+                contentClass: ClassDefinition;
+                /** Class of the Steps component content when transition is happening */
+                transitioningClass: ClassDefinition;
+                /** Class of the Steps component navigation element */
+                navigationClass: ClassDefinition;
             }>;
         switch?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the switch size */
-                sizeClass: ClassDefinition;
-                /** Root class of the native input checkbox */
-                inputClass: ClassDefinition;
-                /** Class of the switch when rounded */
-                roundedClass: ClassDefinition;
-                /** Class when switch is disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the switch variant */
-                variantClass: ClassDefinition;
-                /** Size of the control */
-                size: string;
                 /** Color of the control */
                 variant: string;
-                /** Same as native autocomplete options to use in HTML5 validation */
-                autocomplete: string;
-                /** Class of switch label position */
-                positionClass: ClassDefinition;
-                /** Class of the switch label */
-                labelClass: ClassDefinition;
-                /** Class of the native input element when checked */
-                inputCheckedClass: ClassDefinition;
                 /** Color of the switch when is passive */
                 passiveVariant: string;
+                /** Size of the control */
+                size: string;
+                /** Same as native autocomplete options to use in HTML5 validation */
+                autocomplete: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class when switch is disabled */
+                disabledClass: ClassDefinition;
                 /** Class of the outer switch check */
                 switchClass: ClassDefinition;
                 /** Class of the outer switch check when checked */
                 switchCheckedClass: ClassDefinition;
                 /** Class of the inner switch check */
                 switchCheckClass: ClassDefinition;
+                /** Class of the switch when rounded */
+                roundedClass: ClassDefinition;
                 /** Class of the switch passive variant */
                 passiveVariantClass: ClassDefinition;
+                /** Class of switch label position */
+                positionClass: ClassDefinition;
+                /** Root class of the native input checkbox */
+                inputClass: ClassDefinition;
+                /** Class of the native input element when checked */
+                inputCheckedClass: ClassDefinition;
+                /** Class of the switch label */
+                labelClass: ClassDefinition;
+                /** Class of the switch size */
+                sizeClass: ClassDefinition;
+                /** Class of the switch variant */
+                variantClass: ClassDefinition;
             }>;
         table?: ComponentConfigBase &
             Partial<{
@@ -1301,7 +1309,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Role attribute to be passed to the div wrapper for better accessibility */
                 ariaRole: string;
                 /** Class of the tab item */
-                tabPanelClass: ClassDefinition;
+                navItemClass: ClassDefinition;
+                /** Class of the nav item when active */
+                navItemActiveClass: ClassDefinition;
+                /** Class of the nav item before the active one */
+                navItemPreviousClass: ClassDefinition;
+                /** Class of the nav item after the active one */
+                navItemNextClass: ClassDefinition;
                 /** Class of the tab item */
                 tabClass: ClassDefinition;
                 /** Class of the tab item when active */
@@ -1314,6 +1328,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tabIconClass: ClassDefinition;
                 /** Class of the tab item label */
                 tabLabelClass: ClassDefinition;
+                /** Class of the tab item */
+                tabPanelClass: ClassDefinition;
                 /** Color of the control */
                 variant: string;
                 /** Tab size */
@@ -1346,8 +1362,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 navPositionClass: ClassDefinition;
                 /** Type of the navigation */
                 navTypeClass: ClassDefinition;
-                /** Class of the tab item */
-                navItemClass: ClassDefinition;
                 /** Class of the tab content */
                 contentClass: ClassDefinition;
                 /** Class of the tab content when transitioning */

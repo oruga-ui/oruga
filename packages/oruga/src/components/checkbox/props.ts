@@ -53,7 +53,7 @@ export type CheckboxProps<T> = {
     customValidity?:
         | string
         | ((
-              currentValue: boolean | null | undefined,
+              currentValue: T | T[] | null | undefined,
               state: ValidityState,
           ) => string);
 } & CheckboxClasses;

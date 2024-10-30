@@ -14,7 +14,6 @@ import {
     useMatchMedia,
 } from "@/composables";
 
-import type { ClassBind } from "@/types";
 import type { StepItem, StepItemComponent, StepsComponent } from "./types";
 import type { StepsProps } from "./props";
 
@@ -86,6 +85,7 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 const provideData = computed<StepsComponent<ModelValue>>(() => ({
     activeValue: vmodel.value,
     activeIndex: activeItem.value?.index || 0,
+    labelPosition: props.labelPosition,
     vertical: props.vertical,
     animated: props.animated,
     animation: props.animation,
@@ -118,7 +118,10 @@ watch(
     },
 );
 
-const activeItem = ref(items.value[0]);
+const activeItem = ref<StepItem<T>>(
+    items.value.find((item) => item.value === props.modelValue) ||
+        items.value[0],
+);
 
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
@@ -142,7 +145,11 @@ const prevItem = computed(() => {
     if (!activeItem.value) return undefined;
 
     let prevItem: StepItem<T> | undefined;
-    for (let idx = items.value.indexOf(activeItem.value) - 1; idx >= 0; idx--) {
+    let idx =
+        items.value.findIndex(
+            (item) => item.identifier === activeItem.value.identifier,
+        ) - 1;
+    for (; idx >= 0; idx--) {
         if (items.value[idx].visible) {
             prevItem = items.value[idx];
             break;
@@ -154,7 +161,11 @@ const prevItem = computed(() => {
 /** Retrieves the next visible item */
 const nextItem = computed(() => {
     let nextItem: StepItem<T> | undefined;
-    let idx = activeItem.value ? items.value.indexOf(activeItem.value) + 1 : 0;
+    let idx = activeItem.value
+        ? items.value.findIndex(
+              (item) => item.identifier === activeItem.value.identifier,
+          ) + 1
+        : 0;
     for (; idx < items.value.length; idx++) {
         if (items.value[idx].visible) {
             nextItem = items.value[idx];
@@ -183,15 +194,16 @@ function next(): void {
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem<T>): void {
+    if (!isItemClickable(item)) return;
     if (vmodel.value !== item.value) performAction(item.value as T);
 }
 
 /** Activate next child and deactivate prev child */
-function performAction(newId: T): void {
-    const oldId = activeItem.value.value;
+function performAction(newValue: T): void {
+    const oldValue = activeItem.value.value;
     const oldItem = activeItem.value;
     const newItem =
-        items.value.find((item) => item.value === newId) || items.value[0];
+        items.value.find((item) => item.value === newValue) || items.value[0];
 
     if (oldItem && newItem) {
         oldItem.deactivate(newItem.index);
@@ -199,15 +211,15 @@ function performAction(newId: T): void {
     }
 
     nextTick(() => {
-        vmodel.value = newId;
-        emits("change", newId, oldId as T);
+        vmodel.value = newValue;
+        emits("change", newValue, oldValue as T);
     });
 }
 
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-steps__wrapper"],
+    ["rootClass", "o-steps"],
     [
         "sizeClass",
         "o-steps--",
@@ -220,115 +232,89 @@ const rootClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
-    [
-        "verticalClass",
-        "o-steps__wrapper-vertical",
-        null,
-        computed(() => props.vertical),
-    ],
+    ["verticalClass", "o-steps-vertical", null, computed(() => props.vertical)],
     [
         "positionClass",
-        "o-steps__wrapper-position-",
+        "o-steps-position-",
         computed(() => props.position),
         computed(() => !!props.position && props.vertical),
     ],
     ["mobileClass", "o-steps--mobile", null, isMobile],
 );
 
-const listClasses = defineClasses(
-    ["stepsClass", "o-steps"],
+const navClasses = defineClasses(
+    ["navClass", "o-steps__nav"],
     [
         "animatedClass",
-        "o-steps--animated",
+        "o-steps__nav--animated",
         null,
         computed(() => props.animated),
     ],
 );
 
-const stepDividerClasses = defineClasses([
-    "stepDividerClass",
-    "o-steps__divider",
-]);
+const dividerClasses = defineClasses(["dividerClass", "o-steps__divider"]);
 
-const stepMarkerClasses = defineClasses(
-    ["stepMarkerClass", "o-steps__marker"],
+const markerClasses = defineClasses(
+    ["markerClass", "o-steps__marker"],
     [
-        "stepMarkerRoundedClass",
+        "markerRoundedClass",
         "o-steps__marker--rounded",
         null,
         computed(() => props.rounded),
     ],
 );
 
-const stepContentClasses = defineClasses(
-    ["stepContentClass", "o-steps__content"],
+const contentClasses = defineClasses(
+    ["contentClass", "o-steps__content"],
     [
-        "stepContentTransitioningClass",
+        "transitioningClass",
         "o-steps__content-transitioning",
         null,
         isTransitioning,
     ],
 );
 
-const stepNavigationClasses = defineClasses([
-    "stepNavigationClass",
+const navigationClasses = defineClasses([
+    "navigationClass",
     "o-steps__navigation",
 ]);
-
-const stepLinkLabelClasses = defineClasses([
-    "stepLinkLabelClass",
-    "o-steps__title",
-]);
-
-const stepLinkClasses = defineClasses(
-    ["stepLinkClass", "o-steps__link"],
-    [
-        "stepLinkLabelPositionClass",
-        "o-steps__link-label-",
-        computed(() => props.labelPosition),
-        computed(() => !!props.labelPosition),
-    ],
-);
-
-const stepLinkClickableClasses = defineClasses([
-    "stepLinkClickableClass",
-    "o-steps__link-clickable",
-]);
-
-function stepLinkAppliedClasses(childItem: StepItem<T>): ClassBind[] {
-    const activeClasses = isItemClickable(childItem)
-        ? stepLinkClickableClasses.value
-        : [];
-
-    return [...stepLinkClasses.value, ...activeClasses];
-}
 </script>
 
 <template>
     <div :class="rootClasses" data-oruga="steps">
-        <ol :class="listClasses">
+        <ol
+            :class="navClasses"
+            role="tablist"
+            :aria-orientation="vertical ? 'vertical' : 'horizontal'">
             <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
+                :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
+                :class="childItem.navClasses"
+                role="tab"
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "
-                :class="childItem.classes">
-                <span v-if="index > 0" :class="stepDividerClasses"> </span>
+                :aria-controls="`tabpanel-${childItem.identifier}`"
+                :aria-selected="childItem.value === activeItem.value">
+                <span v-if="index > 0" :class="dividerClasses" />
 
                 <component
                     :is="childItem.tag"
                     role="button"
                     :tabindex="isItemClickable(childItem) ? 0 : null"
-                    :class="stepLinkAppliedClasses(childItem)"
-                    @click="isItemClickable(childItem) && itemClick(childItem)"
-                    @keydown.enter="
-                        isItemClickable(childItem) && itemClick(childItem)
-                    ">
-                    <div :class="stepMarkerClasses">
+                    :class="childItem.classes"
+                    @click="itemClick(childItem)"
+                    @keydown.enter="itemClick(childItem)"
+                    @keydown.left.prevent="prev"
+                    @keydown.right.prevent="next"
+                    @keydown.up.prevent="prev"
+                    @keydown.down.prevent="next">
+                    <div :class="markerClasses">
                         <o-icon
                             v-if="childItem.icon"
+                            :class="childItem.iconClasses"
                             :icon="childItem.icon"
                             :pack="childItem.iconPack"
                             :size="size" />
@@ -337,14 +323,14 @@ function stepLinkAppliedClasses(childItem: StepItem<T>): ClassBind[] {
                         </span>
                     </div>
 
-                    <div :class="stepLinkLabelClasses">
+                    <div :class="childItem.labelClasses">
                         {{ childItem.label }}
                     </div>
                 </component>
             </li>
         </ol>
 
-        <section :class="stepContentClasses">
+        <section :class="contentClasses">
             <!--
                 @slot Place step items here
             -->
@@ -368,7 +354,7 @@ function stepLinkAppliedClasses(childItem: StepItem<T>): ClassBind[] {
             name="navigation"
             :previous="{ disabled: !hasPrev, action: prev }"
             :next="{ disabled: !hasNext, action: next }">
-            <nav v-if="hasNavigation" :class="stepNavigationClasses">
+            <nav v-if="hasNavigation" :class="navigationClasses">
                 <o-button
                     role="button"
                     :icon-left="iconPrev"

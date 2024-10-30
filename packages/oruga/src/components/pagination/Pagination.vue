@@ -108,7 +108,7 @@ const props = defineProps({
     /** Accessibility label for the page button. */
     ariaPageLabel: {
         type: String,
-        default: () => getOption("pagination.ariaPageLabel", "page"),
+        default: () => getOption("pagination.ariaPageLabel", "Page"),
     },
     /** Accessibility label for the current page button. */
     ariaCurrentLabel: {
@@ -118,16 +118,6 @@ const props = defineProps({
     // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the prev button */
-    prevButtonClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the next button */
-    nextButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -142,12 +132,27 @@ const props = defineProps({
         default: undefined,
     },
     /** Class of the link button */
-    linkClass: {
+    buttonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
     /** Class of the current link */
-    linkCurrentClass: {
+    buttonCurrentClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the disabled link */
+    buttonDisabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the prev button */
+    buttonPrevClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the next button */
+    buttonNextClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -173,11 +178,6 @@ const props = defineProps({
     },
     /** Class of the pagination when rounded */
     roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the disabled link */
-    linkDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -230,14 +230,17 @@ const firstItem = computed(() => {
     return firstItem >= 0 ? firstItem : 0;
 });
 
-/** Check if previous button is available. */
-const hasPrev = computed(() => props.current > 1);
+/** Check if this is the first page. */
+const isFirst = computed(() => props.current <= 1);
 
 /** Check if first page button should be visible. */
 const hasFirst = computed(() => props.current >= 2 + props.rangeBefore);
 
 /** Check if first ellipsis should be visible. */
 const hasFirstEllipsis = computed(() => props.current >= props.rangeBefore + 4);
+
+/** Check if this is the last page. */
+const isLast = computed(() => props.current >= pageCount.value);
 
 /** Check if last page button should be visible. */
 const hasLast = computed(
@@ -248,9 +251,6 @@ const hasLast = computed(
 const hasLastEllipsis = computed(
     () => props.current < pageCount.value - (2 + props.rangeAfter),
 );
-
-/** Check if next button is available. */
-const hasNext = computed(() => props.current < pageCount.value);
 
 /**
  * Get near pages, 1 before and 1 after the current.
@@ -361,48 +361,38 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-pag--mobile", null, isMobile],
 );
 
-const prevBtnClasses = defineClasses(
-    ["prevButtonClass", "o-pag__previous"],
-    [
-        "linkDisabledClass",
-        "o-pag__link--disabled",
-        null,
-        computed(() => !hasPrev.value),
-    ],
-);
-
-const nextBtnClasses = defineClasses(
-    ["nextButtonClass", "o-pag__next"],
-    [
-        "linkDisabledClass",
-        "o-pag__link--disabled",
-        null,
-        computed(() => !hasNext.value),
-    ],
-);
-
 const infoClasses = defineClasses(["infoClass", "o-pag__info"]);
 
 const ellipsisClasses = defineClasses(["ellipsisClass", "o-pag__ellipsis"]);
 
 const listClasses = defineClasses(["listClass", "o-pag__list"]);
 
-const linkClasses = defineClasses(
-    ["linkClass", "o-pag__link"],
+const listItemClasses = defineClasses(["listItemClass", "o-pag__item"]);
+
+const buttonClasses = defineClasses(
+    ["buttonClass", "o-pag__btn"],
     [
         "roundedClass",
-        "o-pag__link--rounded",
+        "o-pag__btn--rounded",
         null,
         computed(() => props.rounded),
     ],
 );
 
-const linkCurrentClasses = defineClasses([
-    "linkCurrentClass",
-    "o-pag__link--current",
+const buttonCurrentClasses = defineClasses([
+    "buttonCurrentClass",
+    "o-pag__btn--current",
 ]);
 
-const listItemClasses = defineClasses(["listItemClass", "o-pag__item"]);
+const buttonPrevClasses = defineClasses(
+    ["buttonPrevClass", "o-pag__btn-previous"],
+    ["buttonDisabledClass", "o-pag__btn--disabled", null, isFirst],
+);
+
+const buttonNextClasses = defineClasses(
+    ["buttonNextClass", "o-pag__btn-next"],
+    ["buttonDisabledClass", "o-pag__btn--disabled", null, isLast],
+);
 
 // --- Expose Public Functionalities ---
 
@@ -424,9 +414,9 @@ defineExpose({ last, first, prev, next });
             v-bind="getPage(currentPage - 1, ariaPreviousLabel)">
             <o-pagination-button
                 v-bind="getPage(currentPage - 1, ariaPreviousLabel)"
-                :root-class="prevBtnClasses"
-                :link-class="linkClasses"
-                :link-current-class="linkCurrentClasses">
+                :root-class="buttonPrevClasses"
+                :button-class="buttonClasses"
+                :button-current-class="buttonCurrentClasses">
                 <o-icon
                     :icon="iconPrev"
                     :pack="iconPack"
@@ -434,6 +424,7 @@ defineExpose({ last, first, prev, next });
                     aria-hidden="true" />
             </o-pagination-button>
         </slot>
+
         <!-- 
             @slot Next button slot
             @binding {number} number - page number 
@@ -444,9 +435,9 @@ defineExpose({ last, first, prev, next });
         <slot name="next" v-bind="getPage(currentPage + 1, ariaNextLabel)">
             <o-pagination-button
                 v-bind="getPage(currentPage + 1, ariaNextLabel)"
-                :root-class="nextBtnClasses"
-                :link-class="linkClasses"
-                :link-current-class="linkCurrentClasses">
+                :root-class="buttonNextClasses"
+                :button-class="buttonClasses"
+                :button-current-class="buttonCurrentClasses">
                 <o-icon
                     :icon="iconNext"
                     :pack="iconPack"
@@ -474,10 +465,11 @@ defineExpose({ last, first, prev, next });
                 <slot v-bind="getPage(1)">
                     <o-pagination-button
                         v-bind="getPage(1)"
-                        :link-class="linkClasses"
-                        :link-current-class="linkCurrentClasses" />
+                        :button-class="buttonClasses"
+                        :button-current-class="buttonCurrentClasses" />
                 </slot>
             </li>
+
             <li v-if="hasFirstEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
@@ -490,8 +482,8 @@ defineExpose({ last, first, prev, next });
                 <slot v-bind="page">
                     <o-pagination-button
                         v-bind="page"
-                        :link-class="linkClasses"
-                        :link-current-class="linkCurrentClasses" />
+                        :button-class="buttonClasses"
+                        :button-current-class="buttonCurrentClasses" />
                 </slot>
             </li>
 
@@ -499,6 +491,7 @@ defineExpose({ last, first, prev, next });
             <li v-if="hasLastEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
+
             <li v-if="hasLast" :class="listItemClasses">
                 <!-- 
                     @slot Pagination button slot
@@ -510,8 +503,8 @@ defineExpose({ last, first, prev, next });
                 <slot v-bind="getPage(pageCount)">
                     <o-pagination-button
                         v-bind="getPage(pageCount)"
-                        :link-class="linkClasses"
-                        :link-current-class="linkCurrentClasses" />
+                        :button-class="buttonClasses"
+                        :button-current-class="buttonCurrentClasses" />
                 </slot>
             </li>
         </ul>
