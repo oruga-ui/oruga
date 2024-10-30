@@ -18,14 +18,30 @@ const inspectData = [
         warning: "Switch to mobile view to see it in action!",
     },
     {
-        class: "prevButtonClass",
+        class: "buttonClass",
+        description: "Class of the link button",
+        specificity: "when <b>mobileClass</b> is applied",
+    },
+    {
+        class: "buttonCurrentClass",
+        description: "Class of the current link",
+    },
+    {
+        class: "buttonPrevClass",
         description: "Class of the prev button",
         specificity: "when <b>mobileClass</b> is applied",
     },
     {
-        class: "nextButtonClass",
+        class: "buttonNextClass",
         description: "Class of the next button",
         specificity: "when <b>mobileClass</b> is applied",
+    },
+    {
+        class: "buttonDisabledClass",
+        description: "Class of the disabled link",
+        action: () => {
+            current.value = 20;
+        },
     },
     {
         class: "listClass",
@@ -33,17 +49,8 @@ const inspectData = [
         specificity: "when <b>mobileClass</b> is applied",
     },
     {
-        class: "linkClass",
-        description: "Class of the link button",
-        specificity: "when <b>mobileClass</b> is applied",
-    },
-    {
         class: "listItemClass",
         description: "Class of the pagination list items",
-    },
-    {
-        class: "linkCurrentClass",
-        description: "Class of the current link",
     },
     {
         class: "ellipsisClass",
@@ -81,13 +88,6 @@ const inspectData = [
         properties: ["rounded"],
         action: (cmp, data) => {
             data.rounded = true;
-        },
-    },
-    {
-        class: "linkDisabledClass",
-        description: "Class of the disabled link",
-        action: () => {
-            current.value = 20;
         },
     },
     {
