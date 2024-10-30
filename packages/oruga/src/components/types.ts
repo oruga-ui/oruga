@@ -996,26 +996,26 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 trackClass: ClassDefinition;
                 /** Class of the filled part of the slider */
                 fillClass: ClassDefinition;
+                /** Class when slider is disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the slider variant */
+                variantClass: ClassDefinition;
+                /** Class of the thumb wrapper */
+                thumbWrapperClass: ClassDefinition;
+                /** Class to display on the wrapper element when the slider is dragged */
+                thumbWrapperDraggingClass: ClassDefinition;
+                /** Class of the thumb */
+                thumbClass: ClassDefinition;
                 /** Class when the slider is rounded */
                 thumbRoundedClass: ClassDefinition;
                 /** Class when the thumb gets dragged */
                 thumbDraggingClass: ClassDefinition;
-                /** Class when slider is disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the thumb wrapper */
-                thumbWrapperClass: ClassDefinition;
-                /** Class of the thumb */
-                thumbClass: ClassDefinition;
-                /** Class of the slider variant */
-                variantClass: ClassDefinition;
                 /** Class of slider tick */
                 tickClass: ClassDefinition;
                 /** Class when slider tick is hidden */
                 tickHiddenClass: ClassDefinition;
                 /** Class of tick label */
                 tickLabelClass: ClassDefinition;
-                /** Class to display on the wrapper element when the slider is dragged */
-                thumbWrapperDraggingClass: ClassDefinition;
             }>;
         steps?: ComponentConfigBase &
             Partial<{
