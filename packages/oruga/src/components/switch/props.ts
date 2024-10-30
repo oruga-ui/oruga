@@ -56,6 +56,13 @@ export type SwitchProps<T> = {
     id?: string;
     /** Enable html 5 native validation */
     useHtml5Validation?: boolean;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?:
+        | string
+        | ((
+              currentValue: T | null | undefined,
+              state: ValidityState,
+          ) => string);
 } & SwitchClasses;
 
 // class props (will not be displayed in the docs)
