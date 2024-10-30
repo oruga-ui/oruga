@@ -108,7 +108,7 @@ const props = defineProps({
     /** Accessibility label for the page button. */
     ariaPageLabel: {
         type: String,
-        default: () => getOption("pagination.ariaPageLabel", "page"),
+        default: () => getOption("pagination.ariaPageLabel", "Page"),
     },
     /** Accessibility label for the current page button. */
     ariaCurrentLabel: {

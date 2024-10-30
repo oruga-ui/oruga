@@ -49,6 +49,28 @@ const inspectData = [
             loading.value = true;
         },
     },
+    {
+        class: "scrollClipClass",
+        description: "Class of the full page when scroll is clip",
+        specificity: "when <b>fullPage</b> is applied",
+        properties: ["scroll"],
+        action: (cmp, data) => {
+            data.fullPage = true;
+            data.scroll = "clip";
+            loading.value = true;
+        },
+    },
+    {
+        class: "noScrollClass",
+        description: "Class of the modal when scroll is not clip",
+        specificity: "when <b>fullPage</b> is applied",
+        properties: ["scroll"],
+        action: (cmp, data) => {
+            data.fullPage = true;
+            data.scroll = "";
+            loading.value = true;
+        },
+    },
 ];
 </script>
 
