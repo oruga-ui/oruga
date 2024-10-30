@@ -79,16 +79,16 @@ const props = defineProps({
      * Button type, like native
      * @values button, submit, reset
      */
-    nativeType: {
+    type: {
         type: String,
         default: "button",
         validator: (value: string) =>
             ["button", "submit", "reset"].indexOf(value) >= 0,
     },
     /** Accessibility Role attribute to be passed to the button. */
-    role: {
+    ariaRole: {
         type: String,
-        default: () => getOption("button.role", "button"),
+        default: () => getOption("button.ariaRole", "button"),
     },
     /**
      * This is used internally
@@ -175,7 +175,7 @@ const computedTag = computed(() =>
 );
 
 const computedNativeType = computed(() =>
-    props.tag === "button" || props.tag === "input" ? props.nativeType : null,
+    props.tag === "button" || props.tag === "input" ? props.type : null,
 );
 
 const computedDisabled = computed(() => (props.disabled ? true : null));
@@ -243,7 +243,7 @@ const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
         :disabled="computedDisabled"
         :type="computedNativeType"
         :class="rootClasses"
-        :role="role"
+        :role="ariaRole"
         data-oruga="button">
         <span :class="wrapperClasses">
             <o-icon
