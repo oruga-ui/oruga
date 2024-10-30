@@ -2,18 +2,20 @@
 import { ref } from "vue";
 
 const labelPosition = ref<"bottom" | "right" | "left">("bottom");
-const position = ref<"left" | "centered" | "right">();
+const position = ref<"left" | "centered" | "right">("left");
 const size = ref<string>();
 </script>
 
 <template>
     <section>
         <o-field grouped>
-            <o-field>
-                <o-switch
-                    v-model="position"
-                    true-value="right"
-                    label="Right position" />
+            <o-field label="Position">
+                <o-select v-model="position" placeholder="Position">
+                    <option :value="undefined">Default</option>
+                    <option value="left">Left</option>
+                    <option value="centered">Centered</option>
+                    <option value="right">Right</option>
+                </o-select>
             </o-field>
             <o-field label="Size">
                 <o-select v-model="size" placeholder="Size">

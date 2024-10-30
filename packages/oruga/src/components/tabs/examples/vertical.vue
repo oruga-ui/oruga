@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const atRight = ref(false);
+const position = ref<"left" | "right">("left");
 const expanded = ref(false);
 const size = ref();
 const type = ref("default");
@@ -10,11 +10,12 @@ const type = ref("default");
 <template>
     <section>
         <o-field grouped group-multiline>
-            <o-field>
-                <o-switch v-model="atRight" label="Right position" />
-            </o-field>
-            <o-field>
-                <o-switch v-model="expanded" label="Expanded" />
+            <o-field label="Position">
+                <o-select v-model="position" placeholder="Position">
+                    <option :value="undefined">Default</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                </o-select>
             </o-field>
             <o-field label="Size">
                 <o-select v-model="size" placeholder="Size">
@@ -31,10 +32,13 @@ const type = ref("default");
                     <option value="toggle">Toggle</option>
                 </o-select>
             </o-field>
+            <o-field>
+                <o-switch v-model="expanded" label="Expanded" />
+            </o-field>
         </o-field>
 
         <o-tabs
-            :position="atRight ? 'right' : 'left'"
+            :position="position"
             :size="size"
             :type="type"
             vertical
