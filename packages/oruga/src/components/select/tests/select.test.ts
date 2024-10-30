@@ -237,7 +237,7 @@ describe("OSelect tests", () => {
         expect(emit![2][0]).toHaveLength(1);
     });
 
-    describe("render options props correctly", () => {
+    describe("handle options props correctly", () => {
         test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
 

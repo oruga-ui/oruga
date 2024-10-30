@@ -1,12 +1,21 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`OSteps tests > render correctly 1`] = `
+exports[`OSteps with OStepItem tests > test render correctly 1`] = `
 "<div class="o-steps" data-oruga="steps">
   <ol class="o-steps__nav o-steps__nav--animated" role="tablist" aria-orientation="horizontal"></ol>
   <section class="o-steps__content">
     <!--
                 @slot Place step items here
             -->
+    <transition-stub appear="false" persisted="false" css="true">
+      <div id="tabpanel-1" class="o-steps__panel" data-id="steps-1" data-oruga="steps-item" role="tab" aria-labelledby="tab-1" tabindex="-1" aria-roledescription="item" style="display: none;">
+        <!-- 
+                    @slot Step item content
+                -->
+        <!-- injected component -->
+        <!-- default content prop -->ABC
+      </div>
+    </transition-stub>
   </section>
   <!--
             @slot Override step navigation

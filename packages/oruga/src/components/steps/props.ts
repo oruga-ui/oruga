@@ -80,32 +80,24 @@ type StepsClasses = Partial<{
     verticalClass: ComponentClass;
     /** Class of the Steps component when is vertical and its position changes */
     positionClass: ComponentClass;
-    /** Class of the steps container */
-    stepsClass: ComponentClass;
-    /** Class of Steps component when animation gets triggered */
-    animatedClass: ComponentClass;
-    /** Class of the Steps markers trigger when are rounded */
-    stepMarkerRoundedClass: ComponentClass;
-    /** Class of the Steps component dividers */
-    stepDividerClass: ComponentClass;
-    /** Class of the Steps component marker */
-    stepMarkerClass: ComponentClass;
-    /** Class of the Steps component content */
-    stepContentClass: ComponentClass;
-    /** Class of the Steps component content when transition is happening */
-    stepContentTransitioningClass: ComponentClass;
-    /** Class of the Steps component navigation element */
-    stepNavigationClass: ComponentClass;
-    /** Class of the Steps component link */
-    stepLinkClass: ComponentClass;
-    /** Class of the Steps component link when clickable */
-    stepLinkClickableClass: ComponentClass;
-    /** Class of the Step component link label */
-    stepLinkLabelClass: ComponentClass;
-    /** Class of the Step component link label when positioned */
-    stepLinkLabelPositionClass: ComponentClass;
     /** Class of steps component when on mobile */
     mobileClass: ComponentClass;
+    /** Class of the steps nav container */
+    navClass: ComponentClass;
+    /** Class of Steps component when animation gets triggered */
+    animatedClass: ComponentClass;
+    /** Class of the Steps component dividers */
+    dividerClass: ComponentClass;
+    /** Class of the Steps markers trigger when are rounded */
+    markerRoundedClass: ComponentClass;
+    /** Class of the Steps component marker */
+    markerClass: ComponentClass;
+    /** Class of the Steps component content */
+    contentClass: ComponentClass;
+    /** Class of the Steps component content when transition is happening */
+    transitioningClass: ComponentClass;
+    /** Class of the Steps component navigation element */
+    navigationClass: ComponentClass;
 }>;
 
 export type StepItemProps<T, C extends Component> = {
@@ -126,6 +118,8 @@ export type StepItemProps<T, C extends Component> = {
      * Could be used to set a completed step to "success" for example
      */
     variant?: string;
+    /** Item will be disabled */
+    disabled?: boolean;
     /**
      * Item can be used directly to navigate.
      * If undefined, previous steps are clickable while the others are not
@@ -153,14 +147,30 @@ export type StepItemProps<T, C extends Component> = {
 
 // class props (will not be displayed in the docs)
 type StepItemClasses = Partial<{
-    /** Class of the content item */
-    itemClass: ComponentClass;
     /** Class of the nav item */
-    itemHeaderClass: ComponentClass;
+    navItemClass: ComponentClass;
     /** Class of the nav item when active */
-    itemHeaderActiveClass: ComponentClass;
-    /** Class of the nav item behind the active one */
-    itemHeaderPreviousClass: ComponentClass;
+    navItemActiveClass: ComponentClass;
+    /** Class of the nav item before the active one */
+    navItemPreviousClass: ComponentClass;
+    /** Class of the nav item after the active one */
+    navItemNextClass: ComponentClass;
     /** Class of the nav item with variant (default value by parent steps component) */
-    itemHeaderVariantClass: ComponentClass;
+    navItemVariantClass: ComponentClass;
+    /** Class of the step item */
+    stepClass: ComponentClass;
+    /** Class of the tab item when active */
+    stepActiveClass: ComponentClass;
+    /** Class of the step item when clickable */
+    stepClickableClass: ComponentClass;
+    /** Class of the step item when disabled */
+    stepDisabledClass: ComponentClass;
+    /** Class of the step item label when positioned */
+    stepLabelPositionClass: ComponentClass;
+    /** Class of the step item label */
+    stepLabelClass: ComponentClass;
+    /** Class of the step item icon */
+    stepIconClass: ComponentClass;
+    /** Class of the content item */
+    stepPanelClass: ComponentClass;
 }>;

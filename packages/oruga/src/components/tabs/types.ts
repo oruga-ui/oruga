@@ -6,6 +6,7 @@ import type { TabItemProps } from "./props";
 
 export type TabItemComponent<T> = TabItemProps<T, Component> & {
     $slots: Slots;
+    navClasses: ClassBind[];
     classes: ClassBind[];
     iconClasses: ClassBind[];
     labelClasses: ClassBind[];
@@ -16,6 +17,7 @@ export type TabItemComponent<T> = TabItemProps<T, Component> & {
 
 export type TabsComponent<T> = {
     activeValue: T;
+    activeIndex: number;
     type: string;
     vertical: boolean;
     animated: boolean;

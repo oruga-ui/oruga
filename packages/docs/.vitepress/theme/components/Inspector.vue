@@ -16,12 +16,11 @@ const emits = defineEmits(["inspect"]);
 
 const selectedElementIndex = ref<number>();
 
-const classesToInspect = computed(() => {
-    const data = props.inspectData;
-    return data.sort((propa, propb) =>
+const classesToInspect = computed(() =>
+    props.inspectData.toSorted((propa, propb) =>
         propa.class < propb.class ? -1 : propa.class > propb.class ? 1 : 0,
-    );
-});
+    ),
+);
 
 function addDotToTheEnd(value: string) {
     return !value.endsWith(".") ? value + "." : value;

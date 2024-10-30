@@ -79,6 +79,18 @@ const inspectData = [
         description: "Class of the navigation item",
     },
     {
+        class: "navItemActiveClass",
+        description: "Class of the nav item when active",
+    },
+    {
+        class: "navItemPreviousClass",
+        description: "Class of the nav item before the active one",
+    },
+    {
+        class: "navItemNextClass",
+        description: "Class of the nav item after the active one",
+    },
+    {
         class: "tabClass",
         description: "Class of the tab item",
         subitem: true,
