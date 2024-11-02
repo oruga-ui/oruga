@@ -10,9 +10,9 @@ import {
     useId,
     triggerRef,
     watchEffect,
+    useTemplateRef,
     type Component,
 } from "vue";
-import type { ComponentExposed } from "vue-component-type-helpers";
 
 import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -178,10 +178,10 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = ref<ComponentExposed<typeof OInput>>();
-const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
-const footerRef = ref<HTMLElement>();
-const headerRef = ref<HTMLElement>();
+const inputRef = useTemplateRef("inputComponent");
+const dropdownRef = useTemplateRef("dropdownComponent");
+const headerRef = useTemplateRef("headerElement");
+const footerRef = useTemplateRef("footerElement");
 const itemRefs = ref<(HTMLElement | Component)[]>([]);
 
 function setItemRef(
@@ -593,7 +593,7 @@ defineExpose({ focus: setFocus, value: inputValue });
 
 <template>
     <o-dropdown
-        ref="dropdownRef"
+        ref="dropdownComponent"
         v-model="selectedValue"
         v-model:active="isActive"
         data-oruga="autocomplete"
@@ -617,7 +617,7 @@ defineExpose({ focus: setFocus, value: inputValue });
         @close="onDropdownClose">
         <template #trigger>
             <o-input
-                ref="inputRef"
+                ref="inputComponent"
                 v-bind="inputBind"
                 v-model="inputValue"
                 :type="type"
@@ -656,7 +656,7 @@ defineExpose({ focus: setFocus, value: inputValue });
         <o-dropdown-item
             v-if="$slots.header"
             :id="`${menuId}-header`"
-            ref="headerRef"
+            ref="headerElement"
             :tag="itemTag"
             :value="SpecialOption.Header"
             :clickable="selectableHeader"
@@ -745,7 +745,7 @@ defineExpose({ focus: setFocus, value: inputValue });
         <o-dropdown-item
             v-if="$slots.footer"
             :id="`${menuId}-footer`"
-            ref="footerRef"
+            ref="footerElement"
             :tag="itemTag"
             :value="SpecialOption.Footer"
             :clickable="selectableFooter"

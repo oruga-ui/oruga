@@ -1,5 +1,13 @@
 <script setup lang="ts" generic="T">
-import { computed, toValue, nextTick, ref, watch, watchEffect } from "vue";
+import {
+    computed,
+    toValue,
+    nextTick,
+    ref,
+    watch,
+    watchEffect,
+    useTemplateRef,
+} from "vue";
 
 import OStepItem from "../steps/StepItem.vue";
 import OButton from "../button/Button.vue";
@@ -76,7 +84,7 @@ const emits = defineEmits<{
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -281,7 +289,7 @@ const navigationClasses = defineClasses([
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="steps">
+    <div ref="rootElement" :class="rootClasses" data-oruga="steps">
         <ol
             :class="navClasses"
             role="tablist"

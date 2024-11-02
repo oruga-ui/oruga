@@ -106,7 +106,7 @@ const emits = defineEmits<{
 
 // --- Validation Feature ---
 
-const inputElement = useTemplateRef<HTMLInputElement>("inputRef");
+const inputRef = useTemplateRef<HTMLInputElement>("inputElement");
 
 // use form input functionalities
 const {
@@ -117,7 +117,7 @@ const {
     setFocus,
     isValid,
     isFocused,
-} = useInputHandler(inputElement, emits, props);
+} = useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
@@ -168,8 +168,8 @@ const height = ref("auto");
 function resize(): void {
     height.value = "auto";
     nextTick(() => {
-        if (props.type !== "textarea" || !inputElement.value) return;
-        const scrollHeight = inputElement.value.scrollHeight;
+        if (props.type !== "textarea" || !inputRef.value) return;
+        const scrollHeight = inputRef.value.scrollHeight;
         height.value = scrollHeight + "px";
     });
 }
@@ -353,7 +353,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             v-if="type !== 'textarea'"
             v-bind="inputBind"
             :id="id"
-            ref="inputRef"
+            ref="inputElement"
             v-model="vmodel"
             :data-oruga-input="inputType"
             :type="inputType"
@@ -371,7 +371,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             v-else
             v-bind="inputBind"
             :id="id"
-            ref="inputRef"
+            ref="inputElement"
             v-model="vmodel"
             data-oruga-input="textarea"
             :class="inputClasses"

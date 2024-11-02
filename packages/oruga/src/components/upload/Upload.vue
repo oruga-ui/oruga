@@ -67,7 +67,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = useTemplateRef<HTMLInputElement>("inputRef");
+const inputRef = useTemplateRef("inputElement");
 
 // use form input functionality
 const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
@@ -254,7 +254,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 
         <input
             v-bind="inputBind"
-            ref="inputRef"
+            ref="inputElement"
             type="file"
             data-oruga-input="file"
             :multiple="props.multiple"

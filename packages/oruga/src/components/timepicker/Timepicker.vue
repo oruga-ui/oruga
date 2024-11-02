@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, useTemplateRef, watch } from "vue";
 
 import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
@@ -123,7 +123,7 @@ const {
     secondLiteral,
 } = useTimepickerMixins(props);
 
-const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
+const pickerRef = useTemplateRef("pickerComponent");
 
 /** modelvalue of selected date */
 const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
@@ -592,7 +592,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
 <template>
     <OPickerWrapper
-        ref="pickerRef"
+        ref="pickerComponent"
         v-model:active="isActive"
         :value="vmodel"
         data-oruga="timepicker"

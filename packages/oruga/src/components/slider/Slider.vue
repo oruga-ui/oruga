@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="IsRange extends boolean = false">
-import { computed, ref, watch } from "vue";
+import { computed, ref, useTemplateRef, watch } from "vue";
 
 import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
@@ -71,9 +71,9 @@ const emits = defineEmits<{
     (e: "dragend"): void;
 }>();
 
-const sliderRef = ref();
-const thumbStartRef = ref();
-const thumbEndRef = ref();
+const sliderRef = useTemplateRef("sliderElement");
+const thumbStartRef = useTemplateRef("thumbStartComponent");
+const thumbEndRef = useTemplateRef("thumbEndComponent");
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed<SliderComponent>(() => ({
@@ -182,11 +182,13 @@ const barStyle = computed(() => ({
 }));
 
 function getSliderSize(): number {
-    return sliderRef.value.getBoundingClientRect().width;
+    return sliderRef.value?.getBoundingClientRect().width || 0;
 }
 
 function onSliderClick(event: MouseEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
+    if (!sliderRef.value || !thumbStartRef.value || !thumbEndRef.value) return;
+
     const sliderOffsetLeft = sliderRef.value.getBoundingClientRect().left;
     const percent =
         ((event.clientX - sliderOffsetLeft) / getSliderSize()) * 100;
@@ -281,7 +283,7 @@ defineExpose({ value: vmodel });
 
 <template>
     <div :class="rootClasses" data-oruga="slider" @click="onSliderClick">
-        <div ref="sliderRef" :class="trackClasses">
+        <div ref="sliderElement" :class="trackClasses">
             <div :class="fillClasses" :style="barStyle" />
             <template v-if="ticks">
                 <o-slider-tick
@@ -299,7 +301,7 @@ defineExpose({ value: vmodel });
             <slot />
 
             <o-slider-thumb
-                ref="thumbStartRef"
+                ref="thumbStartComponent"
                 v-model="valueStart"
                 :slider-props="props"
                 :slider-size="getSliderSize"
@@ -311,7 +313,7 @@ defineExpose({ value: vmodel });
 
             <o-slider-thumb
                 v-if="isTrueish(props.range)"
-                ref="thumbEndRef"
+                ref="thumbEndComponent"
                 v-model="valueEnd"
                 :slider-props="props"
                 :slider-size="getSliderSize"

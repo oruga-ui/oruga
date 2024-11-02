@@ -5,6 +5,7 @@ import {
     watch,
     onMounted,
     onBeforeUnmount,
+    useTemplateRef,
     type Component,
 } from "vue";
 
@@ -66,8 +67,8 @@ const emits = defineEmits<{
     (e: "close", ...args: unknown[]): void;
 }>();
 
-const rootRef = ref();
-const contentRef = ref();
+const rootRef = useTemplateRef("rootElement");
+const contentRef = useTemplateRef("contentElement");
 
 const isActive = defineModel<boolean>("active", { default: false });
 
@@ -128,7 +129,7 @@ onBeforeUnmount(() => {
 
 if (isClient) {
     // register onKeyPress event listener when is active
-    useEventListener("keyup", onKeyPress, rootRef.value, { trigger: isActive });
+    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
     if (!props.overlay)
         // register outside click event listener when is active
         useClickOutside(contentRef, clickedOutside, { trigger: isActive });
@@ -143,7 +144,10 @@ function onKeyPress(event: KeyboardEvent): void {
 /** Close fixed sidebar if clicked outside. */
 function clickedOutside(event: Event): void {
     if (props.inline || !isActive.value || isAnimating.value) return;
-    if (props.overlay || !event.composedPath().includes(contentRef.value))
+    if (
+        props.overlay ||
+        (contentRef.value && !event.composedPath().includes(contentRef.value))
+    )
         event.preventDefault();
     cancel("outside");
 }
@@ -303,7 +307,7 @@ defineExpose({ close });
     <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
         <div
             v-show="!hideOnMobile"
-            ref="rootRef"
+            ref="rootElement"
             v-bind="$attrs"
             :class="rootClasses"
             data-oruga="sidebar">
@@ -317,7 +321,10 @@ defineExpose({ close });
                 :name="transitionName"
                 @after-enter="afterEnter"
                 @before-leave="beforeLeave">
-                <div v-show="isActive" ref="contentRef" :class="contentClasses">
+                <div
+                    v-show="isActive"
+                    ref="contentElement"
+                    :class="contentClasses">
                     <!--
                         @slot Sidebar default content, default is component prop
                         @binding {(...args):void} close - function to close the component

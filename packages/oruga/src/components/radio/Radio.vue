@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, ref, useAttrs, useId } from "vue";
+import { computed, useAttrs, useId, useTemplateRef } from "vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
@@ -64,7 +64,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref<HTMLInputElement>();
+const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
 const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
@@ -144,7 +144,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         <input
             v-bind="inputBind"
             :id="id"
-            ref="inputRef"
+            ref="inputElement"
             v-model="vmodel"
             type="radio"
             data-oruga-input="radio"

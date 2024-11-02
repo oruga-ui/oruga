@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef } from "vue";
 
-const dropdownbtn = useTemplateRef<HTMLElement>("dropdownbtn");
+const dropdownbtn = useTemplateRef<HTMLElement>("dropdownBtn");
 const currentMenu = ref("");
 const subitem = "dropdownitem";
 
@@ -156,7 +156,7 @@ const inspectData = [
         <o-dropdown v-model="currentMenu" v-bind="props">
             <template #trigger="{ active }">
                 <o-button
-                    ref="dropdownbtn"
+                    ref="dropdownBtn"
                     label="Click me!"
                     variant="primary"
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
