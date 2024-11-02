@@ -5,7 +5,7 @@
         IsRange extends boolean = false,
         IsMultiple extends boolean = false
     ">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, useTemplateRef } from "vue";
 
 import OButton from "../button/Button.vue";
 import OSelect from "../select/Select.vue";
@@ -165,7 +165,7 @@ const { dtf, dateCreator, dateFormatter, dateParser } =
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
+const pickerRef = useTemplateRef("pickerComponent");
 
 /** modelvalue of selected date, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -548,7 +548,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
 <template>
     <OPickerWrapper
-        ref="pickerRef"
+        ref="pickerComponent"
         v-model:active="isActive"
         v-model:value="vmodel"
         data-oruga="datepicker"

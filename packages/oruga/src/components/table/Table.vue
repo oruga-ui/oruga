@@ -7,6 +7,7 @@ import {
     nextTick,
     useSlots,
     toValue,
+    useTemplateRef,
     type PropType,
     type Ref,
     type MaybeRefOrGetter,
@@ -809,7 +810,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
-const slotRef = ref<HTMLElement>();
+const slotRef = useTemplateRef("slotElement");
 
 /** provide functionalities and data to child item components */
 const provider = useProviderParent<TableColumnComponent<T>>(slotRef);
@@ -1548,7 +1549,7 @@ defineExpose({ rows: tableData, sort: sortByField });
 
 <template>
     <div :class="rootClasses" data-oruga="table">
-        <div ref="slotRef" style="display: none">
+        <div ref="slotElement" style="display: none">
             <!--
                 @slot Place o-table-column here
             -->

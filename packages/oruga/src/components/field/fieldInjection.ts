@@ -12,7 +12,7 @@ import { getOption } from "@/utils/config";
 export type FieldProps = InstanceType<typeof Field>["$props"];
 
 type FieldData = {
-    $el: Element;
+    $el: Element | null;
     props: FieldProps;
     hasInnerField: boolean;
     variant?: string;

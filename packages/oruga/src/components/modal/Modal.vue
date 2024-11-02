@@ -1,5 +1,13 @@
 <script setup lang="ts" generic="C extends Component">
-import { ref, computed, watch, nextTick, onMounted, type Component } from "vue";
+import {
+    ref,
+    computed,
+    watch,
+    nextTick,
+    onMounted,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -65,8 +73,8 @@ const emits = defineEmits<{
     (e: "close", ...args: unknown[]): void;
 }>();
 
-const rootRef = ref();
-const contentRef = ref();
+const rootRef = useTemplateRef("rootElement");
+const contentRef = useTemplateRef("contentElement");
 
 const isActive = defineModel<boolean>("active", { default: false });
 
@@ -93,8 +101,10 @@ const toggleScroll = usePreventScrolling(props.scroll === "keep");
 watch(isActive, (value) => {
     if (props.overlay) toggleScroll(value);
     // if autoFocus focus the element
-    if (value && rootRef.value && props.autoFocus)
-        nextTick(() => rootRef.value.focus());
+    if (value && props.autoFocus)
+        nextTick(() => {
+            if (rootRef.value) rootRef.value.focus();
+        });
 });
 
 onMounted(() => {
@@ -105,7 +115,7 @@ onMounted(() => {
 
 if (isClient) {
     // register onKeyPress event listener when is active
-    useEventListener("keyup", onKeyPress, rootRef.value, { trigger: isActive });
+    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
 
     if (!props.overlay)
         // register outside click event listener when is active
@@ -123,7 +133,10 @@ function onKeyPress(event: KeyboardEvent): void {
 /** Close fixed sidebar if clicked outside. */
 function onClickedOutside(event: Event): void {
     if (!isActive.value || isAnimating.value) return;
-    if (props.overlay || !event.composedPath().includes(contentRef.value))
+    if (
+        props.overlay ||
+        (contentRef.value && !event.composedPath().includes(contentRef.value))
+    )
         event.preventDefault();
     cancel("outside");
 }
@@ -201,7 +214,7 @@ defineExpose({ close });
             <div
                 v-show="isActive"
                 v-bind="$attrs"
-                ref="rootRef"
+                ref="rootElement"
                 v-trap-focus="trapFocus"
                 data-oruga="modal"
                 :class="rootClasses"
@@ -216,7 +229,7 @@ defineExpose({ close });
                     @click="onClickedOutside" />
 
                 <div
-                    ref="contentRef"
+                    ref="contentElement"
                     :class="contentClasses"
                     :style="customStyle">
                     <!-- injected component for programmatic usage -->

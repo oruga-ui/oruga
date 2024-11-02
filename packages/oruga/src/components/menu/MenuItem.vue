@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, type PropType } from "vue";
+import { computed, type PropType, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -172,7 +172,7 @@ function reset(): void {
     if (parent.value.activable) isActive.value = false;
 }
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to enjure reactivity
 const provideData = computed<MenuItemProvider>(() => ({
@@ -214,7 +214,7 @@ const submenuClasses = defineClasses([
 
 <template>
     <li
-        ref="rootRef"
+        ref="rootElement"
         :role="ariaRole"
         :class="wrapperClasses"
         :data-id="identifier"

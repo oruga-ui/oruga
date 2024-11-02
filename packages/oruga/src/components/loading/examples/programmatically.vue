@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, useTemplateRef } from "vue";
 import { useOruga } from "@oruga-ui/oruga-next";
 
 const oruga = useOruga();
 
-const elementRef = ref(null);
+const elementRef = useTemplateRef("contentElement");
 const isFullPage = ref(true);
 
 function openLoading(): void {
@@ -25,12 +25,14 @@ function openLoading(): void {
                 variant="primary"
                 @click="openLoading" />
         </o-field>
+
         <o-field>
             <o-switch
                 v-model="isFullPage"
                 label="Display loader over full page" />
         </o-field>
-        <p ref="elementRef" style="position: relative">
+
+        <p ref="contentElement" style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
             sapien laoreet elit

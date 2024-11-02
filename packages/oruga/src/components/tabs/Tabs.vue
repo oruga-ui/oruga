@@ -7,6 +7,7 @@ import {
     toValue,
     nextTick,
     onMounted,
+    useTemplateRef,
 } from "vue";
 
 import OTabItem from "../tabs/TabItem.vue";
@@ -75,7 +76,7 @@ const emits = defineEmits<{
     (e: "change", newValue: ModelValue, oldValue: ModelValue): void;
 }>();
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -268,7 +269,7 @@ const contentClasses = defineClasses(
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses" data-oruga="tabs">
+    <div ref="rootElement" :class="rootClasses" data-oruga="tabs">
         <nav
             :class="navClasses"
             role="tablist"

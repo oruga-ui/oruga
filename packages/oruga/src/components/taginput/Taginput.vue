@@ -130,7 +130,7 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const autocompleteRef = useTemplateRef("autocompleteRef");
+const autocompleteRef = useTemplateRef("autocompleteComponent");
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -373,7 +373,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
 
             <o-autocomplete
                 v-show="hasInput"
-                ref="autocompleteRef"
+                ref="autocompleteComponent"
                 v-model:input="inputValue"
                 v-bind="autocompleteBind"
                 :options="options"

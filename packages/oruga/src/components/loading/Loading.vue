@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { useTemplateRef, watch } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -56,7 +56,7 @@ const emits = defineEmits<{
     (e: "close", ...args: unknown[]): void;
 }>();
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
@@ -72,9 +72,7 @@ watch(isActive, (value) => {
 
 if (isClient) {
     // register onKeyPress event when is active
-    useEventListener("keyup", onKeyPress, rootRef.value, {
-        trigger: isActive,
-    });
+    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
 }
 
 /** Keypress event that is bound to the document. */
@@ -127,7 +125,7 @@ defineExpose({ close });
     <transition :name="animation">
         <div
             v-if="isActive"
-            ref="rootRef"
+            ref="rootElement"
             data-oruga="loading"
             role="dialog"
             :class="rootClasses">

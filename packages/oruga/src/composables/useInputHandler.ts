@@ -214,7 +214,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
                 const invalidHandler = getOption("invalidHandler");
                 if (invalidHandler instanceof Function) {
                     invalidHandler(validatable, fieldElement);
-                } else {
+                } else if (fieldElement) {
                     // We'll scroll to put the whole field in view, not just the element that triggered the event,
                     // which should mean that the message will be visible onscreen.
                     // scrollIntoViewIfNeeded() is a non-standard method (but a very common extension).
