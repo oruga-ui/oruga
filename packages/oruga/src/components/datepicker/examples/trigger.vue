@@ -13,7 +13,7 @@ const selectedString = computed(() =>
         <o-field label="Select a date" grouped>
             <o-datepicker v-model="selected" teleport>
                 <template #trigger>
-                    <o-button icon-left="calendar" type="primary" />
+                    <o-button icon-left="calendar" variant="primary" />
                 </template>
             </o-datepicker>
 
