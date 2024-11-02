@@ -9,8 +9,8 @@ exports[`OTimepicker tests > render correctly 1`] = `
                 @binding {boolean} active - dropdown active state
                 @binding {() => void} toggle - toggle dropdown active state
             -->
-      <div data-oruga="input" class="o-input__wrapper"><input id="v-0" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
-        <!--v-if-->
+      <div data-oruga="input" class="o-input__wrapper">
+        <!--v-if--><input id="v-0" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
         <!--v-if-->
         <!--v-if-->
       </div>
