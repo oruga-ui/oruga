@@ -369,6 +369,8 @@ function eventClasses(event: DatepickerEvent): ClassBind[] {
             props.pickerProps.indicators,
             !!props.pickerProps.indicators,
         ],
+        // pass effect scope for rectivity binding
+        { scope },
     );
     return classes.value;
 }
