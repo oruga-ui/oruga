@@ -341,6 +341,15 @@ defineExpose({ focus: setFocus, value: vmodel });
 
 <template>
     <div data-oruga="input" :class="rootClasses">
+        <o-icon
+            v-if="icon"
+            :class="iconLeftClasses"
+            :clickable="iconClickable"
+            :icon="icon"
+            :pack="iconPack"
+            :size="size"
+            @click="iconClick" />
+
         <input
             v-if="type !== 'textarea'"
             v-bind="inputBind"
@@ -375,15 +384,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             @focus="onFocus"
             @invalid="onInvalid"
             @input="debouncedInput" />
-
-        <o-icon
-            v-if="icon"
-            :class="iconLeftClasses"
-            :clickable="iconClickable"
-            :icon="icon"
-            :pack="iconPack"
-            :size="size"
-            @click="iconClick" />
 
         <o-icon
             v-if="hasIconRight"
