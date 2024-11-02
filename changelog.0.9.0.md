@@ -19,7 +19,6 @@
  <!> ~ prop: nativeType -> type (to match same props from other component)
  <!> ~ prop: role -> ariaRole (to match same props from other component)
 
-
 # Carousel
 
 ---
