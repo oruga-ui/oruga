@@ -32,9 +32,9 @@
     "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.1",
     "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
-    "replace-in-file": "^7.2.0"
+    "replace-in-file": "^8.2.0"
   }
 }
