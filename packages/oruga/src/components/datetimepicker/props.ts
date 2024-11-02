@@ -44,8 +44,20 @@ export type DatetimepickerProps = {
     parser?: (date: string) => DatetimepickerProps["modelValue"];
     /** Date creator function, default is `new Date()` */
     creator?: () => Date;
-    /** Dropdown position */
-    position?: string;
+    /**
+     * Position of the dropdown relative to the input
+     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     */
+    position?:
+        | "auto"
+        | "top"
+        | "bottom"
+        | "left"
+        | "right"
+        | "top-right"
+        | "top-left"
+        | "bottom-left"
+        | "bottom-right";
     /** Enable mobile native input if mobile agent */
     mobileNative?: boolean;
     /**
