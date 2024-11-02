@@ -106,12 +106,7 @@ const emits = defineEmits<{
 
 // --- Validation Feature ---
 
-const inputRef = useTemplateRef<HTMLInputElement>("inputRef");
-const textareaRef = useTemplateRef<HTMLInputElement>("textareaRef");
-
-const elementRef = computed<HTMLInputElement | null>(() =>
-    props.type === "textarea" ? textareaRef.value : inputRef.value,
-);
+const inputElement = useTemplateRef<HTMLInputElement>("inputRef");
 
 // use form input functionalities
 const {
@@ -122,7 +117,7 @@ const {
     setFocus,
     isValid,
     isFocused,
-} = useInputHandler(elementRef, emits, props);
+} = useInputHandler(inputElement, emits, props);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
@@ -131,7 +126,12 @@ const vmodel = defineModel<ModelValue, string, string, ModelValue>({
     // cast incomming value to string
     get: (value) => (typeof value !== "undefined" ? String(value) : ""),
     // cast outgoing value to number if prop number is true
-    set: (value) => (props.number ? Number(value) : String(value)),
+    set: (value) =>
+        typeof value == "undefined"
+            ? value
+            : props.number
+              ? Number(value)
+              : String(value),
     default: undefined,
 });
 
@@ -168,22 +168,21 @@ const height = ref("auto");
 function resize(): void {
     height.value = "auto";
     nextTick(() => {
-        if (!textareaRef.value) return;
-        const scrollHeight = textareaRef.value.scrollHeight;
+        if (props.type !== "textarea" || !inputElement.value) return;
+        const scrollHeight = inputElement.value.scrollHeight;
         height.value = scrollHeight + "px";
     });
 }
 
 /** Computed inline styles for autoresize */
-const computedStyles = computed(
-    (): StyleValue =>
-        props.autosize
-            ? {
-                  resize: "none",
-                  height: height.value,
-                  overflow: "hidden",
-              }
-            : {},
+const computedStyles = computed<StyleValue>(() =>
+    props.type === "textarea" && props.autosize
+        ? {
+              resize: "none",
+              height: height.value,
+              overflow: "hidden",
+          }
+        : {},
 );
 
 let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
@@ -341,6 +340,34 @@ defineExpose({ focus: setFocus, value: vmodel });
 
 <template>
     <div data-oruga="input" :class="rootClasses">
+        <o-icon
+            v-if="icon"
+            :class="iconLeftClasses"
+            :clickable="iconClickable"
+            :icon="icon"
+            :pack="iconPack"
+            :size="size"
+            @click="iconClick" />
+
+        <!-- <component
+            :is="type === 'textarea' ? 'textarea' : 'input'"
+            v-bind="inputBind"
+            :id="id"
+            ref="inputRef"
+            :model-value="vmodel"
+            :data-oruga-input="inputType"
+            :type="type !== 'textarea' ? inputType : undefined"
+            :class="inputClasses"
+            :style="computedStyles"
+            :autocomplete="autocomplete"
+            :maxlength="maxlength"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            @blur="onBlur"
+            @focus="onFocus"
+            @invalid="onInvalid"
+            @input="debouncedInput" /> -->
+
         <input
             v-if="type !== 'textarea'"
             v-bind="inputBind"
@@ -363,7 +390,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             v-else
             v-bind="inputBind"
             :id="id"
-            ref="textareaRef"
+            ref="inputRef"
             v-model="vmodel"
             data-oruga-input="textarea"
             :class="inputClasses"
@@ -375,15 +402,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             @focus="onFocus"
             @invalid="onInvalid"
             @input="debouncedInput" />
-
-        <o-icon
-            v-if="icon"
-            :class="iconLeftClasses"
-            :clickable="iconClickable"
-            :icon="icon"
-            :pack="iconPack"
-            :size="size"
-            @click="iconClick" />
 
         <o-icon
             v-if="hasIconRight"
