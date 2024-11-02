@@ -40,6 +40,7 @@ export default defineConfig(({ mode }) => ({
         tsconfigPaths(),
         vue(),
         dts({
+            tsconfigPath: "./tsconfig.app.json",
             outDir: "./dist/types",
             bundledPackages: ["vue-component-type-helpers"],
         }),
