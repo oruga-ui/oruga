@@ -349,25 +349,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             :size="size"
             @click="iconClick" />
 
-        <!-- <component
-            :is="type === 'textarea' ? 'textarea' : 'input'"
-            v-bind="inputBind"
-            :id="id"
-            ref="inputRef"
-            :model-value="vmodel"
-            :data-oruga-input="inputType"
-            :type="type !== 'textarea' ? inputType : undefined"
-            :class="inputClasses"
-            :style="computedStyles"
-            :autocomplete="autocomplete"
-            :maxlength="maxlength"
-            :placeholder="placeholder"
-            :disabled="disabled"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid"
-            @input="debouncedInput" /> -->
-
         <input
             v-if="type !== 'textarea'"
             v-bind="inputBind"
