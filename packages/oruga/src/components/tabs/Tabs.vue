@@ -82,8 +82,7 @@ const rootRef = useTemplateRef("rootElement");
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<TabsComponent<ModelValue>>(() => ({
-    activeValue: vmodel.value,
+const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index || 0,
     type: props.type,
     vertical: props.vertical,

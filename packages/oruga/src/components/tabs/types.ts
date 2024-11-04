@@ -15,8 +15,7 @@ export type TabItemComponent<T> = TabItemProps<T, Component> & {
     deactivate: (index: number) => void;
 };
 
-export type TabsComponent<T> = {
-    activeValue: T;
+export type TabsComponent = {
     activeIndex: number;
     type: string;
     vertical: boolean;

@@ -15,8 +15,7 @@ export type StepItemComponent<T> = StepItemProps<T, Component> & {
     deactivate: (index: number) => void;
 };
 
-export type StepsComponent<T> = {
-    activeValue: T;
+export type StepsComponent = {
     activeIndex: number;
     labelPosition: string;
     vertical: boolean;

@@ -2,7 +2,6 @@
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
 import { getOption } from "@/utils/config";
-import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { StepsComponent, StepItemComponent } from "./types";
@@ -62,13 +61,13 @@ const providedData = computed<StepItemComponent<T>>(() => ({
 }));
 
 // inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<StepsComponent<T>>({
+const { parent, item } = useProviderChild<StepsComponent>({
     data: providedData,
 });
 
 const transitionName = ref();
 
-const isActive = computed(() => isEqual(itemValue, parent.value.activeValue));
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const isTransitioning = ref(false);
 
