@@ -7,10 +7,10 @@ export type ObjectMap<T> = Array<{
 
 /** wrap entities in an array of objects with key/value attributes */
 export function useObjectMap<T>(
-    values: MaybeRefOrGetter<Array<T>>,
+    values?: MaybeRefOrGetter<Array<T>>,
     key?: string,
 ): ObjectMap<T> {
-    if (!toValue(values)?.length) return [];
+    if (!values || !toValue(values)?.length) return [];
     return toValue(values).map((value: T) => ({
         value: toValue(value),
         key:

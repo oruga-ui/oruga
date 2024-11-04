@@ -55,7 +55,7 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
     tdClasses: tdClasses.value,
 }));
 
-const { parent, item } = useProviderChild<TableComponent<T>>({
+const { parent, item } = useProviderChild<TableComponent>({
     data: providedData,
 });
 
@@ -66,11 +66,7 @@ const thClasses = defineClasses(
         "thCurrentSortClass",
         "o-table__th-current-sort",
         null,
-        computed(
-            () =>
-                parent.value?.currentSortColumn?.identifier ===
-                item.value.identifier,
-        ),
+        computed(() => parent.value?.isColumnSorted(item.value)),
     ],
     [
         "thSortableClass",
