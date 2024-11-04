@@ -299,7 +299,7 @@ function setSelected(
         if (props.clearOnSelect) inputValue.value = "";
         else inputValue.value = option.label;
         setHovered(undefined);
-    } else inputValue.value = "";
+    }
 
     if (closeDropdown) nextTick(() => (isActive.value = false));
     checkHtml5Validity();
