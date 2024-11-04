@@ -347,7 +347,7 @@ function selectItem(value: T): void {
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed<DropdownComponent<T>>(() => ({
     disabled: props.disabled,
-    multiple: props.multiple || false,
+    multiple: isTrueish(props.multiple),
     selected: vmodel.value,
     selectItem,
 }));
