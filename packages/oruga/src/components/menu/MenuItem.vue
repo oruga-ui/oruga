@@ -77,33 +77,33 @@ const props = defineProps({
         default: () => getOption("menu.itemAriaRole", "menuitem"),
     },
     // class props (will not be displayed in the docs)
-    /** Class of the menu item */
+    /** Class of the root element of menu item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu item */
+    itemButtonClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /** Class of the active menu item */
-    itemActiveClass: {
+    itemButtonActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
     /** Class of the disabled menu item */
-    itemDisabledClass: {
+    itemButtonDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the icon of menu item */
-    itemIconTextClass: {
+    /** Class of the menu item with icon */
+    itemButtonIconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
     /** Class of the menu item when is a submenu */
     itemSubmenuClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the root element of menu item */
-    itemWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -184,23 +184,20 @@ useProviderParent(rootRef, { key: "menu-item", data: provideData });
 
 // --- Computed Component Classes ---
 
-const wrapperClasses = defineClasses([
-    "itemWrapperClass",
-    "o-menu__item__wrapper",
-]);
+const itemClasses = defineClasses(["itemClass", "o-menu__item"]);
 
-const itemClasses = defineClasses(
-    ["itemClass", "o-menu__item"],
-    ["itemActiveClass", "o-menu__item--active", null, isActive],
+const buttonClasses = defineClasses(
+    ["itemButtonClass", "o-menu__item__button"],
+    ["itemButtonActiveClass", "o-menu__item__button--active", null, isActive],
     [
-        "itemDisabledClass",
-        "o-menu__item--disabled",
+        "itemButtonDisabledClass",
+        "o-menu__item__button--disabled",
         null,
         computed(() => props.disabled),
     ],
     [
-        "itemIconTextClass",
-        "o-menu__item--icon-text",
+        "itemButtonIconClass",
+        "o-menu__item__button--icon",
         null,
         computed(() => !!props.icon),
     ],
@@ -216,14 +213,14 @@ const submenuClasses = defineClasses([
     <li
         ref="rootElement"
         :role="ariaRole"
-        :class="wrapperClasses"
+        :class="itemClasses"
         :data-id="identifier"
         data-oruga="menu-item"
         aria-roledescription="item">
         <component
             :is="tag"
             v-bind="$attrs"
-            :class="itemClasses"
+            :class="buttonClasses"
             role="button"
             :disabled="disabled"
             @keyup.enter="onClick()"
