@@ -31,8 +31,8 @@ const props = withDefaults(defineProps<SwitchProps<T>>(), {
     disabled: false,
     required: false,
     name: undefined,
-    trueValue: true,
-    falseValue: false,
+    trueValue: undefined,
+    falseValue: undefined,
     rounded: true,
     position: "right",
     autocomplete: () => getOption("switch.autocomplete", "off"),
@@ -85,9 +85,14 @@ const vmodel = defineModel<T>({ default: undefined });
 // if not `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField?.value?.setInputId(props.id);
 
+const _trueValue =
+    typeof props.trueValue === "undefined" ? true : props.trueValue;
+const _falseValue =
+    typeof props.falseValue === "undefined" ? false : props.falseValue;
+
 const isChecked = computed(
     () =>
-        vmodel.value === props.trueValue ||
+        vmodel.value === _trueValue ||
         (Array.isArray(vmodel.value) &&
             vmodel.value.includes(props.nativeValue)),
 );
@@ -186,8 +191,8 @@ defineExpose({ focus: setFocus, value: vmodel });
             :name="name"
             :autocomplete="autocomplete"
             :value="nativeValue"
-            :true-value="trueValue"
-            :false-value="falseValue"
+            :true-value="_trueValue"
+            :false-value="_falseValue"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"
