@@ -181,7 +181,7 @@ const detailedRows = ref([data.value[0]]);
                 <tr v-for="item in row.items" :key="item.name">
                     <td v-if="showDetailIcon"></td>
                     <td v-show="columnsVisible['name'].display">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{ item.name }}
+                        {{ item.name }}
                     </td>
                     <td v-show="columnsVisible['sold'].display">
                         {{ item.sold }}

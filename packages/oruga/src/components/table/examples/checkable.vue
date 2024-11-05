@@ -66,7 +66,7 @@ const data = ref([
     },
 ]);
 
-const checkboxPosition = ref("left");
+const checkboxPosition = ref<"left" | "right">("left");
 const checkedRows = ref([data.value[1], data.value[3]]);
 </script>
 
