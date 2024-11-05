@@ -8,7 +8,6 @@ import {
     useSlots,
     toValue,
     useTemplateRef,
-    type PropType,
     type Ref,
     type MaybeRefOrGetter,
 } from "vue";
@@ -42,13 +41,15 @@ import {
     useObjectMap,
 } from "@/composables";
 
+import type { ClassBind } from "@/types";
 import type {
     TableColumn,
     TableRow,
     TableColumnItem,
     TableColumnComponent,
+    TableComponent,
 } from "./types";
-import type { ComponentClass, ClassBind, OrugaOptions } from "@/types";
+import type { TableProps } from "./props";
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -63,512 +64,77 @@ defineOptions({
     inheritAttrs: false,
 });
 
-type SortDirection = "asc" | "desc";
-
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Table data */
-    data: { type: Array as PropType<T[]>, default: () => [] },
-    /** Table columns */
-    columns: { type: Array as PropType<TableColumn[]>, default: () => [] },
-    /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-    rowKey: { type: String, default: () => getOption("table.rowKey") },
-    /** Define individual class for a row */
-    rowClass: {
-        type: Function as PropType<(row: T, index: number) => string>,
-        default: (row, index) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("table.rowClass", (row, index) => "")(row, index),
-    },
-    /** Adds native attributes to a column th element */
-    thAttrs: {
-        type: Function as PropType<(column: TableColumn<T>) => object>,
-        default: undefined,
-    },
-    /** Adds native attributes to column td element of a row */
-    tdAttrs: {
-        type: Function as PropType<(row: T, column: TableColumn<T>) => object>,
-        default: undefined,
-    },
-    /**
-     * Define a custom comparison function to check whether two row elements are equal.
-     * By default a `rowKey` comparison is performed if given. Otherwise a simple object comparison is done.
-     */
-    customCompare: {
-        type: Function as PropType<(a: T, b: T) => boolean>,
-        default: undefined,
-    },
-    /** Border to all cells */
-    bordered: {
-        type: Boolean,
-        default: () => getOption("table.bordered", false),
-    },
-    /** Whether table is striped */
-    striped: {
-        type: Boolean,
-        default: () => getOption("table.striped", false),
-    },
-    /** Makes the cells narrower */
-    narrowed: {
-        type: Boolean,
-        default: () => getOption("table.narrowed", false),
-    },
-    /** Rows are highlighted when hovering */
-    hoverable: {
-        type: Boolean,
-        default: () => getOption("table.hoverable", false),
-    },
-    /** Set which row is selected, use `v-model:selected` to make it two-way binding (if selectable) */
-    selected: { type: Object as PropType<T>, default: undefined },
-    /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */
-    selectable: {
-        type: Boolean,
-        default: () => getOption("table.selectable", false),
-    },
-    /** Custom method to verify if a row is selectable, works when is selectable */
-    isRowSelectable: {
-        type: Function as PropType<(row: T) => boolean>,
-        default: () => true,
-    },
-    /** Show header */
-    showHeader: {
-        type: Boolean,
-        default: () => getOption("table.showHeader", true),
-    },
-    /** Allows rows to be draggable */
-    draggable: { type: Boolean, default: false },
-    /** Allows columns to be draggable */
-    draggableColumn: { type: Boolean, default: false },
-    /** Add a horizontal scrollbar when table is too wide */
-    scrollable: { type: Boolean, default: undefined },
-    /** Show a sticky table header */
-    stickyHeader: { type: Boolean, default: false },
-    /** Table fixed height */
-    height: { type: [Number, String], default: undefined },
-    /** Filtering debounce time (in milliseconds) */
-    debounceSearch: {
-        type: Number,
-        default: () => getOption("table.debounceSearch"),
-    },
-    /** Rows can be checked (multiple) */
-    checkable: { type: Boolean, default: false },
-    /** Make the checkbox column sticky (if checkable) */
-    stickyCheckbox: { type: Boolean, default: false },
-    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
-    headerCheckable: { type: Boolean, default: true },
-    /** Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable) */
-    checkedRows: { type: Array as PropType<T[]>, default: () => [] },
-    /**
-     * Position of the checkbox when checkable (if checkable)
-     * @values left, right
-     */
-    checkboxPosition: {
-        type: String,
-        default: () => getOption("table.checkboxPosition", "left"),
-        validator: (value: string) => ["left", "right"].indexOf(value) >= 0,
-    },
-    /**
-     * Color of the checkbox when checkable (if checkable)
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    checkboxVariant: {
-        type: String,
-        default: () => getOption("table.checkboxVariant"),
-    },
-    /** Custom method to verify if a row is checked (if checkable) */
-    isRowChecked: {
-        type: Function as PropType<(row: T) => boolean>,
-        default: undefined,
-    },
-    /** Custom method to verify if a row is checkable (if checkable) */
-    isRowCheckable: {
-        type: Function as PropType<(row: T) => boolean>,
-        default: (row: T) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("table.isRowCheckable", (row) => true)(row),
-    },
-    /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
-    backendSorting: {
-        type: Boolean,
-        default: () => getOption("table.backendSorting", false),
-    },
-    /**
-     * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc']
-     * @type string | [string, 'asc' | 'desc']
-     */
-    defaultSort: {
-        type: [String, Array] as PropType<string | [string, SortDirection]>,
-        default: () => getOption("table.defaultSort"),
-    },
-    /**
-     * Sets the default sort column direction on the first click
-     * @type 'asc'|'desc'
-     * @values asc, desc
-     */
-    defaultSortDirection: {
-        type: String as PropType<SortDirection>,
-        validator: (value: string) => ["asc", "desc"].indexOf(value) >= 0,
-        default: () => getOption("table.defaultSortDirection", "asc"),
-    },
-    /** Sets the header sorting icon */
-    sortIcon: {
-        type: String,
-        default: () => getOption("table.sortIcon", "arrow-up"),
-    },
-    /**
-     * Sets the size of the sorting icon
-     * @values small, medium, large
-     */
-    sortIconSize: {
-        type: String,
-        default: () => getOption("table.sortIconSize", "small"),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("table.iconPack"),
-    },
-    /** Allow row details  */
-    detailed: { type: Boolean, default: false },
-    /**
-     * Set which rows have opened details, use `v-model:detailedRows` to make it two-way binding (if detailed).
-     * Ideal to open details via vue-router. (A unique key is required; check `rowKey` prop)
-     */
-    detailedRows: { type: Array as PropType<T[]>, default: () => [] },
-    /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
-    isDetailedVisible: {
-        type: Function as PropType<(row: T) => boolean>,
-        default: (row: T) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("table.isDetailedVisible", (row) => true)(row),
-    },
-    /** Allow detail icon and column to be visible (if detailed) */
-    showDetailIcon: {
-        type: Boolean,
-        default: () => getOption("table.showDetailIcon", true),
-    },
-    /** Icon name of detail action (if detailed) */
-    detailIcon: {
-        type: String,
-        default: () => getOption("table.detailIcon", "chevron-right"),
-    },
-    /** Enable custom style on details (if detailed) */
-    customDetailRow: { type: Boolean, default: false },
-    /* Transition name to use when toggling row details (if detailed) */
-    detailTransition: {
-        type: String,
-        default: () => getOption("table.detailTransition", "slide"),
-    },
-    /** Adds pagination to the table */
-    paginated: {
-        type: Boolean,
-        default: () => getOption("table.paginated", false),
-    },
-    /** Rows won't be paginated with Javascript, use with `page-change` event to paginate in your backend */
-    backendPagination: { type: Boolean, default: false },
-    /** Total number of table data if backend-pagination is enabled */
-    total: { type: Number, default: 0 },
-    /** Current page of table data (if paginated), use `v-model:currentPage` to make it two-way binding */
-    currentPage: { type: Number, default: 1 },
-    /** How many rows per page (if paginated) */
-    perPage: {
-        type: [Number, String],
-        default: () => getOption("table.perPage", 20),
-    },
-    /**
-     * Pagination position (if paginated)
-     * @values bottom, top, both
-     */
-    paginationPosition: {
-        type: String,
-        default: () => getOption("table.paginationPosition", "bottom"),
-        validator: (value: string) =>
-            ["bottom", "top", "both"].indexOf(value) >= 0,
-    },
-    /**
-     * Size of pagination (if paginated)
-     * @values small, medium, large
-     */
-    paginationSize: {
-        type: String,
-        default: () => getOption("table.paginationSize", "small"),
-    },
-    /** Enable rounded pagination buttons (if paginated) */
-    paginationRounded: {
-        type: Boolean,
-        default: () => getOption("table.paginationRounded", false),
-    },
-    /** Enable simple style pagination (if paginated) */
-    paginationSimple: {
-        type: Boolean,
-        default: () => getOption("table.paginationSimple", false),
-    },
-    /**
-     * Pagination buttons order (if paginated)
-     * @values centered, right, left
-     */
-    paginationOrder: {
-        type: String,
-        default: () => getOption("table.paginationOrder"),
-        validator: (value: string) =>
-            ["centered", "right", "left"].indexOf(value) >= 0,
-    },
-    /** Columns won't be filtered with Javascript, use with `searchable` prop to the columns to filter in your backend */
-    backendFiltering: {
-        type: Boolean,
-        default: () => getOption("table.backendFiltering", false),
-    },
-    /** Icon of the column search input */
-    filtersIcon: {
-        type: String,
-        default: () => getOption("table.filterIcon"),
-    },
-    /** Placeholder of the column search input */
-    filtersPlaceholder: {
-        type: String,
-        default: () => getOption("table.filterPlaceholder"),
-    },
-    /** Add a native event to filter */
-    filtersEvent: { type: String, default: "" },
-    /** Label to be shown when the table is empty */
-    emptyLabel: {
-        type: String,
-        default: () => getOption("table.emptyLabel"),
-    },
-    /** Icon to be shown when the table is empty */
-    emptyIcon: {
-        type: String,
-        default: () => getOption("table.emptyIcon"),
-    },
-    /**
-     * Size of empty icon
-     * @values small, medium, large
-     */
-    emptyIconSize: {
-        type: String,
-        default: () => getOption("table.emptyIconSize", "large"),
-    },
-    /** Enable loading state */
-    loading: { type: Boolean, default: false },
-    /** Icon for the loading state */
-    loadingIcon: {
-        type: String,
-        default: () => getOption("table.loadingIcon", "loading"),
-    },
-    /** Label for the loading state */
-    loadingLabel: {
-        type: String,
-        default: () => getOption("table.loadingLabel"),
-    },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("table.mobileBreakpoint"),
-    },
-    /** Rows appears as cards on mobile (collapse rows) */
-    mobileCards: {
-        type: Boolean,
-        default: () => getOption("table.mobileCards", true),
-    },
-    /** Select placeholder text when nothing is selected (if mobileCards)*/
-    mobileSortPlaceholder: {
-        type: String,
-        default: () => getOption("table.mobileSortPlaceholder"),
-    },
-    /** Accessibility label for the pagination next page button. */
-    ariaNextLabel: {
-        type: String,
-        default: () => getOption("table.ariaNextLabel"),
-    },
-    /** Accessibility label for the pagination previous page button. */
-    ariaPreviousLabel: {
-        type: String,
-        default: () => getOption("table.ariaPreviousLabel"),
-    },
-    /** Accessibility label for the pagination page button. */
-    ariaPageLabel: {
-        type: String,
-        default: () => getOption("table.ariaPageLabel"),
-    },
-    /** Accessibility label for the pagination current page button. */
-    ariaCurrentLabel: {
-        type: String,
-        default: () => getOption("table.ariaCurrentLabel"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table */
-    tableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table wrapper */
-    wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table footer */
-    footerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when it is empty */
-    emptyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table row detail */
-    detailedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when is bordered */
-    borderedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when rows are striped */
-    stripedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when rows are narrowed */
-    narrowedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when is hoverable */
-    hoverableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table wrapper when header is sticky */
-    stickyHeaderClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table wrapper when its content is scrollable */
-    scrollableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table row when selected */
-    trSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table row when checkable and checked */
-    trCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element */
-    thClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element when component is positioned */
-    thPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element when component is sticky" */
-    thStickyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element when is checkable */
-    thCheckboxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element currently sorted */
-    thCurrentSortClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sortable Table `th` element */
-    thSortableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element that is unsortable */
-    thUnselectableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table sort icon in the header */
-    thSortIconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element of the detail column of triggers */
-    thDetailedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` subheading element */
-    thSubheadingClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element */
-    tdClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element when component is positioned */
-    tdPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element when component is sticky */
-    tdStickyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element when is checkable */
-    tdCheckboxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element that contains the chevron to trigger details */
-    tdDetailedChevronClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sortable form wrapper on mobile */
-    mobileSortClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table pagination wrapper */
-    paginationWrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /**
-     * Class configuration for the internal loading component
-     * @ignore
-     */
-    loadingClasses: {
-        type: Object,
-        default: () =>
-            getOption<OrugaOptions["loading"]>("table.loadingClasses", {}),
-    },
+const props = withDefaults(defineProps<TableProps<T>>(), {
+    override: undefined,
+    data: undefined,
+    columns: undefined,
+    rowKey: () => getOption("table.rowKey"),
+    rowClass: getOption("table.rowClass", () => ""),
+    thAttrs: undefined,
+    tdAttrs: undefined,
+    customCompare: undefined,
+    bordered: () => getOption("table.bordered", false),
+    striped: () => getOption("table.striped", false),
+    narrowed: () => getOption("table.narrowed", false),
+    hoverable: () => getOption("table.hoverable", false),
+    selected: undefined,
+    selectable: () => getOption("table.selectable", false),
+    isRowSelectable: () => true,
+    showHeader: () => getOption("table.showHeader", true),
+    draggable: false,
+    draggableColumn: false,
+    scrollable: undefined,
+    stickyHeader: false,
+    height: undefined,
+    debounceSearch: () => getOption("table.debounceSearch"),
+    checkable: false,
+    stickyCheckbox: false,
+    headerCheckable: true,
+    checkedRows: () => [],
+    checkboxPosition: () => getOption("table.checkboxPosition", "left"),
+    checkboxVariant: () => getOption("table.checkboxVariant"),
+    isRowChecked: undefined,
+    isRowCheckable: getOption("table.isRowCheckable", () => true),
+    backendSorting: () => getOption("table.backendSorting", false),
+    defaultSort: () => getOption("table.defaultSort"),
+    defaultSortDirection: () => getOption("table.defaultSortDirection", "asc"),
+    sortIcon: () => getOption("table.sortIcon", "arrow-up"),
+    sortIconSize: () => getOption("table.sortIconSize", "small"),
+    iconPack: () => getOption("table.iconPack"),
+    detailed: false,
+    detailedRows: () => [],
+    isDetailedVisible: getOption("table.isDetailedVisible", () => true),
+    showDetailIcon: () => getOption("table.showDetailIcon", true),
+    detailIcon: () => getOption("table.detailIcon", "chevron-right"),
+    customDetailRow: false,
+    detailTransition: () => getOption("table.detailTransition", "slide"),
+    paginated: () => getOption("table.paginated", false),
+    backendPagination: false,
+    total: 0,
+    currentPage: 1,
+    perPage: () => getOption("table.perPage", 20),
+    paginationPosition: () => getOption("table.paginationPosition", "bottom"),
+    paginationSize: () => getOption("table.paginationSize", "small"),
+    paginationRounded: () => getOption("table.paginationRounded", false),
+    paginationSimple: () => getOption("table.paginationSimple", false),
+    paginationOrder: () => getOption("table.paginationOrder"),
+    backendFiltering: () => getOption("table.backendFiltering", false),
+    filtersIcon: () => getOption("table.filterIcon"),
+    filtersPlaceholder: () => getOption("table.filterPlaceholder"),
+    filtersEvent: "",
+    emptyLabel: () => getOption("table.emptyLabel"),
+    emptyIcon: () => getOption("table.emptyIcon"),
+    emptyIconSize: () => getOption("table.emptyIconSize", "large"),
+    loading: false,
+    loadingIcon: () => getOption("table.loadingIcon", "loading"),
+    loadingLabel: () => getOption("table.loadingLabel"),
+    mobileBreakpoint: () => getOption("table.mobileBreakpoint"),
+    mobileCards: () => getOption("table.mobileCards", true),
+    mobileSortPlaceholder: () => getOption("table.mobileSortPlaceholder"),
+    ariaNextLabel: () => getOption("table.ariaNextLabel"),
+    ariaPreviousLabel: () => getOption("table.ariaPreviousLabel"),
+    ariaPageLabel: () => getOption("table.ariaPageLabel"),
+    ariaCurrentLabel: () => getOption("table.ariaCurrentLabel"),
 });
 
 const emits = defineEmits<{
@@ -623,7 +189,7 @@ const emits = defineEmits<{
     (
         e: "sort",
         column: TableColumn<T>,
-        direction: SortDirection,
+        direction: "asc" | "desc",
         event: Event,
     ): void;
     /**
@@ -812,13 +378,20 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
 const slotRef = useTemplateRef("slotElement");
 
+// provided data is a computed ref to enjure reactivity
+const provideData = computed<TableComponent>(() => ({
+    isColumnSorted,
+}));
+
 /** provide functionalities and data to child item components */
-const provider = useProviderParent<TableColumnComponent<T>>(slotRef);
+const { sortedItems } = useProviderParent<TableColumnComponent<T>>(slotRef, {
+    data: provideData,
+});
 
 /** all defined columns */
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
-    if (!provider.sortedItems.value) return [];
-    return provider.sortedItems.value.map((column) => ({
+    if (!sortedItems.value) return [];
+    return sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
@@ -865,7 +438,7 @@ const tableTotal = computed(() =>
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 /** visible rows based on current page */
-const visibleRows = computed<TableRow<T>[]>(() => {
+const visibleRows = computed<TableRow<T>[]>((): TableRow<T>[] => {
     if (!props.paginated || props.backendPagination) return tableRows.value;
 
     const currentPage = tableCurrentPage.value;
@@ -1122,7 +695,7 @@ function initSort(): void {
     } else {
         sortField = props.defaultSort;
     }
-    sortByField(sortField, sortDirection as SortDirection);
+    sortByField(sortField, sortDirection);
 }
 
 /**
@@ -1156,7 +729,7 @@ function sort(
     processTableData();
 }
 
-function sortByField(field: string, direction: SortDirection = "asc"): void {
+function sortByField(field: string, direction: "asc" | "desc"): void {
     const sortColumn = tableColumns.value.find(
         (column) => column.field === field,
     );
