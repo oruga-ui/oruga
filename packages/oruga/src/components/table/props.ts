@@ -9,7 +9,7 @@ export type TableProps<T> = {
     /** Table columns */
     columns?: TableColumn<T>[];
     /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-    rowKey?: string;
+    rowKey?: keyof T;
     /** Define individual class for a row */
     rowClass?: (row: T, index: number) => string;
     /** Adds native attributes to a column th element */
