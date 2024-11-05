@@ -438,7 +438,7 @@ const tableTotal = computed(() =>
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 /** visible rows based on current page */
-const visibleRows = computed<TableRow<T>[]>(() => {
+const visibleRows = computed<TableRow<T>[]>((): TableRow<T>[] => {
     if (!props.paginated || props.backendPagination) return tableRows.value;
 
     const currentPage = tableCurrentPage.value;

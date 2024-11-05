@@ -263,8 +263,6 @@ export type TableColumnProps<T> = {
     formatter?: (value: unknown, row: T) => string;
     /** Define a column sub heading  */
     subheading?: string;
-    /** Add addtional meta information for the column for custom purpose*/
-    meta?: any;
     /** Column fixed width */
     width?: number | string;
     /** Define column value as number */

@@ -21,7 +21,6 @@ const props = withDefaults(defineProps<TableColumnProps<T>>(), {
     field: undefined,
     formatter: undefined,
     subheading: undefined,
-    meta: undefined,
     width: undefined,
     numeric: false,
     position: undefined,

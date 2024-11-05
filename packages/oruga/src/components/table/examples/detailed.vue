@@ -140,11 +140,9 @@ const detailedRows = ref([data.value[0]]);
                     {{ row.name }}
                 </template>
 
-                <template v-else>
-                    <button @click="toggleDetails()">
-                        {{ row.name }}
-                    </button>
-                </template>
+                <button v-else @click="toggleDetails()">
+                    {{ row.name }}
+                </button>
             </o-table-column>
 
             <o-table-column
