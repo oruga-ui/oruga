@@ -96,7 +96,11 @@
 
 # Menu
 
----
+ <!> ~ class: itemWrapperClass -> itemClass
+ <!> ~ class: itemClass -> itemButtonClass
+ <!> ~ class: itemActiveClass -> itemButtonActiveClass
+ <!> ~ class: itemDisabledClass -> itemButtonDisabledClass
+ <!> ~ class: itemIconTextClass -> itemButtonIconClass
 
 # Modal
 
