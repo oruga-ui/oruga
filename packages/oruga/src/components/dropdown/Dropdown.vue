@@ -467,7 +467,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                     :class="menuClasses"
                     :style="menuStyle"
                     :role="ariaRole"
-                    :aria-hidden="disabled || !isActive"
+                    :aria-hidden="!inline && (disabled || !isActive)"
                     :aria-modal="!inline && trapFocus">
                     <!--
                         @slot Place dropdown items here
