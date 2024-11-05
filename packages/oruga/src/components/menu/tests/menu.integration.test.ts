@@ -26,9 +26,7 @@ describe("Menu integration tests", () => {
                 "menu-item",
             );
             expect(itemComps.at(idx)!.text()).toBe(value.label);
-            expect(itemComps.at(idx)!.classes()).toContain(
-                "o-menu__item__wrapper",
-            );
+            expect(itemComps.at(idx)!.classes()).toContain("o-menu__item");
         });
     });
 
@@ -76,7 +74,9 @@ describe("Menu integration tests", () => {
         const itemButtonTwo = itemTwo.find("button");
 
         expect(itemButtonOne.attributes("disabled")).toBe("");
-        expect(itemButtonOne.classes()).toContain("o-menu__item--disabled");
+        expect(itemButtonOne.classes()).toContain(
+            "o-menu__item__button--disabled",
+        );
         expect(itemButtonTwo.attributes("disabled")).toBeUndefined();
 
         await itemButtonOne.trigger("click");
@@ -99,7 +99,7 @@ describe("Menu integration tests", () => {
         const itemComp = wrapper.findComponent(OMenuItem);
         expect(itemComp.exists()).toBeTruthy();
         const itemButton = itemComp.find("button");
-        expect(itemButton.classes()).toContain("o-menu__item--active");
+        expect(itemButton.classes()).toContain("o-menu__item__button--active");
 
         await itemButton.trigger("click");
         expect(itemComp.emitted("update:active")).toHaveLength(1);

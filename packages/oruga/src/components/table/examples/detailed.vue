@@ -140,11 +140,9 @@ const detailedRows = ref([data.value[0]]);
                     {{ row.name }}
                 </template>
 
-                <template v-else>
-                    <button @click="toggleDetails()">
-                        {{ row.name }}
-                    </button>
-                </template>
+                <button v-else @click="toggleDetails()">
+                    {{ row.name }}
+                </button>
             </o-table-column>
 
             <o-table-column
@@ -178,10 +176,12 @@ const detailedRows = ref([data.value[0]]);
             </o-table-column>
 
             <template #detail="{ row }">
-                <tr v-for="item in row.items" :key="item.name">
+                <tr
+                    v-for="item in (row as (typeof data)[number]).items"
+                    :key="item.name">
                     <td v-if="showDetailIcon"></td>
                     <td v-show="columnsVisible['name'].display">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{ item.name }}
+                        {{ item.name }}
                     </td>
                     <td v-show="columnsVisible['sold'].display">
                         {{ item.sold }}
