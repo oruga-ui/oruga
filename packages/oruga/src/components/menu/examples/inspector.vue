@@ -16,34 +16,34 @@ const inspectData = [
     },
     {
         class: "itemClass",
+        description: "Class of the root element of menu item",
+        subitem: true,
+    },
+    {
+        class: "itemButtonClass",
         description: "Class of the menu item",
         subitem: true,
     },
     {
-        class: "itemActiveClass",
+        class: "itemButtonActiveClass",
         description: "Class of the active menu item",
         subitem: true,
     },
     {
-        class: "itemDisabledClass",
+        class: "itemButtonDisabledClass",
         properties: ["disabled"],
         description: "Class of the disabled menu item",
         subitem: true,
     },
     {
-        class: "itemIconTextClass",
+        class: "itemButtonIconClass",
         properties: ["icon"],
-        description: "Class of the icon of menu item",
+        description: "Class of the menu item with icon",
         subitem: true,
     },
     {
         class: "itemSubmenuClass",
         description: "Class of the menu item when is a submenu",
-        subitem: true,
-    },
-    {
-        class: "itemWrapperClass",
-        description: "Class of the root element of menu item",
         subitem: true,
     },
 ];
