@@ -523,7 +523,7 @@ function hasCustomFooterSlot(): boolean {
 
 /** get the formated row value for a column */
 function getColumnValue(row: T, column: TableColumn<T>): string {
-    return getPropertyValue(row, String(column.field), column.formatter);
+    return getPropertyValue(row, column.field, column.formatter);
 }
 
 /** check if two rows are equal by a custom compare function or the rowKey attribute */
@@ -744,7 +744,7 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
     if (!column) return rows;
     return sortBy<TableRow<T>>(
         rows,
-        column?.field ? "value." + String(column.field) : "",
+        column?.field ? "value." + column.field : "",
         column?.customSort
             ? (a, b, asc): number => column.customSort!(a.value, b.value, asc)
             : undefined,

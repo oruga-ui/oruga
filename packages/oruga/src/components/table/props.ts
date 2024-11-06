@@ -258,7 +258,7 @@ export type TableColumnProps<T> = {
     /** Define the column label */
     label?: string;
     /** Define an object property key if data is an object */
-    field?: keyof T | string;
+    field?: string;
     /** Provide a formatter function to edit the output */
     formatter?: (value: unknown, row: T) => string;
     /** Define a column sub heading  */
