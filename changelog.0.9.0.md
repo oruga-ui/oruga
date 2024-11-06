@@ -144,6 +144,7 @@
  
 # Sidebar
 
+ ~ prop: mobile (variable changed from `fullwitdh` to `expanded`)
  - prop: variant
  - prop: container (only available in programmatic usage)
  <!> - prop: destroyOnHide (no done by default for programmatic usage)
@@ -179,6 +180,7 @@
  + class: stepIconClass
  <!> ~ class: itemClass -> stepPanelClass
  <!> ~ class: rootClass (default class changed)
+ <!> ~ class: expandedClass (default class changed)
  <!> ~ class: verticalClass (default class changed)
  <!> ~ class: positionClass (default class changed)
  <!> ~ class: animatedClass (default class changed)
