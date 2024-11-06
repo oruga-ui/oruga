@@ -219,12 +219,7 @@ const rootClasses = defineClasses(
         computed(() => props.position),
         computed(() => !!props.position && props.vertical),
     ],
-    [
-        "expandedClass",
-        "o-tabs--fullwidth",
-        null,
-        computed(() => props.expanded),
-    ],
+    ["expandedClass", "o-tabs--expanded", null, computed(() => props.expanded)],
     ["verticalClass", "o-tabs--vertical", null, computed(() => props.vertical)],
     [
         "multilineClass",

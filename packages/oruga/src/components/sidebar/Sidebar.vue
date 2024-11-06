@@ -259,7 +259,7 @@ const contentClasses = defineClasses(
         computed(
             () =>
                 props.fullwidth ||
-                (props.mobile === "fullwidth" && isMobile.value),
+                (props.mobile === "expanded" && isMobile.value),
         ),
     ],
     [
@@ -278,7 +278,7 @@ const contentClasses = defineClasses(
         computed(
             () =>
                 props.expandOnHover &&
-                (!isMobile.value || props.mobile !== "fullwidth"),
+                (!isMobile.value || props.mobile !== "expanded"),
         ),
     ],
     ["visibleClass", "o-side__content--visible", null, isActive],

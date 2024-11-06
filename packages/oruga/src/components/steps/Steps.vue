@@ -238,7 +238,12 @@ const rootClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
-    ["verticalClass", "o-steps-vertical", null, computed(() => props.vertical)],
+    [
+        "verticalClass",
+        "o-steps--vertical",
+        null,
+        computed(() => props.vertical),
+    ],
     [
         "positionClass",
         "o-steps-position-",

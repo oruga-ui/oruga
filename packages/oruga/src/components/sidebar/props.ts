@@ -24,9 +24,9 @@ export type SidebarProps<C extends Component> = {
     reduce?: boolean;
     /**
      * Custom layout on mobile
-     * @values fullwidth, reduced, hidden
+     * @values expanded, reduced, hidden
      */
-    mobile?: "fullwidth" | "reduced" | "hidden";
+    mobile?: "expanded" | "reduced" | "hidden";
     /** Expand sidebar on hover when reduced or mobile is reduce */
     expandOnHover?: boolean;
     /** Custom animation (transition name) */
