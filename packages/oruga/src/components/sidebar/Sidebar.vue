@@ -225,7 +225,7 @@ function beforeLeave(): void {
 
 const rootClasses = defineClasses(
     ["rootClass", "o-side"],
-    ["mobileClass", "o-side--mobile", computed(() => props.mobile), isMobile],
+    ["mobileClass", "o-side--mobile", null, isMobile],
     ["activeClass", "o-side--active", null, isActive],
     [
         "teleportClass",
