@@ -216,8 +216,12 @@ const selected = ref(options[3].value);
                 placeholder="e.g. Anne"
                 :keep-first="keepFirst"
                 :open-on-focus="openOnFocus"
-                :keep-open="keepOpen">
+                :keep-open="keepOpen"
+                selectable-header
+                selectable-footer>
                 <template #empty> No results found </template>
+                <template #header> Header </template>
+                <template #footer> Footer </template>
             </o-autocomplete>
         </o-field>
 

@@ -5,7 +5,6 @@ import {
     ref,
     watch,
     useAttrs,
-    onMounted,
     useSlots,
     useId,
     triggerRef,
@@ -32,6 +31,7 @@ import {
     filterOptionsItems,
     useInputHandler,
     useEventListener,
+    isOptionValid,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -379,46 +379,68 @@ function navigateItem(direction: 1 | -1): void {
         return;
     }
 
-    const options: (SpecialOption | OptionsItem<T>)[] =
-        toOptionsList(groupedOptions);
+    // convert grouped options to simple list
+    const options: OptionsItem<T>[] = toOptionsList(groupedOptions);
+    // filter only avaibale options
+    const availableOptions: (SpecialOption | OptionsItem<T>)[] = options.filter(
+        (o) => isOptionValid(o),
+    );
 
-    // add header / footer if selectable
-    if (headerRef.value && props.selectableHeader)
-        options.unshift(SpecialOption.Header);
-    if (footerRef.value && props.selectableFooter)
-        options.push(SpecialOption.Footer);
+    // item elements
+    const items = [...itemRefs.value];
 
-    // define current index
+    // add header / footer if available and selectable
+    if (headerRef.value && props.selectableHeader) {
+        availableOptions.unshift(SpecialOption.Header);
+        items.unshift(headerRef.value);
+    }
+    if (footerRef.value && props.selectableFooter) {
+        availableOptions.push(SpecialOption.Footer);
+        items.push(footerRef.value);
+    }
+
+    // define current available options index
     let index: number;
     if (headerHovered.value) index = 0 + direction;
-    else if (footerHovered.value) index = options.length - 1 + direction;
-    else
+    else if (footerHovered.value)
+        index = availableOptions.length - 1 + direction;
+    else {
         index =
-            options.findIndex(
+            availableOptions.findIndex(
                 (o) =>
                     !isSpecialOption(o) && o.key === hoveredOption.value?.key,
             ) + direction;
+    }
 
     // check if index overflow
-    index = index > options.length - 1 ? options.length - 1 : index;
+    index =
+        index > availableOptions.length - 1
+            ? availableOptions.length - 1
+            : index;
     // check if index underflow
     index = index < 0 ? 0 : index;
 
+    // get option element
+    const option = availableOptions[index];
+
     // set hover state
-    setHovered(options[index]);
+    setHovered(option);
 
-    // get items from input
-    let items = itemRefs.value || [];
-    if (headerRef.value && props.selectableHeader)
-        items = [headerRef.value, ...items];
-    if (footerRef.value && props.selectableFooter)
-        items = [...items, footerRef.value];
+    // get real option index
+    index =
+        option === SpecialOption.Header
+            ? -1
+            : option === SpecialOption.Footer
+              ? options.length
+              : options.findIndex((o) => o.key === option.key);
 
+    if (headerRef.value && props.selectableHeader) index++;
+
+    const dropdownMenu = unrefElement(dropdownRef.value.$content);
     const element = unrefElement(items[index]);
     if (!element) return;
 
     // define scroll position
-    const dropdownMenu = unrefElement(dropdownRef.value.$content);
     const visMin = dropdownMenu.scrollTop;
     const visMax =
         dropdownMenu.scrollTop +
@@ -435,7 +457,8 @@ function navigateItem(direction: 1 | -1): void {
             dropdownMenu.clientHeight +
             element.clientHeight;
     }
-    // trigger scroll
+
+    // trigger scroll events
     if (props.checkScroll) checkDropdownScroll();
 }
 
@@ -509,15 +532,12 @@ function rightIconClick(event: Event): void {
 
 // --- InfitiveScroll Feature ---
 
-onMounted(() => {
-    if (isClient && props.checkScroll && dropdownRef.value?.$content)
-        useEventListener(
-            "scroll",
-            checkDropdownScroll,
-            dropdownRef.value.$content,
-            { immediate: true },
-        );
-});
+if (isClient && props.checkScroll)
+    useEventListener(
+        "scroll",
+        checkDropdownScroll,
+        computed(() => dropdownRef.value.$content),
+    );
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
