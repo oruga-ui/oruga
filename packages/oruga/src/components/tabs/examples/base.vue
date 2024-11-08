@@ -10,7 +10,7 @@ const showBooks = ref(false);
         <o-field grouped>
             <o-switch v-model="showBooks" label="Show Books item" />
 
-            <o-button label="Set Music" @click="activeTab = 1" />
+            <o-button label="Set Music" @click="activeTab = 2" />
         </o-field>
 
         <o-tabs v-model="activeTab" destroy-on-hide>
