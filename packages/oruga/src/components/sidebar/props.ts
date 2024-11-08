@@ -88,7 +88,7 @@ type SidebarClasses = Partial<{
     /** Class of sidebar component when on mobile */
     mobileClass: ComponentClass;
     /** Class of the body when sidebar clipped */
-    crollClipClass: ComponentClass;
+    scrollClipClass: ComponentClass;
     /** Class of the body when sidebar is not clipped */
     noScrollClass: ComponentClass;
     /** Class of the sidebar content when sidebar is hidden */

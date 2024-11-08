@@ -964,7 +964,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of sidebar component when on mobile */
                 mobileClass: ClassDefinition;
                 /** Class of the body when sidebar clipped */
-                crollClipClass: ClassDefinition;
+                scrollClipClass: ClassDefinition;
                 /** Class of the body when sidebar is not clipped */
                 noScrollClass: ClassDefinition;
                 /** Class of the sidebar content when sidebar is hidden */
