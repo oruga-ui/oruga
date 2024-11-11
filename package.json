@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.9.0-pre.3",
+  "version": "0.9.0-pre.4",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -18,6 +18,7 @@
     "build:docs:watch": "npm run docs:dev --workspace @oruga-ui/docs-next",
     "build:lib": "npm run build:lib --workspace @oruga-ui/oruga-next",
     "build:lib:watch": "npm run build:lib:watch --workspace @oruga-ui/oruga-next",
+    "build:examples": "npm run build --workspace @oruga-ui/examples",
     "gen": "npm run gen:types && npm run gen:volar && npm run gen:docs",
     "gen:volar": "node .scripts/gen-volar-dts.mjs --bundle --platform=node",
     "gen:types": "node .scripts/gen-comp-types.mjs --bundle --platform=node",
@@ -32,9 +33,9 @@
     "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.1",
     "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
-    "replace-in-file": "^7.2.0"
+    "replace-in-file": "^8.2.0"
   }
 }

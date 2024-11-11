@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const mobile = ref<"reduced" | "fullwidth" | "hidden">("reduced");
+const mobile = ref<"reduced" | "expanded" | "hidden">("reduced");
 const expandOnHover = ref(false);
 const reduce = ref(false);
 </script>
@@ -42,7 +42,7 @@ const reduce = ref(false);
                     <option :value="null"></option>
                     <option value="reduced">Reduced</option>
                     <option value="hidden">Hidden</option>
-                    <option value="fullwidth">Fullwidth</option>
+                    <option value="expanded">Expanded</option>
                 </o-select>
             </o-field>
         </div>

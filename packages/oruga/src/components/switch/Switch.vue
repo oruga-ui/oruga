@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, ref, useAttrs, useId } from "vue";
+import { computed, useAttrs, useId, useTemplateRef } from "vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
@@ -31,8 +31,8 @@ const props = withDefaults(defineProps<SwitchProps<T>>(), {
     disabled: false,
     required: false,
     name: undefined,
-    trueValue: true,
-    falseValue: false,
+    trueValue: undefined,
+    falseValue: undefined,
     rounded: true,
     position: "right",
     autocomplete: () => getOption("switch.autocomplete", "off"),
@@ -69,7 +69,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref<HTMLInputElement>();
+const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
 const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
@@ -85,9 +85,14 @@ const vmodel = defineModel<T>({ default: undefined });
 // if not `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField?.value?.setInputId(props.id);
 
+const _trueValue =
+    typeof props.trueValue === "undefined" ? true : props.trueValue;
+const _falseValue =
+    typeof props.falseValue === "undefined" ? false : props.falseValue;
+
 const isChecked = computed(
     () =>
-        vmodel.value === props.trueValue ||
+        vmodel.value === _trueValue ||
         (Array.isArray(vmodel.value) &&
             vmodel.value.includes(props.nativeValue)),
 );
@@ -175,7 +180,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         <input
             v-bind="inputBind"
             :id="id"
-            ref="inputRef"
+            ref="inputElement"
             v-model="vmodel"
             type="checkbox"
             role="switch"
@@ -186,8 +191,8 @@ defineExpose({ focus: setFocus, value: vmodel });
             :name="name"
             :autocomplete="autocomplete"
             :value="nativeValue"
-            :true-value="trueValue"
-            :false-value="falseValue"
+            :true-value="_trueValue"
+            :false-value="_falseValue"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"

@@ -347,7 +347,7 @@ function selectItem(value: T): void {
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed<DropdownComponent<T>>(() => ({
     disabled: props.disabled,
-    multiple: props.multiple || false,
+    multiple: isTrueish(props.multiple),
     selected: vmodel.value,
     selectItem,
 }));
@@ -467,7 +467,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                     :class="menuClasses"
                     :style="menuStyle"
                     :role="ariaRole"
-                    :aria-hidden="disabled || !isActive"
+                    :aria-hidden="!inline && (disabled || !isActive)"
                     :aria-modal="!inline && trapFocus">
                     <!--
                         @slot Place dropdown items here

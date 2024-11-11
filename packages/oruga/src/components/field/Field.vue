@@ -5,6 +5,7 @@ import {
     useSlots,
     watch,
     useId,
+    useTemplateRef,
     type PropType,
     type VNodeArrayChildren,
 } from "vue";
@@ -230,7 +231,7 @@ function getInnerContent(vnode): VNodeArrayChildren {
 
 // --- Field Dependency Injection Feature ---
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 function addInnerField(): void {
     hasInnerField.value = true;
@@ -348,7 +349,7 @@ const innerFieldClasses = defineClasses(
 </script>
 
 <template>
-    <div ref="rootRef" data-oruga="field" :class="rootClasses">
+    <div ref="rootElement" data-oruga="field" :class="rootClasses">
         <div v-if="horizontal" :class="horizontalLabelClasses">
             <label v-if="hasLabel" :for="inputId" :class="labelClasses">
                 <!--

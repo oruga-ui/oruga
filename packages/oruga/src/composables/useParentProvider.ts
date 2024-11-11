@@ -44,7 +44,7 @@ type ProviderParentOptions<T = unknown> = {
  * @param options additional options
  */
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
-    rootRef?: Ref<HTMLElement | Component | undefined>,
+    rootRef?: Ref<HTMLElement | Component | null | undefined>,
     options?: ProviderParentOptions<ParentData>,
 ): {
     childItems: Ref<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;

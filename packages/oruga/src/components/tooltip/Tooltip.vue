@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, type PropType } from "vue";
+import {
+    ref,
+    computed,
+    watch,
+    nextTick,
+    type PropType,
+    type Component,
+} from "vue";
 
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
@@ -193,7 +200,7 @@ watch(
 
 // --- Event Handler ---
 
-const contentRef = ref<HTMLElement>();
+const contentRef = ref<HTMLElement | Component>();
 const triggerRef = ref<HTMLElement>();
 
 const eventCleanups: (() => void)[] = [];

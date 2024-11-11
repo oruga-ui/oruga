@@ -3,10 +3,7 @@ import type { ComponentClass } from "@/types";
 export type CheckboxProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /**
-     * The input value state
-     * @type string|number|boolean|object|array
-     */
+    /** The input value state, use v-model to make it two-way binding */
     modelValue?: T | T[];
     /**
      * Color of the control
@@ -22,10 +19,7 @@ export type CheckboxProps<T> = {
     label?: string;
     /** Same as native indeterminate */
     indeterminate?: boolean;
-    /**
-     * Same as native value
-     * @type string|number|boolean|object
-     */
+    /** Same as native value */
     nativeValue?: T;
     /** Same as native disabled */
     disabled?: boolean;
@@ -33,16 +27,10 @@ export type CheckboxProps<T> = {
     required?: boolean;
     /** Same as native name */
     name?: string;
-    /**
-     * Overrides the returned value when it's checked
-     * @type string|number|boolean|object
-     */
-    trueValue?: T | boolean;
-    /**
-     * Overrides the returned value when it's not checked
-     * @type string|number|boolean|object
-     */
-    falseValue?: T | boolean;
+    /** Overrides the returned value when it's checked */
+    trueValue?: T;
+    /** Overrides the returned value when it's not checked */
+    falseValue?: T;
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete?: string;
     /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */

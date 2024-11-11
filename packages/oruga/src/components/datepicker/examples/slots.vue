@@ -67,7 +67,7 @@ function selectMonth(option): void {
     </section>
 </template>
 
-<style  scoped>
+<style scoped>
 .footer-container {
     display: flex;
     justify-content: end;

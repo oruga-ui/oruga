@@ -21,7 +21,7 @@ const active = ref(false);
 
         <o-button
             label="Open / Close"
-            type="primary"
+            variant="primary"
             @click="active = !active" />
     </o-field>
 </template>

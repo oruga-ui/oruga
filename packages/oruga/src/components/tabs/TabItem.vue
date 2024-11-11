@@ -2,7 +2,6 @@
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
 import { getOption } from "@/utils/config";
-import { isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { TabsComponent, TabItemComponent } from "./types";
@@ -59,13 +58,13 @@ const providedData = computed<TabItemComponent<T>>(() => ({
 }));
 
 // Inject functionalities and data from the parent component
-const { parent, item } = useProviderChild<TabsComponent<T>>({
+const { parent, item } = useProviderChild<TabsComponent>({
     data: providedData,
 });
 
 const transitionName = ref();
 
-const isActive = computed(() => isEqual(itemValue, parent.value.activeValue));
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const isTransitioning = ref(false);
 
@@ -168,9 +167,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 :class="panelClasses"
                 :data-id="`tabs-${item.identifier}`"
                 data-oruga="tabs-item"
-                :role="ariaRole"
                 :aria-labelledby="`tab-${item.identifier}`"
-                :tabindex="isActive ? 0 : -1"
                 aria-roledescription="item">
                 <!-- 
                     @slot Tab item content

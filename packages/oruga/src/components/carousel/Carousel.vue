@@ -8,6 +8,7 @@ import {
     nextTick,
     readonly,
     toRaw,
+    useTemplateRef,
     type PropType,
 } from "vue";
 
@@ -227,7 +228,7 @@ const emits = defineEmits<{
     (e: "click", event: Event): void;
 }>();
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 function restartTimer(): void {
     pauseTimer();
@@ -270,7 +271,7 @@ watch([() => props.itemsToList, () => props.itemsToShow], () => onRefresh());
 
 onMounted(() => {
     if (isClient) {
-        if (window.ResizeObserver && resizeObserver)
+        if (window.ResizeObserver && resizeObserver && rootRef.value)
             resizeObserver.observe(rootRef.value);
 
         onResized();
@@ -325,7 +326,8 @@ const settings = computed<typeof props>(() => {
 
 const itemWidth = computed(() => {
     // Ensure component is mounted
-    if (!windowWidth.value) return 0;
+    if (!windowWidth.value || !rootRef.value) return 0;
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const r = refresh_.value; // We force the computed property to refresh if this ref is changed
 
@@ -591,7 +593,7 @@ function indicatorItemAppliedClasses(index: number): ClassBind[] {
 
 <template>
     <div
-        ref="rootRef"
+        ref="rootElement"
         :class="rootClasses"
         data-oruga="carousel"
         role="region"

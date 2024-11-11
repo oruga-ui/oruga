@@ -7,6 +7,7 @@ import {
     toValue,
     nextTick,
     onMounted,
+    useTemplateRef,
 } from "vue";
 
 import OTabItem from "../tabs/TabItem.vue";
@@ -75,14 +76,13 @@ const emits = defineEmits<{
     (e: "change", newValue: ModelValue, oldValue: ModelValue): void;
 }>();
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<TabsComponent<ModelValue>>(() => ({
-    activeValue: vmodel.value,
+const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index || 0,
     type: props.type,
     vertical: props.vertical,
@@ -219,12 +219,7 @@ const rootClasses = defineClasses(
         computed(() => props.position),
         computed(() => !!props.position && props.vertical),
     ],
-    [
-        "expandedClass",
-        "o-tabs--fullwidth",
-        null,
-        computed(() => props.expanded),
-    ],
+    ["expandedClass", "o-tabs--expanded", null, computed(() => props.expanded)],
     ["verticalClass", "o-tabs--vertical", null, computed(() => props.vertical)],
     [
         "multilineClass",
@@ -268,7 +263,7 @@ const contentClasses = defineClasses(
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses" data-oruga="tabs">
+    <div ref="rootElement" :class="rootClasses" data-oruga="tabs">
         <nav
             :class="navClasses"
             role="tablist"
@@ -284,7 +279,7 @@ const contentClasses = defineClasses(
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
                 :class="childItem.navClasses"
-                role="tab"
+                :role="childItem.ariaRole"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem.value">
                 <o-slot-component

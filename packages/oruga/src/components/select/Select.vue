@@ -1,5 +1,12 @@
 <script setup lang="ts" generic="T, IsMultiple extends boolean = false">
-import { computed, watch, ref, nextTick, useAttrs, useId } from "vue";
+import {
+    computed,
+    watch,
+    nextTick,
+    useAttrs,
+    useId,
+    useTemplateRef,
+} from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -89,7 +96,7 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const selectRef = ref<HTMLInputElement>();
+const selectRef = useTemplateRef("selectElement");
 
 // use form input functionality
 const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
@@ -264,7 +271,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         <select
             v-bind="inputBind"
             :id="id"
-            ref="selectRef"
+            ref="selectElement"
             v-model="vmodel"
             data-oruga-input="select"
             :class="selectClasses"

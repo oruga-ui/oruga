@@ -5,8 +5,8 @@ import {
     ref,
     watch,
     nextTick,
+    useTemplateRef,
     type PropType,
-    type ComponentInstance,
 } from "vue";
 
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -108,9 +108,9 @@ const isMobileNative = computed(
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
-const inputRef = ref<ComponentInstance<typeof OInput>>();
-const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
+const dropdownRef = useTemplateRef("dropdownComponent");
+const inputRef = useTemplateRef("inputComponent");
+const nativeInputRef = useTemplateRef("nativeInputComponent");
 
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : inputRef.value,
@@ -330,7 +330,7 @@ defineExpose({ focus: setFocus });
     <div :data-oruga="dataOruga" :class="rootClasses" @click="onNativeClick">
         <o-dropdown
             v-if="!isMobileNative"
-            ref="dropdownRef"
+            ref="dropdownComponent"
             v-bind="dropdownBind"
             v-model:active="isActive"
             :position="pickerProps.position"
@@ -347,7 +347,7 @@ defineExpose({ focus: setFocus });
             <template v-if="!pickerProps.inline" #trigger>
                 <slot name="trigger">
                     <o-input
-                        ref="inputRef"
+                        ref="inputComponent"
                         v-bind="inputBind"
                         v-model="inputValue"
                         :placeholder="pickerProps.placeholder"
@@ -388,7 +388,7 @@ defineExpose({ focus: setFocus });
         <template v-else>
             <slot name="trigger">
                 <o-input
-                    ref="nativeInputRef"
+                    ref="nativeInputComponent"
                     v-bind="inputBind"
                     v-model="inputValue"
                     :type="initialNativeType"

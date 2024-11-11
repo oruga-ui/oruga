@@ -133,7 +133,7 @@ export type StepItemProps<T, C extends Component> = {
     iconPack?: string;
     /** Step item tag name */
     tag?: DynamicComponent;
-    /** Role attribute to be passed to the div wrapper for better accessibility */
+    /** Role attribute to be passed to the li wrapper for better accessibility */
     ariaRole?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;

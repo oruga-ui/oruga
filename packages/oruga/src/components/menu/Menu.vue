@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, type PropType } from "vue";
+import { computed, useTemplateRef, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -81,7 +81,7 @@ const props = defineProps({
     },
 });
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to enjure reactivity
 const provideData = computed<MenuComponent>(() => ({
@@ -114,7 +114,7 @@ const labelClasses = defineClasses(["listLabelClass", "o-menu__label"]);
 </script>
 
 <template>
-    <div ref="rootRef" data-oruga="menu" :class="rootClasses">
+    <div ref="rootElement" data-oruga="menu" :class="rootClasses">
         <div v-if="label || $slots.label" :class="labelClasses">
             <!-- 
                 @slot Override icon and label

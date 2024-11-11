@@ -71,7 +71,6 @@ defineEmits(["close"]);
     .modal-card {
         margin: 0 auto;
         max-height: calc(100vh - 40px);
-        width: 640px;
     }
 }
 

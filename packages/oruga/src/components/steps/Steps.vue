@@ -1,5 +1,13 @@
 <script setup lang="ts" generic="T">
-import { computed, toValue, nextTick, ref, watch, watchEffect } from "vue";
+import {
+    computed,
+    toValue,
+    nextTick,
+    ref,
+    watch,
+    watchEffect,
+    useTemplateRef,
+} from "vue";
 
 import OStepItem from "../steps/StepItem.vue";
 import OButton from "../button/Button.vue";
@@ -76,14 +84,13 @@ const emits = defineEmits<{
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<StepsComponent<ModelValue>>(() => ({
-    activeValue: vmodel.value,
+const provideData = computed<StepsComponent>(() => ({
     activeIndex: activeItem.value?.index || 0,
     labelPosition: props.labelPosition,
     vertical: props.vertical,
@@ -194,7 +201,6 @@ function next(): void {
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem<T>): void {
-    if (!isItemClickable(item)) return;
     if (vmodel.value !== item.value) performAction(item.value as T);
 }
 
@@ -232,7 +238,12 @@ const rootClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
-    ["verticalClass", "o-steps-vertical", null, computed(() => props.vertical)],
+    [
+        "verticalClass",
+        "o-steps--vertical",
+        null,
+        computed(() => props.vertical),
+    ],
     [
         "positionClass",
         "o-steps-position-",
@@ -281,7 +292,7 @@ const navigationClasses = defineClasses([
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="steps">
+    <div ref="rootElement" :class="rootClasses" data-oruga="steps">
         <ol
             :class="navClasses"
             role="tablist"
@@ -292,7 +303,7 @@ const navigationClasses = defineClasses([
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
                 :class="childItem.navClasses"
-                role="tab"
+                :role="childItem.ariaRole"
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "
@@ -305,8 +316,10 @@ const navigationClasses = defineClasses([
                     role="button"
                     :tabindex="isItemClickable(childItem) ? 0 : null"
                     :class="childItem.classes"
-                    @click="itemClick(childItem)"
-                    @keydown.enter="itemClick(childItem)"
+                    @click="isItemClickable(childItem) && itemClick(childItem)"
+                    @keydown.enter="
+                        isItemClickable(childItem) && itemClick(childItem)
+                    "
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"

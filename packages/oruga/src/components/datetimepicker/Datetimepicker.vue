@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-    computed,
-    ref,
-    useTemplateRef,
-    watch,
-    type ComponentPublicInstance,
-} from "vue";
+import { computed, ref, useTemplateRef, watch } from "vue";
 
 import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
@@ -122,10 +116,8 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const datepickerRef = useTemplateRef<ComponentPublicInstance>("datepickerRef");
-const timepickerRef = useTemplateRef<ComponentPublicInstance>("timepickerRef");
-const nativeInputRef =
-    useTemplateRef<ComponentPublicInstance>("nativeInputRef");
+const datepickerRef = useTemplateRef("datepickerComponent");
+const nativeInputRef = useTemplateRef("nativeInputComponent");
 
 const timepickerProps = ref<TimepickerProps | undefined>(props.timepicker);
 watch(
@@ -350,7 +342,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 <template>
     <o-datepicker
         v-if="!isMobileNative || inline"
-        ref="datepickerRef"
+        ref="datepickerComponent"
         v-bind="{ ...$attrs, ...datepicker }"
         v-model:active="isActive"
         :model-value="vmodel"
@@ -391,7 +383,6 @@ defineExpose({ focus: setFocus, value: vmodel });
         <template #footer>
             <div :class="timepickerWrapperClasses">
                 <o-timepicker
-                    ref="timepickerRef"
                     v-bind="timepicker"
                     v-model="vmodel"
                     inline
@@ -417,7 +408,7 @@ defineExpose({ focus: setFocus, value: vmodel });
     <o-input
         v-else
         v-bind="$attrs"
-        ref="nativeInputRef"
+        ref="nativeInputComponent"
         type="datetime-local"
         autocomplete="off"
         :value="formatNative(vmodel)"

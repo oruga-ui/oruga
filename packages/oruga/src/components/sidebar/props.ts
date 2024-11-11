@@ -24,9 +24,9 @@ export type SidebarProps<C extends Component> = {
     reduce?: boolean;
     /**
      * Custom layout on mobile
-     * @values fullwidth, reduced, hidden
+     * @values expanded, reduced, hidden
      */
-    mobile?: "fullwidth" | "reduced" | "hidden";
+    mobile?: "expanded" | "reduced" | "hidden";
     /** Expand sidebar on hover when reduced or mobile is reduce */
     expandOnHover?: boolean;
     /** Custom animation (transition name) */
@@ -88,7 +88,7 @@ type SidebarClasses = Partial<{
     /** Class of sidebar component when on mobile */
     mobileClass: ComponentClass;
     /** Class of the body when sidebar clipped */
-    crollClipClass: ComponentClass;
+    scrollClipClass: ComponentClass;
     /** Class of the body when sidebar is not clipped */
     noScrollClass: ComponentClass;
     /** Class of the sidebar content when sidebar is hidden */

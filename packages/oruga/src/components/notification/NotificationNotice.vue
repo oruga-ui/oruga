@@ -1,5 +1,12 @@
 <script setup lang="ts" generic="C extends Component">
-import { computed, ref, onMounted, onBeforeMount, type Component } from "vue";
+import {
+    computed,
+    ref,
+    onMounted,
+    onBeforeMount,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import ONotification from "./Notification.vue";
 
@@ -39,7 +46,7 @@ const emits = defineEmits<{
     (e: "close", ...args: unknown[]): void;
 }>();
 
-const notificationRef = ref();
+const notificationRef = useTemplateRef("notificationComponent");
 
 const isActive = ref(true);
 
@@ -132,7 +139,7 @@ function showNotice(): void {
     if (shouldQueue.value) correctParent.value.innerHTML = "";
     correctParent.value.insertAdjacentElement(
         "afterbegin",
-        notificationRef.value.$el,
+        notificationRef.value?.$el,
     );
 }
 
@@ -184,7 +191,7 @@ defineExpose({ close });
 <template>
     <o-notification
         v-bind="$attrs"
-        ref="notificationRef"
+        ref="notificationComponent"
         v-model:active="isActive"
         :override="override"
         :position="position"
