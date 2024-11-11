@@ -14,7 +14,7 @@ import Expo from "./components/Expo.vue";
 import Oruga, { useOruga } from "@oruga-ui/oruga-next";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
-import * as bootstrapTheme from "@oruga-ui/theme-bootstrap";
+import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -110,10 +110,9 @@ export default {
                     break;
                 }
                 case "theme-bootstrap": {
-                    bootstrapTheme.bootstrapConfig.iconPack = "fas";
-                    bootstrapTheme.bootstrapConfig.iconComponent =
-                        "vue-fontawesome";
-                    oruga.config.setOptions(bootstrapTheme.bootstrapConfig);
+                    bootstrapConfig.iconPack = "fas";
+                    bootstrapConfig.iconComponent = "vue-fontawesome";
+                    oruga.config.setOptions(bootstrapConfig);
                     break;
                 }
             }

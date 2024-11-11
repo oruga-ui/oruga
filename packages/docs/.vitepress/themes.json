@@ -5,7 +5,7 @@
         "path": "@oruga-ui/theme-oruga/dist",
         "git": "https://github.com/oruga-ui/theme-oruga",
         "src": "https://github.com/oruga-ui/theme-oruga/tree/main/src/assets",
-        "cdn": "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-oruga/dist/oruga.min.css"
+        "cdn": "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-oruga/dist/oruga.css"
     },
     {
         "label": "Bulma",
@@ -13,7 +13,7 @@
         "path": "@oruga-ui/theme-bulma/dist",
         "git": "https://github.com/oruga-ui/theme-bulma",
         "src": "https://github.com/oruga-ui/theme-bulma/tree/main/src/assets",
-        "cdn":  "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css"
+        "cdn":  "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.css"
     },
     {
         "label": "Bootstrap",
@@ -21,6 +21,6 @@
         "path": "@oruga-ui/theme-bootstrap/dist",
         "git": "https://github.com/oruga-ui/theme-bootstrap",
         "src": "https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets",
-        "cdn": "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bootstrap/dist/bootstrap.min.css"
+        "cdn": "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bootstrap/dist/bootstrap.css"
     }
 ]
