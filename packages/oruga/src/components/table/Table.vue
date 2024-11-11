@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T extends Record<string, any>">
 import {
     computed,
     ref,
@@ -983,7 +983,7 @@ function handleColumnDragLeave(
 
 const rootClasses = defineClasses(
     ["rootClass", "o-table__root"],
-    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
+    ["mobileClass", "o-table__root--mobile", null, isMobile],
 );
 
 const tableClasses = defineClasses(

@@ -15,7 +15,7 @@ exports[`OTab with OTabItem tests > test render correctly 1`] = `
                 @slot Place tab items here
             -->
     <transition-stub appear="false" persisted="false" css="true">
-      <div id="tabpanel-1" class="o-tabs__panel" data-id="tabs-1" data-oruga="tabs-item" role="tabpanel" aria-labelledby="tab-1" tabindex="-1" aria-roledescription="item" style="display: none;">
+      <div id="tabpanel-1" class="o-tabs__panel" data-id="tabs-1" data-oruga="tabs-item" aria-labelledby="tab-1" aria-roledescription="item">
         <!-- 
                     @slot Tab item content
                 -->

@@ -145,8 +145,8 @@ function setValues(newValue: number | number[] | undefined): void {
             : Math.min(props.max, Math.max(props.min, newValue));
         valueEnd.value = 0;
     } else {
-        valueStart.value = 0;
-        valueEnd.value = 0;
+        valueStart.value = props.min;
+        valueEnd.value = props.min;
     }
 }
 

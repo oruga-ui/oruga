@@ -176,9 +176,7 @@ const detailedRows = ref([data.value[0]]);
             </o-table-column>
 
             <template #detail="{ row }">
-                <tr
-                    v-for="item in (row as (typeof data)[number]).items"
-                    :key="item.name">
+                <tr v-for="item in row.items" :key="item.name">
                     <td v-if="showDetailIcon"></td>
                     <td v-show="columnsVisible['name'].display">
                         {{ item.name }}

@@ -11,6 +11,9 @@ import OutlinedCode from "./outlined.vue?raw";
 import Inverted from "./inverted.vue";
 import InvertedCode from "./inverted.vue?raw";
 
+import Sizes from "./sizes.vue";
+import SizesCode from "./sizes.vue?raw";
+
 import Icons from "./icons.vue";
 import IconsCode from "./icons.vue?raw";
 
@@ -30,6 +33,9 @@ import TagsCode from "./tags.vue?raw";
 
     <h3 id="inverted">Inverted</h3>
     <ExampleViewer :component="Inverted" :code="InvertedCode" />
+
+    <h3 id="sizes">Sizes</h3>
+    <ExampleViewer :component="Sizes" :code="SizesCode" />
 
     <h3 id="icons">Icons</h3>
     <ExampleViewer :component="Icons" :code="IconsCode" />

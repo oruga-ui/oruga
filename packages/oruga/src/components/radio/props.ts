@@ -3,10 +3,7 @@ import type { ComponentClass } from "@/types";
 export type RadioProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /**
-     * The input value state
-     * @type string|number|boolean|object
-     */
+    /** The input value state, use v-model to make it two-way binding */
     modelValue?: T;
     /**
      * Color of the control
@@ -20,11 +17,8 @@ export type RadioProps<T> = {
     size?: string;
     /** Input label, unnecessary when default slot is used */
     label?: string;
-    /**
-     * Same as native value
-     * @type string|number|boolean|object
-     */
-    nativeValue?: T | boolean;
+    /** Same as native value */
+    nativeValue?: T;
     /** Same as native disabled */
     disabled?: boolean;
     /** Same as native required */

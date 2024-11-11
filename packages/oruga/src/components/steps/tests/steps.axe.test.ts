@@ -51,7 +51,10 @@ describe("Steps axe tests", () => {
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
-        const wrapper = mount(StepsExample, props);
-        expect(await axe(wrapper.html())).toHaveNoViolations();
+        const wrapper = mount(StepsExample, {
+            props: { ...props },
+            attachTo: document.body,
+        });
+        expect(await axe(wrapper.element)).toHaveNoViolations();
     });
 });

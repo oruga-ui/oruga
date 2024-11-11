@@ -31,8 +31,8 @@ const props = withDefaults(defineProps<CheckboxProps<T>>(), {
     disabled: false,
     required: false,
     name: undefined,
-    trueValue: true,
-    falseValue: false,
+    trueValue: undefined,
+    falseValue: undefined,
     autocomplete: () => getOption("checkbox.autocomplete", "off"),
     id: () => useId(),
     useHtml5Validation: () => getOption("useHtml5Validation", true),
@@ -94,9 +94,14 @@ const isIndeterminate = defineModel<boolean>("indeterminate", {
     default: false,
 });
 
+const _trueValue =
+    typeof props.trueValue === "undefined" ? true : props.trueValue;
+const _falseValue =
+    typeof props.falseValue === "undefined" ? false : props.falseValue;
+
 const isChecked = computed(
     () =>
-        vmodel.value === props.trueValue ||
+        vmodel.value === _trueValue ||
         (Array.isArray(vmodel.value) &&
             vmodel.value.includes(props.nativeValue as T)),
 );
@@ -174,8 +179,8 @@ defineExpose({ focus: setFocus, value: vmodel });
             :autocomplete="autocomplete"
             :value="nativeValue"
             :indeterminate.prop="indeterminate"
-            :true-value="trueValue"
-            :false-value="falseValue"
+            :true-value="_trueValue"
+            :false-value="_falseValue"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"

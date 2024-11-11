@@ -1,7 +1,7 @@
 import type { ComponentClass } from "@/types";
 import type { TableColumn } from "./types";
 
-export type TableProps<T> = {
+export type TableProps<T extends Record<string, any>> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** Table data */
@@ -9,7 +9,7 @@ export type TableProps<T> = {
     /** Table columns */
     columns?: TableColumn<T>[];
     /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-    rowKey?: keyof T;
+    rowKey?: keyof T | string;
     /** Define individual class for a row */
     rowClass?: (row: T, index: number) => string;
     /** Adds native attributes to a column th element */

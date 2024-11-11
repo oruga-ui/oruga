@@ -206,4 +206,9 @@ function copy(val: string) {
 .vp-doc .vp-code-group .blocks .lang {
     color: var(--vp-code-copy-code-hover-border-color);
 }
+
+.vp-code-group .tabs {
+    justify-content: start;
+    margin-bottom: 0;
+}
 </style>
