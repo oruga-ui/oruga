@@ -1044,7 +1044,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPack: string;
                 /** Step item tag name */
                 itemTag: DynamicComponent;
-                /** Role attribute to be passed to the div wrapper for better accessibility */
+                /** Role attribute to be passed to the li wrapper for better accessibility */
                 ariaRole: string;
                 /** Class of the nav item */
                 navItemClass: ClassDefinition;
@@ -1165,7 +1165,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
                 rowKey: string;
                 /** Define individual class for a row */
-                rowClass: (row: unknown, index: number) => string;
+                rowClass: (row: Record<string, any>, index: number) => string;
                 /** Border to all cells */
                 bordered: boolean;
                 /** Whether table is striped */
@@ -1185,7 +1185,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Color of the checkbox when checkable (if checkable) */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
-                isRowCheckable: (row: unknown) => boolean;
+                isRowCheckable: (row: Record<string, any>) => boolean;
                 /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
                 backendSorting: boolean;
                 /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
@@ -1199,7 +1199,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Icon pack to use */
                 iconPack: string;
                 /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
-                isDetailedVisible: (row: unknown) => boolean;
+                isDetailedVisible: (row: Record<string, any>) => boolean;
                 /** Allow detail icon and column to be visible (if detailed) */
                 showDetailIcon: boolean;
                 /** Icon name of detail action (if detailed) */
