@@ -1,289 +1,306 @@
-# Autocomplete
+# [0.9.0](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.4...v0.9.0) (2024-11-11)
 
- <!> ~ prop: data -> options (type changed)
- <!> - prop: field (replaced by strict options type)
- <!> - prop: formatter (replaced by strict options type)
- <!> - prop: groupField (replaced by strict options type)
- <!> - prop: groupOptions (replaced by strict options type)
- + prop: input (v-model:input)
- + prop: filter
- - prop: validationMessage
- + prop: customValidity
+
+All Changes are accumulated from all pre-releases.
+
+
+### Detailed Changes
+
+
+Legend:
+* ⚠️: breaking change
+* `~` : changed
+* `-` : removed
+* `+` : added
+* A -> B : renamed
+
+
+#### Autocomplete
+
+*  ⚠️ `~` prop: data -> options (type changed)
+*  ⚠️ `-` prop: field (replaced by strict options type)
+*  ⚠️ `-` prop: formatter (replaced by strict options type)
+*  ⚠️ `-` prop: groupField (replaced by strict options type)
+*  ⚠️ `-` prop: groupOptions (replaced by strict options type)
+*  `+` prop: input (v-model:input)
+*  `+` prop: filter
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
  
- + event: update:input	
+*  `+` event: update:input	
 
- + type: remove modelValue type restrictions
+*  `+` type: remove modelValue type restrictions
  
-# Button
+#### Button
 
- <!> ~ prop: nativeType -> type (to match same props from other component)
- <!> ~ prop: role -> ariaRole (to match same props from other component)
+*  ⚠️ `~` prop: nativeType -> type (to match same props from other component)
+*  ⚠️ `~` prop: role -> ariaRole (to match same props from other component)
 
-# Carousel
+#### Carousel
 
----
+--
 
-# Checkbox
+#### Checkbox
 
- + prop: id
- - prop: validationMessage
- + prop: customValidity
+*  `+` prop: id
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
  
- + type: remove modelValue type restrictions
+*  `+` type: remove modelValue type restrictions
  
-# Collapse
+#### Collapse
 
----
+--
 
-# Datepicker
+#### Datepicker
 
- <!> ~ prop: dateCreator -> creator
- <!> ~ prop: dateFormatter -> formatter
- <!> ~ prop: dateParser -> parser
- - prop: validationMessage
- + prop: customValidity
+*  ⚠️ `~` prop: dateCreator -> creator
+*  ⚠️ `~` prop: dateFormatter -> formatter
+*  ⚠️ `~` prop: dateParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
 
-# Datetimepicker
+#### Datetimepicker
 
- <!> ~ prop: datetimeCreator -> creator
- <!> ~ prop: datetimeFormatter -> formatter
- <!> ~ prop: datetimeParser -> parser
- - prop: validationMessage
- + prop: customValidity
+*  ⚠️ `~` prop: datetimeCreator -> creator
+*  ⚠️ `~` prop: datetimeFormatter -> formatter
+*  ⚠️ `~` prop: datetimeParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
 
-# Dropdown
+#### Dropdown
 
- + prop: options
- + prop: desktopModal
+*  `+` prop: options
+*  `+` prop: desktopModal
  
- <!> ~ class: menuMobileOverlayClass -> overlayClass
- + class: modalClass
- + class: scrollClipClass
- + class: noScrollClass
+*  ⚠️ `~` class: menuMobileOverlayClass -> overlayClass
+*  `+` class: modalClass
+*  `+` class: scrollClipClass
+*  `+` class: noScrollClass
 
- + type: remove modelValue type restrictions
+*  `+` type: remove modelValue type restrictions
 
-# Field 
+#### Field 
  
- <!> ~ class: bodyHorizontalClass -> horizontalBodyClass 
- <!> ~ class: labelHorizontalClass -> horizontalLabelClass
- <!> ~ class: variantLabelClass -> labelVariantClass
- <!> ~ class: variantMessageClass -> messageVariantClass
+*  ⚠️ `~` class: bodyHorizontalClass -> horizontalBodyClass 
+*  ⚠️ `~` class: labelHorizontalClass -> horizontalLabelClass
+*  ⚠️ `~` class: variantLabelClass -> labelVariantClass
+*  ⚠️ `~` class: variantMessageClass -> messageVariantClass
  
-# Icon
+#### Icon
 
----
+--
 
-# Input 
+#### Input 
  
- + prop: debounce
- + prop: number
- - prop: validationMessage
- + prop: customValidity
+*  `+` prop: debounce
+*  `+` prop: number
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
  
- ~ event: input (only emits string values)
+*  `~` event: input (only emits string values)
 
-# Loading
+#### Loading
 
- - prop: container (only available in programmatic usage)
- <!> - prop: onCancel
- <!> - prop: onClose (only available in programmatic usage)
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
 
- + class: noScrollClass
- + class: scrollClipClass
+*  `+` class: noScrollClass
+*  `+` class: scrollClipClass
 
- <!> ~ programmatic: interface changed 
+*  ⚠️ `~` programmatic: interface changed 
 
-# Menu
+#### Menu
 
- <!> ~ class: itemWrapperClass -> itemClass
- <!> ~ class: itemClass -> itemButtonClass
- <!> ~ class: itemActiveClass -> itemButtonActiveClass
- <!> ~ class: itemDisabledClass -> itemButtonDisabledClass
- <!> ~ class: itemIconTextClass -> itemButtonIconClass
+*  ⚠️ `~` class: itemWrapperClass -> itemClass
+*  ⚠️ `~` class: itemClass -> itemButtonClass
+*  ⚠️ `~` class: itemActiveClass -> itemButtonActiveClass
+*  ⚠️ `~` class: itemDisabledClass -> itemButtonDisabledClass
+*  ⚠️ `~` class: itemIconTextClass -> itemButtonIconClass
 
-# Modal
+#### Modal
 
- - prop: container (only available in programmatic usage)
- <!> - prop: destroyOnHide (no done by default for programmatic usage)
- <!> - prop: onCancel
- <!> - prop: onClose (only available in programmatic usage)
- + prop: overlay
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: destroyOnHide (no done by default for programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+*  `+` prop: overlay
 
- <!> ~ programmatic: interface changed
+*  ⚠️ `~` programmatic: interface changed
  
-# Notification
+#### Notification
  
- ~ prop: active (is not longer avaible in programmatic usage)
- - prop: container (only available in programmatic usage)
- <!> - prop: onCancel
- <!> - prop: onClose (only available in programmatic usage)
+*  `~` prop: active (is not longer avaible in programmatic usage)
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
  
- <!> ~ programmatic: interface changed
+*  ⚠️ `~` programmatic: interface changed
 
-# Pagination
+#### Pagination
 
- <!> ~ class: linkClass -> buttonClass 
- <!> ~ class: linkCurrentClass -> buttonCurrentClass 
- <!> ~ class: linkDisabledClass -> buttonDisabledClass 
- <!> ~ class: prevButtonClass -> buttonPrevClass 
- <!> ~ class: nextButtonClass -> buttonNextClass 
+*  ⚠️ `~` class: linkClass -> buttonClass 
+*  ⚠️ `~` class: linkCurrentClass -> buttonCurrentClass 
+*  ⚠️ `~` class: linkDisabledClass -> buttonDisabledClass 
+*  ⚠️ `~` class: prevButtonClass -> buttonPrevClass 
+*  ⚠️ `~` class: nextButtonClass -> buttonNextClass 
  
-# Radio
+#### Radio
 
- + prop: id
- + prop: customValidity
+*  `+` prop: id
+*  `+` prop: customValidity
  
- + type: remove modelValue type restrictions
+*  `+` type: remove modelValue type restrictions
  
-# Select
+#### Select
 
- <!> ~ prop: options (type changed)
- - prop: validationMessage
- + prop: customValidity
+*  ⚠️ `~` prop: options (type changed)
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
  
-# Sidebar
+#### Sidebar
 
- ~ prop: mobile (variable changed from `fullwitdh` to `expanded`)
- - prop: variant
- - prop: container (only available in programmatic usage)
- <!> - prop: destroyOnHide (no done by default for programmatic usage)
- <!> - prop: onCancel
- <!> - prop: onClose (only available in programmatic usage)
+*  `~` prop: mobile (variable changed from `fullwitdh` to `expanded`)
+*  `-` prop: variant
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: destroyOnHide (no done by default for programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
  
- <!> ~ programmatic: interface changed
+*  ⚠️ `~` programmatic: interface changed
 
-# Skeleton
+#### Skeleton
 
----
+--
 
-# Slider
+#### Slider
 
- + prop: range
- <!> ~ prop: customFormatter -> formatter
+*  `+` prop: range
+*  ⚠️ `~` prop: customFormatter -> formatter
 
-# Steps
+#### Steps
  
- + prop: options
+*  `+` prop: options
  
- <!> ~ class: itemHeaderClass -> navItemClass
- <!> ~ class: itemHeaderVariantClass -> navItemVariantClass
- <!> ~ class: itemHeaderActiveClass -> navItemActiveClass
- <!> ~ class: itemHeaderPreviousClass -> navItemPreviousClass
- + class: navItemNextClass
- <!> ~ class: stepLinkClass -> stepClass
- <!> ~ class: stepLinkLabelPositionClass -> stepLabelPositionClass
- <!> ~ class: stepLinkClickableClass -> stepClickableClass
- + class: stepActiveClass
- + class: stepDisabledClass
- <!> ~ class: stepLinkLabelClass -> stepLabelClass
- + class: stepIconClass
- <!> ~ class: itemClass -> stepPanelClass
- <!> ~ class: rootClass (default class changed)
- <!> ~ class: expandedClass (default class changed)
- <!> ~ class: verticalClass (default class changed)
- <!> ~ class: positionClass (default class changed)
- <!> ~ class: animatedClass (default class changed)
- <!> ~ class: stepsClass -> navClass
- <!> ~ class: stepDividerClass -> dividerClass
- <!> ~ class: stepMarkerClass -> markerClass
- <!> ~ class: stepMarkerRoundedClass -> markerRoundedClass
- <!> ~ class: stepContentClass -> contentClass
- <!> ~ class: stepContentTransitioningClass -> transitioningClass
- <!> ~ class: stepNavigationClass -> navigationClass
+*  ⚠️ `~` class: itemHeaderClass -> navItemClass
+*  ⚠️ `~` class: itemHeaderVariantClass -> navItemVariantClass
+*  ⚠️ `~` class: itemHeaderActiveClass -> navItemActiveClass
+*  ⚠️ `~` class: itemHeaderPreviousClass -> navItemPreviousClass
+*  `+` class: navItemNextClass
+*  ⚠️ `~` class: stepLinkClass -> stepClass
+*  ⚠️ `~` class: stepLinkLabelPositionClass -> stepLabelPositionClass
+*  ⚠️ `~` class: stepLinkClickableClass -> stepClickableClass
+*  `+` class: stepActiveClass
+*  `+` class: stepDisabledClass
+*  ⚠️ `~` class: stepLinkLabelClass -> stepLabelClass
+*  `+` class: stepIconClass
+*  ⚠️ `~` class: itemClass -> stepPanelClass
+*  ⚠️ `~` class: rootClass (default class changed)
+*  ⚠️ `~` class: expandedClass (default class changed)
+*  ⚠️ `~` class: verticalClass (default class changed)
+*  ⚠️ `~` class: positionClass (default class changed)
+*  ⚠️ `~` class: animatedClass (default class changed)
+*  ⚠️ `~` class: stepsClass -> navClass
+*  ⚠️ `~` class: stepDividerClass -> dividerClass
+*  ⚠️ `~` class: stepMarkerClass -> markerClass
+*  ⚠️ `~` class: stepMarkerRoundedClass -> markerRoundedClass
+*  ⚠️ `~` class: stepContentClass -> contentClass
+*  ⚠️ `~` class: stepContentTransitioningClass -> transitioningClass
+*  ⚠️ `~` class: stepNavigationClass -> navigationClass
 
- + type: remove modelValue type restrictions
+*  `+` type: remove modelValue type restrictions
 
-# StepItem
+#### StepItem
 
- + prop: disabled
+*  `+` prop: disabled
  
-# Switch
+#### Switch
 
- + prop: id
- + prop: customValidity
+*  `+` prop: id
+*  `+` prop: customValidity
  
- + type: remove modelValue type restrictions
+*  `+` type: remove modelValue type restrictions
  
-# Table
+#### Table
 
- <!> ~ prop: column (type changed)
- + prop: customCompare
- <!> ~ prop: customRowKey -> rowKey
- <!> ~ prop: customIsChecked -> isRowChecked (to match other props name pattern)
- <!> ~ props: hasDetailedVisible -> isDetailedVisible (to match other props name pattern)
- - prop: detailKey (use rowKey instead)
- + props: emptyIcon
- + props: emptyIconSize
- + props: emptyLabel
- + props: filtersIcon
- + props: filtersPlaceholder
- + props: loadingIcon
- + props: loadingLabel
- <!> ~ props: openedDetailed -> detailedRows (to match props name pattern)
- + props: selectable
- + props: tdAttrs
- + props: thAttrs
+*  ⚠️ `~` prop: column (type changed)
+*  `+` prop: customCompare
+*  ⚠️ `~` prop: customRowKey -> rowKey
+*  ⚠️ `~` prop: customIsChecked -> isRowChecked (to match other props name pattern)
+*  ⚠️ `~` props: hasDetailedVisible -> isDetailedVisible (to match other props name pattern)
+*  `-` prop: detailKey (use rowKey instead)
+*  `+` props: emptyIcon
+*  `+` props: emptyIconSize
+*  `+` props: emptyLabel
+*  `+` props: filtersIcon
+*  `+` props: filtersPlaceholder
+*  `+` props: loadingIcon
+*  `+` props: loadingLabel
+*  ⚠️ `~` props: openedDetailed -> detailedRows (to match props name pattern)
+*  `+` props: selectable
+*  `+` props: tdAttrs
+*  `+` props: thAttrs
  
- ~ event: update:openedDetailed -> update:detailedRows	
+*  `~` event: update:openedDetailed -> update:detailedRows	
  
- + slots: before
- + slots: after
+*  `+` slots: before
+*  `+` slots: after
  
-# TableColumn
+#### TableColumn
 
- + props: formatter
+*  `+` props: formatter
  
- ~ types: improve slots type
+*  `~` types: improve slots type
  
-# Tabs
+#### Tabs
 
- <!> ~ class: navTabsClass -> navClass
- <!> ~ class: itemWrapperClass -> navItemClass
- <!> ~ class: itemClass -> tabPanelClass
- <!> ~ class: itemHeaderActiveClass -> tabActiveClass
- <!> ~ class: itemHeaderClass -> tabClass
- <!> ~ class: itemHeaderDisabledClass -> tabDisabledClass
- <!> ~ class: itemHeaderIconClass -> tabIconClass
- <!> ~ class: itemHeaderTextClass -> tabLabelClass
- <!> ~ class: itemHeaderTypeClass -> tabTypeClass
- <!> ~ class: tabTextClass -> tabLabelClass
- + class: navItemActiveClass
- + class: navItemPreviousClass
- + class: navItemNextClass
+*  ⚠️ `~` class: navTabsClass -> navClass
+*  ⚠️ `~` class: itemWrapperClass -> navItemClass
+*  ⚠️ `~` class: itemClass -> tabPanelClass
+*  ⚠️ `~` class: itemHeaderActiveClass -> tabActiveClass
+*  ⚠️ `~` class: itemHeaderClass -> tabClass
+*  ⚠️ `~` class: itemHeaderDisabledClass -> tabDisabledClass
+*  ⚠️ `~` class: itemHeaderIconClass -> tabIconClass
+*  ⚠️ `~` class: itemHeaderTextClass -> tabLabelClass
+*  ⚠️ `~` class: itemHeaderTypeClass -> tabTypeClass
+*  ⚠️ `~` class: tabTextClass -> tabLabelClass
+*  `+` class: navItemActiveClass
+*  `+` class: navItemPreviousClass
+*  `+` class: navItemNextClass
  
- + props: options
+*  `+` props: options
  
- + type: remove modelValue type restrictions
+*  `+` type: remove modelValue type restrictions
  
-# Taginput
+#### Taginput
 
- + prop: input (v-model:input)
- - props: allowAutocomplete 
- <!> ~ props: data -> options (type changed)
- <!> - prop: field (replaced by strict options type)
- <!> - prop: groupField (replaced by strict options type)
- <!> - prop: groupOptions (replaced by strict options type)
- <!> ~ props: beforeAdding -> validateItem
- + prop: filter
- - prop: validationMessage
- + prop: customValidity
+*  `+` prop: input (v-model:input)
+*  `-` props: allowAutocomplete 
+*  ⚠️ `~` props: data -> options (type changed)
+*  ⚠️ `-` prop: field (replaced by strict options type)
+*  ⚠️ `-` prop: groupField (replaced by strict options type)
+*  ⚠️ `-` prop: groupOptions (replaced by strict options type)
+*  ⚠️ `~` props: beforeAdding -> validateItem
+*  `+` prop: filter
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
  
- + event: update:input
+*  `+` event: update:input
  
-# Timepicker
+#### Timepicker
 
- <!> ~ prop: timeCreator -> creator
- <!> ~ prop: timeFormatter -> formatter
- <!> ~ prop: timeParser -> parser
- - prop: validationMessage
- + prop: customValidity
+*  ⚠️ `~` prop: timeCreator -> creator
+*  ⚠️ `~` prop: timeFormatter -> formatter
+*  ⚠️ `~` prop: timeParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
  
-# Tooltip
+#### Tooltip
 
- - prop: validationMessage
- + prop: customValidity
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
 
-# Upload 
+#### Upload 
 
----
+--
