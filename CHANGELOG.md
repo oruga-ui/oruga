@@ -1,3 +1,24 @@
+# [0.9.0-pre.5](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.4...v0.9.0-pre.5) (2024-11-11)
+
+
+### Bug Fixes
+
+* **datepicker:** add missing scope to deinfeClasses ([#1091](https://github.com/oruga-ui/oruga/issues/1091)) ([277c2e0](https://github.com/oruga-ui/oruga/commit/277c2e052866147963a6c0392fca3c70f5332eaf))
+* solve issues ([#1100](https://github.com/oruga-ui/oruga/issues/1100)) ([d6b792f](https://github.com/oruga-ui/oruga/commit/d6b792f0850d59ea85857c8ff7a9e4db570d134a))
+
+
+### Features
+
+* **input:** move the left icon element before the input element ([#1094](https://github.com/oruga-ui/oruga/issues/1094)) ([7bf11e2](https://github.com/oruga-ui/oruga/commit/7bf11e223e24357f63ca00016fea307303acb1ce))
+* **menu:** refactor class names to match other components class name patterns ([#1097](https://github.com/oruga-ui/oruga/issues/1097)) ([f3ce20a](https://github.com/oruga-ui/oruga/commit/f3ce20a001a071ff9e89eac1e071367fe72dbf27))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+
 # [0.9.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.3...v0.9.0-pre.4) (2024-10-30)
 
 
@@ -7,6 +28,11 @@
 * **dropdown:** add `toggle` prop to `trigger` slot ([#1086](https://github.com/oruga-ui/oruga/issues/1086)) ([c9b51f3](https://github.com/oruga-ui/oruga/commit/c9b51f3aec79454d33268ea979c262429190b5f1))
 * **pagination:** adjust class names to match other components class patterns ([#1087](https://github.com/oruga-ui/oruga/issues/1087)) ([54c3706](https://github.com/oruga-ui/oruga/commit/54c37068a2e14ae50a057abbce1c117723720c50))
 * **steps:** adjust class names to match other components class patterns ([#1084](https://github.com/oruga-ui/oruga/issues/1084)) ([6466757](https://github.com/oruga-ui/oruga/commit/6466757509443750c0f6a41adf64f4ed3e92da3c))
+
+
+### Detailed Changes
+
+*following with the main release...*
 
 
 

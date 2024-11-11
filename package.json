@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.9.0-pre.4",
+  "version": "0.9.0-pre.5",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -36,6 +36,6 @@
     "concurrently": "^9.0.1",
     "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
-    "replace-in-file": "^8.2.0"
+    "replace-in-file": "^7.1.0"
   }
 }
