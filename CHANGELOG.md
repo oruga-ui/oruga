@@ -3,8 +3,8 @@
 
 ### Bug Fixes
 
-* **datepicker:** add missing scope to deinfeClasses ([#1091](https://github.com/oruga-ui/oruga/issues/1091)) ([277c2e0](https://github.com/oruga-ui/oruga/commit/277c2e052866147963a6c0392fca3c70f5332eaf))
-* solve issues ([#1100](https://github.com/oruga-ui/oruga/issues/1100)) ([d6b792f](https://github.com/oruga-ui/oruga/commit/d6b792f0850d59ea85857c8ff7a9e4db570d134a))
+* **datepicker:** add missing scope to defineClasses ([#1091](https://github.com/oruga-ui/oruga/issues/1091)) ([277c2e0](https://github.com/oruga-ui/oruga/commit/277c2e052866147963a6c0392fca3c70f5332eaf))
+* solve varius issues ([#1100](https://github.com/oruga-ui/oruga/issues/1100)) ([d6b792f](https://github.com/oruga-ui/oruga/commit/d6b792f0850d59ea85857c8ff7a9e4db570d134a))
 
 
 ### Features
