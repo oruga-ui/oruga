@@ -167,9 +167,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 :class="panelClasses"
                 :data-id="`tabs-${item.identifier}`"
                 data-oruga="tabs-item"
-                :role="ariaRole"
                 :aria-labelledby="`tab-${item.identifier}`"
-                :tabindex="isActive ? 0 : -1"
                 aria-roledescription="item">
                 <!-- 
                     @slot Tab item content

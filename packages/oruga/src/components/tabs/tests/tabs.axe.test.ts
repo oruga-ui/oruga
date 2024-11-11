@@ -51,7 +51,10 @@ describe("Tabs axe tests", () => {
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
-        const wrapper = mount(TabsExample, props);
-        expect(await axe(wrapper.html())).toHaveNoViolations();
+        const wrapper = mount(TabsExample, {
+            props: { ...props },
+            attachTo: document.body,
+        });
+        expect(await axe(wrapper.element)).toHaveNoViolations();
     });
 });

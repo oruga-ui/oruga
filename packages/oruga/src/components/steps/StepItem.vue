@@ -183,9 +183,7 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
                 :class="panelClasses"
                 :data-id="`steps-${item.identifier}`"
                 data-oruga="steps-item"
-                :role="ariaRole"
                 :aria-labelledby="`tab-${item.identifier}`"
-                :tabindex="isActive ? 0 : -1"
                 aria-roledescription="item">
                 <!-- 
                     @slot Step item content

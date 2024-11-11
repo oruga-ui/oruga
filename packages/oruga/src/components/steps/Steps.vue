@@ -303,7 +303,7 @@ const navigationClasses = defineClasses([
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
                 :class="childItem.navClasses"
-                role="tab"
+                :role="childItem.ariaRole"
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "

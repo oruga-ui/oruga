@@ -32,6 +32,6 @@ describe("OSteps tests", () => {
         const vertical = true;
         const wrapper = mount(OSteps, { props: { vertical } });
 
-        expect(wrapper.classes("o-steps-vertical")).toBeTruthy();
+        expect(wrapper.classes("o-steps--vertical")).toBeTruthy();
     });
 });
