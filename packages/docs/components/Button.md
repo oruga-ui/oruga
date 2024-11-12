@@ -70,10 +70,11 @@
 
 | SASS Variable                     | Default                                         |
 | --------------------------------- | ----------------------------------------------- |
-| $button-background-color          | var(--#{$prefix}primary)                        |
-| $button-color                     | var(--#{$prefix}primary-invert)                 |
+| $button-background-color          | transparent                                     |
+| $button-color                     | var(--#{$prefix}black)                          |
 | $button-border-radius             | var(--#{$prefix}base-border-radius)             |
-| $button-border                    | 1px solid $button-background-color              |
+| $button-border-color              | var(--#{$prefix}grey-lighter)                   |
+| $button-border                    | 1px solid $button-border-color                  |
 | $button-box-shadow                | none                                            |
 | $button-font-weight               | 400                                             |
 | $button-line-height               | var(--#{$prefix}base-line-height)               |
@@ -84,6 +85,7 @@
 | $button-rounded-border-radius     | var( --#{$prefix}#{base-border-radius-rounded}) |
 | $button-disabled-opacity          | var(--#{$prefix}#{base-disabled-opacity})       |
 | $button-outlined-background-color | transparent                                     |
+| $button-outlined-border-color     | var(--#{$prefix}grey-light)                     |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
 
