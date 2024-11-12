@@ -44,6 +44,7 @@ function loadTheme() {
             if (themeConfig && typeof themeConfig === "object")
                 return themeConfig;
         } catch (e) {
+            console.warn(e);
             return themes[1];
         }
     }
@@ -53,7 +54,7 @@ function loadTheme() {
 export default {
     ...DefaultTheme,
     Layout,
-    enhanceApp({ app }: { app: App }) {
+    enhanceApp({ app }: { app: App }): void {
         // add fortawesome icons
         library.add(fas);
         app.component("VueFontawesome", FontAwesomeIcon);
