@@ -22,6 +22,11 @@
     max-width: none;
 }
 
+header .VPNavBar button {
+    border: unset;
+    box-shadow: unset;
+}
+
 @media (min-width: 960px) {
     .VPContent .VPDoc .container > .content {
         padding: 0px 0px 128px;
