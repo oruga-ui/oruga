@@ -13,7 +13,7 @@ import OStepItem from "../steps/StepItem.vue";
 import OButton from "../button/Button.vue";
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDefined } from "@/utils/helpers";
 import {
     defineClasses,
@@ -43,29 +43,29 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     options: undefined,
-    variant: () => getOption("steps.variant"),
-    size: () => getOption("steps.size"),
+    variant: () => getDefault("steps.variant"),
+    size: () => getDefault("steps.size"),
     vertical: false,
     position: undefined,
-    iconPack: () => getOption("steps.iconPack"),
-    iconPrev: () => getOption("steps.iconPrev", "chevron-left"),
-    iconNext: () => getOption("steps.iconNext", "chevron-right"),
+    iconPack: () => getDefault("steps.iconPack"),
+    iconPrev: () => getDefault("steps.iconPrev", "chevron-left"),
+    iconNext: () => getDefault("steps.iconNext", "chevron-right"),
     hasNavigation: true,
     destroyOnHide: false,
-    animated: () => getOption("steps.animated", true),
+    animated: () => getDefault("steps.animated", true),
     animation: () =>
-        getOption("steps.animation", [
+        getDefault("steps.animation", [
             "slide-next",
             "slide-prev",
             "slide-down",
             "slide-up",
         ]),
-    animateInitially: () => getOption("steps.animateInitially", false),
-    labelPosition: () => getOption("steps.labelPosition", "bottom"),
+    animateInitially: () => getDefault("steps.animateInitially", false),
+    labelPosition: () => getDefault("steps.labelPosition", "bottom"),
     rounded: true,
-    mobileBreakpoint: () => getOption("steps.mobileBreakpoint"),
-    ariaNextLabel: () => getOption("steps.ariaNextLabel", "Next"),
-    ariaPreviousLabel: () => getOption("steps.ariaPreviousLabel", "Previous"),
+    mobileBreakpoint: () => getDefault("steps.mobileBreakpoint"),
+    ariaNextLabel: () => getDefault("steps.ariaNextLabel", "Next"),
+    ariaPreviousLabel: () => getDefault("steps.ariaPreviousLabel", "Previous"),
 });
 
 const emits = defineEmits<{

@@ -3,11 +3,10 @@ import { computed } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { DynamicComponent } from "@/types";
-import type { ButtonProps } from "./propts";
+import type { ButtonProps } from "./props";
 
 /**
  * The classic button, in different colors, sizes, and states
@@ -22,21 +21,21 @@ defineOptions({
 
 const props = withDefaults(defineProps<ButtonProps>(), {
     override: undefined,
-    tag: () => getOption<DynamicComponent>("button.tag", "button"),
-    variant: () => getOption("button.variant"),
-    size: () => getOption("button.size"),
+    tag: () => getDefault("button.tag", "button"),
+    variant: () => getDefault("button.variant"),
+    size: () => getDefault("button.size"),
     label: undefined,
-    iconPack: () => getOption("button.iconPack"),
+    iconPack: () => getDefault("button.iconPack"),
     iconLeft: undefined,
     iconRight: undefined,
-    rounded: () => getOption("button.rounded", false),
+    rounded: () => getDefault("button.rounded", false),
     expanded: false,
     disabled: false,
     outlined: false,
     loading: false,
     inverted: false,
     type: "button",
-    ariaRole: () => getOption("button.ariaRole", "button"),
+    ariaRole: () => getDefault("button.ariaRole", "button"),
     iconBoth: false,
 });
 

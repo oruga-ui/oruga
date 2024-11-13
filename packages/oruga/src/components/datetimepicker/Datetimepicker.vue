@@ -5,7 +5,7 @@ import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
 import OInput from "../input/Input.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDate, isMobileAgent, pad } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
@@ -35,26 +35,26 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     timepicker: undefined,
     minDatetime: undefined,
     maxDatetime: undefined,
-    size: () => getOption("datetimepicker.size"),
+    size: () => getDefault("datetimepicker.size"),
     expanded: false,
     rounded: false,
     placeholder: undefined,
     readonly: false,
     disabled: false,
     inline: false,
-    openOnFocus: () => getOption("datetimepicker.openOnFocus", true),
-    locale: () => getOption("locale"),
-    formatter: getOption("datetimepicker.dateFormatter"),
-    parser: getOption("datetimepicker.dateParser"),
-    creator: getOption("datetimepicker.datetimeCreator"),
+    openOnFocus: () => getDefault("datetimepicker.openOnFocus", true),
+    locale: () => getDefault("locale"),
+    formatter: getDefault("datetimepicker.dateFormatter"),
+    parser: getDefault("datetimepicker.dateParser"),
+    creator: getDefault("datetimepicker.datetimeCreator"),
     position: undefined,
-    mobileNative: () => getOption("datetimepicker.mobileNative", true),
-    iconPack: () => getOption("datetimepicker.iconPack"),
-    icon: () => getOption("datetimepicker.icon"),
-    iconRight: () => getOption("datetimepicker.iconRight"),
+    mobileNative: () => getDefault("datetimepicker.mobileNative", true),
+    iconPack: () => getDefault("datetimepicker.iconPack"),
+    icon: () => getDefault("datetimepicker.icon"),
+    iconRight: () => getDefault("datetimepicker.iconRight"),
     iconRightClickable: false,
-    teleport: () => getOption("datetimepicker.teleport", false),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    teleport: () => getDefault("datetimepicker.teleport", false),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
 });
 

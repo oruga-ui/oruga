@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { CarouselComponent } from "./types";
@@ -25,7 +25,7 @@ const props = defineProps({
     /** Role attribute to be passed to the div wrapper for better accessibility */
     ariaRole: {
         type: String,
-        default: () => getOption("carousel.ariaRole", "option"),
+        default: () => getDefault("carousel.ariaRole", "option"),
     },
     // class props (will not be displayed in the docs)
     /** Class of carousel item */

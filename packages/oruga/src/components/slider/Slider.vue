@@ -4,7 +4,7 @@ import { computed, ref, useTemplateRef, watch } from "vue";
 import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderParent } from "@/composables";
 
@@ -32,21 +32,21 @@ const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     min: 0,
     max: 100,
     step: 1,
-    variant: () => getOption("slider.variant"),
-    size: () => getOption("slider.size"),
+    variant: () => getDefault("slider.variant"),
+    size: () => getDefault("slider.size"),
     ticks: false,
-    tooltip: () => getOption("slider.tooltip", true),
-    tooltipVariant: () => getOption("slider.tooltipVariant"),
+    tooltip: () => getDefault("slider.tooltip", true),
+    tooltipVariant: () => getDefault("slider.tooltipVariant"),
     tooltipAlways: false,
-    rounded: () => getOption("slider.rounded", false),
+    rounded: () => getDefault("slider.rounded", false),
     disabled: false,
     lazy: false,
     formatter: undefined,
     biggerSliderFocus: false,
     indicator: false,
-    format: () => getOption("slider.format", "raw"),
-    locale: () => getOption("locale"),
-    ariaLabel: () => getOption("slider.ariaLabel"),
+    format: () => getDefault("slider.format", "raw"),
+    locale: () => getDefault("locale"),
+    ariaLabel: () => getDefault("slider.ariaLabel"),
 });
 
 const emits = defineEmits<{

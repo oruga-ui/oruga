@@ -11,7 +11,7 @@ import {
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { vTrapFocus } from "@/directives/trapFocus";
 import { toCssDimension, isMobileAgent, isTrueish } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
@@ -27,7 +27,6 @@ import {
     usePreventScrolling,
 } from "@/composables";
 
-import type { DynamicComponent } from "@/types";
 import type { DropdownComponent } from "./types";
 import type { DropdownProps } from "./props";
 
@@ -55,26 +54,26 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     disabled: false,
     inline: false,
     scrollable: false,
-    maxHeight: () => getOption("dropdown.maxHeight", 200),
-    position: () => getOption("dropdown.position", "bottom-left"),
-    animation: () => getOption("dropdown.animation", "fade"),
-    trapFocus: () => getOption("dropdown.trapFocus", true),
-    checkScroll: () => getOption("dropdown.checkScroll", false),
+    maxHeight: () => getDefault("dropdown.maxHeight", 200),
+    position: () => getDefault("dropdown.position", "bottom-left"),
+    animation: () => getDefault("dropdown.animation", "fade"),
+    trapFocus: () => getDefault("dropdown.trapFocus", true),
+    checkScroll: () => getDefault("dropdown.checkScroll", false),
     expanded: false,
     menuId: undefined,
     menuTabindex: undefined,
-    menuTag: () => getOption<DynamicComponent>("dropdown.menuTag", "div"),
-    triggerTag: () => getOption<DynamicComponent>("dropdown.triggerTag", "div"),
-    triggers: () => getOption("dropdown.triggers", ["click"]),
+    menuTag: () => getDefault("dropdown.menuTag", "div"),
+    triggerTag: () => getDefault("dropdown.triggerTag", "div"),
+    triggers: () => getDefault("dropdown.triggers", ["click"]),
     delay: undefined,
     closeable: () =>
-        getOption("dropdown.closeable", ["escape", "outside", "content"]),
+        getDefault("dropdown.closeable", ["escape", "outside", "content"]),
     tabindex: 0,
-    ariaRole: () => getOption("dropdown.ariaRole", "list"),
-    desktopModal: () => getOption("dropdown.desktopModal", false),
-    mobileModal: () => getOption("dropdown.mobileModal", true),
-    mobileBreakpoint: () => getOption("dropdown.mobileBreakpoint"),
-    teleport: () => getOption("dropdown.teleport", false),
+    ariaRole: () => getDefault("dropdown.ariaRole", "list"),
+    desktopModal: () => getDefault("dropdown.desktopModal", false),
+    mobileModal: () => getDefault("dropdown.mobileModal", true),
+    mobileBreakpoint: () => getDefault("dropdown.mobileBreakpoint"),
+    teleport: () => getDefault("dropdown.teleport", false),
 });
 
 const emits = defineEmits<{

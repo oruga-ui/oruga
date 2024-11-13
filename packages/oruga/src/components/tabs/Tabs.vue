@@ -14,7 +14,7 @@ import OTabItem from "../tabs/TabItem.vue";
 import OIcon from "../icon/Icon.vue";
 import OSlotComponent from "../utils/SlotComponent";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { mod, isDefined } from "@/utils/helpers";
 import {
     defineClasses,
@@ -43,22 +43,22 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     options: undefined,
-    variant: () => getOption("tabs.variant"),
-    size: () => getOption("tabs.size"),
-    vertical: () => getOption("tabs.vertical", false),
+    variant: () => getDefault("tabs.variant"),
+    size: () => getDefault("tabs.size"),
+    vertical: () => getDefault("tabs.vertical", false),
     position: undefined,
-    type: () => getOption("tabs.type", "default"),
+    type: () => getDefault("tabs.type", "default"),
     expanded: false,
     destroyOnHide: false,
-    animated: () => getOption("tabs.animated", true),
+    animated: () => getDefault("tabs.animated", true),
     animation: () =>
-        getOption("tabs.animation", [
+        getDefault("tabs.animation", [
             "slide-next",
             "slide-prev",
             "slide-down",
             "slide-up",
         ]),
-    animateInitially: () => getOption("tabs.animateInitially", false),
+    animateInitially: () => getDefault("tabs.animateInitially", false),
     multiline: false,
 });
 

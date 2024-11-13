@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T, C extends Component">
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { TabsComponent, TabItemComponent } from "./types";
@@ -23,10 +23,10 @@ const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     label: undefined,
     disabled: false,
     visible: true,
-    icon: () => getOption("tabs.icon"),
-    iconPack: () => getOption("tabs.iconPack"),
-    tag: () => getOption("tabs.itemTag", "button"),
-    ariaRole: () => getOption("tabs.ariaRole", "tabpanel"),
+    icon: () => getDefault("tabs.icon"),
+    iconPack: () => getDefault("tabs.iconPack"),
+    tag: () => getDefault("tabs.itemTag", "button"),
+    ariaRole: () => getDefault("tabs.ariaRole", "tabpanel"),
     content: undefined,
     component: undefined,
     props: undefined,
