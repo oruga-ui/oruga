@@ -60,8 +60,7 @@ const getIcons = (): Record<string, IconConfig> => {
         fal: faIcons(),
     };
 
-    const customIconPacks =
-        getOption<Record<string, IconConfig>>("customIconPacks");
+    const customIconPacks = getOption("customIconPacks");
     if (customIconPacks) icons = merge(icons, customIconPacks, true);
 
     return icons;

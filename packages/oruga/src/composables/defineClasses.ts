@@ -199,15 +199,19 @@ function computeClass(
 
     // get component config class definition
     let globalClass: ClassDefinition | undefined =
-        getValueByPath<ClassDefinition>(
+        (getValueByPath(
             config,
             `${componentKey}.${field}.class`,
             "",
-        ) ||
-        getValueByPath<ClassDefinition>(config, `${componentKey}.${field}`, "");
+        ) as ClassDefinition) ||
+        (getValueByPath(
+            config,
+            `${componentKey}.${field}`,
+            "",
+        ) as ClassDefinition);
 
     // get instance class definition
-    let localClass: ComponentClass | undefined = getValueByPath<ComponentClass>(
+    let localClass: ComponentClass | undefined = getValueByPath(
         props,
         field,
         "",
@@ -279,17 +283,17 @@ function computeClass(
     // --- Tranform Classes ---
 
     // get global config tranform class
-    const globalTransformClasses = getValueByPath<TransformFunction>(
+    const globalTransformClasses = getValueByPath(
         config,
         "transformClasses",
         undefined,
-    );
+    ) as TransformFunction;
     // get component config tranform class
-    const localTransformClasses = getValueByPath<TransformFunction>(
+    const localTransformClasses = getValueByPath(
         config,
         `${componentKey}.transformClasses`,
         undefined,
-    );
+    ) as TransformFunction;
 
     // apply component local transformclass if available
     if (localTransformClasses) {

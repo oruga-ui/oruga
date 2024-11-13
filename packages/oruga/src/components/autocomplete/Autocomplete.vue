@@ -17,7 +17,7 @@ import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
@@ -36,12 +36,7 @@ import {
 
 import { injectField } from "../field/fieldInjection";
 
-import type {
-    DynamicComponent,
-    ClassBind,
-    OptionsItem,
-    OptionsGroupItem,
-} from "@/types";
+import type { ClassBind, OptionsItem, OptionsGroupItem } from "@/types";
 import type { AutocompleteProps } from "./props";
 
 enum SpecialOption {
@@ -75,42 +70,42 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     options: undefined,
     filter: undefined,
     type: "text",
-    menuTag: () => getOption<DynamicComponent>("autocomplete.menuTag", "div"),
-    itemTag: () => getOption<DynamicComponent>("autocomplete.itemTag", "div"),
-    size: () => getOption("autocomplete.size"),
-    position: () => getOption("autocomplete.position", "auto"),
+    menuTag: () => getDefault("autocomplete.menuTag", "div"),
+    itemTag: () => getDefault("autocomplete.itemTag", "div"),
+    size: () => getDefault("autocomplete.size"),
+    position: () => getDefault("autocomplete.position", "auto"),
     placeholder: undefined,
     expanded: false,
     rounded: false,
     disabled: false,
     maxlength: undefined,
-    checkScroll: () => getOption("autocomplete.checkScroll", false),
-    debounce: () => getOption("autocomplete.debounce", 400),
-    keepFirst: () => getOption("autocomplete.keepFirst", false),
-    clearOnSelect: () => getOption("autocomplete.clearOnSelect", false),
-    openOnFocus: () => getOption("autocomplete.openOnFocus", false),
-    keepOpen: () => getOption("autocomplete.keepOpen", false),
-    maxHeight: () => getOption("autocomplete.maxHeight"),
-    confirmKeys: () => getOption("autocomplete.confirmKeys", ["Tab", "Enter"]),
-    mobileModal: () => getOption("autocomplete.mobileModal", false),
-    animation: () => getOption("autocomplete.animation", "fade"),
+    checkScroll: () => getDefault("autocomplete.checkScroll", false),
+    debounce: () => getDefault("autocomplete.debounce", 400),
+    keepFirst: () => getDefault("autocomplete.keepFirst", false),
+    clearOnSelect: () => getDefault("autocomplete.clearOnSelect", false),
+    openOnFocus: () => getDefault("autocomplete.openOnFocus", false),
+    keepOpen: () => getDefault("autocomplete.keepOpen", false),
+    maxHeight: () => getDefault("autocomplete.maxHeight"),
+    confirmKeys: () => getDefault("autocomplete.confirmKeys", ["Tab", "Enter"]),
+    mobileModal: () => getDefault("autocomplete.mobileModal", false),
+    animation: () => getDefault("autocomplete.animation", "fade"),
     selectOnClickOutside: false,
     selectableHeader: false,
     selectableFooter: false,
-    iconPack: () => getOption("autocomplete.iconPack"),
-    icon: () => getOption("autocomplete.icon"),
+    iconPack: () => getDefault("autocomplete.iconPack"),
+    icon: () => getDefault("autocomplete.icon"),
     iconClickable: false,
-    iconRight: () => getOption("autocomplete.iconRight"),
+    iconRight: () => getDefault("autocomplete.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    clearable: () => getOption("autocomplete.clearable", false),
-    clearIcon: () => getOption("autocomplete.clearIcon", "close-circle"),
-    statusIcon: () => getOption("statusIcon", true),
-    autocomplete: () => getOption("autocomplete.autocomplete", "off"),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    clearable: () => getDefault("autocomplete.clearable", false),
+    clearIcon: () => getDefault("autocomplete.clearIcon", "close-circle"),
+    statusIcon: () => getDefault("statusIcon", true),
+    autocomplete: () => getDefault("autocomplete.autocomplete", "off"),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
-    teleport: () => getOption("autocomplete.teleport", false),
-    inputClasses: () => getOption("autocomplete.inputClasses", {}),
+    teleport: () => getDefault("autocomplete.teleport", false),
+    inputClasses: () => getDefault("autocomplete.inputClasses", {}),
 });
 
 const emits = defineEmits<{

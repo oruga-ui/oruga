@@ -1,11 +1,10 @@
 <script setup lang="ts" generic="T">
 import { useId, computed } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { DynamicComponent } from "@/types";
 import type { DropdownComponent } from "./types";
 import type { DropdownItemProps } from "./props";
 
@@ -24,9 +23,9 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     label: undefined,
     disabled: false,
     clickable: true,
-    tag: () => getOption<DynamicComponent>("dropdown.itemTag", "div"),
+    tag: () => getDefault("dropdown.itemTag", "div"),
     tabindex: 0,
-    ariaRole: () => getOption("dropdown.itemAriaRole", "listitem"),
+    ariaRole: () => getDefault("dropdown.itemAriaRole", "listitem"),
 });
 
 const itemValue = props.value || useId();

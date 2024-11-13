@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T">
 import { computed, useAttrs, useId, useTemplateRef } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -23,9 +23,9 @@ defineOptions({
 const props = withDefaults(defineProps<SwitchProps<T>>(), {
     override: undefined,
     modelValue: undefined,
-    variant: () => getOption("switch.variant"),
-    passiveVariant: () => getOption("switch.passiveVariant"),
-    size: () => getOption("switch.size"),
+    variant: () => getDefault("switch.variant"),
+    passiveVariant: () => getDefault("switch.passiveVariant"),
+    size: () => getDefault("switch.size"),
     label: undefined,
     nativeValue: undefined,
     disabled: false,
@@ -35,9 +35,9 @@ const props = withDefaults(defineProps<SwitchProps<T>>(), {
     falseValue: undefined,
     rounded: true,
     position: "right",
-    autocomplete: () => getOption("switch.autocomplete", "off"),
+    autocomplete: () => getDefault("switch.autocomplete", "off"),
     id: () => useId(),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{

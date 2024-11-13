@@ -10,7 +10,7 @@ import {
 
 import ONotification from "./Notification.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, getActiveClasses } from "@/composables";
 
 import type { NotificationNoticeProps } from "./props";
@@ -29,10 +29,10 @@ defineOptions({
 const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
     override: undefined,
     // container: undefined,
-    position: () => getOption("notification.position", "top"),
-    duration: () => getOption("notification.duration", 2000),
+    position: () => getDefault("notification.position", "top"),
+    duration: () => getDefault("notification.duration", 2000),
     infinite: false,
-    queue: () => getOption("notification.queue"),
+    queue: () => getDefault("notification.queue"),
     component: undefined,
     props: undefined,
     events: undefined,

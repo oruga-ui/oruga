@@ -4,7 +4,7 @@ import { computed, ref, useTemplateRef, watch } from "vue";
 import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDate, isDefined, pad } from "@/utils/helpers";
 import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
@@ -36,37 +36,37 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     rounded: false,
     readonly: false,
     disabled: false,
-    size: () => getOption("timepicker.size"),
+    size: () => getDefault("timepicker.size"),
     hourFormat: undefined,
     incrementHours: 1,
     incrementMinutes: 1,
     incrementSeconds: 1,
-    openOnFocus: () => getOption("timepicker.openOnFocus", true),
-    closeOnClick: () => getOption("timepicker.closeOnClick", true),
+    openOnFocus: () => getDefault("timepicker.openOnFocus", true),
+    closeOnClick: () => getDefault("timepicker.closeOnClick", true),
     enableSeconds: false,
     defaultMinutes: undefined,
     defaultSeconds: undefined,
-    locale: () => getOption("locale"),
-    formatter: getOption("timepicker.formatter"),
-    parser: getOption("timepicker.parser"),
-    creator: getOption("timepicker.creator"),
+    locale: () => getDefault("locale"),
+    formatter: getDefault("timepicker.formatter"),
+    parser: getDefault("timepicker.parser"),
+    creator: getDefault("timepicker.creator"),
     unselectableTimes: undefined,
     resetOnMeridianChange: false,
-    trapFocus: () => getOption("timepicker.trapFocus", true),
+    trapFocus: () => getDefault("timepicker.trapFocus", true),
     position: undefined,
-    mobileModal: () => getOption("timepicker.mobileModal", true),
-    mobileNative: () => getOption("timepicker.mobileNative", true),
-    iconPack: () => getOption("timepicker.iconPack"),
-    icon: () => getOption("timepicker.icon"),
-    iconRight: () => getOption("timepicker.iconRight"),
+    mobileModal: () => getDefault("timepicker.mobileModal", true),
+    mobileNative: () => getDefault("timepicker.mobileNative", true),
+    iconPack: () => getDefault("timepicker.iconPack"),
+    icon: () => getDefault("timepicker.icon"),
+    iconRight: () => getDefault("timepicker.iconRight"),
     iconRightClickable: false,
-    mobileBreakpoint: () => getOption("timepicker.mobileBreakpoint"),
-    teleport: () => getOption("timepicker.teleport", false),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    mobileBreakpoint: () => getDefault("timepicker.mobileBreakpoint"),
+    teleport: () => getDefault("timepicker.teleport", false),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
-    inputClasses: () => getOption("timepicker.inputClasses"),
-    dropdownClasses: () => getOption("timepicker.dropdownClasses"),
-    selectClasses: () => getOption("timepicker.selectClasses"),
+    inputClasses: () => getDefault("timepicker.inputClasses"),
+    dropdownClasses: () => getDefault("timepicker.dropdownClasses"),
+    selectClasses: () => getDefault("timepicker.selectClasses"),
 });
 
 defineEmits<{

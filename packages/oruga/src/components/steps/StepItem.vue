@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T, C extends Component">
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { StepsComponent, StepItemComponent } from "./types";
@@ -26,10 +26,10 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
     clickable: undefined,
     disabled: false,
     visible: true,
-    icon: () => getOption("steps.icon"),
-    iconPack: () => getOption("steps.iconPack"),
-    tag: () => getOption("steps.itemTag", "button"),
-    ariaRole: () => getOption("steps.ariaRole", "tab"),
+    icon: () => getDefault("steps.icon"),
+    iconPack: () => getDefault("steps.iconPack"),
+    tag: () => getDefault("steps.itemTag", "button"),
+    ariaRole: () => getDefault("steps.ariaRole", "tab"),
     content: undefined,
     component: undefined,
     props: undefined,

@@ -12,7 +12,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { vTrapFocus } from "@/directives/trapFocus";
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
@@ -42,19 +42,20 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     active: false,
     fullScreen: false,
     content: undefined,
-    width: () => getOption("modal.width", 960),
-    animation: () => getOption("modal.animation", "zoom-out"),
-    overlay: () => getOption("modal.overlay", true),
-    cancelable: () => getOption("modal.cancelable", ["escape", "x", "outside"]),
-    scroll: () => getOption("modal.scroll", "keep"),
-    trapFocus: () => getOption("modal.trapFocus", true),
-    ariaRole: () => getOption("modal.ariaRole"),
-    ariaLabel: () => getOption("modal.ariaLabel"),
-    autoFocus: () => getOption("modal.autoFocus", true),
-    closeIcon: () => getOption("modal.closeIcon", "close"),
-    closeIconSize: () => getOption("modal.closeIconSize", "medium"),
-    mobileBreakpoint: () => getOption("modal.mobileBreakpoint"),
-    teleport: () => getOption("modal.teleport", false),
+    width: () => getDefault("modal.width", 960),
+    animation: () => getDefault("modal.animation", "zoom-out"),
+    overlay: () => getDefault("modal.overlay", true),
+    cancelable: () =>
+        getDefault("modal.cancelable", ["escape", "x", "outside"]),
+    scroll: () => getDefault("modal.scroll", "keep"),
+    trapFocus: () => getDefault("modal.trapFocus", true),
+    ariaRole: () => getDefault("modal.ariaRole"),
+    ariaLabel: () => getDefault("modal.ariaLabel"),
+    autoFocus: () => getDefault("modal.autoFocus", true),
+    closeIcon: () => getDefault("modal.closeIcon", "close"),
+    closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
+    mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
+    teleport: () => getDefault("modal.teleport", false),
     component: undefined,
     props: undefined,
     events: undefined,

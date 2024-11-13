@@ -1,4 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
+import type { DeepType } from "@/types";
 
 /**
  * +/- function to native math sign
@@ -185,26 +186,23 @@ export function isElement(el: any): el is Element {
  * Apply a formatter function to the property if given.
  * Return the display label.
  *
- * @param option Object to the the label for
- * @param field  Property of the object to use as display text
- * @param formatter Function to format the option to a string
+ * @param obj Object to get the label for
+ * @param field  Property path of the object to use as display text
+ * @param formatter Function to format the property to a string
  */
-export function getPropertyValue<T>(
-    option?: T,
-    field?: string,
-    formatter?: (value: unknown, option: T) => string,
+export function getPropertyValue<O, K extends keyof O | string>(
+    obj: O,
+    field?: K,
+    formatter?: (value: DeepType<O, K>, option: O) => string,
 ): string {
-    if (!option) return "";
+    if (!obj) return "";
 
-    const property =
-        field && typeof option === "object"
-            ? getValueByPath(option, field)
-            : option;
+    const property = field
+        ? getValueByPath<O, K>(obj, field)
+        : (obj as DeepType<O, K>);
 
     const label =
-        typeof formatter === "function"
-            ? formatter(property, option)
-            : property;
+        typeof formatter === "function" ? formatter(property, obj) : property;
 
     return String(label || "");
 }
@@ -249,26 +247,28 @@ export function mergeDeep(target: any, source: any): any {
 /**
  * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<T>(
-    obj: Record<string, any>,
-    path: string,
-    defaultValue?: T,
-): typeof defaultValue extends undefined
-    ? T
-    : NonNullable<typeof defaultValue> {
+export function getValueByPath<O, K extends keyof O | string>(
+    obj: O,
+    path: K,
+    defaultValue?: DeepType<O, K>,
+): DeepType<O, K> {
+    if (!obj || typeof obj !== "object") return obj as DeepType<O, K>;
+    if (typeof path !== "string") return obj as DeepType<O, K>;
+
     const value: any = path
         .split(".")
         .reduce((o, i) => (typeof o !== "undefined" ? o[i] : undefined), obj);
+
     return typeof value !== "undefined" ? value : defaultValue;
 }
 
 /**
  * Set a value of an object property/path even if it's nested
  */
-export function setValueByPath<T = any>(
+export function setValueByPath(
     obj: Record<string, any>,
     path: string,
-    value: T,
+    value: any,
 ): void {
     const p = path.split(".");
     if (p.length === 1) {
@@ -294,7 +294,7 @@ export function removeElement(el: Element): void {
  */
 export function escapeRegExpChars(value: string): string {
     if (!value) return value;
-    // eslint-disable-next-line no-useless-escape
+
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 

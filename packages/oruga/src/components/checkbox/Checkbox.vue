@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T">
 import { computed, useAttrs, useId, useTemplateRef } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -23,8 +23,8 @@ defineOptions({
 const props = withDefaults(defineProps<CheckboxProps<T>>(), {
     override: undefined,
     modelValue: undefined,
-    variant: () => getOption("checkbox.variant"),
-    size: () => getOption("checkbox.size"),
+    variant: () => getDefault("checkbox.variant"),
+    size: () => getDefault("checkbox.size"),
     label: undefined,
     indeterminate: false,
     nativeValue: undefined,
@@ -33,9 +33,9 @@ const props = withDefaults(defineProps<CheckboxProps<T>>(), {
     name: undefined,
     trueValue: undefined,
     falseValue: undefined,
-    autocomplete: () => getOption("checkbox.autocomplete", "off"),
+    autocomplete: () => getDefault("checkbox.autocomplete", "off"),
     id: () => useId(),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
 });
 

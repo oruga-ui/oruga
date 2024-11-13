@@ -3,7 +3,7 @@ import { computed, useTemplateRef, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import {
     defineClasses,
     useProviderParent,
@@ -41,7 +41,7 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: getOption("menu.ariaRole", "menu"),
+        default: () => getDefault("menu.ariaRole", "menu"),
         validator: (value: string) =>
             ["menu", "list", "dialog"].indexOf(value) > -1,
     },
@@ -53,7 +53,7 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("menu.iconPack"),
+        default: () => getDefault("menu.iconPack"),
     },
     /**
      * Icon size
@@ -61,7 +61,7 @@ const props = defineProps({
      */
     iconSize: {
         type: String,
-        default: () => getOption("menu.iconSize"),
+        default: () => getDefault("menu.iconSize"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element */

@@ -10,7 +10,7 @@ import {
     type VNodeArrayChildren,
 } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isVNodeEmpty } from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
@@ -46,7 +46,7 @@ const props = defineProps({
      */
     labelSize: {
         type: String,
-        default: () => getOption("field.labelsize"),
+        default: () => getDefault("field.labelsize"),
     },
     /** Same as native `for` set on the label */
     labelFor: { type: String, default: undefined },
@@ -54,7 +54,7 @@ const props = defineProps({
     message: { type: String, default: undefined },
     messageTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("field.messageTag", "p"),
+        default: () => getDefault("field.messageTag", "p"),
     },
     /**
      * Direct child components/elements of Field will be grouped horizontally
@@ -70,7 +70,7 @@ const props = defineProps({
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
-        default: () => getOption("field.mobileBreakpoint"),
+        default: () => getDefault("field.mobileBreakpoint"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element */

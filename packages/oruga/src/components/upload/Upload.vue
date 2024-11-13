@@ -7,7 +7,7 @@
     ">
 import { computed, ref, useAttrs, useTemplateRef, watch } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { File } from "@/utils/ssr";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
@@ -34,13 +34,13 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
     // multiple: false,
-    variant: () => getOption("upload.variant"),
+    variant: () => getDefault("upload.variant"),
     disabled: false,
     accept: undefined,
     dragDrop: false,
     expanded: false,
     native: true,
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
 });
 
