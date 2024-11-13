@@ -61,7 +61,7 @@ const columns: TableColumn<(typeof data)[number]>[] = [
         field: "date",
         label: "Date",
         position: "centered",
-        // formatter: (v: string): string => new Date(v).toLocaleDateString(),
+        formatter: (v): string => new Date(String(v)).toLocaleDateString(),
     },
     {
         field: "gender",

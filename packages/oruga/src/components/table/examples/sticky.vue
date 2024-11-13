@@ -58,7 +58,7 @@ const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
         label: "Date",
         position: "centered",
         sticky: true,
-        formatter: (v: string): string => new Date(v).toLocaleDateString(),
+        formatter: (v): string => new Date(String(v)).toLocaleDateString(),
         thAttrs: { class: "is-sticky-column-two" },
         tdAttrs: { class: "is-sticky-column-two" },
     },
