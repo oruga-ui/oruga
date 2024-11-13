@@ -76,26 +76,26 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {Date, Array} updated active prop
      */
-    (e: "update:value", value: Date | Array<Date> | undefined): void;
+    "update:value": [value: Date | Array<Date> | undefined];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /** on input focus event */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /** on input blur event */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /** on input invalid event */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /** on icon click event */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /** on icon right click event */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
     /** on dropdown left button press event */
-    (e: "left", event: Event): void;
+    left: [event: Event];
     /** on dropdown right button press event */
-    (e: "right", event: Event): void;
+    right: [event: Event];
 }>();
 
 const isMobileNative = computed(

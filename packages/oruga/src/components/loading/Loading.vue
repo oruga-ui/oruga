@@ -43,17 +43,17 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {boolean} - updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * fullPage prop two-way binding
      * @param value {boolean} - updated fullPage prop
      */
-    (e: "update:fullPage", value: boolean): void;
+    "update:fullPage": [value: boolean];
     /**
      * on component close event
      * @param value {unknown} - close event data
      */
-    (e: "close", ...args: unknown[]): void;
+    close: [...args: unknown[]];
 }>();
 
 const rootRef = useTemplateRef("rootElement");

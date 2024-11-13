@@ -43,11 +43,11 @@ const props = defineProps({
 
 const emits = defineEmits<{
     /** modelValue prop two-way binding */
-    (e: "update:modelValue", value: Date | Date[]): void;
+    "update:modelValue": [value: Date | Date[]];
     /** focusedDate prop two-way binding */
-    (e: "update:focusedDate", value: FocusedDate): void;
-    (e: "range-start", value: Date): void;
-    (e: "range-end", value: Date): void;
+    "update:focusedDate": [value: FocusedDate];
+    "range-start": [value: Date];
+    "range-end": [value: Date];
 }>();
 
 const { dateCreator } = useDatepickerMixins(props.pickerProps);

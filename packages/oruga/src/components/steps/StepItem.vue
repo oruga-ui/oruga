@@ -38,9 +38,9 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
 
 const emits = defineEmits<{
     /** on step item activate event */
-    (e: "activate"): void;
+    activate: [];
     /** on step item deactivate event */
-    (e: "deactivate"): void;
+    deactivate: [];
 }>();
 
 const itemValue = props.value || useId();

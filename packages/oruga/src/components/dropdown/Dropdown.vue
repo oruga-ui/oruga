@@ -79,28 +79,28 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object | array} updated modelValue prop
+     * @param value {T | T[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:modelValue": [value: ModelValue];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on change event - fired after update:modelValue
-     * @param value {string | number | object | array} selected value
+     * @param value {T | T[]} selected value
      */
-    (e: "change", value: ModelValue): void;
+    change: [value: ModelValue];
     /**
      * on close event
      * @param method {string} close method
      */
-    (e: "close", method: string): void;
+    close: [method: string];
     /** the list inside the dropdown reached the start */
-    (e: "scroll-start"): void;
+    "scroll-start": [];
     /** the list inside the dropdown reached it's end */
-    (e: "scroll-end"): void;
+    "scroll-end": [];
 }>();
 
 const contentRef = ref<HTMLElement | Component>();

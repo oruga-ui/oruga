@@ -61,11 +61,11 @@ const emits = defineEmits<{
      * open prop two-way binding
      * @param value {boolean} updated open prop
      */
-    (e: "update:open", value: boolean): void;
+    "update:open": [value: boolean];
     /** on collapse opened */
-    (e: "open"): void;
+    open: [];
     /** on collapse closed */
-    (e: "close"): void;
+    close: [];
 }>();
 
 const isOpen = defineModel<boolean>("open", { default: true });

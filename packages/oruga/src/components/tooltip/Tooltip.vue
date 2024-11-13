@@ -174,11 +174,11 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {boolean} - updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /** on active change to false event */
-    (e: "close"): void;
+    close: [];
     /** on active change to true event */
-    (e: "open"): void;
+    open: [];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });

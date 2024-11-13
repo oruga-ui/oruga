@@ -54,21 +54,21 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:modelValue": [value: ModelValue];
     /**
      * on value change event
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "change", value: ModelValue): void;
+    change: [value: ModelValue];
     /**
      * on dragging event
      * @param value {number | number[]} updated modelValue prop
      * */
-    (e: "dragging", value: ModelValue): void;
+    dragging: [value: ModelValue];
     /** on drag start event */
-    (e: "dragstart"): void;
+    dragstart: [];
     /** on drag end event */
-    (e: "dragend"): void;
+    dragend: [];
 }>();
 
 const sliderRef = useTemplateRef("sliderElement");

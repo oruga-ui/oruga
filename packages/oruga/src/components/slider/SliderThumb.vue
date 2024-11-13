@@ -32,13 +32,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: number | number[]): void;
+    "update:modelValue": [value: number | number[]];
     /** on value change event */
-    (e: "change"): void;
+    change: [];
     /** on drag start event */
-    (e: "dragstart"): void;
+    dragstart: [];
     /** on drag end event */
-    (e: "dragend"): void;
+    dragend: [];
 }>();
 
 const isFocused = ref(false);
