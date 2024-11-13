@@ -2,37 +2,6 @@
 import { ref } from "vue";
 import type { TableColumn } from "@oruga-ui/oruga-next";
 
-const columns = ref<TableColumn[]>([
-    {
-        field: "id",
-        label: "ID",
-        width: "40",
-        numeric: true,
-        sortable: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-        sortable: true,
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-        sortable: true,
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-        sortable: true,
-    },
-    {
-        field: "gender",
-        label: "Gender",
-        sortable: true,
-    },
-]);
-
 const data = ref([
     {
         id: 1,
@@ -68,7 +37,41 @@ const data = ref([
         last_name: "Lee",
         date: "2016-12-06 14:38:38",
         gender: "Female",
+        a: { b: 1 },
     },
+]);
+
+const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
+    {
+        field: "id",
+        label: "ID",
+        width: "40",
+        numeric: true,
+        sortable: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+        sortable: true,
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+        sortable: true,
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+        sortable: true,
+        formatter: (v): string => new Date(String(v)).toLocaleDateString(),
+    },
+    {
+        field: "gender",
+        label: "Gender",
+        sortable: true,
+    },
+    { field: "a.b" },
 ]);
 </script>
 
