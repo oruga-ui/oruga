@@ -15,7 +15,6 @@ function imageSidebar(): void {
         component: vnode,
         fullheight: true,
         overlay: true,
-        destroyOnHide: true,
     });
 }
 
@@ -24,7 +23,6 @@ function formSidebar(): void {
         component: Form,
         fullheight: true,
         overlay: true,
-        destroyOnHide: true,
     });
 }
 </script>

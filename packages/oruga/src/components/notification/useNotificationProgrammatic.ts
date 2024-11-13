@@ -39,7 +39,7 @@ const useNotificationProgrammatic = {
      */
     open<C extends Component>(
         options: string | NotifcationProgrammaticOptions<C>,
-        target?: string | HTMLElement,
+        target?: string | HTMLElement | null,
     ): ProgrammaticExpose {
         const _options: NotifcationProgrammaticOptions<C> =
             typeof options === "string" ? { message: options } : options;
