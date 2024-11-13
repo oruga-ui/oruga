@@ -142,123 +142,117 @@ const emits = defineEmits<{
      * currentPage prop two-way binding
      * @param value {number} updated currentPage prop
      */
-    (e: "update:currentPage", value: number): void;
+    "update:currentPage": [value: number];
     /**
      * is emitted each time the table data is processed into rows
      * @param value {TableRow[]} computed table rows
      */
-    (e: "processed", value: Array<TableRow<T>>): void;
+    processed: [value: TableRow<T>[]];
     /**
      * on pagination page change event
      * @param page {number} updated page
      */
-    (e: "page-change", page: number): void;
+    "page-change": [page: number];
     /**
      * select prop two-way binding
      * @param value {T} updated select prop
      */
-    (e: "update:selected", value: T): void;
+    "update:selected": [value: T];
     /**
      * on row select event
      * @param newRow {T} new select value
      * @param oldRow {T} old select value
      */
-    (e: "select", newRow: T, oldRow: T): void;
+    select: [newRow: T, oldRow: T];
     /**
      * on row checked event
      * @param value {T[]} all checked rows
      * @param row {T} row data
      */
-    (e: "check", value: Array<T>, row: T): void;
+    check: [value: T[], row: T];
     /**
      * on all rows checked event
      * @param value {T[]} all checked rows
      */
-    (e: "check-all", value: Array<T>): void;
+    "check-all": [value: T[]];
     /**
      * checkedRows prop two-way binding
      * @param value {T[]} updated checkedRows prop
      */
-    (e: "update:checkedRows", value: Array<T>): void;
+    "update:checkedRows": [value: T[]];
     /**
      * on column sort change event
      * @param column {TableColumn} column data
      * @param direction {string}  'asc' or 'desc'
      * @param event {Event} native  event
      */
-    (
-        e: "sort",
-        column: TableColumn<T>,
-        direction: "asc" | "desc",
-        event: Event,
-    ): void;
+    sort: [column: TableColumn<T>, direction: "asc" | "desc", event: Event];
     /**
      * on filter change event
      * @param filters {object} filter object
      */
-    (e: "filters-change", value: Record<string, string>): void;
+    "filters-change": [value: Record<string, string>];
     /**
      * on native filter event based on props filtersEvent
      * @param filtersEvent {string} props filtersEvent value
      * @param filters {object} filter object
      * @param event {Event} native  event
      */
-    (
-        e: "filters-event",
+    "filters-event": [
         filtersEvent: string,
         filters: Record<string, string>,
         event: Event,
-    ): void;
+    ];
     /**
      * detailedRows prop two-way binding
      * @param value {T[]} updated detailedRows prop
      */
-    (e: "update:detailedRows", value: Array<T>): void;
+    "update:detailedRows": [value: T[]];
     /**
      * on details open event
      * @param row {T} row data
      */
-    (e: "details-open", row: T): void;
+    "details-open": [row: T];
     /**
      * on details close event
      * @param row {T} row data
      */
-    (e: "details-close", row: T): void;
+    "details-close": [row: T];
     /**
      * on row click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "click", row: T, index: number, event: Event): void;
+    click: [row: T, index: number, event: Event];
     /**
      * on row double click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "dblclick", row: T, index: number, event: Event): void;
+    dblclick: [row: T, index: number, event: Event];
     /**
      * on row right click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native contextmenu event
      */
-    (e: "contextmenu", row: T, index: number, event: Event): void;
+    contextmenu: [row: T, index: number, event: Event];
     /**
      * on row mouseenter event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseenter event
      */
-    (e: "mouseenter", row: T, index: number, event: Event): void;
+    mouseenter: [row: T, index: number, event: Event];
     /**
      * on row mouseleave event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseleave event
      */
-    (e: "mouseleave", row: T, index: number, event: Event): void;
+    mouseleave: [row: T, index: number, event: Event];
     /**
      * on cell click event
      * @param row {T} row data
@@ -267,109 +261,83 @@ const emits = defineEmits<{
      * @param colindex {number} column index
      * @param event {Event} native click event
      */
-    (
-        e: "cell-click",
+    "cell-click": [
         row: T,
         column: TableColumn<T>,
         index: number,
         colindex: number,
         event: Event,
-    ): void;
+    ];
     /**
      * on row dragstart event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragstart event
      */
-    (e: "dragstart", row: T, index: number, event: DragEvent): void;
+    dragstart: [row: T, index: number, event: DragEvent];
     /**
      * on row dragend event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragend event
      */
-    (e: "dragend", row: T, index: number, event: DragEvent): void;
+    dragend: [row: T, index: number, event: DragEvent];
     /**
      * on row drop event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native drop event
      */
-    (e: "drop", row: T, index: number, event: DragEvent): void;
+    drop: [row: T, index: number, event: DragEvent];
     /**
      * on row dragleave event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragleave event
      */
-    (e: "dragleave", row: T, index: number, event: DragEvent): void;
+    dragleave: [row: T, index: number, event: DragEvent];
     /**
      * on row dragover event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragover event
      */
-    (e: "dragover", row: T, index: number, event: DragEvent): void;
+    dragover: [row: T, index: number, event: DragEvent];
     /**
      * on column columndragstart event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragstart event
      */
-    (
-        e: "columndragstart",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragstart: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragend event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragend event
      */
-    (
-        e: "columndragend",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragend: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndrop event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndrop event
      */
-    (
-        e: "columndrop",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndrop: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragleave event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragleave event
      */
-    (
-        e: "columndragleave",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragleave: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragover event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragover event
      */
-    (
-        e: "columndragover",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragover: [column: TableColumn<T>, index: number, event: DragEvent];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
