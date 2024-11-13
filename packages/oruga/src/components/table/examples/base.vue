@@ -37,7 +37,6 @@ const data = ref([
         last_name: "Lee",
         date: "2016-12-06 14:38:38",
         gender: "Female",
-        a: { b: 1 },
     },
 ]);
 
@@ -71,7 +70,6 @@ const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
         label: "Gender",
         sortable: true,
     },
-    { field: "a.b" },
 ]);
 </script>
 

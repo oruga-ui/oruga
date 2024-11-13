@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import type { TableColumn } from "@oruga-ui/oruga-next";
 
-const data = ref([
+const data = [
     {
         id: 1,
         first_name: "Jesse",
@@ -38,9 +38,9 @@ const data = ref([
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-]);
+];
 
-const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
+const columns: TableColumn<(typeof data)[number]>[] = [
     {
         field: "id",
         label: "ID",
@@ -64,10 +64,10 @@ const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
         field: "gender",
         label: "Gender",
     },
-]);
+];
 
 const checkboxPosition = ref<"left" | "right">("left");
-const checkedRows = ref([data.value[1], data.value[3]]);
+const checkedRows = ref([data[1], data[3]]);
 </script>
 
 <template>
@@ -91,8 +91,7 @@ const checkedRows = ref([data.value[1], data.value[3]]);
             :columns="columns"
             checkable
             :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
-            :checkbox-position="checkboxPosition"
-            @check-all="() => console.log">
+            :checkbox-position="checkboxPosition">
             <template #bottom-left>
                 <b>Total checked</b>: {{ checkedRows.length }}
             </template>
