@@ -15,7 +15,7 @@ export type TableColumns<T = unknown> = (
     | {
           [K in keyof T]: TableColumn<T, K>;
       }[keyof T]
-    | TableColumn<T>
+    | TableColumn<T, string>
 )[];
 
 export type TableColumnComponent<T = unknown> = TableColumn<T> & {
