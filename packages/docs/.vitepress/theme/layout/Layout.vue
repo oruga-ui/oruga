@@ -10,7 +10,7 @@ const theme = ref({ key: undefined });
 </script>
 
 <template>
-    <Layout :class="theme.key">
+    <Layout :class="theme.key" data-theme="light">
         <template #nav-bar-content-before>
             <ClientOnly>
                 <ThemeSelector v-if="hasSidebar" v-model:theme="theme" />
