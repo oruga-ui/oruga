@@ -34,9 +34,9 @@ type ComponentEmitsByProps<T> = {
 };
 
 /**
- * Custom ComponentEmits helper which defines the emits as object.
+ * Custom ComponentEmits helper which defines the emits of an component as object.
  *
- * Because the `ComponentEmits` from "vue-component-type-helpers" does not export the emits as an object but as:
+ * Because the `ComponentEmit` from "vue-component-type-helpers" does not export the emits as an object but as:
  * `((event: "close", ...args: any[]) => void) | undefined`
  */
 export type ComponentEmits<C> = ComponentEmitsByProps<ComponentProps<C>>;
