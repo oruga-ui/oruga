@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends Record<string, any>">
+<script setup lang="ts" generic="T">
 import {
     computed,
     ref,
@@ -147,7 +147,7 @@ const emits = defineEmits<{
      * is emitted each time the table data is processed into rows
      * @param value {TableRow[]} computed table rows
      */
-    processed: [value: Array<TableRow<T>>];
+    processed: [value: TableRow<T>[]];
     /**
      * on pagination page change event
      * @param page {number} updated page
@@ -169,17 +169,17 @@ const emits = defineEmits<{
      * @param value {T[]} all checked rows
      * @param row {T} row data
      */
-    check: [value: Array<T>, row: T];
+    check: [value: T[], row: T];
     /**
      * on all rows checked event
      * @param value {T[]} all checked rows
      */
-    "check-all": [value: Array<T>];
+    "check-all": [value: T[]];
     /**
      * checkedRows prop two-way binding
      * @param value {T[]} updated checkedRows prop
      */
-    "update:checkedRows": [value: Array<T>];
+    "update:checkedRows": [value: T[]];
     /**
      * on column sort change event
      * @param column {TableColumn} column data
@@ -207,7 +207,7 @@ const emits = defineEmits<{
      * detailedRows prop two-way binding
      * @param value {T[]} updated detailedRows prop
      */
-    "update:detailedRows": [value: Array<T>];
+    "update:detailedRows": [value: T[]];
     /**
      * on details open event
      * @param row {T} row data
@@ -504,7 +504,11 @@ function isRowEqual(
     if (!isDefined(targetRow)) return false;
     if (typeof props.customCompare === "function")
         return props.customCompare(el1, el2);
-    if (props.rowKey) return el1[props.rowKey] == el2[props.rowKey];
+    if (props.rowKey)
+        return (
+            getPropertyValue(el1, props.rowKey) ==
+            getPropertyValue(el2, props.rowKey)
+        );
     return el1 == el2;
 }
 
