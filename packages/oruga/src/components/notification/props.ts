@@ -104,7 +104,7 @@ export type NotificationNoticeProps<C extends Component> = {
     queue?: boolean;
     /**
      * Component to be injected.
-     * Close notification within the component by emitting a 'close' event — $emit('close').
+     * Close the component by emitting a 'close' event — `$emit('close')`
      */
     component?: Component;
     /** Props to be binded to the injected component */

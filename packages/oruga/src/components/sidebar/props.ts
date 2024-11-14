@@ -51,8 +51,8 @@ export type SidebarProps<C extends Component> = {
      */
     teleport?: boolean | string | object;
     /**
-     * Component to be injected, used to open a component sidebar programmatically.
-     * Close sidebar within the component by emitting a 'close' event — emits('close')
+     * Component to be injected.
+     * Close the component by emitting a 'close' event — `$emit('close')`
      */
     component?: C;
     /** Props to be binded to the injected component */

@@ -56,7 +56,7 @@ export type ModalProps<C extends Component> = {
     teleport?: boolean | string | object;
     /**
      * Component to be injected.
-     * Close the programmatic component within the component by emitting a 'close' event — `$emit('close')`
+     * Close the component by emitting a 'close' event — `$emit('close')`
      */
     component?: C;
     /** Props to be binded to the injected component */
