@@ -1,6 +1,6 @@
 import type { Component } from "vue";
-import type { ComponentClass } from "@/types";
-import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
+import type { ComponentClass, ComponentEmits } from "@/types";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 export type NotificationProps = {
     /** Override existing theme classes completely */
@@ -110,7 +110,7 @@ export type NotificationNoticeProps<C extends Component> = {
     /** Props to be binded to the injected component */
     props?: ComponentProps<C>;
     /** Events to be binded to the injected component */
-    events?: ComponentEmit<C>;
+    events?: ComponentEmits<C>;
 } & NotificationNoticeClasses;
 
 // class props (will not be displayed in the docs)

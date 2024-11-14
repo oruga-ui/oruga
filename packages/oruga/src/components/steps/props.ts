@@ -1,6 +1,11 @@
 import type { Component } from "vue";
-import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
-import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
+import type {
+    ComponentClass,
+    ComponentEmits,
+    DynamicComponent,
+    OptionsProp,
+} from "@/types";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 export type StepsProps<T> = {
     /** Override existing theme classes completely */
@@ -142,7 +147,7 @@ export type StepItemProps<T, C extends Component> = {
     /** Props to be binded to the injected component */
     props?: ComponentProps<C>;
     /** Events to be binded to the injected component */
-    events?: ComponentEmit<C>;
+    events?: ComponentEmits<C>;
 } & StepItemClasses;
 
 // class props (will not be displayed in the docs)
