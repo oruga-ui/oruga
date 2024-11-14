@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T, K extends string">
 import { computed, getCurrentInstance } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
@@ -16,7 +16,7 @@ defineOptions({
     configField: "table",
 });
 
-const props = withDefaults(defineProps<TableColumnProps<T>>(), {
+const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     label: undefined,
     field: undefined,
     formatter: undefined,
@@ -113,7 +113,7 @@ const tdClasses = defineClasses(
 // these properties are just for type addings
 // slot props will be set in Table.vue
 const row = {} as any;
-const column = {} as TableColumnProps<T>;
+const column = {} as TableColumnProps<T, K>;
 const index = 0;
 const toggle = () => {};
 const filters = {} as Record<string, string>;

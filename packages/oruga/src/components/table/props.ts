@@ -1,7 +1,7 @@
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DeepType } from "@/types";
 import type { TableColumn } from "./types";
 
-export type TableProps<T extends Record<string, any>> = {
+export type TableProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** Table data */
@@ -254,13 +254,13 @@ type TableClasses = Partial<{
     loadingClasses: object;
 }>;
 
-export type TableColumnProps<T> = {
+export type TableColumnProps<T, K extends keyof T | string> = {
     /** Define the column label */
     label?: string;
     /** Define an object property key if data is an object */
-    field?: string;
+    field?: K;
     /** Provide a formatter function to edit the output */
-    formatter?: (value: unknown, row: T) => string;
+    formatter?: (value: DeepType<T, K>, row: T) => string;
     /** Define a column sub heading  */
     subheading?: string;
     /** Column fixed width */

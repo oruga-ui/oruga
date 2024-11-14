@@ -6,7 +6,17 @@ import type { TableColumnProps } from "./props";
 
 export type TableRow<T = unknown> = ObjectMap<T>[number];
 
-export type TableColumn<T = unknown> = TableColumnProps<T>;
+export type TableColumn<
+    T = unknown,
+    K extends keyof T | string = string,
+> = TableColumnProps<T, K>;
+
+export type TableColumns<T = unknown> = (
+    | {
+          [K in keyof T]: TableColumn<T, K>;
+      }[keyof T]
+    | TableColumn<T, string>
+)[];
 
 export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $el: ComponentPublicInstance;
