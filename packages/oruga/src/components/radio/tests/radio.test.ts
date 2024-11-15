@@ -67,9 +67,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value1,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -77,9 +77,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value2,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -93,14 +93,14 @@ describe("ORadio tests", () => {
 
         await input1.setValue(true);
 
-        let emits = wrapper1.emitted("update:modelValue");
+        let emits = wrapper1.emitted("update:model-value");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
-        emits = wrapper2.emitted("update:modelValue");
+        emits = wrapper2.emitted("update:model-value");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);
@@ -115,9 +115,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value1,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -125,9 +125,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value2,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -140,14 +140,14 @@ describe("ORadio tests", () => {
 
         await input1.setValue(true);
 
-        let emits = wrapper1.emitted("update:modelValue");
+        let emits = wrapper1.emitted("update:model-value");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
-        emits = wrapper2.emitted("update:modelValue");
+        emits = wrapper2.emitted("update:model-value");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);
@@ -162,9 +162,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value1,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -172,9 +172,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value2,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -187,14 +187,14 @@ describe("ORadio tests", () => {
 
         await input1.setValue(true);
 
-        let emits = wrapper1.emitted("update:modelValue");
+        let emits = wrapper1.emitted("update:model-value");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
-        emits = wrapper2.emitted("update:modelValue");
+        emits = wrapper2.emitted("update:model-value");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);

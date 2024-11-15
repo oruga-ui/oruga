@@ -74,9 +74,9 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {Date, Array} updated active prop
+     * @param value {Date, Date[]} updated active prop
      */
-    "update:value": [value: Date | Array<Date> | undefined];
+    "update:value": [value: Date | Date[] | undefined];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop

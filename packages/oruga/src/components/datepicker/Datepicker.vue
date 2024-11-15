@@ -108,7 +108,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date | Date[]} updated modelValue prop
      */
-    "update:modelValue": [value: ModelValue];
+    "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -197,7 +197,7 @@ watch(
                 Array.isArray(vmodel.value) &&
                 value.length > vmodel.value.length)
         )
-            // updateInternalState
+            // update internal state
             focusedDateData.value = {
                 day: currentDate.getDate(),
                 month: currentDate.getMonth(),

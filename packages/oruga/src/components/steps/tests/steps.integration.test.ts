@@ -139,7 +139,7 @@ describe("OSteps with OStepItem tests", () => {
                 );
             });
 
-            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+            expect(wrapper.emitted("update:model-value")).toStrictEqual([
                 [options[4].value],
                 [options[0].value],
             ]);
@@ -173,7 +173,7 @@ describe("OSteps with OStepItem tests", () => {
             // trigger prev
             await buttons[0].trigger("click");
 
-            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+            expect(wrapper.emitted("update:model-value")).toStrictEqual([
                 [options[currentIndex - 1].value],
                 [options[currentIndex - 2].value],
             ]);
@@ -210,7 +210,7 @@ describe("OSteps with OStepItem tests", () => {
             // trigger prev
             await buttons[1].trigger("click");
 
-            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+            expect(wrapper.emitted("update:model-value")).toStrictEqual([
                 [options[currentIndex + 1].value],
                 [options[currentIndex + 2].value],
             ]);

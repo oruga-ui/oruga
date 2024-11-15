@@ -43,12 +43,12 @@ const props = withDefaults(defineProps<SwitchProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    "update:modelValue": [value: T];
+    "update:model-value": [value: T];
     /**
      * on input change event
-     * @param value {string | number | boolean | object} input value
+     * @param value {T} input value
      * @param event {Event} native event
      */
     input: [value: T, event: Event];

@@ -205,7 +205,7 @@ describe("OTab with OTabItem tests", () => {
                 );
             });
 
-            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+            expect(wrapper.emitted("update:model-value")).toStrictEqual([
                 [options[4].value],
                 [options[0].value],
             ]);

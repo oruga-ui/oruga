@@ -38,7 +38,7 @@ describe("OInput", () => {
         await vi.runAllTimers(); // await debounce timer
 
         expect(wrapper.emitted("input")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+        expect(wrapper.emitted("update:model-value")).toHaveLength(1);
         expect(wrapper.vm.value).toEqual(value);
     });
 
@@ -143,8 +143,8 @@ describe("OInput", () => {
         const wrapper = mount(OInput, {
             props: {
                 modelValue: "foo",
-                "onUpdate:modelValue": (e) =>
-                    wrapper.setProps({ modelValue: e }),
+                "onUpdate:modelValue": (modelValue) =>
+                    wrapper.setProps({ modelValue }),
             },
         });
 
@@ -159,8 +159,8 @@ describe("OInput", () => {
         expect(emits).toHaveLength(1);
         expect(emits![0][0]).toBe("bar");
         expect(wrapper.emitted("blur")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")![0][0]).toBe("bar");
+        expect(wrapper.emitted("update:model-value")).toHaveLength(1);
+        expect(wrapper.emitted("update:model-value")![0][0]).toBe("bar");
         expect(wrapper.props("modelValue")).toBe("bar");
     });
 
@@ -204,7 +204,7 @@ describe("OInput", () => {
         await input.setValue(11);
         expect(input.element.value).toBe("11");
 
-        const emitted = wrapper.emitted("update:modelValue");
+        const emitted = wrapper.emitted("update:model-value");
 
         expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
     });

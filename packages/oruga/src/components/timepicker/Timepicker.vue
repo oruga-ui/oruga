@@ -24,6 +24,8 @@ defineOptions({
     configField: "timepicker",
 });
 
+type ModelValue = TimepickerProps["modelValue"];
+
 const props = withDefaults(defineProps<TimepickerProps>(), {
     override: undefined,
     modelValue: undefined,
@@ -74,7 +76,7 @@ defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} updated modelValue prop
      */
-    "update:modelValue": [value: Date];
+    "update:model-value": [value: Date];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -126,7 +128,7 @@ const {
 const pickerRef = useTemplateRef("pickerComponent");
 
 /** modelvalue of selected date */
-const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -143,16 +145,18 @@ watch(
 );
 
 /** Update internal value. */
-function updateValue(value: Date | undefined): void {
+function updateValue(value: Date | Date[] | undefined): void {
     if (Array.isArray(value)) return updateValue(value[0]);
-    if (vmodel.value !== value) vmodel.value = value as Date;
+    if (vmodel.value !== value) vmodel.value = value;
     if (value) {
+        // update internal state
         hoursSelected.value = value.getHours();
         minutesSelected.value = value.getMinutes();
         secondsSelected.value = value.getSeconds();
         meridienSelected.value =
             value.getHours() >= 12 ? pmString.value : amString.value;
     } else {
+        // reset internal state
         hoursSelected.value = undefined;
         minutesSelected.value = undefined;
         secondsSelected.value = undefined;

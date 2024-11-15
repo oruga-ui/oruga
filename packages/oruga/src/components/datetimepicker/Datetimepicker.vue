@@ -27,6 +27,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = DatetimepickerProps["modelValue"];
+
 const props = withDefaults(defineProps<DatetimepickerProps>(), {
     override: undefined,
     modelValue: undefined,
@@ -63,7 +65,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} updated modelValue prop
      */
-    "update:modelValue": [value: Date];
+    "update:model-value": [value: Date];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -157,14 +159,14 @@ const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 function updateVModel(value: Date | Date[] | undefined): void {
+    if (Array.isArray(value)) return updateVModel(value[0]);
     if (!value) {
         vmodel.value = undefined;
         return;
     }
-    if (Array.isArray(value)) return updateVModel(value[0]);
 
     let date = new Date(value.getTime());
     if (props.modelValue) {
@@ -275,7 +277,7 @@ function parse(value: string): Date | undefined {
     return isDate(date) ? date : undefined;
 }
 
-function formatNative(value: typeof props.modelValue): string {
+function formatNative(value: ModelValue): string {
     const date = value ? new Date(value) : undefined;
     if (date && isDate(date)) {
         const year = date.getFullYear();

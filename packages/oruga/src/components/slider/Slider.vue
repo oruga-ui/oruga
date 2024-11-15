@@ -54,7 +54,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    "update:modelValue": [value: ModelValue];
+    "update:model-value": [value: ModelValue];
     /**
      * on value change event
      * @param value {number | number[]} updated modelValue prop
@@ -114,7 +114,7 @@ watch([valueStart, valueEnd], () => {
                 ? valueStart.value > valueEnd.value
                 : false;
     if (!props.lazy || !dragging.value)
-        emits("update:modelValue", vmodel.value); // update external vmodel
+        emits("update:model-value", vmodel.value); // update external vmodel
     if (dragging.value) emits("dragging", vmodel.value);
 });
 
@@ -221,7 +221,7 @@ function onDragEnd(): void {
     setTimeout(() => (isTrackClickDisabled.value = false));
     dragging.value = false;
     emits("dragend");
-    if (props.lazy) emits("update:modelValue", vmodel.value);
+    if (props.lazy) emits("update:model-value", vmodel.value);
 }
 
 // --- Computed Component Classes ---

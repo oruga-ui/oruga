@@ -68,7 +68,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {T | T[]} updated modelValue prop
      */
-    "update:modelValue": [value: ModelValue];
+    "update:model-value": [value: ModelValue];
     /**
      * on input focus event
      * @param event {Event} native event

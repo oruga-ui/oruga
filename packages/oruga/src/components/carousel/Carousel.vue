@@ -215,7 +215,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number} updated modelValue prop
      */
-    "update:modelValue": [value: number];
+    "update:model-value": [value: number];
     /**
      * on carousel scroll event
      * @param value {number} scroll index

@@ -79,7 +79,7 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string[] | number[] | object[]} updated modelValue prop
      */
-    "update:modelValue": [value: ModelValue[]];
+    "update:model-value": [value: ModelValue[]];
     /**
      * input prop two-way binding
      * @param value {string} updated input prop
