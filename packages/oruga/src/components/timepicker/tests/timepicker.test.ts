@@ -50,7 +50,7 @@ describe("OTimepicker tests", () => {
         expect(input.element.value).toBe("12:03");
     });
 
-    test.only("handles invalid keyboard input", async () => {
+    test("handles invalid keyboard input", async () => {
         const wrapper = mount(OTimepicker, {
             props: { modelValue: new Date() },
         });
