@@ -1,6 +1,6 @@
 import { describe, test, expect, vi, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-import { createVNode, nextTick, type ComponentPublicInstance } from "vue";
+import { nextTick, type ComponentPublicInstance } from "vue";
 import { setTimeout } from "timers/promises";
 
 import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
@@ -41,25 +41,26 @@ describe("Dropdown tests", () => {
     });
 
     test("render correctly with items", async () => {
-        const component = createVNode({
+        const component = {
             components: { ODropdown, ODropdownItem },
-            props: { options },
+            props: ["options"],
             template: `<o-dropdown>
                 <template #trigger="{ active }">
-                    <button class="trigger" :class="{ active }">Component Trigger Label</button>
+                    <button :class="{ active }">Component Trigger Label</button>
                 </template>
 
                 <o-dropdown-item
                     v-for="el in options"
                     :key=" el"
-                    :value="el"
-                    @click="onChange(el)">
+                    :value="el">
                     {{ el }}
                 </o-dropdown-item>
             </o-dropdown>`,
-        });
+        };
 
-        const wrapper = mount(component, { props: { options: simpleOptions } });
+        const wrapper = mount(component, {
+            props: { options: simpleOptions },
+        });
         await nextTick(); // await dropdown item rendered
 
         expect(!!wrapper.vm).toBeTruthy();
