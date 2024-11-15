@@ -38,7 +38,7 @@ const useSidebarProgrammatic = {
      */
     open<C extends Component>(
         options: SidebarProgrammaticOptions<C>,
-        target?: string | HTMLElement,
+        target?: string | HTMLElement | null,
     ): ProgrammaticExpose {
         const componentProps: SidebarProps<C> = {
             active: true, // set the active default state to true

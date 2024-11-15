@@ -8,10 +8,12 @@ const elementRef = useTemplateRef("contentElement");
 const isFullPage = ref(true);
 
 function openLoading(): void {
-    const loadingComponent = oruga.loading.open({
-        fullPage: isFullPage.value,
-        container: isFullPage.value ? null : elementRef.value,
-    });
+    const loadingComponent = oruga.loading.open(
+        {
+            fullPage: isFullPage.value,
+        },
+        isFullPage.value ? null : elementRef.value,
+    );
     setTimeout(() => loadingComponent.close(), 3 * 1000);
 }
 </script>

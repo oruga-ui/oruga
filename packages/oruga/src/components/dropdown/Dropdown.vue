@@ -335,7 +335,7 @@ function selectItem(value: T): void {
             nextTick(() => emits("change", vmodel.value));
         }
     }
-    if (!props.multiple) {
+    if (!isTrueish(props.multiple)) {
         if (cancelOptions.value.indexOf("content") < 0) return;
         emits("close", "content");
         isActive.value = false;

@@ -33,7 +33,7 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
      * Specify a target the component get rendered into
      * @default `document.body`
      */
-    target?: string | HTMLElement;
+    target?: string | HTMLElement | null;
 } & Omit<ProgrammaticComponentProps<C>, "component"> & // component props
     EmitsToProps<Omit<ProgrammaticComponentEmits, "destroy">>; // component emit props
 

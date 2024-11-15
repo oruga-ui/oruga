@@ -33,7 +33,7 @@ const useLoadingProgrammatic = {
      */
     open(
         options: string | LoadingProgrammaticOptions,
-        target?: string | HTMLElement,
+        target?: string | HTMLElement | null,
     ): ProgrammaticExpose {
         const _options: LoadingProgrammaticOptions =
             typeof options === "string" ? { label: options } : options;
