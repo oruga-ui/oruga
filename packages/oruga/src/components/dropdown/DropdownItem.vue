@@ -36,7 +36,7 @@ const emits = defineEmits<{
      * @param value {string | number | object} value prop data
      * @param event {event} Native Event
      */
-    (e: "click", value: T, event: Event): void;
+    click: [value: T, event: Event];
 }>();
 
 // Inject functionalities and data from the parent component

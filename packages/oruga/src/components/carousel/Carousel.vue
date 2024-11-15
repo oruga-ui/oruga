@@ -215,17 +215,17 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number} updated modelValue prop
      */
-    (e: "update:modelValue", value: number): void;
+    "update:model-value": [value: number];
     /**
      * on carousel scroll event
      * @param value {number} scroll index
      */
-    (e: "scroll", value: number): void;
+    scroll: [value: number];
     /**
      * on item click event
      * @param event {event} native event
      */
-    (e: "click", event: Event): void;
+    click: [event: Event];
 }>();
 
 const rootRef = useTemplateRef("rootElement");

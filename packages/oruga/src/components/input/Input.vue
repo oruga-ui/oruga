@@ -70,38 +70,38 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string, event: Event): void;
+    input: [value: string, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
 // --- Validation Feature ---

@@ -67,9 +67,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value1,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -77,9 +77,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value2,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -115,9 +115,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value1,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -125,9 +125,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value2,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -162,9 +162,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value1,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });
@@ -172,9 +172,9 @@ describe("ORadio tests", () => {
             props: {
                 modelValue: model,
                 nativeValue: value2,
-                "onUpdate:modelValue": (e) => {
-                    wrapper1.setProps({ modelValue: e });
-                    wrapper2.setProps({ modelValue: e });
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper1.setProps({ modelValue });
+                    wrapper2.setProps({ modelValue });
                 },
             },
         });

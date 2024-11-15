@@ -35,9 +35,9 @@ const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
 
 const emits = defineEmits<{
     /** on tab item activate event */
-    (e: "activate"): void;
+    activate: [];
     /** on tab item deactivate event */
-    (e: "deactivate"): void;
+    deactivate: [];
 }>();
 
 const itemValue = props.value || useId();

@@ -30,7 +30,7 @@ const props = defineProps({
 });
 
 defineEmits<{
-    (e: "click", event: Event): void;
+    click: [event: Event];
 }>();
 
 // --- Computed Component Classes ---

@@ -27,6 +27,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = DatetimepickerProps["modelValue"];
+
 const props = withDefaults(defineProps<DatetimepickerProps>(), {
     override: undefined,
     modelValue: undefined,
@@ -63,57 +65,57 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} updated modelValue prop
      */
-    (e: "update:modelValue", value: Date): void;
+    "update:model-value": [value: Date];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on range start is selected event
      * @param value {Date} range start date
      */
-    (e: "range-start", value: Date): void;
+    "range-start": [value: Date];
     /**
      * on range end is selected event
      * @param value {Date} range end date
      */
-    (e: "range-end", value: Date): void;
+    "range-end": [value: Date];
     /**
      * on month change event
      * @param value {number} month number
      */
-    (e: "change-month", value: number): void;
+    "change-month": [value: number];
     /**
      * on year change event
      * @param value {number} year number
      */
-    (e: "change-year", value: number): void;
+    "change-year": [value: number];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
 const datepickerRef = useTemplateRef("datepickerComponent");
@@ -157,14 +159,14 @@ const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 function updateVModel(value: Date | Date[] | undefined): void {
+    if (Array.isArray(value)) return updateVModel(value[0]);
     if (!value) {
         vmodel.value = undefined;
         return;
     }
-    if (Array.isArray(value)) return updateVModel(value[0]);
 
     let date = new Date(value.getTime());
     if (props.modelValue) {
@@ -275,7 +277,7 @@ function parse(value: string): Date | undefined {
     return isDate(date) ? date : undefined;
 }
 
-function formatNative(value: typeof props.modelValue): string {
+function formatNative(value: ModelValue): string {
     const date = value ? new Date(value) : undefined;
     if (date && isDate(date)) {
         const year = date.getFullYear();

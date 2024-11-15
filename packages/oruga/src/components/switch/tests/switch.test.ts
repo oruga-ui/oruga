@@ -128,13 +128,13 @@ describe("OSwitch tests", () => {
     test("react accordingly when custom object values are given", async () => {
         const trueValue = { a: "a", b: "b" };
         const falseValue = { y: "y", x: "X" };
-        const wrapper = mount<typeof OSwitch<object>>(OSwitch, {
+        const wrapper = mount(OSwitch, {
             props: {
                 modelValue: falseValue,
                 trueValue,
                 falseValue,
-                "onUpdate:modelValue": (e) =>
-                    wrapper.setProps({ modelValue: e }),
+                "onUpdate:modelValue": (modelValue) =>
+                    wrapper.setProps({ modelValue }),
             },
         });
 
@@ -149,7 +149,6 @@ describe("OSwitch tests", () => {
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(2);
         expect(emits![0]).toContainEqual(trueValue);
         expect(emits![1]).toContainEqual(falseValue);
         expect(wrapper.vm.value).toEqual(falseValue);

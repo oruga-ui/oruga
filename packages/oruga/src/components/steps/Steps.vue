@@ -71,15 +71,15 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on step change event
-     * @param value {string | number | object} new step value
-     * @param value {string | number | object} old step value
+     * @param value {T} new step value
+     * @param value {T} old step value
      */
-    (e: "change", newValue: ModelValue, oldValue: ModelValue): void;
+    change: [newValue: ModelValue, oldValue: ModelValue];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);

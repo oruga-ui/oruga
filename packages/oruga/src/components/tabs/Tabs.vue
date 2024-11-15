@@ -65,15 +65,15 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on tab change event
-     * @param value {string | number | object} new tab value
-     * @param value {string | number | object} old tab value
+     * @param value {T} new tab value
+     * @param value {T} old tab value
      */
-    (e: "change", newValue: ModelValue, oldValue: ModelValue): void;
+    change: [newValue: ModelValue, oldValue: ModelValue];
 }>();
 
 const rootRef = useTemplateRef("rootElement");

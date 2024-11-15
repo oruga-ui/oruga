@@ -43,7 +43,7 @@ const emits = defineEmits<{
      * on component close event
      * @param value {unknown} - close event data
      */
-    (e: "close", ...args: unknown[]): void;
+    close: [...args: unknown[]];
 }>();
 
 const notificationRef = useTemplateRef("notificationComponent");

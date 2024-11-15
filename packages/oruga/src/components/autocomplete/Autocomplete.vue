@@ -111,65 +111,65 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * input prop two-way binding
      * @param value {string} updated input prop
      */
-    (e: "update:input", value: string): void;
+    "update:input": [value: string];
     /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string, event: Event): void;
+    input: [value: string, event: Event];
     /**
      * selected element changed event
-     * @param value {string | number | object} selected value
+     * @param value {T} selected value
      * @param event {Event} native event
      */
-    (e: "select", value: ModelValue, event: Event): void;
+    select: [value: ModelValue, event: Event];
     /**
      * header is selected
      * @param event {Event} native event
      */
-    (e: "select-header", event: Event): void;
+    "select-header": [event: Event];
     /**
      * footer is selected
      * @param event {Event} native event
      */
-    (e: "select-footer", event: Event): void;
+    "select-footer": [event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
     /** the list inside the dropdown reached the start */
-    (e: "scroll-start"): void;
+    "scroll-start": [];
     /** the list inside the dropdown reached it's end */
-    (e: "scroll-end"): void;
+    "scroll-end": [];
 }>();
 
 const slots = useSlots();

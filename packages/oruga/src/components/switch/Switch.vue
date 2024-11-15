@@ -43,30 +43,30 @@ const props = withDefaults(defineProps<SwitchProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    "update:model-value": [value: T];
     /**
      * on input change event
-     * @param value {string | number | boolean | object} input value
+     * @param value {T} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T, event: Event): void;
+    input: [value: T, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
 }>();
 
 const inputRef = useTemplateRef("inputElement");

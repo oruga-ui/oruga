@@ -67,7 +67,7 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
-    (e: "update:position", value: string);
+    "update:position": [value: string];
 }>();
 
 const teleportTo = computed(() =>

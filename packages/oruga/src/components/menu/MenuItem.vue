@@ -114,12 +114,12 @@ defineEmits<{
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * expanded prop two-way binding
      * @param value {boolean} updated expanded prop
      */
-    (e: "update:expanded", value: boolean): void;
+    "update:expanded": [value: boolean];
 }>();
 
 const providedData = computed<MenuItemComponent>(() => ({

@@ -11,3 +11,4 @@ packages/docs/.vitepress/.temp/
 packages/docs/.vitepress/dist/
 packages/oruga/README.md
 **/vite.config.js.timestamp**
+**/vite.config.ts.timestamp**
