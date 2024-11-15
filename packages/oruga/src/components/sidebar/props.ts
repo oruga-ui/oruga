@@ -1,6 +1,6 @@
 import type { Component } from "vue";
-import type { ComponentClass } from "@/types";
-import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
+import type { ComponentClass, ComponentEmits } from "@/types";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 export type SidebarProps<C extends Component> = {
     /** Override existing theme classes completely */
@@ -51,14 +51,14 @@ export type SidebarProps<C extends Component> = {
      */
     teleport?: boolean | string | object;
     /**
-     * Component to be injected, used to open a component sidebar programmatically.
-     * Close sidebar within the component by emitting a 'close' event — emits('close')
+     * Component to be injected.
+     * Close the component by emitting a 'close' event — `$emit('close')`
      */
     component?: C;
     /** Props to be binded to the injected component */
     props?: ComponentProps<C>;
     /** Events to be binded to the injected component */
-    events?: ComponentEmit<C>;
+    events?: ComponentEmits<C>;
 } & SidebarClasses;
 
 // class props (will not be displayed in the docs)
