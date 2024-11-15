@@ -93,14 +93,14 @@ describe("ORadio tests", () => {
 
         await input1.setValue(true);
 
-        let emits = wrapper1.emitted("update:model-value");
+        let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
-        emits = wrapper2.emitted("update:model-value");
+        emits = wrapper2.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);
@@ -140,14 +140,14 @@ describe("ORadio tests", () => {
 
         await input1.setValue(true);
 
-        let emits = wrapper1.emitted("update:model-value");
+        let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
-        emits = wrapper2.emitted("update:model-value");
+        emits = wrapper2.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);
@@ -187,14 +187,14 @@ describe("ORadio tests", () => {
 
         await input1.setValue(true);
 
-        let emits = wrapper1.emitted("update:model-value");
+        let emits = wrapper1.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value1);
         expect(wrapper1.vm.value).toEqual(value1);
         expect(wrapper2.vm.value).toEqual(value1);
 
         await input2.setValue();
-        emits = wrapper2.emitted("update:model-value");
+        emits = wrapper2.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toContainEqual(value2);
         expect(wrapper1.vm.value).toEqual(value2);

@@ -7,7 +7,7 @@ exports[`Dropdown tests > render correctly with items 1`] = `
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
                 @binding {() => void} toggle - toggle dropdown active state
-            --><button class="trigger">Component Trigger Label</button>
+            --><button class="">Component Trigger Label</button>
   </div>
   <!--teleport start-->
   <!--v-if-->

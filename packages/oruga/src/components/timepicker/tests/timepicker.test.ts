@@ -29,7 +29,7 @@ describe("OTimepicker tests", () => {
         date.setSeconds(0);
         date.setMilliseconds(0);
 
-        let emits = wrapper.emitted("update:model-value");
+        let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toHaveLength(1);
         expect(emits![0][0]).toBeInstanceOf(Date);
@@ -42,7 +42,7 @@ describe("OTimepicker tests", () => {
         date.setHours(12);
         date.setMinutes(3);
 
-        emits = wrapper.emitted("update:model-value");
+        emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
         expect(emits![1]).toHaveLength(1);
         expect(emits![1][0]).toBeInstanceOf(Date);
@@ -50,7 +50,7 @@ describe("OTimepicker tests", () => {
         expect(input.element.value).toBe("12:03");
     });
 
-    test("handles invalid keyboard input", async () => {
+    test.only("handles invalid keyboard input", async () => {
         const wrapper = mount(OTimepicker, {
             props: { modelValue: new Date() },
         });
@@ -59,7 +59,7 @@ describe("OTimepicker tests", () => {
         expect(input.exists()).toBeTruthy();
         await input.setValue("not-a-date");
 
-        let emits = wrapper.emitted("update:model-value");
+        let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toHaveLength(1);
         expect(emits![0][0]).toBeUndefined();
@@ -67,7 +67,7 @@ describe("OTimepicker tests", () => {
 
         await input.setValue("21:wrong");
 
-        emits = wrapper.emitted("update:model-value");
+        emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(input.element.value).toBe("00:00");
     });

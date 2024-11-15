@@ -34,7 +34,7 @@ describe("ODatetimepicker tests", () => {
 
         let date = new Date(2024, 5, 8, 10, 51);
 
-        let emits = wrapper.emitted("update:model-value");
+        let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toHaveLength(1);
         expect(emits![0][0]).toBeInstanceOf(Date);
@@ -45,7 +45,7 @@ describe("ODatetimepicker tests", () => {
 
         date = new Date(2021, 9, 21, 12, 23);
 
-        emits = wrapper.emitted("update:model-value");
+        emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
         expect(emits![1]).toHaveLength(1);
         expect(emits![1][0]).toBeInstanceOf(Date);
@@ -62,7 +62,7 @@ describe("ODatetimepicker tests", () => {
         expect(input.exists()).toBeTruthy();
         await input.setValue("not-a-date");
 
-        let emits = wrapper.emitted("update:model-value");
+        let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(emits![0]).toHaveLength(1);
         expect(emits![0][0]).toBeUndefined();
@@ -70,7 +70,7 @@ describe("ODatetimepicker tests", () => {
 
         await input.setValue("21/06/wrong");
 
-        emits = wrapper.emitted("update:model-value");
+        emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
         expect(input.element.value).toBe("");
     });
