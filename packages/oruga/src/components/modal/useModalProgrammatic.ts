@@ -39,7 +39,7 @@ const useModalProgrammatic = {
      */
     open<C extends Component>(
         options: string | ModalProgrammaticOptions<C>,
-        target?: string | HTMLElement,
+        target?: string | HTMLElement | null,
     ): ProgrammaticExpose {
         const _options: ModalProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
