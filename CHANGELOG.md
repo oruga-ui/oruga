@@ -1,3 +1,15 @@
+## [0.9.1](https://github.com/oruga-ui/oruga/compare/v0.9.0...v0.9.1) (2024-11-15)
+
+
+### Bug Fixes
+
+* **dropdown:** solve closing issue when has `multiple` prop ([#1109](https://github.com/oruga-ui/oruga/issues/1109)) ([5443ec2](https://github.com/oruga-ui/oruga/commit/5443ec2547494657f6599e69258003454bca5c9f))
+* **programmatic:** readd `OrugaProgrammatic` interface to the export ([#1110](https://github.com/oruga-ui/oruga/issues/1110)) ([44c7075](https://github.com/oruga-ui/oruga/commit/44c70754a2c755045c36e6d8671c6791b9a861b3))
+* **programmatic:** solve wrong `events` prop type ([#1114](https://github.com/oruga-ui/oruga/issues/1114)) ([0271e7e](https://github.com/oruga-ui/oruga/commit/0271e7e21ca962f02aa8a8d202a1c735a945bb34))
+* **table:** remove generic type strictness ([#1107](https://github.com/oruga-ui/oruga/issues/1107)) ([4592a9d](https://github.com/oruga-ui/oruga/commit/4592a9d7f66eac56ec76aebfc52f2944ec1fa6bb))
+
+
+
 # [0.9.0](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.5...v0.9.0) (2024-11-11)
 
 These Changes are accumulated from all pre-releases.
