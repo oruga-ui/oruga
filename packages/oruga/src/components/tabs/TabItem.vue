@@ -48,8 +48,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
     $slots: slots,
-    navClasses: navItemClasses.value,
-    classes: tabClasses.value,
+    tabClasses: tabClasses.value,
     iconClasses: tabIconClasses.value,
     labelClasses: tabLabelClasses.value,
     isTransitioning: isTransitioning.value,
@@ -110,23 +109,6 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const navItemClasses = defineClasses(
-    ["navItemClass", "o-tabs__nav-item"],
-    ["navItemActiveClass", "o-tabs__nav-item--active", null, isActive],
-    [
-        "navItemPreviousClass",
-        "o-tabs__nav-item--previous",
-        null,
-        computed(() => item.value.index < parent.value?.activeIndex),
-    ],
-    [
-        "navItemNextClass",
-        "o-tabs__nav-item--next",
-        null,
-        computed(() => item.value.index > parent.value?.activeIndex),
-    ],
-);
-
 const tabClasses = defineClasses(
     ["tabClass", "o-tabs__tab"],
     [
@@ -141,6 +123,18 @@ const tabClasses = defineClasses(
         "o-tabs__tab--disabled",
         null,
         computed(() => props.disabled),
+    ],
+    [
+        "navItemPreviousClass",
+        "o-tabs__tab--previous",
+        null,
+        computed(() => item.value.index < parent.value?.activeIndex),
+    ],
+    [
+        "navItemNextClass",
+        "o-tabs__tab--next",
+        null,
+        computed(() => item.value.index > parent.value?.activeIndex),
     ],
 );
 
