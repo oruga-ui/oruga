@@ -279,6 +279,9 @@ const contentClasses = defineClasses(
                 :role="childItem.ariaRole"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem.value"
+                :tabindex="
+                    childItem.value === activeItem.value ? undefined : '-1'
+                "
                 @click="tabClick(childItem)"
                 @keydown.enter="tabClick(childItem)"
                 @keydown.left.prevent="prev"
