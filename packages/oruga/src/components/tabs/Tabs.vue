@@ -279,7 +279,7 @@ const contentClasses = defineClasses(
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
                 :class="childItem.navClasses"
-                :role="childItem.ariaRole"
+                role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem.value">
                 <o-slot-component
