@@ -43,6 +43,8 @@ export type TabsProps<T> = {
     expanded?: boolean;
     /** Destroy tabItem on hide */
     destroyOnHide?: boolean;
+    /** Set the tab active on navigation focus */
+    activateOnFocus?: boolean;
     /** Tab will have an animation */
     animated?: boolean;
     /**
