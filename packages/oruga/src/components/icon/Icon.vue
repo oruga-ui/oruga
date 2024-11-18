@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import getIcons from "@/utils/icons";
 import { defineClasses } from "@/composables";
 
@@ -21,10 +21,10 @@ defineOptions({
 const props = withDefaults(defineProps<IconProps>(), {
     override: undefined,
     icon: undefined,
-    component: () => getOption("iconComponent"),
-    pack: () => getOption("iconPack", "mdi"),
-    variant: () => getOption("icon.variant"),
-    size: () => getOption("icon.size"),
+    component: () => getDefault("iconComponent"),
+    pack: () => getDefault("iconPack", "mdi"),
+    variant: () => getDefault("icon.variant"),
+    size: () => getDefault("icon.size"),
     customSize: undefined,
     customClass: undefined,
     clickable: false,

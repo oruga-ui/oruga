@@ -80,6 +80,7 @@ async function component(): Promise<void> {
                 size="medium"
                 @click="success" />
         </div>
+
         <div class="odocs-spaced">
             <o-button label="Launch toast" size="medium" @click="toast" />
             <o-button
@@ -88,6 +89,7 @@ async function component(): Promise<void> {
                 size="medium"
                 @click="queueToast" />
         </div>
+
         <div class="odocs-spaced">
             <o-button
                 label="Launch notification (custom)"

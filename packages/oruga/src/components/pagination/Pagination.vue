@@ -4,7 +4,7 @@ import { computed, watch, nextTick, type PropType } from "vue";
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
@@ -29,7 +29,7 @@ const props = defineProps({
     /** Items count for each page */
     perPage: {
         type: [Number, String],
-        default: () => getOption("pagination.perPage", 20),
+        default: () => getDefault("pagination.perPage", 20),
     },
     /** Current page number, use v-model:current to make it two-way binding */
     current: { type: Number, default: 1 },
@@ -43,17 +43,17 @@ const props = defineProps({
      */
     size: {
         type: String,
-        default: () => getOption("pagination.size"),
+        default: () => getDefault("pagination.size"),
     },
     /** Enable simple style */
     simple: {
         type: Boolean,
-        default: () => getOption("pagination.simple", false),
+        default: () => getDefault("pagination.simple", false),
     },
     /** Enable rounded button style */
     rounded: {
         type: Boolean,
-        default: () => getOption("pagination.rounded", false),
+        default: () => getDefault("pagination.rounded", false),
     },
     /**
      * Buttons order
@@ -61,15 +61,14 @@ const props = defineProps({
      */
     order: {
         type: String,
-        default: () => getOption("pagination.order", "right"),
+        default: () => getDefault("pagination.order", "right"),
         validator: (value: string) =>
             ["centered", "right", "left"].indexOf(value) >= 0,
     },
     /** Pagination button tag name */
     buttonTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () =>
-            getOption<DynamicComponent>("pagination.buttonTag", "button"),
+        default: () => getDefault("pagination.buttonTag", "button"),
     },
     /**
      * Icon pack to use
@@ -77,43 +76,44 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("pagination.iconPack"),
+        default: () => getDefault("pagination.iconPack"),
     },
     /** Icon to use for previous button */
     iconPrev: {
         type: String,
-        default: () => getOption("pagination.iconPrev", "chevron-left"),
+        default: () => getDefault("pagination.iconPrev", "chevron-left"),
     },
     /** Icon to use for next button */
     iconNext: {
         type: String,
-        default: () => getOption("pagination.iconNext", "chevron-right"),
+        default: () => getDefault("pagination.iconNext", "chevron-right"),
     },
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: {
         type: String,
-        default: () => getOption("pagination.mobileBreakpoint"),
+        default: () => getDefault("pagination.mobileBreakpoint"),
     },
     /** Accessibility label for the next page button. */
     ariaNextLabel: {
         type: String,
-        default: () => getOption("pagination.ariaNextLabel", "Next page"),
+        default: () => getDefault("pagination.ariaNextLabel", "Next page"),
     },
     /** Accessibility label for the previous page button. */
     ariaPreviousLabel: {
         type: String,
         default: () =>
-            getOption("pagination.ariaPreviousLabel", "Previous page"),
+            getDefault("pagination.ariaPreviousLabel", "Previous page"),
     },
     /** Accessibility label for the page button. */
     ariaPageLabel: {
         type: String,
-        default: () => getOption("pagination.ariaPageLabel", "Page"),
+        default: () => getDefault("pagination.ariaPageLabel", "Page"),
     },
     /** Accessibility label for the current page button. */
     ariaCurrentLabel: {
         type: String,
-        default: () => getOption("pagination.ariaCurrentLabel", "Current page"),
+        default: () =>
+            getDefault("pagination.ariaCurrentLabel", "Current page"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
@@ -198,12 +198,12 @@ const emits = defineEmits<{
      * current prop two-way binding
      * @param value {number} updated current prop
      */
-    (e: "update:current", value: number): void;
+    "update:current": [value: number];
     /**
      * on current change event
      * @param value {number} current value
      */
-    (e: "change", event: number): void;
+    change: [event: number];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);

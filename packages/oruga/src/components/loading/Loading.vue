@@ -3,7 +3,7 @@ import { useTemplateRef, watch } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -30,12 +30,12 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     active: false,
     fullPage: true,
     label: undefined,
-    animation: () => getOption("loading.animation", "fade"),
+    animation: () => getDefault("loading.animation", "fade"),
     cancelable: false,
-    icon: () => getOption("loading.icon", "loading"),
-    iconSpin: () => getOption("loading.iconSpin", true),
-    iconSize: () => getOption("loading.iconSize", "medium"),
-    scroll: () => getOption("modal.scroll", "keep"),
+    icon: () => getDefault("loading.icon", "loading"),
+    iconSpin: () => getDefault("loading.iconSpin", true),
+    iconSize: () => getDefault("loading.iconSize", "medium"),
+    scroll: () => getDefault("modal.scroll", "keep"),
 });
 
 const emits = defineEmits<{
@@ -43,17 +43,17 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {boolean} - updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * fullPage prop two-way binding
      * @param value {boolean} - updated fullPage prop
      */
-    (e: "update:fullPage", value: boolean): void;
+    "update:fullPage": [value: boolean];
     /**
      * on component close event
      * @param value {unknown} - close event data
      */
-    (e: "close", ...args: unknown[]): void;
+    close: [...args: unknown[]];
 }>();
 
 const rootRef = useTemplateRef("rootElement");

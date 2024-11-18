@@ -33,7 +33,7 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
-    (e: "sort", column: TableColumnItem<T>, event: Event);
+    sort: [column: TableColumnItem<T>, event: Event];
 }>();
 
 const mobileSort = ref<string | undefined>(props.currentSortColumn?.identifier);

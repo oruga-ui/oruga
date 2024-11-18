@@ -4,7 +4,7 @@ import { computed, ref, useTemplateRef, watch } from "vue";
 import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderParent } from "@/composables";
 
@@ -32,21 +32,21 @@ const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     min: 0,
     max: 100,
     step: 1,
-    variant: () => getOption("slider.variant"),
-    size: () => getOption("slider.size"),
+    variant: () => getDefault("slider.variant"),
+    size: () => getDefault("slider.size"),
     ticks: false,
-    tooltip: () => getOption("slider.tooltip", true),
-    tooltipVariant: () => getOption("slider.tooltipVariant"),
+    tooltip: () => getDefault("slider.tooltip", true),
+    tooltipVariant: () => getDefault("slider.tooltipVariant"),
     tooltipAlways: false,
-    rounded: () => getOption("slider.rounded", false),
+    rounded: () => getDefault("slider.rounded", false),
     disabled: false,
     lazy: false,
     formatter: undefined,
     biggerSliderFocus: false,
     indicator: false,
-    format: () => getOption("slider.format", "raw"),
-    locale: () => getOption("locale"),
-    ariaLabel: () => getOption("slider.ariaLabel"),
+    format: () => getDefault("slider.format", "raw"),
+    locale: () => getDefault("locale"),
+    ariaLabel: () => getDefault("slider.ariaLabel"),
 });
 
 const emits = defineEmits<{
@@ -54,21 +54,21 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on value change event
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "change", value: ModelValue): void;
+    change: [value: ModelValue];
     /**
      * on dragging event
      * @param value {number | number[]} updated modelValue prop
      * */
-    (e: "dragging", value: ModelValue): void;
+    dragging: [value: ModelValue];
     /** on drag start event */
-    (e: "dragstart"): void;
+    dragstart: [];
     /** on drag end event */
-    (e: "dragend"): void;
+    dragend: [];
 }>();
 
 const sliderRef = useTemplateRef("sliderElement");
@@ -114,7 +114,7 @@ watch([valueStart, valueEnd], () => {
                 ? valueStart.value > valueEnd.value
                 : false;
     if (!props.lazy || !dragging.value)
-        emits("update:modelValue", vmodel.value); // update external vmodel
+        emits("update:model-value", vmodel.value); // update external vmodel
     if (dragging.value) emits("dragging", vmodel.value);
 });
 
@@ -145,8 +145,8 @@ function setValues(newValue: number | number[] | undefined): void {
             : Math.min(props.max, Math.max(props.min, newValue));
         valueEnd.value = 0;
     } else {
-        valueStart.value = 0;
-        valueEnd.value = 0;
+        valueStart.value = props.min;
+        valueEnd.value = props.min;
     }
 }
 
@@ -221,7 +221,7 @@ function onDragEnd(): void {
     setTimeout(() => (isTrackClickDisabled.value = false));
     dragging.value = false;
     emits("dragend");
-    if (props.lazy) emits("update:modelValue", vmodel.value);
+    if (props.lazy) emits("update:model-value", vmodel.value);
 }
 
 // --- Computed Component Classes ---

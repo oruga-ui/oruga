@@ -14,7 +14,7 @@ import OTabItem from "../tabs/TabItem.vue";
 import OIcon from "../icon/Icon.vue";
 import OSlotComponent from "../utils/SlotComponent";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { mod, isDefined } from "@/utils/helpers";
 import {
     defineClasses,
@@ -43,37 +43,37 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     options: undefined,
-    variant: () => getOption("tabs.variant"),
-    size: () => getOption("tabs.size"),
-    vertical: () => getOption("tabs.vertical", false),
+    variant: () => getDefault("tabs.variant"),
+    size: () => getDefault("tabs.size"),
+    vertical: () => getDefault("tabs.vertical", false),
     position: undefined,
-    type: () => getOption("tabs.type", "default"),
+    type: () => getDefault("tabs.type", "default"),
     expanded: false,
     destroyOnHide: false,
-    animated: () => getOption("tabs.animated", true),
+    animated: () => getDefault("tabs.animated", true),
     animation: () =>
-        getOption("tabs.animation", [
+        getDefault("tabs.animation", [
             "slide-next",
             "slide-prev",
             "slide-down",
             "slide-up",
         ]),
-    animateInitially: () => getOption("tabs.animateInitially", false),
+    animateInitially: () => getDefault("tabs.animateInitially", false),
     multiline: false,
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on tab change event
-     * @param value {string | number | object} new tab value
-     * @param value {string | number | object} old tab value
+     * @param value {T} new tab value
+     * @param value {T} old tab value
      */
-    (e: "change", newValue: ModelValue, oldValue: ModelValue): void;
+    change: [newValue: ModelValue, oldValue: ModelValue];
 }>();
 
 const rootRef = useTemplateRef("rootElement");
@@ -82,8 +82,7 @@ const rootRef = useTemplateRef("rootElement");
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed<TabsComponent<ModelValue>>(() => ({
-    activeValue: vmodel.value,
+const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index || 0,
     type: props.type,
     vertical: props.vertical,
@@ -220,12 +219,7 @@ const rootClasses = defineClasses(
         computed(() => props.position),
         computed(() => !!props.position && props.vertical),
     ],
-    [
-        "expandedClass",
-        "o-tabs--fullwidth",
-        null,
-        computed(() => props.expanded),
-    ],
+    ["expandedClass", "o-tabs--expanded", null, computed(() => props.expanded)],
     ["verticalClass", "o-tabs--vertical", null, computed(() => props.vertical)],
     [
         "multilineClass",
@@ -285,7 +279,7 @@ const contentClasses = defineClasses(
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
                 :class="childItem.navClasses"
-                role="tab"
+                :role="childItem.ariaRole"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem.value">
                 <o-slot-component

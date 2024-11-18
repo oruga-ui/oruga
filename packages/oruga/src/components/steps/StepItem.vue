@@ -1,8 +1,7 @@
 <script setup lang="ts" generic="T, C extends Component">
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
-import { getOption } from "@/utils/config";
-import { isEqual } from "@/utils/helpers";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { StepsComponent, StepItemComponent } from "./types";
@@ -27,10 +26,10 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
     clickable: undefined,
     disabled: false,
     visible: true,
-    icon: () => getOption("steps.icon"),
-    iconPack: () => getOption("steps.iconPack"),
-    tag: () => getOption("steps.itemTag", "button"),
-    ariaRole: () => getOption("steps.ariaRole", "tab"),
+    icon: () => getDefault("steps.icon"),
+    iconPack: () => getDefault("steps.iconPack"),
+    tag: () => getDefault("steps.itemTag", "button"),
+    ariaRole: () => getDefault("steps.ariaRole", "tab"),
     content: undefined,
     component: undefined,
     props: undefined,
@@ -39,9 +38,9 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
 
 const emits = defineEmits<{
     /** on step item activate event */
-    (e: "activate"): void;
+    activate: [];
     /** on step item deactivate event */
-    (e: "deactivate"): void;
+    deactivate: [];
 }>();
 
 const itemValue = props.value || useId();
@@ -62,13 +61,13 @@ const providedData = computed<StepItemComponent<T>>(() => ({
 }));
 
 // inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<StepsComponent<T>>({
+const { parent, item } = useProviderChild<StepsComponent>({
     data: providedData,
 });
 
 const transitionName = ref();
 
-const isActive = computed(() => isEqual(itemValue, parent.value.activeValue));
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const isTransitioning = ref(false);
 
@@ -184,9 +183,7 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
                 :class="panelClasses"
                 :data-id="`steps-${item.identifier}`"
                 data-oruga="steps-item"
-                :role="ariaRole"
                 :aria-labelledby="`tab-${item.identifier}`"
-                :tabindex="isActive ? 0 : -1"
                 aria-roledescription="item">
                 <!-- 
                     @slot Step item content

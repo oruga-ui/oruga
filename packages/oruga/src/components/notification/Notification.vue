@@ -3,7 +3,7 @@ import { computed } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
 import type { NotificationProps } from "./props";
@@ -26,16 +26,16 @@ const props = withDefaults(defineProps<NotificationProps>(), {
     message: undefined,
     active: true,
     type: undefined,
-    variant: () => getOption("notification.variant"),
-    position: () => getOption("notification.position", "top"),
-    animation: () => getOption("notification.animation", "fade"),
+    variant: () => getDefault("notification.variant"),
+    position: () => getDefault("notification.position", "top"),
+    animation: () => getDefault("notification.animation", "fade"),
     icon: undefined,
-    iconPack: () => getOption("notification.iconPack"),
-    iconSize: () => getOption("notification.iconSize", "large"),
+    iconPack: () => getDefault("notification.iconPack"),
+    iconSize: () => getDefault("notification.iconSize", "large"),
     closable: false,
-    closeIcon: () => getOption("notification.closeIcon", "close"),
-    closeIconSize: () => getOption("notification.closeIconSize"),
-    ariaCloseLabel: () => getOption("notification.ariaCloseLabel", "Close"),
+    closeIcon: () => getDefault("notification.closeIcon", "close"),
+    closeIconSize: () => getDefault("notification.closeIconSize"),
+    ariaCloseLabel: () => getDefault("notification.ariaCloseLabel", "Close"),
 });
 
 const emits = defineEmits<{
@@ -43,12 +43,12 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {boolean} - updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on component close event
      * @param value {unknown} - close event data
      */
-    (e: "close", ...args: unknown[]): void;
+    close: [...args: unknown[]];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: true });

@@ -8,7 +8,7 @@ const app = getCurrentInstance();
 const oruga = app?.appContext.config.globalProperties.$oruga;
 
 const triggerClass = oruga?.config
-    ? oruga.config.getOption("input.iconLeftClass", "o-input__icon-left")
+    ? oruga.config.getDefault("input.iconLeftClass", "o-input__icon-left")
     : "o-input__icon-left";
 
 const events = ref([

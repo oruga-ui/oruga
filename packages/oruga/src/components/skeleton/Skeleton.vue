@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
@@ -26,7 +26,7 @@ const props = defineProps({
     /** Show a loading animation */
     animated: {
         type: Boolean,
-        default: () => getOption("skeleton.animated", true),
+        default: () => getDefault("skeleton.animated", true),
     },
     /** Custom width */
     width: { type: [Number, String], default: undefined },
@@ -37,7 +37,7 @@ const props = defineProps({
     /** Enable rounded style */
     rounded: {
         type: Boolean,
-        default: () => getOption("skeleton.rounded", true),
+        default: () => getDefault("skeleton.rounded", true),
     },
     /** Number of shapes to display */
     count: { type: Number, default: 1 },

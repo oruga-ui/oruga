@@ -11,7 +11,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import {
     defineClasses,
     getActiveClasses,
@@ -42,35 +42,36 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     input: "",
     options: undefined,
     filter: undefined,
-    size: () => getOption("taginput.size"),
-    variant: () => getOption("taginput.variant"),
+    size: () => getDefault("taginput.size"),
+    variant: () => getDefault("taginput.variant"),
     maxitems: undefined,
     maxlength: undefined,
-    counter: () => getOption("taginput.counter", true),
+    counter: () => getDefault("taginput.counter", true),
     openOnFocus: false,
-    keepOpen: () => getOption("taginput.keepOpen", false),
+    keepOpen: () => getDefault("taginput.keepOpen", false),
     placeholder: undefined,
     expanded: false,
     disabled: false,
-    confirmKeys: () => getOption("taginput.confirmKeys", [",", "Tab", "Enter"]),
-    separators: () => getOption("taginput.separators", [","]),
+    confirmKeys: () =>
+        getDefault("taginput.confirmKeys", [",", "Tab", "Enter"]),
+    separators: () => getDefault("taginput.separators", [","]),
     keepFirst: false,
-    allowNew: () => getOption("taginput.allowNew", false),
-    allowDuplicates: () => getOption("taginput.allowDuplicates", false),
-    removeOnKeys: () => getOption("taginput.removeOnKeys", ["Backspace"]),
+    allowNew: () => getDefault("taginput.allowNew", false),
+    allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
+    removeOnKeys: () => getDefault("taginput.removeOnKeys", ["Backspace"]),
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
-    checkScroll: () => getOption("taginput.checkScroll", false),
-    closable: () => getOption("taginput.closable", true),
-    iconPack: () => getOption("taginput.iconPack"),
-    icon: () => getOption("taginput.icon"),
-    closeIcon: () => getOption("taginput.closeIcon", "close"),
-    ariaCloseLabel: () => getOption("taginput.ariaCloseLabel"),
-    autocomplete: () => getOption("taginput.autocomplete", "off"),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    checkScroll: () => getDefault("taginput.checkScroll", false),
+    closable: () => getDefault("taginput.closable", true),
+    iconPack: () => getDefault("taginput.iconPack"),
+    icon: () => getDefault("taginput.icon"),
+    closeIcon: () => getDefault("taginput.closeIcon", "close"),
+    ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel"),
+    autocomplete: () => getDefault("taginput.autocomplete", "off"),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
-    teleport: () => getOption("taginput.teleport", false),
-    autocompleteClasses: () => getOption("taginput.autocompleteClasses", {}),
+    teleport: () => getDefault("taginput.teleport", false),
+    autocompleteClasses: () => getDefault("taginput.autocompleteClasses", {}),
 });
 
 const emits = defineEmits<{
@@ -78,56 +79,56 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string[] | number[] | object[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue[]): void;
+    "update:model-value": [value: ModelValue[]];
     /**
      * input prop two-way binding
      * @param value {string} updated input prop
      */
-    (e: "update:input", value: string): void;
+    "update:input": [value: string];
     /**
      * on input change event
      * @param value {string} input value
      */
-    (e: "input", value: string): void;
+    input: [value: string];
     /**
      * new item got added
      * @param value {string | number | object} added item
      */
-    (e: "add", value: T): void;
+    add: [value: T];
     /**
      * item got removed
      * @param value {string | number | object} removed item
      */
-    (e: "remove", value: T): void;
+    remove: [value: T];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
     /** the list inside the dropdown reached the start */
-    (e: "scroll-start"): void;
+    "scroll-start": [];
     /** the list inside the dropdown reached it's end */
-    (e: "scroll-end"): void;
+    "scroll-end": [];
 }>();
 
 const autocompleteRef = useTemplateRef("autocompleteComponent");

@@ -8,7 +8,7 @@ exports[`OSteps with OStepItem tests > test render correctly 1`] = `
                 @slot Place step items here
             -->
     <transition-stub appear="false" persisted="false" css="true">
-      <div id="tabpanel-1" class="o-steps__panel" data-id="steps-1" data-oruga="steps-item" role="tab" aria-labelledby="tab-1" tabindex="-1" aria-roledescription="item" style="display: none;">
+      <div id="tabpanel-1" class="o-steps__panel" data-id="steps-1" data-oruga="steps-item" aria-labelledby="tab-1" aria-roledescription="item">
         <!-- 
                     @slot Step item content
                 -->

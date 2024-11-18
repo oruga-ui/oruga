@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useId, type PropType } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -25,7 +25,7 @@ defineProps({
     /** Custom animation (transition name) */
     animation: {
         type: String,
-        default: () => getOption("collapse.animation", "fade"),
+        default: () => getDefault("collapse.animation", "fade"),
     },
     /** Id property of the content container - default is an uuid */
     contentId: { type: String, default: () => useId() },
@@ -35,7 +35,7 @@ defineProps({
      */
     position: {
         type: String as PropType<"top" | "bottom">,
-        default: () => getOption("collapse.position", "top"),
+        default: () => getDefault("collapse.position", "top"),
         validator: (value: string) => ["top", "bottom"].includes(value),
     },
     // class props (will not be displayed in the docs)
@@ -61,11 +61,11 @@ const emits = defineEmits<{
      * open prop two-way binding
      * @param value {boolean} updated open prop
      */
-    (e: "update:open", value: boolean): void;
+    "update:open": [value: boolean];
     /** on collapse opened */
-    (e: "open"): void;
+    open: [];
     /** on collapse closed */
-    (e: "close"): void;
+    close: [];
 }>();
 
 const isOpen = defineModel<boolean>("open", { default: true });

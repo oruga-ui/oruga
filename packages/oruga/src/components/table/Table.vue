@@ -22,7 +22,7 @@ import OTableMobileSort from "./TableMobileSort.vue";
 import OTableColumn from "./TableColumn.vue";
 import OTablePagination from "./TablePagination.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import {
     getValueByPath,
     toCssDimension,
@@ -68,73 +68,73 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     override: undefined,
     data: undefined,
     columns: undefined,
-    rowKey: () => getOption("table.rowKey"),
-    rowClass: getOption("table.rowClass", () => ""),
+    rowKey: () => getDefault("table.rowKey"),
+    rowClass: getDefault("table.rowClass", () => ""),
     thAttrs: undefined,
     tdAttrs: undefined,
     customCompare: undefined,
-    bordered: () => getOption("table.bordered", false),
-    striped: () => getOption("table.striped", false),
-    narrowed: () => getOption("table.narrowed", false),
-    hoverable: () => getOption("table.hoverable", false),
+    bordered: () => getDefault("table.bordered", false),
+    striped: () => getDefault("table.striped", false),
+    narrowed: () => getDefault("table.narrowed", false),
+    hoverable: () => getDefault("table.hoverable", false),
     selected: undefined,
-    selectable: () => getOption("table.selectable", false),
+    selectable: () => getDefault("table.selectable", false),
     isRowSelectable: () => true,
-    showHeader: () => getOption("table.showHeader", true),
+    showHeader: () => getDefault("table.showHeader", true),
     draggable: false,
     draggableColumn: false,
     scrollable: undefined,
     stickyHeader: false,
     height: undefined,
-    debounceSearch: () => getOption("table.debounceSearch"),
+    debounceSearch: () => getDefault("table.debounceSearch"),
     checkable: false,
     stickyCheckbox: false,
     headerCheckable: true,
     checkedRows: () => [],
-    checkboxPosition: () => getOption("table.checkboxPosition", "left"),
-    checkboxVariant: () => getOption("table.checkboxVariant"),
+    checkboxPosition: () => getDefault("table.checkboxPosition", "left"),
+    checkboxVariant: () => getDefault("table.checkboxVariant"),
     isRowChecked: undefined,
-    isRowCheckable: getOption("table.isRowCheckable", () => true),
-    backendSorting: () => getOption("table.backendSorting", false),
-    defaultSort: () => getOption("table.defaultSort"),
-    defaultSortDirection: () => getOption("table.defaultSortDirection", "asc"),
-    sortIcon: () => getOption("table.sortIcon", "arrow-up"),
-    sortIconSize: () => getOption("table.sortIconSize", "small"),
-    iconPack: () => getOption("table.iconPack"),
+    isRowCheckable: getDefault("table.isRowCheckable", () => true),
+    backendSorting: () => getDefault("table.backendSorting", false),
+    defaultSort: () => getDefault("table.defaultSort"),
+    defaultSortDirection: () => getDefault("table.defaultSortDirection", "asc"),
+    sortIcon: () => getDefault("table.sortIcon", "arrow-up"),
+    sortIconSize: () => getDefault("table.sortIconSize", "small"),
+    iconPack: () => getDefault("table.iconPack"),
     detailed: false,
     detailedRows: () => [],
-    isDetailedVisible: getOption("table.isDetailedVisible", () => true),
-    showDetailIcon: () => getOption("table.showDetailIcon", true),
-    detailIcon: () => getOption("table.detailIcon", "chevron-right"),
+    isDetailedVisible: getDefault("table.isDetailedVisible", () => true),
+    showDetailIcon: () => getDefault("table.showDetailIcon", true),
+    detailIcon: () => getDefault("table.detailIcon", "chevron-right"),
     customDetailRow: false,
-    detailTransition: () => getOption("table.detailTransition", "slide"),
-    paginated: () => getOption("table.paginated", false),
+    detailTransition: () => getDefault("table.detailTransition", "slide"),
+    paginated: () => getDefault("table.paginated", false),
     backendPagination: false,
     total: 0,
     currentPage: 1,
-    perPage: () => getOption("table.perPage", 20),
-    paginationPosition: () => getOption("table.paginationPosition", "bottom"),
-    paginationSize: () => getOption("table.paginationSize", "small"),
-    paginationRounded: () => getOption("table.paginationRounded", false),
-    paginationSimple: () => getOption("table.paginationSimple", false),
-    paginationOrder: () => getOption("table.paginationOrder"),
-    backendFiltering: () => getOption("table.backendFiltering", false),
-    filtersIcon: () => getOption("table.filterIcon"),
-    filtersPlaceholder: () => getOption("table.filterPlaceholder"),
+    perPage: () => getDefault("table.perPage", 20),
+    paginationPosition: () => getDefault("table.paginationPosition", "bottom"),
+    paginationSize: () => getDefault("table.paginationSize", "small"),
+    paginationRounded: () => getDefault("table.paginationRounded", false),
+    paginationSimple: () => getDefault("table.paginationSimple", false),
+    paginationOrder: () => getDefault("table.paginationOrder"),
+    backendFiltering: () => getDefault("table.backendFiltering", false),
+    filtersIcon: () => getDefault("table.filterIcon"),
+    filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
     filtersEvent: "",
-    emptyLabel: () => getOption("table.emptyLabel"),
-    emptyIcon: () => getOption("table.emptyIcon"),
-    emptyIconSize: () => getOption("table.emptyIconSize", "large"),
+    emptyLabel: () => getDefault("table.emptyLabel"),
+    emptyIcon: () => getDefault("table.emptyIcon"),
+    emptyIconSize: () => getDefault("table.emptyIconSize", "large"),
     loading: false,
-    loadingIcon: () => getOption("table.loadingIcon", "loading"),
-    loadingLabel: () => getOption("table.loadingLabel"),
-    mobileBreakpoint: () => getOption("table.mobileBreakpoint"),
-    mobileCards: () => getOption("table.mobileCards", true),
-    mobileSortPlaceholder: () => getOption("table.mobileSortPlaceholder"),
-    ariaNextLabel: () => getOption("table.ariaNextLabel"),
-    ariaPreviousLabel: () => getOption("table.ariaPreviousLabel"),
-    ariaPageLabel: () => getOption("table.ariaPageLabel"),
-    ariaCurrentLabel: () => getOption("table.ariaCurrentLabel"),
+    loadingIcon: () => getDefault("table.loadingIcon", "loading"),
+    loadingLabel: () => getDefault("table.loadingLabel"),
+    mobileBreakpoint: () => getDefault("table.mobileBreakpoint"),
+    mobileCards: () => getDefault("table.mobileCards", true),
+    mobileSortPlaceholder: () => getDefault("table.mobileSortPlaceholder"),
+    ariaNextLabel: () => getDefault("table.ariaNextLabel"),
+    ariaPreviousLabel: () => getDefault("table.ariaPreviousLabel"),
+    ariaPageLabel: () => getDefault("table.ariaPageLabel"),
+    ariaCurrentLabel: () => getDefault("table.ariaCurrentLabel"),
 });
 
 const emits = defineEmits<{
@@ -142,123 +142,117 @@ const emits = defineEmits<{
      * currentPage prop two-way binding
      * @param value {number} updated currentPage prop
      */
-    (e: "update:currentPage", value: number): void;
+    "update:currentPage": [value: number];
     /**
      * is emitted each time the table data is processed into rows
      * @param value {TableRow[]} computed table rows
      */
-    (e: "processed", value: Array<TableRow<T>>): void;
+    processed: [value: TableRow<T>[]];
     /**
      * on pagination page change event
      * @param page {number} updated page
      */
-    (e: "page-change", page: number): void;
+    "page-change": [page: number];
     /**
      * select prop two-way binding
      * @param value {T} updated select prop
      */
-    (e: "update:selected", value: T): void;
+    "update:selected": [value: T];
     /**
      * on row select event
      * @param newRow {T} new select value
      * @param oldRow {T} old select value
      */
-    (e: "select", newRow: T, oldRow: T): void;
+    select: [newRow: T, oldRow: T];
     /**
      * on row checked event
      * @param value {T[]} all checked rows
      * @param row {T} row data
      */
-    (e: "check", value: Array<T>, row: T): void;
+    check: [value: T[], row: T];
     /**
      * on all rows checked event
      * @param value {T[]} all checked rows
      */
-    (e: "check-all", value: Array<T>): void;
+    "check-all": [value: T[]];
     /**
      * checkedRows prop two-way binding
      * @param value {T[]} updated checkedRows prop
      */
-    (e: "update:checkedRows", value: Array<T>): void;
+    "update:checkedRows": [value: T[]];
     /**
      * on column sort change event
      * @param column {TableColumn} column data
      * @param direction {string}  'asc' or 'desc'
      * @param event {Event} native  event
      */
-    (
-        e: "sort",
-        column: TableColumn<T>,
-        direction: "asc" | "desc",
-        event: Event,
-    ): void;
+    sort: [column: TableColumn<T>, direction: "asc" | "desc", event: Event];
     /**
      * on filter change event
      * @param filters {object} filter object
      */
-    (e: "filters-change", value: Record<string, string>): void;
+    "filters-change": [value: Record<string, string>];
     /**
      * on native filter event based on props filtersEvent
      * @param filtersEvent {string} props filtersEvent value
      * @param filters {object} filter object
      * @param event {Event} native  event
      */
-    (
-        e: "filters-event",
+    "filters-event": [
         filtersEvent: string,
         filters: Record<string, string>,
         event: Event,
-    ): void;
+    ];
     /**
      * detailedRows prop two-way binding
      * @param value {T[]} updated detailedRows prop
      */
-    (e: "update:detailedRows", value: Array<T>): void;
+    "update:detailedRows": [value: T[]];
     /**
      * on details open event
      * @param row {T} row data
      */
-    (e: "details-open", row: T): void;
+    "details-open": [row: T];
     /**
      * on details close event
      * @param row {T} row data
      */
-    (e: "details-close", row: T): void;
+    "details-close": [row: T];
     /**
      * on row click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "click", row: T, index: number, event: Event): void;
+    click: [row: T, index: number, event: Event];
     /**
      * on row double click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "dblclick", row: T, index: number, event: Event): void;
+    dblclick: [row: T, index: number, event: Event];
     /**
      * on row right click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native contextmenu event
      */
-    (e: "contextmenu", row: T, index: number, event: Event): void;
+    contextmenu: [row: T, index: number, event: Event];
     /**
      * on row mouseenter event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseenter event
      */
-    (e: "mouseenter", row: T, index: number, event: Event): void;
+    mouseenter: [row: T, index: number, event: Event];
     /**
      * on row mouseleave event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseleave event
      */
-    (e: "mouseleave", row: T, index: number, event: Event): void;
+    mouseleave: [row: T, index: number, event: Event];
     /**
      * on cell click event
      * @param row {T} row data
@@ -267,109 +261,83 @@ const emits = defineEmits<{
      * @param colindex {number} column index
      * @param event {Event} native click event
      */
-    (
-        e: "cell-click",
+    "cell-click": [
         row: T,
         column: TableColumn<T>,
         index: number,
         colindex: number,
         event: Event,
-    ): void;
+    ];
     /**
      * on row dragstart event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragstart event
      */
-    (e: "dragstart", row: T, index: number, event: DragEvent): void;
+    dragstart: [row: T, index: number, event: DragEvent];
     /**
      * on row dragend event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragend event
      */
-    (e: "dragend", row: T, index: number, event: DragEvent): void;
+    dragend: [row: T, index: number, event: DragEvent];
     /**
      * on row drop event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native drop event
      */
-    (e: "drop", row: T, index: number, event: DragEvent): void;
+    drop: [row: T, index: number, event: DragEvent];
     /**
      * on row dragleave event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragleave event
      */
-    (e: "dragleave", row: T, index: number, event: DragEvent): void;
+    dragleave: [row: T, index: number, event: DragEvent];
     /**
      * on row dragover event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragover event
      */
-    (e: "dragover", row: T, index: number, event: DragEvent): void;
+    dragover: [row: T, index: number, event: DragEvent];
     /**
      * on column columndragstart event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragstart event
      */
-    (
-        e: "columndragstart",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragstart: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragend event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragend event
      */
-    (
-        e: "columndragend",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragend: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndrop event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndrop event
      */
-    (
-        e: "columndrop",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndrop: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragleave event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragleave event
      */
-    (
-        e: "columndragleave",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragleave: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragover event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragover event
      */
-    (
-        e: "columndragover",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragover: [column: TableColumn<T>, index: number, event: DragEvent];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -536,7 +504,11 @@ function isRowEqual(
     if (!isDefined(targetRow)) return false;
     if (typeof props.customCompare === "function")
         return props.customCompare(el1, el2);
-    if (props.rowKey) return el1[props.rowKey] == el2[props.rowKey];
+    if (props.rowKey)
+        return (
+            getPropertyValue(el1, props.rowKey) ==
+            getPropertyValue(el2, props.rowKey)
+        );
     return el1 == el2;
 }
 
@@ -983,7 +955,7 @@ function handleColumnDragLeave(
 
 const rootClasses = defineClasses(
     ["rootClass", "o-table__root"],
-    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
+    ["mobileClass", "o-table__root--mobile", null, isMobile],
 );
 
 const tableClasses = defineClasses(

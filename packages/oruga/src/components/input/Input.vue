@@ -13,7 +13,7 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -39,29 +39,29 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     modelValue: undefined,
     // number: false,
     type: "text",
-    size: getOption("input.size"),
-    variant: getOption("input.variant"),
+    size: () => getDefault("input.size"),
+    variant: () => getDefault("input.variant"),
     placeholder: undefined,
     expanded: false,
     rounded: false,
     disabled: false,
     passwordReveal: false,
     maxlength: undefined,
-    counter: getOption("input.counter", false),
+    counter: () => getDefault("input.counter", false),
     autosize: false,
-    iconPack: getOption("input.iconPack", undefined),
-    icon: getOption("input.icon", undefined),
+    iconPack: () => getDefault("input.iconPack"),
+    icon: () => getDefault("input.icon"),
     iconClickable: false,
-    iconRight: getOption("input.iconRight", undefined),
+    iconRight: () => getDefault("input.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    clearable: getOption("input.clearable", false),
-    clearIcon: getOption("input.clearIcon", "close-circle"),
-    statusIcon: getOption("statusIcon", true),
-    debounce: getOption("autocomplete.debounce", 400),
-    autocomplete: getOption("input.autocomplete", "off"),
+    clearable: () => getDefault("input.clearable", false),
+    clearIcon: () => getDefault("input.clearIcon", "close-circle"),
+    statusIcon: () => getDefault("statusIcon", true),
+    debounce: () => getDefault("autocomplete.debounce", 400),
+    autocomplete: () => getDefault("input.autocomplete", "off"),
     id: () => useId(),
-    useHtml5Validation: getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
 });
 
@@ -70,38 +70,38 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string, event: Event): void;
+    input: [value: string, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
 // --- Validation Feature ---

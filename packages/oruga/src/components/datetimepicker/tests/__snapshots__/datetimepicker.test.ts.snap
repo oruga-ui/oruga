@@ -330,7 +330,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                   <!--teleport start-->
                   <!--v-if-->
                   <transition-stub name="fade" appear="false" persisted="true" css="true">
-                    <div class="o-drop__menu o-drop__menu--bottom-left o-drop__menu--active" role="list" aria-hidden="true" aria-modal="false">
+                    <div class="o-drop__menu o-drop__menu--bottom-left o-drop__menu--active" role="list" aria-hidden="false" aria-modal="false">
                       <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state

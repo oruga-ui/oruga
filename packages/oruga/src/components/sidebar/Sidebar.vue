@@ -9,7 +9,7 @@ import {
     type Component,
 } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -36,19 +36,19 @@ defineOptions({
 const props = withDefaults(defineProps<SidebarProps<C>>(), {
     override: undefined,
     active: false,
-    overlay: () => getOption("sidebar.overlay", false),
+    overlay: () => getDefault("sidebar.overlay", false),
     inline: false,
-    position: () => getOption("sidebar.position", "left"),
-    fullheight: () => getOption("sidebar.fullheight", false),
-    fullwidth: () => getOption("sidebar.fullwidth", false),
-    reduce: () => getOption("sidebar.reduce", false),
-    mobile: () => getOption("sidebar.mobile"),
-    expandOnHover: () => getOption("sidebar.expandOnHover", false),
-    animation: () => getOption("sidebar.animation"),
-    cancelable: () => getOption("sidebar.cancelable", ["escape", "outside"]),
-    scroll: () => getOption("sidebar.scroll", "clip"),
-    mobileBreakpoint: () => getOption("sidebar.mobileBreakpoint"),
-    teleport: () => getOption("sidebar.teleport", false),
+    position: () => getDefault("sidebar.position", "left"),
+    fullheight: () => getDefault("sidebar.fullheight", false),
+    fullwidth: () => getDefault("sidebar.fullwidth", false),
+    reduce: () => getDefault("sidebar.reduce", false),
+    mobile: () => getDefault("sidebar.mobile"),
+    expandOnHover: () => getDefault("sidebar.expandOnHover", false),
+    animation: () => getDefault("sidebar.animation"),
+    cancelable: () => getDefault("sidebar.cancelable", ["escape", "outside"]),
+    scroll: () => getDefault("sidebar.scroll", "clip"),
+    mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
+    teleport: () => getDefault("sidebar.teleport", false),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -59,12 +59,12 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {boolean} - updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on component close event
      * @param value {unknown} - close event data
      */
-    (e: "close", ...args: unknown[]): void;
+    close: [...args: unknown[]];
 }>();
 
 const rootRef = useTemplateRef("rootElement");
@@ -225,7 +225,7 @@ function beforeLeave(): void {
 
 const rootClasses = defineClasses(
     ["rootClass", "o-side"],
-    ["mobileClass", "o-side--mobile", computed(() => props.mobile), isMobile],
+    ["mobileClass", "o-side--mobile", null, isMobile],
     ["activeClass", "o-side--active", null, isActive],
     [
         "teleportClass",
@@ -259,7 +259,7 @@ const contentClasses = defineClasses(
         computed(
             () =>
                 props.fullwidth ||
-                (props.mobile === "fullwidth" && isMobile.value),
+                (props.mobile === "expanded" && isMobile.value),
         ),
     ],
     [
@@ -278,7 +278,7 @@ const contentClasses = defineClasses(
         computed(
             () =>
                 props.expandOnHover &&
-                (!isMobile.value || props.mobile !== "fullwidth"),
+                (!isMobile.value || props.mobile !== "expanded"),
         ),
     ],
     ["visibleClass", "o-side__content--visible", null, isActive],

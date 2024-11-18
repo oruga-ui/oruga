@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T">
 import { computed, useAttrs, useId, useTemplateRef } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -23,54 +23,54 @@ defineOptions({
 const props = withDefaults(defineProps<CheckboxProps<T>>(), {
     override: undefined,
     modelValue: undefined,
-    variant: () => getOption("checkbox.variant"),
-    size: () => getOption("checkbox.size"),
+    variant: () => getDefault("checkbox.variant"),
+    size: () => getDefault("checkbox.size"),
     label: undefined,
     indeterminate: false,
     nativeValue: undefined,
     disabled: false,
     required: false,
     name: undefined,
-    trueValue: true,
-    falseValue: false,
-    autocomplete: () => getOption("checkbox.autocomplete", "off"),
+    trueValue: undefined,
+    falseValue: undefined,
+    autocomplete: () => getDefault("checkbox.autocomplete", "off"),
     id: () => useId(),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object | array} updated modelValue prop
+     * @param value {T | T[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: T | T[]): void;
+    "update:model-value": [value: T | T[]];
     /**
      * on input change event
-     * @param value {string | number | boolean | object | array} input value
+     * @param value {T | T[]} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T | T[], event: Event): void;
+    input: [value: T | T[], event: Event];
     /**
      * indeterminate prop two-way binding
      * @param value {boolean} updated indeterminate prop
      */
-    (e: "update:indeterminate", value: boolean): void;
+    "update:indeterminate": [value: boolean];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
 }>();
 
 const inputRef = useTemplateRef("inputElement");
@@ -94,9 +94,14 @@ const isIndeterminate = defineModel<boolean>("indeterminate", {
     default: false,
 });
 
+const _trueValue =
+    typeof props.trueValue === "undefined" ? true : props.trueValue;
+const _falseValue =
+    typeof props.falseValue === "undefined" ? false : props.falseValue;
+
 const isChecked = computed(
     () =>
-        vmodel.value === props.trueValue ||
+        vmodel.value === _trueValue ||
         (Array.isArray(vmodel.value) &&
             vmodel.value.includes(props.nativeValue as T)),
 );
@@ -174,8 +179,8 @@ defineExpose({ focus: setFocus, value: vmodel });
             :autocomplete="autocomplete"
             :value="nativeValue"
             :indeterminate.prop="indeterminate"
-            :true-value="trueValue"
-            :false-value="falseValue"
+            :true-value="_trueValue"
+            :false-value="_falseValue"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"

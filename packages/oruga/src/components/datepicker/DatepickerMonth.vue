@@ -43,11 +43,11 @@ const props = defineProps({
 
 const emits = defineEmits<{
     /** modelValue prop two-way binding */
-    (e: "update:modelValue", value: Date | Date[]): void;
+    "update:model-value": [value: Date | Date[]];
     /** focusedDate prop two-way binding */
-    (e: "update:focusedDate", value: FocusedDate): void;
-    (e: "range-start", value: Date): void;
-    (e: "range-end", value: Date): void;
+    "update:focusedDate": [value: FocusedDate];
+    "range-start": [value: Date];
+    "range-end": [value: Date];
 }>();
 
 const { dateCreator } = useDatepickerMixins(props.pickerProps);
@@ -234,7 +234,7 @@ function selectDate(date: Date): void {
     else if (isTrueish(props.pickerProps.range)) handleSelectRangeDate(date);
     else if (isTrueish(props.pickerProps.multiple))
         handleSelectMultipleDates(date);
-    else emits("update:modelValue", date);
+    else emits("update:model-value", date);
 }
 
 /*
@@ -255,7 +255,7 @@ function handleSelectRangeDate(date: Date): void {
             selectedEndDate.value = date;
         }
         emits("range-end", date);
-        emits("update:modelValue", [
+        emits("update:model-value", [
             selectedBeginDate.value,
             selectedEndDate.value,
         ]);
@@ -291,7 +291,7 @@ function handleSelectMultipleDates(date: Date): void {
     } else {
         multipleSelectedDates.push(date);
     }
-    emits("update:modelValue", multipleSelectedDates);
+    emits("update:model-value", multipleSelectedDates);
 }
 
 function changeFocus(month: Date, inc: number): void {

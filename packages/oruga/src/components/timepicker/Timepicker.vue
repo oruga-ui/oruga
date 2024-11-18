@@ -4,7 +4,7 @@ import { computed, ref, useTemplateRef, watch } from "vue";
 import OSelect from "../select/Select.vue";
 import OPickerWrapper from "../utils/PickerWrapper.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDate, isDefined, pad } from "@/utils/helpers";
 import { defineClasses, useMatchMedia, getActiveClasses } from "@/composables";
 
@@ -24,6 +24,8 @@ defineOptions({
     configField: "timepicker",
 });
 
+type ModelValue = TimepickerProps["modelValue"];
+
 const props = withDefaults(defineProps<TimepickerProps>(), {
     override: undefined,
     modelValue: undefined,
@@ -36,37 +38,37 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     rounded: false,
     readonly: false,
     disabled: false,
-    size: () => getOption("timepicker.size"),
+    size: () => getDefault("timepicker.size"),
     hourFormat: undefined,
     incrementHours: 1,
     incrementMinutes: 1,
     incrementSeconds: 1,
-    openOnFocus: () => getOption("timepicker.openOnFocus", true),
-    closeOnClick: () => getOption("timepicker.closeOnClick", true),
+    openOnFocus: () => getDefault("timepicker.openOnFocus", true),
+    closeOnClick: () => getDefault("timepicker.closeOnClick", true),
     enableSeconds: false,
     defaultMinutes: undefined,
     defaultSeconds: undefined,
-    locale: () => getOption("locale"),
-    formatter: getOption("timepicker.formatter"),
-    parser: getOption("timepicker.parser"),
-    creator: getOption("timepicker.creator"),
+    locale: () => getDefault("locale"),
+    formatter: getDefault("timepicker.formatter"),
+    parser: getDefault("timepicker.parser"),
+    creator: getDefault("timepicker.creator"),
     unselectableTimes: undefined,
     resetOnMeridianChange: false,
-    trapFocus: () => getOption("timepicker.trapFocus", true),
+    trapFocus: () => getDefault("timepicker.trapFocus", true),
     position: undefined,
-    mobileModal: () => getOption("timepicker.mobileModal", true),
-    mobileNative: () => getOption("timepicker.mobileNative", true),
-    iconPack: () => getOption("timepicker.iconPack"),
-    icon: () => getOption("timepicker.icon"),
-    iconRight: () => getOption("timepicker.iconRight"),
+    mobileModal: () => getDefault("timepicker.mobileModal", true),
+    mobileNative: () => getDefault("timepicker.mobileNative", true),
+    iconPack: () => getDefault("timepicker.iconPack"),
+    icon: () => getDefault("timepicker.icon"),
+    iconRight: () => getDefault("timepicker.iconRight"),
     iconRightClickable: false,
-    mobileBreakpoint: () => getOption("timepicker.mobileBreakpoint"),
-    teleport: () => getOption("timepicker.teleport", false),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    mobileBreakpoint: () => getDefault("timepicker.mobileBreakpoint"),
+    teleport: () => getDefault("timepicker.teleport", false),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
-    inputClasses: () => getOption("timepicker.inputClasses"),
-    dropdownClasses: () => getOption("timepicker.dropdownClasses"),
-    selectClasses: () => getOption("timepicker.selectClasses"),
+    inputClasses: () => getDefault("timepicker.inputClasses"),
+    dropdownClasses: () => getDefault("timepicker.dropdownClasses"),
+    selectClasses: () => getDefault("timepicker.selectClasses"),
 });
 
 defineEmits<{
@@ -74,37 +76,37 @@ defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} updated modelValue prop
      */
-    (e: "update:modelValue", value: Date): void;
+    "update:model-value": [value: Date];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -126,7 +128,7 @@ const {
 const pickerRef = useTemplateRef("pickerComponent");
 
 /** modelvalue of selected date */
-const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
@@ -143,16 +145,18 @@ watch(
 );
 
 /** Update internal value. */
-function updateValue(value: Date | undefined): void {
+function updateValue(value: Date | Date[] | undefined): void {
     if (Array.isArray(value)) return updateValue(value[0]);
-    if (vmodel.value !== value) vmodel.value = value as Date;
+    if (vmodel.value !== value) vmodel.value = value;
     if (value) {
+        // update internal state
         hoursSelected.value = value.getHours();
         minutesSelected.value = value.getMinutes();
         secondsSelected.value = value.getSeconds();
         meridienSelected.value =
             value.getHours() >= 12 ? pmString.value : amString.value;
     } else {
+        // reset internal state
         hoursSelected.value = undefined;
         minutesSelected.value = undefined;
         secondsSelected.value = undefined;

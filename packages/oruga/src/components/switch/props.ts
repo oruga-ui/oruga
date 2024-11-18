@@ -3,10 +3,7 @@ import type { ComponentClass } from "@/types";
 export type SwitchProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /**
-     * The input value state
-     * @type string|number|boolean|object
-     */
+    /** The input value state, use v-model to make it two-way binding */
     modelValue?: T;
     /**
      * Color of the control
@@ -25,10 +22,7 @@ export type SwitchProps<T> = {
     size?: string;
     /** Input label, unnecessary when default slot is used */
     label?: string;
-    /**
-     * Same as native value
-     * @type string|number|boolean|object
-     */
+    /** Same as native value */
     nativeValue?: T;
     /** Same as native disabled */
     disabled?: boolean;
@@ -36,16 +30,10 @@ export type SwitchProps<T> = {
     required?: boolean;
     /** Name attribute on native checkbox */
     name?: string;
-    /**
-     * Overrides the returned value when it's checked
-     * @type string|number|boolean|object
-     */
-    trueValue?: T | boolean;
-    /**
-     * Overrides the returned value when it's not checked
-     * @type string|number|boolean|object
-     */
-    falseValue?: T | boolean;
+    /** Overrides the returned value when it's checked */
+    trueValue?: T;
+    /** Overrides the returned value when it's not checked */
+    falseValue?: T;
     /** Rounded style */
     rounded?: boolean;
     /** Label position */

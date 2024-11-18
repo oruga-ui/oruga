@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T">
 import { computed, useAttrs, useId, useTemplateRef } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -23,45 +23,45 @@ defineOptions({
 const props = withDefaults(defineProps<RadioProps<T>>(), {
     override: undefined,
     modelValue: undefined,
-    variant: () => getOption("radio.variant"),
-    size: () => getOption("radio.size"),
+    variant: () => getDefault("radio.variant"),
+    size: () => getDefault("radio.size"),
     label: undefined,
     nativeValue: undefined,
     disabled: false,
     required: false,
     name: undefined,
-    autocomplete: () => getOption("radio.autocomplete", "off"),
+    autocomplete: () => getDefault("radio.autocomplete", "off"),
     id: () => useId(),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    "update:model-value": [value: T];
     /**
      * on input change event
-     * @param value {string | number | boolean | object} input value
+     * @param value {T} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T, event: Event): void;
+    input: [value: T, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
 }>();
 
 const inputRef = useTemplateRef("inputElement");

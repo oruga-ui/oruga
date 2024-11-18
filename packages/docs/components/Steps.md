@@ -49,7 +49,7 @@ sidebarDepth: 2
 | iconNext          | Icon to use for navigation button                                                                                             | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconNext: "chevron-right"<br>}</code>                                           |
 | iconPack          | Icon pack to use for the navigation                                                                                           | string                                               | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>                                                 |
 | iconPrev          | Icon to use for navigation button                                                                                             | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconPrev: "chevron-left"<br>}</code>                                            |
-| labelPosition     | Position of the marker label                                                                                                  | "left" \| "right" \| "bottom"                        | `bottom`, `right`, `left`                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;labelPosition: "bottom"<br>}</code>                                             |
+| labelPosition     | Position of the marker label                                                                                                  | "bottom" \| "left" \| "right"                        | `bottom`, `right`, `left`                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;labelPosition: "bottom"<br>}</code>                                             |
 | mobileBreakpoint  | Mobile breakpoint as `max-width` value                                                                                        | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;mobileBreakpoint: undefined<br>}</code>                                         |
 | v-model           | The selected item value, use v-model to make it two-way binding                                                               | string\|number\|object                               | -                                                                               |                                                                                                                                                                                                     |
 | options           | Steps options, unnecessary when default slot is used                                                                          | OptionsProp&lt;unknown&gt;                           | -                                                                               |                                                                                                                                                                                                     |
@@ -133,8 +133,9 @@ sidebarDepth: 2
 
 | SASS Variable                       | Default                                      |
 | ----------------------------------- | -------------------------------------------- |
-| $steps-details-background-color     | hsl(0, 0%, 100%)                             |
-| $steps-details-padding              | 0.2em                                        |
+| $steps-title-background-color       | hsl(0, 0%, 100%)                             |
+| $steps-title-padding                | 0.2em                                        |
+| $steps-title-font-weight            | 500                                          |
 | $steps-marker-background            | var(--#{$prefix}grey-light)                  |
 | $steps-marker-color                 | var(--#{$prefix}primary-invert)              |
 | $steps-marker-border                | 0.2em solid #fff                             |
@@ -147,9 +148,9 @@ sidebarDepth: 2
 | $steps-vertical-padding             | 1em 0                                        |
 | $steps-item-line-height             | var(--#{$prefix}base-line-height)            |
 | $steps-link-color                   | hsl(0, 0%, 29%)                              |
+| $steps-content-spacer               | 1rem                                         |
 | $steps-content-padding              | 1rem                                         |
 | $steps-font-size                    | var(--#{$prefix}base-font-size)              |
-| $steps-details-title-font-weight    | 600                                          |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_steps.scss)
 
@@ -179,18 +180,19 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable           | Default                     |
-| ----------------------- | --------------------------- |
-| $steps-marker-bg        | var(--#{$prefix}gray-light) |
-| $steps-marker-border    | var(--#{$prefix}white)      |
-| $steps-marker-color     | var(--#{$prefix}white)      |
-| $steps-color-active     | var(--#{$prefix}primary)    |
-| $steps-title-color      | var(--#{$prefix}dark)       |
-| $steps-title-bg         | var(--#{$prefix}white)      |
-| $steps-divider-height   | 0.2em                       |
-| $steps-content-spacer   | 1rem                        |
-| $steps-content-padding  | 1rem                        |
-| $steps-vertical-padding | 1em 0                       |
+| SASS Variable            | Default                     |
+| ------------------------ | --------------------------- |
+| $steps-marker-bg         | var(--#{$prefix}gray-light) |
+| $steps-marker-border     | var(--#{$prefix}white)      |
+| $steps-marker-color      | var(--#{$prefix}white)      |
+| $steps-color-active      | var(--#{$prefix}primary)    |
+| $steps-title-color       | var(--#{$prefix}dark)       |
+| $steps-title-bg          | var(--#{$prefix}white)      |
+| $steps-title-font-weight | 500                         |
+| $steps-divider-height    | 0.2em                       |
+| $steps-content-spacer    | 1rem                        |
+| $steps-content-padding   | 1rem                        |
+| $steps-vertical-padding  | 1em 0                       |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_steps.scss)
 

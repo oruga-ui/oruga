@@ -7,7 +7,7 @@
     ">
 import { computed, ref, useAttrs, useTemplateRef, watch } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { File } from "@/utils/ssr";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
@@ -34,13 +34,13 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
     // multiple: false,
-    variant: () => getOption("upload.variant"),
+    variant: () => getDefault("upload.variant"),
     disabled: false,
     accept: undefined,
     dragDrop: false,
     expanded: false,
     native: true,
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
 });
 
@@ -49,22 +49,22 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {object | object[] | File | File[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
 }>();
 
 const inputRef = useTemplateRef("inputElement");

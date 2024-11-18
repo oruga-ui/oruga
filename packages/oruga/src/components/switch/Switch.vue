@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T">
 import { computed, useAttrs, useId, useTemplateRef } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -23,50 +23,50 @@ defineOptions({
 const props = withDefaults(defineProps<SwitchProps<T>>(), {
     override: undefined,
     modelValue: undefined,
-    variant: () => getOption("switch.variant"),
-    passiveVariant: () => getOption("switch.passiveVariant"),
-    size: () => getOption("switch.size"),
+    variant: () => getDefault("switch.variant"),
+    passiveVariant: () => getDefault("switch.passiveVariant"),
+    size: () => getDefault("switch.size"),
     label: undefined,
     nativeValue: undefined,
     disabled: false,
     required: false,
     name: undefined,
-    trueValue: true,
-    falseValue: false,
+    trueValue: undefined,
+    falseValue: undefined,
     rounded: true,
     position: "right",
-    autocomplete: () => getOption("switch.autocomplete", "off"),
+    autocomplete: () => getDefault("switch.autocomplete", "off"),
     id: () => useId(),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    "update:model-value": [value: T];
     /**
      * on input change event
-     * @param value {string | number | boolean | object} input value
+     * @param value {T} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T, event: Event): void;
+    input: [value: T, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
 }>();
 
 const inputRef = useTemplateRef("inputElement");
@@ -85,9 +85,14 @@ const vmodel = defineModel<T>({ default: undefined });
 // if not `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField?.value?.setInputId(props.id);
 
+const _trueValue =
+    typeof props.trueValue === "undefined" ? true : props.trueValue;
+const _falseValue =
+    typeof props.falseValue === "undefined" ? false : props.falseValue;
+
 const isChecked = computed(
     () =>
-        vmodel.value === props.trueValue ||
+        vmodel.value === _trueValue ||
         (Array.isArray(vmodel.value) &&
             vmodel.value.includes(props.nativeValue)),
 );
@@ -186,8 +191,8 @@ defineExpose({ focus: setFocus, value: vmodel });
             :name="name"
             :autocomplete="autocomplete"
             :value="nativeValue"
-            :true-value="trueValue"
-            :false-value="falseValue"
+            :true-value="_trueValue"
+            :false-value="_falseValue"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"

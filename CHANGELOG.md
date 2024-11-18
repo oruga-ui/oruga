@@ -1,3 +1,344 @@
+## [0.9.1](https://github.com/oruga-ui/oruga/compare/v0.9.0...v0.9.1) (2024-11-15)
+
+
+### Bug Fixes
+
+* **dropdown:** solve closing issue when has `multiple` prop ([#1109](https://github.com/oruga-ui/oruga/issues/1109)) ([5443ec2](https://github.com/oruga-ui/oruga/commit/5443ec2547494657f6599e69258003454bca5c9f))
+* **programmatic:** readd `OrugaProgrammatic` interface to the export ([#1110](https://github.com/oruga-ui/oruga/issues/1110)) ([44c7075](https://github.com/oruga-ui/oruga/commit/44c70754a2c755045c36e6d8671c6791b9a861b3))
+* **programmatic:** solve wrong `events` prop type ([#1114](https://github.com/oruga-ui/oruga/issues/1114)) ([0271e7e](https://github.com/oruga-ui/oruga/commit/0271e7e21ca962f02aa8a8d202a1c735a945bb34))
+* **table:** remove generic type strictness ([#1107](https://github.com/oruga-ui/oruga/issues/1107)) ([4592a9d](https://github.com/oruga-ui/oruga/commit/4592a9d7f66eac56ec76aebfc52f2944ec1fa6bb))
+
+
+
+# [0.9.0](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.5...v0.9.0) (2024-11-11)
+
+These Changes are accumulated from all pre-releases.
+
+
+### Detailed Changes
+
+
+Legend:
+* ⚠️: breaking change
+* `~` : changed
+* `-` : removed
+* `+` : added
+* A -> B : renamed
+
+
+#### Autocomplete
+
+*  ⚠️ `~` prop: data -> options (type changed)
+*  ⚠️ `-` prop: field (replaced by strict options type)
+*  ⚠️ `-` prop: formatter (replaced by strict options type)
+*  ⚠️ `-` prop: groupField (replaced by strict options type)
+*  ⚠️ `-` prop: groupOptions (replaced by strict options type)
+*  `+` prop: input (v-model:input)
+*  `+` prop: filter
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+*  `+` event: update:input	
+
+*  `+` type: remove modelValue type restrictions
+ 
+#### Button
+
+*  ⚠️ `~` prop: nativeType -> type (to match same props from other component)
+*  ⚠️ `~` prop: role -> ariaRole (to match same props from other component)
+
+#### Carousel
+
+--
+
+#### Checkbox
+
+*  `+` prop: id
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+*  `+` type: remove modelValue type restrictions
+ 
+#### Collapse
+
+--
+
+#### Datepicker
+
+*  ⚠️ `~` prop: dateCreator -> creator
+*  ⚠️ `~` prop: dateFormatter -> formatter
+*  ⚠️ `~` prop: dateParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+
+#### Datetimepicker
+
+*  ⚠️ `~` prop: datetimeCreator -> creator
+*  ⚠️ `~` prop: datetimeFormatter -> formatter
+*  ⚠️ `~` prop: datetimeParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+
+#### Dropdown
+
+*  `+` prop: options
+*  `+` prop: desktopModal
+ 
+*  ⚠️ `~` class: menuMobileOverlayClass -> overlayClass
+*  `+` class: modalClass
+*  `+` class: scrollClipClass
+*  `+` class: noScrollClass
+
+*  `+` type: remove modelValue type restrictions
+
+#### Field 
+ 
+*  ⚠️ `~` class: bodyHorizontalClass -> horizontalBodyClass 
+*  ⚠️ `~` class: labelHorizontalClass -> horizontalLabelClass
+*  ⚠️ `~` class: variantLabelClass -> labelVariantClass
+*  ⚠️ `~` class: variantMessageClass -> messageVariantClass
+ 
+#### Icon
+
+--
+
+#### Input 
+ 
+*  `+` prop: debounce
+*  `+` prop: number
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+*  `~` event: input (only emits string values)
+
+#### Loading
+
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+
+*  `+` class: noScrollClass
+*  `+` class: scrollClipClass
+
+*  ⚠️ `~` programmatic: interface changed 
+
+#### Menu
+
+*  ⚠️ `~` class: itemWrapperClass -> itemClass
+*  ⚠️ `~` class: itemClass -> itemButtonClass
+*  ⚠️ `~` class: itemActiveClass -> itemButtonActiveClass
+*  ⚠️ `~` class: itemDisabledClass -> itemButtonDisabledClass
+*  ⚠️ `~` class: itemIconTextClass -> itemButtonIconClass
+
+#### Modal
+
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: destroyOnHide (no done by default for programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+*  `+` prop: overlay
+
+*  ⚠️ `~` programmatic: interface changed
+ 
+#### Notification
+ 
+*  `~` prop: active (is not longer avaible in programmatic usage)
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+ 
+*  ⚠️ `~` programmatic: interface changed
+
+#### Pagination
+
+*  ⚠️ `~` class: linkClass -> buttonClass 
+*  ⚠️ `~` class: linkCurrentClass -> buttonCurrentClass 
+*  ⚠️ `~` class: linkDisabledClass -> buttonDisabledClass 
+*  ⚠️ `~` class: prevButtonClass -> buttonPrevClass 
+*  ⚠️ `~` class: nextButtonClass -> buttonNextClass 
+ 
+#### Radio
+
+*  `+` prop: id
+*  `+` prop: customValidity
+ 
+*  `+` type: remove modelValue type restrictions
+ 
+#### Select
+
+*  ⚠️ `~` prop: options (type changed)
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+#### Sidebar
+
+*  `~` prop: mobile (variable changed from `fullwitdh` to `expanded`)
+*  `-` prop: variant
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: destroyOnHide (no done by default for programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+ 
+*  ⚠️ `~` programmatic: interface changed
+
+#### Skeleton
+
+--
+
+#### Slider
+
+*  `+` prop: range
+*  ⚠️ `~` prop: customFormatter -> formatter
+
+#### Steps
+ 
+*  `+` prop: options
+ 
+*  ⚠️ `~` class: itemHeaderClass -> navItemClass
+*  ⚠️ `~` class: itemHeaderVariantClass -> navItemVariantClass
+*  ⚠️ `~` class: itemHeaderActiveClass -> navItemActiveClass
+*  ⚠️ `~` class: itemHeaderPreviousClass -> navItemPreviousClass
+*  `+` class: navItemNextClass
+*  ⚠️ `~` class: stepLinkClass -> stepClass
+*  ⚠️ `~` class: stepLinkLabelPositionClass -> stepLabelPositionClass
+*  ⚠️ `~` class: stepLinkClickableClass -> stepClickableClass
+*  `+` class: stepActiveClass
+*  `+` class: stepDisabledClass
+*  ⚠️ `~` class: stepLinkLabelClass -> stepLabelClass
+*  `+` class: stepIconClass
+*  ⚠️ `~` class: itemClass -> stepPanelClass
+*  ⚠️ `~` class: rootClass (default class changed)
+*  ⚠️ `~` class: expandedClass (default class changed)
+*  ⚠️ `~` class: verticalClass (default class changed)
+*  ⚠️ `~` class: positionClass (default class changed)
+*  ⚠️ `~` class: animatedClass (default class changed)
+*  ⚠️ `~` class: stepsClass -> navClass
+*  ⚠️ `~` class: stepDividerClass -> dividerClass
+*  ⚠️ `~` class: stepMarkerClass -> markerClass
+*  ⚠️ `~` class: stepMarkerRoundedClass -> markerRoundedClass
+*  ⚠️ `~` class: stepContentClass -> contentClass
+*  ⚠️ `~` class: stepContentTransitioningClass -> transitioningClass
+*  ⚠️ `~` class: stepNavigationClass -> navigationClass
+
+*  `+` type: remove modelValue type restrictions
+
+#### StepItem
+
+*  `+` prop: disabled
+ 
+#### Switch
+
+*  `+` prop: id
+*  `+` prop: customValidity
+ 
+*  `+` type: remove modelValue type restrictions
+ 
+#### Table
+
+*  ⚠️ `~` prop: column (type changed)
+*  `+` prop: customCompare
+*  ⚠️ `~` prop: customRowKey -> rowKey
+*  ⚠️ `~` prop: customIsChecked -> isRowChecked (to match other props name pattern)
+*  ⚠️ `~` props: hasDetailedVisible -> isDetailedVisible (to match other props name pattern)
+*  `-` prop: detailKey (use rowKey instead)
+*  `+` props: emptyIcon
+*  `+` props: emptyIconSize
+*  `+` props: emptyLabel
+*  `+` props: filtersIcon
+*  `+` props: filtersPlaceholder
+*  `+` props: loadingIcon
+*  `+` props: loadingLabel
+*  ⚠️ `~` props: openedDetailed -> detailedRows (to match props name pattern)
+*  `+` props: selectable
+*  `+` props: tdAttrs
+*  `+` props: thAttrs
+ 
+*  `~` event: update:openedDetailed -> update:detailedRows	
+ 
+*  `+` slots: before
+*  `+` slots: after
+ 
+#### TableColumn
+
+*  `+` props: formatter
+ 
+*  `~` types: improve slots type
+ 
+#### Tabs
+
+*  ⚠️ `~` class: navTabsClass -> navClass
+*  ⚠️ `~` class: itemWrapperClass -> navItemClass
+*  ⚠️ `~` class: itemClass -> tabPanelClass
+*  ⚠️ `~` class: itemHeaderActiveClass -> tabActiveClass
+*  ⚠️ `~` class: itemHeaderClass -> tabClass
+*  ⚠️ `~` class: itemHeaderDisabledClass -> tabDisabledClass
+*  ⚠️ `~` class: itemHeaderIconClass -> tabIconClass
+*  ⚠️ `~` class: itemHeaderTextClass -> tabLabelClass
+*  ⚠️ `~` class: itemHeaderTypeClass -> tabTypeClass
+*  ⚠️ `~` class: tabTextClass -> tabLabelClass
+*  `+` class: navItemActiveClass
+*  `+` class: navItemPreviousClass
+*  `+` class: navItemNextClass
+ 
+*  `+` props: options
+ 
+*  `+` type: remove modelValue type restrictions
+ 
+#### Taginput
+
+*  `+` prop: input (v-model:input)
+*  `-` props: allowAutocomplete 
+*  ⚠️ `~` props: data -> options (type changed)
+*  ⚠️ `-` prop: field (replaced by strict options type)
+*  ⚠️ `-` prop: groupField (replaced by strict options type)
+*  ⚠️ `-` prop: groupOptions (replaced by strict options type)
+*  ⚠️ `~` props: beforeAdding -> validateItem
+*  `+` prop: filter
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+*  `+` event: update:input
+ 
+#### Timepicker
+
+*  ⚠️ `~` prop: timeCreator -> creator
+*  ⚠️ `~` prop: timeFormatter -> formatter
+*  ⚠️ `~` prop: timeParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+#### Tooltip
+
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+
+#### Upload 
+
+--
+
+
+
+# [0.9.0-pre.5](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.5...v0.9.0-pre.4) (2024-11-11)
+
+
+### Bug Fixes
+
+* **datepicker:** add missing scope to defineClasses ([#1091](https://github.com/oruga-ui/oruga/issues/1091)) ([277c2e0](https://github.com/oruga-ui/oruga/commit/277c2e052866147963a6c0392fca3c70f5332eaf))
+* solve various issues ([#1100](https://github.com/oruga-ui/oruga/issues/1100)) ([d6b792f](https://github.com/oruga-ui/oruga/commit/d6b792f0850d59ea85857c8ff7a9e4db570d134a))
+
+
+### Features
+
+* **input:** move the left icon element before the input element ([#1094](https://github.com/oruga-ui/oruga/issues/1094)) ([7bf11e2](https://github.com/oruga-ui/oruga/commit/7bf11e223e24357f63ca00016fea307303acb1ce))
+* **menu:** refactor class names to match other components class name patterns ([#1097](https://github.com/oruga-ui/oruga/issues/1097)) ([f3ce20a](https://github.com/oruga-ui/oruga/commit/f3ce20a001a071ff9e89eac1e071367fe72dbf27))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+
 # [0.9.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.3...v0.9.0-pre.4) (2024-10-30)
 
 
@@ -7,6 +348,11 @@
 * **dropdown:** add `toggle` prop to `trigger` slot ([#1086](https://github.com/oruga-ui/oruga/issues/1086)) ([c9b51f3](https://github.com/oruga-ui/oruga/commit/c9b51f3aec79454d33268ea979c262429190b5f1))
 * **pagination:** adjust class names to match other components class patterns ([#1087](https://github.com/oruga-ui/oruga/issues/1087)) ([54c3706](https://github.com/oruga-ui/oruga/commit/54c37068a2e14ae50a057abbce1c117723720c50))
 * **steps:** adjust class names to match other components class patterns ([#1084](https://github.com/oruga-ui/oruga/issues/1084)) ([6466757](https://github.com/oruga-ui/oruga/commit/6466757509443750c0f6a41adf64f4ed3e92da3c))
+
+
+### Detailed Changes
+
+*following with the main release...*
 
 
 

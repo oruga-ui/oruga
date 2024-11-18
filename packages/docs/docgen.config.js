@@ -299,7 +299,7 @@ ${description ? "> " + description : ""}
 
         if (value === "undefined") value = "";
         else if (
-            value.includes("getOption") &&
+            value.includes("getDefault") &&
             !value.includes("const ") &&
             !value.includes("if ") &&
             !value.includes("else ")
@@ -310,15 +310,15 @@ ${description ? "> " + description : ""}
             // get default params
             value = value.replace(/\r\n/g, "").replaceAll("\n", "");
             let f = "";
-            if (value.includes("getOption("))
+            if (value.includes("getDefault("))
                 f = value.substring(
-                    value.lastIndexOf("getOption(") + "getOption(".length,
+                    value.lastIndexOf("getDefault(") + "getDefault(".length,
                 );
-            else if (value.includes("getOption<"))
+            else if (value.includes("getDefault<"))
                 f = value.substring(value.indexOf(">(") + ">(".length);
 
             // remove new line (+)
-            value = value.replace(/=>(.*?)getOption/g, "=> getOption");
+            value = value.replace(/=>(.*?)getDefault/g, "=> getDefault");
             // remove function prop invokation
             if (f.lastIndexOf("(") > 0) f = f.substring(0, f.lastIndexOf("("));
             if (f.lastIndexOf(")") > 0) f = f.substring(0, f.lastIndexOf(")"));

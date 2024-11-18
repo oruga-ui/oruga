@@ -5,7 +5,6 @@ import {
     ref,
     watch,
     useAttrs,
-    onMounted,
     useSlots,
     useId,
     triggerRef,
@@ -18,7 +17,7 @@ import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
@@ -32,16 +31,12 @@ import {
     filterOptionsItems,
     useInputHandler,
     useEventListener,
+    isOptionValid,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type {
-    DynamicComponent,
-    ClassBind,
-    OptionsItem,
-    OptionsGroupItem,
-} from "@/types";
+import type { ClassBind, OptionsItem, OptionsGroupItem } from "@/types";
 import type { AutocompleteProps } from "./props";
 
 enum SpecialOption {
@@ -75,106 +70,106 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     options: undefined,
     filter: undefined,
     type: "text",
-    menuTag: () => getOption<DynamicComponent>("autocomplete.menuTag", "div"),
-    itemTag: () => getOption<DynamicComponent>("autocomplete.itemTag", "div"),
-    size: () => getOption("autocomplete.size"),
-    position: () => getOption("autocomplete.position", "auto"),
+    menuTag: () => getDefault("autocomplete.menuTag", "div"),
+    itemTag: () => getDefault("autocomplete.itemTag", "div"),
+    size: () => getDefault("autocomplete.size"),
+    position: () => getDefault("autocomplete.position", "auto"),
     placeholder: undefined,
     expanded: false,
     rounded: false,
     disabled: false,
     maxlength: undefined,
-    checkScroll: () => getOption("autocomplete.checkScroll", false),
-    debounce: () => getOption("autocomplete.debounce", 400),
-    keepFirst: () => getOption("autocomplete.keepFirst", false),
-    clearOnSelect: () => getOption("autocomplete.clearOnSelect", false),
-    openOnFocus: () => getOption("autocomplete.openOnFocus", false),
-    keepOpen: () => getOption("autocomplete.keepOpen", false),
-    maxHeight: () => getOption("autocomplete.maxHeight"),
-    confirmKeys: () => getOption("autocomplete.confirmKeys", ["Tab", "Enter"]),
-    mobileModal: () => getOption("autocomplete.mobileModal", false),
-    animation: () => getOption("autocomplete.animation", "fade"),
+    checkScroll: () => getDefault("autocomplete.checkScroll", false),
+    debounce: () => getDefault("autocomplete.debounce", 400),
+    keepFirst: () => getDefault("autocomplete.keepFirst", false),
+    clearOnSelect: () => getDefault("autocomplete.clearOnSelect", false),
+    openOnFocus: () => getDefault("autocomplete.openOnFocus", false),
+    keepOpen: () => getDefault("autocomplete.keepOpen", false),
+    maxHeight: () => getDefault("autocomplete.maxHeight"),
+    confirmKeys: () => getDefault("autocomplete.confirmKeys", ["Tab", "Enter"]),
+    mobileModal: () => getDefault("autocomplete.mobileModal", false),
+    animation: () => getDefault("autocomplete.animation", "fade"),
     selectOnClickOutside: false,
     selectableHeader: false,
     selectableFooter: false,
-    iconPack: () => getOption("autocomplete.iconPack"),
-    icon: () => getOption("autocomplete.icon"),
+    iconPack: () => getDefault("autocomplete.iconPack"),
+    icon: () => getDefault("autocomplete.icon"),
     iconClickable: false,
-    iconRight: () => getOption("autocomplete.iconRight"),
+    iconRight: () => getDefault("autocomplete.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    clearable: () => getOption("autocomplete.clearable", false),
-    clearIcon: () => getOption("autocomplete.clearIcon", "close-circle"),
-    statusIcon: () => getOption("statusIcon", true),
-    autocomplete: () => getOption("autocomplete.autocomplete", "off"),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    clearable: () => getDefault("autocomplete.clearable", false),
+    clearIcon: () => getDefault("autocomplete.clearIcon", "close-circle"),
+    statusIcon: () => getDefault("statusIcon", true),
+    autocomplete: () => getDefault("autocomplete.autocomplete", "off"),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
-    teleport: () => getOption("autocomplete.teleport", false),
-    inputClasses: () => getOption("autocomplete.inputClasses", {}),
+    teleport: () => getDefault("autocomplete.teleport", false),
+    inputClasses: () => getDefault("autocomplete.inputClasses", {}),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * input prop two-way binding
      * @param value {string} updated input prop
      */
-    (e: "update:input", value: string): void;
+    "update:input": [value: string];
     /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string, event: Event): void;
+    input: [value: string, event: Event];
     /**
      * selected element changed event
-     * @param value {string | number | object} selected value
+     * @param value {T} selected value
      * @param event {Event} native event
      */
-    (e: "select", value: ModelValue, event: Event): void;
+    select: [value: ModelValue, event: Event];
     /**
      * header is selected
      * @param event {Event} native event
      */
-    (e: "select-header", event: Event): void;
+    "select-header": [event: Event];
     /**
      * footer is selected
      * @param event {Event} native event
      */
-    (e: "select-footer", event: Event): void;
+    "select-footer": [event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
     /** the list inside the dropdown reached the start */
-    (e: "scroll-start"): void;
+    "scroll-start": [];
     /** the list inside the dropdown reached it's end */
-    (e: "scroll-end"): void;
+    "scroll-end": [];
 }>();
 
 const slots = useSlots();
@@ -299,7 +294,7 @@ function setSelected(
         if (props.clearOnSelect) inputValue.value = "";
         else inputValue.value = option.label;
         setHovered(undefined);
-    } else inputValue.value = "";
+    }
 
     if (closeDropdown) nextTick(() => (isActive.value = false));
     checkHtml5Validity();
@@ -379,46 +374,68 @@ function navigateItem(direction: 1 | -1): void {
         return;
     }
 
-    const options: (SpecialOption | OptionsItem<T>)[] =
-        toOptionsList(groupedOptions);
+    // convert grouped options to simple list
+    const options: OptionsItem<T>[] = toOptionsList(groupedOptions);
+    // filter only avaibale options
+    const availableOptions: (SpecialOption | OptionsItem<T>)[] = options.filter(
+        (o) => isOptionValid(o),
+    );
 
-    // add header / footer if selectable
-    if (headerRef.value && props.selectableHeader)
-        options.unshift(SpecialOption.Header);
-    if (footerRef.value && props.selectableFooter)
-        options.push(SpecialOption.Footer);
+    // item elements
+    const items = [...itemRefs.value];
 
-    // define current index
+    // add header / footer if available and selectable
+    if (headerRef.value && props.selectableHeader) {
+        availableOptions.unshift(SpecialOption.Header);
+        items.unshift(headerRef.value);
+    }
+    if (footerRef.value && props.selectableFooter) {
+        availableOptions.push(SpecialOption.Footer);
+        items.push(footerRef.value);
+    }
+
+    // define current available options index
     let index: number;
     if (headerHovered.value) index = 0 + direction;
-    else if (footerHovered.value) index = options.length - 1 + direction;
-    else
+    else if (footerHovered.value)
+        index = availableOptions.length - 1 + direction;
+    else {
         index =
-            options.findIndex(
+            availableOptions.findIndex(
                 (o) =>
                     !isSpecialOption(o) && o.key === hoveredOption.value?.key,
             ) + direction;
+    }
 
     // check if index overflow
-    index = index > options.length - 1 ? options.length - 1 : index;
+    index =
+        index > availableOptions.length - 1
+            ? availableOptions.length - 1
+            : index;
     // check if index underflow
     index = index < 0 ? 0 : index;
 
+    // get option element
+    const option = availableOptions[index];
+
     // set hover state
-    setHovered(options[index]);
+    setHovered(option);
 
-    // get items from input
-    let items = itemRefs.value || [];
-    if (headerRef.value && props.selectableHeader)
-        items = [headerRef.value, ...items];
-    if (footerRef.value && props.selectableFooter)
-        items = [...items, footerRef.value];
+    // get real option index
+    index =
+        option === SpecialOption.Header
+            ? -1
+            : option === SpecialOption.Footer
+              ? options.length
+              : options.findIndex((o) => o.key === option.key);
 
+    if (headerRef.value && props.selectableHeader) index++;
+
+    const dropdownMenu = unrefElement(dropdownRef.value.$content);
     const element = unrefElement(items[index]);
     if (!element) return;
 
     // define scroll position
-    const dropdownMenu = unrefElement(dropdownRef.value.$content);
     const visMin = dropdownMenu.scrollTop;
     const visMax =
         dropdownMenu.scrollTop +
@@ -435,7 +452,8 @@ function navigateItem(direction: 1 | -1): void {
             dropdownMenu.clientHeight +
             element.clientHeight;
     }
-    // trigger scroll
+
+    // trigger scroll events
     if (props.checkScroll) checkDropdownScroll();
 }
 
@@ -509,15 +527,12 @@ function rightIconClick(event: Event): void {
 
 // --- InfitiveScroll Feature ---
 
-onMounted(() => {
-    if (isClient && props.checkScroll && dropdownRef.value?.$content)
-        useEventListener(
-            "scroll",
-            checkDropdownScroll,
-            dropdownRef.value.$content,
-            { immediate: true },
-        );
-});
+if (isClient && props.checkScroll)
+    useEventListener(
+        "scroll",
+        checkDropdownScroll,
+        computed(() => dropdownRef.value.$content),
+    );
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {

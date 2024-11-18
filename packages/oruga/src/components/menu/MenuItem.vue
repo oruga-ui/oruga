@@ -3,7 +3,7 @@ import { computed, type PropType, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import {
     defineClasses,
     useProviderChild,
@@ -48,7 +48,7 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("menu.iconPack"),
+        default: () => getDefault("menu.iconPack"),
     },
     /**
      * Icon size
@@ -56,17 +56,17 @@ const props = defineProps({
      */
     iconSize: {
         type: String,
-        default: () => getOption("menu.iconSize"),
+        default: () => getDefault("menu.iconSize"),
     },
     /** Transition name to apply on menu list */
     animation: {
         type: String,
-        default: () => getOption("menu.animation", "slide"),
+        default: () => getDefault("menu.animation", "slide"),
     },
     /** Menu item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("menu.menuTag", "button"),
+        default: () => getDefault("menu.menuTag", "button"),
     },
     /**
      * Role attribute to be passed to the list item for better accessibility.
@@ -74,7 +74,7 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: () => getOption("menu.itemAriaRole", "menuitem"),
+        default: () => getDefault("menu.itemAriaRole", "menuitem"),
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element of menu item */
@@ -114,12 +114,12 @@ defineEmits<{
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * expanded prop two-way binding
      * @param value {boolean} updated expanded prop
      */
-    (e: "update:expanded", value: boolean): void;
+    "update:expanded": [value: boolean];
 }>();
 
 const providedData = computed<MenuItemComponent>(() => ({

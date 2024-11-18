@@ -10,7 +10,7 @@ import {
 
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -44,7 +44,7 @@ const props = defineProps({
      */
     variant: {
         type: String,
-        default: () => getOption("tooltip.variant"),
+        default: () => getDefault("tooltip.variant"),
     },
     /**
      * Position of the Tooltip relative to the trigger
@@ -52,7 +52,7 @@ const props = defineProps({
      */
     position: {
         type: String,
-        default: () => getOption("tooltip.position", "auto"),
+        default: () => getDefault("tooltip.position", "auto"),
         validator: (value: string) =>
             [
                 "auto",
@@ -73,14 +73,14 @@ const props = defineProps({
     /** Tooltip default animation */
     animation: {
         type: String,
-        default: () => getOption("tooltip.animation", "fade"),
+        default: () => getDefault("tooltip.animation", "fade"),
     },
     /** Tooltip will be multilined */
     multiline: { type: Boolean, default: false },
     /** Tooltip trigger tag name */
     triggerTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("tooltip.triggerTag", "div"),
+        default: () => getDefault("tooltip.triggerTag", "div"),
     },
     /**
      * Tooltip trigger events
@@ -88,7 +88,7 @@ const props = defineProps({
      */
     triggers: {
         type: Array as PropType<string[]>,
-        default: () => getOption("tooltip.triggers", ["hover"]),
+        default: () => getDefault("tooltip.triggers", ["hover"]),
         validator: (values: string[]) =>
             values.filter(
                 (value) =>
@@ -105,7 +105,7 @@ const props = defineProps({
     closeable: {
         type: [Array, Boolean] as PropType<string[] | boolean>,
         default: () =>
-            getOption("tooltip.closeable", ["escape", "outside", "content"]),
+            getDefault("tooltip.closeable", ["escape", "outside", "content"]),
     },
     /**
      * Append the component to another part of the DOM.
@@ -114,7 +114,7 @@ const props = defineProps({
      */
     teleport: {
         type: [Boolean, String, Object],
-        default: () => getOption("dropdown.teleport", false),
+        default: () => getDefault("dropdown.teleport", false),
     },
     // class props (will not be displayed in the docs)
     /** Class of the root element */
@@ -174,11 +174,11 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {boolean} - updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /** on active change to false event */
-    (e: "close"): void;
+    close: [];
     /** on active change to true event */
-    (e: "open"): void;
+    open: [];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });

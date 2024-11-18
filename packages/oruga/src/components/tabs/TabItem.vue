@@ -1,8 +1,7 @@
 <script setup lang="ts" generic="T, C extends Component">
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
-import { getOption } from "@/utils/config";
-import { isEqual } from "@/utils/helpers";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { TabsComponent, TabItemComponent } from "./types";
@@ -24,10 +23,10 @@ const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     label: undefined,
     disabled: false,
     visible: true,
-    icon: () => getOption("tabs.icon"),
-    iconPack: () => getOption("tabs.iconPack"),
-    tag: () => getOption("tabs.itemTag", "button"),
-    ariaRole: () => getOption("tabs.ariaRole", "tabpanel"),
+    icon: () => getDefault("tabs.icon"),
+    iconPack: () => getDefault("tabs.iconPack"),
+    tag: () => getDefault("tabs.itemTag", "button"),
+    ariaRole: () => getDefault("tabs.ariaRole", "tabpanel"),
     content: undefined,
     component: undefined,
     props: undefined,
@@ -36,9 +35,9 @@ const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
 
 const emits = defineEmits<{
     /** on tab item activate event */
-    (e: "activate"): void;
+    activate: [];
     /** on tab item deactivate event */
-    (e: "deactivate"): void;
+    deactivate: [];
 }>();
 
 const itemValue = props.value || useId();
@@ -59,13 +58,13 @@ const providedData = computed<TabItemComponent<T>>(() => ({
 }));
 
 // Inject functionalities and data from the parent component
-const { parent, item } = useProviderChild<TabsComponent<T>>({
+const { parent, item } = useProviderChild<TabsComponent>({
     data: providedData,
 });
 
 const transitionName = ref();
 
-const isActive = computed(() => isEqual(itemValue, parent.value.activeValue));
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const isTransitioning = ref(false);
 
@@ -168,9 +167,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 :class="panelClasses"
                 :data-id="`tabs-${item.identifier}`"
                 data-oruga="tabs-item"
-                :role="ariaRole"
                 :aria-labelledby="`tab-${item.identifier}`"
-                :tabindex="isActive ? 0 : -1"
                 aria-roledescription="item">
                 <!-- 
                     @slot Tab item content

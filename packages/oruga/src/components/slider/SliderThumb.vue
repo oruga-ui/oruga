@@ -32,13 +32,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: number | number[]): void;
+    "update:model-value": [value: number | number[]];
     /** on value change event */
-    (e: "change"): void;
+    change: [];
     /** on drag start event */
-    (e: "dragstart"): void;
+    dragstart: [];
     /** on drag end event */
-    (e: "dragend"): void;
+    dragend: [];
 }>();
 
 const isFocused = ref(false);
@@ -193,7 +193,7 @@ function setPosition(percent: number | undefined): void {
     let value =
         ((steps * stepLength) / 100) * (max.value - min.value) + min.value;
     value = parseFloat(value.toFixed(precision.value));
-    emits("update:modelValue", value);
+    emits("update:model-value", value);
 
     if (!dragging.value && value !== oldValue.value) oldValue.value = value;
 }

@@ -68,19 +68,16 @@ export function injectField(): {
         return undefined;
     });
 
-    const statusVariantIconConfig = getOption<Record<string, string>>(
-        "statusVariantIcon",
-        {
-            success: "check",
-            danger: "alert-circle",
-            info: "information",
-            warning: "alert",
-        },
-    );
+    const statusVariantIconConfig = getOption("statusVariantIcon", {
+        success: "check",
+        danger: "alert-circle",
+        info: "information",
+        warning: "alert",
+    });
 
     /** Icon name based on the variant. */
     const statusVariantIcon = computed<string>(() => {
-        if (!statusVariant.value) return "";
+        if (!statusVariant.value || !statusVariantIconConfig) return "";
         return statusVariantIconConfig[statusVariant.value] || "";
     });
 

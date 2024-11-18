@@ -14,7 +14,7 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
@@ -48,7 +48,7 @@ const props = defineProps({
     /** Timer interval for `autoplay` */
     interval: {
         type: Number,
-        default: () => getOption("carousel.interval", 3500),
+        default: () => getDefault("carousel.interval", 3500),
     },
     /** Move item automaticalls after `interval` */
     autoplay: { type: Boolean, default: false },
@@ -74,32 +74,32 @@ const props = defineProps({
     /** Position of the indicator - depends on used theme */
     indicatorPosition: {
         type: String,
-        default: () => getOption("carousel.indicatorPosition", "bottom"),
+        default: () => getDefault("carousel.indicatorPosition", "bottom"),
     },
     /** Style of the indicator - depends on used theme */
     indicatorStyle: {
         type: String,
-        default: () => getOption("carousel.indicatorStyle", "dots"),
+        default: () => getDefault("carousel.indicatorStyle", "dots"),
     },
     /** Number of items to show at once*/
     itemsToShow: {
         type: Number,
-        default: () => getOption("carousel.itemsToShow", 1),
+        default: () => getDefault("carousel.itemsToShow", 1),
     },
     /** Number of items to switch at once */
     itemsToList: {
         type: Number,
-        default: () => getOption("carousel.itemsToList", 1),
+        default: () => getDefault("carousel.itemsToList", 1),
     },
     /** Show next / prev arrows */
     arrows: {
         type: Boolean,
-        default: () => getOption("carousel.arrows", true),
+        default: () => getDefault("carousel.arrows", true),
     },
     /** Show next / prev arrows only on hover */
     arrowsHover: {
         type: Boolean,
-        default: () => getOption("carousel.arrowsHover", true),
+        default: () => getDefault("carousel.arrowsHover", true),
     },
     /**
      * Icon pack to use
@@ -107,7 +107,7 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("carousel.iconPack"),
+        default: () => getDefault("carousel.iconPack"),
     },
     /**
      * Icon size
@@ -115,17 +115,17 @@ const props = defineProps({
      */
     iconSize: {
         type: String,
-        default: () => getOption("carousel.iconSize"),
+        default: () => getDefault("carousel.iconSize"),
     },
     /** Icon name for previous icon */
     iconPrev: {
         type: String,
-        default: () => getOption("carousel.iconPrev", "chevron-left"),
+        default: () => getDefault("carousel.iconPrev", "chevron-left"),
     },
     /** Icon name for next icon */
     iconNext: {
         type: String,
-        default: () => getOption("carousel.iconNext", "chevron-right"),
+        default: () => getDefault("carousel.iconNext", "chevron-right"),
     },
     /** Define these props for different screen sizes */
     breakpoints: {
@@ -215,17 +215,17 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number} updated modelValue prop
      */
-    (e: "update:modelValue", value: number): void;
+    "update:model-value": [value: number];
     /**
      * on carousel scroll event
      * @param value {number} scroll index
      */
-    (e: "scroll", value: number): void;
+    scroll: [value: number];
     /**
      * on item click event
      * @param event {event} native event
      */
-    (e: "click", event: Event): void;
+    click: [event: Event];
 }>();
 
 const rootRef = useTemplateRef("rootElement");
