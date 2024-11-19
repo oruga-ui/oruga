@@ -14,7 +14,8 @@
   },
   "include": [
     ".vitepress/**/*",
-    "docgen.config.js"
+    "src/**/*",
+    "src/**/*.ts", 
   ],
   "exclude": [
     "node_modules"

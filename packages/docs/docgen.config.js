@@ -61,7 +61,7 @@ let checker = createChecker(
     { forceUseTs: true, printer: { newLine: 1 } },
 );
 
-createThemeDocs();
+// createThemeDocs();
 
 export default {
     componentsRoot: `../oruga/src/components`,
@@ -412,53 +412,4 @@ ${renderThemeVariables(theme)}
 </div>`,
 ).join("")}
 `;
-}
-
-function createThemeDocs() {
-    THEMES.map((theme) => {
-        let componentPath = getThemePath(theme, "/scss/utils/_variables.scss");
-        if (!componentPath)
-            componentPath = getThemePath(
-                theme,
-                "/scss/utilities/_variables.scss",
-            );
-        if (!componentPath)
-            componentPath = getThemePath(
-                theme,
-                "/scss/components/utils/_variables.scss",
-            );
-        if (!componentPath) {
-            const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
-            fs.writeFileSync(`./themes/${theme.key}.md`, noStyle);
-            return;
-        }
-        const cssFile = path.resolve(componentPath);
-        const content = fs.readFileSync(cssFile, "utf8");
-        const file = content
-            // split file
-            .split(/(\r\n|\n|\r)/gm)
-            // remove commands and empty rows
-            .filter(
-                (d) =>
-                    !d.match(/(?:@use|\*{2}|\*{1}\s|\/\*)/) &&
-                    !d.match(/(\r\n|\n|\r)/),
-            );
-        // remove starting empty lines
-        while (file[0] == "") file.shift();
-        // remove ending empty lines
-        while (file[file.length - 1] == "") file.pop();
-
-        const md = `<div class="${theme.key}">
-
-> Current theme ➜ _[${theme.label}](${theme.git})_
-
-\`\`\`scss
-${file.join("\n")}
-\`\`\`
-
-See ➜ 📄 [SCSS files](${theme.src}/scss/)
-</div>
-`;
-        fs.writeFileSync(`./themes/${theme.key}.md`, md);
-    });
 }
