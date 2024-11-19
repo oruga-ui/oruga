@@ -10,7 +10,7 @@ const nextIcon = ref("chevron-right");
 const total = ref(200);
 const current = ref(10);
 const perPage = ref(10);
-const order = ref("left");
+const order = ref<"left" | "centered" | "right">("left");
 const size = ref("");
 </script>
 

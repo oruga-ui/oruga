@@ -9,7 +9,6 @@ import {
     readonly,
     toRaw,
     useTemplateRef,
-    type PropType,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -24,7 +23,8 @@ import {
 } from "@/composables";
 
 import type { CarouselComponent } from "./types";
-import type { ComponentClass, ClassBind } from "@/types";
+import type { ClassBind } from "@/types";
+import type { CarouselProps } from "./props";
 
 /**
  * A Slideshow for cycling images in confined spaces
@@ -38,176 +38,29 @@ defineOptions({
     configField: "carousel",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The index of the current active element */
-    modelValue: { type: Number, default: 0 },
-    /** Enable drag mode */
-    dragable: { type: Boolean, default: true },
-    /** Timer interval for `autoplay` */
-    interval: {
-        type: Number,
-        default: () => getDefault("carousel.interval", 3500),
-    },
-    /** Move item automaticalls after `interval` */
-    autoplay: { type: Boolean, default: false },
-    /** Pause autoplay on hover */
-    pauseHover: { type: Boolean, default: false },
-    /** Repeat from the beginning after reaching the end */
-    repeat: { type: Boolean, default: false },
-    /** Show an overlay */
-    overlay: { type: Boolean, default: false },
-    /** Enable indicators */
-    indicators: { type: Boolean, default: true },
-    /** Place indicators inside the carousel */
-    indicatorInside: { type: Boolean, default: false },
-    /**
-     * Indicator interaction mode
-     * @values click, hover
-     */
-    indicatorMode: {
-        type: String,
-        default: "click",
-        validator: (value: string) => ["click", "hover"].indexOf(value) >= 0,
-    },
-    /** Position of the indicator - depends on used theme */
-    indicatorPosition: {
-        type: String,
-        default: () => getDefault("carousel.indicatorPosition", "bottom"),
-    },
-    /** Style of the indicator - depends on used theme */
-    indicatorStyle: {
-        type: String,
-        default: () => getDefault("carousel.indicatorStyle", "dots"),
-    },
-    /** Number of items to show at once*/
-    itemsToShow: {
-        type: Number,
-        default: () => getDefault("carousel.itemsToShow", 1),
-    },
-    /** Number of items to switch at once */
-    itemsToList: {
-        type: Number,
-        default: () => getDefault("carousel.itemsToList", 1),
-    },
-    /** Show next / prev arrows */
-    arrows: {
-        type: Boolean,
-        default: () => getDefault("carousel.arrows", true),
-    },
-    /** Show next / prev arrows only on hover */
-    arrowsHover: {
-        type: Boolean,
-        default: () => getDefault("carousel.arrowsHover", true),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getDefault("carousel.iconPack"),
-    },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: {
-        type: String,
-        default: () => getDefault("carousel.iconSize"),
-    },
-    /** Icon name for previous icon */
-    iconPrev: {
-        type: String,
-        default: () => getDefault("carousel.iconPrev", "chevron-left"),
-    },
-    /** Icon name for next icon */
-    iconNext: {
-        type: String,
-        default: () => getDefault("carousel.iconNext", "chevron-right"),
-    },
-    /** Define these props for different screen sizes */
-    breakpoints: {
-        type: Object as PropType<Record<number, any>>,
-        default: () => ({}),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the root element in overlay */
-    overlayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the wrapper element of carousel items */
-    wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of slider items */
-    itemsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of slider items on drag */
-    itemsDraggingClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of arrow elements */
-    arrowIconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of prev arrow element */
-    arrowIconPrevClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of next arrow element */
-    arrowIconNextClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator link element */
-    indicatorClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element */
-    indicatorsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element when inside */
-    indicatorsInsideClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element when inside and position */
-    indicatorsInsidePositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator item element */
-    indicatorItemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator element when is active */
-    indicatorItemActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator element to separate different styles */
-    indicatorItemStyleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<CarouselProps>(), {
+    override: undefined,
+    modelValue: 0,
+    dragable: true,
+    interval: () => getDefault("carousel.interval", 3500),
+    autoplay: false,
+    pauseHover: false,
+    repeat: false,
+    overlay: false,
+    indicators: true,
+    indicatorInside: false,
+    indicatorMode: "click",
+    indicatorPosition: () => getDefault("carousel.indicatorPosition", "bottom"),
+    indicatorStyle: () => getDefault("carousel.indicatorStyle", "dots"),
+    itemsToShow: () => getDefault("carousel.itemsToShow", 1),
+    itemsToList: () => getDefault("carousel.itemsToList", 1),
+    arrows: () => getDefault("carousel.arrows", true),
+    arrowsHover: () => getDefault("carousel.arrowsHover", true),
+    iconPack: () => getDefault("carousel.iconPack"),
+    iconSize: () => getDefault("carousel.iconSize"),
+    iconPrev: () => getDefault("carousel.iconPrev", "chevron-left"),
+    iconNext: () => getDefault("carousel.iconNext", "chevron-right"),
+    breakpoints: () => ({}),
 });
 
 const emits = defineEmits<{

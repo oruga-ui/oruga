@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useTemplateRef, type PropType } from "vue";
+import { computed, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -11,7 +11,7 @@ import {
 } from "@/composables";
 
 import type { MenuComponent, MenuItemComponent } from "./types";
-import type { ComponentClass } from "@/types";
+import type { MenuProps } from "./props";
 
 /**
  * A simple menu
@@ -25,60 +25,15 @@ defineOptions({
     configField: "menu",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Menu label */
-    label: { type: String, default: undefined },
-    /** If sub menu items are collapsible */
-    accordion: { type: Boolean, default: true },
-    /** If the menu items are clickable */
-    activable: { type: Boolean, default: true },
-    /**
-     * Role attribute to be passed to the list container for better accessibility.
-     * Use menu only in situations where your dropdown is related to a navigation menu.
-     * @values list, menu, dialog
-     */
-    ariaRole: {
-        type: String,
-        default: () => getDefault("menu.ariaRole", "menu"),
-        validator: (value: string) =>
-            ["menu", "list", "dialog"].indexOf(value) > -1,
-    },
-    /** Icon to be shown */
-    icon: { type: String, default: undefined },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getDefault("menu.iconPack"),
-    },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: {
-        type: String,
-        default: () => getDefault("menu.iconSize"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu list */
-    listClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu list label */
-    listLabelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<MenuProps>(), {
+    override: undefined,
+    label: undefined,
+    accordion: true,
+    activable: true,
+    ariaRole: () => getDefault("menu.ariaRole", "menu"),
+    icon: undefined,
+    iconPack: () => getDefault("menu.iconPack"),
+    iconSize: () => getDefault("menu.iconSize"),
 });
 
 const rootRef = useTemplateRef("rootElement");

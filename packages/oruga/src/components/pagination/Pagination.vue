@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch, nextTick, type PropType } from "vue";
+import { computed, watch, nextTick } from "vue";
 
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
@@ -7,7 +7,8 @@ import OIcon from "../icon/Icon.vue";
 import { getDefault } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { PaginationProps } from "./props";
+import type { DynamicComponent } from "@/types";
 
 /**
  * A responsive and flexible pagination
@@ -21,176 +22,28 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Total count of items */
-    total: { type: Number, default: undefined },
-    /** Items count for each page */
-    perPage: {
-        type: [Number, String],
-        default: () => getDefault("pagination.perPage", 20),
-    },
-    /** Current page number, use v-model:current to make it two-way binding */
-    current: { type: Number, default: 1 },
-    /** Number of pagination items to show before current page. */
-    rangeBefore: { type: Number, default: 1 },
-    /** Number of pagination items to show after current page. */
-    rangeAfter: { type: Number, default: 1 },
-    /**
-     * Pagination size
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getDefault("pagination.size"),
-    },
-    /** Enable simple style */
-    simple: {
-        type: Boolean,
-        default: () => getDefault("pagination.simple", false),
-    },
-    /** Enable rounded button style */
-    rounded: {
-        type: Boolean,
-        default: () => getDefault("pagination.rounded", false),
-    },
-    /**
-     * Buttons order
-     * @values centered, right, left
-     */
-    order: {
-        type: String,
-        default: () => getDefault("pagination.order", "right"),
-        validator: (value: string) =>
-            ["centered", "right", "left"].indexOf(value) >= 0,
-    },
-    /** Pagination button tag name */
-    buttonTag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getDefault("pagination.buttonTag", "button"),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getDefault("pagination.iconPack"),
-    },
-    /** Icon to use for previous button */
-    iconPrev: {
-        type: String,
-        default: () => getDefault("pagination.iconPrev", "chevron-left"),
-    },
-    /** Icon to use for next button */
-    iconNext: {
-        type: String,
-        default: () => getDefault("pagination.iconNext", "chevron-right"),
-    },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getDefault("pagination.mobileBreakpoint"),
-    },
-    /** Accessibility label for the next page button. */
-    ariaNextLabel: {
-        type: String,
-        default: () => getDefault("pagination.ariaNextLabel", "Next page"),
-    },
-    /** Accessibility label for the previous page button. */
-    ariaPreviousLabel: {
-        type: String,
-        default: () =>
-            getDefault("pagination.ariaPreviousLabel", "Previous page"),
-    },
-    /** Accessibility label for the page button. */
-    ariaPageLabel: {
-        type: String,
-        default: () => getDefault("pagination.ariaPageLabel", "Page"),
-    },
-    /** Accessibility label for the current page button. */
-    ariaCurrentLabel: {
-        type: String,
-        default: () =>
-            getDefault("pagination.ariaCurrentLabel", "Current page"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination list */
-    listClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination list items */
-    listItemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the link button */
-    buttonClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the current link */
-    buttonCurrentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the disabled link */
-    buttonDisabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the prev button */
-    buttonPrevClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the next button */
-    buttonNextClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination ellipsis */
-    ellipsisClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the info in `simple` mode */
-    infoClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination order */
-    orderClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination in `simple` mode */
-    simpleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination when rounded */
-    roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the pagination size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of pagination component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<PaginationProps>(), {
+    override: undefined,
+    total: undefined,
+    perPage: () => getDefault("pagination.perPage", 20),
+    current: 1,
+    rangeBefore: 1,
+    rangeAfter: 1,
+    size: () => getDefault("pagination.size"),
+    simple: () => getDefault("pagination.simple", false),
+    rounded: () => getDefault("pagination.rounded", false),
+    order: () => getDefault("pagination.order", "right"),
+    buttonTag: () => getDefault("pagination.buttonTag", "button"),
+    iconPack: () => getDefault("pagination.iconPack"),
+    iconPrev: () => getDefault("pagination.iconPrev", "chevron-left"),
+    iconNext: () => getDefault("pagination.iconNext", "chevron-right"),
+    mobileBreakpoint: () => getDefault("pagination.mobileBreakpoint"),
+    ariaNextLabel: () => getDefault("pagination.ariaNextLabel", "Next page"),
+    ariaPreviousLabel: () =>
+        getDefault("pagination.ariaPreviousLabel", "Previous page"),
+    ariaPageLabel: () => getDefault("pagination.ariaPageLabel", "Page"),
+    ariaCurrentLabel: () =>
+        getDefault("pagination.ariaCurrentLabel", "Current page"),
 });
 
 const emits = defineEmits<{

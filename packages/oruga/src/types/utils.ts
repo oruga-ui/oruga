@@ -1,5 +1,5 @@
-import type { Component } from "vue";
-import type { ComponentProps } from "vue-component-type-helpers";
+import type { Component, EmitsToProps } from "vue";
+import type { ComponentEmit } from "vue-component-type-helpers";
 
 export type ClassBind = {
     [x: string]: boolean;
@@ -21,25 +21,8 @@ export type DynamicComponent = string | object | CallableFunction | Component;
 /** Define a property as required */
 export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
-/**
- * Extract all properties of an object which starts with a `on` prefix.
- * It also cuts the `on` prefix and lowercase the first char.
- */
-type ComponentEmitsByProps<T> = {
-    [K in keyof T as K extends `on${infer S}`
-        ? S extends `${infer First}${infer Rest}`
-            ? `${Lowercase<First>}${Rest}`
-            : S
-        : never]: T[K];
-};
-
-/**
- * Custom type helper which extracts the `$emits` type of an component as object.
- *
- * Because the `ComponentEmit` from "vue-component-type-helpers" does not export the emits as an object but as:
- * `((event: "close", ...args: any[]) => void) | undefined`
- */
-export type ComponentEmits<C> = ComponentEmitsByProps<ComponentProps<C>>;
+/** Custom type helper which extracts the `$emits` type of an component and converts it to an props object. */
+export type ComponentEmits<C> = EmitsToProps<ComponentEmit<C>>;
 
 /** Extracts the type of property `K` in object `T`. */
 type TypeOfKey<T, K extends string> = K extends keyof T ? T[K] : unknown;
