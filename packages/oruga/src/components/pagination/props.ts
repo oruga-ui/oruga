@@ -50,8 +50,8 @@ export type PaginationProps = {
     ariaCurrentLabel?: string;
 } & PaginationClasses;
 
+// class props (will not be displayed in the docs)
 type PaginationClasses = Partial<{
-    // class props (will not be displayed in the docs)
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the pagination list */

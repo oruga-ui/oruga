@@ -20,6 +20,7 @@ export type FieldProps = {
     labelFor?: string;
     /** Help message text */
     message?: string;
+    /** Message element tag name */
     messageTag?: DynamicComponent;
     /**
      * Direct child components/elements of Field will be grouped horizontally

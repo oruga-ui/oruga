@@ -98,6 +98,7 @@ export type CarouselItemProps = {
     ariaRole?: string;
 } & CarouselItemClasses;
 
+// class props (will not be displayed in the docs)
 type CarouselItemClasses = Partial<{
     /** Class of carousel item */
     itemClass: ComponentClass;
