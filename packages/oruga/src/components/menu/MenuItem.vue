@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type PropType, useTemplateRef } from "vue";
+import { computed, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -16,7 +16,7 @@ import type {
     MenuItemComponent,
     MenuItemProvider,
 } from "./types";
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { MenuItemProps } from "./props";
 
 /**
  * A menu list item
@@ -29,84 +29,18 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The active state of the menu item, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-    /** Menu item label */
-    label: { type: String, default: undefined },
-    /** Menu item will be expanded */
-    expanded: { type: Boolean, default: false },
-    /** Menu item will be disabled */
-    disabled: { type: Boolean, default: false },
-    /** Icon to be shown */
-    icon: { type: String, default: undefined },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getDefault("menu.iconPack"),
-    },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: {
-        type: String,
-        default: () => getDefault("menu.iconSize"),
-    },
-    /** Transition name to apply on menu list */
-    animation: {
-        type: String,
-        default: () => getDefault("menu.animation", "slide"),
-    },
-    /** Menu item tag name */
-    tag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getDefault("menu.menuTag", "button"),
-    },
-    /**
-     * Role attribute to be passed to the list item for better accessibility.
-     * @values listitem, menuitem
-     */
-    ariaRole: {
-        type: String,
-        default: () => getDefault("menu.itemAriaRole", "menuitem"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element of menu item */
-    itemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu item */
-    itemButtonClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the active menu item */
-    itemButtonActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the disabled menu item */
-    itemButtonDisabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu item with icon */
-    itemButtonIconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu item when is a submenu */
-    itemSubmenuClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<MenuItemProps>(), {
+    override: undefined,
+    active: false,
+    label: undefined,
+    expanded: false,
+    disabled: false,
+    icon: undefined,
+    iconPack: () => getDefault("menu.iconPack"),
+    iconSize: () => getDefault("menu.iconSize"),
+    animation: () => getDefault("menu.animation", "slide"),
+    tag: () => getDefault("menu.menuTag", "button"),
+    ariaRole: () => getDefault("menu.itemAriaRole", "menuitem"),
 });
 
 defineEmits<{

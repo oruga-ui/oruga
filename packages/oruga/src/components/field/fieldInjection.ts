@@ -6,10 +6,8 @@ import {
     type InjectionKey,
 } from "vue";
 
-import Field from "./Field.vue";
 import { getOption } from "@/utils/config";
-
-export type FieldProps = InstanceType<typeof Field>["$props"];
+import type { FieldProps } from "./props";
 
 type FieldData = {
     $el: Element | null;

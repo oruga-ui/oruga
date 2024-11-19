@@ -3,7 +3,7 @@
 exports[`OModal tests > render correctly 1`] = `
 "<!--teleport start-->
 <transition-stub name="zoom-out" appear="false" persisted="true" css="true">
-  <div data-oruga="modal" class="o-modal" tabindex="-1" aria-modal="false" style="display: none;">
+  <div data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
     <div class="o-modal__overlay" tabindex="-1"></div>
     <div class="o-modal__content" style="max-width: 960px;">
       <!-- injected component for programmatic usage -->

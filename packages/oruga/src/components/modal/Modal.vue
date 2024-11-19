@@ -49,7 +49,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
         getDefault("modal.cancelable", ["escape", "x", "outside"]),
     scroll: () => getDefault("modal.scroll", "keep"),
     trapFocus: () => getDefault("modal.trapFocus", true),
-    ariaRole: () => getDefault("modal.ariaRole"),
+    ariaRole: () => getDefault("modal.ariaRole", "dialog"),
     ariaLabel: () => getDefault("modal.ariaLabel"),
     autoFocus: () => getDefault("modal.autoFocus", true),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
