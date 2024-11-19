@@ -98,11 +98,11 @@ export type CarouselItemProps = {
     ariaRole?: string;
 } & CarouselItemClasses;
 
-type CarouselItemClasses = {
+type CarouselItemClasses = Partial<{
     /** Class of carousel item */
     itemClass: ComponentClass;
     /** Class of carousel item when is active */
     itemActiveClass: ComponentClass;
     /** Class of carousel item when is clickable */
     itemClickableClass: ComponentClass;
-};
+}>;

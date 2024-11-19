@@ -8,7 +8,7 @@ export type SkeletonProps = {
     /** Show a loading animation */
     animated?: boolean;
     /** Custom width */
-    widtd?: number | string;
+    width?: number | string;
     /** Custom height */
     height?: number | string;
     /** Show a circle shape */
