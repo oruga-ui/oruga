@@ -37,7 +37,7 @@
 | contentId | Id property of the content container - default is an uuid                    | string            | -               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                        |
 | open      | Whether collapse is open or not, use v-model:open to make it two-way binding | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                           |
 | override  | Override existing theme classes completely                                   | boolean           | -               |                                                                                                                                                      |
-| position  | Trigger position                                                             | "top" \| "bottom" | `top`, `bottom` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |
+| position  | Trigger position                                                             | "bottom" \| "top" | `top`, `bottom` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |
 
 ### Events
 

@@ -26,6 +26,7 @@ import {
     functionalTag,
 } from "vue-docgen-cli/lib/compileTemplates";
 import { createThemeDocs } from "./themes-helper";
+import type { FileEventType } from "vue-docgen-cli/lib/config";
 
 // Components to be ignored for creating docs
 const IGNORE_COMPONENTS = [
@@ -71,7 +72,8 @@ export async function run(
         docsFolder: "packages/docs",
         defaultExamples: false,
         ignore: IGNORE_COMPONENTS,
-        propsParser: (filePath: string) => parser(checker, filePath),
+        propsParser: (filePath: string, opts, event?: FileEventType) =>
+            parser(checker, filePath, event),
         templates: {
             props: renderProps,
             slots: renderSlots,

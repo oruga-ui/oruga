@@ -15,7 +15,7 @@ export function renderer(
     opt: SubTemplateOptions,
     doc: ComponentDoc,
 ): string {
-    const name = doc.exportName;
+    const name = doc.name;
     const props = descriptor;
 
     const tag = (name.match(/[A-Z][a-z]+/g) || []).join("-").toLowerCase();
@@ -37,11 +37,19 @@ export function renderer(
             if (!IGNORE_CLASSES[tag]?.includes(name.toLowerCase())) return;
         }
 
-        const type = pr.tags?.type
+        let type = pr.tags?.type
             ? String((pr.tags?.type[0] as ParamTag).description)
             : pr.type?.name
               ? pr.type.name
               : "";
+
+        // if type has multiple values, sort type
+        if (type.includes(" | ") && !type.includes("("))
+            type = type
+                .split(" | ")
+                .sort((a, b) => a.localeCompare(b))
+                .join(" | ");
+
         let value = pr.defaultValue?.value ? pr.defaultValue.value : "";
         const values = pr.values
             ? pr.values.map((pv) => `\`${pv}\``).join(", ")

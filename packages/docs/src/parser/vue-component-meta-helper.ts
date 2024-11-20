@@ -90,7 +90,6 @@ export async function vueComponentMeta(
                     },
                 );
 
-                // TODO: check if this is needed
                 const exposed =
                     // the meta also includes duplicated entries in the "exposed" array with "on"
                     // prefix (e.g. onClick instead of click), so we need to filter them out here

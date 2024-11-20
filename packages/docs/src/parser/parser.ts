@@ -3,6 +3,7 @@ import type { ComponentDoc } from "vue-docgen-api";
 import { mapProps, vueComponentMeta } from "./vue-component-meta-helper";
 import { vueDocgenApi } from "./vue-docgen-api-helper";
 import { getFilenameWithoutExtension } from "../utils";
+import type { FileEventType } from "vue-docgen-cli/lib/config";
 
 const META_PROP_IGNORE = ["key", "ref", "ref_for", "ref_key", "class", "style"];
 
@@ -15,10 +16,11 @@ const META_PROP_IGNORE = ["key", "ref", "ref_for", "ref_key", "class", "style"];
 export async function parser(
     checker: ComponentMetaChecker,
     filePath: string,
+    event?: FileEventType,
 ): Promise<ComponentDoc[]> {
     const component = getFilenameWithoutExtension(filePath);
 
-    console.log(`Processing component ${component}...`);
+    console.debug(`Processing component ${component} in mode ${event}...`);
 
     // analyse component with vue-component-meta
     const metaSources = await vueComponentMeta(checker, filePath);
