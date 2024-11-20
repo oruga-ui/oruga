@@ -173,7 +173,8 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = useTemplateRef("inputComponent");
+// define as Component to prevent docs memmory overload
+const inputRef = useTemplateRef<Component>("inputComponent");
 const dropdownRef = useTemplateRef("dropdownComponent");
 const headerRef = useTemplateRef("headerElement");
 const footerRef = useTemplateRef("footerElement");
@@ -464,7 +465,10 @@ function navigateItem(direction: 1 | -1): void {
 function onKeydown(event: KeyboardEvent): void {
     // prevent emit submit event
     if (event.key === "Enter") event.preventDefault();
-    if (props.confirmKeys.indexOf(event.key) >= 0) {
+    if (
+        Array.isArray(props.confirmKeys) &&
+        props.confirmKeys.indexOf(event.key) >= 0
+    ) {
         // If adding by comma, don't add the comma to the input
         if (event.key === ",") event.preventDefault();
         // Close dropdown on select by Tab
@@ -531,7 +535,7 @@ if (isClient && props.checkScroll)
     useEventListener(
         "scroll",
         checkDropdownScroll,
-        computed(() => dropdownRef.value.$content),
+        computed(() => dropdownRef.value?.$content),
     );
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
@@ -664,7 +668,7 @@ defineExpose({ focus: setFocus, value: inputValue });
                 @keydown="onKeydown"
                 @keydown.up.prevent="navigateItem(-1)"
                 @keydown.down.prevent="navigateItem(1)"
-                @icon-click="(event) => $emit('icon-click', event)"
+                @icon-click="emits('icon-click', $event)"
                 @icon-right-click="rightIconClick" />
         </template>
 

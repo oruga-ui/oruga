@@ -7,14 +7,13 @@
 </div>
 
 <div class="vp-example">
-
 ## Examples
 
 <example-autocomplete />
 
 </div>
-<div class="vp-example">
 
+<div class="vp-example">
 ## Class props
 
 <inspector-autocomplete-viewer />
@@ -22,7 +21,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Autocomplete component
 
 > Extended input that provide suggestions while the user types
@@ -79,21 +77,21 @@
 
 ### Events
 
-| Event name        | Properties                                                                                   | Description                                    |
-| ----------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| icon-click        | **event** `Event` - native event                                                             | on icon click event                            |
-| update:modelValue | **value** `string \| number \| object` - updated modelValue prop                             | modelValue prop two-way binding                |
-| update:input      | **value** `string` - updated input prop                                                      | input prop two-way binding                     |
-| input             | **value** `string` - input value<br/>**event** `Event` - native event                        | on input change event                          |
-| select            | **value** `string \| number \| object` - selected value<br/>**event** `Event` - native event | selected element changed event                 |
-| select-header     | **event** `Event` - native event                                                             | header is selected                             |
-| select-footer     | **event** `Event` - native event                                                             | footer is selected                             |
-| focus             | **event** `Event` - native event                                                             | on input focus event                           |
-| blur              | **event** `Event` - native event                                                             | on input blur event                            |
-| invalid           | **event** `Event` - native event                                                             | on input invalid event                         |
-| icon-right-click  | **event** `Event` - native event                                                             | on icon right click event                      |
-| scroll-start      |                                                                                              | the list inside the dropdown reached the start |
-| scroll-end        |                                                                                              | the list inside the dropdown reached it's end  |
+| Event name         | Properties                                                            | Description                                    |
+| ------------------ | --------------------------------------------------------------------- | ---------------------------------------------- |
+| update:model-value | **value** `T` - updated modelValue prop                               | modelValue prop two-way binding                |
+| update:input       | **value** `string` - updated input prop                               | input prop two-way binding                     |
+| input              | **value** `string` - input value<br/>**event** `Event` - native event | on input change event                          |
+| select             | **value** `T` - selected value<br/>**event** `Event` - native event   | selected element changed event                 |
+| select-header      | **event** `Event` - native event                                      | header is selected                             |
+| select-footer      | **event** `Event` - native event                                      | footer is selected                             |
+| focus              | **event** `Event` - native event                                      | on input focus event                           |
+| blur               | **event** `Event` - native event                                      | on input blur event                            |
+| invalid            | **event** `Event` - native event                                      | on input invalid event                         |
+| icon-click         | **event** `Event` - native event                                      | on icon click event                            |
+| icon-right-click   | **event** `Event` - native event                                      | on icon right click event                      |
+| scroll-start       |                                                                       | the list inside the dropdown reached the start |
+| scroll-end         |                                                                       | the list inside the dropdown reached it's end  |
 
 ### Slots
 
@@ -108,7 +106,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -121,7 +118,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -131,7 +129,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_autocomplete.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
