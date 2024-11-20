@@ -11,14 +11,13 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
-
 ## Examples
 
 <example-slider />
 
 </div>
-<div class="vp-example">
 
+<div class="vp-example">
 ## Class props
 
 <inspector-slider-viewer />
@@ -26,7 +25,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
 ## Slider component
 
 > A slider to select a value or range from a given range
@@ -63,13 +61,13 @@ sidebarDepth: 2
 
 ### Events
 
-| Event name        | Properties                                               | Description                     |
-| ----------------- | -------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `number \| number[]` - updated modelValue prop | modelValue prop two-way binding |
-| change            | **value** `number \| number[]` - updated modelValue prop | on value change event           |
-| dragging          | **value** `number \| number[]` - updated modelValue prop | on dragging event               |
-| dragstart         |                                                          | on drag start event             |
-| dragend           |                                                          | on drag end event               |
+| Event name         | Properties                                               | Description                     |
+| ------------------ | -------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `number \| number[]` - updated modelValue prop | modelValue prop two-way binding |
+| change             | **value** `number \| number[]` - updated modelValue prop | on value change event           |
+| dragging           | **value** `number \| number[]` - updated modelValue prop | on dragging event               |
+| dragstart          |                                                          | on drag start event             |
+| dragend            |                                                          | on drag end event               |
 
 ### Slots
 
@@ -80,7 +78,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
 ## SliderTick component
 
 ```html
@@ -104,10 +101,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
-</div>
-<div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -141,7 +134,8 @@ sidebarDepth: 2
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -166,7 +160,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_slider.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

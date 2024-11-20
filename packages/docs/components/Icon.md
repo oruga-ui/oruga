@@ -7,14 +7,13 @@
 </div>
 
 <div class="vp-example">
-
 ## Examples
 
 <example-icon />
 
 </div>
-<div class="vp-example">
 
+<div class="vp-example">
 ## Class props
 
 <inspector-icon-viewer />
@@ -22,7 +21,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Icon component
 
 > Icons take an important role of any application
@@ -49,7 +47,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -62,7 +59,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_icon.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -72,7 +70,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_icon.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

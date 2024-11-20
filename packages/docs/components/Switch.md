@@ -7,14 +7,13 @@
 </div>
 
 <div class="vp-example">
-
 ## Examples
 
 <example-switch />
 
 </div>
-<div class="vp-example">
 
+<div class="vp-example">
 ## Class props
 
 <inspector-switch-viewer />
@@ -22,7 +21,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Switch component
 
 > Switch between two opposing states
@@ -56,13 +54,13 @@
 
 ### Events
 
-| Event name        | Properties                                                                                           | Description                     |
-| ----------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `string \| number \| boolean \| object` - updated modelValue prop                          | modelValue prop two-way binding |
-| input             | **value** `string \| number \| boolean \| object` - input value<br/>**event** `Event` - native event | on input change event           |
-| focus             | **event** `Event` - native event                                                                     | on input focus event            |
-| blur              | **event** `Event` - native event                                                                     | on input blur event             |
-| invalid           | **event** `Event` - native event                                                                     | on input invalid event          |
+| Event name         | Properties                                                       | Description                     |
+| ------------------ | ---------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `T` - updated modelValue prop                          | modelValue prop two-way binding |
+| input              | **value** `T` - input value<br/>**event** `Event` - native event | on input change event           |
+| focus              | **event** `Event` - native event                                 | on input focus event            |
+| blur               | **event** `Event` - native event                                 | on input blur event             |
+| invalid            | **event** `Event` - native event                                 | on input invalid event          |
 
 ### Slots
 
@@ -73,7 +71,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -95,7 +92,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_switch.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -110,7 +108,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_switch.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

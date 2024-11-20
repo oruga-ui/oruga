@@ -7,14 +7,13 @@
 </div>
 
 <div class="vp-example">
-
 ## Examples
 
 <example-button />
 
 </div>
-<div class="vp-example">
 
+<div class="vp-example">
 ## Class props
 
 <inspector-button-viewer />
@@ -22,7 +21,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Button component
 
 > The classic button, in different colors, sizes, and states
@@ -61,7 +59,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -89,7 +86,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -99,7 +97,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_button.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

@@ -11,14 +11,13 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
-
 ## Examples
 
 <example-dropdown />
 
 </div>
-<div class="vp-example">
 
+<div class="vp-example">
 ## Class props
 
 <inspector-dropdown-viewer />
@@ -26,7 +25,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
 ## Dropdown component
 
 > Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -41,7 +39,7 @@ sidebarDepth: 2
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | active           | The active state of the dropdown, use v-model:active to make it two-way binding                                                                                                  | boolean                                                                                                          | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                  |
 | animation        | Custom animation (transition name)                                                                                                                                               | string                                                                                                           | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>                         |
-| ariaRole         | Role attribute to be passed to the list container for better accessibility.<br/>Use menu only in situations where your dropdown is related to a navigation menu.                 | "dialog" \| "menu" \| "list" \| "listbox"                                                                        | `list`, `listbox`, `menu`, `dialog`                                                              | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;ariaRole: "list"<br>}</code>                          |
+| ariaRole         | Role attribute to be passed to the list container for better accessibility.<br/>Use menu only in situations where your dropdown is related to a navigation menu.                 | "list" \| "listbox" \| "menu" \| "dialog"                                                                        | `list`, `listbox`, `menu`, `dialog`                                                              | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;ariaRole: "list"<br>}</code>                          |
 | checkScroll      | Makes the component check if menu reached scroll start or end and emit scroll events.                                                                                            | boolean                                                                                                          | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;checkScroll: false<br>}</code>                        |
 | closeable        | Dropdown close options (pressing escape, clicking the content or outside)                                                                                                        | boolean \| string[]                                                                                              | `true`, `false`, `escape`, `outside`, `content`                                                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;closeable: ["escape","outside","content"]<br>}</code> |
 | delay            | Dropdown delay before it appears (number in ms)                                                                                                                                  | number                                                                                                           | -                                                                                                |                                                                                                                                                                              |
@@ -70,14 +68,14 @@ sidebarDepth: 2
 
 ### Events
 
-| Event name        | Properties                                                                | Description                                     |
-| ----------------- | ------------------------------------------------------------------------- | ----------------------------------------------- |
-| update:modelValue | **value** `string \| number \| object \| array` - updated modelValue prop | modelValue prop two-way binding                 |
-| update:active     | **value** `boolean` - updated active prop                                 | active prop two-way binding                     |
-| change            | **value** `string \| number \| object \| array` - selected value          | on change event - fired after update:modelValue |
-| close             | **method** `string` - close method                                        | on close event                                  |
-| scroll-start      |                                                                           | the list inside the dropdown reached the start  |
-| scroll-end        |                                                                           | the list inside the dropdown reached it's end   |
+| Event name         | Properties                                     | Description                                     |
+| ------------------ | ---------------------------------------------- | ----------------------------------------------- |
+| update:model-value | **value** `T \| T[]` - updated modelValue prop | modelValue prop two-way binding                 |
+| update:active      | **value** `boolean` - updated active prop      | active prop two-way binding                     |
+| change             | **value** `T \| T[]` - selected value          | on change event - fired after update:modelValue |
+| close              | **method** `string` - close method             | on close event                                  |
+| scroll-start       |                                                | the list inside the dropdown reached the start  |
+| scroll-end         |                                                | the list inside the dropdown reached it's end   |
 
 ### Slots
 
@@ -89,7 +87,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
 ## DropdownItem component
 
 ```html
@@ -98,16 +95,16 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description | Type | Values | Default                                                                                                                                                     |
-| --------- | ----------- | ---- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;itemAriaRole: "listitem"<br>}</code> |
-| clickable |             |      | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                  |
-| disabled  |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                 |
-| label     |             |      | -      |                                                                                                                                                             |
-| override  |             |      | -      |                                                                                                                                                             |
-| tabindex  |             |      | -      | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                     |
-| tag       |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;itemTag: "div"<br>}</code>           |
-| value     |             |      | -      |                                                                                                                                                             |
+| Prop name | Description                                                                                                                                                     | Type                   | Values                           | Default                                                                                                                                                     |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  | Role attribute to be passed to the list item for better accessibility.<br/>Use menuitem only in situations where your dropdown is related to a navigation menu. | string                 | `listitem`, `menuitem`, `button` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;itemAriaRole: "listitem"<br>}</code> |
+| clickable | Item is clickable and emit an event                                                                                                                             | boolean                | -                                | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                  |
+| disabled  | Item is disabled                                                                                                                                                | boolean                | -                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                 |
+| label     | Item label, unnecessary when default slot is used                                                                                                               | string                 | -                                |                                                                                                                                                             |
+| override  | Override existing theme classes completely                                                                                                                      | boolean                | -                                |                                                                                                                                                             |
+| tabindex  | Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key)                                                                       | string \| number       | -                                | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                     |
+| tag       | Dropdown item tag name                                                                                                                                          | DynamicComponent       | -                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;itemTag: "div"<br>}</code>           |
+| value     | Item value (it will be used as v-model of wrapper component) - default is an uuid                                                                               | string\|number\|object | -                                |                                                                                                                                                             |
 
 ### Events
 
@@ -124,10 +121,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
-</div>
-<div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -164,7 +157,8 @@ sidebarDepth: 2
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -178,7 +172,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_dropdown.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

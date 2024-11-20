@@ -7,14 +7,13 @@
 </div>
 
 <div class="vp-example">
-
 ## Examples
 
 <example-modal />
 
 </div>
-<div class="vp-example">
 
+<div class="vp-example">
 ## Class props
 
 <inspector-modal-viewer />
@@ -22,7 +21,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Modal component
 
 > Classic modal overlay to include any content you may need
@@ -38,12 +36,12 @@
 | active           | Whether modal is active or not, use v-model:active to make it two-way binding                                                                                                       | boolean                     | -                                                   | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                          |
 | animation        | Custom animation (transition name)                                                                                                                                                  | string                      | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;animation: "zoom-out"<br>}</code>                |
 | ariaLabel        | Accessibility aria-label to be passed to the div wrapper element                                                                                                                    | string                      | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaLabel: undefined<br>}</code>                 |
-| ariaRole         | Role attribute to be passed to the div wrapper for better accessibility.                                                                                                            | "dialog" \| "alertdialog"   | `dialog`, `alertdialog`                             | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaRole: undefined<br>}</code>                  |
+| ariaRole         | Role attribute to be passed to the div wrapper for better accessibility.                                                                                                            | "dialog" \| "alertdialog"   | `dialog`, `alertdialog`                             | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaRole: "dialog"<br>}</code>                   |
 | autoFocus        | Automatically focus modal when active                                                                                                                                               | boolean                     | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;autoFocus: true<br>}</code>                      |
 | cancelable       | Is Modal cancleable by clicking 'X', pressing escape or clicking outside                                                                                                            | boolean \| string[]         | `escape`, `x`, `outside`, `button`, `true`, `false` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;cancelable: ["escape","x","outside"]<br>}</code> |
 | closeIcon        | Close icon name                                                                                                                                                                     | string                      | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>                   |
 | closeIconSize    | Size of close icon                                                                                                                                                                  | string                      | `small`, `medium`, `large`                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;closeIconSize: "medium"<br>}</code>              |
-| component        | Component to be injected, used to open a component modal programmatically.<br/>Close modal within the component by emitting a 'close' event — emits('close')                        | Component                   | -                                                   |                                                                                                                                                                      |
+| component        | Component to be injected.<br/>Close the component by emitting a 'close' event — `$emit('close')`                                                                                    | Component                   | -                                                   |                                                                                                                                                                      |
 | content          | Text content, unnecessary when default slot is used                                                                                                                                 | string                      | -                                                   |                                                                                                                                                                      |
 | events           | Events to be binded to the injected component                                                                                                                                       | {}                          | -                                                   |                                                                                                                                                                      |
 | fullScreen       | Display modal as full screen                                                                                                                                                        | boolean                     | -                                                   | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                          |
@@ -72,7 +70,6 @@
 </div>
 
 <div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -96,12 +93,14 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_modal.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
 <p>The theme does not have any custom variables for this component.</p>
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
