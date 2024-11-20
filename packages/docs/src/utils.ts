@@ -67,3 +67,19 @@ export function getComponents(dir: string): string[] {
             .filter((key) => !IGNORE.includes(key))
     );
 }
+
+/**
+ * Find a file in a directory, case-insensitive
+ *
+ * @param {string} filepath
+ * @return {string|undefined} File path with correct case
+ */
+export function findFileCaseInsensitive(filepath: string): string | undefined {
+    const dir = path.dirname(filepath);
+    const fileNameLower = path.basename(filepath).toLowerCase();
+    const files = fs.readdirSync(dir);
+    const found = files.find(
+        (file: string) => file.toLowerCase() === fileNameLower,
+    );
+    return found && path.join(dir, found);
+}

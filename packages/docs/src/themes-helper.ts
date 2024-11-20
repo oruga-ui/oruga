@@ -15,24 +15,33 @@ const Themes = themes as ThemeConfig[];
 
 export { Themes };
 
-export function getThemePath(theme: ThemeConfig, suffix: string): string {
+export function getThemePath(
+    theme: ThemeConfig,
+    cwd: string,
+    suffix: string,
+): string {
     // local package node_module path
-    let path = `./node_modules/${theme.path}${suffix}`;
-    if (fs.existsSync(path)) return path;
+    let filePath = path.resolve(cwd, `./node_modules/${theme.path}${suffix}`);
+    if (fs.existsSync(filePath)) return filePath;
     // root node_module path
-    path = `./../../node_modules/${theme.path}${suffix}`;
-    if (fs.existsSync(path)) return path;
+    filePath = path.resolve(cwd, `./../../node_modules/${theme.path}${suffix}`);
+    if (fs.existsSync(filePath)) return filePath;
     // return empty path
     return "";
 }
 
-export function createThemeDocs(themes: ThemeConfig[]): void {
-    themes.forEach((theme) => {
+export function createThemeDocs(cwd: string): void {
+    Themes.forEach((theme) => {
         // get the variable file path
-        let componentPath = getThemePath(theme, "/scss/utils/_variables.scss");
+        let componentPath = getThemePath(
+            theme,
+            cwd,
+            "/scss/utils/_variables.scss",
+        );
         if (!componentPath)
             componentPath = getThemePath(
                 theme,
+                cwd,
                 "/scss/components/utils/_variables.scss",
             );
 

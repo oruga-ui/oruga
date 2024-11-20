@@ -4,9 +4,13 @@ import { type SafeDocgenCLIConfig } from "vue-docgen-cli/lib/config";
 import { getThemePath, Themes, type ThemeConfig } from "../themes-helper";
 
 export function renderer(config: SafeDocgenCLIConfig, name: string): string {
-    const renderThemeVariables = (theme: ThemeConfig) => {
+    const renderThemeVariables = (theme: ThemeConfig): string => {
         const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
-        const componentPath = getThemePath(theme, `/scss/components/${name}`);
+        const componentPath = getThemePath(
+            theme,
+            config.cwd,
+            `/scss/components/${name}`,
+        );
         if (!componentPath) return noStyle;
 
         const cssFile = path.resolve(config.cwd, componentPath);
@@ -43,8 +47,7 @@ See ➜ 📄 [Full scss file](${theme.src}/scss/components/${name})
 `;
     };
 
-    return `
-## Sass variables
+    return `## Sass variables
 
 ${Themes.map(
     (theme) =>
@@ -53,7 +56,8 @@ ${Themes.map(
 > Current theme ➜ _[${theme.label}](${theme.git})_
 
 ${renderThemeVariables(theme)}
-</div>`,
+</div>
+`,
 ).join("")}
 `;
 }

@@ -5,7 +5,7 @@ import {
 } from "vue-docgen-cli/lib/compileTemplates";
 
 // Classes which will be shown in props
-const IGNORE_CLASSES : Record<string, string[]> = {
+const IGNORE_CLASSES: Record<string, string[]> = {
     icon: ["customClass"],
     table: ["rowClass"],
 };

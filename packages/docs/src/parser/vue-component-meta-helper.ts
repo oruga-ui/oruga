@@ -1,6 +1,4 @@
-import { parseMulti } from "vue-docgen-api";
 import type {
-    ComponentDoc,
     PropDescriptor,
     EventDescriptor,
     SlotDescriptor,
@@ -13,11 +11,11 @@ import {
     TypeMeta,
     createChecker,
 } from "vue-component-meta";
-import type {  EventMeta,  PropertyMeta,  SlotMeta,  } from "vue-component-meta";
+import type { EventMeta, PropertyMeta, SlotMeta } from "vue-component-meta";
 import { getFilenameWithoutExtension, lowercaseFirstLetter } from "../utils";
 
 export type MetaSource = {
-    displayName: string;
+    name: string;
     exportName: string;
     sourceFiles: string;
 } & ComponentMeta;
@@ -51,14 +49,8 @@ export async function vueComponentMeta(
     try {
         // create component meta for each name export in the component
         const exportNames = checker.getExportNames(componentPath);
-        let componentsMeta = exportNames.map((name) =>
+        const componentsMeta = exportNames.map((name) =>
             checker.getComponentMeta(componentPath, name),
-        );
-
-        // Applies a temporary workaround/fix for missing event descriptions because Volar is currently not able to extract them.
-        componentsMeta = await applyTempFixForEventDescriptions(
-            componentPath,
-            componentsMeta,
         );
 
         const metaSources: MetaSource[] = componentsMeta
@@ -134,9 +126,9 @@ export async function vueComponentMeta(
                 return {
                     sourceFiles: componentPath,
                     exportName,
-                    displayName:
+                    name:
                         exportName === "default"
-                            ? getFilenameWithoutExtension(componentPath)
+                            ? "O" + getFilenameWithoutExtension(componentPath)
                             : exportName,
                     // add meta properties
                     ...meta,
@@ -153,61 +145,6 @@ export async function vueComponentMeta(
         console.warn(e);
         return undefined;
     }
-}
-
-/**
- * Applies a temporary workaround/fix for missing event descriptions because Volar is currently not
- * able to extract them. Will modify the events of the passed meta. Performance note: Based on some
- * quick tests, calling "parseMulti" only takes a few milliseconds (8-20ms) so it should not
- * decrease performance that much. Especially because it is only execute if the component actually
- * has events.
- *
- * @soruce https://github.com/storybookjs/storybook/blob/next/code/frameworks/vue3-vite/src/plugins/vue-component-meta.ts
- *
- * Check status of this Volar issue: https://github.com/vuejs/language-tools/issues/3893 and
- * update/remove this workaround once Volar supports it:
- *
- * - Delete this function
- * - Uninstall vue-docgen-api dependency
- */
-async function applyTempFixForEventDescriptions(
-    filename: string,
-    componentMeta: ComponentMeta[],
-): Promise<ComponentMeta[]> {
-    // do not apply temp fix if no events exist for performance reasons
-    const hasEvents = componentMeta.some((meta) => meta.events.length);
-
-    if (!hasEvents) return componentMeta;
-
-    try {
-        const parsedComponentDocs = await parseMulti(filename);
-
-        // add event descriptions to the existing Volar meta if available
-        componentMeta.map((meta, index) => {
-            const eventsWithDescription = parsedComponentDocs[index].events;
-
-            if (!meta.events.length || !eventsWithDescription?.length)
-                return meta;
-
-            meta.events = meta.events.map((event) => {
-                const description = eventsWithDescription.find(
-                    (i) => i.name === event.name,
-                )?.description;
-                if (description) {
-                    (
-                        event as typeof event & { description: string }
-                    ).description = description;
-                }
-                return event;
-            });
-
-            return meta;
-        });
-    } catch {
-        // noop
-    }
-
-    return componentMeta;
 }
 
 /**
@@ -228,42 +165,11 @@ function removeNestedSchemas(schema: PropertyMetaSchema): void {
     delete schema.schema;
 }
 
-// export interface ComponentDoc {
-//     displayName: string;
-//     exportName: string;
-//     description?: string;
-//     props?: PropDescriptor[];
-//     methods?: MethodDescriptor[];
-//     slots?: SlotDescriptor[];
-//     events?: EventDescriptor[];
-//     expose?: ExposeDescriptor[];
-//     tags: {
-//         [key: string]: BlockTag[];
-//     };
-//     docsBlocks?: string[];
-//     sourceFiles?: string[];
-//     [key: string]: any;
-// }
-
-/** convert from vue-component-meta to vue-docgen-api type */
-export function transformMeta(metaSource: MetaSource, ignore?: Partial<Record<"props" |"slots" | "events", string[]>>): ComponentDoc {
-    const doc: ComponentDoc = {
-        displayName: metaSource.displayName,
-        exportName: metaSource.exportName,
-        sourceFiles: [metaSource.sourceFiles],
-        description: "", // TODO: add mapping
-        tags: {}, // TODO: add mapping
-    };
-
-    doc["props"] = parseProps(metaSource.props, ignore?.props);
-    doc["events"] = parseEvents(metaSource.events);
-    doc["slots"] = parseSlots(metaSource.slots);
-
-    return doc;
-}
-
 /** trasnform vue-component-meta props type into vue-docgen-api props type */
-function parseProps(props: PropertyMeta[], ignore: string[] = []): PropDescriptor[] {
+export function mapProps(
+    props: PropertyMeta[],
+    ignore: string[] = [],
+): PropDescriptor[] {
     return props
         .filter((p) => !ignore.includes(p.name))
         .map((prop): PropDescriptor => {
@@ -307,23 +213,23 @@ function parseProps(props: PropertyMeta[], ignore: string[] = []): PropDescripto
 }
 
 /** trasnform vue-component-meta events type into vue-docgen-api events type */
-function parseEvents(events: EventMeta[]): EventDescriptor[] {
+export function mapEvents(events: EventMeta[]): EventDescriptor[] {
     return events.map((event): EventDescriptor => {
         // create vue-docgen-api event doc object
         return {
             name: event.name,
+            description: event.description || "",
             type: {
                 // TODO: update this mapping
                 names: [event.type],
                 elements: [],
             },
-            description: event.description,
         };
     });
 }
 
 /** trasnform vue-component-meta slots type into vue-docgen-api slots type */
-function parseSlots(slots: SlotMeta[]): SlotDescriptor[] {
+export function mapSlots(slots: SlotMeta[]): SlotDescriptor[] {
     return slots.map((slot): SlotDescriptor => {
         // create vue-docgen-api slot doc object
         return {

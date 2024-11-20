@@ -91,6 +91,7 @@ type CarouselClasses = Partial<{
 }>;
 
 export type CarouselItemProps = {
+    /** Override existing theme classes completely */
     override?: boolean;
     /** Make item clickable */
     clickable?: boolean;
