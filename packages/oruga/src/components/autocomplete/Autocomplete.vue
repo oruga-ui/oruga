@@ -544,8 +544,9 @@ function checkDropdownScroll(): void {
     const dropdown = unrefElement(dropdownRef.value.$content);
     if (!dropdown) return;
     const trashhold = dropdown.offsetTop;
-    const headerHeight = headerRef.value?.clientHeight || 0;
-    const footerHeight = (footerRef.value?.clientHeight || 0) + trashhold;
+    const headerHeight = unrefElement(headerRef)?.clientHeight || 0;
+    const footerHeight =
+        (unrefElement(footerRef)?.clientHeight || 0) + trashhold;
     if (dropdown.clientHeight !== dropdown.scrollHeight) {
         if (
             dropdown.scrollTop + dropdown.clientHeight + footerHeight >=
