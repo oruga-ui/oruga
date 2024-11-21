@@ -9,11 +9,11 @@
   "private": true,
   "scripts": {
     "dev": "vitepress dev",
-    "docs:dev": "concurrently \"vue-docgen --watch\" \"vitepress dev\"",
-    "docs:gen": "vue-docgen",
-    "docs:build": "vitepress build",
-    "gen": "tsx src/docgen.ts",
-    "gen:watch": "tsx src/docgen-watch.ts",
+    "build": "vitepress build",
+    "docs:dev": "concurrently \"npm run docs:gen:watch\" \"npm run dev\"",
+    "docs:build": "npm run build",
+    "docs:gen": "tsx src/docgen.ts",
+    "docs:gen:watch": "tsx src/docgen.ts --watch",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "update": "ncu -u"
   },
