@@ -11,14 +11,13 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
-
 ## Examples
 
 <example-tabs />
 
 </div>
-<div class="vp-example">
 
+<div class="vp-example">
 ## Class props
 
 <inspector-tabs-viewer />
@@ -26,7 +25,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
 ## Tabs component
 
 > Responsive horizontal navigation tabs, switch between contents with ease
@@ -41,14 +39,14 @@ sidebarDepth: 2
 | ---------------- | --------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | animateInitially | Apply animation on the initial render                           | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animateInitially: false<br>}</code>                                             |
 | animated         | Tab will have an animation                                      | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code>                                                      |
-| animation        | Transition animation name                                       | [string, string] \| [string, string, string, string] | `[next`, `prev]`, `[right`, `left`, `down`, `up]`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animation: [ "slide-next", "slide-prev", "slide-down", "slide-up",]<br>}</code> |
+| animation        | Transition animation name                                       | [string, string, string, string] \| [string, string] | `[next`, `prev]`, `[right`, `left`, `down`, `up]`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animation: [ "slide-next", "slide-prev", "slide-down", "slide-up",]<br>}</code> |
 | destroyOnHide    | Destroy tabItem on hide                                         | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
 | expanded         | Tabs will be expanded (full-width)                              | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
 | v-model          | The selected item value, use v-model to make it two-way binding | string\|number\|object                               | -                                                                               |                                                                                                                                                                                                    |
 | multiline        | Show tab items multiline when there is no space                 | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
 | options          | Tabs options, unnecessary when default slot is used             | OptionsProp&lt;unknown&gt;                           | -                                                                               |                                                                                                                                                                                                    |
 | override         | Override existing theme classes completely                      | boolean                                              | -                                                                               |                                                                                                                                                                                                    |
-| position         | Position of the tabs                                            | "left" \| "right" \| "centered"                      | `left`, `centered`, `right`                                                     |                                                                                                                                                                                                    |
+| position         | Position of the tabs                                            | "centered" \| "left" \| "right"                      | `left`, `centered`, `right`                                                     |                                                                                                                                                                                                    |
 | size             | Tab size                                                        | string                                               | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;size: undefined<br>}</code>                                                     |
 | type             | Tab type                                                        | string                                               | `default`, `boxed`, `toggle`, `pills`                                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;type: "default"<br>}</code>                                                     |
 | variant          | Color of the control                                            | string                                               | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>                                                  |
@@ -56,10 +54,10 @@ sidebarDepth: 2
 
 ### Events
 
-| Event name        | Properties                                                                                                        | Description                     |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `string \| number \| object` - updated modelValue prop                                                  | modelValue prop two-way binding |
-| change            | **value** `string \| number \| object` - new tab value<br/>**value** `string \| number \| object` - old tab value | on tab change event             |
+| Event name         | Properties                                                      | Description                     |
+| ------------------ | --------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `T` - updated modelValue prop                         | modelValue prop two-way binding |
+| change             | **value** `T` - new tab value<br/>**value** `T` - old tab value | on tab change event             |
 
 ### Slots
 
@@ -72,7 +70,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
 ## TabItem component
 
 ```html
@@ -81,21 +78,21 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description | Type | Values | Default                                                                                                                                             |
-| --------- | ----------- | ---- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tabpanel"<br>}</code> |
-| component |             |      | -      |                                                                                                                                                     |
-| content   |             |      | -      |                                                                                                                                                     |
-| disabled  |             |      | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                         |
-| events    |             |      | -      |                                                                                                                                                     |
-| icon      |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>      |
-| iconPack  |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>  |
-| label     |             |      | -      |                                                                                                                                                     |
-| override  |             |      | -      |                                                                                                                                                     |
-| props     |             |      | -      |                                                                                                                                                     |
-| tag       |             |      | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>    |
-| value     |             |      | -      |                                                                                                                                                     |
-| visible   |             |      | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                          |
+| Prop name | Description                                                                       | Type                   | Values | Default                                                                                                                                             |
+| --------- | --------------------------------------------------------------------------------- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility           | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tabpanel"<br>}</code> |
+| component | Component to be injected.                                                         | Component              | -      |                                                                                                                                                     |
+| content   | Text content, unnecessary when default slot is used                               | string                 | -      |                                                                                                                                                     |
+| disabled  | Item will be disabled                                                             | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                         |
+| events    | Events to be binded to the injected component                                     | {}                     | -      |                                                                                                                                                     |
+| icon      | Icon on the left                                                                  | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>      |
+| iconPack  | Icon pack                                                                         | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>  |
+| label     | Item label                                                                        | string                 | -      |                                                                                                                                                     |
+| override  | Override existing theme classes completely                                        | boolean                | -      |                                                                                                                                                     |
+| props     | Props to be binded to the injected component                                      | any                    | -      |                                                                                                                                                     |
+| tag       | Tabs item tag name                                                                | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>    |
+| value     | Item value (it will be used as v-model of wrapper component) - default is an uuid | string\|number\|object | -      |                                                                                                                                                     |
+| visible   | Show/hide item                                                                    | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                          |
 
 ### Events
 
@@ -114,10 +111,6 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
-
-</div>
-<div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -156,7 +149,8 @@ sidebarDepth: 2
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tabs.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -176,7 +170,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tabs.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
