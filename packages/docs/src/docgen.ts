@@ -4,16 +4,19 @@ import docgen, {
     defineConfig,
     type DocgenCLIConfig,
 } from "vue-docgen-cli/lib/docgen";
+import type { FileEventType } from "vue-docgen-cli/lib/config";
 import { findFileCaseInsensitive, getFilenameWithoutExtension } from "./utils";
+import { createVueComponentMetaChecker } from "./parser/vue-component-meta-helper";
+import { createThemeDocs } from "./themes-helper";
+
+// custom templates
 import renderEvents from "./templates/events";
-import renderMethods from "./templates/methods";
-// import renderExpose from './templates/expose'
 import renderSlots from "./templates/slots";
 import renderProps from "./templates/props";
 import renderComponent from "./templates/component";
 import parser from "./parser/parser";
-import { createVueComponentMetaChecker } from "./parser/vue-component-meta-helper";
 
+// native vue-docgen-cli templates
 import {
     header,
     component,
@@ -25,8 +28,6 @@ import {
     defaultExample,
     functionalTag,
 } from "vue-docgen-cli/lib/compileTemplates";
-import { createThemeDocs } from "./themes-helper";
-import type { FileEventType } from "vue-docgen-cli/lib/config";
 
 // Components to be ignored for creating docs
 const IGNORE_COMPONENTS = [
@@ -54,7 +55,7 @@ export async function run(): Promise<void> {
     const __dirname = process.cwd();
     const argWatch = process.argv[2];
     const watch = argWatch === "--watch";
-    if (watch) console.info("Watch mode turned on.");
+    if (watch) console.info("Watch mode is turned on.");
 
     // create vue-component-meta checker
     const checker = createVueComponentMetaChecker(
@@ -78,9 +79,7 @@ export async function run(): Promise<void> {
         templates: {
             props: renderProps,
             slots: renderSlots,
-            methods: renderMethods,
             events: renderEvents,
-            // expose: renderExpose,
             component: renderComponent,
         },
         getDestFile: (file: string, config: DocgenCLIConfig): string => {
@@ -108,6 +107,7 @@ export async function run(): Promise<void> {
         },
     });
 
+    // construct edit url
     if (!docgenConfig.getRepoEditUrl && docgenConfig.docsRepo) {
         const branch = docgenConfig.docsBranch || "main";
         const dir = docgenConfig.docsFolder || "";
@@ -115,6 +115,7 @@ export async function run(): Promise<void> {
             `https://github.com/${docgenConfig.docsRepo}/edit/${branch}/${dir}/${p}`;
     }
 
+    // extend the config with default vue-docgen-cli templates
     docgenConfig.templates = {
         header: docgenConfig.templates?.header ?? header,
         component: docgenConfig.templates?.component ?? component,
@@ -131,11 +132,14 @@ export async function run(): Promise<void> {
     console.log("Start generating docs...");
 
     // generate documentation via vue-docgen-cli
-    // @ts-ignore
+    // @ts-expect-error .default call is unexpected
     await docgen.default(docgenConfig);
 
+    // generate theme config documentations
     createThemeDocs(__dirname);
+
     console.log("Generating docs finished.");
 }
 
+// execute scripts
 run();

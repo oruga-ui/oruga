@@ -41,6 +41,8 @@ export function createVueComponentMetaChecker(
  * @param checker ComponentMetaChecker instance
  * @param componentPath Component path
  * @returns Array of MetaSource object for each script tag in the component
+ *
+ * @source https://github.com/storybookjs/storybook/blob/next/code/frameworks/vue3-vite/src/plugins/vue-component-meta.ts
  */
 export async function vueComponentMeta(
     checker: ComponentMetaChecker,
@@ -90,36 +92,35 @@ export async function vueComponentMeta(
                     },
                 );
 
-                const exposed =
+                const exposed = meta.exposed
                     // the meta also includes duplicated entries in the "exposed" array with "on"
                     // prefix (e.g. onClick instead of click), so we need to filter them out here
-                    meta.exposed
-                        .filter((expose) => {
-                            let nameWithoutOnPrefix = expose.name;
+                    .filter((expose) => {
+                        let nameWithoutOnPrefix = expose.name;
 
-                            if (nameWithoutOnPrefix.startsWith("on")) {
-                                nameWithoutOnPrefix = lowercaseFirstLetter(
-                                    expose.name.replace("on", ""),
-                                );
-                            }
-
-                            const hasEvent = meta.events.find(
-                                (event) => event.name === nameWithoutOnPrefix,
+                        if (nameWithoutOnPrefix.startsWith("on")) {
+                            nameWithoutOnPrefix = lowercaseFirstLetter(
+                                expose.name.replace("on", ""),
                             );
-                            return !hasEvent;
-                        })
-                        // remove unwanted duplicated "$slots" expose
-                        .filter((expose) => {
-                            if (expose.name === "$slots") {
-                                const slotNames = meta.slots.map(
-                                    (slot) => slot.name,
-                                );
-                                return !slotNames.every((slotName) =>
-                                    expose.type.includes(slotName),
-                                );
-                            }
-                            return true;
-                        });
+                        }
+
+                        const hasEvent = meta.events.find(
+                            (event) => event.name === nameWithoutOnPrefix,
+                        );
+                        return !hasEvent;
+                    })
+                    // remove unwanted duplicated "$slots" expose
+                    .filter((expose) => {
+                        if (expose.name === "$slots") {
+                            const slotNames = meta.slots.map(
+                                (slot) => slot.name,
+                            );
+                            return !slotNames.every((slotName) =>
+                                expose.type.includes(slotName),
+                            );
+                        }
+                        return true;
+                    });
 
                 // create MetaSource return object
                 return {
