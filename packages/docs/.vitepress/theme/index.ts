@@ -33,7 +33,7 @@ hljs.registerLanguage("scss", scss);
 hljs.registerLanguage("css", css);
 
 // Import theme definitions
-import themes from "../../src/themes.json";
+import themes from "@docs/themes.json";
 
 // load last used theme or set a default one
 function loadTheme() {
