@@ -77,8 +77,11 @@ watch(
     },
 );
 
-/** a uniqe id for the message slot to associate an input to the field message */
+/** a uniqe id for the field message to associate an input to */
 const messageId = useId();
+
+/** a uniqe id for the field label to associate an input to */
+const labelId = useId();
 
 /** this can be set from outside to update the focus state */
 const isFocused = ref(false);
@@ -153,6 +156,7 @@ const provideData = computed(() => ({
     hasInnerField: hasInnerField.value,
     variant: fieldVariant.value,
     message: fieldMessage.value,
+    labelId,
     inputAttrs: inputAttrs.value,
     addInnerField,
     setInputId,
@@ -239,7 +243,11 @@ const innerFieldClasses = defineClasses(
 <template>
     <div ref="rootElement" data-oruga="field" :class="rootClasses">
         <div v-if="horizontal" :class="horizontalLabelClasses">
-            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
+            <label
+                v-if="hasLabel"
+                :id="labelId"
+                :for="inputId"
+                :class="labelClasses">
                 <!--
                     @slot Override the label
                     @binding {string} label - label property 
@@ -248,7 +256,11 @@ const innerFieldClasses = defineClasses(
             </label>
         </div>
         <template v-else>
-            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
+            <label
+                v-if="hasLabel"
+                :id="labelId"
+                :for="inputId"
+                :class="labelClasses">
                 <!--
                     @slot Override the label
                     @binding {string} label - label property 

@@ -15,6 +15,7 @@ type FieldData = {
     hasInnerField: boolean;
     variant?: string;
     message?: string;
+    labelId: string;
     inputAttrs: object;
     addInnerField: () => void;
     setInputId: (value: string) => void;
@@ -25,7 +26,7 @@ type FieldData = {
 };
 
 /** provide/inject type */
-type ProvidedField = ComputedRef<FieldData> | undefined;
+type ProvidedField = ComputedRef<FieldData | undefined>;
 
 /** provide/inject key */
 const $FieldKey: InjectionKey<ProvidedField> = Symbol("FielData");
@@ -40,12 +41,15 @@ export function provideField(data: ProvidedField): void {
 
 /** Inject parent field component if used inside one. **/
 export function injectField(): {
-    parentField?: ComputedRef<FieldData> | undefined;
+    parentField: ComputedRef<FieldData | undefined>;
     statusVariantIcon: ComputedRef<string>;
     statusVariant: ComputedRef<string | undefined>;
     statusMessage: ComputedRef<string | undefined>;
 } {
-    const parentField = inject($FieldKey, undefined);
+    const parentField = inject(
+        $FieldKey,
+        computed(() => undefined),
+    );
 
     /** Get the message prop from parent if it's a Field. */
     const statusMessage = computed<string | undefined>(() => {
