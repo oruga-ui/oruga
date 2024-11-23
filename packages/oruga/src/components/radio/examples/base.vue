@@ -9,25 +9,25 @@ const radio = ref("Jack");
         <o-field>
             <o-radio
                 v-model="radio"
-                name="name"
+                name="base"
                 native-value="Flint"
                 label="Flint" />
 
             <o-radio
                 v-model="radio"
-                name="name"
+                name="base"
                 native-value="Silver"
                 label="Silver" />
 
             <o-radio
                 v-model="radio"
-                name="name"
+                name="base"
                 native-value="Jack"
                 label="Jack" />
 
             <o-radio
                 v-model="radio"
-                name="name"
+                name="base"
                 native-value="Vane"
                 label="Vane"
                 disabled />
