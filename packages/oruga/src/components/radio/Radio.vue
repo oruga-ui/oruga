@@ -23,15 +23,15 @@ defineOptions({
 const props = withDefaults(defineProps<RadioProps<T>>(), {
     override: undefined,
     modelValue: undefined,
+    id: () => useId(),
+    label: undefined,
+    name: undefined,
     variant: () => getDefault("radio.variant"),
     size: () => getDefault("radio.size"),
-    label: undefined,
-    nativeValue: undefined,
     disabled: false,
     required: false,
-    name: undefined,
+    nativeValue: undefined,
     autocomplete: () => getDefault("radio.autocomplete", "off"),
-    id: () => useId(),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
 });
 
@@ -76,10 +76,12 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const vmodel = defineModel<T>({ default: undefined });
+const labelId = parentField.value?.labelId || useId();
 
-// if not `label` is given and `id` is given set as `for` property on o-field wrapper
-if (!props.label && props.id) parentField?.value?.setInputId(props.id);
+// if no `label` is given and `id` is given set as `for` property on o-field wrapper
+if (!props.label && props.id) parentField.value?.setInputId(props.id);
+
+const vmodel = defineModel<T>({ default: undefined });
 
 const isChecked = computed(() => vmodel.value === props.nativeValue);
 
@@ -133,14 +135,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <label
-        ref="label"
-        :class="rootClasses"
-        data-oruga="radio"
-        role="radio"
-        :aria-checked="isChecked"
-        @click.stop="setFocus"
-        @keydown.prevent.enter="setFocus">
+    <div :class="rootClasses" data-oruga="radio">
         <input
             v-bind="inputBind"
             :id="id"
@@ -149,22 +144,27 @@ defineExpose({ focus: setFocus, value: vmodel });
             type="radio"
             data-oruga-input="radio"
             :class="inputClasses"
-            :disabled="disabled"
-            :required="required"
             :name="name"
-            :autocomplete="autocomplete"
             :value="nativeValue"
-            @click.stop
+            :required="required"
+            :disabled="disabled"
+            :autocomplete="autocomplete"
+            :aria-checked="isChecked"
+            :aria-labelledby="labelId"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @change="onInput" />
 
-        <span v-if="label || $slots.default" :class="labelClasses">
+        <label
+            v-if="label || $slots.default"
+            :id="labelId"
+            :for="id"
+            :class="labelClasses">
             <!--
                 @slot Override the label, default is label prop 
             -->
             <slot>{{ label }}</slot>
-        </span>
-    </label>
+        </label>
+    </div>
 </template>
