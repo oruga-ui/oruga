@@ -45,6 +45,20 @@ const props = withDefaults(defineProps<FieldProps>(), {
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
+/** a unique id for the field message to associate an input with */
+const messageId = useId();
+
+/** a unique id for the field label to associate an input with */
+const labelId = useId();
+
+/** this can be set from outside to update the focus state */
+const isFocused = ref(false);
+/** this can be set from outside to update the filled state */
+const isFilled = ref(false);
+/** this can be set from sub fields to update the has inner field state */
+const hasInnerField = ref(false);
+
+/** the unique id for the input to associate the label with */
 const inputId = ref(props.labelFor);
 watch(
     () => props.labelFor,
@@ -66,29 +80,13 @@ watch(
 );
 
 /** Set parent message if we use Field in Field. */
-watch(
-    () => fieldMessage.value,
-    (value) => {
-        if (parentField?.value?.hasInnerField) {
-            if (!parentField.value.variant)
-                parentField.value.setVariant(fieldVariant.value);
-            if (!parentField.value.message) parentField.value.setMessage(value);
-        }
-    },
-);
-
-/** a uniqe id for the field message to associate an input to */
-const messageId = useId();
-
-/** a uniqe id for the field label to associate an input to */
-const labelId = useId();
-
-/** this can be set from outside to update the focus state */
-const isFocused = ref(false);
-/** this can be set from outside to update the filled state */
-const isFilled = ref(false);
-/** this can be set from sub fields to update the has inner field state */
-const hasInnerField = ref<boolean>(false);
+watch(fieldMessage, (value) => {
+    if (parentField?.value?.hasInnerField) {
+        if (!parentField.value.variant)
+            parentField.value.setVariant(fieldVariant.value);
+        if (!parentField.value.message) parentField.value.setMessage(value);
+    }
+});
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
