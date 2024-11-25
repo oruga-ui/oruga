@@ -81,9 +81,6 @@ watch(fieldMessage, (value) => {
     }
 });
 
-/** a uniqe id for the message slot to associate an input to the field message */
-const messageId = useId();
-
 /** this can be set from outside to update the focus state */
 const isFocused = ref(false);
 /** this can be set from inputs to update the filled state */
