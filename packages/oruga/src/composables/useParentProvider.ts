@@ -1,17 +1,19 @@
 import {
-    computed,
     getCurrentInstance,
     inject,
-    nextTick,
     onUnmounted,
     provide,
     ref,
+    toValue,
+    watch,
     type Component,
     type ComputedRef,
+    type MaybeRefOrGetter,
     type Ref,
     type UnwrapNestedRefs,
 } from "vue";
 import { unrefElement } from "./unrefElement";
+import { useDebounce } from "./useDebounce";
 
 export type ProviderItem<T = unknown> = {
     index: number;
@@ -35,6 +37,10 @@ type ProviderParentOptions<T = unknown> = {
      * Additional data provided for the child to the item
      */
     data?: ComputedRef<T>;
+    /**
+     * When items are added/removed sort them according to their DOM position
+     */
+    sorted?: boolean;
 };
 
 /**
@@ -44,11 +50,10 @@ type ProviderParentOptions<T = unknown> = {
  * @param options additional options
  */
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
-    rootRef?: Ref<HTMLElement | Component | null | undefined>,
+    rootRef?: MaybeRefOrGetter<HTMLElement | Component | null | undefined>,
     options?: ProviderParentOptions<ParentData>,
 ): {
     childItems: Ref<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
-    sortedItems: ComputedRef<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
 } {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
@@ -63,12 +68,38 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     const childItems = ref<ProviderItem<ItemData>[]>([]);
     const sequence = ref(1);
 
-    /**
-     * When items are added/removed sort them according to their position
-     */
-    const sortedItems = computed(() =>
-        childItems.value.slice().sort((a, b) => a.index - b.index),
-    );
+    if (options?.sorted && !!toValue(rootRef)) {
+        // debounced sort function
+        const sortHandler = useDebounce((items: typeof childItems.value) => {
+            const parent = unrefElement(rootRef);
+            if (!parent) return;
+
+            // create a list of child item ids
+            const ids = items
+                .map((item) => `[data-id="${key}-${item.identifier}"]`)
+                .join(",");
+
+            // query all child items
+            const children = parent.querySelectorAll(ids);
+
+            // create a list of ids ordered after the elements in template
+            const sortedIds = Array.from(children).map((el) =>
+                el.getAttribute("data-id")?.replace(`${key}-`, ""),
+            );
+
+            // update the index attribute of the child items
+            items.forEach(
+                (item) =>
+                    (item.index = sortedIds.indexOf(`${item.identifier}`)),
+            );
+
+            // sort items according to their index position
+            items.sort((a, b) => a.index - b.index);
+        }, 500);
+
+        // watch change of the child list (no deep change - only list update)
+        watch(childItems, sortHandler);
+    }
 
     function registerItem(
         data?: ComputedRef<ItemData>,
@@ -76,25 +107,11 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         const index = childItems.value.length;
         const identifier = nextSequence();
         const item = { index, data, identifier };
-        childItems.value.push(item as UnwrapNestedRefs<typeof item>);
-        if (rootRef?.value) {
-            nextTick(() => {
-                const ids = childItems.value
-                    .map((item) => `[data-id="${key}-${item.identifier}"]`)
-                    .join(",");
-                const parent = unrefElement(rootRef);
-                if (!parent) return;
-                const children = parent.querySelectorAll(ids);
-                const sortedIds = Array.from(children).map((el) =>
-                    el.getAttribute("data-id")?.replace(`${key}-`, ""),
-                );
-
-                childItems.value.forEach(
-                    (item) =>
-                        (item.index = sortedIds.indexOf(`${item.identifier}`)),
-                );
-            });
-        }
+        // add new item to the child list
+        childItems.value = [
+            ...childItems.value,
+            item as UnwrapNestedRefs<typeof item>,
+        ];
         return item;
     }
 
@@ -115,7 +132,6 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
 
     return {
         childItems,
-        sortedItems,
     };
 }
 

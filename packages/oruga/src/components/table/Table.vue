@@ -352,14 +352,15 @@ const provideData = computed<TableComponent>(() => ({
 }));
 
 /** provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<TableColumnComponent<T>>(slotRef, {
+const { childItems } = useProviderParent<TableColumnComponent<T>>(slotRef, {
     data: provideData,
+    sorted: true,
 });
 
 /** all defined columns */
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
-    if (!sortedItems.value) return [];
-    return sortedItems.value.map((column) => ({
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),

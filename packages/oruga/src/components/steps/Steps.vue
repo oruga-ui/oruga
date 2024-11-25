@@ -102,17 +102,19 @@ const provideData = computed<StepsComponent>(() => ({
 }));
 
 /** Provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<StepItemComponent<T>>(rootRef, {
+const { childItems } = useProviderParent<StepItemComponent<T>>(rootRef, {
     data: provideData,
+    sorted: true,
 });
 
-const items = computed<StepItem<T>[]>(() =>
-    sortedItems.value.map((column) => ({
+const items = computed<StepItem<T>[]>(() => {
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
-    })),
-);
+    }));
+});
 
 /** normalized programamtic options */
 const groupedOptions = computed(() => normalizeOptions<T>(props.options));

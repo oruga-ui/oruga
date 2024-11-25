@@ -93,17 +93,19 @@ const provideData = computed<TabsComponent>(() => ({
 }));
 
 /** Provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<TabItemComponent<T>>(rootRef, {
+const { childItems } = useProviderParent<TabItemComponent<T>>(rootRef, {
     data: provideData,
+    sorted: true,
 });
 
-const items = computed<TabItem<T>[]>(() =>
-    sortedItems.value.map((column) => ({
+const items = computed<TabItem<T>[]>(() => {
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
-    })),
-);
+    }));
+});
 
 /** normalized programamtic options */
 const groupedOptions = computed(() => normalizeOptions<T>(props.options));
