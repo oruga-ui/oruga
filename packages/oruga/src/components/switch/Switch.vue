@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, useAttrs, useId, useTemplateRef } from "vue";
+import { computed, useAttrs, useId, useSlots, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
@@ -81,12 +81,18 @@ const { onBlur, onFocus, onInvalid, setFocus, doClick } = useInputHandler(
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const vmodel = defineModel<T>({ default: undefined });
+const slots = useSlots();
 
-const labelId = parentField.value?.labelId || useId();
+// set field labelId or create a unique label id if a label is given
+const labelId =
+    parentField.value || !!props.label || slots.label
+        ? parentField.value?.labelId || useId()
+        : undefined;
 
 // if no `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField.value?.setInputId(props.id);
+
+const vmodel = defineModel<T>({ default: undefined });
 
 const isChecked = computed(
     () =>
