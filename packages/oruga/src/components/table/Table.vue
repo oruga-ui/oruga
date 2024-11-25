@@ -1184,11 +1184,11 @@ defineExpose({ rows: tableData, sort: sortByField });
 
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
-                v-bind="$attrs"
                 :class="tableClasses"
                 :tabindex="selectable || isScrollable ? 0 : undefined"
                 :aria-rowcount="tableTotal"
                 :aria-colcount="tableColumns.length"
+                v-bind="$attrs"
                 @keydown.prevent.up="onArrowPressed(-1, $event)"
                 @keydown.prevent.down="onArrowPressed(1, $event)"
                 @keydown.prevent.home="selectRow(visibleRows[0], 0, $event)"
@@ -1334,7 +1334,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         <!-- row data columns -->
                         <th
                             v-for="(column, index) in visibleColumns"
-                            :key="`${column.identifier}_${index}_searchable`"
+                            :key="`${column.identifier}_searchable`"
                             v-bind="column.thAttrsData"
                             :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style">
@@ -1375,7 +1375,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         <!-- row data columns -->
                         <th
                             v-for="(column, index) in visibleColumns"
-                            :key="`${column.identifier}_${index}_subheading`"
+                            :key="`${column.identifier}_subheading`"
                             :style="isMobileActive ? {} : column.style"
                             :class="[...thBaseClasses, ...thSubheadingClasses]">
                             <o-slot-component
