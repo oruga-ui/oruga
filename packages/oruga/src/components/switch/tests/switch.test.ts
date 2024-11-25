@@ -8,7 +8,7 @@ describe("OSwitch tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
-        const wrapper = mount(OSwitch);
+        const wrapper = mount(OSwitch, { props: { label: "My input" } });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("switch");
