@@ -393,7 +393,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         doClick,
         onFocus,
         onBlur,
-        checkHtml5Validity,
         onInvalid,
+        checkHtml5Validity,
     };
 }
