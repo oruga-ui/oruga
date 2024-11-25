@@ -76,11 +76,9 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const slots = useSlots();
-
 // set field labelId or create a unique label id if a label is given
 const labelId =
-    parentField.value || !!props.label || slots.label
+    !!parentField.value || !!props.label || !!useSlots().label
         ? parentField.value?.labelId || useId()
         : undefined;
 
