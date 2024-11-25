@@ -4,7 +4,6 @@ import {
     onUnmounted,
     provide,
     ref,
-    toValue,
     watch,
     type Component,
     type ComputedRef,
@@ -68,7 +67,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     const childItems = ref<ProviderItem<ItemData>[]>([]);
     const sequence = ref(1);
 
-    if (options?.sorted && !!toValue(rootRef)) {
+    if (options?.sorted) {
         // debounced sort function
         const sortHandler = useDebounce((items: typeof childItems.value) => {
             const parent = unrefElement(rootRef);
