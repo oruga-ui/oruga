@@ -81,7 +81,7 @@ watch(fieldMessage, (value) => {
     }
 });
 
-/** this can be set from outside to update the focus state */
+/** this can be set from inputs to update the focus state */
 const isFocused = ref(false);
 /** this can be set from inputs to update the filled state */
 const isFilled = ref(false);
