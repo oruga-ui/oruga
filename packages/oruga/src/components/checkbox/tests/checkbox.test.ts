@@ -8,7 +8,7 @@ describe("OCheckbox tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
-        const wrapper = mount(OCheckbox);
+        const wrapper = mount(OCheckbox, { props: { label: "My Input" } });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("checkbox");
