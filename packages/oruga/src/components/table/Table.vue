@@ -403,8 +403,23 @@ const tableTotal = computed(() =>
     props.backendPagination ? props.total : tableRows.value.length,
 );
 
+const tableColumnIndexStart = computed(() => {
+    let i = 1;
+    if (showDetailRowIcon.value) i++;
+    if (props.checkable && props.checkboxPosition === "left") i++;
+    return i;
+});
+
+const tableRowIndexStart = computed(() => {
+    let i = 1;
+    if (hasSearchableColumns.value) i++;
+    if (hasSubheadings.value) i++;
+    return i;
+});
+
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
+// Todo: refactor this to options data implementation with hidden and index attr
 /** visible rows based on current page */
 const visibleRows = computed<TableRow<T>[]>((): TableRow<T>[] => {
     if (!props.paginated || props.backendPagination) return tableRows.value;
@@ -470,7 +485,7 @@ const isScrollable = computed(() => {
 const slots = useSlots();
 
 /** check if table hast subheadings  */
-const hasCustomSubheadings = computed(() => {
+const hasSubheadings = computed(() => {
     if (slots.subheading) return true;
     return tableColumns.value.some((column) => !!column.subheading);
 });
@@ -680,7 +695,7 @@ function sort(
     updateDirection = false,
     event?: Event,
 ): void {
-    if (!column || !column.sortable) return;
+    if (!column?.sortable) return;
 
     if (updateDirection)
         isAsc.value = isColumnSorted(column)
@@ -901,54 +916,46 @@ function handleDragLeave(
 
 /** emits drag start event (column) */
 function handleColumnDragStart(
-    column: TableColumn<T>,
-    index: number,
+    column: TableColumnItem<T>,
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
     isDraggingColumn.value = true;
-    emits("columndragstart", column, index, event);
+    emits("columndragstart", column, column.index, event);
 }
 
 /** emits drag leave event (column) */
 function handleColumnDragEnd(
-    column: TableColumn<T>,
-    index: number,
+    column: TableColumnItem<T>,
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
     isDraggingColumn.value = false;
-    emits("columndragend", column, index, event);
+    emits("columndragend", column, column.index, event);
 }
 
 /** emits drop event (column) */
-function handleColumnDrop(
-    column: TableColumn<T>,
-    index: number,
-    event: DragEvent,
-): void {
+function handleColumnDrop(column: TableColumnItem<T>, event: DragEvent): void {
     if (!canDragColumn.value) return;
-    emits("columndrop", column, index, event);
+    emits("columndrop", column, column.index, event);
 }
 
 /** emits drag over event (column) */
 function handleColumnDragOver(
-    column: TableColumn<T>,
-    index: number,
+    column: TableColumnItem<T>,
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
-    emits("columndragover", column, index, event);
+    emits("columndragover", column, column.index, event);
 }
 
 /** emits drag leave event (column) */
 function handleColumnDragLeave(
-    column: TableColumn<T>,
-    index: number,
+    column: TableColumnItem<T>,
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
-    emits("columndragleave", column, index, event);
+    emits("columndragleave", column, column.index, event);
 }
 
 // --- Computed Component Classes ---
@@ -1152,7 +1159,6 @@ defineExpose({ rows: tableData, sort: sortByField });
                 :total="tableTotal"
                 :change="(page) => (tableCurrentPage = page)">
                 <o-table-pagination
-                    v-bind="$attrs"
                     v-model:current="tableCurrentPage"
                     :paginated="paginated"
                     :per-page="perPage"
@@ -1178,10 +1184,21 @@ defineExpose({ rows: tableData, sort: sortByField });
 
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
+                v-bind="$attrs"
                 :class="tableClasses"
-                :tabindex="selectable ? 0 : undefined"
-                @keydown.self.prevent.up="onArrowPressed(-1, $event)"
-                @keydown.self.prevent.down="onArrowPressed(1, $event)">
+                :tabindex="selectable || isScrollable ? 0 : undefined"
+                :aria-rowcount="tableTotal"
+                :aria-colcount="tableColumns.length"
+                @keydown.prevent.up="onArrowPressed(-1, $event)"
+                @keydown.prevent.down="onArrowPressed(1, $event)"
+                @keydown.prevent.home="selectRow(visibleRows[0], 0, $event)"
+                @keydown.prevent.end="
+                    selectRow(
+                        visibleRows[visibleRows.length - 1],
+                        visibleRows.length - 1,
+                        $event,
+                    )
+                ">
                 <caption v-if="$slots.caption">
                     <!--
                         @slot Define a table caption here
@@ -1194,15 +1211,17 @@ defineExpose({ rows: tableData, sort: sortByField });
                         @slot Define preheader content here
                     -->
                     <slot name="preheader" />
-                    <tr>
+                    <tr :aria-rowindex="1">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
-                            :class="[...thBaseClasses, ...thDetailedClasses]" />
+                            :class="[...thBaseClasses, ...thDetailedClasses]"
+                            :aria-colindex="1" />
                         <!-- checkable column left -->
                         <th
                             v-if="checkable && checkboxPosition === 'left'"
-                            :class="[...thBaseClasses, ...thCheckboxClasses]">
+                            :class="[...thBaseClasses, ...thCheckboxClasses]"
+                            :aria-colindex="showDetailRowIcon ? 2 : 1">
                             <!--
                                 @slot Override check all checkbox
                                 @binding {boolean} is-all-checked - if all rows are checked
@@ -1221,62 +1240,65 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     name="row_check_all"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
+                                    aria-label="Check all"
                                     @update:model-value="checkAll" />
                             </slot>
                         </th>
                         <!-- row data columns -->
                         <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="`${column.identifier}_${index}_header`"
+                            v-for="column in visibleColumns"
+                            :key="`${column.identifier}_header`"
                             v-bind="column.thAttrsData"
                             :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style"
                             :draggable="canDragColumn"
+                            :aria-sort="
+                                isColumnSorted(column)
+                                    ? isAsc
+                                        ? 'ascending'
+                                        : 'descending'
+                                    : undefined
+                            "
+                            :aria-colindex="
+                                tableColumnIndexStart + column.index
+                            "
                             @click.stop="sort(column, true, $event)"
-                            @dragstart="
-                                handleColumnDragStart(column, index, $event)
-                            "
-                            @dragend="
-                                handleColumnDragEnd(column, index, $event)
-                            "
-                            @drop="handleColumnDrop(column, index, $event)"
-                            @dragover="
-                                handleColumnDragOver(column, index, $event)
-                            "
-                            @dragleave="
-                                handleColumnDragLeave(column, index, $event)
-                            ">
-                            <template v-if="column.$slots?.header">
-                                <o-slot-component
-                                    :component="column.$el"
-                                    name="header"
-                                    tag="span"
-                                    :props="{ column, index }" />
-                            </template>
-                            <template v-else>
-                                <span>
-                                    {{ column.label }}
-                                    <span
-                                        v-show="
-                                            column.sortable &&
-                                            isColumnSorted(column)
-                                        "
-                                        :class="thSortIconClasses">
-                                        <o-icon
-                                            :icon="sortIcon"
-                                            :pack="iconPack"
-                                            both
-                                            :size="sortIconSize"
-                                            :rotation="!isAsc ? 180 : 0" />
-                                    </span>
+                            @dragstart="handleColumnDragStart(column, $event)"
+                            @dragend="handleColumnDragEnd(column, $event)"
+                            @drop="handleColumnDrop(column, $event)"
+                            @dragover="handleColumnDragOver(column, $event)"
+                            @dragleave="handleColumnDragLeave(column, $event)">
+                            <o-slot-component
+                                v-if="column.$slots?.header"
+                                :component="column.$el"
+                                name="header"
+                                tag="span"
+                                :props="{ column }" />
+
+                            <span v-else>
+                                {{ column.label }}
+                                <span
+                                    v-if="column.sortable"
+                                    v-show="isColumnSorted(column)"
+                                    :class="thSortIconClasses"
+                                    :aria-hidden="!isColumnSorted(column)">
+                                    <o-icon
+                                        :icon="sortIcon"
+                                        :pack="iconPack"
+                                        both
+                                        :size="sortIconSize"
+                                        :rotation="!isAsc ? 180 : 0" />
                                 </span>
-                            </template>
+                            </span>
                         </th>
 
                         <!-- checkable column right -->
                         <th
                             v-if="checkable && checkboxPosition === 'right'"
-                            :class="[...thBaseClasses, ...thCheckboxClasses]">
+                            :class="[...thBaseClasses, ...thCheckboxClasses]"
+                            :aria-colindex="
+                                tableColumnIndexStart + tableColumns.length
+                            ">
                             <template v-if="headerCheckable">
                                 <!--
                                     @slot Override check all checkbox
@@ -1295,13 +1317,14 @@ defineExpose({ rows: tableData, sort: sortByField });
                                         name="row_check_all"
                                         :variant="checkboxVariant"
                                         :disabled="isAllUncheckable"
+                                        aria-label="Check all"
                                         @update:model-value="checkAll" />
                                 </slot>
                             </template>
                         </th>
                     </tr>
 
-                    <tr v-if="hasSearchableColumns">
+                    <tr v-if="hasSearchableColumns" :aria-rowindex="2">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
@@ -1328,10 +1351,11 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     v-model="filters[column.field]"
                                     :name="`column_${column.field}_filter`"
                                     :type="column.numeric ? 'number' : 'search'"
-                                    :pack="iconPack"
                                     :placeholder="filtersPlaceholder"
                                     :icon="filtersIcon"
+                                    :pack="iconPack"
                                     size="small"
+                                    :aria-label="`${column.label} search`"
                                     @[filtersEvent]="onFiltersEvent" />
                             </template>
                         </th>
@@ -1339,7 +1363,9 @@ defineExpose({ rows: tableData, sort: sortByField });
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
 
-                    <tr v-if="hasCustomSubheadings">
+                    <tr
+                        v-if="hasSubheadings"
+                        :aria-rowindex="hasSearchableColumns ? 3 : 2">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
@@ -1352,16 +1378,15 @@ defineExpose({ rows: tableData, sort: sortByField });
                             :key="`${column.identifier}_${index}_subheading`"
                             :style="isMobileActive ? {} : column.style"
                             :class="[...thBaseClasses, ...thSubheadingClasses]">
-                            <template v-if="column.$slots?.subheading">
-                                <o-slot-component
-                                    :component="column.$el"
-                                    name="subheading"
-                                    tag="span"
-                                    :props="{ column, index }" />
-                            </template>
-                            <template v-else>
+                            <o-slot-component
+                                v-if="column.$slots?.subheading"
+                                :component="column.$el"
+                                name="subheading"
+                                tag="span"
+                                :props="{ column, index }" />
+                            <span v-else>
                                 {{ column.subheading }}
-                            </template>
+                            </span>
                         </th>
                         <!-- checkable column right -->
                         <th v-if="checkable && checkboxPosition === 'right'" />
@@ -1372,9 +1397,11 @@ defineExpose({ rows: tableData, sort: sortByField });
                     <template
                         v-for="(row, index) in visibleRows"
                         :key="`${row.key}_${index}_row`">
+                        <!-- TODO: ariaRowIndex based on page -->
                         <tr
                             :class="rowClasses(row, index)"
                             :draggable="canDragRow"
+                            :aria-rowindex="tableRowIndexStart + index + 1"
                             @click="selectRow(row, index, $event)"
                             @dblclick="
                                 $emit('dblclick', row.value, index, $event)
@@ -1406,9 +1433,15 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     :pack="iconPack"
                                     :rotation="isVisibleDetailRow(row) ? 90 : 0"
                                     role="button"
+                                    tabindex="0"
                                     clickable
                                     both
-                                    @click.stop="toggleDetails(row)" />
+                                    :aria-label="`Open row ${index} details`"
+                                    @click.prevent="toggleDetails(row)"
+                                    @keydown.prevent.enter="toggleDetails(row)"
+                                    @keydown.prevent.space="
+                                        toggleDetails(row)
+                                    " />
                             </td>
 
                             <!-- checkable column left -->
@@ -1424,13 +1457,14 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     :name="`row_${index}_check`"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
+                                    :aria-label="`Check row ${index}`"
                                     @update:model-value="checkRow(row)" />
                             </td>
 
                             <!-- row data columns -->
                             <o-slot-component
-                                v-for="(column, colindex) in visibleColumns"
-                                :key="`${column.identifier}_${index}_${colindex}`"
+                                v-for="(column, colIndex) in visibleColumns"
+                                :key="`${column.identifier}_${index}_${colIndex}`"
                                 v-bind="column.tdAttrsData[index]"
                                 :component="column.$el"
                                 name="default"
@@ -1442,7 +1476,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     row: row.value,
                                     column,
                                     index,
-                                    colindex,
+                                    colindex: colIndex,
                                     toggleDetails: () => toggleDetails(row),
                                 }"
                                 @click="
@@ -1451,7 +1485,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                         row.value,
                                         column,
                                         index,
-                                        colindex,
+                                        colIndex,
                                         $event,
                                     )
                                 " />
@@ -1468,6 +1502,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
+                                    :aria-label="`Check row ${index}`"
                                     @update:model-value="checkRow(row)" />
                             </td>
                         </tr>
@@ -1585,7 +1620,6 @@ defineExpose({ rows: tableData, sort: sortByField });
                 :total="tableTotal"
                 :change="(page) => (tableCurrentPage = page)">
                 <o-table-pagination
-                    v-bind="$attrs"
                     v-model:current="tableCurrentPage"
                     :paginated="paginated"
                     :per-page="perPage"
