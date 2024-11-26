@@ -8,11 +8,11 @@ describe("ORadio tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
-        const wrapper = mount(ORadio);
+        const wrapper = mount(ORadio, { props: { label: "My input" } });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("radio");
-        expect(wrapper.find("label input[type=radio]").exists()).toBeTruthy(); // has an input checkbox
+        expect(wrapper.find("input[type=radio]").exists()).toBeTruthy();
         expect(wrapper.html()).toMatchSnapshot();
     });
 

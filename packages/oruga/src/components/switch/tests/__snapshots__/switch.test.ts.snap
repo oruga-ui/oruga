@@ -1,7 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OSwitch tests > render correctly 1`] = `
-"<label class="o-switch o-switch--right" data-oruga="switch" role="switch" aria-checked="false"><input id="v-0" type="checkbox" role="switch" data-oruga-input="switch" class="o-switch__input" autocomplete="off" true-value="true" false-value="false"><span class="o-switch__check o-switch--rounded"><span class="o-switch__check-switch o-switch--rounded"></span></span>
-  <!--v-if-->
-</label>"
+"<div class="o-switch o-switch--position" data-oruga="switch"><input id="v-0" type="checkbox" role="switch" data-oruga-input="switch" class="o-switch__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false" aria-labelledby="v-1"><span class="o-switch__check o-switch--rounded"><span class="o-switch__check-switch o-switch--rounded"></span></span><label id="v-1" for="v-0" class="o-switch__label">
+    <!--
+                @slot Override the label, default is label prop 
+            -->My input
+  </label></div>"
 `;
