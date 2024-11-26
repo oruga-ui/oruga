@@ -19,6 +19,7 @@ import {
     normalizeOptions,
     findOption,
     useInputHandler,
+    useSequentialId,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
@@ -154,8 +155,13 @@ const itemsLength = computed(() => selectedItems.value?.length || 0);
 
 const isComposing = ref(false);
 
+// create a unique id sequence
+const idSequence = useSequentialId();
+
 /** normalized programamtic options */
-const normalizedOptions = computed(() => normalizeOptions<T>(props.options));
+const normalizedOptions = computed(() =>
+    normalizeOptions<T>(props.options, idSequence),
+);
 
 /** map the selected items into option items */
 const selectedOptions = computed(() => {

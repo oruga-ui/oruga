@@ -22,6 +22,7 @@ import {
 import { injectField } from "../field/fieldInjection";
 
 import type { SelectProps } from "./props";
+import { useSequentialId } from "@/composables";
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -134,8 +135,13 @@ watch(
     { immediate: true, flush: "post" },
 );
 
+// create a unique id sequence
+const idSequence = useSequentialId();
+
 /** normalized programamtic options */
-const normalizedptions = computed(() => normalizeOptions<T>(props.options));
+const normalizedptions = computed(() =>
+    normalizeOptions<T>(props.options, idSequence),
+);
 
 const placeholderVisible = computed(
     () =>

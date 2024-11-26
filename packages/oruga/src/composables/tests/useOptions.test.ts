@@ -1,4 +1,4 @@
-import { describe, test, beforeEach, afterEach, vi, expect } from "vitest";
+import { describe, test, beforeEach, expect } from "vitest";
 import {
     checkOptionsEmpty,
     filterOptionsItems,
@@ -11,36 +11,33 @@ import {
     toOptionsList,
     type OptionsGroupItem,
 } from "../useOptions";
+import { useSequentialId } from "../useSequentialId";
 
 describe("useOptions tests", () => {
-    const UUID = "123";
+    let isSecuencer: ReturnType<typeof useSequentialId>;
 
     beforeEach(() => {
-        vi.stubGlobal("crypto", { randomUUID: vi.fn(() => UUID) });
-    });
-
-    afterEach(() => {
-        vi.clearAllMocks();
+        isSecuencer = useSequentialId();
     });
 
     describe("test normalizeOptions", () => {
         test("test empty list", () => {
-            const normOptions = normalizeOptions([]);
+            const normOptions = normalizeOptions([], isSecuencer);
             expect(normOptions).toEqual([]);
         });
 
         test("test options object", () => {
             const options = { foo: "bar", a: "b" };
-            const normOptions = normalizeOptions(options);
+            const normOptions = normalizeOptions(options, isSecuencer);
 
             expect(normOptions).toEqual([
                 {
-                    key: UUID,
+                    key: "0",
                     label: "bar",
                     value: "foo",
                 },
                 {
-                    key: UUID,
+                    key: "1",
                     label: "b",
                     value: "a",
                 },
@@ -49,18 +46,18 @@ describe("useOptions tests", () => {
 
         test("test options array of strings", () => {
             const options = ["foo", "bar"];
-            const normOptions = normalizeOptions(options);
+            const normOptions = normalizeOptions(options, isSecuencer);
 
             expect(normOptions).toEqual([
                 {
+                    key: "0",
                     label: "foo",
                     value: "foo",
-                    key: UUID,
                 },
                 {
+                    key: "1",
                     label: "bar",
                     value: "bar",
-                    key: UUID,
                 },
             ]);
         });
@@ -70,21 +67,22 @@ describe("useOptions tests", () => {
                 { label: "foo", value: "bar" },
                 { label: "a", value: "b" },
             ];
-            const normOptions = normalizeOptions(options);
+            const normOptions = normalizeOptions(options, isSecuencer);
 
             expect(normOptions).toEqual([
                 {
+                    key: "0",
                     label: "foo",
                     value: "bar",
-                    key: UUID,
                 },
                 {
+                    key: "1",
                     label: "a",
                     value: "b",
-                    key: UUID,
                 },
             ]);
         });
+
         test("test can recursively handle options with nested groups", () => {
             const options = [
                 {
@@ -102,12 +100,12 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const normOptions = normalizeOptions(options);
+            const normOptions = normalizeOptions(options, isSecuencer);
 
             expect(normOptions).toEqual([
                 {
+                    key: "0",
                     group: "foo",
-                    key: "123",
                     options: [
                         { key: "123", label: "#ff985d", value: "#ff985d" },
                         { key: "123", label: "#f7ce68", value: "#f7ce68" },
@@ -116,8 +114,8 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
+                    key: "1",
                     group: "Other",
-                    key: "123",
                     options: [{ key: "123", label: "Red", value: "#ff0000" }],
                 },
             ]);
@@ -141,19 +139,19 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const normOptions = normalizeOptions(options);
+            const normOptions = normalizeOptions(options, isSecuencer);
             expect(normOptions).toEqual([
                 {
+                    key: "0",
                     group: "Foo",
-                    key: "123",
                     options: [
                         { key: "123", label: "A", value: 0 },
                         { key: "123", label: "B", value: 1 },
                     ],
                 },
                 {
+                    key: "1",
                     group: "Bar",
-                    key: "123",
                     options: [
                         { key: "123", label: "D", value: 3 },
                         { key: "123", label: "E", value: 4 },
@@ -179,28 +177,28 @@ describe("useOptions tests", () => {
 
     describe("test toOptionsGroup", () => {
         test("test empty list", () => {
-            const groupOptions = toOptionsGroup([]);
-            expect(groupOptions).toEqual([{ key: UUID, options: [] }]);
+            const groupOptions = toOptionsGroup([], "0");
+            expect(groupOptions).toEqual([{ key: 0, options: [] }]);
         });
 
         test("test is normal options", () => {
             const options = [
                 {
+                    key: "0",
                     label: "foo",
                     value: "bar",
-                    key: UUID,
                 },
                 {
+                    key: "1",
                     label: "a",
                     value: "b",
-                    key: UUID,
                 },
             ];
 
-            const groupOptions = toOptionsGroup(options);
+            const groupOptions = toOptionsGroup(options, "3");
             expect(groupOptions).toEqual([
                 {
-                    key: UUID,
+                    key: "3",
                     options,
                 },
             ]);
@@ -240,7 +238,7 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const groupOptions = toOptionsGroup(options);
+            const groupOptions = toOptionsGroup(options, "22");
             expect(groupOptions).toEqual(options);
         });
     });
