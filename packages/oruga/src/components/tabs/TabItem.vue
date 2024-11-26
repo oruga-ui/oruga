@@ -159,16 +159,16 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <template v-if="!parent.destroyOnHide || (isActive && visible)">
-            <div
-                v-show="isActive && visible"
-                v-bind="$attrs"
-                :id="`tabpanel-${item.identifier}`"
-                :class="panelClasses"
-                :data-id="`tabs-${item.identifier}`"
-                data-oruga="tabs-item"
-                :aria-labelledby="`tab-${item.identifier}`"
-                aria-roledescription="item">
+        <div
+            v-show="isActive && visible"
+            v-bind="$attrs"
+            :id="`tabpanel-${item.identifier}`"
+            :class="panelClasses"
+            :data-id="`tabs-${item.identifier}`"
+            data-oruga="tabs-item"
+            :aria-labelledby="`tab-${item.identifier}`"
+            aria-roledescription="item">
+            <template v-if="!parent.destroyOnHide || (isActive && visible)">
                 <!-- 
                     @slot Tab item content
                 -->
@@ -195,7 +195,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                     -->
                     <slot name="header" />
                 </template>
-            </div>
-        </template>
+            </template>
+        </div>
     </Transition>
 </template>
