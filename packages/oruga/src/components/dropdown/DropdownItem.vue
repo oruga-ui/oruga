@@ -39,8 +39,8 @@ const emits = defineEmits<{
     click: [value: T, event: Event];
 }>();
 
-// Inject functionalities and data from the parent component
-const { parent } = useProviderChild<DropdownComponent<T>>();
+/** inject functionalities and data from the parent component */
+const { parent, item } = useProviderChild<DropdownComponent<T>>();
 
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
@@ -81,12 +81,14 @@ const rootClasses = defineClasses(
     <component
         :is="tag"
         :class="rootClasses"
+        data-oruga="dropdown-item"
+        :data-id="`dropdown-${item.identifier}`"
         :role="ariaRole"
         :tabindex="tabindex"
-        data-oruga="dropdown-item"
         :aria-selected="isActive"
         :aria-disabled="disabled"
-        @click="selectItem">
+        @click="selectItem"
+        @keypress.enter="selectItem">
         <!--
             @slot Override the label, default is label prop 
         -->

@@ -44,6 +44,7 @@ const itemValue = props.value || useId();
 
 const slots = useSlots();
 
+// provided data is a computed ref to enjure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
@@ -57,7 +58,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
     deactivate,
 }));
 
-// Inject functionalities and data from the parent component
+/** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<TabsComponent>({
     data: providedData,
 });
@@ -164,8 +165,8 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             v-bind="$attrs"
             :id="`tabpanel-${item.identifier}`"
             :class="panelClasses"
-            :data-id="`tabs-${item.identifier}`"
             data-oruga="tabs-item"
+            :data-id="`tabs-${item.identifier}`"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
             <template v-if="!parent.destroyOnHide || (isActive && visible)">

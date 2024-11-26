@@ -47,6 +47,7 @@ const itemValue = props.value || useId();
 
 const slots = useSlots();
 
+// provided data is a computed ref to enjure reactivity
 const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
@@ -60,7 +61,7 @@ const providedData = computed<StepItemComponent<T>>(() => ({
     deactivate,
 }));
 
-// inject functionalities and data from the parent carousel component
+/** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<StepsComponent>({
     data: providedData,
 });
@@ -180,8 +181,8 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             v-bind="$attrs"
             :id="`tabpanel-${item.identifier}`"
             :class="panelClasses"
-            :data-id="`steps-${item.identifier}`"
             data-oruga="steps-item"
+            :data-id="`steps-${item.identifier}`"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
             <template v-if="!parent.destroyOnHide || (isActive && visible)">

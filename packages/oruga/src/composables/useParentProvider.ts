@@ -28,6 +28,10 @@ type PovidedData<P, I = unknown> = {
 
 type ProviderParentOptions<T = unknown> = {
     /**
+     * Root element of the provider component
+     */
+    rootRef?: MaybeRefOrGetter<HTMLElement | Component | null | undefined>;
+    /**
      * Override the provide/inject key.
      * Default is the component configField attribute
      */
@@ -36,20 +40,13 @@ type ProviderParentOptions<T = unknown> = {
      * Additional data provided for the child to the item
      */
     data?: ComputedRef<T>;
-    /**
-     * When items are added/removed sort them according to their DOM position
-     */
-    sorted?: boolean;
 };
 
 /**
  * Provide functionalities and data to child components
- * @param rootRef Root element of the provider component
- * @param data Additional data to provide
- * @param options additional options
+ * @param options parent provider options
  */
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
-    rootRef?: MaybeRefOrGetter<HTMLElement | Component | null | undefined>,
     options?: ProviderParentOptions<ParentData>,
 ): {
     childItems: Ref<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
@@ -65,12 +62,11 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     const key = options?.key || configField;
 
     const childItems = ref<ProviderItem<ItemData>[]>([]);
-    const sequence = ref(1);
 
-    if (options?.sorted) {
+    if (options?.rootRef) {
         // debounced sort function
         const sortHandler = useDebounce((items: typeof childItems.value) => {
-            const parent = unrefElement(rootRef);
+            const parent = unrefElement(options.rootRef);
             if (!parent) return;
 
             // create a list of child item ids
@@ -96,7 +92,8 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
             items.sort((a, b) => a.index - b.index);
         }, 500);
 
-        // watch change of the child list (no deep change - only list update)
+        // when child items are added/removed (no deep change - only list update)
+        // sort them according to their DOM position
         watch(childItems, sortHandler);
     }
 
@@ -118,8 +115,9 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         childItems.value = childItems.value.filter((i) => i !== item);
     }
 
+    let sequence = 1;
     function nextSequence(): string {
-        return String(sequence.value++);
+        return String(sequence++);
     }
 
     /** Provide functionality for child components via dependency injection. */
@@ -157,19 +155,30 @@ type ProviderChildOptions<T = unknown> = {
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
-    options?: Omit<ProviderChildOptions<ItemData>, "needParent" | "register">,
-): {
-    parent: Ref<ParentData>;
-    item: Ref<ProviderItem<ItemData>>;
-};
-
-export function useProviderChild<ParentData, ItemData = unknown>(
-    options: Omit<ProviderChildOptions<ItemData>, "needParent" | "register"> & {
+    options: Omit<ProviderChildOptions<ItemData>, "needParent"> & {
         needParent: true;
     },
 ): {
     parent: Ref<ParentData>;
     item: Ref<ProviderItem<ItemData> | undefined>;
+};
+
+export function useProviderChild<ParentData, ItemData = unknown>(
+    options: Omit<ProviderChildOptions<ItemData>, "needParent"> & {
+        needParent: false;
+    },
+): {
+    parent: Ref<ParentData | undefined>;
+    item: Ref<ProviderItem<ItemData> | undefined>;
+};
+
+export function useProviderChild<ParentData, ItemData = unknown>(
+    options: Omit<ProviderChildOptions<ItemData>, "needParent"> & {
+        register: false;
+    },
+): {
+    parent: Ref<ParentData>;
+    item: Ref<undefined>;
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
@@ -183,12 +192,10 @@ export function useProviderChild<ParentData, ItemData = unknown>(
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
-    options: Omit<ProviderChildOptions<ItemData>, "needParent"> & {
-        needParent?: false;
-    },
+    options?: Omit<ProviderChildOptions<ItemData>, "needParent">,
 ): {
-    parent: Ref<ParentData | undefined>;
-    item: Ref<ProviderItem<ItemData> | undefined>;
+    parent: Ref<ParentData>;
+    item: Ref<ProviderItem<ItemData>>;
 };
 
 /**

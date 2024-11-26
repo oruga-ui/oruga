@@ -81,7 +81,7 @@ const rootRef = useTemplateRef("rootElement");
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index || 0,
     type: props.type,
@@ -92,10 +92,10 @@ const provideData = computed<TabsComponent>(() => ({
     destroyOnHide: props.destroyOnHide,
 }));
 
-/** Provide functionalities and data to child item components */
-const { childItems } = useProviderParent<TabItemComponent<T>>(rootRef, {
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent<TabItemComponent<T>>({
+    rootRef,
     data: provideData,
-    sorted: true,
 });
 
 const items = computed<TabItem<T>[]>(() => {

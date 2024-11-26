@@ -352,9 +352,9 @@ const provideData = computed<TableComponent>(() => ({
 }));
 
 /** provide functionalities and data to child item components */
-const { childItems } = useProviderParent<TableColumnComponent<T>>(slotRef, {
+const { childItems } = useProviderParent<TableColumnComponent<T>>({
+    rootRef: slotRef,
     data: provideData,
-    sorted: true,
 });
 
 /** all defined columns */
