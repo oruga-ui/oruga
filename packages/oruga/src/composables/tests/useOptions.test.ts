@@ -104,19 +104,19 @@ describe("useOptions tests", () => {
 
             expect(normOptions).toEqual([
                 {
-                    key: "0",
+                    key: "4",
                     group: "foo",
                     options: [
-                        { key: "123", label: "#ff985d", value: "#ff985d" },
-                        { key: "123", label: "#f7ce68", value: "#f7ce68" },
-                        { key: "123", label: "#FFFFFF", value: "#FFFFFF" },
-                        { key: "123", label: "#2b2b35", value: "#2b2b35" },
+                        { key: "0", label: "#ff985d", value: "#ff985d" },
+                        { key: "1", label: "#f7ce68", value: "#f7ce68" },
+                        { key: "2", label: "#FFFFFF", value: "#FFFFFF" },
+                        { key: "3", label: "#2b2b35", value: "#2b2b35" },
                     ],
                 },
                 {
-                    key: "1",
+                    key: "6",
                     group: "Other",
-                    options: [{ key: "123", label: "Red", value: "#ff0000" }],
+                    options: [{ key: "5", label: "Red", value: "#ff0000" }],
                 },
             ]);
         });
@@ -142,19 +142,19 @@ describe("useOptions tests", () => {
             const normOptions = normalizeOptions(options, isSecuencer);
             expect(normOptions).toEqual([
                 {
-                    key: "0",
+                    key: "2",
                     group: "Foo",
                     options: [
-                        { key: "123", label: "A", value: 0 },
-                        { key: "123", label: "B", value: 1 },
+                        { key: "0", label: "A", value: 0 },
+                        { key: "1", label: "B", value: 1 },
                     ],
                 },
                 {
-                    key: "1",
+                    key: "5",
                     group: "Bar",
                     options: [
-                        { key: "123", label: "D", value: 3 },
-                        { key: "123", label: "E", value: 4 },
+                        { key: "3", label: "D", value: 3 },
+                        { key: "4", label: "E", value: 4 },
                     ],
                 },
             ]);
@@ -178,7 +178,7 @@ describe("useOptions tests", () => {
     describe("test toOptionsGroup", () => {
         test("test empty list", () => {
             const groupOptions = toOptionsGroup([], "0");
-            expect(groupOptions).toEqual([{ key: 0, options: [] }]);
+            expect(groupOptions).toEqual([{ key: "0", options: [] }]);
         });
 
         test("test is normal options", () => {
