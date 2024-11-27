@@ -3,6 +3,7 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 
 import OTable from "@/components/table/Table.vue";
 import type { TableColumn } from "../types";
+import { nextTick } from "vue";
 
 describe("OTable tests", () => {
     enableAutoUnmount(afterEach);
@@ -77,10 +78,12 @@ describe("OTable tests", () => {
         },
     ];
 
-    test("render correctly", () => {
+    test("render correctly", async () => {
         const wrapper = mount<typeof OTable<(typeof data)[number]>>(OTable, {
             props: { data, columns },
         });
+        await nextTick(); // await child component rendering
+
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("table");

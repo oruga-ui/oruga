@@ -36,7 +36,114 @@ exports[`OTable tests > render correctly 1`] = `
   <!--v-if-->
   <!--v-if-->
   <div class="o-table__wrapper">
-    <!--v-if-->
+    <table class="o-table" aria-rowcount="6" aria-colcount="5">
+      <!--v-if-->
+      <thead>
+        <!--
+                        @slot Define preheader content here
+                    -->
+        <tr aria-rowindex="1">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;" draggable="false" aria-colindex="1"><span>ID <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="2"><span>First Name <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="3"><span>Last Name <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable o-table__th--centered" draggable="false" aria-colindex="4"><span>Date <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="5"><span>Gender <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <!--v-if-->
+        <!--v-if-->
+      </thead>
+      <tbody>
+        <!-- table rows -->
+        <tr class="" draggable="false" aria-rowindex="2">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">1</td>
+          <td class="o-table__td">Jesse</td>
+          <td class="o-table__td">Simmons</td>
+          <td class="o-table__td o-table__td--centered">15.10.2016</td>
+          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <transition-stub name="slide" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub>
+        <tr class="" draggable="false" aria-rowindex="3">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">2</td>
+          <td class="o-table__td">John</td>
+          <td class="o-table__td">Jacobs</td>
+          <td class="o-table__td o-table__td--centered">15.12.2016</td>
+          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <transition-stub name="slide" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub>
+        <tr class="" draggable="false" aria-rowindex="4">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">3</td>
+          <td class="o-table__td">Tina</td>
+          <td class="o-table__td">Gilbert</td>
+          <td class="o-table__td o-table__td--centered">26.4.2016</td>
+          <td class="o-table__td">Female</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <transition-stub name="slide" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub>
+        <tr class="" draggable="false" aria-rowindex="5">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">4</td>
+          <td class="o-table__td">Clarence</td>
+          <td class="o-table__td">Flores</td>
+          <td class="o-table__td o-table__td--centered">10.4.2016</td>
+          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <transition-stub name="slide" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub>
+        <tr class="" draggable="false" aria-rowindex="6">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">5</td>
+          <td class="o-table__td">Anne</td>
+          <td class="o-table__td">Lee</td>
+          <td class="o-table__td o-table__td--centered">6.12.2016</td>
+          <td class="o-table__td">Female</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <transition-stub name="slide" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub>
+        <!--v-if-->
+      </tbody>
+      <!--v-if-->
+    </table>
     <!--
                 @slot Override loading component
                 @binding {boolean} loading - is loading state enabled

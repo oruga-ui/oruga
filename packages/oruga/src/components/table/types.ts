@@ -14,13 +14,6 @@ export type TableColumn<
     K extends keyof T | string = string,
 > = TableColumnProps<T, K>;
 
-export type TableColumns<T = unknown> = (
-    | {
-          [K in keyof T]: TableColumn<T, K>;
-      }[keyof T]
-    | TableColumn<T, string>
-)[];
-
 export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $el: ComponentPublicInstance;
     $slots: Slots;
@@ -35,6 +28,7 @@ export type TableComponent = {
 
 export type TableColumnItem<T = unknown> = Omit<ProviderItem, "data"> &
     TableColumnComponent<T> & {
+        value: TableColumn<T>;
         thAttrsData: object;
         tdAttrsData: Array<object>;
     };

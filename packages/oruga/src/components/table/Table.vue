@@ -373,9 +373,10 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
         );
 
         return {
+            ...column,
+            value: column,
             index: columnItem.index,
             identifier: columnItem.identifier,
-            ...column,
             thAttrsData: thAttrsData,
             tdAttrsData: tdAttrsData,
         };
@@ -933,7 +934,7 @@ function handleColumnDragStart(
 ): void {
     if (!canDragColumn.value) return;
     isDraggingColumn.value = true;
-    emits("columndragstart", column, column.index, event);
+    emits("columndragstart", column.value, column.index, event);
 }
 
 /** emits drag leave event (column) */
@@ -943,13 +944,13 @@ function handleColumnDragEnd(
 ): void {
     if (!canDragColumn.value) return;
     isDraggingColumn.value = false;
-    emits("columndragend", column, column.index, event);
+    emits("columndragend", column.value, column.index, event);
 }
 
 /** emits drop event (column) */
 function handleColumnDrop(column: TableColumnItem<T>, event: DragEvent): void {
     if (!canDragColumn.value) return;
-    emits("columndrop", column, column.index, event);
+    emits("columndrop", column.value, column.index, event);
 }
 
 /** emits drag over event (column) */
@@ -958,7 +959,7 @@ function handleColumnDragOver(
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
-    emits("columndragover", column, column.index, event);
+    emits("columndragover", column.value, column.index, event);
 }
 
 /** emits drag leave event (column) */
@@ -967,7 +968,7 @@ function handleColumnDragLeave(
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
-    emits("columndragleave", column, column.index, event);
+    emits("columndragleave", column.value, column.index, event);
 }
 
 // #endregion --- Drag&Drop Feature ---
@@ -1301,7 +1302,10 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :component="column.$el"
                                     name="header"
                                     tag="span"
-                                    :props="{ column }" />
+                                    :props="{
+                                        column: column.value,
+                                        index: column.index,
+                                    }" />
 
                                 <span v-else>
                                     {{ column.label }}
@@ -1379,7 +1383,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             name="searchable"
                                             tag="span"
                                             :props="{
-                                                column,
+                                                column: column.value,
                                                 index: column.index,
                                                 filters,
                                             }" />
@@ -1432,7 +1436,10 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :component="column.$el"
                                     name="subheading"
                                     tag="span"
-                                    :props="{ column, index: column.index }" />
+                                    :props="{
+                                        column: column.value,
+                                        index: column.index,
+                                    }" />
                                 <span v-else>
                                     {{ column.subheading }}
                                 </span>
@@ -1545,8 +1552,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :style="isMobileActive ? {} : column.style"
                                     :props="{
                                         row: row.value,
-                                        column,
                                         index: row.index,
+                                        column: column.value,
                                         colindex: column.index,
                                         toggleDetails: () => toggleDetails(row),
                                     }"
@@ -1554,7 +1561,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         $emit(
                                             'cell-click',
                                             row.value,
-                                            column,
+                                            column.value,
                                             row.index,
                                             column.index,
                                             $event,
@@ -1666,7 +1673,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :active="loading"
                     :icon="loadingIcon"
                     :label="loadingLabel"
-                    aria-role="status" />
+                    role="status" />
             </slot>
         </div>
 
