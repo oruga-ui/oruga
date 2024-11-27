@@ -8,8 +8,27 @@ exports[`OTable tests > render correctly 1`] = `
             -->
     <!--
                     @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-                -->
-    <!--v-if-->
+                --><span data-id="1" data-oruga="table-column">ID <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span><span data-id="2" data-oruga="table-column">First Name <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span><span data-id="3" data-oruga="table-column">Last Name <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span><span data-id="4" data-oruga="table-column">Date <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span><span data-id="5" data-oruga="table-column">Gender <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span>
     <!--
                     @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
                 -->

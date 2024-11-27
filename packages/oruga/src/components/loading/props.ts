@@ -28,6 +28,8 @@ export type LoadingProps = {
      * @values keep, clip
      */
     scroll?: "keep" | "clip";
+    /** Role attribute to be passed to the div wrapper for better accessibility */
+    ariaRole?: string;
 } & LoadingClasses;
 
 // class props (will not be displayed in the docs)

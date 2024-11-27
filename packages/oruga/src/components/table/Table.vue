@@ -1235,7 +1235,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         <th
                             v-if="showDetailRowIcon"
                             :class="[...thBaseClasses, ...thDetailedClasses]"
-                            :aria-colindex="1" />
+                            :aria-colindex="1"
+                            aria-hidden="true" />
 
                         <!-- checkable column left -->
                         <th
@@ -1356,7 +1357,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
-                            :class="[...thBaseClasses, ...thDetailedClasses]" />
+                            :class="[...thBaseClasses, ...thDetailedClasses]"
+                            aria-hidden="true" />
 
                         <!-- checkable column left -->
                         <th v-if="checkable && checkboxPosition === 'left'" />
@@ -1541,7 +1543,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         ...column.tdClasses,
                                     ]"
                                     :style="isMobileActive ? {} : column.style"
-                                    :data-label="column.label"
                                     :props="{
                                         row: row.value,
                                         column,
@@ -1665,7 +1666,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :active="loading"
                     :icon="loadingIcon"
                     :label="loadingLabel"
-                    role="status" />
+                    aria-role="status" />
             </slot>
         </div>
 
