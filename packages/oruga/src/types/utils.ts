@@ -21,6 +21,17 @@ export type DynamicComponent = string | object | CallableFunction | Component;
 /** Define a property as required */
 export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
+/** Remove generic <[x: string]: any> index signature structure from type */
+export type RemoveIndex<T> = {
+    [K in keyof T as string extends K
+        ? never
+        : number extends K
+          ? never
+          : symbol extends K
+            ? never
+            : K]: T[K];
+};
+
 /** Custom type helper which extracts the `$emits` type of an component and converts it to an props object. */
 export type ComponentEmits<C> = EmitsToProps<ComponentEmit<C>>;
 
@@ -38,3 +49,9 @@ export type DeepType<T, K> = T extends object
             : TypeOfKey<T, K>
         : T
     : T;
+
+export type DeepKeys<T> = T extends object
+    ? {
+          [K in keyof T]: `${Exclude<K, symbol>}${DeepKeys<T[K]> extends never ? "" : `.${DeepKeys<T[K]>}`}`;
+      }[keyof T]
+    : never;

@@ -17,21 +17,7 @@ exports[`OTable tests > render correctly 1`] = `
   <!--v-if-->
   <!--v-if-->
   <div class="o-table__wrapper">
-    <table class="o-table o-table--empty">
-      <!--v-if-->
-      <!--v-if-->
-      <tbody>
-        <tr>
-          <td colspan="0">
-            <!--
-                                @slot Define content if table is empty
-                            -->
-            <!--v-if-->
-          </td>
-        </tr>
-      </tbody>
-      <!--v-if-->
-    </table>
+    <!--v-if-->
     <!--
                 @slot Override loading component
                 @binding {boolean} loading - is loading state enabled

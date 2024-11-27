@@ -10,7 +10,9 @@ import {
     triggerRef,
     watchEffect,
     useTemplateRef,
+    toValue,
     type Component,
+    type MaybeRefOrGetter,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -27,11 +29,11 @@ import {
     toOptionsList,
     findOption,
     checkOptionsEmpty,
-    firstValidOption,
+    firstViableOption,
     filterOptionsItems,
     useInputHandler,
     useEventListener,
-    isOptionValid,
+    isOptionViable,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -220,10 +222,22 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
  */
 watchEffect(() => {
     // filter options by input value
-    filterOptionsItems(groupedOptions, inputValue, props.filter);
+    filterOptionsItems(groupedOptions, (o) => filterItems(o, inputValue));
     // trigger reactive update of groupedOptions
     triggerRef(groupedOptions);
 });
+
+function filterItems(
+    option: OptionsItem<T>,
+    value: MaybeRefOrGetter<string>,
+): boolean {
+    if (typeof props.filter === "function")
+        return props.filter(option.value, toValue(value));
+    else
+        return !String(option.label)
+            .toLowerCase()
+            .includes(toValue(value)?.toLowerCase());
+}
 
 // set initial inputValue if selected is given
 if (selectedValue.value) {
@@ -357,7 +371,7 @@ function setHovered(option: OptionsItem<T> | SpecialOption | undefined): void {
 
 /** set first option as hovered */
 function hoverFirstOption(): void {
-    const option = firstValidOption(groupedOptions);
+    const option = firstViableOption(groupedOptions);
     // set found option or undefined hovered
     setHovered(option);
 }
@@ -368,7 +382,7 @@ function hoverFirstOption(): void {
  * Arrows keys listener.
  * If dropdown is active, set hovered option, or else just open.
  */
-function navigateItem(direction: 1 | -1): void {
+function navigateItem(delta: 1 | -1): void {
     if (!dropdownRef.value?.$content) return;
     if (!isActive.value) {
         isActive.value = true;
@@ -379,7 +393,7 @@ function navigateItem(direction: 1 | -1): void {
     const options: OptionsItem<T>[] = toOptionsList(groupedOptions);
     // filter only avaibale options
     const availableOptions: (SpecialOption | OptionsItem<T>)[] = options.filter(
-        (o) => isOptionValid(o),
+        (o) => isOptionViable(o),
     );
 
     // item elements
@@ -397,15 +411,14 @@ function navigateItem(direction: 1 | -1): void {
 
     // define current available options index
     let index: number;
-    if (headerHovered.value) index = 0 + direction;
-    else if (footerHovered.value)
-        index = availableOptions.length - 1 + direction;
+    if (headerHovered.value) index = 0 + delta;
+    else if (footerHovered.value) index = availableOptions.length - 1 + delta;
     else {
         index =
             availableOptions.findIndex(
                 (o) =>
                     !isSpecialOption(o) && o.key === hoveredOption.value?.key,
-            ) + direction;
+            ) + delta;
     }
 
     // check if index overflow
