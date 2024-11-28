@@ -20,6 +20,7 @@ import {
     defineClasses,
     normalizeOptions,
     useProviderParent,
+    useSequentialId,
 } from "@/composables";
 
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
@@ -105,8 +106,13 @@ const items = computed<TabItem<T>[]>(() =>
     })),
 );
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
-const groupedOptions = computed(() => normalizeOptions<T>(props.options));
+const groupedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 /**  When v-model is changed set the new active tab. */
 watch(

@@ -4,7 +4,7 @@ import { axe } from "jest-axe";
 
 import OSwitch from "../Switch.vue";
 
-describe("Checkbox axe tests", () => {
+describe("Switch axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases = [
