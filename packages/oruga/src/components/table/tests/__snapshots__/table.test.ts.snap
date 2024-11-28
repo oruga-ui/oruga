@@ -73,9 +73,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
-        <transition-stub name="slide" appear="false" persisted="false" css="true">
-          <!--v-if-->
-        </transition-stub>
+        <!--v-if-->
         <tr class="" draggable="false" aria-rowindex="3">
           <!-- detailed toggle column -->
           <!--v-if-->
@@ -89,9 +87,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
-        <transition-stub name="slide" appear="false" persisted="false" css="true">
-          <!--v-if-->
-        </transition-stub>
+        <!--v-if-->
         <tr class="" draggable="false" aria-rowindex="4">
           <!-- detailed toggle column -->
           <!--v-if-->
@@ -105,9 +101,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td">Female</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
-        <transition-stub name="slide" appear="false" persisted="false" css="true">
-          <!--v-if-->
-        </transition-stub>
+        <!--v-if-->
         <tr class="" draggable="false" aria-rowindex="5">
           <!-- detailed toggle column -->
           <!--v-if-->
@@ -121,9 +115,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
-        <transition-stub name="slide" appear="false" persisted="false" css="true">
-          <!--v-if-->
-        </transition-stub>
+        <!--v-if-->
         <tr class="" draggable="false" aria-rowindex="6">
           <!-- detailed toggle column -->
           <!--v-if-->
@@ -137,9 +129,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td">Female</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
-        <transition-stub name="slide" appear="false" persisted="false" css="true">
-          <!--v-if-->
-        </transition-stub>
+        <!--v-if-->
         <!--v-if-->
       </tbody>
       <!--v-if-->
