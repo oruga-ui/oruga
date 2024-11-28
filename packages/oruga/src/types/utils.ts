@@ -49,9 +49,3 @@ export type DeepType<T, K> = T extends object
             : TypeOfKey<T, K>
         : T
     : T;
-
-export type DeepKeys<T> = T extends object
-    ? {
-          [K in keyof T]: `${Exclude<K, symbol>}${DeepKeys<T[K]> extends never ? "" : `.${DeepKeys<T[K]>}`}`;
-      }[keyof T]
-    : never;

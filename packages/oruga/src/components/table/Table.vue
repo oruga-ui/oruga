@@ -30,7 +30,6 @@ import {
     sortBy,
     isDefined,
     getPropertyValue,
-    isObject,
 } from "@/utils/helpers";
 import {
     defineClasses,
@@ -433,15 +432,13 @@ const tableRows = computed<TableRow<T>[]>(() => {
         index: idx, // row index
         key:
             // if no key is given and data is object, create unique row id for each row
-            props.rowKey && isObject(value)
-                ? String(
-                      getValueByPath(
-                          value,
-                          props.rowKey,
-                          nextSequence() as DeepType<T, string>,
-                      ),
-                  )
-                : nextSequence(),
+            String(
+                getValueByPath(
+                    value,
+                    props.rowKey,
+                    nextSequence() as DeepType<T, string>,
+                ),
+            ),
     }));
 });
 
@@ -1590,7 +1587,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             </td>
                         </tr>
 
-                        <transition :name="detailTransition">
+                        <transition
+                            v-if="props.detailed"
+                            :name="detailTransition">
                             <template v-if="isActiveDetailRow(row)">
                                 <!--
                                     @slot Place row detail content here

@@ -1,9 +1,10 @@
 import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
+
+import type { TableColumn } from "../types";
 
 import OTable from "@/components/table/Table.vue";
-import type { TableColumn } from "../types";
-import { nextTick } from "vue";
 
 describe("OTable tests", () => {
     enableAutoUnmount(afterEach);
