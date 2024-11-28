@@ -70,7 +70,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         childItems.value.slice().sort((a, b) => a.index - b.index),
     );
 
-    const { nextSequence } = useSequentialId();
+    const { nextSequence } = useSequentialId(1);
 
     function registerItem(
         data?: ComputedRef<ItemData>,
