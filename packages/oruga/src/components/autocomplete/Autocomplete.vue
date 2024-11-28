@@ -34,6 +34,7 @@ import {
     useInputHandler,
     useEventListener,
     isOptionViable,
+    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -209,10 +210,13 @@ const inputValue = defineModel<string>("input", { default: "" });
 /** create a unique id for the menu */
 const menuId = useId();
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
 const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options);
-    const groupedOptions = toOptionsGroup(normalizedOptions);
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 

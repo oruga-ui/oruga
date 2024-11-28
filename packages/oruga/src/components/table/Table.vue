@@ -40,6 +40,7 @@ import {
     useDebounce,
     isOptionViable,
     filterOptionsItems,
+    useSequentialId,
 } from "@/composables";
 
 import type { ClassBind, DeepType } from "@/types";
@@ -420,6 +421,9 @@ const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 // recompute table rows visibility on page change
 watch([tableCurrentPage, () => props.perPage], () => filterTableRows());
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** all defined data elements as normalized options with a unique key*/
 const tableRows = computed<TableRow<T>[]>(() => {
     if (!props.data) return [];
@@ -434,10 +438,10 @@ const tableRows = computed<TableRow<T>[]>(() => {
                       getValueByPath(
                           value,
                           props.rowKey,
-                          idx as DeepType<T, string>,
+                          nextSequence() as DeepType<T, string>,
                       ),
                   )
-                : String(idx),
+                : nextSequence(),
     }));
 });
 

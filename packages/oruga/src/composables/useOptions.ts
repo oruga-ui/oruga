@@ -114,7 +114,7 @@ export function normalizeOptions<
     V,
     O extends OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
     R extends NormalizedOptions<V, O> = NormalizedOptions<V, O>,
->(options?: O): R {
+>(options: O | undefined, uuid: () => string): R {
     if (!options) return [] as R;
 
     if (Array.isArray(options))
@@ -125,24 +125,24 @@ export function normalizeOptions<
                     return {
                         label: String(option),
                         value: String(option),
-                        key: crypto.randomUUID(),
+                        key: uuid(),
                     } as OptionsItem<V>;
 
                 if (typeof option == "object") {
                     if ("group" in option) {
                         // process group options
-                        const options = normalizeOptions(option.options);
+                        const options = normalizeOptions(option.options, uuid);
                         // create options group item
                         return {
                             ...option,
                             options,
-                            key: crypto.randomUUID(),
+                            key: uuid(),
                         } as OptionsGroupItem<V>;
                     } else if ("value" in option) {
                         // create options item
                         return {
                             ...option,
-                            key: crypto.randomUUID(),
+                            key: uuid(),
                         } as OptionsItem<V>;
                     }
                 }
@@ -155,7 +155,7 @@ export function normalizeOptions<
             // create option from object key/value
             label: options[value],
             value,
-            key: crypto.randomUUID(),
+            key: uuid(),
         }),
     ) as R;
 }
@@ -176,6 +176,7 @@ export function isGroupOption(
 
 export function toOptionsGroup<V>(
     options: OptionsItem<V>[] | OptionsGroupItem<V>[],
+    key: string,
 ): OptionsGroupItem<V>[] {
     if (!Array.isArray(options)) return [];
 
@@ -185,7 +186,7 @@ export function toOptionsGroup<V>(
     if (isGroup) return [...options] as OptionsGroupItem<V>[];
 
     // create a list with a single group
-    return [{ options, key: crypto.randomUUID() }] as OptionsGroupItem<V>[];
+    return [{ options, key }] as OptionsGroupItem<V>[];
 }
 
 export function toOptionsList<V>(
