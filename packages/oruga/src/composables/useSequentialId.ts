@@ -3,7 +3,7 @@ export function useSequentialId(): {
     nextSequence: () => string;
     sequence: Readonly<number>;
 } {
-    let sequence = 0;
+    let sequence = 1;
 
     /** increase the unique id sequence */
     function nextSequence(): string {
