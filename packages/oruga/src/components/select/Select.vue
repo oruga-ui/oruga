@@ -17,12 +17,12 @@ import {
     isGroupOption,
     normalizeOptions,
     useInputHandler,
+    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
 import type { SelectProps } from "./props";
-import { useSequentialId } from "@/composables";
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
