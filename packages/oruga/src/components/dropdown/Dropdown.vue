@@ -114,12 +114,12 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 const isActive = defineModel<boolean>("active", { default: false });
 
 // create a unique id sequence
-const idSequence = useSequentialId();
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
 const groupedOptions = computed(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, idSequence);
-    const groupedOptions = toOptionsGroup(normalizedOptions, idSequence());
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 

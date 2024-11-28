@@ -136,11 +136,11 @@ watch(
 );
 
 // create a unique id sequence
-const idSequence = useSequentialId();
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
 const normalizedptions = computed(() =>
-    normalizeOptions<T>(props.options, idSequence),
+    normalizeOptions<T>(props.options, nextSequence),
 );
 
 const placeholderVisible = computed(

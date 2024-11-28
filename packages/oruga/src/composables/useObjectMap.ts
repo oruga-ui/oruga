@@ -1,5 +1,4 @@
 import { toValue, type MaybeRefOrGetter } from "vue";
-import type { useSequentialId } from "./useSequentialId";
 
 export type ObjectMap<T> = Array<{
     key: string | number;
@@ -10,7 +9,7 @@ export type ObjectMap<T> = Array<{
 export function useObjectMap<T>(
     values: MaybeRefOrGetter<Array<T>> | undefined,
     key: string | number | symbol | undefined,
-    uId: ReturnType<typeof useSequentialId>,
+    uuid: () => string,
 ): ObjectMap<T> {
     if (!values || !toValue(values)?.length) return [];
     return toValue(values).map((value: T) => ({
@@ -18,7 +17,7 @@ export function useObjectMap<T>(
         key:
             // if no key is given and data is object, create unique row id for each row
             key && value && typeof value === "object"
-                ? (value[key as keyof T] as string) || uId()
-                : uId(),
+                ? (value[key as keyof T] as string) || uuid()
+                : uuid(),
     }));
 }

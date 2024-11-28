@@ -116,11 +116,11 @@ const items = computed<StepItem<T>[]>(() =>
 );
 
 // create a unique id sequence
-const idSequence = useSequentialId();
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
 const groupedOptions = computed(() =>
-    normalizeOptions<T>(props.options, idSequence),
+    normalizeOptions<T>(props.options, nextSequence),
 );
 
 /** When v-model is changed set the new active step. */

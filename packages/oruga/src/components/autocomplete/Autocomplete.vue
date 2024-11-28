@@ -209,12 +209,12 @@ const inputValue = defineModel<string>("input", { default: "" });
 const menuId = useId();
 
 // create a unique id sequence
-const idSequence = useSequentialId();
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
 const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, idSequence);
-    const groupedOptions = toOptionsGroup(normalizedOptions, idSequence());
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 

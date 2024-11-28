@@ -1,6 +1,5 @@
 import { toValue, type MaybeRefOrGetter } from "vue";
 import { isEqual } from "@/utils/helpers";
-import type { useSequentialId } from "./";
 
 /**
  * Options should always be formatted as an array of objects with label and value properties.
@@ -116,7 +115,7 @@ export function normalizeOptions<
     V,
     O extends OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
     R extends NormalizedOptions<V, O> = NormalizedOptions<V, O>,
->(options: O | undefined, uId: ReturnType<typeof useSequentialId>): R {
+>(options: O | undefined, uuid: () => string): R {
     if (!options) return [] as R;
 
     if (Array.isArray(options))
@@ -127,24 +126,24 @@ export function normalizeOptions<
                     return {
                         label: String(option),
                         value: String(option),
-                        key: uId(),
+                        key: uuid(),
                     } as OptionsItem<V>;
 
                 if (typeof option == "object") {
                     if ("group" in option) {
                         // process group options
-                        const options = normalizeOptions(option.options, uId);
+                        const options = normalizeOptions(option.options, uuid);
                         // create options group item
                         return {
                             ...option,
                             options,
-                            key: uId(),
+                            key: uuid(),
                         } as OptionsGroupItem<V>;
                     } else if ("value" in option) {
                         // create options item
                         return {
                             ...option,
-                            key: uId(),
+                            key: uuid(),
                         } as OptionsItem<V>;
                     }
                 }
@@ -157,7 +156,7 @@ export function normalizeOptions<
             // create option from object key/value
             label: options[value],
             value,
-            key: uId(),
+            key: uuid(),
         }),
     ) as R;
 }

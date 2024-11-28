@@ -22,13 +22,16 @@ describe("useOptions tests", () => {
 
     describe("test normalizeOptions", () => {
         test("test empty list", () => {
-            const normOptions = normalizeOptions([], isSecuencer);
+            const normOptions = normalizeOptions([], isSecuencer.nextSequence);
             expect(normOptions).toEqual([]);
         });
 
         test("test options object", () => {
             const options = { foo: "bar", a: "b" };
-            const normOptions = normalizeOptions(options, isSecuencer);
+            const normOptions = normalizeOptions(
+                options,
+                isSecuencer.nextSequence,
+            );
 
             expect(normOptions).toEqual([
                 {
@@ -46,7 +49,10 @@ describe("useOptions tests", () => {
 
         test("test options array of strings", () => {
             const options = ["foo", "bar"];
-            const normOptions = normalizeOptions(options, isSecuencer);
+            const normOptions = normalizeOptions(
+                options,
+                isSecuencer.nextSequence,
+            );
 
             expect(normOptions).toEqual([
                 {
@@ -67,7 +73,10 @@ describe("useOptions tests", () => {
                 { label: "foo", value: "bar" },
                 { label: "a", value: "b" },
             ];
-            const normOptions = normalizeOptions(options, isSecuencer);
+            const normOptions = normalizeOptions(
+                options,
+                isSecuencer.nextSequence,
+            );
 
             expect(normOptions).toEqual([
                 {
@@ -100,7 +109,10 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const normOptions = normalizeOptions(options, isSecuencer);
+            const normOptions = normalizeOptions(
+                options,
+                isSecuencer.nextSequence,
+            );
 
             expect(normOptions).toEqual([
                 {
@@ -139,7 +151,10 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const normOptions = normalizeOptions(options, isSecuencer);
+            const normOptions = normalizeOptions(
+                options,
+                isSecuencer.nextSequence,
+            );
             expect(normOptions).toEqual([
                 {
                     key: "2",

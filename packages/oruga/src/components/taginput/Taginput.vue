@@ -156,11 +156,11 @@ const itemsLength = computed(() => selectedItems.value?.length || 0);
 const isComposing = ref(false);
 
 // create a unique id sequence
-const idSequence = useSequentialId();
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, idSequence),
+    normalizeOptions<T>(props.options, nextSequence),
 );
 
 /** map the selected items into option items */
