@@ -9,6 +9,7 @@ defineOptions({
     isOruga: true,
     name: "OTablePagination",
     configField: "table",
+    inheritAttrs: false,
 });
 
 defineProps({
