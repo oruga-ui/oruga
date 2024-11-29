@@ -17,6 +17,7 @@ import {
     isGroupOption,
     normalizeOptions,
     useInputHandler,
+    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -134,8 +135,13 @@ watch(
     { immediate: true, flush: "post" },
 );
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
-const normalizedptions = computed(() => normalizeOptions<T>(props.options));
+const normalizedptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 const placeholderVisible = computed(
     () =>

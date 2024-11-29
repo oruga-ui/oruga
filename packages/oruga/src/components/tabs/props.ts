@@ -43,6 +43,8 @@ export type TabsProps<T> = {
     expanded?: boolean;
     /** Destroy tabItem on hide */
     destroyOnHide?: boolean;
+    /** Set the tab active on navigation focus */
+    activateOnFocus?: boolean;
     /** Tab will have an animation */
     animated?: boolean;
     /**
@@ -102,8 +104,6 @@ export type TabItemProps<T, C extends Component> = {
     iconPack?: string;
     /** Tabs item tag name */
     tag?: DynamicComponent;
-    /** Role attribute to be passed to the div wrapper for better accessibility */
-    ariaRole?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;
     /** Component to be injected. */

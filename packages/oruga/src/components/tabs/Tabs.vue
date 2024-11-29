@@ -20,6 +20,7 @@ import {
     defineClasses,
     normalizeOptions,
     useProviderParent,
+    useSequentialId,
 } from "@/composables";
 
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
@@ -50,6 +51,7 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     type: () => getDefault("tabs.type", "default"),
     expanded: false,
     destroyOnHide: false,
+    activateOnFocus: false,
     animated: () => getDefault("tabs.animated", true),
     animation: () =>
         getDefault("tabs.animation", [
@@ -107,8 +109,13 @@ const items = computed<TabItem<T>[]>(() => {
     }));
 });
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
-const groupedOptions = computed(() => normalizeOptions<T>(props.options));
+const groupedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 /**  When v-model is changed set the new active tab. */
 watch(
@@ -149,36 +156,67 @@ function tabClick(item: TabItem<T>): void {
 }
 
 /** Go to the next item or wrap around */
-function next(): void {
-    const newIndex = mod(activeIndex.value + 1, items.value.length);
-    clickFirstViableChild(newIndex, true);
+function next(event: KeyboardEvent, index: number): void {
+    if (
+        (props.vertical && event.key == "ArrowDown") ||
+        (!props.vertical && event.key == "ArrowRight")
+    ) {
+        event.preventDefault(); // prevent default browser scrolling
+        const newIndex = mod(index + 1, items.value.length);
+        const item = getFirstViableItem(newIndex, true);
+        moveFocus(item);
+    }
 }
 
 /** Go to the previous item or wrap around */
-function prev(): void {
-    const newIndex = mod(activeIndex.value - 1, items.value.length);
-    clickFirstViableChild(newIndex, false);
+function prev(event: KeyboardEvent, index: number): void {
+    if (
+        (props.vertical && event.key == "ArrowUp") ||
+        (!props.vertical && event.key == "ArrowLeft")
+    ) {
+        event.preventDefault(); // prevent default browser scrolling
+        const newIndex = mod(index - 1, items.value.length);
+        const item = getFirstViableItem(newIndex, false);
+        moveFocus(item);
+    }
 }
 
 /** Go to the first viable item */
 function homePressed(): void {
     if (items.value.length < 1) return;
-    clickFirstViableChild(0, true);
+    const item = getFirstViableItem(0, true);
+    moveFocus(item);
 }
 
 /** Go to the last viable item */
 function endPressed(): void {
     if (items.value.length < 1) return;
-    clickFirstViableChild(items.value.length - 1, false);
+    const item = getFirstViableItem(items.value.length - 1, false);
+    moveFocus(item);
+}
+
+/** Set focus on a tab item. */
+function moveFocus(item: TabItem<T>): void {
+    if (props.activateOnFocus) {
+        tabClick(item);
+    } else {
+        const el = rootRef.value?.querySelector<HTMLElement>(
+            `#tab-${item.identifier} > *`,
+        );
+        el?.focus();
+    }
 }
 
 /**
- * Select the first 'viable' child, starting at startingIndex and in the direction specified
+ * Get the first 'viable' child, starting at startingIndex and in the direction specified
  * by the boolean parameter forward. In other words, first try to select the child at index
  * startingIndex, and if it is not visible or it is disabled, then go to the index in the
  * specified direction until either returning to startIndex or finding a viable child item.
  */
-function clickFirstViableChild(startingIndex: number, forward: boolean): void {
+function getFirstViableItem(
+    startingIndex: number,
+    forward: boolean,
+): TabItem<T> {
     const direction = forward ? 1 : -1;
     let newIndex = startingIndex;
     for (
@@ -190,7 +228,8 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
         if (items.value[newIndex].visible && !items.value[newIndex].disabled)
             break;
     }
-    tabClick(items.value[newIndex]);
+
+    return items.value[newIndex];
 }
 
 /** Activate next child and deactivate prev child */
@@ -281,9 +320,12 @@ const contentClasses = defineClasses(
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
                 :class="childItem.navClasses"
-                :role="childItem.ariaRole"
+                role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="childItem.value === activeItem.value">
+                :aria-selected="childItem.value === activeItem.value"
+                :tabindex="
+                    childItem.value === activeItem.value ? undefined : '-1'
+                ">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
@@ -292,10 +334,10 @@ const contentClasses = defineClasses(
                     :class="childItem.classes"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
-                    @keydown.left.prevent="prev"
-                    @keydown.right.prevent="next"
-                    @keydown.up.prevent="prev"
-                    @keydown.down.prevent="next"
+                    @keydown.left="prev($event, childItem.index)"
+                    @keydown.right="next($event, childItem.index)"
+                    @keydown.up="prev($event, childItem.index)"
+                    @keydown.down="next($event, childItem.index)"
                     @keydown.home.prevent="homePressed"
                     @keydown.end.prevent="endPressed" />
 
@@ -307,10 +349,10 @@ const contentClasses = defineClasses(
                     :class="childItem.classes"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
-                    @keydown.left.prevent="prev"
-                    @keydown.right.prevent="next"
-                    @keydown.up.prevent="prev"
-                    @keydown.down.prevent="next"
+                    @keydown.left="prev($event, childItem.index)"
+                    @keydown.right="next($event, childItem.index)"
+                    @keydown.up="prev($event, childItem.index)"
+                    @keydown.down="next($event, childItem.index)"
                     @keydown.home.prevent="homePressed"
                     @keydown.end.prevent="endPressed">
                     <o-icon

@@ -39,6 +39,7 @@ import {
     useMatchMedia,
     useDebounce,
     useObjectMap,
+    useSequentialId,
 } from "@/composables";
 
 import type { ClassBind } from "@/types";
@@ -369,9 +370,12 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
     }));
 });
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** all defined data elements as an object map */
 const tableData = computed<TableRow<T>[]>(() =>
-    useObjectMap(props.data, props.rowKey),
+    useObjectMap(props.data, props.rowKey, nextSequence),
 );
 
 const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;

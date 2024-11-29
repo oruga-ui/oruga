@@ -26,7 +26,6 @@ const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     icon: () => getDefault("tabs.icon"),
     iconPack: () => getDefault("tabs.iconPack"),
     tag: () => getDefault("tabs.itemTag", "button"),
-    ariaRole: () => getDefault("tabs.ariaRole", "tabpanel"),
     content: undefined,
     component: undefined,
     props: undefined,
@@ -164,9 +163,11 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             v-show="isActive && visible"
             v-bind="$attrs"
             :id="`tabpanel-${item.identifier}`"
-            :class="panelClasses"
             data-oruga="tabs-item"
             :data-id="`tabs-${item.identifier}`"
+            :class="panelClasses"
+            role="tabpanel"
+            :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
             <template v-if="!parent.destroyOnHide || (isActive && visible)">

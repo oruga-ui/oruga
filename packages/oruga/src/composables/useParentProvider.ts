@@ -13,6 +13,7 @@ import {
 } from "vue";
 import { unrefElement } from "./unrefElement";
 import { useDebounce } from "./useDebounce";
+import { useSequentialId } from "./useSequentialId";
 
 export type ProviderItem<T = unknown> = {
     index: number;
@@ -97,6 +98,8 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         watch(childItems, sortHandler);
     }
 
+    const { nextSequence } = useSequentialId(1);
+
     function registerItem(
         data?: ComputedRef<ItemData>,
     ): ProviderItem<ItemData> {
@@ -113,11 +116,6 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
 
     function unregisterItem(item: ProviderItem): void {
         childItems.value = childItems.value.filter((i) => i !== item);
-    }
-
-    let sequence = 1;
-    function nextSequence(): string {
-        return String(sequence++);
     }
 
     /** Provide functionality for child components via dependency injection. */
