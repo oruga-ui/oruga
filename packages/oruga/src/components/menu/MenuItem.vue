@@ -146,10 +146,10 @@ const submenuClasses = defineClasses([
 <template>
     <li
         ref="rootElement"
-        :role="ariaRole"
-        :class="itemClasses"
         data-oruga="menu-item"
         :data-id="identifier"
+        :class="itemClasses"
+        :role="ariaRole"
         aria-roledescription="item">
         <component
             :is="tag"
