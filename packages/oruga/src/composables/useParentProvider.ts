@@ -12,6 +12,7 @@ import {
     type UnwrapNestedRefs,
 } from "vue";
 import { unrefElement } from "./unrefElement";
+import { useSequentialId } from "./useSequentialId";
 
 export type ProviderItem<T = unknown> = {
     index: number;
@@ -61,7 +62,6 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     const key = options?.key || configField;
 
     const childItems = ref<ProviderItem<ItemData>[]>([]);
-    const sequence = ref(1);
 
     /**
      * When items are added/removed sort them according to their position
@@ -69,6 +69,8 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     const sortedItems = computed(() =>
         childItems.value.slice().sort((a, b) => a.index - b.index),
     );
+
+    const { nextSequence } = useSequentialId(1);
 
     function registerItem(
         data?: ComputedRef<ItemData>,
@@ -100,10 +102,6 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
 
     function unregisterItem(item: ProviderItem): void {
         childItems.value = childItems.value.filter((i) => i !== item);
-    }
-
-    function nextSequence(): string {
-        return String(sequence.value++);
     }
 
     /** Provide functionality for child components via dependency injection. */

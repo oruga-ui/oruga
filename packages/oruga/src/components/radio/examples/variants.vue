@@ -7,12 +7,17 @@ const radio = ref("default");
 <template>
     <section>
         <o-field>
-            <o-radio v-model="radio" native-value="default" label="Default" />
+            <o-radio
+                v-model="radio"
+                name="variants"
+                native-value="default"
+                label="Default" />
         </o-field>
 
         <o-field>
             <o-radio
                 v-model="radio"
+                name="variants"
                 native-value="primary"
                 variant="primary"
                 label="Primary" />
@@ -21,6 +26,7 @@ const radio = ref("default");
         <o-field>
             <o-radio
                 v-model="radio"
+                name="variants"
                 native-value="success"
                 variant="success"
                 label="Success" />
@@ -29,6 +35,7 @@ const radio = ref("default");
         <o-field>
             <o-radio
                 v-model="radio"
+                name="variants"
                 native-value="info"
                 variant="info"
                 label="Info" />
@@ -37,6 +44,7 @@ const radio = ref("default");
         <o-field>
             <o-radio
                 v-model="radio"
+                name="variants"
                 native-value="warning"
                 variant="warning"
                 label="Warning" />
@@ -45,6 +53,7 @@ const radio = ref("default");
         <o-field>
             <o-radio
                 v-model="radio"
+                name="variants"
                 native-value="danger"
                 variant="danger"
                 label="Danger" />

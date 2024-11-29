@@ -138,6 +138,8 @@ export default defineConfig({
                 "@": fileURLToPath(
                     new URL("./../../oruga/src", import.meta.url),
                 ),
+                // add '@docs' alias to docs src folder
+                "@docs": fileURLToPath(new URL("./../src", import.meta.url)),
             },
         },
     },

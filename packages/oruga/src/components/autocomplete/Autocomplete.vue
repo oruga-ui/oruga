@@ -32,6 +32,7 @@ import {
     useInputHandler,
     useEventListener,
     isOptionValid,
+    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -173,7 +174,8 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
-const inputRef = useTemplateRef("inputComponent");
+// define as Component to prevent docs memmory overload
+const inputRef = useTemplateRef<Component>("inputComponent");
 const dropdownRef = useTemplateRef("dropdownComponent");
 const headerRef = useTemplateRef("headerElement");
 const footerRef = useTemplateRef("footerElement");
@@ -206,10 +208,13 @@ const inputValue = defineModel<string>("input", { default: "" });
 /** create a unique id for the menu */
 const menuId = useId();
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
 const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options);
-    const groupedOptions = toOptionsGroup(normalizedOptions);
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 
@@ -464,7 +469,10 @@ function navigateItem(direction: 1 | -1): void {
 function onKeydown(event: KeyboardEvent): void {
     // prevent emit submit event
     if (event.key === "Enter") event.preventDefault();
-    if (props.confirmKeys.indexOf(event.key) >= 0) {
+    if (
+        Array.isArray(props.confirmKeys) &&
+        props.confirmKeys.indexOf(event.key) >= 0
+    ) {
         // If adding by comma, don't add the comma to the input
         if (event.key === ",") event.preventDefault();
         // Close dropdown on select by Tab
@@ -531,7 +539,7 @@ if (isClient && props.checkScroll)
     useEventListener(
         "scroll",
         checkDropdownScroll,
-        computed(() => dropdownRef.value.$content),
+        computed(() => dropdownRef.value?.$content),
     );
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
@@ -540,8 +548,9 @@ function checkDropdownScroll(): void {
     const dropdown = unrefElement(dropdownRef.value.$content);
     if (!dropdown) return;
     const trashhold = dropdown.offsetTop;
-    const headerHeight = headerRef.value?.clientHeight || 0;
-    const footerHeight = (footerRef.value?.clientHeight || 0) + trashhold;
+    const headerHeight = unrefElement(headerRef)?.clientHeight || 0;
+    const footerHeight =
+        (unrefElement(footerRef)?.clientHeight || 0) + trashhold;
     if (dropdown.clientHeight !== dropdown.scrollHeight) {
         if (
             dropdown.scrollTop + dropdown.clientHeight + footerHeight >=
@@ -664,7 +673,7 @@ defineExpose({ focus: setFocus, value: inputValue });
                 @keydown="onKeydown"
                 @keydown.up.prevent="navigateItem(-1)"
                 @keydown.down.prevent="navigateItem(1)"
-                @icon-click="(event) => $emit('icon-click', event)"
+                @icon-click="emits('icon-click', $event)"
                 @icon-right-click="rightIconClick" />
         </template>
 

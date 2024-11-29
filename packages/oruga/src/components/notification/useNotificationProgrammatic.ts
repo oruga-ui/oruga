@@ -21,7 +21,7 @@ declare module "../../index" {
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useNotificationProgrammatic composable options */
-type NotifcationProgrammaticOptions<C extends Component> = Readonly<
+type NotificationProgrammaticOptions<C extends Component> = Readonly<
     Omit<
         NotificationNoticeProps<C> & NotificationProps,
         "message" | "container"
@@ -38,10 +38,10 @@ const useNotificationProgrammatic = {
      * @returns ProgrammaticExpose
      */
     open<C extends Component>(
-        options: string | NotifcationProgrammaticOptions<C>,
+        options: string | NotificationProgrammaticOptions<C>,
         target?: string | HTMLElement | null,
     ): ProgrammaticExpose {
-        const _options: NotifcationProgrammaticOptions<C> =
+        const _options: NotificationProgrammaticOptions<C> =
             typeof options === "string" ? { message: options } : options;
 
         let slot;

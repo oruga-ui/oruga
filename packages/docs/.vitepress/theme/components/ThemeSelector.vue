@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Import theme definitions
-import themes from "../../themes.json";
+import themes from "@docs/themes.json";
 
 const selectedTheme = defineModel<any>("theme");
 

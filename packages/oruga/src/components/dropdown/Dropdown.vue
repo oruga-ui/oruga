@@ -25,6 +25,7 @@ import {
     useEventListener,
     useClickOutside,
     usePreventScrolling,
+    useSequentialId,
 } from "@/composables";
 
 import type { DropdownComponent } from "./types";
@@ -112,10 +113,13 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
 const groupedOptions = computed(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options);
-    const groupedOptions = toOptionsGroup(normalizedOptions);
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 
