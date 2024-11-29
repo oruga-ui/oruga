@@ -8,6 +8,7 @@ import {
     useSlots,
     toValue,
     useTemplateRef,
+    triggerRef,
     type MaybeRefOrGetter,
 } from "vue";
 
@@ -87,7 +88,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     scrollable: undefined,
     stickyHeader: false,
     height: undefined,
-    debounceSearch: () => getDefault("table.debounceSearch"),
+    debounceSearch: () => getDefault("table.debounceSearch", 300),
     checkable: false,
     stickyCheckbox: false,
     headerCheckable: true,
@@ -363,14 +364,18 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
         const column = toValue(columnItem.data!);
 
         // create additional th attrs data
-        const thAttrsData =
+        let thAttrsData =
             typeof props.thAttrs === "function" ? props.thAttrs(column) : {};
+        thAttrsData = Object.assign(thAttrsData, column.thAttrs);
+
         // create additional td attrs data
-        const tdAttrsData = (props.data ?? []).map((data) =>
-            typeof props.tdAttrs === "function"
-                ? props.tdAttrs(data, column)
-                : {},
-        );
+        const tdAttrsData = (props.data ?? []).map((data) => {
+            const tdAttrs =
+                typeof props.tdAttrs === "function"
+                    ? props.tdAttrs(data, column)
+                    : {};
+            return Object.assign(tdAttrs, column.tdAttrs);
+        });
 
         return {
             ...column,
@@ -615,24 +620,29 @@ const hasSearchableColumns = computed(() => {
     return tableColumns.value.some((column) => column.searchable);
 });
 
+let debouncedFilter: ReturnType<
+    typeof useDebounce<Parameters<typeof handleFiltersChange>>
+>;
+
+// initialise and update debounces filter function
 watch(
-    filters,
-    (value) => {
-        if (props.backendFiltering) return;
-        if (props.debounceSearch)
-            useDebounce(
-                () => handleFiltersChange(value),
-                props.debounceSearch,
-            )();
-        else handleFiltersChange(value);
-    },
-    { deep: true },
+    () => props.debounceSearch,
+    (debounce) =>
+        (debouncedFilter = useDebounce(handleFiltersChange, debounce || 0)),
+    { immediate: true },
 );
+
+// react on filters got changed
+watch(filters, (value) => debouncedFilter(value), { deep: true });
 
 function handleFiltersChange(value: Record<string, string>): void {
     emits("filters-change", value);
-    // recompute rows visibility with updated filters
-    filterTableRows();
+    // if not backend filtered, recompute rows visibility with updated filters
+    if (!props.backendFiltering) {
+        filterTableRows();
+        // force tableRows reactivity to update
+        triggerRef(tableRows);
+    }
 }
 
 function onFiltersEvent(event: Event): void {
@@ -1034,17 +1044,25 @@ const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
 
-const thCheckboxClasses = defineClasses([
-    "thCheckboxClass",
-    "o-table__th-checkbox",
-]);
+const thCheckboxClasses = defineClasses(
+    ["thCheckboxClass", "o-table__th-checkbox"],
+    [
+        "thStickyClass",
+        "o-table__th--sticky",
+        null,
+        computed(() => props.stickyCheckbox),
+    ],
+);
 
 const thDetailedClasses = defineClasses([
     "thDetailedClass",
-    "o-table__th--detailed",
+    "o-table__th-detailed",
 ]);
 
-const thSubheadingClasses = defineClasses(["thSubheadingClass", "o-table__th"]);
+const thSubheadingClasses = defineClasses([
+    "thSubheadingClass",
+    "o-table__th-subheading",
+]);
 
 const thSortIconClasses = defineClasses([
     "thSortIconClass",
@@ -1059,6 +1077,13 @@ const trSelectedClasses = defineClasses([
 const trCheckedClasses = defineClasses([
     "trCheckedClass",
     "o-table__tr--checked",
+]);
+
+const trEmptyClasses = defineClasses(["trEmptyClass", "o-table__tr-empty"]);
+
+const trDetailedClasses = defineClasses([
+    "trDetailedClass",
+    "o-table__tr-detail",
 ]);
 
 const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
@@ -1077,8 +1102,6 @@ const tdDetailedChevronClasses = defineClasses([
     "tdDetailedChevronClass",
     "o-table__td-chevron",
 ]);
-
-const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
 
 const mobileSortClasses = defineClasses([
     "mobileSortClass",
@@ -1604,7 +1627,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 <tr
                                     v-else
                                     :key="`${row.key}_detail`"
-                                    :class="detailedClasses">
+                                    :class="trDetailedClasses">
                                     <td :colspan="columnCount">
                                         <!--
                                             @slot Place row detail content here
@@ -1621,7 +1644,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         </transition>
                     </template>
 
-                    <tr v-if="!availableRows.length">
+                    <tr v-if="!availableRows.length" :class="trEmptyClasses">
                         <td :colspan="columnCount">
                             <!--
                                 @slot Define content if table is empty
@@ -1631,6 +1654,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     v-if="emptyIcon"
                                     :icon="emptyIcon"
                                     :size="emptyIconSize"
+                                    :pack="iconPack"
                                     both />
                                 {{ emptyLabel }}
                             </slot>

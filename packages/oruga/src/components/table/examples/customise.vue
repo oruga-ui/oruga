@@ -76,7 +76,9 @@ const hasMobileCards = ref(true);
             :checkable="isCheckbale"
             :loading="isLoading"
             :selectable="isSelectable"
-            :mobile-cards="hasMobileCards">
+            :mobile-cards="hasMobileCards"
+            empty-label="Table is empty"
+            empty-icon="frown">
             <o-table-column
                 v-slot="{ row }"
                 field="id"
