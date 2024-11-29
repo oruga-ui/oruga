@@ -185,22 +185,21 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             :class="panelClasses"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <template v-if="!parent.destroyOnHide || (isActive && visible)">
-                <!-- 
-                    @slot Step item content
-                -->
-                <slot>
-                    <!-- injected component -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}" />
+            <!-- 
+                @slot Step item content
+                @binding {boolean} active - if item is shown 
+            -->
+            <slot :active="isActive && visible">
+                <!-- injected component -->
+                <component
+                    :is="component"
+                    v-if="component"
+                    v-bind="$props.props"
+                    v-on="$props.events || {}" />
 
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </slot>
-            </template>
+                <!-- default content prop -->
+                <template v-else>{{ content }}</template>
+            </slot>
         </div>
     </Transition>
 </template>

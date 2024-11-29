@@ -11,7 +11,7 @@ exports[`Menu integration tests > render correctly 1`] = `
     <!--
                 @slot Place menu items here 
             -->
-    <li role="menuitem" class="o-menu__item" data-id="menu-1" data-oruga="menu-item" aria-roledescription="item"><button class="o-menu__item__button o-menu__item__button--icon" role="button"><span class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span>
+    <li data-oruga="menu-item" data-id="menu-1" class="o-menu__item" role="menuitem" aria-roledescription="item"><button class="o-menu__item__button o-menu__item__button--icon" role="button"><span class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span>
         <!-- 
                 @slot Override label
                 @binding {boolean} expanded - item expanded state
@@ -20,7 +20,7 @@ exports[`Menu integration tests > render correctly 1`] = `
       </button><!-- sub menu items -->
       <!--v-if-->
     </li>
-    <li role="menuitem" class="o-menu__item" data-id="menu-2" data-oruga="menu-item" aria-roledescription="item"><button class="o-menu__item__button o-menu__item__button--icon" role="button"><span class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span>
+    <li data-oruga="menu-item" data-id="menu-2" class="o-menu__item" role="menuitem" aria-roledescription="item"><button class="o-menu__item__button o-menu__item__button--icon" role="button"><span class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span>
         <!-- 
                 @slot Override label
                 @binding {boolean} expanded - item expanded state

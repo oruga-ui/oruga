@@ -170,33 +170,32 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <template v-if="!parent.destroyOnHide || (isActive && visible)">
-                <!-- 
-                    @slot Tab item content
-                -->
-                <slot>
-                    <!-- injected component -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}" />
+            <!-- 
+                @slot Tab item content
+                @binding {boolean} active - if item is shown 
+            -->
+            <slot :active="isActive && visible">
+                <!-- injected component -->
+                <component
+                    :is="component"
+                    v-if="component"
+                    v-bind="$props.props"
+                    v-on="$props.events || {}" />
 
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </slot>
+                <!-- default content prop -->
+                <template v-else>{{ content }}</template>
+            </slot>
 
+            <!--
+                Do not render these slots here.
+                These are only for documentation purposes.
+                Slots are defined in tabs component.
+            -->
+            <template v-if="false">
                 <!--
-                    Do not render these slots here.
-                    These are only for documentation purposes.
-                    Slots are defined in tabs component.
+                    @slot Override header label
                 -->
-                <template v-if="false">
-                    <!--
-                        @slot Override header label
-                    -->
-                    <slot name="header" />
-                </template>
+                <slot name="header" />
             </template>
         </div>
     </Transition>

@@ -22,7 +22,6 @@ export type StepsComponent = {
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
-    destroyOnHide: boolean;
     variant: string;
 };
 

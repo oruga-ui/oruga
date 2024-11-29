@@ -11,7 +11,7 @@ import OButton from "@/components/button/Button.vue";
 describe("OSteps with OStepItem tests", () => {
     enableAutoUnmount(afterEach);
 
-    function genTestcomponent(stepProps, itemProps) {
+    function createTestcomponent(stepProps, itemProps) {
         return {
             components: {
                 OSteps,
@@ -27,7 +27,7 @@ describe("OSteps with OStepItem tests", () => {
 
     test("test render correctly", () => {
         const wrapper = mount(
-            genTestcomponent(
+            createTestcomponent(
                 {},
                 {
                     value: "1",
@@ -50,7 +50,7 @@ describe("OSteps with OStepItem tests", () => {
 
     test("render item with component prop correctly", () => {
         const wrapper = mount(
-            genTestcomponent(
+            createTestcomponent(
                 {},
                 {
                     value: "1",
