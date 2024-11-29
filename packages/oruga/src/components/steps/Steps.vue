@@ -20,6 +20,7 @@ import {
     normalizeOptions,
     useProviderParent,
     useMatchMedia,
+    useSequentialId,
 } from "@/composables";
 
 import type { StepItem, StepItemComponent, StepsComponent } from "./types";
@@ -114,8 +115,13 @@ const items = computed<StepItem<T>[]>(() =>
     })),
 );
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
-const groupedOptions = computed(() => normalizeOptions<T>(props.options));
+const groupedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 /** When v-model is changed set the new active step. */
 watch(

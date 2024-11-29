@@ -45,52 +45,53 @@ const props = withDefaults(defineProps<FieldProps>(), {
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
+/** a unique id for the field message to associate an input with */
+const messageId = useId();
+
+/** a unique id for the field label to associate an input with */
+const labelId = useId();
+
+/** the unique id for the input to associate the label with */
 const inputId = ref(props.labelFor);
 watch(
     () => props.labelFor,
     (v) => (inputId.value = v),
 );
 
-/** Set internal variant when prop change. */
+/** set internal variant when prop change */
 const fieldVariant = ref(props.variant);
 watch(
     () => props.variant,
     (v) => (fieldVariant.value = v),
 );
 
-/** Set internal message when prop change. */
+/** set internal message when prop change */
 const fieldMessage = ref(props.message);
 watch(
     () => props.message,
     (v) => (fieldMessage.value = v),
 );
 
-/** Set parent message if we use Field in Field. */
-watch(
-    () => fieldMessage.value,
-    (value) => {
-        if (parentField?.value?.hasInnerField) {
-            if (!parentField.value.variant)
-                parentField.value.setVariant(fieldVariant.value);
-            if (!parentField.value.message) parentField.value.setMessage(value);
-        }
-    },
-);
+/** set parent message if we use Field in Field */
+watch(fieldMessage, (value) => {
+    if (parentField.value && parentField.value.hasInnerField) {
+        if (!parentField.value.variant)
+            parentField.value.setVariant(fieldVariant.value);
+        if (!parentField.value.message) parentField.value.setMessage(value);
+    }
+});
 
-/** a uniqe id for the message slot to associate an input to the field message */
-const messageId = useId();
-
-/** this can be set from outside to update the focus state */
+/** this can be set from inputs to update the focus state */
 const isFocused = ref(false);
-/** this can be set from outside to update the filled state */
+/** this can be set from inputs to update the filled state */
 const isFilled = ref(false);
 /** this can be set from sub fields to update the has inner field state */
-const hasInnerField = ref<boolean>(false);
+const hasInnerField = ref(false);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
 // tell parent field it has an inner field
-if (parentField?.value) parentField.value.addInnerField();
+if (parentField.value) parentField.value.addInnerField();
 
 const slots = useSlots();
 
@@ -140,11 +141,12 @@ function setInputId(value: string): void {
     inputId.value = value;
 }
 
-const inputAttrs = computed(() =>
-    fieldVariant.value === "error"
+const inputAttrs = computed(() => ({
+    "aria-labelledby": labelId,
+    ...(fieldVariant.value === "error"
         ? { "aria-errormessage": messageId }
-        : { "aria-describedby": messageId },
-);
+        : { "aria-describedby": messageId }),
+}));
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed(() => ({
@@ -153,6 +155,7 @@ const provideData = computed(() => ({
     hasInnerField: hasInnerField.value,
     variant: fieldVariant.value,
     message: fieldMessage.value,
+    labelId,
     inputAttrs: inputAttrs.value,
     addInnerField,
     setInputId,
@@ -239,7 +242,11 @@ const innerFieldClasses = defineClasses(
 <template>
     <div ref="rootElement" data-oruga="field" :class="rootClasses">
         <div v-if="horizontal" :class="horizontalLabelClasses">
-            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
+            <label
+                v-if="hasLabel"
+                :id="labelId"
+                :for="inputId"
+                :class="labelClasses">
                 <!--
                     @slot Override the label
                     @binding {string} label - label property 
@@ -248,7 +255,11 @@ const innerFieldClasses = defineClasses(
             </label>
         </div>
         <template v-else>
-            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
+            <label
+                v-if="hasLabel"
+                :id="labelId"
+                :for="inputId"
+                :class="labelClasses">
                 <!--
                     @slot Override the label
                     @binding {string} label - label property 
