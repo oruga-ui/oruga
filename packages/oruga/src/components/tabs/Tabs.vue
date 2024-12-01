@@ -91,7 +91,6 @@ const provideData = computed<TabsComponent>(() => ({
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
-    destroyOnHide: props.destroyOnHide,
 }));
 
 /** Provide functionalities and data to child item components */

@@ -175,31 +175,29 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <template v-if="!parent.destroyOnHide || (isActive && visible)">
-            <div
-                v-show="isActive && visible"
-                v-bind="$attrs"
-                :id="`tabpanel-${item.identifier}`"
-                :class="panelClasses"
-                :data-id="`steps-${item.identifier}`"
-                data-oruga="steps-item"
-                :aria-labelledby="`tab-${item.identifier}`"
-                aria-roledescription="item">
-                <!-- 
-                    @slot Step item content
-                -->
-                <slot>
-                    <!-- injected component -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}" />
+        <div
+            v-show="isActive && visible"
+            v-bind="$attrs"
+            :id="`tabpanel-${item.identifier}`"
+            :class="panelClasses"
+            :data-id="`steps-${item.identifier}`"
+            data-oruga="steps-item"
+            :aria-labelledby="`tab-${item.identifier}`"
+            aria-roledescription="item">
+            <!-- 
+                @slot Step item content
+            -->
+            <slot :active="isActive && visible">
+                <!-- injected component -->
+                <component
+                    :is="component"
+                    v-if="component"
+                    v-bind="$props.props"
+                    v-on="$props.events || {}" />
 
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </slot>
-            </div>
-        </template>
+                <!-- default content prop -->
+                <template v-else>{{ content }}</template>
+            </slot>
+        </div>
     </Transition>
 </template>
