@@ -158,45 +158,43 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <template v-if="!parent.destroyOnHide || (isActive && visible)">
-            <div
-                v-show="isActive && visible"
-                v-bind="$attrs"
-                :id="`tabpanel-${item.identifier}`"
-                data-oruga="tabs-item"
-                :data-id="`tabs-${item.identifier}`"
-                :class="panelClasses"
-                role="tabpanel"
-                :hidden="!isActive"
-                :aria-labelledby="`tab-${item.identifier}`"
-                aria-roledescription="item">
-                <!-- 
-                    @slot Tab item content
-                -->
-                <slot>
-                    <!-- injected component -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}" />
+        <div
+            v-show="isActive && visible"
+            v-bind="$attrs"
+            :id="`tabpanel-${item.identifier}`"
+            data-oruga="tabs-item"
+            :data-id="`tabs-${item.identifier}`"
+            :class="panelClasses"
+            role="tabpanel"
+            :hidden="!isActive"
+            :aria-labelledby="`tab-${item.identifier}`"
+            aria-roledescription="item">
+            <!-- 
+                @slot Tab item content
+            -->
+            <slot :active="isActive && visible">
+                <!-- injected component -->
+                <component
+                    :is="component"
+                    v-if="component"
+                    v-bind="$props.props"
+                    v-on="$props.events || {}" />
 
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </slot>
+                <!-- default content prop -->
+                <template v-else>{{ content }}</template>
+            </slot>
 
+            <!--
+                Do not render these slots here.
+                These are only for documentation purposes.
+                Slots are defined in tabs component.
+            -->
+            <template v-if="false">
                 <!--
-                    Do not render these slots here.
-                    These are only for documentation purposes.
-                    Slots are defined in tabs component.
+                    @slot Override header label
                 -->
-                <template v-if="false">
-                    <!--
-                        @slot Override header label
-                    -->
-                    <slot name="header" />
-                </template>
-            </div>
-        </template>
+                <slot name="header" />
+            </template>
+        </div>
     </Transition>
 </template>
