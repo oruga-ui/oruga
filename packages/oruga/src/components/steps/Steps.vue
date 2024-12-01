@@ -98,6 +98,7 @@ const provideData = computed<StepsComponent>(() => ({
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
+    destroyOnHide: props.destroyOnHide,
     variant: props.variant,
 }));
 

@@ -190,15 +190,17 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
                 @binding {boolean} active - if item is shown 
             -->
             <slot :active="isActive && visible">
-                <!-- injected component -->
-                <component
-                    :is="component"
-                    v-if="component"
-                    v-bind="$props.props"
-                    v-on="$props.events || {}" />
+                <template v-if="!parent.destroyOnHide || (isActive && visible)">
+                    <!-- injected component -->
+                    <component
+                        :is="component"
+                        v-if="component"
+                        v-bind="$props.props"
+                        v-on="$props.events || {}" />
 
-                <!-- default content prop -->
-                <template v-else>{{ content }}</template>
+                    <!-- default content prop -->
+                    <template v-else>{{ content }}</template>
+                </template>
             </slot>
         </div>
     </Transition>
