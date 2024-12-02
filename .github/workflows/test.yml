@@ -15,7 +15,7 @@ jobs:
           node-version: 22.x
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies 📦
-        run: npm install   
+        run: npm install
       - name: Run unit tests 🧪
         run: npm run test
           
