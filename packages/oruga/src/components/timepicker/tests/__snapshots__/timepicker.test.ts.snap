@@ -24,7 +24,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
-        <div class="o-tpck__box" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false">
+        <div class="o-tpck__box" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
           <!--
             @slot Override the label, default is label prop 
         -->

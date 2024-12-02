@@ -47,7 +47,10 @@ export type StepsProps<T> = {
      * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
      */
     hasNavigation?: boolean;
-    /** Destroy stepItem on hide */
+    /**
+     * Destroy stepItem on hide
+     * @deprecated implement this yourself, using the `active` slot prop
+     */
     destroyOnHide?: boolean;
     /** Step navigation is animated */
     animated?: boolean;

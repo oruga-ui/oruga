@@ -103,10 +103,10 @@ sidebarDepth: 2
 
 ### Slots
 
-| Name    | Description           | Bindings |
-| ------- | --------------------- | -------- |
-| default | Tab item content      |          |
-| header  | Override header label |          |
+| Name    | Description           | Bindings                                |
+| ------- | --------------------- | --------------------------------------- |
+| default | Tab item content      | **active** `boolean` - if item is shown |
+| header  | Override header label | **active** `boolean` - if item is shown |
 
 </div>
 

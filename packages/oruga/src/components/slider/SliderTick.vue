@@ -37,8 +37,8 @@ const props = defineProps({
     },
 });
 
-// Inject functionalities and data from the parent carousel component
-const { parent } = useProviderChild<SliderComponent>();
+/** inject functionalities and data from the parent component */
+const { parent } = useProviderChild<SliderComponent>({ register: false });
 
 const position = computed(() => {
     const pos =

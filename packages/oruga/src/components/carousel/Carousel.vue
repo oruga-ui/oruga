@@ -88,6 +88,7 @@ function restartTimer(): void {
     startTimer();
 }
 
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<CarouselComponent>(() => ({
     restartTimer,
     itemWidth: itemWidth.value,
@@ -96,8 +97,8 @@ const provideData = computed<CarouselComponent>(() => ({
     setActive: (index: number): void => switchTo(index),
 }));
 
-/** Provide functionalities and data to child item components */
-const { childItems } = useProviderParent(rootRef, { data: provideData });
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent({ rootRef, data: provideData });
 
 const activeIndex = defineModel<number>({ default: 0 });
 const scrollIndex = ref(props.modelValue);
@@ -471,6 +472,7 @@ function indicatorItemAppliedClasses(index: number): ClassBind[] {
                 -->
                 <slot />
             </div>
+
             <!--
                 @slot Override the arrows
                 @binding {boolean} has-prev has prev arrow button 
@@ -545,6 +547,7 @@ function indicatorItemAppliedClasses(index: number): ClassBind[] {
                 </div>
             </template>
         </slot>
+
         <template v-if="overlay">
             <!-- @slot Overlay element -->
             <slot name="overlay" />

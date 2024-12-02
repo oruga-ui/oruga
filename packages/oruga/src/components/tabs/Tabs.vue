@@ -83,7 +83,7 @@ const rootRef = useTemplateRef("rootElement");
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index || 0,
     type: props.type,
@@ -94,18 +94,20 @@ const provideData = computed<TabsComponent>(() => ({
     destroyOnHide: props.destroyOnHide,
 }));
 
-/** Provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<TabItemComponent<T>>(rootRef, {
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent<TabItemComponent<T>>({
+    rootRef,
     data: provideData,
 });
 
-const items = computed<TabItem<T>[]>(() =>
-    sortedItems.value.map((column) => ({
+const items = computed<TabItem<T>[]>(() => {
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
-    })),
-);
+    }));
+});
 
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
@@ -330,6 +332,9 @@ const contentClasses = defineClasses(
                     :tag="childItem.tag"
                     name="header"
                     :class="childItem.classes"
+                    :props="{
+                        active: childItem.index === activeIndex,
+                    }"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
                     @keydown.left="prev($event, childItem.index)"

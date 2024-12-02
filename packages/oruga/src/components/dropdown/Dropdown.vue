@@ -347,7 +347,7 @@ function selectItem(value: T): void {
     }
 }
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
@@ -355,8 +355,8 @@ const provideData = computed<DropdownComponent<T>>(() => ({
     selectItem,
 }));
 
-/** Provide functionalities and data to child item components */
-useProviderParent(contentRef, { data: provideData });
+/** provide functionalities and data to child item components */
+useProviderParent({ data: provideData });
 
 // --- Computed Component Classes ---
 

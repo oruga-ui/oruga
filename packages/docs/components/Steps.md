@@ -111,9 +111,9 @@ sidebarDepth: 2
 
 ### Slots
 
-| Name    | Description       | Bindings |
-| ------- | ----------------- | -------- |
-| default | Step item content |          |
+| Name    | Description       | Bindings                                |
+| ------- | ----------------- | --------------------------------------- |
+| default | Step item content | **active** `boolean` - if item is shown |
 
 </div>
 
