@@ -332,6 +332,9 @@ const contentClasses = defineClasses(
                     :tag="childItem.tag"
                     name="header"
                     :class="childItem.classes"
+                    :props="{
+                        active: childItem.index === activeIndex,
+                    }"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
                     @keydown.left="prev($event, childItem.index)"

@@ -106,7 +106,7 @@ sidebarDepth: 2
 | Name    | Description           | Bindings                                |
 | ------- | --------------------- | --------------------------------------- |
 | default | Tab item content      | **active** `boolean` - if item is shown |
-| header  | Override header label |                                         |
+| header  | Override header label | **active** `boolean` - if item is shown |
 
 </div>
 

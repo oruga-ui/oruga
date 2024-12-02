@@ -196,8 +196,9 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             <template v-if="false">
                 <!--
                     @slot Override header label
+                    @binding {boolean} active - if item is shown 
                 -->
-                <slot name="header" />
+                <slot name="header" :active="isActive && visible" />
             </template>
         </div>
     </Transition>
