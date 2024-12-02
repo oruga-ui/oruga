@@ -1,3 +1,25 @@
+## [0.9.2](https://github.com/oruga-ui/oruga/compare/v0.9.1...v0.9.2) (2024-12-02)
+
+
+### Bug Fixes
+
+* change `crypto.randomUUID()` with a sequential id generation ([#1137](https://github.com/oruga-ui/oruga/issues/1137)) ([52d3ea5](https://github.com/oruga-ui/oruga/commit/52d3ea56155a11a8f2e710d7b0db34db992cfc45))
+* **performance:** solve performance issues with child component registration ([#1133](https://github.com/oruga-ui/oruga/issues/1133)) ([d560007](https://github.com/oruga-ui/oruga/commit/d56000723628f22cf69bd766bedf348d85003e5e))
+* **programmatic:** make options interface extandable ([#1118](https://github.com/oruga-ui/oruga/issues/1118)) ([37e17f5](https://github.com/oruga-ui/oruga/commit/37e17f5db2c72e6e62284b0cf0d07179965e8403))
+* **notification:** solve typo in `NotificationProgrammaticOptions` type ([#1117](https://github.com/oruga-ui/oruga/issues/1117)) ([16cf988](https://github.com/oruga-ui/oruga/commit/16cf988c5a633845153f2d089bfdefb97ae0abde))
+* **tabs:** set fixed `role` attribute values for Tab and TabItem ([#1119](https://github.com/oruga-ui/oruga/issues/1119)) ([c1afcf3](https://github.com/oruga-ui/oruga/commit/c1afcf30529287ff4a72d47fe0be0caf168758f8))
+
+
+### Features
+
+* **checkbox:** support w3c WAI-ARIA (a11y) pattern ([#1130](https://github.com/oruga-ui/oruga/issues/1130)) ([6d189fe](https://github.com/oruga-ui/oruga/commit/6d189feee88fdfd32d45654797d5d0be2b9a8618))
+* **field:** add unique label Id to field injection ([#1129](https://github.com/oruga-ui/oruga/issues/1129)) ([1561718](https://github.com/oruga-ui/oruga/commit/15617181817f9283aabb9550436f883bd3e1c743))
+* **radio:** support w3c WAI-ARIA (a11y) pattern ([#1132](https://github.com/oruga-ui/oruga/issues/1132)) ([96255a8](https://github.com/oruga-ui/oruga/commit/96255a8682621e2b11901eeba179e5d10f9c6845))
+* **switch:** support w3c WAI-ARIA (a11y) pattern ([#1131](https://github.com/oruga-ui/oruga/issues/1131)) ([60ec0d1](https://github.com/oruga-ui/oruga/commit/60ec0d112310bb38c8e1e1dad1174b5253022833))
+* **tabs:** update keyboard navigation to match W3C WAI standart ([#1121](https://github.com/oruga-ui/oruga/issues/1121)) ([58583a3](https://github.com/oruga-ui/oruga/commit/58583a301f052a9c87ad5234f61809bba317b45d))
+
+
+
 ## [0.9.1](https://github.com/oruga-ui/oruga/compare/v0.9.0...v0.9.1) (2024-11-15)
 
 
