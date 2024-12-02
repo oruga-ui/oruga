@@ -4,7 +4,6 @@ import docgen, {
     defineConfig,
     type DocgenCLIConfig,
 } from "vue-docgen-cli/lib/docgen";
-import type { FileEventType } from "vue-docgen-cli/lib/config";
 import { findFileCaseInsensitive, getFilenameWithoutExtension } from "./utils";
 import { createVueComponentMetaChecker } from "./parser/vue-component-meta-helper";
 import { createThemeDocs } from "./themes-helper";
@@ -74,8 +73,7 @@ export async function run(): Promise<void> {
         docsFolder: "packages/docs",
         defaultExamples: false,
         ignore: IGNORE_COMPONENTS,
-        propsParser: (filePath: string, opts, event?: FileEventType) =>
-            parser(checker, filePath, event),
+        propsParser: (filePath: string) => parser(checker, filePath),
         templates: {
             props: renderProps,
             slots: renderSlots,
