@@ -5,7 +5,7 @@ import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { DropdownComponent } from "./types";
+import type { DropdownComponent, DropdownItemComponent } from "./types";
 import type { DropdownItemProps } from "./props";
 
 /**
@@ -24,11 +24,8 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     disabled: false,
     clickable: true,
     tag: () => getDefault("dropdown.itemTag", "div"),
-    tabindex: 0,
-    ariaRole: () => getDefault("dropdown.itemAriaRole", "listitem"),
+    ariaRole: () => getDefault("dropdown.itemAriaRole", "option"),
 });
-
-const itemValue = props.value || useId();
 
 const emits = defineEmits<{
     /**
@@ -39,8 +36,19 @@ const emits = defineEmits<{
     click: [value: T, event: Event];
 }>();
 
+const itemValue = props.value ?? useId();
+
+// provided data is a computed ref to enjure reactivity
+const providedData = computed<DropdownItemComponent<T>>(() => ({
+    value: itemValue,
+    clickable: isClickable.value,
+}));
+
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<DropdownComponent<T>>();
+const { parent, item } = useProviderChild<
+    DropdownComponent<T>,
+    DropdownItemComponent<T>
+>({ data: providedData });
 
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
@@ -58,7 +66,7 @@ const isActive = computed(() => {
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(itemValue as T);
+    parent.value.selectItem(item.value.identifier);
     emits("click", itemValue as T, event);
 }
 
@@ -80,11 +88,11 @@ const rootClasses = defineClasses(
 <template>
     <component
         :is="tag"
+        :id="`${parent.menuId}-${item.identifier}`"
         :class="rootClasses"
         data-oruga="dropdown-item"
         :data-id="`dropdown-${item.identifier}`"
         :role="ariaRole"
-        :tabindex="tabindex"
         :aria-selected="isActive"
         :aria-disabled="disabled"
         @click="selectItem"

@@ -142,14 +142,12 @@ export type DropdownItemProps<T> = {
     clickable?: boolean;
     /** Dropdown item tag name */
     tag?: DynamicComponent;
-    /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
-    tabindex?: number | string;
     /**
      * Role attribute to be passed to the list item for better accessibility.
      * Use menuitem only in situations where your dropdown is related to a navigation menu.
-     * @values listitem, menuitem, button
+     * @values listitem, menuitem, option
      */
-    ariaRole?: string;
+    ariaRole?: "listitem" | "menuitem" | "option";
 } & DropdownItemClasses;
 
 // class props (will not be displayed in the docs)

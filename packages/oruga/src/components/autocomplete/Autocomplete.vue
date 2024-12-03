@@ -514,7 +514,9 @@ function onInput(value: string, event: Event): void {
     checkHtml5Validity();
 }
 
-// --- Icon Feature ---
+// #endregion --- Event Handler ---
+
+// #region --- Icon Feature ---
 
 const computedIconRight = computed(() =>
     props.clearable && inputValue.value && props.clearIcon
@@ -533,7 +535,9 @@ function rightIconClick(event: Event): void {
     } else emits("icon-right-click", event);
 }
 
-// --- InfitiveScroll Feature ---
+// #endregion --- Icon Feature ---
+
+// #region --- InfitiveScroll Feature ---
 
 if (isClient && props.checkScroll)
     useEventListener(
@@ -563,7 +567,9 @@ function checkDropdownScroll(): void {
     }
 }
 
-// --- Computed Component Classes ---
+// #endregion--- InfitiveScroll Feature ---
+
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -609,10 +615,14 @@ function itemAppliedClasses(option: OptionsItem<T>): ClassBind[] {
     return [...itemClasses.value, ...hoverClasses];
 }
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ focus: setFocus, value: inputValue });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
