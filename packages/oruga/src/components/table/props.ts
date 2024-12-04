@@ -1,4 +1,4 @@
-import type { ComponentClass, DeepType } from "@/types";
+import type { ComponentClass, DeepKeys, DeepType } from "@/types";
 import type { TableColumn } from "./types";
 
 export type TableProps<T> = {
@@ -9,7 +9,7 @@ export type TableProps<T> = {
     /** Table columns */
     columns?: TableColumn<T>[];
     /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-    rowKey?: keyof T | string;
+    rowKey?: DeepKeys<T>;
     /** Define individual class for a row */
     rowClass?: (row: T, index: number) => string;
     /** Adds native attributes to a column th element */
@@ -254,11 +254,11 @@ type TableClasses = Partial<{
     loadingClasses: object;
 }>;
 
-export type TableColumnProps<T, K extends keyof T | string> = {
+export type TableColumnProps<T, K extends DeepKeys<T>> = {
     /** Define the column label */
     label?: string;
     /** Define an object property key if data is an object */
-    field?: K;
+    field?: K | string;
     /** Provide a formatter function to edit the output */
     formatter?: (value: DeepType<T, K>, row: T) => string;
     /** Define a column sub heading  */

@@ -1,5 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
-import type { DeepType } from "@/types";
+import type { DeepKeys, DeepType } from "@/types";
 
 /**
  * +/- function to native math sign
@@ -86,7 +86,7 @@ export const toCssDimension = (
  */
 export function sortBy<T>(
     array: T[],
-    key: string,
+    key: DeepKeys<T>,
     fn?: (a: T, b: T, asc: boolean) => number,
     isAsc: boolean = false,
 ): T[] {
@@ -190,7 +190,7 @@ export function isElement(el: any): el is Element {
  * @param field  Property path of the object to use as display text
  * @param formatter Function to format the property to a string
  */
-export function getPropertyValue<O, K extends keyof O | string>(
+export function getPropertyValue<O, K extends DeepKeys<O>>(
     obj: O,
     field?: K,
     formatter?: (value: DeepType<O, K>, option: O) => string,
@@ -247,7 +247,7 @@ export function mergeDeep(target: any, source: any): any {
 /**
  * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<O, K extends keyof O | string>(
+export function getValueByPath<O, K extends DeepKeys<O>>(
     obj: O,
     path: K,
     defaultValue?: DeepType<O, K>,
@@ -265,14 +265,14 @@ export function getValueByPath<O, K extends keyof O | string>(
 /**
  * Set a value of an object property/path even if it's nested
  */
-export function setValueByPath(
-    obj: Record<string, any>,
-    path: string,
-    value: any,
+export function setValueByPath<O, K extends DeepKeys<O>>(
+    obj: O,
+    path: K,
+    value: DeepType<O, K>,
 ): void {
     const p = path.split(".");
     if (p.length === 1) {
-        obj[path] = value;
+        obj[p[0]] = value;
         return;
     }
     const field = p[0];

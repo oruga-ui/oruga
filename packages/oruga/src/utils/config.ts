@@ -1,7 +1,7 @@
 import { ref, toRaw, type App } from "vue";
 import { getValueByPath, merge, setValueByPath } from "./helpers";
 import { setVueInstance } from "./plugins";
-import type { DeepType, OrugaOptions } from "@/types";
+import type { DeepKeys, DeepType, OrugaOptions } from "@/types";
 
 declare module "../index" {
     interface OrugaProgrammatic {
@@ -24,7 +24,7 @@ export const getOptions = (): OrugaOptions => {
     return Object.assign({}, toRaw(globalOptions.value));
 };
 
-export const getOption = <K extends string = string>(
+export const getOption = <K extends DeepKeys<OrugaOptions>>(
     path: K,
     defaultValue?: DeepType<OrugaOptions, K>,
 ): DeepType<OrugaOptions, K> => {
@@ -32,11 +32,17 @@ export const getOption = <K extends string = string>(
 };
 
 /** less type strict version of getOption for component props defaults */
-export const getDefault = <T>(path: string, defaultValue?: T): T => {
+export const getDefault = <T>(
+    path: DeepKeys<OrugaOptions>,
+    defaultValue?: T,
+): T => {
     return getValueByPath(globalOptions.value, path, defaultValue) as T & {};
 };
 
-export const setOption = <T>(path: string, value: T): void => {
+export const setOption = <K extends DeepKeys<OrugaOptions>>(
+    path: K,
+    value: DeepType<OrugaOptions, K>,
+): void => {
     setValueByPath(globalOptions.value, path, value);
 };
 
