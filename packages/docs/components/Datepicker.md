@@ -33,6 +33,7 @@
 ```
 
 ### Props
+                                                                                                                                              | number[]                                                                                                         | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;yearsRange: [-100,10]<br>}</code>             |
 
 | Prop name                 | Description                                                                                                                                                                      | Type                                                                                                                      | Values                                                                                           | Default                                                                                                                                                                |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -88,6 +89,7 @@
 | useHtml5Validation        | Enable HTML 5 native validation                                                                                                                                                  | boolean                                                                                                                   | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;useHtml5Validation: true<br>}</code>                      |
 | weekNumberClickable       | Define if week numbers are clickable                                                                                                                                             | boolean                                                                                                                   | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;weekNumberClickable: false<br>}</code>        |
 | yearsRange                | Define the range of years to show                                                                                                                                                | number[]                                                                                                                  | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;yearsRange: [-100,10]<br>}</code>             |
+
 
 ### Events
 
@@ -170,6 +172,7 @@
 | $datepicker-btn-margin                            | 0.25rem                                                           |
 | $datepicker-btn-min-width                         | 2.25em                                                            |
 | $datepicker-btn-padding                           | 0.5em 0.5em                                                       |
+
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datepicker.scss)
 
