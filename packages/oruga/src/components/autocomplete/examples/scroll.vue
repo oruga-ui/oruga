@@ -58,7 +58,7 @@ function getMoreAsyncData(): void {
 </script>
 
 <template>
-    <section>
+    <section class="odocs-spaced">
         <o-field label="Find a movie">
             <o-autocomplete
                 v-model="selected"
@@ -66,7 +66,6 @@ function getMoreAsyncData(): void {
                 placeholder="e.g. Fight Club"
                 expanded
                 check-scroll
-                open-on-focus
                 :debounce="500"
                 @input="getAsyncData"
                 @scroll-end="getMoreAsyncData">
@@ -94,9 +93,9 @@ function getMoreAsyncData(): void {
                     </span>
                 </template>
             </o-autocomplete>
-        </o-field>
 
-        <p><b>Selected:</b> {{ selected }}</p>
+            <p><b>Selected:</b> {{ selected?.title }}</p>
+        </o-field>
     </section>
 </template>
 

@@ -58,7 +58,7 @@ export function useEventListener(
             (value) => {
                 // toggle listener
                 if (value) register();
-                else stop();
+                else if (typeof cleanup === "function") cleanup();
             },
             { flush: "post" },
         );
