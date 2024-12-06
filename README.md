@@ -9,6 +9,7 @@
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build.yml/badge.svg" /><a>
     <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
+    <a href="https://ko-fi.com/mlmoravek"><img src="https://img.shields.io/badge/ko--fi-donate-%23FF5E5B?style=flat&logo=ko-fi&logoColor=white" /></a>
 </p>
 
 <p align="center">
