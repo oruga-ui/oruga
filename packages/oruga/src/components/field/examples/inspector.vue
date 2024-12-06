@@ -17,7 +17,25 @@ const inspectData = [
         class: "horizontalClass",
         description: "Class to align label and control in horizontal forms",
         properties: ["horizontal"],
-        specificity: "when <b>mobileClass</b> is applied",
+        specificity: "when <b>horizontal</b> is applied",
+        action: (cmp, data) => {
+            data.horizontal = true;
+        },
+    },
+    {
+        class: "horizontalLabelClass",
+        description: "Class for field label when horizontal",
+        properties: ["horizontal"],
+        specificity: "when <b>horizontal</b> is applied",
+        action: (cmp, data) => {
+            data.horizontal = true;
+        },
+    },
+    {
+        class: "horizontalBodyClass",
+        description: "Class for field body when horizontal",
+        specificity: "when <b>horizontal</b> is applied",
+        properties: ["horizontal"],
         action: (cmp, data) => {
             data.horizontal = true;
         },
@@ -52,26 +70,17 @@ const inspectData = [
         },
     },
     {
-        class: "labelHorizontalClass",
-        description: "Class for field label when horizontal",
-        properties: ["horizontal"],
-        specificity: "when <b>mobileClass</b> is applied",
+        class: "labelVariantClass",
+        description: "Class of the label field variant",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data) => {
-            data.horizontal = true;
+            data.variant = "info";
         },
     },
     {
         class: "bodyClass",
         description: "Class for field body",
-    },
-    {
-        class: "bodyHorizontalClass",
-        description: "Class for field body when horizontal",
-        specificity: "when <b>mobileClass</b> is applied",
-        properties: ["horizontal"],
-        action: (cmp, data) => {
-            data.horizontal = true;
-        },
     },
     {
         class: "addonsClass",
@@ -92,22 +101,13 @@ const inspectData = [
         },
     },
     {
-        class: "variantMessageClass",
+        class: "messageVariantClass",
         description: "Class of the message field variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data) => {
             data.variant = "info";
             data.message = "This is a message for the field";
-        },
-    },
-    {
-        class: "variantLabelClass",
-        description: "Class of the label field variant",
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
-            data.variant = "info";
         },
     },
     {

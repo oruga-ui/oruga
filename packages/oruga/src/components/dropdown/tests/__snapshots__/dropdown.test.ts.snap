@@ -1,24 +1,78 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Dropdown tests > render correctly 1`] = `
+exports[`Dropdown tests > render correctly with items 1`] = `
 "<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
   <div tabindex="0" class="o-drop__trigger" aria-haspopup="true">
     <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
-            -->
+                @binding {() => void} toggle - toggle dropdown active state
+            --><button class="">Component Trigger Label</button>
   </div>
   <!--teleport start-->
-  <transition-stub name="fade" appear="false" persisted="false" css="true">
-    <!--v-if-->
-  </transition-stub>
+  <!--v-if-->
   <transition-stub name="fade" appear="false" persisted="true" css="true">
     <div class="o-drop__menu o-drop__menu--bottom-left" role="list" aria-hidden="true" aria-modal="true" style="display: none;">
       <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
-                        @binding {boolean} toggle - toggle active state function
+                        @binding {() => void} toggle - toggle dropdown active state
                     -->
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+        <!--
+            @slot Override the label, default is label prop 
+        -->A
+      </div>
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-2" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+        <!--
+            @slot Override the label, default is label prop 
+        -->B
+      </div>
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-3" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+        <!--
+            @slot Override the label, default is label prop 
+        -->C
+      </div>
+    </div>
+  </transition-stub>
+  <!--teleport end-->
+</div>"
+`;
+
+exports[`Dropdown tests > render correctly with options 1`] = `
+"<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
+  <div tabindex="0" class="o-drop__trigger" aria-haspopup="true">
+    <!--
+                @slot Override the trigger element, default is label prop
+                @binding {boolean} active - dropdown active state
+                @binding {() => void} toggle - toggle dropdown active state
+            -->Some Trigger Label
+  </div>
+  <!--teleport start-->
+  <!--v-if-->
+  <transition-stub name="fade" appear="false" persisted="true" css="true">
+    <div class="o-drop__menu o-drop__menu--bottom-left" role="list" aria-hidden="true" aria-modal="true" style="display: none;">
+      <!--
+                        @slot Place dropdown items here
+                        @binding {boolean} active - dropdown active state
+                        @binding {() => void} toggle - toggle dropdown active state
+                    -->
+      <!--v-if-->
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+        <!--
+            @slot Override the label, default is label prop 
+        -->Item 1
+      </div>
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-2" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+        <!--
+            @slot Override the label, default is label prop 
+        -->Item 2
+      </div>
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-3" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+        <!--
+            @slot Override the label, default is label prop 
+        -->Item 3
+      </div>
     </div>
   </transition-stub>
   <!--teleport end-->

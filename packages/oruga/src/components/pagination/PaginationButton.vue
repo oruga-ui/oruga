@@ -12,10 +12,6 @@ defineOptions({
 const props = defineProps({
     number: { type: Number, default: undefined },
     isCurrent: { type: Boolean, default: false },
-    click: {
-        type: Function as PropType<(event: Event) => void>,
-        required: true,
-    },
     ariaLabel: { type: String, default: undefined },
     disabled: { type: Boolean, default: false },
     tag: {
@@ -23,22 +19,26 @@ const props = defineProps({
         default: "button" as DynamicComponent,
     },
     rootClass: { type: Array as PropType<ClassBind[]>, default: () => [] },
-    linkClass: {
+    buttonClass: {
         type: Array as PropType<ClassBind[]>,
         required: true,
     },
-    linkCurrentClass: {
+    buttonCurrentClass: {
         type: Array as PropType<ClassBind[]>,
         required: true,
     },
 });
 
+defineEmits<{
+    click: [event: Event];
+}>();
+
 // --- Computed Component Classes ---
 
-const linkClasses = computed(() => [
+const classes = computed(() => [
     ...props.rootClass,
-    ...props.linkClass,
-    ...(props.isCurrent ? props.linkCurrentClass : []),
+    ...props.buttonClass,
+    ...(props.isCurrent ? props.buttonCurrentClass : []),
 ]);
 </script>
 
@@ -48,12 +48,11 @@ const linkClasses = computed(() => [
         role="button"
         :tabindex="disabled ? null : 0"
         :disabled="disabled"
-        :class="linkClasses"
-        v-bind="$attrs"
+        :class="classes"
         :aria-label="ariaLabel"
         :aria-current="isCurrent"
-        @click.prevent="click"
-        @keydown.enter.prevent="click">
+        @click.prevent="$emit('click', $event)"
+        @keydown.enter.prevent="$emit('click', $event)">
         <slot>{{ number }}</slot>
     </component>
 </template>

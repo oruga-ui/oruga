@@ -16,12 +16,11 @@ const emits = defineEmits(["inspect"]);
 
 const selectedElementIndex = ref<number>();
 
-const classesToInspect = computed(() => {
-    const data = props.inspectData;
-    return data.sort((propa, propb) =>
+const classesToInspect = computed(() =>
+    props.inspectData.toSorted((propa, propb) =>
         propa.class < propb.class ? -1 : propa.class > propb.class ? 1 : 0,
-    );
-});
+    ),
+);
 
 function addDotToTheEnd(value: string) {
     return !value.endsWith(".") ? value + "." : value;
@@ -120,73 +119,76 @@ function inspectClass(index: number, selectedData: any) {
         </o-collapse>
 
         <table>
-            <tr>
-                <th>Class prop</th>
-                <th>Description</th>
-                <th>Props</th>
-                <th>Suffixes</th>
-                <th></th>
-            </tr>
-            <tr
-                v-for="(data, index) of classesToInspect"
-                :key="data.class"
-                :class="{
-                    inspector__highlight: index === selectedElementIndex,
-                }">
-                <td v-if="!data.subitem">{{ data.class }}</td>
-                <td v-if="data.subitem">
-                    ▷ <a :href="`#${subitem}-component`">{{ data.class }}</a>
-                </td>
-                <td>
-                    <span>{{ addDotToTheEnd(data.description) }}</span>
-                    <span v-if="data.componentRef">
-                        More detail
-                        <a
-                            target="_blank"
-                            :href="`/components/${data.componentRef}.html#class-props`">
-                            here
-                        </a>
-                    </span>
-                    <span v-if="data.warning">
-                        <br />👉 <i><span v-html="data.warning"></span></i>
-                    </span>
-                    <span v-if="data.specificity">
-                        <br />🔍
-                        <i>
-                            <span>
-                                Classes applied have a higher specificity than
-                                expected
-                                <span v-html="data.specificity"> </span>
-                            </span>
-                        </i>
-                    </span>
-                </td>
-                <td>
-                    <span v-if="data.properties">
-                        <code
-                            style="white-space: nowrap; padding: 0"
-                            v-html="setByProperties(data.properties)">
-                        </code>
-                    </span>
-                </td>
-                <td>
-                    <span v-if="data.suffixes">
-                        <code
-                            style="white-space: nowrap; padding: 0"
-                            v-html="setByProperties(data.suffixes)">
-                        </code>
-                    </span>
-                </td>
-                <td>
-                    <o-button
-                        v-if="!data.nospec === true"
-                        label="Inspect"
-                        variant="warning"
-                        class="inspector__btn"
-                        type="button"
-                        @click="inspectClass(index, data)" />
-                </td>
-            </tr>
+            <tbody>
+                <tr>
+                    <th>Class prop</th>
+                    <th>Description</th>
+                    <th>Props</th>
+                    <th>Suffixes</th>
+                    <th></th>
+                </tr>
+                <tr
+                    v-for="(data, index) of classesToInspect"
+                    :key="data.class"
+                    :class="{
+                        inspector__highlight: index === selectedElementIndex,
+                    }">
+                    <td v-if="!data.subitem">{{ data.class }}</td>
+                    <td v-if="data.subitem">
+                        ▷
+                        <a :href="`#${subitem}-component`">{{ data.class }}</a>
+                    </td>
+                    <td>
+                        <span>{{ addDotToTheEnd(data.description) }}</span>
+                        <span v-if="data.componentRef">
+                            More detail
+                            <a
+                                target="_blank"
+                                :href="`/components/${data.componentRef}.html#class-props`">
+                                here
+                            </a>
+                        </span>
+                        <span v-if="data.warning">
+                            <br />👉 <i><span v-html="data.warning"></span></i>
+                        </span>
+                        <span v-if="data.specificity">
+                            <br />🔍
+                            <i>
+                                <span>
+                                    Classes applied have a higher specificity
+                                    than expected
+                                    <span v-html="data.specificity"> </span>
+                                </span>
+                            </i>
+                        </span>
+                    </td>
+                    <td>
+                        <span v-if="data.properties">
+                            <code
+                                style="white-space: nowrap; padding: 0"
+                                v-html="setByProperties(data.properties)">
+                            </code>
+                        </span>
+                    </td>
+                    <td>
+                        <span v-if="data.suffixes">
+                            <code
+                                style="white-space: nowrap; padding: 0"
+                                v-html="setByProperties(data.suffixes)">
+                            </code>
+                        </span>
+                    </td>
+                    <td>
+                        <o-button
+                            v-if="!data.nospec === true"
+                            label="Inspect"
+                            variant="warning"
+                            class="inspector__btn"
+                            type="button"
+                            @click="inspectClass(index, data)" />
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </template>

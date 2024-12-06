@@ -1,5 +1,9 @@
 import type { ComponentClass } from "@/types";
 
+export type InputType<IsNumber extends boolean> = IsNumber extends true
+    ? number
+    : string;
+
 export type InputProps<IsNumber extends boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
@@ -7,7 +11,7 @@ export type InputProps<IsNumber extends boolean> = {
      * The input value state
      * @type string | number
      */
-    modelValue?: IsNumber extends true ? number : string;
+    modelValue?: InputType<IsNumber>;
     /**
      * Convert the ´modelValue` into type `number`
      * @type boolean
@@ -69,12 +73,17 @@ export type InputProps<IsNumber extends boolean> = {
     debounce?: number;
     /** Native options to use in HTML5 validation */
     autocomplete?: string;
-    /** Same as native id. Also set the for label for o-field wrapper. */
+    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
     id?: string;
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
-    /** The message which is shown when a validation error occurs */
-    validationMessage?: string;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?:
+        | string
+        | ((
+              currentValue: InputType<IsNumber> | null | undefined,
+              state: ValidityState,
+          ) => string);
 } & InputClasses;
 
 // class props (will not be displayed in the docs)

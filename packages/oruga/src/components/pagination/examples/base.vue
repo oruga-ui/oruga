@@ -10,7 +10,7 @@ const nextIcon = ref("chevron-right");
 const total = ref(200);
 const current = ref(10);
 const perPage = ref(10);
-const order = ref("left");
+const order = ref<"left" | "centered" | "right">("left");
 const size = ref("");
 </script>
 
@@ -18,18 +18,18 @@ const size = ref("");
     <section>
         <o-field grouped group-multiline>
             <o-field label="Total">
-                <o-input v-model="total" type="number" />
+                <o-input v-model="total" type="number" number />
             </o-field>
             <o-field label="Items per page">
-                <o-input v-model="perPage" type="number" />
+                <o-input v-model="perPage" type="number" number />
             </o-field>
         </o-field>
         <o-field grouped group-multiline>
             <o-field label="Show buttons before current">
-                <o-input v-model="rangeBefore" type="number" min="0" />
+                <o-input v-model="rangeBefore" type="number" number min="0" />
             </o-field>
             <o-field label="Show buttons after current">
-                <o-input v-model="rangeAfter" type="number" min="0" />
+                <o-input v-model="rangeAfter" type="number" number min="0" />
             </o-field>
         </o-field>
         <o-field grouped group-multiline>

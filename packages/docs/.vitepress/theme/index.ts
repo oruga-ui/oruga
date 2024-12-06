@@ -14,7 +14,7 @@ import Expo from "./components/Expo.vue";
 import Oruga, { useOruga } from "@oruga-ui/oruga-next";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
-import * as bootstrapTheme from "@oruga-ui/theme-bootstrap";
+import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -33,7 +33,7 @@ hljs.registerLanguage("scss", scss);
 hljs.registerLanguage("css", css);
 
 // Import theme definitions
-import themes from "../themes.json";
+import themes from "@docs/themes.json";
 
 // load last used theme or set a default one
 function loadTheme() {
@@ -44,6 +44,7 @@ function loadTheme() {
             if (themeConfig && typeof themeConfig === "object")
                 return themeConfig;
         } catch (e) {
+            console.warn(e);
             return themes[1];
         }
     }
@@ -53,7 +54,7 @@ function loadTheme() {
 export default {
     ...DefaultTheme,
     Layout,
-    enhanceApp({ app }: { app: App }) {
+    enhanceApp({ app }: { app: App }): void {
         // add fortawesome icons
         library.add(fas);
         app.component("VueFontawesome", FontAwesomeIcon);
@@ -110,10 +111,9 @@ export default {
                     break;
                 }
                 case "theme-bootstrap": {
-                    bootstrapTheme.bootstrapConfig.iconPack = "fas";
-                    bootstrapTheme.bootstrapConfig.iconComponent =
-                        "vue-fontawesome";
-                    oruga.config.setOptions(bootstrapTheme.bootstrapConfig);
+                    bootstrapConfig.iconPack = "fas";
+                    bootstrapConfig.iconComponent = "vue-fontawesome";
+                    oruga.config.setOptions(bootstrapConfig);
                     break;
                 }
             }

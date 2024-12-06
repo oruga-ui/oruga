@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+const mobile = ref<"reduced" | "expanded" | "hidden">("reduced");
 const expandOnHover = ref(false);
-const mobile = ref("reduced");
 const reduce = ref(false);
 </script>
 
@@ -42,22 +42,22 @@ const reduce = ref(false);
                     <option :value="null"></option>
                     <option value="reduced">Reduced</option>
                     <option value="hidden">Hidden</option>
-                    <option value="fullwidth">Fullwidth</option>
+                    <option value="expanded">Expanded</option>
                 </o-select>
             </o-field>
         </div>
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .sidebar-page {
     display: flex;
     flex-direction: row;
     width: 100%;
+}
 
-    .sidebar-layout {
-        padding: 1rem;
-        flex-basis: 50%;
-    }
+.sidebar-page .sidebar-layout {
+    padding: 1rem;
+    flex-basis: 50%;
 }
 </style>

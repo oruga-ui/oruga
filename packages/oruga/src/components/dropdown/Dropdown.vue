@@ -1,10 +1,4 @@
-<script
-    setup
-    lang="ts"
-    generic="
-        T extends string | number | object,
-        IsMultiple extends boolean = false
-    ">
+<script setup lang="ts" generic="T, IsMultiple extends boolean = false">
 import {
     computed,
     nextTick,
@@ -14,23 +8,26 @@ import {
     type Component,
 } from "vue";
 
+import ODropdownItem from "../dropdown/DropdownItem.vue";
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { vTrapFocus } from "@/directives/trapFocus";
 import { toCssDimension, isMobileAgent, isTrueish } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
     defineClasses,
+    toOptionsGroup,
+    normalizeOptions,
     useProviderParent,
     useMatchMedia,
     useEventListener,
     useClickOutside,
-    useVModel,
+    usePreventScrolling,
+    useSequentialId,
 } from "@/composables";
 
-import type { DynamicComponent } from "@/types";
 import type { DropdownComponent } from "./types";
 import type { DropdownProps } from "./props";
 
@@ -46,71 +43,85 @@ defineOptions({
     configField: "dropdown",
 });
 
+type ModelValue = DropdownProps<T, IsMultiple>["modelValue"];
+
 const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
     // multiple: false,
+    options: undefined,
     active: false,
     label: undefined,
     disabled: false,
     inline: false,
     scrollable: false,
-    maxHeight: () => getOption("dropdown.maxHeight", 200),
-    position: () => getOption("dropdown.position", "bottom-left"),
-    mobileModal: () => getOption("dropdown.mobileModal", true),
-    animation: () => getOption("dropdown.animation", "fade"),
-    trapFocus: () => getOption("dropdown.trapFocus", true),
-    checkScroll: () => getOption("dropdown.checkScroll", false),
+    maxHeight: () => getDefault("dropdown.maxHeight", 200),
+    position: () => getDefault("dropdown.position", "bottom-left"),
+    animation: () => getDefault("dropdown.animation", "fade"),
+    trapFocus: () => getDefault("dropdown.trapFocus", true),
+    checkScroll: () => getDefault("dropdown.checkScroll", false),
     expanded: false,
-    menuId: null,
-    menuTabindex: null,
-    menuTag: () => getOption<DynamicComponent>("dropdown.menuTag", "div"),
-    triggerTag: () => getOption<DynamicComponent>("dropdown.triggerTag", "div"),
-    triggers: () => getOption("dropdown.triggers", ["click"]),
+    menuId: undefined,
+    menuTabindex: undefined,
+    menuTag: () => getDefault("dropdown.menuTag", "div"),
+    triggerTag: () => getDefault("dropdown.triggerTag", "div"),
+    triggers: () => getDefault("dropdown.triggers", ["click"]),
     delay: undefined,
     closeable: () =>
-        getOption("dropdown.closeable", ["escape", "outside", "content"]),
+        getDefault("dropdown.closeable", ["escape", "outside", "content"]),
     tabindex: 0,
-    ariaRole: () => getOption("dropdown.ariaRole", "list"),
-    mobileBreakpoint: () => getOption("dropdown.mobileBreakpoint"),
-    teleport: () => getOption("dropdown.teleport", false),
+    ariaRole: () => getDefault("dropdown.ariaRole", "list"),
+    desktopModal: () => getDefault("dropdown.desktopModal", false),
+    mobileModal: () => getDefault("dropdown.mobileModal", true),
+    mobileBreakpoint: () => getDefault("dropdown.mobileBreakpoint"),
+    teleport: () => getDefault("dropdown.teleport", false),
 });
-
-type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object | array} updated modelValue prop
+     * @param value {T | T[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on change event - fired after update:modelValue
-     * @param value {string | number | object | array} selected value
+     * @param value {T | T[]} selected value
      */
-    (e: "change", value: ModelValue): void;
+    change: [value: ModelValue];
     /**
      * on close event
      * @param method {string} close method
      */
-    (e: "close", method: string): void;
+    close: [method: string];
     /** the list inside the dropdown reached the start */
-    (e: "scroll-start"): void;
+    "scroll-start": [];
     /** the list inside the dropdown reached it's end */
-    (e: "scroll-end"): void;
+    "scroll-end": [];
 }>();
 
-/** The selected item value */
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
+const contentRef = ref<HTMLElement | Component>();
+const triggerRef = ref<HTMLElement>();
+
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
+
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
+/** normalized programamtic options */
+const groupedOptions = computed(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
+    return groupedOptions;
+});
 
 const autoPosition = ref(props.position);
 
@@ -122,28 +133,30 @@ watch(
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-// check if mobile modal should be shown
-const isMobileModal = computed(
-    () => isMobile.value && props.mobileModal && !props.inline,
+// check if should be shown as modal
+const isModal = computed(
+    () =>
+        !props.inline &&
+        ((isMobile.value && props.mobileModal) ||
+            (!isMobile.value && props.desktopModal)),
 );
 
 // check if client is mobile native
-const isMobileNative = computed(() => props.mobileModal && isMobileAgent.any());
+const isMobileNative = isClient && isMobileAgent.any();
 
 const menuStyle = computed(() => ({
     maxHeight: props.scrollable ? toCssDimension(props.maxHeight) : null,
     overflow: props.scrollable ? "auto" : null,
 }));
 
-const hoverable = computed(() => props.triggers.indexOf("hover") >= 0);
+const hoverable = computed(() => props.triggers.includes("hover"));
+
+const toggleScroll = usePreventScrolling();
 
 // --- Event Handler ---
 
-const contentRef = ref<HTMLElement | Component>();
-const triggerRef = ref<HTMLElement>();
-
-const eventCleanups = [];
-let timer: NodeJS.Timeout;
+const eventCleanups: (() => void)[] = [];
+let timer: NodeJS.Timeout | undefined;
 
 const cancelOptions = computed(() =>
     typeof props.closeable === "boolean"
@@ -156,9 +169,9 @@ const cancelOptions = computed(() =>
 watch(
     isActive,
     (value) => {
-        // on active set event handler
-        if (value && isClient) {
-            if (cancelOptions.value.indexOf("outside") >= 0) {
+        // on active set event handler if not open as modal
+        if (value && isClient && !isModal.value) {
+            if (cancelOptions.value.includes("outside")) {
                 // set outside handler
                 eventCleanups.push(
                     useClickOutside(contentRef, onClickedOutside, {
@@ -169,7 +182,7 @@ watch(
                 );
             }
 
-            if (cancelOptions.value.indexOf("escape") >= 0) {
+            if (cancelOptions.value.includes("escape")) {
                 // set keyup handler
                 eventCleanups.push(
                     useEventListener("keyup", onKeyPress, document, {
@@ -182,6 +195,7 @@ watch(
             eventCleanups.forEach((fn) => fn());
             eventCleanups.length = 0;
         }
+        if (isMobile.value) toggleScroll(value);
     },
     { immediate: true, flush: "post" },
 );
@@ -195,7 +209,7 @@ onUnmounted(() => {
 /** Close dropdown if clicked outside. */
 function onClickedOutside(): void {
     if (!isActive.value || props.inline) return;
-    if (cancelOptions.value.indexOf("outside") < 0) return;
+    if (!cancelOptions.value.includes("outside")) return;
     emits("close", "outside");
     isActive.value = false;
 }
@@ -203,40 +217,43 @@ function onClickedOutside(): void {
 /** Keypress event that is bound to the document */
 function onKeyPress(event: KeyboardEvent): void {
     if (isActive.value && (event.key === "Escape" || event.key === "Esc")) {
-        if (cancelOptions.value.indexOf("escape") < 0) return;
+        if (!cancelOptions.value.includes("escape")) return;
         emits("close", "escape");
         isActive.value = false;
     }
 }
 
 function onClick(): void {
-    if (props.triggers.indexOf("click") < 0) return;
+    // check if is mobile native and hoverable together
+    if (isMobileNative && hoverable.value) toggle();
+    // check normal click conditions
+    if (!props.triggers.includes("click")) return;
     toggle();
 }
 
 function onContextMenu(event: MouseEvent): void {
-    if (props.triggers.indexOf("contextmenu") < 0) return;
+    if (!props.triggers.includes("contextmenu")) return;
     event.preventDefault();
     open();
 }
 
 function onFocus(): void {
-    if (props.triggers.indexOf("focus") < 0) return;
+    if (!props.triggers.includes("focus")) return;
     open();
 }
 
 const isHovered = ref(false);
 function onHover(): void {
-    if (!isMobileNative.value && props.triggers.indexOf("hover") >= 0) {
-        isHovered.value = true;
-        open();
-    }
+    if (isMobileNative) return;
+    if (!props.triggers.includes("hover")) return;
+    isHovered.value = true;
+    open();
 }
 function onHoverLeave(): void {
-    if (!isMobileNative.value && isHovered.value) {
-        isHovered.value = false;
-        onClose();
-    }
+    if (isMobileNative) return;
+    if (!isHovered.value) return;
+    isHovered.value = false;
+    onClose();
 }
 
 /** Toggle dropdown if it's not disabled. */
@@ -253,7 +270,7 @@ function open(): void {
     if (props.delay) {
         timer = setTimeout(() => {
             isActive.value = true;
-            timer = null;
+            timer = undefined;
         }, props.delay);
     } else {
         isActive.value = true;
@@ -261,7 +278,7 @@ function open(): void {
 }
 
 function onClose(): void {
-    if (cancelOptions.value.indexOf("content") < 0) return;
+    if (!cancelOptions.value.includes("content")) return;
     emits("close", "content");
     isActive.value = !props.closeable;
     if (timer && props.closeable) clearTimeout(timer);
@@ -275,6 +292,7 @@ if (isClient && props.checkScroll)
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
     const dropdown = unrefElement(contentRef);
+    if (!dropdown) return;
     if (dropdown.clientHeight !== dropdown.scrollHeight) {
         if (
             dropdown.scrollTop + dropdown.clientHeight >=
@@ -321,7 +339,7 @@ function selectItem(value: T): void {
             nextTick(() => emits("change", vmodel.value));
         }
     }
-    if (!props.multiple) {
+    if (!isTrueish(props.multiple)) {
         if (cancelOptions.value.indexOf("content") < 0) return;
         emits("close", "content");
         isActive.value = false;
@@ -329,15 +347,16 @@ function selectItem(value: T): void {
     }
 }
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
-    props,
+    disabled: props.disabled,
+    multiple: isTrueish(props.multiple),
     selected: vmodel.value,
     selectItem,
 }));
 
-/** Provide functionalities and data to child item components */
-useProviderParent(contentRef, { data: provideData });
+/** provide functionalities and data to child item components */
+useProviderParent({ data: provideData });
 
 // --- Computed Component Classes ---
 
@@ -346,12 +365,9 @@ const rootClasses = defineClasses(
     ["disabledClass", "o-drop--disabled", null, computed(() => props.disabled)],
     ["expandedClass", "o-drop--expanded", null, computed(() => props.expanded)],
     ["inlineClass", "o-drop--inline", null, computed(() => props.inline)],
-    [
-        "mobileClass",
-        "o-drop--mobile",
-        null,
-        computed(() => isMobileModal.value && !hoverable.value),
-    ],
+    ["mobileClass", "o-drop--mobile", null, isMobile],
+    ["modalClass", "o-drop--modal", null, isModal],
+    ["hoverableClass", "o-drop--hoverable", null, hoverable],
     [
         "positionClass",
         "o-drop--position-",
@@ -364,22 +380,18 @@ const rootClasses = defineClasses(
         null,
         computed(() => isActive.value || props.inline),
     ],
-    ["hoverableClass", "o-drop--hoverable", null, hoverable],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
 
-const positionWrapperClasses = defineClasses([
+const teleportClasses = defineClasses([
     "teleportClass",
     "o-drop--teleport",
     null,
     computed(() => !!props.teleport),
 ]);
 
-const menuMobileOverlayClasses = defineClasses([
-    "menuMobileOverlayClass",
-    "o-drop__overlay",
-]);
+const overlayClasses = defineClasses(["overlayClass", "o-drop__overlay"]);
 
 const menuClasses = defineClasses(
     ["menuClass", "o-drop__menu"],
@@ -423,8 +435,9 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
             <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
+                @binding {() => void} toggle - toggle dropdown active state
             -->
-            <slot name="trigger" :active="isActive">
+            <slot name="trigger" :active="isActive" :toggle="onClick">
                 {{ label }}
             </slot>
         </component>
@@ -433,18 +446,17 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
             v-slot="{ setContent }"
             v-model:position="autoPosition"
             :teleport="teleport"
-            :class="[...rootClasses, ...positionWrapperClasses]"
+            :class="[...rootClasses, ...teleportClasses]"
             :trigger="triggerRef"
             :disabled="!isActive"
             default-position="bottom"
-            :disable-positioning="!isMobileModal">
-            <transition :name="animation">
+            :disable-positioning="!isModal">
+            <transition v-if="isModal" :name="animation">
                 <div
-                    v-if="isMobileModal"
                     v-show="isActive"
-                    :tabindex="-1"
-                    :class="menuMobileOverlayClasses"
-                    :aria-hidden="disabled || !isActive" />
+                    :class="overlayClasses"
+                    tabindex="-1"
+                    @click="onClickedOutside" />
             </transition>
 
             <transition :name="animation">
@@ -458,14 +470,34 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                     :class="menuClasses"
                     :style="menuStyle"
                     :role="ariaRole"
-                    :aria-hidden="disabled || !isActive"
+                    :aria-hidden="!inline && (disabled || !isActive)"
                     :aria-modal="!inline && trapFocus">
                     <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
-                        @binding {boolean} toggle - toggle active state function
+                        @binding {() => void} toggle - toggle dropdown active state
                     -->
-                    <slot :active="isActive" :toggle="toggle" />
+                    <slot :active="isActive" :toggle="toggle">
+                        <template v-for="group in groupedOptions">
+                            <o-dropdown-item
+                                v-if="group.group"
+                                v-show="!group.hidden"
+                                :key="group.key"
+                                v-bind="group.attrs"
+                                tabindex="-1">
+                                {{ group.group }}
+                            </o-dropdown-item>
+
+                            <o-dropdown-item
+                                v-for="option in group.options"
+                                v-show="!option.hidden"
+                                :key="option.key"
+                                :value="option.value"
+                                v-bind="option.attrs">
+                                {{ option.label }}
+                            </o-dropdown-item>
+                        </template>
+                    </slot>
                 </component>
             </transition>
         </PositionWrapper>

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { type PropType } from "vue";
+import { useId } from "vue";
 
-import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
+import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { CollapseProps } from "./props";
 
 /**
  * An easy way to toggle what you want
@@ -18,43 +17,12 @@ defineOptions({
     configField: "collapse",
 });
 
-defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Whether collapse is open or not, use v-model:open to make it two-way binding */
-    open: { type: Boolean, default: true },
-    /** Custom animation (transition name) */
-    animation: {
-        type: String,
-        default: () => getOption("collapse.animation", "fade"),
-    },
-    /** Id property of the content container */
-    contentId: { type: String, default: () => uuid() },
-    /**
-     * Trigger position
-     * @values top, bottom
-     */
-    position: {
-        type: String as PropType<"top" | "bottom">,
-        default: () => getOption("collapse.position", "top"),
-        validator: (value: string) => ["top", "bottom"].indexOf(value) > -1,
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the trigger element */
-    triggerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the content */
-    contentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+withDefaults(defineProps<CollapseProps>(), {
+    override: undefined,
+    open: true,
+    animation: () => getDefault("collapse.animation", "fade"),
+    contentId: () => useId(),
+    position: () => getDefault("collapse.position", "top"),
 });
 
 const emits = defineEmits<{
@@ -62,11 +30,11 @@ const emits = defineEmits<{
      * open prop two-way binding
      * @param value {boolean} updated open prop
      */
-    (e: "update:open", value: boolean): void;
+    "update:open": [value: boolean];
     /** on collapse opened */
-    (e: "open"): void;
+    open: [];
     /** on collapse closed */
-    (e: "close"): void;
+    close: [];
 }>();
 
 const isOpen = defineModel<boolean>("open", { default: true });
@@ -74,7 +42,8 @@ const isOpen = defineModel<boolean>("open", { default: true });
 /** Toggle and emit events */
 function toggle(): void {
     isOpen.value = !isOpen.value;
-    isOpen.value ? emits("open") : emits("close");
+    if (isOpen.value) emits("open");
+    else emits("close");
 }
 
 // --- Computed Component Classes ---

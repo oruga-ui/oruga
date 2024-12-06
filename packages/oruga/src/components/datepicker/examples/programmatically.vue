@@ -13,7 +13,7 @@ const active = ref(false);
                 placeholder="Select a date" />
             <o-button
                 icon-left="calendar"
-                type="primary"
+                variant="primary"
                 @click="active = !active" />
         </o-field>
     </section>

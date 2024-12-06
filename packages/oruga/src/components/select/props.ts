@@ -1,18 +1,17 @@
 import type { ComponentClass } from "@/types";
-import type { OptionsItem } from "./types";
+import type { OptionsPropWithGroups } from "@/composables";
 
-export type SelectProps<
-    T extends string | number | object,
-    IsMultiple extends boolean,
-> = {
+type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
-    modelValue?: IsMultiple extends true ? T[] : T;
-    /** Select options, unnecessary when default slot is used */
-    options?: string[] | OptionsItem<T>[];
+    modelValue?: ValueType<T, IsMultiple>;
     /** Allow multiple selection - converts the `modelValue` into an array */
     multiple?: IsMultiple;
+    /** Select options, unnecessary when default slot is used */
+    options?: OptionsPropWithGroups<T>;
     /**
      * Vertical size of input
      * @values small, medium, large
@@ -50,16 +49,21 @@ export type SelectProps<
     iconRightClickable?: boolean;
     /** Variant of right icon */
     iconRightVariant?: string;
-    /** Same as native id. Also set the `for` label for o-field wrapper. */
+    /** Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. */
     id?: string;
-    /** Enable html 5 native validation */
-    useHtml5Validation?: boolean;
-    /** The message which is shown when a validation error occurs */
-    validationMessage?: string;
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete?: string;
     /** Show status icon using field and variant prop */
     statusIcon?: boolean;
+    /** Enable HTML 5 native validation */
+    useHtml5Validation?: boolean;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?:
+        | string
+        | ((
+              currentValue: ValueType<T, IsMultiple> | null | undefined,
+              state: ValidityState,
+          ) => string);
 } & SelectClasses;
 
 // class props (will not be displayed in the docs)

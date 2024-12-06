@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 const isOpen = ref(0);
+const isOpenAgain = ref(0);
 
 const collapses = ref([
     {
@@ -29,64 +30,79 @@ const collapses = ref([
             :key="index"
             class="card"
             animation="slide"
+            trigger-class="trigger-fullwidth"
             :open="isOpen == index"
             @open="isOpen = index">
             <template #trigger="props">
                 <div class="card-header" role="button">
-                    <p class="card-header-title">
+                    <span class="card-header-title">
                         {{ collapse.title }}
-                    </p>
+                    </span>
+
                     <a class="card-header-icon">
                         <o-icon :icon="props.open ? 'caret-up' : 'caret-down'">
                         </o-icon>
                     </a>
                 </div>
             </template>
+
             <div class="card-content">
-                <div class="content" v-html="collapse.text" />
+                <p class="content" v-html="collapse.text" />
             </div>
         </o-collapse>
+    </section>
+
+    <br />
+
+    <section>
+        <article v-for="(collapse, index) of collapses" :key="index">
+            <o-collapse
+                animation="slide"
+                :open="isOpenAgain == index"
+                @update:open="isOpenAgain = index">
+                <template #trigger>
+                    <o-button variant="success" :label="collapse.title" />
+                </template>
+
+                <div class="card">
+                    <p class="card-content" v-html="collapse.text" />
+                </div>
+            </o-collapse>
+        </article>
     </section>
 </template>
 
 <style>
 .card {
+    position: relative;
     background-color: #fff;
     box-shadow:
         0 2px 3px hsla(0, 0%, 4%, 0.1),
         0 0 0 1px hsla(0, 0%, 4%, 0.1);
-    color: #4a4a4a;
-    max-width: 100%;
-    position: relative;
 }
 
 .card-header {
-    background-color: transparent;
-    align-items: stretch;
-    box-shadow: 0 1px 2px hsla(0, 0%, 4%, 0.1);
     display: flex;
+    align-items: center;
+    box-shadow: 0 1px 2px hsla(0, 0%, 4%, 0.1);
 }
 
 .card-header-title {
-    align-items: center;
-    color: #363636;
-    display: flex;
     flex-grow: 1;
     font-weight: 700;
     padding: 0.75rem;
-    margin: 0;
 }
 
 .card-header-icon {
-    align-items: center;
     cursor: pointer;
-    display: flex;
     padding: 0.75rem;
-    justify-content: center;
 }
 
 .card-content {
     padding: 1.5rem;
-    background-color: transparent;
+}
+
+.trigger-fullwidth {
+    width: 100%;
 }
 </style>

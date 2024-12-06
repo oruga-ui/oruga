@@ -8,13 +8,11 @@ describe("OSwitch tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
-        const wrapper = mount(OSwitch);
+        const wrapper = mount(OSwitch, { props: { label: "My input" } });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("switch");
-        expect(
-            wrapper.find("label input[type=checkbox]").exists(),
-        ).toBeTruthy(); // has an input checkbox
+        expect(wrapper.find("input[type=checkbox]").exists()).toBeTruthy();
         expect(wrapper.html()).toMatchSnapshot();
     });
 
@@ -92,13 +90,13 @@ describe("OSwitch tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toContainEqual(true);
+        expect(emits![0]).toContainEqual(true);
         expect(wrapper.vm.value).toEqual(true);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits[1]).toContainEqual(false);
+        expect(emits![1]).toContainEqual(false);
         expect(wrapper.vm.value).toEqual(false);
     });
 
@@ -115,26 +113,26 @@ describe("OSwitch tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toContainEqual(trueValue);
+        expect(emits![0]).toContainEqual(trueValue);
         expect(wrapper.vm.value).toEqual(trueValue);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(2);
-        expect(emits[1]).toContainEqual(falseValue);
+        expect(emits![1]).toContainEqual(falseValue);
         expect(wrapper.vm.value).toEqual(falseValue);
     });
 
     test("react accordingly when custom object values are given", async () => {
         const trueValue = { a: "a", b: "b" };
         const falseValue = { y: "y", x: "X" };
-        const wrapper = mount<typeof OSwitch<object>>(OSwitch, {
+        const wrapper = mount(OSwitch, {
             props: {
                 modelValue: falseValue,
                 trueValue,
                 falseValue,
-                "onUpdate:modelValue": (e) =>
-                    wrapper.setProps({ modelValue: e }),
+                "onUpdate:modelValue": (modelValue) =>
+                    wrapper.setProps({ modelValue }),
             },
         });
 
@@ -144,14 +142,13 @@ describe("OSwitch tests", () => {
         await input.setValue(true);
         let emits = wrapper.emitted("update:modelValue");
         expect(emits).toHaveLength(1);
-        expect(emits[0]).toContainEqual(trueValue);
+        expect(emits![0]).toContainEqual(trueValue);
         expect(wrapper.vm.value).toEqual(trueValue);
 
         await input.setValue(false);
         emits = wrapper.emitted("update:modelValue");
-        expect(emits).toHaveLength(2);
-        expect(emits[0]).toContainEqual(trueValue);
-        expect(emits[1]).toContainEqual(falseValue);
+        expect(emits![0]).toContainEqual(trueValue);
+        expect(emits![1]).toContainEqual(falseValue);
         expect(wrapper.vm.value).toEqual(falseValue);
     });
 

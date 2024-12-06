@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const datetime = ref(new Date());
+const datetime = ref<Date | undefined>(new Date());
 </script>
 
 <template>
@@ -19,7 +19,9 @@ const datetime = ref(new Date());
                             <o-icon icon="calendar" />
                             <span>Today</span>
                         </o-button>
-                        <o-button variant="danger" @click="datetime = null">
+                        <o-button
+                            variant="danger"
+                            @click="datetime = undefined">
                             <o-icon icon="times" />
                             <span>Clear</span>
                         </o-button>
@@ -30,14 +32,13 @@ const datetime = ref(new Date());
     </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .footer-container {
     display: flex;
     justify-content: end;
     margin-top: 0.5rem;
-
-    button {
-        margin-left: 0.5rem;
-    }
+}
+.footer-container button {
+    margin-left: 0.5rem;
 }
 </style>

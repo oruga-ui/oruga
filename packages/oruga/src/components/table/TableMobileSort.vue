@@ -6,8 +6,6 @@ import OSelect from "@/components/select/Select.vue";
 import OIcon from "@/components/icon/Icon.vue";
 import OField from "@/components/field/Field.vue";
 
-import { getValueByPath } from "@/utils/helpers";
-
 import type { TableColumnItem } from "./types";
 import type { ClassBind } from "@/types";
 
@@ -35,20 +33,15 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
-    (e: "sort", column: TableColumnItem<T>, event: Event);
+    sort: [column: TableColumnItem<T>, event: Event];
 }>();
 
-const mobileSort = ref<string>(
-    getValueByPath(props.currentSortColumn, "identifier"),
-);
+const mobileSort = ref<string | undefined>(props.currentSortColumn?.identifier);
 
 const showPlaceholder = computed(
     () =>
         !props.columns ||
-        !props.columns.some(
-            (column) =>
-                getValueByPath(column, "identifier") === mobileSort.value,
-        ),
+        props.columns.every((column) => column.identifier !== mobileSort.value),
 );
 
 const sortableColumns = computed(() =>
@@ -56,34 +49,33 @@ const sortableColumns = computed(() =>
 );
 
 const isCurrentSort = computed(
-    () =>
-        getValueByPath(props.currentSortColumn, "identifier") ===
-        mobileSort.value,
+    () => props.currentSortColumn?.identifier === mobileSort.value,
 );
 
 watch(mobileSort, (value) => {
-    if (props.currentSortColumn.identifier === value) return;
-    sort();
+    if (props.currentSortColumn?.identifier === value) return;
+    sort(new Event("sort"));
 });
 
 watch(
     () => props.currentSortColumn,
     (column) => {
-        mobileSort.value = getValueByPath(column, "identifier");
+        mobileSort.value = column?.identifier;
     },
 );
 
-function sort(event?: Event): void {
+function sort(event: Event): void {
     const column = sortableColumns.value.find(
-        (c) => getValueByPath(c, "identifier") === mobileSort.value,
+        (column) => column.identifier === mobileSort.value,
     );
+    if (!column) return;
     emits("sort", column, event);
 }
 </script>
 
 <template>
     <div :class="mobileSortClasses">
-        <o-field>
+        <o-field addons>
             <o-select v-model="mobileSort" expanded>
                 <template v-if="placeholder">
                     <option

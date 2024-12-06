@@ -9,12 +9,14 @@
     "baseUrl": ".",
     "types": ["node", "vite/client", "vitepress/client"],
     "paths": {
+      "@docs/*": ["src/*"],
       "@oruga-ui/oruga-next": ["../oruga/src"],
     },
   },
   "include": [
     ".vitepress/**/*",
-    "docgen.config.ts"
+    "src/**/*",
+    "src/**/*.ts", 
   ],
   "exclude": [
     "node_modules"

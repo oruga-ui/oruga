@@ -13,6 +13,7 @@
 <example-skeleton />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -39,12 +40,12 @@
 | animated  | Show a loading animation                     | boolean                         | -                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>skeleton: {<br>&nbsp;&nbsp;animated: true<br>}</code> |
 | circle    | Show a circle shape                          | boolean                         | -                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
 | count     | Number of shapes to display                  | number                          | -                           | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                           |
-| height    | Custom height                                | string \| number                | -                           |                                                                                                                                                   |
+| height    | Custom height                                | number \| string                | -                           |                                                                                                                                                   |
 | override  | Override existing theme classes completely   | boolean                         | -                           |                                                                                                                                                   |
-| position  | Skeleton position in relation to the element | "left" \| "right" \| "centered" | `left`, `centered`, `right` | <code style='white-space: nowrap; padding: 0;'>"left"</code>                                                                                      |
+| position  | Skeleton position in relation to the element | "centered" \| "left" \| "right" | `left`, `centered`, `right` | <code style='white-space: nowrap; padding: 0;'>"left"</code>                                                                                      |
 | rounded   | Enable rounded style                         | boolean                         | -                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>skeleton: {<br>&nbsp;&nbsp;rounded: true<br>}</code>  |
 | size      | Size of skeleton                             | string                          | `small`, `medium`, `large`  |                                                                                                                                                   |
-| width     | Custom width                                 | string \| number                | -                           |                                                                                                                                                   |
+| width     | Custom width                                 | number \| string                | -                           |                                                                                                                                                   |
 
 </div>
 
@@ -65,12 +66,21 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_skeleton.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
-</div><div class="theme-bootstrap">
+| SASS Variable           | Default              |
+| ----------------------- | -------------------- |
+| $skeleton-border-radius | css.getVar("radius") |
+| $skeleton-duration      | 1.5s                 |
+| $skeleton-margin-top    | 0.5rem               |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_skeleton.scss)
+
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

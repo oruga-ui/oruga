@@ -28,7 +28,7 @@ const inspectData = [
         nospec: true,
     },
     {
-        class: "noticeCustomContainerClass",
+        class: "noticeContainerClass",
         description: "Class of the custom container element",
     },
     {

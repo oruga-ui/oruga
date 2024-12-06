@@ -10,7 +10,7 @@ export type IconConfig = {
 const mdiIcons = {
     sizes: {
         default: "mdi-24px",
-        small: null,
+        small: "",
         medium: "mdi-36px",
         large: "mdi-48px",
     },
@@ -22,10 +22,10 @@ const faIcons = () => {
     const faIconPrefix = iconComponent ? "" : "fa-";
     return {
         sizes: {
-            default: null,
-            small: null,
+            default: "",
+            small: "sm",
             medium: "lg",
-            large: "2xl",
+            large: "xl",
         },
         iconPrefix: faIconPrefix,
         internalIcons: {
@@ -60,8 +60,7 @@ const getIcons = (): Record<string, IconConfig> => {
         fal: faIcons(),
     };
 
-    const customIconPacks =
-        getOption<Record<string, IconConfig>>("customIconPacks");
+    const customIconPacks = getOption("customIconPacks");
     if (customIconPacks) icons = merge(icons, customIconPacks, true);
 
     return icons;

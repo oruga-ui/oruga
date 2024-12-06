@@ -1,27 +1,22 @@
-import type {
-    ComponentProps,
-    // ComponentSlots,
-} from "vue-component-type-helpers";
+import type { Component, Slots } from "vue";
 import type { ProviderItem } from "@/composables";
 import type { ClassBind } from "@/types";
 
-import TabItem from "./TabItem.vue";
+import type { TabItemProps } from "./props";
 
-export type TabItemProps = ComponentProps<typeof TabItem>;
-
-export type TabItemSlots = any; //ComponentSlots<typeof TabItem>; TODO: can be reentered with vue 3.5
-
-export type TabItemComponent = TabItemProps & {
-    $slots: TabItemSlots;
-    headerIconClasses: ClassBind[];
-    headerTextClasses: ClassBind[];
+export type TabItemComponent<T> = TabItemProps<T, Component> & {
+    $slots: Slots;
+    navClasses: ClassBind[];
+    classes: ClassBind[];
+    iconClasses: ClassBind[];
+    labelClasses: ClassBind[];
     isTransitioning: boolean;
     activate: (index: number) => void;
     deactivate: (index: number) => void;
 };
 
-export type TabsComponent<T extends string | number | object> = {
-    activeValue: T;
+export type TabsComponent = {
+    activeIndex: number;
     type: string;
     vertical: boolean;
     animated: boolean;
@@ -30,4 +25,4 @@ export type TabsComponent<T extends string | number | object> = {
     destroyOnHide: boolean;
 };
 
-export type TabItem = Omit<ProviderItem, "data"> & TabItemComponent;
+export type TabItem<T> = Omit<ProviderItem<T>, "data"> & TabItemComponent<T>;

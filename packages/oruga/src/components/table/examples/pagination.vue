@@ -180,7 +180,7 @@ const data = ref([
 
 const isPaginated = ref(true);
 const isPaginationSimple = ref(false);
-const paginationPosition = ref("bottom");
+const paginationPosition = ref<"bottom" | "top" | "both">("bottom");
 const sortIcon = ref("arrow-up");
 const sortIconSize = ref("small");
 const defaultSortDirection = ref<"asc" | "desc">("asc");

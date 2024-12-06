@@ -9,7 +9,7 @@ exports[`OCollapse tests > render correctly 1`] = `
              -->
   </div>
   <transition-stub name="fade" appear="false" persisted="true" css="true">
-    <div id="mocked" class="o-clps__content">
+    <div id="v-0" class="o-clps__content">
       <!--
                     @slot Default content
                 -->

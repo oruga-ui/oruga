@@ -25,12 +25,12 @@ const emits = defineEmits<{
      * current prop two-way binding
      * @param value {number} updated current prop
      */
-    (e: "update:current", value: number): void;
+    "update:current": [value: number];
     /**
      * on current change event
      * @param value {number} current value
      */
-    (e: "change", event: number): void;
+    change: [event: number];
 }>();
 
 const currentPage = defineModel<number>("current");

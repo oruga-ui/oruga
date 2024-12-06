@@ -1,22 +1,19 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="C extends Component">
 import {
     computed,
     ref,
     onMounted,
     onBeforeMount,
-    type PropType,
+    useTemplateRef,
     type Component,
 } from "vue";
 
-import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    getActiveClasses,
-    useProgrammaticComponent,
-} from "@/composables";
+import ONotification from "./Notification.vue";
 
-import type { NotifcationProps } from "./types";
-import type { ProgrammaticInstance, ComponentClass } from "@/types";
+import { getDefault } from "@/utils/config";
+import { defineClasses, getActiveClasses } from "@/composables";
+
+import type { NotificationNoticeProps } from "./props";
 
 /**
  * Notification Notice is an extension of the Notification component and is used for the programmatic usage
@@ -29,125 +26,32 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * Which position the notification will appear.
-     * @values top-right, top, top-left, bottom-right, bottom, bottom-left
-     */
-    position: {
-        type: String,
-        default: () => getOption("notification.position", "top"),
-        validator: (value: string) =>
-            [
-                "top-right",
-                "top",
-                "top-left",
-                "bottom-right",
-                "bottom",
-                "bottom-left",
-            ].indexOf(value) > -1,
-    },
-    /** Hide notification after duration (in miliseconds) */
-    duration: {
-        type: Number,
-        default: () => getOption("notification.duration", 2000),
-    },
-    /** Show the Notification infinitely until it is dismissed. */
-    infinite: { type: Boolean, default: false },
-    /** If notice should queue with others notices (snackbar/toast/notification). */
-    queue: {
-        type: Boolean,
-        default: () => getOption("notification.queue"),
-    },
-    /** Callback function to call on close (programmatically close or user canceled). */
-    onClose: { type: Function as PropType<() => void>, default: () => {} },
-    /**
-     * Component to be injected.
-     * Close notification within the component by emitting a 'close' event — $emit('close').
-     */
-    component: {
-        type: [Object, Function] as PropType<Component>,
-        default: undefined,
-    },
-    /** Props to be binded to the injected component. */
-    props: { type: Object, default: undefined },
-    /** Events to be binded to the injected component. */
-    events: { type: Object, default: () => ({}) },
-    /**
-     * DOM element the toast will be created on (for programmatic usage).
-     * Note that this also changes the position of the toast from fixed to absolute.
-     * Meaning that the container should be fixed.
-     */
-    container: {
-        type: [Object, String] as PropType<string | HTMLElement | null>,
-        default: () => getOption("notification.container", "body"),
-    },
-    /**
-     * Props passed to the internal notification component.
-     * @ignore
-     */
-    notification: {
-        type: Object as PropType<NotifcationProps>,
-        default: () => ({}),
-    },
-    /**
-     * This is used internally for programmatic usage.
-     * @ignore
-     */
-    programmatic: {
-        type: Object as PropType<ProgrammaticInstance>,
-        default: undefined,
-    },
-    /**
-     * This is used internally for programmatic usage.
-     * @ignore
-     */
-    promise: { type: Promise, default: undefined },
-    // class props (will not be displayed in the docs)
-    /** Root class of the notice */
-    noticeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the notice when positioned */
-    noticePositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the custom container element */
-    noticeCustomContainerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
+    override: undefined,
+    // container: undefined,
+    position: () => getDefault("notification.position", "top"),
+    duration: () => getDefault("notification.duration", 2000),
+    infinite: false,
+    queue: () => getDefault("notification.queue"),
+    component: undefined,
+    props: undefined,
+    events: undefined,
 });
 
-const notificationRef = ref();
+const emits = defineEmits<{
+    /**
+     * on component close event
+     * @param value {unknown} - close event data
+     */
+    close: [...args: unknown[]];
+}>();
+
+const notificationRef = useTemplateRef("notificationComponent");
 
 const isActive = ref(true);
 
-function handleClose(...args: any[]): void {
-    if (typeof props.onClose === "function" && isActive.value)
-        props.onClose.apply(args);
-    isActive.value = false;
-    if (timer.value) clearTimeout(timer.value);
-}
-
-/** add programmatic usage to this component */
-const { close, container } = useProgrammaticComponent(
-    () => notificationRef.value.$el,
-    {
-        container: props.container,
-        programmatic: props.programmatic,
-        cancelable: true,
-        destroy: true,
-        onClose: handleClose,
-    },
-);
-
-const parentTop = ref(null);
-const parentBottom = ref(null);
+const parentTop = ref<Element | null>(null);
+const parentBottom = ref<Element | null>(null);
 
 const timer = ref();
 
@@ -162,10 +66,10 @@ onBeforeMount(() => {
         const topClasses = getActiveClasses(positionTopClasses.value);
         const bottomClasses = getActiveClasses(positionBottomClasses.value);
 
-        parentTop.value = container.value.querySelector(
+        parentTop.value = props.container.querySelector(
             `.${rootClasses.join(".")}.${topClasses.join(".")}`,
         );
-        parentBottom.value = container.value.querySelector(
+        parentBottom.value = props.container.querySelector(
             `.${rootClasses.join(".")}.${bottomClasses.join(".")}`,
         );
 
@@ -185,19 +89,17 @@ onBeforeMount(() => {
             )} ${bottomClasses.join(" ")}`;
         }
 
-        container.value.appendChild(parentTop.value);
-        container.value.appendChild(parentBottom.value);
+        props.container.appendChild(parentTop.value);
+        props.container.appendChild(parentBottom.value);
 
-        if (container.value.tagName !== "BODY") {
-            const classes = getActiveClasses(
-                noticeCustomContainerClasses.value,
-            );
+        if (props.container.tagName !== "BODY") {
+            const classes = getActiveClasses(noticeContainerClasses.value);
             if (classes?.length)
                 classes
                     .filter((c) => !!c)
                     .forEach((c: string) => {
-                        parentTop.value.classList.add(c);
-                        parentBottom.value.classList.add(c);
+                        parentTop.value?.classList.add(c);
+                        parentBottom.value?.classList.add(c);
                     });
         }
     }
@@ -225,17 +127,19 @@ const correctParent = computed(() => {
 });
 
 const shouldQueue = computed(() =>
-    props.queue
+    props.queue && parentTop.value && parentBottom.value
         ? parentTop.value.childElementCount > 0 ||
           parentBottom.value.childElementCount > 0
         : false,
 );
 
 function showNotice(): void {
+    if (!correctParent.value) return;
+
     if (shouldQueue.value) correctParent.value.innerHTML = "";
     correctParent.value.insertAdjacentElement(
         "afterbegin",
-        notificationRef.value.$el,
+        notificationRef.value?.$el,
     );
 }
 
@@ -249,6 +153,13 @@ function setAutoClose(): void {
             if (isActive.value) close({ action: "close", method: "timeout" });
         }, props.duration);
     }
+}
+
+/** set active to false and emit close event */
+function close(...args: unknown[]): void {
+    isActive.value = false;
+    if (timer.value) clearTimeout(timer.value);
+    emits("close", args);
 }
 
 // --- Computed Component Classes ---
@@ -266,22 +177,23 @@ const positionBottomClasses = defineClasses([
     "bottom",
 ]);
 
-const noticeCustomContainerClasses = defineClasses([
-    "noticeCustomContainerClass",
-    "o-notices__custom-container",
+const noticeContainerClasses = defineClasses([
+    "noticeContainerClass",
+    "o-notices__container",
 ]);
 
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ close: handleClose, promise: props.promise });
+defineExpose({ close });
 </script>
 
 <template>
     <o-notification
-        v-bind="notification"
-        ref="notificationRef"
+        v-bind="$attrs"
+        ref="notificationComponent"
         v-model:active="isActive"
+        :override="override"
         :position="position"
         @close="close">
         <template #inner="{ close }">
@@ -290,7 +202,7 @@ defineExpose({ close: handleClose, promise: props.promise });
                 v-bind="$props.props"
                 :is="component"
                 v-if="component"
-                v-on="$props.events"
+                v-on="$props.events || {}"
                 @close="close" />
         </template>
         <slot />

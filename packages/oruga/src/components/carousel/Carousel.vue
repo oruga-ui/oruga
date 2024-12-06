@@ -8,12 +8,12 @@ import {
     nextTick,
     readonly,
     toRaw,
-    type PropType,
+    useTemplateRef,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
@@ -23,7 +23,8 @@ import {
 } from "@/composables";
 
 import type { CarouselComponent } from "./types";
-import type { ComponentClass, ClassBind } from "@/types";
+import type { ClassBind } from "@/types";
+import type { CarouselProps } from "./props";
 
 /**
  * A Slideshow for cycling images in confined spaces
@@ -37,176 +38,29 @@ defineOptions({
     configField: "carousel",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The index of the current active element */
-    modelValue: { type: Number, default: 0 },
-    /** Enable drag mode */
-    dragable: { type: Boolean, default: true },
-    /** Timer interval for `autoplay` */
-    interval: {
-        type: Number,
-        default: () => getOption("carousel.interval", 3500),
-    },
-    /** Move item automaticalls after `interval` */
-    autoplay: { type: Boolean, default: false },
-    /** Pause autoplay on hover */
-    pauseHover: { type: Boolean, default: false },
-    /** Repeat from the beginning after reaching the end */
-    repeat: { type: Boolean, default: false },
-    /** Show an overlay */
-    overlay: { type: Boolean, default: false },
-    /** Enable indicators */
-    indicators: { type: Boolean, default: true },
-    /** Place indicators inside the carousel */
-    indicatorInside: { type: Boolean, default: false },
-    /**
-     * Indicator interaction mode
-     * @values click, hover
-     */
-    indicatorMode: {
-        type: String,
-        default: "click",
-        validator: (value: string) => ["click", "hover"].indexOf(value) >= 0,
-    },
-    /** Position of the indicator - depends on used theme */
-    indicatorPosition: {
-        type: String,
-        default: () => getOption("carousel.indicatorPosition", "bottom"),
-    },
-    /** Style of the indicator - depends on used theme */
-    indicatorStyle: {
-        type: String,
-        default: () => getOption("carousel.indicatorStyle", "dots"),
-    },
-    /** Number of items to show at once*/
-    itemsToShow: {
-        type: Number,
-        default: () => getOption("carousel.itemsToShow", 1),
-    },
-    /** Number of items to switch at once */
-    itemsToList: {
-        type: Number,
-        default: () => getOption("carousel.itemsToList", 1),
-    },
-    /** Show next / prev arrows */
-    arrows: {
-        type: Boolean,
-        default: () => getOption("carousel.arrows", true),
-    },
-    /** Show next / prev arrows only on hover */
-    arrowsHover: {
-        type: Boolean,
-        default: () => getOption("carousel.arrowsHover", true),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("carousel.iconPack"),
-    },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: {
-        type: String,
-        default: () => getOption("carousel.iconSize"),
-    },
-    /** Icon name for previous icon */
-    iconPrev: {
-        type: String,
-        default: () => getOption("carousel.iconPrev", "chevron-left"),
-    },
-    /** Icon name for next icon */
-    iconNext: {
-        type: String,
-        default: () => getOption("carousel.iconNext", "chevron-right"),
-    },
-    /** Define these props for different screen sizes */
-    breakpoints: {
-        type: Object as PropType<Record<number, any>>,
-        default: () => ({}),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the root element in overlay */
-    overlayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the wrapper element of carousel items */
-    wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of slider items */
-    itemsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of slider items on drag */
-    itemsDraggingClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of arrow elements */
-    arrowIconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of prev arrow element */
-    arrowIconPrevClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of next arrow element */
-    arrowIconNextClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator link element */
-    indicatorClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element */
-    indicatorsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element when inside */
-    indicatorsInsideClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element when inside and position */
-    indicatorsInsidePositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator item element */
-    indicatorItemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator element when is active */
-    indicatorItemActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator element to separate different styles */
-    indicatorItemStyleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<CarouselProps>(), {
+    override: undefined,
+    modelValue: 0,
+    dragable: true,
+    interval: () => getDefault("carousel.interval", 3500),
+    autoplay: false,
+    pauseHover: false,
+    repeat: false,
+    overlay: false,
+    indicators: true,
+    indicatorInside: false,
+    indicatorMode: "click",
+    indicatorPosition: () => getDefault("carousel.indicatorPosition", "bottom"),
+    indicatorStyle: () => getDefault("carousel.indicatorStyle", "dots"),
+    itemsToShow: () => getDefault("carousel.itemsToShow", 1),
+    itemsToList: () => getDefault("carousel.itemsToList", 1),
+    arrows: () => getDefault("carousel.arrows", true),
+    arrowsHover: () => getDefault("carousel.arrowsHover", true),
+    iconPack: () => getDefault("carousel.iconPack"),
+    iconSize: () => getDefault("carousel.iconSize"),
+    iconPrev: () => getDefault("carousel.iconPrev", "chevron-left"),
+    iconNext: () => getDefault("carousel.iconNext", "chevron-right"),
+    breakpoints: () => ({}),
 });
 
 const emits = defineEmits<{
@@ -214,26 +68,27 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number} updated modelValue prop
      */
-    (e: "update:modelValue", value: number): void;
+    "update:model-value": [value: number];
     /**
      * on carousel scroll event
      * @param value {number} scroll index
      */
-    (e: "scroll", value: number): void;
+    scroll: [value: number];
     /**
      * on item click event
      * @param event {event} native event
      */
-    (e: "click", event: Event): void;
+    click: [event: Event];
 }>();
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 function restartTimer(): void {
     pauseTimer();
     startTimer();
 }
 
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<CarouselComponent>(() => ({
     restartTimer,
     itemWidth: itemWidth.value,
@@ -242,14 +97,18 @@ const provideData = computed<CarouselComponent>(() => ({
     setActive: (index: number): void => switchTo(index),
 }));
 
-/** Provide functionalities and data to child item components */
-const { childItems } = useProviderParent(rootRef, { data: provideData });
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent({ rootRef, data: provideData });
 
 const activeIndex = defineModel<number>({ default: 0 });
 const scrollIndex = ref(props.modelValue);
 
-const resizeObserver = ref(null);
+let resizeObserver: ResizeObserver | undefined;
 const windowWidth = ref(0);
+
+if (isClient && window.ResizeObserver) {
+    resizeObserver = new window.ResizeObserver(onRefresh);
+}
 
 const refresh_ = ref(0);
 
@@ -266,10 +125,9 @@ watch([() => props.itemsToList, () => props.itemsToShow], () => onRefresh());
 
 onMounted(() => {
     if (isClient) {
-        if (window.ResizeObserver) {
-            resizeObserver.value = new window.ResizeObserver(onRefresh);
-            resizeObserver.value.observe(rootRef.value);
-        }
+        if (window.ResizeObserver && resizeObserver && rootRef.value)
+            resizeObserver.observe(rootRef.value);
+
         onResized();
         startTimer();
     }
@@ -277,7 +135,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     if (isClient) {
-        if (window.ResizeObserver) resizeObserver.value.disconnect();
+        if (window.ResizeObserver && resizeObserver)
+            resizeObserver.disconnect();
+
         dragEnd();
         pauseTimer();
     }
@@ -320,7 +180,8 @@ const settings = computed<typeof props>(() => {
 
 const itemWidth = computed(() => {
     // Ensure component is mounted
-    if (!windowWidth.value) return 0;
+    if (!windowWidth.value || !rootRef.value) return 0;
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const r = refresh_.value; // We force the computed property to refresh if this ref is changed
 
@@ -391,8 +252,7 @@ function onModeChange(trigger: string, index: number): void {
 // --- Autoplay Feature ---
 
 const isHovered = ref(false);
-const isPaused = ref(false);
-const timer = ref(null);
+let timer: NodeJS.Timeout | undefined;
 
 function onMouseEnter(): void {
     isHovered.value = true;
@@ -422,19 +282,17 @@ watch(
 );
 
 function startTimer(): void {
-    if (!props.autoplay || timer.value) return;
-    isPaused.value = false;
-    timer.value = setInterval(() => {
+    if (!props.autoplay || timer) return;
+    timer = setInterval(() => {
         if (!props.repeat && !hasNext.value) pauseTimer();
         else onNext();
     }, props.interval);
 }
 
 function pauseTimer(): void {
-    isPaused.value = true;
-    if (timer.value) {
-        clearInterval(timer.value);
-        timer.value = null;
+    if (timer) {
+        clearInterval(timer);
+        timer = undefined;
     }
 }
 
@@ -546,24 +404,6 @@ const arrowIconNextClasses = defineClasses([
     "o-car__arrow__icon-next",
 ]);
 
-function indicatorItemClasses(index): ClassBind[] {
-    return defineClasses(
-        ["indicatorItemClass", "o-car__indicator__item"],
-        [
-            "indicatorItemActiveClass",
-            "o-car__indicator__item--active",
-            null,
-            indicatorIndex.value === index,
-        ],
-        [
-            "indicatorItemStyleClass",
-            "o-car__indicator__item--",
-            props.indicatorStyle,
-            !!props.indicatorStyle,
-        ],
-    ).value;
-}
-
 const indicatorsClasses = defineClasses(
     ["indicatorsClass", "o-car__indicators"],
     [
@@ -581,11 +421,33 @@ const indicatorsClasses = defineClasses(
 );
 
 const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
+
+const indicatorItemClasses = defineClasses(
+    ["indicatorItemClass", "o-car__indicator__item"],
+    [
+        "indicatorItemStyleClass",
+        "o-car__indicator__item--",
+        props.indicatorStyle,
+        !!props.indicatorStyle,
+    ],
+);
+
+const indicatorItemActiveClasses = defineClasses([
+    "indicatorItemActiveClass",
+    "o-car__indicator__item--active",
+]);
+
+function indicatorItemAppliedClasses(index: number): ClassBind[] {
+    const activeClasses =
+        indicatorIndex.value === index ? indicatorItemActiveClasses.value : [];
+
+    return [...indicatorItemClasses.value, ...activeClasses];
+}
 </script>
 
 <template>
     <div
-        ref="rootRef"
+        ref="rootElement"
         :class="rootClasses"
         data-oruga="carousel"
         role="region"
@@ -610,6 +472,7 @@ const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
                 -->
                 <slot />
             </div>
+
             <!--
                 @slot Override the arrows
                 @binding {boolean} has-prev has prev arrow button 
@@ -678,12 +541,13 @@ const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
                             @binding {index} index indicator index 
                         -->
                         <slot :index="index" name="indicator">
-                            <span :class="indicatorItemClasses(index)" />
+                            <span :class="indicatorItemAppliedClasses(index)" />
                         </slot>
                     </div>
                 </div>
             </template>
         </slot>
+
         <template v-if="overlay">
             <!-- @slot Overlay element -->
             <slot name="overlay" />

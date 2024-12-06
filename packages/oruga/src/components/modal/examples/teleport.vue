@@ -28,18 +28,6 @@ const isModalActive = ref(false);
                     hendrerit, cursus lectus a, blandit felis. Nam luctus orci
                     nec varius commodo.
                 </p>
-                <p>
-                    Sed vulputate metus purus, ut egestas erat congue et. Donec
-                    tellus orci, malesuada eget dolor sed, pellentesque bibendum
-                    nunc. In eu egestas diam. Integer sed congue massa. Sed a
-                    urna quam. Morbi vulputate dolor eleifend ligula lobortis
-                    venenatis. Aenean pellentesque risus sit amet faucibus
-                    molestie. Aliquam eu lorem aliquet, aliquam nulla in,
-                    vestibulum lorem. Donec mollis mi at sollicitudin tristique.
-                    Nullam id nibh pulvinar, dignissim nisl id, gravida risus.
-                    Nulla arcu elit, scelerisque in sollicitudin et, laoreet et
-                    metus. Aenean placerat turpis nec tincidunt tempus.
-                </p>
             </div>
         </o-modal>
     </section>

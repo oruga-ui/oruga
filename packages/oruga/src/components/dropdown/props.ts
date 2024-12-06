@@ -1,15 +1,17 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
+import type { OptionsPropWithGroups } from "@/composables";
 
-export type DropdownProps<
-    T extends string | number | object,
-    IsMultiple extends boolean,
-> = {
+type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
+
+export type DropdownProps<T, IsMultiple extends boolean> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected item value */
-    modelValue?: IsMultiple extends true ? T[] : T;
+    /** The selected option value */
+    modelValue?: ValueType<T, IsMultiple>;
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
+    /** Dropdown options, unnecessary when default slot is used */
+    options?: OptionsPropWithGroups<T>;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Trigger label, unnecessary when trgger slot is used */
@@ -38,6 +40,8 @@ export type DropdownProps<
         | "bottom-right";
     /** Dropdown content (items) are shown into a modal on mobile */
     mobileModal?: boolean;
+    /** Dropdown content (items) are shown into a modal on desktop */
+    desktopModal?: boolean;
     /** Custom animation (transition name) */
     animation?: string;
     /** Trap focus inside the dropdown. */
@@ -94,8 +98,6 @@ type DropdownClasses = Partial<{
     triggerClass: ComponentClass;
     /** Class of dropdown menu when inline */
     inlineClass: ComponentClass;
-    /** Class of the overlay when on mobile */
-    menuMobileOverlayClass: ComponentClass;
     /** Class of the dropdown menu */
     menuClass: ComponentClass;
     /** Class of dropdown menu position */
@@ -104,6 +106,10 @@ type DropdownClasses = Partial<{
     menuActiveClass: ComponentClass;
     /** Class of dropdown when on mobile */
     mobileClass: ComponentClass;
+    /** Class of dropdown when on is shown as modal */
+    modalClass: ComponentClass;
+    /** Class of the overlay when is shown as modal */
+    overlayClass: ComponentClass;
     /** Class of dropdown when disabled */
     disabledClass: ComponentClass;
     /** Class of dropdown when expanded */
@@ -114,4 +120,46 @@ type DropdownClasses = Partial<{
     activeClass: ComponentClass;
     /** Class for the root element when the dropdown is hoverable */
     hoverableClass: ComponentClass;
+    /** Class of the body when dropdown is open and scroll is clip */
+    scrollClipClass: ComponentClass;
+    /** Class of the body when dropdown is open and scroll is not clip */
+    noScrollClass: ComponentClass;
+}>;
+
+export type DropdownItemProps<T> = {
+    /** Override existing theme classes completely */
+    override?: boolean;
+    /**
+     * Item value (it will be used as v-model of wrapper component) - default is an uuid
+     * @type string|number|object
+     */
+    value?: T;
+    /** Item label, unnecessary when default slot is used */
+    label?: string;
+    /** Item is disabled */
+    disabled?: boolean;
+    /** Item is clickable and emit an event */
+    clickable?: boolean;
+    /** Dropdown item tag name */
+    tag?: DynamicComponent;
+    /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
+    tabindex?: number | string;
+    /**
+     * Role attribute to be passed to the list item for better accessibility.
+     * Use menuitem only in situations where your dropdown is related to a navigation menu.
+     * @values listitem, menuitem, button
+     */
+    ariaRole?: string;
+} & DropdownItemClasses;
+
+// class props (will not be displayed in the docs)
+type DropdownItemClasses = Partial<{
+    /** Class of the dropdown item */
+    itemClass: ComponentClass;
+    /** Class of the dropdown item when active  */
+    itemActiveClass: ComponentClass;
+    /** Class of the dropdown item when clickable */
+    itemClickableClass: ComponentClass;
+    /** Class of the dropdown item when disabled */
+    itemDisabledClass: ComponentClass;
 }>;

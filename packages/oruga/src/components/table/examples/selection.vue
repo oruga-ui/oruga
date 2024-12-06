@@ -2,33 +2,7 @@
 import { ref } from "vue";
 import type { TableColumn } from "@oruga-ui/oruga-next";
 
-const columns = ref<TableColumn[]>([
-    {
-        field: "id",
-        label: "ID",
-        width: "40",
-        numeric: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-    },
-    {
-        field: "gender",
-        label: "Gender",
-    },
-]);
-
-const data = ref([
+const data = [
     {
         id: 1,
         first_name: "Jesse",
@@ -64,9 +38,36 @@ const data = ref([
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-]);
+];
 
-const selected = ref(data.value[2]);
+const columns: TableColumn<(typeof data)[number]>[] = [
+    {
+        field: "id",
+        label: "ID",
+        width: "40",
+        numeric: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+        formatter: (v): string => new Date(String(v)).toLocaleDateString(),
+    },
+    {
+        field: "gender",
+        label: "Gender",
+    },
+];
+
+const selected = ref<(typeof data)[number] | undefined>(data[2]);
 </script>
 
 <template>
@@ -76,7 +77,7 @@ const selected = ref(data.value[2]);
             :disabled="!selected"
             icon-left="times"
             label="Clear selected"
-            @click="selected = null" />
+            @click="selected = undefined" />
 
         <p><b>Selection:</b> {{ selected }}</p>
 

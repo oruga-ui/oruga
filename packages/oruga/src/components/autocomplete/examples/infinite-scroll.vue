@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { OptionsPropItem } from "@oruga-ui/oruga-next";
 
 const isFetching = ref(false);
 const page = ref(1);
 const totalPages = ref(1);
 
-const options = ref([]);
-const selected = ref(null);
+const options = ref<OptionsPropItem<any>[]>([]);
+const selected = ref<any>();
 const value = ref("");
 
 async function getAsyncData(_value): Promise<void> {
@@ -36,7 +37,12 @@ async function getAsyncData(_value): Promise<void> {
             `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${_value}&page=${page.value}`,
         ).then((response) => response.json());
 
-        options.value = [...options.value, ..._data.results];
+        const movies: OptionsPropItem[] = _data.results.map((v) => ({
+            value: v,
+            label: v.title,
+        }));
+
+        options.value = [...options.value, ...movies];
         page.value += 1;
         totalPages.value = _data.total_pages;
     } catch (err) {
@@ -58,26 +64,25 @@ function getMoreAsyncData(): void {
                 v-model="selected"
                 :options="options"
                 placeholder="e.g. Fight Club"
-                field="title"
                 expanded
                 check-scroll
                 open-on-focus
                 :debounce="500"
                 @input="getAsyncData"
                 @scroll-end="getMoreAsyncData">
-                <template #default="{ option }">
+                <template #default="{ value }">
                     <div class="media">
                         <div class="media-left">
                             <img
                                 width="32"
-                                :src="`https://image.tmdb.org/t/p/w500/${option.poster_path}`" />
+                                :src="`https://image.tmdb.org/t/p/w500/${value.poster_path}`" />
                         </div>
                         <div class="media-content">
-                            {{ option.title }}
+                            {{ value.title }}
                             <br />
                             <small>
-                                Released at {{ option.release_date }}, rated
-                                <b>{{ option.vote_average }}</b>
+                                Released at {{ value.release_date }}, rated
+                                <b>{{ value.vote_average }}</b>
                             </small>
                         </div>
                     </div>

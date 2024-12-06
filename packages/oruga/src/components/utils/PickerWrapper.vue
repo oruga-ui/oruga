@@ -5,21 +5,23 @@ import {
     ref,
     watch,
     nextTick,
+    useTemplateRef,
     type PropType,
-    type ComponentInstance,
 } from "vue";
 
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import OInput from "../input/Input.vue";
 
-import { isDefined, isMobileAgent, isTrueish } from "@/utils/helpers";
+import { isDate, isDefined, isMobileAgent, isTrueish } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     getActiveClasses,
     useEventListener,
     useInputHandler,
 } from "@/composables";
+
+import { injectField } from "../field/fieldInjection";
 
 import type { ClassBind, ComponentClass } from "@/types";
 
@@ -32,57 +34,68 @@ defineOptions({
 });
 
 const props = defineProps({
+    /** the internal input value */
+    value: {
+        type: [Date, Array] as PropType<Date | Date[] | undefined>,
+        default: undefined,
+    },
+    /** the active state of the dropdown */
+    active: { type: Boolean, default: false },
     /** parent picker component props  */
     pickerProps: { type: Object, required: true },
     /** data-oruga attribute value */
     dataOruga: { type: String, required: true },
-    /** the internal input value */
-    value: { type: [Date, Array], default: undefined },
-    /** the active state of the dropdown */
-    active: { type: Boolean, default: false },
-    /** formatted display value to show when client is desktop */
-    formattedValue: { type: String, default: undefined },
-    /** native value when client is mobile native */
-    nativeValue: { type: [String, Number], default: undefined },
-    nativeType: { type: String, required: true },
-    nativeStep: { type: String, default: undefined },
-    nativeMin: { type: [String, Number], default: undefined },
-    nativeMax: { type: [String, Number], default: undefined },
+    /** format props value to input value */
+    formatter: {
+        type: Function as PropType<
+            (value: Date | Date[] | undefined, isNative: boolean) => string
+        >,
+        required: true,
+    },
+    /** parse input value to props value */
+    parser: {
+        type: Function as PropType<
+            (value: string, isNative: boolean) => Date | Date[] | undefined
+        >,
+        required: true,
+    },
+    type: { type: String, required: true },
+    step: { type: String, default: undefined },
+    min: { type: Date, default: undefined },
+    max: { type: Date, default: undefined },
     stayOpen: { type: Boolean, default: false },
-    rootClasses: {
-        type: Array as PropType<ClassBind[]>,
-        required: true,
-    },
-    dropdownClasses: {
-        type: Array as PropType<ClassBind[]>,
-        required: true,
-    },
-    boxClass: {
-        type: Array as PropType<ComponentClass>,
-        required: true,
-    },
+    /** the DateTimeFormat object to watch for to update the parsed input value */
+    dtf: { type: Object, default: undefined },
+    rootClasses: { type: Array as PropType<ClassBind[]>, required: true },
+    dropdownClasses: { type: Array as PropType<ClassBind[]>, required: true },
+    boxClass: { type: Array as PropType<ComponentClass>, required: true },
 });
 
 const emits = defineEmits<{
     /**
      * active prop two-way binding
+     * @param value {Date, Date[]} updated active prop
+     */
+    "update:value": [value: Date | Date[] | undefined];
+    /**
+     * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
-    /** on value change event */
-    (e: "change", value: string): void;
-    /** on natvie value change event */
-    (e: "native-change", value: string): void;
+    "update:active": [value: boolean];
     /** on input focus event */
-    (e: "focus", evt: Event): void;
+    focus: [event: Event];
     /** on input blur event */
-    (e: "blur", evt: Event): void;
+    blur: [event: Event];
     /** on input invalid event */
-    (e: "invalid", evt: Event): void;
+    invalid: [event: Event];
     /** on icon click event */
-    (e: "icon-click", evt: Event): void;
+    "icon-click": [event: Event];
     /** on icon right click event */
-    (e: "icon-right-click", evt: Event): void;
+    "icon-right-click": [event: Event];
+    /** on dropdown left button press event */
+    left: [event: Event];
+    /** on dropdown right button press event */
+    right: [event: Event];
 }>();
 
 const isMobileNative = computed(
@@ -92,9 +105,12 @@ const isMobileNative = computed(
         isMobileAgent.any(),
 );
 
-const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
-const inputRef = ref<ComponentInstance<typeof OInput>>();
-const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
+// inject parent field component if used inside one
+const { parentField } = injectField();
+
+const dropdownRef = useTemplateRef("dropdownComponent");
+const inputRef = useTemplateRef("inputComponent");
+const nativeInputRef = useTemplateRef("nativeInputComponent");
 
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : inputRef.value,
@@ -116,37 +132,64 @@ const {
  * when placeholder and no native value is given.
  */
 const initialNativeType =
-    !isDefined(props.pickerProps.placeholder) || !!isTrueish(props.nativeValue)
-        ? props.nativeType
+    !isDefined(props.pickerProps.placeholder) || isTrueish(props.value)
+        ? props.type
         : "text";
 
-/** input value based on mobile native or formatted desktop value */
-const inputValue = computed(() =>
-    isMobileNative.value ? props.nativeValue : props.formattedValue,
-);
-
-/** internal o-input vmodel value */
-const vmodel = ref(inputValue.value);
-// update the o-input vmodel value when prop value change
-watch(inputValue, (value) => (vmodel.value = value));
+/** the v-model value of the input */
+const inputValue = ref("");
 
 /**
  * When v-model is changed:
  *  1. Update internal value.
- *  2. If it's invalid, validate again.
+ *  2. Close picker.
+ *  3. If it's invalid, validate again.
  */
 watch(
     () => props.value,
-    () => {
-        // reset input value if they not match
-        if (vmodel.value !== inputValue.value) vmodel.value = inputValue.value;
+    (value) => {
+        // update internal value
+        inputValue.value = props.formatter(value, isMobileNative.value);
 
         // toggle picker if not stay open
         if (!isMobileNative.value && !props.stayOpen) togglePicker(false);
+        // validate if its invalid
         if (!isValid.value) checkHtml5Validity();
     },
-    { flush: "post" },
+    { immediate: true },
 );
+
+// update the parsed input value when the dtf change
+watch(
+    () => props.dtf,
+    () => setValue(inputValue.value),
+);
+
+/** Set the vmodel value and update the prop value */
+function setValue(value: string): void {
+    // parse to date
+    let date = props.parser(value, isMobileNative.value);
+
+    // check min/max dates
+    if (Array.isArray(date)) date = date.map(checkMinMaxDate);
+    else if (isDefined(date)) date = checkMinMaxDate(date);
+
+    nextTick(
+        () =>
+            // reparse to string for internal value
+            (inputValue.value = props.formatter(date, isMobileNative.value)),
+    );
+
+    // update the prop value
+    emits("update:value", date);
+}
+
+function checkMinMaxDate(date: Date): Date {
+    if (!isDate(date)) return date;
+    if (props.min && date < props.min) date = props.min;
+    else if (props.max && date > props.max) date = props.max;
+    return date;
+}
 
 const isActive = defineModel<boolean>("active", { default: false });
 
@@ -172,10 +215,9 @@ function onKeyPress(event: KeyboardEvent): void {
 
 /** Toggle picker */
 function togglePicker(active: boolean): void {
-    if (dropdownRef.value) {
-        if (active || isTrueish(props.pickerProps.closeOnClick))
-            nextTick(() => (isActive.value = active));
-    }
+    if (!dropdownRef.value) return;
+    if (active || isTrueish(props.pickerProps.closeOnClick))
+        nextTick(() => (isActive.value = active));
 }
 
 /** Avoid dropdown toggle when is already visible */
@@ -185,15 +227,19 @@ function onInputClick(event): void {
 
 /** Emit 'blur' event on dropdown is not active (closed) */
 function onActiveChange(value: boolean): void {
-    if (value) onFocus();
-    else if (!value) onBlur();
+    if (value) onFocus(new Event("focus"));
+    else if (!value) onBlur(new Event("blur"));
 }
 
 // --- NATIVE EVENT HANDLER ---
 
+function onChange(event: Event): void {
+    setValue((event.target as HTMLInputElement).value);
+}
+
 function onNativeClick(event: Event): void {
     // do nothing if client is not mobile
-    if (!isMobileNative.value) return;
+    if (!isMobileNative.value || !input.value) return;
 
     // when input is not editable jet
     if (input.value.type === "text") {
@@ -204,9 +250,10 @@ function onNativeClick(event: Event): void {
         input.value.blur();
 
         setTimeout(() => {
+            if (!input.value) return;
             // make the input editable
             input.value.readOnly = false;
-            input.value.type = props.nativeType;
+            input.value.type = props.type;
 
             // focus the underlaying input element again to open native keyboards for type 'date'
             setFocus();
@@ -216,7 +263,7 @@ function onNativeClick(event: Event): void {
 
 function onNativeFocus(event: Event): void {
     // do nothing if client is not mobile
-    if (!isMobileNative.value) return;
+    if (!isMobileNative.value || !input.value) return;
 
     // when input is not editable jet
     if (input.value.type === "text") {
@@ -225,12 +272,12 @@ function onNativeFocus(event: Event): void {
         event.stopPropagation();
     }
     // only emit focus event if editable
-    else onFocus();
+    else onFocus(event);
 }
 
-function onNativeBlur(): void {
+function onNativeBlur(event: Event): void {
     // do nothing if client is not mobile
-    if (!isMobileNative.value) return;
+    if (!isMobileNative.value || !input.value) return;
 
     // when the input does not have any value
     if (!input.value.value) {
@@ -239,33 +286,37 @@ function onNativeBlur(): void {
         input.value.type = "text";
     }
     // emit blur event
-    onBlur();
+    onBlur(event);
 }
 
 function onNativeChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value
         ? (event.target as HTMLInputElement).value
-        : null;
+        : "";
 
     // when the input does not have any value
-    if (!value) {
+    if (!value && input.value) {
         input.value.value = value;
         input.value.blur();
     }
 
-    emits("native-change", value);
+    setValue(value);
 }
 
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
+
 const inputBind = computed(() => ({
+    ...parentField?.value?.inputAttrs,
     ...attrs,
+    inputClass: props.pickerProps.inputClass,
     ...props.pickerProps.inputClasses,
 }));
 
 const dropdownBind = computed(() => ({
     "root-class": getActiveClasses(props.dropdownClasses),
+    "teleport-class": getActiveClasses(props.rootClasses),
     ...props.pickerProps.dropdownClasses,
 }));
 
@@ -279,13 +330,14 @@ defineExpose({ focus: setFocus });
     <div :data-oruga="dataOruga" :class="rootClasses" @click="onNativeClick">
         <o-dropdown
             v-if="!isMobileNative"
-            ref="dropdownRef"
+            ref="dropdownComponent"
             v-bind="dropdownBind"
             v-model:active="isActive"
             :position="pickerProps.position"
             :disabled="pickerProps.disabled"
             :inline="pickerProps.inline"
             :mobile-modal="pickerProps.mobileModal"
+            :mobile-breakpoint="pickerProps.mobileBreakpoint"
             :trap-focus="pickerProps.trapFocus"
             :aria-role="ariaRole"
             :aria-modal="!pickerProps.inline"
@@ -295,10 +347,9 @@ defineExpose({ focus: setFocus });
             <template v-if="!pickerProps.inline" #trigger>
                 <slot name="trigger">
                     <o-input
-                        ref="inputRef"
+                        ref="inputComponent"
                         v-bind="inputBind"
-                        v-model="vmodel"
-                        autocomplete="off"
+                        v-model="inputValue"
                         :placeholder="pickerProps.placeholder"
                         :size="pickerProps.size"
                         :icon-pack="pickerProps.iconPack"
@@ -309,10 +360,12 @@ defineExpose({ focus: setFocus });
                         :rounded="pickerProps.rounded"
                         :disabled="pickerProps.disabled"
                         :readonly="pickerProps.readonly"
+                        autocomplete="off"
                         :use-html5-validation="false"
+                        @invalid="onInvalid"
                         @click="onInputClick"
                         @keyup.enter="togglePicker(true)"
-                        @change="$emit('change', $event.target.value)"
+                        @change="onChange"
                         @focus="onFocus"
                         @blur="onBlur"
                         @icon-click="$emit('icon-click', $event)"
@@ -324,7 +377,9 @@ defineExpose({ focus: setFocus });
                 tag="div"
                 :item-class="boxClass"
                 :disabled="pickerProps.disabled"
-                :clickable="false">
+                :clickable="false"
+                @keydown.left="$emit('left', $event)"
+                @keydown.right="$emit('right', $event)">
                 <slot />
             </o-dropdown-item>
         </o-dropdown>
@@ -333,13 +388,13 @@ defineExpose({ focus: setFocus });
         <template v-else>
             <slot name="trigger">
                 <o-input
-                    ref="nativeInputRef"
+                    ref="nativeInputComponent"
                     v-bind="inputBind"
-                    v-model="vmodel"
+                    v-model="inputValue"
                     :type="initialNativeType"
-                    :min="nativeMin"
-                    :max="nativeMax"
-                    :step="nativeStep"
+                    :min="formatter(min, true)"
+                    :max="formatter(max, true)"
+                    :step="step"
                     :placeholder="pickerProps.placeholder"
                     :size="pickerProps.size"
                     :icon-pack="pickerProps.iconPack"

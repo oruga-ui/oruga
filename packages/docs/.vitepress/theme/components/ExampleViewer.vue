@@ -193,6 +193,7 @@ function copy(val: string) {
         text-align: center;
         padding: 0.5rem;
         background-color: var(--vp-button-alt-bg);
+        width: 100%;
     }
 
     .odocs-panel-content {
@@ -201,7 +202,13 @@ function copy(val: string) {
         }
     }
 }
+
 .vp-doc .vp-code-group .blocks .lang {
     color: var(--vp-code-copy-code-hover-border-color);
+}
+
+.vp-code-group .tabs {
+    justify-content: start;
+    margin-bottom: 0;
 }
 </style>

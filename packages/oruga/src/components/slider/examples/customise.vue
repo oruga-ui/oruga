@@ -28,6 +28,7 @@ const size = ref("medium");
                 <o-select v-model="variant">
                     <option value="default">default</option>
                     <option value="primary">primary</option>
+                    <option value="secondary">secondary</option>
                     <option value="success">success</option>
                     <option value="info">info</option>
                     <option value="warning">warning</option>

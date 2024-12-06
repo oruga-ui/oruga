@@ -1,15 +1,15 @@
 <script setup lang="ts" generic="IsRange extends boolean = false">
-import { computed, ref, watch } from "vue";
+import { computed, ref, useTemplateRef, watch } from "vue";
 
 import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderParent } from "@/composables";
 
 import type { SliderComponent } from "./types";
-import type { SelectProps } from "./props";
+import type { SliderProps } from "./props";
 
 /**
  * A slider to select a value or range from a given range
@@ -23,77 +23,81 @@ defineOptions({
     configField: "slider",
 });
 
-const props = withDefaults(defineProps<SelectProps<IsRange>>(), {
+type ModelValue = SliderProps<IsRange>["modelValue"];
+
+const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     override: undefined,
     modelValue: undefined,
     // range: false,
     min: 0,
     max: 100,
     step: 1,
-    variant: () => getOption("slider.variant"),
-    size: () => getOption("slider.size"),
+    variant: () => getDefault("slider.variant"),
+    size: () => getDefault("slider.size"),
     ticks: false,
-    tooltip: () => getOption("slider.tooltip", true),
-    tooltipVariant: () => getOption("slider.tooltipVariant"),
+    tooltip: () => getDefault("slider.tooltip", true),
+    tooltipVariant: () => getDefault("slider.tooltipVariant"),
     tooltipAlways: false,
-    rounded: () => getOption("slider.rounded", false),
+    rounded: () => getDefault("slider.rounded", false),
     disabled: false,
     lazy: false,
-    customFormatter: undefined,
+    formatter: undefined,
     biggerSliderFocus: false,
     indicator: false,
-    format: () => getOption("slider.format", "raw"),
-    locale: () => getOption("locale"),
-    ariaLabel: () => getOption("slider.ariaLabel"),
+    format: () => getDefault("slider.format", "raw"),
+    locale: () => getDefault("locale"),
+    ariaLabel: () => getDefault("slider.ariaLabel"),
 });
-
-type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on value change event
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "change", value: ModelValue): void;
+    change: [value: ModelValue];
     /**
      * on dragging event
      * @param value {number | number[]} updated modelValue prop
      * */
-    (e: "dragging", value: ModelValue): void;
+    dragging: [value: ModelValue];
     /** on drag start event */
-    (e: "dragstart"): void;
+    dragstart: [];
     /** on drag end event */
-    (e: "dragend"): void;
+    dragend: [];
 }>();
 
-const sliderRef = ref();
-const thumbStartRef = ref();
-const thumbEndRef = ref();
+const sliderRef = useTemplateRef("sliderElement");
+const thumbStartRef = useTemplateRef("thumbStartComponent");
+const thumbEndRef = useTemplateRef("thumbEndComponent");
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,
 }));
 
-/** Provide functionalities and data to child item components */
-useProviderParent(undefined, { data: provideData });
+/** provide functionalities and data to child item components */
+useProviderParent({ data: provideData });
 
-const valueStart = ref<number>(null);
-const valueEnd = ref<number>(null);
+const valueStart = ref<number>(0);
+const valueEnd = ref<number>(0);
 const dragging = ref(false);
 
 const isThumbReversed = ref();
 const isTrackClickDisabled = ref();
 
-const minValue = computed(() => Math.min(valueStart.value, valueEnd.value));
+const minValue = computed(() =>
+    Math.min(valueStart.value || props.min, valueEnd.value || props.max),
+);
 
-const maxValue = computed(() => Math.max(valueStart.value, valueEnd.value));
+const maxValue = computed(() =>
+    Math.max(valueStart.value || props.min, valueEnd.value || props.max),
+);
 
 const vmodel = computed<ModelValue>(
     () =>
@@ -105,9 +109,12 @@ const vmodel = computed<ModelValue>(
 /** update vmodel value on internal value change */
 watch([valueStart, valueEnd], () => {
     if (isTrueish(props.range))
-        isThumbReversed.value = valueStart.value > valueEnd.value;
+        isThumbReversed.value =
+            valueStart.value && valueEnd.value
+                ? valueStart.value > valueEnd.value
+                : false;
     if (!props.lazy || !dragging.value)
-        emits("update:modelValue", vmodel.value); // update external vmodel
+        emits("update:model-value", vmodel.value); // update external vmodel
     if (dragging.value) emits("dragging", vmodel.value);
 });
 
@@ -118,7 +125,7 @@ watch(
     { immediate: true }, // initialise valueStart and valueEnd
 );
 
-function setValues(newValue: number | number[]): void {
+function setValues(newValue: number | number[] | undefined): void {
     if (props.min > props.max) return;
 
     if (Array.isArray(newValue)) {
@@ -132,17 +139,20 @@ function setValues(newValue: number | number[]): void {
                 : Math.max(Math.min(props.max, newValue[1]), props.min);
         valueStart.value = isThumbReversed.value ? largeValue : smallValue;
         valueEnd.value = isThumbReversed.value ? smallValue : largeValue;
-    } else {
+    } else if (newValue !== undefined) {
         valueStart.value = isNaN(newValue)
             ? props.min
             : Math.min(props.max, Math.max(props.min, newValue));
-        valueEnd.value = null;
+        valueEnd.value = 0;
+    } else {
+        valueStart.value = props.min;
+        valueEnd.value = props.min;
     }
 }
 
 const tickValues = computed(() => {
     if (!props.ticks || props.min > props.max || props.step === 0) return [];
-    const result = [];
+    const result: number[] = [];
     for (let i = props.min + props.step; i < props.max; i = i + props.step) {
         result.push(i);
     }
@@ -172,11 +182,13 @@ const barStyle = computed(() => ({
 }));
 
 function getSliderSize(): number {
-    return sliderRef.value.getBoundingClientRect().width;
+    return sliderRef.value?.getBoundingClientRect().width || 0;
 }
 
 function onSliderClick(event: MouseEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
+    if (!sliderRef.value || !thumbStartRef.value || !thumbEndRef.value) return;
+
     const sliderOffsetLeft = sliderRef.value.getBoundingClientRect().left;
     const percent =
         ((event.clientX - sliderOffsetLeft) / getSliderSize()) * 100;
@@ -209,7 +221,7 @@ function onDragEnd(): void {
     setTimeout(() => (isTrackClickDisabled.value = false));
     dragging.value = false;
     emits("dragend");
-    if (props.lazy) emits("update:modelValue", vmodel.value);
+    if (props.lazy) emits("update:model-value", vmodel.value);
 }
 
 // --- Computed Component Classes ---
@@ -271,7 +283,7 @@ defineExpose({ value: vmodel });
 
 <template>
     <div :class="rootClasses" data-oruga="slider" @click="onSliderClick">
-        <div ref="sliderRef" :class="trackClasses">
+        <div ref="sliderElement" :class="trackClasses">
             <div :class="fillClasses" :style="barStyle" />
             <template v-if="ticks">
                 <o-slider-tick
@@ -289,7 +301,7 @@ defineExpose({ value: vmodel });
             <slot />
 
             <o-slider-thumb
-                ref="thumbStartRef"
+                ref="thumbStartComponent"
                 v-model="valueStart"
                 :slider-props="props"
                 :slider-size="getSliderSize"
@@ -301,7 +313,7 @@ defineExpose({ value: vmodel });
 
             <o-slider-thumb
                 v-if="isTrueish(props.range)"
-                ref="thumbEndRef"
+                ref="thumbEndComponent"
                 v-model="valueEnd"
                 :slider-props="props"
                 :slider-size="getSliderSize"
