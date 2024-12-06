@@ -58,8 +58,6 @@ export type DatetimepickerProps = {
         | "top-left"
         | "bottom-left"
         | "bottom-right";
-    /** Enable mobile native input if mobile agent */
-    mobileNative?: boolean;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -71,6 +69,8 @@ export type DatetimepickerProps = {
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
+    /** Enable mobile native input if mobile agent */
+    mobileNative?: boolean;
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.

@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
     closeIcon: () => getDefault("taginput.closeIcon", "close"),
-    ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel"),
+    ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel", "Remove"),
     autocomplete: () => getDefault("taginput.autocomplete", "off"),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
