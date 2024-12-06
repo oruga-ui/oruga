@@ -25,8 +25,6 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     clickable: true,
     hidden: false,
     tag: () => getDefault("dropdown.itemTag", "div"),
-    /** @deprecated */
-    ariaRole: () => getDefault("dropdown.itemAriaRole", "option"),
 });
 
 const emits = defineEmits<{
@@ -40,7 +38,7 @@ const emits = defineEmits<{
 
 const itemValue = props.value ?? useId();
 
-const rootRef = useTemplateRef("rootElement");
+const rootRef = useTemplateRef<Element>("rootElement");
 
 // provided data is a computed ref to enjure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
@@ -76,7 +74,7 @@ const isFocused = computed(
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(item.value.data?.value, event);
+    parent.value.selectItem(itemValue as T, event);
     emits("click", itemValue as T, event);
 }
 

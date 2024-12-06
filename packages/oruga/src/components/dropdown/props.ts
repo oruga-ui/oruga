@@ -143,12 +143,6 @@ export type DropdownItemProps<T> = {
     hidden?: boolean;
     /** Dropdown item tag name */
     tag?: DynamicComponent;
-    /**
-     * Role attribute to be passed to the list item for better accessibility.
-     * Use menuitem only in situations where your dropdown is related to a navigation menu.
-     * @values listitem, menuitem, option
-     */
-    ariaRole?: "listitem" | "menuitem" | "option";
 } & DropdownItemClasses;
 
 // class props (will not be displayed in the docs)
