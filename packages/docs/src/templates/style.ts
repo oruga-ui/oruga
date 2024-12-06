@@ -47,7 +47,8 @@ See ➜ 📄 [Full scss file](${theme.src}/scss/components/${name})
 `;
     };
 
-    return `## Sass variables
+    return `
+## Sass variables
 
 ${Themes.map(
     (theme) =>

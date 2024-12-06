@@ -11,6 +11,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-steps />
@@ -18,6 +19,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-steps-viewer />
@@ -25,6 +27,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Steps component
 
 > Responsive horizontal process steps
@@ -75,6 +78,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## StepItem component
 
 ```html
@@ -118,6 +122,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">
