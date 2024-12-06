@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { useId, computed } from "vue";
+import { useId, computed, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     disabled: false,
     clickable: true,
     tag: () => getDefault("dropdown.itemTag", "div"),
+    /** @deprecated */
     ariaRole: () => getDefault("dropdown.itemAriaRole", "option"),
 });
 
@@ -38,10 +39,14 @@ const emits = defineEmits<{
 
 const itemValue = props.value ?? useId();
 
+const rootRef = useTemplateRef("rootElement");
+
 // provided data is a computed ref to enjure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
+    ...props,
+    $el: rootRef.value,
     value: itemValue,
-    clickable: isClickable.value,
+    selectItem,
 }));
 
 /** inject functionalities and data from the parent component */
@@ -63,10 +68,14 @@ const isActive = computed(() => {
     return isEqual(itemValue, parent.value.selected);
 });
 
+const isFocused = computed(
+    () => item.value.identifier === parent.value.focsuedIdentifier,
+);
+
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(item.value.identifier);
+    parent.value.selectItem(item.value.data?.value, event);
     emits("click", itemValue as T, event);
 }
 
@@ -82,6 +91,7 @@ const rootClasses = defineClasses(
     ],
     ["itemActiveClass", "o-drop__item--active", null, isActive],
     ["itemClickableClass", "o-drop__item--clickable", null, isClickable],
+    ["itemFocusedClass", "o-drop__item--focused", null, isFocused],
 );
 </script>
 
@@ -89,10 +99,11 @@ const rootClasses = defineClasses(
     <component
         :is="tag"
         :id="`${parent.menuId}-${item.identifier}`"
+        ref="rootElement"
         :class="rootClasses"
         data-oruga="dropdown-item"
         :data-id="`dropdown-${item.identifier}`"
-        :role="ariaRole"
+        role="option"
         :aria-selected="isActive"
         :aria-disabled="disabled"
         @click="selectItem"
@@ -103,3 +114,9 @@ const rootClasses = defineClasses(
         <slot>{{ label }}</slot>
     </component>
 </template>
+
+<style>
+.o-drop__item--focused {
+    background-color: gray;
+}
+</style>

@@ -9,7 +9,7 @@ import {
 import { getOption } from "@/utils/config";
 import type { FieldProps } from "./props";
 
-type FieldData = {
+export type FieldData = {
     $el: Element | null;
     props: FieldProps;
     hasInnerField: boolean;

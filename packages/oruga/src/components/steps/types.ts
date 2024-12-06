@@ -26,4 +26,4 @@ export type StepsComponent = {
     variant: string;
 };
 
-export type StepItem<T> = Omit<ProviderItem<T>, "data"> & StepItemComponent<T>;
+export type StepItem<T> = Omit<ProviderItem, "data"> & StepItemComponent<T>;

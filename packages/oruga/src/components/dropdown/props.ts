@@ -20,8 +20,12 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
     disabled?: boolean;
     /** Dropdown content (items) are shown inline, trigger is removed */
     inline?: boolean;
+    /** Enables item selection */
+    selectable?: boolean;
     /** Dropdown content will be scrollable */
     scrollable?: boolean;
+    /** Makes the component check if menu reached scroll start or end and emit scroll events. */
+    checkScroll?: boolean;
     /** Max height of dropdown content */
     maxHeight?: string | number;
     /**
@@ -38,22 +42,12 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
         | "top-left"
         | "bottom-left"
         | "bottom-right";
-    /** Dropdown content (items) are shown into a modal on mobile */
-    mobileModal?: boolean;
-    /** Dropdown content (items) are shown into a modal on desktop */
-    desktopModal?: boolean;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Trap focus inside the dropdown. */
-    trapFocus?: boolean;
-    /** Makes the component check if menu reached scroll start or end and emit scroll events. */
-    checkScroll?: boolean;
     /** Dropdown will be expanded (full-width) */
     expanded?: boolean;
     /** HTML element Id of the dropdown menu element */
     menuId?: string;
-    /** Tabindex of the dropdown menu element */
-    menuTabindex?: number;
     /** Dropdown menu tag name */
     menuTag?: DynamicComponent;
     /** Dropdown trigger tag name */
@@ -62,22 +56,21 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
      * Dropdown will be triggered by any events
      * @values click, hover, contextmenu, focus
      */
-    triggers?: ("click" | "hover" | "contextmenu" | "focus")[];
+    triggers?: ("click" | "keydown" | "hover" | "contextmenu" | "focus")[];
     /** Dropdown delay before it appears (number in ms) */
     delay?: number;
-    /**
-     * Dropdown close options (pressing escape, clicking the content or outside)
-     * @values true, false, escape, outside, content
-     */
-    closeable?: string[] | boolean;
-    /** Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key) */
-    tabindex?: number;
-    /**
-     * Role attribute to be passed to the list container for better accessibility.
-     * Use menu only in situations where your dropdown is related to a navigation menu.
-     * @values list, listbox, menu, dialog
-     */
-    ariaRole?: "list" | "listbox" | "menu" | "dialog";
+    /** Disable close Dropdown when item selected */
+    stayOpen?: boolean;
+    /** Close Dropdown when clicked outside */
+    closeOnOutside?: boolean;
+    /** Select current focused item when focused */
+    selectOnFocus?: boolean;
+    /** Select current focused item when closed */
+    selectOnClose?: boolean;
+    /** Dropdown content (items) are shown into a modal on mobile */
+    mobileModal?: boolean;
+    /** Dropdown content (items) are shown into a modal on desktop */
+    desktopModal?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**
@@ -86,6 +79,10 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
+    /** Ensures that each input has an accessible name. */
+    labelledby?: string;
+    /** Accessibility aria-label to be passed to the trigger element - usefull if selectable */
+    ariaLabel?: string;
 } & DropdownClasses;
 
 // class props (will not be displayed in the docs)
