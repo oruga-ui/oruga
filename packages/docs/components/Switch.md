@@ -7,6 +7,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-switch />
@@ -14,6 +15,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-switch-viewer />
@@ -21,6 +23,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Switch component
 
 > Switch between two opposing states
@@ -71,6 +74,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

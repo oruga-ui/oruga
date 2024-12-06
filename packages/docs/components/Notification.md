@@ -11,6 +11,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-notification />
@@ -18,6 +19,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-notification-viewer />
@@ -25,6 +27,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Notification component
 
 > Bold notification blocks to alert your users of something
@@ -69,6 +72,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## NotificationNotice component
 
 > Notification Notice is an extension of the Notification component and is used for the programmatic usage
@@ -105,6 +109,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">
