@@ -23,6 +23,7 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     label: undefined,
     disabled: false,
     clickable: true,
+    hidden: false,
     tag: () => getDefault("dropdown.itemTag", "div"),
     /** @deprecated */
     ariaRole: () => getDefault("dropdown.itemAriaRole", "option"),

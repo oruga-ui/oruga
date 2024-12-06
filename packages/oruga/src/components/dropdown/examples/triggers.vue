@@ -82,11 +82,9 @@ const active = ref(false);
         <br />
         <p>
             <o-field grouped>
-                <o-dropdown v-model:active="active">
+                <o-dropdown v-model:active="active" :triggers="[]">
                     <template #trigger>
-                        <div style="height: 100%" @click.stop>
-                            Click the button beside!
-                        </div>
+                        <div style="height: 100%">Click the button beside!</div>
                     </template>
 
                     <o-dropdown-item label="Action" />

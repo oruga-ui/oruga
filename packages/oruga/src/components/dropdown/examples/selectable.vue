@@ -4,17 +4,31 @@ import { ref } from "vue";
 const selectedOption = ref();
 
 const selectedOptions = ref([]);
+
+const keepFirst = ref(false);
+const keepOpen = ref(true);
+const selectOnClose = ref(false);
+const selectOnFocus = ref(false);
 </script>
 
 <template>
     <section class="odocs-spaced">
         <o-field grouped>
+            <o-switch v-model="keepFirst">Keep first</o-switch>
+            <o-switch v-model="keepOpen">Keep open</o-switch>
+            <o-switch v-model="selectOnClose">Select on close</o-switch>
+            <o-switch v-model="selectOnFocus">Select on focus</o-switch>
+        </o-field>
+
+        <o-field grouped>
             <o-field label="Single Selection">
                 <o-dropdown
                     v-model:model-value="selectedOption"
                     selectable
-                    stay-open
-                    select-on-close>
+                    :keep-open="keepOpen"
+                    :keep-first="keepFirst"
+                    :select-on-close="selectOnClose"
+                    :select-on-focus="selectOnFocus">
                     <template #trigger="{ value }">
                         <o-button
                             variant="primary"
@@ -36,7 +50,11 @@ const selectedOptions = ref([]);
                 <o-dropdown
                     v-model:model-value="selectedOptions"
                     selectable
-                    multiple>
+                    multiple
+                    :keep-open="keepOpen"
+                    :keep-first="keepFirst"
+                    :select-on-close="selectOnClose"
+                    :select-on-focus="selectOnFocus">
                     <template #trigger>
                         <o-button
                             variant="primary"

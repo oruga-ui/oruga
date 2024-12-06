@@ -15,5 +15,7 @@ export type DropdownItemComponent<T> = DropdownItemProps<T> & {
     selectItem: (event: Event) => void;
 };
 
-export type DropdownItem<T> = Omit<ProviderItem, "data"> &
-    DropdownItemComponent<T>;
+export type DropdownChildItem<T> = ProviderItem<DropdownItemComponent<T>>;
+
+// export type DropdownItem<T> = Omit<ProviderItem, "data"> &
+//     DropdownItemComponent<T>;

@@ -59,8 +59,10 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
     triggers?: ("click" | "keydown" | "hover" | "contextmenu" | "focus")[];
     /** Dropdown delay before it appears (number in ms) */
     delay?: number;
-    /** Disable close Dropdown when item selected */
-    stayOpen?: boolean;
+    /** Keep dropdown list open when item get selected */
+    keepOpen?: boolean;
+    /** The first option will always be pre-selected (easier to just hit enter or tab) */
+    keepFirst?: boolean;
     /** Close Dropdown when clicked outside */
     closeOnOutside?: boolean;
     /** Select current focused item when focused */
@@ -137,6 +139,8 @@ export type DropdownItemProps<T> = {
     disabled?: boolean;
     /** Item is clickable and emit an event */
     clickable?: boolean;
+    /** Define whether the item is visible or not */
+    hidden?: boolean;
     /** Dropdown item tag name */
     tag?: DynamicComponent;
     /**
@@ -153,6 +157,8 @@ type DropdownItemClasses = Partial<{
     itemClass: ComponentClass;
     /** Class of the dropdown item when active  */
     itemActiveClass: ComponentClass;
+    /** Class of the dropdown items when focused */
+    itemFocusedClass: ComponentClass;
     /** Class of the dropdown item when clickable */
     itemClickableClass: ComponentClass;
     /** Class of the dropdown item when disabled */

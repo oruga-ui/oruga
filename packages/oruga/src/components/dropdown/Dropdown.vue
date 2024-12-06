@@ -1,14 +1,5 @@
 <script setup lang="ts" generic="T, IsMultiple extends boolean = false">
-import {
-    computed,
-    nextTick,
-    ref,
-    watch,
-    onUnmounted,
-    useId,
-    toValue,
-    type Component,
-} from "vue";
+import { computed, nextTick, ref, watch, useId, type Component } from "vue";
 
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import PositionWrapper from "../utils/PositionWrapper.vue";
@@ -29,8 +20,8 @@ import {
 } from "@/composables";
 
 import type {
+    DropdownChildItem,
     DropdownComponent,
-    DropdownItem,
     DropdownItemComponent,
 } from "./types";
 import type { DropdownProps } from "./props";
@@ -62,7 +53,8 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     disabled: false,
     inline: false,
     selectable: false,
-    stayOpen: false,
+    keepOpen: () => getDefault("dropdown.keepOpen", false),
+    keepFirst: () => getDefault("dropdown.keepFirst", false),
     closeOnOutside: true,
     selectOnFocus: false,
     selectOnClose: false,
@@ -98,7 +90,7 @@ const emits = defineEmits<{
      * on select event - fired before update:modelValue
      * @param value {T} selected value
      */
-    selected: [value: T];
+    select: [value: T];
     /**
      * @deprecated use update:model-value instead
      * on change event - fired after update:modelValue
@@ -108,11 +100,13 @@ const emits = defineEmits<{
     /**
      * on open event
      * @param method {string} open method
+     * @param event {Event} native event
      */
     open: [method: string, event: Event];
     /**
      * on close event
      * @param method {string} close method
+     * @param event {Event} native event
      */
     close: [method: string, event: Event];
     /** the list inside the dropdown reached the start */
@@ -143,13 +137,14 @@ const { childItems } = useProviderParent<
     data: provideData,
 });
 
-const items = computed<DropdownItem<T>[]>(() => {
-    if (!childItems.value) return [];
-    return childItems.value.map((column) => ({
-        index: column.index,
-        identifier: column.identifier,
-        ...toValue(column.data!),
-    }));
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
+/** normalized programamtic options */
+const groupedOptions = computed(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
+    return groupedOptions;
 });
 
 /** The selected item value, use v-model to make it two-way binding */
@@ -163,16 +158,6 @@ const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId = props.labelledby ?? parentField.value?.labelId;
-
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
-
-/** normalized programamtic options */
-const groupedOptions = computed(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
-    return groupedOptions;
-});
 
 const autoPosition = ref(props.position);
 
@@ -204,7 +189,7 @@ const hoverable = computed(() => props.triggers.includes("hover"));
 
 const toggleScroll = usePreventScrolling(true);
 
-// infitiveScroll Feature
+// set infinite scroll handler
 if (isClient && props.scrollable && props.checkScroll)
     useInfiniteScroll(
         contentRef,
@@ -212,90 +197,83 @@ if (isClient && props.scrollable && props.checkScroll)
         () => emits("scroll-start"),
     );
 
-// #region --- Select Feature ---
-
-/**
- * Click listener from DropdownItem.
- *   1. Set new selected item.
- *   2. Emit input event to update the user v-model.
- *   3. Close the dropdown.
- */
-function selectItem(value: T, event: Event): void {
-    emits("selected", value);
-
-    if (!props.selectable) {
-        if (props.stayOpen) return;
-        close("content", event);
-        return;
-    }
-
-    // set selected option
-    if (isTrueish(props.multiple)) {
-        if (vmodel.value && Array.isArray(vmodel.value)) {
-            if (!vmodel.value.includes(value)) {
-                // add a value
-                vmodel.value = [...vmodel.value, value] as ModelValue;
-            } else {
-                // remove a value
-                vmodel.value = vmodel.value.filter(
-                    (val) => val !== value,
-                ) as ModelValue;
-            }
-        } else {
-            // init new value array
-            vmodel.value = [value] as ModelValue;
-        }
-        // emit change after vmodel has changed
-        nextTick(() => emits("change", vmodel.value));
-    } else {
-        if (vmodel.value !== value) {
-            // update a single value
-            vmodel.value = value as ModelValue;
-            // emit change after vmodel has changed
-            nextTick(() => emits("change", vmodel.value));
-        }
-    }
-
-    if (!isTrueish(props.multiple)) {
-        triggerRef.value?.focus();
-        if (props.stayOpen) return;
-        close("content", event);
-    }
-}
-
-// #endregion --- Select Feature ---
-
-// #region --- Trigger Handler ---
-
-let outsideCleanup: (() => void) | undefined = undefined;
 let timer: NodeJS.Timeout | undefined;
+
+// set click outside handler
+if (isClient && props.closeOnOutside) {
+    useClickOutside(contentRef, onClickedOutside, {
+        ignore: [triggerRef],
+        trigger: isActive,
+        passive: true,
+    });
+}
 
 watch(
     isActive,
     (value) => {
         // on active set event handler if not open as modal
-        if (value && isClient && !isModal.value) {
-            if (props.closeOnOutside) {
-                // set outside handler
-                outsideCleanup = useClickOutside(contentRef, onClickedOutside, {
-                    ignore: [triggerRef],
-                    immediate: true,
-                    passive: true,
-                });
-            }
+        if (value) {
+            // keep first option always pre-selected
+            if (!props.inline && props.keepFirst && !focusedItem.value)
+                moveFocus(1);
         } else if (!value) {
-            // on close cleanup event handler
-            if (typeof outsideCleanup === "function") outsideCleanup();
+            // select item when dropdown closed
+            if (props.selectOnClose && focusedItem.value?.data?.value)
+                selectItem(focusedItem.value.data.value);
         }
         if (isModal.value) toggleScroll(value);
     },
-    { immediate: true, flush: "post" },
+    { flush: "post" },
 );
 
-onUnmounted(() => {
-    // on close cleanup event handler
-    if (typeof outsideCleanup === "function") outsideCleanup();
-});
+// #region --- Select Feature ---
+
+/**
+ * Click listener from DropdownItem.
+ *   1. Set new selected item.
+ *   2. Update v-model.
+ *   3. Close the dropdown.
+ */
+function selectItem(value: T, event?: Event): void {
+    emits("select", value);
+
+    if (props.selectable) {
+        // set selected option
+        if (isTrueish(props.multiple)) {
+            if (vmodel.value && Array.isArray(vmodel.value)) {
+                if (!vmodel.value.includes(value)) {
+                    // add a value
+                    vmodel.value = [...vmodel.value, value] as ModelValue;
+                } else {
+                    // remove a value
+                    vmodel.value = vmodel.value.filter(
+                        (val) => val !== value,
+                    ) as ModelValue;
+                }
+            } else {
+                // init new value array
+                vmodel.value = [value] as ModelValue;
+            }
+            // emit change after vmodel has changed
+            nextTick(() => emits("change", vmodel.value));
+        } else {
+            if (vmodel.value !== value) {
+                // update a single value
+                vmodel.value = value as ModelValue;
+                // emit change after vmodel has changed
+                nextTick(() => emits("change", vmodel.value));
+            }
+        }
+    }
+
+    triggerRef.value?.focus();
+    if (props.keepOpen || !isActive.value || !event) return;
+    close("content", event);
+}
+
+// #endregion --- Select Feature ---
+
+// #region --- Trigger Handler ---
 
 /** Close dropdown if clicked outside. */
 function onClickedOutside(event: Event): void {
@@ -361,9 +339,6 @@ function open(method: string, event: Event): void {
 
 function close(method: string, event: Event): void {
     if (!isActive.value) return;
-    if (props.selectOnClose && focusedItem.value?.value)
-        selectItem(focusedItem.value.value, event);
-
     emits("close", method, event);
     isActive.value = false;
     focusedItem.value = undefined;
@@ -374,23 +349,23 @@ function close(method: string, event: Event): void {
 
 // #region --- Focus Feature ---
 
-const focusedItem = ref<DropdownItem<T>>();
+const focusedItem = ref<DropdownChildItem<T>>();
 
 /** Set focus on a tab item. */
 function moveFocus(delta: 1 | -1): void {
-    if (items.value.length < 1) return;
+    if (childItems.value.length < 1) return;
     const item = getFirstViableItem(focusedItem.value?.index || 0, delta);
     setFocus(item);
 }
 
 /** Set focus on a dropdown item. */
-function setFocus(item: DropdownItem<T>): void {
-    if (props.selectOnFocus && item.value) {
-        selectItem(item.value, new Event("focus"));
+function setFocus(item: DropdownChildItem<T>): void {
+    if (props.selectOnFocus && item.data?.value) {
+        selectItem(item.data.value, new Event("focus"));
     }
 
     const dropdownMenu = unrefElement(contentRef);
-    const element = unrefElement(item.$el);
+    const element = unrefElement(item.data?.$el);
     if (!dropdownMenu || !element) return;
 
     // set item as focused
@@ -415,14 +390,14 @@ function onEnter(event: Event): void {
 
     if (focusedItem.value) {
         setFocus(focusedItem.value);
-        focusedItem.value.selectItem(event);
+        focusedItem.value.data?.selectItem(event);
     }
 }
 
 /** Go to the first viable item */
 function onHomePressed(event: Event): void {
     open("keydown", event);
-    if (items.value.length < 1) return;
+    if (childItems.value.length < 1) return;
     const item = getFirstViableItem(0, 1);
     setFocus(item);
 }
@@ -430,8 +405,8 @@ function onHomePressed(event: Event): void {
 /** Go to the last viable item */
 function onEndPressed(event: Event): void {
     open("keydown", event);
-    if (items.value.length < 1) return;
-    const item = getFirstViableItem(items.value.length - 1, -1);
+    if (childItems.value.length < 1) return;
+    const item = getFirstViableItem(childItems.value.length - 1, -1);
     setFocus(item);
 }
 
@@ -448,24 +423,28 @@ function onEscape(event: Event): void {
 function getFirstViableItem(
     startingIndex: number,
     delta: 1 | -1,
-): DropdownItem<T> {
+): DropdownChildItem<T> {
     let newIndex = mod(
         focusedItem.value?.index == startingIndex
             ? startingIndex + delta
             : startingIndex,
-        items.value.length,
+        childItems.value.length,
     );
     for (
         ;
         newIndex !== focusedItem.value?.index;
-        newIndex = mod(newIndex + delta, items.value.length)
+        newIndex = mod(newIndex + delta, childItems.value.length)
     ) {
         // Break if the item at this index is viable (not disabled)
-        if (!items.value[newIndex].disabled && items.value[newIndex].clickable)
+        if (
+            !childItems.value[newIndex].data?.disabled &&
+            !childItems.value[newIndex].data?.hidden &&
+            childItems.value[newIndex].data?.clickable
+        )
             break;
     }
 
-    return items.value[newIndex];
+    return childItems.value[newIndex];
 }
 
 // #endregion --- Focus Feature ---
@@ -554,9 +533,9 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
             @mouseenter="onTriggerHover"
             @focus.capture="onTriggerFocus"
             @keydown.tab="onEscape"
-            @keydown.escape.prevent="onEscape"
-            @keydown.enter.prevent="onEnter"
-            @keydown.space.prevent="onEnter"
+            @keydown.escape="onEscape"
+            @keydown.enter="onEnter"
+            @keydown.space="onEnter"
             @keydown.up.prevent="onUpPressed"
             @keydown.down.prevent="onDownPressed"
             @keydown.home.prevent="onHomePressed"
@@ -623,26 +602,51 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                         :active="isActive"
                         :focused-index="focusedItem?.index"
                         :toggle="toggle">
-                        <template v-for="group in groupedOptions">
+                        <!--
+                            @slot Place extra `o-dropdown-item` components here, even if you have some options defined by prop
+                        -->
+                        <slot name="before" />
+
+                        <template v-for="(group, groupIndex) in groupedOptions">
                             <o-dropdown-item
                                 v-if="group.group"
                                 v-show="!group.hidden"
                                 :key="group.key"
                                 v-bind="group.attrs"
+                                :value="group.group"
+                                :hidden="group.hidden"
                                 role="presentation"
                                 :clickable="false">
-                                {{ group.group }}
+                                <!--
+                                    @slot Override the option group
+                                    @binding {object} group - options group
+                                    @binding {number} index - option index
+                                -->
+                                <slot
+                                    v-if="$slots.group"
+                                    name="group"
+                                    :group="group.group"
+                                    :index="groupIndex" />
+                                <span v-else>
+                                    {{ group.group }}
+                                </span>
                             </o-dropdown-item>
 
                             <o-dropdown-item
                                 v-for="option in group.options"
                                 v-show="!option.hidden"
                                 :key="option.key"
+                                v-bind="option.attrs"
                                 :value="option.value"
-                                v-bind="option.attrs">
+                                :hidden="option.hidden">
                                 {{ option.label }}
                             </o-dropdown-item>
                         </template>
+
+                        <!--
+                            @slot Place extra `o-dropdown-item` components here, even if you have some options defined by prop
+                        -->
+                        <slot name="after" />
                     </slot>
                 </component>
             </transition>

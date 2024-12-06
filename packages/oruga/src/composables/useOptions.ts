@@ -93,14 +93,11 @@ export type OptionsPropWithGroups<V = unknown> =
     | OptionsProp<V>
     | OptionsGroupProp<V>;
 
-type NormalizedOptions<
-    V,
-    O extends OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
-> =
-    O extends OptionsProp<V>
-        ? OptionsItem<V>[]
-        : O extends OptionsGroupPropItem<V>
-          ? OptionsGroupItem<V>[]
+type NormalizedOptions<V, O extends OptionsPropWithGroups<V>> =
+    O extends OptionsGroupPropItem<V>
+        ? OptionsGroupItem<V>[]
+        : O extends OptionsProp<V>
+          ? OptionsItem<V>[]
           : never[];
 
 /**
