@@ -32,7 +32,6 @@ const selected = ref();
                 icon="search"
                 clearable
                 open-on-focus>
-                <template #empty>No results found</template>
             </o-autocomplete>
 
             <p><b>Selected:</b> {{ selected }}</p>

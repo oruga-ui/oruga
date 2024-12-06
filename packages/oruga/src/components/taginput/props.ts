@@ -38,12 +38,6 @@ export type TaginputProps<T> = {
     expanded?: boolean;
     /** Same as native input disabled */
     disabled?: boolean;
-    /**
-     * Array of keys
-     * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
-     * which will add a item when typing
-     */
-    confirmKeys?: string[];
     /** Array of chars used to split when pasting a new string */
     separators?: string[];
     /** The first option will always be pre-selected (easier to just hit enter or tab) */

@@ -236,7 +236,9 @@ watch(
         }
 
         // Close dropdown if data is empty
-        if (isEmpty.value && !slots.empty) isActive.value = false;
+        if (isEmpty.value && !slots.empty) {
+            isActive.value = false;
+        }
     },
     { flush: "post" },
 );
@@ -276,10 +278,10 @@ function setSelected(item: T | SpecialOption | undefined): void {
 /** emit input change event */
 function onInput(value: string, event: Event): void {
     if (isFocused.value) {
-        if (!isActive.value && value)
-            // open dropdown if input has value
+        if (!isActive.value && value && (!isEmpty.value || slots.empty)) {
+            // open dropdown if input has value and options are available
             isActive.value = true;
-        else if (isActive.value && !value && !props.keepOpen) {
+        } else if (isActive.value && !value && !props.keepOpen) {
             // close dropdown if input has not value and is not keep open
             isActive.value = false;
         }
@@ -414,7 +416,6 @@ defineExpose({ focus: setFocus, value: inputValue });
                 :debounce="debounce"
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
                 :aria-controls="menuId"
-                :aria-expanded="isActive"
                 :use-html5-validation="false"
                 @input="onInput"
                 @focus="handleFocus"

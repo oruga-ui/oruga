@@ -137,6 +137,9 @@ const { childItems } = useProviderParent<
     data: provideData,
 });
 
+/** is any option visible */
+const isNotEmpty = computed(() => childItems.value.some(isItemViable));
+
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
 
@@ -353,7 +356,7 @@ const focusedItem = ref<DropdownChildItem<T>>();
 
 /** Set focus on a tab item. */
 function moveFocus(delta: 1 | -1): void {
-    if (childItems.value.length < 1) return;
+    if (!isNotEmpty.value) return;
     const item = getFirstViableItem(focusedItem.value?.index || 0, delta);
     setFocus(item);
 }
@@ -386,8 +389,7 @@ function onDownPressed(event: Event): void {
 }
 
 function onEnter(event: Event): void {
-    if (!isActive.value) return open("keydown", event);
-
+    if (!isActive.value) return;
     if (focusedItem.value) {
         setFocus(focusedItem.value);
         focusedItem.value.data?.selectItem(event);
@@ -397,7 +399,7 @@ function onEnter(event: Event): void {
 /** Go to the first viable item */
 function onHomePressed(event: Event): void {
     open("keydown", event);
-    if (childItems.value.length < 1) return;
+    if (!isNotEmpty.value) return;
     const item = getFirstViableItem(0, 1);
     setFocus(item);
 }
@@ -405,7 +407,7 @@ function onHomePressed(event: Event): void {
 /** Go to the last viable item */
 function onEndPressed(event: Event): void {
     open("keydown", event);
-    if (childItems.value.length < 1) return;
+    if (!isNotEmpty.value) return;
     const item = getFirstViableItem(childItems.value.length - 1, -1);
     setFocus(item);
 }
@@ -436,15 +438,14 @@ function getFirstViableItem(
         newIndex = mod(newIndex + delta, childItems.value.length)
     ) {
         // Break if the item at this index is viable (not disabled)
-        if (
-            !childItems.value[newIndex].data?.disabled &&
-            !childItems.value[newIndex].data?.hidden &&
-            childItems.value[newIndex].data?.clickable
-        )
-            break;
+        if (isItemViable(childItems.value[newIndex])) break;
     }
 
     return childItems.value[newIndex];
+}
+
+function isItemViable(item: DropdownChildItem<T>): boolean {
+    return !item.data?.disabled && !item.data?.hidden && !!item.data?.clickable;
 }
 
 // #endregion --- Focus Feature ---
