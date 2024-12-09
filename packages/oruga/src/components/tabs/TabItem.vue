@@ -49,7 +49,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
     value: itemValue,
     $slots: slots,
     navClasses: navItemClasses.value,
-    classes: tabClasses.value,
+    tabClasses: tabClasses.value,
     iconClasses: tabIconClasses.value,
     labelClasses: tabLabelClasses.value,
     isTransitioning: isTransitioning.value,
