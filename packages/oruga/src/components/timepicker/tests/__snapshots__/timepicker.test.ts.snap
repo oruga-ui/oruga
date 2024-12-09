@@ -2,34 +2,38 @@
 
 exports[`OTimepicker tests > render correctly 1`] = `
 "<div data-oruga="timepicker" class="o-tpck">
-  <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--position-bottom-left" aria-modal="true">
-    <div tabindex="-1" class="o-drop__trigger" aria-haspopup="dialog">
+  <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--modal o-drop--position-bottom-left">
+    <div class="o-drop__trigger" aria-haspopup="listbox" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
+                @binding {T | T[]} value - the selected value
                 @binding {() => void} toggle - toggle dropdown active state
             -->
       <div data-oruga="input" class="o-input__wrapper">
-        <!--v-if--><input id="v-0" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
+        <!--v-if--><input id="v-1" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
         <!--v-if-->
         <!--v-if-->
       </div>
     </div>
     <!--teleport start-->
-    <!--v-if-->
     <transition-stub name="fade" appear="false" persisted="true" css="true">
-      <div class="o-drop__menu o-drop__menu--bottom-left" role="dialog" aria-hidden="true" aria-modal="true" style="display: none;">
+      <div class="o-drop__overlay" tabindex="-1" style="display: none;"></div>
+    </transition-stub>
+    <transition-stub name="fade" appear="false" persisted="true" css="true">
+      <div id="v-0" tabindex="-1" class="o-drop__menu o-drop__menu--bottom-left" role="listbox" aria-hidden="true" aria-multiselectable="false" style="display: none;">
         <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
+                        @binding {number} focusedIndex - index of the focused element
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
-        <div class="o-tpck__box" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+        <div id="v-0-1" class="o-tpck__box" data-oruga="dropdown-item" data-id="dropdown-1" role="option" aria-selected="false" aria-disabled="false">
           <!--
             @slot Override the label, default is label prop 
         -->
           <div class="" data-oruga="select">
-            <!--v-if--><select id="v-2" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select id="v-3" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop
@@ -62,7 +66,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
             <!--v-if-->
           </div><span class="o-tpck__separtor">:</span>
           <div class="" data-oruga="select">
-            <!--v-if--><select id="v-3" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select id="v-4" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop
