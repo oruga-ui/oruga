@@ -11,6 +11,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-carousel />
@@ -18,6 +19,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-carousel-viewer />
@@ -25,6 +27,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Carousel component
 
 > A Slideshow for cycling images in confined spaces
@@ -81,6 +84,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## CarouselItem component
 
 > A Slideshow item used by the carousel
@@ -106,6 +110,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

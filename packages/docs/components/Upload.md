@@ -7,6 +7,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-upload />
@@ -14,6 +15,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-upload-viewer />
@@ -21,6 +23,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Upload component
 
 > Upload one or more files
@@ -63,6 +66,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

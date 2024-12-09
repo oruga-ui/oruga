@@ -41,8 +41,13 @@ export type TabsProps<T> = {
     type?: string;
     /** Tabs will be expanded (full-width) */
     expanded?: boolean;
-    /** Destroy tabItem on hide */
+    /**
+     * Destroy tabItem on hide
+     * @deprecated implement this yourself, using the `active` slot prop
+     */
     destroyOnHide?: boolean;
+    /** Set the tab active on navigation focus */
+    activateOnFocus?: boolean;
     /** Tab will have an animation */
     animated?: boolean;
     /**
@@ -102,8 +107,6 @@ export type TabItemProps<T, C extends Component> = {
     iconPack?: string;
     /** Tabs item tag name */
     tag?: DynamicComponent;
-    /** Role attribute to be passed to the div wrapper for better accessibility */
-    ariaRole?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;
     /** Component to be injected. */

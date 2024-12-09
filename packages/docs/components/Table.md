@@ -11,6 +11,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-table />
@@ -18,6 +19,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-table-viewer />
@@ -25,6 +27,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Table component
 
 > Tabulated data are sometimes needed, it's even better when it's responsive
@@ -162,6 +165,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## TableColumn component
 
 ```html
@@ -202,6 +206,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

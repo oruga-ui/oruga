@@ -77,7 +77,7 @@ export default defineConfig({
             { text: "Expo", link: "/expo/" },
             {
                 text: "Support",
-                items: [{ text: "Ko-fi", link: "https://ko-fi.com/orugaui" }],
+                items: [{ text: "Ko-fi", link: "https://ko-fi.com/mlmoravek" }],
             },
             {
                 text: `v${version}`,

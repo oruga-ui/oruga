@@ -7,6 +7,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-field />
@@ -14,6 +15,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-field-viewer />
@@ -21,6 +23,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Field component
 
 > Fields are used to add functionality to controls and to attach/group components and elements together
@@ -57,6 +60,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

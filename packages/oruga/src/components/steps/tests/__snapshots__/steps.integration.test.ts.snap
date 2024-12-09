@@ -7,11 +7,12 @@ exports[`OSteps with OStepItem tests > test render correctly 1`] = `
     <!--
                 @slot Place step items here
             -->
-    <transition-stub appear="false" persisted="false" css="true">
-      <div id="tabpanel-1" class="o-steps__panel" data-id="steps-1" data-oruga="steps-item" aria-labelledby="tab-1" aria-roledescription="item">
+    <transition-stub appear="false" persisted="true" css="true">
+      <div id="tabpanel-1" data-oruga="steps-item" data-id="steps-1" class="o-steps__panel" aria-labelledby="tab-1" aria-roledescription="item">
         <!-- 
-                    @slot Step item content
-                -->
+                @slot Step item content
+                @binding {boolean} active - if item is shown 
+            -->
         <!-- injected component -->
         <!-- default content prop -->ABC
       </div>

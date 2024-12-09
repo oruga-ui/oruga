@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<CarouselItemProps>(), {
     ariaRole: () => getDefault("carousel.ariaRole", "option"),
 });
 
-// Inject functionalities and data from the parent carousel component
+/** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<CarouselComponent>();
 
 const isActive = computed(() => parent.value.activeIndex === item.value.index);
@@ -54,8 +54,8 @@ const itemClasses = defineClasses(
         v-if="parent"
         :class="itemClasses"
         :style="itemStyle"
-        :data-id="`carousel-${item.identifier}`"
         data-oruga="carousel-item"
+        :data-id="`carousel-${item.identifier}`"
         :role="ariaRole"
         aria-roledescription="item"
         :aria-selected="isActive"

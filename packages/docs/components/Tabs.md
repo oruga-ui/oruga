@@ -11,6 +11,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-tabs />
@@ -18,6 +19,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-tabs-viewer />
@@ -25,6 +27,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Tabs component
 
 > Responsive horizontal navigation tabs, switch between contents with ease
@@ -37,6 +40,7 @@ sidebarDepth: 2
 
 | Prop name        | Description                                                     | Type                                                 | Values                                                                          | Default                                                                                                                                                                                            |
 | ---------------- | --------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| activateOnFocus  | Set the tab active on navigation focus                          | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
 | animateInitially | Apply animation on the initial render                           | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animateInitially: false<br>}</code>                                             |
 | animated         | Tab will have an animation                                      | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code>                                                      |
 | animation        | Transition animation name                                       | [string, string, string, string] \| [string, string] | `[next`, `prev]`, `[right`, `left`, `down`, `up]`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animation: [ "slide-next", "slide-prev", "slide-down", "slide-up",]<br>}</code> |
@@ -70,6 +74,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## TabItem component
 
 ```html
@@ -78,21 +83,20 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description                                                                       | Type                   | Values | Default                                                                                                                                             |
-| --------- | --------------------------------------------------------------------------------- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility           | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tabpanel"<br>}</code> |
-| component | Component to be injected.                                                         | Component              | -      |                                                                                                                                                     |
-| content   | Text content, unnecessary when default slot is used                               | string                 | -      |                                                                                                                                                     |
-| disabled  | Item will be disabled                                                             | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                         |
-| events    | Events to be binded to the injected component                                     | {}                     | -      |                                                                                                                                                     |
-| icon      | Icon on the left                                                                  | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>      |
-| iconPack  | Icon pack                                                                         | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>  |
-| label     | Item label                                                                        | string                 | -      |                                                                                                                                                     |
-| override  | Override existing theme classes completely                                        | boolean                | -      |                                                                                                                                                     |
-| props     | Props to be binded to the injected component                                      | any                    | -      |                                                                                                                                                     |
-| tag       | Tabs item tag name                                                                | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>    |
-| value     | Item value (it will be used as v-model of wrapper component) - default is an uuid | string\|number\|object | -      |                                                                                                                                                     |
-| visible   | Show/hide item                                                                    | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                          |
+| Prop name | Description                                                                       | Type                   | Values | Default                                                                                                                                            |
+| --------- | --------------------------------------------------------------------------------- | ---------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| component | Component to be injected.                                                         | Component              | -      |                                                                                                                                                    |
+| content   | Text content, unnecessary when default slot is used                               | string                 | -      |                                                                                                                                                    |
+| disabled  | Item will be disabled                                                             | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| events    | Events to be binded to the injected component                                     | {}                     | -      |                                                                                                                                                    |
+| icon      | Icon on the left                                                                  | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>     |
+| iconPack  | Icon pack                                                                         | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| label     | Item label                                                                        | string                 | -      |                                                                                                                                                    |
+| override  | Override existing theme classes completely                                        | boolean                | -      |                                                                                                                                                    |
+| props     | Props to be binded to the injected component                                      | any                    | -      |                                                                                                                                                    |
+| tag       | Tabs item tag name                                                                | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
+| value     | Item value (it will be used as v-model of wrapper component) - default is an uuid | string\|number\|object | -      |                                                                                                                                                    |
+| visible   | Show/hide item                                                                    | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
 
 ### Events
 
@@ -103,14 +107,15 @@ sidebarDepth: 2
 
 ### Slots
 
-| Name    | Description           | Bindings |
-| ------- | --------------------- | -------- |
-| default | Tab item content      |          |
-| header  | Override header label |          |
+| Name    | Description           | Bindings                                |
+| ------- | --------------------- | --------------------------------------- |
+| default | Tab item content      | **active** `boolean` - if item is shown |
+| header  | Override header label | **active** `boolean` - if item is shown |
 
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

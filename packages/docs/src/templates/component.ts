@@ -59,6 +59,7 @@ ${renderClasses(component)}
 `
 }
 <div class="vp-doc">
+
 ## ${component} component
 
 ${description ? "> " + description : ""}

@@ -351,7 +351,8 @@ const provideData = computed<TableComponent>(() => ({
 }));
 
 /** provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<TableColumnComponent<T>>(slotsRef, {
+const { childItems } = useProviderParent<TableColumnComponent<T>>({
+    rootRef: slotsRef,
     data: provideData,
 });
 
@@ -359,8 +360,8 @@ const { sortedItems } = useProviderParent<TableColumnComponent<T>>(slotsRef, {
 
 /** all defined columns */
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
-    if (!sortedItems.value.length) return [];
-    return sortedItems.value.map((columnItem) => {
+    if (!childItems.value.length) return [];
+    return childItems.value.map((columnItem) => {
         const column = toValue(columnItem.data!);
 
         // create additional th attrs data

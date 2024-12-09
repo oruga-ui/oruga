@@ -3,19 +3,21 @@ import fs from 'fs'
 import path from 'path'
 import process from 'process'
 
-import { componentDirectory, getComponents, exist } from "./utils.mjs";
+import { getComponents, fileExist } from "../packages/docs/src/utils.ts";
 
 const __dirname = process.cwd();
 
-function generateComponentsType (module, file) {  
-  if(!exist(path.resolve(__dirname, componentDirectory))) 
+const componentDirectory = './packages/oruga/src/components';
+
+function generateComponentsType(module: string, file: string): void {
+  if (!fileExist(path.resolve(__dirname, componentDirectory)))
     throw new Error("Path not exist: " + componentDirectory);
 
   const globalComponents = getComponents(componentDirectory);
 
   const components = {}
   globalComponents
-    // add global O prefix
+    // add global "O" prefix
     .map((dir) => "O" + dir)
     // add type declaration
     .forEach((key) => {
@@ -42,7 +44,7 @@ export {};
 `;
 
   fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')
-  
+
   console.log(`File '${file}' generated.`);
 }
 
