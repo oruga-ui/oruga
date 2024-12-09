@@ -36,9 +36,8 @@ const inspectData = [
     },
     {
         class: "positionClass",
-        description:
-            "Class of Tabs component when when is vertical and its position changes",
-        properties: ["position", "vertical"],
+        description: "Class of Tabs component position",
+        properties: ["position"],
         suffixes: ["bottom", "left", "right"],
         action: (cmp, data) => {
             data.vertical = true;
@@ -46,11 +45,7 @@ const inspectData = [
         },
     },
     {
-        class: "navClass",
-        description: "Class of the Tabs navigation",
-    },
-    {
-        class: "navSizeClass",
+        class: "sizeClass",
         description: "Size of the navigation",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
@@ -59,36 +54,14 @@ const inspectData = [
         },
     },
     {
-        class: "navTypeClass",
+        class: "typeClass",
         description: "Type of the navigation",
         properties: ["type"],
         suffixes: ["default", "boxed", "toggle", "pills"],
     },
     {
-        class: "navPositionClass",
-        description: "Class of the Tabs component nav position",
-        properties: ["position"],
-        suffixes: ["bottom", "left", "right"],
-        action: (cmp, data) => {
-            data.vertical = false;
-            data.position = "right";
-        },
-    },
-    {
-        class: "navItemClass",
-        description: "Class of the navigation item",
-    },
-    {
-        class: "navItemActiveClass",
-        description: "Class of the nav item when active",
-    },
-    {
-        class: "navItemPreviousClass",
-        description: "Class of the nav item before the active one",
-    },
-    {
-        class: "navItemNextClass",
-        description: "Class of the nav item after the active one",
+        class: "tablistClass",
+        description: "Class of the tablist element",
     },
     {
         class: "tabClass",
@@ -102,6 +75,14 @@ const inspectData = [
         action: (cmp, data) => {
             data.active = true;
         },
+    },
+    {
+        class: "tabPreviousClass",
+        description: "Class of the nav item before the active one",
+    },
+    {
+        class: "tabNextClass",
+        description: "Class of the nav item after the active one",
     },
     {
         class: "tabDisabledClass",

@@ -1,15 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OTab with OTabItem tests > test render correctly 1`] = `
-"<div class="o-tabs" data-oruga="tabs">
-  <nav class="o-tabs__nav o-tabs__nav--default" role="tablist" aria-orientation="horizontal">
+"<div class="o-tabs o-tabs--default" data-oruga="tabs">
+  <div class="o-tabs__tablist" role="tablist" aria-orientation="horizontal">
     <!--
                 @slot Additional slot before tabs
-            -->
+            --><button id="tab-1" class="o-tabs__tab o-tabs__tab--default o-tabs__tab--active" role="tab" aria-selected="true">
+      <!--v-if--><span class="o-tabs__tab-label">Account</span>
+    </button>
     <!--
                 @slot Additional slot after tabs
             -->
-  </nav>
+  </div>
   <section class="o-tabs__content">
     <!--
                 @slot Place tab items here
