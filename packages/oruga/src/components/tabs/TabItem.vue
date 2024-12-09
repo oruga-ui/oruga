@@ -175,7 +175,6 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 @binding {boolean} active - if item is shown 
             -->
             <slot :active="isActive && visible">
-                <template v-if="!parent.destroyOnHide || (isActive && visible)">
                     <!-- injected component -->
                     <component
                         :is="component"
@@ -183,9 +182,8 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                         v-bind="$props.props"
                         v-on="$props.events || {}" />
 
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </template>
+                <!-- default content prop -->
+                <template v-else>{{ content }}</template>
             </slot>
 
             <!--

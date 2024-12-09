@@ -22,7 +22,6 @@ export type TabsComponent = {
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
-    destroyOnHide: boolean;
 };
 
 export type TabItem<T> = Omit<ProviderItem<T>, "data"> & TabItemComponent<T>;
