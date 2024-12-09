@@ -8,23 +8,23 @@ exports[`OTable tests > render correctly 1`] = `
             -->
     <!--
                     @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-                --><span data-id="1" data-oruga="table-column">ID <!--
+                --><span data-oruga="table-column" data-id="1">ID <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
-        --><!--v-if--></span><span data-id="2" data-oruga="table-column">First Name <!--
+        --><!--v-if--></span><span data-oruga="table-column" data-id="2">First Name <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
-        --><!--v-if--></span><span data-id="3" data-oruga="table-column">Last Name <!--
+        --><!--v-if--></span><span data-oruga="table-column" data-id="3">Last Name <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
-        --><!--v-if--></span><span data-id="4" data-oruga="table-column">Date <!--
+        --><!--v-if--></span><span data-oruga="table-column" data-id="4">Date <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
-        --><!--v-if--></span><span data-id="5" data-oruga="table-column">Gender <!--
+        --><!--v-if--></span><span data-oruga="table-column" data-id="5">Gender <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
@@ -69,7 +69,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td" style="width: 40px;">1</td>
           <td class="o-table__td">Jesse</td>
           <td class="o-table__td">Simmons</td>
-          <td class="o-table__td o-table__td--centered">15.10.2016</td>
+          <td class="o-table__td o-table__td--centered">2016-10-15 13:43:27</td>
           <td class="o-table__td">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
@@ -83,7 +83,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td" style="width: 40px;">2</td>
           <td class="o-table__td">John</td>
           <td class="o-table__td">Jacobs</td>
-          <td class="o-table__td o-table__td--centered">15.12.2016</td>
+          <td class="o-table__td o-table__td--centered">2016-12-15 06:00:53</td>
           <td class="o-table__td">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
@@ -97,7 +97,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td" style="width: 40px;">3</td>
           <td class="o-table__td">Tina</td>
           <td class="o-table__td">Gilbert</td>
-          <td class="o-table__td o-table__td--centered">26.4.2016</td>
+          <td class="o-table__td o-table__td--centered">2016-04-26 06:26:28</td>
           <td class="o-table__td">Female</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
@@ -111,7 +111,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td" style="width: 40px;">4</td>
           <td class="o-table__td">Clarence</td>
           <td class="o-table__td">Flores</td>
-          <td class="o-table__td o-table__td--centered">10.4.2016</td>
+          <td class="o-table__td o-table__td--centered">2016-04-10 10:28:46</td>
           <td class="o-table__td">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
@@ -125,7 +125,7 @@ exports[`OTable tests > render correctly 1`] = `
           <td class="o-table__td" style="width: 40px;">5</td>
           <td class="o-table__td">Anne</td>
           <td class="o-table__td">Lee</td>
-          <td class="o-table__td o-table__td--centered">6.12.2016</td>
+          <td class="o-table__td o-table__td--centered">2016-12-06 14:38:38</td>
           <td class="o-table__td">Female</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
