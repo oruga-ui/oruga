@@ -2,15 +2,16 @@
 
 exports[`ODatepicker > render correctly 1`] = `
 "<div data-oruga="datepicker" class="o-dpck">
-  <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--position-bottom-left" aria-modal="true">
-    <div tabindex="-1" class="o-drop__trigger" aria-haspopup="dialog">
+  <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--position-bottom-left">
+    <div class="o-drop__trigger" aria-haspopup="listbox" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
+                @binding {T | T[]} value - the selected value
                 @binding {() => void} toggle - toggle dropdown active state
             -->
       <div data-oruga="input" class="o-input__wrapper">
-        <!--v-if--><input id="v-0" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
+        <!--v-if--><input id="v-1" data-oruga-input="text" type="text" class="o-input" autocomplete="off">
         <!--v-if-->
         <!--v-if-->
       </div>
@@ -18,13 +19,14 @@ exports[`ODatepicker > render correctly 1`] = `
     <!--teleport start-->
     <!--v-if-->
     <transition-stub name="fade" appear="false" persisted="true" css="true">
-      <div class="o-drop__menu o-drop__menu--bottom-left" role="dialog" aria-hidden="true" aria-modal="true" style="display: none;">
+      <div id="v-0" tabindex="-1" class="o-drop__menu o-drop__menu--bottom-left" role="listbox" aria-hidden="true" aria-multiselectable="false" style="display: none;">
         <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
+                        @binding {number} focusedIndex - index of the focused element
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
-        <div class="o-dpck__box" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+        <div id="v-0-1" class="o-dpck__box" data-oruga="dropdown-item" data-id="dropdown-1" role="option" aria-selected="false" aria-disabled="false">
           <!--
             @slot Override the label, default is label prop 
         -->
@@ -41,7 +43,7 @@ exports[`ODatepicker > render correctly 1`] = `
               </button>
               <div class="o-dpck__header__list">
                 <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select id="v-2" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                  <!--v-if--><select id="v-3" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop
@@ -62,7 +64,7 @@ exports[`ODatepicker > render correctly 1`] = `
                   <!--v-if-->
                 </div>
                 <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select id="v-3" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                  <!--v-if--><select id="v-4" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop

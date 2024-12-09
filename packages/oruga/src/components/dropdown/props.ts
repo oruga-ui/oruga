@@ -3,7 +3,7 @@ import type { OptionsPropWithGroups } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
-export type DropdownProps<T, IsMultiple extends boolean> = {
+export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The selected option value */

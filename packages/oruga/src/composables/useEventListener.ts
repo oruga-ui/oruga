@@ -50,7 +50,7 @@ export function useEventListener(
         });
     };
 
-    let stopWatch;
+    let stopWatch: () => void;
 
     if (typeof options?.trigger !== "undefined") {
         stopWatch = watch(

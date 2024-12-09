@@ -115,8 +115,8 @@ const emits = defineEmits<{
     "scroll-end": [];
 }>();
 
-const contentRef = ref<HTMLElement | Component>();
 const triggerRef = ref<HTMLElement>();
+const menuRef = ref<HTMLElement | Component>();
 
 // provided data is a computed ref to enjure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
@@ -133,7 +133,7 @@ const { childItems } = useProviderParent<
     DropdownItemComponent<T>,
     DropdownComponent<T>
 >({
-    rootRef: contentRef,
+    rootRef: menuRef,
     data: provideData,
 });
 
@@ -195,7 +195,7 @@ const toggleScroll = usePreventScrolling(true);
 // set infinite scroll handler
 if (isClient && props.scrollable && props.checkScroll)
     useInfiniteScroll(
-        contentRef,
+        menuRef,
         () => emits("scroll-end"),
         () => emits("scroll-start"),
     );
@@ -204,7 +204,7 @@ let timer: NodeJS.Timeout | undefined;
 
 // set click outside handler
 if (isClient && props.closeOnOutside) {
-    useClickOutside(contentRef, onClickedOutside, {
+    useClickOutside(menuRef, onClickedOutside, {
         ignore: [triggerRef],
         trigger: isActive,
         passive: true,
@@ -367,7 +367,7 @@ function setFocus(item: DropdownChildItem<T>): void {
         selectItem(item.data.value, new Event("focus"));
     }
 
-    const dropdownMenu = unrefElement(contentRef);
+    const dropdownMenu = unrefElement(menuRef);
     const element = unrefElement(item.data?.$el);
     if (!dropdownMenu || !element) return;
 
@@ -504,7 +504,7 @@ const menuClasses = defineClasses(
 // #endregion --- Computed Component Classes ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
+defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
 </script>
 
 <template>
@@ -528,7 +528,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
             :aria-disabled="disabled"
             :aria-controls="menuId"
             :aria-labelledby="labelId"
-            :aria-label="ariaLabel"
+            :aria-label="selectable ? ariaLabel : undefined"
             @click="onTriggerClick"
             @contextmenu="onTriggerContextMenu"
             @mouseenter="onTriggerHover"
@@ -578,7 +578,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                     :is="menuTag"
                     v-show="(!disabled && isActive) || inline"
                     :id="menuId"
-                    :ref="(el) => (contentRef = setContent(el))"
+                    :ref="(el) => (menuRef = setContent(el))"
                     :tabindex="inline ? 0 : -1"
                     :class="menuClasses"
                     :style="menuStyle"
@@ -586,7 +586,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                     :aria-labelledby="labelId"
                     :aria-label="ariaLabel"
                     :aria-hidden="!inline && (disabled || !isActive)"
-                    :aria-multiselectable="isTrueish(multiple)"
+                    :aria-multiselectable="selectable && isTrueish(multiple)"
                     @keydown.enter.prevent="inline && onEnter($event)"
                     @keydown.space.prevent="inline && onEnter($event)"
                     @keydown.up.prevent="inline && onUpPressed($event)"
