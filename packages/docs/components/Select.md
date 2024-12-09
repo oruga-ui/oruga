@@ -13,6 +13,7 @@
 <example-select />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -36,7 +37,6 @@
 | Prop name          | Description                                                                           | Type                                                                   | Values                                                                          | Default                                                                                                                                               |
 | ------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | autocomplete       | Same as native autocomplete options to use in HTML5 validation                        | string                                                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>  |
-| customValidation   |                                                                                       |                                                                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>""</code>                                                                                              |
 | customValidity     | Custom HTML 5 validation error to set on the form control                             | string \| ((currentValue: unknown, state: ValidityState) =&gt; string) | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
 | disabled           | Disable the input - same as native disabled                                           | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | expanded           | Makes input full width when inside a grouped or addon field                           | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
@@ -49,7 +49,7 @@
 | id                 | Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. | string                                                                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                         |
 | v-model            | The input value state                                                                 | unknown                                                                | -                                                                               |                                                                                                                                                       |
 | multiple           | Allow multiple selection - converts the `modelValue` into an array                    | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
-| nativeSize         | Same as native size                                                                   | string \| number                                                       | -                                                                               |                                                                                                                                                       |
+| nativeSize         | Same as native size                                                                   | number \| string                                                       | -                                                                               |                                                                                                                                                       |
 | options            | Select options, unnecessary when default slot is used                                 | OptionsPropWithGroups&lt;unknown&gt;                                   | -                                                                               |                                                                                                                                                       |
 | override           | Override existing theme classes completely                                            | boolean                                                                | -                                                                               |                                                                                                                                                       |
 | placeholder        | Text when nothing is selected                                                         | string                                                                 | -                                                                               |                                                                                                                                                       |
@@ -62,14 +62,14 @@
 
 ### Events
 
-| Event name        | Properties                                                                           | Description                     |
-| ----------------- | ------------------------------------------------------------------------------------ | ------------------------------- |
-| update:modelValue | **value** `string \| number \| boolean \| object \| array` - updated modelValue prop | modelValue prop two-way binding |
-| focus             | **event** `Event` - native event                                                     | on input focus event            |
-| blur              | **event** `Event` - native event                                                     | on input blur event             |
-| invalid           | **event** `Event` - native event                                                     | on input invalid event          |
-| icon-click        | **event** `Event` - native event                                                     | on icon click event             |
-| icon-right-click  | **event** `Event` - native event                                                     | on icon right click event       |
+| Event name         | Properties                                     | Description                     |
+| ------------------ | ---------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `T \| T[]` - updated modelValue prop | modelValue prop two-way binding |
+| focus              | **event** `Event` - native event               | on input focus event            |
+| blur               | **event** `Event` - native event               | on input blur event             |
+| invalid            | **event** `Event` - native event               | on input invalid event          |
+| icon-click         | **event** `Event` - native event               | on icon click event             |
+| icon-right-click   | **event** `Event` - native event               | on icon right click event       |
 
 ### Slots
 
@@ -109,12 +109,14 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
 <p>The theme does not have any custom variables for this component.</p>
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

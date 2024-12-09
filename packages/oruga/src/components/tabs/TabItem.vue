@@ -26,7 +26,6 @@ const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     icon: () => getDefault("tabs.icon"),
     iconPack: () => getDefault("tabs.iconPack"),
     tag: () => getDefault("tabs.itemTag", "button"),
-    ariaRole: () => getDefault("tabs.ariaRole", "tabpanel"),
     content: undefined,
     component: undefined,
     props: undefined,
@@ -44,6 +43,7 @@ const itemValue = props.value || useId();
 
 const slots = useSlots();
 
+// provided data is a computed ref to enjure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
@@ -56,7 +56,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
     deactivate,
 }));
 
-// Inject functionalities and data from the parent component
+/** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<TabsComponent>({
     data: providedData,
 });
@@ -153,20 +153,23 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <template v-if="!parent.destroyOnHide || (isActive && visible)">
-            <div
-                v-show="isActive && visible"
-                v-bind="$attrs"
-                :id="`tabpanel-${item.identifier}`"
-                :class="panelClasses"
-                :data-id="`tabs-${item.identifier}`"
-                data-oruga="tabs-item"
-                :aria-labelledby="`tab-${item.identifier}`"
-                aria-roledescription="item">
-                <!-- 
-                    @slot Tab item content
-                -->
-                <slot>
+        <div
+            v-show="isActive && visible"
+            v-bind="$attrs"
+            :id="`tabpanel-${item.identifier}`"
+            data-oruga="tabs-item"
+            :data-id="`tabs-${item.identifier}`"
+            :class="panelClasses"
+            role="tabpanel"
+            :hidden="!isActive"
+            :aria-labelledby="`tab-${item.identifier}`"
+            aria-roledescription="item">
+            <!-- 
+                @slot Tab item content
+                @binding {boolean} active - if item is shown 
+            -->
+            <slot :active="isActive && visible">
+                <template v-if="!parent.destroyOnHide || (isActive && visible)">
                     <!-- injected component -->
                     <component
                         :is="component"
@@ -176,20 +179,21 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
 
                     <!-- default content prop -->
                     <template v-else>{{ content }}</template>
-                </slot>
-
-                <!--
-                    Do not render these slots here.
-                    These are only for documentation purposes.
-                    Slots are defined in tabs component.
-                -->
-                <template v-if="false">
-                    <!--
-                        @slot Override header label
-                    -->
-                    <slot name="header" />
                 </template>
-            </div>
-        </template>
+            </slot>
+
+            <!--
+                Do not render these slots here.
+                These are only for documentation purposes.
+                Slots are defined in tabs component.
+            -->
+            <template v-if="false">
+                <!--
+                    @slot Override header label
+                    @binding {boolean} active - if item is shown 
+                -->
+                <slot name="header" :active="isActive && visible" />
+            </template>
+        </div>
     </Transition>
 </template>

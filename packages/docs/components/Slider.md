@@ -17,6 +17,7 @@ sidebarDepth: 2
 <example-slider />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -42,14 +43,14 @@ sidebarDepth: 2
 | ariaLabel         | Accessibility aria-label to to be passed to the slider thumb element. | string                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;ariaLabel: undefined<br>}</code>      |
 | biggerSliderFocus | Increases slider size on focus                                        | boolean                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
 | disabled          | Slider will be disabled                                               | boolean                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
-| format            | Define v-model format                                                 | "raw" \| "percent"             | `row`, `percent`                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;format: "raw"<br>}</code>             |
+| format            | Define v-model format                                                 | "percent" \| "raw"             | `row`, `percent`                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;format: "raw"<br>}</code>             |
 | formatter         | Function to format the tooltip label for display                      | ((value: number) =&gt; string) | -                                                                               |                                                                                                                                                            |
 | indicator         | Show indicators                                                       | boolean                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
 | lazy              | Update v-model only when dragging is finished                         | boolean                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
 | locale            | Date format locale                                                    | string \| string[]             | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;locale: undefined<br>}</code>                 |
 | max               | Maximum value                                                         | number                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>100</code>                                                                                                  |
 | min               | Minimum value                                                         | number                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                    |
-| v-model           | The input value state                                                 | number \| [number, number]     | -                                                                               |                                                                                                                                                            |
+| v-model           | The input value state                                                 | [number, number] \| number     | -                                                                               |                                                                                                                                                            |
 | override          | Override existing theme classes completely                            | boolean                        | -                                                                               |                                                                                                                                                            |
 | range             | Enable range slider                                                   | boolean                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                     |
 | rounded           | Rounded thumb                                                         | boolean                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;rounded: false<br>}</code>            |
@@ -63,13 +64,13 @@ sidebarDepth: 2
 
 ### Events
 
-| Event name        | Properties                                               | Description                     |
-| ----------------- | -------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `number \| number[]` - updated modelValue prop | modelValue prop two-way binding |
-| change            | **value** `number \| number[]` - updated modelValue prop | on value change event           |
-| dragging          | **value** `number \| number[]` - updated modelValue prop | on dragging event               |
-| dragstart         |                                                          | on drag start event             |
-| dragend           |                                                          | on drag end event               |
+| Event name         | Properties                                               | Description                     |
+| ------------------ | -------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `number \| number[]` - updated modelValue prop | modelValue prop two-way binding |
+| change             | **value** `number \| number[]` - updated modelValue prop | on value change event           |
+| dragging           | **value** `number \| number[]` - updated modelValue prop | on dragging event               |
+| dragstart          |                                                          | on drag start event             |
+| dragend            |                                                          | on drag end event               |
 
 ### Slots
 
@@ -105,9 +106,6 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-</div>
-<div class="vp-doc">
-
 ## Sass variables
 
 <div class="theme-oruga">
@@ -141,7 +139,8 @@ sidebarDepth: 2
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -166,7 +165,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_slider.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

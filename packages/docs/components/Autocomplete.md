@@ -13,6 +13,7 @@
 <example-autocomplete />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -57,8 +58,8 @@
 | itemTag              | Menu item tag name                                                                                                                                                               | DynamicComponent                                                       | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;itemTag: "div"<br>}</code>               |
 | keepFirst            | The first option will always be pre-selected (easier to just hit enter or tab)                                                                                                   | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;keepFirst: false<br>}</code>             |
 | keepOpen             | Keep open dropdown list after select                                                                                                                                             | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;keepOpen: false<br>}</code>              |
-| maxHeight            | Max height of dropdown content                                                                                                                                                   | string \| number                                                       | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;maxHeight: undefined<br>}</code>         |
-| maxlength            | Same as native maxlength, plus character counter                                                                                                                                 | string \| number                                                       | -                                                 |                                                                                                                                                                     |
+| maxHeight            | Max height of dropdown content                                                                                                                                                   | number \| string                                                       | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;maxHeight: undefined<br>}</code>         |
+| maxlength            | Same as native maxlength, plus character counter                                                                                                                                 | number \| string                                                       | -                                                 |                                                                                                                                                                     |
 | menuTag              | Menu tag name                                                                                                                                                                    | DynamicComponent                                                       | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;menuTag: "div"<br>}</code>               |
 | mobileModal          | Dropdown content (items) are shown into a modal on mobile                                                                                                                        | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;mobileModal: false<br>}</code>           |
 | v-model              | The selected option value, use v-model to make it two-way binding                                                                                                                | string\|number\|object                                                 | -                                                 |                                                                                                                                                                     |
@@ -66,34 +67,34 @@
 | options              | Autocomplete options                                                                                                                                                             | OptionsPropWithGroups&lt;unknown&gt;                                   | -                                                 |                                                                                                                                                                     |
 | override             | Override existing theme classes completely                                                                                                                                       | boolean                                                                | -                                                 |                                                                                                                                                                     |
 | placeholder          | Input placeholder                                                                                                                                                                | string                                                                 | -                                                 |                                                                                                                                                                     |
-| position             | Position of the dropdown                                                                                                                                                         | "auto" \| "top" \| "bottom"                                            | `auto`, `top`, `bottom`                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;position: "auto"<br>}</code>             |
+| position             | Position of the dropdown                                                                                                                                                         | "auto" \| "bottom" \| "top"                                            | `auto`, `top`, `bottom`                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;position: "auto"<br>}</code>             |
 | rounded              | Makes the element rounded                                                                                                                                                        | boolean                                                                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                         |
 | selectOnClickOutside | Trigger the select event for the first pre-selected option when clicking outside and `keep-first` is enabled                                                                     | boolean                                                                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                         |
 | selectableFooter     | Allows the footer in the autocomplete to be selectable                                                                                                                           | boolean                                                                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                         |
 | selectableHeader     | Allows the header in the autocomplete to be selectable                                                                                                                           | boolean                                                                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                         |
 | size                 | Size of the control                                                                                                                                                              | string                                                                 | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;size: undefined<br>}</code>              |
 | statusIcon           | Show status icon using field and variant prop                                                                                                                                    | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;statusIcon: true<br>}</code>                           |
-| teleport             | Append the component to another part of the DOM.<br/>Set `true` to append the component to the body.<br/>In addition, any CSS selector string or an actual DOM node can be used. | string \| boolean \| object                                            | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;teleport: false<br>}</code>              |
+| teleport             | Append the component to another part of the DOM.<br/>Set `true` to append the component to the body.<br/>In addition, any CSS selector string or an actual DOM node can be used. | boolean \| object \| string                                            | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;teleport: false<br>}</code>              |
 | type                 | Input type                                                                                                                                                                       | string                                                                 | -                                                 | <code style='white-space: nowrap; padding: 0;'>"text"</code>                                                                                                        |
 | useHtml5Validation   | Enable HTML 5 native validation                                                                                                                                                  | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;useHtml5Validation: true<br>}</code>                   |
 
 ### Events
 
-| Event name        | Properties                                                                                   | Description                                    |
-| ----------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| icon-click        | **event** `Event` - native event                                                             | on icon click event                            |
-| update:modelValue | **value** `string \| number \| object` - updated modelValue prop                             | modelValue prop two-way binding                |
-| update:input      | **value** `string` - updated input prop                                                      | input prop two-way binding                     |
-| input             | **value** `string` - input value<br/>**event** `Event` - native event                        | on input change event                          |
-| select            | **value** `string \| number \| object` - selected value<br/>**event** `Event` - native event | selected element changed event                 |
-| select-header     | **event** `Event` - native event                                                             | header is selected                             |
-| select-footer     | **event** `Event` - native event                                                             | footer is selected                             |
-| focus             | **event** `Event` - native event                                                             | on input focus event                           |
-| blur              | **event** `Event` - native event                                                             | on input blur event                            |
-| invalid           | **event** `Event` - native event                                                             | on input invalid event                         |
-| icon-right-click  | **event** `Event` - native event                                                             | on icon right click event                      |
-| scroll-start      |                                                                                              | the list inside the dropdown reached the start |
-| scroll-end        |                                                                                              | the list inside the dropdown reached it's end  |
+| Event name         | Properties                                                            | Description                                    |
+| ------------------ | --------------------------------------------------------------------- | ---------------------------------------------- |
+| update:model-value | **value** `T` - updated modelValue prop                               | modelValue prop two-way binding                |
+| update:input       | **value** `string` - updated input prop                               | input prop two-way binding                     |
+| input              | **value** `string` - input value<br/>**event** `Event` - native event | on input change event                          |
+| select             | **value** `T` - selected value<br/>**event** `Event` - native event   | selected element changed event                 |
+| select-header      | **event** `Event` - native event                                      | header is selected                             |
+| select-footer      | **event** `Event` - native event                                      | footer is selected                             |
+| focus              | **event** `Event` - native event                                      | on input focus event                           |
+| blur               | **event** `Event` - native event                                      | on input blur event                            |
+| invalid            | **event** `Event` - native event                                      | on input invalid event                         |
+| icon-click         | **event** `Event` - native event                                      | on icon click event                            |
+| icon-right-click   | **event** `Event` - native event                                      | on icon right click event                      |
+| scroll-start       |                                                                       | the list inside the dropdown reached the start |
+| scroll-end         |                                                                       | the list inside the dropdown reached it's end  |
 
 ### Slots
 
@@ -121,7 +122,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -131,7 +133,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_autocomplete.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

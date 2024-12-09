@@ -13,6 +13,7 @@
 <example-button />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -49,7 +50,7 @@
 | rounded   | Enable rounded style                                     | boolean                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;rounded: false<br>}</code>      |
 | size      | Size of the control                                      | string                          | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;size: undefined<br>}</code>     |
 | tag       | Button tag name                                          | DynamicComponent                | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;tag: "button"<br>}</code>       |
-| type      | Button type, like native                                 | "reset" \| "submit" \| "button" | `button`, `submit`, `reset`                                                     | <code style='white-space: nowrap; padding: 0;'>"button"</code>                                                                                       |
+| type      | Button type, like native                                 | "button" \| "reset" \| "submit" | `button`, `submit`, `reset`                                                     | <code style='white-space: nowrap; padding: 0;'>"button"</code>                                                                                       |
 | variant   | Color variant of the control                             | string                          | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
 
 ### Slots
@@ -89,7 +90,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -99,7 +101,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_button.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

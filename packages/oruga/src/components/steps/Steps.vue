@@ -20,6 +20,7 @@ import {
     normalizeOptions,
     useProviderParent,
     useMatchMedia,
+    useSequentialId,
 } from "@/composables";
 
 import type { StepItem, StepItemComponent, StepsComponent } from "./types";
@@ -89,7 +90,7 @@ const rootRef = useTemplateRef("rootElement");
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<StepsComponent>(() => ({
     activeIndex: activeItem.value?.index || 0,
     labelPosition: props.labelPosition,
@@ -101,21 +102,28 @@ const provideData = computed<StepsComponent>(() => ({
     variant: props.variant,
 }));
 
-/** Provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<StepItemComponent<T>>(rootRef, {
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent<StepItemComponent<T>>({
+    rootRef,
     data: provideData,
 });
 
-const items = computed<StepItem<T>[]>(() =>
-    sortedItems.value.map((column) => ({
+const items = computed<StepItem<T>[]>(() => {
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
-    })),
-);
+    }));
+});
+
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed(() => normalizeOptions<T>(props.options));
+const groupedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 /** When v-model is changed set the new active step. */
 watch(

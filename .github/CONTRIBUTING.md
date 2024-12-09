@@ -50,7 +50,7 @@ Add comments if method is too complex and/or whenever you judge necessary.
 
 # Development Setup
 
-You need at least [Node.js](http://nodejs.org/) **version 20.10.0**.
+You need at least [Node.js](http://nodejs.org/) **version 22**.
 
 After cloning the repository, install the dependencies:
 

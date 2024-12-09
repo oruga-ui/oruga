@@ -8,13 +8,11 @@ describe("OSwitch tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
-        const wrapper = mount(OSwitch);
+        const wrapper = mount(OSwitch, { props: { label: "My input" } });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("switch");
-        expect(
-            wrapper.find("label input[type=checkbox]").exists(),
-        ).toBeTruthy(); // has an input checkbox
+        expect(wrapper.find("input[type=checkbox]").exists()).toBeTruthy();
         expect(wrapper.html()).toMatchSnapshot();
     });
 

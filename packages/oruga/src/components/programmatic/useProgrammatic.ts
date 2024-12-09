@@ -40,7 +40,9 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
 /** public options interface for programmatically called components */
 export type PublicProgrammaticComponentOptions = EmitsToProps<
     Pick<ProgrammaticComponentEmits, "close">
->;
+> &
+    // make the type extendable
+    Record<string, any>;
 
 /** useProgrammatic composable `open` function return value */
 export type ProgrammaticExpose = ProgrammaticComponentExpose;

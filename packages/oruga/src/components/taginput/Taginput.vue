@@ -6,6 +6,7 @@ import {
     useTemplateRef,
     useId,
     watchEffect,
+    type Component,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -18,6 +19,7 @@ import {
     normalizeOptions,
     findOption,
     useInputHandler,
+    useSequentialId,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
@@ -88,8 +90,9 @@ const emits = defineEmits<{
     /**
      * on input change event
      * @param value {string} input value
+     * @param event {Event} native event
      */
-    input: [value: string];
+    input: [value: string, event: Event];
     /**
      * new item got added
      * @param value {string | number | object} added item
@@ -131,7 +134,8 @@ const emits = defineEmits<{
     "scroll-end": [];
 }>();
 
-const autocompleteRef = useTemplateRef("autocompleteComponent");
+// define as Component to prevent docs memmory overload
+const autocompleteRef = useTemplateRef<Component>("autocompleteComponent");
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -151,8 +155,13 @@ const itemsLength = computed(() => selectedItems.value?.length || 0);
 
 const isComposing = ref(false);
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
-const normalizedOptions = computed(() => normalizeOptions<T>(props.options));
+const normalizedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 /** map the selected items into option items */
 const selectedOptions = computed(() => {
@@ -231,7 +240,7 @@ function addItem(item?: T | string): void {
     // after autocomplete events
     requestAnimationFrame(() => {
         inputValue.value = "";
-        emits("input", "");
+        emits("input", "", new Event("input"));
     });
 }
 
@@ -247,13 +256,13 @@ function removeItem(index: number, event?: Event): void {
 
 // --- Event Handler ---
 
-function onSelect(option: T): void {
+function onSelect(option: T | undefined): void {
     if (!option) return;
     addItem(option);
 }
 
-function onInput(value: string): void {
-    emits("input", value.trim());
+function onInput(value: string, event: Event): void {
+    emits("input", value.trim(), event);
 }
 
 function onKeydown(event: KeyboardEvent): void {

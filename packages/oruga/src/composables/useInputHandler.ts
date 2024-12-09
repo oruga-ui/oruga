@@ -55,7 +55,7 @@ const constraintValidationAttributes = [
  */
 export function useInputHandler<T extends ValidatableFormElement>(
     /** input ref element - can be a html element or a vue component*/
-    inputRef: MaybeRefOrGetter<T | Component>,
+    inputRef: Readonly<MaybeRefOrGetter<T | Component>>,
     /** emitted input events */
     emits: {
         /** on input focus event */
@@ -393,7 +393,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         doClick,
         onFocus,
         onBlur,
-        checkHtml5Validity,
         onInvalid,
+        checkHtml5Validity,
     };
 }

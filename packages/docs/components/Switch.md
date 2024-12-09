@@ -13,6 +13,7 @@
 <example-switch />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -46,9 +47,9 @@
 | nativeValue        | Same as native value                                                                | unknown                                                                | -                                                                               |                                                                                                                                                            |
 | override           | Override existing theme classes completely                                          | boolean                                                                | -                                                                               |                                                                                                                                                            |
 | passiveVariant     | Color of the switch when is passive                                                 | string                                                                 | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>switch: {<br>&nbsp;&nbsp;passiveVariant: undefined<br>}</code> |
-| position           | Label position                                                                      | string                                                                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>"right"</code>                                                                                              |
+| position           | Label position                                                                      | string                                                                 | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>switch: {<br>&nbsp;&nbsp;right: "position"<br>}</code>         |
 | required           | Same as native required                                                             | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                |
-| rounded            | Rounded style                                                                       | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                 |
+| rounded            | Rounded style                                                                       | boolean                                                                | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>switch: {<br>&nbsp;&nbsp;rounded: true<br>}</code>             |
 | size               | Size of the control                                                                 | string                                                                 | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>switch: {<br>&nbsp;&nbsp;size: undefined<br>}</code>           |
 | trueValue          | Overrides the returned value when it's checked                                      | unknown                                                                | -                                                                               |                                                                                                                                                            |
 | useHtml5Validation | Enable html 5 native validation                                                     | boolean                                                                | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;useHtml5Validation: true<br>}</code>          |
@@ -56,13 +57,13 @@
 
 ### Events
 
-| Event name        | Properties                                                                                           | Description                     |
-| ----------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `string \| number \| boolean \| object` - updated modelValue prop                          | modelValue prop two-way binding |
-| input             | **value** `string \| number \| boolean \| object` - input value<br/>**event** `Event` - native event | on input change event           |
-| focus             | **event** `Event` - native event                                                                     | on input focus event            |
-| blur              | **event** `Event` - native event                                                                     | on input blur event             |
-| invalid           | **event** `Event` - native event                                                                     | on input invalid event          |
+| Event name         | Properties                                                       | Description                     |
+| ------------------ | ---------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `T` - updated modelValue prop                          | modelValue prop two-way binding |
+| input              | **value** `T` - input value<br/>**event** `Event` - native event | on input change event           |
+| focus              | **event** `Event` - native event                                 | on input focus event            |
+| blur               | **event** `Event` - native event                                 | on input blur event             |
+| invalid            | **event** `Event` - native event                                 | on input invalid event          |
 
 ### Slots
 
@@ -95,7 +96,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_switch.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -110,7 +112,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_switch.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

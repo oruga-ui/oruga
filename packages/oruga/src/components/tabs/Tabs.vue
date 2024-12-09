@@ -20,6 +20,7 @@ import {
     defineClasses,
     normalizeOptions,
     useProviderParent,
+    useSequentialId,
 } from "@/composables";
 
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
@@ -51,6 +52,7 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     tag: () => getDefault("tabs.tag", "div"),
     expanded: false,
     destroyOnHide: false,
+    activateOnFocus: false,
     animated: () => getDefault("tabs.animated", true),
     animation: () =>
         getDefault("tabs.animation", [
@@ -82,7 +84,7 @@ const rootRef = useTemplateRef("rootElement");
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index || 0,
     type: props.type,
@@ -93,21 +95,28 @@ const provideData = computed<TabsComponent>(() => ({
     destroyOnHide: props.destroyOnHide,
 }));
 
-/** Provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<TabItemComponent<T>>(rootRef, {
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent<TabItemComponent<T>>({
+    rootRef,
     data: provideData,
 });
 
-const items = computed<TabItem<T>[]>(() =>
-    sortedItems.value.map((column) => ({
+const items = computed<TabItem<T>[]>(() => {
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
-    })),
-);
+    }));
+});
+
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed(() => normalizeOptions<T>(props.options));
+const groupedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 /**  When v-model is changed set the new active tab. */
 watch(
@@ -148,36 +157,67 @@ function tabClick(item: TabItem<T>): void {
 }
 
 /** Go to the next item or wrap around */
-function next(): void {
-    const newIndex = mod(activeIndex.value + 1, items.value.length);
-    clickFirstViableChild(newIndex, true);
+function next(event: KeyboardEvent, index: number): void {
+    if (
+        (props.vertical && event.key == "ArrowDown") ||
+        (!props.vertical && event.key == "ArrowRight")
+    ) {
+        event.preventDefault(); // prevent default browser scrolling
+        const newIndex = mod(index + 1, items.value.length);
+        const item = getFirstViableItem(newIndex, true);
+        moveFocus(item);
+    }
 }
 
 /** Go to the previous item or wrap around */
-function prev(): void {
-    const newIndex = mod(activeIndex.value - 1, items.value.length);
-    clickFirstViableChild(newIndex, false);
+function prev(event: KeyboardEvent, index: number): void {
+    if (
+        (props.vertical && event.key == "ArrowUp") ||
+        (!props.vertical && event.key == "ArrowLeft")
+    ) {
+        event.preventDefault(); // prevent default browser scrolling
+        const newIndex = mod(index - 1, items.value.length);
+        const item = getFirstViableItem(newIndex, false);
+        moveFocus(item);
+    }
 }
 
 /** Go to the first viable item */
 function homePressed(): void {
     if (items.value.length < 1) return;
-    clickFirstViableChild(0, true);
+    const item = getFirstViableItem(0, true);
+    moveFocus(item);
 }
 
 /** Go to the last viable item */
 function endPressed(): void {
     if (items.value.length < 1) return;
-    clickFirstViableChild(items.value.length - 1, false);
+    const item = getFirstViableItem(items.value.length - 1, false);
+    moveFocus(item);
+}
+
+/** Set focus on a tab item. */
+function moveFocus(item: TabItem<T>): void {
+    if (props.activateOnFocus) {
+        tabClick(item);
+    } else {
+        const el = rootRef.value?.querySelector<HTMLElement>(
+            `#tab-${item.identifier} > *`,
+        );
+        el?.focus();
+    }
 }
 
 /**
- * Select the first 'viable' child, starting at startingIndex and in the direction specified
+ * Get the first 'viable' child, starting at startingIndex and in the direction specified
  * by the boolean parameter forward. In other words, first try to select the child at index
  * startingIndex, and if it is not visible or it is disabled, then go to the index in the
  * specified direction until either returning to startIndex or finding a viable child item.
  */
-function clickFirstViableChild(startingIndex: number, forward: boolean): void {
+function getFirstViableItem(
+    startingIndex: number,
+    forward: boolean,
+): TabItem<T> {
     const direction = forward ? 1 : -1;
     let newIndex = startingIndex;
     for (
@@ -189,7 +229,8 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
         if (items.value[newIndex].visible && !items.value[newIndex].disabled)
             break;
     }
-    tabClick(items.value[newIndex]);
+
+    return items.value[newIndex];
 }
 
 /** Activate next child and deactivate prev child */
@@ -276,8 +317,7 @@ const contentClasses = defineClasses(
                 :tag="childItem.tag"
                 name="header"
                 :class="childItem.tabClasses"
-                :role="childItem.ariaRole"
-                :aria-controls="`tabpanel-${childItem.identifier}`"
+                role="tab"
                 :aria-selected="childItem.value === activeItem.value"
                 :tabindex="
                     childItem.value === activeItem.value ? undefined : '-1'

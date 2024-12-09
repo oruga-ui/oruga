@@ -8,13 +8,11 @@ describe("OCheckbox tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
-        const wrapper = mount(OCheckbox);
+        const wrapper = mount(OCheckbox, { props: { label: "My Input" } });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("checkbox");
-        expect(
-            wrapper.find("label input[type=checkbox]").exists(),
-        ).toBeTruthy(); // has an input checkbox
+        expect(wrapper.find("input[type=checkbox]").exists()).toBeTruthy();
         expect(wrapper.html()).toMatchSnapshot();
     });
 

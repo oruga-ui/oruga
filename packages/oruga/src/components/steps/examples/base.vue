@@ -6,7 +6,7 @@ const activeStep = ref("1");
 const isStepsClickable = ref(false);
 const isAnimated = ref(true);
 const isVertical = ref(false);
-const isProfileSuccess = ref(false);
+const isProfileWarning = ref(false);
 const isRounded = ref(true);
 const enableProfileActivateEvent = ref(false);
 // Navigation
@@ -53,8 +53,8 @@ const onProfileActivate = () => {
                     label="Custom Navigation" />
             </o-field>
             <o-field>
-                <o-switch v-model="isProfileSuccess">
-                    Set <code>success</code> for profile
+                <o-switch v-model="isProfileWarning">
+                    Set <code>warning</code> for profile
                 </o-switch>
             </o-field>
             <o-field>
@@ -110,7 +110,7 @@ const onProfileActivate = () => {
                 step="2"
                 label="Profile"
                 :clickable="isStepsClickable"
-                :variant="isProfileSuccess ? 'success' : ''"
+                :variant="isProfileWarning ? 'warning' : ''"
                 @activate="onProfileActivate">
                 <h1 class="title has-text-centered">Profile</h1>
                 Lorem ipsum dolor sit amet.

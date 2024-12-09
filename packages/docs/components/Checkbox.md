@@ -13,6 +13,7 @@
 <example-checkbox />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -54,14 +55,13 @@
 
 ### Events
 
-| Event name           | Properties                                                                                                    | Description                        |
-| -------------------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| update:modelValue    | **value** `string \| number \| boolean \| object \| array` - updated modelValue prop                          | modelValue prop two-way binding    |
-| input                | **value** `string \| number \| boolean \| object \| array` - input value<br/>**event** `Event` - native event | on input change event              |
-| update:indeterminate | **value** `boolean` - updated indeterminate prop                                                              | indeterminate prop two-way binding |
-| focus                | **event** `Event` - native event                                                                              | on input focus event               |
-| blur                 | **event** `Event` - native event                                                                              | on input blur event                |
-| invalid              | **event** `Event` - native event                                                                              | on input invalid event             |
+| Event name         | Properties                                                              | Description                     |
+| ------------------ | ----------------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `T \| T[]` - updated modelValue prop                          | modelValue prop two-way binding |
+| input              | **value** `T \| T[]` - input value<br/>**event** `Event` - native event | on input change event           |
+| focus              | **event** `Event` - native event                                        | on input focus event            |
+| blur               | **event** `Event` - native event                                        | on input blur event             |
+| invalid            | **event** `Event` - native event                                        | on input invalid event          |
 
 ### Slots
 
@@ -99,7 +99,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -119,7 +120,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_checkbox.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

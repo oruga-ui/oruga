@@ -25,6 +25,7 @@ import {
     useEventListener,
     useClickOutside,
     usePreventScrolling,
+    useSequentialId,
 } from "@/composables";
 
 import type { DropdownComponent } from "./types";
@@ -112,10 +113,13 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
 const groupedOptions = computed(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options);
-    const groupedOptions = toOptionsGroup(normalizedOptions);
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 
@@ -343,7 +347,7 @@ function selectItem(value: T): void {
     }
 }
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to enjure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
@@ -351,8 +355,8 @@ const provideData = computed<DropdownComponent<T>>(() => ({
     selectItem,
 }));
 
-/** Provide functionalities and data to child item components */
-useProviderParent(contentRef, { data: provideData });
+/** provide functionalities and data to child item components */
+useProviderParent({ data: provideData });
 
 // --- Computed Component Classes ---
 
