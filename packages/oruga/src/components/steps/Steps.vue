@@ -92,7 +92,7 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // provided data is a computed ref to enjure reactivity
 const provideData = computed<StepsComponent>(() => ({
-    activeIndex: activeItem.value?.index || 0,
+    activeIndex: activeItem.value?.index ?? 0,
     labelPosition: props.labelPosition,
     vertical: props.vertical,
     animated: props.animated,
@@ -133,11 +133,10 @@ watch(
     },
 );
 
-const activeItem = ref<StepItem<T>>(
-    items.value.find((item) => item.value === props.modelValue) ||
-        items.value[0],
-);
+/** the active item */
+const activeItem = ref<StepItem<T>>();
 
+// set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
         ? items.value.find((item) => item.value === vmodel.value) ||
@@ -162,7 +161,7 @@ const prevItem = computed(() => {
     let prevItem: StepItem<T> | undefined;
     let idx =
         items.value.findIndex(
-            (item) => item.identifier === activeItem.value.identifier,
+            (item) => item.identifier === activeItem.value?.identifier,
         ) - 1;
     for (; idx >= 0; idx--) {
         if (items.value[idx].visible) {
@@ -178,7 +177,7 @@ const nextItem = computed(() => {
     let nextItem: StepItem<T> | undefined;
     let idx = activeItem.value
         ? items.value.findIndex(
-              (item) => item.identifier === activeItem.value.identifier,
+              (item) => item.identifier === activeItem.value?.identifier,
           ) + 1
         : 0;
     for (; idx < items.value.length; idx++) {
@@ -193,7 +192,7 @@ const nextItem = computed(() => {
 /** Return if the step should be clickable or not. */
 function isItemClickable(item: StepItem<T>): boolean {
     if (item.clickable === undefined)
-        return item.index < activeItem.value?.index;
+        return item.index < (activeItem.value?.index ?? 0);
     return item.clickable;
 }
 
@@ -214,7 +213,7 @@ function itemClick(item: StepItem<T>): void {
 
 /** Activate next child and deactivate prev child */
 function performAction(newValue: T): void {
-    const oldValue = activeItem.value.value;
+    const oldValue = activeItem.value?.value;
     const oldItem = activeItem.value;
     const newItem =
         items.value.find((item) => item.value === newValue) || items.value[0];
@@ -313,17 +312,17 @@ const navigationClasses = defineClasses([
                 :class="childItem.navClasses"
                 :role="childItem.ariaRole"
                 :aria-current="
-                    childItem.value === activeItem.value ? 'step' : undefined
+                    childItem.value === activeItem?.value ? 'step' : undefined
                 "
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="childItem.value === activeItem.value">
+                :aria-selected="childItem.value === activeItem?.value">
                 <span v-if="index > 0" :class="dividerClasses" />
 
                 <component
                     :is="childItem.tag"
                     role="button"
                     :tabindex="isItemClickable(childItem) ? 0 : null"
-                    :class="childItem.classes"
+                    :class="childItem.stepClasses"
                     @click="isItemClickable(childItem) && itemClick(childItem)"
                     @keydown.enter="
                         isItemClickable(childItem) && itemClick(childItem)

@@ -56,9 +56,10 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<TableComponent>({
-    data: providedData,
-});
+const { parent, item } = useProviderChild<
+    TableComponent,
+    TableColumnComponent<T>
+>({ data: providedData });
 
 // --- Computed Component Classes ---
 
