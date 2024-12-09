@@ -3,9 +3,9 @@ import {
     checkOptionsEmpty,
     filterOptionsItems,
     findOption,
-    firstValidOption,
+    firstViableOption,
     isGroupOption,
-    isOptionValid,
+    isOptionViable,
     normalizeOptions,
     toOptionsGroup,
     toOptionsList,
@@ -344,60 +344,52 @@ describe("useOptions tests", () => {
         });
 
         test("test empty list", () => {
-            const filteredOptions = filterOptionsItems([], "abc");
-            expect(filteredOptions).toEqual([]);
+            const options = [];
+            filterOptionsItems(options, (o) => o.label == "abc");
+            expect(options).toEqual([]);
         });
 
         test("test filter single value", () => {
-            const filteredOptions = filterOptionsItems(options, "#FFFFFF");
-            expect(filteredOptions).toHaveLength(options.length);
-            expect(filteredOptions[0].options[2]).toEqual({
+            const length = options.length;
+            filterOptionsItems(options, (o) => o.label != "#FFFFFF");
+            expect(options).toHaveLength(length);
+            expect(options[0].options[2]).toEqual({
                 label: "#FFFFFF",
                 value: "#FFFFFF",
                 hidden: false,
             });
 
-            expect(
-                filteredOptions[0].options.filter((o) => !o.hidden),
-            ).toHaveLength(1);
+            expect(options[0].options.filter((o) => !o.hidden)).toHaveLength(1);
         });
 
         test("test filter multiple value", () => {
-            const filteredOptions = filterOptionsItems(options, "#");
-            expect(filteredOptions).toHaveLength(options.length);
-            expect(filteredOptions.every((o) => o.hidden)).toBeFalsy();
-            expect(
-                filteredOptions[0].options.every((o) => !o.hidden),
-            ).toBeTruthy();
+            const length = options.length;
+            filterOptionsItems(options, (o) => o.label.startsWith("#"));
+            expect(options).toHaveLength(length);
+            expect(options.every((o) => o.hidden)).toBeFalsy();
+            expect(options[0].options.every((o) => o.hidden)).toBeTruthy();
         });
 
         test("test filter by invalid value", () => {
-            const filteredOptions = filterOptionsItems(options, "abc");
-            expect(filteredOptions).toHaveLength(options.length);
-            expect(filteredOptions.every((o) => o.hidden)).toBeTruthy();
-            expect(
-                filteredOptions[0].options.every((o) => o.hidden),
-            ).toBeTruthy();
+            const length = options.length;
+            filterOptionsItems(options, (o) => o.label != "abc");
+            expect(options).toHaveLength(length);
+            expect(options.every((o) => o.hidden)).toBeTruthy();
+            expect(options[0].options.every((o) => o.hidden)).toBeTruthy();
         });
 
         test("test filter with custom function", () => {
-            const filteredOptions = filterOptionsItems(
-                options,
-                "FFFFFF",
-                (option, filter) => {
-                    return !String(option).includes("#" + filter);
-                },
+            const length = options.length;
+            filterOptionsItems(options, (option) =>
+                String(option).includes("#FFFFFF"),
             );
-            expect(filteredOptions).toHaveLength(options.length);
-            expect(filteredOptions[0].options[2]).toEqual({
+            expect(options).toHaveLength(length);
+            expect(options[0].options[2]).toEqual({
                 label: "#FFFFFF",
                 value: "#FFFFFF",
                 hidden: false,
             });
-
-            expect(
-                filteredOptions[0].options.filter((o) => !o.hidden),
-            ).toHaveLength(1);
+            expect(options[1].options.filter((o) => !o.hidden)).toHaveLength(1);
         });
     });
 
@@ -660,7 +652,7 @@ describe("useOptions tests", () => {
 
     describe("test firstValidOption", () => {
         test("test empty list", () => {
-            const foundOption = firstValidOption([]);
+            const foundOption = firstViableOption([]);
             expect(foundOption).toBeUndefined();
         });
 
@@ -685,7 +677,7 @@ describe("useOptions tests", () => {
                     value: "#2b2b35",
                 },
             ];
-            const foundOption = firstValidOption(options);
+            const foundOption = firstViableOption(options);
             expect(foundOption).toStrictEqual({
                 label: "#FFFFFF",
                 value: "#FFFFFF",
@@ -728,7 +720,7 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const foundOption = firstValidOption(options);
+            const foundOption = firstViableOption(options);
             expect(foundOption).toStrictEqual({
                 label: "#ff985d",
                 value: "#ff985d",
@@ -774,7 +766,7 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const foundOption = firstValidOption(options);
+            const foundOption = firstViableOption(options);
             expect(foundOption).toStrictEqual({
                 label: "Red",
                 value: "#ff0000",
@@ -789,7 +781,7 @@ describe("useOptions tests", () => {
                 value: "#ff985d",
             };
 
-            const isValid = isOptionValid(option);
+            const isValid = isOptionViable(option);
             expect(isValid).toBeTruthy();
         });
 
@@ -800,7 +792,7 @@ describe("useOptions tests", () => {
                 hidden: true,
             };
 
-            const isValid = isOptionValid(option);
+            const isValid = isOptionViable(option);
             expect(isValid).toBeFalsy();
         });
 
@@ -811,7 +803,7 @@ describe("useOptions tests", () => {
                 attrs: { disabled: true },
             };
 
-            const isValid = isOptionValid(option);
+            const isValid = isOptionViable(option);
             expect(isValid).toBeFalsy();
         });
     });
