@@ -107,8 +107,15 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description | Type | Values | Default |
-| --------- | ----------- | ---- | ------ | ------- |
+| Prop name | Description                                                                       | Type                   | Values | Default                                                                                                                                           |
+| --------- | --------------------------------------------------------------------------------- | ---------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| clickable | Item is clickable and emit an event                                               | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                        |
+| disabled  | Item is disabled                                                                  | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
+| hidden    | Define whether the item is visible or not                                         | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
+| label     | Item label, unnecessary when default slot is used                                 | string                 | -      |                                                                                                                                                   |
+| override  | Override existing theme classes completely                                        | boolean                | -      |                                                                                                                                                   |
+| tag       | Dropdown item tag name                                                            | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;itemTag: "div"<br>}</code> |
+| value     | Item value (it will be used as v-model of wrapper component) - default is an uuid | string\|number\|object | -      |                                                                                                                                                   |
 
 ### Events
 
