@@ -618,6 +618,8 @@ See icon library documentation for custom classes. */
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
                 scroll: "clip" | "keep";
+                /** Role attribute to be passed to the div wrapper for better accessibility */
+                role: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class for the root element when fullpage */
@@ -1245,8 +1247,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 footerClass: ClassDefinition;
                 /** Class of the Table when it is empty */
                 emptyClass: ClassDefinition;
-                /** Class of the Table row detail */
-                detailedClass: ClassDefinition;
                 /** Class of the Table when is bordered */
                 borderedClass: ClassDefinition;
                 /** Class of the Table when rows are striped */
@@ -1263,6 +1263,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 trSelectedClass: ClassDefinition;
                 /** Class of the Table row when checkable and checked */
                 trCheckedClass: ClassDefinition;
+                /** Class of the detail Table row */
+                trDetailedClass: ClassDefinition;
+                /** Class of the Table row when table is empty */
+                trEmptyClass: ClassDefinition;
                 /** Class of the Table `th` element */
                 thClass: ClassDefinition;
                 /** Class of the Table `th` element when component is positioned */
