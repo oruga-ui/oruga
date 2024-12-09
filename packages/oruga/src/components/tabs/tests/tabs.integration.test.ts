@@ -42,7 +42,7 @@ describe("OTab with OTabItem tests", () => {
         };
     }
 
-    test("test render correctly", () => {
+    test("test render correctly", async () => {
         const wrapper = mount(
             genTestcomponent(
                 {},
@@ -53,6 +53,8 @@ describe("OTab with OTabItem tests", () => {
                 },
             ),
         );
+        await nextTick();
+
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.html()).toMatchSnapshot();
@@ -66,9 +68,9 @@ describe("OTab with OTabItem tests", () => {
 
     test("renders the tab buttons", async () => {
         const wrapper = mount(componentWrapper);
-        await wrapper.vm.$nextTick();
+        await nextTick();
 
-        const tabButtons = wrapper.findAll(".o-tabs__nav-item");
+        const tabButtons = wrapper.findAll(".o-tabs__tab");
 
         expect(tabButtons.length).toBe(3);
         expect(tabButtons[0].text()).toBe("Tab 1");
@@ -81,7 +83,7 @@ describe("OTab with OTabItem tests", () => {
 
     test("renders the tab panels", async () => {
         const wrapper = mount(componentWrapper, { attachTo: document.body });
-        await wrapper.vm.$nextTick();
+        await nextTick();
 
         const tabPanls = wrapper.findAll(`[data-oruga="tabs-item"]`);
 
@@ -96,7 +98,7 @@ describe("OTab with OTabItem tests", () => {
 
     test("switches the content based on the tab clicked", async () => {
         const wrapper = mount(componentWrapper, { attachTo: document.body });
-        await wrapper.vm.$nextTick();
+        await nextTick();
 
         const tabs = wrapper.findAll(".o-tabs__tab");
         const tabPanls = wrapper.findAll(`[data-oruga="tabs-item"]`);
@@ -114,7 +116,7 @@ describe("OTab with OTabItem tests", () => {
         expect(tabPanls[1].isVisible()).toBeFalsy();
     });
 
-    test("render item with component prop correctly", () => {
+    test("render item with component prop correctly", async () => {
         const wrapper = mount(
             genTestcomponent(
                 {},
@@ -126,6 +128,7 @@ describe("OTab with OTabItem tests", () => {
                 },
             ),
         );
+        await nextTick();
 
         const step = wrapper.find('[data-oruga="tabs-item"]');
         expect(step.exists()).toBeTruthy();
@@ -154,53 +157,53 @@ describe("OTab with OTabItem tests", () => {
             });
             await nextTick();
 
-            const navElements = wrapper.findAll(".o-tabs__nav-item");
+            const navElements = wrapper.findAll(".o-tabs__tab");
             expect(navElements).toHaveLength(options.length);
 
             navElements.forEach((el, idx) => {
-                expect(el.classes("o-tabs__nav-item--previous")).toBe(
+                expect(el.classes("o-tabs__tab--previous")).toBe(
                     idx < currentIndex,
                 );
-                expect(el.classes("o-tabs__nav-item--active")).toBe(
+                expect(el.classes("o-tabs__tab--active")).toBe(
                     idx == currentIndex,
                 );
-                expect(el.classes("o-tabs__nav-item--next")).toBe(
+                expect(el.classes("o-tabs__tab--next")).toBe(
                     idx > currentIndex,
                 );
             });
 
             currentIndex = 4;
-            let navButton = navElements[currentIndex].find("button");
-            expect(navButton.exists()).toBeTruthy();
+            let navButton = navElements[currentIndex];
+            expect(navButton.element.tagName).toBe("BUTTON");
 
             await navButton.trigger("click");
 
             navElements.forEach((el, idx) => {
-                expect(el.classes("o-tabs__nav-item--previous")).toBe(
+                expect(el.classes("o-tabs__tab--previous")).toBe(
                     idx < currentIndex,
                 );
-                expect(el.classes("o-tabs__nav-item--active")).toBe(
+                expect(el.classes("o-tabs__tab--active")).toBe(
                     idx == currentIndex,
                 );
-                expect(el.classes("o-tabs__nav-item--next")).toBe(
+                expect(el.classes("o-tabs__tab--next")).toBe(
                     idx > currentIndex,
                 );
             });
 
             currentIndex = 0;
-            navButton = navElements[currentIndex].find("button");
-            expect(navButton.exists()).toBeTruthy();
+            navButton = navElements[currentIndex];
+            expect(navButton.element.tagName).toBe("BUTTON");
 
             await navButton.trigger("click");
 
             navElements.forEach((el, idx) => {
-                expect(el.classes("o-tabs__nav-item--previous")).toBe(
+                expect(el.classes("o-tabs__tab--previous")).toBe(
                     idx < currentIndex,
                 );
-                expect(el.classes("o-tabs__nav-item--active")).toBe(
+                expect(el.classes("o-tabs__tab--active")).toBe(
                     idx == currentIndex,
                 );
-                expect(el.classes("o-tabs__nav-item--next")).toBe(
+                expect(el.classes("o-tabs__tab--next")).toBe(
                     idx > currentIndex,
                 );
             });
@@ -224,7 +227,7 @@ describe("OTab with OTabItem tests", () => {
             const wrapper = mount(OTabs, { props: { options } });
             await nextTick();
 
-            const navElements = wrapper.findAll(".o-tabs__nav-item");
+            const navElements = wrapper.findAll(".o-tabs__tab");
             expect(navElements).toHaveLength(options.length);
 
             const itemElements = wrapper.findAll('[data-oruga="tabs-item"]');
@@ -248,7 +251,7 @@ describe("OTab with OTabItem tests", () => {
             const wrapper = mount(OTabs, { props: { options } });
             await nextTick();
 
-            const navElements = wrapper.findAll(".o-tabs__nav-item");
+            const navElements = wrapper.findAll(".o-tabs__tab");
             expect(navElements).toHaveLength(Object.keys(options).length);
 
             const optionElements = wrapper.findAll('[data-oruga="tabs-item"]');
@@ -284,7 +287,7 @@ describe("OTab with OTabItem tests", () => {
             const wrapper = mount(OTabs, { props: { options } });
             await nextTick();
 
-            const navElements = wrapper.findAll(".o-tabs__nav-item");
+            const navElements = wrapper.findAll(".o-tabs__tab");
             expect(navElements).toHaveLength(Object.keys(options).length);
 
             const optionElements = wrapper.findAll('[data-oruga="tabs-item"]');
@@ -292,9 +295,8 @@ describe("OTab with OTabItem tests", () => {
 
             navElements.forEach((el, idx) => {
                 expect(el.text()).toBe(options[idx].label);
-                const button = el.find("button");
-                expect(button.exists()).toBeTruthy();
-                expect(button.classes("o-tabs__tab--disabled")).toBe(
+                expect(el.element.tagName).toBe("BUTTON");
+                expect(el.classes("o-tabs__tab--disabled")).toBe(
                     options[idx].attrs?.disabled || false,
                 );
             });
