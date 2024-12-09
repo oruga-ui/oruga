@@ -18,17 +18,17 @@ exports[`Dropdown tests > render correctly with items 1`] = `
                         @binding {boolean} active - dropdown active state
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
-      <div class="o-drop__item o-drop__item--clickable" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false">
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->A
       </div>
-      <div class="o-drop__item o-drop__item--clickable" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false">
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-2" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->B
       </div>
-      <div class="o-drop__item o-drop__item--clickable" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false">
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-3" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->C
@@ -58,17 +58,17 @@ exports[`Dropdown tests > render correctly with options 1`] = `
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
       <!--v-if-->
-      <div class="o-drop__item o-drop__item--clickable" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false">
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->Item 1
       </div>
-      <div class="o-drop__item o-drop__item--clickable" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false">
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-2" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->Item 2
       </div>
-      <div class="o-drop__item o-drop__item--clickable" role="listitem" tabindex="0" data-oruga="dropdown-item" aria-selected="false" aria-disabled="false">
+      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-3" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->Item 3

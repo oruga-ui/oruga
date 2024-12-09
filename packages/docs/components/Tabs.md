@@ -11,6 +11,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-tabs />
@@ -18,6 +19,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-tabs-viewer />
@@ -25,6 +27,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Tabs component
 
 > Responsive horizontal navigation tabs, switch between contents with ease
@@ -71,6 +74,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## TabItem component
 
 ```html
@@ -103,14 +107,15 @@ sidebarDepth: 2
 
 ### Slots
 
-| Name    | Description           | Bindings |
-| ------- | --------------------- | -------- |
-| default | Tab item content      |          |
-| header  | Override header label |          |
+| Name    | Description           | Bindings                                |
+| ------- | --------------------- | --------------------------------------- |
+| default | Tab item content      | **active** `boolean` - if item is shown |
+| header  | Override header label | **active** `boolean` - if item is shown |
 
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

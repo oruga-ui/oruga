@@ -16,7 +16,7 @@ declare module "../index" {
                 /** Size of the control */
                 size: string;
                 /** Position of the dropdown */
-                position: "auto" | "top" | "bottom";
+                position: "auto" | "bottom" | "top";
                 /** Makes the component check if list reached scroll start or end and emit scroll events. */
                 checkScroll: boolean;
                 /** Number of milliseconds to delay before to emit input event */
@@ -30,7 +30,7 @@ declare module "../index" {
                 /** Keep open dropdown list after select */
                 keepOpen: boolean;
                 /** Max height of dropdown content */
-                maxHeight: string | number;
+                maxHeight: number | string;
                 /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
                 confirmKeys: string[];
                 /** Dropdown content (items) are shown into a modal on mobile */
@@ -52,7 +52,7 @@ declare module "../index" {
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
+                teleport: boolean | object | string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the menu items */
@@ -115,14 +115,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         carousel?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the root element in overlay */
-                overlayClass: ClassDefinition;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Class of the wrapper element of carousel items */
-                wrapperClass: ClassDefinition;
                 /** Timer interval for `autoplay` */
                 interval: number;
                 /** Position of the indicator - depends on used theme */
@@ -137,12 +129,20 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 arrows: boolean;
                 /** Show next / prev arrows only on hover */
                 arrowsHover: boolean;
+                /** Icon pack to use */
+                iconPack: string;
                 /** Icon size */
                 iconSize: string;
                 /** Icon name for previous icon */
                 iconPrev: string;
                 /** Icon name for next icon */
                 iconNext: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the root element in overlay */
+                overlayClass: ClassDefinition;
+                /** Class of the wrapper element of carousel items */
+                wrapperClass: ClassDefinition;
                 /** Class of slider items */
                 itemsClass: ClassDefinition;
                 /** Class of slider items on drag */
@@ -167,10 +167,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 indicatorItemActiveClass: ClassDefinition;
                 /** Class of indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
-                /** Class of carousel item */
-                itemClass: ClassDefinition;
                 /** Role attribute to be passed to the div wrapper for better accessibility */
                 ariaRole: string;
+                /** Class of carousel item */
+                itemClass: ClassDefinition;
                 /** Class of carousel item when is active */
                 itemActiveClass: ClassDefinition;
                 /** Class of carousel item when is clickable */
@@ -205,14 +205,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         collapse?: ComponentConfigBase &
             Partial<{
+                /** Custom animation (transition name) */
+                animation: string;
+                /** Trigger position */
+                position: "bottom" | "top";
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the trigger element */
                 triggerClass: ClassDefinition;
-                /** Trigger position */
-                position: "top" | "bottom";
-                /** Custom animation (transition name) */
-                animation: string;
                 /** Class of the content */
                 contentClass: ClassDefinition;
             }>;
@@ -229,15 +229,11 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Close dropdown on click */
                 closeOnClick: boolean;
                 /** Custom function to format a date into a string */
-                formatter:
-                    | ((date: Date | [] | Date[] | [Date, Date]) => string)
-                    | undefined;
+                formatter: ((date: Date | [] | Date[] | [Date, Date]) => string) | undefined;
                 /** Custom function to parse a string into a date */
-                parser:
-                    | ((date: string) => Date | [] | Date[] | [Date, Date])
-                    | undefined;
+                parser: ((date: string) => Date | [] | Date[] | [Date, Date]) | undefined;
                 /** Date creator function, default is `new Date()` */
-                creator: () => Date;
+                creator: (() => Date);
                 /** Define a list of weeks which can not be selected */
                 unselectableDaysOfWeek: number[];
                 /** Show nearby month days */
@@ -273,7 +269,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
+                teleport: boolean | object | string;
                 /** Accessibility next button aria label */
                 ariaNextLabel: string;
                 /** Class of the root element */
@@ -398,7 +394,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to parse a string into a date */
                 dateParser: ((date: string) => Date) | undefined;
                 /** Date creator function, default is `new Date()` */
-                datetimeCreator: () => Date;
+                datetimeCreator: (() => Date);
                 /** Enable mobile native input if mobile agent */
                 mobileNative: boolean;
                 /** Icon pack to use */
@@ -410,7 +406,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
+                teleport: boolean | object | string;
                 /** Class of the Datepicker wrapper */
                 datepickerWrapperClass: ClassDefinition;
                 /** Class of the Timepicker wrapper */
@@ -419,18 +415,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
         dropdown?: ComponentConfigBase &
             Partial<{
                 /** Max height of dropdown content */
-                maxHeight: string | number;
+                maxHeight: number | string;
                 /** Position of the dropdown relative to the trigger */
-                position:
-                    | "left"
-                    | "right"
-                    | "auto"
-                    | "top"
-                    | "bottom"
-                    | "top-right"
-                    | "top-left"
-                    | "bottom-left"
-                    | "bottom-right";
+                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
                 /** Dropdown content (items) are shown into a modal on mobile */
                 mobileModal: boolean;
                 /** Dropdown content (items) are shown into a modal on desktop */
@@ -451,13 +438,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 closeable: boolean | string[];
                 /** Role attribute to be passed to the list container for better accessibility.
 Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: "dialog" | "menu" | "list" | "listbox";
+                ariaRole: "dialog" | "list" | "listbox" | "menu";
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
+                teleport: boolean | object | string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class when the dropdown is teleported */
@@ -508,16 +495,14 @@ Use menuitem only in situations where your dropdown is related to a navigation m
             }>;
         field?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of file component when on mobile */
-                mobileClass: ClassDefinition;
-                /** Mobile breakpoint as `max-width` value */
-                mobileBreakpoint: string;
                 /** Vertical size of input */
                 labelsize: string;
-                /**  */
+                /** Message element tag name */
                 messageTag: DynamicComponent;
+                /** Mobile breakpoint as `max-width` value */
+                mobileBreakpoint: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
                 /** Class to align label and control in horizontal forms */
                 horizontalClass: ClassDefinition;
                 /** Class for field label when horizontal */
@@ -542,6 +527,8 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 messageClass: ClassDefinition;
                 /** Class of the message field variant */
                 messageVariantClass: ClassDefinition;
+                /** Class of file component when on mobile */
+                mobileClass: ClassDefinition;
                 /** Class for the focused field */
                 focusedClass: ClassDefinition;
                 /** Class for the filled field */
@@ -630,7 +617,7 @@ See icon library documentation for custom classes. */
                 iconSize: string;
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
-                scroll: "keep" | "clip";
+                scroll: "clip" | "keep";
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class for the root element when fullpage */
@@ -648,27 +635,27 @@ but will set body to position fixed, might break some layouts. */
             }>;
         menu?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
                 /** Role attribute to be passed to the list container for better accessibility.
 Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: string;
+                ariaRole: "dialog" | "list" | "menu";
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon size */
                 iconSize: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
                 /** Class of the menu list */
                 listClass: ClassDefinition;
                 /** Class of the menu list label */
                 listLabelClass: ClassDefinition;
                 /** Transition name to apply on menu list */
                 animation: string;
+                /** Menu item tag name */
+                menuTag: DynamicComponent;
                 /** Role attribute to be passed to the list item for better accessibility. */
                 itemAriaRole: string;
                 /** Class of the root element of menu item */
                 itemClass: ClassDefinition;
-                /** Menu item tag name */
-                menuTag: DynamicComponent;
                 /** Class of the menu item */
                 itemButtonClass: ClassDefinition;
                 /** Class of the active menu item */
@@ -683,7 +670,7 @@ Use menu only in situations where your dropdown is related to a navigation menu.
         modal?: ComponentConfigBase &
             Partial<{
                 /** Width of the Modal */
-                width: string | number;
+                width: number | string;
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Show an overlay */
@@ -692,11 +679,11 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                 cancelable: boolean | string[];
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
-                scroll: "keep" | "clip";
+                scroll: "clip" | "keep";
                 /** Trap focus inside the modal */
                 trapFocus: boolean;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
-                ariaRole: "dialog" | "alertdialog";
+                ariaRole: "alertdialog" | "dialog";
                 /** Accessibility aria-label to be passed to the div wrapper element */
                 ariaLabel: string;
                 /** Automatically focus modal when active */
@@ -710,7 +697,7 @@ but will set body to position fixed, might break some layouts. */
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
+                teleport: boolean | object | string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of modal component when its active */
@@ -735,13 +722,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Color of the control */
                 variant: string;
                 /** Which position the notification will appear when programmatically */
-                position:
-                    | "top"
-                    | "bottom"
-                    | "top-right"
-                    | "top-left"
-                    | "bottom-left"
-                    | "bottom-right";
+                position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Icon pack to use */
@@ -781,44 +762,38 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         pagination?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class for the pagination size */
-                sizeClass: ClassDefinition;
-                /** Class of pagination component when on mobile */
-                mobileClass: ClassDefinition;
-                /** Mobile breakpoint as `max-width` value */
-                mobileBreakpoint: string;
+                /** Items count for each page */
+                perPage: number | string;
                 /** Pagination size */
                 size: string;
-                /** Class of the pagination when rounded */
-                roundedClass: ClassDefinition;
+                /** Enable simple style */
+                simple: boolean;
                 /** Enable rounded button style */
                 rounded: boolean;
+                /** Buttons order */
+                order: "centered" | "left" | "right";
+                /** Pagination button tag name */
+                buttonTag: DynamicComponent;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to use for previous button */
                 iconPrev: string;
                 /** Icon to use for next button */
                 iconNext: string;
+                /** Mobile breakpoint as `max-width` value */
+                mobileBreakpoint: string;
                 /** Accessibility label for the next page button. */
                 ariaNextLabel: string;
                 /** Accessibility label for the previous page button. */
                 ariaPreviousLabel: string;
-                /** Class of the pagination list */
-                listClass: ClassDefinition;
-                /** Items count for each page */
-                perPage: string | number;
-                /** Enable simple style */
-                simple: boolean;
-                /** Buttons order */
-                order: string;
-                /** Pagination button tag name */
-                buttonTag: DynamicComponent;
                 /** Accessibility label for the page button. */
                 ariaPageLabel: string;
                 /** Accessibility label for the current page button. */
                 ariaCurrentLabel: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the pagination list */
+                listClass: ClassDefinition;
                 /** Class of the pagination list items */
                 listItemClass: ClassDefinition;
                 /** Class of the link button */
@@ -839,6 +814,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 orderClass: ClassDefinition;
                 /** Class of the pagination in `simple` mode */
                 simpleClass: ClassDefinition;
+                /** Class of the pagination when rounded */
+                roundedClass: ClassDefinition;
+                /** Class for the pagination size */
+                sizeClass: ClassDefinition;
+                /** Class of pagination component when on mobile */
+                mobileClass: ClassDefinition;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
@@ -915,7 +896,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Show an overlay like modal */
                 overlay: boolean;
                 /** Sidebar position */
-                position: "left" | "right" | "top" | "bottom";
+                position: "bottom" | "left" | "right" | "top";
                 /** Show sidebar in fullheight */
                 fullheight: boolean;
                 /** Show sidebar in fullwidth */
@@ -923,7 +904,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Show a small sidebar */
                 reduce: boolean;
                 /** Custom layout on mobile */
-                mobile: "expanded" | "reduced" | "hidden";
+                mobile: "expanded" | "hidden" | "reduced";
                 /** Expand sidebar on hover when reduced or mobile is reduce */
                 expandOnHover: boolean;
                 /** Custom animation (transition name) */
@@ -932,13 +913,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 cancelable: boolean | string[];
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
-                scroll: "keep" | "clip";
+                scroll: "clip" | "keep";
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
+                teleport: boolean | object | string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of sidebar component when its active */
@@ -974,22 +955,22 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         skeleton?: ComponentConfigBase &
             Partial<{
+                /** Show a loading animation */
+                animated: boolean;
+                /** Enable rounded style */
+                rounded: boolean;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of the skeleton size */
-                sizeClass: ClassDefinition;
+                /** Class of the skeleton animation */
+                animationClass: ClassDefinition;
                 /** Class of the skeleton position */
                 positionClass: ClassDefinition;
                 /** Class of the skeleton item */
                 itemClass: ClassDefinition;
-                /** Enable rounded style */
-                rounded: boolean;
-                /** Show a loading animation */
-                animated: boolean;
-                /** Class of the skeleton animation */
-                animationClass: ClassDefinition;
                 /** Class of the skeleton item rounded */
                 itemRoundedClass: ClassDefinition;
+                /** Class of the skeleton size */
+                sizeClass: ClassDefinition;
             }>;
         slider?: ComponentConfigBase &
             Partial<{
@@ -1004,7 +985,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Rounded thumb */
                 rounded: boolean;
                 /** Define v-model format */
-                format: "raw" | "percent";
+                format: "percent" | "raw";
                 /** Accessibility aria-label to to be passed to the slider thumb element. */
                 ariaLabel: string;
                 /** Class of the root element */
@@ -1087,7 +1068,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Apply animation on the initial render */
                 animateInitially: boolean;
                 /** Position of the marker label */
-                labelPosition: "left" | "right" | "bottom";
+                labelPosition: "bottom" | "left" | "right";
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Accessibility next button aria label */
@@ -1131,6 +1112,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 passiveVariant: string;
                 /** Size of the control */
                 size: string;
+                /** Rounded style */
+                rounded: boolean;
+                /** Label position */
+                right: string;
                 /** Same as native autocomplete options to use in HTML5 validation */
                 autocomplete: string;
                 /** Class of the root element */
@@ -1165,7 +1150,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
                 rowKey: string;
                 /** Define individual class for a row */
-                rowClass: (row: Record<string, any>, index: number) => string;
+                rowClass: ((row: unknown, index: number) => string);
                 /** Border to all cells */
                 bordered: boolean;
                 /** Whether table is striped */
@@ -1185,11 +1170,11 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Color of the checkbox when checkable (if checkable) */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
-                isRowCheckable: (row: Record<string, any>) => boolean;
+                isRowCheckable: ((row: unknown) => boolean);
                 /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
                 backendSorting: boolean;
                 /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
-                defaultSort: string | [string, "asc" | "desc"];
+                defaultSort: string | [string, "desc" | "asc"];
                 /** Sets the default sort column direction on the first click */
                 defaultSortDirection: "asc" | "desc";
                 /** Sets the header sorting icon */
@@ -1199,7 +1184,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Icon pack to use */
                 iconPack: string;
                 /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
-                isDetailedVisible: (row: Record<string, any>) => boolean;
+                isDetailedVisible: ((row: unknown) => boolean);
                 /** Allow detail icon and column to be visible (if detailed) */
                 showDetailIcon: boolean;
                 /** Icon name of detail action (if detailed) */
@@ -1209,9 +1194,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Adds pagination to the table */
                 paginated: boolean;
                 /** How many rows per page (if paginated) */
-                perPage: string | number;
+                perPage: number | string;
                 /** Pagination position (if paginated) */
-                paginationPosition: "bottom" | "top" | "both";
+                paginationPosition: "both" | "bottom" | "top";
                 /** Size of pagination (if paginated) */
                 paginationSize: string;
                 /** Enable rounded pagination buttons (if paginated) */
@@ -1219,7 +1204,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Enable simple style pagination (if paginated) */
                 paginationSimple: boolean;
                 /** Pagination buttons order (if paginated) */
-                paginationOrder: "left" | "right" | "centered";
+                paginationOrder: "centered" | "left" | "right";
                 /** Columns won't be filtered with Javascript, use with `searchable` prop to the columns to filter in your backend */
                 backendFiltering: boolean;
                 /** Icon of the column search input */
@@ -1325,8 +1310,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPack: string;
                 /** Tabs item tag name */
                 itemTag: DynamicComponent;
-                /** Role attribute to be passed to the div wrapper for better accessibility */
-                ariaRole: string;
                 /** Class of the tab item */
                 navItemClass: ClassDefinition;
                 /** Class of the nav item when active */
@@ -1427,7 +1410,7 @@ if input is empty */
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
+                teleport: boolean | object | string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of input when expanded */
@@ -1460,7 +1443,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to parse a string into a date */
                 parser: ((date: string) => Date) | undefined;
                 /** time creator function, default is `new Date()` */
-                creator: () => Date;
+                creator: (() => Date);
                 /** Dropdown trapFocus */
                 trapFocus: boolean;
                 /** Enable dropdown mobile modal */
@@ -1478,7 +1461,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | object;
+                teleport: boolean | object | string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the Timepicker component size */
@@ -1502,40 +1485,40 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         tooltip?: ComponentConfigBase &
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the tooltip variant */
-                variantClass: ClassDefinition;
-                /** Class when the dropdown is teleported */
-                teleportClass: ClassDefinition;
-                /** Class of the tooltip trigger */
-                triggerClass: ClassDefinition;
-                /** Class of the tooltip trigger position */
-                positionClass: ClassDefinition;
+                /** Color of the tooltip */
+                variant: string;
                 /** Position of the Tooltip relative to the trigger */
-                position: string;
+                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
                 /** Tooltip default animation */
                 animation: string;
                 /** Tooltip trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Tooltip trigger events */
-                triggers: string[];
+                triggers: ("click" | "contextmenu" | "focus" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
                 closeable: boolean | string[];
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
-                teleport: string | boolean | Record<string, any>;
-                /** Color of the tooltip */
-                variant: string;
-                /** Class of the tooltip arrow */
-                arrowClass: ClassDefinition;
+                teleport: boolean | object | string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class when the dropdown is teleported */
+                teleportClass: ClassDefinition;
                 /** Class of the tooltip content */
                 contentClass: ClassDefinition;
+                /** Class of the tooltip trigger position */
+                positionClass: ClassDefinition;
+                /** Class of the tooltip trigger */
+                triggerClass: ClassDefinition;
                 /** Class of the tooltip content when is multiline */
                 multilineClass: ClassDefinition;
                 /** Class of the tooltip trigger when is always visible */
                 alwaysClass: ClassDefinition;
+                /** Class of the tooltip variant */
+                variantClass: ClassDefinition;
+                /** Class of the tooltip arrow */
+                arrowClass: ClassDefinition;
                 /** Class of the tooltip arrow position */
                 arrowPositionClass: ClassDefinition;
             }>;

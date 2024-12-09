@@ -32,6 +32,7 @@ export function createVueComponentMetaChecker(
         printer: { newLine: 1 },
     };
 
+    console.log("Creating vue-component-meta checker...");
     return createChecker(tsconfigPath, checkerOptions);
 }
 

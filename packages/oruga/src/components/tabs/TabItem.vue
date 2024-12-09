@@ -43,6 +43,7 @@ const itemValue = props.value || useId();
 
 const slots = useSlots();
 
+// provided data is a computed ref to enjure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
@@ -56,7 +57,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
     deactivate,
 }));
 
-// Inject functionalities and data from the parent component
+/** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<TabsComponent>({
     data: providedData,
 });
@@ -171,14 +172,15 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             aria-roledescription="item">
             <!-- 
                 @slot Tab item content
+                @binding {boolean} active - if item is shown 
             -->
             <slot :active="isActive && visible">
-                <!-- injected component -->
-                <component
-                    :is="component"
-                    v-if="component"
-                    v-bind="$props.props"
-                    v-on="$props.events || {}" />
+                    <!-- injected component -->
+                    <component
+                        :is="component"
+                        v-if="component"
+                        v-bind="$props.props"
+                        v-on="$props.events || {}" />
 
                 <!-- default content prop -->
                 <template v-else>{{ content }}</template>
@@ -192,8 +194,9 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             <template v-if="false">
                 <!--
                     @slot Override header label
+                    @binding {boolean} active - if item is shown 
                 -->
-                <slot name="header" />
+                <slot name="header" :active="isActive && visible" />
             </template>
         </div>
     </Transition>

@@ -7,6 +7,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-sidebar />
@@ -14,6 +15,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-sidebar-viewer />
@@ -21,6 +23,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Sidebar component
 
 > A sidebar to use as left/right overlay or static
@@ -68,6 +71,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

@@ -60,12 +60,12 @@ const providedData = computed<MenuItemComponent>(() => ({
     reset,
 }));
 
-// inject functionalities and data from the parent menu component
+/** inject functionalities and data from the parent menu component */
 const { parent, item } = useProviderChild<MenuComponent, MenuItemComponent>({
     data: providedData,
 });
 
-// inject functionalities and data from the parent menu-item component
+/** inject functionalities and data from the parent menu-item component */
 const providedItem = useProviderChild<MenuItemProvider>({
     key: "menu-item",
     needParent: false,
@@ -114,7 +114,7 @@ const provideData = computed<MenuItemProvider>(() => ({
 }));
 
 /** provide functionalities and data to child item components */
-useProviderParent(rootRef, { key: "menu-item", data: provideData });
+useProviderParent({ rootRef, key: "menu-item", data: provideData });
 
 // --- Computed Component Classes ---
 
@@ -146,10 +146,10 @@ const submenuClasses = defineClasses([
 <template>
     <li
         ref="rootElement"
-        :role="ariaRole"
-        :class="itemClasses"
-        :data-id="identifier"
         data-oruga="menu-item"
+        :data-id="identifier"
+        :class="itemClasses"
+        :role="ariaRole"
         aria-roledescription="item">
         <component
             :is="tag"

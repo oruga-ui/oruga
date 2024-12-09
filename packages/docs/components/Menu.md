@@ -11,6 +11,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-menu />
@@ -18,6 +19,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-menu-viewer />
@@ -25,6 +27,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Menu component
 
 > A simple menu
@@ -56,6 +59,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## MenuItem component
 
 > A menu list item
@@ -97,6 +101,7 @@ sidebarDepth: 2
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

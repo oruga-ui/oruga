@@ -7,6 +7,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Examples
 
 <example-tooltip />
@@ -14,6 +15,7 @@
 </div>
 
 <div class="vp-example">
+
 ## Class props
 
 <inspector-tooltip-viewer />
@@ -21,6 +23,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Tooltip component
 
 > Display a brief helper text to your user
@@ -66,6 +69,7 @@
 </div>
 
 <div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-oruga">

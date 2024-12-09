@@ -46,7 +46,8 @@ const provideData = computed<MenuComponent>(() => ({
 }));
 
 /** provide functionalities and data to child item components */
-const { childItems } = useProviderParent<MenuItemComponent>(rootRef, {
+const { childItems } = useProviderParent<MenuItemComponent>({
+    rootRef,
     data: provideData,
 });
 
