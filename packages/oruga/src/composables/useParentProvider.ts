@@ -17,13 +17,13 @@ import { useSequentialId } from "./useSequentialId";
 
 export type ProviderItem<T = unknown> = {
     index: number;
-    data?: ComputedRef<T>;
+    data?: T;
     identifier: string;
 };
 
 type PovidedData<P, I = unknown> = {
-    registerItem: (data?: ComputedRef<I>) => ProviderItem<I>;
-    unregisterItem: (item: ProviderItem<I>) => void;
+    registerItem: (data?: ComputedRef<I>) => ProviderItem<ComputedRef<I>>;
+    unregisterItem: (item: ProviderItem) => void;
     data?: ComputedRef<P>;
 };
 
@@ -50,7 +50,7 @@ type ProviderParentOptions<T = unknown> = {
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     options?: ProviderParentOptions<ParentData>,
 ): {
-    childItems: Ref<UnwrapNestedRefs<ProviderItem<ItemData>[]>>;
+    childItems: Ref<ProviderItem<ItemData>[]>;
 } {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
@@ -102,19 +102,19 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
 
     function registerItem(
         data?: ComputedRef<ItemData>,
-    ): ProviderItem<ItemData> {
+    ): ProviderItem<ComputedRef<ItemData>> {
         const index = childItems.value.length;
         const identifier = nextSequence();
         const item = { index, data, identifier };
         // add new item to the child list
         childItems.value = [
             ...childItems.value,
-            item as UnwrapNestedRefs<typeof item>,
-        ];
+            item,
+        ] as ProviderItem<ItemData>[];
         return item;
     }
 
-    function unregisterItem(item: ProviderItem): void {
+    function unregisterItem(item: UnwrapNestedRefs<ProviderItem>): void {
         childItems.value = childItems.value.filter((i) => i !== item);
     }
 
@@ -126,7 +126,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     });
 
     return {
-        childItems,
+        childItems: childItems as Ref<ProviderItem<ItemData>[]>,
     };
 }
 
@@ -232,7 +232,9 @@ export function useProviderChild<ParentData, ItemData = unknown>(
     const item = ref<ProviderItem<ItemData>>();
 
     if (parent && options.register)
-        item.value = parent.registerItem(options?.data);
+        item.value = parent.registerItem(
+            options?.data,
+        ) as ProviderItem<ItemData>;
 
     onUnmounted(() => {
         if (parent && item.value) parent.unregisterItem(item.value);
