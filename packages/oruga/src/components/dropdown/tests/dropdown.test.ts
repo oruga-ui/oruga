@@ -59,7 +59,7 @@ describe("Dropdown tests", () => {
         };
 
         const wrapper = mount(component, {
-            props: { options: simpleOptions },
+            props: { options: simpleOptions, selectable: true },
         });
         await nextTick(); // await dropdown item rendered
 

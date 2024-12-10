@@ -30,7 +30,7 @@ describe("Dropdown axe tests", () => {
         },
         {
             title: "axe dropdown - active",
-            props: { options, active: true, ariaLabel: "accessiblle-name" },
+            props: { options, active: true },
         },
         {
             title: "axe dropdown - selectable",
@@ -72,7 +72,7 @@ describe("Dropdown axe tests", () => {
         },
         {
             title: "axe dropdown - inline",
-            props: { options, inline: true, ariaLabel: "accessiblle-name" },
+            props: { options, inline: true },
         },
         {
             title: "axe dropdown - position",

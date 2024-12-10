@@ -4,6 +4,7 @@ import type { DropdownItemProps } from "./props";
 export type DropdownComponent<T> = {
     disabled: boolean;
     multiple: boolean;
+    selectable: boolean;
     menuId: string;
     selected: T | T[] | undefined;
     focsuedIdentifier: string | undefined;

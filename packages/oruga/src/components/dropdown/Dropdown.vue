@@ -122,6 +122,7 @@ const menuRef = ref<HTMLElement | Component>();
 const provideData = computed<DropdownComponent<T>>(() => ({
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
+    selectable: props.selectable,
     menuId: props.menuId,
     selected: vmodel.value,
     focsuedIdentifier: focusedItem.value?.identifier,
@@ -582,11 +583,13 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     :tabindex="inline ? 0 : -1"
                     :class="menuClasses"
                     :style="menuStyle"
-                    role="listbox"
+                    :role="selectable ? 'listbox' : 'menu'"
                     :aria-labelledby="labelId"
                     :aria-label="ariaLabel"
                     :aria-hidden="!inline && (disabled || !isActive)"
-                    :aria-multiselectable="selectable && isTrueish(multiple)"
+                    :aria-multiselectable="
+                        selectable ? isTrueish(multiple) : undefined
+                    "
                     @keydown.enter.prevent="inline && onEnter($event)"
                     @keydown.space.prevent="inline && onEnter($event)"
                     @keydown.up.prevent="inline && onUpPressed($event)"
