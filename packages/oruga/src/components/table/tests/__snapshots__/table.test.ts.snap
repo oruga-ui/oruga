@@ -17,7 +17,7 @@ exports[`OTable tests > render correctly 1`] = `
   <!--v-if-->
   <!--v-if-->
   <div class="o-table__wrapper">
-    <table class="o-table o-table--table__empty">
+    <table class="o-table o-table--empty">
       <!--v-if-->
       <!--v-if-->
       <tbody>
@@ -26,6 +26,7 @@ exports[`OTable tests > render correctly 1`] = `
             <!--
                                 @slot Define content if table is empty
                             -->
+            <!--v-if-->
           </td>
         </tr>
       </tbody>

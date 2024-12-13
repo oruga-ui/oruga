@@ -1,15 +1,30 @@
-<script setup lang="ts" generic="T extends string | number | object">
-import { computed, toValue, nextTick, ref, watch, type PropType } from "vue";
+<script setup lang="ts" generic="T">
+import {
+    computed,
+    toValue,
+    nextTick,
+    ref,
+    watch,
+    watchEffect,
+    useTemplateRef,
+} from "vue";
 
+import OStepItem from "../steps/StepItem.vue";
 import OButton from "../button/Button.vue";
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDefined } from "@/utils/helpers";
-import { defineClasses, useProviderParent, useMatchMedia } from "@/composables";
+import {
+    defineClasses,
+    normalizeOptions,
+    useProviderParent,
+    useMatchMedia,
+    useSequentialId,
+} from "@/composables";
 
 import type { StepItem, StepItemComponent, StepsComponent } from "./types";
-import type { ComponentClass, ClassBind } from "@/types";
+import type { StepsProps } from "./props";
 
 /**
  * Responsive horizontal process steps
@@ -23,252 +38,92 @@ defineOptions({
     configField: "steps",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The selected item value
-     * @type string|number|object
-     */
-    modelValue: {
-        type: [String, Number, Object] as PropType<T>,
-        default: undefined,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("steps.variant"),
-    },
-    /**
-     * Step size
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("steps.size"),
-    },
-    /** Show step in vertical layout */
-    vertical: { type: Boolean, default: false },
-    /**
-     * Position of the step
-     * @values left, centered, right
-     */
-    position: {
-        type: String,
-        default: undefined,
-        validator: (value: string) =>
-            ["left", "centered", "right"].indexOf(value) >= 0,
-    },
-    /**
-     * Icon pack to use for the navigation
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("steps.iconPack"),
-    },
-    /** Icon to use for navigation button */
-    iconPrev: {
-        type: String,
-        default: () => getOption("steps.iconPrev", "chevron-left"),
-    },
-    /** Icon to use for navigation button */
-    iconNext: {
-        type: String,
-        default: () => getOption("steps.iconNext", "chevron-right"),
-    },
-    /**
-     * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
-     */
-    hasNavigation: { type: Boolean, default: true },
-    /** Destroy stepItem on hide */
-    destroyOnHide: { type: Boolean, default: false },
-    /** Step navigation is animated */
-    animated: {
-        type: Boolean,
-        default: () => getOption("steps.animated", true),
-    },
-    /**
-     * Transition animation name
-     * @values [next, prev], [right, left, down, up]
-     */
-    animation: {
-        type: Array as PropType<Array<string>>,
-        default: () =>
-            getOption("steps.animation", [
-                "slide-next",
-                "slide-prev",
-                "slide-down",
-                "slide-up",
-            ]),
-        validator: (value: Array<string>) =>
-            value.length === 2 || value.length === 4,
-    },
-    /** Apply animation on the initial render */
-    animateInitially: {
-        type: Boolean,
-        default: () => getOption("steps.animateInitially", false),
-    },
-    /**
-     * Position of the marker label
-     * @values bottom, right, left
-     */
-    labelPosition: {
-        type: String,
-        default: () => getOption("steps.labelPosition", "bottom"),
-        validator: (value: string) =>
-            ["bottom", "right", "left"].indexOf(value) > -1,
-    },
-    /** Rounded step markers */
-    rounded: { type: Boolean, default: true },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("steps.mobileBreakpoint"),
-    },
-    /** Accessibility next button aria label */
-    ariaNextLabel: {
-        type: String,
-        default: () => getOption("steps.ariaNextLabel"),
-    },
-    /** Accessibility previous button aria label  */
-    ariaPreviousLabel: {
-        type: String,
-        default: () => getOption("steps.ariaPreviousLabel"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Size of the steps */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip trigger */
-    verticalClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component when is vertical and its position changes */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the steps container */
-    stepsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of Steps component when animation gets triggered */
-    animatedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps markers trigger when are rounded */
-    stepMarkerRoundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component dividers */
-    stepDividerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component marker */
-    stepMarkerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component content */
-    stepContentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component content when transition is happening */
-    stepContentTransitioningClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component navigation element */
-    stepNavigationClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component link */
-    stepLinkClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Steps component link when clickable */
-    stepLinkClickableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Step component link label */
-    stepLinkLabelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Step component link label when positioned */
-    stepLinkLabelPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of steps component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+type ModelValue = StepsProps<T>["modelValue"];
+
+const props = withDefaults(defineProps<StepsProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    options: undefined,
+    variant: () => getDefault("steps.variant"),
+    size: () => getDefault("steps.size"),
+    vertical: false,
+    position: undefined,
+    iconPack: () => getDefault("steps.iconPack"),
+    iconPrev: () => getDefault("steps.iconPrev", "chevron-left"),
+    iconNext: () => getDefault("steps.iconNext", "chevron-right"),
+    hasNavigation: true,
+    destroyOnHide: false,
+    animated: () => getDefault("steps.animated", true),
+    animation: () =>
+        getDefault("steps.animation", [
+            "slide-next",
+            "slide-prev",
+            "slide-down",
+            "slide-up",
+        ]),
+    animateInitially: () => getDefault("steps.animateInitially", false),
+    labelPosition: () => getDefault("steps.labelPosition", "bottom"),
+    rounded: true,
+    mobileBreakpoint: () => getDefault("steps.mobileBreakpoint"),
+    ariaNextLabel: () => getDefault("steps.ariaNextLabel", "Next"),
+    ariaPreviousLabel: () => getDefault("steps.ariaPreviousLabel", "Previous"),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on step change event
-     * @param value {string | number | object} new step value
-     * @param value {string | number | object} old step value
+     * @param value {T} new step value
+     * @param value {T} old step value
      */
-    (e: "change", newValue: T, oldValue: T): void;
+    change: [newValue: ModelValue, oldValue: ModelValue];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
-// Provided data is a computed ref to enjure reactivity.
-const provideData = computed<StepsComponent<T>>(() => ({
-    activeValue: vmodel.value,
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
+
+// provided data is a computed ref to enjure reactivity
+const provideData = computed<StepsComponent>(() => ({
+    activeIndex: activeItem.value?.index || 0,
+    labelPosition: props.labelPosition,
     vertical: props.vertical,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
     destroyOnHide: props.destroyOnHide,
+    variant: props.variant,
 }));
 
-/** Provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<StepItemComponent>(rootRef, {
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent<StepItemComponent<T>>({
+    rootRef,
     data: provideData,
 });
 
-const items = computed<StepItem[]>(() =>
-    sortedItems.value.map((column) => ({
+const items = computed<StepItem<T>[]>(() => {
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
-        ...toValue(column.data),
-    })),
-);
+        ...toValue(column.data!),
+    }));
+});
 
-const vmodel = defineModel<T>({ default: undefined });
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
+/** normalized programamtic options */
+const groupedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 /** When v-model is changed set the new active step. */
 watch(
@@ -278,12 +133,17 @@ watch(
     },
 );
 
-const activeItem = computed(() =>
-    isDefined(vmodel.value)
+const activeItem = ref<StepItem<T>>(
+    items.value.find((item) => item.value === props.modelValue) ||
+        items.value[0],
+);
+
+watchEffect(() => {
+    activeItem.value = isDefined(vmodel.value)
         ? items.value.find((item) => item.value === vmodel.value) ||
           items.value[0]
-        : items.value[0],
-);
+        : items.value[0];
+});
 
 const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
@@ -297,10 +157,14 @@ const hasNext = computed(() => !!nextItem.value);
 
 /** Retrieves the previous visible item */
 const prevItem = computed(() => {
-    if (!activeItem.value) return null;
+    if (!activeItem.value) return undefined;
 
-    let prevItem = null;
-    for (let idx = items.value.indexOf(activeItem.value) - 1; idx >= 0; idx--) {
+    let prevItem: StepItem<T> | undefined;
+    let idx =
+        items.value.findIndex(
+            (item) => item.identifier === activeItem.value.identifier,
+        ) - 1;
+    for (; idx >= 0; idx--) {
         if (items.value[idx].visible) {
             prevItem = items.value[idx];
             break;
@@ -311,8 +175,12 @@ const prevItem = computed(() => {
 
 /** Retrieves the next visible item */
 const nextItem = computed(() => {
-    let nextItem = null;
-    let idx = activeItem.value ? items.value.indexOf(activeItem.value) + 1 : 0;
+    let nextItem: StepItem<T> | undefined;
+    let idx = activeItem.value
+        ? items.value.findIndex(
+              (item) => item.identifier === activeItem.value.identifier,
+          ) + 1
+        : 0;
     for (; idx < items.value.length; idx++) {
         if (items.value[idx].visible) {
             nextItem = items.value[idx];
@@ -323,7 +191,7 @@ const nextItem = computed(() => {
 });
 
 /** Return if the step should be clickable or not. */
-function isItemClickable(item: StepItem): boolean {
+function isItemClickable(item: StepItem<T>): boolean {
     if (item.clickable === undefined)
         return item.index < activeItem.value?.index;
     return item.clickable;
@@ -331,25 +199,25 @@ function isItemClickable(item: StepItem): boolean {
 
 /** Previous button click listener. */
 function prev(): void {
-    if (hasPrev.value) itemClick(prevItem.value);
+    if (hasPrev.value && prevItem.value) itemClick(prevItem.value);
 }
 
 /** Previous button click listener. */
 function next(): void {
-    if (hasNext.value) itemClick(nextItem.value);
+    if (hasNext.value && nextItem.value) itemClick(nextItem.value);
 }
 
 /** Item click listener, emit input event and change active child. */
-function itemClick(item: StepItem): void {
+function itemClick(item: StepItem<T>): void {
     if (vmodel.value !== item.value) performAction(item.value as T);
 }
 
 /** Activate next child and deactivate prev child */
-function performAction(newId: T): void {
-    const oldId = activeItem.value.value;
+function performAction(newValue: T): void {
+    const oldValue = activeItem.value.value;
     const oldItem = activeItem.value;
     const newItem =
-        items.value.find((item) => item.value === newId) || items.value[0];
+        items.value.find((item) => item.value === newValue) || items.value[0];
 
     if (oldItem && newItem) {
         oldItem.deactivate(newItem.index);
@@ -357,15 +225,15 @@ function performAction(newId: T): void {
     }
 
     nextTick(() => {
-        vmodel.value = newId;
-        emits("change", newId, oldId as T);
+        vmodel.value = newValue;
+        emits("change", newValue, oldValue as T);
     });
 }
 
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-steps__wrapper"],
+    ["rootClass", "o-steps"],
     [
         "sizeClass",
         "o-steps--",
@@ -373,138 +241,101 @@ const rootClasses = defineClasses(
         computed(() => !!props.size),
     ],
     [
+        "variantClass",
+        "o-steps--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+    [
         "verticalClass",
-        "o-steps__wrapper-vertical",
+        "o-steps--vertical",
         null,
         computed(() => props.vertical),
     ],
     [
         "positionClass",
-        "o-steps__wrapper-position-",
+        "o-steps-position-",
         computed(() => props.position),
-        computed(() => props.position && props.vertical),
+        computed(() => !!props.position && props.vertical),
     ],
     ["mobileClass", "o-steps--mobile", null, isMobile],
 );
 
-const wrapperClasses = defineClasses(
-    ["stepsClass", "o-steps"],
+const navClasses = defineClasses(
+    ["navClass", "o-steps__nav"],
     [
         "animatedClass",
-        "o-steps--animated",
+        "o-steps__nav--animated",
         null,
         computed(() => props.animated),
     ],
 );
 
-const stepDividerClasses = defineClasses([
-    "stepDividerClass",
-    "o-steps__divider",
-]);
+const dividerClasses = defineClasses(["dividerClass", "o-steps__divider"]);
 
-const stepMarkerClasses = defineClasses(
-    ["stepMarkerClass", "o-steps__marker"],
+const markerClasses = defineClasses(
+    ["markerClass", "o-steps__marker"],
     [
-        "stepMarkerRoundedClass",
+        "markerRoundedClass",
         "o-steps__marker--rounded",
         null,
         computed(() => props.rounded),
     ],
 );
 
-const stepContentClasses = defineClasses(
-    ["stepContentClass", "o-steps__content"],
+const contentClasses = defineClasses(
+    ["contentClass", "o-steps__content"],
     [
-        "stepContentTransitioningClass",
+        "transitioningClass",
         "o-steps__content-transitioning",
         null,
         isTransitioning,
     ],
 );
 
-const stepNavigationClasses = defineClasses([
-    "stepNavigationClass",
+const navigationClasses = defineClasses([
+    "navigationClass",
     "o-steps__navigation",
 ]);
-
-const stepLinkLabelClasses = defineClasses([
-    "stepLinkLabelClass",
-    "o-steps__title",
-]);
-
-function stepLinkClasses(childItem: StepItem): ClassBind[] {
-    const classes = defineClasses(
-        ["stepLinkClass", "o-steps__link"],
-        [
-            "stepLinkLabelPositionClass",
-            "o-steps__link-label-",
-            props.labelPosition,
-            !!props.labelPosition,
-        ],
-        [
-            "stepLinkClickableClass",
-            "o-steps__link-clickable",
-            null,
-            isItemClickable(childItem),
-        ],
-    );
-
-    return classes.value;
-}
-
-function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
-    const classes = defineClasses(
-        ["itemHeaderClass", "o-steps__nav-item"],
-        [
-            "itemHeaderVariantClass",
-            "o-steps__nav-item--",
-            childItem.variant || props.variant,
-            !!childItem.variant || !!props.variant,
-        ],
-        [
-            "itemHeaderActiveClass",
-            "o-steps__nav-item-active",
-            null,
-            childItem.value === activeItem.value.value,
-        ],
-        [
-            "itemHeaderPreviousClass",
-            "o-steps__nav-item-previous",
-            null,
-            activeItem.value.index > childItem.index,
-        ],
-    );
-
-    const headerClass = { [childItem.headerClass || ""]: true };
-    return [headerClass, ...classes.value];
-}
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="steps">
-        <ol :class="wrapperClasses">
+    <div ref="rootElement" :class="rootClasses" data-oruga="steps">
+        <ol
+            :class="navClasses"
+            role="tablist"
+            :aria-orientation="vertical ? 'vertical' : 'horizontal'">
             <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
+                :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
+                :class="childItem.navClasses"
+                :role="childItem.ariaRole"
                 :aria-current="
                     childItem.value === activeItem.value ? 'step' : undefined
                 "
-                :class="itemClasses(childItem)">
-                <span v-if="index > 0" :class="stepDividerClasses"> </span>
+                :aria-controls="`tabpanel-${childItem.identifier}`"
+                :aria-selected="childItem.value === activeItem.value">
+                <span v-if="index > 0" :class="dividerClasses" />
 
                 <component
                     :is="childItem.tag"
                     role="button"
                     :tabindex="isItemClickable(childItem) ? 0 : null"
-                    :class="stepLinkClasses(childItem)"
+                    :class="childItem.classes"
                     @click="isItemClickable(childItem) && itemClick(childItem)"
                     @keydown.enter="
                         isItemClickable(childItem) && itemClick(childItem)
-                    ">
-                    <div :class="stepMarkerClasses">
+                    "
+                    @keydown.left.prevent="prev"
+                    @keydown.right.prevent="next"
+                    @keydown.up.prevent="prev"
+                    @keydown.down.prevent="next">
+                    <div :class="markerClasses">
                         <o-icon
                             v-if="childItem.icon"
+                            :class="childItem.iconClasses"
                             :icon="childItem.icon"
                             :pack="childItem.iconPack"
                             :size="size" />
@@ -513,18 +344,26 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
                         </span>
                     </div>
 
-                    <div :class="stepLinkLabelClasses">
+                    <div :class="childItem.labelClasses">
                         {{ childItem.label }}
                     </div>
                 </component>
             </li>
         </ol>
 
-        <section :class="stepContentClasses">
+        <section :class="contentClasses">
             <!--
                 @slot Place step items here
             -->
-            <slot />
+            <slot>
+                <o-step-item
+                    v-for="option in groupedOptions"
+                    v-show="!option.hidden"
+                    v-bind="option.attrs"
+                    :key="option.key"
+                    :value="option.value"
+                    :label="option.label" />
+            </slot>
         </section>
 
         <!--
@@ -536,7 +375,7 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
             name="navigation"
             :previous="{ disabled: !hasPrev, action: prev }"
             :next="{ disabled: !hasNext, action: next }">
-            <nav v-if="hasNavigation" :class="stepNavigationClasses">
+            <nav v-if="hasNavigation" :class="navigationClasses">
                 <o-button
                     role="button"
                     :icon-left="iconPrev"

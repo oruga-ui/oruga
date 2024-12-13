@@ -11,6 +11,9 @@ import LongHeaderCode from "./long-header.vue?raw";
 import Vertical from "./vertical.vue";
 import VerticalCode from "./vertical.vue?raw";
 
+import Expanded from "./expanded.vue";
+import ExpandedCode from "./expanded.vue?raw";
+
 import Types from "./types.vue";
 import TypesCode from "./types.vue?raw";
 
@@ -30,6 +33,9 @@ import SizesCode from "./sizes.vue?raw";
 
     <h3 id="position">Position</h3>
     <ExampleViewer :component="Position" :code="PositionCode" />
+
+    <h3 id="expanded">Expanded</h3>
+    <ExampleViewer :component="Expanded" :code="ExpandedCode" />
 
     <h3 id="sizes">Sizes</h3>
     <ExampleViewer :component="Sizes" :code="SizesCode" />

@@ -7,6 +7,7 @@
 $whitelist: () !default;
 $css-vars: true !default;
 $prefix: "oruga-" !default;
+$enable-host: false !default;
 
 // Animations
 $speed: 300ms !default;
@@ -45,8 +46,9 @@ $base-disabled-opacity: 0.5 !default;
 
 $control-border-width: 1px !default;
 $control-height: 2.25em !default;
-$control-padding-vertical: calc(0.375em - #{$control-border-width});
-$control-padding-horizontal: calc(0.625em - #{$control-border-width});
+$control-padding-vertical: calc(0.25em - #{$control-border-width});
+$control-padding-horizontal: calc(1em - #{$control-border-width});
+$control-box-shadow: inset 0 1px 2px hsla(0, 0%, 4%, 0.1);
 
 // Sizes
 $sizes: (

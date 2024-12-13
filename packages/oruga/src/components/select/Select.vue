@@ -1,21 +1,27 @@
-<script
-    setup
-    lang="ts"
-    generic="
-        T extends string | number | object,
-        IsMultiple extends boolean = false
-    ">
-import { computed, watch, onMounted, ref, nextTick } from "vue";
+<script setup lang="ts" generic="T, IsMultiple extends boolean = false">
+import {
+    computed,
+    watch,
+    nextTick,
+    useAttrs,
+    useId,
+    useTemplateRef,
+} from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
-import { isDefined, isTrueish, uuid } from "@/utils/helpers";
-import { defineClasses, useInputHandler } from "@/composables";
+import { getDefault } from "@/utils/config";
+import { isDefined, isTrueish } from "@/utils/helpers";
+import {
+    defineClasses,
+    isGroupOption,
+    normalizeOptions,
+    useInputHandler,
+    useSequentialId,
+} from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { OptionsItem } from "./types";
 import type { SelectProps } from "./props";
 
 /**
@@ -30,68 +36,68 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = SelectProps<T, IsMultiple>["modelValue"];
+
 const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     override: undefined,
-    modelValue: null,
+    modelValue: undefined,
     // multiple: false,
     options: undefined,
-    size: () => getOption("select.size"),
-    variant: () => getOption("select.variant"),
+    size: () => getDefault("select.size"),
+    variant: () => getDefault("select.variant"),
     placeholder: undefined,
     disabled: false,
     required: false,
     expanded: false,
     rounded: false,
     nativeSize: undefined,
-    iconPack: () => getOption("select.iconPack", undefined),
-    icon: () => getOption("select.icon", undefined),
+    iconPack: () => getDefault("select.iconPack"),
+    icon: () => getDefault("select.icon"),
     iconClickable: false,
-    iconRight: () => getOption("select.iconRight", undefined),
+    iconRight: () => getDefault("select.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    id: uuid(),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
-    validationMessage: undefined,
-    autocomplete: () => getOption("select.autocomplete", "off"),
-    statusIcon: () => getOption("statusIcon", true),
+    id: () => useId(),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
+    customValidation: "",
+    autocomplete: () => getDefault("select.autocomplete", "off"),
+    statusIcon: () => getDefault("statusIcon", true),
 });
-
-type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object | array} updated modelValue prop
+     * @param value {T | T[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
-const selectRef = ref<HTMLInputElement>();
+const selectRef = useTemplateRef("selectElement");
 
 // use form input functionality
 const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
@@ -100,46 +106,48 @@ const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-// if id is given set as `for` property on o-field wrapper
+// if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
 
 const vmodel = defineModel<ModelValue>({
-    get: (v) => (isDefined(v) ? v : props.multiple ? [] : ""),
-    set: (v) => (isDefined(v) ? v : props.multiple ? [] : null),
-    default: null,
+    get: (value) =>
+        typeof value !== "undefined"
+            ? value
+            : ((props.multiple ? [] : "") as ModelValue),
+    set: (value) =>
+        typeof value !== "undefined"
+            ? value
+            : ((props.multiple ? [] : undefined) as ModelValue),
+    default: undefined,
 });
+
+/**
+ * When v-model is changed:
+ *  1. Set parent field filled state.
+ *  2. Check html5 valdiation
+ */
+watch(
+    vmodel,
+    (value) => {
+        if (parentField?.value) parentField.value.setFilled(!!value);
+        if (!isValid.value) checkHtml5Validity();
+    },
+    { immediate: true, flush: "post" },
+);
+
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
+/** normalized programamtic options */
+const normalizedptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 const placeholderVisible = computed(
     () =>
         !isTrueish(props.multiple) &&
         (!isDefined(vmodel.value) || vmodel.value === ""),
 );
-
-onMounted(() => {
-    /**
-     * When v-model is changed:
-     *  1. Set parent field filled state.
-     *  2. Check html5 valdiation
-     */
-    watch(
-        vmodel,
-        (value) => {
-            if (parentField?.value) parentField.value.setFilled(!!value);
-            if (!isValid.value) checkHtml5Validity();
-        },
-        { immediate: true, flush: "post" },
-    );
-});
-
-const selectOptions = computed<OptionsItem<T>[]>(() => {
-    if (!props.options || !Array.isArray(props.options)) return [];
-
-    return props.options.map((option) =>
-        typeof option === "string"
-            ? { value: option, label: option, key: uuid() }
-            : { ...option, key: uuid() },
-    );
-});
 
 // --- Icon Feature ---
 
@@ -155,7 +163,7 @@ const rightIcon = computed(() =>
 
 const rightIconVariant = computed(() =>
     props.iconRight
-        ? props.iconRightVariant || props.variant || null
+        ? props.iconRightVariant || props.variant
         : statusVariant.value,
 );
 
@@ -173,6 +181,13 @@ function rightIconClick(event: Event): void {
 }
 
 // --- Computed Component Classes ---
+
+const attrs = useAttrs();
+
+const inputBind = computed(() => ({
+    ...parentField?.value?.inputAttrs,
+    ...attrs,
+}));
 
 const rootClasses = defineClasses(
     ["rootClass", "o-ctrl-sel"],
@@ -260,9 +275,9 @@ defineExpose({ focus: setFocus, value: vmodel });
             @click="leftIconClick($event)" />
 
         <select
-            v-bind="$attrs"
+            v-bind="inputBind"
             :id="id"
-            ref="selectRef"
+            ref="selectElement"
             v-model="vmodel"
             data-oruga-input="select"
             :class="selectClasses"
@@ -289,13 +304,32 @@ defineExpose({ focus: setFocus, value: vmodel });
                 @slot Override the options, default is options prop
             -->
             <slot>
-                <option
-                    v-for="option in selectOptions"
-                    :key="option.key"
-                    :value="option.value"
-                    v-bind="option.attrs">
-                    {{ option.label }}
-                </option>
+                <template v-for="option in normalizedptions" :key="option.key">
+                    <optgroup
+                        v-if="isGroupOption(option)"
+                        v-show="!option.hidden"
+                        v-bind="option.attrs"
+                        :label="option.group">
+                        <option
+                            v-for="_option in option.options"
+                            v-show="!_option.hidden"
+                            v-bind="_option.attrs"
+                            :key="_option.key"
+                            :value="_option.value"
+                            :selected="option.value === vmodel">
+                            {{ _option.label }}
+                        </option>
+                    </optgroup>
+
+                    <option
+                        v-else
+                        v-show="!option.hidden"
+                        v-bind="option.attrs"
+                        :value="option.value"
+                        :selected="option.value === vmodel">
+                        {{ option.label }}
+                    </option>
+                </template>
             </slot>
         </select>
 

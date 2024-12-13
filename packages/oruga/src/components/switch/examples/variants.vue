@@ -9,6 +9,13 @@
         </o-field>
 
         <o-field>
+            <o-switch
+                :model-value="true"
+                variant="secondary"
+                label="Secondary" />
+        </o-field>
+
+        <o-field>
             <o-switch :model-value="true" variant="info" label="Info" />
         </o-field>
 

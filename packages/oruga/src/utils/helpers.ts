@@ -1,9 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
-
-/**
- * Generates a random string
- */
-export const uuid = (): string => Math.random().toString(36).substring(2, 15);
+import type { DeepType } from "@/types";
 
 /**
  * +/- function to native math sign
@@ -22,6 +18,9 @@ export const sign = Math.sign || signPoly;
  */
 export const mod = (n: number, mod: number): number => ((n % mod) + mod) % mod;
 
+/** add a prefix `0` to a 1 digit number */
+export const pad = (value: number): string => (value < 10 ? "0" : "") + value;
+
 /**
  * Asserts a value is beetween min and max
  * @param val
@@ -33,14 +32,23 @@ export function bound(val: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, val));
 }
 
-export const isObject = (value: unknown): boolean =>
-    value && typeof value === "object" && !Array.isArray(value);
+/**
+ * checks if the value is of type object
+ */
+export const isObject = (value: unknown): value is object =>
+    !!value && typeof value === "object" && !Array.isArray(value);
 
+/**
+ * checks if the value is of type date
+ */
 export const isDate = (value: unknown): value is Date =>
-    value && value instanceof Date && !isNaN(value.getTime());
+    !!value && value instanceof Date && !isNaN(value.getTime());
 
-export const isDefined = (value: unknown): boolean =>
-    value !== null && value !== undefined;
+/**
+ * checks if the value is not null or undefined
+ */
+export const isDefined = <T>(value: T | undefined | null): value is T =>
+    value !== null && typeof value !== "undefined";
 
 /**
  * Determines if the value of a prop that is either present (true) or not
@@ -54,7 +62,7 @@ export const isDefined = (value: unknown): boolean =>
 export const isTrueish = (value: unknown): boolean =>
     isDefined(value) && value !== "false" && value !== false;
 
-export const blankIfUndefined = (value: string): string =>
+export const blankIfUndefined = (value: string | null | undefined): string =>
     isDefined(value) ? value : "";
 
 export const defaultIfUndefined = <T>(
@@ -62,21 +70,15 @@ export const defaultIfUndefined = <T>(
     defaultValue: T,
 ): T => (isDefined(value) ? value : defaultValue);
 
-export const toCssDimension = (width: string | number): string | number =>
-    !isDefined(width) ? null : isNaN(width as number) ? width : width + "px";
-
-/**
- * Extension of indexOf method by equality function if specified
- */
-export function indexOf<T>(
-    array: T[],
-    obj: T,
-    fn: (value: T, array: T[]) => boolean,
-): number {
-    if (!array) return -1;
-    if (!fn || typeof fn !== "function") return array.indexOf(obj);
-    return array.findIndex((value, index, arr) => fn(value, arr));
-}
+export const toCssDimension = (
+    width: string | number | undefined,
+    dimension: string = "px",
+): string | undefined =>
+    !isDefined(width)
+        ? undefined
+        : isNaN(width as number)
+          ? String(width)
+          : String(width) + dimension;
 
 /**
  * Sort an array by key without mutating original data.
@@ -85,18 +87,18 @@ export function indexOf<T>(
 export function sortBy<T>(
     array: T[],
     key: string,
-    fn: (a: T, b: T, asc: boolean) => number,
-    isAsc: boolean,
+    fn?: (a: T, b: T, asc: boolean) => number,
+    isAsc: boolean = false,
 ): T[] {
-    let sorted = [];
+    let sorted: T[] = [];
     // Sorting without mutating original data
     if (fn && typeof fn === "function") {
         sorted = [...array].sort((a, b) => fn(a, b, isAsc));
     } else {
         sorted = [...array].sort((a, b) => {
             // Get nested values from objects
-            let newA = getValueByPath(a, key);
-            let newB = getValueByPath(b, key);
+            let newA: any = isObject(a) ? getValueByPath(a, key) : a;
+            let newB: any = isObject(b) ? getValueByPath(b, key) : b;
 
             // sort boolean type
             if (typeof newA === "boolean" && typeof newB === "boolean") {
@@ -168,14 +170,14 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
  * Returns true if it is a DOM element
  * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
  */
-export function isElement(o: any): boolean {
+export function isElement(el: any): el is Element {
     return typeof HTMLElement === "object"
-        ? o instanceof HTMLElement //DOM2
-        : o &&
-              typeof o === "object" &&
-              o !== null &&
-              o.nodeType === 1 &&
-              typeof o.nodeName === "string";
+        ? el instanceof HTMLElement //DOM2
+        : el &&
+              typeof el === "object" &&
+              el !== null &&
+              el.nodeType === 1 &&
+              typeof el.nodeName === "string";
 }
 
 /**
@@ -184,35 +186,25 @@ export function isElement(o: any): boolean {
  * Apply a formatter function to the property if given.
  * Return the display label.
  *
- * @param option Object to the the label for
- * @param field  Property of the object to use as display text
- * @param formatter Function to format the option to a string
+ * @param obj Object to get the label for
+ * @param field  Property path of the object to use as display text
+ * @param formatter Function to format the property to a string
  */
-export function getPropertyValue<T>(
-    option?: T,
-    field?: string,
-    formatter?: (value: unknown, option: T) => string,
+export function getPropertyValue<O, K extends keyof O | string>(
+    obj: O,
+    field?: K,
+    formatter?: (value: DeepType<O, K>, option: O) => string,
 ): string {
-    if (!option) return "";
+    if (!obj) return "";
 
-    const property =
-        field && typeof option === "object"
-            ? getValueByPath(option, field)
-            : option;
+    const property = field
+        ? getValueByPath<O, K>(obj, field)
+        : (obj as DeepType<O, K>);
 
     const label =
-        typeof formatter === "function"
-            ? formatter(property, option)
-            : property;
+        typeof formatter === "function" ? formatter(property, obj) : property;
 
     return String(label || "");
-}
-
-/**
- * Clone an obj with Object.assign
- */
-export function clone<T extends object>(obj: T): T {
-    return Object.assign({}, obj);
 }
 
 /**
@@ -255,27 +247,28 @@ export function mergeDeep(target: any, source: any): any {
 /**
  * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<T = any>(
-    obj: Record<string, any>,
-    path: string,
-    defaultValue?: T,
-): T {
-    const value = path
+export function getValueByPath<O, K extends keyof O | string>(
+    obj: O,
+    path: K,
+    defaultValue?: DeepType<O, K>,
+): DeepType<O, K> {
+    if (!obj || typeof obj !== "object") return obj as DeepType<O, K>;
+    if (typeof path !== "string") return obj as DeepType<O, K>;
+
+    const value: any = path
         .split(".")
-        .reduce(
-            (o, i) => (typeof o !== "undefined" ? o[i] : undefined),
-            obj,
-        ) as T;
+        .reduce((o, i) => (typeof o !== "undefined" ? o[i] : undefined), obj);
+
     return typeof value !== "undefined" ? value : defaultValue;
 }
 
 /**
  * Set a value of an object property/path even if it's nested
  */
-export function setValueByPath<T = any>(
+export function setValueByPath(
     obj: Record<string, any>,
     path: string,
-    value: T,
+    value: any,
 ): void {
     const p = path.split(".");
     if (p.length === 1) {
@@ -295,25 +288,13 @@ export function removeElement(el: Element): void {
     }
 }
 
-export function createAbsoluteElement(el: Element): HTMLDivElement {
-    const root = document.createElement("div");
-    root.style.position = "absolute";
-    root.style.left = "0px";
-    root.style.top = "0px";
-    const wrapper = document.createElement("div");
-    root.appendChild(wrapper);
-    wrapper.appendChild(el);
-    document.body.appendChild(root);
-    return root;
-}
-
 /**
  * Escape regex characters
  * http://stackoverflow.com/a/6969486
  */
 export function escapeRegExpChars(value: string): string {
     if (!value) return value;
-    // eslint-disable-next-line no-useless-escape
+
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 

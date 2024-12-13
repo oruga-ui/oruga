@@ -10,6 +10,7 @@ import {
     type MaybeRefOrGetter,
     type Ref,
     type ComponentInternalInstance,
+    type EffectScope,
 } from "vue";
 
 import { getOptions } from "@/utils/config";
@@ -27,33 +28,78 @@ import type {
 type ComputedClass = readonly [
     className: string,
     defaultClass: string,
-    suffix?: MaybeRefOrGetter<string>,
-    apply?: MaybeRefOrGetter<boolean>,
+    suffix?: MaybeRefOrGetter<string | undefined> | null,
+    apply?: MaybeRefOrGetter<boolean> | null,
 ];
 
 /** Helperfunction to get all active classes from a class binding list */
-export const getActiveClasses = (classes: ClassBind[]): string[] => {
-    if (!classes) return [];
-    return classes.flatMap((bind) =>
-        Object.keys(bind).filter((key) => key && bind[key]),
+export const getActiveClasses = (
+    classes: MaybeRefOrGetter<ClassBind[]>,
+): string[] => {
+    const values = toValue(classes);
+    if (!values) return [];
+    return values.flatMap((bind) =>
+        Object.keys(bind)
+            .filter((key) => key && bind[key])
+            .flatMap((v) => v.split(" ")),
     );
 };
+
+type DefineClassesOptions = {
+    /**
+     * Pass a custom effect scope.
+     * By default a new effect scope is created.
+     * An error will be thrown if no current scope or a custom scope is given.
+     * @default effectScope()
+     */
+    scope?: EffectScope;
+};
+
+export function defineClasses(
+    ...args: [...ComputedClass[], DefineClassesOptions]
+): Ref<ClassBind[]>;
+
+export function defineClasses(...args: [...ComputedClass[]]): Ref<ClassBind[]>;
 
 /**
  * Calculate dynamic classes based on class definitions
  */
 export function defineClasses(
-    ...classDefinitions: ComputedClass[]
+    ...args: ComputedClass[] | [...ComputedClass[], DefineClassesOptions]
 ): Ref<ClassBind[]> {
+    // extract last argument if its the option object
+    const options = Array.isArray(args.at(-1))
+        ? undefined
+        : (args.at(-1) as DefineClassesOptions);
+
+    // get class defintion list based on options are given or not
+    const classDefinitions = (
+        Array.isArray(args.at(-1)) ? args : args.slice(0, -1)
+    ) as ComputedClass[];
+
     // getting a hold of the internal instance of the component in setup()
     const vm = getCurrentInstance();
     if (!vm)
         throw new Error(
             "defineClasses must be called within a component setup function.",
         );
+    // check if there is no current active effect scope given
+    if (!getCurrentScope() && !options?.scope)
+        throw new Error(
+            "defineClasses must be called within a current active effect scope.",
+        );
 
     // create an effect scope object to capture reactive effects
-    const scope = effectScope();
+    const scope = options?.scope || effectScope();
+
+    // check if there is a current active effect scope
+    if (getCurrentScope())
+        // Registers a dispose callback on the current active effect scope.
+        // The callback will be invoked when the associated effect scope is stopped.
+        onScopeDispose(() => {
+            // stop all effects when appropriate
+            if (scope) scope.stop();
+        });
 
     // reactive classes container
     const classes = ref<ClassBind[]>([]);
@@ -67,10 +113,10 @@ export function defineClasses(
         function getClassBind(): ClassBind {
             // compute class based on definition parameter
             const computedClass = computeClass(
-                vm,
+                vm!,
                 className,
                 defaultClass,
-                toValue(suffix),
+                toValue(suffix) || undefined,
             );
 
             // if apply is not defined or true
@@ -84,7 +130,7 @@ export function defineClasses(
         scope.run(() => {
             // recompute the class bind property when the class property change
             watch(
-                () => vm.proxy.$props[className],
+                () => vm.proxy?.$props[className],
                 () => {
                     // recompute the class bind property
                     const classBind = getClassBind();
@@ -126,15 +172,6 @@ export function defineClasses(
         return getClassBind();
     });
 
-    // check if there is a current active effect scope
-    if (getCurrentScope())
-        // Registers a dispose callback on the current active effect scope.
-        // The callback will be invoked when the associated effect scope is stopped.
-        onScopeDispose(() => {
-            // stop all effects when appropriate
-            if (scope) scope.stop();
-        });
-
     // return reactive classes
     return classes;
 }
@@ -145,7 +182,7 @@ export function defineClasses(
 function computeClass(
     vm: ComponentInternalInstance,
     field: string,
-    defaultValue?: string,
+    defaultValue: string,
     suffix = "",
 ): string {
     // get component props
@@ -161,16 +198,24 @@ function computeClass(
     // --- Classes Definition ---
 
     // get component config class definition
-    let globalClass =
-        getValueByPath<ClassDefinition>(
+    let globalClass: ClassDefinition | undefined =
+        (getValueByPath(
             config,
             `${componentKey}.${field}.class`,
             "",
-        ) ||
-        getValueByPath<ClassDefinition>(config, `${componentKey}.${field}`, "");
+        ) as ClassDefinition) ||
+        (getValueByPath(
+            config,
+            `${componentKey}.${field}`,
+            "",
+        ) as ClassDefinition);
 
     // get instance class definition
-    let localClass = getValueByPath<ComponentClass>(props, field, "");
+    let localClass: ComponentClass | undefined = getValueByPath(
+        props,
+        field,
+        "",
+    );
 
     // procsess local instance class
     if (Array.isArray(localClass)) {
@@ -238,17 +283,17 @@ function computeClass(
     // --- Tranform Classes ---
 
     // get global config tranform class
-    const globalTransformClasses = getValueByPath<TransformFunction>(
+    const globalTransformClasses = getValueByPath(
         config,
         "transformClasses",
         undefined,
-    );
+    ) as TransformFunction;
     // get component config tranform class
-    const localTransformClasses = getValueByPath<TransformFunction>(
+    const localTransformClasses = getValueByPath(
         config,
         `${componentKey}.transformClasses`,
         undefined,
-    );
+    ) as TransformFunction;
 
     // apply component local transformclass if available
     if (localTransformClasses) {
@@ -271,7 +316,7 @@ function suffixProcessor(input: string, suffix: string): string {
 }
 
 const getProps = (vm: ComponentInternalInstance): ComponentProps => {
-    let props = vm.proxy.$props;
+    let props = vm.proxy?.$props || {};
 
     // get all props which ends with "Props", these are compressed parent props
     // append these parent props as root level prop

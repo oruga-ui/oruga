@@ -1,50 +1,24 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import OAutocomplete from "../Autocomplete.vue";
 import OField from "../../field/Field.vue";
-export default defineComponent({
-    components: {
-        [OAutocomplete.name]: OAutocomplete,
-        [OField.name]: OField,
-    },
-    data() {
-        return {
-            data: [
-                "Angular",
-                "Angular 2",
-                "Aurelia",
-                "Backbone",
-                "Ember",
-                "jQuery",
-                "Meteor",
-                "Node.js",
-                "Polymer",
-                "React",
-                "RxJS",
-                "Vue.js",
-            ],
-            name: "",
-            selected: null,
-        };
-    },
-    computed: {
-        filteredDataArray(): string[] {
-            return this.data.filter((option: any) => {
-                return (
-                    option
-                        .toString()
-                        .toLowerCase()
-                        .indexOf(this.name.toLowerCase()) >= 0
-                );
-            });
-        },
-    },
-    methods: {
-        select(option: any) {
-            this.selected = option;
-        },
-    },
-});
+
+const options = [
+    "Angular",
+    "Angular 2",
+    "Aurelia",
+    "Backbone",
+    "Ember",
+    "jQuery",
+    "Meteor",
+    "Node.js",
+    "Polymer",
+    "React",
+    "RxJS",
+    "Vue.js",
+];
+const name = ref("");
+const selected = ref<string>();
 </script>
 
 <template>
@@ -53,14 +27,12 @@ export default defineComponent({
         <o-autocomplete
             v-model="name"
             rounded
-            :data="filteredDataArray"
+            :options="options"
             placeholder="e.g. jQuery"
             icon="search"
             clearable
-            @select="select">
+            @select="selected = $event">
             <template #empty>No results found</template>
         </o-autocomplete>
     </o-field>
 </template>
-
-<style></style>

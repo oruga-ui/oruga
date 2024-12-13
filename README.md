@@ -8,7 +8,8 @@
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build.yml/badge.svg" /><a>
-    <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://codecov.io/gh/oruga-ui/oruga/branch/develop/graph/badge.svg?flag=oruga-next" /></a>
+    <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
+    <a href="https://ko-fi.com/mlmoravek"><img src="https://img.shields.io/badge/ko--fi-donate-%23FF5E5B?style=flat&logo=ko-fi&logoColor=white" /></a>
 </p>
 
 <p align="center">
@@ -17,25 +18,6 @@
 
 <p align="center">
 (🐛) => 🦋
-</p>
-
-> Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
-
-
-> [!NOTE]  
-> **_Oruga for Vue 2.x deprecated_**  
-> Due to [EOL for Vue 2.x](https://v2.vuejs.org/lts/) at the end of the year, from now on Oruga for Vue 2 is deprecated. Further enhancements will only be developed for Oruga-next. See [#496](https://github.com/oruga-ui/oruga/issues/496).
-
-### Contact us 👾
-
-<p align="center">
-    <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
-</p>
-
-### Support us ✌🏻
-
-<p align="center">
-    <a href="https://ko-fi.com/orugaui"><img alt="Donate using Ko-fi"  src="https://img.shields.io/badge/donate-ko--fi-00AA00.svg?logo=ko-fi" /></a>
 </p>
 
 
@@ -61,7 +43,7 @@ Browse [online documentation here](https://oruga-ui.com/documentation/).
 
 🕹 To see Oruga in action, go to the [Example section](https://oruga-ui.com/documentation/#examples) in the documentation.
 
-Note: the documentation source code is in the `docs` directory, it serves as the demo as well.
+Note: the source code of the documentation examples can be found in the `examples` directories for each component, it serves as the demo as well.
 
 ## Quick start
 
@@ -106,7 +88,7 @@ Each component can be individually customised and configured by defining specifi
 
 Please [read the "customization" section](https://oruga-ui.com/documentation/customisation.html) in Oruga documentation.
 
-If you want to see an example with a fully customized registration form using `Tailwind`, `Bulma`, `Bootstrap` or `Material` CSS framework have a look at the official [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind) (source code available [here](https://github.com/oruga-ui/demo-multiframework)) or if you're more familiar with TailwindCSS 2 give our official [TailwindCSS Demo](https://oruga-tailwindcss-demo.netlify.app/) a try (source code [here](https://github.com/oruga-ui/demo-tailwindcss))
+If you want to see an example with a fully customized registration form using `Tailwind`, `Bulma`, `Bootstrap`, `Material` or any other CSS framework have a look at the official [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind) (source code available [here](https://github.com/oruga-ui/demo-multiframework)) or if you're more familiar with TailwindCSS 2 give our official [TailwindCSS Demo](https://oruga-tailwindcss-demo.netlify.app/) a try (source code [here](https://github.com/oruga-ui/demo-tailwindcss))
 
 ### Using Oruga with Nuxt
 
@@ -136,6 +118,12 @@ Take a look at the [official NuxtJS + Oruga example](https://github.com/oruga-ui
 
 Please see the [contributing guidelines](./.github/CONTRIBUTING.md).
 
+
+### Contact us 👾
+
+→ Join the [Oruga Discord server](https://discord.gg/RuKuBYN).
+
+
 ## Versioning
 
 Oruga uses [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) for package versions.
@@ -151,7 +139,7 @@ While it's still in beta, versions will follow this pattern: **v0.Y.Z**, where:
   <tr>
     <td align="center"><a href="https://twitter.com/walter_tommasi"><img src="https://avatars0.githubusercontent.com/u/8029488?v=4" width="80px;" alt=""/><br /><sub><b>Walter Tommasi</b></sub></a><br /></td>
     <td align="center"><a href="https://twitter.com/4stagi"><img src="https://avatars0.githubusercontent.com/u/537363?v=4" width="80px;" alt=""/><br /><sub><b>Andrea Stagi</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/mlmoravek"><img src="https://avatars0.githubusercontent.com/u/25961416?v=4" width="80px;" alt=""/><br /><sub><b>Marcel Moravek</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/mlmoravek"><img src="https://avatars0.githubusercontent.com/u/25961416?v=4" width="80px;" alt=""/><br /><sub><b>Marcel Moravek</b></sub></a><br /></td>
   </tr>
 </table>
 
@@ -159,9 +147,7 @@ While it's still in beta, versions will follow this pattern: **v0.Y.Z**, where:
 Thank you to everyone involved for improving this project, day by day 💚
 
 <a href="https://github.com/oruga-ui/oruga">
-  <img
-  src="https://contrib.rocks/image?repo=oruga-ui/oruga"
-  />
+  <img src="https://contrib.rocks/image?repo=oruga-ui/oruga"/>
 </a>
 
 [Complete list](CONTRIBUTORS.md).

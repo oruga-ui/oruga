@@ -10,7 +10,7 @@
         <div class="odocs-spaced">
             <o-button label="Delete" variant="danger" icon-left="trash" />
             <o-button label="Delete" variant="danger" icon-right="trash" />
-            <o-button variant="danger" icon-right="trash" />
+            <o-button variant="danger" aria-label="Delete" icon-right="trash" />
         </div>
     </section>
 </template>

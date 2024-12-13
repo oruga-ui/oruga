@@ -143,8 +143,8 @@ describe("OInput", () => {
         const wrapper = mount(OInput, {
             props: {
                 modelValue: "foo",
-                "onUpdate:modelValue": (e) =>
-                    wrapper.setProps({ modelValue: e }),
+                "onUpdate:modelValue": (modelValue) =>
+                    wrapper.setProps({ modelValue }),
             },
         });
 
@@ -155,9 +155,12 @@ describe("OInput", () => {
         await input.trigger("blur");
         await vi.runAllTimers(); // await debounce timer
 
-        expect(wrapper.emitted("input")[0][0]).toBe("bar");
+        const emits = wrapper.emitted("input");
+        expect(emits).toHaveLength(1);
+        expect(emits![0][0]).toBe("bar");
         expect(wrapper.emitted("blur")).toHaveLength(1);
-        expect(wrapper.emitted("update:modelValue")[0][0]).toBe("bar");
+        expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+        expect(wrapper.emitted("update:modelValue")![0][0]).toBe("bar");
         expect(wrapper.props("modelValue")).toBe("bar");
     });
 

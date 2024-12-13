@@ -5,19 +5,16 @@ import {
     nextTick,
     watch,
     onMounted,
+    useAttrs,
+    useId,
+    useTemplateRef,
     type StyleValue,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
-import { uuid } from "@/utils/helpers";
-import {
-    defineClasses,
-    useDebounce,
-    useInputHandler,
-    useVModel,
-} from "@/composables";
+import { getDefault } from "@/utils/config";
+import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
@@ -35,86 +32,81 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = InputProps<IsNumber>["modelValue"];
+
 const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     override: undefined,
     modelValue: undefined,
     // number: false,
     type: "text",
-    size: getOption("input.size"),
-    variant: getOption("input.variant"),
+    size: () => getDefault("input.size"),
+    variant: () => getDefault("input.variant"),
     placeholder: undefined,
     expanded: false,
     rounded: false,
     disabled: false,
     passwordReveal: false,
     maxlength: undefined,
-    counter: getOption("input.counter", false),
+    counter: () => getDefault("input.counter", false),
     autosize: false,
-    iconPack: getOption("input.iconPack", undefined),
-    icon: getOption("input.icon", undefined),
+    iconPack: () => getDefault("input.iconPack"),
+    icon: () => getDefault("input.icon"),
     iconClickable: false,
-    iconRight: getOption("input.iconRight", undefined),
+    iconRight: () => getDefault("input.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    clearable: getOption("input.clearable", false),
-    clearIcon: getOption("input.clearIcon", "close-circle"),
-    statusIcon: getOption("statusIcon", true),
-    debounce: getOption("autocomplete.debounce", 400),
-    autocomplete: getOption("input.autocomplete", "off"),
-    id: uuid(),
-    useHtml5Validation: getOption("useHtml5Validation", true),
-    validationMessage: undefined,
+    clearable: () => getDefault("input.clearable", false),
+    clearIcon: () => getDefault("input.clearIcon", "close-circle"),
+    statusIcon: () => getDefault("statusIcon", true),
+    debounce: () => getDefault("autocomplete.debounce", 400),
+    autocomplete: () => getDefault("input.autocomplete", "off"),
+    id: () => useId(),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
+    customValidity: "",
 });
-
-type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on input change event
-     * @param value {string | number} input value
+     * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: ModelValue, event: Event): void;
+    input: [value: string, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
 // --- Validation Feature ---
 
-const inputRef = ref<HTMLInputElement>();
-const textareaRef = ref<HTMLInputElement>();
-
-const elementRef = computed<HTMLInputElement>(() =>
-    props.type === "textarea" ? textareaRef.value : inputRef.value,
-);
+const inputRef = useTemplateRef<HTMLInputElement>("inputElement");
 
 // use form input functionalities
 const {
@@ -125,15 +117,25 @@ const {
     setFocus,
     isValid,
     isFocused,
-} = useInputHandler(elementRef, emits, props);
+} = useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
+const vmodel = defineModel<ModelValue, string, string, ModelValue>({
+    // cast incomming value to string
+    get: (value) => (typeof value !== "undefined" ? String(value) : ""),
+    // cast outgoing value to number if prop number is true
+    set: (value) =>
+        typeof value == "undefined"
+            ? value
+            : props.number
+              ? Number(value)
+              : String(value),
+    default: undefined,
+});
 
-// if id is given set as `for` property on o-field wrapper
+// if `id` is given set as `for` property on o-field wrapper
 if (props.id) parentField?.value?.setInputId(props.id);
 
 /** Get value length */
@@ -166,38 +168,34 @@ const height = ref("auto");
 function resize(): void {
     height.value = "auto";
     nextTick(() => {
-        if (!textareaRef.value) return;
-        const scrollHeight = textareaRef.value.scrollHeight;
+        if (props.type !== "textarea" || !inputRef.value) return;
+        const scrollHeight = inputRef.value.scrollHeight;
         height.value = scrollHeight + "px";
     });
 }
 
 /** Computed inline styles for autoresize */
-const computedStyles = computed(
-    (): StyleValue =>
-        props.autosize
-            ? {
-                  resize: "none",
-                  height: height.value,
-                  overflow: "hidden",
-              }
-            : {},
+const computedStyles = computed<StyleValue>(() =>
+    props.type === "textarea" && props.autosize
+        ? {
+              resize: "none",
+              height: height.value,
+              overflow: "hidden",
+          }
+        : {},
 );
 
 let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
 
 watch(
     () => props.debounce,
-    () => {
-        debouncedInput = useDebounce(onInput, props.debounce || 0);
-    },
+    (debounce) => (debouncedInput = useDebounce(onInput, debounce || 0)),
     { immediate: true },
 );
 
 function onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const input = (props.number ? Number(value) : String(value)) as ModelValue;
-    emits("input", input, event);
+    emits("input", value, event);
 }
 
 // --- Icon Feature ---
@@ -221,7 +219,7 @@ const computedIconRight = computed(() => {
 
 const computedIconRightVariant = computed(() =>
     props.passwordReveal || props.iconRight
-        ? props.iconRightVariant || props.variant || null
+        ? props.iconRightVariant || props.variant
         : statusVariant.value,
 );
 
@@ -265,6 +263,13 @@ function togglePasswordVisibility(): void {
 }
 
 // --- Computed Component Classes ---
+
+const attrs = useAttrs();
+
+const inputBind = computed(() => ({
+    ...parentField?.value?.inputAttrs,
+    ...attrs,
+}));
 
 const rootClasses = defineClasses(
     ["rootClass", "o-input__wrapper"],
@@ -335,11 +340,20 @@ defineExpose({ focus: setFocus, value: vmodel });
 
 <template>
     <div data-oruga="input" :class="rootClasses">
+        <o-icon
+            v-if="icon"
+            :class="iconLeftClasses"
+            :clickable="iconClickable"
+            :icon="icon"
+            :pack="iconPack"
+            :size="size"
+            @click="iconClick" />
+
         <input
             v-if="type !== 'textarea'"
-            v-bind="$attrs"
+            v-bind="inputBind"
             :id="id"
-            ref="inputRef"
+            ref="inputElement"
             v-model="vmodel"
             :data-oruga-input="inputType"
             :type="inputType"
@@ -355,9 +369,9 @@ defineExpose({ focus: setFocus, value: vmodel });
 
         <textarea
             v-else
-            v-bind="$attrs"
+            v-bind="inputBind"
             :id="id"
-            ref="textareaRef"
+            ref="inputElement"
             v-model="vmodel"
             data-oruga-input="textarea"
             :class="inputClasses"
@@ -369,15 +383,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             @focus="onFocus"
             @invalid="onInvalid"
             @input="debouncedInput" />
-
-        <o-icon
-            v-if="icon"
-            :class="iconLeftClasses"
-            :clickable="iconClickable"
-            :icon="icon"
-            :pack="iconPack"
-            :size="size"
-            @click="iconClick" />
 
         <o-icon
             v-if="hasIconRight"

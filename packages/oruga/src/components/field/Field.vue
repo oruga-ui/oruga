@@ -4,17 +4,18 @@ import {
     ref,
     useSlots,
     watch,
-    type PropType,
+    useId,
+    useTemplateRef,
     type VNodeArrayChildren,
 } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isVNodeEmpty } from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import { injectField, provideField } from "./fieldInjection";
 
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { FieldProps } from "./props";
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
@@ -27,178 +28,70 @@ defineOptions({
     configField: "field",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * Color of the field and help message, also adds a matching icon.
-     * Used by Input, Select and Autocomplete.
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: { type: String, default: undefined },
-    /** Field label */
-    label: { type: String, default: undefined },
-    /**
-     * Vertical size of input
-     * @values small, medium, large
-     */
-    labelSize: {
-        type: String,
-        default: () => getOption("field.labelsize"),
-    },
-    /** Same as native `for` set on the label */
-    labelFor: { type: String, default: undefined },
-    /** Help message text */
-    message: { type: String, default: undefined },
-    messageTag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("field.messageTag", "p"),
-    },
-    /**
-     * Direct child components/elements of Field will be grouped horizontally
-     * (see which ones at the top of the page).
-     */
-    grouped: { type: Boolean, default: false },
-    /** Allow controls to fill up multiple lines, making it responsive */
-    groupMultiline: { type: Boolean, default: false },
-    /** Group label and control on the same line for horizontal forms */
-    horizontal: { type: Boolean, default: false },
-    /** Field automatically attach controls together */
-    addons: { type: Boolean, default: false },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("field.mobileBreakpoint"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class to align label and control in horizontal forms */
-    horizontalClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when fields are grouped together */
-    groupedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when fields fill up multiple lines */
-    groupMultilineClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for field label */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for field label size */
-    labelSizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for field label when horizontal */
-    labelHorizontalClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for field body */
-    bodyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** "Class for field body when horizontal */
-    bodyHorizontalClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for components automatically attached together when inside a field */
-    addonsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the field message */
-    messageClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the message field variant */
-    variantMessageClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the label field variant */
-    variantLabelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of file component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the focused field */
-    focusedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the filled field */
-    filledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<FieldProps>(), {
+    override: undefined,
+    variant: undefined,
+    label: undefined,
+    labelSize: () => getDefault("field.labelsize"),
+    labelFor: undefined,
+    message: undefined,
+    messageTag: () => getDefault("field.messageTag", "p"),
+    grouped: false,
+    groupMultiline: false,
+    horizontal: false,
+    addons: false,
+    mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
+/** a unique id for the field message to associate an input with */
+const messageId = useId();
+
+/** a unique id for the field label to associate an input with */
+const labelId = useId();
+
+/** the unique id for the input to associate the label with */
 const inputId = ref(props.labelFor);
 watch(
     () => props.labelFor,
     (v) => (inputId.value = v),
 );
 
-/** Set internal variant when prop change. */
+/** set internal variant when prop change */
 const fieldVariant = ref(props.variant);
 watch(
     () => props.variant,
     (v) => (fieldVariant.value = v),
 );
 
-/** Set internal message when prop change. */
+/** set internal message when prop change */
 const fieldMessage = ref(props.message);
 watch(
     () => props.message,
     (v) => (fieldMessage.value = v),
 );
 
-/** Set parent message if we use Field in Field. */
-watch(
-    () => fieldMessage.value,
-    (value) => {
-        if (parentField?.value?.hasInnerField) {
-            if (!parentField.value.fieldVariant)
-                parentField.value.setVariant(fieldVariant.value);
-            if (!parentField.value.fieldMessage)
-                parentField.value.setMessage(value);
-        }
-    },
-);
+/** set parent message if we use Field in Field */
+watch(fieldMessage, (value) => {
+    if (parentField.value && parentField.value.hasInnerField) {
+        if (!parentField.value.variant)
+            parentField.value.setVariant(fieldVariant.value);
+        if (!parentField.value.message) parentField.value.setMessage(value);
+    }
+});
 
-/** this can be set from outside to update the focus state */
+/** this can be set from inputs to update the focus state */
 const isFocused = ref(false);
-/** this can be set from outside to update the filled state */
+/** this can be set from inputs to update the filled state */
 const isFilled = ref(false);
 /** this can be set from sub fields to update the has inner field state */
-const hasInnerField = ref<boolean>(false);
+const hasInnerField = ref(false);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
 // tell parent field it has an inner field
-if (parentField?.value) parentField.value.addInnerField();
+if (parentField.value) parentField.value.addInnerField();
 
 const slots = useSlots();
 
@@ -227,7 +120,7 @@ function getInnerContent(vnode): VNodeArrayChildren {
 
 // --- Field Dependency Injection Feature ---
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
 function addInnerField(): void {
     hasInnerField.value = true;
@@ -238,24 +131,32 @@ function setFocus(value: boolean): void {
 function setFilled(value: boolean): void {
     isFilled.value = value;
 }
-function setVariant(value: string): void {
+function setVariant(value?: string): void {
     fieldVariant.value = value;
 }
-function setMessage(value: string): void {
+function setMessage(value?: string): void {
     fieldMessage.value = value;
 }
 function setInputId(value: string): void {
     inputId.value = value;
 }
 
+const inputAttrs = computed(() => ({
+    "aria-labelledby": labelId,
+    ...(fieldVariant.value === "error"
+        ? { "aria-errormessage": messageId }
+        : { "aria-describedby": messageId }),
+}));
+
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed(() => ({
     $el: rootRef.value,
     props,
     hasInnerField: hasInnerField.value,
-    hasMessage: hasMessage.value,
-    fieldVariant: fieldVariant.value,
-    fieldMessage: fieldMessage.value,
+    variant: fieldVariant.value,
+    message: fieldMessage.value,
+    labelId,
+    inputAttrs: inputAttrs.value,
     addInnerField,
     setInputId,
     setFocus,
@@ -285,7 +186,7 @@ const rootClasses = defineClasses(
 const messageClasses = defineClasses(
     ["messageClass", "o-field__message"],
     [
-        "variantMessageClass",
+        "messageVariantClass",
         "o-field__message-",
         fieldVariant,
         computed(() => !!fieldVariant.value),
@@ -301,35 +202,34 @@ const labelClasses = defineClasses(
         computed(() => !!props.labelSize),
     ],
     [
-        "variantLabelClass",
+        "labelVariantClass",
         "o-field__label-",
         fieldVariant,
         computed(() => !!fieldVariant.value),
     ],
 );
 
-const labelHorizontalClasses = defineClasses([
-    "labelHorizontalClass",
+const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
+
+const horizontalLabelClasses = defineClasses([
+    "horizontalLabelClass",
     "o-field__horizontal-label",
 ]);
 
-const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
-
-const bodyHorizontalClasses = defineClasses([
-    "bodyHorizontalClass",
+const horizontalBodyClasses = defineClasses([
+    "horizontalBodyClass",
     "o-field__horizontal-body",
 ]);
 
 const innerFieldClasses = defineClasses(
     ["rootClass", "o-field"],
+    ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
     [
         "groupMultilineClass",
         "o-field--grouped-multiline",
         null,
         computed(() => props.groupMultiline),
     ],
-
-    ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
     [
         "addonsClass",
         "o-field--addons",
@@ -340,9 +240,13 @@ const innerFieldClasses = defineClasses(
 </script>
 
 <template>
-    <div ref="rootRef" data-oruga="field" :class="rootClasses">
-        <div v-if="horizontal" :class="labelHorizontalClasses">
-            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
+    <div ref="rootElement" data-oruga="field" :class="rootClasses">
+        <div v-if="horizontal" :class="horizontalLabelClasses">
+            <label
+                v-if="hasLabel"
+                :id="labelId"
+                :for="inputId"
+                :class="labelClasses">
                 <!--
                     @slot Override the label
                     @binding {string} label - label property 
@@ -351,7 +255,11 @@ const innerFieldClasses = defineClasses(
             </label>
         </div>
         <template v-else>
-            <label v-if="hasLabel" :for="inputId" :class="labelClasses">
+            <label
+                v-if="hasLabel"
+                :id="labelId"
+                :for="inputId"
+                :class="labelClasses">
                 <!--
                     @slot Override the label
                     @binding {string} label - label property 
@@ -360,7 +268,7 @@ const innerFieldClasses = defineClasses(
             </label>
         </template>
 
-        <div v-if="horizontal" :class="bodyHorizontalClasses">
+        <div v-if="horizontal" :class="horizontalBodyClasses">
             <template
                 v-for="(element, index) in getInnerContent($slots.default)"
                 :key="index">
@@ -403,6 +311,7 @@ const innerFieldClasses = defineClasses(
         <component
             :is="messageTag"
             v-if="hasMessage && !horizontal"
+            :id="messageId"
             :class="messageClasses">
             <!--
                 @slot Override the message

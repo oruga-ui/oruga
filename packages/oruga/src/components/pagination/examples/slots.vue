@@ -61,21 +61,21 @@ function convertToRoman(num) {
                     :label="convertToRoman(props.number)"
                     :disabled="props.isCurrent"
                     :aria-label="props.ariaLabel"
-                    @click="props.click" />
+                    @click="props.onClick" />
             </template>
             <template #previous="props">
                 <o-button
                     label="Previous"
                     :disabled="props.isCurrent"
                     :aria-label="props.ariaLabel"
-                    @click="props.click" />
+                    @click="props.onClick" />
             </template>
             <template #next="props">
                 <o-button
                     label="Next"
                     :disabled="props.isCurrent"
                     :aria-label="props.ariaLabel"
-                    @click="props.click" />
+                    @click="props.onClick" />
             </template>
         </o-pagination>
     </section>

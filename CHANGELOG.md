@@ -1,3 +1,506 @@
+## [0.9.2](https://github.com/oruga-ui/oruga/compare/v0.9.1...v0.9.2) (2024-12-02)
+
+
+### Bug Fixes
+
+* change `crypto.randomUUID()` with a sequential id generation ([#1137](https://github.com/oruga-ui/oruga/issues/1137)) ([52d3ea5](https://github.com/oruga-ui/oruga/commit/52d3ea56155a11a8f2e710d7b0db34db992cfc45))
+* **performance:** solve performance issues with child component registration ([#1133](https://github.com/oruga-ui/oruga/issues/1133)) ([d560007](https://github.com/oruga-ui/oruga/commit/d56000723628f22cf69bd766bedf348d85003e5e))
+* **programmatic:** make options interface extandable ([#1118](https://github.com/oruga-ui/oruga/issues/1118)) ([37e17f5](https://github.com/oruga-ui/oruga/commit/37e17f5db2c72e6e62284b0cf0d07179965e8403))
+* **notification:** solve typo in `NotificationProgrammaticOptions` type ([#1117](https://github.com/oruga-ui/oruga/issues/1117)) ([16cf988](https://github.com/oruga-ui/oruga/commit/16cf988c5a633845153f2d089bfdefb97ae0abde))
+* **tabs:** set fixed `role` attribute values for Tab and TabItem ([#1119](https://github.com/oruga-ui/oruga/issues/1119)) ([c1afcf3](https://github.com/oruga-ui/oruga/commit/c1afcf30529287ff4a72d47fe0be0caf168758f8))
+
+
+### Features
+
+* **checkbox:** support w3c WAI-ARIA (a11y) pattern ([#1130](https://github.com/oruga-ui/oruga/issues/1130)) ([6d189fe](https://github.com/oruga-ui/oruga/commit/6d189feee88fdfd32d45654797d5d0be2b9a8618))
+* **field:** add unique label Id to field injection ([#1129](https://github.com/oruga-ui/oruga/issues/1129)) ([1561718](https://github.com/oruga-ui/oruga/commit/15617181817f9283aabb9550436f883bd3e1c743))
+* **radio:** support w3c WAI-ARIA (a11y) pattern ([#1132](https://github.com/oruga-ui/oruga/issues/1132)) ([96255a8](https://github.com/oruga-ui/oruga/commit/96255a8682621e2b11901eeba179e5d10f9c6845))
+* **switch:** support w3c WAI-ARIA (a11y) pattern ([#1131](https://github.com/oruga-ui/oruga/issues/1131)) ([60ec0d1](https://github.com/oruga-ui/oruga/commit/60ec0d112310bb38c8e1e1dad1174b5253022833))
+* **tabs:** update keyboard navigation to match W3C WAI standart ([#1121](https://github.com/oruga-ui/oruga/issues/1121)) ([58583a3](https://github.com/oruga-ui/oruga/commit/58583a301f052a9c87ad5234f61809bba317b45d))
+
+
+
+## [0.9.1](https://github.com/oruga-ui/oruga/compare/v0.9.0...v0.9.1) (2024-11-15)
+
+
+### Bug Fixes
+
+* **dropdown:** solve closing issue when has `multiple` prop ([#1109](https://github.com/oruga-ui/oruga/issues/1109)) ([5443ec2](https://github.com/oruga-ui/oruga/commit/5443ec2547494657f6599e69258003454bca5c9f))
+* **programmatic:** readd `OrugaProgrammatic` interface to the export ([#1110](https://github.com/oruga-ui/oruga/issues/1110)) ([44c7075](https://github.com/oruga-ui/oruga/commit/44c70754a2c755045c36e6d8671c6791b9a861b3))
+* **programmatic:** solve wrong `events` prop type ([#1114](https://github.com/oruga-ui/oruga/issues/1114)) ([0271e7e](https://github.com/oruga-ui/oruga/commit/0271e7e21ca962f02aa8a8d202a1c735a945bb34))
+* **table:** remove generic type strictness ([#1107](https://github.com/oruga-ui/oruga/issues/1107)) ([4592a9d](https://github.com/oruga-ui/oruga/commit/4592a9d7f66eac56ec76aebfc52f2944ec1fa6bb))
+
+
+
+# [0.9.0](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.5...v0.9.0) (2024-11-11)
+
+These Changes are accumulated from all pre-releases.
+
+
+### Detailed Changes
+
+
+Legend:
+* ⚠️: breaking change
+* `~` : changed
+* `-` : removed
+* `+` : added
+* A -> B : renamed
+
+
+#### Autocomplete
+
+*  ⚠️ `~` prop: data -> options (type changed)
+*  ⚠️ `-` prop: field (replaced by strict options type)
+*  ⚠️ `-` prop: formatter (replaced by strict options type)
+*  ⚠️ `-` prop: groupField (replaced by strict options type)
+*  ⚠️ `-` prop: groupOptions (replaced by strict options type)
+*  `+` prop: input (v-model:input)
+*  `+` prop: filter
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+*  `+` event: update:input	
+
+*  `+` type: remove modelValue type restrictions
+ 
+#### Button
+
+*  ⚠️ `~` prop: nativeType -> type (to match same props from other component)
+*  ⚠️ `~` prop: role -> ariaRole (to match same props from other component)
+
+#### Carousel
+
+--
+
+#### Checkbox
+
+*  `+` prop: id
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+*  `+` type: remove modelValue type restrictions
+ 
+#### Collapse
+
+--
+
+#### Datepicker
+
+*  ⚠️ `~` prop: dateCreator -> creator
+*  ⚠️ `~` prop: dateFormatter -> formatter
+*  ⚠️ `~` prop: dateParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+
+#### Datetimepicker
+
+*  ⚠️ `~` prop: datetimeCreator -> creator
+*  ⚠️ `~` prop: datetimeFormatter -> formatter
+*  ⚠️ `~` prop: datetimeParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+
+#### Dropdown
+
+*  `+` prop: options
+*  `+` prop: desktopModal
+ 
+*  ⚠️ `~` class: menuMobileOverlayClass -> overlayClass
+*  `+` class: modalClass
+*  `+` class: scrollClipClass
+*  `+` class: noScrollClass
+
+*  `+` type: remove modelValue type restrictions
+
+#### Field 
+ 
+*  ⚠️ `~` class: bodyHorizontalClass -> horizontalBodyClass 
+*  ⚠️ `~` class: labelHorizontalClass -> horizontalLabelClass
+*  ⚠️ `~` class: variantLabelClass -> labelVariantClass
+*  ⚠️ `~` class: variantMessageClass -> messageVariantClass
+ 
+#### Icon
+
+--
+
+#### Input 
+ 
+*  `+` prop: debounce
+*  `+` prop: number
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+*  `~` event: input (only emits string values)
+
+#### Loading
+
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+
+*  `+` class: noScrollClass
+*  `+` class: scrollClipClass
+
+*  ⚠️ `~` programmatic: interface changed 
+
+#### Menu
+
+*  ⚠️ `~` class: itemWrapperClass -> itemClass
+*  ⚠️ `~` class: itemClass -> itemButtonClass
+*  ⚠️ `~` class: itemActiveClass -> itemButtonActiveClass
+*  ⚠️ `~` class: itemDisabledClass -> itemButtonDisabledClass
+*  ⚠️ `~` class: itemIconTextClass -> itemButtonIconClass
+
+#### Modal
+
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: destroyOnHide (no done by default for programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+*  `+` prop: overlay
+
+*  ⚠️ `~` programmatic: interface changed
+ 
+#### Notification
+ 
+*  `~` prop: active (is not longer avaible in programmatic usage)
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+ 
+*  ⚠️ `~` programmatic: interface changed
+
+#### Pagination
+
+*  ⚠️ `~` class: linkClass -> buttonClass 
+*  ⚠️ `~` class: linkCurrentClass -> buttonCurrentClass 
+*  ⚠️ `~` class: linkDisabledClass -> buttonDisabledClass 
+*  ⚠️ `~` class: prevButtonClass -> buttonPrevClass 
+*  ⚠️ `~` class: nextButtonClass -> buttonNextClass 
+ 
+#### Radio
+
+*  `+` prop: id
+*  `+` prop: customValidity
+ 
+*  `+` type: remove modelValue type restrictions
+ 
+#### Select
+
+*  ⚠️ `~` prop: options (type changed)
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+#### Sidebar
+
+*  `~` prop: mobile (variable changed from `fullwitdh` to `expanded`)
+*  `-` prop: variant
+*  `-` prop: container (only available in programmatic usage)
+*  ⚠️ `-` prop: destroyOnHide (no done by default for programmatic usage)
+*  ⚠️ `-` prop: onCancel
+*  ⚠️ `-` prop: onClose (only available in programmatic usage)
+ 
+*  ⚠️ `~` programmatic: interface changed
+
+#### Skeleton
+
+--
+
+#### Slider
+
+*  `+` prop: range
+*  ⚠️ `~` prop: customFormatter -> formatter
+
+#### Steps
+ 
+*  `+` prop: options
+ 
+*  ⚠️ `~` class: itemHeaderClass -> navItemClass
+*  ⚠️ `~` class: itemHeaderVariantClass -> navItemVariantClass
+*  ⚠️ `~` class: itemHeaderActiveClass -> navItemActiveClass
+*  ⚠️ `~` class: itemHeaderPreviousClass -> navItemPreviousClass
+*  `+` class: navItemNextClass
+*  ⚠️ `~` class: stepLinkClass -> stepClass
+*  ⚠️ `~` class: stepLinkLabelPositionClass -> stepLabelPositionClass
+*  ⚠️ `~` class: stepLinkClickableClass -> stepClickableClass
+*  `+` class: stepActiveClass
+*  `+` class: stepDisabledClass
+*  ⚠️ `~` class: stepLinkLabelClass -> stepLabelClass
+*  `+` class: stepIconClass
+*  ⚠️ `~` class: itemClass -> stepPanelClass
+*  ⚠️ `~` class: rootClass (default class changed)
+*  ⚠️ `~` class: expandedClass (default class changed)
+*  ⚠️ `~` class: verticalClass (default class changed)
+*  ⚠️ `~` class: positionClass (default class changed)
+*  ⚠️ `~` class: animatedClass (default class changed)
+*  ⚠️ `~` class: stepsClass -> navClass
+*  ⚠️ `~` class: stepDividerClass -> dividerClass
+*  ⚠️ `~` class: stepMarkerClass -> markerClass
+*  ⚠️ `~` class: stepMarkerRoundedClass -> markerRoundedClass
+*  ⚠️ `~` class: stepContentClass -> contentClass
+*  ⚠️ `~` class: stepContentTransitioningClass -> transitioningClass
+*  ⚠️ `~` class: stepNavigationClass -> navigationClass
+
+*  `+` type: remove modelValue type restrictions
+
+#### StepItem
+
+*  `+` prop: disabled
+ 
+#### Switch
+
+*  `+` prop: id
+*  `+` prop: customValidity
+ 
+*  `+` type: remove modelValue type restrictions
+ 
+#### Table
+
+*  ⚠️ `~` prop: column (type changed)
+*  `+` prop: customCompare
+*  ⚠️ `~` prop: customRowKey -> rowKey
+*  ⚠️ `~` prop: customIsChecked -> isRowChecked (to match other props name pattern)
+*  ⚠️ `~` props: hasDetailedVisible -> isDetailedVisible (to match other props name pattern)
+*  `-` prop: detailKey (use rowKey instead)
+*  `+` props: emptyIcon
+*  `+` props: emptyIconSize
+*  `+` props: emptyLabel
+*  `+` props: filtersIcon
+*  `+` props: filtersPlaceholder
+*  `+` props: loadingIcon
+*  `+` props: loadingLabel
+*  ⚠️ `~` props: openedDetailed -> detailedRows (to match props name pattern)
+*  `+` props: selectable
+*  `+` props: tdAttrs
+*  `+` props: thAttrs
+ 
+*  `~` event: update:openedDetailed -> update:detailedRows	
+ 
+*  `+` slots: before
+*  `+` slots: after
+ 
+#### TableColumn
+
+*  `+` props: formatter
+ 
+*  `~` types: improve slots type
+ 
+#### Tabs
+
+*  ⚠️ `~` class: navTabsClass -> navClass
+*  ⚠️ `~` class: itemWrapperClass -> navItemClass
+*  ⚠️ `~` class: itemClass -> tabPanelClass
+*  ⚠️ `~` class: itemHeaderActiveClass -> tabActiveClass
+*  ⚠️ `~` class: itemHeaderClass -> tabClass
+*  ⚠️ `~` class: itemHeaderDisabledClass -> tabDisabledClass
+*  ⚠️ `~` class: itemHeaderIconClass -> tabIconClass
+*  ⚠️ `~` class: itemHeaderTextClass -> tabLabelClass
+*  ⚠️ `~` class: itemHeaderTypeClass -> tabTypeClass
+*  ⚠️ `~` class: tabTextClass -> tabLabelClass
+*  `+` class: navItemActiveClass
+*  `+` class: navItemPreviousClass
+*  `+` class: navItemNextClass
+ 
+*  `+` props: options
+ 
+*  `+` type: remove modelValue type restrictions
+ 
+#### Taginput
+
+*  `+` prop: input (v-model:input)
+*  `-` props: allowAutocomplete 
+*  ⚠️ `~` props: data -> options (type changed)
+*  ⚠️ `-` prop: field (replaced by strict options type)
+*  ⚠️ `-` prop: groupField (replaced by strict options type)
+*  ⚠️ `-` prop: groupOptions (replaced by strict options type)
+*  ⚠️ `~` props: beforeAdding -> validateItem
+*  `+` prop: filter
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+*  `+` event: update:input
+ 
+#### Timepicker
+
+*  ⚠️ `~` prop: timeCreator -> creator
+*  ⚠️ `~` prop: timeFormatter -> formatter
+*  ⚠️ `~` prop: timeParser -> parser
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+ 
+#### Tooltip
+
+*  `-` prop: validationMessage
+*  `+` prop: customValidity
+
+#### Upload 
+
+--
+
+
+
+# [0.9.0-pre.5](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.5...v0.9.0-pre.4) (2024-11-11)
+
+
+### Bug Fixes
+
+* **datepicker:** add missing scope to defineClasses ([#1091](https://github.com/oruga-ui/oruga/issues/1091)) ([277c2e0](https://github.com/oruga-ui/oruga/commit/277c2e052866147963a6c0392fca3c70f5332eaf))
+* solve various issues ([#1100](https://github.com/oruga-ui/oruga/issues/1100)) ([d6b792f](https://github.com/oruga-ui/oruga/commit/d6b792f0850d59ea85857c8ff7a9e4db570d134a))
+
+
+### Features
+
+* **input:** move the left icon element before the input element ([#1094](https://github.com/oruga-ui/oruga/issues/1094)) ([7bf11e2](https://github.com/oruga-ui/oruga/commit/7bf11e223e24357f63ca00016fea307303acb1ce))
+* **menu:** refactor class names to match other components class name patterns ([#1097](https://github.com/oruga-ui/oruga/issues/1097)) ([f3ce20a](https://github.com/oruga-ui/oruga/commit/f3ce20a001a071ff9e89eac1e071367fe72dbf27))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+
+# [0.9.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.3...v0.9.0-pre.4) (2024-10-30)
+
+
+### Features
+
+* **button:** props name adjustment ([#1088](https://github.com/oruga-ui/oruga/issues/1088)) ([1296348](https://github.com/oruga-ui/oruga/commit/1296348514847ae3ff6ca46fbd03a59233bdc067))
+* **dropdown:** add `toggle` prop to `trigger` slot ([#1086](https://github.com/oruga-ui/oruga/issues/1086)) ([c9b51f3](https://github.com/oruga-ui/oruga/commit/c9b51f3aec79454d33268ea979c262429190b5f1))
+* **pagination:** adjust class names to match other components class patterns ([#1087](https://github.com/oruga-ui/oruga/issues/1087)) ([54c3706](https://github.com/oruga-ui/oruga/commit/54c37068a2e14ae50a057abbce1c117723720c50))
+* **steps:** adjust class names to match other components class patterns ([#1084](https://github.com/oruga-ui/oruga/issues/1084)) ([6466757](https://github.com/oruga-ui/oruga/commit/6466757509443750c0f6a41adf64f4ed3e92da3c))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+
+# [0.9.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.2...v0.9.0-pre.3) (2024-10-25)
+
+
+### Bug Fixes
+
+* **1038:** add `vue-component-type-helpers` as dependency ([#1054](https://github.com/oruga-ui/oruga/issues/1054)) ([33c0309](https://github.com/oruga-ui/oruga/commit/33c0309af7a9a76c1f5c7635bb45ea3e465548fb))
+* **a11y:** remove unnecessary `aria-hidden="true"` on  overlays ([#1059](https://github.com/oruga-ui/oruga/issues/1059)) ([f831f7f](https://github.com/oruga-ui/oruga/commit/f831f7f518a6d4391858a18b91b495460806b1e1))
+* **hydration:** replace custom `uuid` with vues native `useId` composable ([#1053](https://github.com/oruga-ui/oruga/issues/1053)) ([d7091ff](https://github.com/oruga-ui/oruga/commit/d7091ff63157b264918755be579d237f461b91b7))
+* **performance:** resolve a memory leak in `defineClasses` with wrong/missing effectScope ([#1067](https://github.com/oruga-ui/oruga/issues/1067)) ([a1f53c2](https://github.com/oruga-ui/oruga/commit/a1f53c2c2c223be5fef12312594ed1fb75ce3093))
+* **types:** solve a type generation problems ([#1072](https://github.com/oruga-ui/oruga/issues/1072)) ([54f1409](https://github.com/oruga-ui/oruga/commit/54f1409a7ba09ef3136d7ccc8881bb5997696c07))
+
+
+### Features
+
+* **1008:** unify component options/items definiton ([#1065](https://github.com/oruga-ui/oruga/issues/1065)) ([16dfd09](https://github.com/oruga-ui/oruga/commit/16dfd098cd34c2b1c5b6e1886c1ca44d3ba3bdec))
+* **a11y:** solve accessibility issues ([#1061](https://github.com/oruga-ui/oruga/issues/1061)) ([3615594](https://github.com/oruga-ui/oruga/commit/3615594f787ee0bd32271eeb2203f04c9f556bfa))
+* **dropdown:** add `modalDesktop` property ([#1064](https://github.com/oruga-ui/oruga/issues/1064)) ([4819fb7](https://github.com/oruga-ui/oruga/commit/4819fb70ab39a54b535e6af0a006e44b3a884fe9))
+* **field:** rename class names to match existing class name patterns ([#1047](https://github.com/oruga-ui/oruga/issues/1047)) ([a2e9b8a](https://github.com/oruga-ui/oruga/commit/a2e9b8a0bdc4d34dbb8a2071be900fe012715c2d))
+* **loading:** add body `noscroll` class when fullpage ([#1074](https://github.com/oruga-ui/oruga/issues/1074)) ([bbe2865](https://github.com/oruga-ui/oruga/commit/bbe2865521336ef074c0b1dee5f20433f1332848))
+* **picker:** improve date/time picker class drilling ([#1044](https://github.com/oruga-ui/oruga/issues/1044)) ([5ec65c8](https://github.com/oruga-ui/oruga/commit/5ec65c81dc004e0011f259a1abdd5534834852dc))
+* **programmatic:** unfiy  `useProgramamtic` interfaces ([#1058](https://github.com/oruga-ui/oruga/issues/1058)) ([80a0c5c](https://github.com/oruga-ui/oruga/commit/80a0c5c9ef49022791c54efae9bfa68d6a6b4139))
+* **sidebar:** remove `variant` prop | improve prop definitions ([#1046](https://github.com/oruga-ui/oruga/issues/1046)) ([c6bd1bc](https://github.com/oruga-ui/oruga/commit/c6bd1bc3a606381e3d865939aa541b4f5f4a8918))
+* **steps:** add root `variantClass` prop | update examples ([#1049](https://github.com/oruga-ui/oruga/issues/1049)) ([d795946](https://github.com/oruga-ui/oruga/commit/d7959461d49ff62345df76f2128582692af65055))
+* **table:** add `addons` to internal mobile sort field wrapper ([#1051](https://github.com/oruga-ui/oruga/issues/1051)) ([781849e](https://github.com/oruga-ui/oruga/commit/781849ee8390b17f4c096dff1cb91ea3dfcc37af))
+* **tabs|steps:** add `component` prop to item ([#1071](https://github.com/oruga-ui/oruga/issues/1071)) ([d3ea497](https://github.com/oruga-ui/oruga/commit/d3ea497942e4cace63bfb1960747dee8106431d7))
+* **tabs:** update class names ([#1062](https://github.com/oruga-ui/oruga/issues/1062)) ([4bfab60](https://github.com/oruga-ui/oruga/commit/4bfab60d2638d15b50a5cd8df8c0eaa476fcddac))
+* **types:** enhance `component` prop type ([#1075](https://github.com/oruga-ui/oruga/issues/1075)) ([73f3801](https://github.com/oruga-ui/oruga/commit/73f38010c9482ccde5ab656affcb256af021f178))
+* **types:** update tsconfig | add `strictNullChecks` definition ([#1066](https://github.com/oruga-ui/oruga/issues/1066)) ([923f887](https://github.com/oruga-ui/oruga/commit/923f887c4314acd33ed3c75a7cb45e0e061fe055))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+
+# [0.9.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.9.0-pre.1...v0.9.0-pre.2) (2024-08-08)
+
+
+### Bug Fixes
+
+* **datetimepicker:** solve editing directly not working correctly ([#1026](https://github.com/oruga-ui/oruga/issues/1026)) ([05e392e](https://github.com/oruga-ui/oruga/commit/05e392ea81d40e609d85f8aa628c37c380919776))
+* **dropdown:** prevent background scrolling on mobile ([#1022](https://github.com/oruga-ui/oruga/issues/1022)) ([bc1b497](https://github.com/oruga-ui/oruga/commit/bc1b49729f67b7e9ea6ea9cfd778e934b8e06e96))
+* **icon:** adjust `component` prop type ([#1028](https://github.com/oruga-ui/oruga/issues/1028)) ([a656182](https://github.com/oruga-ui/oruga/commit/a656182c3e29fa87950745dbe8357cabc8e18043))
+* **table:** emit `check` and `check-all` after reactive value got updated ([#1031](https://github.com/oruga-ui/oruga/issues/1031)) ([bf708ee](https://github.com/oruga-ui/oruga/commit/bf708eedc8ba319d86e33ae214c8ad407f6693f6))
+* **table:** solve an issue with `isRowChecked` prop ([#1032](https://github.com/oruga-ui/oruga/issues/1032)) ([9bcc478](https://github.com/oruga-ui/oruga/commit/9bcc478ac3cf2e051f414e2fa870e62d3953b7d2))
+* **theme:** solve an issue with class as string array definition ([#1024](https://github.com/oruga-ui/oruga/issues/1024)) ([754e1ee](https://github.com/oruga-ui/oruga/commit/754e1eecdfe4a68704e1a8b0c32b3f97150aab52))
+
+
+### Features
+
+* allow custom constraint validation errors ([#1023](https://github.com/oruga-ui/oruga/issues/1023)) ([a465a22](https://github.com/oruga-ui/oruga/commit/a465a22977276edb8f273ef8ccbd63761e56dc55))
+* **field:** programmatically associate inputs with field messages ([#1021](https://github.com/oruga-ui/oruga/issues/1021)) ([6fc309f](https://github.com/oruga-ui/oruga/commit/6fc309ff3b4fb324b3c69d193b7b116c1cb9913e))
+* **table:** add icon/label to `empty` slot ([#1030](https://github.com/oruga-ui/oruga/issues/1030)) ([79a7ab9](https://github.com/oruga-ui/oruga/commit/79a7ab905e81988544b3c5390f0ca879f71229cb))
+* **slider**: rename `customFormatter` prop to `formatter` prop ([#1033](https://github.com/oruga-ui/oruga/pull/1033))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+# [0.9.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.8.11...v0.9.0-pre.1) (2024-07-12)
+
+
+### Bug Fixes
+
+* **autocomplete:** adjust prop `keepOpen` behavior ([#1015](https://github.com/oruga-ui/oruga/issues/1015)) ([e01ad35](https://github.com/oruga-ui/oruga/commit/e01ad3577f42f8838c81ddcb5e7811c0d3713d23))
+* **dropdown:** adjust prop `multiple` behavior ([#1012](https://github.com/oruga-ui/oruga/issues/1012)) ([3e4291a](https://github.com/oruga-ui/oruga/commit/3e4291ac94556603543a92bd17bec2f5b8cc60db))
+* **select:** adjust prop `multiple` behavior ([#1014](https://github.com/oruga-ui/oruga/issues/1014)) ([6e25bee](https://github.com/oruga-ui/oruga/commit/6e25bee220819e9abd4b739bd17592859c490894))
+* **select:** adjust prop `placeholder` behavior ([#964](https://github.com/oruga-ui/oruga/issues/964)) ([1c8b580](https://github.com/oruga-ui/oruga/commit/1c8b58083dc1f33bf5a6d9a9efe3a17ba0c049ac))
+* **table:** solve searchable filter bug ([#949](https://github.com/oruga-ui/oruga/issues/949)) ([858c5c7](https://github.com/oruga-ui/oruga/commit/858c5c72a2207dbb6133458a54a3630ae946e4af))
+
+
+### Features
+
+* remove deprecated `ConfigPlugin` export ([#873](https://github.com/oruga-ui/oruga/issues/873)) ([66c09f4](https://github.com/oruga-ui/oruga/commit/66c09f45b5c2ecc45d024c8fc38ead20c0c0c2d3))
+* expose `value` for every *form* component ([#957](https://github.com/oruga-ui/oruga/issues/957)) ([9a43312](https://github.com/oruga-ui/oruga/commit/9a433124836a50d280dcd9df02574722aa142717))
+* **autocomplete:** update type generics ([#956](https://github.com/oruga-ui/oruga/issues/956)) ([26de252](https://github.com/oruga-ui/oruga/commit/26de252197e7cae61178c1593c158ff7c8e9ca75))
+* **checkbox:** add type generics ([#968](https://github.com/oruga-ui/oruga/issues/968)) ([c2c9d05](https://github.com/oruga-ui/oruga/commit/c2c9d055f8981725888e34606af7bec80803b6ee))
+* **datepicker:** change `mobileNative` default to `false` ([#993](https://github.com/oruga-ui/oruga/issues/993)) ([46e2c89](https://github.com/oruga-ui/oruga/commit/46e2c8940857842e51c9f9c165dfe6ddd47e4b1e))
+* **datepicker:** make `modelValue` conditional typed by prop `range`  ([#1006](https://github.com/oruga-ui/oruga/issues/1006)) ([96f1784](https://github.com/oruga-ui/oruga/commit/96f1784e5f626d2b9767d7ebcb345d7c476bbe41))
+* **datepicker:** make `datepicker` conditional typed by prop `multiple` ([#1011](https://github.com/oruga-ui/oruga/issues/1011)) ([8689a40](https://github.com/oruga-ui/oruga/commit/8689a40163130bc5c3ea97b761e6af7d9429b4d9))
+* **dropdown:** update type generics ([#984](https://github.com/oruga-ui/oruga/issues/984)) ([df7074b](https://github.com/oruga-ui/oruga/commit/df7074b4783e693d20f0537d9e371c26920a5044))
+* **dropdown:** make `modelValue` conditional typed by prop `multiple` ([#1003](https://github.com/oruga-ui/oruga/issues/1003)) ([66bbbcc](https://github.com/oruga-ui/oruga/commit/66bbbccc6524c14bd49072069bfd8898b594594b))
+* **field:** set prop `addons` default to `false` ([#914](https://github.com/oruga-ui/oruga/issues/914)) ([3871879](https://github.com/oruga-ui/oruga/commit/3871879b4bb40eb4d073e657fa5607dad1c1d8c3))
+* **input:** add `number` prop for vmodel casting ([#884](https://github.com/oruga-ui/oruga/issues/884)) ([ded99f9](https://github.com/oruga-ui/oruga/commit/ded99f9de574e3bf427c38223836214413639363))
+* **input:** make `modelValue` conditional typed by prop `number`  ([#991](https://github.com/oruga-ui/oruga/issues/991)) ([53924f1](https://github.com/oruga-ui/oruga/commit/53924f10b9348d96a80d6404560a7a9972e9d8c0))
+* **radio:** add type generics ([#969](https://github.com/oruga-ui/oruga/issues/969)) ([f241391](https://github.com/oruga-ui/oruga/commit/f241391053e3a6ae623327dc854ccadf881edca8))
+* **select:** add native `required` prop ([#971](https://github.com/oruga-ui/oruga/issues/971)) ([e3df9f1](https://github.com/oruga-ui/oruga/commit/e3df9f19b4417a1b02d2e4218c6082e89d145f2b))
+* **select:** add type generics | add unit tests ([#963](https://github.com/oruga-ui/oruga/issues/963)) ([a5bdedc](https://github.com/oruga-ui/oruga/commit/a5bdedc2c63200eb0e1ec4d19cee02172500fc05))
+* **select:** make `modelValue` conditional typed by prop `multiple` ([#1004](https://github.com/oruga-ui/oruga/issues/1004)) ([d3dc6dd](https://github.com/oruga-ui/oruga/commit/d3dc6ddec9e7120fa28779d3e73818dcef28c52a))
+* **select:** register `id` to field wrapper ([#966](https://github.com/oruga-ui/oruga/issues/966)) ([72f253c](https://github.com/oruga-ui/oruga/commit/72f253ccd14b46c699a9452b4c55a6ac877ada8b))
+* **slider:** make `modelValue` conditional typed by prop `range` ([#1018](https://github.com/oruga-ui/oruga/issues/1018)) ([eafc3f3](https://github.com/oruga-ui/oruga/commit/eafc3f3466a690f28b524f2781b8eb92760ffa76))
+* **steps:** add type generics ([#977](https://github.com/oruga-ui/oruga/issues/977)) ([f07a7cc](https://github.com/oruga-ui/oruga/commit/f07a7ccde7f1a3f11a6b7b5292d839dd1cde0050))
+* **switch:** add type generics ([#973](https://github.com/oruga-ui/oruga/issues/973)) ([cb67396](https://github.com/oruga-ui/oruga/commit/cb6739600bd294684955a4b57ea949b2aa84da34))
+* **table:** add `before` and `after` slot | add column `display` prop ([#947](https://github.com/oruga-ui/oruga/issues/947)) ([8f64934](https://github.com/oruga-ui/oruga/commit/8f64934ae0fc61fc437c3568d276fcf52b290662))
+* **table:** enhance loading spinner ([#946](https://github.com/oruga-ui/oruga/issues/946)) ([a1b7d45](https://github.com/oruga-ui/oruga/commit/a1b7d45495c19edc8b5ffa77466be504dd13be32))
+* **table:** add type generics ([#919](https://github.com/oruga-ui/oruga/issues/919)) ([c85bee6](https://github.com/oruga-ui/oruga/commit/c85bee62fcc98d48d7d51e5f2beeecd766d81de4))
+* **table:** expose `sort` function ([#959](https://github.com/oruga-ui/oruga/issues/959)) ([e9030bd](https://github.com/oruga-ui/oruga/commit/e9030bdbec26aeef91a15500959f792d8ab9742f))
+* **table:** update `thAttrs` and `tdAttrs` properties ([#958](https://github.com/oruga-ui/oruga/issues/958)) ([9dced98](https://github.com/oruga-ui/oruga/commit/9dced984f198bc13cb34cc68835b277ec794a7e7))
+* **tabs:** add type generics ([#978](https://github.com/oruga-ui/oruga/issues/978)) ([a9ded34](https://github.com/oruga-ui/oruga/commit/a9ded34592bc337019270b3ec90bddd95a737650))
+* **taginput:** update type generics ([#956](https://github.com/oruga-ui/oruga/issues/956)) ([26de252](https://github.com/oruga-ui/oruga/commit/26de252197e7cae61178c1593c158ff7c8e9ca75))
+* **taginput:** enhance `allowNew` and `allowDuplicates` props ([#1016](https://github.com/oruga-ui/oruga/issues/1016)) ([1eeeb42](https://github.com/oruga-ui/oruga/commit/1eeeb421d7ffefe9743abfcb20f45e5dec17c892))
+* **upload:** add type generics ([#982](https://github.com/oruga-ui/oruga/issues/982)) ([38bc75d](https://github.com/oruga-ui/oruga/commit/38bc75d1702764de36d6fc6b55ce138bffdfe7bb))
+* **upload:** make `modelValue` conditional typed by prop `mulitple` ([#1005](https://github.com/oruga-ui/oruga/issues/1005)) ([a93abfe](https://github.com/oruga-ui/oruga/commit/a93abfe71182689ec37db4c9b5dc67f5bd451a6d))
+* **programmatic:** add programmatic component ([#944](https://github.com/oruga-ui/oruga/issues/944)) ([2840a7e](https://github.com/oruga-ui/oruga/commit/2840a7e9354af31a42419c2e2112be7f7296cdc3))
+* **reactivity:** make components `classes` props reactive ([#960](https://github.com/oruga-ui/oruga/issues/960)) ([c0e429d](https://github.com/oruga-ui/oruga/commit/c0e429dc8db9b4fab5138d25773abb8d355d3996))
+* **themes:** remove theme config function `props` object encapsulation ([#760](https://github.com/oruga-ui/oruga/issues/760)) ([317fafb](https://github.com/oruga-ui/oruga/commit/317fafbcb1f071004733776ad17c2fcbea145350))
+* **examples:** add package `@oruga-ui/examples` ([#1019](https://github.com/oruga-ui/oruga/issues/1019)) ([5d18d26](https://github.com/oruga-ui/oruga/commit/5d18d26b15c5360a0eefcc3a4c98fe36e4efa781))
+
+
+### Reverts
+
+* **defineModel:** reuse `useVModel` composable for generics where the type is `T | T[]` ([#998](https://github.com/oruga-ui/oruga/issues/998)) ([c00abf5](https://github.com/oruga-ui/oruga/commit/c00abf5ad767a2121eb486ca4a7f3cd665089665))
+
+
+### Detailed Changes
+
+*following with the main release...*
+
+
+
 ## [0.8.12](https://github.com/oruga-ui/oruga/compare/v0.8.11...v0.8.12) (2024-06-28)
 
 

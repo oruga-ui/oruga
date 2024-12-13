@@ -1,8 +1,8 @@
-<script setup>
+<script setup lang="ts">
 // Import theme definitions
-import themes from "../../themes.json";
+import themes from "@docs/themes.json";
 
-const selectedTheme = defineModel("theme");
+const selectedTheme = defineModel<any>("theme");
 
 selectedTheme.value = loadTheme();
 
@@ -15,13 +15,14 @@ function loadTheme() {
             if (themeConfig && typeof themeConfig === "object")
                 return themeConfig;
         } catch (e) {
+            console.log(e);
             return themes[1];
         }
     }
     return themes[1];
 }
 
-function onThemeChange(theme) {
+function onThemeChange(theme: unknown): void {
     selectedTheme.value = theme;
     localStorage.setItem("oruga-ui.com:theme", JSON.stringify(theme));
     location.reload();
@@ -32,20 +33,15 @@ function onThemeChange(theme) {
     <o-dropdown
         :model-value="selectedTheme"
         root-class="theme-selector"
-        aria-role="list"
         @change="onThemeChange">
         <template #trigger="{ active }">
             <span role="button">
-                Theme ➜ {{ selectedTheme.label }}
+                Theme ➜ {{ selectedTheme?.label }}
                 <o-icon :icon="active ? 'caret-up' : 'caret-down'" />
             </span>
         </template>
 
-        <o-dropdown-item
-            v-for="item in themes"
-            :key="item.key"
-            :value="item"
-            aria-role="listitem">
+        <o-dropdown-item v-for="item in themes" :key="item.key" :value="item">
             {{ item.label }}
         </o-dropdown-item>
     </o-dropdown>

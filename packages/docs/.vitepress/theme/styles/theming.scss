@@ -2,16 +2,7 @@
 
 // Components Theme Style section
 
-.theme-orugabase {
-    .theme-orugafull,
-    .theme-bulma,
-    .theme-bootstrap {
-        display: none;
-    }
-}
-
-.theme-orugafull {
-    .theme-orugabase,
+.theme-oruga {
     .theme-bulma,
     .theme-bootstrap {
         display: none;
@@ -19,16 +10,14 @@
 }
 
 .theme-bulma {
-    .theme-orugabase,
-    .theme-orugafull,
+    .theme-oruga,
     .theme-bootstrap {
         display: none;
     }
 }
 
 .theme-bootstrap {
-    .theme-orugabase,
-    .theme-orugafull,
+    .theme-oruga,
     .theme-bulma {
         display: none;
     }

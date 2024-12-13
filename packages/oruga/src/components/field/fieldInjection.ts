@@ -6,28 +6,27 @@ import {
     type InjectionKey,
 } from "vue";
 
-import Field from "./Field.vue";
 import { getOption } from "@/utils/config";
-
-export type FieldProps = InstanceType<typeof Field>["$props"];
+import type { FieldProps } from "./props";
 
 type FieldData = {
-    $el: Element;
+    $el: Element | null;
     props: FieldProps;
     hasInnerField: boolean;
-    hasMessage: boolean;
-    fieldVariant: string;
-    fieldMessage: string;
+    variant?: string;
+    message?: string;
+    labelId: string;
+    inputAttrs: object;
     addInnerField: () => void;
     setInputId: (value: string) => void;
     setFocus: (value: boolean) => void;
     setFilled: (value: boolean) => void;
-    setVariant: (value: string) => void;
-    setMessage: (value: string) => void;
+    setVariant: (value?: string) => void;
+    setMessage: (value?: string) => void;
 };
 
 /** provide/inject type */
-type ProvidedField = ComputedRef<FieldData> | undefined;
+type ProvidedField = ComputedRef<FieldData | undefined>;
 
 /** provide/inject key */
 const $FieldKey: InjectionKey<ProvidedField> = Symbol("FielData");
@@ -41,38 +40,47 @@ export function provideField(data: ProvidedField): void {
 }
 
 /** Inject parent field component if used inside one. **/
-export function injectField() {
-    const parentField = inject($FieldKey, undefined);
+export function injectField(): {
+    parentField: ComputedRef<FieldData | undefined>;
+    statusVariantIcon: ComputedRef<string>;
+    statusVariant: ComputedRef<string | undefined>;
+    statusMessage: ComputedRef<string | undefined>;
+} {
+    const parentField = inject(
+        $FieldKey,
+        computed(() => undefined),
+    );
 
-    /**
-     * Get the type prop from parent if it's a Field.
-     */
-    const statusVariant = computed(() => {
-        if (!parentField?.value?.fieldVariant) return undefined;
-        if (typeof parentField.value.fieldVariant === "string")
-            return parentField.value.fieldVariant;
-        if (Array.isArray(parentField.value.fieldVariant)) {
-            for (const key in parentField.value.fieldVariant as any) {
-                if (parentField.value.fieldVariant[key]) return key;
+    /** Get the message prop from parent if it's a Field. */
+    const statusMessage = computed<string | undefined>(() => {
+        if (!parentField?.value?.message) return undefined;
+        return parentField?.value.message;
+    });
+
+    /** Get the type prop from parent if it's a Field. */
+    const statusVariant = computed<string | undefined>(() => {
+        if (!parentField?.value?.variant) return undefined;
+        if (typeof parentField.value.variant === "string")
+            return parentField.value.variant;
+        if (Array.isArray(parentField.value.variant)) {
+            for (const key in parentField.value.variant as any) {
+                if (parentField.value.variant[key]) return key;
             }
         }
         return undefined;
     });
 
-    /** Get the message prop from parent if it's a Field. */
-    const statusMessage = computed(() =>
-        parentField.value?.hasMessage ? parentField.value.fieldMessage : "",
-    );
+    const statusVariantIconConfig = getOption("statusVariantIcon", {
+        success: "check",
+        danger: "alert-circle",
+        info: "information",
+        warning: "alert",
+    });
 
     /** Icon name based on the variant. */
     const statusVariantIcon = computed<string>(() => {
-        const statusVariantIcon = getOption("statusVariantIcon", {
-            success: "check",
-            danger: "alert-circle",
-            info: "information",
-            warning: "alert",
-        });
-        return statusVariantIcon[statusVariant.value] || "";
+        if (!statusVariant.value || !statusVariantIconConfig) return "";
+        return statusVariantIconConfig[statusVariant.value] || "";
     });
 
     return {

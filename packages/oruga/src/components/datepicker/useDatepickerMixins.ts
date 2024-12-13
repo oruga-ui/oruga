@@ -1,8 +1,9 @@
 import { computed } from "vue";
 import { matchWithGroups } from "./utils";
-import type { DatepickerProps } from "./types";
+import type { DatepickerProps } from "./props";
 import { isTrueish } from "@/utils/helpers";
 
+/** Time Format Feature */
 export function useDatepickerMixins<R extends boolean, M extends boolean>(
     props: DatepickerProps<R, M>,
 ) {
@@ -11,7 +12,7 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
      * is within a given month
      */
     function isDateSelectable(date: Date, month: number): boolean {
-        const validity = [];
+        const validity: boolean[] = [];
 
         if (props.minDate) validity.push(date >= props.minDate);
         if (props.maxDate) validity.push(date <= props.maxDate);
@@ -88,7 +89,7 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
     );
 
     const sampleTime = computed(() => {
-        const d = props.dateCreator();
+        const d = dateCreator();
         d.setHours(10);
         d.setSeconds(0);
         d.setMinutes(0);
@@ -96,8 +97,16 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
         return d;
     });
 
+    function dateCreator(): Date {
+        return typeof props.creator === "function"
+            ? props.creator()
+            : new Date();
+    }
+
     /** Format date into string */
-    const defaultDateFormatter = (date: typeof props.modelValue): string => {
+    function dateFormatter(date: typeof props.modelValue): string {
+        if (typeof props.formatter === "function") return props.formatter(date);
+
         if (!date) return "";
         const targetDates: Date[] = Array.isArray(date) ? date : [date];
         if (!targetDates.length) return "";
@@ -116,11 +125,13 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
         return !isTrueish(props.multiple) && !isTrueish(props.range)
             ? dates.join(" - ")
             : dates.join(", ");
-    };
+    }
 
     /** Parse a string into a date */
-    const defaultDateParser = (date: string): typeof props.modelValue => {
-        if (!date) return null;
+    function dateParser(date: string): typeof props.modelValue {
+        if (typeof props.parser === "function") return props.parser(date);
+
+        if (!date) return undefined;
         const isArray = isTrueish(props.multiple) || isTrueish(props.range);
         const targetDates = !isArray ? [date] : date.split(", ");
         const dates = targetDates.map((date) => {
@@ -177,7 +188,13 @@ export function useDatepickerMixins<R extends boolean, M extends boolean>(
             }
         });
         return (isArray ? dates : dates[0]) as typeof props.modelValue;
-    };
+    }
 
-    return { isDateSelectable, defaultDateParser, defaultDateFormatter };
+    return {
+        dtf,
+        isDateSelectable,
+        dateCreator,
+        dateParser,
+        dateFormatter,
+    };
 }

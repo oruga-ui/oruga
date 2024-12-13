@@ -7,7 +7,7 @@ import {
     nextTick,
     useSlots,
     toValue,
-    type PropType,
+    useTemplateRef,
     type Ref,
     type MaybeRefOrGetter,
 } from "vue";
@@ -22,10 +22,9 @@ import OTableMobileSort from "./TableMobileSort.vue";
 import OTableColumn from "./TableColumn.vue";
 import OTablePagination from "./TablePagination.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import {
     getValueByPath,
-    indexOf,
     toCssDimension,
     escapeRegExpChars,
     removeDiacriticsFromString,
@@ -40,15 +39,18 @@ import {
     useMatchMedia,
     useDebounce,
     useObjectMap,
+    useSequentialId,
 } from "@/composables";
 
+import type { ClassBind } from "@/types";
 import type {
     TableColumn,
     TableRow,
     TableColumnItem,
     TableColumnComponent,
+    TableComponent,
 } from "./types";
-import type { ComponentClass, ClassBind, OrugaOptions } from "@/types";
+import type { TableProps } from "./props";
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -63,494 +65,77 @@ defineOptions({
     inheritAttrs: false,
 });
 
-type SortDirection = "asc" | "desc";
-
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Table data */
-    data: { type: Array as PropType<T[]>, default: () => [] },
-    /** Table columns */
-    columns: { type: Array as PropType<TableColumn[]>, default: () => [] },
-    /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-    rowKey: { type: String, default: () => getOption("table.rowKey") },
-    /** Define individual class for a row */
-    rowClass: {
-        type: Function as PropType<(row: T, index: number) => string>,
-        default: (row: T, index: number) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("table.rowClass", (row, index) => "")(row, index),
-    },
-    /** Adds native attributes to a column th element */
-    thAttrs: {
-        type: Function as PropType<(column: TableColumn<T>) => object>,
-        default: undefined,
-    },
-    /** Adds native attributes to column td element of a row */
-    tdAttrs: {
-        type: Function as PropType<(row: T, column: TableColumn<T>) => object>,
-        default: undefined,
-    },
-    /**
-     * Define a custom comparison function to check whether two row elements are equal.
-     * By default a `rowKey` comparison is performed if given. Otherwise a simple object comparison is done.
-     */
-    customCompare: {
-        type: Function as PropType<(a: T, b: T) => boolean>,
-        default: undefined,
-    },
-    /** Border to all cells */
-    bordered: {
-        type: Boolean,
-        default: () => getOption("table.bordered", false),
-    },
-    /** Whether table is striped */
-    striped: {
-        type: Boolean,
-        default: () => getOption("table.striped", false),
-    },
-    /** Makes the cells narrower */
-    narrowed: {
-        type: Boolean,
-        default: () => getOption("table.narrowed", false),
-    },
-    /** Rows are highlighted when hovering */
-    hoverable: {
-        type: Boolean,
-        default: () => getOption("table.hoverable", false),
-    },
-    /** Enable loading state */
-    loading: { type: Boolean, default: false },
-    /** Set which row is selected, use `v-model:selected` to make it two-way binding (if selectable) */
-    selected: { type: Object as PropType<T>, default: undefined },
-    /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */
-    selectable: {
-        type: Boolean,
-        default: () => getOption("table.selectable", false),
-    },
-    /** Custom method to verify if a row is selectable, works when is selectable */
-    isRowSelectable: {
-        type: Function as PropType<(row: T) => boolean>,
-        default: () => true,
-    },
-    /** Show header */
-    showHeader: {
-        type: Boolean,
-        default: () => getOption("table.showHeader", true),
-    },
-    /** Allows rows to be draggable */
-    draggable: { type: Boolean, default: false },
-    /** Allows columns to be draggable */
-    draggableColumn: { type: Boolean, default: false },
-    /** Add a horizontal scrollbar when table is too wide */
-    scrollable: { type: Boolean, default: undefined },
-    /** Show a sticky table header */
-    stickyHeader: { type: Boolean, default: false },
-    /** Table fixed height */
-    height: { type: [Number, String], default: undefined },
-    /** Filtering debounce time (in milliseconds) */
-    debounceSearch: {
-        type: Number,
-        default: () => getOption("table.debounceSearch"),
-    },
-    /** Rows can be checked (multiple) */
-    checkable: { type: Boolean, default: false },
-    /** Make the checkbox column sticky (if checkable) */
-    stickyCheckbox: { type: Boolean, default: false },
-    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
-    headerCheckable: { type: Boolean, default: true },
-    /** Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable) */
-    checkedRows: { type: Array as PropType<T[]>, default: () => [] },
-    /**
-     * Position of the checkbox when checkable (if checkable)
-     * @values left, right
-     */
-    checkboxPosition: {
-        type: String,
-        default: () => getOption("table.checkboxPosition", "left"),
-        validator: (value: string) => ["left", "right"].indexOf(value) >= 0,
-    },
-    /**
-     * Color of the checkbox when checkable (if checkable)
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    checkboxVariant: {
-        type: String,
-        default: () => getOption("table.checkboxVariant"),
-    },
-    /** Custom method to verify if a row is checked (if checkable). Useful for backend pagination. */
-    isRowChecked: {
-        type: Function as PropType<(row: T, data: T[]) => boolean>,
-        default: undefined,
-    },
-    /** Custom method to verify if a row is checkable (if checkable) */
-    isRowCheckable: {
-        type: Function as PropType<(row: T) => boolean>,
-        default: (row: T) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("table.isRowCheckable", (row) => true)(row),
-    },
-    /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
-    backendSorting: {
-        type: Boolean,
-        default: () => getOption("table.backendSorting", false),
-    },
-    /**
-     * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc']
-     * @type string | [string, 'asc' | 'desc']
-     */
-    defaultSort: {
-        type: [String, Array] as PropType<string | [string, SortDirection]>,
-        default: () => getOption("table.defaultSort"),
-    },
-    /**
-     * Sets the default sort column direction on the first click
-     * @type 'asc'|'desc'
-     * @values asc, desc
-     */
-    defaultSortDirection: {
-        type: String as PropType<SortDirection>,
-        validator: (value: string) => ["asc", "desc"].indexOf(value) >= 0,
-        default: () => getOption("table.defaultSortDirection", "asc"),
-    },
-    /** Sets the header sorting icon */
-    sortIcon: {
-        type: String,
-        default: () => getOption("table.sortIcon", "arrow-up"),
-    },
-    /**
-     * Sets the size of the sorting icon
-     * @values small, medium, large
-     */
-    sortIconSize: {
-        type: String,
-        default: () => getOption("table.sortIconSize", "small"),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("table.iconPack"),
-    },
-    /** Allow row details  */
-    detailed: { type: Boolean, default: false },
-    /**
-     * Set which rows have opened details, use `v-model:detailedRows` to make it two-way binding (if detailed).
-     * Ideal to open details via vue-router. (A unique key is required; check `rowKey` prop)
-     */
-    detailedRows: { type: Array as PropType<T[]>, default: () => [] },
-    /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
-    isDetailedVisible: {
-        type: Function as PropType<(row: T) => boolean>,
-        default: (row: T) =>
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            getOption("table.isDetailedVisible", (row) => true)(row),
-    },
-    /** Allow detail icon and column to be visible (if detailed) */
-    showDetailIcon: {
-        type: Boolean,
-        default: () => getOption("table.showDetailIcon", true),
-    },
-    /** Icon name of detail action (if detailed) */
-    detailIcon: {
-        type: String,
-        default: () => getOption("table.detailIcon", "chevron-right"),
-    },
-    /** Enable custom style on details (if detailed) */
-    customDetailRow: { type: Boolean, default: false },
-    /* Transition name to use when toggling row details (if detailed) */
-    detailTransition: {
-        type: String,
-        default: () => getOption("table.detailTransition", "slide"),
-    },
-    /** Adds pagination to the table */
-    paginated: {
-        type: Boolean,
-        default: () => getOption("table.paginated", false),
-    },
-    /** Rows won't be paginated with Javascript, use with `page-change` event to paginate in your backend */
-    backendPagination: { type: Boolean, default: false },
-    /** Total number of table data if backend-pagination is enabled */
-    total: { type: Number, default: 0 },
-    /** Current page of table data (if paginated), use `v-model:currentPage` to make it two-way binding */
-    currentPage: { type: Number, default: 1 },
-    /** How many rows per page (if paginated) */
-    perPage: {
-        type: [Number, String],
-        default: () => getOption("table.perPage", 20),
-    },
-    /**
-     * Pagination position (if paginated)
-     * @values bottom, top, both
-     */
-    paginationPosition: {
-        type: String,
-        default: () => getOption("table.paginationPosition", "bottom"),
-        validator: (value: string) =>
-            ["bottom", "top", "both"].indexOf(value) >= 0,
-    },
-    /**
-     * Size of pagination (if paginated)
-     * @values small, medium, large
-     */
-    paginationSize: {
-        type: String,
-        default: () => getOption("table.paginationSize", "small"),
-    },
-    /** Enable rounded pagination buttons (if paginated) */
-    paginationRounded: {
-        type: Boolean,
-        default: () => getOption("table.paginationRounded", false),
-    },
-    /** Enable simple style pagination (if paginated) */
-    paginationSimple: {
-        type: Boolean,
-        default: () => getOption("table.paginationSimple", false),
-    },
-    /**
-     * Pagination buttons order (if paginated)
-     * @values centered, right, left
-     */
-    paginationOrder: {
-        type: String,
-        default: () => getOption("table.paginationOrder"),
-        validator: (value: string) =>
-            ["centered", "right", "left"].indexOf(value) >= 0,
-    },
-    /** Columns won't be filtered with Javascript, use with `searchable` prop to the columns to filter in your backend */
-    backendFiltering: {
-        type: Boolean,
-        default: () => getOption("table.backendFiltering", false),
-    },
-    /** Icon of the column search input */
-    filtersIcon: {
-        type: String,
-        default: () => getOption("table.filterIcon"),
-    },
-    /** Placeholder of the column search input */
-    filtersPlaceholder: {
-        type: String,
-        default: () => getOption("table.filterPlaceholder"),
-    },
-    /** Add a native event to filter */
-    filtersEvent: { type: String, default: "" },
-    /** Icon for the loading state */
-    loadingIcon: {
-        type: String,
-        default: () => getOption("table.loadingIcon", "loading"),
-    },
-    /** Label for the loading state */
-    loadingLabel: {
-        type: String,
-        default: () => getOption("table.loadingLabel"),
-    },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("table.mobileBreakpoint"),
-    },
-    /** Rows appears as cards on mobile (collapse rows) */
-    mobileCards: {
-        type: Boolean,
-        default: () => getOption("table.mobileCards", true),
-    },
-    /** Select placeholder text when nothing is selected (if mobileCards)*/
-    mobileSortPlaceholder: {
-        type: String,
-        default: () => getOption("table.mobileSortPlaceholder"),
-    },
-    /** Accessibility label for the pagination next page button. */
-    ariaNextLabel: {
-        type: String,
-        default: () => getOption("table.ariaNextLabel"),
-    },
-    /** Accessibility label for the pagination previous page button. */
-    ariaPreviousLabel: {
-        type: String,
-        default: () => getOption("table.ariaPreviousLabel"),
-    },
-    /** Accessibility label for the pagination page button. */
-    ariaPageLabel: {
-        type: String,
-        default: () => getOption("table.ariaPageLabel"),
-    },
-    /** Accessibility label for the pagination current page button. */
-    ariaCurrentLabel: {
-        type: String,
-        default: () => getOption("table.ariaCurrentLabel"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table */
-    tableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table wrapper */
-    wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table footer */
-    footerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when it is empty */
-    emptyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table row detail */
-    detailedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when is bordered */
-    borderedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when rows are striped */
-    stripedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when rows are narrowed */
-    narrowedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table when is hoverable */
-    hoverableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table wrapper when header is sticky */
-    stickyHeaderClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table wrapper when its content is scrollable */
-    scrollableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table row when selected */
-    trSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table row when checkable and checked */
-    trCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element */
-    thClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element when component is positioned */
-    thPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element when component is sticky" */
-    thStickyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element when is checkable */
-    thCheckboxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element currently sorted */
-    thCurrentSortClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sortable Table `th` element */
-    thSortableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element that is unsortable */
-    thUnselectableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table sort icon in the header */
-    thSortIconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` element of the detail column of triggers */
-    thDetailedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `th` subheading element */
-    thSubheadingClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element */
-    tdClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element when component is positioned */
-    tdPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element when component is sticky */
-    tdStickyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element when is checkable */
-    tdCheckboxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table `td` element that contains the chevron to trigger details */
-    tdDetailedChevronClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the sortable form wrapper on mobile */
-    mobileSortClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table pagination wrapper */
-    paginationWrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the Table component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /**
-     * Class configuration for the internal loading component
-     * @ignore
-     */
-    loadingClasses: {
-        type: Object,
-        default: () =>
-            getOption<OrugaOptions["loading"]>("table.loadingClasses", {}),
-    },
+const props = withDefaults(defineProps<TableProps<T>>(), {
+    override: undefined,
+    data: undefined,
+    columns: undefined,
+    rowKey: () => getDefault("table.rowKey"),
+    rowClass: getDefault("table.rowClass", () => ""),
+    thAttrs: undefined,
+    tdAttrs: undefined,
+    customCompare: undefined,
+    bordered: () => getDefault("table.bordered", false),
+    striped: () => getDefault("table.striped", false),
+    narrowed: () => getDefault("table.narrowed", false),
+    hoverable: () => getDefault("table.hoverable", false),
+    selected: undefined,
+    selectable: () => getDefault("table.selectable", false),
+    isRowSelectable: () => true,
+    showHeader: () => getDefault("table.showHeader", true),
+    draggable: false,
+    draggableColumn: false,
+    scrollable: undefined,
+    stickyHeader: false,
+    height: undefined,
+    debounceSearch: () => getDefault("table.debounceSearch"),
+    checkable: false,
+    stickyCheckbox: false,
+    headerCheckable: true,
+    checkedRows: () => [],
+    checkboxPosition: () => getDefault("table.checkboxPosition", "left"),
+    checkboxVariant: () => getDefault("table.checkboxVariant"),
+    isRowChecked: undefined,
+    isRowCheckable: getDefault("table.isRowCheckable", () => true),
+    backendSorting: () => getDefault("table.backendSorting", false),
+    defaultSort: () => getDefault("table.defaultSort"),
+    defaultSortDirection: () => getDefault("table.defaultSortDirection", "asc"),
+    sortIcon: () => getDefault("table.sortIcon", "arrow-up"),
+    sortIconSize: () => getDefault("table.sortIconSize", "small"),
+    iconPack: () => getDefault("table.iconPack"),
+    detailed: false,
+    detailedRows: () => [],
+    isDetailedVisible: getDefault("table.isDetailedVisible", () => true),
+    showDetailIcon: () => getDefault("table.showDetailIcon", true),
+    detailIcon: () => getDefault("table.detailIcon", "chevron-right"),
+    customDetailRow: false,
+    detailTransition: () => getDefault("table.detailTransition", "slide"),
+    paginated: () => getDefault("table.paginated", false),
+    backendPagination: false,
+    total: 0,
+    currentPage: 1,
+    perPage: () => getDefault("table.perPage", 20),
+    paginationPosition: () => getDefault("table.paginationPosition", "bottom"),
+    paginationSize: () => getDefault("table.paginationSize", "small"),
+    paginationRounded: () => getDefault("table.paginationRounded", false),
+    paginationSimple: () => getDefault("table.paginationSimple", false),
+    paginationOrder: () => getDefault("table.paginationOrder"),
+    backendFiltering: () => getDefault("table.backendFiltering", false),
+    filtersIcon: () => getDefault("table.filterIcon"),
+    filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
+    filtersEvent: "",
+    emptyLabel: () => getDefault("table.emptyLabel"),
+    emptyIcon: () => getDefault("table.emptyIcon"),
+    emptyIconSize: () => getDefault("table.emptyIconSize", "large"),
+    loading: false,
+    loadingIcon: () => getDefault("table.loadingIcon", "loading"),
+    loadingLabel: () => getDefault("table.loadingLabel"),
+    mobileBreakpoint: () => getDefault("table.mobileBreakpoint"),
+    mobileCards: () => getDefault("table.mobileCards", true),
+    mobileSortPlaceholder: () => getDefault("table.mobileSortPlaceholder"),
+    ariaNextLabel: () => getDefault("table.ariaNextLabel"),
+    ariaPreviousLabel: () => getDefault("table.ariaPreviousLabel"),
+    ariaPageLabel: () => getDefault("table.ariaPageLabel"),
+    ariaCurrentLabel: () => getDefault("table.ariaCurrentLabel"),
 });
 
 const emits = defineEmits<{
@@ -558,123 +143,117 @@ const emits = defineEmits<{
      * currentPage prop two-way binding
      * @param value {number} updated currentPage prop
      */
-    (e: "update:currentPage", value: number): void;
+    "update:currentPage": [value: number];
     /**
      * is emitted each time the table data is processed into rows
      * @param value {TableRow[]} computed table rows
      */
-    (e: "processed", value: Array<TableRow<T>>): void;
+    processed: [value: TableRow<T>[]];
     /**
      * on pagination page change event
      * @param page {number} updated page
      */
-    (e: "page-change", page: number): void;
+    "page-change": [page: number];
     /**
      * select prop two-way binding
      * @param value {T} updated select prop
      */
-    (e: "update:selected", value: T): void;
+    "update:selected": [value: T];
     /**
      * on row select event
      * @param newRow {T} new select value
      * @param oldRow {T} old select value
      */
-    (e: "select", newRow: T, oldRow: T): void;
+    select: [newRow: T, oldRow: T];
     /**
      * on row checked event
      * @param value {T[]} all checked rows
      * @param row {T} row data
      */
-    (e: "check", value: Array<T>, row: T): void;
+    check: [value: T[], row: T];
     /**
      * on all rows checked event
      * @param value {T[]} all checked rows
      */
-    (e: "check-all", value: Array<T>): void;
+    "check-all": [value: T[]];
     /**
      * checkedRows prop two-way binding
      * @param value {T[]} updated checkedRows prop
      */
-    (e: "update:checkedRows", value: Array<T>): void;
+    "update:checkedRows": [value: T[]];
     /**
      * on column sort change event
      * @param column {TableColumn} column data
      * @param direction {string}  'asc' or 'desc'
      * @param event {Event} native  event
      */
-    (
-        e: "sort",
-        column: TableColumn<T>,
-        direction: SortDirection,
-        event: Event,
-    ): void;
+    sort: [column: TableColumn<T>, direction: "asc" | "desc", event: Event];
     /**
      * on filter change event
      * @param filters {object} filter object
      */
-    (e: "filters-change", value: Record<string, string>): void;
+    "filters-change": [value: Record<string, string>];
     /**
      * on native filter event based on props filtersEvent
      * @param filtersEvent {string} props filtersEvent value
      * @param filters {object} filter object
      * @param event {Event} native  event
      */
-    (
-        e: "filters-event",
+    "filters-event": [
         filtersEvent: string,
         filters: Record<string, string>,
         event: Event,
-    ): void;
+    ];
     /**
      * detailedRows prop two-way binding
      * @param value {T[]} updated detailedRows prop
      */
-    (e: "update:detailedRows", value: Array<T>): void;
+    "update:detailedRows": [value: T[]];
     /**
      * on details open event
      * @param row {T} row data
      */
-    (e: "details-open", row: T): void;
+    "details-open": [row: T];
     /**
      * on details close event
      * @param row {T} row data
      */
-    (e: "details-close", row: T): void;
+    "details-close": [row: T];
     /**
      * on row click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "click", row: T, index: number, event: Event): void;
+    click: [row: T, index: number, event: Event];
     /**
      * on row double click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native click event
      */
-    (e: "dblclick", row: T, index: number, event: Event): void;
+    dblclick: [row: T, index: number, event: Event];
     /**
      * on row right click event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native contextmenu event
      */
-    (e: "contextmenu", row: T, index: number, event: Event): void;
+    contextmenu: [row: T, index: number, event: Event];
     /**
      * on row mouseenter event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseenter event
      */
-    (e: "mouseenter", row: T, index: number, event: Event): void;
+    mouseenter: [row: T, index: number, event: Event];
     /**
      * on row mouseleave event
      * @param row {T} row data
      * @param index {number} index of clicked row
      * @param event {Event} native mouseleave event
      */
-    (e: "mouseleave", row: T, index: number, event: Event): void;
+    mouseleave: [row: T, index: number, event: Event];
     /**
      * on cell click event
      * @param row {T} row data
@@ -683,136 +262,120 @@ const emits = defineEmits<{
      * @param colindex {number} column index
      * @param event {Event} native click event
      */
-    (
-        e: "cell-click",
+    "cell-click": [
         row: T,
         column: TableColumn<T>,
         index: number,
         colindex: number,
         event: Event,
-    ): void;
+    ];
     /**
      * on row dragstart event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragstart event
      */
-    (e: "dragstart", row: T, index: number, event: DragEvent): void;
+    dragstart: [row: T, index: number, event: DragEvent];
     /**
      * on row dragend event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragend event
      */
-    (e: "dragend", row: T, index: number, event: DragEvent): void;
+    dragend: [row: T, index: number, event: DragEvent];
     /**
      * on row drop event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native drop event
      */
-    (e: "drop", row: T, index: number, event: DragEvent): void;
-
+    drop: [row: T, index: number, event: DragEvent];
     /**
      * on row dragleave event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragleave event
      */
-    (e: "dragleave", row: T, index: number, event: DragEvent): void;
+    dragleave: [row: T, index: number, event: DragEvent];
     /**
      * on row dragover event
      * @param row {T} row data
      * @param index {number} index of draged row
      * @param event {DragEvent} native dragover event
      */
-    (e: "dragover", row: T, index: number, event: DragEvent): void;
+    dragover: [row: T, index: number, event: DragEvent];
     /**
      * on column columndragstart event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragstart event
      */
-    (
-        e: "columndragstart",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragstart: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragend event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragend event
      */
-    (
-        e: "columndragend",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragend: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndrop event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndrop event
      */
-    (
-        e: "columndrop",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndrop: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragleave event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragleave event
      */
-    (
-        e: "columndragleave",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragleave: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragover event
      * @param column {TableColumn} column data
      * @param index {number} index of draged column
      * @param event {DragEvent} native columndragover event
      */
-    (
-        e: "columndragover",
-        column: TableColumn<T>,
-        index: number,
-        event: DragEvent,
-    ): void;
+    columndragover: [column: TableColumn<T>, index: number, event: DragEvent];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
-const slotRef = ref<HTMLElement>();
+const slotRef = useTemplateRef("slotElement");
+
+// provided data is a computed ref to enjure reactivity
+const provideData = computed<TableComponent>(() => ({
+    isColumnSorted,
+}));
 
 /** provide functionalities and data to child item components */
-const provider = useProviderParent<TableColumnComponent<T>>(slotRef);
+const { childItems } = useProviderParent<TableColumnComponent<T>>({
+    rootRef: slotRef,
+    data: provideData,
+});
 
 /** all defined columns */
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
-    if (!provider.sortedItems.value) return [];
-    return provider.sortedItems.value.map((column) => ({
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
-        ...toValue(column.data),
+        ...toValue(column.data!),
         thAttrsData: {},
         tdAttrsData: [],
     }));
 });
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** all defined data elements as an object map */
 const tableData = computed<TableRow<T>[]>(() =>
-    useObjectMap(props.data, props.rowKey),
+    useObjectMap(props.data, props.rowKey, nextSequence),
 );
 
 const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;
@@ -848,7 +411,7 @@ const tableTotal = computed(() =>
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 /** visible rows based on current page */
-const visibleRows = computed(() => {
+const visibleRows = computed<TableRow<T>[]>((): TableRow<T>[] => {
     if (!props.paginated || props.backendPagination) return tableRows.value;
 
     const currentPage = tableCurrentPage.value;
@@ -936,6 +499,24 @@ function getColumnValue(row: T, column: TableColumn<T>): string {
     return getPropertyValue(row, column.field, column.formatter);
 }
 
+/** check if two rows are equal by a custom compare function or the rowKey attribute */
+function isRowEqual(
+    sourceRow: MaybeRefOrGetter<T>,
+    targetRow: MaybeRefOrGetter<T>,
+): boolean {
+    const el1 = toValue(sourceRow);
+    const el2 = toValue(targetRow);
+    if (!isDefined(targetRow)) return false;
+    if (typeof props.customCompare === "function")
+        return props.customCompare(el1, el2);
+    if (props.rowKey)
+        return (
+            getPropertyValue(el1, props.rowKey) ==
+            getPropertyValue(el2, props.rowKey)
+        );
+    return el1 == el2;
+}
+
 // --- Select Feature ---
 
 const tableSelectedRow = defineModel<T>("selected", { default: undefined });
@@ -960,23 +541,23 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
     const row = visibleRows.value[index];
 
     if (!props.isRowSelectable(row.value)) {
-        let newIndex = null;
+        let newIndex: number | undefined;
         if (pos > 0) {
             for (
                 let i = index;
-                i < visibleRows.value.length && newIndex === null;
+                i < visibleRows.value.length && newIndex === undefined;
                 i++
             ) {
                 if (props.isRowSelectable(visibleRows.value[i].value))
                     newIndex = i;
             }
         } else {
-            for (let i = index; i >= 0 && newIndex === null; i--) {
+            for (let i = index; i >= 0 && newIndex === undefined; i--) {
                 if (props.isRowSelectable(visibleRows.value[i].value))
                     newIndex = i;
             }
         }
-        if (newIndex >= 0) {
+        if (newIndex != undefined && newIndex >= 0) {
             selectRow(visibleRows.value[newIndex], index, event);
         }
     } else {
@@ -999,19 +580,6 @@ function selectRow(row: TableRow<T>, index: number, event: Event): void {
     tableSelectedRow.value = row.value;
     // emit new and old row
     emits("select", row.value, tableSelectedRow.value);
-}
-
-function isRowEqual(
-    sourceRow: MaybeRefOrGetter<T>,
-    targetRow?: MaybeRefOrGetter<T>,
-): boolean {
-    const el1 = toValue(sourceRow);
-    const el2 = toValue(targetRow);
-    if (!isDefined(targetRow)) return false;
-    if (typeof props.customCompare === "function")
-        return props.customCompare(el1, el2);
-    if (props.rowKey) return el1[props.rowKey] == el2[props.rowKey];
-    return el1 == el2;
 }
 
 // --- Filter Feature ---
@@ -1053,7 +621,8 @@ function isRowFiltered(row: T): boolean {
         if (typeof column?.customSearch === "function")
             return column.customSearch(row, filter);
 
-        const value = typeof row === "object" ? getValueByPath(row, key) : row;
+        const value =
+            typeof row === "object" && !!row ? getValueByPath(row, key) : row;
         if (value == null) return false;
         // if number compare values
         if (Number.isInteger(value)) return value === Number(filter);
@@ -1063,7 +632,7 @@ function isRowFiltered(row: T): boolean {
                 (val) =>
                     re.test(removeDiacriticsFromString(val)) || re.test(val),
             );
-
+        if (typeof value !== "string") return !!value;
         return re.test(removeDiacriticsFromString(value)) || re.test(value);
     });
 }
@@ -1103,7 +672,7 @@ function initSort(): void {
     } else {
         sortField = props.defaultSort;
     }
-    sortByField(sortField, sortDirection as SortDirection);
+    sortByField(sortField, sortDirection);
 }
 
 /**
@@ -1125,14 +694,19 @@ function sort(
 
     // if not first time sort
     if (currentSortColumn.value)
-        emits("sort", column, isAsc.value ? "asc" : "desc", event);
+        emits(
+            "sort",
+            column,
+            isAsc.value ? "asc" : "desc",
+            event || new Event("sort"),
+        );
 
     currentSortColumn.value = column;
     // recompute rows with updated currentSortColumn
     processTableData();
 }
 
-function sortByField(field: string, direction: SortDirection = "asc"): void {
+function sortByField(field: string, direction: "asc" | "desc"): void {
     const sortColumn = tableColumns.value.find(
         (column) => column.field === field,
     );
@@ -1147,9 +721,9 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
     if (!column) return rows;
     return sortBy<TableRow<T>>(
         rows,
-        column?.field ? "value." + column.field : undefined,
+        column?.field ? "value." + column.field : "",
         column?.customSort
-            ? (a, b, asc): number => column.customSort(a.value, b.value, asc)
+            ? (a, b, asc): number => column.customSort!(a.value, b.value, asc)
             : undefined,
         isAsc.value,
     );
@@ -1160,7 +734,6 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
 const tableCheckedRows = defineModel<T[]>("checkedRows", {
     default: [],
 });
-const lastCheckedRowIndex = ref(null);
 
 /** check if all rows in the page are checked */
 const isAllChecked = computed(() => {
@@ -1168,13 +741,8 @@ const isAllChecked = computed(() => {
         props.isRowCheckable(row.value),
     );
     if (validVisibleData.length === 0) return false;
-    return !validVisibleData.some(
-        (currentVisibleRow) =>
-            indexOf(
-                tableCheckedRows.value,
-                currentVisibleRow.value,
-                props.isRowChecked,
-            ) < 0,
+    return validVisibleData.every((currentVisibleRow) =>
+        isChecked(currentVisibleRow),
     );
 });
 
@@ -1185,7 +753,9 @@ const isAllUncheckable = computed(
 
 /** check if the row is checked (is added to the array) */
 function isChecked(row: TableRow<T>): boolean {
-    return indexOf(tableCheckedRows.value, row.value, props.isRowChecked) >= 0;
+    if (typeof props.isRowChecked === "function")
+        return props.isRowChecked(row.value);
+    else return tableCheckedRows.value.some((r) => isRowEqual(r, row.value));
 }
 
 /** add a checked row to the the array */
@@ -1195,7 +765,9 @@ function addCheckedRow(row: TableRow<T>): void {
 
 /** remove a checked row from the array */
 function removeCheckedRow(row: TableRow<T>): void {
-    const idx = indexOf(tableCheckedRows.value, row.value, props.isRowChecked);
+    const idx = tableCheckedRows.value.findIndex((r) =>
+        isRowEqual(r, row.value),
+    );
     if (idx >= 0)
         tableCheckedRows.value = tableCheckedRows.value.toSpliced(idx, 1);
 }
@@ -1205,24 +777,29 @@ function removeCheckedRow(row: TableRow<T>): void {
  * Add or remove all rows in current page.
  */
 function checkAll(): void {
-    const checkedRows = visibleRows.value.filter((row) =>
-        props.isRowCheckable(row.value),
-    );
-    tableCheckedRows.value = isAllChecked.value
-        ? []
-        : checkedRows.map((row) => row.value);
-    emits("check-all", tableCheckedRows.value);
+    if (isAllChecked.value)
+        // if all rows are already checked, check nothing
+        tableCheckedRows.value = [];
+    else {
+        // else set all visible rows as checked
+        tableCheckedRows.value = visibleRows.value
+            .filter((row) => props.isRowCheckable(row.value))
+            .map((row) => row.value);
+    }
+
+    // emit event after the reactive checked rows list got updated
+    nextTick(() => emits("check-all", tableCheckedRows.value));
 }
 
 /** row checkbox click listener */
-function checkRow(row: TableRow<T>, index: number): void {
+function checkRow(row: TableRow<T>): void {
     if (!props.isRowCheckable(row.value)) return;
-    lastCheckedRowIndex.value = index;
 
-    if (!isChecked(row)) addCheckedRow(row);
-    else removeCheckedRow(row);
+    if (isChecked(row)) removeCheckedRow(row);
+    else addCheckedRow(row);
 
-    emits("check", tableCheckedRows.value, row.value);
+    // emit event after the reactive checked rows list got updated
+    nextTick(() => emits("check", tableCheckedRows.value, row.value));
 }
 
 // --- Detail Row Feature ---
@@ -1383,7 +960,7 @@ function handleColumnDragLeave(
 
 const rootClasses = defineClasses(
     ["rootClass", "o-table__root"],
-    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
+    ["mobileClass", "o-table__root--mobile", null, isMobile],
 );
 
 const tableClasses = defineClasses(
@@ -1413,7 +990,7 @@ const tableClasses = defineClasses(
     ],
     [
         "emptyClass",
-        "o-table--table__empty",
+        "o-table--empty",
         null,
         computed(() => !visibleRows.value.length),
     ],
@@ -1439,8 +1016,6 @@ const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
 
-const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
-
 const thCheckboxClasses = defineClasses([
     "thCheckboxClass",
     "o-table__th-checkbox",
@@ -1453,6 +1028,23 @@ const thDetailedClasses = defineClasses([
 
 const thSubheadingClasses = defineClasses(["thSubheadingClass", "o-table__th"]);
 
+const thSortIconClasses = defineClasses([
+    "thSortIconClass",
+    "o-table__th__sort-icon",
+]);
+
+const trSelectedClasses = defineClasses([
+    "trSelectedClass",
+    "o-table__tr--selected",
+]);
+
+const trCheckedClasses = defineClasses([
+    "trCheckedClass",
+    "o-table__tr--checked",
+]);
+
+const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
+
 const tdCheckboxClasses = defineClasses(
     ["tdCheckboxClass", "o-table__td-checkbox"],
     [
@@ -1463,12 +1055,12 @@ const tdCheckboxClasses = defineClasses(
     ],
 );
 
-const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
-
 const tdDetailedChevronClasses = defineClasses([
     "tdDetailedChevronClass",
     "o-table__td-chevron",
 ]);
+
+const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
 
 const mobileSortClasses = defineClasses([
     "mobileSortClass",
@@ -1481,73 +1073,22 @@ const paginationWrapperClasses = defineClasses([
 ]);
 
 const paginationWrapperRootClasses = computed(() =>
-    getActiveClasses(paginationWrapperClasses.value),
+    getActiveClasses(paginationWrapperClasses),
 );
 
-const thSortIconClasses = defineClasses([
-    "thSortIconClass",
-    "o-table__th__sort-icon",
-]);
-
-function thClasses(column: TableColumnItem<T>): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "thCurrentSortClass",
-            "o-table__th-current-sort",
-            null,
-            isColumnSorted(column),
-        ],
-        ["thSortableClass", "o-table__th--sortable", null, column.sortable],
-        [
-            "thUnselectableClass",
-            "o-table__th--unselectable",
-            null,
-            column.isHeaderUnselectable,
-        ],
-        [
-            "thPositionClass",
-            "o-table__th--",
-            column.position,
-            !!column.position,
-        ],
-        ["thStickyClass", "o-table__th--sticky", null, column.sticky],
-    );
-
-    return [...thBaseClasses.value, ...classes.value];
-}
-
 function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "trSelectedClass",
-            "o-table__tr--selected",
-            null,
-            isRowEqual(row.value, tableSelectedRow.value),
-        ],
-        ["trCheckedClass", "o-table__tr--checked", null, isChecked(row)],
-    );
+    const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
+        ? trSelectedClasses.value
+        : [];
+
+    const checkedClasses = isChecked(row) ? trCheckedClasses.value : [];
 
     const rowClass =
         typeof props.rowClass === "function"
             ? props.rowClass(row.value, index) || ""
             : "";
 
-    return [...classes.value, { [rowClass]: true }];
-}
-
-function tdClasses(row: TableRow<T>, column: TableColumnItem<T>): ClassBind[] {
-    const classes = defineClasses(
-        [
-            "tdPositionClass",
-            "o-table__td--",
-            column.position,
-            !!column.position,
-        ],
-
-        ["tdStickyClass", "o-table__td--sticky", null, column.sticky],
-    );
-
-    return [...tdBaseClasses.value, ...classes.value];
+    return [...selectedClasses, ...checkedClasses, { [rowClass]: true }];
 }
 
 // --- Expose Public Functionalities ---
@@ -1558,7 +1099,7 @@ defineExpose({ rows: tableData, sort: sortByField });
 
 <template>
     <div :class="rootClasses" data-oruga="table">
-        <div ref="slotRef" style="display: none">
+        <div ref="slotElement" style="display: none">
             <!--
                 @slot Place o-table-column here
             -->
@@ -1574,7 +1115,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ getColumnValue(row, column) }}
+                        {{ getColumnValue(row as T, column) }}
                     </o-table-column>
                 </template>
 
@@ -1643,7 +1184,7 @@ defineExpose({ rows: tableData, sort: sortByField });
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
                 :class="tableClasses"
-                :tabindex="selectable ? 0 : null"
+                :tabindex="selectable ? 0 : undefined"
                 @keydown.self.prevent.up="onArrowPressed(-1, $event)"
                 @keydown.self.prevent.down="onArrowPressed(1, $event)">
                 <caption v-if="$slots.caption">
@@ -1652,6 +1193,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                     -->
                     <slot name="caption" />
                 </caption>
+
                 <thead v-if="tableColumns.length && showHeader">
                     <!--
                         @slot Define preheader content here
@@ -1692,7 +1234,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-for="(column, index) in visibleColumns"
                             :key="`${column.identifier}_${index}_header`"
                             v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
+                            :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style"
                             :draggable="canDragColumn"
                             @click.stop="sort(column, true, $event)"
@@ -1735,6 +1277,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                 </span>
                             </template>
                         </th>
+
                         <!-- checkable column right -->
                         <th
                             v-if="checkable && checkboxPosition === 'right'"
@@ -1762,6 +1305,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             </template>
                         </th>
                     </tr>
+
                     <tr v-if="hasSearchableColumns">
                         <!-- detailed toggle column -->
                         <th
@@ -1774,7 +1318,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-for="(column, index) in visibleColumns"
                             :key="`${column.identifier}_${index}_searchable`"
                             v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
+                            :class="[...thBaseClasses, ...column.thClasses]"
                             :style="isMobileActive ? {} : column.style">
                             <template v-if="column.searchable">
                                 <template v-if="column.$slots?.searchable">
@@ -1785,7 +1329,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                         :props="{ column, index, filters }" />
                                 </template>
                                 <o-input
-                                    v-else
+                                    v-else-if="column.field"
                                     v-model="filters[column.field]"
                                     :name="`column_${column.field}_filter`"
                                     :type="column.numeric ? 'number' : 'search'"
@@ -1799,6 +1343,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         <!-- checkable column right -->
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
+
                     <tr v-if="hasCustomSubheadings">
                         <!-- detailed toggle column -->
                         <th
@@ -1827,6 +1372,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
                 </thead>
+
                 <tbody>
                     <template
                         v-for="(row, index) in visibleRows"
@@ -1883,9 +1429,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     :name="`row_${index}_check`"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
-                                    @update:model-value="
-                                        checkRow(row, index)
-                                    " />
+                                    @update:model-value="checkRow(row)" />
                             </td>
 
                             <!-- row data columns -->
@@ -1896,7 +1440,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                 :component="column.$el"
                                 name="default"
                                 tag="td"
-                                :class="tdClasses(row, column)"
+                                :class="[...tdBaseClasses, ...column.tdClasses]"
                                 :style="isMobileActive ? {} : column.style"
                                 :data-label="column.label"
                                 :props="{
@@ -1929,9 +1473,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
-                                    @update:model-value="
-                                        checkRow(row, index)
-                                    " />
+                                    @update:model-value="checkRow(row)" />
                             </td>
                         </tr>
 
@@ -1972,7 +1514,14 @@ defineExpose({ rows: tableData, sort: sortByField });
                             <!--
                                 @slot Define content if table is empty
                             -->
-                            <slot name="empty" />
+                            <slot name="empty">
+                                <o-icon
+                                    v-if="emptyIcon"
+                                    :icon="emptyIcon"
+                                    :size="emptyIconSize"
+                                    both />
+                                {{ emptyLabel }}
+                            </slot>
                         </td>
                     </tr>
                 </tbody>

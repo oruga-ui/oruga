@@ -5,7 +5,7 @@
         IsRange extends boolean = false,
         IsMultiple extends boolean = false
     ">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, useTemplateRef } from "vue";
 
 import OButton from "../button/Button.vue";
 import OSelect from "../select/Select.vue";
@@ -13,21 +13,16 @@ import OPickerWrapper from "../utils/PickerWrapper.vue";
 import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
-import { getOption } from "@/utils/config";
-import { isDate } from "@/utils/helpers";
-import {
-    defineClasses,
-    getActiveClasses,
-    useMatchMedia,
-    useVModel,
-} from "@/composables";
+import { getDefault } from "@/utils/config";
+import { isDate, pad } from "@/utils/helpers";
+import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
 import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
 
+import type { OptionsPropItem } from "@/types";
 import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
-import type { OptionsItem } from "../select";
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
@@ -40,18 +35,20 @@ defineOptions({
     configField: "datepicker",
 });
 
+type ModelValue = DatepickerProps<IsRange, IsMultiple>["modelValue"];
+
 const props = withDefaults(
     defineProps<DatepickerProps<IsRange, IsMultiple>>(),
     {
         override: undefined,
-        modelValue: null,
+        modelValue: undefined,
         // range: false,
         // multiple: false,
         active: false,
         type: "date",
-        dayNames: () => getOption("datepicker.dayNames", undefined),
-        monthNames: () => getOption("datepicker.monthNames", undefined),
-        size: () => getOption("datepicker.size"),
+        dayNames: () => getDefault("datepicker.dayNames"),
+        monthNames: () => getDefault("datepicker.monthNames"),
+        size: () => getDefault("datepicker.size"),
         focusedDate: undefined,
         events: undefined,
         indicators: "dots",
@@ -63,142 +60,119 @@ const props = withDefaults(
         placeholder: undefined,
         readonly: false,
         disabled: false,
-        openOnFocus: () => getOption("datepicker.openOnFocus", true),
-        closeOnClick: () => getOption("datepicker.closeOnClick", true),
-        locale: () => getOption("locale"),
-        dateFormatter: (date) =>
-            getOption<(date) => string>(
-                "datepicker.dateFormatter",
-                () => undefined,
-            )(date),
-        dateParser: (date: string) =>
-            getOption<(date: string) => any>(
-                "datepicker.dateParser",
-                () => undefined,
-            )(date),
-        dateCreator: () =>
-            getOption("datepicker.dateCreator", () => new Date())(),
+        openOnFocus: () => getDefault("datepicker.openOnFocus", true),
+        closeOnClick: () => getDefault("datepicker.closeOnClick", true),
+        locale: () => getDefault("locale"),
+        formatter: getDefault("datepicker.formatter"),
+        parser: getDefault("datepicker.parser"),
+        creator: getDefault("datepicker.creator"),
         selectableDates: undefined,
         unselectableDates: undefined,
         unselectableDaysOfWeek: () =>
-            getOption("datepicker.unselectableDaysOfWeek", undefined),
-        nearbyMonthDays: () => getOption("datepicker.nearbyMonthDays", true),
+            getDefault("datepicker.unselectableDaysOfWeek"),
+        nearbyMonthDays: () => getDefault("datepicker.nearbyMonthDays", true),
         nearbySelectableMonthDays: () =>
-            getOption("datepicker.nearbySelectableMonthDays", false),
-        showWeekNumber: () => getOption("datepicker.showWeekNumber", false),
+            getDefault("datepicker.nearbySelectableMonthDays", false),
+        showWeekNumber: () => getDefault("datepicker.showWeekNumber", false),
         weekNumberClickable: () =>
-            getOption("datepicker.weekNumberClickable", false),
-        firstDayOfWeek: () => getOption("datepicker.firstDayOfWeek", 0),
+            getDefault("datepicker.weekNumberClickable", false),
+        firstDayOfWeek: () => getDefault("datepicker.firstDayOfWeek", 0),
         rulesForFirstWeek: 4,
-        yearsRange: () => getOption("datepicker.yearsRange", [-100, 10]),
-        trapFocus: () => getOption("datepicker.trapFocus", true),
+        yearsRange: () => getDefault("datepicker.yearsRange", [-100, 10]),
+        trapFocus: () => getDefault("datepicker.trapFocus", true),
         position: undefined,
-        mobileModal: () => getOption("datepicker.mobileModal", true),
-        mobileNative: () => getOption("datepicker.mobileNative", false),
-        iconPack: () => getOption("datepicker.iconPack", undefined),
-        icon: () => getOption("datepicker.icon", undefined),
-        iconRight: () => getOption("datepicker.iconRight", undefined),
+        mobileModal: () => getDefault("datepicker.mobileModal", true),
+        mobileNative: () => getDefault("datepicker.mobileNative", false),
+        iconPack: () => getDefault("datepicker.iconPack"),
+        icon: () => getDefault("datepicker.icon"),
+        iconRight: () => getDefault("datepicker.iconRight"),
         iconRightClickable: false,
-        iconPrev: () => getOption("datepicker.iconPrev", "chevron-left"),
-        iconNext: () => getOption("datepicker.iconNext", "chevron-right"),
-        mobileBreakpoint: () => getOption("datepicker.mobileBreakpoint"),
-        teleport: () => getOption("datepicker.teleport", false),
-        useHtml5Validation: () => getOption("useHtml5Validation", true),
-        validationMessage: undefined,
-        ariaNextLabel: () => getOption("datepicker.ariaNextLabel", "Next Page"),
+        iconPrev: () => getDefault("datepicker.iconPrev", "chevron-left"),
+        iconNext: () => getDefault("datepicker.iconNext", "chevron-right"),
+        mobileBreakpoint: () => getDefault("datepicker.mobileBreakpoint"),
+        teleport: () => getDefault("datepicker.teleport", false),
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
+        customValidity: "",
+        ariaNextLabel: () =>
+            getDefault("datepicker.ariaNextLabel", "Next Page"),
         ariaPreviousLabel: () =>
-            getOption("datepicker.ariaNextLabel", "Previous Page"),
-        inputClasses: () => getOption("datepicker.inputClasses", {}),
-        dropdownClasses: () => getOption("datepicker.dropdownClasses", {}),
-        selectClasses: () => getOption("datepicker.selectClasses", {}),
+            getDefault("datepicker.ariaNextLabel", "Previous Page"),
+        inputClasses: () => getDefault("datepicker.inputClasses"),
+        dropdownClasses: () => getDefault("datepicker.dropdownClasses"),
+        selectClasses: () => getDefault("datepicker.selectClasses"),
     },
 );
-
-type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {Date | Date[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on range start is selected event
      * @param value {Date} range start date
      */
-    (e: "range-start", value: Date): void;
+    "range-start": [value: Date];
     /**
      * on range end is selected event
      * @param value {Date} range end date
      */
-    (e: "range-end", value: Date): void;
+    "range-end": [value: Date];
     /**
      * on month change event
      * @param value {number} month number
      */
-    (e: "change-month", value: number): void;
+    "change-month": [value: number];
     /**
      * on year change event
      * @param value {number} year number
      */
-    (e: "change-year", value: number): void;
+    "change-year": [value: number];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
-const { defaultDateFormatter, defaultDateParser } = useDatepickerMixins(props);
+const { dtf, dateCreator, dateFormatter, dateParser } =
+    useDatepickerMixins(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
+const pickerRef = useTemplateRef("pickerComponent");
 
-/** modelvalue of selected date */
-// const vmodel = defineModel<ModelValue>({ default: null });
-const vmodel = useVModel<ModelValue>();
+/** modelvalue of selected date, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
-
-/** modelValue formated into string */
-const formattedValue = computed<string>(() => {
-    // define function prop
-    const value = (
-        Array.isArray(vmodel.value) ? [...vmodel.value] : vmodel.value
-    ) as ModelValue;
-    // call prop function
-    const formatted = props.dateFormatter(value);
-    // call default if prop function is not given
-    if (typeof formatted === "undefined") return defaultDateFormatter(value);
-    else return formatted;
-});
 
 const isTypeMonth = computed(() => props.type === "month");
 
@@ -208,22 +182,22 @@ const isTypeMonth = computed(() => props.type === "month");
  */
 watch(
     () => props.modelValue,
-    (value) => {
+    (value: ModelValue) => {
         const isArray = Array.isArray(value);
         const currentDate: Date = isArray
             ? value.length
                 ? value[value.length - 1]
-                : props.dateCreator()
+                : dateCreator()
             : value
               ? value
-              : props.dateCreator();
+              : dateCreator();
         if (
             !isArray ||
             (isArray &&
                 Array.isArray(vmodel.value) &&
                 value.length > vmodel.value.length)
         )
-            // updateInternalState
+            // update internal state
             focusedDateData.value = {
                 day: currentDate.getDate(),
                 month: currentDate.getMonth(),
@@ -250,7 +224,7 @@ const _initialDate: Date =
         ? props.modelValue[0]
         : props.modelValue) ||
     props.focusedDate ||
-    props.dateCreator();
+    dateCreator();
 
 if (
     !props.modelValue &&
@@ -284,7 +258,7 @@ const computedMonthNames = computed(() =>
         : getMonthNames(props.locale),
 );
 
-const listOfMonths = computed<OptionsItem<number>[]>(() => {
+const listOfMonths = computed<OptionsPropItem<number>[]>(() => {
     let minMonth = 0;
     let maxMonth = 12;
     if (
@@ -306,17 +280,18 @@ const listOfMonths = computed<OptionsItem<number>[]>(() => {
     }));
 });
 
-const computedDayNames = computed(() => {
-    if (Array.isArray(props.dayNames)) return props.dayNames;
-    return getWeekdayNames(props.locale);
-});
+const computedDayNames = computed(() =>
+    Array.isArray(props.dayNames)
+        ? props.dayNames
+        : getWeekdayNames(props.locale),
+);
 
 /*
  * Returns an array of years for the year dropdown. If earliest/latest
  * dates are set by props, range of years will fall within those dates.
  */
-const listOfYears = computed<OptionsItem<number>[]>(() => {
-    let latestYear = focusedDateData.value.year + props.yearsRange[1];
+const listOfYears = computed<OptionsPropItem<number>[]>(() => {
+    let latestYear = _initialDate.getFullYear() + props.yearsRange[1];
     if (props.maxDate && props.maxDate.getFullYear() < latestYear) {
         latestYear = Math.max(
             props.maxDate.getFullYear(),
@@ -324,7 +299,7 @@ const listOfYears = computed<OptionsItem<number>[]>(() => {
         );
     }
 
-    let earliestYear = focusedDateData.value.year + props.yearsRange[0];
+    let earliestYear = _initialDate.getFullYear() + props.yearsRange[0];
     if (props.minDate && props.minDate.getFullYear() > earliestYear) {
         earliestYear = Math.min(
             props.minDate.getFullYear(),
@@ -412,40 +387,45 @@ function next(): void {
     }
 }
 
-function formatNative(value: Date | Date[]): string {
+// --- Formatter / Parser ---
+
+/** Format date into string */
+function format(value: Date | Date[] | undefined, isNative: boolean): string {
+    if (isNative) return formatNative(value);
+
+    // define function prop
+    const date = (Array.isArray(value) ? [...value] : value) as ModelValue;
+
+    return dateFormatter(date);
+}
+
+function formatNative(value: Date | Date[] | undefined): string {
     if (Array.isArray(value)) value = value[0];
+
+    // return empty string if no value is given or value can't parse to proper date
+    if (!value) return "";
     const date = new Date(value);
-    // return null if no value is given or value can't parse to proper date
-    if (!value || !date || isNaN(date.getTime())) return null;
+    if (!isDate(date)) return "";
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
-        return year + "-" + ((month < 10 ? "0" : "") + month);
+        return year + "-" + pad(month);
     } else {
         // Format date into string 'YYYY-MM-DD'
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
         const day = date.getDate();
-        return (
-            year +
-            "-" +
-            ((month < 10 ? "0" : "") + month) +
-            "-" +
-            ((day < 10 ? "0" : "") + day)
-        );
+        return year + "-" + pad(month) + "-" + pad(day);
     }
 }
 
-// --- Event Handler ---
-
 /** Parse string into date */
-function onChange(value: string): void {
-    // call prop function
-    let date = props.dateParser(value);
-    // call default if prop function is not given
-    if (typeof date === "undefined") date = defaultDateParser(value);
+function parse(value: string, isNative: boolean): Date | Date[] | undefined {
+    if (isNative) return parseNative(value);
+
+    const date = dateParser(value);
 
     const isValid =
         isDate(date) ||
@@ -454,19 +434,62 @@ function onChange(value: string): void {
             isDate(date[0]) &&
             isDate(date[1]));
 
-    vmodel.value = (isValid ? date : null) as ModelValue;
+    return isValid ? date : undefined;
 }
 
 /** Parse date from string */
-function onChangeNativePicker(value: string): void {
+function parseNative(value: string): Date | undefined {
     const s = value ? value.split("-") : [];
-    if (s.length === 3) {
-        const year = parseInt(s[0], 10);
-        const month = parseInt(s[1]) - 1;
-        const day = parseInt(s[2]);
-        vmodel.value = new Date(year, month, day) as ModelValue;
+    if (s.length !== 3) return undefined;
+    const year = parseInt(s[0], 10);
+    const month = parseInt(s[1]) - 1;
+    const day = parseInt(s[2]);
+    return new Date(year, month, day);
+}
+
+// --- Event Handler ---
+
+/** move to the previous focused date */
+function prevDate(): void {
+    if (props.disabled) return;
+
+    if (isTypeMonth.value) {
+        focusedDateData.value.year -= 1;
     } else {
-        vmodel.value = null;
+        const date = new Date(
+            focusedDateData.value.year,
+            focusedDateData.value.month,
+            focusedDateData.value.day,
+        );
+        date.setDate(date.getDate() - 1);
+        focusedDateData.value.day = date.getDate();
+        focusedDateData.value.month = date.getMonth();
+        focusedDateData.value.year = date.getFullYear();
+
+        // todo: show selected hovered date
+        // vmodel.value = date as ModelValue;
+    }
+}
+
+/** move to the next focused date */
+function nextDate(): void {
+    if (props.disabled) return;
+
+    if (isTypeMonth.value) {
+        focusedDateData.value.year += 1;
+    } else {
+        const date = new Date(
+            focusedDateData.value.year,
+            focusedDateData.value.month,
+            focusedDateData.value.day,
+        );
+        date.setDate(date.getDate() + 1);
+        focusedDateData.value.day = date.getDate();
+        focusedDateData.value.month = date.getMonth();
+        focusedDateData.value.year = date.getFullYear();
+
+        // todo: show selected hovered date
+        // vmodel.value = date as ModelValue;
     }
 }
 
@@ -510,13 +533,13 @@ const listsClasses = defineClasses(["listsClass", "o-dpck__header__list"]);
 
 const footerClasses = defineClasses(["footerClass", "o-dpck__footer"]);
 
-const dropdownClass = defineClasses([
-    "dropdownClasses.rootClass",
+const pickerDropdownClasses = defineClasses([
+    "dropdownClass",
     "o-tpck__dropdown",
 ]);
 
 const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
+const boxClassBind = computed(() => getActiveClasses(boxClasses));
 
 // --- Expose Public Functionalities ---
 
@@ -526,25 +549,26 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
 <template>
     <OPickerWrapper
-        ref="pickerRef"
+        ref="pickerComponent"
         v-model:active="isActive"
+        v-model:value="vmodel"
         data-oruga="datepicker"
-        :value="vmodel"
         :picker-props="props"
-        :formatted-value="formattedValue"
-        :native-type="!isTypeMonth ? 'date' : 'month'"
-        :native-value="formatNative(vmodel)"
-        :native-max="formatNative(maxDate)"
-        :native-min="formatNative(minDate)"
+        :formatter="format"
+        :parser="parse"
+        :type="!isTypeMonth ? 'date' : 'month'"
+        :max="maxDate"
+        :min="minDate"
         :stay-open="props.multiple"
-        :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
+        :dropdown-classes="pickerDropdownClasses"
         :box-class="boxClassBind"
-        @change="onChange"
-        @native-change="onChangeNativePicker"
+        :dtf="dtf"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @invalid="$emit('invalid', $event)"
+        @left="prevDate"
+        @right="nextDate"
         @icon-click="$emit('icon-click', $event)"
         @icon-right-click="$emit('icon-right-click', $event)">
         <template v-if="$slots.trigger" #trigger>
@@ -553,6 +577,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             -->
             <slot name="trigger" />
         </template>
+
         <header :class="headerClasses">
             <!--
                 @slot Override the header
@@ -566,7 +591,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         :aria-label="ariaPreviousLabel"
                         :icon-pack="iconPack"
                         :icon-left="iconPrev"
-                        outlined
                         @click.prevent="prev"
                         @keydown.enter.prevent="prev"
                         @keydown.space.prevent="prev" />
@@ -578,7 +602,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                         :aria-label="ariaNextLabel"
                         :icon-pack="iconPack"
                         :icon-left="iconNext"
-                        outlined
                         @click.prevent="next"
                         @keydown.enter.prevent="next"
                         @keydown.space.prevent="next" />
@@ -586,22 +609,33 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                     <div :class="listsClasses">
                         <o-select
                             v-if="!isTypeMonth"
+                            v-bind="selectClasses"
                             v-model="focusedDateData.month"
                             :disabled="disabled"
                             :size="size"
-                            v-bind="selectClasses"
-                            :options="listOfMonths" />
+                            :options="listOfMonths"
+                            :use-html5-validation="false"
+                            @keydown.left.stop.prevent="prev"
+                            @keydown.right.stop.prevent="next" />
 
                         <o-select
+                            v-bind="selectClasses"
                             v-model="focusedDateData.year"
                             :disabled="disabled"
                             :size="size"
-                            v-bind="selectClasses"
-                            :options="listOfYears" />
+                            :options="listOfYears"
+                            :use-html5-validation="false"
+                            @keydown.left.stop.prevent="prev"
+                            @keydown.right.stop.prevent="next"
+                            @keydown.up.stop.prevent="focusedDateData.year += 1"
+                            @keydown.down.stop.prevent="
+                                focusedDateData.year -= 1
+                            " />
                     </div>
                 </div>
             </slot>
         </header>
+
         <!--
             @slot Override the body
         -->
@@ -624,6 +658,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 @range-start="(date) => $emit('range-start', date)"
                 @range-end="(date) => $emit('range-end', date)" />
         </slot>
+
         <footer v-if="$slots.footer" :class="footerClasses">
             <!--
                 @slot Define an additional footer

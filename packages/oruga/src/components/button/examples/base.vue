@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 
-const clickMe = () => {
+const clickMe = (): void => {
     alert("Clicked!");
 };
 
 const settings = reactive({
-    rounded: false,
-    variant: "success",
+    variant: "primary",
     size: "medium",
+    rounded: false,
+    outlined: false,
+    inverted: false,
+    disabled: false,
 });
 </script>
 
@@ -27,14 +30,24 @@ const settings = reactive({
                 <o-select v-model="settings.variant">
                     <option value="default">default</option>
                     <option value="primary">primary</option>
+                    <option value="secondary">secondary</option>
                     <option value="success">success</option>
                     <option value="info">info</option>
                     <option value="warning">warning</option>
                     <option value="danger">danger</option>
                 </o-select>
             </o-field>
+            <o-field label="Inverted">
+                <o-switch v-model="settings.inverted" />
+            </o-field>
+            <o-field label="Outlined">
+                <o-switch v-model="settings.outlined" />
+            </o-field>
             <o-field label="Rounded">
                 <o-switch v-model="settings.rounded" />
+            </o-field>
+            <o-field label="Disabled">
+                <o-switch v-model="settings.disabled" />
             </o-field>
         </o-field>
 
@@ -42,6 +55,9 @@ const settings = reactive({
             :variant="settings.variant"
             :size="settings.size"
             :rounded="settings.rounded"
+            :inverted="settings.inverted"
+            :outlined="settings.outlined"
+            :disabled="settings.disabled"
             @click="clickMe">
             Click Me
         </o-button>

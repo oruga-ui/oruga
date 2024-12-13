@@ -5,12 +5,14 @@
         T extends object | typeof File,
         IsMultiple extends boolean = false
     ">
-import { computed, ref, watch } from "vue";
+import { computed, ref, useAttrs, useTemplateRef, watch } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { File } from "@/utils/ssr";
 import { isTrueish } from "@/utils/helpers";
-import { defineClasses, useInputHandler, useVModel } from "@/composables";
+import { defineClasses, useInputHandler } from "@/composables";
+
+import { injectField } from "../field/fieldInjection";
 
 import type { UploadProps } from "./props";
 
@@ -26,53 +28,55 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = UploadProps<T, IsMultiple>["modelValue"];
+
 const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
     // multiple: false,
-    variant: () => getOption("upload.variant"),
+    variant: () => getDefault("upload.variant"),
     disabled: false,
     accept: undefined,
     dragDrop: false,
     expanded: false,
     native: true,
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
-    validationMessage: undefined,
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
+    customValidity: "",
 });
-
-type ModelValue = typeof props.modelValue;
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
      * @param value {object | object[] | File | File[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
 }>();
 
-const inputRef = ref<HTMLInputElement>();
-
-// const vmodel = defineModel<ModelValue>({ default: undefined });
-const vmodel = useVModel<ModelValue>();
+const inputRef = useTemplateRef("inputElement");
 
 // use form input functionality
-const { checkHtml5Validity, onFocus, onBlur, isValid, setFocus } =
+const { checkHtml5Validity, onFocus, onBlur, onInvalid, isValid, setFocus } =
     useInputHandler(inputRef, emits, props);
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
+
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 const dragDropFocus = ref(false);
 
@@ -83,7 +87,7 @@ const dragDropFocus = ref(false);
  */
 watch(vmodel, (value) => {
     if (!value || (Array.isArray(value) && value.length === 0))
-        inputRef.value.value = null;
+        if (inputRef.value) inputRef.value.value = "";
     if (!isValid.value && !props.dragDrop) checkHtml5Validity();
 });
 
@@ -96,11 +100,12 @@ function onFileChange(event: Event | DragEvent): void {
     if (props.dragDrop) updateDragDropFocus(false);
     const value =
         (event.target as HTMLInputElement).files ||
-        (event as DragEvent).dataTransfer.files;
+        (event as DragEvent).dataTransfer?.files ||
+        [];
     // no file selected
     if (value.length === 0) {
         if (!vmodel.value) return;
-        if (props.native) vmodel.value = null;
+        if (props.native) vmodel.value = undefined;
     }
 
     // multiple upload
@@ -128,7 +133,7 @@ function onFileChange(event: Event | DragEvent): void {
             if (checkType(file)) vmodel.value = file as ModelValue;
             // else clear input
             else if (vmodel.value) {
-                vmodel.value = null;
+                vmodel.value = undefined;
                 clearInput();
             } else {
                 // Force input back to empty state and recheck validity
@@ -144,7 +149,7 @@ function onFileChange(event: Event | DragEvent): void {
 
 /** Reset file input value */
 function clearInput(): void {
-    inputRef.value.value = null;
+    if (inputRef.value) inputRef.value.value = "";
 }
 
 /** Listen drag-drop to update internal variable */
@@ -178,11 +183,18 @@ function onClick(event: Event): void {
     // click input if not drag and drop is used
     if (!props.dragDrop) {
         event.preventDefault();
-        inputRef.value.click();
+        if (inputRef.value) inputRef.value.click();
     }
 }
 
 // --- Computed Component Classes ---
+
+const attrs = useAttrs();
+
+const inputBind = computed(() => ({
+    ...parentField?.value?.inputAttrs,
+    ...attrs,
+}));
 
 const rootClasses = defineClasses(
     ["rootClass", "o-upl"],
@@ -202,7 +214,7 @@ const draggableClasses = defineClasses(
         "variantClass",
         "o-upl__draggable--hovered-",
         computed(() => props.variant),
-        computed(() => props.variant && dragDropFocus.value),
+        computed(() => !!props.variant && dragDropFocus.value),
     ],
 );
 
@@ -241,8 +253,8 @@ defineExpose({ focus: setFocus, value: vmodel });
         </div>
 
         <input
-            v-bind="$attrs"
-            ref="inputRef"
+            v-bind="inputBind"
+            ref="inputElement"
             type="file"
             data-oruga-input="file"
             :multiple="props.multiple"
@@ -250,6 +262,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             :disabled="disabled"
             @change="onFileChange"
             @focus="onFocus"
-            @blur="onBlur" />
+            @blur="onBlur"
+            @invalid="onInvalid" />
     </label>
 </template>

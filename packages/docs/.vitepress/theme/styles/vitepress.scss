@@ -22,9 +22,22 @@
     max-width: none;
 }
 
+header .VPNavBar button {
+    border: unset;
+    box-shadow: unset;
+}
+
+.search-keyboard-shortcuts kbd {
+    color: inherit;
+}
+
 @media (min-width: 960px) {
     .VPContent .VPDoc .container > .content {
         padding: 0px 0px 128px;
+    }
+
+    .VPNavBar.has-sidebar .container {
+        max-width: 100% !important;
     }
 }
 

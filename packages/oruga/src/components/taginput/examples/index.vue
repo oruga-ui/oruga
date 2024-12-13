@@ -13,6 +13,9 @@ import LimitsCode from "./limits.vue?raw";
 
 import Variants from "./variants.vue";
 import VariantsCode from "./variants.vue?raw";
+
+import Disabled from "./disabled.vue";
+import DisabledCode from "./disabled.vue?raw";
 </script>
 
 <template>
@@ -27,6 +30,9 @@ import VariantsCode from "./variants.vue?raw";
 
     <h3 id="limits">Limits</h3>
     <ExampleViewer :component="Limits" :code="LimitsCode" />
+
+    <h3 id="disabled">Disabled</h3>
+    <ExampleViewer :component="Disabled" :code="DisabledCode" />
 
     <h3 id="varaints">Variants</h3>
     <ExampleViewer :component="Variants" :code="VariantsCode" />

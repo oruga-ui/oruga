@@ -1,4 +1,4 @@
-import type { App, Component, Plugin } from "vue";
+import type { App, Component, Plugin, defineComponent } from "vue";
 import { useOruga, addProgrammatic } from "./programmatic";
 
 export let VueInstance: App;
@@ -14,7 +14,10 @@ export const registerPlugin = (app: App, plugin: Plugin): void => {
 };
 
 /** register a component to the vue app instance */
-export const registerComponent = (app: App, component: Component): void => {
+export const registerComponent = (
+    app: App,
+    component: ReturnType<typeof defineComponent>, // type Component isn't correct since vue 3.5 any more
+): void => {
     app.component(component.name, component);
 };
 

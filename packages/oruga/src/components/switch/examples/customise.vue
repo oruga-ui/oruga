@@ -2,8 +2,8 @@
 import { ref } from "vue";
 
 const size = ref("");
-const variant = ref(null);
-const passive = ref(null);
+const variant = ref<string>();
+const passive = ref<string>();
 const isRounded = ref(false);
 const position = ref("right");
 </script>
@@ -21,9 +21,11 @@ const position = ref("right");
         <o-field grouped>
             <o-field label="Variant">
                 <o-select v-model="variant" expanded placeholder="Variant">
-                    <option value="null">Default</option>
+                    <option :value="undefined">Default</option>
                     <option value="primary">Primary</option>
+                    <option value="secondary">Secondary</option>
                     <option value="success">Success</option>
+                    <option value="info">Info</option>
                     <option value="warning">Warning</option>
                     <option value="danger">Danger</option>
                 </o-select>
@@ -33,9 +35,11 @@ const position = ref("right");
                     v-model="passive"
                     expanded
                     placeholder="Passive Variant">
-                    <option value="null">Default</option>
+                    <option :value="undefined">Default</option>
                     <option value="primary">Primary</option>
+                    <option value="secondary">Secondary</option>
                     <option value="success">Success</option>
+                    <option value="info">Info</option>
                     <option value="warning">Warning</option>
                     <option value="danger">Danger</option>
                 </o-select>

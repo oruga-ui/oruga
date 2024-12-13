@@ -1,37 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import type { TableColumn } from "@oruga-ui/oruga-next";
 
-const columns = ref<TableColumn[]>([
-    {
-        field: "id",
-        label: "ID",
-        width: "100",
-        numeric: true,
-        searchable: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-        searchable: true,
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-        searchable: true,
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-    },
-    {
-        field: "gender",
-        label: "Gender",
-    },
-]);
-
-const data = ref([
+const data = [
     {
         id: 1,
         first_name: "Jesse",
@@ -67,7 +37,37 @@ const data = ref([
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-]);
+];
+
+const columns: TableColumn<(typeof data)[number]>[] = [
+    {
+        field: "id",
+        label: "ID",
+        width: "100",
+        numeric: true,
+        searchable: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+        searchable: true,
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+        searchable: true,
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+        formatter: (v): string => new Date(String(v)).toLocaleDateString(),
+    },
+    {
+        field: "gender",
+        label: "Gender",
+    },
+];
 </script>
 
 <template>
@@ -90,15 +90,17 @@ const data = ref([
                 v-bind="column">
                 <template
                     v-if="column.searchable && !column.numeric"
-                    #searchable="props">
+                    #searchable="{ filters }">
                     <o-input
-                        v-model="props.filters[props.column.field]"
+                        v-if="column.field"
+                        v-model="filters[column.field]"
                         placeholder="Search..."
                         icon="search"
                         size="small" />
                 </template>
-                <template #default="props">
-                    {{ props.row[column.field] }}
+
+                <template #default="{ row }">
+                    {{ column.field ? row[column.field] : "" }}
                 </template>
             </o-table-column>
         </o-table>

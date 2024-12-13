@@ -1,8 +1,14 @@
 import type { ComponentClass } from "@/types";
 import type { DatepickerEvent } from "./types";
-import type { SelectProps } from "../select/types";
-import type { DropdownProps } from "../dropdown/types";
-import type { InputProps } from "../input/types";
+import type { DropdownProps } from "../dropdown/props";
+import type { SelectProps } from "../select/props";
+import type { InputProps } from "../input/props";
+
+type DatepickerType<IsRange, IsMultiple> = IsRange extends true
+    ? [Date, Date] | []
+    : IsMultiple extends true
+      ? Date[]
+      : Date;
 
 export type DatepickerProps<
     IsRange extends boolean = false,
@@ -10,12 +16,8 @@ export type DatepickerProps<
 > = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The input value state */
-    modelValue?: IsRange extends true
-        ? [Date, Date] | []
-        : IsMultiple extends true
-          ? Date[]
-          : Date;
+    /** The input value state, use v-model to make it two-way binding */
+    modelValue?: DatepickerType<IsRange, IsMultiple>;
     /** Enable date range selection */
     range?: IsRange;
     /** Same as native, also push new item to v-model instead of replacing */
@@ -65,15 +67,15 @@ export type DatepickerProps<
     /** Date format locale */
     locale?: string;
     /** Custom function to format a date into a string */
-    dateFormatter?: (
+    formatter?: (
         date: DatepickerProps<IsRange, IsMultiple>["modelValue"],
     ) => string;
     /** Custom function to parse a string into a date */
-    dateParser?: (
+    parser?: (
         date: string,
     ) => DatepickerProps<IsRange, IsMultiple>["modelValue"];
     /** Date creator function, default is `new Date()` */
-    dateCreator?: () => Date;
+    creator?: () => Date;
     /** Define a list of dates which can be selected */
     selectableDates?: Date[] | ((date: Date) => boolean);
     /** Define a list of dates which can not be selected */
@@ -84,9 +86,9 @@ export type DatepickerProps<
     nearbyMonthDays?: boolean;
     /** Define if nearby month days can be selected */
     nearbySelectableMonthDays?: boolean;
-    /** Show weeek numbers */
+    /** Show week numbers */
     showWeekNumber?: boolean;
-    /** Define if weeek numbers are clickable */
+    /** Define if week numbers are clickable */
     weekNumberClickable?: boolean;
     /** Set the first day of a week */
     firstDayOfWeek?: number;
@@ -137,10 +139,18 @@ export type DatepickerProps<
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
-    /** Enable html 5 native validation */
+    /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
-    /** The message which is shown when a validation error occurs */
-    validationMessage?: string;
+    /** Custom HTML 5 validation error to set on the form control */
+    customValidity?:
+        | string
+        | ((
+              currentValue:
+                  | DatepickerType<IsRange, IsMultiple>
+                  | null
+                  | undefined,
+              state: ValidityState,
+          ) => string);
     /** Accessibility next button aria label */
     ariaNextLabel?: string;
     /** Accessibility previous button aria label  */
@@ -249,19 +259,23 @@ type DatepickerClasses = Partial<{
     monthCellEventsClass: ComponentClass;
     /** Class of the Datepicker when on mobile */
     mobileClass: ComponentClass;
+    /** Class for the underlaying dropdown component */
+    dropdownClass: ComponentClass;
+    /** Class for the HTML input element */
+    inputClass: ComponentClass;
     /**
      * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: InputProps;
+    inputClasses: InputProps<false>;
     /**
      * Class configuration for the internal dropdown component
      * @ignore
      */
-    dropdownClasses: DropdownProps;
+    dropdownClasses: DropdownProps<string, false>;
     /**
      * Class configuration for the internal select component
      * @ignore
      */
-    selectClasses: SelectProps;
+    selectClasses: SelectProps<number, false>;
 }>;

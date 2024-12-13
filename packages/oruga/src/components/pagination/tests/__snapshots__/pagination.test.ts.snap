@@ -6,16 +6,16 @@ exports[`OPagination tests > render correctly 1`] = `
             @slot Previous button slot
             @binding {number} number - page number 
             @binding {boolean} isCurrent - if page is current
-            @binding {(event:Event): void} click - onClick handler
+            @binding {(event:Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
-        --><button role="button" tabindex="0" class="o-pag__previous o-pag__link--disabled o-pag__link" aria-label="Previous page" aria-current="false"><span class="o-icon" data-oruga="icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span></button>
+        --><button role="button" tabindex="0" class="o-pag__btn-previous o-pag__btn--disabled o-pag__btn" aria-label="Previous page" aria-current="false"><span class="o-icon" data-oruga="icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span></button>
   <!-- 
             @slot Next button slot
             @binding {number} number - page number 
             @binding {boolean} isCurrent - if page is current
-            @binding {(event:Event): void} click - onClick handler
+            @binding {(event:Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
-        --><button role="button" tabindex="0" class="o-pag__next o-pag__link--disabled o-pag__link" aria-label="Next page" aria-current="false"><span class="o-icon" data-oruga="icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span></button>
+        --><button role="button" tabindex="0" class="o-pag__btn-next o-pag__btn--disabled o-pag__btn" aria-label="Next page" aria-current="false"><span class="o-icon" data-oruga="icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span></button>
   <ul class="o-pag__list">
     <!--First-->
     <!--v-if-->

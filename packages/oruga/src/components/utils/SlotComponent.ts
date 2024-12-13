@@ -1,28 +1,46 @@
-import type { DefineComponent, PropType } from "vue";
-import { defineComponent, h } from "vue";
+import {
+    createVNode,
+    defineComponent,
+    type DefineComponent,
+    type VNode,
+    type VNodeTypes,
+} from "vue";
+import type { ComponentProps } from "vue-component-type-helpers";
 import type { DynamicComponent } from "@/types";
 
-/** This components renders a specific slot and only the slot of another component */
-export default defineComponent({
-    name: "OSlotComponent",
-    props: {
-        /** Component to be get the slot from */
-        component: { type: Object, required: true },
-        /** Slot name */
-        name: { type: String, default: "default" },
-        /** Props passed to the slot */
-        props: { type: Object, default: () => {} },
-        /** Tag name of the slot wrapper element */
-        tag: {
-            type: [String, Object, Function] as PropType<DynamicComponent>,
-            default: "div" as DynamicComponent,
-        },
-    },
-    render() {
-        const slot = (this.component as DefineComponent).$slots[this.name]
-            ? (this.component as DefineComponent).$slots[this.name](this.props)
-            : {};
+type SlotComponentProps<C extends VNodeTypes> = {
+    /** Component to be get the slot from */
+    component: C;
+    /** Props to be binded to the injected component. */
+    props?: ComponentProps<C>;
+    /**
+     * Slot name
+     * @default "default"
+     */
+    name?: string;
+    /**
+     * Tag name of the slot wrapper element
+     * @default "div"
+     */
+    tag?: DynamicComponent;
+};
 
-        return h(this.tag, {}, slot);
+/** This components renders a specific slot and only the slot of another component */
+export default defineComponent<SlotComponentProps<any>>(
+    <C extends DefineComponent>(props: SlotComponentProps<C>) => {
+        const _props = { tag: "div", name: "default", ...props };
+
+        return (): VNode => {
+            const slot = props.component.$slots[_props.name]
+                ? props.component.$slots[_props.name](props.props)
+                : {};
+
+            return createVNode(_props.tag as VNode, {}, slot);
+        };
     },
-});
+    {
+        name: "OSlotComponent",
+        // manual runtime props declaration is currently still needed.
+        props: ["component", "props", "name", "tag"],
+    },
+);

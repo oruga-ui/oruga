@@ -1,12 +1,11 @@
-<script setup lang="ts" generic="T extends string | number | object">
-import { computed, ref, useSlots, type PropType } from "vue";
+<script setup lang="ts" generic="T, C extends Component">
+import { computed, ref, useSlots, useId, type Component } from "vue";
 
-import { getOption } from "@/utils/config";
-import { isEqual, uuid } from "@/utils/helpers";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { TabsComponent, TabItemComponent } from "./types";
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { TabItemProps } from "./props";
 
 /**
  * @displayName Tab Item
@@ -18,110 +17,54 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * Item value (it will be used as v-model of wrapper component) - default is a uuid
-     * @type string|number|object
-     */
-    value: {
-        type: [String, Number, Object] as PropType<T>,
-        default: () => uuid(),
-    },
-    /** Item label */
-    label: { type: String, default: undefined },
-    /** Item will be disabled */
-    disabled: { type: Boolean, default: false },
-    /** Icon on the left */
-    icon: {
-        type: String,
-        default: () => getOption("tabs.icon"),
-    },
-    /** Icon pack */
-    iconPack: {
-        type: String,
-        default: () => getOption("tabs.iconPack"),
-    },
-    /** Show/hide item */
-    visible: { type: Boolean, default: true },
-    /** Tabs item tag name */
-    tag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("tabs.itemTag", "button"),
-    },
-    /** Role attribute to be passed to the div wrapper for better accessibility. */
-    ariaRole: {
-        type: String,
-        default: () => getOption("tabs.ariaRole", "tab"),
-    },
-    /** Sets a class to the item header */
-    headerClass: { type: String, default: undefined },
-    // class props (will not be displayed in the docs)
-    /** Class of the tab item */
-    itemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab item header */
-    itemHeaderClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab item header when active */
-    itemHeaderActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab item header when disabled */
-    itemHeaderDisabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab item header type */
-    itemHeaderTypeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab item header icon */
-    itemHeaderIconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tab item header text */
-    itemHeaderTextClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
+    override: undefined,
+    value: undefined,
+    label: undefined,
+    disabled: false,
+    visible: true,
+    icon: () => getDefault("tabs.icon"),
+    iconPack: () => getDefault("tabs.iconPack"),
+    tag: () => getDefault("tabs.itemTag", "button"),
+    content: undefined,
+    component: undefined,
+    props: undefined,
+    events: undefined,
 });
 
 const emits = defineEmits<{
     /** on tab item activate event */
-    (e: "activate"): void;
+    activate: [];
     /** on tab item deactivate event */
-    (e: "deactivate"): void;
+    deactivate: [];
 }>();
+
+const itemValue = props.value || useId();
 
 const slots = useSlots();
 
-const providedData = computed<TabItemComponent>(() => ({
+// provided data is a computed ref to enjure reactivity
+const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
+    value: itemValue,
     $slots: slots,
-    headerIconClasses: headerIconClasses.value,
-    headerTextClasses: headerTextClasses.value,
+    navClasses: navItemClasses.value,
+    classes: tabClasses.value,
+    iconClasses: tabIconClasses.value,
+    labelClasses: tabLabelClasses.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,
 }));
 
-// Inject functionalities and data from the parent component
-const { parent, item } = useProviderChild<TabsComponent<T>>({
+/** inject functionalities and data from the parent component */
+const { parent, item } = useProviderChild<TabsComponent>({
     data: providedData,
 });
 
 const transitionName = ref();
 
-const isActive = computed(() => isEqual(props.value, parent.value.activeValue));
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const isTransitioning = ref(false);
 
@@ -167,17 +110,45 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const elementClasses = defineClasses(["itemClass", "o-tab-item__content"]);
+const navItemClasses = defineClasses(
+    ["navItemClass", "o-tabs__nav-item"],
+    ["navItemActiveClass", "o-tabs__nav-item--active", null, isActive],
+    [
+        "navItemPreviousClass",
+        "o-tabs__nav-item--previous",
+        null,
+        computed(() => item.value.index < parent.value?.activeIndex),
+    ],
+    [
+        "navItemNextClass",
+        "o-tabs__nav-item--next",
+        null,
+        computed(() => item.value.index > parent.value?.activeIndex),
+    ],
+);
 
-const headerIconClasses = defineClasses([
-    "itemHeaderIconClass",
-    "o-tabs__nav-item-icon",
-]);
+const tabClasses = defineClasses(
+    ["tabClass", "o-tabs__tab"],
+    [
+        "tabTypeClass",
+        "o-tabs__tab--",
+        computed(() => parent.value.type),
+        computed(() => !!parent.value.type),
+    ],
+    ["tabActiveClass", "o-tabs__tab--active", null, isActive],
+    [
+        "tabDisabledClass",
+        "o-tabs__tab--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+);
 
-const headerTextClasses = defineClasses([
-    "itemHeaderTextClass",
-    "o-tabs__nav-item-text",
-]);
+const tabIconClasses = defineClasses(["tabIconClass", "o-tabs__tab-icon"]);
+
+const tabLabelClasses = defineClasses(["tabLabelClass", "o-tabs__tab-label"]);
+
+const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
 </script>
 
 <template>
@@ -188,34 +159,47 @@ const headerTextClasses = defineClasses([
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <template v-if="!parent.destroyOnHide || (isActive && visible)">
-            <div
-                v-show="isActive && visible"
-                ref="rootRef"
-                v-bind="$attrs"
-                :class="elementClasses"
-                :data-id="`tabs-${item.identifier}`"
-                data-oruga="tabs-item"
-                :tabindex="isActive ? 0 : -1"
-                :role="ariaRole"
-                aria-roledescription="item">
-                <!-- 
-                    @slot Tab item content
-                -->
-                <slot />
+        <div
+            v-show="isActive && visible"
+            v-bind="$attrs"
+            :id="`tabpanel-${item.identifier}`"
+            data-oruga="tabs-item"
+            :data-id="`tabs-${item.identifier}`"
+            :class="panelClasses"
+            role="tabpanel"
+            :hidden="!isActive"
+            :aria-labelledby="`tab-${item.identifier}`"
+            aria-roledescription="item">
+            <!-- 
+                @slot Tab item content
+                @binding {boolean} active - if item is shown 
+            -->
+            <slot :active="isActive && visible">
+                <template v-if="!parent.destroyOnHide || (isActive && visible)">
+                    <!-- injected component -->
+                    <component
+                        :is="component"
+                        v-if="component"
+                        v-bind="$props.props"
+                        v-on="$props.events || {}" />
 
-                <!--
-                    Do not render these slots here.
-                    These are only for documentation purposes.
-                    Slots are defined in tabs component.
-                -->
-                <template v-if="false">
-                    <!--
-                        @slot Override header label
-                    -->
-                    <slot name="header" />
+                    <!-- default content prop -->
+                    <template v-else>{{ content }}</template>
                 </template>
-            </div>
-        </template>
+            </slot>
+
+            <!--
+                Do not render these slots here.
+                These are only for documentation purposes.
+                Slots are defined in tabs component.
+            -->
+            <template v-if="false">
+                <!--
+                    @slot Override header label
+                    @binding {boolean} active - if item is shown 
+                -->
+                <slot name="header" :active="isActive && visible" />
+            </template>
+        </div>
     </Transition>
 </template>

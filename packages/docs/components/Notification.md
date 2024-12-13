@@ -13,6 +13,7 @@
 <example-notification />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -33,29 +34,31 @@
 
 ### Props
 
-| Prop name      | Description                                                            | Type               | Values                                                                          | Default                                                                                                                                                         |
-| -------------- | ---------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active         |                                                                        | boolean            | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                      |
-| animation      | Custom animation (transition name)                                     | string             | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>        |
-| ariaCloseLabel | Accessibility label for the close button                               | string             | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;ariaCloseLabel: "Close"<br>}</code>  |
-| closable       | Add close button to the item that closes the notification              | boolean            | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                     |
-| closeIcon      | Close icon name                                                        | string             | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
-| closeIconSize  | Size of close icon                                                     | string             | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIconSize: undefined<br>}</code> |
-| icon           | Icon name to use                                                       | string             | -                                                                               |                                                                                                                                                                 |
-| iconPack       | Icon pack to use                                                       | string             | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
-| iconSize       | Icon size                                                              | string             | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconSize: "large"<br>}</code>        |
-| message        | Message text (can contain HTML), unnecessary when default slot is used | string \| string[] | -                                                                               |                                                                                                                                                                 |
-| override       | Override existing theme classes completely                             | boolean            | -                                                                               |                                                                                                                                                                 |
-| position       | Which position the notification will appear when programmatically      | string             | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left`         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>          |
-| type           | Type (color) of the notification                                       | string             | `info`, `success`, `warning`, `danger`                                          |                                                                                                                                                                 |
-| variant        | Color of the control                                                   | string             | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>       |
+
+| Prop name      | Description                                                                   | Type                                                                              | Values                                                                          | Default                                                                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active         | Whether modal is active or not, use v-model:active to make it two-way binding | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                      |
+| animation      | Custom animation (transition name)                                            | string                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>        |
+| ariaCloseLabel | Accessibility label for the close button                                      | string                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;ariaCloseLabel: "Close"<br>}</code>  |
+| closable       | Add close button to the item that closes the notification                     | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                     |
+| closeIcon      | Close icon name                                                               | string                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
+| closeIconSize  | Size of close icon                                                            | string                                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIconSize: undefined<br>}</code> |
+| icon           | Icon name to use                                                              | string                                                                            | -                                                                               |                                                                                                                                                                 |
+| iconPack       | Icon pack to use                                                              | string                                                                            | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
+| iconSize       | Icon size                                                                     | string                                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconSize: "large"<br>}</code>        |
+| message        | Message text (can contain HTML), unnecessary when default slot is used        | string \| string[]                                                                | -                                                                               |                                                                                                                                                                 |
+| override       | Override existing theme classes completely                                    | boolean                                                                           | -                                                                               |                                                                                                                                                                 |
+| position       | Which position the notification will appear when programmatically             | "bottom-left" \| "bottom-right" \| "bottom" \| "top-left" \| "top-right" \| "top" | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left`         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>          |
+| type           | Type (color) of the notification                                              | string                                                                            | `info`, `success`, `warning`, `danger`                                          |                                                                                                                                                                 |
+| variant        | Color of the control                                                          | string                                                                            | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>       |
+
 
 ### Events
 
 | Event name    | Properties                                | Description                 |
 | ------------- | ----------------------------------------- | --------------------------- |
 | update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         | **value** `any` - close event data        | on component close event    |
+| close         | **value** `unknown` - close event data    | on component close event    |
 
 ### Slots
 
@@ -78,18 +81,22 @@
 
 ### Props
 
-| Prop name | Description                                                                                                                                                                                          | Type                          | Values                                                                  | Default                                                                                                                                                  |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| component | Component to be injected.<br/>Close notification within the component by emitting a 'close' event — $emit('close').                                                                                  | Component                     | -                                                                       |                                                                                                                                                          |
-| container | DOM element the toast will be created on (for programmatic usage).<br/>Note that this also changes the position of the toast from fixed to absolute.<br/>Meaning that the container should be fixed. | string \| HTMLElement \| null | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;container: "body"<br>}</code> |
-| duration  | Hide notification after duration (in miliseconds)                                                                                                                                                    | number                        | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;duration: 2000<br>}</code>    |
-| events    | Events to be binded to the injected component.                                                                                                                                                       | object                        | -                                                                       | <code style='white-space: nowrap; padding: 0;'>{}</code>                                                                                                 |
-| infinite  | Show the Notification infinitely until it is dismissed.                                                                                                                                              | boolean                       | -                                                                       | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
-| onClose   | Callback function to call on close (programmatically close or user canceled).                                                                                                                        | () =&gt; void                 | -                                                                       | Default function (see source code)                                                                                                                       |
-| override  | Override existing theme classes completely                                                                                                                                                           | boolean                       | -                                                                       |                                                                                                                                                          |
-| position  | Which position the notification will appear.                                                                                                                                                         | string                        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |
-| props     | Props to be binded to the injected component.                                                                                                                                                        | object                        | -                                                                       |                                                                                                                                                          |
-| queue     | If notice should queue with others notices (snackbar/toast/notification).                                                                                                                            | boolean                       | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;queue: undefined<br>}</code>  |
+| Prop name | Description                                                                                      | Type                                                                              | Values                                                                  | Default                                                                                                                                                 |
+| --------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| component | Component to be injected.<br/>Close the component by emitting a 'close' event — `$emit('close')` | Component                                                                         | -                                                                       |                                                                                                                                                         |
+| duration  | Hide notification after duration (in miliseconds)                                                | number                                                                            | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;duration: 2000<br>}</code>   |
+| events    | Events to be binded to the injected component                                                    | {}                                                                                | -                                                                       |                                                                                                                                                         |
+| infinite  | Show the Notification infinitely until it is dismissed.                                          | boolean                                                                           | -                                                                       | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                             |
+| override  | Override existing theme classes completely                                                       | boolean                                                                           | -                                                                       |                                                                                                                                                         |
+| position  | Which position the notification will appear.                                                     | "bottom-left" \| "bottom-right" \| "bottom" \| "top-left" \| "top-right" \| "top" | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>  |
+| props     | Props to be binded to the injected component                                                     | any                                                                               | -                                                                       |                                                                                                                                                         |
+| queue     | If notice should queue with others notices (snackbar/toast/notification).                        | boolean                                                                           | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;queue: undefined<br>}</code> |
+
+### Events
+
+| Event name | Properties                             | Description              |
+| ---------- | -------------------------------------- | ------------------------ |
+| close      | **value** `unknown` - close event data | on component close event |
 
 ### Slots
 
@@ -99,9 +106,6 @@
 
 </div>
 
-<div class="vp-doc">
-
-</div>
 <div class="vp-doc">
 
 ## Sass variables
@@ -130,7 +134,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -138,11 +143,12 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ----------------------------- | ------- |
 | $notification-margin-bottom   | 1.5rem  |
 | $notification-notices-padding | 2em     |
-| $notification-notices-zindex  | 1000    |
+| $notification-notices-z       | 1000    |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_notification.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
