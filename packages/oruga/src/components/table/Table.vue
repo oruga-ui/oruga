@@ -423,8 +423,10 @@ const isScrollable = computed(() => {
 
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
-// recompute table rows visibility on page change
-watch([tableCurrentPage, () => props.perPage], () => filterTableRows());
+// recompute table rows visibility on page change or data change
+watch([tableCurrentPage, () => props.perPage, () => props.data], () =>
+    filterTableRows(),
+);
 
 // create a unique id sequence
 const { nextSequence } = useSequentialId();

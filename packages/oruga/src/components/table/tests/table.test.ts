@@ -1,5 +1,5 @@
-import { describe, test, expect, afterEach } from "vitest";
-import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
+import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
 import type { TableColumn } from "../types";
@@ -88,6 +88,48 @@ describe("OTable tests", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("table");
         expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    test("holds columns", async () => {
+        const wrapper = mount(OTable, {
+            props: {
+                columns: [
+                    { label: "default", width: "100px" },
+                    { label: "pecent", width: "50%" },
+                    { label: "fixed_num", width: 100 },
+                    { label: "fixed_str", width: "100" },
+                ],
+            },
+        });
+        await nextTick();
+
+        const headers = wrapper.findAll("th");
+
+        expect(headers).toHaveLength(4);
+
+        const cols = headers.filter((th) => th.find("span"));
+        expect(cols).toHaveLength(4);
+
+        expect(cols[0].attributes("style")).toBe("width: 100px;");
+        expect(cols[1].attributes("style")).toBe("width: 50%;");
+        expect(cols[2].attributes("style")).toBe("width: 100px;");
+        expect(cols[3].attributes("style")).toBe("width: 100px;");
+    });
+
+    test("displays all data", async () => {
+        const wrapper = mount(OTable, {
+            props: {
+                columns: [
+                    { label: "ID", field: "id", numeric: true },
+                    { label: "Name", field: "name", searchable: true },
+                ],
+                data,
+            },
+        });
+        await nextTick();
+
+        const bodyRows = wrapper.findAll("tbody tr");
+        expect(bodyRows).toHaveLength(5);
     });
 
     describe("test column props", () => {
@@ -218,6 +260,242 @@ describe("OTable tests", () => {
                     tds[i].classes(i % 2 === 0 ? "td-id" : "td-abc"),
                 ).toBeTruthy();
             }
+        });
+    });
+
+    describe("test searchable", () => {
+        const data = [
+            { id: 1, name: "Jesse" },
+            { id: 2, name: "João" },
+            { id: 3, name: "Tina" },
+            { id: 4, name: "Anne" },
+            { id: 5, name: "Clarence" },
+        ];
+
+        beforeEach(() => {
+            vi.useFakeTimers();
+        });
+
+        afterEach(() => {
+            vi.clearAllTimers();
+            vi.restoreAllMocks();
+        });
+
+        test("displays filter row when at least one column is searchable", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    data,
+                },
+            });
+            await nextTick();
+
+            const header = wrapper.find("thead");
+            expect(header.exists()).toBeTruthy();
+
+            const headRows = header.findAll("tr");
+            expect(headRows).toHaveLength(2);
+
+            const inputs = headRows[1].findAll("input");
+            expect(inputs).toHaveLength(1);
+        });
+
+        test("displays filter input only on searchable columns", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    data,
+                },
+            });
+            await nextTick();
+
+            const headRows = wrapper.findAll("thead tr");
+            expect(headRows).toHaveLength(2);
+            const filterCells = headRows[1].findAll("th");
+
+            expect(filterCells[0].find("input").exists()).toBeFalsy(); // ID column is not searchable
+            expect(filterCells[1].find("input").exists()).toBeTruthy(); // Name column is searchable
+        });
+
+        test("displays filtered data when searching", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    data,
+                },
+            });
+            await nextTick();
+
+            const header = wrapper.find("thead");
+
+            const inputs = header.findAll("input");
+            expect(inputs).toHaveLength(1);
+
+            const input = inputs[0];
+
+            await input.setValue("J");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await flushPromises();
+
+            const bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(2); // Jesse and João
+
+            expect(wrapper.emitted("filters-change")).toHaveLength(1);
+        });
+
+        test("displays filtered data when searching and updating data", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    data,
+                },
+            });
+            await nextTick();
+
+            const input = wrapper.find("thead input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue("J");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await flushPromises();
+
+            let bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(2); // Jesse and João
+
+            wrapper.setProps({
+                data: [...data, { id: 6, name: "Justin" }],
+            });
+            await nextTick();
+
+            console.log(wrapper.find("tbody").html());
+
+            bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(3); // Jesse, João and Justin
+        });
+
+        test("displays filtered data when searching by name without accent", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    data,
+                },
+            });
+            await nextTick();
+
+            const input = wrapper.find("thead input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue("Joao");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await flushPromises();
+
+            const bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(1); // João
+        });
+
+        test("displays filtered data when searching by name with accent", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    data,
+                },
+            });
+            await nextTick();
+
+            const input = wrapper.find("thead input");
+            expect(input.exists()).toBeTruthy();
+
+            await input.setValue("João");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await flushPromises();
+
+            const bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(1); // João
+        });
+
+        test("debounce search filtering when debounce-search is defined", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    data,
+                    debounceSearch: 1000,
+                },
+            });
+            await nextTick();
+
+            const input = wrapper.find("thead input");
+            expect(input.exists()).toBeTruthy();
+
+            for (let i = 0; i < 10; i++) {
+                await input.setValue("J".repeat(10 - i));
+                await input.trigger("input");
+                await setTimeout(() => {}, 500);
+                const bodyRows = wrapper.findAll("tbody tr");
+                expect(bodyRows).toHaveLength(5); // No filtering yet
+            }
+
+            vi.runAllTimers(); // run debounce timer
+
+            const bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(5); // Filtering after debounce
+        });
+    });
+
+    describe("test checkable", () => {
+        test("tests isAllUncheckable method", async () => {
+            const isRowCheckable = vi.fn(() => false);
+
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    checkable: true,
+                    isRowCheckable: isRowCheckable,
+                    paginated: false,
+                    data: [
+                        {
+                            id: 1,
+                            first_name: "Jesse",
+                            last_name: "Simmons",
+                            date: "2016-10-15 13:43:27",
+                            gender: "Male",
+                        },
+                    ],
+                },
+            });
+            await nextTick();
+
+            const body = wrapper.find("tbody");
+            const checkboxes = body.findAll("input");
+            expect(checkboxes).toHaveLength(1);
+            expect(checkboxes[0].attributes("disabled")).toBe("");
         });
     });
 });
