@@ -163,4 +163,35 @@ describe("OSwitch tests", () => {
             expect(input.element.focus).toHaveBeenCalled();
         });
     });
+
+    test("applies passiveVariant prop properly", async () => {
+        const passiveVariant = "danger";
+        const modelValue = false;
+        const wrapper = mount(OSwitch, {
+            props: { passiveVariant, modelValue },
+        });
+        const switchCheckElement = wrapper.find(".o-switch__check");
+        expect(
+            switchCheckElement.classes("o-switch__check--checked"),
+        ).toBeFalsy();
+        const switchElement = wrapper.find(".o-switch");
+        expect(switchElement.classes("o-switch--danger-passive")).toBeTruthy();
+    });
+
+    test("does not have a label at left by default", () => {
+        const modelValue = false;
+        const wrapper = mount(OSwitch, {
+            props: { modelValue },
+        });
+        expect(wrapper.classes("o-switch--left")).toBeFalsy();
+    });
+
+    test("has label at left", async () => {
+        const modelValue = false;
+        const wrapper = mount(OSwitch, {
+            props: { position: "left", modelValue },
+        });
+        const rootElement = wrapper.find(".o-switch");
+        expect(rootElement.classes("o-switch--left")).toBeTruthy();
+    });
 });
