@@ -49,7 +49,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
     value: itemValue,
     $slots: slots,
     navClasses: navItemClasses.value,
-    classes: tabClasses.value,
+    tabClasses: tabClasses.value,
     iconClasses: tabIconClasses.value,
     labelClasses: tabLabelClasses.value,
     isTransitioning: isTransitioning.value,
@@ -58,7 +58,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<TabsComponent>({
+const { parent, item } = useProviderChild<TabsComponent, TabItemComponent<T>>({
     data: providedData,
 });
 
