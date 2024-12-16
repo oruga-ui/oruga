@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 import { axe } from "jest-axe";
 
 import TabsExample from "./TabsAxeExample.vue";
@@ -55,6 +56,7 @@ describe("Tabs axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
+        await nextTick();
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });
 });
