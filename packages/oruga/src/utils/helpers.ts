@@ -89,13 +89,13 @@ export function sortBy<T>(
     key: string,
     fn?: (a: T, b: T, asc: boolean) => number,
     isAsc: boolean = false,
+    mutate: boolean = false,
 ): T[] {
-    let sorted: T[] = [];
     // Sorting without mutating original data
     if (fn && typeof fn === "function") {
-        sorted = [...array].sort((a, b) => fn(a, b, isAsc));
+        return (mutate ? array : [...array]).sort((a, b) => fn(a, b, isAsc));
     } else {
-        sorted = [...array].sort((a, b) => {
+        return (mutate ? array : [...array]).sort((a, b) => {
             // Get nested values from objects
             let newA: any = isObject(a) ? getValueByPath(a, key) : a;
             let newB: any = isObject(b) ? getValueByPath(b, key) : b;
@@ -115,8 +115,6 @@ export function sortBy<T>(
             return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
         });
     }
-
-    return sorted;
 }
 
 /**
@@ -252,8 +250,10 @@ export function getValueByPath<O, K extends keyof O | string>(
     path: K,
     defaultValue?: DeepType<O, K>,
 ): DeepType<O, K> {
-    if (!obj || typeof obj !== "object") return obj as DeepType<O, K>;
-    if (typeof path !== "string") return obj as DeepType<O, K>;
+    if (!obj || typeof obj !== "object")
+        return defaultValue ?? (obj as DeepType<O, K>);
+    if (typeof path !== "string")
+        return defaultValue ?? (obj as DeepType<O, K>);
 
     const value: any = path
         .split(".")

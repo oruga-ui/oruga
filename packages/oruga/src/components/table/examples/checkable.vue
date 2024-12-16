@@ -79,7 +79,7 @@ const checkedRows = ref([data[1], data[3]]);
                 icon-left="times"
                 label="Clear checked"
                 @click="checkedRows = []" />
-            <o-select v-model="checkboxPosition">
+            <o-select v-model="checkboxPosition" aria-label="Checkbox position">
                 <option value="left">Checkbox at left</option>
                 <option value="right">Checkbox at right</option>
             </o-select>
