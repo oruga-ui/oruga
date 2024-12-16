@@ -1,7 +1,85 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`OTabs tests > OTab with OTabItem integration tests > test render correctly 1`] = `
+"<div class="o-tabs o-tabs--default" data-oruga="tabs">
+  <div class="o-tabs__tablist" role="tablist" aria-orientation="horizontal">
+    <!--
+                @slot Additional slot before tabs
+            --><button id="tab-1" class="o-tabs__tab o-tabs__tab--default o-tabs__tab--active" role="tab" aria-selected="true">
+      <!--v-if--><span class="o-tabs__tab-label">Account</span>
+    </button>
+    <!--
+                @slot Additional slot after tabs
+            -->
+  </div>
+  <section class="o-tabs__content">
+    <!--
+                @slot Place tab items here
+            -->
+    <transition-stub appear="false" persisted="true" css="true">
+      <div id="tabpanel-1" data-oruga="tabs-item" data-id="tabs-1" class="o-tabs__panel" role="tabpanel" aria-labelledby="tab-1" aria-roledescription="item">
+        <!-- 
+                @slot Tab item content
+                @binding {boolean} active - if item is shown 
+            -->
+        <!-- injected component -->
+        <!-- default content prop -->ABC
+        <!--
+                Do not render these slots here.
+                These are only for documentation purposes.
+                Slots are defined in tabs component.
+            -->
+        <!--v-if-->
+      </div>
+    </transition-stub>
+  </section>
+</div>"
+`;
+
+exports[`OTabs tests > OTabItem > render correctly 1`] = `
+"<button id="tab-2" class="o-tabs__tab o-tabs__tab--default o-tabs__tab--next" role="tab" aria-selected="false" tabindex="-1">
+  <!--v-if--><span class="o-tabs__tab-label"></span>
+</button>"
+`;
+
+exports[`OTabs tests > basic tests > still renders if there is no item 1`] = `
+"<div class="o-tabs o-tabs--default" data-oruga="tabs" value="tab1">
+  <div class="o-tabs__tablist" role="tablist" aria-orientation="horizontal">
+    <!--
+                @slot Additional slot before tabs
+            -->
+    <!--
+                @slot Additional slot after tabs
+            -->
+  </div>
+  <section class="o-tabs__content">
+    <!--
+                @slot Place tab items here
+            -->
+  </section>
+</div>"
+`;
+
 exports[`OTabs tests > render correctly 1`] = `
 "<div class="o-tabs o-tabs--default" data-oruga="tabs">
+  <div class="o-tabs__tablist" role="tablist" aria-orientation="horizontal">
+    <!--
+                @slot Additional slot before tabs
+            -->
+    <!--
+                @slot Additional slot after tabs
+            -->
+  </div>
+  <section class="o-tabs__content">
+    <!--
+                @slot Place tab items here
+            -->
+  </section>
+</div>"
+`;
+
+exports[`OTabs tests > render correctly when there is no item 1`] = `
+"<div class="o-tabs o-tabs--default" data-oruga="tabs" value="tab1">
   <div class="o-tabs__tablist" role="tablist" aria-orientation="horizontal">
     <!--
                 @slot Additional slot before tabs
