@@ -14,10 +14,11 @@ export type TabsComponent = {
     destroyOnHide: boolean;
 };
 
+
 export type TabItemComponent<T> = TabItemProps<T, Component> & {
     $slots: Slots;
     navClasses: ClassBind[];
-    tabClasses: ClassBind[];
+    classes: ClassBind[];
     iconClasses: ClassBind[];
     labelClasses: ClassBind[];
     isTransitioning: boolean;
@@ -25,4 +26,4 @@ export type TabItemComponent<T> = TabItemProps<T, Component> & {
     deactivate: (index: number) => void;
 };
 
-export type TabItem<T> = Omit<ProviderItem, "data"> & TabItemComponent<T>;
+export type TabItem<T> = Omit<ProviderItem<T>, "data"> & TabItemComponent<T>;

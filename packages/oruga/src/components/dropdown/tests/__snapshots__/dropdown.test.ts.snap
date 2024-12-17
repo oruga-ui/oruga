@@ -2,33 +2,35 @@
 
 exports[`Dropdown tests > render correctly with items 1`] = `
 "<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
-  <div tabindex="0" class="o-drop__trigger" aria-haspopup="true">
+  <div class="o-drop__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false" aria-controls="v-0">
     <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
+                @binding {T | T[]} value - the selected value
                 @binding {() => void} toggle - toggle dropdown active state
             --><button class="">Component Trigger Label</button>
   </div>
   <!--teleport start-->
   <!--v-if-->
   <transition-stub name="fade" appear="false" persisted="true" css="true">
-    <div class="o-drop__menu o-drop__menu--bottom-left" role="list" aria-hidden="true" aria-modal="true" style="display: none;">
+    <div id="v-0" tabindex="-1" class="o-drop__menu o-drop__menu--bottom-left" role="listbox" aria-hidden="true" aria-multiselectable="false" style="display: none;">
       <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
+                        @binding {number} focusedIndex - index of the focused element
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
-      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+      <div id="v-0-1" class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-1" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->A
       </div>
-      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-2" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+      <div id="v-0-2" class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-2" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->B
       </div>
-      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-3" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+      <div id="v-0-3" class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-3" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->C
@@ -41,38 +43,46 @@ exports[`Dropdown tests > render correctly with items 1`] = `
 
 exports[`Dropdown tests > render correctly with options 1`] = `
 "<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
-  <div tabindex="0" class="o-drop__trigger" aria-haspopup="true">
+  <div class="o-drop__trigger" aria-haspopup="listbox" aria-disabled="false" aria-controls="v-0">
     <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
+                @binding {T | T[]} value - the selected value
                 @binding {() => void} toggle - toggle dropdown active state
             -->Some Trigger Label
   </div>
   <!--teleport start-->
   <!--v-if-->
   <transition-stub name="fade" appear="false" persisted="true" css="true">
-    <div class="o-drop__menu o-drop__menu--bottom-left" role="list" aria-hidden="true" aria-modal="true" style="display: none;">
+    <div id="v-0" tabindex="-1" class="o-drop__menu o-drop__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
       <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
+                        @binding {number} focusedIndex - index of the focused element
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
+      <!--
+                            @slot Place extra \`o-dropdown-item\` components here, even if you have some options defined by prop
+                        -->
       <!--v-if-->
-      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-1" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+      <div id="v-0-1" class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-1" role="menuitem" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->Item 1
       </div>
-      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-2" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+      <div id="v-0-2" class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-2" role="menuitem" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->Item 2
       </div>
-      <div class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-3" role="listitem" tabindex="0" aria-selected="false" aria-disabled="false">
+      <div id="v-0-3" class="o-drop__item o-drop__item--clickable" data-oruga="dropdown-item" data-id="dropdown-3" role="menuitem" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->Item 3
       </div>
+      <!--
+                            @slot Place extra \`o-dropdown-item\` components here, even if you have some options defined by prop
+                        -->
     </div>
   </transition-stub>
   <!--teleport end-->

@@ -50,7 +50,7 @@ export function useEventListener(
         });
     };
 
-    let stopWatch;
+    let stopWatch: () => void;
 
     if (typeof options?.trigger !== "undefined") {
         stopWatch = watch(
@@ -58,7 +58,7 @@ export function useEventListener(
             (value) => {
                 // toggle listener
                 if (value) register();
-                else stop();
+                else if (typeof cleanup === "function") cleanup();
             },
             { flush: "post" },
         );

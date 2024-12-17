@@ -25,7 +25,8 @@ const currentMenu = ref({ icon: "users", text: "People" });
         <o-dropdown
             v-model="currentMenu"
             :scrollable="isScrollable"
-            :max-height="maxHeight">
+            :max-height="maxHeight"
+            check-scroll>
             <template #trigger>
                 <o-button
                     variant="primary"

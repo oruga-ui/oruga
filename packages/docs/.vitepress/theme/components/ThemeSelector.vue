@@ -33,6 +33,8 @@ function onThemeChange(theme: unknown): void {
     <o-dropdown
         :model-value="selectedTheme"
         root-class="theme-selector"
+        selectable
+        aria-label="theme selection"
         @change="onThemeChange">
         <template #trigger="{ active }">
             <span role="button">

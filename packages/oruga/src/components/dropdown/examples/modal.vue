@@ -1,11 +1,8 @@
 <template>
     <section class="odocs-spaced">
-        <o-dropdown>
-            <template #trigger="{ active }">
-                <o-button
-                    variant="primary"
-                    label="Click me!"
-                    :icon-right="active ? 'caret-up' : 'caret-down'" />
+        <o-dropdown desktop-modal mobile-modal aria-label="modal example">
+            <template #trigger>
+                <o-button variant="primary" label="Click to open modal!" />
             </template>
 
             <o-dropdown-item label="Action" />
