@@ -214,7 +214,7 @@ const { nextSequence } = useSequentialId();
 /** normalized programamtic options */
 const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 
@@ -343,7 +343,10 @@ watch(
             else setHovered(undefined);
         } else if (hoveredOption.value) {
             // reset hovered with found option or undefined
-            const hoveredValue = findOption(options, hoveredOption.value.value);
+            const hoveredValue = findOption<T>(
+                options,
+                hoveredOption.value.value,
+            );
             setHovered(hoveredValue);
         }
     },
@@ -359,7 +362,7 @@ function setHovered(option: OptionsItem<T> | SpecialOption | undefined): void {
 
 /** set first option as hovered */
 function hoverFirstOption(): void {
-    const option = firstValidOption(groupedOptions);
+    const option = firstValidOption<T>(groupedOptions);
     // set found option or undefined hovered
     setHovered(option);
 }
@@ -697,11 +700,12 @@ defineExpose({ focus: setFocus, value: inputValue });
 
         <template v-for="(group, groupIndex) in groupedOptions">
             <o-dropdown-item
-                v-if="group.group"
+                v-if="group.label"
                 v-show="!group.hidden"
                 v-bind="group.attrs"
                 :key="group.key"
                 :tag="itemTag"
+                :value="group.value"
                 :clickable="false"
                 tabindex="-1"
                 :class="[...itemClasses, ...itemGroupClasses]">
@@ -713,10 +717,10 @@ defineExpose({ focus: setFocus, value: inputValue });
                 <slot
                     v-if="$slots.group"
                     name="group"
-                    :group="group.group"
+                    :group="group.label"
                     :index="groupIndex" />
                 <span v-else>
-                    {{ group.group }}
+                    {{ group.label }}
                 </span>
             </o-dropdown-item>
 

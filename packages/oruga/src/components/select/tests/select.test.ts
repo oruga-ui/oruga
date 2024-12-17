@@ -313,7 +313,7 @@ describe("OSelect tests", () => {
         test("handle grouped options correctly", () => {
             const options: OptionsGroupProp<string | number | object> = [
                 {
-                    group: "Black Sails",
+                    label: "Black Sails",
                     options: [
                         { label: "Flint", value: "flint" },
                         { label: "Silver", value: "silver" },
@@ -322,7 +322,7 @@ describe("OSelect tests", () => {
                     ],
                 },
                 {
-                    group: "Breaking Bad",
+                    label: "Breaking Bad",
                     options: {
                         heisenberg: "Heisenberg",
                         jesse: "Jesse",
@@ -331,7 +331,7 @@ describe("OSelect tests", () => {
                     },
                 },
                 {
-                    group: "Game of Thrones",
+                    label: "Game of Thrones",
                     attrs: { disabled: true },
                     options: [
                         "Tyrion Lannister",

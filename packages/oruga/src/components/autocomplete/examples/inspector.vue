@@ -4,7 +4,7 @@ import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
 
 const options: OptionsGroupProp<string> = [
     {
-        group: "Frameworks",
+        label: "Frameworks",
         options: ["Vue.js"],
     },
 ];
