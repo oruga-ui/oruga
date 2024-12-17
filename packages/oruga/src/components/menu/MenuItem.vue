@@ -39,7 +39,6 @@ const props = withDefaults(defineProps<MenuItemProps<T>>(), {
     expanded: false,
     disabled: false,
     hidden: false,
-    clickable: true,
     submenuId: () => useId(),
     icon: undefined,
     iconPack: () => getDefault("menu.iconPack"),
@@ -261,9 +260,3 @@ const submenuClasses = defineClasses([
         </transition>
     </li>
 </template>
-
-<style lang="css" scoped>
-.o-menu__item--focused {
-    background-color: grey;
-}
-</style>

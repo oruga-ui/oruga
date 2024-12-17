@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
+import { nextTick } from "vue";
 
 import type { OptionsProp } from "@/composables";
+import type { MenuProps } from "../props";
 
 import OMenu from "../Menu.vue";
-import { nextTick } from "vue";
-import type { MenuProps } from "../props";
 
 describe("Menu axe tests", () => {
     enableAutoUnmount(afterEach);

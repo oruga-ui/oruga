@@ -11,7 +11,7 @@ describe("OMenu tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
-        const wrapper = mount(OMenu);
+        const wrapper = mount(OMenu, { props: { label: "My Menu" } });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("menu");
@@ -77,7 +77,9 @@ describe("OMenu tests", () => {
         };
 
         test("render correctly", () => {
-            const wrapper = mount(componentWrapper, { props: { items } });
+            const wrapper = mount(componentWrapper, {
+                props: { items, label: "My Menu" },
+            });
             expect(wrapper.attributes("data-oruga")).toBe("menu");
             expect(!!wrapper.vm).toBeTruthy();
             expect(wrapper.html()).toMatchSnapshot();
@@ -221,7 +223,7 @@ describe("OMenu tests", () => {
             expect(itemTwo.emitted("update:expanded")).toBeUndefined();
         });
 
-        test.only("react accordingly when menu is disabled", async () => {
+        test("react accordingly when menu is disabled", async () => {
             const wrapper = mount(componentWrapper, {
                 props: { items, disabled: true },
             });

@@ -2,7 +2,16 @@
 
 exports[`OMenu tests > menu integration tests > render correctly 1`] = `
 "<nav data-oruga="menu" class="o-menu">
-  <!--v-if-->
+  <div id="v-1" class="o-menu__label">
+    <!-- 
+                @slot Override icon and label
+                @binding {T} focused - the focused item value
+                @binding {number} focusedIndex - index of the focused item
+                @binding {T} selected - the selected item value
+                @binding {number} selectedIndex - index of the selected item
+            -->
+    <!--v-if--><span>My Menu</span>
+  </div>
   <ul id="v-0" class="o-menu__list" role="tree" tabindex="0" aria-labelledby="v-1">
     <!--
                 @slot Place menu items here 
@@ -11,21 +20,21 @@ exports[`OMenu tests > menu integration tests > render correctly 1`] = `
                 @binding {T} selected - the selected item value
                 @binding {number} selectedIndex - index of the selected item
             -->
-    <li data-v-9fbc3e6f="" id="v-0-1" data-oruga="menu-item" data-id="menu-1" class="o-menu__item" role="none"><button data-v-9fbc3e6f="" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false"><span data-v-9fbc3e6f="" class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span>
+    <li id="v-0-1" data-oruga="menu-item" data-id="menu-1" class="o-menu__item" role="none"><button class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span>
         <!-- 
                 @slot Override label
                 @binding {boolean} expanded - item expanded state
                 @binding {boolean} active - item active state
-            --><span data-v-9fbc3e6f="">label1</span>
+            --><span>label1</span>
       </button><!-- sub menu items -->
       <!--v-if-->
     </li>
-    <li data-v-9fbc3e6f="" id="v-0-2" data-oruga="menu-item" data-id="menu-2" class="o-menu__item" role="none"><button data-v-9fbc3e6f="" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false"><span data-v-9fbc3e6f="" class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span>
+    <li id="v-0-2" data-oruga="menu-item" data-id="menu-2" class="o-menu__item" role="none"><button class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span class="o-icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span>
         <!-- 
                 @slot Override label
                 @binding {boolean} expanded - item expanded state
                 @binding {boolean} active - item active state
-            --><span data-v-9fbc3e6f="">label2</span>
+            --><span>label2</span>
       </button><!-- sub menu items -->
       <!--v-if-->
     </li>
@@ -35,7 +44,16 @@ exports[`OMenu tests > menu integration tests > render correctly 1`] = `
 
 exports[`OMenu tests > render correctly 1`] = `
 "<nav data-oruga="menu" class="o-menu">
-  <!--v-if-->
+  <div id="v-1" class="o-menu__label">
+    <!-- 
+                @slot Override icon and label
+                @binding {T} focused - the focused item value
+                @binding {number} focusedIndex - index of the focused item
+                @binding {T} selected - the selected item value
+                @binding {number} selectedIndex - index of the selected item
+            -->
+    <!--v-if--><span>My Menu</span>
+  </div>
   <ul id="v-0" class="o-menu__list" role="tree" tabindex="0" aria-labelledby="v-1">
     <!--
                 @slot Place menu items here 
