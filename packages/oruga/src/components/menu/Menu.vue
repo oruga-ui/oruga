@@ -38,9 +38,10 @@ const props = withDefaults(defineProps<MenuProps<T>>(), {
     options: undefined,
     label: undefined,
     accordion: true,
+    disabled: false,
     menuId: () => useId(),
     labelId: () => useId(),
-    ariaRole: () => getDefault("menu.ariaRole", "tree"),
+    role: () => getDefault("menu.ariaRole", "tree"),
     icon: undefined,
     iconPack: () => getDefault("menu.iconPack"),
     iconSize: () => getDefault("menu.iconSize"),
@@ -61,7 +62,8 @@ const provideData = computed<MenuComponent<T>>(() => ({
     focsuedIdentifier: focusedItem.value?.identifier,
     menuId: props.menuId,
     accordion: props.accordion,
-    role: props.ariaRole,
+    disabled: props.disabled,
+    role: props.role,
     nextSequence,
     resetMenu,
     selectItem,
@@ -256,7 +258,7 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
         <ul
             :id="menuId"
             :class="listClasses"
-            role="tree"
+            :role="role"
             :tabindex="0"
             :aria-labelledby="labelId"
             @keydown.left="onCollapse"

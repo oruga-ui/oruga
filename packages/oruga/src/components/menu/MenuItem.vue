@@ -117,7 +117,7 @@ const isFocused = computed(
 );
 
 function selectItem(event: Event): void {
-    if (props.disabled) return;
+    if (props.disabled || parent.value.disabled) return;
     triggerReset();
     isActive.value = !isActive.value;
     if (parent.value.accordion) isExpanded.value = isActive.value;
@@ -166,7 +166,7 @@ const itemClasses = defineClasses(
         "itemDisabledClass",
         "o-menu__item--disabled",
         null,
-        computed(() => props.disabled),
+        computed(() => props.disabled || parent.value.disabled),
     ],
 );
 
@@ -183,7 +183,7 @@ const buttonClasses = defineClasses(
         "itemButtonDisabledClass",
         "o-menu__item__button--disabled",
         null,
-        computed(() => props.disabled),
+        computed(() => props.disabled || parent.value.disabled),
     ],
     [
         "itemButtonIconClass",
@@ -214,10 +214,10 @@ const submenuClasses = defineClasses([
             v-bind="$attrs"
             :class="buttonClasses"
             :role="parent.role + 'item'"
-            :disabled="disabled"
+            :disabled="disabled || parent.disabled"
             tabindex="-1"
-            :aria-selected="isActive"
-            :aria-disabled="disabled"
+            :aria-selected="parent.role == 'tree' ? isActive : undefined"
+            :aria-disabled="disabled || parent.disabled"
             :aria-expanded="hasChildren ? isExpanded : undefined"
             :aria-owns="hasChildren ? submenuId : undefined"
             @keyup.enter="selectItem"
@@ -243,6 +243,7 @@ const submenuClasses = defineClasses([
                 v-show="isExpanded"
                 :id="submenuId"
                 :class="submenuClasses"
+                tabindex="-1"
                 role="group">
                 <!--
                         @slot Place menu items here 

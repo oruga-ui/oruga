@@ -31,11 +31,6 @@ const selected = ref();
             </o-menu-item>
         </o-menu>
 
-        <!-- <o-menu label="Actions">
-            <o-menu-item label="Profile" />
-            <o-menu-item label="Article" />
-            <o-menu-item label="Logout" />
-        </o-menu> -->
         <p><b> Selected:</b> {{ selected }}</p>
     </section>
 </template>

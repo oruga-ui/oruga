@@ -4,6 +4,7 @@ import type { MenuItemProps } from "./props";
 export type MenuComponent<T> = {
     focsuedIdentifier: string | undefined;
     accordion: boolean;
+    disabled: boolean;
     role: string;
     menuId: string;
     nextSequence: () => string;

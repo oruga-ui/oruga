@@ -11,6 +11,8 @@ export type MenuProps<T> = {
     label?: string;
     /** If sub menu items are collapsible */
     accordion?: boolean;
+    /** Menu will be disabled */
+    disabled?: boolean;
     /** HTML element Id of the ol list element */
     menuId?: string;
     /** HTML element Id of the label element */
@@ -18,9 +20,9 @@ export type MenuProps<T> = {
     /**
      * Role attribute to be passed to the list container for better accessibility.
      * Use menu only in situations where your dropdown is related to a navigation menu.
-     * @values list, menu, tree
+     * @values menu, tree
      */
-    ariaRole?: "list" | "menu" | "tree";
+    role?: "menu" | "tree";
     /** Icon to be shown */
     icon?: string;
     /**
