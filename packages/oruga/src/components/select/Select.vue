@@ -139,7 +139,7 @@ watch(
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const normalizedptions = computed(() =>
+const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
@@ -304,7 +304,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                 @slot Override the options, default is options prop
             -->
             <slot>
-                <template v-for="option in normalizedptions" :key="option.key">
+                <template v-for="option in normalizedOptions" :key="option.key">
                     <optgroup
                         v-if="isGroupOption(option)"
                         v-show="!option.hidden"

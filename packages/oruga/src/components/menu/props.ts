@@ -1,4 +1,5 @@
-import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
+import type { OptionsProp, OptionsPropWithGroups } from "@/composables";
 
 export type MenuProps<T> = {
     /** Override existing theme classes completely */
@@ -6,7 +7,7 @@ export type MenuProps<T> = {
     /** The selected item value, use v-model to make it two-way binding */
     modelValue?: T;
     /** Menu items, unnecessary when default slot is used */
-    options?: OptionsProp<T>;
+    options?: OptionsPropWithGroups<T>;
     /** Menu label */
     label?: string;
     /** If sub menu items are collapsible */

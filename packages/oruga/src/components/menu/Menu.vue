@@ -8,6 +8,7 @@ import { getDefault } from "@/utils/config";
 import { mod } from "@/utils/helpers";
 import {
     defineClasses,
+    isGroupOption,
     normalizeOptions,
     useProviderParent,
     useSequentialId,
@@ -281,13 +282,28 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
                 :focused-index="focusedItem?.index"
                 :selected="selectedItem?.data"
                 :selected-index="selectedItem?.index">
-                <OMenuItem
-                    v-for="option in normalizedOptions"
-                    :key="option.key"
-                    v-bind="option.attrs"
-                    :value="option.value"
-                    :label="option.label"
-                    :hidden="option.hidden" />
+                <template v-for="option in normalizedOptions" :key="option.key">
+                    <OMenuItem
+                        v-if="isGroupOption(option)"
+                        v-bind="option.attrs"
+                        :label="option.group"
+                        :hidden="option.hidden">
+                        <OMenuItem
+                            v-for="_option in option.options"
+                            v-bind="_option.attrs"
+                            :key="_option.key"
+                            :value="_option.value"
+                            :label="_option.label"
+                            :hidden="_option.hidden" />
+                    </OMenuItem>
+
+                    <OMenuItem
+                        v-else
+                        v-bind="option.attrs"
+                        :value="option.value"
+                        :label="option.label"
+                        :hidden="option.hidden" />
+                </template>
             </slot>
         </ul>
     </nav>
