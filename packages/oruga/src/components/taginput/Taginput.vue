@@ -20,6 +20,8 @@ import {
     findOption,
     useInputHandler,
     useSequentialId,
+    toOptionsGroup,
+    type OptionsGroupItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
@@ -159,15 +161,17 @@ const isComposing = ref(false);
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
-);
+const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
+    return groupedOptions;
+});
 
 /** map the selected items into option items */
 const selectedOptions = computed(() => {
     if (!selectedItems.value) return [];
     return selectedItems.value.map((value) => {
-        const option = findOption(normalizedOptions, value);
+        const option = findOption<T>(groupedOptions, value);
         // return the found option or create a new option object
         if (option) return option;
         else return { label: value, value, key: useId() };
