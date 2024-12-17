@@ -85,7 +85,7 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // provided data is a computed ref to enjure reactivity
 const provideData = computed<TabsComponent>(() => ({
-    activeIndex: activeItem.value?.index || 0,
+    activeIndex: activeItem.value?.index ?? 0,
     type: props.type,
     vertical: props.vertical,
     animated: props.animated,
@@ -125,19 +125,16 @@ watch(
     },
 );
 
-const activeItem = ref<TabItem<T>>(
-    items.value.find((item) => item.value === props.modelValue) ||
-        items.value[0],
-);
+/** the active item */
+const activeItem = ref<TabItem<T>>();
 
+// set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
         ? items.value.find((item) => item.value === vmodel.value) ||
           items.value[0]
         : items.value[0];
 });
-
-const activeIndex = computed(() => activeItem.value.index);
 
 const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
@@ -221,7 +218,7 @@ function getFirstViableItem(
     let newIndex = startingIndex;
     for (
         ;
-        newIndex !== activeIndex.value;
+        newIndex !== activeItem.value?.index;
         newIndex = mod(newIndex + direction, items.value.length)
     ) {
         // Break if the item at this index is viable (not disabled and is visible)
@@ -322,18 +319,18 @@ const contentClasses = defineClasses(
                 :class="childItem.navClasses"
                 role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="childItem.value === activeItem.value"
+                :aria-selected="childItem.value === activeItem?.value"
                 :tabindex="
-                    childItem.value === activeItem.value ? undefined : '-1'
+                    childItem.value === activeItem?.value ? undefined : '-1'
                 ">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
-                    :class="childItem.classes"
+                    :class="childItem.tabClasses"
                     :props="{
-                        active: childItem.index === activeIndex,
+                        active: childItem.index === activeItem?.index,
                     }"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
@@ -349,7 +346,7 @@ const contentClasses = defineClasses(
                     v-else
                     role="button"
                     :tabindex="0"
-                    :class="childItem.classes"
+                    :class="childItem.tabClasses"
                     @click="tabClick(childItem)"
                     @keydown.enter="tabClick(childItem)"
                     @keydown.left="prev($event, childItem.index)"

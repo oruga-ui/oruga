@@ -6,7 +6,6 @@ const datepicker = ref();
 
 // get programmatic oruga access
 const oruga = useOruga();
-
 const triggerClass =
     oruga.config.getOption("input.iconLeftClass", "o-input__icon-left") ??
     "o-input__icon-left";
