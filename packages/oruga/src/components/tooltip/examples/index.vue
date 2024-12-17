@@ -14,8 +14,8 @@ import MultilineCode from "./multiline.vue?raw";
 import Slot from "./slot.vue";
 import SlotCode from "./slot.vue?raw";
 
-import Toggle from "./toggle.vue";
-import ToggleCode from "./toggle.vue?raw";
+import Triggers from "./triggers.vue";
+import TriggersCode from "./triggers.vue?raw";
 </script>
 
 <template>
@@ -34,6 +34,6 @@ import ToggleCode from "./toggle.vue?raw";
     <h3 id="slot">Slot</h3>
     <ExampleViewer :component="Slot" :code="SlotCode" />
 
-    <h3 id="toggle">Toggle</h3>
-    <ExampleViewer :component="Toggle" :code="ToggleCode" />
+    <h3 id="triggers">Triggers</h3>
+    <ExampleViewer :component="Triggers" :code="TriggersCode" />
 </template>

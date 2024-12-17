@@ -40,14 +40,14 @@ export type TooltipProps = {
      * Tooltip trigger events
      * @values hover, click, focus, contextmenu
      */
-    triggers?: ("click" | "hover" | "contextmenu" | "focus")[];
+    triggers?: Array<"click" | "hover" | "contextmenu" | "focus">;
     /** Tooltip delay before it appears (number in ms) */
     delay?: number;
     /**
      * Tooltip auto close options (pressing escape, clicking the content or outside)
      * @values true, false, content, outside, escape
      */
-    closeable?: string[] | boolean;
+    closeable?: Array<"content" | "outside" | "escape"> | boolean;
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
