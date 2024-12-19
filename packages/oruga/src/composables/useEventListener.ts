@@ -45,12 +45,13 @@ export function useEventListener(
         // register listener with timeout to prevent animation collision
         setTimeout(() => {
             target.addEventListener(event, handler, optionsClone);
-            cleanup = (): void =>
+            cleanup = (): void => {
                 target.removeEventListener(event, handler, optionsClone);
+            };
         });
     };
 
-    let stopWatch;
+    let stopWatch: () => void;
 
     if (typeof options?.trigger !== "undefined") {
         stopWatch = watch(
@@ -58,7 +59,7 @@ export function useEventListener(
             (value) => {
                 // toggle listener
                 if (value) register();
-                else stop();
+                else if (typeof cleanup === "function") cleanup();
             },
             { flush: "post" },
         );
