@@ -99,7 +99,7 @@ watch(isActive, (value) => {
             if (cancelOptions.value.indexOf("escape") >= 0) {
                 // set keyup handler
                 eventCleanups.push(
-                    useEventListener("keyup", onKeyPress, document, {
+                    useEventListener(document, "keyup", onKeyPress, {
                         immediate: true,
                     }),
                 );

@@ -129,7 +129,7 @@ onBeforeUnmount(() => {
 
 if (isClient) {
     // register onKeyPress event listener when is active
-    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
 
     if (!props.overlay)
         // register outside click event listener when is active

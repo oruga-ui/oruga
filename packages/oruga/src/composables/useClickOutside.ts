@@ -54,12 +54,12 @@ export function useClickOutside(
         });
     };
 
-    const listener = (event: PointerEvent): void => {
+    function listener(event: PointerEvent): void {
         if (shouldIgnore(event)) return;
         handler(event);
-    };
+    }
 
-    const stop = useEventListener("click", listener, window, listenerOptions);
+    const stop = useEventListener(window, "click", listener, listenerOptions);
 
     return stop;
 }
