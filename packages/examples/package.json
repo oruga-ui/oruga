@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/examples",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "homepage": "https://oruga-ui.com",
   "description": "Oruga component examples",
   "license": "MIT",
@@ -50,7 +50,7 @@
     "update": "ncu -u"
   },
   "peerDependencies": {
-    "@oruga-ui/oruga-next": "0.9.2",
+    "@oruga-ui/oruga-next": "0.9.3",
     "vue": "^3.0.0"
   },
   "dependencies": {
