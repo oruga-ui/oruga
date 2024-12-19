@@ -1,3 +1,14 @@
+## [0.9.3](https://github.com/oruga-ui/oruga/compare/v0.9.2...v0.9.3) (2024-12-19)
+
+
+### Bug Fixes
+
+* **autocomplete:** solve input does not get cleared ([#1151](https://github.com/oruga-ui/oruga/issues/1151)) ([f0eccaf](https://github.com/oruga-ui/oruga/commit/f0eccafda6e79f71b21f25ae9b13fc824a494ccd))
+* **input:** solve prop `number` declaration issue ([#1150](https://github.com/oruga-ui/oruga/issues/1150)) ([123dc6f](https://github.com/oruga-ui/oruga/commit/123dc6f55f09798a531ec732ea06639a71caa71d))
+* **table:** solve `mobileClass` trigger issue ([#1153](https://github.com/oruga-ui/oruga/issues/1153)) ([226f19b](https://github.com/oruga-ui/oruga/commit/226f19b43f5138fc6b56dae2808d5764b5f86b5c))
+
+
+
 ## [0.9.2](https://github.com/oruga-ui/oruga/compare/v0.9.1...v0.9.2) (2024-12-02)
 
 
