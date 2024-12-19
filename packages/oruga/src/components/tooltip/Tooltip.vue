@@ -85,18 +85,21 @@ watch(isActive, (value) => {
             if (cancelOptions.value.indexOf("outside") >= 0) {
                 // set outside handler
                 eventCleanups.push(
-                    useClickOutside(contentRef, onClickedOutside, {
-                        ignore: [triggerRef],
-                        immediate: true,
-                        passive: true,
-                    }),
+                    useClickOutside(
+                        [contentRef, triggerRef],
+                        onClickedOutside,
+                        {
+                            immediate: true,
+                            passive: true,
+                        },
+                    ),
                 );
             }
 
             if (cancelOptions.value.indexOf("escape") >= 0) {
                 // set keyup handler
                 eventCleanups.push(
-                    useEventListener("keyup", onKeyPress, document, {
+                    useEventListener(document, "keyup", onKeyPress, {
                         immediate: true,
                     }),
                 );
