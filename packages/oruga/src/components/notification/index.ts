@@ -9,7 +9,7 @@ import {
 } from "@/utils/plugins";
 
 /** export notification specific types */
-// no types to export here
+export type { NotificationProgrammaticOptions } from "./useNotificationProgrammatic";
 
 /** export notification plugin */
 export default {

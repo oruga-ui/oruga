@@ -20,13 +20,15 @@ declare module "../../index" {
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useLoadingProgrammatic composable options */
-type LoadingProgrammaticOptions = Readonly<Omit<LoadingProps, "label">> & {
+export type LoadingProgrammaticOptions = Readonly<
+    Omit<LoadingProps, "label">
+> & {
     label?: string | Array<unknown>;
 } & ProgrammaticComponentOptions;
 
 const LoadingProgrammatic = {
     /**
-     * Create a new programmatic loading component.
+     * Create a new programmatic loading component instance.
      * @param options loading label string or loading component props object
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
@@ -64,11 +66,11 @@ const LoadingProgrammatic = {
             slot,
         );
     },
-    /** close the last registred instance in the loading programmatic instance registry */
+    /** Close the last registred instance in the loading programmatic instance registry. */
     close(...args: unknown[]): void {
         instances.last()?.exposed?.close(...args);
     },
-    /** close all instances in the programmatic loading instance registry */
+    /** Close all instances in the programmatic loading instance registry. */
     closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed?.close(...args));
     },
