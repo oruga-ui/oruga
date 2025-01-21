@@ -24,14 +24,16 @@ declare module "../../index" {
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useSidebarProgrammatic composable options */
-type SidebarProgrammaticOptions<C extends Component> = Readonly<
+export type SidebarProgrammaticOptions<C extends Component> = Readonly<
     SidebarProps<C>
 > &
     PublicProgrammaticComponentOptions;
 
 const useSidebarProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: instances.count,
     /**
-     * create a new programmatic modal component
+     * Create a new programmatic modal component instance.
      * @param options sidebar component props object
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
@@ -53,11 +55,11 @@ const useSidebarProgrammatic = {
             onClose: options.onClose, // on close event handler
         });
     },
-    /** close the last registred instance in the sidebar programmatic instance registry */
+    /** Close the last registred instance in the sidebar programmatic instance registry. */
     close(...args: unknown[]): void {
         instances.last()?.exposed?.close(...args);
     },
-    /** close all instances in the programmatic sidebar instance registry */
+    /** Close all instances in the programmatic sidebar instance registry. */
     closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed?.close(...args));
     },

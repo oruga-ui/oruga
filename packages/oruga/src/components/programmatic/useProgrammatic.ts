@@ -48,8 +48,10 @@ export type PublicProgrammaticComponentOptions = EmitsToProps<
 export type ProgrammaticExpose = ProgrammaticComponentExpose;
 
 export const useProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: instances.count,
     /**
-     * create a new programmatic component
+     * Create a new programmatic component instance.
      * @param component component to render
      * @param options render options
      * @param slot default slot content - see {@link https://vuejs.org/api/render-function.html#render-function-apis |Vue render function}

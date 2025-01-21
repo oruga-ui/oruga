@@ -9,7 +9,7 @@ import {
 } from "@/utils/plugins";
 
 /** export modal specific types */
-// no types to export here
+export type { ModalProgrammaticOptions } from "./useModalProgrammatic";
 
 /** export modal plugin */
 export default {

@@ -8,11 +8,7 @@ import {
     type VNode,
     type VNodeTypes,
 } from "vue";
-import type {
-    // ComponentExposed,
-    ComponentProps,
-} from "vue-component-type-helpers";
-
+import type { ComponentProps } from "vue-component-type-helpers";
 import type InstanceRegistry from "@/components/programmatic/InstanceRegistry";
 import { isClient } from "@/utils/ssr";
 

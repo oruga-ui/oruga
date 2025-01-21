@@ -21,7 +21,7 @@ declare module "../../index" {
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useNotificationProgrammatic composable options */
-type NotificationProgrammaticOptions<C extends Component> = Readonly<
+export type NotificationProgrammaticOptions<C extends Component> = Readonly<
     Omit<
         NotificationNoticeProps<C> & NotificationProps,
         "message" | "container"
@@ -31,8 +31,10 @@ type NotificationProgrammaticOptions<C extends Component> = Readonly<
 } & PublicProgrammaticComponentOptions;
 
 const useNotificationProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: instances.count,
     /**
-     * create a new programmatic modal component
+     * Create a new programmatic modal component instance.
      * @param options notification message string or notification component props object
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
@@ -70,11 +72,11 @@ const useNotificationProgrammatic = {
             slot,
         );
     },
-    /** close the last registred instance in the notification programmatic instance registry */
+    /** Close the last registred instance in the notification programmatic instance registry. */
     close(...args: unknown[]): void {
         instances.last()?.exposed?.close(...args);
     },
-    /** close all instances in the programmatic notification instance registry */
+    /** Close all instances in the programmatic notification instance registry. */
     closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed?.close(...args));
     },

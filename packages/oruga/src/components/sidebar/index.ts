@@ -9,7 +9,7 @@ import {
 } from "@/utils/plugins";
 
 /** export sidebar specific types */
-// no types to export here
+export type { SidebarProgrammaticOptions } from "./useSidebarProgrammatic";
 
 /** export sidebar plugin */
 export default {

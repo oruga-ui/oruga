@@ -9,7 +9,7 @@ import {
 } from "@/utils/plugins";
 
 /** export loading specific types */
-// no types to export here
+export type { LoadingProgrammaticOptions } from "./useLoadingProgrammatic";
 
 /** export loading plugin */
 export default {
