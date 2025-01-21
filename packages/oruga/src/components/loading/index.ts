@@ -1,7 +1,7 @@
 import type { App, Plugin } from "vue";
 
 import Loading from "./Loading.vue";
-import useLoadingProgrammatic from "./useLoadingProgrammatic";
+import LoadingProgrammatic from "./useLoadingProgrammatic";
 
 import {
     registerComponent,
@@ -15,9 +15,9 @@ import {
 export default {
     install(app: App) {
         registerComponent(app, Loading);
-        registerComponentProgrammatic(app, "loading", useLoadingProgrammatic);
+        registerComponentProgrammatic(app, "loading", LoadingProgrammatic);
     },
 } as Plugin;
 
 /** export loading components & composables */
-export { Loading as OLoading, useLoadingProgrammatic };
+export { Loading as OLoading, LoadingProgrammatic };

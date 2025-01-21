@@ -1,8 +1,8 @@
 import type { Component, ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
-    useProgrammatic,
-    type PublicProgrammaticComponentOptions,
+    ComponentProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 import { getOption } from "@/utils/config";
@@ -13,7 +13,7 @@ import type { NotificationProps, NotificationNoticeProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        notification: typeof useNotificationProgrammatic;
+        notification: typeof NotificationProgrammatic;
     }
 }
 
@@ -28,13 +28,13 @@ type NotificationProgrammaticOptions<C extends Component> = Readonly<
     >
 > & {
     message?: string | Array<unknown>;
-} & PublicProgrammaticComponentOptions;
+} & ProgrammaticComponentOptions;
 
-const useNotificationProgrammatic = {
+const NotificationProgrammatic = {
     /**
-     * create a new programmatic modal component
+     * Create a new programmatic notification component.
      * @param options notification message string or notification component props object
-     * @param target specify a target the component get rendered into
+     * @param target specify a target the component get rendered into - default is `document.body`
      * @returns ProgrammaticExpose
      */
     open<C extends Component>(
@@ -58,7 +58,7 @@ const useNotificationProgrammatic = {
         };
 
         // create programmatic component
-        return useProgrammatic.open(
+        return ComponentProgrammatic.open(
             NotificationNotice,
             {
                 instances, // custom programmatic instance registry
@@ -80,4 +80,4 @@ const useNotificationProgrammatic = {
     },
 };
 
-export default useNotificationProgrammatic;
+export default NotificationProgrammatic;

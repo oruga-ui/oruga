@@ -1,7 +1,7 @@
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import useLoadingProgrammatic from "../useLoadingProgrammatic";
+import LoadingProgrammatic from "../useLoadingProgrammatic";
 
 describe("useLoadingProgrammatic tests", () => {
     beforeEach(() => {
@@ -20,7 +20,7 @@ describe("useLoadingProgrammatic tests", () => {
         const label = "My Label";
 
         // open element
-        const { close, promise } = useLoadingProgrammatic.open(label);
+        const { close, promise } = LoadingProgrammatic.open(label);
 
         // check promise get called
         const handler = vi.fn();
@@ -51,7 +51,7 @@ describe("useLoadingProgrammatic tests", () => {
         const label = "My loading Content";
 
         // open element
-        const { close } = useLoadingProgrammatic.open(
+        const { close } = LoadingProgrammatic.open(
             label,
             "#my-cool-container",
         );
@@ -80,7 +80,7 @@ describe("useLoadingProgrammatic tests", () => {
         const label = "My loading Content";
 
         // open element
-        const { close } = useLoadingProgrammatic.open({
+        const { close } = LoadingProgrammatic.open({
             label,
             active: false,
         });
@@ -103,7 +103,7 @@ describe("useLoadingProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        const { close } = useLoadingProgrammatic.open({ label, onClose });
+        const { close } = LoadingProgrammatic.open({ label, onClose });
 
         // check element exist
         let loading = document.body.querySelector<HTMLElement>(

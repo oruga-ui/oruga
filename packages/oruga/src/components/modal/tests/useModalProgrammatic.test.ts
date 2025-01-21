@@ -2,7 +2,7 @@ import { createVNode } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import useModalProgrammatic from "../useModalProgrammatic";
+import ModalProgrammatic from "../useModalProgrammatic";
 
 describe("useModalProgrammatic tests", () => {
     beforeEach(() => {
@@ -21,7 +21,7 @@ describe("useModalProgrammatic tests", () => {
         const content = "My Modal Content";
 
         // open element
-        const { close, promise } = useModalProgrammatic.open(content);
+        const { close, promise } = ModalProgrammatic.open(content);
 
         // check promise get called
         const handler = vi.fn();
@@ -54,7 +54,7 @@ describe("useModalProgrammatic tests", () => {
         const content = "My Modal Content";
 
         // open element
-        const { close } = useModalProgrammatic.open(
+        const { close } = ModalProgrammatic.open(
             content,
             "#my-cool-container",
         );
@@ -85,7 +85,7 @@ describe("useModalProgrammatic tests", () => {
         });
 
         // open element
-        useModalProgrammatic.open({
+        ModalProgrammatic.open({
             component,
             props: { "data-oruga": "programmatic" },
         });
@@ -113,7 +113,7 @@ describe("useModalProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        useModalProgrammatic.open({ content, onClose });
+        ModalProgrammatic.open({ content, onClose });
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>(".o-icon");

@@ -1,8 +1,8 @@
 import { type ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
-    useProgrammatic,
-    type PublicProgrammaticComponentOptions,
+    ComponentProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 
@@ -12,7 +12,7 @@ import type { LoadingProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        loading: typeof useLoadingProgrammatic;
+        loading: typeof LoadingProgrammatic;
     }
 }
 
@@ -22,11 +22,11 @@ const instances = new InstanceRegistry<ComponentInternalInstance>();
 /** useLoadingProgrammatic composable options */
 type LoadingProgrammaticOptions = Readonly<Omit<LoadingProps, "label">> & {
     label?: string | Array<unknown>;
-} & PublicProgrammaticComponentOptions;
+} & ProgrammaticComponentOptions;
 
-const useLoadingProgrammatic = {
+const LoadingProgrammatic = {
     /**
-     * create a new programmatic modal component
+     * Create a new programmatic loading component.
      * @param options loading label string or loading component props object
      * @param target specify a target the component get rendered into
      * @returns ProgrammaticExpose
@@ -52,7 +52,7 @@ const useLoadingProgrammatic = {
         };
 
         // create programmatic component
-        return useProgrammatic.open(
+        return ComponentProgrammatic.open(
             Loading,
             {
                 instances, // custom programmatic instance registry
@@ -74,4 +74,4 @@ const useLoadingProgrammatic = {
     },
 };
 
-export default useLoadingProgrammatic;
+export default LoadingProgrammatic;

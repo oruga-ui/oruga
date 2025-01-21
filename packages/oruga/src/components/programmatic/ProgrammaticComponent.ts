@@ -51,9 +51,9 @@ export type ProgrammaticComponentEmits = {
 // >;
 
 export type ProgrammaticComponentExpose = {
-    /** call close event function */
+    /** Call the close event of the component. */
     close: (...args: unknown[]) => void;
-    /** promise which get called on close event */
+    /** Promise which get resolved on the close event. */
     promise: Promise<unknown>;
 };
 

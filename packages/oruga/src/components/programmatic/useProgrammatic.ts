@@ -20,7 +20,7 @@ import {
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        programmatic: typeof useProgrammatic;
+        programmatic: typeof ComponentProgrammatic;
     }
 }
 
@@ -38,7 +38,7 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
     EmitsToProps<Omit<ProgrammaticComponentEmits, "destroy">>; // component emit props
 
 /** public options interface for programmatically called components */
-export type PublicProgrammaticComponentOptions = EmitsToProps<
+export type ProgrammaticComponentOptions = EmitsToProps<
     Pick<ProgrammaticComponentEmits, "close">
 > &
     // make the type extendable
@@ -47,9 +47,9 @@ export type PublicProgrammaticComponentOptions = EmitsToProps<
 /** useProgrammatic composable `open` function return value */
 export type ProgrammaticExpose = ProgrammaticComponentExpose;
 
-export const useProgrammatic = {
+export const ComponentProgrammatic = {
     /**
-     * create a new programmatic component
+     * Create a new programmatic component.
      * @param component component to render
      * @param options render options
      * @param slot default slot content - see {@link https://vuejs.org/api/render-function.html#render-function-apis |Vue render function}
@@ -114,4 +114,4 @@ export const useProgrammatic = {
     },
 };
 
-export default useProgrammatic;
+export default ComponentProgrammatic;
