@@ -2,7 +2,7 @@ import { createVNode, nextTick } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import useNotificationProgrammatic from "../useNotificationProgrammatic";
+import NotificationProgrammatic from "../useNotificationProgrammatic";
 
 describe("useNotificationProgrammatic tests", () => {
     beforeEach(() => {
@@ -21,7 +21,7 @@ describe("useNotificationProgrammatic tests", () => {
         const message = "My Fany Message";
 
         // open element
-        const { close, promise } = useNotificationProgrammatic.open(message);
+        const { close, promise } = NotificationProgrammatic.open(message);
 
         // check promise get called
         const handler = vi.fn();
@@ -60,7 +60,7 @@ describe("useNotificationProgrammatic tests", () => {
         });
 
         // open element
-        const { close } = useNotificationProgrammatic.open(
+        const { close } = NotificationProgrammatic.open(
             { component },
             "#my-cool-container",
         );
@@ -102,7 +102,7 @@ describe("useNotificationProgrammatic tests", () => {
         });
 
         // open element
-        useNotificationProgrammatic.open({
+        NotificationProgrammatic.open({
             component,
             props: { "data-oruga": "programmatic" },
         });
@@ -136,7 +136,7 @@ describe("useNotificationProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        useNotificationProgrammatic.open({ component, onClose });
+        NotificationProgrammatic.open({ component, onClose });
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>("button");

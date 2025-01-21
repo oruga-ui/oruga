@@ -5,8 +5,8 @@ import {
 } from "vue";
 import {
     InstanceRegistry,
-    useProgrammatic,
-    type PublicProgrammaticComponentOptions,
+    ComponentProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 
@@ -16,7 +16,7 @@ import type { ModalProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        modal: typeof useModalProgrammatic;
+        modal: typeof ModalProgrammatic;
     }
 }
 
@@ -28,15 +28,13 @@ export type ModalProgrammaticOptions<C extends Component> = Readonly<
     Omit<ModalProps<C>, "content">
 > & {
     content?: string | Array<unknown>;
-} & PublicProgrammaticComponentOptions;
+} & ProgrammaticComponentOptions;
 
-const useModalProgrammatic = {
-    /** Returns the number of registered active instances. */
-    count: instances.count,
+const ModalProgrammatic = {
     /**
      * Create a new programmatic modal component instance.
      * @param options modal content string or modal component props object
-     * @param target specify a target the component get rendered into
+     * @param target specify a target the component get rendered into - default is `document.body`
      * @returns ProgrammaticExpose
      */
     open<C extends Component>(
@@ -59,7 +57,7 @@ const useModalProgrammatic = {
         };
 
         // create programmatic component
-        return useProgrammatic.open(
+        return ComponentProgrammatic.open(
             Modal as VNodeTypes,
             {
                 instances, // custom programmatic instance registry
@@ -67,7 +65,7 @@ const useModalProgrammatic = {
                 props: componentProps, // component specific props
                 onClose: _options.onClose, // on close event handler
             },
-            // component default slot render
+            // component default slot to render content
             slot,
         );
     },
@@ -81,4 +79,4 @@ const useModalProgrammatic = {
     },
 };
 
-export default useModalProgrammatic;
+export default ModalProgrammatic;

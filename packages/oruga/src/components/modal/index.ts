@@ -1,7 +1,7 @@
 import type { App, Plugin } from "vue";
 
 import Modal from "./Modal.vue";
-import useModalProgrammatic from "./useModalProgrammatic";
+import ModalProgrammatic from "./useModalProgrammatic";
 
 import {
     registerComponent,
@@ -15,9 +15,9 @@ export type { ModalProgrammaticOptions } from "./useModalProgrammatic";
 export default {
     install(app: App) {
         registerComponent(app, Modal);
-        registerComponentProgrammatic(app, "modal", useModalProgrammatic);
+        registerComponentProgrammatic(app, "modal", ModalProgrammatic);
     },
 } as Plugin;
 
 /** export modal components & composables */
-export { Modal as OModal, useModalProgrammatic };
+export { Modal as OModal, ModalProgrammatic };

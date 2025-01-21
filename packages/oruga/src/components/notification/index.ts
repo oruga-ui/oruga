@@ -1,7 +1,7 @@
 import type { App, Plugin } from "vue";
 
 import Notification from "./Notification.vue";
-import useNotificationProgrammatic from "./useNotificationProgrammatic";
+import NotificationProgrammatic from "./useNotificationProgrammatic";
 
 import {
     registerComponent,
@@ -18,10 +18,10 @@ export default {
         registerComponentProgrammatic(
             app,
             "notification",
-            useNotificationProgrammatic,
+            NotificationProgrammatic,
         );
     },
 } as Plugin;
 
 /** export notification components & composables */
-export { Notification as ONotification, useNotificationProgrammatic };
+export { Notification as ONotification, NotificationProgrammatic };

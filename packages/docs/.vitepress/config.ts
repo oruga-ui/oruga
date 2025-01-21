@@ -34,6 +34,10 @@ const getStartedItems = [
         text: "Themes",
         link: "/documentation/themes",
     },
+    {
+        text: "Composable",
+        link: "/documentation/composables",
+    },
 ];
 
 export default defineConfig({
