@@ -28,6 +28,16 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     <h3 id="custom">Add custom buttons</h3>
     <ExampleViewer :component="AddCustomButtons" :code="AddCustomButtonsCode" />
 
-    <h3 id="programmatically">Programmatically opening</h3>
+    <h3 id="programmatically">Programmatically</h3>
+    <div class="vp-doc">
+        <p>
+            This component provides a programmatic interface that can be
+            accessed by the
+            <a href="/documentation/composables.html"
+                ><code>useOruga()</code>
+            </a>
+            composable.
+        </p>
+    </div>
     <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 </template>
