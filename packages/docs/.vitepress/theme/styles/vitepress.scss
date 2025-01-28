@@ -43,7 +43,7 @@ header .VPNavBar button {
 
 
 .main {
-    h1, h2, h3 {
+    h1, h2, h3, h4 {
         position: relative;
         margin: 0;
         line-height: 1.5em;
@@ -64,8 +64,12 @@ header .VPNavBar button {
     h3 {
         margin: 3rem 0 0;
         letter-spacing: -0.01em;
-        line-height: 1.5em;
-        font-size: 1.25em;
+        font-size: 1.3em;
+    }
+    h4 {
+        margin: 3rem 0 0;
+        letter-spacing: -0.01em;
+        font-size: 1.1em;
     }
 
     .header-anchor {
@@ -74,7 +78,7 @@ header .VPNavBar button {
         padding-right: 0.23em;
         font-weight: 500;
         opacity: 0;
-        transition: color .25s,opacity .25s;
+        transition: color .25s, opacity .25s;
     }
 
     h1:hover .header-anchor, h1 .header-anchor:focus,

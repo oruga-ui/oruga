@@ -33,8 +33,8 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
         <p>
             This component provides a programmatic interface that can be
             accessed by the
-            <a href="/documentation/composables.html"
-                ><code>useOruga()</code>
+            <a href="/documentation/composables.html">
+                <code>useOruga()</code>
             </a>
             composable.
         </p>
