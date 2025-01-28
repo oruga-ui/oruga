@@ -88,7 +88,7 @@ import WithIconsCode from "./with-icons.vue?raw";
     <div class="vp-doc">
         <p>
             The most flexible way to define options is to provide an array of
-            objects. The object is defined as:
+            objects. The object is defined as: <br />
             <code>{ value: any, label: string, attrs?: object }</code>.
             <br />
             The
