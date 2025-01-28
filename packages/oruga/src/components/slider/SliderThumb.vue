@@ -46,9 +46,6 @@ const emits = defineEmits<{
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-// set field labelId or create a unique label id if a label is given
-const labelId = !!parentField.value ? parentField.value?.labelId : undefined;
-
 const isFocused = ref(false);
 const dragging = ref(false);
 const startX = ref(0);
@@ -225,7 +222,7 @@ defineExpose({ setPosition });
                 :tabindex="disabled ? undefined : 0"
                 role="slider"
                 :aria-label="ariaLabel"
-                :aria-labelledby="labelId"
+                :aria-labelledby="parentField?.labelId"
                 :aria-valuenow="modelValue"
                 :aria-valuemin="min"
                 :aria-valuemax="max"
