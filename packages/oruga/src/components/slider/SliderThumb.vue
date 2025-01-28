@@ -5,6 +5,8 @@ import OTooltip from "../tooltip/Tooltip.vue";
 
 import { isClient } from "@/utils/ssr";
 
+import { injectField } from "../field/fieldInjection";
+
 import type { SliderProps } from "./props";
 import type { ClassBind, WithRequired } from "@/types";
 
@@ -40,6 +42,12 @@ const emits = defineEmits<{
     /** on drag end event */
     dragend: [];
 }>();
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
+
+// set field labelId or create a unique label id if a label is given
+const labelId = !!parentField.value ? parentField.value?.labelId : undefined;
 
 const isFocused = ref(false);
 const dragging = ref(false);
@@ -217,6 +225,7 @@ defineExpose({ setPosition });
                 :tabindex="disabled ? undefined : 0"
                 role="slider"
                 :aria-label="ariaLabel"
+                :aria-labelledby="labelId"
                 :aria-valuenow="modelValue"
                 :aria-valuemin="min"
                 :aria-valuemax="max"
