@@ -1,8 +1,8 @@
 import type { Component, ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
-    useProgrammatic,
-    type PublicProgrammaticComponentOptions,
+    ComponentProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 import { getOption } from "@/utils/config";
@@ -13,7 +13,7 @@ import type { NotificationProps, NotificationNoticeProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        notification: typeof useNotificationProgrammatic;
+        notification: typeof NotificationProgrammatic;
     }
 }
 
@@ -21,20 +21,22 @@ declare module "../../index" {
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useNotificationProgrammatic composable options */
-type NotificationProgrammaticOptions<C extends Component> = Readonly<
+export type NotificationProgrammaticOptions<C extends Component> = Readonly<
     Omit<
         NotificationNoticeProps<C> & NotificationProps,
         "message" | "container"
     >
 > & {
     message?: string | Array<unknown>;
-} & PublicProgrammaticComponentOptions;
+} & ProgrammaticComponentOptions;
 
-const useNotificationProgrammatic = {
+const NotificationProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: instances.count,
     /**
-     * create a new programmatic modal component
+     * Create a new programmatic notification component instance.
      * @param options notification message string or notification component props object
-     * @param target specify a target the component get rendered into
+     * @param target specify a target the component get rendered into - default is `document.body`
      * @returns ProgrammaticExpose
      */
     open<C extends Component>(
@@ -58,7 +60,7 @@ const useNotificationProgrammatic = {
         };
 
         // create programmatic component
-        return useProgrammatic.open(
+        return ComponentProgrammatic.open(
             NotificationNotice,
             {
                 instances, // custom programmatic instance registry
@@ -70,14 +72,14 @@ const useNotificationProgrammatic = {
             slot,
         );
     },
-    /** close the last registred instance in the notification programmatic instance registry */
+    /** Close the last registred instance in the notification programmatic instance registry. */
     close(...args: unknown[]): void {
         instances.last()?.exposed?.close(...args);
     },
-    /** close all instances in the programmatic notification instance registry */
+    /** Close all instances in the programmatic notification instance registry. */
     closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed?.close(...args));
     },
 };
 
-export default useNotificationProgrammatic;
+export default NotificationProgrammatic;

@@ -23,5 +23,15 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     <ExampleViewer :component="Component" :code="ComponentCode" />
 
     <h3 id="programmatically">Programmatically</h3>
+    <div class="vp-doc">
+        <p>
+            This component provides a programmatic interface that can be
+            accessed by the
+            <a href="/documentation/composables.html"
+                ><code>useOruga()</code>
+            </a>
+            composable.
+        </p>
+    </div>
     <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 </template>

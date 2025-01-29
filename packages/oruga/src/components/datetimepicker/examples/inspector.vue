@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { getCurrentInstance, ref } from "vue";
+import { ref } from "vue";
+import { useOruga } from "@/utils/programmatic";
 
 const datetimepicker = ref();
 
 // get programmatic oruga access
-const app = getCurrentInstance();
-const oruga = app?.appContext.config.globalProperties.$oruga;
-
-const triggerClass = oruga?.config
-    ? oruga.config.getOption("dropdown.triggerClass", "o-drop__trigger")
-    : "o-drop__trigger";
+const oruga = useOruga();
+const triggerClass =
+    oruga.config.getOption("input.iconLeftClass", "o-input__icon-left") ??
+    "o-input__icon-left";
 
 function openDatetimePicker() {
     setTimeout(() => {

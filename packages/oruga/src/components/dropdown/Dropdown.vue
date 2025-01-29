@@ -174,18 +174,21 @@ watch(
             if (cancelOptions.value.includes("outside")) {
                 // set outside handler
                 eventCleanups.push(
-                    useClickOutside(contentRef, onClickedOutside, {
-                        ignore: [triggerRef],
-                        immediate: true,
-                        passive: true,
-                    }),
+                    useClickOutside(
+                        [contentRef, triggerRef],
+                        onClickedOutside,
+                        {
+                            immediate: true,
+                            passive: true,
+                        },
+                    ),
                 );
             }
 
             if (cancelOptions.value.includes("escape")) {
                 // set keyup handler
                 eventCleanups.push(
-                    useEventListener("keyup", onKeyPress, document, {
+                    useEventListener(document, "keyup", onKeyPress, {
                         immediate: true,
                     }),
                 );
@@ -287,7 +290,7 @@ function onClose(): void {
 // --- InfitiveScroll Feature ---
 
 if (isClient && props.checkScroll)
-    useEventListener("scroll", checkDropdownScroll, contentRef);
+    useEventListener(contentRef, "scroll", checkDropdownScroll);
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */
 function checkDropdownScroll(): void {
