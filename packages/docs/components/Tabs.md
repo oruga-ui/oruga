@@ -67,8 +67,8 @@ sidebarDepth: 2
 
 | Name    | Description                 | Bindings |
 | ------- | --------------------------- | -------- |
-| start   | Additional slot before tabs |          |
-| end     | Additional slot after tabs  |          |
+| before  | Additional slot before tabs |          |
+| after   | Additional slot after tabs  |          |
 | default | Place tab items here        |          |
 
 </div>
@@ -107,10 +107,10 @@ sidebarDepth: 2
 
 ### Slots
 
-| Name    | Description           | Bindings                                |
-| ------- | --------------------- | --------------------------------------- |
-| default | Tab item content      | **active** `boolean` - if item is shown |
-| header  | Override header label | **active** `boolean` - if item is shown |
+| Name    | Description                | Bindings                                |
+| ------- | -------------------------- | --------------------------------------- |
+| default | Override tab panel content | **active** `boolean` - if item is shown |
+| header  | Override tab header label  | **active** `boolean` - if item is shown |
 
 </div>
 

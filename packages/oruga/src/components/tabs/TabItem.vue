@@ -171,7 +171,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
             <!-- 
-                @slot Tab item content
+                @slot Override tab panel content
                 @binding {boolean} active - if item is shown 
             -->
             <slot :active="isActive && visible">
@@ -195,7 +195,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             -->
             <template v-if="false">
                 <!--
-                    @slot Override header label
+                    @slot Override tab header label
                     @binding {boolean} active - if item is shown 
                 -->
                 <slot name="header" :active="isActive && visible" />
