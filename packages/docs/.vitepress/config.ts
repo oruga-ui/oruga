@@ -66,7 +66,7 @@ export default defineConfig({
     appearance: false,
     themeConfig: {
         logo: "/logo.png",
-        outline: [2, 3],
+        outline: [2, 4],
         search: {
             provider: "local",
         },
