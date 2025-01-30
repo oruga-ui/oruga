@@ -8,6 +8,12 @@ sidebarDepth: 2
 
 > Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
 
+The **dropdown** component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
+Dropdowns are toggleable, contextual overlays for displaying lists of links and more.
+
+They’re toggled by clicking, not by hovering;
+They’re made interactive
+
 </div>
 
 <div class="vp-example">

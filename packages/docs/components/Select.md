@@ -4,6 +4,9 @@
 
 > Select an item in a list. Use with Field to access all functionalities.
 
+The **select** input uses [HTML's native select input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select).
+Select inputs can be single value selections, or multi-value selections by using the `multiple` attribute.
+
 </div>
 
 <div class="vp-example">

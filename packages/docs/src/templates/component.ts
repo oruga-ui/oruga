@@ -41,8 +41,8 @@ ${since ? `Since: ${(since[0] as ParamTag).description}\n` : ""}
 ${version ? `Version: ${(version[0] as ParamTag).description}\n` : ""}
 ${see ? see.map((s) => `[See](${(s as ParamTag).description})\n`) : ""}
 ${link ? link.map((l) => `[See](${(l as ParamTag).description})\n`) : ""}
-</div>
 ${docsBlocks ? docsBlocks : ""}
+</div>
 `
 }
 ${

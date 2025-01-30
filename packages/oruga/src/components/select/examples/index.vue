@@ -32,16 +32,6 @@ import WithIconsCode from "./with-icons.vue?raw";
 
 <template>
     <h3 id="base">Base</h3>
-    <div class="vp-doc">
-        <p>
-            The <b>select</b> input uses
-            <a
-                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">
-                HTML's native select input</a
-            >. Select inputs can be single value selections, or multi-value
-            selections by using the <code>multiple</code> attribute.
-        </p>
-    </div>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="options">Options</h3>
