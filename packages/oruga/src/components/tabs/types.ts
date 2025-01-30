@@ -11,7 +11,6 @@ export type TabsComponent = {
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
-    destroyOnHide: boolean;
 };
 
 export type TabItemComponent<T> = TabItemProps<T, Component> & {
