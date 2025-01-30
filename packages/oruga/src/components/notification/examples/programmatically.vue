@@ -37,7 +37,7 @@ function queueToast(): void {
 function danger(): void {
     oruga.notification.open({
         duration: 5000,
-        // creating an inline component using a render function (https://vuejs.org/guide/extras/render-function)
+        // here we use a render function to create an inline component (https://vuejs.org/guide/extras/render-function)
         component: h("div", [
             "Something's not good, also I'm on ",
             h("b", "bottom"),
