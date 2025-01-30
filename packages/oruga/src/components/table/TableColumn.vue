@@ -123,7 +123,7 @@ const filters = {} as Record<string, string>;
 </script>
 
 <template>
-    <span data-oruga="table-column" :data-id="item.identifier">
+    <span data-oruga="table-column" :data-id="`table-${item.identifier}`">
         {{ label }}
 
         <!--
