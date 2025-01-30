@@ -487,7 +487,10 @@ const hasCustomSubheadings = computed(() => {
 function hasCustomFooterSlot(): boolean {
     if (!slots.footer) return false;
 
-    const footer = slots.footer();
+    const footer = slots.footer({
+        columnCount: columnCount.value,
+        rowCount: visibleRows.value.length,
+    });
     if (footer.length > 1) return true;
 
     const tag = footer[0]["type"];
@@ -1365,7 +1368,9 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     :props="{ column, index }" />
                             </template>
                             <template v-else>
-                                {{ column.subheading }}
+                                <slot name="subheading">
+                                    {{ column.subheading }}
+                                </slot>
                             </template>
                         </th>
                         <!-- checkable column right -->
