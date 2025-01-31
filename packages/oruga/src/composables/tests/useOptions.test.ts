@@ -3,13 +3,16 @@ import {
     checkOptionsEmpty,
     filterOptionsItems,
     findOption,
-    firstValidOption,
+    firstViableOption,
     isGroupOption,
-    isOptionValid,
+    isOptionViable,
     normalizeOptions,
     toOptionsGroup,
     toOptionsList,
     type OptionsGroupItem,
+    type OptionsGroupProp,
+    type OptionsItem,
+    type OptionsProp,
 } from "../useOptions";
 import { useSequentialId } from "../useSequentialId";
 
@@ -27,7 +30,7 @@ describe("useOptions tests", () => {
         });
 
         test("test options object", () => {
-            const options = { foo: "bar", a: "b" };
+            const options: OptionsProp = { foo: "bar", a: "b" };
             const normOptions = normalizeOptions(
                 options,
                 isSecuencer.nextSequence,
@@ -48,7 +51,7 @@ describe("useOptions tests", () => {
         });
 
         test("test options array of strings", () => {
-            const options = ["foo", "bar"];
+            const options: OptionsProp = ["foo", "bar"];
             const normOptions = normalizeOptions(
                 options,
                 isSecuencer.nextSequence,
@@ -69,10 +72,11 @@ describe("useOptions tests", () => {
         });
 
         test("test options array of objects", () => {
-            const options = [
+            const options: OptionsProp = [
                 { label: "foo", value: "bar" },
                 { label: "a", value: "b" },
             ];
+
             const normOptions = normalizeOptions(
                 options,
                 isSecuencer.nextSequence,
@@ -93,13 +97,13 @@ describe("useOptions tests", () => {
         });
 
         test("test can recursively handle options with nested groups", () => {
-            const options = [
+            const options: OptionsGroupProp = [
                 {
-                    group: "foo",
+                    label: "foo",
                     options: ["#ff985d", "#f7ce68", "#FFFFFF", "#2b2b35"],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     options: [
                         {
                             label: "Red",
@@ -117,7 +121,7 @@ describe("useOptions tests", () => {
             expect(normOptions).toEqual([
                 {
                     key: "4",
-                    group: "foo",
+                    label: "foo",
                     options: [
                         { key: "0", label: "#ff985d", value: "#ff985d" },
                         { key: "1", label: "#f7ce68", value: "#f7ce68" },
@@ -127,23 +131,23 @@ describe("useOptions tests", () => {
                 },
                 {
                     key: "6",
-                    group: "Other",
+                    label: "Other",
                     options: [{ key: "5", label: "Red", value: "#ff0000" }],
                 },
             ]);
         });
 
         test("test can recursively handle options with groups of objects", () => {
-            const options = [
+            const options: OptionsGroupProp = [
                 {
-                    group: "Foo",
+                    label: "Foo",
                     options: [
                         { label: "A", value: 0 },
                         { label: "B", value: 1 },
                     ],
                 },
                 {
-                    group: "Bar",
+                    label: "Bar",
                     options: [
                         { label: "D", value: 3 },
                         { label: "E", value: 4 },
@@ -158,7 +162,7 @@ describe("useOptions tests", () => {
             expect(normOptions).toEqual([
                 {
                     key: "2",
-                    group: "Foo",
+                    label: "Foo",
                     options: [
                         { key: "0", label: "A", value: 0 },
                         { key: "1", label: "B", value: 1 },
@@ -166,7 +170,7 @@ describe("useOptions tests", () => {
                 },
                 {
                     key: "5",
-                    group: "Bar",
+                    label: "Bar",
                     options: [
                         { key: "3", label: "D", value: 3 },
                         { key: "4", label: "E", value: 4 },
@@ -183,7 +187,7 @@ describe("useOptions tests", () => {
         });
         test("test is group option item", () => {
             const option = {
-                group: "my group",
+                label: "my group",
                 options: [{ label: "foo", value: "bar" }],
             };
             expect(isGroupOption(option)).toBeTruthy();
@@ -197,7 +201,7 @@ describe("useOptions tests", () => {
         });
 
         test("test is normal options", () => {
-            const options = [
+            const options: OptionsItem[] = [
                 {
                     key: "0",
                     label: "foo",
@@ -220,9 +224,9 @@ describe("useOptions tests", () => {
         });
 
         test("test is group options", () => {
-            const options = [
+            const options: OptionsGroupItem[] = [
                 {
-                    group: "foo",
+                    label: "foo",
                     options: [
                         {
                             label: "#ff985d",
@@ -243,7 +247,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     options: [
                         {
                             label: "Red",
@@ -265,9 +269,9 @@ describe("useOptions tests", () => {
         });
 
         test("test group options to option item list", () => {
-            const options = [
+            const options: OptionsGroupItem[] = [
                 {
-                    group: "foo",
+                    label: "foo",
                     options: [
                         {
                             label: "#ff985d",
@@ -288,7 +292,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     options: [
                         {
                             label: "Red",
@@ -311,7 +315,7 @@ describe("useOptions tests", () => {
         beforeEach(() => {
             options = [
                 {
-                    group: "foo",
+                    label: "foo",
                     options: [
                         {
                             label: "#ff985d",
@@ -332,7 +336,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     options: [
                         {
                             label: "Red",
@@ -344,60 +348,52 @@ describe("useOptions tests", () => {
         });
 
         test("test empty list", () => {
-            const filteredOptions = filterOptionsItems([], "abc");
-            expect(filteredOptions).toEqual([]);
+            const options = [];
+            filterOptionsItems(options, (o) => o.label == "abc");
+            expect(options).toEqual([]);
         });
 
         test("test filter single value", () => {
-            const filteredOptions = filterOptionsItems(options, "#FFFFFF");
-            expect(filteredOptions).toHaveLength(options.length);
-            expect(filteredOptions[0].options[2]).toEqual({
+            const length = options.length;
+            filterOptionsItems(options, (o) => o.label != "#FFFFFF");
+            expect(options).toHaveLength(length);
+            expect(options[0].options[2]).toEqual({
                 label: "#FFFFFF",
                 value: "#FFFFFF",
                 hidden: false,
             });
 
-            expect(
-                filteredOptions[0].options.filter((o) => !o.hidden),
-            ).toHaveLength(1);
+            expect(options[0].options.filter((o) => !o.hidden)).toHaveLength(1);
         });
 
         test("test filter multiple value", () => {
-            const filteredOptions = filterOptionsItems(options, "#");
-            expect(filteredOptions).toHaveLength(options.length);
-            expect(filteredOptions.every((o) => o.hidden)).toBeFalsy();
-            expect(
-                filteredOptions[0].options.every((o) => !o.hidden),
-            ).toBeTruthy();
+            const length = options.length;
+            filterOptionsItems(options, (o) => o.label.startsWith("#"));
+            expect(options).toHaveLength(length);
+            expect(options.every((o) => o.hidden)).toBeFalsy();
+            expect(options[0].options.every((o) => o.hidden)).toBeTruthy();
         });
 
         test("test filter by invalid value", () => {
-            const filteredOptions = filterOptionsItems(options, "abc");
-            expect(filteredOptions).toHaveLength(options.length);
-            expect(filteredOptions.every((o) => o.hidden)).toBeTruthy();
-            expect(
-                filteredOptions[0].options.every((o) => o.hidden),
-            ).toBeTruthy();
+            const length = options.length;
+            filterOptionsItems(options, (o) => o.label != "abc");
+            expect(options).toHaveLength(length);
+            expect(options.every((o) => o.hidden)).toBeTruthy();
+            expect(options[0].options.every((o) => o.hidden)).toBeTruthy();
         });
 
         test("test filter with custom function", () => {
-            const filteredOptions = filterOptionsItems(
-                options,
-                "FFFFFF",
-                (option, filter) => {
-                    return !String(option).includes("#" + filter);
-                },
+            const length = options.length;
+            filterOptionsItems(options, (option) =>
+                String(option).includes("#FFFFFF"),
             );
-            expect(filteredOptions).toHaveLength(options.length);
-            expect(filteredOptions[0].options[2]).toEqual({
+            expect(options).toHaveLength(length);
+            expect(options[0].options[2]).toEqual({
                 label: "#FFFFFF",
                 value: "#FFFFFF",
                 hidden: false,
             });
-
-            expect(
-                filteredOptions[0].options.filter((o) => !o.hidden),
-            ).toHaveLength(1);
+            expect(options[1].options.filter((o) => !o.hidden)).toHaveLength(1);
         });
     });
 
@@ -410,7 +406,7 @@ describe("useOptions tests", () => {
         test("test list with hidden option", () => {
             const options: OptionsGroupItem[] = [
                 {
-                    group: "foo",
+                    label: "foo",
                     hidden: true,
                     options: [
                         {
@@ -436,7 +432,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     hidden: true,
                     options: [
                         {
@@ -453,7 +449,7 @@ describe("useOptions tests", () => {
         });
 
         test("test list without hidden options", () => {
-            const options = [
+            const options: OptionsItem[] = [
                 {
                     label: "#ff985d",
                     value: "#ff985d",
@@ -479,7 +475,7 @@ describe("useOptions tests", () => {
         test("test list with and without hidden options", () => {
             const options: OptionsGroupItem[] = [
                 {
-                    group: "foo",
+                    label: "foo",
                     options: [
                         {
                             label: "#ff985d",
@@ -500,7 +496,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     hidden: true,
                     options: [
                         {
@@ -524,7 +520,7 @@ describe("useOptions tests", () => {
         });
 
         test("test filter by valid value", () => {
-            const options = [
+            const options: OptionsItem[] = [
                 {
                     label: "#ff985d",
                     value: "#ff985d",
@@ -551,7 +547,7 @@ describe("useOptions tests", () => {
         });
 
         test("test filter by invalid value", () => {
-            const options = [
+            const options: OptionsItem[] = [
                 {
                     label: "#ff985d",
                     value: "#ff985d",
@@ -577,7 +573,7 @@ describe("useOptions tests", () => {
         test("test group options filter by valid value", () => {
             const options: OptionsGroupItem[] = [
                 {
-                    group: "foo",
+                    label: "foo",
                     options: [
                         {
                             label: "#ff985d",
@@ -598,7 +594,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     hidden: true,
                     options: [
                         {
@@ -620,7 +616,7 @@ describe("useOptions tests", () => {
         test("test group options filter by invalid value", () => {
             const options: OptionsGroupItem[] = [
                 {
-                    group: "foo",
+                    label: "foo",
                     options: [
                         {
                             label: "#ff985d",
@@ -641,7 +637,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     hidden: true,
                     options: [
                         {
@@ -660,12 +656,12 @@ describe("useOptions tests", () => {
 
     describe("test firstValidOption", () => {
         test("test empty list", () => {
-            const foundOption = firstValidOption([]);
+            const foundOption = firstViableOption([]);
             expect(foundOption).toBeUndefined();
         });
 
         test("test list with hidden option", () => {
-            const options = [
+            const options: OptionsItem[] = [
                 {
                     label: "#ff985d",
                     value: "#ff985d",
@@ -685,7 +681,7 @@ describe("useOptions tests", () => {
                     value: "#2b2b35",
                 },
             ];
-            const foundOption = firstValidOption(options);
+            const foundOption = firstViableOption(options);
             expect(foundOption).toStrictEqual({
                 label: "#FFFFFF",
                 value: "#FFFFFF",
@@ -695,7 +691,7 @@ describe("useOptions tests", () => {
         test("test list without hidden options", () => {
             const options: OptionsGroupItem[] = [
                 {
-                    group: "foo",
+                    label: "foo",
                     options: [
                         {
                             label: "#ff985d",
@@ -716,7 +712,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     hidden: true,
                     options: [
                         {
@@ -728,7 +724,7 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const foundOption = firstValidOption(options);
+            const foundOption = firstViableOption(options);
             expect(foundOption).toStrictEqual({
                 label: "#ff985d",
                 value: "#ff985d",
@@ -738,7 +734,7 @@ describe("useOptions tests", () => {
         test("test list with and without hidden options", () => {
             const options: OptionsGroupItem[] = [
                 {
-                    group: "foo",
+                    label: "foo",
                     hidden: true,
                     options: [
                         {
@@ -764,7 +760,7 @@ describe("useOptions tests", () => {
                     ],
                 },
                 {
-                    group: "Other",
+                    label: "Other",
                     options: [
                         {
                             label: "Red",
@@ -774,7 +770,7 @@ describe("useOptions tests", () => {
                 },
             ];
 
-            const foundOption = firstValidOption(options);
+            const foundOption = firstViableOption(options);
             expect(foundOption).toStrictEqual({
                 label: "Red",
                 value: "#ff0000",
@@ -789,7 +785,7 @@ describe("useOptions tests", () => {
                 value: "#ff985d",
             };
 
-            const isValid = isOptionValid(option);
+            const isValid = isOptionViable(option);
             expect(isValid).toBeTruthy();
         });
 
@@ -800,7 +796,7 @@ describe("useOptions tests", () => {
                 hidden: true,
             };
 
-            const isValid = isOptionValid(option);
+            const isValid = isOptionViable(option);
             expect(isValid).toBeFalsy();
         });
 
@@ -811,7 +807,7 @@ describe("useOptions tests", () => {
                 attrs: { disabled: true },
             };
 
-            const isValid = isOptionValid(option);
+            const isValid = isOptionViable(option);
             expect(isValid).toBeFalsy();
         });
     });

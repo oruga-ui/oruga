@@ -551,7 +551,7 @@ const inspectData = [
         realClass: "dropdownClasses.rootClass",
         description: "Classes to apply on internal dropdown component",
         componentRef: "Dropdown",
-        action: () => {
+        action: (): void => {
             openDatePicker();
         },
     },
@@ -561,7 +561,7 @@ const inspectData = [
         description:
             "Classes to apply on internal select component (month and year list)",
         componentRef: "Select",
-        action: () => {
+        action: (): void => {
             openDatePicker();
         },
     },
@@ -578,7 +578,7 @@ const inspectData = [
                 locale="en-GB"
                 placeholder="Click to select a date..."
                 icon="calendar">
-                Footer
+                <template #footer> Footer </template>
             </o-datepicker>
         </o-field>
     </inspector-wrapper>

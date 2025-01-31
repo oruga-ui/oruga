@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     searchable: false,
     sortable: false,
     visible: true,
+    hidden: false,
     sticky: false,
     headerSelectable: false,
     customSort: undefined,
@@ -123,7 +124,7 @@ const filters = {} as Record<string, string>;
 </script>
 
 <template>
-    <span data-oruga="table-column" :data-id="item.identifier">
+    <span data-oruga="table-column" :data-id="`table-${item.identifier}`">
         {{ label }}
 
         <!--

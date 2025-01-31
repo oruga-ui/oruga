@@ -4,11 +4,17 @@ import type { OptionsPropWithGroups } from "@oruga-ui/oruga-next";
 
 const options: OptionsPropWithGroups<string> = [
     {
-        group: "Fruits",
+        label: "Fruits",
+        attrs: {
+            icon: "info-circle",
+        },
         options: ["Apple", "Banana", "Watermelon"],
     },
     {
-        group: "Vegetables",
+        label: "Vegetables",
+        attrs: {
+            icon: "info-circle",
+        },
         options: ["Carrot", "Broccoli", "Cucumber", "Onion"],
     },
 ];
@@ -18,12 +24,12 @@ const selected = ref();
 
 <template>
     <section>
-        <o-field label="Find a food">
-            <o-autocomplete v-model="selected" :options="options" open-on-focus>
-                <template #header>List Groups</template>
-            </o-autocomplete>
-        </o-field>
+        <o-menu
+            v-model="selected"
+            label="Groceries"
+            :options="options"
+            :accordion="false" />
 
-        <p><b>Selected:</b> {{ selected }}</p>
+        <p><b> Selected:</b> {{ selected }}</p>
     </section>
 </template>

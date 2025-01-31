@@ -45,6 +45,7 @@ const faIcons = () => {
             "close-circle": "times-circle",
             close: "times",
             loading: "circle-notch",
+            "emoticon-sad": "frown",
         },
     };
 };
