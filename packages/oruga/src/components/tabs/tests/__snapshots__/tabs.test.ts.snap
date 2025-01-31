@@ -19,7 +19,7 @@ exports[`OTabs tests > OTab with OTabItem integration tests > test render correc
     <transition-stub appear="false" persisted="true" css="true">
       <div id="tabpanel-1" data-oruga="tabs-item" data-id="tabs-1" class="o-tabs__panel" role="tabpanel" aria-labelledby="tab-1" aria-roledescription="item">
         <!-- 
-                @slot Tab item content
+                @slot Override tab panel content
                 @binding {boolean} active - if item is shown 
             -->
         <!-- injected component -->
