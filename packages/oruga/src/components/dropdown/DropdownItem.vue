@@ -113,9 +113,3 @@ const rootClasses = defineClasses(
         <slot>{{ label }}</slot>
     </component>
 </template>
-
-<style>
-.o-drop__item--focused {
-    background-color: gray;
-}
-</style>

@@ -1,14 +1,14 @@
 import { isClient } from "@/utils/ssr";
-import type { Component, MaybeRefOrGetter } from "vue";
-import { useEventListener } from "./useEventListener";
+import type { MaybeRefOrGetter } from "vue";
+import { useEventListener, type EventTarget } from "./useEventListener";
 import { unrefElement } from "./unrefElement";
 
 export function useInfiniteScroll(
-    elementRef: MaybeRefOrGetter<HTMLElement | Component | undefined>,
+    elementRef: MaybeRefOrGetter<EventTarget>,
     onEnd: () => void,
     onStart: () => void,
 ): { checkScroll: () => void } {
-    if (isClient) useEventListener("scroll", checkScroll, elementRef);
+    if (isClient) useEventListener(elementRef, "scroll", checkScroll);
 
     /** Check if the scroll list inside the dropdown reached the top or it's end. */
     function checkScroll(): void {

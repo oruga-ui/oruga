@@ -17,6 +17,3 @@ export type DropdownItemComponent<T> = DropdownItemProps<T> & {
 };
 
 export type DropdownChildItem<T> = ProviderItem<DropdownItemComponent<T>>;
-
-// export type DropdownItem<T> = Omit<ProviderItem, "data"> &
-//     DropdownItemComponent<T>;

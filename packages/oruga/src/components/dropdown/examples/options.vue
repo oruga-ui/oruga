@@ -13,7 +13,7 @@ const selected = ref<string>();
 
 const groupOptions: OptionsPropWithGroups<string> = [
     {
-        group: "Black Sails",
+        label: "Black Sails",
         attrs: { disabled: true },
         options: [
             { label: "Flint", value: "flint" },
@@ -24,7 +24,7 @@ const groupOptions: OptionsPropWithGroups<string> = [
         ],
     },
     {
-        group: "Breaking Bad",
+        label: "Breaking Bad",
         attrs: { disabled: true },
         options: {
             heisenberg: "Heisenberg",
@@ -34,7 +34,7 @@ const groupOptions: OptionsPropWithGroups<string> = [
         },
     },
     {
-        group: "Game of Thrones",
+        label: "Game of Thrones",
         attrs: { disabled: true },
         options: [
             "Tyrion Lannister",
