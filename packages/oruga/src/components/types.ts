@@ -1494,7 +1494,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tooltip trigger events */
                 triggers: ("click" | "contextmenu" | "focus" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
-                closeable: boolean | ("escape" | "outside" | "content")[];
+                closeable: boolean | ("content" | "escape" | "outside")[];
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
