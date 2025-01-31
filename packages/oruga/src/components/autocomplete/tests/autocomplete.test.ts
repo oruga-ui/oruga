@@ -84,7 +84,7 @@ describe("OAutocomplete tests", () => {
         test("handle grouped options correctly", () => {
             const options: OptionsGroupProp<string | number | object> = [
                 {
-                    group: "Black Sails",
+                    label: "Black Sails",
                     options: [
                         { label: "Flint", value: "flint" },
                         { label: "Silver", value: "silver" },
@@ -93,7 +93,7 @@ describe("OAutocomplete tests", () => {
                     ],
                 },
                 {
-                    group: "Breaking Bad",
+                    label: "Breaking Bad",
                     options: {
                         heisenberg: "Heisenberg",
                         jesse: "Jesse",
@@ -102,7 +102,7 @@ describe("OAutocomplete tests", () => {
                     },
                 },
                 {
-                    group: "Game of Thrones",
+                    label: "Game of Thrones",
                     attrs: { disabled: true },
                     options: [
                         "Tyrion Lannister",
@@ -127,7 +127,7 @@ describe("OAutocomplete tests", () => {
 
                 if (isGroup) {
                     const option = options[g_idx];
-                    expect(el.text()).toBe(option.group);
+                    expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
                         option.attrs?.disabled ? "true" : "false",
                     );

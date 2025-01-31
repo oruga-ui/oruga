@@ -11,14 +11,12 @@ export type TabsComponent = {
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
-    destroyOnHide: boolean;
 };
 
 
 export type TabItemComponent<T> = TabItemProps<T, Component> & {
     $slots: Slots;
-    navClasses: ClassBind[];
-    classes: ClassBind[];
+    tabClasses: ClassBind[];
     iconClasses: ClassBind[];
     labelClasses: ClassBind[];
     isTransitioning: boolean;

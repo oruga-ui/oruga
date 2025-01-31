@@ -187,7 +187,7 @@ const { nextSequence } = useSequentialId();
 /** normalized programamtic options */
 const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 
@@ -439,12 +439,12 @@ defineExpose({ focus: setFocus, value: inputValue });
 
         <template v-for="(group, groupIndex) in groupedOptions">
             <o-dropdown-item
-                v-if="group.group"
+                v-if="group.label"
                 v-show="!group.hidden"
                 :key="group.key"
                 v-bind="group.attrs"
-                :value="group.group"
                 :hidden="group.hidden"
+                :value="group.value"
                 :tag="itemTag"
                 role="presentation"
                 :clickable="false"
@@ -457,10 +457,10 @@ defineExpose({ focus: setFocus, value: inputValue });
                 <slot
                     v-if="$slots.group"
                     name="group"
-                    :group="group.group"
+                    :group="group.label"
                     :index="groupIndex" />
                 <span v-else>
-                    {{ group.group }}
+                    {{ group.label }}
                 </span>
             </o-dropdown-item>
 

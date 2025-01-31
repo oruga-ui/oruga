@@ -17,6 +17,7 @@ import {
     useClickOutside,
     usePreventScrolling,
     useSequentialId,
+    type OptionsGroupItem,
 } from "@/composables";
 
 import type {
@@ -138,27 +139,27 @@ const { childItems } = useProviderParent<
     data: provideData,
 });
 
-/** is any option visible */
-const isNotEmpty = computed(() => childItems.value.some(isItemViable));
-
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed(() => {
+const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
     return groupedOptions;
 });
+
+/** is any option visible */
+const isNotEmpty = computed(() => childItems.value.some(isItemViable));
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
 
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /** The active state of the dropdown, use v-model:active to make it two-way binding */
 const isActive = defineModel<boolean>("active", { default: false });
-
-// inject parent field component if used inside one
-const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId = props.labelledby ?? parentField.value?.labelId;
@@ -205,8 +206,7 @@ let timer: NodeJS.Timeout | undefined;
 
 // set click outside handler
 if (isClient && props.closeOnOutside) {
-    useClickOutside(menuRef, onClickedOutside, {
-        ignore: [triggerRef],
+    useClickOutside([menuRef, triggerRef], onClickedOutside, {
         trigger: isActive,
         passive: true,
     });
@@ -613,11 +613,11 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
 
                         <template v-for="(group, groupIndex) in groupedOptions">
                             <o-dropdown-item
-                                v-if="group.group"
+                                v-if="group.label"
                                 v-show="!group.hidden"
-                                :key="group.key"
                                 v-bind="group.attrs"
-                                :value="group.group"
+                                :key="group.key"
+                                :value="group.value"
                                 :hidden="group.hidden"
                                 role="presentation"
                                 :clickable="false">
@@ -629,18 +629,18 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 <slot
                                     v-if="$slots.group"
                                     name="group"
-                                    :group="group.group"
+                                    :group="group.label"
                                     :index="groupIndex" />
                                 <span v-else>
-                                    {{ group.group }}
+                                    {{ group.label }}
                                 </span>
                             </o-dropdown-item>
 
                             <o-dropdown-item
                                 v-for="option in group.options"
                                 v-show="!option.hidden"
-                                :key="option.key"
                                 v-bind="option.attrs"
+                                :key="option.key"
                                 :value="option.value"
                                 :hidden="option.hidden">
                                 {{ option.label }}

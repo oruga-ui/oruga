@@ -25,7 +25,7 @@ import { injectField } from "../field/fieldInjection";
 import type { SelectProps } from "./props";
 
 /**
- * Select an item in a dropdown list. Use with Field to access all functionalities
+ * Select an item in a list. Use with Field to access all functionalities.
  * @displayName Select
  * @style _select.scss
  */
@@ -139,7 +139,7 @@ watch(
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const normalizedptions = computed(() =>
+const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
@@ -304,12 +304,13 @@ defineExpose({ focus: setFocus, value: vmodel });
                 @slot Override the options, default is options prop
             -->
             <slot>
-                <template v-for="option in normalizedptions" :key="option.key">
+                <template v-for="option in normalizedOptions" :key="option.key">
                     <optgroup
                         v-if="isGroupOption(option)"
                         v-show="!option.hidden"
                         v-bind="option.attrs"
-                        :label="option.group">
+                        :label="option.label"
+                        :value="option.value">
                         <option
                             v-for="_option in option.options"
                             v-show="!_option.hidden"

@@ -199,7 +199,7 @@ const triggers = computed(() =>
     isTrueish(props.pickerProps.openOnFocus) ? ["click"] : [],
 );
 
-if (isClient) useEventListener("keyup", onKeyPress);
+if (isClient) useEventListener(document, "keyup", onKeyPress);
 
 /** Keypress event that is bound to the document. */
 function onKeyPress(event: KeyboardEvent): void {
