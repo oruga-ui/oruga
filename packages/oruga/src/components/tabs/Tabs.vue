@@ -314,6 +314,7 @@ const contentClasses = defineClasses(
                 name="header"
                 :class="childItem.tabClasses"
                 role="tab"
+                :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem?.value"
                 :tabindex="
                     childItem.value === activeItem?.value ? undefined : '-1'
