@@ -63,6 +63,7 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
         ]),
     animateInitially: () => getDefault("tabs.animateInitially", false),
     multiline: false,
+    ariaLabel: () => getDefault("tabs.ariaLabel"),
 });
 
 const emits = defineEmits<{
@@ -298,11 +299,12 @@ const contentClasses = defineClasses(
             :is="props.tag"
             :class="tablistClasses"
             role="tablist"
+            :aria-label="ariaLabel"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
             <!--
                 @slot Additional slot before tabs
             -->
-            <slot name="start" />
+            <slot name="before" />
 
             <o-slot-component
                 v-for="childItem in items"
@@ -341,7 +343,7 @@ const contentClasses = defineClasses(
             <!--
                 @slot Additional slot after tabs
             -->
-            <slot name="end" />
+            <slot name="after" />
         </component>
 
         <section :class="contentClasses">

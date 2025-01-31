@@ -1344,6 +1344,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 animation: [string, string] | [string, string, string, string];
                 /** Apply animation on the initial render */
                 animateInitially: boolean;
+                /** Accessibility aria-label to be passed to the tablist wrapper element */
+                ariaLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of Tabs component position */
