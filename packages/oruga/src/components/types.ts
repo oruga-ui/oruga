@@ -13,30 +13,24 @@ declare module "../index" {
                 menuTag: DynamicComponent;
                 /** Menu item tag name */
                 itemTag: DynamicComponent;
-                /** Size of the control */
+                /** Size of the input control */
                 size: string;
                 /** Position of the dropdown */
                 position: "auto" | "bottom" | "top";
-                /** Makes the component check if list reached scroll start or end and emit scroll events. */
-                checkScroll: boolean;
                 /** Number of milliseconds to delay before to emit input event */
                 debounce: number;
-                /** The first option will always be pre-selected (easier to just hit enter or tab) */
+                /** The first option will always be focused (easier to just hit enter or tab) */
                 keepFirst: boolean;
+                /** Keep open dropdown list after select */
+                keepOpen: boolean;
                 /** Clear input text on select */
                 clearOnSelect: boolean;
                 /** Open dropdown list on focus */
                 openOnFocus: boolean;
-                /** Keep open dropdown list after select */
-                keepOpen: boolean;
                 /** Max height of dropdown content */
                 maxHeight: number | string;
-                /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
-                confirmKeys: string[];
-                /** Dropdown content (items) are shown into a modal on mobile */
-                mobileModal: boolean;
-                /** Transition name to apply on dropdown list */
-                animation: string;
+                /** Makes the component check if list reached scroll start or end and emit scroll events. */
+                checkScroll: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -47,6 +41,12 @@ declare module "../index" {
                 clearable: boolean;
                 /** Icon name to be added on the clear button */
                 clearIcon: string;
+                /** Dropdown content (items) are shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content (items) are shown into a modal on desktop */
+                desktopModal: boolean;
+                /** Transition name to apply on dropdown list */
+                animation: string;
                 /** Native options to use in HTML5 validation */
                 autocomplete: string;
                 /** Append the component to another part of the DOM.
@@ -57,8 +57,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the menu items */
                 itemClass: ClassDefinition;
-                /** Class of the menu items on hover */
-                itemHoverClass: ClassDefinition;
                 /** Class of the menu items group title */
                 itemGroupTitleClass: ClassDefinition;
                 /** Class of the menu empty placeholder item */
@@ -248,12 +246,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 firstDayOfWeek: number;
                 /** Define the range of years to show */
                 yearsRange: number[];
-                /** Trap dropdown on focus */
-                trapFocus: boolean;
-                /** Enable dropdown mobile modal */
-                mobileModal: boolean;
-                /** Enable mobile native input if mobile agent */
-                mobileNative: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -264,6 +256,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPrev: string;
                 /** Icon name for next icon */
                 iconNext: string;
+                /** Dropdown content is shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content is shown into a modal on desktop */
+                desktopModal: boolean;
+                /** Enable mobile native input if mobile agent */
+                mobileNative: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -395,14 +393,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 dateParser: ((date: string) => Date) | undefined;
                 /** Date creator function, default is `new Date()` */
                 datetimeCreator: (() => Date);
-                /** Enable mobile native input if mobile agent */
-                mobileNative: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
                 icon: string;
                 /** Icon to be added on the right side */
                 iconRight: string;
+                /** Enable mobile native input if mobile agent */
+                mobileNative: boolean;
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
@@ -414,31 +412,28 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
+                /** Makes the component check if menu reached scroll start or end and emit scroll events. */
+                checkScroll: boolean;
                 /** Max height of dropdown content */
                 maxHeight: number | string;
                 /** Position of the dropdown relative to the trigger */
                 position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
-                /** Dropdown content (items) are shown into a modal on mobile */
-                mobileModal: boolean;
-                /** Dropdown content (items) are shown into a modal on desktop */
-                desktopModal: boolean;
                 /** Custom animation (transition name) */
                 animation: string;
-                /** Trap focus inside the dropdown. */
-                trapFocus: boolean;
-                /** Makes the component check if menu reached scroll start or end and emit scroll events. */
-                checkScroll: boolean;
                 /** Dropdown menu tag name */
                 menuTag: DynamicComponent;
                 /** Dropdown trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Dropdown will be triggered by any events */
-                triggers: ("click" | "contextmenu" | "focus" | "hover")[];
-                /** Dropdown close options (pressing escape, clicking the content or outside) */
-                closeable: boolean | string[];
-                /** Role attribute to be passed to the list container for better accessibility.
-Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: "dialog" | "list" | "listbox" | "menu";
+                triggers: ("click" | "contextmenu" | "focus" | "keydown" | "hover")[];
+                /** Keep dropdown list open when item get selected */
+                keepOpen: boolean;
+                /** The first option will always be pre-selected (easier to just hit enter or tab) */
+                keepFirst: boolean;
+                /** Dropdown content (items) are shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content (items) are shown into a modal on desktop */
+                desktopModal: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -481,13 +476,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 noScrollClass: ClassDefinition;
                 /** Dropdown item tag name */
                 itemTag: DynamicComponent;
-                /** Role attribute to be passed to the list item for better accessibility.
-Use menuitem only in situations where your dropdown is related to a navigation menu. */
-                itemAriaRole: string;
                 /** Class of the dropdown item */
                 itemClass: ClassDefinition;
                 /** Class of the dropdown item when active */
                 itemActiveClass: ClassDefinition;
+                /** Class of the dropdown items when focused */
+                itemFocusedClass: ClassDefinition;
                 /** Class of the dropdown item when clickable */
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
@@ -1387,10 +1381,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 counter: boolean;
                 /** Keep open dropdown list after select */
                 keepOpen: boolean;
-                /** Array of keys
-(https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
-which will add a item when typing */
-                confirmKeys: string[];
                 /** Array of chars used to split when pasting a new string */
                 separators: string[];
                 /** Allows adding new items */
@@ -1452,18 +1442,18 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 parser: ((date: string) => Date) | undefined;
                 /** time creator function, default is `new Date()` */
                 creator: (() => Date);
-                /** Dropdown trapFocus */
-                trapFocus: boolean;
-                /** Enable dropdown mobile modal */
-                mobileModal: boolean;
-                /** Enable mobile native input if mobile agent */
-                mobileNative: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
                 icon: string;
                 /** Icon to be added on the right side */
                 iconRight: string;
+                /** Dropdown content is shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content is shown into a modal on desktop */
+                desktopModal: boolean;
+                /** Enable mobile native input if mobile agent */
+                mobileNative: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -1504,7 +1494,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tooltip trigger events */
                 triggers: ("click" | "contextmenu" | "focus" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
-                closeable: boolean | ("escape" | "outside" | "content")[];
+                closeable: boolean | ("content" | "escape" | "outside")[];
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */

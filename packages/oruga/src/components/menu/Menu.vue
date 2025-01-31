@@ -12,7 +12,6 @@ import {
     normalizeOptions,
     useProviderParent,
     useSequentialId,
-    type OptionsItem,
     type ProviderItem,
 } from "@/composables";
 
@@ -80,7 +79,7 @@ const { childItems } = useProviderParent<
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const normalizedOptions = computed<OptionsItem<T>[]>(() =>
+const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
@@ -286,7 +285,7 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
                     <OMenuItem
                         v-if="isGroupOption(option)"
                         v-bind="option.attrs"
-                        :label="option.group"
+                        :label="option.label"
                         :hidden="option.hidden">
                         <OMenuItem
                             v-for="_option in option.options"

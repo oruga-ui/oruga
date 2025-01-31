@@ -5,8 +5,8 @@ import BaseCode from "./base.vue?raw";
 import Autocomplete from "./autocomplete.vue";
 import AutocompleteCode from "./autocomplete.vue?raw";
 
-import CustomSelected from "./custom-selected.vue";
-import CustomSelectedCode from "./custom-selected.vue?raw";
+import Slots from "./slots.vue";
+import SlotsCode from "./slots.vue?raw";
 
 import Limits from "./limits.vue";
 import LimitsCode from "./limits.vue?raw";
@@ -25,8 +25,8 @@ import DisabledCode from "./disabled.vue?raw";
     <h3 id="autocomplete">Autocomplete</h3>
     <ExampleViewer :component="Autocomplete" :code="AutocompleteCode" />
 
-    <h3 id="custom">Custom selected</h3>
-    <ExampleViewer :component="CustomSelected" :code="CustomSelectedCode" />
+    <h3 id="slots">Slots</h3>
+    <ExampleViewer :component="Slots" :code="SlotsCode" />
 
     <h3 id="limits">Limits</h3>
     <ExampleViewer :component="Limits" :code="LimitsCode" />

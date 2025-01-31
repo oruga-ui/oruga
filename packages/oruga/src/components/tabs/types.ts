@@ -13,6 +13,7 @@ export type TabsComponent = {
     animateInitially: boolean;
 };
 
+
 export type TabItemComponent<T> = TabItemProps<T, Component> & {
     $slots: Slots;
     tabClasses: ClassBind[];
@@ -23,4 +24,4 @@ export type TabItemComponent<T> = TabItemProps<T, Component> & {
     deactivate: (index: number) => void;
 };
 
-export type TabItem<T> = Omit<ProviderItem, "data"> & TabItemComponent<T>;
+export type TabItem<T> = Omit<ProviderItem<T>, "data"> & TabItemComponent<T>;
