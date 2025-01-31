@@ -22,16 +22,16 @@ export type EventListenerOptions = AddEventListenerOptions & {
  * Register DOM events using addEventListener on mounted, and removeEventListener automatically on unmounted.
  * Adaption of {@link  https://vueuse.org/core/useEventListener}
  *
+ * @param element DOM element to add the listener to
  * @param event Event name
  * @param handler Event handler function
- * @param element DOM element to add the listener to - default docuemnt
  * @param options EventListenerOptions
  * @return stop function
  */
 export function useEventListener(
+    element: MaybeRefOrGetter<EventTarget>,
     event: string,
-    handler: (evt?: any) => any,
-    element: MaybeRefOrGetter<EventTarget> = document,
+    handler: (evt?: any) => void,
     options?: EventListenerOptions,
 ): () => void {
     let cleanup: () => void;
@@ -66,7 +66,7 @@ export function useEventListener(
     }
 
     if (options?.immediate) register();
-    else {
+    else if (getCurrentScope()) {
         // register listener on mount
         onMounted(() => {
             if (

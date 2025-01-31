@@ -72,7 +72,7 @@ watch(isActive, (value) => {
 
 if (isClient) {
     // register onKeyPress event when is active
-    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
 }
 
 /** Keypress event that is bound to the document. */

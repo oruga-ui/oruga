@@ -9,7 +9,7 @@ import { isClient } from "@/utils/ssr";
  */
 export function useMatchMedia(mobileBreakpoint?: string) {
     const isMobile = ref(false);
-    const mediaQuery = ref();
+    const mediaQuery = ref<MediaQueryList>();
 
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
@@ -42,7 +42,7 @@ export function useMatchMedia(mobileBreakpoint?: string) {
 
     if (mediaQuery.value) {
         isMobile.value = mediaQuery.value.matches;
-        useEventListener("change", onMatchMedia, mediaQuery.value);
+        useEventListener(mediaQuery.value, "change", onMatchMedia);
     } else {
         isMobile.value = false;
     }

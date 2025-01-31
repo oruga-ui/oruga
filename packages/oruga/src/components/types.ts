@@ -1311,17 +1311,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tabs item tag name */
                 itemTag: DynamicComponent;
                 /** Class of the tab item */
-                navItemClass: ClassDefinition;
-                /** Class of the nav item when active */
-                navItemActiveClass: ClassDefinition;
-                /** Class of the nav item before the active one */
-                navItemPreviousClass: ClassDefinition;
-                /** Class of the nav item after the active one */
-                navItemNextClass: ClassDefinition;
-                /** Class of the tab item */
                 tabClass: ClassDefinition;
                 /** Class of the tab item when active */
                 tabActiveClass: ClassDefinition;
+                /** Class of the tab item before the active one */
+                tabPreviousClass: ClassDefinition;
+                /** Class of the tab item after the active one */
+                tabNextClass: ClassDefinition;
                 /** Class of the tab item when disabled */
                 tabDisabledClass: ClassDefinition;
                 /** Class of the tab item type */
@@ -1330,7 +1326,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tabIconClass: ClassDefinition;
                 /** Class of the tab item label */
                 tabLabelClass: ClassDefinition;
-                /** Class of the tab item */
+                /** Class of the tab item panel */
                 tabPanelClass: ClassDefinition;
                 /** Color of the control */
                 variant: string;
@@ -1340,30 +1336,32 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 vertical: boolean;
                 /** Tab type */
                 type: string;
+                /** Tablist tag name */
+                tag: DynamicComponent;
                 /** Tab will have an animation */
                 animated: boolean;
                 /** Transition animation name */
                 animation: [string, string] | [string, string, string, string];
                 /** Apply animation on the initial render */
                 animateInitially: boolean;
+                /** Accessibility aria-label to be passed to the tablist wrapper element */
+                ariaLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of Tabs component when when is vertical and its position changes */
+                /** Class of Tabs component position */
                 positionClass: ClassDefinition;
                 /** Class of Tabs component when expanded */
                 expandedClass: ClassDefinition;
                 /** Class of Tabs component when vertical */
                 verticalClass: ClassDefinition;
+                /** Size of the Tabs component */
+                sizeClass: ClassDefinition;
+                /** Type of the Tabs component */
+                typeClass: ClassDefinition;
                 /** Class of Tabs component when multiline */
                 multilineClass: ClassDefinition;
-                /** Class of the Tabs component nav tabs */
-                navClass: ClassDefinition;
-                /** Size of the navigation */
-                navSizeClass: ClassDefinition;
-                /** Class of the Tabs component nav position */
-                navPositionClass: ClassDefinition;
-                /** Type of the navigation */
-                navTypeClass: ClassDefinition;
+                /** Class of the tablist element */
+                tablistClass: ClassDefinition;
                 /** Class of the tab content */
                 contentClass: ClassDefinition;
                 /** Class of the tab content when transitioning */
