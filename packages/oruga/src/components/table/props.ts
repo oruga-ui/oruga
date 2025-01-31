@@ -193,8 +193,6 @@ type TableClasses = Partial<{
     footerClass: ComponentClass;
     /** Class of the Table when it is empty */
     emptyClass: ComponentClass;
-    /** Class of the Table row detail */
-    detailedClass: ComponentClass;
     /** Class of the Table when is bordered */
     borderedClass: ComponentClass;
     /** Class of the Table when rows are striped */
@@ -211,6 +209,10 @@ type TableClasses = Partial<{
     trSelectedClass: ComponentClass;
     /** Class of the Table row when checkable and checked */
     trCheckedClass: ComponentClass;
+    /** Class of the detail Table row  */
+    trDetailedClass: ComponentClass;
+    /** Class of the Table row when table is empty */
+    trEmptyClass: ComponentClass;
     /** Class of the Table `th` element */
     thClass: ComponentClass;
     /** Class of the Table `th` element when component is positioned */
@@ -276,8 +278,13 @@ export type TableColumnProps<T, K extends keyof T | string> = {
     searchable?: boolean;
     /** Enable column sortability */
     sortable?: boolean;
-    /** Define whether the column is visible or not */
+    /**
+     * Define whether the column is visible or not
+     * @deprecated use `hidden` instead
+     */
     visible?: boolean;
+    /** Define whether the column is visible or not */
+    hidden?: boolean;
     /** Whether the column is sticky or not */
     sticky?: boolean;
     /** Make header selectable */
