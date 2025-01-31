@@ -25,7 +25,7 @@ import { injectField } from "../field/fieldInjection";
 import type { SelectProps } from "./props";
 
 /**
- * Select an item in a dropdown list. Use with Field to access all functionalities
+ * Select an item in a list. Use with Field to access all functionalities.
  * @displayName Select
  * @style _select.scss
  */

@@ -538,9 +538,9 @@ function rightIconClick(event: Event): void {
 
 if (isClient && props.checkScroll)
     useEventListener(
+        computed(() => dropdownRef.value?.$content),
         "scroll",
         checkDropdownScroll,
-        computed(() => dropdownRef.value?.$content),
     );
 
 /** Check if the scroll list inside the dropdown reached the top or it's end. */

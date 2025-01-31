@@ -1,6 +1,6 @@
 import type { App, Plugin } from "vue";
 
-import Programmatic from "./useProgrammatic";
+import ComponentProgrammatic from "./useProgrammatic";
 
 import { registerComponentProgrammatic } from "@/utils/plugins";
 import InstanceRegistry from "./InstanceRegistry";
@@ -9,16 +9,20 @@ import InstanceRegistry from "./InstanceRegistry";
 export type {
     ProgrammaticOptions,
     ProgrammaticExpose,
-    PublicProgrammaticComponentOptions,
+    ProgrammaticComponentOptions,
 } from "./useProgrammatic";
 export { InstanceRegistry };
 
 /** export programmatic plugin */
 export default {
     install(app: App) {
-        registerComponentProgrammatic(app, "programmatic", Programmatic);
+        registerComponentProgrammatic(
+            app,
+            "programmatic",
+            ComponentProgrammatic,
+        );
     },
 } as Plugin;
 
 /** export composables here */
-export { useProgrammatic } from "./useProgrammatic";
+export { ComponentProgrammatic } from "./useProgrammatic";
