@@ -639,7 +639,7 @@ but will set body to position fixed, might break some layouts. */
             Partial<{
                 /** Role attribute to be passed to the list container for better accessibility.
 Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: "dialog" | "list" | "menu";
+                ariaRole: "menu" | "tree";
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon size */
@@ -648,25 +648,31 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                 rootClass: ClassDefinition;
                 /** Class of the menu list */
                 listClass: ClassDefinition;
-                /** Class of the menu list label */
-                listLabelClass: ClassDefinition;
+                /** Class of the menu label */
+                labelClass: ClassDefinition;
                 /** Transition name to apply on menu list */
                 animation: string;
                 /** Menu item tag name */
-                menuTag: DynamicComponent;
-                /** Role attribute to be passed to the list item for better accessibility. */
-                itemAriaRole: string;
+                itemTag: DynamicComponent;
                 /** Class of the root element of menu item */
                 itemClass: ClassDefinition;
+                /** Class of the menu item root when active */
+                itemActiveClass: ClassDefinition;
+                /** Class of the menu item root when focused */
+                itemFocusedClass: ClassDefinition;
+                /** Class of the menu item root when disabled */
+                itemDisabledClass: ClassDefinition;
                 /** Class of the menu item */
                 itemButtonClass: ClassDefinition;
-                /** Class of the active menu item */
+                /** Class of the menu item when active */
                 itemButtonActiveClass: ClassDefinition;
-                /** Class of the disabled menu item */
+                /** Class of the menu item when focused */
+                itemButtonFocusedClass: ClassDefinition;
+                /** Class of the menu item when disabled */
                 itemButtonDisabledClass: ClassDefinition;
                 /** Class of the menu item with icon */
                 itemButtonIconClass: ClassDefinition;
-                /** Class of the menu item when is a submenu */
+                /** Class of the menu item submenu */
                 itemSubmenuClass: ClassDefinition;
             }>;
         modal?: ComponentConfigBase &
