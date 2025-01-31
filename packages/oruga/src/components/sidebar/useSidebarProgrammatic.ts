@@ -5,8 +5,8 @@ import {
 } from "vue";
 import {
     InstanceRegistry,
-    useProgrammatic,
-    type PublicProgrammaticComponentOptions,
+    ComponentProgrammatic,
+    type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
 
@@ -16,7 +16,7 @@ import type { SidebarProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        sidebar: typeof useSidebarProgrammatic;
+        sidebar: typeof SidebarProgrammatic;
     }
 }
 
@@ -24,16 +24,18 @@ declare module "../../index" {
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useSidebarProgrammatic composable options */
-type SidebarProgrammaticOptions<C extends Component> = Readonly<
+export type SidebarProgrammaticOptions<C extends Component> = Readonly<
     SidebarProps<C>
 > &
-    PublicProgrammaticComponentOptions;
+    ProgrammaticComponentOptions;
 
-const useSidebarProgrammatic = {
+const SidebarProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: instances.count,
     /**
-     * create a new programmatic modal component
+     * Create a new programmatic sidebar component instance.
      * @param options sidebar component props object
-     * @param target specify a target the component get rendered into
+     * @param target specify a target the component get rendered into - default is `document.body`
      * @returns ProgrammaticExpose
      */
     open<C extends Component>(
@@ -46,21 +48,21 @@ const useSidebarProgrammatic = {
         };
 
         // create programmatic component
-        return useProgrammatic.open(Sidebar as VNodeTypes, {
+        return ComponentProgrammatic.open(Sidebar as VNodeTypes, {
             instances, // custom programmatic instance registry
             target, // target the component get rendered into
             props: componentProps, // component specific props
             onClose: options.onClose, // on close event handler
         });
     },
-    /** close the last registred instance in the sidebar programmatic instance registry */
+    /** Close the last registred instance in the sidebar programmatic instance registry. */
     close(...args: unknown[]): void {
         instances.last()?.exposed?.close(...args);
     },
-    /** close all instances in the programmatic sidebar instance registry */
+    /** Close all instances in the programmatic sidebar instance registry. */
     closeAll(...args: unknown[]): void {
         instances.walk((entry) => entry.exposed?.close(...args));
     },
 };
 
-export default useSidebarProgrammatic;
+export default SidebarProgrammatic;
