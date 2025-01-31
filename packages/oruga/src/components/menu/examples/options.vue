@@ -4,14 +4,14 @@ import type { OptionsPropWithGroups } from "@oruga-ui/oruga-next";
 
 const options: OptionsPropWithGroups<string> = [
     {
-        group: "Fruits",
+        label: "Fruits",
         attrs: {
             icon: "info-circle",
         },
         options: ["Apple", "Banana", "Watermelon"],
     },
     {
-        group: "Vegetables",
+        label: "Vegetables",
         attrs: {
             icon: "info-circle",
         },

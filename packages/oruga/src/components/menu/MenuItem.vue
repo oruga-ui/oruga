@@ -9,7 +9,6 @@ import {
     normalizeOptions,
     useProviderChild,
     useProviderParent,
-    type OptionsItem,
     type ProviderItem,
 } from "@/composables";
 
@@ -103,7 +102,7 @@ const { parent, item } = useProviderChild<
 const nextSequence = parent.value.nextSequence;
 
 /** normalized programamtic options */
-const normalizedOptions = computed<OptionsItem<T>[]>(() =>
+const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
