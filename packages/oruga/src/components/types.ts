@@ -1348,6 +1348,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 animation: [string, string] | [string, string, string, string];
                 /** Apply animation on the initial render */
                 animateInitially: boolean;
+                /** Accessibility aria-label to be passed to the tablist wrapper element */
+                ariaLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of Tabs component position */
@@ -1496,7 +1498,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tooltip trigger events */
                 triggers: ("click" | "contextmenu" | "focus" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
-                closeable: boolean | string[];
+                closeable: boolean | ("escape" | "outside" | "content")[];
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */

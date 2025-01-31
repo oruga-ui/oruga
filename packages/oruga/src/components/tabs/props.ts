@@ -56,6 +56,8 @@ export type TabsProps<T> = {
     animateInitially?: boolean;
     /** Show tab items multiline when there is no space */
     multiline?: boolean;
+    /** Accessibility aria-label to be passed to the tablist wrapper element */
+    ariaLabel?: string;
 } & TabsClasses;
 
 // class props (will not be displayed in the docs)

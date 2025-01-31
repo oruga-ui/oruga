@@ -14,11 +14,11 @@ const selected = ref<string>("");
                 expanded
                 :options="[
                     {
-                        group: 'Names',
+                        label: 'Names',
                         options: ['Flint', 'Silver', 'Vane', 'Jack'],
                     },
                     {
-                        group: 'Numbers',
+                        label: 'Numbers',
                         options: [1, 2, 3],
                     },
                 ]" />
