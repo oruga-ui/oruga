@@ -88,7 +88,7 @@ See ➜ 📄 [Full scss file](${theme.src}/scss/components/${name})
 ## Sass variables
 
 ${Themes.map(
-    (theme: ThemeConfig) =>
+    (theme) =>
         `<div class="${theme.key}">
 
 > Current theme ➜ _[${theme.label}](${theme.git})_
