@@ -61,10 +61,6 @@ export function renderer(config: SafeDocgenCLIConfig, name: string): string {
         )
             return noStyle;
 
-        if (name === "_skeleton.scss") {
-            console.error("???", name, cssContent, defaultsContent);
-        }
-
         const variables = [
             ...getVariablesFromContent(cssContent),
             ...getVariablesFromContent(defaultsContent),
