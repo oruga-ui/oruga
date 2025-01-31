@@ -48,7 +48,9 @@ export type OptionsProp<V = string | number | object> =
  */
 export type OptionsGroupItem<V = unknown> = {
     /** displayed option group label */
-    group?: string;
+    label?: string;
+    /** the real option group value */
+    value?: V;
     /** list of options */
     options: OptionsItem<V>[];
     /** additional attributes bound to the options grouü element */
@@ -66,7 +68,9 @@ export type OptionsGroupItem<V = unknown> = {
  */
 export type OptionsGroupPropItem<V = unknown> = {
     /** displayed option group label */
-    group: string;
+    label?: string;
+    /** the real option group value */
+    value?: V;
     /** list of options */
     options: OptionsProp<V>;
     /** additional attributes bound to the options grouü element */
@@ -93,14 +97,12 @@ export type OptionsPropWithGroups<V = unknown> =
     | OptionsProp<V>
     | OptionsGroupProp<V>;
 
-type NormalizedOptions<
-    V,
-    O extends OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
-> =
-    O extends OptionsProp<V>
-        ? OptionsItem<V>[]
-        : O extends OptionsGroupPropItem<V>
-          ? OptionsGroupItem<V>[]
+/** Normalized external options prop for internal usage */
+type NormalizedOptions<V, O extends OptionsPropWithGroups<V> | undefined> =
+    O extends OptionsGroupProp<V>
+        ? OptionsGroupItem<V>[]
+        : O extends OptionsProp<V>
+          ? OptionsItem<V>[]
           : never[];
 
 /**
@@ -114,9 +116,8 @@ type NormalizedOptions<
 export function normalizeOptions<
     V,
     O extends OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
-    R extends NormalizedOptions<V, O> = NormalizedOptions<V, O>,
->(options: O | undefined, uuid: () => string): R {
-    if (!options) return [] as R;
+>(options: O | undefined, uuid: () => string): NormalizedOptions<V, O> {
+    if (!options) return [] as NormalizedOptions<V, O>;
 
     if (Array.isArray(options))
         return options.map(
@@ -130,7 +131,7 @@ export function normalizeOptions<
                     } as OptionsItem<V>;
 
                 if (typeof option == "object") {
-                    if ("group" in option) {
+                    if ("options" in option) {
                         // process group options
                         const options = normalizeOptions(option.options, uuid);
                         // create options group item
@@ -149,7 +150,7 @@ export function normalizeOptions<
                 }
                 return option as OptionsItem<V>;
             },
-        ) as R;
+        ) as NormalizedOptions<V, O>;
 
     return Object.keys(options).map(
         (value: string): OptionsItem<string> => ({
@@ -158,7 +159,7 @@ export function normalizeOptions<
             value,
             key: uuid(),
         }),
-    ) as R;
+    ) as NormalizedOptions<V, O>;
 }
 
 /**

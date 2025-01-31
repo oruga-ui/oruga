@@ -26,6 +26,7 @@ import {
     useClickOutside,
     usePreventScrolling,
     useSequentialId,
+    type OptionsGroupItem,
 } from "@/composables";
 
 import type { DropdownComponent } from "./types";
@@ -117,9 +118,9 @@ const isActive = defineModel<boolean>("active", { default: false });
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed(() => {
+const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
-    const groupedOptions = toOptionsGroup(normalizedOptions, nextSequence());
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 
@@ -483,20 +484,21 @@ defineExpose({ $trigger: triggerRef, $content: contentRef, value: vmodel });
                     <slot :active="isActive" :toggle="toggle">
                         <template v-for="group in groupedOptions">
                             <o-dropdown-item
-                                v-if="group.group"
+                                v-if="group.label"
                                 v-show="!group.hidden"
-                                :key="group.key"
                                 v-bind="group.attrs"
+                                :key="group.key"
+                                :value="group.value"
                                 tabindex="-1">
-                                {{ group.group }}
+                                {{ group.label }}
                             </o-dropdown-item>
 
                             <o-dropdown-item
                                 v-for="option in group.options"
                                 v-show="!option.hidden"
+                                v-bind="option.attrs"
                                 :key="option.key"
-                                :value="option.value"
-                                v-bind="option.attrs">
+                                :value="option.value">
                                 {{ option.label }}
                             </o-dropdown-item>
                         </template>

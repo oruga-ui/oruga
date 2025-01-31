@@ -690,7 +690,7 @@ describe("Dropdown tests", () => {
         test("handle grouped options correctly", async () => {
             const options: OptionsGroupProp<string | number | object> = [
                 {
-                    group: "Black Sails",
+                    label: "Black Sails",
                     options: [
                         { label: "Flint", value: "flint" },
                         { label: "Silver", value: "silver" },
@@ -699,7 +699,7 @@ describe("Dropdown tests", () => {
                     ],
                 },
                 {
-                    group: "Breaking Bad",
+                    label: "Breaking Bad",
                     options: {
                         heisenberg: "Heisenberg",
                         jesse: "Jesse",
@@ -708,7 +708,7 @@ describe("Dropdown tests", () => {
                     },
                 },
                 {
-                    group: "Game of Thrones",
+                    label: "Game of Thrones",
                     attrs: { disabled: true },
                     options: [
                         "Tyrion Lannister",
@@ -734,7 +734,7 @@ describe("Dropdown tests", () => {
 
                 if (isGroup) {
                     const option = options[g_idx];
-                    expect(el.text()).toBe(option.group);
+                    expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
                         option.attrs?.disabled ? "true" : "false",
                     );
