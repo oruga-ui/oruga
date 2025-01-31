@@ -2,7 +2,7 @@ import { toValue, type MaybeRefOrGetter } from "vue";
 import { isEqual } from "@/utils/helpers";
 
 /**
- * Options should always be formatted as an array of objects with label and value properties.
+ * Internal OptionsItem representation object with additional state information.
  *
  * @internal
  */
@@ -14,8 +14,7 @@ export type OptionsItem<V = unknown> = OptionsPropItem<V> & {
 };
 
 /**
- * Options should always be formatted as an array of objects with label and value
- * properties.
+ * Options should always be formatted as an array of objects with label and value properties.
  *
  * @public
  */
@@ -169,7 +168,7 @@ export function normalizeOptions<
  * @returns option is OptionsGroupItem
  */
 export function isGroupOption(
-    option: OptionsItem | OptionsGroupItem,
+    option: Partial<OptionsItem | OptionsGroupItem>,
 ): option is OptionsGroupItem {
     return (
         option && typeof option === "object" && Array.isArray(option.options)
@@ -203,56 +202,31 @@ export function toOptionsList<V>(
 }
 
 /**
- * Applies an reactive filter for a list of options {@link OptionsItem | OptionsGroupItem} based on a given value.
+ * Applies an filter function for a list of options {@link OptionsItem | OptionsGroupItem}.
  * Options are filtered by setting the hidden attribute.
- * A custom filter function can be given.
- * @param options Options to filter
- * @param value Value to filter for
- * @param customFilter optional filter function
+ * The options reactivity is not triggered by this.
+ * @param options - Options to filter
+ * @param filter - filter function
  */
-export function filterOptionsItems<
-    V,
-    O extends OptionsItem<V>[] | OptionsGroupItem<V>[],
->(
-    options: MaybeRefOrGetter<O>,
-    value: MaybeRefOrGetter<string>,
-    customFilter?: (option: V, value: string) => boolean,
-): O {
-    function filter(option: OptionsItem<V>, value: string): boolean {
-        if (typeof customFilter === "function")
-            return customFilter(option.value, toValue(value));
-        else
-            return !String(option.label)
-                .toLowerCase()
-                .includes(value?.toLowerCase());
-    }
-
-    function filterOptions(
-        options: OptionsItem<V>[] | OptionsGroupItem<V>[],
-        value: string,
-    ): void {
-        options.forEach((option: OptionsItem<V> | OptionsGroupItem<V>) => {
-            if (isGroupOption(option)) {
-                filterOptions(option.options, value);
-                // hide the whole group if every group options is hidden
-                option.hidden = option.options.every((option) => option.hidden);
-            } else {
-                // hide the option if filtered
-                option.hidden = filter(option, value);
-            }
-        });
-    }
-
-    // filter options by value
-    filterOptions(toValue(options), toValue(value));
-
-    // return options as new array
-    return [...toValue(options)] as O;
+export function filterOptionsItems<V>(
+    options: MaybeRefOrGetter<OptionsItem<V>[] | OptionsGroupItem<V>[]>,
+    filter: (option: OptionsItem<V>) => boolean,
+): void {
+    toValue(options).forEach((option: OptionsItem<V> | OptionsGroupItem<V>) => {
+        if (isGroupOption(option)) {
+            filterOptionsItems(option.options, filter);
+            // hide the whole group if every group options is hidden
+            option.hidden = option.options.every((option) => option.hidden);
+        } else {
+            // hide the option if filtered
+            option.hidden = filter(option);
+        }
+    });
 }
 
 /**
  * Checks if no options are given or every existing options are hidden.
- * @param options  - A list of {@link OptionsItem | OptionsGroupItem} to check for a given value
+ * @param options - A list of {@link OptionsItem | OptionsGroupItem} to check for a given value
  *
  * @returns boolean
  */
@@ -267,7 +241,7 @@ export function checkOptionsEmpty(
             // check if every options are hidden
             return checkOptionsEmpty(option.options);
         // check if option is hidden
-        else return !isOptionValid(option);
+        else return !isOptionViable(option);
     });
 }
 
@@ -305,7 +279,7 @@ export function findOption<V>(
  * Given an options list, find the first value.
  * @param options - An options list (with groups)
  */
-export function firstValidOption<V>(
+export function firstViableOption<V>(
     options:
         | MaybeRefOrGetter<OptionsItem<V>[]>
         | MaybeRefOrGetter<OptionsGroupItem<V>[]>,
@@ -316,16 +290,16 @@ export function firstValidOption<V>(
         if (typeof option !== "object" && option) continue;
         if (isGroupOption(option)) {
             // option in group
-            const found = firstValidOption(option.options);
+            const found = firstViableOption(option.options);
             if (found !== undefined) return found;
         }
-        // check if option is valid
-        else if (isOptionValid(option)) return option;
+        // check if option is viable
+        else if (isOptionViable(option)) return option;
     }
 
     return undefined;
 }
 
-export function isOptionValid(option: MaybeRefOrGetter<OptionsItem>): boolean {
+export function isOptionViable(option: MaybeRefOrGetter<OptionsItem>): boolean {
     return !toValue(option).hidden && !toValue(option).attrs?.disabled;
 }

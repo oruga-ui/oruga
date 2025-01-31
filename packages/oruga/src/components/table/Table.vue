@@ -8,7 +8,7 @@ import {
     useSlots,
     toValue,
     useTemplateRef,
-    type Ref,
+    triggerRef,
     type MaybeRefOrGetter,
 } from "vue";
 
@@ -38,11 +38,12 @@ import {
     useProviderParent,
     useMatchMedia,
     useDebounce,
-    useObjectMap,
+    isOptionViable,
+    filterOptionsItems,
     useSequentialId,
 } from "@/composables";
 
-import type { ClassBind } from "@/types";
+import type { ClassBind, DeepType } from "@/types";
 import type {
     TableColumn,
     TableRow,
@@ -87,7 +88,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     scrollable: undefined,
     stickyHeader: false,
     height: undefined,
-    debounceSearch: () => getDefault("table.debounceSearch"),
+    debounceSearch: () => getDefault("table.debounceSearch", 300),
     checkable: false,
     stickyCheckbox: false,
     headerCheckable: true,
@@ -144,11 +145,6 @@ const emits = defineEmits<{
      * @param value {number} updated currentPage prop
      */
     "update:currentPage": [value: number];
-    /**
-     * is emitted each time the table data is processed into rows
-     * @param value {TableRow[]} computed table rows
-     */
-    processed: [value: TableRow<T>[]];
     /**
      * on pagination page change event
      * @param page {number} updated page
@@ -341,11 +337,13 @@ const emits = defineEmits<{
     columndragover: [column: TableColumn<T>, index: number, event: DragEvent];
 }>();
 
+const slots = useSlots();
+
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
-const slotRef = useTemplateRef("slotElement");
+const slotsRef = useTemplateRef("slotsWrapper");
 
 // provided data is a computed ref to enjure reactivity
 const provideData = computed<TableComponent>(() => ({
@@ -354,130 +352,159 @@ const provideData = computed<TableComponent>(() => ({
 
 /** provide functionalities and data to child item components */
 const { childItems } = useProviderParent<TableColumnComponent<T>>({
-    rootRef: slotRef,
+    rootRef: slotsRef,
     data: provideData,
 });
 
+// #region --- TABLE COLUMNS ---
+
 /** all defined columns */
 const tableColumns = computed<TableColumnItem<T>[]>(() => {
-    if (!childItems.value) return [];
-    return childItems.value.map((column) => ({
-        index: column.index,
-        identifier: column.identifier,
-        ...toValue(column.data!),
-        thAttrsData: {},
-        tdAttrsData: [],
-    }));
+    if (!childItems.value.length) return [];
+    return childItems.value.map((columnItem) => {
+        const column = toValue(columnItem.data!);
+
+        // create additional th attrs data
+        let thAttrsData =
+            typeof props.thAttrs === "function" ? props.thAttrs(column) : {};
+        thAttrsData = Object.assign(thAttrsData, column.thAttrs);
+
+        // create additional td attrs data
+        const tdAttrsData = (props.data ?? []).map((data) => {
+            const tdAttrs =
+                typeof props.tdAttrs === "function"
+                    ? props.tdAttrs(data, column)
+                    : {};
+            return Object.assign(tdAttrs, column.tdAttrs);
+        });
+
+        return {
+            ...column,
+            value: column,
+            index: columnItem.index,
+            identifier: columnItem.identifier,
+            thAttrsData: thAttrsData,
+            tdAttrsData: tdAttrsData,
+        };
+    });
 });
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
-
-/** all defined data elements as an object map */
-const tableData = computed<TableRow<T>[]>(() =>
-    useObjectMap(props.data, props.rowKey, nextSequence),
-);
-
-const tableRows = ref(tableData.value) as Ref<TableRow<T>[]>;
-
-/** recompute table rows when table data change */
-watch(tableData, () => processTableData());
-
-/**
- * Compute tableRows based on:
- *   1. Filter data if it's not backend-filtered.
- *   2. Sort data if it's not backend-sorted.
- *   3. Update internal value.
- */
-function processTableData(): void {
-    // create new array to don't mutate the original data order
-    let rows = [...tableData.value];
-
-    // if not backend filtered, filter rows
-    if (!props.backendFiltering) rows = filterRows(rows);
-
-    // if not backend sorted, sort rows
-    if (!props.backendSorting) rows = sortByColumn(rows);
-
-    tableRows.value = rows;
-    emits("processed", rows); // emit computed rows every time they the data get changed
-}
-
-/** Shows total data. If backend paginated, use props total else use rows data length as pagination total */
-const tableTotal = computed(() =>
-    props.backendPagination ? props.total : tableRows.value.length,
-);
-
-const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
-
-/** visible rows based on current page */
-const visibleRows = computed<TableRow<T>[]>((): TableRow<T>[] => {
-    if (!props.paginated || props.backendPagination) return tableRows.value;
-
-    const currentPage = tableCurrentPage.value;
-    const perPage = Number(props.perPage);
-
-    if (tableRows.value.length <= perPage) return tableRows.value;
-
-    const start = (currentPage - 1) * perPage;
-    const end = start + perPage;
-    return tableRows.value.slice(start, end);
-});
-
-const visibleColumns = computed(() => {
-    if (!tableColumns.value) return [];
-    return tableColumns.value.filter(
-        (column) => column.visible || column.visible === undefined,
-    );
-});
-
-/** process thAttrs & tdAttrs when row or columns got changed */
-watch([visibleRows, visibleColumns], () => {
-    if (visibleColumns.value.length && visibleRows.value.length) {
-        for (let i = 0; i < visibleColumns.value.length; i++) {
-            const col = visibleColumns.value[i];
-            // create additional th attrs data
-            const thAttrs =
-                typeof props.thAttrs === "function" ? props.thAttrs(col) : {};
-            col.thAttrsData = Object.assign(thAttrs, col.thAttrs);
-            // create additional td attrs data
-            col.tdAttrsData = visibleRows.value.map((data) => {
-                const tdAttrs =
-                    typeof props.tdAttrs === "function"
-                        ? props.tdAttrs(data.value, col)
-                        : {};
-                return Object.assign(tdAttrs, col.tdAttrs);
-            });
-        }
-    }
-});
-
-/** total column count based if it's checkable or expanded */
+/** total columns count */
 const columnCount = computed(() => {
-    let count = visibleColumns.value.length;
-    count += props.checkable ? 1 : 0;
-    count += props.detailed && props.showDetailIcon ? 1 : 0;
-    return count;
+    let i = tableColumns.value.length;
+    if (showDetailRowIcon.value) i++;
+    if (props.checkable) i++;
+    return i;
 });
 
-/** check if has any searchable column. */
-const hasSearchableColumns = computed(() =>
-    tableColumns.value.some((column) => column.searchable),
-);
+/** aria-colindex start value for ths */
+const ariaColIndexStart = computed(() => {
+    let i = 1;
+    if (showDetailRowIcon.value) i++;
+    if (props.checkable && props.checkboxPosition === "left") i++;
+    return i;
+});
+
+/** check if table has subheadings  */
+const hasSubheadings = computed(() => {
+    if (slots.subheading) return true;
+    return tableColumns.value.some((column) => !!column.subheading);
+});
 
 /** check if table is scrollable */
 const isScrollable = computed(() => {
     if (props.scrollable) return true;
-    if (!tableColumns.value) return false;
     return tableColumns.value.some((column) => column.sticky);
 });
 
-const slots = useSlots();
+// #endregion --- TABLE COLUMNS ---
 
-/** check if table hast subheadings  */
-const hasCustomSubheadings = computed(() => {
-    if (slots.subheading) return true;
-    return tableColumns.value.some((column) => !!column.subheading);
+// #region --- TABLE ROWS ---
+
+const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
+
+// recompute table rows visibility on page change or data change
+watch([tableCurrentPage, () => props.perPage, () => props.data], () =>
+    filterTableRows(),
+);
+
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
+/** all defined data elements as normalized options with a unique key*/
+const tableRows = computed<TableRow<T>[]>(() => {
+    if (!props.data) return [];
+    return props.data.map((value: T, idx: number) => ({
+        label: "row " + idx, // row display label
+        value: toValue(value), // normalizes wrapped ref values
+        index: idx, // row index
+        key:
+            // if no key is given and data is object, create unique row id for each row
+            String(
+                getValueByPath(
+                    value,
+                    props.rowKey,
+                    nextSequence() as DeepType<T, string>,
+                ),
+            ),
+    }));
+});
+
+/** visible rows which are filtered by viability */
+const availableRows = computed<TableRow<T>[]>(() =>
+    tableRows.value.filter(isOptionViable),
+);
+
+/** applies visability filter of reactive tableRows */
+function filterTableRows(): void {
+    // calculate pagination information
+    const currentPage = tableCurrentPage.value;
+    const perPage = Number(props.perPage);
+    const pageStart = (currentPage - 1) * perPage;
+    const pageEnd = pageStart + perPage;
+
+    // update hidden state for each row
+    filterOptionsItems(tableRows, (row) => {
+        // if paginated not backend paginated, paginate row
+        if (props.paginated || !props.backendPagination) {
+            // if not only one page and not on active page
+            if (
+                tableRows.value.length > perPage &&
+                (row.index < pageStart || row.index > pageEnd)
+            )
+                // return row is invisible
+                return true;
+        }
+
+        // if not backend filtered, filter row
+        if (!props.backendFiltering)
+            // return row is visible based on filters
+            return !isRowFiltered(row.value);
+
+        // return row is visible
+        return false;
+    });
+}
+
+/*
+ * Total data count.
+ * If backend paginated, use props total else use rows data length as pagination total.
+ */
+const tableTotal = computed(() =>
+    props.backendPagination ? props.total : tableRows.value.length,
+);
+
+/** total rows count  */
+const rowCount = computed(() => {
+    return tableTotal.value + ariaRowIndexStart.value;
+});
+
+/** aria-rowindex start value for tds based if it's Searchable or has subheadings */
+const ariaRowIndexStart = computed(() => {
+    let i = 1;
+    if (hasSearchableColumns.value) i++;
+    if (hasSubheadings.value) i++;
+    return i;
 });
 
 /**
@@ -489,7 +516,7 @@ function hasCustomFooterSlot(): boolean {
 
     const footer = slots.footer({
         columnCount: columnCount.value,
-        rowCount: visibleRows.value.length,
+        rowCount: rowCount.value,
     });
     if (footer.length > 1) return true;
 
@@ -520,51 +547,53 @@ function isRowEqual(
     return el1 == el2;
 }
 
-// --- Select Feature ---
+// #endregion  --- TABLE ROWS ---
+
+// #region --- Select Feature ---
 
 const tableSelectedRow = defineModel<T>("selected", { default: undefined });
 
 /** table arrow keys listener, change selection */
-function onArrowPressed(pos: number, event: KeyboardEvent): void {
-    if (!visibleRows.value.length) return;
+function onArrowPressed(delta: 1 | -1, event: KeyboardEvent): void {
+    if (!availableRows.value.length) return;
 
     let index =
-        visibleRows.value.findIndex((row) =>
+        availableRows.value.findIndex((row) =>
             isRowEqual(row.value, tableSelectedRow.value),
-        ) + pos;
+        ) + delta;
 
-    // prevent from going up from first and down from last
+    // check if index overflow
     index =
-        index < 0
-            ? 0
-            : index > visibleRows.value.length - 1
-              ? visibleRows.value.length - 1
-              : index;
+        index > availableRows.value.length - 1
+            ? availableRows.value.length - 1
+            : index;
+    // check if index underflow
+    index = index < 0 ? 0 : index;
 
-    const row = visibleRows.value[index];
+    // get row element
+    const row = availableRows.value[index];
 
     if (!props.isRowSelectable(row.value)) {
         let newIndex: number | undefined;
-        if (pos > 0) {
+        if (delta > 0) {
             for (
                 let i = index;
-                i < visibleRows.value.length && newIndex === undefined;
+                i < availableRows.value.length && newIndex === undefined;
                 i++
             ) {
-                if (props.isRowSelectable(visibleRows.value[i].value))
+                if (props.isRowSelectable(availableRows.value[i].value))
                     newIndex = i;
             }
         } else {
             for (let i = index; i >= 0 && newIndex === undefined; i--) {
-                if (props.isRowSelectable(visibleRows.value[i].value))
+                if (props.isRowSelectable(availableRows.value[i].value))
                     newIndex = i;
             }
         }
-        if (newIndex != undefined && newIndex >= 0) {
-            selectRow(visibleRows.value[newIndex], index, event);
-        }
+        if (newIndex != undefined && newIndex >= 0)
+            selectRow(availableRows.value[newIndex], event);
     } else {
-        selectRow(row, index, event);
+        selectRow(row, event);
     }
 }
 
@@ -572,8 +601,8 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
  * Row click listener.
  * Emit all necessary events.
  */
-function selectRow(row: TableRow<T>, index: number, event: Event): void {
-    emits("click", row.value, index, event);
+function selectRow(row: TableRow<T>, event: Event): void {
+    emits("click", row.value, row.index, event);
 
     if (!props.selectable) return;
 
@@ -585,35 +614,53 @@ function selectRow(row: TableRow<T>, index: number, event: Event): void {
     emits("select", row.value, tableSelectedRow.value);
 }
 
-// --- Filter Feature ---
+// #endregion --- Select Feature ---
 
+// #region --- Filter Feature ---
+
+/** search filter record alias { fieldKey: filterValue } */
 const filters = ref<Record<string, string>>({});
 
-watch(
-    filters,
-    (value) => {
-        if (props.backendFiltering) return;
-        if (props.debounceSearch)
-            useDebounce(
-                () => handleFiltersChange(value),
-                props.debounceSearch,
-            )();
-        else handleFiltersChange(value);
-    },
-    { deep: true },
+/** check if has any searchable column */
+const hasSearchableColumns = computed(() =>
+    tableColumns.value.some((column) => column.searchable),
 );
+
+let debouncedFilter: ReturnType<
+    typeof useDebounce<Parameters<typeof handleFiltersChange>>
+>;
+
+// initialise and update debounces filter function
+watch(
+    () => props.debounceSearch,
+    (debounce) =>
+        (debouncedFilter = useDebounce(handleFiltersChange, debounce || 0)),
+    { immediate: true },
+);
+
+// react on filters got changed
+watch(filters, (value) => debouncedFilter(value), { deep: true });
 
 function handleFiltersChange(value: Record<string, string>): void {
     emits("filters-change", value);
-    // recompute rows with updated filters
-    processTableData();
+    // if not backend filtered, recompute rows visibility with updated filters
+    if (!props.backendFiltering) {
+        filterTableRows();
+        // force tableRows reactivity to update
+        triggerRef(tableRows);
+    }
 }
 
 function onFiltersEvent(event: Event): void {
     emits("filters-event", props.filtersEvent, filters.value, event);
 }
 
-/** check whether a row is filtered by filter or not */
+/**
+ * check whether a row is filtered by active filters or not
+ * @param row - row element
+ *
+ * @returns is row filtered in
+ * */
 function isRowFiltered(row: T): boolean {
     if (!Object.values(filters.value).filter(Boolean).length) return true;
     return Object.entries(filters.value).some(([key, filter]) => {
@@ -640,11 +687,9 @@ function isRowFiltered(row: T): boolean {
     });
 }
 
-function filterRows(rows: TableRow<T>[]): TableRow<T>[] {
-    return rows.filter((row) => isRowFiltered(row.value));
-}
+// #endregion --- Filter Feature ---
 
-// --- Sort Feature ---
+// #region --- Sort Feature ---
 
 const currentSortColumn = ref<TableColumnItem<T>>();
 const isAsc = ref(true);
@@ -660,7 +705,7 @@ function isColumnSorted(column: TableColumnItem<T>): boolean {
 }
 
 // call initSort only first time (for example async data)
-// initSort must be called after TableColumns got initialised first time
+// initSort must be called after async TableColumns got initialised first time
 onMounted(() => nextTick(() => initSort()));
 
 /** initial sorted column based on the default-sort prop */
@@ -688,7 +733,7 @@ function sort(
     updateDirection = false,
     event?: Event,
 ): void {
-    if (!column || !column.sortable) return;
+    if (!column?.sortable) return;
 
     if (updateDirection)
         isAsc.value = isColumnSorted(column)
@@ -705,8 +750,9 @@ function sort(
         );
 
     currentSortColumn.value = column;
-    // recompute rows with updated currentSortColumn
-    processTableData();
+
+    // if not backend sorted, sort rows by mutating the tableRows array
+    if (!props.backendSorting) sortByColumn(tableRows.value);
 }
 
 function sortByField(field: string, direction: "asc" | "desc"): void {
@@ -729,10 +775,13 @@ function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
             ? (a, b, asc): number => column.customSort!(a.value, b.value, asc)
             : undefined,
         isAsc.value,
+        true,
     );
 }
 
-// --- Checkable Feature ---
+// #endregion --- Sort Feature ---
+
+// #region --- Checkable Feature ---
 
 const tableCheckedRows = defineModel<T[]>("checkedRows", {
     default: [],
@@ -740,7 +789,7 @@ const tableCheckedRows = defineModel<T[]>("checkedRows", {
 
 /** check if all rows in the page are checked */
 const isAllChecked = computed(() => {
-    const validVisibleData = visibleRows.value.filter((row) =>
+    const validVisibleData = availableRows.value.filter((row) =>
         props.isRowCheckable(row.value),
     );
     if (validVisibleData.length === 0) return false;
@@ -751,7 +800,7 @@ const isAllChecked = computed(() => {
 
 /** check if all rows in the page are checkable */
 const isAllUncheckable = computed(
-    () => !visibleRows.value.some((row) => props.isRowCheckable(row.value)),
+    () => !availableRows.value.some((row) => props.isRowCheckable(row.value)),
 );
 
 /** check if the row is checked (is added to the array) */
@@ -785,7 +834,7 @@ function checkAll(): void {
         tableCheckedRows.value = [];
     else {
         // else set all visible rows as checked
-        tableCheckedRows.value = visibleRows.value
+        tableCheckedRows.value = availableRows.value
             .filter((row) => props.isRowCheckable(row.value))
             .map((row) => row.value);
     }
@@ -805,7 +854,9 @@ function checkRow(row: TableRow<T>): void {
     nextTick(() => emits("check", tableCheckedRows.value, row.value));
 }
 
-// --- Detail Row Feature ---
+// #endregion --- Checkable Feature ---
+
+// #region --- Detail Row Feature ---
 
 const visibleDetailedRows = defineModel<T[]>("detailedRows", {
     default: [],
@@ -850,7 +901,9 @@ function isActiveDetailRow(row: TableRow<T>): boolean {
     return props.detailed && isVisibleDetailRow(row);
 }
 
-// --- Drag&Drop Feature ---
+// #endregion --- Detail Row Feature ---
+
+// #region --- Drag&Drop Feature ---
 
 const isDraggingRow = ref(false);
 const isDraggingColumn = ref(false);
@@ -862,104 +915,82 @@ const canDragColumn = computed(
 );
 
 /** emits drag start event */
-function handleDragStart(
-    row: TableRow<T>,
-    index: number,
-    event: DragEvent,
-): void {
+function handleDragStart(row: TableRow<T>, event: DragEvent): void {
     if (!props.draggable) return;
-    emits("dragstart", row.value, index, event);
+    emits("dragstart", row.value, row.index, event);
 }
 
 /** emits drag leave event */
-function handleDragEnd(
-    row: TableRow<T>,
-    index: number,
-    event: DragEvent,
-): void {
+function handleDragEnd(row: TableRow<T>, event: DragEvent): void {
     if (!props.draggable) return;
-    emits("dragend", row.value, index, event);
+    emits("dragend", row.value, row.index, event);
 }
 
 /** emits drop event */
-function handleDrop(row: TableRow<T>, index: number, event: DragEvent): void {
+function handleDrop(row: TableRow<T>, event: DragEvent): void {
     if (!props.draggable) return;
-    emits("drop", row.value, index, event);
+    emits("drop", row.value, row.index, event);
 }
 
 /** emits drag over event */
-function handleDragOver(
-    row: TableRow<T>,
-    index: number,
-    event: DragEvent,
-): void {
+function handleDragOver(row: TableRow<T>, event: DragEvent): void {
     if (!props.draggable) return;
-    emits("dragover", row.value, index, event);
+    emits("dragover", row.value, row.index, event);
 }
 
 /** emits drag leave event */
-function handleDragLeave(
-    row: TableRow<T>,
-    index: number,
-    event: DragEvent,
-): void {
+function handleDragLeave(row: TableRow<T>, event: DragEvent): void {
     if (!props.draggable) return;
-    emits("dragleave", row.value, index, event);
+    emits("dragleave", row.value, row.index, event);
 }
 
 /** emits drag start event (column) */
 function handleColumnDragStart(
-    column: TableColumn<T>,
-    index: number,
+    column: TableColumnItem<T>,
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
     isDraggingColumn.value = true;
-    emits("columndragstart", column, index, event);
+    emits("columndragstart", column.value, column.index, event);
 }
 
 /** emits drag leave event (column) */
 function handleColumnDragEnd(
-    column: TableColumn<T>,
-    index: number,
+    column: TableColumnItem<T>,
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
     isDraggingColumn.value = false;
-    emits("columndragend", column, index, event);
+    emits("columndragend", column.value, column.index, event);
 }
 
 /** emits drop event (column) */
-function handleColumnDrop(
-    column: TableColumn<T>,
-    index: number,
-    event: DragEvent,
-): void {
+function handleColumnDrop(column: TableColumnItem<T>, event: DragEvent): void {
     if (!canDragColumn.value) return;
-    emits("columndrop", column, index, event);
+    emits("columndrop", column.value, column.index, event);
 }
 
 /** emits drag over event (column) */
 function handleColumnDragOver(
-    column: TableColumn<T>,
-    index: number,
+    column: TableColumnItem<T>,
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
-    emits("columndragover", column, index, event);
+    emits("columndragover", column.value, column.index, event);
 }
 
 /** emits drag leave event (column) */
 function handleColumnDragLeave(
-    column: TableColumn<T>,
-    index: number,
+    column: TableColumnItem<T>,
     event: DragEvent,
 ): void {
     if (!canDragColumn.value) return;
-    emits("columndragleave", column, index, event);
+    emits("columndragleave", column.value, column.index, event);
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Drag&Drop Feature ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-table__root"],
@@ -988,14 +1019,14 @@ const tableClasses = defineClasses(
         computed(
             () =>
                 (props.hoverable || props.selectable) &&
-                !!visibleRows.value.length,
+                !!availableRows.value.length,
         ),
     ],
     [
         "emptyClass",
         "o-table--empty",
         null,
-        computed(() => !visibleRows.value.length),
+        computed(() => !availableRows.value.length),
     ],
 );
 
@@ -1019,17 +1050,25 @@ const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
 
-const thCheckboxClasses = defineClasses([
-    "thCheckboxClass",
-    "o-table__th-checkbox",
-]);
+const thCheckboxClasses = defineClasses(
+    ["thCheckboxClass", "o-table__th-checkbox"],
+    [
+        "thStickyClass",
+        "o-table__th--sticky",
+        null,
+        computed(() => props.stickyCheckbox),
+    ],
+);
 
 const thDetailedClasses = defineClasses([
     "thDetailedClass",
-    "o-table__th--detailed",
+    "o-table__th-detailed",
 ]);
 
-const thSubheadingClasses = defineClasses(["thSubheadingClass", "o-table__th"]);
+const thSubheadingClasses = defineClasses([
+    "thSubheadingClass",
+    "o-table__th-subheading",
+]);
 
 const thSortIconClasses = defineClasses([
     "thSortIconClass",
@@ -1044,6 +1083,13 @@ const trSelectedClasses = defineClasses([
 const trCheckedClasses = defineClasses([
     "trCheckedClass",
     "o-table__tr--checked",
+]);
+
+const trEmptyClasses = defineClasses(["trEmptyClass", "o-table__tr-empty"]);
+
+const trDetailedClasses = defineClasses([
+    "trDetailedClass",
+    "o-table__tr-detail",
 ]);
 
 const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
@@ -1063,8 +1109,6 @@ const tdDetailedChevronClasses = defineClasses([
     "o-table__td-chevron",
 ]);
 
-const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
-
 const mobileSortClasses = defineClasses([
     "mobileSortClass",
     "o-table__mobile-sort",
@@ -1079,7 +1123,7 @@ const paginationWrapperRootClasses = computed(() =>
     getActiveClasses(paginationWrapperClasses),
 );
 
-function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
+function rowClasses(row: TableRow<T>): ClassBind[] {
     const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
         ? trSelectedClasses.value
         : [];
@@ -1088,21 +1132,28 @@ function rowClasses(row: TableRow<T>, index: number): ClassBind[] {
 
     const rowClass =
         typeof props.rowClass === "function"
-            ? props.rowClass(row.value, index) || ""
+            ? props.rowClass(row.value, row.index) || ""
             : "";
 
     return [...selectedClasses, ...checkedClasses, { [rowClass]: true }];
 }
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// compute initial row visibility
+filterTableRows();
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ rows: tableData, sort: sortByField });
+defineExpose({ rows: tableRows, sort: sortByField });
+
+// #endregion
 </script>
 
 <template>
     <div :class="rootClasses" data-oruga="table">
-        <div ref="slotElement" style="display: none">
+        <div ref="slotsWrapper" style="display: none">
             <!--
                 @slot Place o-table-column here
             -->
@@ -1160,7 +1211,6 @@ defineExpose({ rows: tableData, sort: sortByField });
                 :total="tableTotal"
                 :change="(page) => (tableCurrentPage = page)">
                 <o-table-pagination
-                    v-bind="$attrs"
                     v-model:current="tableCurrentPage"
                     :paginated="paginated"
                     :per-page="perPage"
@@ -1186,10 +1236,18 @@ defineExpose({ rows: tableData, sort: sortByField });
 
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
+                v-if="tableColumns.length"
                 :class="tableClasses"
-                :tabindex="selectable ? 0 : undefined"
-                @keydown.self.prevent.up="onArrowPressed(-1, $event)"
-                @keydown.self.prevent.down="onArrowPressed(1, $event)">
+                :tabindex="selectable || isScrollable ? 0 : undefined"
+                :aria-rowcount="rowCount"
+                :aria-colcount="columnCount"
+                v-bind="$attrs"
+                @keydown.prevent.up="onArrowPressed(-1, $event)"
+                @keydown.prevent.down="onArrowPressed(1, $event)"
+                @keydown.prevent.home="selectRow(availableRows[0], $event)"
+                @keydown.prevent.end="
+                    selectRow(availableRows[availableRows.length - 1], $event)
+                ">
                 <caption v-if="$slots.caption">
                     <!--
                         @slot Define a table caption here
@@ -1197,20 +1255,25 @@ defineExpose({ rows: tableData, sort: sortByField });
                     <slot name="caption" />
                 </caption>
 
-                <thead v-if="tableColumns.length && showHeader">
+                <thead v-if="showHeader">
                     <!--
                         @slot Define preheader content here
                     -->
                     <slot name="preheader" />
-                    <tr>
+
+                    <tr :aria-rowindex="1">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
-                            :class="[...thBaseClasses, ...thDetailedClasses]" />
+                            :class="[...thBaseClasses, ...thDetailedClasses]"
+                            :aria-colindex="1"
+                            aria-hidden="true" />
+
                         <!-- checkable column left -->
                         <th
                             v-if="checkable && checkboxPosition === 'left'"
-                            :class="[...thBaseClasses, ...thCheckboxClasses]">
+                            :class="[...thBaseClasses, ...thCheckboxClasses]"
+                            :aria-colindex="showDetailRowIcon ? 2 : 1">
                             <!--
                                 @slot Override check all checkbox
                                 @binding {boolean} is-all-checked - if all rows are checked
@@ -1229,47 +1292,58 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     name="row_check_all"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
+                                    aria-label="Check all"
                                     @update:model-value="checkAll" />
                             </slot>
                         </th>
+
                         <!-- row data columns -->
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="`${column.identifier}_${index}_header`"
-                            v-bind="column.thAttrsData"
-                            :class="[...thBaseClasses, ...column.thClasses]"
-                            :style="isMobileActive ? {} : column.style"
-                            :draggable="canDragColumn"
-                            @click.stop="sort(column, true, $event)"
-                            @dragstart="
-                                handleColumnDragStart(column, index, $event)
-                            "
-                            @dragend="
-                                handleColumnDragEnd(column, index, $event)
-                            "
-                            @drop="handleColumnDrop(column, index, $event)"
-                            @dragover="
-                                handleColumnDragOver(column, index, $event)
-                            "
-                            @dragleave="
-                                handleColumnDragLeave(column, index, $event)
-                            ">
-                            <template v-if="column.$slots?.header">
+                        <template
+                            v-for="column in tableColumns"
+                            :key="column.identifier">
+                            <th
+                                v-if="column.visible && !column.hidden"
+                                v-bind="column.thAttrsData"
+                                :class="[...thBaseClasses, ...column.thClasses]"
+                                :style="isMobileActive ? {} : column.style"
+                                :draggable="canDragColumn"
+                                :aria-sort="
+                                    isColumnSorted(column)
+                                        ? isAsc
+                                            ? 'ascending'
+                                            : 'descending'
+                                        : undefined
+                                "
+                                :aria-colindex="
+                                    ariaColIndexStart + column.index
+                                "
+                                @click.stop="sort(column, true, $event)"
+                                @dragstart="
+                                    handleColumnDragStart(column, $event)
+                                "
+                                @dragend="handleColumnDragEnd(column, $event)"
+                                @drop="handleColumnDrop(column, $event)"
+                                @dragover="handleColumnDragOver(column, $event)"
+                                @dragleave="
+                                    handleColumnDragLeave(column, $event)
+                                ">
                                 <o-slot-component
+                                    v-if="column.$slots?.header"
                                     :component="column.$el"
                                     name="header"
                                     tag="span"
-                                    :props="{ column, index }" />
-                            </template>
-                            <template v-else>
-                                <span>
+                                    :props="{
+                                        column: column.value,
+                                        index: column.index,
+                                    }" />
+
+                                <span v-else>
                                     {{ column.label }}
                                     <span
-                                        v-show="
-                                            column.sortable &&
-                                            isColumnSorted(column)
-                                        "
-                                        :class="thSortIconClasses">
+                                        v-if="column.sortable"
+                                        v-show="isColumnSorted(column)"
+                                        :class="thSortIconClasses"
+                                        :aria-hidden="!isColumnSorted(column)">
                                         <o-icon
                                             :icon="sortIcon"
                                             :pack="iconPack"
@@ -1278,13 +1352,16 @@ defineExpose({ rows: tableData, sort: sortByField });
                                             :rotation="!isAsc ? 180 : 0" />
                                     </span>
                                 </span>
-                            </template>
-                        </th>
+                            </th>
+                        </template>
 
                         <!-- checkable column right -->
                         <th
                             v-if="checkable && checkboxPosition === 'right'"
-                            :class="[...thBaseClasses, ...thCheckboxClasses]">
+                            :class="[...thBaseClasses, ...thCheckboxClasses]"
+                            :aria-colindex="
+                                ariaColIndexStart + tableColumns.length
+                            ">
                             <template v-if="headerCheckable">
                                 <!--
                                     @slot Override check all checkbox
@@ -1303,106 +1380,152 @@ defineExpose({ rows: tableData, sort: sortByField });
                                         name="row_check_all"
                                         :variant="checkboxVariant"
                                         :disabled="isAllUncheckable"
+                                        aria-label="Check all"
                                         @update:model-value="checkAll" />
                                 </slot>
                             </template>
                         </th>
                     </tr>
 
-                    <tr v-if="hasSearchableColumns">
+                    <tr v-if="hasSearchableColumns" :aria-rowindex="2">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
-                            :class="[...thBaseClasses, ...thDetailedClasses]" />
+                            :class="[...thBaseClasses, ...thDetailedClasses]"
+                            aria-hidden="true" />
+
                         <!-- checkable column left -->
                         <th v-if="checkable && checkboxPosition === 'left'" />
+
                         <!-- row data columns -->
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="`${column.identifier}_${index}_searchable`"
-                            v-bind="column.thAttrsData"
-                            :class="[...thBaseClasses, ...column.thClasses]"
-                            :style="isMobileActive ? {} : column.style">
-                            <template v-if="column.searchable">
-                                <template v-if="column.$slots?.searchable">
-                                    <o-slot-component
-                                        :component="column.$el"
-                                        name="searchable"
-                                        tag="span"
-                                        :props="{ column, index, filters }" />
+                        <template
+                            v-for="column in tableColumns"
+                            :key="column.identifier">
+                            <th
+                                v-if="column.visible && !column.hidden"
+                                v-bind="column.thAttrsData"
+                                :class="[...thBaseClasses, ...column.thClasses]"
+                                :style="isMobileActive ? {} : column.style">
+                                <template v-if="column.searchable">
+                                    <template v-if="column.$slots?.searchable">
+                                        <o-slot-component
+                                            :component="column.$el"
+                                            name="searchable"
+                                            tag="span"
+                                            :props="{
+                                                column: column.value,
+                                                index: column.index,
+                                                filters,
+                                            }" />
+                                    </template>
+                                    <o-input
+                                        v-else-if="column.field"
+                                        v-model="filters[column.field]"
+                                        :name="`column_${column.field}_filter`"
+                                        :type="
+                                            column.numeric ? 'number' : 'search'
+                                        "
+                                        :placeholder="filtersPlaceholder"
+                                        :icon="filtersIcon"
+                                        :pack="iconPack"
+                                        size="small"
+                                        :aria-label="`${column.label} search`"
+                                        @[filtersEvent]="onFiltersEvent" />
                                 </template>
-                                <o-input
-                                    v-else-if="column.field"
-                                    v-model="filters[column.field]"
-                                    :name="`column_${column.field}_filter`"
-                                    :type="column.numeric ? 'number' : 'search'"
-                                    :pack="iconPack"
-                                    :placeholder="filtersPlaceholder"
-                                    :icon="filtersIcon"
-                                    size="small"
-                                    @[filtersEvent]="onFiltersEvent" />
-                            </template>
-                        </th>
+                            </th>
+                        </template>
+
                         <!-- checkable column right -->
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
 
-                    <tr v-if="hasCustomSubheadings">
+                    <tr
+                        v-if="hasSubheadings"
+                        :aria-rowindex="hasSearchableColumns ? 3 : 2">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
                             :class="[...thBaseClasses, ...thDetailedClasses]" />
+
                         <!-- checkable column left -->
                         <th v-if="checkable && checkboxPosition === 'left'" />
+
                         <!-- row data columns -->
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="`${column.identifier}_${index}_subheading`"
-                            :style="isMobileActive ? {} : column.style"
-                            :class="[...thBaseClasses, ...thSubheadingClasses]">
-                            <template v-if="column.$slots?.subheading">
+                        <template
+                            v-for="column in tableColumns"
+                            :key="column.identifier">
+                            <th
+                                v-if="column.visible && !column.hidden"
+                                :style="isMobileActive ? {} : column.style"
+                                :class="[
+                                    ...thBaseClasses,
+                                    ...thSubheadingClasses,
+                                ]">
                                 <o-slot-component
+                                    v-if="column.$slots?.subheading"
                                     :component="column.$el"
                                     name="subheading"
                                     tag="span"
-                                    :props="{ column, index }" />
-                            </template>
-                            <template v-else>
-                                <slot name="subheading">
-                                    {{ column.subheading }}
-                                </slot>
-                            </template>
-                        </th>
+                                    :props="{
+                                        column: column.value,
+                                        index: column.index,
+                                    }" />
+                                <span v-else>
+                                    <slot name="subheading">
+                                        {{ column.subheading }}
+                                    </slot>
+                                </span>
+                            </th>
+                        </template>
+
                         <!-- checkable column right -->
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
                 </thead>
 
                 <tbody>
+                    <!-- table rows -->
                     <template
-                        v-for="(row, index) in visibleRows"
-                        :key="`${row.key}_${index}_row`">
+                        v-for="(row, rowIndex) in tableRows"
+                        :key="row.key">
                         <tr
-                            :class="rowClasses(row, index)"
+                            v-if="!row.hidden"
+                            :class="rowClasses(row)"
                             :draggable="canDragRow"
-                            @click="selectRow(row, index, $event)"
+                            :aria-rowindex="ariaRowIndexStart + rowIndex + 1"
+                            @click="selectRow(row, $event)"
                             @dblclick="
-                                $emit('dblclick', row.value, index, $event)
+                                $emit('dblclick', row.value, row.index, $event)
                             "
                             @mouseenter="
-                                $emit('mouseenter', row.value, index, $event)
+                                $emit(
+                                    'mouseenter',
+                                    row.value,
+                                    row.index,
+                                    $event,
+                                )
                             "
                             @mouseleave="
-                                $emit('mouseleave', row.value, index, $event)
+                                $emit(
+                                    'mouseleave',
+                                    row.value,
+                                    row.index,
+                                    $event,
+                                )
                             "
                             @contextmenu="
-                                $emit('contextmenu', row.value, index, $event)
+                                $emit(
+                                    'contextmenu',
+                                    row.value,
+                                    row.index,
+                                    $event,
+                                )
                             "
-                            @dragstart="handleDragStart(row, index, $event)"
-                            @dragend="handleDragEnd(row, index, $event)"
-                            @drop="handleDrop(row, index, $event)"
-                            @dragover="handleDragOver(row, index, $event)"
-                            @dragleave="handleDragLeave(row, index, $event)">
+                            @dragstart="handleDragStart(row, $event)"
+                            @dragend="handleDragEnd(row, $event)"
+                            @drop="handleDrop(row, $event)"
+                            @dragover="handleDragOver(row, $event)"
+                            @dragleave="handleDragLeave(row, $event)">
                             <!-- detailed toggle column -->
                             <td
                                 v-if="showDetailRowIcon"
@@ -1416,9 +1539,15 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     :pack="iconPack"
                                     :rotation="isVisibleDetailRow(row) ? 90 : 0"
                                     role="button"
+                                    tabindex="0"
                                     clickable
                                     both
-                                    @click.stop="toggleDetails(row)" />
+                                    :aria-label="`Open ${row.label} details`"
+                                    @click.prevent="toggleDetails(row)"
+                                    @keydown.prevent.enter="toggleDetails(row)"
+                                    @keydown.prevent.space="
+                                        toggleDetails(row)
+                                    " />
                             </td>
 
                             <!-- checkable column left -->
@@ -1431,40 +1560,46 @@ defineExpose({ rows: tableData, sort: sortByField });
                                 <o-checkbox
                                     :model-value="isChecked(row)"
                                     autocomplete="off"
-                                    :name="`row_${index}_check`"
+                                    :name="`row_${row.index}_check`"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
+                                    :aria-label="`Check ${row.label}`"
                                     @update:model-value="checkRow(row)" />
                             </td>
 
                             <!-- row data columns -->
-                            <o-slot-component
-                                v-for="(column, colindex) in visibleColumns"
-                                :key="`${column.identifier}_${index}_${colindex}`"
-                                v-bind="column.tdAttrsData[index]"
-                                :component="column.$el"
-                                name="default"
-                                tag="td"
-                                :class="[...tdBaseClasses, ...column.tdClasses]"
-                                :style="isMobileActive ? {} : column.style"
-                                :data-label="column.label"
-                                :props="{
-                                    row: row.value,
-                                    column,
-                                    index,
-                                    colindex,
-                                    toggleDetails: () => toggleDetails(row),
-                                }"
-                                @click="
-                                    $emit(
-                                        'cell-click',
-                                        row.value,
-                                        column,
-                                        index,
-                                        colindex,
-                                        $event,
-                                    )
-                                " />
+                            <template
+                                v-for="column in tableColumns"
+                                :key="column.identifier">
+                                <o-slot-component
+                                    v-if="column.visible && !column.hidden"
+                                    v-bind="column.tdAttrsData[row.index]"
+                                    :component="column.$el"
+                                    name="default"
+                                    tag="td"
+                                    :class="[
+                                        ...tdBaseClasses,
+                                        ...column.tdClasses,
+                                    ]"
+                                    :style="isMobileActive ? {} : column.style"
+                                    :props="{
+                                        row: row.value,
+                                        index: row.index,
+                                        column: column.value,
+                                        colindex: column.index,
+                                        toggleDetails: () => toggleDetails(row),
+                                    }"
+                                    @click="
+                                        $emit(
+                                            'cell-click',
+                                            row.value,
+                                            column.value,
+                                            row.index,
+                                            column.index,
+                                            $event,
+                                        )
+                                    " />
+                            </template>
 
                             <!-- checkable column right -->
                             <td
@@ -1478,11 +1613,14 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row.value)"
+                                    :aria-label="`Check ${row.label}`"
                                     @update:model-value="checkRow(row)" />
                             </td>
                         </tr>
 
-                        <transition :name="detailTransition">
+                        <transition
+                            v-if="props.detailed"
+                            :name="detailTransition">
                             <template v-if="isActiveDetailRow(row)">
                                 <!--
                                     @slot Place row detail content here
@@ -1493,11 +1631,11 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     v-if="customDetailRow"
                                     name="detail"
                                     :row="row.value"
-                                    :index="index" />
+                                    :index="row.index" />
                                 <tr
                                     v-else
                                     :key="`${row.key}_detail`"
-                                    :class="detailedClasses">
+                                    :class="trDetailedClasses">
                                     <td :colspan="columnCount">
                                         <!--
                                             @slot Place row detail content here
@@ -1507,14 +1645,14 @@ defineExpose({ rows: tableData, sort: sortByField });
                                         <slot
                                             name="detail"
                                             :row="row.value"
-                                            :index="index" />
+                                            :index="row.index" />
                                     </td>
                                 </tr>
                             </template>
                         </transition>
                     </template>
 
-                    <tr v-if="!visibleRows.length">
+                    <tr v-if="!availableRows.length" :class="trEmptyClasses">
                         <td :colspan="columnCount">
                             <!--
                                 @slot Define content if table is empty
@@ -1524,6 +1662,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                                     v-if="emptyIcon"
                                     :icon="emptyIcon"
                                     :size="emptyIconSize"
+                                    :pack="iconPack"
                                     both />
                                 {{ emptyLabel }}
                             </slot>
@@ -1542,7 +1681,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             v-if="hasCustomFooterSlot()"
                             name="footer"
                             :column-count="columnCount"
-                            :row-count="visibleRows?.length" />
+                            :row-count="rowCount" />
                         <th v-else :colspan="columnCount">
                             <!--
                                 @slot Define a custom footer
@@ -1552,7 +1691,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                             <slot
                                 name="footer"
                                 :column-count="columnCount"
-                                :row-count="visibleRows?.length" />
+                                :row-count="rowCount" />
                         </th>
                     </tr>
                 </tfoot>
@@ -1569,8 +1708,7 @@ defineExpose({ rows: tableData, sort: sortByField });
                     :active="loading"
                     :icon="loadingIcon"
                     :label="loadingLabel"
-                    role="status"
-                    :aria-hidden="!loading" />
+                    role="status" />
             </slot>
         </div>
 
@@ -1595,7 +1733,6 @@ defineExpose({ rows: tableData, sort: sortByField });
                 :total="tableTotal"
                 :change="(page) => (tableCurrentPage = page)">
                 <o-table-pagination
-                    v-bind="$attrs"
                     v-model:current="tableCurrentPage"
                     :paginated="paginated"
                     :per-page="perPage"

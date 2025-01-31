@@ -612,6 +612,8 @@ See icon library documentation for custom classes. */
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
                 scroll: "clip" | "keep";
+                /** Role attribute to be passed to the div wrapper for better accessibility */
+                role: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class for the root element when fullpage */
@@ -631,7 +633,7 @@ but will set body to position fixed, might break some layouts. */
             Partial<{
                 /** Role attribute to be passed to the list container for better accessibility.
 Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: "dialog" | "list" | "menu";
+                ariaRole: "menu" | "tree";
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon size */
@@ -640,25 +642,31 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                 rootClass: ClassDefinition;
                 /** Class of the menu list */
                 listClass: ClassDefinition;
-                /** Class of the menu list label */
-                listLabelClass: ClassDefinition;
+                /** Class of the menu label */
+                labelClass: ClassDefinition;
                 /** Transition name to apply on menu list */
                 animation: string;
                 /** Menu item tag name */
-                menuTag: DynamicComponent;
-                /** Role attribute to be passed to the list item for better accessibility. */
-                itemAriaRole: string;
+                itemTag: DynamicComponent;
                 /** Class of the root element of menu item */
                 itemClass: ClassDefinition;
+                /** Class of the menu item root when active */
+                itemActiveClass: ClassDefinition;
+                /** Class of the menu item root when focused */
+                itemFocusedClass: ClassDefinition;
+                /** Class of the menu item root when disabled */
+                itemDisabledClass: ClassDefinition;
                 /** Class of the menu item */
                 itemButtonClass: ClassDefinition;
-                /** Class of the active menu item */
+                /** Class of the menu item when active */
                 itemButtonActiveClass: ClassDefinition;
-                /** Class of the disabled menu item */
+                /** Class of the menu item when focused */
+                itemButtonFocusedClass: ClassDefinition;
+                /** Class of the menu item when disabled */
                 itemButtonDisabledClass: ClassDefinition;
                 /** Class of the menu item with icon */
                 itemButtonIconClass: ClassDefinition;
-                /** Class of the menu item when is a submenu */
+                /** Class of the menu item submenu */
                 itemSubmenuClass: ClassDefinition;
             }>;
         modal?: ComponentConfigBase &
@@ -1239,8 +1247,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 footerClass: ClassDefinition;
                 /** Class of the Table when it is empty */
                 emptyClass: ClassDefinition;
-                /** Class of the Table row detail */
-                detailedClass: ClassDefinition;
                 /** Class of the Table when is bordered */
                 borderedClass: ClassDefinition;
                 /** Class of the Table when rows are striped */
@@ -1257,6 +1263,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 trSelectedClass: ClassDefinition;
                 /** Class of the Table row when checkable and checked */
                 trCheckedClass: ClassDefinition;
+                /** Class of the detail Table row */
+                trDetailedClass: ClassDefinition;
+                /** Class of the Table row when table is empty */
+                trEmptyClass: ClassDefinition;
                 /** Class of the Table `th` element */
                 thClass: ClassDefinition;
                 /** Class of the Table `th` element when component is positioned */
@@ -1484,7 +1494,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tooltip trigger events */
                 triggers: ("click" | "contextmenu" | "focus" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
-                closeable: boolean | string[];
+                closeable: boolean | ("escape" | "outside" | "content")[];
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */

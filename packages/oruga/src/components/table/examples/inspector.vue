@@ -125,16 +125,6 @@ const inspectData = [
         },
     },
     {
-        class: "detailedClass",
-        description: "Class of the Table row detail",
-        properties: ["detailed"],
-        warning: "Expand details to see it in action!",
-        action: (cmp, data) => {
-            data.tableClass = "inspector_table";
-            data.mobileCards = true;
-        },
-    },
-    {
         class: "narrowedClass",
         properties: ["narrowed"],
         description: "Class of the Table when rows are narrowed",
@@ -168,6 +158,16 @@ const inspectData = [
         },
     },
     {
+        class: "trDetailedClass",
+        description: "Class of the detail Table row ",
+        properties: ["detailed"],
+        warning: "Expand details to see it in action!",
+        action: (cmp, data) => {
+            data.tableClass = "inspector_table";
+            data.mobileCards = true;
+        },
+    },
+    {
         class: "trSelectedClass",
         description: "Class of the Table row when selected",
         warning: "Select a row of the table to see it in action!",
@@ -182,6 +182,13 @@ const inspectData = [
         properties: ["checkable"],
         action: (cmp, data) => {
             data.checkable = true;
+        },
+    },
+    {
+        class: "trEmptyClass",
+        description: "Class of the Table row when table is empty",
+        action: (cmp, data) => {
+            data.data = [];
         },
     },
     {

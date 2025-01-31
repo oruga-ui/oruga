@@ -9,7 +9,9 @@ import {
     triggerRef,
     watchEffect,
     useTemplateRef,
+    toValue,
     type Component,
+    type MaybeRefOrGetter,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -197,10 +199,22 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
  */
 watchEffect(() => {
     // filter options by input value
-    filterOptionsItems(groupedOptions, inputValue, props.filter);
+    filterOptionsItems<T>(groupedOptions, (o) => filterItems(o, inputValue));
     // trigger reactive update of groupedOptions
     triggerRef(groupedOptions);
 });
+
+function filterItems(
+    option: OptionsItem<T>,
+    value: MaybeRefOrGetter<string>,
+): boolean {
+    if (typeof props.filter === "function")
+        return props.filter(option.value, toValue(value));
+    else
+        return !String(option.label)
+            .toLowerCase()
+            .includes(toValue(value)?.toLowerCase());
+}
 
 // set initial inputValue if selected is given
 if (selectedValue.value) {

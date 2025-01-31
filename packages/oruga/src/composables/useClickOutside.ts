@@ -27,6 +27,7 @@ export function useClickOutside(
 
     // set default options
     const listenerOptions = Object.assign({ ignore: [] }, options);
+
     // convert elements to ignore list
     const ignores = Array.isArray(elements) ? elements : [elements];
 
