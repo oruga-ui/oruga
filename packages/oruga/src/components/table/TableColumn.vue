@@ -56,9 +56,10 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<TableComponent>({
-    data: providedData,
-});
+const { parent, item } = useProviderChild<
+    TableComponent,
+    TableColumnComponent<T>
+>({ data: providedData });
 
 // --- Computed Component Classes ---
 
@@ -122,7 +123,7 @@ const filters = {} as Record<string, string>;
 </script>
 
 <template>
-    <span data-oruga="table-column" :data-id="item.identifier">
+    <span data-oruga="table-column" :data-id="`table-${item.identifier}`">
         {{ label }}
 
         <!--

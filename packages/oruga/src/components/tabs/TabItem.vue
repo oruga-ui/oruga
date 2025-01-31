@@ -57,7 +57,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<TabsComponent>({
+const { parent, item } = useProviderChild<TabsComponent, TabItemComponent<T>>({
     data: providedData,
 });
 
@@ -169,7 +169,6 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                 @binding {boolean} active - if item is shown 
             -->
             <slot :active="isActive && visible">
-                <template v-if="!parent.destroyOnHide || (isActive && visible)">
                     <!-- injected component -->
                     <component
                         :is="component"
@@ -177,9 +176,8 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
                         v-bind="$props.props"
                         v-on="$props.events || {}" />
 
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </template>
+                <!-- default content prop -->
+                <template v-else>{{ content }}</template>
             </slot>
 
             <!--

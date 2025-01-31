@@ -86,13 +86,12 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 
 // provided data is a computed ref to enjure reactivity
 const provideData = computed<TabsComponent>(() => ({
-    activeIndex: activeItem.value?.index || 0,
+    activeIndex: activeItem.value?.index ?? 0,
     type: props.type,
     vertical: props.vertical,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
-    destroyOnHide: props.destroyOnHide,
 }));
 
 /** provide functionalities and data to child item components */
@@ -126,19 +125,16 @@ watch(
     },
 );
 
-const activeItem = ref<TabItem<T>>(
-    items.value.find((item) => item.value === props.modelValue) ||
-        items.value[0],
-);
+/** the active item */
+const activeItem = ref<TabItem<T>>();
 
+// set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
         ? items.value.find((item) => item.value === vmodel.value) ||
           items.value[0]
         : items.value[0];
 });
-
-const activeIndex = computed(() => activeItem.value.index);
 
 const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
@@ -222,7 +218,7 @@ function getFirstViableItem(
     let newIndex = startingIndex;
     for (
         ;
-        newIndex !== activeIndex.value;
+        newIndex !== activeItem.value?.index;
         newIndex = mod(newIndex + direction, items.value.length)
     ) {
         // Break if the item at this index is viable (not disabled and is visible)
@@ -318,9 +314,9 @@ const contentClasses = defineClasses(
                 name="header"
                 :class="childItem.tabClasses"
                 role="tab"
-                :aria-selected="childItem.value === activeItem.value"
+                :aria-selected="childItem.value === activeItem?.value"
                 :tabindex="
-                    childItem.value === activeItem.value ? undefined : '-1'
+                    childItem.value === activeItem?.value ? undefined : '-1'
                 "
                 @click="tabClick(childItem)"
                 @keydown.enter="tabClick(childItem)"
