@@ -113,7 +113,7 @@ const items = computed<TabItem<T>[]>(() => {
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed(() =>
+const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
@@ -350,7 +350,7 @@ const contentClasses = defineClasses(
             -->
             <slot>
                 <o-tab-item
-                    v-for="option in groupedOptions"
+                    v-for="option in normalizedOptions"
                     v-show="!option.hidden"
                     v-bind="option.attrs"
                     :key="option.key"
