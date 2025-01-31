@@ -49,6 +49,7 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     vertical: () => getDefault("tabs.vertical", false),
     position: undefined,
     type: () => getDefault("tabs.type", "default"),
+    tag: () => getDefault("tabs.tag", "div"),
     expanded: false,
     destroyOnHide: false,
     activateOnFocus: false,
@@ -112,7 +113,7 @@ const items = computed<TabItem<T>[]>(() => {
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed(() =>
+const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
@@ -254,7 +255,19 @@ const rootClasses = defineClasses(
         "positionClass",
         "o-tabs--",
         computed(() => props.position),
-        computed(() => !!props.position && props.vertical),
+        computed(() => !!props.position),
+    ],
+    [
+        "sizeClass",
+        "o-tabs--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "typeClass",
+        "o-tabs--",
+        computed(() => props.type),
+        computed(() => !!props.type),
     ],
     ["expandedClass", "o-tabs--expanded", null, computed(() => props.expanded)],
     ["verticalClass", "o-tabs--vertical", null, computed(() => props.vertical)],
@@ -266,27 +279,7 @@ const rootClasses = defineClasses(
     ],
 );
 
-const navClasses = defineClasses(
-    ["navClass", "o-tabs__nav"],
-    [
-        "navSizeClass",
-        "o-tabs__nav--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-    [
-        "navPositionClass",
-        "o-tabs__nav--",
-        computed(() => props.position),
-        computed(() => !!props.position && !props.vertical),
-    ],
-    [
-        "navTypeClass",
-        "o-tabs__nav--",
-        computed(() => props.type),
-        computed(() => !!props.type),
-    ],
-);
+const tablistClasses = defineClasses(["tablistClass", "o-tabs__tablist"]);
 
 const contentClasses = defineClasses(
     ["contentClass", "o-tabs__content"],
@@ -301,8 +294,9 @@ const contentClasses = defineClasses(
 
 <template>
     <div ref="rootElement" :class="rootClasses" data-oruga="tabs">
-        <nav
-            :class="navClasses"
+        <component
+            :is="props.tag"
+            :class="tablistClasses"
             role="tablist"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
             <!--
@@ -310,67 +304,45 @@ const contentClasses = defineClasses(
             -->
             <slot name="start" />
 
-            <div
+            <o-slot-component
                 v-for="childItem in items"
                 v-show="childItem.visible"
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
-                :class="childItem.navClasses"
+                :component="childItem"
+                :tag="childItem.tag"
+                name="header"
+                :class="childItem.tabClasses"
                 role="tab"
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem?.value"
                 :tabindex="
                     childItem.value === activeItem?.value ? undefined : '-1'
-                ">
-                <o-slot-component
-                    v-if="childItem.$slots.header"
-                    :component="childItem"
-                    :tag="childItem.tag"
-                    name="header"
-                    :class="childItem.tabClasses"
-                    :props="{
-                        active: childItem.index === activeItem?.index,
-                    }"
-                    @click="tabClick(childItem)"
-                    @keydown.enter="tabClick(childItem)"
-                    @keydown.left="prev($event, childItem.index)"
-                    @keydown.right="next($event, childItem.index)"
-                    @keydown.up="prev($event, childItem.index)"
-                    @keydown.down="next($event, childItem.index)"
-                    @keydown.home.prevent="homePressed"
-                    @keydown.end.prevent="endPressed" />
-
-                <component
-                    :is="childItem.tag"
-                    v-else
-                    role="button"
-                    :tabindex="0"
-                    :class="childItem.tabClasses"
-                    @click="tabClick(childItem)"
-                    @keydown.enter="tabClick(childItem)"
-                    @keydown.left="prev($event, childItem.index)"
-                    @keydown.right="next($event, childItem.index)"
-                    @keydown.up="prev($event, childItem.index)"
-                    @keydown.down="next($event, childItem.index)"
-                    @keydown.home.prevent="homePressed"
-                    @keydown.end.prevent="endPressed">
-                    <o-icon
-                        v-if="childItem.icon"
-                        :class="childItem.iconClasses"
-                        :icon="childItem.icon"
-                        :pack="childItem.iconPack"
-                        :size="size" />
-                    <span :class="childItem.labelClasses">
-                        {{ childItem.label }}
-                    </span>
-                </component>
-            </div>
+                "
+                @click="tabClick(childItem)"
+                @keydown.enter="tabClick(childItem)"
+                @keydown.left.prevent="prev"
+                @keydown.right.prevent="next"
+                @keydown.up.prevent="prev"
+                @keydown.down.prevent="next"
+                @keydown.home.prevent="homePressed"
+                @keydown.end.prevent="endPressed">
+                <o-icon
+                    v-if="childItem.icon"
+                    :class="childItem.iconClasses"
+                    :icon="childItem.icon"
+                    :pack="childItem.iconPack"
+                    :size="size" />
+                <span :class="childItem.labelClasses">
+                    {{ childItem.label }}
+                </span>
+            </o-slot-component>
 
             <!--
                 @slot Additional slot after tabs
             -->
             <slot name="end" />
-        </nav>
+        </component>
 
         <section :class="contentClasses">
             <!--
@@ -378,7 +350,7 @@ const contentClasses = defineClasses(
             -->
             <slot>
                 <o-tab-item
-                    v-for="option in groupedOptions"
+                    v-for="option in normalizedOptions"
                     v-show="!option.hidden"
                     v-bind="option.attrs"
                     :key="option.key"
