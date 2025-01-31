@@ -452,7 +452,7 @@ const tableRows = computed<TableRow<T>[]>(() => {
 
 /** visible rows which are filtered by viability */
 const availableRows = computed<TableRow<T>[]>(() =>
-    tableRows.value.filter((o) => isOptionViable(o)),
+    tableRows.value.filter(isOptionViable),
 );
 
 /** applies visability filter of reactive tableRows */
@@ -622,9 +622,9 @@ function selectRow(row: TableRow<T>, event: Event): void {
 const filters = ref<Record<string, string>>({});
 
 /** check if has any searchable column */
-const hasSearchableColumns = computed(() => {
-    return tableColumns.value.some((column) => column.searchable);
-});
+const hasSearchableColumns = computed(() =>
+    tableColumns.value.some((column) => column.searchable),
+);
 
 let debouncedFilter: ReturnType<
     typeof useDebounce<Parameters<typeof handleFiltersChange>>
@@ -695,9 +695,9 @@ const currentSortColumn = ref<TableColumnItem<T>>();
 const isAsc = ref(true);
 
 /** check if has any sortable column */
-const hasSortableColumns = computed(() => {
-    return tableColumns.value.some((column) => column.sortable);
-});
+const hasSortableColumns = computed(() =>
+    tableColumns.value.some((column) => column.sortable),
+);
 
 /** check if the column is the current sort column */
 function isColumnSorted(column: TableColumnItem<T>): boolean {

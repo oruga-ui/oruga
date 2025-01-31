@@ -250,9 +250,7 @@ export function getValueByPath<O, K extends keyof O | string>(
     path: K,
     defaultValue?: DeepType<O, K>,
 ): DeepType<O, K> {
-    if (!obj || typeof obj !== "object")
-        return defaultValue ?? (obj as DeepType<O, K>);
-    if (typeof path !== "string")
+    if (!obj || typeof obj !== "object" || typeof path !== "string")
         return defaultValue ?? (obj as DeepType<O, K>);
 
     const value: any = path
