@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { h } from "vue";
 import { useOruga } from "@oruga-ui/oruga-next";
 import NotificationForm from "./_notification-form.vue";
 
@@ -36,7 +37,11 @@ function queueToast(): void {
 function danger(): void {
     oruga.notification.open({
         duration: 5000,
-        message: `Something's not good, also I'm on <b>bottom</b>`,
+        // here we use a render function to create an inline component (https://vuejs.org/guide/extras/render-function)
+        component: h("div", [
+            "Something's not good, also I'm on ",
+            h("b", "bottom"),
+        ]),
         position: "bottom-right",
         variant: "danger",
         closable: true,
