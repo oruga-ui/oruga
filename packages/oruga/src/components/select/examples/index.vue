@@ -36,13 +36,16 @@ import WithIconsCode from "./with-icons.vue?raw";
 
     <h3 id="options">Options</h3>
     <div class="vp-doc">
-        <p>There are 4 ways to provide options to a select input:</p>
+        <p>There are several ways to provide options for a select input:</p>
         <ul>
-            <li>An array of primitives</li>
-            <li>An object of value/label pairs</li>
+            <li>An array of primitives <code>['A', 'B', 'C']</code></li>
             <li>
-                An array of objects with label and value properties (the same as
-                the checkbox and radio inputs)
+                An object literal with key-value pairs
+                <code>{ a: 'A', b: 'B', c: 'C' }</code>
+            </li>
+            <li>
+                An array of objects with <code>label</code> and
+                <code>value</code> properties
             </li>
             <li>
                 Using the native
@@ -65,7 +68,7 @@ import WithIconsCode from "./with-icons.vue?raw";
         :component="OptionsPrimitives"
         :code="OptionsPrimitivesCode" />
 
-    <h4 id="options-object">Value / Label object</h4>
+    <h4 id="options-object">Key-Value pair object</h4>
     <div class="vp-doc">
         <p>
             You may also provide the <code>options</code> prop where the keys

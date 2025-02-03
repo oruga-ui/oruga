@@ -33,8 +33,6 @@ ${
         ? ""
         : `<div class="vp-doc">
 ${deprecated ? `> **Deprecated** ${(deprecated[0] as ParamTag).description}\n` : ""}
-${description ? "> " + description : ""}
-
 ${functional ? renderedUsage.functionalTag : ""}
 ${author ? author.map((a) => `Author: ${(a as ParamTag).description}\n`) : ""}
 ${since ? `Since: ${(since[0] as ParamTag).description}\n` : ""}

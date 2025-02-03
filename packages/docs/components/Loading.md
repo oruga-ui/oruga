@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> A simple loading overlay
-
 </div>
 
 <div class="vp-example">

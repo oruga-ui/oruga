@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> A simple tag input field that can have autocomplete functionality
-
 </div>
 
 <div class="vp-example">

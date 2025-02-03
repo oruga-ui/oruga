@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> Select an option from a set
-
 </div>
 
 <div class="vp-example">

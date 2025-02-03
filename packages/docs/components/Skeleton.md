@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> A placeholder for content to load
-
 </div>
 
 <div class="vp-example">

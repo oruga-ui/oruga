@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> Icons take an important role of any application
-
 </div>
 
 <div class="vp-example">

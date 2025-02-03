@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
-
 </div>
 
 <div class="vp-example">

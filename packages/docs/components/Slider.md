@@ -6,8 +6,6 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> A slider to select a value or range from a given range
-
 </div>
 
 <div class="vp-example">

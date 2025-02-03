@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> Select a single or grouped options
-
 </div>
 
 <div class="vp-example">

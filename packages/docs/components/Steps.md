@@ -6,8 +6,6 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> Responsive horizontal process steps
-
 </div>
 
 <div class="vp-example">

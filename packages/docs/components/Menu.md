@@ -6,8 +6,6 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> A simple menu
-
 </div>
 
 <div class="vp-example">

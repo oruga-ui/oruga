@@ -6,8 +6,6 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> Tabulated data are sometimes needed, it's even better when it's responsive
-
 </div>
 
 <div class="vp-example">

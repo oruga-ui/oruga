@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> Upload one or more files
-
 </div>
 
 <div class="vp-example">

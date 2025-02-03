@@ -6,8 +6,6 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> A Slideshow for cycling images in confined spaces
-
 </div>
 
 <div class="vp-example">

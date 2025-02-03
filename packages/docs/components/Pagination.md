@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> A responsive and flexible pagination
-
 </div>
 
 <div class="vp-example">

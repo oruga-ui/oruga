@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> Classic modal overlay to include any content you may need
-
 </div>
 
 <div class="vp-example">

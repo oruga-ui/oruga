@@ -6,8 +6,6 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> Responsive horizontal navigation tabs, switch between contents with ease
-
 </div>
 
 <div class="vp-example">

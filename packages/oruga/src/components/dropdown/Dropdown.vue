@@ -31,7 +31,7 @@ import { maintainScrollVisibility } from "@/composables/useScrollHelper";
 import { useInfiniteScroll } from "@/composables/useInfiniteScroll";
 
 /**
- * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
+ * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content.
  * @displayName Dropdown
  * @requires ./DropdownItem.vue
  * @style _dropdown.scss

@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> Extended input that provide suggestions while the user types
-
 </div>
 
 <div class="vp-example">

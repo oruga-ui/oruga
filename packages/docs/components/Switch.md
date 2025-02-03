@@ -2,8 +2,6 @@
 
 <div class="vp-doc">
 
-> Switch between two opposing states
-
 </div>
 
 <div class="vp-example">
