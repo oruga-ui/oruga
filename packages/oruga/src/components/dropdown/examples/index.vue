@@ -27,7 +27,7 @@ import PositionCode from "./position.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <div class="vp-doc">
-        The dropdown will be a simple unselectable menu list by default.
+        <p>The dropdown will be a simple unselectable menu list by default.</p>
     </div>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
