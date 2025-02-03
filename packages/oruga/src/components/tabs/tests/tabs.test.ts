@@ -324,12 +324,12 @@ describe("OTabs tests", () => {
         describe("handle options props correctly", () => {
             test("handle options as primitves correctly", async () => {
                 const options: OptionsProp = [
-                    "Flint",
-                    "Silver",
-                    "Vane",
                     0,
                     1,
                     2,
+                    "Flint",
+                    "Silver",
+                    "Vane",
                 ];
 
                 const wrapper = mount(OTabs, { props: { options } });
@@ -346,6 +346,10 @@ describe("OTabs tests", () => {
                 navElements.forEach((el, idx) => {
                     expect(el.text()).toBe(String(options[idx]));
                 });
+
+                expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                    ["0"],
+                ]);
             });
 
             test("handle options as object correctly", async () => {
