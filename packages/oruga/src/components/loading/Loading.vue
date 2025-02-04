@@ -35,7 +35,8 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     icon: () => getDefault("loading.icon", "loading"),
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
-    scroll: () => getDefault("modal.scroll", "keep"),
+    scroll: () => getDefault("loading.scroll", "keep"),
+    role: () => getDefault("loading.role", "dialog"),
 });
 
 const emits = defineEmits<{
@@ -72,7 +73,7 @@ watch(isActive, (value) => {
 
 if (isClient) {
     // register onKeyPress event when is active
-    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
 }
 
 /** Keypress event that is bound to the document. */
@@ -127,7 +128,7 @@ defineExpose({ close });
             v-if="isActive"
             ref="rootElement"
             data-oruga="loading"
-            role="dialog"
+            :role="role"
             :class="rootClasses">
             <div
                 :class="overlayClasses"

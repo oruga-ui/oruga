@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="T = string">
 import {
     computed,
-    ref,
     useAttrs,
     useTemplateRef,
     useId,
@@ -20,6 +19,8 @@ import {
     findOption,
     useInputHandler,
     useSequentialId,
+    toOptionsGroup,
+    type OptionsGroupItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
@@ -54,9 +55,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     placeholder: undefined,
     expanded: false,
     disabled: false,
-    confirmKeys: () =>
-        getDefault("taginput.confirmKeys", [",", "Tab", "Enter"]),
-    separators: () => getDefault("taginput.separators", [","]),
+    separators: () => getDefault("taginput.separators", [",", "Enter", "Tab"]),
     keepFirst: false,
     allowNew: () => getDefault("taginput.allowNew", false),
     allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
@@ -68,7 +67,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
     closeIcon: () => getDefault("taginput.closeIcon", "close"),
-    ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel"),
+    ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel", "Remove"),
     autocomplete: () => getDefault("taginput.autocomplete", "off"),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
@@ -153,21 +152,21 @@ const inputValue = defineModel<string>("input", { default: "" });
 const inputLength = computed(() => inputValue.value.trim().length);
 const itemsLength = computed(() => selectedItems.value?.length || 0);
 
-const isComposing = ref(false);
-
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
-);
+const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
+    return groupedOptions;
+});
 
 /** map the selected items into option items */
 const selectedOptions = computed(() => {
     if (!selectedItems.value) return [];
     return selectedItems.value.map((value) => {
-        const option = findOption(normalizedOptions, value);
+        const option = findOption<T>(groupedOptions, value);
         // return the found option or create a new option object
         if (option) return option;
         else return { label: value, value, key: useId() };
@@ -267,7 +266,7 @@ function onInput(value: string, event: Event): void {
 
 function onKeydown(event: KeyboardEvent): void {
     if (
-        props.removeOnKeys.indexOf(event.key) >= 0 &&
+        props.removeOnKeys.includes(event.key) &&
         !inputValue.value?.length &&
         itemsLength.value > 0
     ) {
@@ -275,10 +274,9 @@ function onKeydown(event: KeyboardEvent): void {
         removeItem(itemsLength.value - 1);
     }
 
-    if (props.confirmKeys.indexOf(event.key) >= 0) {
-        // Allow Tab to advance to next field regardless
-        if (event.key !== "Tab") event.preventDefault();
-        if (event.key === "Enter" && isComposing.value) return;
+    if (props.separators.includes(event.key)) {
+        // If adding by comma, don't add the comma to the input
+        if (event.key === ",") event.preventDefault();
         // Add item if not select only
         if (props.allowNew) addItem();
     }
@@ -399,7 +397,6 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
                 :check-scroll="checkScroll"
-                :confirm-keys="confirmKeys"
                 :teleport="teleport"
                 :has-counter="false"
                 :use-html5-validation="false"
@@ -409,8 +406,6 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 @blur="onBlur"
                 @invalid="onInvalid"
                 @keydown="onKeydown"
-                @compositionstart="isComposing = true"
-                @compositionend="isComposing = false"
                 @select="onSelect"
                 @scroll-start="$emit('scroll-start')"
                 @scroll-end="$emit('scroll-end')"

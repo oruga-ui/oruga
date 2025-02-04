@@ -6,7 +6,11 @@ const selectedOption = ref();
 
 <template>
     <section class="odocs-spaced">
-        <o-dropdown v-model="selectedOption" inline>
+        <o-dropdown
+            v-model="selectedOption"
+            inline
+            selectable
+            aria-label="inline example">
             <template #trigger>
                 <o-button label="Inline" />
             </template>
@@ -16,6 +20,6 @@ const selectedOption = ref();
             <o-dropdown-item :value="3" label="Something else " />
         </o-dropdown>
 
-        <p><b>selected</b>: {{ selectedOption }}</p>
+        <p><b>Selected:</b> {{ selectedOption }}</p>
     </section>
 </template>

@@ -3,7 +3,7 @@ import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
 import InstanceRegistry from "../InstanceRegistry";
-import useProgrammatic from "../useProgrammatic";
+import ComponentProgrammatic from "../useProgrammatic";
 
 describe("useProgrammatic tests", () => {
     beforeEach(() => {
@@ -24,7 +24,7 @@ describe("useProgrammatic tests", () => {
         });
 
         // open element
-        const { close, promise } = useProgrammatic.open(component);
+        const { close, promise } = ComponentProgrammatic.open(component);
 
         // check promise get called
         const handler = vi.fn();
@@ -57,7 +57,7 @@ describe("useProgrammatic tests", () => {
         });
 
         // open element
-        const { close } = useProgrammatic.open(component, {
+        const { close } = ComponentProgrammatic.open(component, {
             target: "#my-cool-container",
         });
 
@@ -89,7 +89,7 @@ describe("useProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        useProgrammatic.open(component, { onClose });
+        ComponentProgrammatic.open(component, { onClose });
 
         // check element exist
         let el = document.body.querySelector("button");
@@ -112,7 +112,7 @@ describe("useProgrammatic tests", () => {
         });
 
         // open element
-        const { close } = useProgrammatic.open(component, {
+        const { close } = ComponentProgrammatic.open(component, {
             props: { "data-oruga": "programmatic" },
         });
 
@@ -139,7 +139,7 @@ describe("useProgrammatic tests", () => {
 
         expect(instanceRegistry.entries).toHaveLength(0);
 
-        const { close } = useProgrammatic.open("div", {
+        const { close } = ComponentProgrammatic.open("div", {
             instances: instanceRegistry,
         });
 
@@ -153,14 +153,14 @@ describe("useProgrammatic tests", () => {
 
     test("test closeAll is working correctly", async () => {
         // open elements
-        useProgrammatic.open("div");
-        useProgrammatic.open("div");
+        ComponentProgrammatic.open("div");
+        ComponentProgrammatic.open("div");
 
         let bodyElements = document.body.querySelectorAll("*");
         expect(bodyElements).toHaveLength(2);
 
         // close all elements
-        useProgrammatic.closeAll();
+        ComponentProgrammatic.closeAll();
         vi.runAllTimers();
 
         bodyElements = document.body.querySelectorAll("*");
@@ -169,21 +169,21 @@ describe("useProgrammatic tests", () => {
 
     test("test close last is working correctly", async () => {
         // open elements
-        useProgrammatic.open("div");
-        useProgrammatic.open("div");
+        ComponentProgrammatic.open("div");
+        ComponentProgrammatic.open("div");
 
         let bodyElements = document.body.querySelectorAll("*");
         expect(bodyElements).toHaveLength(2);
 
         // close last element
-        useProgrammatic.close();
+        ComponentProgrammatic.close();
         vi.runAllTimers();
 
         bodyElements = document.body.querySelectorAll("*");
         expect(bodyElements).toHaveLength(1);
 
         // close last element
-        useProgrammatic.close();
+        ComponentProgrammatic.close();
         vi.runAllTimers();
 
         bodyElements = document.body.querySelectorAll("*");
@@ -199,7 +199,7 @@ describe("useProgrammatic tests", () => {
         const slot = h("p", { "data-oruga": "inner-slot" }, "HELP");
 
         // open elements
-        const { close } = useProgrammatic.open(component, {}, slot);
+        const { close } = ComponentProgrammatic.open(component, {}, slot);
 
         // check element exist
         const button = document.body.querySelector("button");

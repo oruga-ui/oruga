@@ -39,7 +39,7 @@ const emits = defineEmits<{
     deactivate: [];
 }>();
 
-const itemValue = props.value || useId();
+const itemValue = props.value ?? useId();
 
 const slots = useSlots();
 
@@ -48,8 +48,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
     $slots: slots,
-    navClasses: navItemClasses.value,
-    classes: tabClasses.value,
+    tabClasses: tabClasses.value,
     iconClasses: tabIconClasses.value,
     labelClasses: tabLabelClasses.value,
     isTransitioning: isTransitioning.value,
@@ -58,7 +57,7 @@ const providedData = computed<TabItemComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<TabsComponent>({
+const { parent, item } = useProviderChild<TabsComponent, TabItemComponent<T>>({
     data: providedData,
 });
 
@@ -110,23 +109,6 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const navItemClasses = defineClasses(
-    ["navItemClass", "o-tabs__nav-item"],
-    ["navItemActiveClass", "o-tabs__nav-item--active", null, isActive],
-    [
-        "navItemPreviousClass",
-        "o-tabs__nav-item--previous",
-        null,
-        computed(() => item.value.index < parent.value?.activeIndex),
-    ],
-    [
-        "navItemNextClass",
-        "o-tabs__nav-item--next",
-        null,
-        computed(() => item.value.index > parent.value?.activeIndex),
-    ],
-);
-
 const tabClasses = defineClasses(
     ["tabClass", "o-tabs__tab"],
     [
@@ -141,6 +123,18 @@ const tabClasses = defineClasses(
         "o-tabs__tab--disabled",
         null,
         computed(() => props.disabled),
+    ],
+    [
+        "navItemPreviousClass",
+        "o-tabs__tab--previous",
+        null,
+        computed(() => item.value.index < parent.value?.activeIndex),
+    ],
+    [
+        "navItemNextClass",
+        "o-tabs__tab--next",
+        null,
+        computed(() => item.value.index > parent.value?.activeIndex),
     ],
 );
 
@@ -171,21 +165,19 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
             <!-- 
-                @slot Tab item content
+                @slot Override tab panel content
                 @binding {boolean} active - if item is shown 
             -->
             <slot :active="isActive && visible">
-                <template v-if="!parent.destroyOnHide || (isActive && visible)">
-                    <!-- injected component -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}" />
+                <!-- injected component -->
+                <component
+                    :is="component"
+                    v-if="component"
+                    v-bind="$props.props"
+                    v-on="$props.events || {}" />
 
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </template>
+                <!-- default content prop -->
+                <template v-else>{{ content }}</template>
             </slot>
 
             <!--
@@ -195,7 +187,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             -->
             <template v-if="false">
                 <!--
-                    @slot Override header label
+                    @slot Override tab header label
                     @binding {boolean} active - if item is shown 
                 -->
                 <slot name="header" :active="isActive && visible" />

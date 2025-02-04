@@ -34,6 +34,10 @@ const getStartedItems = [
         text: "Themes",
         link: "/documentation/themes",
     },
+    {
+        text: "Composable",
+        link: "/documentation/composables",
+    },
 ];
 
 export default defineConfig({
@@ -62,7 +66,7 @@ export default defineConfig({
     appearance: false,
     themeConfig: {
         logo: "/logo.png",
-        outline: [2, 3],
+        outline: [2, 4],
         search: {
             provider: "local",
         },

@@ -26,6 +26,16 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
     <ExampleViewer :component="Teleport" :code="TeleportCode" />
 
     <h3 id="programmatically">Programmatically</h3>
+    <div class="vp-doc">
+        <p>
+            This component provides a programmatic interface that can be
+            accessed by the
+            <a href="/documentation/composables.html"
+                ><code>useOruga()</code>
+            </a>
+            composable.
+        </p>
+    </div>
     <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 
     <h3 id="async">Programmatically (with promises and async/await)</h3>

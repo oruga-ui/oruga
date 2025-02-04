@@ -86,11 +86,11 @@
 
 ### Props
 
-| Prop name | Description                                | Type    | Values | Default                                                |
-| --------- | ------------------------------------------ | ------- | ------ | ------------------------------------------------------ |
-| label     | Tick label                                 | string  | -      |                                                        |
-| override  | Override existing theme classes completely | boolean | -      |                                                        |
-| value     | Value of single tick                       | number  | -      | <code style='white-space: nowrap; padding: 0;'></code> |
+| Prop name | Description                                | Type             | Values | Default                                                |
+| --------- | ------------------------------------------ | ---------------- | ------ | ------------------------------------------------------ |
+| label     | Tick label                                 | number \| string | -      |                                                        |
+| override  | Override existing theme classes completely | boolean          | -      |                                                        |
+| value     | Value of single tick                       | number           | -      | <code style='white-space: nowrap; padding: 0;'></code> |
 
 ### Slots
 

@@ -41,11 +41,8 @@ export type TabsProps<T> = {
     type?: string;
     /** Tabs will be expanded (full-width) */
     expanded?: boolean;
-    /**
-     * Destroy tabItem on hide
-     * @deprecated implement this yourself, using the `active` slot prop
-     */
-    destroyOnHide?: boolean;
+    /** Tablist tag name */
+    tag?: DynamicComponent;
     /** Set the tab active on navigation focus */
     activateOnFocus?: boolean;
     /** Tab will have an animation */
@@ -59,28 +56,28 @@ export type TabsProps<T> = {
     animateInitially?: boolean;
     /** Show tab items multiline when there is no space */
     multiline?: boolean;
+    /** Accessibility aria-label to be passed to the tablist wrapper element */
+    ariaLabel?: string;
 } & TabsClasses;
 
 // class props (will not be displayed in the docs)
 type TabsClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of Tabs component when when is vertical and its position changes */
+    /** Class of Tabs component position */
     positionClass: ComponentClass;
     /** Class of Tabs component when expanded */
     expandedClass: ComponentClass;
     /** Class of Tabs component when vertical */
     verticalClass: ComponentClass;
+    /** Size of the Tabs component */
+    sizeClass: ComponentClass;
+    /** Type of the Tabs component */
+    typeClass: ComponentClass;
     /** Class of Tabs component when multiline */
     multilineClass: ComponentClass;
-    /** Class of the Tabs component nav tabs */
-    navClass: ComponentClass;
-    /** Size of the navigation */
-    navSizeClass: ComponentClass;
-    /** Class of the Tabs component nav position */
-    navPositionClass: ComponentClass;
-    /** Type of the navigation */
-    navTypeClass: ComponentClass;
+    /** Class of the tablist element */
+    tablistClass: ComponentClass;
     /** Class of the tab content */
     contentClass: ComponentClass;
     /** Class of the tab content when transitioning */
@@ -120,17 +117,13 @@ export type TabItemProps<T, C extends Component> = {
 // class props (will not be displayed in the docs)
 type TabItemClasses = Partial<{
     /** Class of the tab item */
-    navItemClass: ComponentClass;
-    /** Class of the nav item when active */
-    navItemActiveClass: ComponentClass;
-    /** Class of the nav item before the active one */
-    navItemPreviousClass: ComponentClass;
-    /** Class of the nav item after the active one */
-    navItemNextClass: ComponentClass;
-    /** Class of the tab item */
     tabClass: ComponentClass;
     /** Class of the tab item when active */
     tabActiveClass: ComponentClass;
+    /** Class of the tab item before the active one */
+    tabPreviousClass: ComponentClass;
+    /** Class of the tab item after the active one */
+    tabNextClass: ComponentClass;
     /** Class of the tab item when disabled */
     tabDisabledClass: ComponentClass;
     /** Class of the tab item type */
@@ -139,6 +132,6 @@ type TabItemClasses = Partial<{
     tabIconClass: ComponentClass;
     /** Class of the tab item label */
     tabLabelClass: ComponentClass;
-    /** Class of the tab item */
+    /** Class of the tab item panel */
     tabPanelClass: ComponentClass;
 }>;

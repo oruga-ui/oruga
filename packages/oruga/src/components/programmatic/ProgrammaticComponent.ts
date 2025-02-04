@@ -8,11 +8,7 @@ import {
     type VNode,
     type VNodeTypes,
 } from "vue";
-import type {
-    // ComponentExposed,
-    ComponentProps,
-} from "vue-component-type-helpers";
-
+import type { ComponentProps } from "vue-component-type-helpers";
 import type InstanceRegistry from "@/components/programmatic/InstanceRegistry";
 import { isClient } from "@/utils/ssr";
 
@@ -51,9 +47,9 @@ export type ProgrammaticComponentEmits = {
 // >;
 
 export type ProgrammaticComponentExpose = {
-    /** call close event function */
+    /** Call the close event of the component. */
     close: (...args: unknown[]) => void;
-    /** promise which get called on close event */
+    /** Promise which get resolved on the close event. */
     promise: Promise<unknown>;
 };
 
