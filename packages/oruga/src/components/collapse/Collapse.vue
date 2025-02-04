@@ -7,7 +7,7 @@ import { defineClasses } from "@/composables";
 import type { CollapseProps } from "./props";
 
 /**
- * An easy way to toggle what you want
+ * An easy way to toggle what you want.
  * @displayName Collapse
  * @style _collapse.scss
  */
