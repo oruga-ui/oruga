@@ -60,7 +60,7 @@ import TagsCode from "./tags.vue?raw";
     <h3 id="sizes">Sizes</h3>
     <div class="vp-doc">
         <p>
-            The button component can be displayed in different sizes using the
+            The component can be displayed in different sizes using the
             <code>size</code> prop.
         </p>
     </div>
