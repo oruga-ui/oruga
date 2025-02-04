@@ -2,6 +2,10 @@
 
 <div class="vp-doc">
 
+The **autocomplete** input component allows you to search through a list of options.
+It is an advanced input that provides suggestions as the user types.
+Based on the dropdown component, the autocomplete component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
+
 </div>
 
 <div class="vp-example">
@@ -24,7 +28,7 @@
 
 ## Autocomplete component
 
-> Extended input that provide suggestions while the user types
+> Extended input that provide suggestions while the user types.
 
 ```html
 <o-autocomplete></o-autocomplete>

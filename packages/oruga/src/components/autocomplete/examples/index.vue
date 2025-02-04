@@ -17,11 +17,68 @@ import ScrollCode from "./scroll.vue?raw";
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="selection">Selection</h3>
+    <div class="vp-doc">
+        <p>
+            The autocomplete input can only contain one item at a time. For the
+            multiple selection version, see the
+            <a href="/components/taginput.html">
+                <b>taginput</b>
+            </a>
+            component.
+        </p>
+    </div>
     <ExampleViewer :component="Selection" :code="SelectionCode" />
 
     <h3 id="options">Options</h3>
+    <div class="vp-doc">
+        <p>
+            The <code>options</code> prop can accept several different formats
+            of values:
+        </p>
+        <ul>
+            <li>An array of primitives <code>['A', 'B', 'C']</code></li>
+            <li>
+                An object literal with key-value pairs
+                <code>{ a: 'A', b: 'B', c: 'C' }</code>
+            </li>
+            <li>
+                An array of objects with <code>label</code> and
+                <code>value</code> properties
+            </li>
+            <li>
+                Grouped options by adding additional
+                <code>options</code> to the option object.
+            </li>
+        </ul>
+
+        <div class="info custom-block">
+            <p class="custom-block-title">Note</p>
+            <p>
+                The <code>options</code> prop works the same as the
+                <a href="/components/select.html">
+                    <b>select</b>
+                </a>
+                input component <code>options</code> prop.
+            </p>
+        </div>
+    </div>
     <ExampleViewer :component="Options" :code="OptionsCode" />
 
     <h3 id="scroll">Infinite Scroll</h3>
+    <div class="vp-doc">
+        <p>
+            When <code>check-scroll</code> prop is set, the component will emits
+            the <code>scroll-start</code> and <code>scroll-end</code> events.
+            These events can be used to load more options as needed.
+        </p>
+        <div class="info custom-block">
+            <p class="custom-block-title">Note</p>
+            <p>
+                The autocomplete component does not have a default slot for
+                defining options. The default slot is used to override the
+                option element template.
+            </p>
+        </div>
+    </div>
     <ExampleViewer :component="Scroll" :code="ScrollCode" />
 </template>
