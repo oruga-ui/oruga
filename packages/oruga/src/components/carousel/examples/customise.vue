@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 
 const carousels = [
     { text: "Slide 1", color: "#445e00" },
@@ -11,34 +11,32 @@ const carousels = [
 
 const carousel = ref(0);
 
-const settings = reactive({
-    dragable: false,
-    autoplay: false,
-    pauseHover: false,
-    interval: 3000,
-    repeat: false,
-});
+const dragable = ref(false);
+const autoplay = ref(false);
+const pauseHover = ref(false);
+const interval = ref(3000);
+const repeat = ref(false);
 </script>
 
 <template>
     <section>
         <o-field grouped>
             <o-field>
-                <o-switch v-model="settings.autoplay" label="Autoplay" />
+                <o-switch v-model="autoplay" label="Autoplay" />
             </o-field>
             <o-field>
                 <o-switch
-                    v-model="settings.pauseHover"
-                    :disabled="!settings.autoplay"
+                    v-model="pauseHover"
+                    :disabled="!autoplay"
                     label="Pause on hover" />
             </o-field>
             <o-field>
-                <o-switch v-model="settings.dragable" label="Drag event" />
+                <o-switch v-model="dragable" label="Drag event" />
             </o-field>
             <o-field>
                 <o-switch
-                    v-model="settings.repeat"
-                    :disabled="!settings.autoplay"
+                    v-model="repeat"
+                    :disabled="!autoplay"
                     label="Repeat" />
             </o-field>
         </o-field>
@@ -53,16 +51,22 @@ const settings = reactive({
             </o-field>
             <o-field label="Interval">
                 <o-input
-                    v-model="settings.interval"
+                    v-model="interval"
                     type="number"
                     number
                     min="0"
                     step="1000"
-                    :disabled="!settings.autoplay" />
+                    :disabled="!autoplay" />
             </o-field>
         </o-field>
 
-        <o-carousel v-model="carousel" v-bind="settings">
+        <o-carousel
+            v-model="carousel"
+            :dragable="dragable"
+            :autoplay="autoplay"
+            :pause-hover="pauseHover"
+            :interval="interval"
+            :repeat="repeat">
             <o-carousel-item v-for="(slide, i) in carousels" :key="i">
                 <section
                     class="ex-slide"
