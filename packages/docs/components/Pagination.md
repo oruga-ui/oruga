@@ -2,6 +2,8 @@
 
 <div class="vp-doc">
 
+A responsive and flexible pagination to indicate a series of related content exists across multiple pages.
+
 </div>
 
 <div class="vp-example">
@@ -24,7 +26,7 @@
 
 ## Pagination component
 
-> A responsive and flexible pagination
+> A responsive and flexible pagination.
 
 ```html
 <o-pagination></o-pagination>
