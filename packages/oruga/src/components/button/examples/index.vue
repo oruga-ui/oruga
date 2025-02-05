@@ -36,7 +36,6 @@ import TagsCode from "./tags.vue?raw";
         <p>
             Different styles can be achieved with the <code>variant</code> prop.
         </p>
-
         <ExampleViewer :component="Variants" :code="VariantsCode" />
 
         <h3 id="outlined">Outlined</h3>
