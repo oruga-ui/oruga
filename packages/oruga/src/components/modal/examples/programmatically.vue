@@ -28,16 +28,18 @@ function cardModal(): void {
 
 <template>
     <section class="odocs-spaced">
-        <o-button
-            label="Open modal (HTML)"
-            size="medium"
-            variant="primary"
-            @click.prevent="imageModal()" />
+        <p>
+            <o-button
+                label="Open modal (HTML)"
+                size="medium"
+                variant="primary"
+                @click.prevent="imageModal()" />
 
-        <o-button
-            label="Open modal (Component)"
-            size="medium"
-            variant="primary"
-            @click.prevent="cardModal()" />
+            <o-button
+                label="Open modal (Component)"
+                size="medium"
+                variant="primary"
+                @click.prevent="cardModal()" />
+        </p>
     </section>
 </template>

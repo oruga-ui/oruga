@@ -24,7 +24,7 @@
 
 ## Modal component
 
-> Classic modal overlay to include any content you may need
+> Classic modal overlay to include any content you may need.
 
 ```html
 <o-modal></o-modal>
