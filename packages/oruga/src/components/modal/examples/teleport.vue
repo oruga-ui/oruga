@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const isModalActive = ref(false);
+const isActive = ref(false);
 </script>
 
 <template>
-    <section class="odocs-spaced">
+    <section>
         <o-button
             label="Open modal"
             size="medium"
             variant="primary"
-            @click="isModalActive = true" />
+            @click="isActive = true" />
 
-        <o-modal v-model:active="isModalActive" teleport>
+        <o-modal v-model:active="isActive" teleport>
             <div style="padding: 10px; background-color: white">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.

@@ -5,7 +5,6 @@ const active = ref(false);
 const overlay = ref(true);
 const fullheight = ref(true);
 const fullwidth = ref(false);
-const teleport = ref(false);
 const position = ref<"left" | "top" | "bottom" | "right">("left");
 </script>
 
@@ -15,7 +14,6 @@ const position = ref<"left" | "top" | "bottom" | "right">("left");
             <o-switch v-model="overlay" label="Overlay" />
             <o-switch v-model="fullheight" label="Fullheight" />
             <o-switch v-model="fullwidth" label="Fullwidth" />
-            <o-switch v-model="teleport" label="On body" />
             <o-field label="Position">
                 <o-select v-model="position">
                     <option value="left">Left</option>
@@ -26,7 +24,7 @@ const position = ref<"left" | "top" | "bottom" | "right">("left");
             </o-field>
         </o-field>
 
-        <o-button label="Show" @click="active = true" />
+        <o-button label="Show Sidebar" @click="active = true" />
 
         <o-sidebar
             v-slot="{ close }"
@@ -34,8 +32,7 @@ const position = ref<"left" | "top" | "bottom" | "right">("left");
             :fullheight="fullheight"
             :fullwidth="fullwidth"
             :overlay="overlay"
-            :position="position"
-            :teleport="teleport">
+            :position="position">
             <o-button
                 v-if="fullwidth || fullheight || !overlay"
                 icon-left="times"

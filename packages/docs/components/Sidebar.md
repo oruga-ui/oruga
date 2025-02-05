@@ -24,7 +24,7 @@
 
 ## Sidebar component
 
-> A sidebar to use as left/right overlay or static
+> A sidebar to use as overlay.
 
 ```html
 <o-sidebar></o-sidebar>
