@@ -31,11 +31,11 @@ import WithIconsCode from "./with-icons.vue?raw";
 </script>
 
 <template>
-    <h3 id="base">Base</h3>
-    <ExampleViewer :component="Base" :code="BaseCode" />
-
-    <h3 id="options">Options</h3>
     <div class="vp-doc">
+        <h3 id="base">Base</h3>
+        <ExampleViewer :component="Base" :code="BaseCode" />
+
+        <h3 id="options">Options</h3>
         <p>There are several ways to provide options for a select input:</p>
         <ul>
             <li>An array of primitives <code>['A', 'B', 'C']</code></li>
@@ -53,32 +53,26 @@ import WithIconsCode from "./with-icons.vue?raw";
                 tags directly inside the default slot.
             </li>
         </ul>
-    </div>
 
-    <h4 id="options-primitives">Array of primitives</h4>
-    <div class="vp-doc">
+        <h4 id="options-primitives">Array of primitives</h4>
         <p>
             The simplest way to provide options is an array of primitives like
             strings or numbers, where the primitive will be used for both
             thestring casted <code>label</code> representation and the
             <code>value</code> of the option.
         </p>
-    </div>
-    <ExampleViewer
-        :component="OptionsPrimitives"
-        :code="OptionsPrimitivesCode" />
+        <ExampleViewer
+            :component="OptionsPrimitives"
+            :code="OptionsPrimitivesCode" />
 
-    <h4 id="options-object">Key-Value pair object</h4>
-    <div class="vp-doc">
+        <h4 id="options-object">Key-Value pair object</h4>
         <p>
             You may also provide the <code>options</code> prop where the keys
             are values and the values of each property are labels.
         </p>
-    </div>
-    <ExampleViewer :component="OptionsObject" :code="OptionsObjectCode" />
+        <ExampleViewer :component="OptionsObject" :code="OptionsObjectCode" />
 
-    <h4 id="options-array">Array of objects</h4>
-    <div class="vp-doc">
+        <h4 id="options-array">Array of objects</h4>
         <p>
             The most flexible way to define options is to provide an array of
             objects. The object is defined as: <br />
@@ -91,32 +85,26 @@ import WithIconsCode from "./with-icons.vue?raw";
             option. The <code>attrs</code> attribute is an object for additional
             attributes, which will be applied to the option item tag.
         </p>
-    </div>
-    <ExampleViewer :component="OptionsArray" :code="OptionsArrayCode" />
+        <ExampleViewer :component="OptionsArray" :code="OptionsArrayCode" />
 
-    <h4 id="options-grouped">Option groups</h4>
-    <div class="vp-doc">
+        <h4 id="options-grouped">Option groups</h4>
         <p>
             Using the array of objects syntax you can also create grouped
             options (<code>&lt;optgroup&gt;</code> in HTML) by adding an
             <code>options</code> property to the object option.
         </p>
-    </div>
-    <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
+        <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 
-    <h4 id="options-native">Default Slot</h4>
-    <div class="vp-doc">
+        <h4 id="options-native">Default Slot</h4>
         <p>
             Sometimes it may be desirable to manually output the contents of a
             select list in order to create specialized structures. This can be
             done by using the <code>default</code> slot to explicitly output
             your options like the native HTML select element.
         </p>
-    </div>
-    <ExampleViewer :component="OptionsNative" :code="OptionsNativeCode" />
+        <ExampleViewer :component="OptionsNative" :code="OptionsNativeCode" />
 
-    <h3 id="multiple">Multiple</h3>
-    <div class="vp-doc">
+        <h3 id="multiple">Multiple</h3>
         <p>
             The <b>select</b> input also supports a
             <code>multiple</code> attribute that allows for multi-selection.
@@ -136,15 +124,25 @@ import WithIconsCode from "./with-icons.vue?raw";
                 instead.
             </p>
         </div>
+        <ExampleViewer :component="Multiple" :code="MultipleCode" />
+
+        <h3 id="sizes">Sizes</h3>
+        <p>
+            The component can be displayed in different sizes using the
+            <code>size</code> prop.
+        </p>
+        <ExampleViewer :component="Sizes" :code="SizesCode" />
+
+        <h3 id="variants">Variants</h3>
+        <p>
+            Different styles can be achieved with the <code>variant</code> prop.
+        </p>
+        <ExampleViewer :component="Variants" :code="VariantsCode" />
+
+        <h3 id="icons">With Icons</h3>
+        <p>
+            Add an icon to the component to explain its function more visually.
+        </p>
+        <ExampleViewer :component="WithIcons" :code="WithIconsCode" />
     </div>
-    <ExampleViewer :component="Multiple" :code="MultipleCode" />
-
-    <h3 id="sizes">Sizes</h3>
-    <ExampleViewer :component="Sizes" :code="SizesCode" />
-
-    <h3 id="variants">Variants</h3>
-    <ExampleViewer :component="Variants" :code="VariantsCode" />
-
-    <h3 id="icons">With Icons</h3>
-    <ExampleViewer :component="WithIcons" :code="WithIconsCode" />
 </template>
