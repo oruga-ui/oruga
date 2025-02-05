@@ -6,6 +6,8 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
+The **slider** component let user select a value or range from a given range with a graphic slider.
+
 </div>
 
 <div class="vp-example">
@@ -28,7 +30,7 @@ sidebarDepth: 2
 
 ## Slider component
 
-> A slider to select a value or range from a given range
+> A slider to select a value or range from a given range.
 
 ```html
 <o-slider></o-slider>
