@@ -10,19 +10,19 @@ import AccordionButtonsCode from "./accordion-buttons.vue?raw";
 </script>
 
 <template>
-    <h3 id="base">Base</h3>
     <div class="vp-doc">
+        <h3 id="base">Base</h3>
         <p>Click the buttons below to show and hide the content.</p>
-    </div>
-    <ExampleViewer :component="Base" :code="BaseCode" />
+        <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3 id="accordion">Accordion</h3>
-    <div class="vp-doc">
+        <h3 id="accordion">Accordion</h3>
         <p>
             Combine multiple collapse components to create an accordion
             behaviour.
         </p>
+        <ExampleViewer :component="Accordion" :code="AccordionCode" />
+        <ExampleViewer
+            :component="AccordionButtons"
+            :code="AccordionButtonsCode" />
     </div>
-    <ExampleViewer :component="Accordion" :code="AccordionCode" />
-    <ExampleViewer :component="AccordionButtons" :code="AccordionButtonsCode" />
 </template>

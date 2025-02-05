@@ -25,14 +25,12 @@ import PositionCode from "./position.vue?raw";
 </script>
 
 <template>
-    <h3 id="base">Base</h3>
     <div class="vp-doc">
+        <h3 id="base">Base</h3>
         <p>The dropdown will be a simple unselectable menu list by default.</p>
-    </div>
-    <ExampleViewer :component="Base" :code="BaseCode" />
+        <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3 id="triggers">Triggers</h3>
-    <div class="vp-doc">
+        <h3 id="triggers">Triggers</h3>
         <p>
             The dropdown component accepts several different trigger variants,
             such as open on hover or open only on right click instead of left
@@ -42,13 +40,11 @@ import PositionCode from "./position.vue?raw";
             Adding the <code>teleport</code> prop will move the dropdown menu to
             the referenced DOM location instead.
         </p>
-    </div>
-    <ExampleViewer :component="Triggers" :code="TriggersCode" />
+        <ExampleViewer :component="Triggers" :code="TriggersCode" />
 
-    <h3 id="options">Options</h3>
-    <div class="vp-doc">
+        <h3 id="options">Options</h3>
         <p>
-            Instead of using the <code>&lt;o-dropdown-item&gt;</code> tags
+            Instead of using the <code>&lt;o-dropdown-item&gt;</code> component
             directly inside the default slot, an <code>options</code> prop can
             be defined, which can be used to define the options
             programmatically. It accepts several different formats of values:
@@ -79,12 +75,9 @@ import PositionCode from "./position.vue?raw";
                 input component <code>options</code> prop.
             </p>
         </div>
-    </div>
+        <ExampleViewer :component="Options" :code="OptionsCode" />
 
-    <ExampleViewer :component="Options" :code="OptionsCode" />
-
-    <h3 id="selectable">Selectable</h3>
-    <div class="vp-doc">
+        <h3 id="selectable">Selectable</h3>
         <p>
             Dropdown components with the prop <code>selectable</code> will have
             options as a selectable list.
@@ -93,41 +86,39 @@ import PositionCode from "./position.vue?raw";
             Adding the <code>multiple</code> prop will change the
             <code>modelValue</code> prop to an array of selected options.
         </p>
-    </div>
-    <ExampleViewer :component="Selectable" :code="SelectableCode" />
+        <ExampleViewer :component="Selectable" :code="SelectableCode" />
 
-    <h3 id="inline">Inline</h3>
-    <div class="vp-doc">
-        <p>
-            Dropdown components with the <code>inline</code> prop set will
-            render the options list directly, and will not have a trigger
-            element rendered.
-        </p>
-    </div>
-    <ExampleViewer :component="Inline" :code="InlineCode" />
+        <h3 id="inline">Inline</h3>
+        <div class="vp-doc">
+            <p>
+                Dropdown components with the <code>inline</code> prop set will
+                render the options list directly, and will not have a trigger
+                element rendered.
+            </p>
+        </div>
+        <ExampleViewer :component="Inline" :code="InlineCode" />
 
-    <h3 id="modal">Modal</h3>
-    <div class="vp-doc">
-        <p>
-            The dropdown component can be opened in an <i>modal</i> mode either
-            for mobile or desktop only, or for both, by adding the
-            <code>mobile-modal</code> and <code>desktop-modal</code> props.
-        </p>
-    </div>
-    <ExampleViewer :component="Modal" :code="ModalCode" />
+        <h3 id="modal">Modal</h3>
+        <div class="vp-doc">
+            <p>
+                The dropdown component can be opened in an <i>modal</i> mode
+                either for mobile or desktop only, or for both, by adding the
+                <code>mobile-modal</code> and <code>desktop-modal</code> props.
+            </p>
+        </div>
+        <ExampleViewer :component="Modal" :code="ModalCode" />
 
-    <h3 id="scrollable">Scrollable</h3>
-    <div class="vp-doc">
-        <p>
-            When having to many options, consider adding the
-            <code>scrollable</code> prop, which allows the menu to remain at a
-            fixed height.
-        </p>
-    </div>
-    <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
+        <h3 id="scrollable">Scrollable</h3>
+        <div class="vp-doc">
+            <p>
+                When having to many options, consider adding the
+                <code>scrollable</code> prop, which allows the menu to remain at
+                a fixed height.
+            </p>
+        </div>
+        <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
-    <h3 id="position">Position</h3>
-    <div class="vp-doc">
+        <h3 id="position">Position</h3>
         <p>
             The direction in which the dropdown menu opens can be defined by the
             <code>position</code> prop. By default, the direction is
@@ -135,6 +126,6 @@ import PositionCode from "./position.vue?raw";
             window. Adding the <code>teleport</code> prop addiotnaly will move
             the dropdown menu to the referenced DOM location instead.
         </p>
+        <ExampleViewer :component="Position" :code="PositionCode" />
     </div>
-    <ExampleViewer :component="Position" :code="PositionCode" />
 </template>

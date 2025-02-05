@@ -13,11 +13,11 @@ import ScrollCode from "./scroll.vue?raw";
 </script>
 
 <template>
-    <h3 id="base">Base</h3>
-    <ExampleViewer :component="Base" :code="BaseCode" />
-
-    <h3 id="selection">Selection</h3>
     <div class="vp-doc">
+        <h3 id="base">Base</h3>
+        <ExampleViewer :component="Base" :code="BaseCode" />
+
+        <h3 id="selection">Selection</h3>
         <p>
             The autocomplete input can only contain one item at a time. For the
             multiple selection version, see the
@@ -26,11 +26,9 @@ import ScrollCode from "./scroll.vue?raw";
             </a>
             component.
         </p>
-    </div>
-    <ExampleViewer :component="Selection" :code="SelectionCode" />
+        <ExampleViewer :component="Selection" :code="SelectionCode" />
 
-    <h3 id="options">Options</h3>
-    <div class="vp-doc">
+        <h3 id="options">Options</h3>
         <p>
             The <code>options</code> prop can accept several different formats
             of values:
@@ -61,11 +59,9 @@ import ScrollCode from "./scroll.vue?raw";
                 input component <code>options</code> prop.
             </p>
         </div>
-    </div>
-    <ExampleViewer :component="Options" :code="OptionsCode" />
+        <ExampleViewer :component="Options" :code="OptionsCode" />
 
-    <h3 id="scroll">Infinite Scroll</h3>
-    <div class="vp-doc">
+        <h3 id="scroll">Infinite Scroll</h3>
         <p>
             When <code>check-scroll</code> prop is set, the component will emits
             the <code>scroll-start</code> and <code>scroll-end</code> events.
@@ -79,6 +75,6 @@ import ScrollCode from "./scroll.vue?raw";
                 option element template.
             </p>
         </div>
+        <ExampleViewer :component="Scroll" :code="ScrollCode" />
     </div>
-    <ExampleViewer :component="Scroll" :code="ScrollCode" />
 </template>
