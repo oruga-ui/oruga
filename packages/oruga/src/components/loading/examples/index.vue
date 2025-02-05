@@ -11,9 +11,20 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
 
 <template>
     <h3 id="base">Base</h3>
+    <div class="vp-doc">
+        <p>
+            The loading state is displayed across the entire page if the
+            <code>full-page</code> prop is added. Otherwise, the overlay will be
+            aligned to the next wrapper element with
+            <code>style="position: relative"</code>.
+        </p>
+    </div>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="slot">Slot</h3>
+    <div class="vp-doc">
+        <p>Override the loading icon by passing a <code>default</code> slot.</p>
+    </div>
     <ExampleViewer :component="Slot" :code="SlotCode" />
 
     <h3 id="programmatically">Programmatically</h3>
