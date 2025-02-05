@@ -2,6 +2,8 @@
 
 <div class="vp-doc">
 
+The **radio** component uses [HTML's native radio inputs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio) to allow a user to select one value from a set of options.
+
 </div>
 
 <div class="vp-example">
@@ -24,7 +26,7 @@
 
 ## Radio component
 
-> Select an option from a set
+> Select an option from a set of options.
 
 ```html
 <o-radio></o-radio>

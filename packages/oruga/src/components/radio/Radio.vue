@@ -9,7 +9,7 @@ import { injectField } from "../field/fieldInjection";
 import type { RadioProps } from "./props";
 
 /**
- * Select an option from a set
+ * Select an option from a set of options.
  * @displayName Radio
  * @style _radio.scss
  */

@@ -32,7 +32,6 @@ import WithIconsCode from "./with-icons.vue?raw";
 
         <h3 id="icons">With Icons</h3>
         <p>Add an icon to the input to explain its function more visually.</p>
-
         <ExampleViewer :component="WithIcons" :code="WithIconsCode" />
     </div>
 </template>
