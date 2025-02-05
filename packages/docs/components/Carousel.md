@@ -6,6 +6,8 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
+A slideshow component for cycling through elements — images or slides of text—like a carousel.
+
 </div>
 
 <div class="vp-example">
@@ -85,7 +87,7 @@ sidebarDepth: 2
 
 ## CarouselItem component
 
-> A Slideshow item used by the carousel
+> A Slideshow item used by the carousel.
 
 ```html
 <o-carousel-item></o-carousel-item>

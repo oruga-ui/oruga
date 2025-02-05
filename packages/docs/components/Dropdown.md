@@ -103,6 +103,8 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 ## DropdownItem component
 
+> An option item used by the dropdown component.
+
 ```html
 <o-dropdown-item></o-dropdown-item>
 ```

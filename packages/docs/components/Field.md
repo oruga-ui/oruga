@@ -2,6 +2,8 @@
 
 <div class="vp-doc">
 
+Fields are used to add functionality to controls and to attach/group components and elements together.
+
 </div>
 
 <div class="vp-example">
@@ -24,7 +26,7 @@
 
 ## Field component
 
-> Fields are used to add functionality to controls and to attach/group components and elements together
+> Fields are used to add functionality to controls and to attach/group components and elements together.
 
 ```html
 <o-field></o-field>
