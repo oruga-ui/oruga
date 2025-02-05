@@ -2,6 +2,10 @@
 
 <div class="vp-doc">
 
+The **input** component uses [HTML's native text input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text).
+It allows a user to enter a single line of text.
+Combine it with the Field component to access all functionalities.
+
 </div>
 
 <div class="vp-example">
@@ -24,7 +28,7 @@
 
 ## Input component
 
-> Get user Input. Use with Field to access all functionalities
+> Get user Input. Use with Field to access all functionalities.
 
 ```html
 <o-input></o-input>

@@ -22,7 +22,7 @@ import { injectField } from "../field/fieldInjection";
 import type { InputProps } from "./props";
 
 /**
- * Get user Input. Use with Field to access all functionalities
+ * Get user Input. Use with Field to access all functionalities.
  * @displayName Input
  * @style _input.scss
  */
