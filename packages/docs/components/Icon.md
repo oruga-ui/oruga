@@ -2,6 +2,9 @@
 
 <div class="vp-doc">
 
+Icons take an important role of any application.
+Oruga is compatible with both [Material Design Icons](https://materialdesignicons.com/) and [FontAwesome 5](https://fontawesome.com/) but you can also add your own custom icon pack.
+
 </div>
 
 <div class="vp-example">
@@ -24,7 +27,7 @@
 
 ## Icon component
 
-> Icons take an important role of any application
+> Icons take an important role of any application.
 
 ```html
 <o-icon></o-icon>

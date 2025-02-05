@@ -80,14 +80,6 @@ app.use(Oruga, {
 
 <template>
     <div class="vp-doc">
-        Oruga is compatible with both
-        <a href="https://materialdesignicons.com/" target="_blank">
-            Material Design Icons
-        </a>
-        and
-        <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but
-        you can also add your own custom icon pack.<br />
-
         <h3 id="base">Base</h3>
         <ExampleViewer :component="Base" :code="BaseCode" />
 
