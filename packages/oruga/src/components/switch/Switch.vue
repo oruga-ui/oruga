@@ -9,7 +9,7 @@ import { injectField } from "../field/fieldInjection";
 import type { SwitchProps } from "./props";
 
 /**
- * Switch between two opposing states
+ * Switch between two opposing states.
  * @displayName Switch
  * @style _switch.scss
  */
