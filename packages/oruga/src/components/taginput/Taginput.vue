@@ -26,7 +26,7 @@ import {
 import type { TaginputProps } from "./props";
 
 /**
- * A simple tag input field that can have autocomplete functionality
+ * A simple tag input field that can have autocomplete functionality.
  * @displayName Taginput
  * @style _taginput.scss
  */

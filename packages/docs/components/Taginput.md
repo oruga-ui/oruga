@@ -2,6 +2,9 @@
 
 <div class="vp-doc">
 
+The **taginput** component allows users to search through a list of options and apply any number of tags.
+The component is based on the autocomplete component and supports the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
+
 </div>
 
 <div class="vp-example">
@@ -24,7 +27,7 @@
 
 ## Taginput component
 
-> A simple tag input field that can have autocomplete functionality
+> A simple tag input field that can have autocomplete functionality.
 
 ```html
 <o-taginput></o-taginput>
