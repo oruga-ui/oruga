@@ -8,6 +8,7 @@ import type { StepsComponent, StepItemComponent } from "./types";
 import type { StepItemProps } from "./props";
 
 /**
+ * An step item used by the steps component.
  * @displayName Step Item
  */
 defineOptions({
@@ -190,12 +191,12 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
                 @binding {boolean} active - if item is shown 
             -->
             <slot :active="isActive && visible">
-                    <!-- injected component -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}" />
+                <!-- injected component -->
+                <component
+                    :is="component"
+                    v-if="component"
+                    v-bind="$props.props"
+                    v-on="$props.events || {}" />
 
                 <!-- default content prop -->
                 <template v-else>{{ content }}</template>
