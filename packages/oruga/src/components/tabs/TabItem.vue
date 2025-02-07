@@ -40,7 +40,7 @@ const emits = defineEmits<{
     deactivate: [];
 }>();
 
-const itemValue = props.value || useId();
+const itemValue = props.value ?? useId();
 
 const slots = useSlots();
 

@@ -170,7 +170,7 @@ describe("Table axe tests", () => {
                 columns,
                 checkable: true,
                 stickyCheckbox: true,
-                headerCheckable: true,
+                checkableHeader: true,
             },
         },
         {
