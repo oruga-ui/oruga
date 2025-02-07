@@ -397,7 +397,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                     :locale="locale" />
             </div>
 
-            <template v-if="$slots.footer !== undefined">
+            <template v-if="$slots.footer">
                 <!--
                     @slot Define an additional footer
                 -->
