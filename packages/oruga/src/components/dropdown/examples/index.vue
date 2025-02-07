@@ -32,9 +32,8 @@ import PositionCode from "./position.vue?raw";
 
         <h3 id="triggers">Triggers</h3>
         <p>
-            The dropdown component accepts several different trigger variants,
-            such as open on hover or open only on right click instead of left
-            click.
+            The component accepts several different trigger variants, such as
+            open on hover or open only on right click instead of left click.
         </p>
         <p>
             Adding the <code>teleport</code> prop will move the dropdown menu to
@@ -70,7 +69,7 @@ import PositionCode from "./position.vue?raw";
             <p>
                 The <code>options</code> prop works the same as the
                 <a href="/components/select.html">
-                    <b>select</b>
+                    <b>Select</b>
                 </a>
                 input component <code>options</code> prop.
             </p>
@@ -79,8 +78,8 @@ import PositionCode from "./position.vue?raw";
 
         <h3 id="selectable">Selectable</h3>
         <p>
-            Dropdown components with the prop <code>selectable</code> will have
-            options as a selectable list.
+            Components with the prop <code>selectable</code> will have options
+            as a selectable list.
         </p>
         <p>
             Adding the <code>multiple</code> prop will change the
@@ -91,9 +90,9 @@ import PositionCode from "./position.vue?raw";
         <h3 id="inline">Inline</h3>
         <div class="vp-doc">
             <p>
-                Dropdown components with the <code>inline</code> prop set will
-                render the options list directly, and will not have a trigger
-                element rendered.
+                Components with the <code>inline</code> prop set will render the
+                options list directly, and will not have a trigger element
+                rendered.
             </p>
         </div>
         <ExampleViewer :component="Inline" :code="InlineCode" />
@@ -101,8 +100,8 @@ import PositionCode from "./position.vue?raw";
         <h3 id="modal">Modal</h3>
         <div class="vp-doc">
             <p>
-                The dropdown component can be opened in an <i>modal</i> mode
-                either for mobile or desktop only, or for both, by adding the
+                The content can be opened in an <i>modal</i> mode either for
+                mobile or desktop only, or for both, by adding the
                 <code>mobile-modal</code> and <code>desktop-modal</code> props.
             </p>
         </div>
