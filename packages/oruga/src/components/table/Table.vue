@@ -88,7 +88,6 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     scrollable: undefined,
     stickyHeader: false,
     height: undefined,
-    debounceSearch: () => getDefault("table.debounceSearch", 300),
     checkable: false,
     stickyCheckbox: false,
     checkableHeader: true,
@@ -124,6 +123,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
     filtersEvent: "",
+    filterDebounce: () => getDefault("table.filterDebounce", 300),
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
     emptyIconSize: () => getDefault("table.emptyIconSize", "large"),
@@ -632,7 +632,7 @@ let debouncedFilter: ReturnType<
 
 // initialise and update debounces filter function
 watch(
-    () => props.debounceSearch,
+    () => props.filterDebounce,
     (debounce) =>
         (debouncedFilter = useDebounce(handleFiltersChange, debounce || 0)),
     { immediate: true },

@@ -443,7 +443,7 @@ describe("OTable tests", () => {
                         { label: "Name", field: "name", searchable: true },
                     ],
                     data,
-                    debounceSearch: 1000,
+                    filterDebounce: 1000,
                 },
             });
             await nextTick();
