@@ -51,10 +51,10 @@ export type TableProps<T> = {
     debounceSearch?: number;
     /** Rows can be checked (multiple) */
     checkable?: boolean;
+    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
+    checkableHeader?: boolean;
     /** Make the checkbox column sticky (if checkable) */
     stickyCheckbox?: boolean;
-    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
-    headerCheckable?: boolean;
     /** Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable) */
     checkedRows?: T[];
     /**

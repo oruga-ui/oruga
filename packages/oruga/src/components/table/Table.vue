@@ -91,7 +91,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     debounceSearch: () => getDefault("table.debounceSearch", 300),
     checkable: false,
     stickyCheckbox: false,
-    headerCheckable: true,
+    checkableHeader: true,
     checkedRows: () => [],
     checkboxPosition: () => getDefault("table.checkboxPosition", "left"),
     checkboxVariant: () => getDefault("table.checkboxVariant"),
@@ -1281,12 +1281,12 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 @binding {(): void} check-all - check all function
                             -->
                             <slot
+                                v-if="checkableHeader"
                                 name="check-all"
                                 :is-all-checked="isAllChecked"
                                 :is-all-uncheckable="isAllUncheckable"
                                 :check-all="checkAll">
                                 <o-checkbox
-                                    v-if="headerCheckable"
                                     :model-value="isAllChecked"
                                     autocomplete="off"
                                     name="row_check_all"
@@ -1362,28 +1362,27 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :aria-colindex="
                                 ariaColIndexStart + tableColumns.length
                             ">
-                            <template v-if="headerCheckable">
-                                <!--
-                                    @slot Override check all checkbox
-                                    @binding {boolean} is-all-checked - if all rows are checked
-                                    @binding {boolean} is-all-uncheckable - if check all is uncheckable
-                                    @binding {(): void} check-all - check all function
-                                -->
-                                <slot
-                                    name="check-all"
-                                    :is-all-checked="isAllChecked"
-                                    :is-all-uncheckable="isAllUncheckable"
-                                    :check-all="checkAll">
-                                    <o-checkbox
-                                        :model-value="isAllChecked"
-                                        autocomplete="off"
-                                        name="row_check_all"
-                                        :variant="checkboxVariant"
-                                        :disabled="isAllUncheckable"
-                                        aria-label="Check all"
-                                        @update:model-value="checkAll" />
-                                </slot>
-                            </template>
+                            <!--
+                                @slot Override check all checkbox
+                                @binding {boolean} is-all-checked - if all rows are checked
+                                @binding {boolean} is-all-uncheckable - if check all is uncheckable
+                                @binding {(): void} check-all - check all function
+                            -->
+                            <slot
+                                v-if="checkableHeader"
+                                name="check-all"
+                                :is-all-checked="isAllChecked"
+                                :is-all-uncheckable="isAllUncheckable"
+                                :check-all="checkAll">
+                                <o-checkbox
+                                    :model-value="isAllChecked"
+                                    autocomplete="off"
+                                    name="row_check_all"
+                                    :variant="checkboxVariant"
+                                    :disabled="isAllUncheckable"
+                                    aria-label="Check all"
+                                    @update:model-value="checkAll" />
+                            </slot>
                         </th>
                     </tr>
 
