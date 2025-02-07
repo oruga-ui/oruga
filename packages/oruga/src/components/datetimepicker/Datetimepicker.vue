@@ -16,7 +16,7 @@ import type { TimepickerProps } from "../timepicker/props";
 import type { DatetimepickerProps } from "./props";
 
 /**
- * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+ * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile.
  * @displayName Datetimepicker
  * @style _datetimepicker.scss
  */

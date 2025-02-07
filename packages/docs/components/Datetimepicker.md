@@ -2,6 +2,9 @@
 
 <div class="vp-doc">
 
+The **datetimepicker** input component uses [HTML's native date picker](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date) to allow users to select a date and time from a customizable calendar, and type the date directly into the input with full internationalization support.
+The input opens a simple dropdown/modal for selecting a date, and uses the native datetimepicker for mobile.
+
 </div>
 
 <div class="vp-example">
@@ -24,7 +27,7 @@
 
 ## Datetimepicker component
 
-> An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+> An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile.
 
 ```html
 <o-datetimepicker></o-datetimepicker>

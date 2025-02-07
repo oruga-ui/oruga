@@ -31,7 +31,7 @@ import MonthPickerCode from "./month-picker.vue?raw";
 
         <h3 id="min_max">Min/Max date</h3>
         <p>
-            Use the <code>min-date</code> and <code>max-date</code>props to
+            Use the <code>min-date</code> and <code>max-date</code> props to
             define a limited date range for the user to choose from.
         </p>
         <ExampleViewer :component="MinMaxDate" :code="MinMaxDateCode" />
