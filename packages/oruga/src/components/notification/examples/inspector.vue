@@ -22,7 +22,7 @@ const inspectData = [
             "bottom",
             "bottom-left",
         ],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "top-right";
         },
         nospec: true,
@@ -35,7 +35,7 @@ const inspectData = [
         class: "closeClass",
         description: "Class of the close button container",
         properties: ["closable"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.closable = true;
         },
     },
@@ -47,7 +47,7 @@ const inspectData = [
         class: "iconClass",
         description: "Class of the icon on the left",
         properties: ["type"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.type = "info";
         },
     },
@@ -65,7 +65,7 @@ const inspectData = [
         ],
         warning:
             "You have to declare a class for top and bottom position when override mode",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "top-right";
         },
     },
@@ -78,7 +78,7 @@ const inspectData = [
         description: "Class of the notification variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },

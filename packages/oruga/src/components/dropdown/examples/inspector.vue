@@ -18,9 +18,9 @@ const inspectData = [
         class: "teleportClass",
         description: "Class when the dropdown is teleported",
         properties: ["teleport"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.teleport = true;
-            setTimeout(() => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -30,8 +30,8 @@ const inspectData = [
         description: "Class of the overlay when on mobile",
         warning: "Switch to mobile view to see it in action!",
         specificity: "when <b>mobileClass</b> is applied",
-        action: () => {
-            setTimeout(() => {
+        action: (): void => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -41,8 +41,8 @@ const inspectData = [
         description: "Class of the dropdown menu",
         specificity:
             "when <b>inlineClass</b> or <b>mobileClass</b> or <b>expandedClass</b> is applied",
-        action: () => {
-            setTimeout(() => {
+        action: (): void => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -51,7 +51,7 @@ const inspectData = [
         class: "disabledClass",
         description: "Class of dropdown when disabled",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
@@ -59,8 +59,8 @@ const inspectData = [
         class: "menuActiveClass",
         description: "Class of dropdown menu when active",
         properties: ["inline", "active"],
-        action: () => {
-            setTimeout(() => {
+        action: (): void => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -69,7 +69,7 @@ const inspectData = [
         class: "inlineClass",
         description: "Class of dropdown menu when inline",
         properties: ["inline"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.inline = true;
         },
     },
@@ -78,9 +78,9 @@ const inspectData = [
         description: "Class of dropdown menu position",
         properties: ["position"],
         suffixes: ["top-right", "top-left", "bottom-right", "bottom-left"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "top-right";
-            setTimeout(() => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -89,8 +89,8 @@ const inspectData = [
         class: "mobileClass",
         description: "Class of dropdown when on mobile",
         warning: "Switch to mobile view to see it in action!",
-        action: () => {
-            setTimeout(() => {
+        action: (): void => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -99,7 +99,7 @@ const inspectData = [
         class: "expandedClass",
         description: "Class of dropdown when expanded",
         properties: ["expanded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -107,8 +107,8 @@ const inspectData = [
         class: "itemClass",
         description: "Class of the dropdown item",
         subitem: true,
-        action: () => {
-            setTimeout(() => {
+        action: (): void => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -117,8 +117,8 @@ const inspectData = [
         class: "itemActiveClass",
         description: "Class of the dropdown item when active",
         subitem: true,
-        action: () => {
-            setTimeout(() => {
+        action: (): void => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -128,8 +128,8 @@ const inspectData = [
         subitem: true,
         description: "Class of the dropdown item when disabled",
         properties: ["disabled"],
-        action: () => {
-            setTimeout(() => {
+        action: (): void => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },
@@ -139,8 +139,8 @@ const inspectData = [
         subitem: true,
         description: "Class of the dropdown item when clickable",
         properties: ["clickable"],
-        action: () => {
-            setTimeout(() => {
+        action: (): void => {
+            setTimeout((): void => {
                 dropdownbtn.value?.click();
             }, 300);
         },

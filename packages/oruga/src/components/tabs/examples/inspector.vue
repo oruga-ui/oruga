@@ -14,7 +14,7 @@ const inspectData = [
         class: "verticalClass",
         description: "Class of Tabs component when vertical",
         properties: ["vertical"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.vertical = true;
         },
     },
@@ -22,7 +22,7 @@ const inspectData = [
         class: "expandedClass",
         description: "Class of Tabs component when expanded",
         properties: ["expanded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -30,7 +30,7 @@ const inspectData = [
         class: "multilineClass",
         description: "Class of Tabs component when multiline",
         properties: ["multiline"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.multiline = true;
         },
     },
@@ -39,7 +39,7 @@ const inspectData = [
         description: "Class of Tabs component position",
         properties: ["position"],
         suffixes: ["bottom", "left", "right"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.vertical = true;
             data.position = "right";
         },
@@ -49,7 +49,7 @@ const inspectData = [
         description: "Size of the navigation",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -72,7 +72,7 @@ const inspectData = [
         class: "tabActiveClass",
         description: "Class of the tab item when active",
         subitem: true,
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.active = true;
         },
     },
@@ -89,7 +89,7 @@ const inspectData = [
         description: "Class of the tab item when disabled",
         properties: ["disabled"],
         subitem: true,
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
