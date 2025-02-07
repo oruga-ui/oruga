@@ -34,7 +34,7 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
      */
     target?: string | HTMLElement | null;
     /**
-     * Specify the id for the programmatic container element.
+     * Specify the template `id` for the programmatic container element.
      * @default `programmatic-app`
      */
     appId?: string;
