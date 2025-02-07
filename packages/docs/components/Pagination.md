@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-A responsive and flexible pagination to indicate a series of related content exists across multiple pages.
+The **Pagination** component ia responsive and flexible way to indicate a series of related content exists across multiple pages.
 
 </div>
 

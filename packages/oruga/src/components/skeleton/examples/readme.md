@@ -1,1 +1,1 @@
-A placeholder for content to load.
+The **Skeleton** component is a placeholder for content to load.
