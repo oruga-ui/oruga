@@ -109,7 +109,7 @@ import DraggableCode from "./draggable.vue?raw";
             Columns can have a search filter input by adding
             <code>searchable</code> to the TableColumn component item. The
             search filter can be debounced to avoid multiple filtering when
-            typing wich adding the <code>debounce-search</code> prop to the
+            typing wich adding the <code>filter-debounce</code> prop to the
             Table component.
         </p>
         <ExampleViewer :component="Searchable" :code="SearchableCode" />

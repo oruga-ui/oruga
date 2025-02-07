@@ -435,7 +435,7 @@ describe("OTable tests", () => {
             expect(bodyRows).toHaveLength(1); // João
         });
 
-        test("debounce search filtering when debounce-search is defined", async () => {
+        test("debounce search filtering when filter-debounce is defined", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
