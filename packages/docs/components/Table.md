@@ -6,6 +6,9 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
+The **table** component uses [HTML's native table element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table).
+It allows tabular data to be displayed in a responsive way with special case cells.
+
 </div>
 
 <div class="vp-example">
@@ -28,7 +31,7 @@ sidebarDepth: 2
 
 ## Table component
 
-> Tabulated data are sometimes needed, it's even better when it's responsive
+> Tabulated data are sometimes needed, it's even better when it's responsive.
 
 ```html
 <o-table></o-table>
@@ -166,6 +169,8 @@ sidebarDepth: 2
 <div class="vp-doc">
 
 ## TableColumn component
+
+> Define a column used by the table component.
 
 ```html
 <o-table-column></o-table-column>

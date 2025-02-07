@@ -54,7 +54,7 @@ import type {
 import type { TableProps } from "./props";
 
 /**
- * Tabulated data are sometimes needed, it's even better when it's responsive
+ * Tabulated data are sometimes needed, it's even better when it's responsive.
  * @displayName Table
  * @requires ./TableColumn.vue
  * @style _table.scss
@@ -1169,7 +1169,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ getColumnValue(row as T, column) }}
+                        {{ getColumnValue(row, column) }}
                     </o-table-column>
                 </template>
 
@@ -1598,7 +1598,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             column.index,
                                             $event,
                                         )
-                                    " />
+                                    ">
+                                    {{ getColumnValue(row.value, column) }}
+                                </o-slot-component>
                             </template>
 
                             <!-- checkable column right -->

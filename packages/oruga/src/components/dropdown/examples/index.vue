@@ -123,7 +123,7 @@ import PositionCode from "./position.vue?raw";
             The direction in which the dropdown menu opens can be defined by the
             <code>position</code> prop. By default, the direction is
             automatically calculated from the distance to the edge of the
-            window. Adding the <code>teleport</code> prop addiotnaly will move
+            window. Adding the <code>teleport</code> prop additionally will move
             the dropdown menu to the referenced DOM location instead.
         </p>
         <ExampleViewer :component="Position" :code="PositionCode" />
