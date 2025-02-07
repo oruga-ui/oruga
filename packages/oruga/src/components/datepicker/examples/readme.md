@@ -1,0 +1,2 @@
+The **datepicker** input component uses [HTML's native date picker](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date) to allow users to select a date from a customizable calendar, and type the date directly into the input with full internationalization support.
+The input opens a simple dropdown/modal for selecting a date, and uses the native datepicker for mobile.
