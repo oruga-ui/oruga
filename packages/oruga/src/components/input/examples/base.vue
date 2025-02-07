@@ -1,13 +1,7 @@
-<script setup lang="ts">
-import { ref } from "vue";
-
-const name = ref("John Silver");
-</script>
-
 <template>
     <section>
         <o-field label="Name">
-            <o-input v-model="name" />
+            <o-input model-value="John Silver" />
         </o-field>
 
         <o-field label="Email" variant="danger" message="This email is invalid">

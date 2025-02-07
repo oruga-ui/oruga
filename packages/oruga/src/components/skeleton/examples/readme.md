@@ -1,0 +1,1 @@
+The **Skeleton** component is a placeholder for content to load.

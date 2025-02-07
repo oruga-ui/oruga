@@ -14,7 +14,7 @@ const inspectData = [
     {
         class: "inputCheckedClass",
         description: "Class of the native input element when checked",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkValue.value = true;
         },
     },
@@ -25,7 +25,7 @@ const inspectData = [
     {
         class: "switchCheckedClass",
         description: "Class of the outer switch check when checked",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkValue.value = true;
         },
     },
@@ -37,7 +37,7 @@ const inspectData = [
         class: "roundedClass",
         description: "Class of the switch when rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.rounded = true;
         },
     },
@@ -45,7 +45,7 @@ const inspectData = [
         class: "disabledClass",
         description: "Class when switch is disabled",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
@@ -57,7 +57,7 @@ const inspectData = [
         class: "positionClass",
         description: "Class of switch label position",
         properties: ["position"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "left";
         },
     },
@@ -66,7 +66,7 @@ const inspectData = [
         description: "Class of the switch size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -75,7 +75,7 @@ const inspectData = [
         description: "Class of the switch variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
             data.checkValue.value = true;
         },
@@ -85,7 +85,7 @@ const inspectData = [
         description: "Class of the switch passive variant",
         properties: ["passiveVariant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.passiveVariant = "danger";
             data.checkValue.value = false;
         },

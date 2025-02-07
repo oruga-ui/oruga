@@ -6,7 +6,7 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> A Slideshow for cycling images in confined spaces
+The **Carousel** component is a slideshow for cycling through elements — images or slides of text—like a carousel.
 
 </div>
 
@@ -30,7 +30,7 @@ sidebarDepth: 2
 
 ## Carousel component
 
-> A Slideshow for cycling images in confined spaces
+> A Slideshow for cycling images in confined spaces.
 
 ```html
 <o-carousel></o-carousel>
@@ -87,7 +87,7 @@ sidebarDepth: 2
 
 ## CarouselItem component
 
-> A Slideshow item used by the carousel
+> A Slideshow item used by the carousel.
 
 ```html
 <o-carousel-item></o-carousel-item>

@@ -2,7 +2,8 @@
 
 <div class="vp-doc">
 
-> A sidebar to use as left/right overlay or static
+The **Sidebar** component can be toggled to appear from the left, right, top, or bottom edge of the viewport.
+The component can be used to show an overlay for navigation, shopping carts, and more.
 
 </div>
 
@@ -26,7 +27,7 @@
 
 ## Sidebar component
 
-> A sidebar to use as left/right overlay or static
+> A sidebar to use as overlay.
 
 ```html
 <o-sidebar></o-sidebar>

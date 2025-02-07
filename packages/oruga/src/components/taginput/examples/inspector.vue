@@ -205,7 +205,7 @@ const inspectData = [
         class: "expandedClass",
         description: "Class of input when expanded",
         properties: ["expanded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -217,7 +217,7 @@ const inspectData = [
         class: "sizeClass",
         description: "Class of the input container size",
         properties: ["size"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -230,7 +230,7 @@ const inspectData = [
         description: "Class of the entered item variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
@@ -238,7 +238,7 @@ const inspectData = [
         class: "closeClass",
         properties: ["closable"],
         description: "Class of the close button of entered item",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.closable = true;
         },
     },
@@ -246,7 +246,7 @@ const inspectData = [
         class: "counterClass",
         description: "Class of the counter element",
         properties: ["counter", "maxitems"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.counter = true;
             data.maxitems = 5;
         },

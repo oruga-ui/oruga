@@ -4,7 +4,7 @@ import { ref } from "vue";
 const isLoading = ref(false);
 const isFullPage = ref(true);
 
-function openLoading() {
+function openLoading(): void {
     isLoading.value = true;
     setTimeout(() => (isLoading.value = false), 10 * 1000);
 }

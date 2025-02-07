@@ -20,7 +20,7 @@ import type {
 import type { MenuItemProps } from "./props";
 
 /**
- * A menu list item
+ * A menu list item.
  * @displayName Menu Item
  */
 defineOptions({

@@ -18,7 +18,7 @@ const inspectData = [
         description: "Class to align label and control in horizontal forms",
         properties: ["horizontal"],
         specificity: "when <b>horizontal</b> is applied",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.horizontal = true;
         },
     },
@@ -27,7 +27,7 @@ const inspectData = [
         description: "Class for field label when horizontal",
         properties: ["horizontal"],
         specificity: "when <b>horizontal</b> is applied",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.horizontal = true;
         },
     },
@@ -36,7 +36,7 @@ const inspectData = [
         description: "Class for field body when horizontal",
         specificity: "when <b>horizontal</b> is applied",
         properties: ["horizontal"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.horizontal = true;
         },
     },
@@ -44,7 +44,7 @@ const inspectData = [
         class: "groupedClass",
         description: "Class when fields are grouped together",
         properties: ["grouped"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.grouped = true;
         },
     },
@@ -52,7 +52,7 @@ const inspectData = [
         class: "groupMultilineClass",
         description: "Class when fields fill up multiple lines",
         properties: ["groupMultiline"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.groupMultiline = true;
         },
     },
@@ -65,7 +65,7 @@ const inspectData = [
         description: "Class for field label size",
         properties: ["labelSize"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.labelSize = "large";
         },
     },
@@ -74,7 +74,7 @@ const inspectData = [
         description: "Class of the label field variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "info";
         },
     },
@@ -88,7 +88,7 @@ const inspectData = [
             "Class for components automatically attached together when inside a field",
         warning:
             "Use the <code>expanded</code> prop on the control to fill up the remaining space",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -96,7 +96,7 @@ const inspectData = [
         class: "messageClass",
         description: "Class for the field message",
         properties: ["message"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.message = "This is a message for the field";
         },
     },
@@ -105,7 +105,7 @@ const inspectData = [
         description: "Class of the message field variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "info";
             data.message = "This is a message for the field";
         },
@@ -114,7 +114,7 @@ const inspectData = [
         class: "focusedClass",
         description: "Class for the focused field",
         warning: "focus event emitted by form elements",
-        action: (cmp) => {
+        action: (cmp): void => {
             cmp.focus();
         },
     },
@@ -122,7 +122,7 @@ const inspectData = [
         class: "filledClass",
         description: "Class for the filled field",
         warning: "when it contains a input",
-        action: () => {
+        action: (): void => {
             name.value = "Oruga";
         },
     },

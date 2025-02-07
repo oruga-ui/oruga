@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-> A simple loading overlay
+The **Loading** component allows you to display a loading state for use on a global state or a specific element.
 
 </div>
 
@@ -26,7 +26,7 @@
 
 ## Loading component
 
-> A simple loading overlay
+> A simple loading overlay.
 
 ```html
 <o-loading></o-loading>

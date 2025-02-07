@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-> A placeholder for content to load
+The **Skeleton** component is a placeholder for content to load.
 
 </div>
 
@@ -26,7 +26,7 @@
 
 ## Skeleton component
 
-> A placeholder for content to load
+> A placeholder for content to load.
 
 ```html
 <o-skeleton></o-skeleton>

@@ -13,7 +13,7 @@ const showBooks = ref(false);
             <o-button label="Set Music" @click="activeTab = 2" />
         </o-field>
 
-        <o-tabs v-model="activeTab" destroy-on-hide>
+        <o-tabs v-model="activeTab">
             <o-tab-item :value="0" label="Pictures" icon="image">
                 hat light is light, if Silvia be not seen? <br />
                 What joy is joy.

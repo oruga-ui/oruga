@@ -19,7 +19,7 @@ const inspectData = [
         description: "Size of the steps",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -27,7 +27,7 @@ const inspectData = [
         class: "verticalClass",
         description: "Class of the tooltip trigger",
         properties: ["vertical"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.vertical = true;
         },
     },
@@ -37,7 +37,7 @@ const inspectData = [
             "Class of the Steps component when is vertical and its position changes",
         properties: ["position", "vertical"],
         suffixes: ["bottom", "left", "right"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.vertical = true;
             data.position = "right";
         },
@@ -46,7 +46,7 @@ const inspectData = [
         class: "animatedClass",
         description: "Class of Steps component when animation gets triggered",
         properties: ["animated"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.animated = true;
         },
     },
@@ -66,7 +66,7 @@ const inspectData = [
         class: "markerRoundedClass",
         description: "Class of the Steps markers trigger when are rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "right";
         },
     },
@@ -100,7 +100,7 @@ const inspectData = [
         class: "navItemPreviousClass",
         description: "Class of the nav item before the active one",
         subitem: true,
-        action: () => {
+        action: (): void => {
             activeStep.value = 2;
         },
     },
@@ -108,7 +108,7 @@ const inspectData = [
         class: "navItemNextClass",
         description: "CClass of the nav item after the active one",
         subitem: true,
-        action: () => {
+        action: (): void => {
             activeStep.value = 2;
         },
     },
@@ -119,7 +119,7 @@ const inspectData = [
         subitem: true,
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
@@ -147,7 +147,7 @@ const inspectData = [
         description: "Class of the Step component item label when positioned",
         properties: ["labelPosition"],
         suffixes: ["bottom", "right", "left"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.labelPosition = "right";
         },
     },

@@ -6,7 +6,7 @@ const inspectData = [
     {
         class: "rootClass",
         description: "Class of the root element",
-        action: () => {
+        action: (): void => {
             isImageModalActive.value = true;
         },
     },
@@ -19,14 +19,14 @@ const inspectData = [
         class: "activeClass",
         description: "Class of modal component when its active",
         properties: ["active"],
-        action: () => {
+        action: (): void => {
             isImageModalActive.value = true;
         },
     },
     {
         class: "overlayClass",
         description: "Class of the modal overlay",
-        action: () => {
+        action: (): void => {
             isImageModalActive.value = true;
         },
     },
@@ -34,14 +34,14 @@ const inspectData = [
         class: "contentClass",
         description: "Class of the modal content",
         specificity: "when <b>mobileClass</b> is applied",
-        action: () => {
+        action: (): void => {
             isImageModalActive.value = true;
         },
     },
     {
         class: "closeClass",
         description: "Class of the close button",
-        action: () => {
+        action: (): void => {
             isImageModalActive.value = true;
         },
     },
@@ -49,7 +49,7 @@ const inspectData = [
         class: "fullScreenClass",
         description: "Class of the modal when fullscreen",
         properties: ["fullScreen"],
-        action: (cmp) => {
+        action: (cmp): void => {
             isImageModalActive.value = true;
             cmp.data.fullScreen = true;
         },
@@ -58,7 +58,7 @@ const inspectData = [
         class: "scrollClipClass",
         description: "Class of the modal when scroll is clip",
         properties: ["scroll"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             isImageModalActive.value = true;
             data.scroll = "clip";
         },
@@ -67,7 +67,7 @@ const inspectData = [
         class: "noScrollClass",
         description: "Class of the modal when scroll is not clip",
         properties: ["scroll"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             isImageModalActive.value = true;
             data.scroll = "";
         },

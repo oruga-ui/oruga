@@ -8,6 +8,7 @@ import type { TableColumnComponent, TableComponent } from "./types";
 import type { TableColumnProps } from "./props";
 
 /**
+ * Define a column used by the table component.
  * @displayName Table Column
  */
 defineOptions({

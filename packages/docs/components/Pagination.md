@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-> A responsive and flexible pagination
+The **Pagination** component is responsive and flexible way to indicate a series of related content exists across multiple pages.
 
 </div>
 
@@ -26,7 +26,7 @@
 
 ## Pagination component
 
-> A responsive and flexible pagination
+> A responsive and flexible pagination.
 
 ```html
 <o-pagination></o-pagination>

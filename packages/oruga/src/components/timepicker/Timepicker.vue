@@ -14,7 +14,7 @@ import type { OptionsItem } from "@/types";
 import type { TimepickerProps } from "./props";
 
 /**
- * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
+ * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile.
  * @displayName Timepicker
  * @style _timepicker.scss
  */
@@ -693,11 +693,11 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             </option>
         </o-select>
 
-        <footer v-if="$slots.default" :class="footerClasses">
+        <footer v-if="$slots.footer" :class="footerClasses">
             <!--
                 @slot Define an additional content on footer
             -->
-            <slot />
+            <slot name="footer" />
         </footer>
     </OPickerWrapper>
 </template>

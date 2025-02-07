@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-> Classic modal overlay to include any content you may need
+The **Modal** component is classic modal overlay, in which you can include any content you want.
 
 </div>
 
@@ -26,7 +26,7 @@
 
 ## Modal component
 
-> Classic modal overlay to include any content you may need
+> Classic modal overlay to include any content you may need.
 
 ```html
 <o-modal></o-modal>

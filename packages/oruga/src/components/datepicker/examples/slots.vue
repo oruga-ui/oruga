@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const months = [
     { label: "January", value: 0 },
@@ -16,34 +16,40 @@ const months = [
     { label: "December", value: 11 },
 ];
 
-const date = ref<Date | undefined>(new Date());
+const selected = ref<Date | undefined>(new Date());
 
-function selectMonth(option): void {
-    if (!option) return;
+const selectedString = computed(() => selected.value?.toDateString() || "");
 
-    date.value = date.value ? new Date(date.value) : new Date();
-    date.value.setMonth(option.value);
+function selectMonth(month: number | undefined): void {
+    if (!month) return;
+
+    const date = selected.value ? new Date(selected.value) : new Date();
+    date.setMonth(month);
+    selected.value = date;
 }
 </script>
 
 <template>
     <section>
-        <o-field label="Select a date">
+        <o-field label="Select a date" grouped>
             <o-datepicker
-                v-model="date"
+                v-model="selected"
                 :first-day-of-week="1"
                 placeholder="Click to select...">
+                <template #trigger>
+                    <o-button icon-left="calendar" variant="primary" />
+                </template>
+
                 <template #header>
                     <o-field grouped>
-                        <o-autocomplete
+                        <o-select
+                            :model-value="selected?.getMonth()"
                             :options="months"
                             root-class="grow"
-                            open-on-focus
-                            readonly
                             expanded
-                            @select="selectMonth" />
+                            @update:model-value="selectMonth" />
                         <o-button
-                            :label="date?.getFullYear().toString()"
+                            :label="selected?.getFullYear().toString()"
                             disabled />
                     </o-field>
                 </template>
@@ -54,15 +60,17 @@ function selectMonth(option): void {
                             variant="primary"
                             icon-left="calendar"
                             label="Today"
-                            @click="date = new Date()" />
+                            @click="selected = new Date()" />
                         <o-button
                             variant="danger"
                             icon-left="times"
                             label="Clear"
-                            @click="date = undefined" />
+                            @click="selected = undefined" />
                     </div>
                 </template>
             </o-datepicker>
+
+            <o-input v-model="selectedString" readonly expanded />
         </o-field>
     </section>
 </template>

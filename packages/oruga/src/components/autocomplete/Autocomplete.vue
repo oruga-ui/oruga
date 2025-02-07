@@ -42,7 +42,7 @@ enum SpecialOption {
 }
 
 /**
- * Extended input that provide suggestions while the user types
+ * Extended input that provide suggestions while the user types.
  * @displayName Autocomplete
  * @style _autocomplete.scss
  */

@@ -11,7 +11,7 @@ const inspectData = [
     {
         class: "checkedClass",
         description: "Class of the root element when checked",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkbox = true;
         },
     },
@@ -22,7 +22,7 @@ const inspectData = [
     {
         class: "inputCheckedClass",
         description: "Class of the checkbox input when checked",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkbox = true;
         },
     },
@@ -30,7 +30,7 @@ const inspectData = [
         class: "indeterminateClass",
         description: "Class when checkbox is indeterminate",
         properties: ["indeterminate"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.indeterminate = true;
         },
     },
@@ -39,7 +39,7 @@ const inspectData = [
         description: "Class of the checkbox size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -47,7 +47,7 @@ const inspectData = [
         class: "disabledClass",
         description: "Class when checkbox is disabled",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
@@ -56,7 +56,7 @@ const inspectData = [
         description: "Class of the checkbox variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
