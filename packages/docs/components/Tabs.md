@@ -1,3 +1,7 @@
+---
+sidebarDepth: 2
+---
+
 # Tabs
 
 <div class="vp-doc">
@@ -148,7 +152,6 @@
 | $tabs-toggle-link-active-background-color   | var(--#{$prefix}primary)               |
 | $tabs-toggle-link-active-border-color       | var(--#{$prefix}primary)               |
 | $tabs-toggle-link-active-color              | var(--#{$prefix}primary-invert)        |
-
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tabs.scss)
 

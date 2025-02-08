@@ -34,7 +34,6 @@
 
 ### Props
 
-
 | Prop name        | Description                                                                                                                                                                         | Type                        | Values                                              | Default                                                                                                                                                              |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | active           | Whether modal is active or not, use v-model:active to make it two-way binding                                                                                                       | boolean                     | -                                                   | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                          |
@@ -57,7 +56,6 @@
 | teleport         | Append the component to another part of the DOM.<br/>Set `true` to append the component to the body.<br/>In addition, any CSS selector string or an actual DOM node can be used.    | boolean \| object \| string | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;teleport: false<br>}</code>                      |
 | trapFocus        | Trap focus inside the modal                                                                                                                                                         | boolean                     | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>                      |
 | width            | Width of the Modal                                                                                                                                                                  | number \| string            | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;width: 960<br>}</code>                           |
-
 
 ### Events
 
@@ -82,20 +80,20 @@
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                              | Default                     |
-| ------------------------------------------ | --------------------------- |
-| $modal-content-background-color            | $white                      |
-| $modal-content-border-radius               | $base-border-radius         |
-| $modal-overlay-background-color            | hsla(0, 0%, 4%, 0.86)       |
-| $modal-close-border-radius                 | $base-rounded-border-radius |
-| $modal-close-right                         | 20px                        |
-| $modal-close-top                           | 20px                        |
-| $modal-close-size                          | 32px                        |
-| $modal-close-color                         | $white                      |
-| $modal-content-fullscreen-background-color | #f5f5f5                     |
-| $modal-content-max-height                  | calc(100vh - 160px)         |
-| $modal-content-margin                      | 0 auto                      |
-| $modal-zindex                              | 40                          |
+| SASS Variable                              | Default                                      |
+| ------------------------------------------ | -------------------------------------------- |
+| $modal-content-background-color            | var(--#{$prefix}white)                       |
+| $modal-content-border-radius               | var(--#{$prefix}base-border-radius)          |
+| $modal-overlay-background-color            | hsla(0, 0%, 4%, 0.86)                        |
+| $modal-close-border-radius                 | var( --#{$prefix}base-border-radius-rounded) |
+| $modal-close-right                         | 20px                                         |
+| $modal-close-top                           | 20px                                         |
+| $modal-close-size                          | 32px                                         |
+| $modal-close-color                         | var(--#{$prefix}white)                       |
+| $modal-content-fullscreen-background-color | #f5f5f5                                      |
+| $modal-content-max-height                  | calc(100vh - 160px)                          |
+| $modal-content-margin                      | 0 auto                                       |
+| $modal-zindex                              | 40                                           |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_modal.scss)
 

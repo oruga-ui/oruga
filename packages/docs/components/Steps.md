@@ -1,3 +1,7 @@
+---
+sidebarDepth: 2
+---
+
 # Steps
 
 <div class="vp-doc">
@@ -124,7 +128,6 @@
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-
 | SASS Variable                       | Default                                      |
 | ----------------------------------- | -------------------------------------------- |
 | $steps-title-background-color       | hsl(0, 0%, 100%)                             |
@@ -145,7 +148,6 @@
 | $steps-content-spacer               | 1rem                                         |
 | $steps-content-padding              | 1rem                                         |
 | $steps-font-size                    | var(--#{$prefix}base-font-size)              |
-
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_steps.scss)
 

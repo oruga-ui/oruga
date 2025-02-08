@@ -53,7 +53,7 @@
 | iconRightVariant   | Variant of right icon                                                               | string                                                                                                | -                                                                               |                                                                                                                                                           |
 | id                 | Same as native id. Also set the for label for o-field wrapper - default is an uuid. | string                                                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                             |
 | maxlength          | Same as native maxlength, plus character counter                                    | number \| string                                                                                      | -                                                                               |                                                                                                                                                           |
-| modelModifiers     |                                                                                     | Record&lt;string, true&gt;                                                                            | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                    |
+| modelModifiers     |                                                                                     | Partial&lt;Record&lt;string, true&gt;&gt;                                                             | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                    |
 | v-model            | The input value state                                                               | number \| string                                                                                      | -                                                                               |                                                                                                                                                           |
 | number             | Convert the ´modelValue`into type`number`                                           | boolean                                                                                               | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                    |
 | override           | Override existing theme classes completely                                          | boolean                                                                                               | -                                                                               |                                                                                                                                                           |
@@ -91,20 +91,20 @@
 | SASS Variable                | Default                                               |
 | ---------------------------- | ----------------------------------------------------- |
 | $input-background-color      | #ffffff                                               |
-| $input-border-color          | $grey-lighter                                         |
+| $input-border-color          | var(--#{$prefix}grey-lighter)                         |
 | $input-border-style          | solid                                                 |
 | $input-border-width          | 1px                                                   |
-| $input-border-radius         | $base-border-radius                                   |
-| $input-rounded-border-radius | $base-rounded-border-radius                           |
-| $input-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1)                  |
+| $input-border-radius         | var(--#{$prefix}base-border-radius)                   |
+| $input-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
+| $input-box-shadow            | $control-box-shadow                                   |
 | $input-color                 | #363636                                               |
 | $input-icon-zindex           | 4                                                     |
-| $input-counter-font-size     | 0.75rem                                               |
-| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
 | $input-height                | $control-height                                       |
-| $input-line-height           | $base-line-height                                     |
+| $input-line-height           | var(--#{$prefix}base-line-height)                     |
 | $input-margin                | 0                                                     |
 | $input-padding               | $control-padding-vertical $control-padding-horizontal |
+| $input-counter-font-size     | 0.75rem                                               |
+| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
 | $input-textarea-max-height   | 600px                                                 |
 | $input-textarea-min-height   | 120px                                                 |
 | $input-textarea-padding      | 0.625em                                               |

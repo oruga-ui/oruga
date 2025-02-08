@@ -1,3 +1,7 @@
+---
+sidebarDepth: 2
+---
+
 # Notification
 
 <div class="vp-doc">
@@ -34,7 +38,6 @@
 
 ### Props
 
-
 | Prop name      | Description                                                                   | Type                                                                              | Values                                                                          | Default                                                                                                                                                         |
 | -------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | active         | Whether modal is active or not, use v-model:active to make it two-way binding | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                      |
@@ -51,7 +54,6 @@
 | position       | Which position the notification will appear when programmatically             | "bottom-left" \| "bottom-right" \| "bottom" \| "top-left" \| "top-right" \| "top" | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left`         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>          |
 | type           | Type (color) of the notification                                              | string                                                                            | `info`, `success`, `warning`, `danger`                                          |                                                                                                                                                                 |
 | variant        | Color of the control                                                          | string                                                                            | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>       |
-
 
 ### Events
 
@@ -114,23 +116,23 @@
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                        | Default                     |
-| ------------------------------------ | --------------------------- |
-| $notification-background-color       | $primary                    |
-| $notification-border-radius          | 4px                         |
-| $notification-padding                | 1.75em 1.75em               |
-| $notification-margin-bottom          | 1.5rem                      |
-| $notification-animantion             | append-animate 0.3s linear  |
-| $notification-color                  | $white                      |
-| $notification-close-border-radius    | $base-rounded-border-radius |
-| $notification-close-right            | 0.5rem                      |
-| $notification-close-top              | 0.5rem                      |
-| $notification-close-size             | 20px                        |
-| $notification-close-color            | $white                      |
-| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)        |
-| $notification-icon-margin-right      | 1rem                        |
-| $notification-notices-padding        | 2em                         |
-| $notification-notices-zindex         | 1000                        |
+| SASS Variable                        | Default                                      |
+| ------------------------------------ | -------------------------------------------- |
+| $notification-background-color       | var(--#{$prefix}primary)                     |
+| $notification-border-radius          | 4px                                          |
+| $notification-padding                | 1.75em 1.75em                                |
+| $notification-margin-bottom          | 1.5rem                                       |
+| $notification-animantion             | append-animate 0.3s linear                   |
+| $notification-color                  | var(--#{$prefix}white)                       |
+| $notification-close-border-radius    | var( --#{$prefix}base-border-radius-rounded) |
+| $notification-close-right            | 0.5rem                                       |
+| $notification-close-top              | 0.5rem                                       |
+| $notification-close-size             | 20px                                         |
+| $notification-close-color            | var(--#{$prefix}white)                       |
+| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)                         |
+| $notification-icon-margin-right      | 1rem                                         |
+| $notification-notices-padding        | 2em                                          |
+| $notification-notices-zindex         | 1000                                         |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
 

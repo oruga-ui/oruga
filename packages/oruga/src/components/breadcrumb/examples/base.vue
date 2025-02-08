@@ -1,19 +1,3 @@
-<script setup>
-// import { reactive } from "vue";
-// import { useRoute,useRouter } from 'vitepress';
-
-// const clickMe = () => {
-//     alert("Clicked!");
-// };
-
-// const settings = reactive({
-//     rounded: false,
-//     tooltip: true,
-//     variant: "warning",
-//     size: "medium",
-// });
-</script>
-
 <template>
     <section>
         <!--  align="center" -->
@@ -40,10 +24,7 @@
             separator="has-arrow-separator"
             size="medium"
             align="center">
-            <o-breadcrumb-item 
-                tag="router-link"  
-                to="/" 
-                active-variant="primary"
+            <o-breadcrumb-item tag="router-link" to="/" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
             <o-breadcrumb-item

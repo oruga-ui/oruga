@@ -88,7 +88,6 @@
 | $button-outlined-background-color | transparent                                     |
 | $button-outlined-border-color     | var(--#{$prefix}grey-light)                     |
 
-
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
 
 </div>
@@ -110,6 +109,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | SASS Variable           | Default                       |
 | ----------------------- | ----------------------------- |
 | $btn-spacer             | 0.5rem                        |
+| $btn-height             | 2.35em                        |
 | $btn-border-color       | var(--#{$prefix}border-color) |
 | $btn-hover-border-color | var(--#{$prefix}border-color) |
 | $btn-hover-box-shadow   | $box-shadow-sm                |
