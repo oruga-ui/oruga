@@ -194,8 +194,8 @@ const slot = "My default slot content";
 oruga.programmatic.open(
     MyComponent,
     {
-        target: document.body, // target the component get rendered into
-        appId: "programmatic-app", // HTML #id of the div element rendered into the target container 
+        target: document.body, // target container the programmatic component get rendered into
+        appId: "programmatic-app", // HTML #id of the app div rendered into the target container 
         props: { ... }, // component specific props
         onClose: (...args: unknown[]) => { ... }, // on close event handler
     }
