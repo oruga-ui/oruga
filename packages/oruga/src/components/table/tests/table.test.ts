@@ -435,7 +435,7 @@ describe("OTable tests", () => {
             expect(bodyRows).toHaveLength(1); // João
         });
 
-        test("debounce search filtering when debounce-search is defined", async () => {
+        test("debounce search filtering when filter-debounce is defined", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
@@ -443,7 +443,7 @@ describe("OTable tests", () => {
                         { label: "Name", field: "name", searchable: true },
                     ],
                     data,
-                    debounceSearch: 1000,
+                    filterDebounce: 1000,
                 },
             });
             await nextTick();

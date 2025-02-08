@@ -365,7 +365,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
                     <span> {{ option.label }}</span>
 
                     <o-icon
-                        v-if="closable"
+                        v-if="closable && !disabled"
                         :class="closeClasses"
                         :pack="iconPack"
                         :icon="closeIcon"

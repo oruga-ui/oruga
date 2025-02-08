@@ -56,7 +56,7 @@ import DisabledCode from "./disabled.vue?raw";
             <p>
                 The <code>options</code> prop works the same as the
                 <a href="/components/select.html">
-                    <b>select</b>
+                    <b>Select</b>
                 </a>
                 input component <code>options</code> prop.
             </p>

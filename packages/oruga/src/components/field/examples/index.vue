@@ -41,7 +41,7 @@ import SlotsCode from "./slots.vue?raw";
         </p>
         <ExampleViewer :component="Horizontal" :code="HorizontalCode" />
 
-        <h3 id="field-slots">Slots</h3>
+        <h3 id="slots">Slots</h3>
         <p>
             The <code>label</code> and the <code>message</code> can be
             customised using slots if needed.

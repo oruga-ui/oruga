@@ -39,7 +39,6 @@ import TriggersCode from "./triggers.vue?raw";
             <code>triggers</code> prop. The action that closes the tooltip can
             be customized using the <code>closaeble</code> prop.
         </p>
-
         <ExampleViewer :component="Triggers" :code="TriggersCode" />
 
         <h3 id="variants">Variants</h3>

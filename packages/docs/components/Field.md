@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-Fields are used to add functionality to controls and to attach/group components and elements together.
+The **Field** component is used to add functionality to controls and to attach/group components and elements together.
 
 </div>
 

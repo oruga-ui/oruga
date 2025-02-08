@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-An easy way to toggle the visibility of content.
+The **Collapse** component is an easy way to toggle the visibility of content.
 
 </div>
 

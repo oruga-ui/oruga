@@ -106,10 +106,9 @@ import WithIconsCode from "./with-icons.vue?raw";
 
         <h3 id="multiple">Multiple</h3>
         <p>
-            The <b>select</b> input also supports a
-            <code>multiple</code> attribute that allows for multi-selection.
-            When used the <code>v-model</code> attribute will be an array of
-            values.
+            The input also supports a <code>multiple</code> attribute that
+            allows multi-selection. When used the <code>v-model</code> attribute
+            will be an array of values.
         </p>
         <div class="info custom-block">
             <p class="custom-block-title">Accessibility Notes</p>

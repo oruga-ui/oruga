@@ -39,7 +39,7 @@ const inspectData = [
     {
         class: "buttonDisabledClass",
         description: "Class of the disabled link",
-        action: () => {
+        action: (): void => {
             current.value = 20;
         },
     },
@@ -61,7 +61,7 @@ const inspectData = [
         class: "infoClass",
         description: "Class of the info in `simple` mode",
         properties: ["simple"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.simple = true;
         },
     },
@@ -70,7 +70,7 @@ const inspectData = [
         description: "Class of the pagination order",
         properties: ["order"],
         suffixes: ["centered", "right", "left"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.order = "centered";
         },
     },
@@ -78,7 +78,7 @@ const inspectData = [
         class: "simpleClass",
         description: "Class of the pagination in `simple` mode",
         properties: ["simple"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.simple = true;
         },
     },
@@ -86,7 +86,7 @@ const inspectData = [
         class: "roundedClass",
         description: "Class of the pagination when rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.rounded = true;
         },
     },
@@ -95,7 +95,7 @@ const inspectData = [
         description: "Class for the pagination size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "small";
         },
     },

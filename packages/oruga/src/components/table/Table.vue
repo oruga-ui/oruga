@@ -54,7 +54,7 @@ import type {
 import type { TableProps } from "./props";
 
 /**
- * Tabulated data are sometimes needed, it's even better when it's responsive
+ * Tabulated data are sometimes needed, it's even better when it's responsive.
  * @displayName Table
  * @requires ./TableColumn.vue
  * @style _table.scss
@@ -88,10 +88,9 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     scrollable: undefined,
     stickyHeader: false,
     height: undefined,
-    debounceSearch: () => getDefault("table.debounceSearch", 300),
     checkable: false,
     stickyCheckbox: false,
-    headerCheckable: true,
+    checkableHeader: true,
     checkedRows: () => [],
     checkboxPosition: () => getDefault("table.checkboxPosition", "left"),
     checkboxVariant: () => getDefault("table.checkboxVariant"),
@@ -124,6 +123,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
     filtersEvent: "",
+    filterDebounce: () => getDefault("table.filterDebounce", 300),
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
     emptyIconSize: () => getDefault("table.emptyIconSize", "large"),
@@ -632,7 +632,7 @@ let debouncedFilter: ReturnType<
 
 // initialise and update debounces filter function
 watch(
-    () => props.debounceSearch,
+    () => props.filterDebounce,
     (debounce) =>
         (debouncedFilter = useDebounce(handleFiltersChange, debounce || 0)),
     { immediate: true },
@@ -1169,7 +1169,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         :key="column.field || idx"
                         v-slot="{ row }"
                         v-bind="column">
-                        {{ getColumnValue(row as T, column) }}
+                        {{ getColumnValue(row, column) }}
                     </o-table-column>
                 </template>
 
@@ -1281,12 +1281,12 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 @binding {(): void} check-all - check all function
                             -->
                             <slot
+                                v-if="checkableHeader"
                                 name="check-all"
                                 :is-all-checked="isAllChecked"
                                 :is-all-uncheckable="isAllUncheckable"
                                 :check-all="checkAll">
                                 <o-checkbox
-                                    v-if="headerCheckable"
                                     :model-value="isAllChecked"
                                     autocomplete="off"
                                     name="row_check_all"
@@ -1362,28 +1362,27 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :aria-colindex="
                                 ariaColIndexStart + tableColumns.length
                             ">
-                            <template v-if="headerCheckable">
-                                <!--
-                                    @slot Override check all checkbox
-                                    @binding {boolean} is-all-checked - if all rows are checked
-                                    @binding {boolean} is-all-uncheckable - if check all is uncheckable
-                                    @binding {(): void} check-all - check all function
-                                -->
-                                <slot
-                                    name="check-all"
-                                    :is-all-checked="isAllChecked"
-                                    :is-all-uncheckable="isAllUncheckable"
-                                    :check-all="checkAll">
-                                    <o-checkbox
-                                        :model-value="isAllChecked"
-                                        autocomplete="off"
-                                        name="row_check_all"
-                                        :variant="checkboxVariant"
-                                        :disabled="isAllUncheckable"
-                                        aria-label="Check all"
-                                        @update:model-value="checkAll" />
-                                </slot>
-                            </template>
+                            <!--
+                                @slot Override check all checkbox
+                                @binding {boolean} is-all-checked - if all rows are checked
+                                @binding {boolean} is-all-uncheckable - if check all is uncheckable
+                                @binding {(): void} check-all - check all function
+                            -->
+                            <slot
+                                v-if="checkableHeader"
+                                name="check-all"
+                                :is-all-checked="isAllChecked"
+                                :is-all-uncheckable="isAllUncheckable"
+                                :check-all="checkAll">
+                                <o-checkbox
+                                    :model-value="isAllChecked"
+                                    autocomplete="off"
+                                    name="row_check_all"
+                                    :variant="checkboxVariant"
+                                    :disabled="isAllUncheckable"
+                                    aria-label="Check all"
+                                    @update:model-value="checkAll" />
+                            </slot>
                         </th>
                     </tr>
 
@@ -1598,7 +1597,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             column.index,
                                             $event,
                                         )
-                                    " />
+                                    ">
+                                    {{ getColumnValue(row.value, column) }}
+                                </o-slot-component>
                             </template>
 
                             <!-- checkable column right -->

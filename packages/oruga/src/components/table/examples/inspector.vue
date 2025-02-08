@@ -97,14 +97,14 @@ const inspectData = [
     {
         class: "emptyClass",
         description: "Class of the Table when it is empty",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.isEmpty = true;
         },
     },
     {
         class: "footerClass",
         description: "Class of the Table footer",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.tableClass = "inspector_table";
         },
     },
@@ -112,7 +112,7 @@ const inspectData = [
         class: "borderedClass",
         properties: ["bordered"],
         description: "Class of the Table when is bordered",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.bordered = true;
         },
     },
@@ -120,7 +120,7 @@ const inspectData = [
         class: "stripedClass",
         properties: ["striped"],
         description: "Class of the Table when rows are striped",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.striped = true;
         },
     },
@@ -128,7 +128,7 @@ const inspectData = [
         class: "narrowedClass",
         properties: ["narrowed"],
         description: "Class of the Table when rows are narrowed",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.narrowed = true;
         },
     },
@@ -136,7 +136,7 @@ const inspectData = [
         class: "hoverableClass",
         properties: ["hoverable or focusable"],
         description: "Class of the Table when is hoverable",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.hoverable = true;
         },
     },
@@ -144,7 +144,7 @@ const inspectData = [
         class: "stickyHeaderClass",
         properties: ["sticky-header"],
         description: "Class of the Table wrapper when header is sticky",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.stickyHeader = true;
         },
     },
@@ -153,7 +153,7 @@ const inspectData = [
         properties: ["scrollable"],
         description:
             "Class of the Table wrapper when its content is scrollable",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.scrollable = true;
         },
     },
@@ -162,7 +162,7 @@ const inspectData = [
         description: "Class of the detail Table row ",
         properties: ["detailed"],
         warning: "Expand details to see it in action!",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.tableClass = "inspector_table";
             data.mobileCards = true;
         },
@@ -171,7 +171,7 @@ const inspectData = [
         class: "trSelectedClass",
         description: "Class of the Table row when selected",
         warning: "Select a row of the table to see it in action!",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.tableClass = "inspector_table";
         },
     },
@@ -180,14 +180,14 @@ const inspectData = [
         description: "Class of the Table row when checkable and checked",
         warning: "Select a row of the table to see it in action!",
         properties: ["checkable"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkable = true;
         },
     },
     {
         class: "trEmptyClass",
         description: "Class of the Table row when table is empty",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.data = [];
         },
     },
@@ -199,7 +199,7 @@ const inspectData = [
         class: "thCheckboxClass",
         description: "Class of the Table `th` element when is checkable",
         properties: ["checkable"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkable = true;
         },
     },
@@ -208,7 +208,7 @@ const inspectData = [
         description:
             "Class of the Table `th` element of the detail column of triggers",
         properties: ["detailed"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.detailed = true;
         },
     },
@@ -259,7 +259,7 @@ const inspectData = [
         class: "tdCheckboxClass",
         description: "Class of the Table `td` element when is checkable",
         properties: ["checkable"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkable = true;
         },
     },
@@ -268,7 +268,7 @@ const inspectData = [
         properties: ["detailed"],
         description:
             "Class of the Table `td` element that contains the chevron to trigger details",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.mobileCards = true;
         },
     },
@@ -298,7 +298,7 @@ const inspectData = [
         class: "paginationWrapperClass",
         description: "Class of the Table pagination wrapper",
         properties: ["paginated"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.paginated = true;
             data.paginationSimple = true;
             data.perPage = 2;

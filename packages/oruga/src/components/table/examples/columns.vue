@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { TableColumn } from "@oruga-ui/oruga-next";
 
 const data = ref([
     {
@@ -38,20 +39,42 @@ const data = ref([
         gender: "Female",
     },
 ]);
+
+const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
+    {
+        field: "id",
+        label: "ID",
+        width: "40",
+        numeric: true,
+        sortable: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+        sortable: true,
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+        sortable: true,
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+        sortable: true,
+        formatter: (v): string => new Date(String(v)).toLocaleDateString(),
+    },
+    {
+        field: "gender",
+        label: "Gender",
+        sortable: true,
+    },
+]);
 </script>
 
 <template>
     <section>
-        <o-table :data="data">
-            <o-table-column field="id" label="Id" width="40" numeric sortable />
-            <o-table-column field="first_name" label="First Name" sortable />
-            <o-table-column field="last_name" label="Last Name" sortable />
-            <o-table-column
-                field="date"
-                label="Date"
-                position="centered"
-                sortable />
-            <o-table-column field="gender" label="Gender" sortable />
-        </o-table>
+        <o-table :data="data" :columns="columns" />
     </section>
 </template>

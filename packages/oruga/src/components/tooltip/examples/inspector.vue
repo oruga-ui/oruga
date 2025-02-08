@@ -16,7 +16,7 @@ const inspectData = [
         class: "multilineClass",
         description: "Class of the tooltip content when is multiline",
         properties: ["multiline"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.multiline = true;
         },
     },
@@ -29,7 +29,7 @@ const inspectData = [
         description: "Class of the tooltip arrow position",
         properties: ["position"],
         suffixes: ["top", "bottom", "left", "right"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "right";
         },
     },
@@ -38,15 +38,15 @@ const inspectData = [
         description: "Class of the tooltip trigger position",
         properties: ["position"],
         suffixes: ["top", "bottom", "left", "right"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "right";
         },
     },
     {
         class: "alwaysClass",
         description: "Class of the tooltip trigger when is always visible",
-        properties: ["always"], 
-        action: (cmp, data) => {
+        properties: ["always"],
+        action: (cmp, data): void => {
             data.always = true;
         },
     },
@@ -55,7 +55,7 @@ const inspectData = [
         description: "Class of the tooltip variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
@@ -63,7 +63,7 @@ const inspectData = [
         class: "teleportClass",
         description: "Class when the dropdown is teleported",
         properties: ["teleport"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.teleport = true;
         },
     },
