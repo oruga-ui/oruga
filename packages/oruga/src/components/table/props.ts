@@ -47,14 +47,12 @@ export type TableProps<T> = {
     stickyHeader?: boolean;
     /** Table fixed height */
     height?: number | string;
-    /** Filtering debounce time (in milliseconds) */
-    debounceSearch?: number;
     /** Rows can be checked (multiple) */
     checkable?: boolean;
+    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
+    checkableHeader?: boolean;
     /** Make the checkbox column sticky (if checkable) */
     stickyCheckbox?: boolean;
-    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
-    headerCheckable?: boolean;
     /** Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable) */
     checkedRows?: T[];
     /**
@@ -150,6 +148,8 @@ export type TableProps<T> = {
     filtersPlaceholder?: string;
     /** Add a native event to filter */
     filtersEvent?: string;
+    /** Filtering debounce time (in milliseconds) */
+    filterDebounce?: number;
     /** Label to be shown when the table is empty */
     emptyLabel?: string;
     /** Icon to be shown when the table is empty */

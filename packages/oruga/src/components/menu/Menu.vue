@@ -19,7 +19,7 @@ import type { MenuChildItem, MenuComponent, MenuItemComponent } from "./types";
 import type { MenuProps } from "./props";
 
 /**
- * A simple menu
+ * A simple menu, for any type of vertical navigation.
  * @displayName Menu
  * @requires ./MenuItem.vue
  * @style _menu.scss

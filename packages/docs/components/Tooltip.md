@@ -2,7 +2,8 @@
 
 <div class="vp-doc">
 
-> Display a brief helper text to your user
+The **Tooltip** component displays a short contextual help text when the user hovers over it.
+The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
 
 </div>
 
@@ -26,7 +27,7 @@
 
 ## Tooltip component
 
-> Display a brief helper text to your user
+> Display a brief helper text to your user.
 
 ```html
 <o-tooltip></o-tooltip>

@@ -9,7 +9,7 @@ import { defineClasses } from "@/composables";
 import type { ButtonProps } from "./props";
 
 /**
- * The classic button, in different colors, sizes, and states
+ * The classic button, in different colors, sizes, and states.
  * @displayName Button
  * @style _button.scss
  */

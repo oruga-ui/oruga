@@ -25,7 +25,7 @@ import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
 
 /**
- * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
+ * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile.
  * @displayName Datepicker
  * @style _datepicker.scss
  */

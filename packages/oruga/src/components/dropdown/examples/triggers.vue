@@ -11,7 +11,7 @@ const active = ref(false);
                 <template #trigger="{ active }">
                     <o-button
                         variant="primary"
-                        label="Click me!"
+                        label="Default"
                         :icon-right="active ? 'caret-up' : 'caret-down'" />
                 </template>
 
@@ -24,8 +24,18 @@ const active = ref(false);
                 <template #trigger="{ active }">
                     <o-button
                         variant="info"
-                        label="Hover me!"
+                        label="Hover"
                         :icon-right="active ? 'caret-up' : 'caret-down'" />
+                </template>
+
+                <o-dropdown-item label="Action" />
+                <o-dropdown-item label="Another action" />
+                <o-dropdown-item label="Something else" />
+            </o-dropdown>
+
+            <o-dropdown :triggers="['contextmenu']">
+                <template #trigger>
+                    <o-button label="Right click" />
                 </template>
 
                 <o-dropdown-item label="Action" />
@@ -59,16 +69,6 @@ const active = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown :triggers="['contextmenu']">
-                <template #trigger>
-                    <o-button label="Right click" />
-                </template>
-
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
-
             <o-dropdown teleport>
                 <template #trigger>
                     <o-button label="Append to body" />
@@ -83,9 +83,7 @@ const active = ref(false);
         <p>
             <o-field grouped>
                 <o-dropdown v-model:active="active" :triggers="[]">
-                    <template #trigger>
-                        <div style="height: 100%">Click the button beside!</div>
-                    </template>
+                    <template #trigger> Click the button beside! </template>
 
                     <o-dropdown-item label="Action" />
                     <o-dropdown-item label="Another action" />

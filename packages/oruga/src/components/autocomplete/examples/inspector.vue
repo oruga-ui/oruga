@@ -17,7 +17,7 @@ const inspectData = [
     {
         class: "itemClass",
         description: "Class of the menu items",
-        action: (cmp) => {
+        action: (cmp): void => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
             el.dispatchEvent(
@@ -33,7 +33,7 @@ const inspectData = [
     {
         class: "itemHoverClass",
         description: "Class of the menu items on hover",
-        action: (cmp) => {
+        action: (cmp): void => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
             el.dispatchEvent(
@@ -79,7 +79,7 @@ const inspectData = [
     {
         class: "itemGroupTitleClass",
         description: "Class of the menu items group title",
-        action: (cmp) => {
+        action: (cmp): void => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
             el.dispatchEvent(
@@ -95,7 +95,7 @@ const inspectData = [
     {
         class: "itemEmptyClass",
         description: "Class of the menu empty placeholder item",
-        action: (cmp) => {
+        action: (cmp): void => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
             el.dispatchEvent(
@@ -111,7 +111,7 @@ const inspectData = [
     {
         class: "itemHeaderClass",
         description: "Class of the menu header item",
-        action: (cmp) => {
+        action: (cmp): void => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
             el.dispatchEvent(
@@ -127,7 +127,7 @@ const inspectData = [
     {
         class: "itemFooterClass",
         description: "Class of the menu footer item",
-        action: (cmp) => {
+        action: (cmp): void => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
             el.dispatchEvent(

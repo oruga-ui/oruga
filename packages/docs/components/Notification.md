@@ -6,7 +6,8 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> Bold notification blocks to alert your users of something
+The **Notification** component is a lightweight and easily customizable alert message.
+It is designed to mimic the push notifications that have been popularized by mobile and desktop operating systems.
 
 </div>
 
@@ -30,7 +31,7 @@ sidebarDepth: 2
 
 ## Notification component
 
-> Bold notification blocks to alert your users of something
+> Bold notification blocks to alert your users of something.
 
 ```html
 <o-notification></o-notification>
@@ -75,7 +76,7 @@ sidebarDepth: 2
 
 ## NotificationNotice component
 
-> Notification Notice is an extension of the Notification component and is used for the programmatic usage
+> Notification Notice is an extension of the Notification component and is used for the programmatic usage.
 
 ```html
 <o-notification-notice></o-notification-notice>

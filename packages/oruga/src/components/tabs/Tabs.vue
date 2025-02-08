@@ -27,7 +27,7 @@ import type { TabsComponent, TabItem, TabItemComponent } from "./types";
 import type { TabsProps } from "./props";
 
 /**
- * Responsive horizontal navigation tabs, switch between contents with ease
+ * Responsive horizontal navigation tabs, switch between contents with ease.
  * @displayName Tabs
  * @requires ./TabItem.vue
  * @style _tabs.scss

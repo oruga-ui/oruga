@@ -8,6 +8,7 @@ import type { StepsComponent, StepItemComponent } from "./types";
 import type { StepItemProps } from "./props";
 
 /**
+ * An step item used by the steps component.
  * @displayName Step Item
  */
 defineOptions({

@@ -6,7 +6,8 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> A simple menu
+The **Menu** component displays a hierarchical list for any type of vertical navigation, where the items can be expanded or collapsed.
+The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/).
 
 </div>
 
@@ -30,7 +31,7 @@ sidebarDepth: 2
 
 ## Menu component
 
-> A simple menu
+> A simple menu, for any type of vertical navigation.
 
 ```html
 <o-menu></o-menu>
@@ -72,7 +73,7 @@ sidebarDepth: 2
 
 ## MenuItem component
 
-> A menu list item
+> A menu list item.
 
 ```html
 <o-menu-item></o-menu-item>

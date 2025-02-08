@@ -11,7 +11,7 @@ const inspectData = [
     {
         class: "checkedClass",
         description: "Class of the root element when checked",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkbox = "default";
         },
     },
@@ -22,7 +22,7 @@ const inspectData = [
     {
         class: "inputCheckedClass",
         description: "Class of the native input element when checked",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.checkbox = "default";
         },
     },
@@ -31,7 +31,7 @@ const inspectData = [
         description: "Class of the radio size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -39,7 +39,7 @@ const inspectData = [
         class: "disabledClass",
         description: "Class when radio is disabled",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
@@ -48,7 +48,7 @@ const inspectData = [
         description: "Class of the radio variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },

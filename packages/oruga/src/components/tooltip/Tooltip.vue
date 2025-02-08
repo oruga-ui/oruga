@@ -10,7 +10,7 @@ import { defineClasses, useClickOutside } from "@/composables";
 import type { TooltipProps } from "./props";
 
 /**
- * Display a brief helper text to your user
+ * Display a brief helper text to your user.
  * @displayName Tooltip
  * @style _tooltip.scss
  */

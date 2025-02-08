@@ -27,7 +27,7 @@ import type { ClassBind } from "@/types";
 import type { CarouselProps } from "./props";
 
 /**
- * A Slideshow for cycling images in confined spaces
+ * A Slideshow for cycling images in confined spaces.
  * @displayName Carousel
  * @requires ./CarouselItem.vue
  * @style _carousel.scss

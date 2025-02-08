@@ -8,7 +8,7 @@ const inspectData = [
         class: "draggableClass",
         description: "Class of the Upload when draggable",
         properties: ["dragDrop"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.dragDrop = true;
         },
     },
@@ -16,7 +16,7 @@ const inspectData = [
         class: "expandedClass",
         description: "Class of the Upload when expanded",
         properties: ["expanded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -24,7 +24,7 @@ const inspectData = [
         class: "disabledClass",
         description: "Class of the Upload when disabled",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
@@ -33,7 +33,7 @@ const inspectData = [
         description: "Class of the Upload when hovered",
         properties: ["dragDrop"],
         warning: "Drag & drop a file to see it in action!",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.dragDrop = true;
         },
     },
@@ -43,7 +43,7 @@ const inspectData = [
         properties: ["variant", "dragDrop"],
         suffixes: ["primary", "info", "warning", "danger"],
         warning: "Drag & drop a file to see it in action!",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
             data.dragDrop = true;
         },

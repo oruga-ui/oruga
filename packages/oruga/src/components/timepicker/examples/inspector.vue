@@ -11,7 +11,7 @@ const triggerClass = oruga?.config
     ? oruga.config.getOption("dropdown.triggerClass", "o-drop__trigger")
     : "o-drop__trigger";
 
-function openTimePicker() {
+function openTimePicker(): void {
     setTimeout(() => {
         timepicker.value.$el.getElementsByClassName(triggerClass)[0].click();
     }, 500);
@@ -27,7 +27,7 @@ const inspectData = [
         description: "Class of the Timepicker component size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
             openTimePicker();
         },
@@ -36,21 +36,21 @@ const inspectData = [
         class: "boxClass",
         description:
             "Class of the Timepicker component box where you choose the date",
-        action: () => {
+        action: (): void => {
             openTimePicker();
         },
     },
     {
         class: "separatorClass",
         description: "Class of the Timepicker separator",
-        action: () => {
+        action: (): void => {
             openTimePicker();
         },
     },
     {
         class: "footerClass",
         description: "Class of the Timepicker footer",
-        action: () => {
+        action: (): void => {
             openTimePicker();
         },
     },
@@ -70,7 +70,7 @@ const inspectData = [
         realClass: "dropdownClasses.rootClass",
         description: "Classes to apply on internal dropdown component",
         componentRef: "Dropdown",
-        action: () => {
+        action: (): void => {
             openTimePicker();
         },
     },
@@ -79,7 +79,7 @@ const inspectData = [
         realClass: "selectClasses.selectClass",
         description: "Classes to apply on internal select component",
         componentRef: "Select",
-        action: () => {
+        action: (): void => {
             openTimePicker();
         },
     },

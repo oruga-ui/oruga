@@ -1165,8 +1165,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 selectable: boolean;
                 /** Show header */
                 showHeader: boolean;
-                /** Filtering debounce time (in milliseconds) */
-                debounceSearch: number;
                 /** Position of the checkbox when checkable (if checkable) */
                 checkboxPosition: "left" | "right";
                 /** Color of the checkbox when checkable (if checkable) */
@@ -1213,6 +1211,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 filterIcon: string;
                 /** Placeholder of the column search input */
                 filterPlaceholder: string;
+                /** Filtering debounce time (in milliseconds) */
+                filterDebounce: number;
                 /** Label to be shown when the table is empty */
                 emptyLabel: string;
                 /** Icon to be shown when the table is empty */

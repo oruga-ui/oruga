@@ -26,7 +26,7 @@ import {
 import type { ModalProps } from "./props";
 
 /**
- * Classic modal overlay to include any content you may need
+ * Classic modal overlay to include any content you may need.
  * @displayName Modal
  * @style _modal.scss
  */
