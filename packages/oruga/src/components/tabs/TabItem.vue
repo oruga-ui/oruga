@@ -8,6 +8,7 @@ import type { TabsComponent, TabItemComponent } from "./types";
 import type { TabItemProps } from "./props";
 
 /**
+ * An tab item used by the tabs component.
  * @displayName Tab Item
  */
 defineOptions({

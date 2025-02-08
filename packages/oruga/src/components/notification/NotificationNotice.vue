@@ -16,7 +16,7 @@ import { defineClasses, getActiveClasses } from "@/composables";
 import type { NotificationNoticeProps } from "./props";
 
 /**
- * Notification Notice is an extension of the Notification component and is used for the programmatic usage
+ * Notification Notice is an extension of the Notification component and is used for the programmatic usage.
  * @displayName Notification Notice
  */
 defineOptions({

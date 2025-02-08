@@ -14,7 +14,7 @@ import {
 import type { LoadingProps } from "./props";
 
 /**
- * A simple loading overlay
+ * A simple loading overlay.
  * @displayName Loading
  * @style _loading.scss
  */

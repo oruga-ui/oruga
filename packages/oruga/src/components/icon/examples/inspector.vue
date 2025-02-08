@@ -8,7 +8,7 @@ const inspectData = [
         class: "clickableClass",
         description: "Class of the icon when clickable",
         properties: ["clickable"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.clickable = true;
         },
     },
@@ -16,7 +16,7 @@ const inspectData = [
         class: "spinClass",
         description: "Class of the element when spin",
         properties: ["spin"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.spin = true;
         },
     },
@@ -25,7 +25,7 @@ const inspectData = [
         description: "Class of the icon size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -34,7 +34,7 @@ const inspectData = [
         description: "Class of the icon variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },

@@ -13,15 +13,25 @@ import VariantsCode from "./variants.vue?raw";
 </script>
 
 <template>
-    <h3 id="base">Base</h3>
-    <ExampleViewer :component="Base" :code="BaseCode" />
+    <div class="vp-doc">
+        <h3 id="base">Base</h3>
+        <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3 id="drag">Drag&Drop</h3>
-    <ExampleViewer :component="DragDrop" :code="DragDropCode" />
+        <h3 id="drag">Drag&Drop</h3>
+        <p>
+            Enable drag and drop using the <code>drag-drop</code> prop. To allow
+            multiple files to be uploaded, set the <code>multiple</code> prop.
+        </p>
+        <ExampleViewer :component="DragDrop" :code="DragDropCode" />
 
-    <h3 id="disabled">Disabled</h3>
-    <ExampleViewer :component="Disabled" :code="DisabledCode" />
+        <h3 id="disabled">Disabled</h3>
+        <p>Prevent inputs with the <code>disabled</code> prop.</p>
+        <ExampleViewer :component="Disabled" :code="DisabledCode" />
 
-    <h3 id="variants">Variants</h3>
-    <ExampleViewer :component="Variants" :code="VariantsCode" />
+        <h3 id="variants">Variants</h3>
+        <p>
+            Different styles can be achieved with the <code>variant</code> prop.
+        </p>
+        <ExampleViewer :component="Variants" :code="VariantsCode" />
+    </div>
 </template>

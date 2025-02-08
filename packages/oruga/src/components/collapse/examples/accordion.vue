@@ -2,7 +2,6 @@
 import { ref } from "vue";
 
 const isOpen = ref(0);
-const isOpenAgain = ref(0);
 
 const collapses = ref([
     {
@@ -51,28 +50,9 @@ const collapses = ref([
             </div>
         </o-collapse>
     </section>
-
-    <br />
-
-    <section>
-        <article v-for="(collapse, index) of collapses" :key="index">
-            <o-collapse
-                animation="slide"
-                :open="isOpenAgain == index"
-                @update:open="isOpenAgain = index">
-                <template #trigger>
-                    <o-button variant="success" :label="collapse.title" />
-                </template>
-
-                <div class="card">
-                    <p class="card-content" v-html="collapse.text" />
-                </div>
-            </o-collapse>
-        </article>
-    </section>
 </template>
 
-<style>
+<style scoped>
 .card {
     position: relative;
     background-color: #fff;
@@ -102,7 +82,7 @@ const collapses = ref([
     padding: 1.5rem;
 }
 
-.trigger-fullwidth {
+:deep(.trigger-fullwidth) {
     width: 100%;
 }
 </style>

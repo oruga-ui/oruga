@@ -6,7 +6,9 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> A slider to select a value or range from a given range
+The **Slider** input component let user select a value or range from a given range with a graphic slider.
+The component implements the W3C ARIA APG [Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/).
+Use it with the Field component to access all the functionalities.
 
 </div>
 
@@ -30,7 +32,7 @@ sidebarDepth: 2
 
 ## Slider component
 
-> A slider to select a value or range from a given range
+> A slider to select a value or range from a given range.
 
 ```html
 <o-slider></o-slider>

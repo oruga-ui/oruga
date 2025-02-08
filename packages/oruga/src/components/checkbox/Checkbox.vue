@@ -9,7 +9,7 @@ import { injectField } from "../field/fieldInjection";
 import type { CheckboxProps } from "./props";
 
 /**
- * Select a single or grouped options
+ * Select a single or grouped options.
  * @displayName Checkbox
  * @style _checkbox.scss
  */

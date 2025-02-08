@@ -18,7 +18,7 @@ const inspectData = [
         class: "overlayClass",
         properties: ["overlay"],
         description: "Class of the root element in overlay",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.overlay = true;
         },
     },
@@ -58,7 +58,7 @@ const inspectData = [
         class: "indicatorsInsideClass",
         properties: ["indicatorInside"],
         description: "Class of indicators wrapper element when inside",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.indicatorInside = true;
         },
     },
@@ -67,7 +67,7 @@ const inspectData = [
         properties: ["indicatorInside", "indicatorPosition"],
         description:
             "Class of indicators wrapper element when inside and position",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.indicatorInside = true;
             data.indicatorPosition = "top";
         },
@@ -84,7 +84,7 @@ const inspectData = [
         class: "indicatorItemStyleClass",
         properties: ["indicatorStyle"],
         description: "Class of indicator element to separate different styles",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.indicatorStyle = "lines";
         },
     },

@@ -7,7 +7,7 @@ const inspectData = [
     {
         class: "animationClass",
         description: "Class of the skeleton animation",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.animated = true;
         },
     },
@@ -16,7 +16,7 @@ const inspectData = [
         description: "Class of the skeleton position",
         properties: ["position"],
         suffixes: ["left", "centered", "right"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "centered";
         },
     },
@@ -28,7 +28,7 @@ const inspectData = [
         class: "itemRoundedClass",
         description: "Class of the skeleton item rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.rounded = true;
         },
     },
@@ -37,7 +37,7 @@ const inspectData = [
         description: "Class of the skeleton size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },

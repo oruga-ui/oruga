@@ -9,6 +9,7 @@ import type { DropdownComponent, DropdownItemComponent } from "./types";
 import type { DropdownItemProps } from "./props";
 
 /**
+ * An option item used by the dropdown component.
  * @displayName Dropdown Item
  */
 defineOptions({

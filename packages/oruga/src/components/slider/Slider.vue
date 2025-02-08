@@ -12,7 +12,7 @@ import type { SliderComponent } from "./types";
 import type { SliderProps } from "./props";
 
 /**
- * A slider to select a value or range from a given range
+ * A slider to select a value or range from a given range.
  * @displayName Slider
  * @requires ./SliderTick.vue
  * @style _slider.scss

@@ -73,8 +73,8 @@ async function component(): Promise<void> {
 </script>
 
 <template>
-    <section>
-        <div class="odocs-spaced">
+    <section class="odocs-spaced">
+        <p>
             <o-button
                 label="Launch notification (default)"
                 size="medium"
@@ -84,18 +84,18 @@ async function component(): Promise<void> {
                 variant="success"
                 size="medium"
                 @click="success" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-button label="Launch toast" size="medium" @click="toast" />
             <o-button
                 label="Launch toast (queued)"
                 variant="success"
                 size="medium"
                 @click="queueToast" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-button
                 label="Launch notification (custom)"
                 variant="danger"
@@ -106,7 +106,7 @@ async function component(): Promise<void> {
                 variant="warning"
                 size="medium"
                 @click="component" />
-        </div>
+        </p>
     </section>
 </template>
 

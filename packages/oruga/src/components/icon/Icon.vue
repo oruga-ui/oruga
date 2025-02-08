@@ -8,7 +8,7 @@ import { defineClasses } from "@/composables";
 import type { IconProps } from "./props";
 
 /**
- * Icons take an important role of any application
+ * Icons take an important role of any application.
  * @displayName Icon
  * @style _icon.scss
  */

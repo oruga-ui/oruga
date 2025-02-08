@@ -18,7 +18,7 @@ import { injectField, provideField, type FieldData } from "./fieldInjection";
 import type { FieldProps } from "./props";
 
 /**
- * Fields are used to add functionality to controls and to attach/group components and elements together
+ * Fields are used to add functionality to controls and to attach/group components and elements together.
  * @displayName Field
  * @style _field.scss
  */

@@ -6,7 +6,7 @@ const inspectData = [
     {
         class: "rootClass",
         description: "Class of the root element",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
             loading.value = true;
@@ -15,7 +15,7 @@ const inspectData = [
     {
         class: "overlayClass",
         description: "Class of the loading overlay",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
             loading.value = true;
@@ -24,7 +24,7 @@ const inspectData = [
     {
         class: "iconClass",
         description: "Class for the loading icon",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
             loading.value = true;
@@ -33,7 +33,7 @@ const inspectData = [
     {
         class: "labelClass",
         description: "Class for the loading label",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
             loading.value = true;
@@ -43,7 +43,7 @@ const inspectData = [
         class: "fullPageClass",
         description: "Class for the root element when fullpage",
         properties: ["fullPage"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullPage = true;
             data.cancelable = true;
             loading.value = true;
@@ -54,7 +54,7 @@ const inspectData = [
         description: "Class of the full page when scroll is clip",
         specificity: "when <b>fullPage</b> is applied",
         properties: ["scroll"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullPage = true;
             data.scroll = "clip";
             loading.value = true;
@@ -65,7 +65,7 @@ const inspectData = [
         description: "Class of the modal when scroll is not clip",
         specificity: "when <b>fullPage</b> is applied",
         properties: ["scroll"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullPage = true;
             data.scroll = "";
             loading.value = true;

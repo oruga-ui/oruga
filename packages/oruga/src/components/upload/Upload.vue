@@ -17,7 +17,7 @@ import { injectField } from "../field/fieldInjection";
 import type { UploadProps } from "./props";
 
 /**
- * Upload one or more files
+ * Upload one or more files.
  * @displayName Upload
  * @style _upload.scss
  */

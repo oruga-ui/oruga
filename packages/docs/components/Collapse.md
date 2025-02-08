@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-> An easy way to toggle what you want
+The **Collapse** component is an easy way to toggle the visibility of content.
 
 </div>
 
@@ -26,7 +26,7 @@
 
 ## Collapse component
 
-> An easy way to toggle what you want
+> An easy way to toggle what you want.
 
 ```html
 <o-collapse></o-collapse>

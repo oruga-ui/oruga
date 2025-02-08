@@ -26,7 +26,7 @@ import {
 import type { TaginputProps } from "./props";
 
 /**
- * A simple tag input field that can have autocomplete functionality
+ * A simple tag input field that can have autocomplete functionality.
  * @displayName Taginput
  * @style _taginput.scss
  */
@@ -365,7 +365,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
                     <span> {{ option.label }}</span>
 
                     <o-icon
-                        v-if="closable"
+                        v-if="closable && !disabled"
                         :class="closeClasses"
                         :pack="iconPack"
                         :icon="closeIcon"
