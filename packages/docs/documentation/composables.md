@@ -172,13 +172,16 @@ type ProgrammaticExpose = {
 ## Component Programmatic {#programmatic}
 Oruga comes with a component that is only available programmatically. This component can be used to mount **any** custom component programmatically, using the [Vue render function](https://vuejs.org/api/render-function.html#render-function-apis) and [Creating Vnodes](https://vuejs.org/guide/extras/render-function.html#render-function-recipes).
 
-The component works as follows: The programmatic component renders a wrapper component in a sperate shadow Vue instance. The separate Vue instance will have the same context object as the current one. The provided component is then rendered in a wrapper component that handles the Vue lifecycle events of the provided component.
-The rendered component is then extracted from the shadow Vue instance and placed into the target container of the real DOM instance.  
-By closing the instance of the wrapper component, for example by calling `oruga.programmatic.close()` from outside, or by firing a `close` event from inside the provided component, the wrapper component and the shadow Vue instance will be destroyed and DOM will be cleaned up.
+The component works like this: 
+The programmatic component creates a new, separate Vue instance, with a wrapper component as root element. 
+The new Vue instance can be seen in the Vue Devtools with the name `ProgrammaticApp`.
+The separate Vue instance will have the same context object as the current one. The new Vue instance is rendered into a `div` in the target DOM container (by default, it is rendered into the `body` element). 
+The provided component is then rendered into the wrapper component, which handles the Vue lifecycle events of the provided component.
+Closing the instance of the wrapper component, for example by calling `oruga.programmatic.close()` from outside, or by firing a `close` event from inside the provided component, will destoroy the wrapper component and the new Vue instance, and clean up the DOM.
 
-> ***Note:*** When using the programmatic component, you may experience some DX issues if you run the Vue Devtools and inspect the programmatic component.
+> ***Note:*** For performance reasons, be careful not to open too many programmatic components and create too many Vue instances at once.
 
-By adding this component using the main Oruga plugin or the dedicated `ComponentProgrammatic` plugin, the component adds an interface `programmatic` to the `useOruga()` composable and provides the `ComponentProgrammatic` object export, but it does not have a Vue component to mount directly. 
+By adding this component using the main Oruga plugin or the dedicated `ComponentProgrammatic` plugin, the component adds an interface `programmatic` to the `useOruga()` composable and provides the `ComponentProgrammatic` object export, but it does not have a Oruga component. 
 
 ```typescript
 import { useOruga } from "@oruga-ui/oruga-next";
@@ -192,11 +195,10 @@ oruga.programmatic.open(
     MyComponent,
     {
         target: document.body, // target the component get rendered into
+        appId: "programmatic-app", // HTML #id of the div element rendered into the target container 
         props: { ... }, // component specific props
         onClose: (...args: unknown[]) => { ... }, // on close event handler
-    },
-    // component default slot render content
-    slot,
+    }
 );
 
 ```
@@ -209,8 +211,6 @@ type open = <C extends VNodeTypes>(
     component: C, 
     /** render options */
     options?: ProgrammaticOptions<C>, 
-    /** default slot content */
-    slot?: unknown
 ) => ProgrammaticExpose;
 
 
@@ -219,6 +219,11 @@ type ProgrammaticOptions<C extends VNodeTypes> = {
      * The target specifies the element the component get rendered into - default is `document.body`.
      */
     target?: string | HTMLElement; 
+    /**
+     * Specify the template `id` for the programmatic container element.
+     * @default `programmatic-app`
+     */
+    appId?: string;
     /**
      * Props to be binded to the injected component. 
      * Both attributes and properties can be used in props.
