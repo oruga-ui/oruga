@@ -34,7 +34,6 @@
 
 ### Props
 
-
 | Prop name     | Description                                    | Type     | Values                      | Default    |
 | ------------- | ---------------------------------------------- | -------- | --------------------------- | ---------- |
 | align         | Position of breadcrumb                         | string   | `left`, `centered`, `right` | `left`     |
@@ -43,6 +42,36 @@
 | tag           | Tag of the breadcrumb                          | string   | `div`, `section` ...        | `section`  |
 | separator     | Separator between breadcrumb items             | string   | `has-arrow-separator`, `has-dot-separator`, `has-slash-separator`, `has-bullet-separator`, `has-succeeds-separator`, `has-chevron-separator` | `has-slash-separator` |
 
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
+
+</div>
+
+<div class="vp-doc">
+
+## Breadcrumb item component
+
+> The classic breadcrumb item, in different colors, icons and states
+
+```html
+<o-breadcrumb></o-breadcrumb>
+```
+
+### Props
+
+| Prop name     | Description                                    | Type     | Values                      | Default    |
+| ------------- | ---------------------------------------------- | -------- | --------------------------- | ---------- |
+| active        | Active breadcrumb item                         | boolean  |  `primary`, `info`, `warning`, `danger`  | `false`     |
+| activeVariant | Variant of active breadcrumb item              | string   |                             | `primary`  |
+| disabled      | breadcrum item is disabled                     | boolean  |                             | `false`    |
+| tag           | Tag of the breadcrumb item                     | string   | `a`, `router-link`          | `a`        |
+| iconLeft      | Icon name to show on the left                  | string   |                             |            |
+| iconRight     | Icon name to show on the right                 | string   |                             |            |
+| iconBoth      | Icon name to show on both sides                | string   |                             |            |
+| iconPack      | Icon pack to use                               | string   | `mdi`, `fa`, `fas` and any other custom icon pack   |            |
 
 ### Slots
 
