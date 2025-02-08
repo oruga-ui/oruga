@@ -216,7 +216,8 @@ type open = <C extends VNodeTypes>(
 
 type ProgrammaticOptions<C extends VNodeTypes> = {
     /** 
-     * The target specifies the element the component get rendered into - default is `document.body`.
+     * The target specifies the element the component get rendered into.
+     * @default `document.body`.
      */
     target?: string | HTMLElement; 
     /**
@@ -231,7 +232,7 @@ type ProgrammaticOptions<C extends VNodeTypes> = {
      * `class` and `style` have the same object / array value support like in templates.
      * Event listeners should be passed as onXxx.
      */
-    props: ComponentProps<C>,
+    props?: ComponentProps<C>,
     /**
      * On component close event.
      * This get called when the component emits `close` or the exposed `close` function get called.
