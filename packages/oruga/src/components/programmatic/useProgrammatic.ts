@@ -63,7 +63,7 @@ export const ComponentProgrammatic = {
         component: C,
         options?: ProgrammaticOptions<C>,
     ): ProgrammaticExpose {
-        options = { registry: registry, ...options };
+        options = { registry, ...options };
 
         // define the target container - either HTML `body` or by a given query selector
         const target =

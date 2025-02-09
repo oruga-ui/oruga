@@ -50,7 +50,7 @@ const NotificationProgrammatic = {
 
         // create programmatic component
         return ComponentProgrammatic.open(NotificationNotice, {
-            registry: registry, // custom programmatic instance registry
+            registry, // custom programmatic instance registry
             target, // target the component get rendered into
             props: componentProps, // component specific props
             onClose: _options.onClose, // on close event handler
