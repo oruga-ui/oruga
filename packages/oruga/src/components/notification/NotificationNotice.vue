@@ -75,6 +75,7 @@ onBeforeMount(() => {
 
         if (parentTop.value && parentBottom.value) return;
 
+        // create notices top container if not alread there
         if (!parentTop.value) {
             parentTop.value = document.createElement("div");
             parentTop.value.className = `${rootClasses.join(
@@ -82,6 +83,7 @@ onBeforeMount(() => {
             )} ${topClasses.join(" ")}`;
         }
 
+        // create notices bottom container if not alread there
         if (!parentBottom.value) {
             parentBottom.value = document.createElement("div");
             parentBottom.value.className = `${rootClasses.join(
@@ -89,6 +91,7 @@ onBeforeMount(() => {
             )} ${bottomClasses.join(" ")}`;
         }
 
+        // append notices top and bottom container to given container
         props.container.appendChild(parentTop.value);
         props.container.appendChild(parentBottom.value);
 
@@ -133,6 +136,7 @@ const shouldQueue = computed(() =>
         : false,
 );
 
+/** move the rendered component template into the correct parent container */
 function showNotice(): void {
     if (!correctParent.value) return;
 

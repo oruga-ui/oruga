@@ -5,8 +5,8 @@ import type { ComponentProps } from "vue-component-type-helpers";
 export type NotificationProps = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Message text (can contain HTML), unnecessary when default slot is used */
-    message?: string | string[];
+    /** Message text, unnecessary when default slot is used */
+    message?: string;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /**

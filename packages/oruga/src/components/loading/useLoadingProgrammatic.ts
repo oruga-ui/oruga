@@ -20,11 +20,8 @@ declare module "../../index" {
 const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useLoadingProgrammatic composable options */
-export type LoadingProgrammaticOptions = Readonly<
-    Omit<LoadingProps, "label">
-> & {
-    label?: string | Array<unknown>;
-} & ProgrammaticComponentOptions;
+export type LoadingProgrammaticOptions = Readonly<LoadingProps> &
+    ProgrammaticComponentOptions;
 
 const LoadingProgrammatic = {
     /**
@@ -40,13 +37,6 @@ const LoadingProgrammatic = {
         const _options: LoadingProgrammaticOptions =
             typeof options === "string" ? { label: options } : options;
 
-        let slot;
-        // render content as slot when is an array
-        if (Array.isArray(_options.label)) {
-            slot = _options.label;
-            delete _options.label;
-        }
-
         const componentProps: LoadingProps = {
             active: true, // set the active default state to true
             fullPage: false, // set the full page default state to false
@@ -54,17 +44,12 @@ const LoadingProgrammatic = {
         };
 
         // create programmatic component
-        return ComponentProgrammatic.open(
-            Loading,
-            {
-                instances, // custom programmatic instance registry
-                target, // target the component get rendered into
-                props: componentProps, // component specific props
-                onClose: _options.onClose, // on close event handler
-            },
-            // component default slot render
-            slot,
-        );
+        return ComponentProgrammatic.open(Loading, {
+            instances, // custom programmatic instance registry
+            target, // target the component get rendered into
+            props: componentProps, // component specific props
+            onClose: _options.onClose, // on close event handler
+        });
     },
     /** Close the last registred instance in the loading programmatic instance registry. */
     close(...args: unknown[]): void {

@@ -103,6 +103,7 @@ export const ProgrammaticComponent = defineComponent<
             );
     },
     {
+        name: "ProgrammaticApp",
         // manual runtime props declaration is currently still needed.
         props: ["component", "props", "instances"],
         // manual runtime emits declaration

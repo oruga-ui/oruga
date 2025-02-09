@@ -1,8 +1,4 @@
-import {
-    type Component,
-    type ComponentInternalInstance,
-    type VNodeTypes,
-} from "vue";
+import { type Component, type ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     ComponentProgrammatic,
@@ -25,10 +21,9 @@ const instances = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useModalProgrammatic composable options */
 export type ModalProgrammaticOptions<C extends Component> = Readonly<
-    Omit<ModalProps<C>, "content">
-> & {
-    content?: string | Array<unknown>;
-} & ProgrammaticComponentOptions;
+    ModalProps<C>
+> &
+    ProgrammaticComponentOptions;
 
 const ModalProgrammatic = {
     /**
@@ -44,30 +39,18 @@ const ModalProgrammatic = {
         const _options: ModalProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
 
-        let slot;
-        // render content as slot when is an array
-        if (Array.isArray(_options.content)) {
-            slot = _options.content;
-            delete _options.content;
-        }
-
         const componentProps: ModalProps<C> = {
             active: true, // set the active default state to true
             ...(_options as ModalProps<C>),
         };
 
         // create programmatic component
-        return ComponentProgrammatic.open(
-            Modal as VNodeTypes,
-            {
-                instances, // custom programmatic instance registry
-                target, // target the component get rendered into
-                props: componentProps, // component specific props
-                onClose: _options.onClose, // on close event handler
-            },
-            // component default slot to render content
-            slot,
-        );
+        return ComponentProgrammatic.open(Modal, {
+            instances, // custom programmatic instance registry
+            target, // target the component get rendered into
+            props: componentProps, // component specific props
+            onClose: _options.onClose, // on close event handler
+        });
     },
     /** Close the last registred instance in the modal programmatic instance registry. */
     close(...args: unknown[]): void {

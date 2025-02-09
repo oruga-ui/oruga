@@ -1,8 +1,4 @@
-import {
-    type Component,
-    type ComponentInternalInstance,
-    type VNodeTypes,
-} from "vue";
+import { type Component, type ComponentInternalInstance } from "vue";
 import {
     InstanceRegistry,
     ComponentProgrammatic,
@@ -48,7 +44,7 @@ const SidebarProgrammatic = {
         };
 
         // create programmatic component
-        return ComponentProgrammatic.open(Sidebar as VNodeTypes, {
+        return ComponentProgrammatic.open(Sidebar, {
             instances, // custom programmatic instance registry
             target, // target the component get rendered into
             props: componentProps, // component specific props

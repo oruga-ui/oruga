@@ -152,19 +152,22 @@ describe("useProgrammatic tests", () => {
     });
 
     test("test closeAll is working correctly", async () => {
-        // open elements
-        ComponentProgrammatic.open("div");
-        ComponentProgrammatic.open("div");
+        const root = document.createElement("div");
 
-        let bodyElements = document.body.querySelectorAll("*");
-        expect(bodyElements).toHaveLength(2);
+        // open elements
+        ComponentProgrammatic.open("div", { target: root });
+        ComponentProgrammatic.open("div", { target: root });
+
+        let apps = root.querySelectorAll("#programmatic-app");
+        expect(apps).toHaveLength(2);
 
         // close all elements
         ComponentProgrammatic.closeAll();
         vi.runAllTimers();
 
-        bodyElements = document.body.querySelectorAll("*");
-        expect(bodyElements).toHaveLength(0);
+        // check elements are removed
+        apps = root.querySelectorAll("#programmatic-app");
+        expect(apps).toHaveLength(0);
     });
 
     test("test close last is working correctly", async () => {
@@ -172,34 +175,36 @@ describe("useProgrammatic tests", () => {
         ComponentProgrammatic.open("div");
         ComponentProgrammatic.open("div");
 
-        let bodyElements = document.body.querySelectorAll("*");
+        let bodyElements = document.body.querySelectorAll("#programmatic-app");
         expect(bodyElements).toHaveLength(2);
 
         // close last element
         ComponentProgrammatic.close();
         vi.runAllTimers();
 
-        bodyElements = document.body.querySelectorAll("*");
+        bodyElements = document.body.querySelectorAll("#programmatic-app");
         expect(bodyElements).toHaveLength(1);
 
         // close last element
         ComponentProgrammatic.close();
         vi.runAllTimers();
 
-        bodyElements = document.body.querySelectorAll("*");
+        bodyElements = document.body.querySelectorAll("#programmatic-app");
         expect(bodyElements).toHaveLength(0);
     });
 
     test("test render slot correctly", async () => {
-        const component = createVNode({
-            template: `<button id="mycomp"><slot /></button>`,
-        });
-
         // create inner slot element
         const slot = h("p", { "data-oruga": "inner-slot" }, "HELP");
 
+        const component = createVNode(
+            { template: `<button id="mycomp"><slot /></button>` },
+            null,
+            () => slot,
+        );
+
         // open elements
-        const { close } = ComponentProgrammatic.open(component, {}, slot);
+        const { close } = ComponentProgrammatic.open(component);
 
         // check element exist
         const button = document.body.querySelector("button");
