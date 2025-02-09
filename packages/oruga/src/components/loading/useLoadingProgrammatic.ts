@@ -17,13 +17,15 @@ declare module "../../index" {
 }
 
 /** loading component programmatic instance registry **/
-const instances = new InstanceRegistry<ComponentInternalInstance>();
+const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useLoadingProgrammatic composable options */
 export type LoadingProgrammaticOptions = Readonly<LoadingProps> &
     ProgrammaticComponentOptions;
 
 const LoadingProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: registry.count,
     /**
      * Create a new programmatic loading component instance.
      * @param options loading label string or loading component props object
@@ -45,7 +47,7 @@ const LoadingProgrammatic = {
 
         // create programmatic component
         return ComponentProgrammatic.open(Loading, {
-            instances, // custom programmatic instance registry
+            registry: registry, // custom programmatic instance registry
             target, // target the component get rendered into
             props: componentProps, // component specific props
             onClose: _options.onClose, // on close event handler
@@ -53,11 +55,11 @@ const LoadingProgrammatic = {
     },
     /** Close the last registred instance in the loading programmatic instance registry. */
     close(...args: unknown[]): void {
-        instances.last()?.exposed?.close(...args);
+        registry.last()?.exposed?.close(...args);
     },
     /** Close all instances in the programmatic loading instance registry. */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed?.close(...args));
+        registry.walk((entry) => entry.exposed?.close(...args));
     },
 };
 

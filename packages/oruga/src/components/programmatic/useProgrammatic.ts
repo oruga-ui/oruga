@@ -24,7 +24,7 @@ declare module "../../index" {
 }
 
 /** programmatic global instance registry if no custom is defined */
-const instances = new InstanceRegistry<ComponentInternalInstance>();
+const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useProgrammatic composable `open` function options */
 export type ProgrammaticOptions<C extends VNodeTypes> = {
@@ -53,7 +53,7 @@ export type ProgrammaticExpose = ProgrammaticComponentExpose;
 
 export const ComponentProgrammatic = {
     /** Returns the number of registered active instances. */
-    count: instances.count,
+    count: registry.count,
     /**
      * Create a new programmatic component instance.
      * @param component component to render
@@ -63,7 +63,7 @@ export const ComponentProgrammatic = {
         component: C,
         options?: ProgrammaticOptions<C>,
     ): ProgrammaticExpose {
-        options = { instances, ...options };
+        options = { registry: registry, ...options };
 
         // define the target container - either HTML `body` or by a given query selector
         const target =
@@ -98,7 +98,7 @@ export const ComponentProgrammatic = {
 
         // create a new vue app instance with the ProgrammaticComponent as root
         let app: App | undefined = createApp(ProgrammaticComponent, {
-            instances: options.instances, // programmatic registry instance - can be overriden by given in options
+            registry: options.registry, // programmatic registry instance - can be overriden by given in options
             component, // the component which should be rendered
             props: { ...options.props, container: target }, // component props including the target as `container`
             onClose: options.onClose, // custom onClose handler
@@ -116,11 +116,11 @@ export const ComponentProgrammatic = {
     },
     /** close the last registred instance in the global programmatic instance registry */
     close(...args: unknown[]): void {
-        instances.last()?.exposed?.close(...args);
+        registry.last()?.exposed?.close(...args);
     },
     /** close all instances in the global programmatic instance registry */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed?.close(...args));
+        registry.walk((entry) => entry.exposed?.close(...args));
     },
 };
 
