@@ -17,7 +17,7 @@ declare module "../../index" {
 }
 
 /** modal component programmatic instance registry **/
-const instances = new InstanceRegistry<ComponentInternalInstance>();
+const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useModalProgrammatic composable options */
 export type ModalProgrammaticOptions<C extends Component> = Readonly<
@@ -26,6 +26,8 @@ export type ModalProgrammaticOptions<C extends Component> = Readonly<
     ProgrammaticComponentOptions;
 
 const ModalProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: registry.count,
     /**
      * Create a new programmatic modal component instance.
      * @param options modal content string or modal component props object
@@ -46,7 +48,7 @@ const ModalProgrammatic = {
 
         // create programmatic component
         return ComponentProgrammatic.open(Modal, {
-            instances, // custom programmatic instance registry
+            registry, // custom programmatic instance registry
             target, // target the component get rendered into
             props: componentProps, // component specific props
             onClose: _options.onClose, // on close event handler
@@ -54,11 +56,11 @@ const ModalProgrammatic = {
     },
     /** Close the last registred instance in the modal programmatic instance registry. */
     close(...args: unknown[]): void {
-        instances.last()?.exposed?.close(...args);
+        registry.last()?.exposed?.close(...args);
     },
     /** Close all instances in the programmatic modal instance registry. */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed?.close(...args));
+        registry.walk((entry) => entry.exposed?.close(...args));
     },
 };
 

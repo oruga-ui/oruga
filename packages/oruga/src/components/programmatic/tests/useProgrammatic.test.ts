@@ -140,7 +140,7 @@ describe("useProgrammatic tests", () => {
         expect(instanceRegistry.entries).toHaveLength(0);
 
         const { close } = ComponentProgrammatic.open("div", {
-            instances: instanceRegistry,
+            registry: instanceRegistry,
         });
 
         expect(instanceRegistry.entries).toHaveLength(1);
