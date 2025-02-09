@@ -174,12 +174,12 @@ Oruga comes with a component that is only available programmatically. This compo
 
 The component works like this: 
 The programmatic component creates a new, separate Vue instance, with a wrapper component as root element. 
-The new Vue instance can be seen in the Vue Devtools with the name `ProgrammaticApp`.
-The separate Vue instance will have the same context object as the current one. The new Vue instance is rendered into a `div` in the target DOM container (by default, it is rendered into the `body` element). 
+The new Vue instance can be seen in the [Vue Devtools](https://devtools.vuejs.org/) with the name `ProgrammaticApp`.
+The separate Vue instance will have the same context object as the current one and will be rendered into a `div` in the target DOM container (by default, it is rendered into the `body` element). 
 The provided component is then rendered into the wrapper component, which handles the Vue lifecycle events of the provided component.
-Closing the instance of the wrapper component, for example by calling `oruga.programmatic.close()` from outside, or by firing a `close` event from inside the provided component, will destoroy the wrapper component and the new Vue instance, and clean up the DOM.
+Closing the instance of the wrapper component, for example by calling `oruga.programmatic.close()` from outside, or by firing a `close` event from inside the provided component, will destroy the wrapper component and the new Vue instance, and clean up the DOM.
 
-> ***Note:*** For performance reasons, be careful not to open too many programmatic components and create too many Vue instances at once.
+> ***Note:*** For performance reasons, be careful not to open too many programmatic components at once, each of which will create a separate Vue instance.
 
 By adding this component using the main Oruga plugin or the dedicated `ComponentProgrammatic` plugin, the component adds an interface `programmatic` to the `useOruga()` composable and provides the `ComponentProgrammatic` object export, but it does not have a Oruga component. 
 

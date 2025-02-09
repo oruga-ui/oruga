@@ -58,7 +58,6 @@ export const ComponentProgrammatic = {
      * Create a new programmatic component instance.
      * @param component component to render
      * @param options render options
-     * @param slot default slot content - see {@link https://vuejs.org/api/render-function.html#render-function-apis |Vue render function}
      */
     open<C extends VNodeTypes>(
         component: C,
@@ -106,8 +105,8 @@ export const ComponentProgrammatic = {
             onDestroy, // node destory cleanup handler
         });
 
-        // bind the current context to the new app instance
-        if (VueInstance) Object.assign(app._context, VueInstance._context); // must use Object.assign on _context
+        // share the current context to the new app instance if running inside a nother app
+        if (VueInstance) app._context = VueInstance._context;
 
         // render the new vue instance into the container
         app.mount(container);
