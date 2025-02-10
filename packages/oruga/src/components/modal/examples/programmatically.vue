@@ -6,6 +6,7 @@ import ModalForm from "./_modal-form.vue";
 const oruga = useOruga();
 
 function imageModal(): void {
+    // here we use a render function to create an dynamic inline component (https://vuejs.org/guide/extras/render-function)
     const vnode = h("p", { style: { "text-align": "center" } }, [
         h("img", {
             src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
@@ -13,7 +14,7 @@ function imageModal(): void {
     ]);
 
     oruga.modal.open({
-        content: [vnode],
+        component: vnode,
     });
 }
 
@@ -28,16 +29,18 @@ function cardModal(): void {
 
 <template>
     <section class="odocs-spaced">
-        <o-button
-            label="Open modal (HTML)"
-            size="medium"
-            variant="primary"
-            @click.prevent="imageModal()" />
+        <p>
+            <o-button
+                label="Open modal (HTML)"
+                size="medium"
+                variant="primary"
+                @click.prevent="imageModal()" />
 
-        <o-button
-            label="Open modal (Component)"
-            size="medium"
-            variant="primary"
-            @click.prevent="cardModal()" />
+            <o-button
+                label="Open modal (Component)"
+                size="medium"
+                variant="primary"
+                @click.prevent="cardModal()" />
+        </p>
     </section>
 </template>

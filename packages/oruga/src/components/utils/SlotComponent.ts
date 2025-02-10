@@ -27,13 +27,15 @@ type SlotComponentProps<C extends VNodeTypes> = {
 
 /** This components renders a specific slot and only the slot of another component */
 export default defineComponent<SlotComponentProps<any>>(
-    <C extends DefineComponent>(props: SlotComponentProps<C>) => {
+    <C extends DefineComponent>(props: SlotComponentProps<C>, { slots }) => {
         const _props = { tag: "div", name: "default", ...props };
 
         return (): VNode => {
             const slot = props.component.$slots[_props.name]
                 ? props.component.$slots[_props.name](props.props)
-                : {};
+                : slots.default
+                  ? slots.default()
+                  : {};
 
             return createVNode(_props.tag as VNode, {}, slot);
         };

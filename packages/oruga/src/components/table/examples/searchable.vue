@@ -74,15 +74,7 @@ const columns: TableColumn<(typeof data)[number]>[] = [
     <section>
         <o-table :data="data" :columns="columns" />
 
-        <p>
-            You can debounce search filter to avoid multiple filtering when
-            typing.
-        </p>
-
-        <o-table :data="data" :columns="columns" :debounce-search="1000" />
-
         <p>You can also customize the search input using a scoped slot.</p>
-
         <o-table :data="data">
             <o-table-column
                 v-for="(column, idx) in columns"

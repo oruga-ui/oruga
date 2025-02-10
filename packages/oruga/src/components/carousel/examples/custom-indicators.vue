@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 
 const gallery = ref(false);
 
-const settings = reactive({
-    indicators: false,
-    itemsToShow: 2,
-    breakpoints: {
-        768: {
-            itemsToShow: 4,
-        },
-        960: {
-            itemsToShow: 6,
-        },
+const indicators = ref(false);
+const itemsToShow = ref(2);
+const breakpoints = ref({
+    768: {
+        itemsToShow: 4,
+    },
+    960: {
+        itemsToShow: 6,
     },
 });
 
-const items = ref([
+const items = [
     {
         title: "Slide 1",
         image: "https://picsum.photos/id/1/1230/500",
@@ -45,9 +43,9 @@ const items = ref([
         title: "Slide 7",
         image: "https://picsum.photos/id/7/1230/500",
     },
-]);
+];
 
-function switchGallery(value) {
+function switchGallery(value): void {
     gallery.value = value;
 
     if (value) document.documentElement.classList.add("o-clipped");
@@ -69,7 +67,9 @@ function switchGallery(value) {
             <template #indicators="{ active, switchTo }">
                 <o-carousel
                     :model-value="active"
-                    v-bind="settings"
+                    :indicators="indicators"
+                    :items-to-show="itemsToShow"
+                    :breakpoints="breakpoints"
                     @update:model-value="switchTo($event)">
                     <o-carousel-item
                         v-for="(item, i) in items"

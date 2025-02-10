@@ -8,8 +8,27 @@ exports[`OTable tests > render correctly 1`] = `
             -->
     <!--
                     @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-                -->
-    <!--v-if-->
+                --><span data-oruga="table-column" data-id="table-1">ID <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span><span data-oruga="table-column" data-id="table-2">First Name <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span><span data-oruga="table-column" data-id="table-3">Last Name <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span><span data-oruga="table-column" data-id="table-4">Date <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span><span data-oruga="table-column" data-id="table-5">Gender <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        --><!--v-if--></span>
     <!--
                     @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
                 -->
@@ -17,18 +36,101 @@ exports[`OTable tests > render correctly 1`] = `
   <!--v-if-->
   <!--v-if-->
   <div class="o-table__wrapper">
-    <table class="o-table o-table--empty">
+    <table class="o-table" aria-rowcount="6" aria-colcount="5">
       <!--v-if-->
-      <!--v-if-->
-      <tbody>
-        <tr>
-          <td colspan="0">
-            <!--
-                                @slot Define content if table is empty
-                            -->
-            <!--v-if-->
-          </td>
+      <thead>
+        <!--
+                        @slot Define preheader content here
+                    -->
+        <tr aria-rowindex="1">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;" draggable="false" aria-colindex="1"><span>ID <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="2"><span>First Name <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="3"><span>Last Name <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable o-table__th--centered" draggable="false" aria-colindex="4"><span>Date <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="5"><span>Gender <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th><!-- checkable column right -->
+          <!--v-if-->
         </tr>
+        <!--v-if-->
+        <!--v-if-->
+      </thead>
+      <tbody>
+        <!-- table rows -->
+        <tr class="" draggable="false" aria-rowindex="2">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">1</td>
+          <td class="o-table__td">Jesse</td>
+          <td class="o-table__td">Simmons</td>
+          <td class="o-table__td o-table__td--centered">2016-10-15 13:43:27</td>
+          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <!--v-if-->
+        <tr class="" draggable="false" aria-rowindex="3">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">2</td>
+          <td class="o-table__td">John</td>
+          <td class="o-table__td">Jacobs</td>
+          <td class="o-table__td o-table__td--centered">2016-12-15 06:00:53</td>
+          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <!--v-if-->
+        <tr class="" draggable="false" aria-rowindex="4">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">3</td>
+          <td class="o-table__td">Tina</td>
+          <td class="o-table__td">Gilbert</td>
+          <td class="o-table__td o-table__td--centered">2016-04-26 06:26:28</td>
+          <td class="o-table__td">Female</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <!--v-if-->
+        <tr class="" draggable="false" aria-rowindex="5">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">4</td>
+          <td class="o-table__td">Clarence</td>
+          <td class="o-table__td">Flores</td>
+          <td class="o-table__td o-table__td--centered">2016-04-10 10:28:46</td>
+          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <!--v-if-->
+        <tr class="" draggable="false" aria-rowindex="6">
+          <!-- detailed toggle column -->
+          <!--v-if-->
+          <!-- checkable column left -->
+          <!--v-if-->
+          <!-- row data columns -->
+          <td class="o-table__td" style="width: 40px;">5</td>
+          <td class="o-table__td">Anne</td>
+          <td class="o-table__td">Lee</td>
+          <td class="o-table__td o-table__td--centered">2016-12-06 14:38:38</td>
+          <td class="o-table__td">Female</td><!-- checkable column right -->
+          <!--v-if-->
+        </tr>
+        <!--v-if-->
+        <!--v-if-->
       </tbody>
       <!--v-if-->
     </table>

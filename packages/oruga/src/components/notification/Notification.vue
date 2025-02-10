@@ -9,7 +9,7 @@ import { defineClasses } from "@/composables";
 import type { NotificationProps } from "./props";
 
 /**
- * Bold notification blocks to alert your users of something
+ * Bold notification blocks to alert your users of something.
  * @displayName Notification
  * @requires ./NotificationNotice.vue
  * @style _notification.scss

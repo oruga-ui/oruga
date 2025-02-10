@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import ModalForm from "./_modal-form-async.vue";
 
-const isModalActive = ref(false);
+const isActive = ref(false);
 </script>
 
 <template>
@@ -11,10 +11,10 @@ const isModalActive = ref(false);
             label="Open modal"
             size="medium"
             variant="primary"
-            @click="isModalActive = true" />
+            @click="isActive = true" />
 
         <o-modal
-            v-model:active="isModalActive"
+            v-model:active="isActive"
             :component="ModalForm"
             :props="{
                 title: 'Ship sprockets?',

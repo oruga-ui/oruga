@@ -54,15 +54,17 @@ const promptModalCloseAll = async (): Promise<void> => {
 
 <template>
     <section class="odocs-spaced">
-        <o-button
-            label="Open prompt"
-            size="medium"
-            variant="primary"
-            @click.prevent="promptModal()" />
-        <o-button
-            label="Open prompt (closeAll timeout)"
-            size="medium"
-            variant="primary"
-            @click.prevent="promptModalCloseAll()" />
+        <p>
+            <o-button
+                label="Open prompt"
+                size="medium"
+                variant="primary"
+                @click.prevent="promptModal()" />
+            <o-button
+                label="Open prompt (closeAll timeout)"
+                size="medium"
+                variant="primary"
+                @click.prevent="promptModalCloseAll()" />
+        </p>
     </section>
 </template>

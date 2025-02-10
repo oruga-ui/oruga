@@ -27,7 +27,7 @@ import type { ClassBind } from "@/types";
 import type { CarouselProps } from "./props";
 
 /**
- * A Slideshow for cycling images in confined spaces
+ * A Slideshow for cycling images in confined spaces.
  * @displayName Carousel
  * @requires ./CarouselItem.vue
  * @style _carousel.scss
@@ -145,10 +145,10 @@ onBeforeUnmount(() => {
 
 // add dom event handler
 if (isClient) {
-    useEventListener("resize", onResized, window);
-    useEventListener("animationend", onRefresh);
-    useEventListener("transitionend", onRefresh);
-    useEventListener("transitionstart", onRefresh);
+    useEventListener(window, "resize", onResized);
+    useEventListener(document, "animationend", onRefresh);
+    useEventListener(document, "transitionend", onRefresh);
+    useEventListener(document, "transitionstart", onRefresh);
 }
 
 function onResized(): void {

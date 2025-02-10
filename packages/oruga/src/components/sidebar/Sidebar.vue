@@ -22,7 +22,7 @@ import {
 import type { SidebarProps } from "./props";
 
 /**
- * A sidebar to use as left/right overlay or static
+ * A sidebar to use as overlay.
  * @displayName Sidebar
  * @style _sidebar.scss
  */
@@ -129,7 +129,8 @@ onBeforeUnmount(() => {
 
 if (isClient) {
     // register onKeyPress event listener when is active
-    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
+
     if (!props.overlay)
         // register outside click event listener when is active
         useClickOutside(contentRef, clickedOutside, { trigger: isActive });

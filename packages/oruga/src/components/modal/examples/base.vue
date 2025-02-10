@@ -7,17 +7,19 @@ const isCardModalActive = ref(false);
 
 <template>
     <section class="odocs-spaced">
-        <o-button
-            label="Open modal"
-            size="medium"
-            variant="primary"
-            @click="isImageModalActive = true" />
+        <p>
+            <o-button
+                label="Open modal"
+                size="medium"
+                variant="primary"
+                @click="isImageModalActive = true" />
 
-        <o-button
-            label="Open modal (clip scroll)"
-            size="medium"
-            variant="primary"
-            @click="isCardModalActive = true" />
+            <o-button
+                label="Open modal (clip scroll)"
+                size="medium"
+                variant="primary"
+                @click="isCardModalActive = true" />
+        </p>
 
         <o-modal v-model:active="isImageModalActive">
             <p style="text-align: center">

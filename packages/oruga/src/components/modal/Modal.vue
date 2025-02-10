@@ -26,7 +26,7 @@ import {
 import type { ModalProps } from "./props";
 
 /**
- * Classic modal overlay to include any content you may need
+ * Classic modal overlay to include any content you may need.
  * @displayName Modal
  * @style _modal.scss
  */
@@ -116,7 +116,7 @@ onMounted(() => {
 
 if (isClient) {
     // register onKeyPress event listener when is active
-    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
 
     if (!props.overlay)
         // register outside click event listener when is active

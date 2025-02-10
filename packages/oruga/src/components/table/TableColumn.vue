@@ -8,6 +8,7 @@ import type { TableColumnComponent, TableComponent } from "./types";
 import type { TableColumnProps } from "./props";
 
 /**
+ * Define a column used by the table component.
  * @displayName Table Column
  */
 defineOptions({
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     searchable: false,
     sortable: false,
     visible: true,
+    hidden: false,
     sticky: false,
     headerSelectable: false,
     customSort: undefined,
@@ -56,9 +58,10 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<TableComponent>({
-    data: providedData,
-});
+const { parent, item } = useProviderChild<
+    TableComponent,
+    TableColumnComponent<T>
+>({ data: providedData });
 
 // --- Computed Component Classes ---
 
@@ -122,7 +125,7 @@ const filters = {} as Record<string, string>;
 </script>
 
 <template>
-    <span data-oruga="table-column" :data-id="item.identifier">
+    <span data-oruga="table-column" :data-id="`table-${item.identifier}`">
         {{ label }}
 
         <!--

@@ -14,6 +14,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
+import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -21,7 +22,7 @@ import { injectField } from "../field/fieldInjection";
 import type { InputProps } from "./props";
 
 /**
- * Get user Input. Use with Field to access all functionalities
+ * Get user Input. Use with Field to access all functionalities.
  * @displayName Input
  * @style _input.scss
  */
@@ -129,7 +130,7 @@ const vmodel = defineModel<ModelValue, string, string, ModelValue>({
     set: (value) =>
         typeof value == "undefined"
             ? value
-            : props.number
+            : isTrueish(props.number)
               ? Number(value)
               : String(value),
     default: undefined,
@@ -231,7 +232,7 @@ function iconClick(event: Event): void {
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
     else if (props.clearable)
-        vmodel.value = (props.number ? 0 : "") as ModelValue;
+        vmodel.value = (isTrueish(props.number) ? 0 : "") as ModelValue;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());

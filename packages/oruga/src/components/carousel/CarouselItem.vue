@@ -8,7 +8,7 @@ import type { CarouselComponent } from "./types";
 import type { CarouselItemProps } from "./props";
 
 /**
- * A Slideshow item used by the carousel
+ * A Slideshow item used by the carousel.
  * @displayName Carousel Item
  */
 defineOptions({

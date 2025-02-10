@@ -13,12 +13,12 @@ import { getDefault } from "@/utils/config";
 import { isVNodeEmpty } from "@/utils/helpers";
 import { defineClasses, useMatchMedia } from "@/composables";
 
-import { injectField, provideField } from "./fieldInjection";
+import { injectField, provideField, type FieldData } from "./fieldInjection";
 
 import type { FieldProps } from "./props";
 
 /**
- * Fields are used to add functionality to controls and to attach/group components and elements together
+ * Fields are used to add functionality to controls and to attach/group components and elements together.
  * @displayName Field
  * @style _field.scss
  */
@@ -149,7 +149,7 @@ const inputAttrs = computed(() => ({
 }));
 
 // Provided data is a computed ref to enjure reactivity.
-const provideData = computed(() => ({
+const provideData = computed<FieldData>(() => ({
     $el: rootRef.value,
     props,
     hasInnerField: hasInnerField.value,

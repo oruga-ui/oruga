@@ -25,7 +25,7 @@ import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
 
 /**
- * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
+ * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile.
  * @displayName Datepicker
  * @style _datepicker.scss
  */
@@ -79,16 +79,16 @@ const props = withDefaults(
         firstDayOfWeek: () => getDefault("datepicker.firstDayOfWeek", 0),
         rulesForFirstWeek: 4,
         yearsRange: () => getDefault("datepicker.yearsRange", [-100, 10]),
-        trapFocus: () => getDefault("datepicker.trapFocus", true),
         position: undefined,
-        mobileModal: () => getDefault("datepicker.mobileModal", true),
-        mobileNative: () => getDefault("datepicker.mobileNative", false),
         iconPack: () => getDefault("datepicker.iconPack"),
         icon: () => getDefault("datepicker.icon"),
         iconRight: () => getDefault("datepicker.iconRight"),
         iconRightClickable: false,
         iconPrev: () => getDefault("datepicker.iconPrev", "chevron-left"),
         iconNext: () => getDefault("datepicker.iconNext", "chevron-right"),
+        desktopModal: () => getDefault("datepicker.desktopModal", false),
+        mobileModal: () => getDefault("datepicker.mobileModal", true),
+        mobileNative: () => getDefault("datepicker.mobileNative", false),
         mobileBreakpoint: () => getDefault("datepicker.mobileBreakpoint"),
         teleport: () => getDefault("datepicker.teleport", false),
         useHtml5Validation: () => getDefault("useHtml5Validation", true),

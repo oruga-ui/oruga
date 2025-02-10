@@ -52,26 +52,26 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <section>
-        <div class="odocs-spaced">
+    <section class="odocs-spaced">
+        <p>
             <o-icon pack="ionicons" icon="person" size="small" />
             <o-icon pack="ionicons" icon="home" size="small" />
             <o-icon pack="ionicons" icon="apps" size="small" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-icon pack="ionicons" icon="person" />
             <o-icon pack="ionicons" icon="home" />
             <o-icon pack="ionicons" icon="apps" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-icon pack="ionicons" icon="person" size="medium" />
             <o-icon pack="ionicons" icon="home" size="medium" />
             <o-icon pack="ionicons" icon="apps" size="medium" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-icon
                 pack="ionicons"
                 icon="person"
@@ -83,9 +83,9 @@ onBeforeUnmount(() => {
                 icon="apps"
                 size="large"
                 variant="primary" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-button variant="primary">
                 <o-icon pack="ionicons" icon="checkmark" />
                 <span>Finish</span>
@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
                 <o-icon spin pack="ionicons" icon="refresh" />
                 <span>Refresh</span>
             </o-button>
-        </div>
+        </p>
     </section>
 </template>
 
