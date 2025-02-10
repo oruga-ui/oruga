@@ -53,6 +53,14 @@ export type CarouselProps = {
     iconAutoplayResume?: string;
     /** Define these props for different screen sizes */
     breakpoints?: Record<number, any>;
+    /** Accessibility autoplay pause button aria label */
+    ariaAutoplayPauseLabel?: string;
+    /** Accessibility autoplay resume button aria label  */
+    ariaAutoplayResumeLabel?: string;
+    /** Accessibility next button aria label */
+    ariaNextLabel?: string;
+    /** Accessibility previous button aria label  */
+    ariaPreviousLabel?: string;
 } & CarouselClasses;
 
 // class props (will not be displayed in the docs)

@@ -60,11 +60,22 @@ const props = withDefaults(defineProps<CarouselProps>(), {
     iconSize: () => getDefault("carousel.iconSize"),
     iconPrev: () => getDefault("carousel.iconPrev", "chevron-left"),
     iconNext: () => getDefault("carousel.iconNext", "chevron-right"),
-    iconAutoplayPause: () =>
-        getDefault("carousel.iconAutoplayPause", "chevron-left"),
-    iconAutoplayResume: () =>
-        getDefault("carousel.iconAutoplayResume", "chevron-right"),
+    iconAutoplayPause: () => getDefault("carousel.iconAutoplayPause", "pause"),
+    iconAutoplayResume: () => getDefault("carousel.iconAutoplayResume", "play"),
     breakpoints: () => ({}),
+    ariaAutoplayPauseLabel: () =>
+        getDefault(
+            "carousel.ariaAutoplayPauseLabel",
+            "Stop Automatic Slide Show",
+        ),
+    ariaAutoplayResumeLabel: () =>
+        getDefault(
+            "carousel.ariaAutoplayResumeLabel",
+            "Start Automatic Slide Show",
+        ),
+    ariaNextLabel: () => getDefault("carousel.ariaNextLabel", "Next Slide"),
+    ariaPreviousLabel: () =>
+        getDefault("carousel.ariaPreviousLabel", "Previous Slide"),
 });
 
 const emits = defineEmits<{
@@ -491,8 +502,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         tabindex="0"
                         :aria-label="
                             !isAutoplayPaused
-                                ? 'Stop Automatic Slide Show'
-                                : 'Start Automatic Slide Show'
+                                ? ariaAutoplayPauseLabel
+                                : ariaAutoplayResumeLabel
                         "
                         @click="onToggleAutoplay"
                         @keydown.enter.prevent="onToggleAutoplay"
@@ -523,7 +534,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         both
                         role="button"
                         tabindex="0"
-                        aria-label="Previous Slide"
+                        :aria-label="ariaPreviousLabel"
                         @click="onPrev"
                         @keydown.enter.prevent="onPrev"
                         @keydown.space.prevent="onPrev" />
@@ -536,7 +547,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         both
                         role="button"
                         tabindex="0"
-                        aria-label="Next Slide"
+                        :aria-label="ariaNextLabel"
                         @click="onNext"
                         @keydown.enter.prevent="onNext"
                         @keydown.space.prevent="onNext" />

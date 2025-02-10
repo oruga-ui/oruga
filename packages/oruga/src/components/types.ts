@@ -139,6 +139,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconAutoplayPause: string;
                 /** Icon name for autoplay resume button */
                 iconAutoplayResume: string;
+                /** Accessibility autoplay pause button aria label */
+                ariaAutoplayPauseLabel: string;
+                /** Accessibility autoplay resume button aria label */
+                ariaAutoplayResumeLabel: string;
+                /** Accessibility next button aria label */
+                ariaNextLabel: string;
+                /** Accessibility previous button aria label */
+                ariaPreviousLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element in overlay */
