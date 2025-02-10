@@ -8,7 +8,7 @@ import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
 import ODropdown from "@/components/dropdown/Dropdown.vue";
 import ODropdownItem from "@/components/dropdown/DropdownItem.vue";
 
-describe("Dropdown tests", () => {
+describe("ODropdown tests", () => {
     const options: OptionsProp = [
         { label: "Item 1", value: 1 },
         { label: "Item 2", value: 2 },

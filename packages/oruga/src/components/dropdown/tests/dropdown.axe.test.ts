@@ -8,7 +8,7 @@ import type { OptionsProp } from "@/composables";
 import ODropdown from "../Dropdown.vue";
 import type { DropdownProps } from "../props";
 
-describe("Dropdown axe tests", () => {
+describe("ODropdown axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: OptionsProp = [

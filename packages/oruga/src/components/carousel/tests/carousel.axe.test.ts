@@ -7,7 +7,7 @@ import OCarousel from "@/components/carousel/Carousel.vue";
 import OCarouselItem from "@/components/carousel/CarouselItem.vue";
 import type { CarouselProps } from "../props";
 
-describe("Dropdown axe tests", () => {
+describe("OCarousel axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const carousels = [
