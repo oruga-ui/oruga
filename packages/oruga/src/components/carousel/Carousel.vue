@@ -150,7 +150,7 @@ onMounted(() => {
         const hasReducedMotion = window.matchMedia(
             "(prefers-reduced-motion: reduce)",
         );
-        if (!hasReducedMotion.matches) startTimer();
+        if (!hasReducedMotion?.matches) startTimer();
     }
 });
 
@@ -449,7 +449,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
 </script>
 
 <template>
-    <section
+    <div
         ref="rootElement"
         :class="rootClasses"
         data-oruga="carousel"
@@ -598,5 +598,5 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
             <!-- @slot Overlay element -->
             <slot name="overlay" />
         </template>
-    </section>
+    </div>
 </template>

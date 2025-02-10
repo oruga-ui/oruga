@@ -166,7 +166,6 @@ describe("OTabs tests", () => {
             });
             await nextTick();
 
-            console.log(wrapper.html());
             const tabButtons = wrapper.findAll(".o-tabs__tab");
 
             expect(tabButtons).toHaveLength(3);

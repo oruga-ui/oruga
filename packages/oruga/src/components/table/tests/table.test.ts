@@ -381,8 +381,6 @@ describe("OTable tests", () => {
             });
             await nextTick();
 
-            console.log(wrapper.find("tbody").html());
-
             bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(3); // Jesse, João and Justin
         });
