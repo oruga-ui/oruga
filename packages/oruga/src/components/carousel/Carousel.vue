@@ -74,10 +74,10 @@ const emits = defineEmits<{
      */
     "update:model-value": [value: number];
     /**
-     * on carousel scroll event
-     * @param value {number} scroll index
+     * on carousel slide change event
+     * @param value {number} active index
      */
-    scroll: [value: number];
+    change: [value: number];
     /**
      * on item click event
      * @param event {event} native event
@@ -191,16 +191,6 @@ const itemWidth = computed(() => {
     return rect.width / settings.value.itemsToShow;
 });
 
-const translation = computed(
-    () =>
-        -bound(
-            delta.value + activeIndex.value * itemWidth.value,
-            0,
-            (childItems.value.length - settings.value.itemsToShow) *
-                itemWidth.value,
-        ),
-);
-
 // #region --- Switch Events ---
 
 const hasArrows = computed(
@@ -243,7 +233,7 @@ function switchTo(index: number): void {
     index = bound(index, 0, total.value - 1);
 
     activeIndex.value = index;
-    emits("scroll", index);
+    emits("change", index);
 }
 
 /** Set focus on a tab item. */
@@ -321,6 +311,16 @@ const dragX = ref();
 const delta = ref(0);
 
 const isDragging = computed(() => isDefined(dragX.value));
+
+const translation = computed(
+    () =>
+        -bound(
+            delta.value + activeIndex.value * itemWidth.value,
+            0,
+            (childItems.value.length - settings.value.itemsToShow) *
+                itemWidth.value,
+        ),
+);
 
 /** handle drag event */
 function onDragStart(event: TouchEvent | MouseEvent): void {

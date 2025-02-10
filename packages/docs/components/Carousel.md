@@ -71,7 +71,7 @@ Tthe component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org
 | Event name         | Properties                                   | Description                     |
 | ------------------ | -------------------------------------------- | ------------------------------- |
 | update:model-value | **value** `number` - updated modelValue prop | modelValue prop two-way binding |
-| scroll             | **value** `number` - scroll index            | on carousel scroll event        |
+| change             | **value** `number` - active index            | on carousel slide change event  |
 | click              | **event** `event` - native event             | on item click event             |
 
 ### Slots
