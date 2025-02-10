@@ -4,5 +4,6 @@ export type CarouselComponent = {
     total: number;
     itemWidth: number;
     onClick: (event: Event) => void;
+    onDrag: (event: Event) => void;
     setActive: (index: number) => void;
 };

@@ -58,8 +58,11 @@ const itemClasses = defineClasses(
         :aria-labelledby="`carousel-${item.identifier}`"
         aria-roledescription="slide"
         :aria-label="`${item.index + 1} of ${parent.total}`"
+        draggable="true"
         @click="onClick"
-        @keypress.enter="onClick">
+        @keypress.enter="onClick"
+        @dragstart="parent.onDrag"
+        @touchstart="parent.onDrag">
         <!--
             @slot Default content
         -->

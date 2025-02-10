@@ -94,6 +94,7 @@ const provideData = computed<CarouselComponent>(() => ({
     total: total.value,
     itemWidth: itemWidth.value,
     onClick: (event: Event): void => emits("click", event),
+    onDrag: onDragStart,
     setActive: (index: number): void => switchTo(index),
 }));
 
@@ -151,8 +152,6 @@ onMounted(() => {
         );
         if (!hasReducedMotion.matches) startTimer();
     }
-
-    console.log(props.iconAutoplayPause, props.iconAutoplayResume);
 });
 
 onBeforeUnmount(() => {
@@ -160,7 +159,7 @@ onBeforeUnmount(() => {
         if (window.ResizeObserver && resizeObserver)
             resizeObserver.disconnect();
 
-        dragEnd();
+        onDragEnd();
         pauseTimer();
     }
 });
@@ -241,7 +240,7 @@ function onEndPressed(): void {
  */
 function switchTo(index: number): void {
     if (settings.value.repeat) index = mod(index, total.value);
-    index = bound(index, 0, total.value);
+    index = bound(index, 0, total.value - 1);
 
     activeIndex.value = index;
     emits("scroll", index);
@@ -318,9 +317,7 @@ function pauseTimer(): void {
 
 // #region --- Drag & Drop Feature ---
 
-const isTouch = ref(false);
 const dragX = ref();
-const hold = ref(0);
 const delta = ref(0);
 
 const isDragging = computed(() => isDefined(dragX.value));
@@ -333,62 +330,43 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
         ((event as MouseEvent).button !== 0 && event.type !== "touchstart")
     )
         return;
-    hold.value = Date.now();
-    isTouch.value = !!(event as TouchEvent).touches;
-    dragX.value = isTouch.value
+
+    delta.value = 0;
+    // get dragging start x value
+    dragX.value = !!(event as TouchEvent).touches
         ? (event as TouchEvent).touches[0].clientX
         : (event as MouseEvent).clientX;
-    if (isTouch.value) {
-        pauseTimer();
-    }
-    if (isClient) {
-        window.addEventListener(
-            isTouch.value ? "touchmove" : "mousemove",
-            dragMove,
-        );
-        window.addEventListener(
-            isTouch.value ? "touchend" : "mouseup",
-            dragEnd,
-        );
-    }
+
+    // stop timer when dragging starts
+    pauseTimer();
 }
 
-function dragMove(event: TouchEvent | MouseEvent): void {
+function onDragOver(event: TouchEvent | MouseEvent): void {
     if (!isDragging.value) return;
-    const dragEndX = (event as TouchEvent).touches
+
+    const dragEndX = !!(event as TouchEvent).touches
         ? (
               (event as TouchEvent).changedTouches[0] ||
               (event as TouchEvent).touches[0]
           ).clientX
         : (event as MouseEvent).clientX;
+    // calc transition delta value
     delta.value = dragX.value - dragEndX;
-    // prevent event if not touch event
-    if (!(event as TouchEvent).touches) event.preventDefault();
 }
 
-function dragEnd(event?: TouchEvent | MouseEvent): void {
-    if (!isDragging.value && !hold.value) return;
-    if (hold.value) {
-        const signCheck = sign(delta.value);
-        const results = Math.round(
-            Math.abs(delta.value / itemWidth.value) + 0.15,
-        ); // Hack
-        switchTo(activeIndex.value + signCheck * results);
-    }
+function onDragEnd(): void {
+    if (!isDragging.value) return;
+    // switch slide
+    const signCheck = sign(delta.value);
+    const results = Math.round(Math.abs(delta.value / itemWidth.value) + 0.15); // Hack
+    switchTo(activeIndex.value + signCheck * results);
+
+    // cleanup
     delta.value = 0;
     dragX.value = undefined;
-    if ((event as TouchEvent)?.touches) startTimer();
 
-    if (isClient) {
-        window.removeEventListener(
-            isTouch.value ? "touchmove" : "mousemove",
-            dragMove,
-        );
-        window.removeEventListener(
-            isTouch.value ? "touchend" : "mouseup",
-            dragEnd,
-        );
-    }
+    // atart timer after dragging ends
+    startTimer();
 }
 
 // #endregion --- Drag & Drop Feature ---
@@ -568,12 +546,13 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
             <div
                 :class="itemsClasses"
                 :style="'transform:translateX(' + translation + 'px)'"
-                draggable="true"
                 aria-roledescription="carousel-slide"
                 aria-atomic="false"
                 :aria-live="autoplay ? 'off' : 'polite'"
-                @mousedown="onDragStart"
-                @touchstart="onDragStart">
+                @dragend="onDragEnd"
+                @dragover="onDragOver"
+                @touchmove="onDragOver"
+                @touchend="onDragEnd">
                 <!--
                     @slot Display carousel item
                 -->
