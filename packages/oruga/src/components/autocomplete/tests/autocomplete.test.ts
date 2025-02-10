@@ -90,7 +90,7 @@ describe("OAutocomplete tests", () => {
             expect(dropdown.isVisible()).toBeFalsy();
         });
 
-        test.only("close dropdown on esc", async () => {
+        test("close dropdown on esc", async () => {
             const wrapper = mount(OAutocomplete, {
                 props: { options: OPTIONS },
                 attachTo: document.body,
