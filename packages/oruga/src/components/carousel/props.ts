@@ -7,10 +7,10 @@ export type CarouselProps = {
     modelValue?: number;
     /** Enable drag mode */
     dragable?: boolean;
-    /** Timer interval for `autoplay` */
-    interval?: number;
     /** Move item automaticalls after `interval` */
     autoplay?: boolean;
+    /** Timer interval for `autoplay` */
+    interval?: number;
     /** Pause autoplay on hover */
     pauseHover?: boolean;
     /** Repeat from the beginning after reaching the end */
@@ -21,11 +21,6 @@ export type CarouselProps = {
     indicators?: boolean;
     /** Place indicators inside the carousel */
     indicatorInside?: boolean;
-    /**
-     * Indicator interaction mode
-     * @values click, hover
-     */
-    indicatorMode?: "click" | "hover";
     /** Position of the indicator - depends on used theme */
     indicatorPosition?: string;
     /** Style of the indicator - depends on used theme */
@@ -48,10 +43,14 @@ export type CarouselProps = {
      * @values small, medium, large
      */
     iconSize?: string;
-    /** Icon name for previous icon */
+    /** Icon name for previous button */
     iconPrev?: string;
-    /** Icon name for next icon */
+    /** Icon name for next button */
     iconNext?: string;
+    /** Icon name for autoplay pause button */
+    iconAutoplayPause?: string;
+    /** Icon name for autoplay resume button */
+    iconAutoplayResume?: string;
     /** Define these props for different screen sizes */
     breakpoints?: Record<number, any>;
 } & CarouselClasses;
@@ -74,14 +73,14 @@ type CarouselClasses = Partial<{
     arrowIconPrevClass: ComponentClass;
     /** Class of next arrow element */
     arrowIconNextClass: ComponentClass;
-    /** Class of indicator link element */
-    indicatorClass: ComponentClass;
     /** Class of indicators wrapper element */
     indicatorsClass: ComponentClass;
     /** Class of indicators wrapper element when inside */
     indicatorsInsideClass: ComponentClass;
     /** Class of indicators wrapper element when inside and position */
     indicatorsInsidePositionClass: ComponentClass;
+    /** Class of indicator link element */
+    indicatorClass: ComponentClass;
     /** Class of indicator item element */
     indicatorItemClass: ComponentClass;
     /** Class of indicator element when is active */
@@ -95,8 +94,6 @@ export type CarouselItemProps = {
     override?: boolean;
     /** Make item clickable */
     clickable?: boolean;
-    /** Role attribute to be passed to the div wrapper for better accessibility */
-    ariaRole?: string;
 } & CarouselItemClasses;
 
 // class props (will not be displayed in the docs)

@@ -93,5 +93,6 @@ const items = [
                 <img :src="item.image" />
             </o-carousel-item>
         </o-carousel>
+        <p><b>Current slide index:</b> {{ carousel }}</p>
     </section>
 </template>

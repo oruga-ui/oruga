@@ -88,33 +88,26 @@ import PositionCode from "./position.vue?raw";
         <ExampleViewer :component="Selectable" :code="SelectableCode" />
 
         <h3 id="inline">Inline</h3>
-        <div class="vp-doc">
-            <p>
-                Components with the <code>inline</code> prop set will render the
-                options list directly, and will not have a trigger element
-                rendered.
-            </p>
-        </div>
+        <p>
+            Components with the <code>inline</code> prop set will render the
+            options list directly, and will not have a trigger element rendered.
+        </p>
         <ExampleViewer :component="Inline" :code="InlineCode" />
 
         <h3 id="modal">Modal</h3>
-        <div class="vp-doc">
-            <p>
-                The content can be opened in an <i>modal</i> mode either for
-                mobile or desktop only, or for both, by adding the
-                <code>mobile-modal</code> and <code>desktop-modal</code> props.
-            </p>
-        </div>
+        <p>
+            The content can be opened in an <i>modal</i> mode either for mobile
+            or desktop only, or for both, by adding the
+            <code>mobile-modal</code> and <code>desktop-modal</code> props.
+        </p>
         <ExampleViewer :component="Modal" :code="ModalCode" />
 
         <h3 id="scrollable">Scrollable</h3>
-        <div class="vp-doc">
-            <p>
-                When having to many options, consider adding the
-                <code>scrollable</code> prop, which allows the menu to remain at
-                a fixed height.
-            </p>
-        </div>
+        <p>
+            When having to many options, consider adding the
+            <code>scrollable</code> prop, which allows the menu to remain at a
+            fixed height.
+        </p>
         <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
 
         <h3 id="position">Position</h3>

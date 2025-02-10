@@ -1,7 +1,8 @@
 export type CarouselComponent = {
-    restartTimer: () => void;
-    itemWidth: number;
     activeIndex: number;
+    indicators: boolean;
+    total: number;
+    itemWidth: number;
     onClick: (event: Event) => void;
     setActive: (index: number) => void;
 };

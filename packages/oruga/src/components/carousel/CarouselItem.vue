@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { CarouselComponent } from "./types";
@@ -20,7 +19,6 @@ defineOptions({
 const props = withDefaults(defineProps<CarouselItemProps>(), {
     override: undefined,
     clickable: false,
-    ariaRole: () => getDefault("carousel.ariaRole", "option"),
 });
 
 /** inject functionalities and data from the parent component */
@@ -51,14 +49,15 @@ const itemClasses = defineClasses(
 
 <template>
     <div
-        v-if="parent"
-        :class="itemClasses"
-        :style="itemStyle"
+        :id="`carouselpanel-${item.identifier}`"
         data-oruga="carousel-item"
         :data-id="`carousel-${item.identifier}`"
-        :role="ariaRole"
-        aria-roledescription="item"
-        :aria-selected="isActive"
+        :class="itemClasses"
+        :style="itemStyle"
+        :role="parent.indicators ? 'tabpanel' : 'group'"
+        :aria-labelledby="`carousel-${item.identifier}`"
+        aria-roledescription="slide"
+        :aria-label="`${item.index + 1} of ${parent.total}`"
         @click="onClick"
         @keypress.enter="onClick">
         <!--

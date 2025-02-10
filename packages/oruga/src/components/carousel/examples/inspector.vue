@@ -47,6 +47,10 @@ const inspectData = [
         description: "Class of next arrow element",
     },
     {
+        class: "arrowIconAutoplayClass",
+        description: "Class of autoplay button element",
+    },
+    {
         class: "indicatorClass",
         description: "Class of indicator link element",
     },
