@@ -104,8 +104,8 @@ const provideData = computed<CarouselComponent>(() => ({
     indicators: props.indicators,
     total: total.value,
     itemWidth: itemWidth.value,
-    onClick: (event: Event): void => emits("click", event),
     onDrag: onDragStart,
+    onClick: (event: Event): void => emits("click", event),
     setActive: (index: number): void => switchTo(index),
 }));
 
@@ -128,7 +128,7 @@ if (isClient && window.ResizeObserver) {
     resizeObserver = new window.ResizeObserver(onRefresh);
 }
 
-/** watch specific props which refresh the component */
+/** watch specific props which need to refresh the component */
 watch(
     [
         () => props.itemsToList,
@@ -236,7 +236,8 @@ function onEndPressed(): void {
     switchTo(total.value - settings.value.itemsToList);
 }
 
-/** Show the slide by index
+/**
+ * Show the slide by index
  * @param index the real index of the slide
  */
 function switchTo(index: number): void {
