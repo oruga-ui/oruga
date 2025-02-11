@@ -5,6 +5,9 @@ import BaseCode from "./base.vue?raw";
 import Options from "./options.vue";
 import OptionsCode from "./options.vue?raw";
 
+import Slots from "./slots.vue";
+import SlotsCode from "./slots.vue?raw";
+
 import Selection from "./selection.vue";
 import SelectionCode from "./selection.vue?raw";
 
@@ -60,6 +63,17 @@ import ScrollCode from "./scroll.vue?raw";
             </p>
         </div>
         <ExampleViewer :component="Options" :code="OptionsCode" />
+
+        <h3 id="scroll">Slots</h3>
+        <p>
+            A header and a footer can be added to the options list by using the
+            <code>header</code> and <code>footer</code> slots. The header and
+            footer can be made clickable by adding the
+            <code>selectable-header</code> and
+            <code>selectable-footer</code> props. Clicking them will clear the
+            input.
+        </p>
+        <ExampleViewer :component="Slots" :code="SlotsCode" />
 
         <h3 id="scroll">Infinite Scroll</h3>
         <p>

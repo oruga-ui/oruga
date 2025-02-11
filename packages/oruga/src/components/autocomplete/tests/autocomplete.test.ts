@@ -1,6 +1,7 @@
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
+import { setTimeout } from "timers/promises";
 
 import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
 
@@ -9,312 +10,337 @@ import OAutocomplete from "@/components/autocomplete/Autocomplete.vue";
 describe("OAutocomplete tests", () => {
     enableAutoUnmount(afterEach);
 
+    const OPTIONS = [
+        "Angular",
+        "Angular 2",
+        "Aurelia",
+        "Backbone",
+        "Ember",
+        "jQuery",
+        "Meteor",
+        "Node.js",
+        "Polymer",
+        "React",
+        "RxJS",
+        "Vue.js",
+    ];
+
     test("render correctly", () => {
-        const wrapper = mount(OAutocomplete);
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS },
+        });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("autocomplete");
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    describe("OAutocomplete", () => {
-        const OPTIONS = [
-            "Angular",
-            "Angular 2",
-            "Aurelia",
-            "Backbone",
-            "Ember",
-            "jQuery",
-            "Meteor",
-            "Node.js",
-            "Polymer",
-            "React",
-            "RxJS",
-            "Vue.js",
-        ];
+    test("has a dropdown menu hidden by default", () => {
+        const wrapper = mount(OAutocomplete, { attachTo: document.body });
+        const dropdown = wrapper.find(".o-drop__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
+    });
 
-        test("has a dropdown menu hidden by default", () => {
-            const wrapper = mount(OAutocomplete, { attachTo: document.body });
-            const dropdown = wrapper.find(".o-drop__menu");
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeFalsy();
+    test("can emit input, focus and blur events", async () => {
+        const VALUE_TYPED = "test";
+
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS },
         });
 
-        test("can emit input, focus and blur events", async () => {
-            const VALUE_TYPED = "test";
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
 
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS },
-            });
+        // open menu
+        await input.trigger("focus");
+        expect(wrapper.emitted("focus")).toHaveLength(1);
 
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
+        await input.setValue(VALUE_TYPED);
+        await input.trigger("input");
 
-            await input.trigger("focus");
-            expect(wrapper.emitted("focus")).toHaveLength(1);
+        expect(wrapper.emitted("update:input")).toHaveLength(1);
+        expect(wrapper.emitted("update:input")![0]).toContain(VALUE_TYPED);
 
-            await input.setValue(VALUE_TYPED);
-            await input.trigger("input");
+        await input.trigger("blur");
+        expect(wrapper.emitted("blur")).toBeDefined();
+    });
 
-            expect(wrapper.emitted("update:input")).toHaveLength(1);
-            expect(wrapper.emitted("update:input")![0]).toContain(VALUE_TYPED);
+    test("can autocomplete with keydown", async () => {
+        const VALUE_TYPED = "Ang";
 
-            await input.trigger("blur");
-            expect(wrapper.emitted("blur")).toBeDefined();
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, openOnFocus: true, keepOpen: false },
+            attachTo: document.body,
         });
 
-        test("can autocomplete with keydown", async () => {
-            const VALUE_TYPED = "Ang";
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
 
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS },
-                attachTo: document.body,
-            });
+        // open menu
+        await input.trigger("focus");
+        await input.setValue(VALUE_TYPED);
 
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
+        const dropdown = wrapper.find(".o-drop__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeTruthy();
 
-            await input.trigger("focus");
-            await input.setValue(VALUE_TYPED);
+        await input.trigger("keydown", { key: "Down" });
+        await input.trigger("keydown", { key: "Enter" });
 
-            let dropdown = wrapper.find(".o-drop__menu");
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeTruthy();
+        expect(input.element.value).toBe(OPTIONS[0]);
+        expect(wrapper.emitted("select")).toStrictEqual([[OPTIONS[0]]]);
+        expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+            [OPTIONS[0]],
+        ]);
 
-            await input.trigger("keydown", { key: "Down" });
-            await input.trigger("keydown", { key: "Enter" });
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
+    });
 
-            expect(input.element.value).toBe(OPTIONS[0]);
-
-            dropdown = wrapper.find(".o-drop__menu");
-            expect(dropdown.isVisible()).toBeFalsy();
+    test("close dropdown on esc", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, openOnFocus: true },
+            attachTo: document.body,
         });
 
-        test("close dropdown on esc", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS },
-                attachTo: document.body,
-            });
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
 
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
+        // open menu
+        await input.trigger("focus");
 
-            const dropdown = wrapper.find(".o-acp__menu");
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeTruthy();
+        const dropdown = wrapper.find(".o-drop__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeTruthy();
 
-            await input.trigger("focus");
+        await input.trigger("keydown", { key: "Escape" });
 
-            await input.trigger("keydown", { key: "Escape" });
+        expect(dropdown.isVisible()).toBeFalsy();
+    });
 
-            expect(dropdown.isVisible()).toBeFalsy();
+    test("close dropdown on click outside", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, openOnFocus: true },
+            attachTo: document.body,
         });
 
-        test("close dropdown on click outside", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS },
-            });
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
 
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
+        // open menu
+        await input.trigger("focus");
+        await setTimeout(); // await event handler get set
 
-            await input.trigger("focus");
+        const dropdown = wrapper.find(".o-drop__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeTruthy();
 
-            const dropdown = wrapper.find(".o-acp__menu");
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeTruthy();
+        // click outside
+        window.dispatchEvent(new Event("click"));
+        await nextTick(); // await dom update
 
-            window.document.body.click();
-            await nextTick();
+        expect(dropdown.isVisible()).toBeFalsy();
+    });
 
-            expect(dropdown.isVisible()).toBeFalsy();
+    test("open dropdown on down key click", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS },
+            attachTo: document.body,
         });
 
-        test("open dropdown on down key click", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS },
-            });
+        const dropdown = wrapper.find(".o-drop__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
 
-            const dropdown = wrapper.find(".o-acp__menu");
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeFalsy();
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
 
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
+        await input.trigger("focus");
+        await input.trigger("keydown", { key: "Down" });
 
-            await input.trigger("focus");
-            await input.trigger("keydown", { key: "Down" });
+        expect(dropdown.isVisible()).toBeTruthy();
+    });
 
-            expect(dropdown.isVisible()).toBeTruthy();
+    test("manages tab pressed as expected", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
+            attachTo: document.body,
         });
 
-        test("manages tab pressed as expected", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
-            });
+        const dropdown = wrapper.find(".o-drop__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
 
-            const dropdown = wrapper.find(".o-acp__menu");
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeFalsy();
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
 
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
+        await input.trigger("keydown", { key: "Tab" });
+        expect(dropdown.isVisible()).toBeFalsy();
 
-            await input.trigger("keydown", { key: "Tab" });
-            expect(dropdown.isVisible()).toBeFalsy();
+        await input.trigger("focus");
 
-            await input.trigger("focus");
+        await input.trigger("keydown", { key: "Tab" });
+        expect(input.element.value).toBe("");
+    });
 
-            await input.trigger("keydown", { key: "Tab" });
-            expect(input.element.value).toBe(OPTIONS[0]);
+    test("can openOnFocus and keepFirst", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
+            attachTo: document.body,
         });
 
-        test("can openOnFocus and keepFirst", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
-            });
+        const dropdown = wrapper.find(".o-drop__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
 
-            const dropdown = wrapper.find(".o-acp__menu");
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeFalsy();
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
 
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
+        await input.trigger("focus");
 
-            await input.trigger("focus");
+        expect(dropdown.isVisible()).toBeTruthy();
+    });
 
-            expect(dropdown.isVisible()).toBeTruthy();
+    test("reset events before destroy", async () => {
+        document.removeEventListener = vi.fn();
+        window.removeEventListener = vi.fn();
+
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS },
+        });
+        await setTimeout(); // await event handler get set
+
+        wrapper.unmount();
+
+        expect(document.removeEventListener).toBeCalledTimes(2);
+        // remove scroll listener
+        expect(document.removeEventListener).toBeCalledWith(
+            "scroll",
+            expect.any(Function),
+        );
+
+        expect(window.removeEventListener).toBeCalledTimes(2);
+        // remove position listener
+        expect(window.removeEventListener).toBeCalledWith(
+            "resize",
+            expect.any(Function),
+        );
+    });
+
+    test("clear button does not exist when the search input is empty", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: {
+                options: OPTIONS,
+                modelValue: "",
+                clearable: true,
+            },
         });
 
-        test("reset events before destroy", () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS },
-            });
+        const subject = wrapper.find(".o-icon");
+        expect(subject.exists()).toBeFalsy();
+    });
 
-            document.removeEventListener = vi.fn();
-            window.removeEventListener = vi.fn();
-
-            wrapper.unmount();
-
-            expect(document.removeEventListener).toBeCalledWith(
-                "click",
-                expect.any(Function),
-            );
-            expect(window.removeEventListener).toBeCalledWith(
-                "resize",
-                expect.any(Function),
-            );
+    test("clears search input text when clear button gets clicked", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: {
+                options: OPTIONS,
+                modelValue: OPTIONS[5],
+                clearable: true,
+            },
         });
 
-        test("clear button does not exist when the search input is empty", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: {
-                    options: OPTIONS,
-                    modelValue: "",
-                    clearable: true,
-                },
-            });
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        expect(input.element.value).toBe(OPTIONS[5]);
 
-            const subject = wrapper.find("o-icon-stub");
-            expect(subject.exists()).toBeFalsy();
+        const icon = wrapper.find(".o-icon");
+        expect(icon.exists()).toBeTruthy();
+        await icon.trigger("click");
+
+        expect(input.element.value).toEqual("");
+    });
+
+    test("clear button does not appear when clearable property is not set to true", () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, modelValue: OPTIONS[5] },
+        });
+        const subject = wrapper.find(".o-icon").exists();
+
+        expect(subject).toBeFalsy();
+    });
+
+    test("can emit select-header by keyboard and click", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: {
+                openOnFocus: true,
+                keepOpen: true,
+                selectableHeader: true,
+                selectableFooter: true,
+            },
+            slots: {
+                header: "<h1>SLOT HEADER</h1>",
+                footer: "<h1>SLOT FOOTER</h1>",
+            },
         });
 
-        test("clears search input text when clear button gets clicked", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: {
-                    options: OPTIONS,
-                    modelValue: "Jquery",
-                    clearable: true,
-                },
-            });
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
 
-            const subject = wrapper.find("o-icon-stub");
-            expect(subject.exists()).toBeTruthy();
-            await wrapper.find("o-icon-stub").trigger("click");
+        // open menu
+        await input.trigger("focus");
 
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
-            expect(input.element.value).toEqual("");
+        // move to header and select by enter
+        await input.trigger("keydown", { key: "Down" });
+        await input.trigger("keydown", { key: "Enter" });
+
+        expect(wrapper.emitted("select-header")).toHaveLength(1);
+
+        const header = wrapper.find(".o-acp__item-header");
+        expect(header.exists()).toBeTruthy();
+        await header.trigger("click");
+
+        expect(wrapper.emitted("select-header")).toHaveLength(2);
+    });
+
+    test("can emit select-footer by keyboard and click", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: {
+                openOnFocus: true,
+                keepOpen: true,
+                selectableHeader: true,
+                selectableFooter: true,
+            },
+            slots: {
+                header: "<h1>SLOT HEADER</h1>",
+                footer: "<h1>SLOT FOOTER</h1>",
+            },
         });
+        const input = wrapper.find("input");
 
-        test("clear button does not appear when clearable property is not set to true", () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, modelValue: "Jquery" },
-            });
-            const subject = wrapper.find("o-icon-stub").exists();
+        // open menu
+        await input.trigger("focus");
 
-            expect(subject).toBeFalsy();
+        // move to footer and select by enter
+        await input.trigger("keydown", { key: "Down" });
+        await input.trigger("keydown", { key: "Down" });
+        await input.trigger("keydown", { key: "Enter" });
+
+        expect(wrapper.emitted("select-footer")).toHaveLength(1);
+
+        const footer = wrapper.find(".o-acp__item-footer");
+        expect(footer.exists()).toBeTruthy();
+        await footer.trigger("click");
+
+        expect(wrapper.emitted("select-footer")).toHaveLength(2);
+    });
+
+    test("has configurable menu and item tags", () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, menuTag: "ul", itemTag: "li" },
         });
-
-        test("can emit select-header by keyboard and click", async () => {
-            const VALUE_TYPED = "test";
-            const wrapper = mount(OAutocomplete, {
-                props: {
-                    checkScroll: true,
-                    selectableHeader: true,
-                    selectableFooter: true,
-                },
-                slots: {
-                    header: "<h1>SLOT HEADER</h1>",
-                    footer: "<h1>SLOT FOOTER</h1>",
-                },
-            });
-
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
-
-            await input.trigger("focus");
-            await input.setValue(VALUE_TYPED);
-
-            await input.trigger("keydown", { key: "Down" });
-            await input.trigger("keydown", { key: "Enter" });
-
-            const header = wrapper.find(".o-acp__item-header");
-            expect(header.exists()).toBeTruthy();
-            await header.trigger("click");
-
-            const emitted = wrapper.emitted("select-header");
-            expect(emitted).toHaveLength(2);
-        });
-
-        test("can emit select-footer by keyboard and click", async () => {
-            const VALUE_TYPED = "test";
-            const wrapper = mount(OAutocomplete, {
-                props: {
-                    checkScroll: true,
-                    selectableHeader: true,
-                    selectableFooter: true,
-                },
-                slots: {
-                    header: "<h1>SLOT HEADER</h1>",
-                    footer: "<h1>SLOT FOOTER</h1>",
-                },
-            });
-            const input = wrapper.find("input");
-
-            await input.trigger("focus");
-            await input.setValue(VALUE_TYPED);
-
-            await input.trigger("keydown", { key: "Down" });
-            await input.trigger("keydown", { key: "Down" });
-            await input.trigger("keydown", { key: "Enter" });
-            await input.trigger("blur");
-
-            const footer = wrapper.find(".o-acp__item-footer");
-            expect(footer.exists()).toBeTruthy();
-            await footer.trigger("click");
-
-            const emitted = wrapper.emitted("select-footer");
-            expect(emitted).toHaveLength(2);
-        });
-
-        test("has configurable menu and item tags", () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, menuTag: "ul", itemTag: "li" },
-            });
-            expect(wrapper.find("ul.o-acp__menu").exists()).toBeTruthy();
-            expect(wrapper.find("li.o-acp__item").exists()).toBeTruthy();
-        });
+        expect(wrapper.find("ul.o-drop__menu").exists()).toBeTruthy();
+        expect(wrapper.find("li.o-acp__item").exists()).toBeTruthy();
     });
 
     describe("render options props correctly", () => {
