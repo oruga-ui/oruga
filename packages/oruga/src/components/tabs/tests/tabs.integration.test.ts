@@ -66,7 +66,7 @@ describe("OTab with OTabItem tests", () => {
 
     test("renders the tab buttons", async () => {
         const wrapper = mount(componentWrapper);
-        await wrapper.vm.$nextTick();
+        await nextTick();
 
         const tabButtons = wrapper.findAll(".o-tabs__nav-item");
 
@@ -81,7 +81,7 @@ describe("OTab with OTabItem tests", () => {
 
     test("renders the tab panels", async () => {
         const wrapper = mount(componentWrapper, { attachTo: document.body });
-        await wrapper.vm.$nextTick();
+        await nextTick();
 
         const tabPanls = wrapper.findAll(`[data-oruga="tabs-item"]`);
 
@@ -96,22 +96,24 @@ describe("OTab with OTabItem tests", () => {
 
     test("switches the content based on the tab clicked", async () => {
         const wrapper = mount(componentWrapper, { attachTo: document.body });
-        await wrapper.vm.$nextTick();
+        await nextTick();
 
         const tabs = wrapper.findAll(".o-tabs__tab");
-        const tabPanls = wrapper.findAll(`[data-oruga="tabs-item"]`);
+        const tabPanels = wrapper.findAll(`[data-oruga="tabs-item"]`);
+        expect(tabs).toHaveLength(3);
+        expect(tabPanels).toHaveLength(3);
 
         // clicking the second tab reveals the second content
         // and hides the first content
         await tabs[1].trigger("click");
-        expect(tabPanls[1].isVisible()).toBeTruthy();
-        expect(tabPanls[0].isVisible()).toBeFalsy();
+        expect(tabPanels[1].isVisible()).toBeTruthy();
+        expect(tabPanels[0].isVisible()).toBeFalsy();
 
         // clicking the third tab reveals the third content
         //  and hides the second content
         await tabs[2].trigger("click");
-        expect(tabPanls[2].isVisible()).toBeTruthy();
-        expect(tabPanls[1].isVisible()).toBeFalsy();
+        expect(tabPanels[2].isVisible()).toBeTruthy();
+        expect(tabPanels[1].isVisible()).toBeFalsy();
     });
 
     test("render item with component prop correctly", () => {

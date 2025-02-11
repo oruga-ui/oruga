@@ -960,7 +960,7 @@ function handleColumnDragLeave(
 
 const rootClasses = defineClasses(
     ["rootClass", "o-table__root"],
-    ["mobileClass", "o-table__root--mobile", null, isMobile],
+    ["mobileClass", "o-table__root--mobile", null, isMobileActive],
 );
 
 const tableClasses = defineClasses(

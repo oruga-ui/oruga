@@ -53,7 +53,7 @@ const providedData = computed<StepItemComponent<T>>(() => ({
     value: itemValue,
     $slots: slots,
     navClasses: navItemClasses.value,
-    classes: stepClasses.value,
+    stepClasses: stepClasses.value,
     labelClasses: stepLabelClasses.value,
     iconClasses: stepIconClasses.value,
     isTransitioning: isTransitioning.value,
@@ -62,9 +62,9 @@ const providedData = computed<StepItemComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<StepsComponent>({
-    data: providedData,
-});
+const { parent, item } = useProviderChild<StepsComponent, StepItemComponent<T>>(
+    { data: providedData },
+);
 
 const transitionName = ref();
 
