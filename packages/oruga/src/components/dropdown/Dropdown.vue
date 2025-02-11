@@ -17,6 +17,7 @@ import {
     useClickOutside,
     usePreventScrolling,
     useSequentialId,
+    useEventListener,
     type OptionsGroupItem,
 } from "@/composables";
 
@@ -57,6 +58,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     keepOpen: () => getDefault("dropdown.keepOpen", false),
     keepFirst: () => getDefault("dropdown.keepFirst", false),
     closeOnOutside: () => getDefault("dropdown.closeOnOutside", true),
+    closeOnScroll: () => getDefault("dropdown.closeOnScroll", false),
     selectOnFocus: () => getDefault("dropdown.selectOnFocus", false),
     selectOnClose: () => getDefault("dropdown.selectOnClose", false),
     expanded: false,
@@ -202,15 +204,16 @@ if (isClient && props.scrollable && props.checkScroll)
         () => emits("scroll-start"),
     );
 
-let timer: NodeJS.Timeout | undefined;
-
 // set click outside handler
-if (isClient && props.closeOnOutside) {
+if (isClient && props.closeOnOutside)
     useClickOutside([menuRef, triggerRef], onClickedOutside, {
         trigger: isActive,
         passive: true,
     });
-}
+
+// set scroll page event
+if (isClient && props.closeOnScroll)
+    useEventListener(window, "scroll", onPageScroll, { passive: true });
 
 watch(
     isActive,
@@ -286,6 +289,13 @@ function onClickedOutside(event: Event): void {
     close("outside", event);
 }
 
+/** Close dropdown if page get scrolled. */
+function onPageScroll(event: Event): void {
+    if (!isActive.value || props.inline) return;
+    if (!props.closeOnScroll) return;
+    close("scroll", event);
+}
+
 function onTriggerClick(event: Event): void {
     // check if is mobile native and hoverable together
     if (isMobileNative && hoverable.value) toggle("click", event);
@@ -323,6 +333,8 @@ function toggle(method: string, event: Event): void {
     if (!isActive.value) open(method, event);
     else close(method, event);
 }
+
+let timer: NodeJS.Timeout | undefined;
 
 function open(method: string, event: Event): void {
     if (props.disabled) return;

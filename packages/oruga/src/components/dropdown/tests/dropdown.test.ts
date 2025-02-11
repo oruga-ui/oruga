@@ -347,6 +347,33 @@ describe("ODropdown tests", () => {
             await trigger.trigger("mouseenter");
             expect(wrapper.find(".o-drop__menu").isVisible()).toBeTruthy();
         });
+
+        test("react accordingly when page scolling", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, closeOnScroll: true },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await event handler get set
+
+            const menu = wrapper.find(".o-drop__menu");
+
+            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(menu.isVisible()).toBeTruthy();
+
+            // do scroll
+            window.dispatchEvent(
+                new CustomEvent("scroll", { detail: "anything" }),
+            );
+            await nextTick(); // await dom update
+
+            // check dropdown closed
+            const activeEmits = wrapper.emitted("update:active");
+            expect(activeEmits).toHaveLength(1);
+            expect(activeEmits![0][0]).toBeFalsy();
+            expect(wrapper.emitted("close")).toHaveLength(1);
+            expect(wrapper.classes("o-drop--active")).toBeFalsy();
+            expect(menu.isVisible()).toBeFalsy();
+        });
     });
 
     describe("test teleport", () => {
