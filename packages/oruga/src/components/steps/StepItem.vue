@@ -182,6 +182,7 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             v-bind="$attrs"
             :id="`tabpanel-${item.identifier}`"
             data-oruga="steps-item"
+            role="tabpanel"
             :data-id="`steps-${item.identifier}`"
             :class="panelClasses"
             :aria-labelledby="`tab-${item.identifier}`"

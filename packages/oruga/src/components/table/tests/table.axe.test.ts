@@ -211,6 +211,7 @@ describe("OTable axe tests", () => {
             attachTo: document.body,
         });
         await nextTick(); // await child component rendering
+
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });
 });

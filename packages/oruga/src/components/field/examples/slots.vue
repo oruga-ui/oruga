@@ -7,12 +7,12 @@
                     <o-icon size="small" icon="question-circle" />
                 </o-tooltip>
             </template>
-            <o-input size="medium" />
+            <o-input size="medium" placeholder="Label with tooltip" />
         </o-field>
 
         <o-field>
             <template #label> Label with custom <i>style</i> </template>
-            <o-input />
+            <o-input placeholder="Custom label and message" />
             <template #message> Message with custom <b>style</b> </template>
         </o-field>
     </section>

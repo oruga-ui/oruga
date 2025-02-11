@@ -9,6 +9,8 @@ export type CollapseProps = {
     animation?: string;
     /** Id property of the content container - default is an uuid */
     contentId?: string;
+    /** Id property of the trigger container - default is an uuid */
+    triggerId?: string;
     /**
      * Trigger position
      * @values top, bottom

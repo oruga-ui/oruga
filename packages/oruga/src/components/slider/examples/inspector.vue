@@ -94,7 +94,12 @@ const inspectData = [
         v-slot="props"
         :inspect-data="inspectData"
         :subitem="subitem">
-        <o-slider v-bind="props" :min="1" :max="10" :value="4">
+        <o-slider
+            v-bind="props"
+            :min="1"
+            :max="10"
+            :value="4"
+            aria-label="inspector-demo">
             <o-slider-tick
                 v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
                 :key="val"

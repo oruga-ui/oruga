@@ -90,6 +90,12 @@ export type TimepickerProps = {
               currentValue: Date | null | undefined,
               state: ValidityState,
           ) => string);
+    /** Accessibility seconds select aria label */
+    ariaSelectSecondsLabel?: string;
+    /** Accessibility minutes select aria label */
+    ariaSelectMinutesLabel?: string;
+    /** Accessibility hours select aria label */
+    ariaSelectHoursLabel?: string;
 } & TimepickerClasses;
 
 // class props (will not be displayed in the docs)

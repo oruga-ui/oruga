@@ -16,7 +16,11 @@
         </o-field>
 
         <o-field label="Password" variant="warning">
-            <o-input model-value="123" type="password" :maxlength="30" />
+            <o-input
+                model-value="123"
+                type="password"
+                :maxlength="30"
+                autocomplete="off" />
         </o-field>
 
         <o-field label="Subject">

@@ -1,13 +1,15 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
+import { nextTick } from "vue";
 
 import OCheckbox from "../Checkbox.vue";
+import type { CheckboxProps } from "../props";
 
 describe("Checkbox axe tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases = [
+    const a11yCases: { title: string; props?: CheckboxProps<unknown> }[] = [
         {
             title: "axe checkbox - base case",
             props: { label: "Checkbox Label" },
@@ -43,6 +45,7 @@ describe("Checkbox axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

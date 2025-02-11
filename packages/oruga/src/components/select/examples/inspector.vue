@@ -132,7 +132,8 @@ const inspectData = [
             <o-select
                 v-bind="props"
                 v-model="selectedOptions"
-                placeholder="Select a character">
+                placeholder="Select a character"
+                aria-label="Select a character">
                 <optgroup label="Black Sails">
                     <option value="flint">Flint</option>
                     <option value="silver">Silver</option>

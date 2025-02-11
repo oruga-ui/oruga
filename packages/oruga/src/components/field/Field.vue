@@ -34,8 +34,10 @@ const props = withDefaults(defineProps<FieldProps>(), {
     label: undefined,
     labelSize: () => getDefault("field.labelsize"),
     labelFor: undefined,
+    labelId: () => useId(),
     message: undefined,
     messageTag: () => getDefault("field.messageTag", "p"),
+    messageId: () => useId(),
     grouped: false,
     groupMultiline: false,
     horizontal: false,
@@ -44,12 +46,6 @@ const props = withDefaults(defineProps<FieldProps>(), {
 });
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
-
-/** a unique id for the field message to associate an input with */
-const messageId = useId();
-
-/** a unique id for the field label to associate an input with */
-const labelId = useId();
 
 /** the unique id for the input to associate the label with */
 const inputId = ref(props.labelFor);
@@ -142,10 +138,10 @@ function setInputId(value: string): void {
 }
 
 const inputAttrs = computed(() => ({
-    "aria-labelledby": labelId,
+    "aria-labelledby": props.labelId,
     ...(fieldVariant.value === "error"
-        ? { "aria-errormessage": messageId }
-        : { "aria-describedby": messageId }),
+        ? { "aria-errormessage": props.messageId }
+        : { "aria-describedby": props.messageId }),
 }));
 
 // Provided data is a computed ref to enjure reactivity.
@@ -155,7 +151,7 @@ const provideData = computed<FieldData>(() => ({
     hasInnerField: hasInnerField.value,
     variant: fieldVariant.value,
     message: fieldMessage.value,
-    labelId,
+    labelId: props.labelId,
     inputAttrs: inputAttrs.value,
     addInnerField,
     setInputId,
@@ -278,6 +274,8 @@ const innerFieldClasses = defineClasses(
                     v-else
                     :variant="fieldVariant"
                     :addons="false"
+                    :label-id="labelId"
+                    :message-id="messageId"
                     :message-tag="messageTag"
                     :message-class="messageClass">
                     <!-- render inner default slot element -->
