@@ -430,6 +430,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 keepOpen: boolean;
                 /** The first option will always be pre-selected (easier to just hit enter or tab) */
                 keepFirst: boolean;
+                /** Close Dropdown when clicked outside */
+                closeOnOutside: boolean;
+                /** Select current focused item when focused */
+                selectOnFocus: boolean;
+                /** Select current focused item when closed */
+                selectOnClose: boolean;
                 /** Dropdown content (items) are shown into a modal on mobile */
                 mobileModal: boolean;
                 /** Dropdown content (items) are shown into a modal on desktop */
