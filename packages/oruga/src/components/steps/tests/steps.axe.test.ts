@@ -4,7 +4,7 @@ import { axe } from "jest-axe";
 
 import StepsExample from "./StepsExample.vue";
 
-describe("Steps axe tests", () => {
+describe("OSteps axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases = [

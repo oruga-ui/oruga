@@ -284,7 +284,8 @@ function setSelected(item: T | SpecialOption | undefined): void {
     inputValue.value = props.clearOnSelect ? "" : option?.label || "";
     checkHtml5Validity();
 
-    setFocus();
+    if (props.keepOpen) setFocus();
+    else isActive.value = false;
 }
 
 // --- Event Handler ---

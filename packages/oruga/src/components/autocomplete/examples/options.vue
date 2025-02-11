@@ -241,12 +241,7 @@ const groupSelected = ref();
                     v-model="selected"
                     :options="options"
                     placeholder="e.g. Anne"
-                    open-on-focus
-                    selectable-header
-                    selectable-footer>
-                    <template #empty> No results found </template>
-                    <template #header> Header </template>
-                    <template #footer> Footer </template>
+                    open-on-focus>
                 </o-autocomplete>
 
                 <p><b>Selected:</b> {{ selected }}</p>
