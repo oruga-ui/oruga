@@ -8,7 +8,7 @@ import { defineClasses } from "@/composables";
 import type { SkeletonProps } from "./props";
 
 /**
- * A placeholder for content to load
+ * A placeholder for content to load.
  * @displayName Skeleton
  * @style _skeleton.scss
  */

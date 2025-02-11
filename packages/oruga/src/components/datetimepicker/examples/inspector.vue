@@ -10,8 +10,8 @@ const triggerClass =
     oruga.config.getOption("input.iconLeftClass", "o-input__icon-left") ??
     "o-input__icon-left";
 
-function openDatetimePicker() {
-    setTimeout(() => {
+function openDatetimePicker(): void {
+    setTimeout((): void => {
         datetimepicker.value.$el
             .getElementsByClassName(triggerClass)[0]
             .click();
@@ -26,7 +26,7 @@ const inspectData = [
     {
         class: "timepickerWrapperClass",
         description: "Class of the Timepicker wrapper",
-        action: () => {
+        action: (): void => {
             openDatetimePicker();
         },
     },

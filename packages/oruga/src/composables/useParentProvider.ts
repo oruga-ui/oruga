@@ -74,10 +74,10 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
                 .map((item) => `[data-id="${key}-${item.identifier}"]`)
                 .join(",");
 
-            // query all child items
+            // query all child items in the order of the DOM appearance
             const children = parent.querySelectorAll(ids);
 
-            // create a list of ids ordered after the elements in template
+            // create a list of ids ordered after the elements in DOM
             const sortedIds = Array.from(children).map((el) =>
                 el.getAttribute("data-id")?.replace(`${key}-`, ""),
             );

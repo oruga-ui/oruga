@@ -6,7 +6,8 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> Responsive horizontal process steps
+The **Steps** component allows you to create a wizard or easily break your process steps into multiple steps.
+Breaking things down into multiple steps can improve the user experience by keeping them small and accessible compared to listing them all at once.
 
 </div>
 
@@ -30,7 +31,7 @@ sidebarDepth: 2
 
 ## Steps component
 
-> Responsive horizontal process steps
+> Responsive horizontal process steps.
 
 ```html
 <o-steps></o-steps>
@@ -45,7 +46,6 @@ sidebarDepth: 2
 | animation         | Transition animation name                                                                                                     | [string, string, string, string] \| [string, string] | `[next`, `prev]`, `[right`, `left`, `down`, `up]`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;animation: [ "slide-next", "slide-prev", "slide-down", "slide-up",]<br>}</code> |
 | ariaNextLabel     | Accessibility next button aria label                                                                                          | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;ariaNextLabel: "Next"<br>}</code>                                               |
 | ariaPreviousLabel | Accessibility previous button aria label                                                                                      | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;ariaPreviousLabel: "Previous"<br>}</code>                                       |
-| destroyOnHide     | Destroy stepItem on hide                                                                                                      | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                         |
 | hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                                                          |
 | iconNext          | Icon to use for navigation button                                                                                             | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconNext: "chevron-right"<br>}</code>                                           |
 | iconPack          | Icon pack to use for the navigation                                                                                           | string                                               | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>                                                 |
@@ -80,6 +80,8 @@ sidebarDepth: 2
 <div class="vp-doc">
 
 ## StepItem component
+
+> An step item used by the steps component.
 
 ```html
 <o-step-item></o-step-item>

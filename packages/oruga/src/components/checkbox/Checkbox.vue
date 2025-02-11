@@ -9,7 +9,7 @@ import { injectField } from "../field/fieldInjection";
 import type { CheckboxProps } from "./props";
 
 /**
- * Select a single or grouped options
+ * Select a single or grouped options.
  * @displayName Checkbox
  * @style _checkbox.scss
  */
@@ -82,7 +82,7 @@ const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId =
-    !!parentField.value || !!props.label || !!useSlots().label
+    !!parentField.value || !!props.label || !!useSlots().default
         ? parentField.value?.labelId || useId()
         : undefined;
 

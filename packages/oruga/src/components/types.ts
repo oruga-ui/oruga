@@ -13,30 +13,24 @@ declare module "../index" {
                 menuTag: DynamicComponent;
                 /** Menu item tag name */
                 itemTag: DynamicComponent;
-                /** Size of the control */
+                /** Size of the input control */
                 size: string;
                 /** Position of the dropdown */
                 position: "auto" | "bottom" | "top";
-                /** Makes the component check if list reached scroll start or end and emit scroll events. */
-                checkScroll: boolean;
                 /** Number of milliseconds to delay before to emit input event */
                 debounce: number;
-                /** The first option will always be pre-selected (easier to just hit enter or tab) */
+                /** The first option will always be focused (easier to just hit enter or tab) */
                 keepFirst: boolean;
+                /** Keep open dropdown list after select */
+                keepOpen: boolean;
                 /** Clear input text on select */
                 clearOnSelect: boolean;
                 /** Open dropdown list on focus */
                 openOnFocus: boolean;
-                /** Keep open dropdown list after select */
-                keepOpen: boolean;
                 /** Max height of dropdown content */
                 maxHeight: number | string;
-                /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
-                confirmKeys: string[];
-                /** Dropdown content (items) are shown into a modal on mobile */
-                mobileModal: boolean;
-                /** Transition name to apply on dropdown list */
-                animation: string;
+                /** Makes the component check if list reached scroll start or end and emit scroll events. */
+                checkScroll: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -47,6 +41,12 @@ declare module "../index" {
                 clearable: boolean;
                 /** Icon name to be added on the clear button */
                 clearIcon: string;
+                /** Dropdown content (items) are shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content (items) are shown into a modal on desktop */
+                desktopModal: boolean;
+                /** Transition name to apply on dropdown list */
+                animation: string;
                 /** Native options to use in HTML5 validation */
                 autocomplete: string;
                 /** Append the component to another part of the DOM.
@@ -57,8 +57,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the menu items */
                 itemClass: ClassDefinition;
-                /** Class of the menu items on hover */
-                itemHoverClass: ClassDefinition;
                 /** Class of the menu items group title */
                 itemGroupTitleClass: ClassDefinition;
                 /** Class of the menu empty placeholder item */
@@ -133,10 +131,22 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPack: string;
                 /** Icon size */
                 iconSize: string;
-                /** Icon name for previous icon */
+                /** Icon name for previous button */
                 iconPrev: string;
-                /** Icon name for next icon */
+                /** Icon name for next button */
                 iconNext: string;
+                /** Icon name for autoplay pause button */
+                iconAutoplayPause: string;
+                /** Icon name for autoplay resume button */
+                iconAutoplayResume: string;
+                /** Accessibility autoplay pause button aria label */
+                ariaAutoplayPauseLabel: string;
+                /** Accessibility autoplay resume button aria label */
+                ariaAutoplayResumeLabel: string;
+                /** Accessibility next button aria label */
+                ariaNextLabel: string;
+                /** Accessibility previous button aria label */
+                ariaPreviousLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element in overlay */
@@ -153,22 +163,20 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 arrowIconPrevClass: ClassDefinition;
                 /** Class of next arrow element */
                 arrowIconNextClass: ClassDefinition;
-                /** Class of indicator link element */
-                indicatorClass: ClassDefinition;
                 /** Class of indicators wrapper element */
                 indicatorsClass: ClassDefinition;
                 /** Class of indicators wrapper element when inside */
                 indicatorsInsideClass: ClassDefinition;
                 /** Class of indicators wrapper element when inside and position */
                 indicatorsInsidePositionClass: ClassDefinition;
+                /** Class of indicator link element */
+                indicatorClass: ClassDefinition;
                 /** Class of indicator item element */
                 indicatorItemClass: ClassDefinition;
                 /** Class of indicator element when is active */
                 indicatorItemActiveClass: ClassDefinition;
                 /** Class of indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
-                /** Role attribute to be passed to the div wrapper for better accessibility */
-                ariaRole: string;
                 /** Class of carousel item */
                 itemClass: ClassDefinition;
                 /** Class of carousel item when is active */
@@ -248,12 +256,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 firstDayOfWeek: number;
                 /** Define the range of years to show */
                 yearsRange: number[];
-                /** Trap dropdown on focus */
-                trapFocus: boolean;
-                /** Enable dropdown mobile modal */
-                mobileModal: boolean;
-                /** Enable mobile native input if mobile agent */
-                mobileNative: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -264,6 +266,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPrev: string;
                 /** Icon name for next icon */
                 iconNext: string;
+                /** Dropdown content is shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content is shown into a modal on desktop */
+                desktopModal: boolean;
+                /** Enable mobile native input if mobile agent */
+                mobileNative: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -395,14 +403,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 dateParser: ((date: string) => Date) | undefined;
                 /** Date creator function, default is `new Date()` */
                 datetimeCreator: (() => Date);
-                /** Enable mobile native input if mobile agent */
-                mobileNative: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
                 icon: string;
                 /** Icon to be added on the right side */
                 iconRight: string;
+                /** Enable mobile native input if mobile agent */
+                mobileNative: boolean;
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
@@ -414,31 +422,34 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
+                /** Makes the component check if menu reached scroll start or end and emit scroll events. */
+                checkScroll: boolean;
                 /** Max height of dropdown content */
                 maxHeight: number | string;
                 /** Position of the dropdown relative to the trigger */
                 position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
-                /** Dropdown content (items) are shown into a modal on mobile */
-                mobileModal: boolean;
-                /** Dropdown content (items) are shown into a modal on desktop */
-                desktopModal: boolean;
                 /** Custom animation (transition name) */
                 animation: string;
-                /** Trap focus inside the dropdown. */
-                trapFocus: boolean;
-                /** Makes the component check if menu reached scroll start or end and emit scroll events. */
-                checkScroll: boolean;
                 /** Dropdown menu tag name */
                 menuTag: DynamicComponent;
                 /** Dropdown trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Dropdown will be triggered by any events */
-                triggers: ("click" | "contextmenu" | "focus" | "hover")[];
-                /** Dropdown close options (pressing escape, clicking the content or outside) */
-                closeable: boolean | string[];
-                /** Role attribute to be passed to the list container for better accessibility.
-Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: "dialog" | "list" | "listbox" | "menu";
+                triggers: ("click" | "contextmenu" | "focus" | "keydown" | "hover")[];
+                /** Keep dropdown list open when item get selected */
+                keepOpen: boolean;
+                /** The first option will always be pre-selected (easier to just hit enter or tab) */
+                keepFirst: boolean;
+                /** Close Dropdown when clicked outside */
+                closeOnOutside: boolean;
+                /** Select current focused item when focused */
+                selectOnFocus: boolean;
+                /** Select current focused item when closed */
+                selectOnClose: boolean;
+                /** Dropdown content (items) are shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content (items) are shown into a modal on desktop */
+                desktopModal: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -481,13 +492,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 noScrollClass: ClassDefinition;
                 /** Dropdown item tag name */
                 itemTag: DynamicComponent;
-                /** Role attribute to be passed to the list item for better accessibility.
-Use menuitem only in situations where your dropdown is related to a navigation menu. */
-                itemAriaRole: string;
                 /** Class of the dropdown item */
                 itemClass: ClassDefinition;
                 /** Class of the dropdown item when active */
                 itemActiveClass: ClassDefinition;
+                /** Class of the dropdown items when focused */
+                itemFocusedClass: ClassDefinition;
                 /** Class of the dropdown item when clickable */
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
@@ -618,6 +628,8 @@ See icon library documentation for custom classes. */
                 /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
 but will set body to position fixed, might break some layouts. */
                 scroll: "clip" | "keep";
+                /** Role attribute to be passed to the div wrapper for better accessibility */
+                role: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class for the root element when fullpage */
@@ -637,7 +649,7 @@ but will set body to position fixed, might break some layouts. */
             Partial<{
                 /** Role attribute to be passed to the list container for better accessibility.
 Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: "dialog" | "list" | "menu";
+                ariaRole: "menu" | "tree";
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon size */
@@ -646,25 +658,31 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                 rootClass: ClassDefinition;
                 /** Class of the menu list */
                 listClass: ClassDefinition;
-                /** Class of the menu list label */
-                listLabelClass: ClassDefinition;
+                /** Class of the menu label */
+                labelClass: ClassDefinition;
                 /** Transition name to apply on menu list */
                 animation: string;
                 /** Menu item tag name */
-                menuTag: DynamicComponent;
-                /** Role attribute to be passed to the list item for better accessibility. */
-                itemAriaRole: string;
+                itemTag: DynamicComponent;
                 /** Class of the root element of menu item */
                 itemClass: ClassDefinition;
+                /** Class of the menu item root when active */
+                itemActiveClass: ClassDefinition;
+                /** Class of the menu item root when focused */
+                itemFocusedClass: ClassDefinition;
+                /** Class of the menu item root when disabled */
+                itemDisabledClass: ClassDefinition;
                 /** Class of the menu item */
                 itemButtonClass: ClassDefinition;
-                /** Class of the active menu item */
+                /** Class of the menu item when active */
                 itemButtonActiveClass: ClassDefinition;
-                /** Class of the disabled menu item */
+                /** Class of the menu item when focused */
+                itemButtonFocusedClass: ClassDefinition;
+                /** Class of the menu item when disabled */
                 itemButtonDisabledClass: ClassDefinition;
                 /** Class of the menu item with icon */
                 itemButtonIconClass: ClassDefinition;
-                /** Class of the menu item when is a submenu */
+                /** Class of the menu item submenu */
                 itemSubmenuClass: ClassDefinition;
             }>;
         modal?: ComponentConfigBase &
@@ -1163,8 +1181,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 selectable: boolean;
                 /** Show header */
                 showHeader: boolean;
-                /** Filtering debounce time (in milliseconds) */
-                debounceSearch: number;
                 /** Position of the checkbox when checkable (if checkable) */
                 checkboxPosition: "left" | "right";
                 /** Color of the checkbox when checkable (if checkable) */
@@ -1211,6 +1227,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 filterIcon: string;
                 /** Placeholder of the column search input */
                 filterPlaceholder: string;
+                /** Filtering debounce time (in milliseconds) */
+                filterDebounce: number;
                 /** Label to be shown when the table is empty */
                 emptyLabel: string;
                 /** Icon to be shown when the table is empty */
@@ -1245,8 +1263,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 footerClass: ClassDefinition;
                 /** Class of the Table when it is empty */
                 emptyClass: ClassDefinition;
-                /** Class of the Table row detail */
-                detailedClass: ClassDefinition;
                 /** Class of the Table when is bordered */
                 borderedClass: ClassDefinition;
                 /** Class of the Table when rows are striped */
@@ -1263,6 +1279,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 trSelectedClass: ClassDefinition;
                 /** Class of the Table row when checkable and checked */
                 trCheckedClass: ClassDefinition;
+                /** Class of the detail Table row */
+                trDetailedClass: ClassDefinition;
+                /** Class of the Table row when table is empty */
+                trEmptyClass: ClassDefinition;
                 /** Class of the Table `th` element */
                 thClass: ClassDefinition;
                 /** Class of the Table `th` element when component is positioned */
@@ -1311,17 +1331,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tabs item tag name */
                 itemTag: DynamicComponent;
                 /** Class of the tab item */
-                navItemClass: ClassDefinition;
-                /** Class of the nav item when active */
-                navItemActiveClass: ClassDefinition;
-                /** Class of the nav item before the active one */
-                navItemPreviousClass: ClassDefinition;
-                /** Class of the nav item after the active one */
-                navItemNextClass: ClassDefinition;
-                /** Class of the tab item */
                 tabClass: ClassDefinition;
                 /** Class of the tab item when active */
                 tabActiveClass: ClassDefinition;
+                /** Class of the tab item before the active one */
+                tabPreviousClass: ClassDefinition;
+                /** Class of the tab item after the active one */
+                tabNextClass: ClassDefinition;
                 /** Class of the tab item when disabled */
                 tabDisabledClass: ClassDefinition;
                 /** Class of the tab item type */
@@ -1330,7 +1346,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tabIconClass: ClassDefinition;
                 /** Class of the tab item label */
                 tabLabelClass: ClassDefinition;
-                /** Class of the tab item */
+                /** Class of the tab item panel */
                 tabPanelClass: ClassDefinition;
                 /** Color of the control */
                 variant: string;
@@ -1340,30 +1356,32 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 vertical: boolean;
                 /** Tab type */
                 type: string;
+                /** Tablist tag name */
+                tag: DynamicComponent;
                 /** Tab will have an animation */
                 animated: boolean;
                 /** Transition animation name */
                 animation: [string, string] | [string, string, string, string];
                 /** Apply animation on the initial render */
                 animateInitially: boolean;
+                /** Accessibility aria-label to be passed to the tablist wrapper element */
+                ariaLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of Tabs component when when is vertical and its position changes */
+                /** Class of Tabs component position */
                 positionClass: ClassDefinition;
                 /** Class of Tabs component when expanded */
                 expandedClass: ClassDefinition;
                 /** Class of Tabs component when vertical */
                 verticalClass: ClassDefinition;
+                /** Size of the Tabs component */
+                sizeClass: ClassDefinition;
+                /** Type of the Tabs component */
+                typeClass: ClassDefinition;
                 /** Class of Tabs component when multiline */
                 multilineClass: ClassDefinition;
-                /** Class of the Tabs component nav tabs */
-                navClass: ClassDefinition;
-                /** Size of the navigation */
-                navSizeClass: ClassDefinition;
-                /** Class of the Tabs component nav position */
-                navPositionClass: ClassDefinition;
-                /** Type of the navigation */
-                navTypeClass: ClassDefinition;
+                /** Class of the tablist element */
+                tablistClass: ClassDefinition;
                 /** Class of the tab content */
                 contentClass: ClassDefinition;
                 /** Class of the tab content when transitioning */
@@ -1379,10 +1397,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 counter: boolean;
                 /** Keep open dropdown list after select */
                 keepOpen: boolean;
-                /** Array of keys
-(https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
-which will add a item when typing */
-                confirmKeys: string[];
                 /** Array of chars used to split when pasting a new string */
                 separators: string[];
                 /** Allows adding new items */
@@ -1444,18 +1458,18 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 parser: ((date: string) => Date) | undefined;
                 /** time creator function, default is `new Date()` */
                 creator: (() => Date);
-                /** Dropdown trapFocus */
-                trapFocus: boolean;
-                /** Enable dropdown mobile modal */
-                mobileModal: boolean;
-                /** Enable mobile native input if mobile agent */
-                mobileNative: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
                 icon: string;
                 /** Icon to be added on the right side */
                 iconRight: string;
+                /** Dropdown content is shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content is shown into a modal on desktop */
+                desktopModal: boolean;
+                /** Enable mobile native input if mobile agent */
+                mobileNative: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -1496,7 +1510,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tooltip trigger events */
                 triggers: ("click" | "contextmenu" | "focus" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
-                closeable: boolean | string[];
+                closeable: boolean | ("content" | "escape" | "outside")[];
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */

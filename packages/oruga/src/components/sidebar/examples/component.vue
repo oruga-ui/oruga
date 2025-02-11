@@ -6,7 +6,7 @@ const isSidebarActive = ref(false);
 </script>
 
 <template>
-    <section class="odocs-spaced">
+    <section>
         <o-button
             label="Open Sidebar"
             size="medium"

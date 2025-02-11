@@ -19,7 +19,7 @@ const inspectData = [
         description: "Class of the vertical slider size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -27,7 +27,7 @@ const inspectData = [
         class: "thumbRoundedClass",
         description: "Class when the slider is rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.rounded = true;
         },
     },
@@ -40,21 +40,21 @@ const inspectData = [
         class: "disabledClass",
         description: "Class when slider is disabled",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
     {
         class: "thumbWrapperClass",
         description: "Class of the thumb wrapper",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullScreen = true;
         },
     },
     {
         class: "thumbClass",
         description: "Class of the thumb",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullScreen = true;
         },
     },
@@ -63,7 +63,7 @@ const inspectData = [
         description: "Class of the slider variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "static";
             data.variant = "warning";
         },

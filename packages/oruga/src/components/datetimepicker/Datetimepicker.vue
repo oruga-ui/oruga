@@ -16,7 +16,7 @@ import type { TimepickerProps } from "../timepicker/props";
 import type { DatetimepickerProps } from "./props";
 
 /**
- * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+ * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile.
  * @displayName Datetimepicker
  * @style _datetimepicker.scss
  */
@@ -50,11 +50,11 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     parser: getDefault("datetimepicker.dateParser"),
     creator: getDefault("datetimepicker.datetimeCreator"),
     position: undefined,
-    mobileNative: () => getDefault("datetimepicker.mobileNative", true),
     iconPack: () => getDefault("datetimepicker.iconPack"),
     icon: () => getDefault("datetimepicker.icon"),
     iconRight: () => getDefault("datetimepicker.iconRight"),
     iconRightClickable: false,
+    mobileNative: () => getDefault("datetimepicker.mobileNative", true),
     teleport: () => getDefault("datetimepicker.teleport", false),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
@@ -397,7 +397,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                     :locale="locale" />
             </div>
 
-            <template v-if="$slots.footer !== undefined">
+            <template v-if="$slots.footer">
                 <!--
                     @slot Define an additional footer
                 -->

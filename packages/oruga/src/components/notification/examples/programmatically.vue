@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { h } from "vue";
 import { useOruga } from "@oruga-ui/oruga-next";
 import NotificationForm from "./_notification-form.vue";
 
@@ -36,7 +37,11 @@ function queueToast(): void {
 function danger(): void {
     oruga.notification.open({
         duration: 5000,
-        message: `Something's not good, also I'm on <b>bottom</b>`,
+        // here we use a render function to create an inline component (https://vuejs.org/guide/extras/render-function)
+        component: h("div", [
+            "Something's not good, also I'm on ",
+            h("b", "bottom"),
+        ]),
         position: "bottom-right",
         variant: "danger",
         closable: true,
@@ -68,8 +73,8 @@ async function component(): Promise<void> {
 </script>
 
 <template>
-    <section>
-        <div class="odocs-spaced">
+    <section class="odocs-spaced">
+        <p>
             <o-button
                 label="Launch notification (default)"
                 size="medium"
@@ -79,18 +84,18 @@ async function component(): Promise<void> {
                 variant="success"
                 size="medium"
                 @click="success" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-button label="Launch toast" size="medium" @click="toast" />
             <o-button
                 label="Launch toast (queued)"
                 variant="success"
                 size="medium"
                 @click="queueToast" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-button
                 label="Launch notification (custom)"
                 variant="danger"
@@ -101,7 +106,7 @@ async function component(): Promise<void> {
                 variant="warning"
                 size="medium"
                 @click="component" />
-        </div>
+        </p>
     </section>
 </template>
 

@@ -27,7 +27,7 @@ import type { StepItem, StepItemComponent, StepsComponent } from "./types";
 import type { StepsProps } from "./props";
 
 /**
- * Responsive horizontal process steps
+ * Responsive horizontal process steps.
  * @displayName Steps
  * @requires ./StepItem.vue
  * @style _steps.scss
@@ -98,7 +98,6 @@ const provideData = computed<StepsComponent>(() => ({
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
-    destroyOnHide: props.destroyOnHide,
     variant: props.variant,
 }));
 

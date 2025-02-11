@@ -11,7 +11,7 @@ import type { PaginationProps } from "./props";
 import type { DynamicComponent } from "@/types";
 
 /**
- * A responsive and flexible pagination
+ * A responsive and flexible pagination.
  * @displayName Pagination
  * @style _pagination.scss
  */

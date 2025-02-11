@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-> A simple loading overlay
+The **Loading** component allows you to display a loading state for use on a global state or a specific element.
 
 </div>
 
@@ -26,7 +26,7 @@
 
 ## Loading component
 
-> A simple loading overlay
+> A simple loading overlay.
 
 ```html
 <o-loading></o-loading>
@@ -45,7 +45,8 @@
 | iconSpin   | Enable spin effect on icon                                                                                                                                                          | boolean          | -                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconSpin: true<br>}</code>     |
 | label      | Notification label, unnecessary when default slot is used.                                                                                                                          | string           | -                          |                                                                                                                                                      |
 | override   | Override existing theme classes completely                                                                                                                                          | boolean          | -                          |                                                                                                                                                      |
-| scroll     | Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,<br/>but will set body to position fixed, might break some layouts. | "clip" \| "keep" | `keep`, `clip`             | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;scroll: "keep"<br>}</code>       |
+| role       | Role attribute to be passed to the div wrapper for better accessibility                                                                                                             | string           | -                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;role: "dialog"<br>}</code>     |
+| scroll     | Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,<br/>but will set body to position fixed, might break some layouts. | "clip" \| "keep" | `keep`, `clip`             | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;scroll: "keep"<br>}</code>     |
 
 ### Events
 

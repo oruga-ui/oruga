@@ -6,7 +6,9 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> A slider to select a value or range from a given range
+The **Slider** input component let user select a value or range from a given range with a graphic slider.
+The component implements the W3C ARIA APG [Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/).
+Use it with the Field component to access all the functionalities.
 
 </div>
 
@@ -30,7 +32,7 @@ sidebarDepth: 2
 
 ## Slider component
 
-> A slider to select a value or range from a given range
+> A slider to select a value or range from a given range.
 
 ```html
 <o-slider></o-slider>
@@ -90,11 +92,11 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description                                | Type    | Values | Default                                                |
-| --------- | ------------------------------------------ | ------- | ------ | ------------------------------------------------------ |
-| label     | Tick label                                 | string  | -      |                                                        |
-| override  | Override existing theme classes completely | boolean | -      |                                                        |
-| value     | Value of single tick                       | number  | -      | <code style='white-space: nowrap; padding: 0;'></code> |
+| Prop name | Description                                | Type             | Values | Default                                                |
+| --------- | ------------------------------------------ | ---------------- | ------ | ------------------------------------------------------ |
+| label     | Tick label                                 | number \| string | -      |                                                        |
+| override  | Override existing theme classes completely | boolean          | -      |                                                        |
+| value     | Value of single tick                       | number           | -      | <code style='white-space: nowrap; padding: 0;'></code> |
 
 ### Slots
 

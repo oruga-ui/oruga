@@ -1,16 +1,18 @@
 <template>
     <section class="odocs-spaced">
-        <o-button label="Button" />
+        <p>
+            <o-button label="Button" />
 
-        <o-button
-            tag="a"
-            href="https://oruga-ui.com"
-            target="_blank"
-            label="Anchor" />
+            <o-button
+                tag="a"
+                href="https://oruga-ui.com"
+                target="_blank"
+                label="Anchor" />
 
-        <o-button tag="input" native-type="submit" value="Submit input" />
+            <o-button tag="input" type="submit" value="Submit input" />
 
-        <!-- Need vue-router -->
-        <o-button tag="router-link" to="/home" label="Docs" />
+            <!-- Need vue-router -->
+            <o-button tag="router-link" to="/home" label="Docs" />
+        </p>
     </section>
 </template>

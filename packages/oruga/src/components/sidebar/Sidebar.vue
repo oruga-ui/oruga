@@ -22,7 +22,7 @@ import {
 import type { SidebarProps } from "./props";
 
 /**
- * A sidebar to use as left/right overlay or static
+ * A sidebar to use as overlay.
  * @displayName Sidebar
  * @style _sidebar.scss
  */

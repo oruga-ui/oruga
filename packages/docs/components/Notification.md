@@ -6,7 +6,8 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> Bold notification blocks to alert your users of something
+The **Notification** component is a lightweight and easily customizable alert message.
+It is designed to mimic the push notifications that have been popularized by mobile and desktop operating systems.
 
 </div>
 
@@ -30,7 +31,7 @@ sidebarDepth: 2
 
 ## Notification component
 
-> Bold notification blocks to alert your users of something
+> Bold notification blocks to alert your users of something.
 
 ```html
 <o-notification></o-notification>
@@ -49,7 +50,7 @@ sidebarDepth: 2
 | icon           | Icon name to use                                                              | string                                                                            | -                                                                               |                                                                                                                                                                 |
 | iconPack       | Icon pack to use                                                              | string                                                                            | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
 | iconSize       | Icon size                                                                     | string                                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconSize: "large"<br>}</code>        |
-| message        | Message text (can contain HTML), unnecessary when default slot is used        | string \| string[]                                                                | -                                                                               |                                                                                                                                                                 |
+| message        | Message text, unnecessary when default slot is used                           | string                                                                            | -                                                                               |                                                                                                                                                                 |
 | override       | Override existing theme classes completely                                    | boolean                                                                           | -                                                                               |                                                                                                                                                                 |
 | position       | Which position the notification will appear when programmatically             | "bottom-left" \| "bottom-right" \| "bottom" \| "top-left" \| "top-right" \| "top" | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left`         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>          |
 | type           | Type (color) of the notification                                              | string                                                                            | `info`, `success`, `warning`, `danger`                                          |                                                                                                                                                                 |
@@ -75,7 +76,7 @@ sidebarDepth: 2
 
 ## NotificationNotice component
 
-> Notification Notice is an extension of the Notification component and is used for the programmatic usage
+> Notification Notice is an extension of the Notification component and is used for the programmatic usage.
 
 ```html
 <o-notification-notice></o-notification-notice>

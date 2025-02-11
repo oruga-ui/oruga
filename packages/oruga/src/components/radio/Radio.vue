@@ -9,7 +9,7 @@ import { injectField } from "../field/fieldInjection";
 import type { RadioProps } from "./props";
 
 /**
- * Select an option from a set
+ * Select an option from a set of options.
  * @displayName Radio
  * @style _radio.scss
  */
@@ -78,7 +78,7 @@ const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId =
-    !!parentField.value || !!props.label || !!useSlots().label
+    !!parentField.value || !!props.label || !!useSlots().default
         ? parentField.value?.labelId || useId()
         : undefined;
 

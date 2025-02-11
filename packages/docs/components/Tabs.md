@@ -6,7 +6,10 @@ sidebarDepth: 2
 
 <div class="vp-doc">
 
-> Responsive horizontal navigation tabs, switch between contents with ease
+The **Tabs** component is a responsive horizontal navigation bar that allows the user to easily switch between content.
+*Tab panels*are a set of individual content sections, where only one content panel can be displayed at a time.
+Each tab panel has an associated tab element that, when activated, displays the panel. The list of tab elements is arranged along one edge of the currently displayed panel, the top edge.
+The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
 
 </div>
 
@@ -30,7 +33,7 @@ sidebarDepth: 2
 
 ## Tabs component
 
-> Responsive horizontal navigation tabs, switch between contents with ease
+> Responsive horizontal navigation tabs, switch between contents with ease.
 
 ```html
 <o-tabs></o-tabs>
@@ -38,23 +41,24 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name        | Description                                                     | Type                                                 | Values                                                                          | Default                                                                                                                                                                                            |
-| ---------------- | --------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| activateOnFocus  | Set the tab active on navigation focus                          | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
-| animateInitially | Apply animation on the initial render                           | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animateInitially: false<br>}</code>                                             |
-| animated         | Tab will have an animation                                      | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code>                                                      |
-| animation        | Transition animation name                                       | [string, string, string, string] \| [string, string] | `[next`, `prev]`, `[right`, `left`, `down`, `up]`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animation: [ "slide-next", "slide-prev", "slide-down", "slide-up",]<br>}</code> |
-| destroyOnHide    | Destroy tabItem on hide                                         | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
-| expanded         | Tabs will be expanded (full-width)                              | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
-| v-model          | The selected item value, use v-model to make it two-way binding | string\|number\|object                               | -                                                                               |                                                                                                                                                                                                    |
-| multiline        | Show tab items multiline when there is no space                 | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
-| options          | Tabs options, unnecessary when default slot is used             | OptionsProp&lt;unknown&gt;                           | -                                                                               |                                                                                                                                                                                                    |
-| override         | Override existing theme classes completely                      | boolean                                              | -                                                                               |                                                                                                                                                                                                    |
-| position         | Position of the tabs                                            | "centered" \| "left" \| "right"                      | `left`, `centered`, `right`                                                     |                                                                                                                                                                                                    |
-| size             | Tab size                                                        | string                                               | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;size: undefined<br>}</code>                                                     |
-| type             | Tab type                                                        | string                                               | `default`, `boxed`, `toggle`, `pills`                                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;type: "default"<br>}</code>                                                     |
-| variant          | Color of the control                                            | string                                               | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>                                                  |
-| vertical         | Show tab in vertical layout                                     | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;vertical: false<br>}</code>                                                     |
+| Prop name        | Description                                                          | Type                                                 | Values                                                                          | Default                                                                                                                                                                                            |
+| ---------------- | -------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| activateOnFocus  | Set the tab active on navigation focus                               | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
+| animateInitially | Apply animation on the initial render                                | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animateInitially: false<br>}</code>                                             |
+| animated         | Tab will have an animation                                           | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code>                                                      |
+| animation        | Transition animation name                                            | [string, string, string, string] \| [string, string] | `[next`, `prev]`, `[right`, `left`, `down`, `up]`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animation: [ "slide-next", "slide-prev", "slide-down", "slide-up",]<br>}</code> |
+| ariaLabel        | Accessibility aria-label to be passed to the tablist wrapper element | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaLabel: undefined<br>}</code>                                                |
+| expanded         | Tabs will be expanded (full-width)                                   | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
+| v-model          | The selected item value, use v-model to make it two-way binding      | string\|number\|object                               | -                                                                               |                                                                                                                                                                                                    |
+| multiline        | Show tab items multiline when there is no space                      | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                        |
+| options          | Tabs options, unnecessary when default slot is used                  | OptionsProp&lt;unknown&gt;                           | -                                                                               |                                                                                                                                                                                                    |
+| override         | Override existing theme classes completely                           | boolean                                              | -                                                                               |                                                                                                                                                                                                    |
+| position         | Position of the tabs                                                 | "centered" \| "left" \| "right"                      | `left`, `centered`, `right`                                                     |                                                                                                                                                                                                    |
+| size             | Tab size                                                             | string                                               | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;size: undefined<br>}</code>                                                     |
+| tag              | Tablist tag name                                                     | DynamicComponent                                     | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;tag: "div"<br>}</code>                                                          |
+| type             | Tab type                                                             | string                                               | `default`, `boxed`, `toggle`, `pills`                                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;type: "default"<br>}</code>                                                     |
+| variant          | Color of the control                                                 | string                                               | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>                                                  |
+| vertical         | Show tab in vertical layout                                          | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;vertical: false<br>}</code>                                                     |
 
 ### Events
 
@@ -67,8 +71,8 @@ sidebarDepth: 2
 
 | Name    | Description                 | Bindings |
 | ------- | --------------------------- | -------- |
-| start   | Additional slot before tabs |          |
-| end     | Additional slot after tabs  |          |
+| before  | Additional slot before tabs |          |
+| after   | Additional slot after tabs  |          |
 | default | Place tab items here        |          |
 
 </div>
@@ -76,6 +80,8 @@ sidebarDepth: 2
 <div class="vp-doc">
 
 ## TabItem component
+
+> An tab item used by the tabs component.
 
 ```html
 <o-tab-item></o-tab-item>
@@ -107,10 +113,10 @@ sidebarDepth: 2
 
 ### Slots
 
-| Name    | Description           | Bindings                                |
-| ------- | --------------------- | --------------------------------------- |
-| default | Tab item content      | **active** `boolean` - if item is shown |
-| header  | Override header label | **active** `boolean` - if item is shown |
+| Name    | Description                | Bindings                                |
+| ------- | -------------------------- | --------------------------------------- |
+| default | Override tab panel content | **active** `boolean` - if item is shown |
+| header  | Override tab header label  | **active** `boolean` - if item is shown |
 
 </div>
 

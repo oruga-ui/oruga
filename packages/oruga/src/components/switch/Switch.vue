@@ -9,7 +9,7 @@ import { injectField } from "../field/fieldInjection";
 import type { SwitchProps } from "./props";
 
 /**
- * Switch between two opposing states
+ * Switch between two opposing states.
  * @displayName Switch
  * @style _switch.scss
  */
@@ -83,7 +83,7 @@ const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId =
-    !!parentField.value || !!props.label || !!useSlots().label
+    !!parentField.value || !!props.label || !!useSlots().default
         ? parentField.value?.labelId || useId()
         : undefined;
 

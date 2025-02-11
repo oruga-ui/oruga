@@ -2,7 +2,7 @@ import { createVNode } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import useSidebarProgrammatic from "../useSidebarProgrammatic";
+import SidebarProgrammatic from "../useSidebarProgrammatic";
 
 describe("useSidebarProgrammatic tests", () => {
     beforeEach(() => {
@@ -23,7 +23,7 @@ describe("useSidebarProgrammatic tests", () => {
         });
 
         // open element
-        const { close, promise } = useSidebarProgrammatic.open({ component });
+        const { close, promise } = SidebarProgrammatic.open({ component });
 
         // check promise get called
         const handler = vi.fn();
@@ -58,7 +58,7 @@ describe("useSidebarProgrammatic tests", () => {
         });
 
         // open element
-        const { close } = useSidebarProgrammatic.open(
+        const { close } = SidebarProgrammatic.open(
             { component },
             "#my-cool-container",
         );
@@ -91,7 +91,7 @@ describe("useSidebarProgrammatic tests", () => {
         });
 
         // open element
-        useSidebarProgrammatic.open({
+        SidebarProgrammatic.open({
             component,
             props: { "data-oruga": "programmatic" },
         });
@@ -121,7 +121,7 @@ describe("useSidebarProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        useSidebarProgrammatic.open({ component, onClose });
+        SidebarProgrammatic.open({ component, onClose });
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>("button");
