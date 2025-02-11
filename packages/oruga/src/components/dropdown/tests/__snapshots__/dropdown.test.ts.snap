@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Dropdown tests > render correctly with items 1`] = `
+exports[`ODropdown tests > render correctly with items 1`] = `
 "<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
   <div class="o-drop__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false" aria-controls="v-0">
     <!--
@@ -41,7 +41,7 @@ exports[`Dropdown tests > render correctly with items 1`] = `
 </div>"
 `;
 
-exports[`Dropdown tests > render correctly with options 1`] = `
+exports[`ODropdown tests > render correctly with options 1`] = `
 "<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
   <div class="o-drop__trigger" aria-haspopup="listbox" aria-disabled="false" aria-controls="v-0">
     <!--

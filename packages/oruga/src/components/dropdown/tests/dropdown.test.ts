@@ -8,7 +8,7 @@ import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
 import ODropdown from "@/components/dropdown/Dropdown.vue";
 import ODropdownItem from "@/components/dropdown/DropdownItem.vue";
 
-describe("Dropdown tests", () => {
+describe("ODropdown tests", () => {
     const options: OptionsProp = [
         { label: "Item 1", value: 1 },
         { label: "Item 2", value: 2 },
@@ -220,7 +220,7 @@ describe("Dropdown tests", () => {
             expect(menu.isVisible()).toBeTruthy();
         });
 
-        test("react accordingly when clicking outside with closable", async () => {
+        test("react accordingly when clicking outside with closable false", async () => {
             const wrapper = mount(ODropdown, {
                 props: { active: true, closeOnOutside: false },
                 attachTo: document.body,
@@ -591,6 +591,42 @@ describe("Dropdown tests", () => {
             expect(dropdown.emitted("update:modelValue")).toBeUndefined();
             expect(dropdown.emitted("select")).toBeUndefined();
             expect(dropdown.emitted("close")).toBeUndefined();
+        });
+
+        test("react accordingly when selected with keydown", async () => {
+            const wrapper = mount(ODropdown, {
+                props: {
+                    options,
+                    selectable: true,
+                },
+                attachTo: document.body,
+            });
+
+            const trigger = wrapper.find(".o-drop__trigger");
+            expect(trigger.exists()).toBeTruthy();
+
+            // open menu with trigger click
+            await trigger.trigger("click");
+
+            let dropdown = wrapper.find(".o-drop__menu");
+
+            expect(dropdown.exists()).toBeTruthy();
+            expect(dropdown.isVisible()).toBeTruthy();
+
+            await trigger.trigger("keydown", { key: "Down" });
+            await trigger.trigger("keydown", { key: "Enter" });
+
+            expect(wrapper.emitted("select")).toStrictEqual([
+                [options[0].value],
+            ]);
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [options[0].value],
+            ]);
+
+            dropdown = wrapper.find(".o-drop__menu");
+
+            expect(dropdown.exists()).toBeTruthy();
+            expect(dropdown.isVisible()).toBeFalsy();
         });
     });
 

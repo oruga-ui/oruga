@@ -7,7 +7,7 @@ import { nextTick } from "vue";
 import type { TableColumn } from "../types";
 import type { TableProps } from "../props";
 
-describe("Table axe tests", () => {
+describe("OTable axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const data = [
