@@ -4,7 +4,7 @@ import { axe } from "jest-axe";
 
 import OSwitch from "../Switch.vue";
 
-describe("Switch axe tests", () => {
+describe("OSwitch axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases = [

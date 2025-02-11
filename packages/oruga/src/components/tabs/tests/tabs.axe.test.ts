@@ -5,7 +5,7 @@ import { axe } from "jest-axe";
 
 import TabsExample from "./TabsAxeExample.vue";
 
-describe("Tabs axe tests", () => {
+describe("OTabs axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases = [

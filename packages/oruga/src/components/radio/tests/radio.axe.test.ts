@@ -4,7 +4,7 @@ import { axe } from "jest-axe";
 
 import ORadio from "../Radio.vue";
 
-describe("Checkbox axe tests", () => {
+describe("OCheckbox axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const a11yCases = [
