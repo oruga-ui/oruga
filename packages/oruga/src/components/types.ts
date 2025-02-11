@@ -131,10 +131,22 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPack: string;
                 /** Icon size */
                 iconSize: string;
-                /** Icon name for previous icon */
+                /** Icon name for previous button */
                 iconPrev: string;
-                /** Icon name for next icon */
+                /** Icon name for next button */
                 iconNext: string;
+                /** Icon name for autoplay pause button */
+                iconAutoplayPause: string;
+                /** Icon name for autoplay resume button */
+                iconAutoplayResume: string;
+                /** Accessibility autoplay pause button aria label */
+                ariaAutoplayPauseLabel: string;
+                /** Accessibility autoplay resume button aria label */
+                ariaAutoplayResumeLabel: string;
+                /** Accessibility next button aria label */
+                ariaNextLabel: string;
+                /** Accessibility previous button aria label */
+                ariaPreviousLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element in overlay */
@@ -151,22 +163,20 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 arrowIconPrevClass: ClassDefinition;
                 /** Class of next arrow element */
                 arrowIconNextClass: ClassDefinition;
-                /** Class of indicator link element */
-                indicatorClass: ClassDefinition;
                 /** Class of indicators wrapper element */
                 indicatorsClass: ClassDefinition;
                 /** Class of indicators wrapper element when inside */
                 indicatorsInsideClass: ClassDefinition;
                 /** Class of indicators wrapper element when inside and position */
                 indicatorsInsidePositionClass: ClassDefinition;
+                /** Class of indicator link element */
+                indicatorClass: ClassDefinition;
                 /** Class of indicator item element */
                 indicatorItemClass: ClassDefinition;
                 /** Class of indicator element when is active */
                 indicatorItemActiveClass: ClassDefinition;
                 /** Class of indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
-                /** Role attribute to be passed to the div wrapper for better accessibility */
-                ariaRole: string;
                 /** Class of carousel item */
                 itemClass: ClassDefinition;
                 /** Class of carousel item when is active */

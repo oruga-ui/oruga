@@ -1,28 +1,136 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OCarousel tests > render correctly 1`] = `
-"<div class="o-car" data-oruga="carousel" role="region">
+"<div class="o-car" data-oruga="carousel" role="region" aria-roledescription="carousel">
   <div class="o-car__wrapper">
-    <div class="o-car__items" style="transform: translateX(0px);" tabindex="0" role="group" draggable="true" aria-roledescription="carousel">
-      <!--
-                    @slot Display carousel item
-                -->
-    </div>
+    <!--
+                @slot Override the pause/resume button
+                @binding {boolean} autoplay if autoplay is active
+                @binding {(): void} toggle toggle autoplay
+            -->
+    <!--v-if-->
     <!--
                 @slot Override the arrows
                 @binding {boolean} has-prev has prev arrow button 
                 @binding {boolean} has-next has next arrow button 
                 @binding {(): void} prev switch to prev item function
                 @binding {(): void} next switch to next item function
-            --><span class="o-icon o-car__arrow__icon o-car__arrow__icon-prev" data-oruga="icon" role="button" tabindex="0" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span class="o-icon o-car__arrow__icon o-car__arrow__icon-next" data-oruga="icon" role="button" tabindex="0" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            --><span class="o-icon o-car__arrow__icon o-car__arrow__icon-prev" data-oruga="icon" role="button" tabindex="0" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span class="o-icon o-car__arrow__icon o-car__arrow__icon-next" data-oruga="icon" role="button" tabindex="0" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+    <div class="o-car__items" style="transform: translateX(0px);" aria-roledescription="carousel-slide" aria-atomic="false" aria-live="polite">
+      <!--
+                    @slot Display carousel item
+                -->
+    </div>
   </div>
   <!--
             @slot Override the indicators
             @binding {number} active active index 
             @binding {(idx: number): void} switch-to switch to item function
-            @binding {number} indicator-index current indicator index
         -->
+  <div class="o-car__indicators" role="tablist" aria-label="Slides"></div>
   <!--v-if-->
+</div>"
+`;
+
+exports[`OCarousel tests > render integration correctly 1`] = `
+"<div class="o-car" data-oruga="carousel" role="region" aria-roledescription="carousel">
+  <div class="o-car__wrapper">
+    <!--
+                @slot Override the pause/resume button
+                @binding {boolean} autoplay if autoplay is active
+                @binding {(): void} toggle toggle autoplay
+            -->
+    <!--v-if-->
+    <!--
+                @slot Override the arrows
+                @binding {boolean} has-prev has prev arrow button 
+                @binding {boolean} has-next has next arrow button 
+                @binding {(): void} prev switch to prev item function
+                @binding {(): void} next switch to next item function
+            --><span class="o-icon o-car__arrow__icon o-car__arrow__icon-prev" data-oruga="icon" role="button" tabindex="0" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span class="o-icon o-car__arrow__icon o-car__arrow__icon-next" data-oruga="icon" role="button" tabindex="0" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+    <div class="o-car__items" style="transform: translateX(0px);" aria-roledescription="carousel-slide" aria-atomic="false" aria-live="polite">
+      <!--
+                    @slot Display carousel item
+                -->
+      <div id="carouselpanel-1" data-oruga="carousel-item" data-id="carousel-1" class="o-car__item o-car__item--active" style="width: 0px;" role="tabpanel" aria-labelledby="carousel-1" aria-roledescription="slide" aria-label="1 of 5" draggable="true">
+        <!--
+            @slot Default content
+        -->
+        <article class="ex-slide" style="background-color: rgb(68, 94, 0);">
+          <h1>Slide 1</h1>
+        </article>
+      </div>
+      <div id="carouselpanel-2" data-oruga="carousel-item" data-id="carousel-2" class="o-car__item" style="width: 0px;" role="tabpanel" aria-labelledby="carousel-2" aria-roledescription="slide" aria-label="2 of 5" draggable="true">
+        <!--
+            @slot Default content
+        -->
+        <article class="ex-slide" style="background-color: rgb(0, 103, 36);">
+          <h1>Slide 2</h1>
+        </article>
+      </div>
+      <div id="carouselpanel-3" data-oruga="carousel-item" data-id="carousel-3" class="o-car__item" style="width: 0px;" role="tabpanel" aria-labelledby="carousel-3" aria-roledescription="slide" aria-label="3 of 5" draggable="true">
+        <!--
+            @slot Default content
+        -->
+        <article class="ex-slide" style="background-color: rgb(182, 0, 0);">
+          <h1>Slide 3</h1>
+        </article>
+      </div>
+      <div id="carouselpanel-4" data-oruga="carousel-item" data-id="carousel-4" class="o-car__item" style="width: 0px;" role="tabpanel" aria-labelledby="carousel-4" aria-roledescription="slide" aria-label="4 of 5" draggable="true">
+        <!--
+            @slot Default content
+        -->
+        <article class="ex-slide" style="background-color: rgb(244, 195, 0);">
+          <h1>Slide 4</h1>
+        </article>
+      </div>
+      <div id="carouselpanel-5" data-oruga="carousel-item" data-id="carousel-5" class="o-car__item" style="width: 0px;" role="tabpanel" aria-labelledby="carousel-5" aria-roledescription="slide" aria-label="5 of 5" draggable="true">
+        <!--
+            @slot Default content
+        -->
+        <article class="ex-slide" style="background-color: rgb(0, 92, 152);">
+          <h1>Slide 5</h1>
+        </article>
+      </div>
+    </div>
+  </div>
+  <!--
+            @slot Override the indicators
+            @binding {number} active active index 
+            @binding {(idx: number): void} switch-to switch to item function
+        -->
+  <div class="o-car__indicators o-car__indicators--inside o-car__indicators--inside--bottom" role="tablist" aria-label="Slides">
+    <div id="carousel-1" class="o-car__indicator" role="tab" tabindex="0" aria-label="Slide 1" aria-controls="carouselpanel-1" aria-selected="true">
+      <!--
+                            @slot Override the indicator elements
+                            @binding {index} index indicator index 
+                        --><span class="o-car__indicator__item o-car__indicator__item--dots o-car__indicator__item--active"></span>
+    </div>
+    <div id="carousel-2" class="o-car__indicator" role="tab" tabindex="-1" aria-label="Slide 2" aria-controls="carouselpanel-2" aria-selected="false">
+      <!--
+                            @slot Override the indicator elements
+                            @binding {index} index indicator index 
+                        --><span class="o-car__indicator__item o-car__indicator__item--dots"></span>
+    </div>
+    <div id="carousel-3" class="o-car__indicator" role="tab" tabindex="-1" aria-label="Slide 3" aria-controls="carouselpanel-3" aria-selected="false">
+      <!--
+                            @slot Override the indicator elements
+                            @binding {index} index indicator index 
+                        --><span class="o-car__indicator__item o-car__indicator__item--dots"></span>
+    </div>
+    <div id="carousel-4" class="o-car__indicator" role="tab" tabindex="-1" aria-label="Slide 4" aria-controls="carouselpanel-4" aria-selected="false">
+      <!--
+                            @slot Override the indicator elements
+                            @binding {index} index indicator index 
+                        --><span class="o-car__indicator__item o-car__indicator__item--dots"></span>
+    </div>
+    <div id="carousel-5" class="o-car__indicator" role="tab" tabindex="-1" aria-label="Slide 5" aria-controls="carouselpanel-5" aria-selected="false">
+      <!--
+                            @slot Override the indicator elements
+                            @binding {index} index indicator index 
+                        --><span class="o-car__indicator__item o-car__indicator__item--dots"></span>
+    </div>
+  </div>
   <!--v-if-->
 </div>"
 `;

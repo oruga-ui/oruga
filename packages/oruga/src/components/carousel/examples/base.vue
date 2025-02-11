@@ -10,7 +10,7 @@ const carousels = [
 
 <template>
     <section>
-        <o-carousel>
+        <o-carousel indicator-inside>
             <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
                 <article
                     class="ex-slide"
