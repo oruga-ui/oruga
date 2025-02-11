@@ -1,5 +1,6 @@
 <template>
     <section>
+        <!-- has-slash-separator -->
         <o-breadcrumb
             tag="div"
             separator="has-slash-separator"
@@ -9,9 +10,7 @@
             <o-breadcrumb-item tag="a" disabled="true">Docs </o-breadcrumb-item>
             <o-breadcrumb-item tag="a">Breadcrumb </o-breadcrumb-item>
         </o-breadcrumb>
-        <!-- <o-breadcrumb>
-            <h1>Hello World</h1>
-        </o-breadcrumb> -->
+        <!-- has-chevron-separator -->
         <o-breadcrumb
             tag="div"
             separator="has-chevron-separator"
@@ -21,9 +20,7 @@
             <o-breadcrumb-item tag="a" disabled="true">Docs </o-breadcrumb-item>
             <o-breadcrumb-item tag="a">Breadcrumb</o-breadcrumb-item>
         </o-breadcrumb>
-        <!-- <o-breadcrumb>
-            <h1>Hello World</h1>
-        </o-breadcrumb> -->
+        <!-- has-arrow-separator -->
         <o-breadcrumb
             tag="div"
             separator="has-arrow-separator"
@@ -33,9 +30,7 @@
             <o-breadcrumb-item tag="a" icon-left="plus" disabled="true">Docs</o-breadcrumb-item>
             <o-breadcrumb-item tag="a" icon-left="location">Breadcrumb</o-breadcrumb-item>
         </o-breadcrumb>
-        <!-- <o-breadcrumb>
-            <h1>Hello World</h1>
-        </o-breadcrumb> -->
+        <!-- has-dot-separator -->
         <o-breadcrumb
             tag="div"
             separator="has-dot-separator"

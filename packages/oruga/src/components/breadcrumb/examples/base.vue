@@ -1,6 +1,5 @@
 <template>
     <section>
-        <!--  align="center" -->
         <o-breadcrumb
             separator="has-arrow-separator"
             size="medium"
@@ -41,8 +40,5 @@
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>
-        <!-- <o-breadcrumb>
-            <h1>Hello World</h1>
-        </o-breadcrumb> -->
     </section>
 </template>
