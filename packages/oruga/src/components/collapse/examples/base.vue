@@ -4,6 +4,7 @@
             <template #trigger="{ open }">
                 <b>{{ open ? "Close" : "Open" }} Collapse!</b>
             </template>
+
             <div class="notification">
                 <h3>Subtitle</h3>
                 <p>
