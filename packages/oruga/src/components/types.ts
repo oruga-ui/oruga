@@ -442,6 +442,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 keepFirst: boolean;
                 /** Close Dropdown when clicked outside */
                 closeOnOutside: boolean;
+                /** Close Dropdown when page get scrolled */
+                closeOnScroll: boolean;
                 /** Select current focused item when focused */
                 selectOnFocus: boolean;
                 /** Select current focused item when closed */

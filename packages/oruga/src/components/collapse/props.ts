@@ -7,13 +7,15 @@ export type CollapseProps = {
     open?: boolean;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Id property of the content container - default is an uuid */
-    contentId?: string;
     /**
      * Trigger position
      * @values top, bottom
      */
     position?: "top" | "bottom";
+    /** Id property of the content container - default is an uuid */
+    contentId?: string;
+    /** Id property of the trigger container - default is an uuid */
+    triggerId?: string;
 } & CollapseClasses;
 
 // class props (will not be displayed in the docs)

@@ -2,7 +2,8 @@
 
 <div class="vp-doc">
 
-The **Collapse** component is an easy way to toggle the visibility of content.
+The **Collapse** component is an easy way to toggle the visibility of content with show/hide functionality.
+The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
 
 </div>
 
@@ -41,6 +42,7 @@ The **Collapse** component is an easy way to toggle the visibility of content.
 | open      | Whether collapse is open or not, use v-model:open to make it two-way binding | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                           |
 | override  | Override existing theme classes completely                                   | boolean           | -               |                                                                                                                                                      |
 | position  | Trigger position                                                             | "bottom" \| "top" | `top`, `bottom` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |
+| triggerId | Id property of the trigger container - default is an uuid                    | string            | -               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                        |
 
 ### Events
 
