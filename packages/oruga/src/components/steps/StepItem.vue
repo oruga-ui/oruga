@@ -29,8 +29,6 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
     visible: true,
     icon: () => getDefault("steps.icon"),
     iconPack: () => getDefault("steps.iconPack"),
-    tag: () => getDefault("steps.itemTag", "button"),
-    ariaRole: () => getDefault("steps.ariaRole", "tab"),
     content: undefined,
     component: undefined,
     props: undefined,
@@ -53,10 +51,9 @@ const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
     $slots: slots,
-    navClasses: navItemClasses.value,
     stepClasses: stepClasses.value,
-    labelClasses: stepLabelClasses.value,
     iconClasses: stepIconClasses.value,
+    labelClasses: stepLabelClasses.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,
@@ -118,34 +115,29 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const navItemClasses = defineClasses(
-    ["navItemClass", "o-steps__nav-item"],
+const stepClasses = defineClasses(
+    ["stepClass", "o-steps__step"],
     [
-        "navItemVariantClass",
-        "o-steps__nav-item--",
+        "stepVariantClass",
+        "o-steps__step--",
         computed(() => parent.value?.variant || props.variant),
         computed(() => !!parent.value?.variant || !!props.variant),
     ],
-    ["navItemActiveClass", "o-steps__nav-item--active", null, isActive],
     [
         "navItemPreviousClass",
-        "o-steps__nav-item--previous",
+        "o-steps__step--previous",
         null,
         computed(() => item.value.index < parent.value?.activeIndex),
     ],
     [
         "navItemNextClass",
-        "o-steps__nav-item--next",
+        "o-steps__step--next",
         null,
         computed(() => item.value.index > parent.value?.activeIndex),
     ],
-);
-
-const stepClasses = defineClasses(
-    ["stepClass", "o-steps__step"],
     [
         "stepLabelPositionClass",
-        "o-steps__step-label-",
+        "o-steps__step--label-",
         computed(() => parent.value?.labelPosition),
         computed(() => !!parent.value?.labelPosition),
     ],
@@ -184,6 +176,8 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             data-oruga="steps-item"
             :data-id="`steps-${item.identifier}`"
             :class="panelClasses"
+            role="tabpanel"
+            :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
             <!-- 

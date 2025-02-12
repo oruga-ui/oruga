@@ -316,11 +316,11 @@ const contentClasses = defineClasses(
                 name="header"
                 :class="childItem.tabClasses"
                 role="tab"
-                :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="childItem.value === activeItem?.value"
                 :tabindex="
                     childItem.value === activeItem?.value ? undefined : '-1'
                 "
+                :aria-controls="`tabpanel-${childItem.identifier}`"
+                :aria-selected="childItem.value === activeItem?.value"
                 @click="tabClick(childItem)"
                 @keydown.enter="tabClick(childItem)"
                 @keydown.left.prevent="prev"

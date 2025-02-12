@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
+import { nextTick } from "vue";
 
 import StepsExample from "./StepsExample.vue";
 
@@ -55,6 +56,8 @@ describe("OSteps axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
+        await nextTick();
+
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });
 });

@@ -65,6 +65,7 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
     labelPosition: () => getDefault("steps.labelPosition", "bottom"),
     rounded: true,
     mobileBreakpoint: () => getDefault("steps.mobileBreakpoint"),
+    ariaLabel: () => getDefault("steps.ariaLabel"),
     ariaNextLabel: () => getDefault("steps.ariaNextLabel", "Next"),
     ariaPreviousLabel: () => getDefault("steps.ariaPreviousLabel", "Previous"),
 });
@@ -259,11 +260,11 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-steps--mobile", null, isMobile],
 );
 
-const navClasses = defineClasses(
-    ["navClass", "o-steps__nav"],
+const tablistClasses = defineClasses(
+    ["listClass", "o-steps__list"],
     [
         "animatedClass",
-        "o-steps__nav--animated",
+        "o-steps__list--animated",
         null,
         computed(() => props.animated),
     ],
@@ -300,52 +301,48 @@ const navigationClasses = defineClasses([
 <template>
     <div ref="rootElement" :class="rootClasses" data-oruga="steps">
         <ol
-            :class="navClasses"
+            :class="tablistClasses"
             role="tablist"
+            :aria-label="ariaLabel"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
             <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
-                :class="childItem.navClasses"
-                :role="childItem.ariaRole"
+                :class="childItem.stepClasses"
+                role="tab"
+                :tabindex="isItemClickable(childItem) ? 0 : undefined"
                 :aria-current="
                     childItem.value === activeItem?.value ? 'step' : undefined
                 "
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="childItem.value === activeItem?.value">
+                :aria-selected="childItem.value === activeItem?.value"
+                @click="isItemClickable(childItem) && itemClick(childItem)"
+                @keydown.enter="
+                    isItemClickable(childItem) && itemClick(childItem)
+                "
+                @keydown.left.prevent="prev"
+                @keydown.right.prevent="next"
+                @keydown.up.prevent="prev"
+                @keydown.down.prevent="next">
                 <span v-if="index > 0" :class="dividerClasses" />
 
-                <component
-                    :is="childItem.tag"
-                    role="button"
-                    :tabindex="isItemClickable(childItem) ? 0 : null"
-                    :class="childItem.stepClasses"
-                    @click="isItemClickable(childItem) && itemClick(childItem)"
-                    @keydown.enter="
-                        isItemClickable(childItem) && itemClick(childItem)
-                    "
-                    @keydown.left.prevent="prev"
-                    @keydown.right.prevent="next"
-                    @keydown.up.prevent="prev"
-                    @keydown.down.prevent="next">
-                    <div :class="markerClasses">
-                        <o-icon
-                            v-if="childItem.icon"
-                            :class="childItem.iconClasses"
-                            :icon="childItem.icon"
-                            :pack="childItem.iconPack"
-                            :size="size" />
-                        <span v-else-if="childItem.step">
-                            {{ childItem.step }}
-                        </span>
-                    </div>
+                <div :class="markerClasses">
+                    <o-icon
+                        v-if="childItem.icon"
+                        :class="childItem.iconClasses"
+                        :icon="childItem.icon"
+                        :pack="childItem.iconPack"
+                        :size="size" />
+                    <span v-else-if="childItem.step">
+                        {{ childItem.step }}
+                    </span>
+                </div>
 
-                    <div :class="childItem.labelClasses">
-                        {{ childItem.label }}
-                    </div>
-                </component>
+                <div :class="childItem.labelClasses">
+                    {{ childItem.label }}
+                </div>
             </li>
         </ol>
 

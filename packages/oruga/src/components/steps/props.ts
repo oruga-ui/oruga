@@ -1,10 +1,5 @@
 import type { Component } from "vue";
-import type {
-    ComponentClass,
-    ComponentEmits,
-    DynamicComponent,
-    OptionsProp,
-} from "@/types";
+import type { ComponentClass, ComponentEmits, OptionsProp } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type StepsProps<T> = {
@@ -65,6 +60,8 @@ export type StepsProps<T> = {
     rounded?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
+    /** Accessibility aria-label to be passed to the tablist wrapper element */
+    ariaLabel?: string;
     /** Accessibility next button aria label */
     ariaNextLabel?: string;
     /** Accessibility previous button aria label  */
@@ -85,8 +82,8 @@ type StepsClasses = Partial<{
     positionClass: ComponentClass;
     /** Class of steps component when on mobile */
     mobileClass: ComponentClass;
-    /** Class of the steps nav container */
-    navClass: ComponentClass;
+    /** Class of the steps list container */
+    listClass: ComponentClass;
     /** Class of Steps component when animation gets triggered */
     animatedClass: ComponentClass;
     /** Class of the Steps component dividers */
@@ -134,10 +131,6 @@ export type StepItemProps<T, C extends Component> = {
     icon?: string;
     /** Icon pack */
     iconPack?: string;
-    /** Step item tag name */
-    tag?: DynamicComponent;
-    /** Role attribute to be passed to the li wrapper for better accessibility */
-    ariaRole?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;
     /** Component to be injected. */
@@ -150,19 +143,15 @@ export type StepItemProps<T, C extends Component> = {
 
 // class props (will not be displayed in the docs)
 type StepItemClasses = Partial<{
-    /** Class of the nav item */
-    navItemClass: ComponentClass;
-    /** Class of the nav item when active */
-    navItemActiveClass: ComponentClass;
-    /** Class of the nav item before the active one */
-    navItemPreviousClass: ComponentClass;
-    /** Class of the nav item after the active one */
-    navItemNextClass: ComponentClass;
-    /** Class of the nav item with variant (default value by parent steps component) */
-    navItemVariantClass: ComponentClass;
     /** Class of the step item */
     stepClass: ComponentClass;
-    /** Class of the tab item when active */
+    /** Class of the step item with variant (default value by parent steps component) */
+    stepVariantClass: ComponentClass;
+    /** Class of the step item before the active one */
+    stepPreviousClass: ComponentClass;
+    /** Class of the step item after the active one */
+    stepNextClass: ComponentClass;
+    /** Class of the step item when active */
     stepActiveClass: ComponentClass;
     /** Class of the step item when clickable */
     stepClickableClass: ComponentClass;
