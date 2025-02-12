@@ -46,8 +46,6 @@ export type ButtonProps = {
      * @values button, submit, reset
      */
     type?: "button" | "submit" | "reset";
-    /** Accessibility Role attribute to be passed to the button. */
-    ariaRole?: string;
     /**
      * This is used internally
      * @ignore

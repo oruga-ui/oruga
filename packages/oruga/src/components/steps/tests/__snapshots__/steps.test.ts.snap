@@ -13,10 +13,10 @@ exports[`OSteps tests > render correctly 1`] = `
             @binding {{disabled: boolean, action: (): void }} previous - previous button configs
             @binding {{disabled: boolean, action: (): void }} next - next button configs
         -->
-  <nav class="o-steps__navigation"><button disabled="" type="button" class="o-btn o-btn--disabled" role="button" data-oruga="button" aria-label="Previous"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+  <nav class="o-steps__navigation"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-btn o-btn--disabled" disabled="" aria-label="Previous"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
       <!--v-if-->
       <!--v-if--></span>
-    </button><button disabled="" type="button" class="o-btn o-btn--disabled" role="button" data-oruga="button" aria-label="Next"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-btn o-btn--disabled" disabled="" aria-label="Next"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
       <!--v-if-->
       <!--v-if--></span>
     </button></nav>
