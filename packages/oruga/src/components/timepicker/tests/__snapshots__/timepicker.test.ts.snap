@@ -3,7 +3,7 @@
 exports[`OTimepicker tests > render correctly 1`] = `
 "<div data-oruga="timepicker" class="o-tpck">
   <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--modal o-drop--position-bottom-left">
-    <div class="o-drop__trigger" aria-haspopup="listbox" aria-disabled="false" aria-controls="v-0">
+    <div class="o-drop__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
@@ -33,7 +33,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
             @slot Override the label, default is label prop 
         -->
           <div class="" data-oruga="select">
-            <!--v-if--><select id="v-3" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select aria-label="Select Hour" id="v-3" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop
@@ -66,7 +66,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
             <!--v-if-->
           </div><span class="o-tpck__separtor">:</span>
           <div class="" data-oruga="select">
-            <!--v-if--><select id="v-4" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select aria-label="Select Minute" id="v-4" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop

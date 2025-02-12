@@ -3,7 +3,7 @@
 exports[`ODatetimepicker tests > render correctly 1`] = `
 "<div data-oruga="datetimepicker" class="o-dpck o-dtpck__date">
   <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--position-bottom-left">
-    <div class="o-drop__trigger" aria-haspopup="listbox" aria-disabled="false" aria-controls="v-0">
+    <div class="o-drop__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
@@ -34,16 +34,16 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
             <!--
                 @slot Override the header
             -->
-            <div class="o-dpck__header__buttons"><button type="button" class="o-btn o-dpck__header__previous" role="button" data-oruga="button" aria-label="Previous Page"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+            <div class="o-dpck__header__buttons"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-btn o-dpck__header__previous" aria-label="Previous Page"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
                 <!--v-if-->
                 <!--v-if--></span>
-              </button><button type="button" class="o-btn o-dpck__header__next" role="button" data-oruga="button" aria-label="Next Page"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+              </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-btn o-dpck__header__next" aria-label="Next Page"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
                 <!--v-if-->
                 <!--v-if--></span>
               </button>
               <div class="o-dpck__header__list">
                 <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select id="v-3" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                  <!--v-if--><select aria-label="Select Month" id="v-3" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop
@@ -64,7 +64,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                   <!--v-if-->
                 </div>
                 <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select id="v-4" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                  <!--v-if--><select aria-label="Select Year" id="v-4" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop
@@ -344,7 +344,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
             @slot Override the label, default is label prop 
         -->
                         <div class="" data-oruga="select">
-                          <!--v-if--><select id="v-7" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+                          <!--v-if--><select aria-label="Select Hour" id="v-7" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
                             <!--v-if-->
                             <!--
                 @slot Override the options, default is options prop
@@ -377,7 +377,7 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                           <!--v-if-->
                         </div><span class="o-tpck__separtor">:</span>
                         <div class="" data-oruga="select">
-                          <!--v-if--><select id="v-8" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+                          <!--v-if--><select aria-label="Select Minute" id="v-8" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
                             <!--v-if-->
                             <!--
                 @slot Override the options, default is options prop

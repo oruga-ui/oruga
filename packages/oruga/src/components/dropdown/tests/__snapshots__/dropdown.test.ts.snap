@@ -43,7 +43,7 @@ exports[`ODropdown tests > render correctly with items 1`] = `
 
 exports[`ODropdown tests > render correctly with options 1`] = `
 "<div data-oruga="dropdown" class="o-drop o-drop--position-bottom-left">
-  <div class="o-drop__trigger" aria-haspopup="listbox" aria-disabled="false" aria-controls="v-0">
+  <div class="o-drop__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
     <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
