@@ -1083,6 +1083,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 labelPosition: "bottom" | "left" | "right";
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
+                /** Accessibility aria-label to be passed to the tablist wrapper element */
+                ariaLabel: string;
                 /** Accessibility next button aria label */
                 ariaNextLabel: string;
                 /** Accessibility previous button aria label */
@@ -1099,8 +1101,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 positionClass: ClassDefinition;
                 /** Class of steps component when on mobile */
                 mobileClass: ClassDefinition;
-                /** Class of the steps nav container */
-                navClass: ClassDefinition;
+                /** Class of the steps list container */
+                listClass: ClassDefinition;
                 /** Class of Steps component when animation gets triggered */
                 animatedClass: ClassDefinition;
                 /** Class of the Steps component dividers */
