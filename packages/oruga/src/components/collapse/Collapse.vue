@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useId } from "vue";
+import { computed, useId } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
@@ -17,12 +17,13 @@ defineOptions({
     configField: "collapse",
 });
 
-withDefaults(defineProps<CollapseProps>(), {
+const props = withDefaults(defineProps<CollapseProps>(), {
     override: undefined,
     open: true,
     animation: () => getDefault("collapse.animation", "fade"),
-    contentId: () => useId(),
     position: () => getDefault("collapse.position", "top"),
+    contentId: () => useId(),
+    triggerId: () => useId(),
 });
 
 const emits = defineEmits<{
@@ -48,7 +49,15 @@ function toggle(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = defineClasses(["rootClass", "o-clps"]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-clps"],
+    [
+        "positionClass",
+        "o-clps--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+);
 
 const triggerClasses = defineClasses(["triggerClass", "o-clps__trigger"]);
 
@@ -58,12 +67,15 @@ const contentClasses = defineClasses(["contentClass", "o-clps__content"]);
 <template>
     <div :class="rootClasses" data-oruga="collapse">
         <div
-            v-if="position === 'top'"
+            :id="triggerId"
             :class="triggerClasses"
             role="button"
             tabindex="0"
+            :aria-controls="contentId"
+            :aria-expanded="isOpen"
             @click="toggle"
-            @keydown.enter="toggle">
+            @keydown.enter="toggle"
+            @keydown.space="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
@@ -72,26 +84,16 @@ const contentClasses = defineClasses(["contentClass", "o-clps__content"]);
         </div>
 
         <Transition :name="animation">
-            <div v-show="isOpen" :id="contentId" :class="contentClasses">
+            <div
+                v-show="isOpen"
+                :id="contentId"
+                :class="contentClasses"
+                :aria-labelledby="triggerId">
                 <!--
                     @slot Default content
                 -->
                 <slot />
             </div>
         </Transition>
-
-        <div
-            v-if="position === 'bottom'"
-            :class="triggerClasses"
-            role="button"
-            tabindex="0"
-            @click="toggle"
-            @keydown.enter="toggle">
-            <!--
-                @slot Define the collapse trigger
-                @binding {boolean} open collapse open state 
-             -->
-            <slot name="trigger" :open="isOpen" />
-        </div>
     </div>
 </template>
