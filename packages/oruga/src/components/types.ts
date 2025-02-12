@@ -80,8 +80,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPack: string;
                 /** Enable rounded style */
                 rounded: boolean;
-                /** Accessibility Role attribute to be passed to the button. */
-                ariaRole: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the button elements wrapper */

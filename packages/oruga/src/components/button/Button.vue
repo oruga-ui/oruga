@@ -25,9 +25,6 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     variant: () => getDefault("button.variant"),
     size: () => getDefault("button.size"),
     label: undefined,
-    iconPack: () => getDefault("button.iconPack"),
-    iconLeft: undefined,
-    iconRight: undefined,
     rounded: () => getDefault("button.rounded", false),
     expanded: false,
     disabled: false,
@@ -35,9 +32,19 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     loading: false,
     inverted: false,
     type: "button",
-    ariaRole: () => getDefault("button.ariaRole", "button"),
+    iconPack: () => getDefault("button.iconPack"),
+    iconLeft: undefined,
+    iconRight: undefined,
     iconBoth: false,
 });
+
+defineEmits<{
+    /**
+     * button click event
+     * @param event {Event} native event
+     */
+    click: [event: Event];
+}>();
 
 const computedTag = computed(() =>
     typeof props.disabled !== "undefined" && props.disabled !== false
@@ -48,8 +55,6 @@ const computedTag = computed(() =>
 const computedNativeType = computed(() =>
     props.tag === "button" || props.tag === "input" ? props.type : null,
 );
-
-const computedDisabled = computed(() => (props.disabled ? true : null));
 
 // --- Computed Component Classes ---
 
@@ -111,11 +116,15 @@ const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
 <template>
     <component
         :is="computedTag"
-        :disabled="computedDisabled"
+        data-oruga="button"
         :type="computedNativeType"
+        role="button"
+        tabindex="0"
         :class="rootClasses"
-        :role="ariaRole"
-        data-oruga="button">
+        :disabled="disabled ? true : null"
+        @click="$emit('click', $event)"
+        @keydown.enter="$emit('click', $event)"
+        @keydown.space="$emit('click', $event)">
         <span :class="wrapperClasses">
             <o-icon
                 v-if="iconLeft"
