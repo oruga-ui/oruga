@@ -150,7 +150,7 @@ const isTransitioning = computed(() =>
 
 // --- EVENT HANDLER ---
 
-/** Click the item after or before the current acitve item. */
+/** Click the item after or before the current active item. */
 function activateItem(fowardIndex: 1 | -1): void {
     const index = (activeItem.value?.index ?? 0) + fowardIndex;
     if (index < 0 || index >= items.value.length) return;
@@ -425,10 +425,3 @@ const navigationClasses = defineClasses([
         </slot>
     </div>
 </template>
-
-<style>
-.o-steps__step:focus-visible,
-.o-steps__step:focus {
-    border: 1px solid black;
-}
-</style>
