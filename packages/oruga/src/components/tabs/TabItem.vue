@@ -44,7 +44,7 @@ const itemValue = props.value ?? useId();
 
 const slots = useSlots();
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     value: itemValue,

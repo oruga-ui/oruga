@@ -75,7 +75,7 @@ const sliderRef = useTemplateRef("sliderElement");
 const thumbStartRef = useTemplateRef("thumbStartComponent");
 const thumbEndRef = useTemplateRef("thumbEndComponent");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,

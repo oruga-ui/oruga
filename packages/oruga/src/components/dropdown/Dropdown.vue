@@ -121,7 +121,7 @@ const emits = defineEmits<{
 const triggerRef = ref<HTMLElement>();
 const menuRef = ref<HTMLElement | Component>();
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),

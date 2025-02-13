@@ -57,7 +57,7 @@ defineEmits<{
 
 const rootRef = useTemplateRef("rootElement");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<MenuComponent<T>>(() => ({
     focsuedIdentifier: focusedItem.value?.identifier,
     menuId: props.menuId,

@@ -62,7 +62,7 @@ const emits = defineEmits<{
 
 const itemValue = props.value ?? useId();
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<MenuItemProvider<T>>(() => ({
     expanded: isExpanded.value,
     setExpand,
@@ -81,7 +81,7 @@ const menuItem = useProviderChild<MenuItemProvider<T>>({
     needParent: false,
 });
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<MenuItemComponent<T>>(() => ({
     ...props,
     value: itemValue,

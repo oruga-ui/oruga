@@ -144,7 +144,7 @@ const inputAttrs = computed(() => ({
         : { "aria-describedby": props.messageId }),
 }));
 
-// Provided data is a computed ref to enjure reactivity.
+// Provided data is a computed ref to ensure reactivity.
 const provideData = computed<FieldData>(() => ({
     $el: rootRef.value,
     props,
