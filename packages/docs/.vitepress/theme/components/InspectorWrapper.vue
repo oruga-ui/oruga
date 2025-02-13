@@ -7,8 +7,8 @@ import {
     useTemplateRef,
     type PropType,
 } from "vue";
-import { setValueByPath } from "../../../../oruga/src/utils/helpers";
-import type { InspectClass, InspectData } from "@/docs";
+import { setValueByPath } from "@oruga-ui/oruga-next";
+import type { InspectClass, InspectData } from "@docs";
 
 const INSPECT_CLASS = "odocs-inspected-element";
 

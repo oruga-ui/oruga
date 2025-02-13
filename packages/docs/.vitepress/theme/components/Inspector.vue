@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, type PropType } from "vue";
-import type {
-    InspectData,
-    InspectClassDescription,
-    InspectClass,
-} from "@/docs";
+import type { InspectData, InspectClassDescription, InspectClass } from "@docs";
 
 const props = defineProps({
     inspectData: { type: Object as PropType<InspectData>, required: true },
