@@ -26,8 +26,8 @@ import SizesCode from "./sizes.vue?raw";
 import Variants from "./variants.vue";
 import VariantsCode from "./variants.vue?raw";
 
-import WithIcons from "./with-icons.vue";
-import WithIconsCode from "./with-icons.vue?raw";
+import WithIcons from "./icons.vue";
+import WithIconsCode from "./icons.vue?raw";
 </script>
 
 <template>

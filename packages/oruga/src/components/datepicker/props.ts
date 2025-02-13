@@ -153,8 +153,12 @@ export type DatepickerProps<
           ) => string);
     /** Accessibility next button aria label */
     ariaNextLabel?: string;
-    /** Accessibility previous button aria label  */
+    /** Accessibility previous button aria label */
     ariaPreviousLabel?: string;
+    /** Accessibility month select aria label */
+    ariaSelectMonthLabel?: string;
+    /** Accessibility year select aria label */
+    ariaSelectYearLabel?: string;
 } & DatepickerClasses;
 
 // class props (will not be displayed in the docs)

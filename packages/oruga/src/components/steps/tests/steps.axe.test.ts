@@ -2,13 +2,20 @@ import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
 import { nextTick } from "vue";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 import StepsExample from "./StepsExample.vue";
+import type { StepsProps } from "../props";
+
+type ExampleProps = ComponentProps<typeof StepsExample>;
 
 describe("OSteps axe tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases = [
+    const a11yCases: {
+        title: string;
+        props?: StepsProps<unknown> & ExampleProps;
+    }[] = [
         {
             title: "axe steps - base case",
             props: undefined,
@@ -56,7 +63,7 @@ describe("OSteps axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await nextTick();
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

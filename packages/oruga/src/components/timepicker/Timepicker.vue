@@ -68,6 +68,12 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     customValidity: "",
     inputClasses: () => getDefault("timepicker.inputClasses"),
     dropdownClasses: () => getDefault("timepicker.dropdownClasses"),
+    ariaSelectSecondsLabel: () =>
+        getDefault("timepicker.ariaSelectSecondLabel", "Select Second"),
+    ariaSelectMinutesLabel: () =>
+        getDefault("timepicker.ariaSelectMinuteLabel", "Select Minute"),
+    ariaSelectHoursLabel: () =>
+        getDefault("timepicker.ariaSelectHourLabel", "Select Hour"),
     selectClasses: () => getDefault("timepicker.selectClasses"),
 });
 
@@ -631,6 +637,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             override
             :disabled="disabled"
             placeholder="00"
+            :aria-label="ariaSelectHoursLabel"
             :use-html5-validation="false"
             @change="onHoursChange($event.target.value)" />
 
@@ -642,6 +649,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             override
             :disabled="disabled"
             placeholder="00"
+            :aria-label="ariaSelectMinutesLabel"
             :use-html5-validation="false"
             @change="onMinutesChange($event.target.value)">
             <option
@@ -662,6 +670,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 override
                 :disabled="disabled"
                 placeholder="00"
+                :aria-label="ariaSelectSecondsLabel"
                 :use-html5-validation="false"
                 @change="onSecondsChange($event.target.value)">
                 <option

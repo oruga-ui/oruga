@@ -3,7 +3,7 @@
 exports[`ODatepicker > render correctly 1`] = `
 "<div data-oruga="datepicker" class="o-dpck">
   <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--position-bottom-left">
-    <div class="o-drop__trigger" aria-haspopup="listbox" aria-disabled="false" aria-controls="v-0">
+    <div class="o-drop__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
@@ -43,7 +43,7 @@ exports[`ODatepicker > render correctly 1`] = `
               </button>
               <div class="o-dpck__header__list">
                 <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select id="v-3" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                  <!--v-if--><select aria-label="Select Month" id="v-3" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop
@@ -64,7 +64,7 @@ exports[`ODatepicker > render correctly 1`] = `
                   <!--v-if-->
                 </div>
                 <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select id="v-4" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                  <!--v-if--><select aria-label="Select Year" id="v-4" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop

@@ -10,6 +10,7 @@ const selected = ref<string>("");
             <o-select
                 v-model="selected"
                 placeholder="Select a character"
+                aria-label="Select a character"
                 icon="user"
                 expanded
                 :options="[

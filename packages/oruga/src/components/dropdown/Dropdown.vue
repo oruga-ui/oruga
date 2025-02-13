@@ -121,7 +121,7 @@ const emits = defineEmits<{
 const triggerRef = ref<HTMLElement>();
 const menuRef = ref<HTMLElement | Component>();
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
     disabled: props.disabled,
     multiple: isTrueish(props.multiple),
@@ -533,14 +533,14 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
             :class="triggerClasses"
             :role="selectable ? 'combobox' : undefined"
             :tabindex="disabled ? -1 : null"
-            aria-haspopup="listbox"
+            :aria-haspopup="selectable ? 'listbox' : 'menu'"
             :aria-expanded="selectable ? isActive : undefined"
             :aria-activedescendant="
                 focusedItem ? `${menuId}-${focusedItem.identifier}` : undefined
             "
             :aria-disabled="disabled"
             :aria-controls="menuId"
-            :aria-labelledby="labelId"
+            :aria-labelledby="selectable ? labelId : undefined"
             :aria-label="selectable ? ariaLabel : undefined"
             @click="onTriggerClick"
             @contextmenu="onTriggerContextMenu"

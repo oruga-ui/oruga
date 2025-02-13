@@ -1,13 +1,15 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
+import { nextTick } from "vue";
 
 import OSwitch from "../Switch.vue";
+import type { SwitchProps } from "../props";
 
 describe("OSwitch axe tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases = [
+    const a11yCases: { title: string; props?: SwitchProps<unknown> }[] = [
         {
             title: "axe switch - base case",
             props: { label: "Switch Label" },
@@ -51,6 +53,7 @@ describe("OSwitch axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

@@ -97,6 +97,10 @@ const props = withDefaults(
             getDefault("datepicker.ariaNextLabel", "Next Page"),
         ariaPreviousLabel: () =>
             getDefault("datepicker.ariaNextLabel", "Previous Page"),
+        ariaSelectMonthLabel: () =>
+            getDefault("datepicker.ariaSelectMonthLabel", "Select Month"),
+        ariaSelectYearLabel: () =>
+            getDefault("datepicker.ariaSelectYearLabel", "Select Year"),
         inputClasses: () => getDefault("datepicker.inputClasses"),
         dropdownClasses: () => getDefault("datepicker.dropdownClasses"),
         selectClasses: () => getDefault("datepicker.selectClasses"),
@@ -614,6 +618,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             :options="listOfMonths"
+                            :aria-label="ariaSelectMonthLabel"
                             :use-html5-validation="false"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next" />
@@ -624,6 +629,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             :options="listOfYears"
+                            :aria-label="ariaSelectYearLabel"
                             :use-html5-validation="false"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next"

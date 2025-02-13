@@ -345,7 +345,7 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
 const slotsRef = useTemplateRef("slotsWrapper");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<TableComponent>(() => ({
     isColumnSorted,
 }));

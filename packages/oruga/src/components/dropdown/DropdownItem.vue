@@ -41,7 +41,7 @@ const itemValue = props.value ?? useId();
 
 const rootRef = useTemplateRef<Element>("rootElement");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
     ...props,
     $el: rootRef.value,

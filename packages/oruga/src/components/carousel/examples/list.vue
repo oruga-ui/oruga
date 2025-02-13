@@ -90,7 +90,7 @@ const items = [
             :items-to-list="itemsToList"
             :repeat="repeat">
             <o-carousel-item v-for="(item, i) in items" :key="i">
-                <img :src="item.image" />
+                <img :src="item.image" :alt="item.title" />
             </o-carousel-item>
         </o-carousel>
         <p><b>Current slide index:</b> {{ carousel }}</p>

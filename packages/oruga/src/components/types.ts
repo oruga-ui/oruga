@@ -278,6 +278,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: boolean | object | string;
                 /** Accessibility next button aria label */
                 ariaNextLabel: string;
+                /** Accessibility month select aria label */
+                ariaSelectMonthLabel: string;
+                /** Accessibility year select aria label */
+                ariaSelectYearLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the Datepicker size */
@@ -1470,6 +1474,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: boolean | object | string;
+                /** Accessibility seconds select aria label */
+                ariaSelectSecondLabel: string;
+                /** Accessibility minutes select aria label */
+                ariaSelectMinuteLabel: string;
+                /** Accessibility hours select aria label */
+                ariaSelectHourLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the Timepicker component size */

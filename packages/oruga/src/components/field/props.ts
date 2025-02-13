@@ -18,10 +18,14 @@ export type FieldProps = {
     labelSize?: string;
     /** Same as native `for` set on the label */
     labelFor?: string;
+    /** A unique HTML id for the field label to associate an input with */
+    labelId?: string;
     /** Help message text */
     message?: string;
     /** Message element tag name */
     messageTag?: DynamicComponent;
+    /** A unique HTML id for the field message to associate an input with */
+    messageId?: string;
     /**
      * Direct child components/elements of Field will be grouped horizontally
      * (see which ones at the top of the page).

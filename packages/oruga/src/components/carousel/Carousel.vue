@@ -98,7 +98,7 @@ const emits = defineEmits<{
 
 const rootRef = useTemplateRef("rootElement");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<CarouselComponent>(() => ({
     activeIndex: activeIndex.value,
     indicators: props.indicators,
