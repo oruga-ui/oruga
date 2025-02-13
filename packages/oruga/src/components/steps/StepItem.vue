@@ -46,7 +46,7 @@ const itemValue = props.value ?? useId();
 
 const slots = useSlots();
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
@@ -123,14 +123,22 @@ const stepClasses = defineClasses(
         computed(() => parent.value?.variant || props.variant),
         computed(() => !!parent.value?.variant || !!props.variant),
     ],
+    ["stepActiveClass", "o-steps__step--active", null, isActive],
+    ["stepClickableClass", "o-steps__step--clickable", null, isClickable],
     [
-        "navItemPreviousClass",
+        "stepDisabledClass",
+        "o-steps__step--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "stepPreviousClass",
         "o-steps__step--previous",
         null,
         computed(() => item.value.index < parent.value?.activeIndex),
     ],
     [
-        "navItemNextClass",
+        "stepNextClass",
         "o-steps__step--next",
         null,
         computed(() => item.value.index > parent.value?.activeIndex),
@@ -140,14 +148,6 @@ const stepClasses = defineClasses(
         "o-steps__step--label-",
         computed(() => parent.value?.labelPosition),
         computed(() => !!parent.value?.labelPosition),
-    ],
-    ["stepActiveClass", "o-steps__step--active", null, isActive],
-    ["stepClickableClass", "o-steps__step--clickable", null, isClickable],
-    [
-        "stepDisabledClass",
-        "o-steps__step--disabled",
-        null,
-        computed(() => props.disabled),
     ],
 );
 

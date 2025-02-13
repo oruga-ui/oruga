@@ -51,7 +51,6 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     type: () => getDefault("tabs.type", "default"),
     tag: () => getDefault("tabs.tag", "div"),
     expanded: false,
-    destroyOnHide: false,
     activateOnFocus: false,
     animated: () => getDefault("tabs.animated", true),
     animation: () =>
@@ -82,10 +81,7 @@ const emits = defineEmits<{
 
 const rootRef = useTemplateRef("rootElement");
 
-/** The selected item value, use v-model to make it two-way binding */
-const vmodel = defineModel<ModelValue>({ default: undefined });
-
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index ?? 0,
     type: props.type,
@@ -118,6 +114,9 @@ const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
+
 /**  When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
@@ -143,63 +142,61 @@ const isTransitioning = computed(() =>
 
 onMounted(() => {
     // set first tab as default if not defined
-    if (!vmodel.value) vmodel.value = items.value[0]?.value as T;
+    if (!vmodel.value) vmodel.value = items.value[0]?.value;
 });
 
 // --- EVENT HANDLER ---
 
 /** Tab item click listener, emit input event and change active child. */
-function tabClick(item: TabItem<T>): void {
-    if (vmodel.value !== item.value) performAction(item.value as T);
+function itemClick(item: TabItem<T>): void {
+    if (vmodel.value !== item.value) performAction(item.value);
 }
 
-/** Go to the next item or wrap around */
-function next(event: KeyboardEvent, index: number): void {
+/** Focus the next item or wrap around. */
+function onNext(event: KeyboardEvent, index: number): void {
     if (
         (props.vertical && event.key == "ArrowDown") ||
         (!props.vertical && event.key == "ArrowRight")
     ) {
-        event.preventDefault(); // prevent default browser scrolling
         const newIndex = mod(index + 1, items.value.length);
         const item = getFirstViableItem(newIndex, true);
         moveFocus(item);
     }
 }
 
-/** Go to the previous item or wrap around */
-function prev(event: KeyboardEvent, index: number): void {
+/** Focus the previous item or wrap around. */
+function onPrev(event: KeyboardEvent, index: number): void {
     if (
         (props.vertical && event.key == "ArrowUp") ||
         (!props.vertical && event.key == "ArrowLeft")
     ) {
-        event.preventDefault(); // prevent default browser scrolling
         const newIndex = mod(index - 1, items.value.length);
         const item = getFirstViableItem(newIndex, false);
         moveFocus(item);
     }
 }
 
-/** Go to the first viable item */
-function homePressed(): void {
+/** Focus to the first viable item. */
+function onHomePressed(): void {
     if (items.value.length < 1) return;
     const item = getFirstViableItem(0, true);
     moveFocus(item);
 }
 
-/** Go to the last viable item */
-function endPressed(): void {
+/** Focus to the last viable item. */
+function onEndPressed(): void {
     if (items.value.length < 1) return;
     const item = getFirstViableItem(items.value.length - 1, false);
     moveFocus(item);
 }
 
-/** Set focus on a tab item. */
+/** Set focus on a tab item or click it if `activateOnFocus`. */
 function moveFocus(item: TabItem<T>): void {
     if (props.activateOnFocus) {
-        tabClick(item);
+        itemClick(item);
     } else {
         const el = rootRef.value?.querySelector<HTMLElement>(
-            `#tab-${item.identifier} > *`,
+            `#tab-${item.identifier}`,
         );
         el?.focus();
     }
@@ -230,8 +227,8 @@ function getFirstViableItem(
     return items.value[newIndex];
 }
 
-/** Activate next child and deactivate prev child */
-function performAction(newValue: T): void {
+/** Activate next child and deactivate prev child. */
+function performAction(newValue: ModelValue): void {
     const oldValue = vmodel.value;
     const oldItem = activeItem.value;
     const newItem =
@@ -316,19 +313,21 @@ const contentClasses = defineClasses(
                 name="header"
                 :class="childItem.tabClasses"
                 role="tab"
-                :tabindex="
-                    childItem.value === activeItem?.value ? undefined : '-1'
+                :tabindex="childItem.value === activeItem?.value ? 0 : -1"
+                :aria-current="
+                    childItem.value === activeItem?.value ? 'true' : undefined
                 "
                 :aria-controls="`tabpanel-${childItem.identifier}`"
                 :aria-selected="childItem.value === activeItem?.value"
-                @click="tabClick(childItem)"
-                @keydown.enter="tabClick(childItem)"
-                @keydown.left.prevent="prev"
-                @keydown.right.prevent="next"
-                @keydown.up.prevent="prev"
-                @keydown.down.prevent="next"
-                @keydown.home.prevent="homePressed"
-                @keydown.end.prevent="endPressed">
+                @click="itemClick(childItem)"
+                @keydown.enter.prevent="itemClick(childItem)"
+                @keydown.space.prevent="itemClick(childItem)"
+                @keydown.left.prevent="onPrev($event, childItem.index)"
+                @keydown.right.prevent="onNext($event, childItem.index)"
+                @keydown.up.prevent="onPrev($event, childItem.index)"
+                @keydown.down.prevent="onNext($event, childItem.index)"
+                @keydown.home.prevent="onHomePressed"
+                @keydown.end.prevent="onEndPressed">
                 <o-icon
                     v-if="childItem.icon"
                     :class="childItem.iconClasses"

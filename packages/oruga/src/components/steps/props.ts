@@ -42,6 +42,8 @@ export type StepsProps<T> = {
      * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
      */
     hasNavigation?: boolean;
+    /** Set the step active on navigation focus */
+    activateOnFocus?: boolean;
     /** Step navigation is animated */
     animated?: boolean;
     /**
