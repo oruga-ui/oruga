@@ -44,7 +44,7 @@ const itemValue = props.value ?? useId();
 
 const slots = useSlots();
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
@@ -126,13 +126,13 @@ const tabClasses = defineClasses(
         computed(() => props.disabled),
     ],
     [
-        "navItemPreviousClass",
+        "tabPreviousClass",
         "o-tabs__tab--previous",
         null,
         computed(() => item.value.index < parent.value?.activeIndex),
     ],
     [
-        "navItemNextClass",
+        "tabNextClass",
         "o-tabs__tab--next",
         null,
         computed(() => item.value.index > parent.value?.activeIndex),

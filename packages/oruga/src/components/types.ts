@@ -1041,23 +1041,15 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 icon: string;
                 /** Icon pack */
                 iconPack: string;
-                /** Step item tag name */
-                itemTag: DynamicComponent;
-                /** Role attribute to be passed to the li wrapper for better accessibility */
-                ariaRole: string;
-                /** Class of the nav item */
-                navItemClass: ClassDefinition;
-                /** Class of the nav item when active */
-                navItemActiveClass: ClassDefinition;
-                /** Class of the nav item before the active one */
-                navItemPreviousClass: ClassDefinition;
-                /** Class of the nav item after the active one */
-                navItemNextClass: ClassDefinition;
-                /** Class of the nav item with variant (default value by parent steps component) */
-                navItemVariantClass: ClassDefinition;
                 /** Class of the step item */
                 stepClass: ClassDefinition;
-                /** Class of the tab item when active */
+                /** Class of the step item with variant (default value by parent steps component) */
+                stepVariantClass: ClassDefinition;
+                /** Class of the step item before the active one */
+                stepPreviousClass: ClassDefinition;
+                /** Class of the step item after the active one */
+                stepNextClass: ClassDefinition;
+                /** Class of the step item when active */
                 stepActiveClass: ClassDefinition;
                 /** Class of the step item when clickable */
                 stepClickableClass: ClassDefinition;
@@ -1089,6 +1081,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 labelPosition: "bottom" | "left" | "right";
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
+                /** Accessibility aria-label to be passed to the tablist wrapper element */
+                ariaLabel: string;
                 /** Accessibility next button aria label */
                 ariaNextLabel: string;
                 /** Accessibility previous button aria label */
@@ -1105,8 +1099,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 positionClass: ClassDefinition;
                 /** Class of steps component when on mobile */
                 mobileClass: ClassDefinition;
-                /** Class of the steps nav container */
-                navClass: ClassDefinition;
+                /** Class of the steps list container */
+                listClass: ClassDefinition;
                 /** Class of Steps component when animation gets triggered */
                 animatedClass: ClassDefinition;
                 /** Class of the Steps component dividers */
