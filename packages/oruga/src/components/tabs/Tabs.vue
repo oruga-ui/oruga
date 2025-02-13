@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number | object">
+<script setup lang="ts" generic="T">
 import {
     computed,
     ref,
@@ -7,25 +7,27 @@ import {
     toValue,
     nextTick,
     onMounted,
+    useTemplateRef,
 } from "vue";
 
 import OTabItem from "../tabs/TabItem.vue";
 import OIcon from "../icon/Icon.vue";
 import OSlotComponent from "../utils/SlotComponent";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { mod, isDefined } from "@/utils/helpers";
 import {
     defineClasses,
     normalizeOptions,
     useProviderParent,
+    useSequentialId,
 } from "@/composables";
 
 import type { TabsComponent, TabItem, TabItemComponent } from "./types";
 import type { TabsProps } from "./props";
 
 /**
- * Responsive horizontal navigation tabs, switch between contents with ease
+ * Responsive horizontal navigation tabs, switch between contents with ease.
  * @displayName Tabs
  * @requires ./TabItem.vue
  * @style _tabs.scss
@@ -42,70 +44,78 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     options: undefined,
-    variant: () => getOption("tabs.variant"),
-    size: () => getOption("tabs.size"),
-    vertical: () => getOption("tabs.vertical", false),
+    variant: () => getDefault("tabs.variant"),
+    size: () => getDefault("tabs.size"),
+    vertical: () => getDefault("tabs.vertical", false),
     position: undefined,
-    type: () => getOption("tabs.type", "default"),
+    type: () => getDefault("tabs.type", "default"),
+    tag: () => getDefault("tabs.tag", "div"),
     expanded: false,
-    destroyOnHide: false,
-    animated: () => getOption("tabs.animated", true),
+    activateOnFocus: false,
+    animated: () => getDefault("tabs.animated", true),
     animation: () =>
-        getOption("tabs.animation", [
+        getDefault("tabs.animation", [
             "slide-next",
             "slide-prev",
             "slide-down",
             "slide-up",
         ]),
-    animateInitially: () => getOption("tabs.animateInitially", false),
+    animateInitially: () => getDefault("tabs.animateInitially", false),
     multiline: false,
+    ariaLabel: () => getDefault("tabs.ariaLabel"),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on tab change event
-     * @param value {string | number | object} new tab value
-     * @param value {string | number | object} old tab value
+     * @param value {T} new tab value
+     * @param value {T} old tab value
      */
-    (e: "change", newValue: ModelValue, oldValue: ModelValue): void;
+    change: [newValue: ModelValue, oldValue: ModelValue];
 }>();
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
-/** The selected item value, use v-model to make it two-way binding */
-const vmodel = defineModel<ModelValue>({ default: undefined });
-
-// Provided data is a computed ref to enjure reactivity.
-const provideData = computed<TabsComponent<ModelValue>>(() => ({
-    activeValue: vmodel.value,
+// provided data is a computed ref to ensure reactivity
+const provideData = computed<TabsComponent>(() => ({
+    activeIndex: activeItem.value?.index ?? 0,
     type: props.type,
     vertical: props.vertical,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
-    destroyOnHide: props.destroyOnHide,
 }));
 
-/** Provide functionalities and data to child item components */
-const { sortedItems } = useProviderParent<TabItemComponent<T>>(rootRef, {
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent<TabItemComponent<T>>({
+    rootRef,
     data: provideData,
 });
 
-const items = computed<TabItem<T>[]>(() =>
-    sortedItems.value.map((column) => ({
+const items = computed<TabItem<T>[]>(() => {
+    if (!childItems.value) return [];
+    return childItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
-    })),
-);
+    }));
+});
+
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed(() => normalizeOptions<T>(props.options));
+const normalizedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
+
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 /**  When v-model is changed set the new active tab. */
 watch(
@@ -115,8 +125,10 @@ watch(
     },
 );
 
-const activeItem = ref(items.value[0]);
+/** the active item */
+const activeItem = ref<TabItem<T>>();
 
+// set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
         ? items.value.find((item) => item.value === vmodel.value) ||
@@ -124,79 +136,103 @@ watchEffect(() => {
         : items.value[0];
 });
 
-const activeIndex = computed(() => activeItem.value.index);
-
-function isActive(item: TabItem<T>): boolean {
-    return item.value === activeItem.value.value;
-}
-
 const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
 );
 
 onMounted(() => {
     // set first tab as default if not defined
-    if (!vmodel.value) vmodel.value = items.value[0]?.value as T;
+    if (!vmodel.value) vmodel.value = items.value[0]?.value;
 });
 
 // --- EVENT HANDLER ---
 
 /** Tab item click listener, emit input event and change active child. */
-function tabClick(item: TabItem<T>): void {
-    if (vmodel.value !== item.value) performAction(item.value as T);
+function itemClick(item: TabItem<T>): void {
+    if (vmodel.value !== item.value) performAction(item.value);
 }
 
-/** Go to the next item or wrap around */
-function next(): void {
-    const newIndex = mod(activeIndex.value + 1, items.value.length);
-    clickFirstViableChild(newIndex, true);
+/** Focus the next item or wrap around. */
+function onNext(event: KeyboardEvent, index: number): void {
+    if (
+        (props.vertical && event.key == "ArrowDown") ||
+        (!props.vertical && event.key == "ArrowRight")
+    ) {
+        const newIndex = mod(index + 1, items.value.length);
+        const item = getFirstViableItem(newIndex, true);
+        moveFocus(item);
+    }
 }
 
-/** Go to the previous item or wrap around */
-function prev(): void {
-    const newIndex = mod(activeIndex.value - 1, items.value.length);
-    clickFirstViableChild(newIndex, false);
+/** Focus the previous item or wrap around. */
+function onPrev(event: KeyboardEvent, index: number): void {
+    if (
+        (props.vertical && event.key == "ArrowUp") ||
+        (!props.vertical && event.key == "ArrowLeft")
+    ) {
+        const newIndex = mod(index - 1, items.value.length);
+        const item = getFirstViableItem(newIndex, false);
+        moveFocus(item);
+    }
 }
 
-/** Go to the first viable item */
-function homePressed(): void {
+/** Focus to the first viable item. */
+function onHomePressed(): void {
     if (items.value.length < 1) return;
-    clickFirstViableChild(0, true);
+    const item = getFirstViableItem(0, true);
+    moveFocus(item);
 }
 
-/** Go to the last viable item */
-function endPressed(): void {
+/** Focus to the last viable item. */
+function onEndPressed(): void {
     if (items.value.length < 1) return;
-    clickFirstViableChild(items.value.length - 1, false);
+    const item = getFirstViableItem(items.value.length - 1, false);
+    moveFocus(item);
+}
+
+/** Set focus on a tab item or click it if `activateOnFocus`. */
+function moveFocus(item: TabItem<T>): void {
+    if (props.activateOnFocus) {
+        itemClick(item);
+    } else {
+        const el = rootRef.value?.querySelector<HTMLElement>(
+            `#tab-${item.identifier}`,
+        );
+        el?.focus();
+    }
 }
 
 /**
- * Select the first 'viable' child, starting at startingIndex and in the direction specified
+ * Get the first 'viable' child, starting at startingIndex and in the direction specified
  * by the boolean parameter forward. In other words, first try to select the child at index
  * startingIndex, and if it is not visible or it is disabled, then go to the index in the
  * specified direction until either returning to startIndex or finding a viable child item.
  */
-function clickFirstViableChild(startingIndex: number, forward: boolean): void {
+function getFirstViableItem(
+    startingIndex: number,
+    forward: boolean,
+): TabItem<T> {
     const direction = forward ? 1 : -1;
     let newIndex = startingIndex;
     for (
         ;
-        newIndex !== activeIndex.value;
+        newIndex !== activeItem.value?.index;
         newIndex = mod(newIndex + direction, items.value.length)
     ) {
         // Break if the item at this index is viable (not disabled and is visible)
         if (items.value[newIndex].visible && !items.value[newIndex].disabled)
             break;
     }
-    tabClick(items.value[newIndex]);
+
+    return items.value[newIndex];
 }
 
-/** Activate next child and deactivate prev child */
-function performAction(newId: T): void {
-    const oldId = vmodel.value;
+/** Activate next child and deactivate prev child. */
+function performAction(newValue: ModelValue): void {
+    const oldValue = vmodel.value;
     const oldItem = activeItem.value;
     const newItem =
-        items.value.find((item) => item.value === newId) || items.value[0];
+        items.value.find((item) => item.value === newValue) || items.value[0];
 
     if (oldItem && newItem) {
         oldItem.deactivate(newItem.index);
@@ -204,8 +240,8 @@ function performAction(newId: T): void {
     }
 
     nextTick(() => {
-        vmodel.value = newId;
-        emits("change", newId, oldId);
+        vmodel.value = newValue;
+        emits("change", newValue, oldValue);
     });
 }
 
@@ -217,14 +253,21 @@ const rootClasses = defineClasses(
         "positionClass",
         "o-tabs--",
         computed(() => props.position),
-        computed(() => !!props.position && props.vertical),
+        computed(() => !!props.position),
     ],
     [
-        "expandedClass",
-        "o-tabs--fullwidth",
-        null,
-        computed(() => props.expanded),
+        "sizeClass",
+        "o-tabs--",
+        computed(() => props.size),
+        computed(() => !!props.size),
     ],
+    [
+        "typeClass",
+        "o-tabs--",
+        computed(() => props.type),
+        computed(() => !!props.type),
+    ],
+    ["expandedClass", "o-tabs--expanded", null, computed(() => props.expanded)],
     ["verticalClass", "o-tabs--vertical", null, computed(() => props.vertical)],
     [
         "multilineClass",
@@ -234,29 +277,7 @@ const rootClasses = defineClasses(
     ],
 );
 
-const navClasses = defineClasses(
-    ["navClass", "o-tabs__nav"],
-    [
-        "navSizeClass",
-        "o-tabs__nav--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-    [
-        "navPositionClass",
-        "o-tabs__nav--",
-        computed(() => props.position),
-        computed(() => !!props.position && !props.vertical),
-    ],
-    [
-        "navTypeClass",
-        "o-tabs__nav--",
-        computed(() => props.type),
-        computed(() => !!props.type),
-    ],
-);
-
-const navItemClasses = defineClasses(["navItemClass", "o-tabs__nav-item"]);
+const tablistClasses = defineClasses(["tablistClass", "o-tabs__tablist"]);
 
 const contentClasses = defineClasses(
     ["contentClass", "o-tabs__content"],
@@ -270,71 +291,59 @@ const contentClasses = defineClasses(
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses" data-oruga="tabs">
-        <nav
-            :class="navClasses"
+    <div ref="rootElement" :class="rootClasses" data-oruga="tabs">
+        <component
+            :is="props.tag"
+            :class="tablistClasses"
             role="tablist"
+            :aria-label="ariaLabel"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
             <!--
                 @slot Additional slot before tabs
             -->
-            <slot name="start" />
+            <slot name="before" />
 
-            <div
+            <o-slot-component
                 v-for="childItem in items"
                 v-show="childItem.visible"
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
-                :class="navItemClasses"
+                :component="childItem"
+                :tag="childItem.tag"
+                name="header"
+                :class="childItem.tabClasses"
                 role="tab"
+                :tabindex="childItem.value === activeItem?.value ? 0 : -1"
+                :aria-current="
+                    childItem.value === activeItem?.value ? 'true' : undefined
+                "
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="isActive(childItem) ? 'true' : 'false'">
-                <o-slot-component
-                    v-if="childItem.$slots.header"
-                    :component="childItem"
-                    :tag="childItem.tag"
-                    name="header"
-                    :class="childItem.classes"
-                    @click="tabClick(childItem)"
-                    @keydown.enter="tabClick(childItem)"
-                    @keydown.left.prevent="prev"
-                    @keydown.right.prevent="next"
-                    @keydown.up.prevent="prev"
-                    @keydown.down.prevent="next"
-                    @keydown.home.prevent="homePressed"
-                    @keydown.end.prevent="endPressed" />
-
-                <component
-                    :is="childItem.tag"
-                    v-else
-                    role="button"
-                    :tabindex="0"
-                    :class="childItem.classes"
-                    @click="tabClick(childItem)"
-                    @keydown.enter="tabClick(childItem)"
-                    @keydown.left.prevent="prev"
-                    @keydown.right.prevent="next"
-                    @keydown.up.prevent="prev"
-                    @keydown.down.prevent="next"
-                    @keydown.home.prevent="homePressed"
-                    @keydown.end.prevent="endPressed">
-                    <o-icon
-                        v-if="childItem.icon"
-                        :class="childItem.iconClasses"
-                        :icon="childItem.icon"
-                        :pack="childItem.iconPack"
-                        :size="size" />
-                    <span :class="childItem.labelClasses">
-                        {{ childItem.label }}
-                    </span>
-                </component>
-            </div>
+                :aria-selected="childItem.value === activeItem?.value"
+                @click="itemClick(childItem)"
+                @keydown.enter.prevent="itemClick(childItem)"
+                @keydown.space.prevent="itemClick(childItem)"
+                @keydown.left.prevent="onPrev($event, childItem.index)"
+                @keydown.right.prevent="onNext($event, childItem.index)"
+                @keydown.up.prevent="onPrev($event, childItem.index)"
+                @keydown.down.prevent="onNext($event, childItem.index)"
+                @keydown.home.prevent="onHomePressed"
+                @keydown.end.prevent="onEndPressed">
+                <o-icon
+                    v-if="childItem.icon"
+                    :class="childItem.iconClasses"
+                    :icon="childItem.icon"
+                    :pack="childItem.iconPack"
+                    :size="size" />
+                <span :class="childItem.labelClasses">
+                    {{ childItem.label }}
+                </span>
+            </o-slot-component>
 
             <!--
                 @slot Additional slot after tabs
             -->
-            <slot name="end" />
-        </nav>
+            <slot name="after" />
+        </component>
 
         <section :class="contentClasses">
             <!--
@@ -342,7 +351,7 @@ const contentClasses = defineClasses(
             -->
             <slot>
                 <o-tab-item
-                    v-for="option in groupedOptions"
+                    v-for="option in normalizedOptions"
                     v-show="!option.hidden"
                     v-bind="option.attrs"
                     :key="option.key"

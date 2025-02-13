@@ -5,7 +5,7 @@
         IsRange extends boolean = false,
         IsMultiple extends boolean = false
     ">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, useTemplateRef } from "vue";
 
 import OButton from "../button/Button.vue";
 import OSelect from "../select/Select.vue";
@@ -13,7 +13,7 @@ import OPickerWrapper from "../utils/PickerWrapper.vue";
 import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDate, pad } from "@/utils/helpers";
 import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
@@ -25,7 +25,7 @@ import type { FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
 
 /**
- * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
+ * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile.
  * @displayName Datepicker
  * @style _datepicker.scss
  */
@@ -46,9 +46,9 @@ const props = withDefaults(
         // multiple: false,
         active: false,
         type: "date",
-        dayNames: () => getOption("datepicker.dayNames"),
-        monthNames: () => getOption("datepicker.monthNames"),
-        size: () => getOption("datepicker.size"),
+        dayNames: () => getDefault("datepicker.dayNames"),
+        monthNames: () => getDefault("datepicker.monthNames"),
+        size: () => getDefault("datepicker.size"),
         focusedDate: undefined,
         events: undefined,
         indicators: "dots",
@@ -60,45 +60,50 @@ const props = withDefaults(
         placeholder: undefined,
         readonly: false,
         disabled: false,
-        openOnFocus: () => getOption("datepicker.openOnFocus", true),
-        closeOnClick: () => getOption("datepicker.closeOnClick", true),
-        locale: () => getOption("locale"),
-        formatter: getOption("datepicker.formatter"),
-        parser: getOption("datepicker.parser"),
-        creator: getOption("datepicker.creator"),
+        openOnFocus: () => getDefault("datepicker.openOnFocus", true),
+        closeOnClick: () => getDefault("datepicker.closeOnClick", true),
+        locale: () => getDefault("locale"),
+        formatter: getDefault("datepicker.formatter"),
+        parser: getDefault("datepicker.parser"),
+        creator: getDefault("datepicker.creator"),
         selectableDates: undefined,
         unselectableDates: undefined,
         unselectableDaysOfWeek: () =>
-            getOption("datepicker.unselectableDaysOfWeek"),
-        nearbyMonthDays: () => getOption("datepicker.nearbyMonthDays", true),
+            getDefault("datepicker.unselectableDaysOfWeek"),
+        nearbyMonthDays: () => getDefault("datepicker.nearbyMonthDays", true),
         nearbySelectableMonthDays: () =>
-            getOption("datepicker.nearbySelectableMonthDays", false),
-        showWeekNumber: () => getOption("datepicker.showWeekNumber", false),
+            getDefault("datepicker.nearbySelectableMonthDays", false),
+        showWeekNumber: () => getDefault("datepicker.showWeekNumber", false),
         weekNumberClickable: () =>
-            getOption("datepicker.weekNumberClickable", false),
-        firstDayOfWeek: () => getOption("datepicker.firstDayOfWeek", 0),
+            getDefault("datepicker.weekNumberClickable", false),
+        firstDayOfWeek: () => getDefault("datepicker.firstDayOfWeek", 0),
         rulesForFirstWeek: 4,
-        yearsRange: () => getOption("datepicker.yearsRange", [-100, 10]),
-        trapFocus: () => getOption("datepicker.trapFocus", true),
+        yearsRange: () => getDefault("datepicker.yearsRange", [-100, 10]),
         position: undefined,
-        mobileModal: () => getOption("datepicker.mobileModal", true),
-        mobileNative: () => getOption("datepicker.mobileNative", false),
-        iconPack: () => getOption("datepicker.iconPack"),
-        icon: () => getOption("datepicker.icon"),
-        iconRight: () => getOption("datepicker.iconRight"),
+        iconPack: () => getDefault("datepicker.iconPack"),
+        icon: () => getDefault("datepicker.icon"),
+        iconRight: () => getDefault("datepicker.iconRight"),
         iconRightClickable: false,
-        iconPrev: () => getOption("datepicker.iconPrev", "chevron-left"),
-        iconNext: () => getOption("datepicker.iconNext", "chevron-right"),
-        mobileBreakpoint: () => getOption("datepicker.mobileBreakpoint"),
-        teleport: () => getOption("datepicker.teleport", false),
-        useHtml5Validation: () => getOption("useHtml5Validation", true),
+        iconPrev: () => getDefault("datepicker.iconPrev", "chevron-left"),
+        iconNext: () => getDefault("datepicker.iconNext", "chevron-right"),
+        desktopModal: () => getDefault("datepicker.desktopModal", false),
+        mobileModal: () => getDefault("datepicker.mobileModal", true),
+        mobileNative: () => getDefault("datepicker.mobileNative", false),
+        mobileBreakpoint: () => getDefault("datepicker.mobileBreakpoint"),
+        teleport: () => getDefault("datepicker.teleport", false),
+        useHtml5Validation: () => getDefault("useHtml5Validation", true),
         customValidity: "",
-        ariaNextLabel: () => getOption("datepicker.ariaNextLabel", "Next Page"),
+        ariaNextLabel: () =>
+            getDefault("datepicker.ariaNextLabel", "Next Page"),
         ariaPreviousLabel: () =>
-            getOption("datepicker.ariaNextLabel", "Previous Page"),
-        inputClasses: () => getOption("datepicker.inputClasses"),
-        dropdownClasses: () => getOption("datepicker.dropdownClasses"),
-        selectClasses: () => getOption("datepicker.selectClasses"),
+            getDefault("datepicker.ariaNextLabel", "Previous Page"),
+        ariaSelectMonthLabel: () =>
+            getDefault("datepicker.ariaSelectMonthLabel", "Select Month"),
+        ariaSelectYearLabel: () =>
+            getDefault("datepicker.ariaSelectYearLabel", "Select Year"),
+        inputClasses: () => getDefault("datepicker.inputClasses"),
+        dropdownClasses: () => getDefault("datepicker.dropdownClasses"),
+        selectClasses: () => getDefault("datepicker.selectClasses"),
     },
 );
 
@@ -107,57 +112,57 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date | Date[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on range start is selected event
      * @param value {Date} range start date
      */
-    (e: "range-start", value: Date): void;
+    "range-start": [value: Date];
     /**
      * on range end is selected event
      * @param value {Date} range end date
      */
-    (e: "range-end", value: Date): void;
+    "range-end": [value: Date];
     /**
      * on month change event
      * @param value {number} month number
      */
-    (e: "change-month", value: number): void;
+    "change-month": [value: number];
     /**
      * on year change event
      * @param value {number} year number
      */
-    (e: "change-year", value: number): void;
+    "change-year": [value: number];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
 const { dtf, dateCreator, dateFormatter, dateParser } =
@@ -165,7 +170,7 @@ const { dtf, dateCreator, dateFormatter, dateParser } =
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const pickerRef = ref<InstanceType<typeof OPickerWrapper>>();
+const pickerRef = useTemplateRef("pickerComponent");
 
 /** modelvalue of selected date, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
@@ -196,7 +201,7 @@ watch(
                 Array.isArray(vmodel.value) &&
                 value.length > vmodel.value.length)
         )
-            // updateInternalState
+            // update internal state
             focusedDateData.value = {
                 day: currentDate.getDate(),
                 month: currentDate.getMonth(),
@@ -548,7 +553,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
 
 <template>
     <OPickerWrapper
-        ref="pickerRef"
+        ref="pickerComponent"
         v-model:active="isActive"
         v-model:value="vmodel"
         data-oruga="datepicker"
@@ -613,6 +618,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             :options="listOfMonths"
+                            :aria-label="ariaSelectMonthLabel"
                             :use-html5-validation="false"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next" />
@@ -623,6 +629,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                             :disabled="disabled"
                             :size="size"
                             :options="listOfYears"
+                            :aria-label="ariaSelectYearLabel"
                             :use-html5-validation="false"
                             @keydown.left.stop.prevent="prev"
                             @keydown.right.stop.prevent="next"

@@ -1,10 +1,10 @@
 <script setup lang="ts" generic="IsRange extends boolean = false">
-import { computed, ref, watch } from "vue";
+import { computed, ref, useTemplateRef, watch } from "vue";
 
 import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useProviderParent } from "@/composables";
 
@@ -12,7 +12,7 @@ import type { SliderComponent } from "./types";
 import type { SliderProps } from "./props";
 
 /**
- * A slider to select a value or range from a given range
+ * A slider to select a value or range from a given range.
  * @displayName Slider
  * @requires ./SliderTick.vue
  * @style _slider.scss
@@ -32,21 +32,21 @@ const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
     min: 0,
     max: 100,
     step: 1,
-    variant: () => getOption("slider.variant"),
-    size: () => getOption("slider.size"),
+    variant: () => getDefault("slider.variant"),
+    size: () => getDefault("slider.size"),
     ticks: false,
-    tooltip: () => getOption("slider.tooltip", true),
-    tooltipVariant: () => getOption("slider.tooltipVariant"),
+    tooltip: () => getDefault("slider.tooltip", true),
+    tooltipVariant: () => getDefault("slider.tooltipVariant"),
     tooltipAlways: false,
-    rounded: () => getOption("slider.rounded", false),
+    rounded: () => getDefault("slider.rounded", false),
     disabled: false,
     lazy: false,
     formatter: undefined,
     biggerSliderFocus: false,
     indicator: false,
-    format: () => getOption("slider.format", "raw"),
-    locale: () => getOption("locale"),
-    ariaLabel: () => getOption("slider.ariaLabel"),
+    format: () => getDefault("slider.format", "raw"),
+    locale: () => getDefault("locale"),
+    ariaLabel: () => getDefault("slider.ariaLabel"),
 });
 
 const emits = defineEmits<{
@@ -54,35 +54,35 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on value change event
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "change", value: ModelValue): void;
+    change: [value: ModelValue];
     /**
      * on dragging event
      * @param value {number | number[]} updated modelValue prop
      * */
-    (e: "dragging", value: ModelValue): void;
+    dragging: [value: ModelValue];
     /** on drag start event */
-    (e: "dragstart"): void;
+    dragstart: [];
     /** on drag end event */
-    (e: "dragend"): void;
+    dragend: [];
 }>();
 
-const sliderRef = ref();
-const thumbStartRef = ref();
-const thumbEndRef = ref();
+const sliderRef = useTemplateRef("sliderElement");
+const thumbStartRef = useTemplateRef("thumbStartComponent");
+const thumbEndRef = useTemplateRef("thumbEndComponent");
 
-// Provided data is a computed ref to enjure reactivity.
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,
 }));
 
-/** Provide functionalities and data to child item components */
-useProviderParent(undefined, { data: provideData });
+/** provide functionalities and data to child item components */
+useProviderParent({ data: provideData });
 
 const valueStart = ref<number>(0);
 const valueEnd = ref<number>(0);
@@ -114,7 +114,7 @@ watch([valueStart, valueEnd], () => {
                 ? valueStart.value > valueEnd.value
                 : false;
     if (!props.lazy || !dragging.value)
-        emits("update:modelValue", vmodel.value); // update external vmodel
+        emits("update:model-value", vmodel.value); // update external vmodel
     if (dragging.value) emits("dragging", vmodel.value);
 });
 
@@ -145,8 +145,8 @@ function setValues(newValue: number | number[] | undefined): void {
             : Math.min(props.max, Math.max(props.min, newValue));
         valueEnd.value = 0;
     } else {
-        valueStart.value = 0;
-        valueEnd.value = 0;
+        valueStart.value = props.min;
+        valueEnd.value = props.min;
     }
 }
 
@@ -182,11 +182,13 @@ const barStyle = computed(() => ({
 }));
 
 function getSliderSize(): number {
-    return sliderRef.value.getBoundingClientRect().width;
+    return sliderRef.value?.getBoundingClientRect().width || 0;
 }
 
 function onSliderClick(event: MouseEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
+    if (!sliderRef.value || !thumbStartRef.value || !thumbEndRef.value) return;
+
     const sliderOffsetLeft = sliderRef.value.getBoundingClientRect().left;
     const percent =
         ((event.clientX - sliderOffsetLeft) / getSliderSize()) * 100;
@@ -219,7 +221,7 @@ function onDragEnd(): void {
     setTimeout(() => (isTrackClickDisabled.value = false));
     dragging.value = false;
     emits("dragend");
-    if (props.lazy) emits("update:modelValue", vmodel.value);
+    if (props.lazy) emits("update:model-value", vmodel.value);
 }
 
 // --- Computed Component Classes ---
@@ -281,7 +283,7 @@ defineExpose({ value: vmodel });
 
 <template>
     <div :class="rootClasses" data-oruga="slider" @click="onSliderClick">
-        <div ref="sliderRef" :class="trackClasses">
+        <div ref="sliderElement" :class="trackClasses">
             <div :class="fillClasses" :style="barStyle" />
             <template v-if="ticks">
                 <o-slider-tick
@@ -299,7 +301,7 @@ defineExpose({ value: vmodel });
             <slot />
 
             <o-slider-thumb
-                ref="thumbStartRef"
+                ref="thumbStartComponent"
                 v-model="valueStart"
                 :slider-props="props"
                 :slider-size="getSliderSize"
@@ -311,7 +313,7 @@ defineExpose({ value: vmodel });
 
             <o-slider-thumb
                 v-if="isTrueish(props.range)"
-                ref="thumbEndRef"
+                ref="thumbEndComponent"
                 v-model="valueEnd"
                 :slider-props="props"
                 :slider-size="getSliderSize"

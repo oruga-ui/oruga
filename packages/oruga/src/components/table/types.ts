@@ -1,13 +1,18 @@
 import type { ComponentPublicInstance, Slots, StyleValue } from "vue";
-import type { ObjectMap, ProviderItem } from "@/composables";
+import type { OptionsItem, ProviderItem } from "@/composables";
 import type { ClassBind } from "@/types";
 
-import TableColumn from "./TableColumn.vue";
 import type { TableColumnProps } from "./props";
 
-export type TableRow<T = unknown> = ObjectMap<T>[number];
+export type TableRow<V = unknown> = OptionsItem<V> & {
+    /** table index position of the current row */
+    index: number;
+};
 
-export type TableColumn<T = unknown> = TableColumnProps<T>;
+export type TableColumn<
+    T = unknown,
+    K extends keyof T | string = string,
+> = TableColumnProps<T, K>;
 
 export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $el: ComponentPublicInstance;
@@ -17,12 +22,13 @@ export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     tdClasses: ClassBind[];
 };
 
-export type TableComponent<T> = {
-    currentSortColumn?: TableColumnItem<T>;
+export type TableComponent = {
+    isColumnSorted(column: ProviderItem): boolean;
 };
 
 export type TableColumnItem<T = unknown> = Omit<ProviderItem, "data"> &
     TableColumnComponent<T> & {
+        value: TableColumn<T>;
         thAttrsData: object;
         tdAttrsData: Array<object>;
     };

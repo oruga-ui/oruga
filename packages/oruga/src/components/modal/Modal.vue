@@ -1,10 +1,18 @@
 <script setup lang="ts" generic="C extends Component">
-import { ref, computed, watch, nextTick, onMounted, type Component } from "vue";
+import {
+    ref,
+    computed,
+    watch,
+    nextTick,
+    onMounted,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { vTrapFocus } from "@/directives/trapFocus";
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
@@ -18,7 +26,7 @@ import {
 import type { ModalProps } from "./props";
 
 /**
- * Classic modal overlay to include any content you may need
+ * Classic modal overlay to include any content you may need.
  * @displayName Modal
  * @style _modal.scss
  */
@@ -34,19 +42,20 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     active: false,
     fullScreen: false,
     content: undefined,
-    width: () => getOption("modal.width", 960),
-    animation: () => getOption("modal.animation", "zoom-out"),
-    overlay: () => getOption("modal.overlay", true),
-    cancelable: () => getOption("modal.cancelable", ["escape", "x", "outside"]),
-    scroll: () => getOption("modal.scroll", "keep"),
-    trapFocus: () => getOption("modal.trapFocus", true),
-    ariaRole: () => getOption("modal.ariaRole"),
-    ariaLabel: () => getOption("modal.ariaLabel"),
-    autoFocus: () => getOption("modal.autoFocus", true),
-    closeIcon: () => getOption("modal.closeIcon", "close"),
-    closeIconSize: () => getOption("modal.closeIconSize", "medium"),
-    mobileBreakpoint: () => getOption("modal.mobileBreakpoint"),
-    teleport: () => getOption("modal.teleport", false),
+    width: () => getDefault("modal.width", 960),
+    animation: () => getDefault("modal.animation", "zoom-out"),
+    overlay: () => getDefault("modal.overlay", true),
+    cancelable: () =>
+        getDefault("modal.cancelable", ["escape", "x", "outside"]),
+    scroll: () => getDefault("modal.scroll", "keep"),
+    trapFocus: () => getDefault("modal.trapFocus", true),
+    ariaRole: () => getDefault("modal.ariaRole", "dialog"),
+    ariaLabel: () => getDefault("modal.ariaLabel"),
+    autoFocus: () => getDefault("modal.autoFocus", true),
+    closeIcon: () => getDefault("modal.closeIcon", "close"),
+    closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
+    mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
+    teleport: () => getDefault("modal.teleport", false),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -57,16 +66,16 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {boolean} - updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on component close event
      * @param value {unknown} - close event data
      */
-    (e: "close", ...args: unknown[]): void;
+    close: [...args: unknown[]];
 }>();
 
-const rootRef = ref();
-const contentRef = ref();
+const rootRef = useTemplateRef("rootElement");
+const contentRef = useTemplateRef("contentElement");
 
 const isActive = defineModel<boolean>("active", { default: false });
 
@@ -93,8 +102,10 @@ const toggleScroll = usePreventScrolling(props.scroll === "keep");
 watch(isActive, (value) => {
     if (props.overlay) toggleScroll(value);
     // if autoFocus focus the element
-    if (value && rootRef.value && props.autoFocus)
-        nextTick(() => rootRef.value.focus());
+    if (value && props.autoFocus)
+        nextTick(() => {
+            if (rootRef.value) rootRef.value.focus();
+        });
 });
 
 onMounted(() => {
@@ -105,7 +116,7 @@ onMounted(() => {
 
 if (isClient) {
     // register onKeyPress event listener when is active
-    useEventListener("keyup", onKeyPress, rootRef.value, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
 
     if (!props.overlay)
         // register outside click event listener when is active
@@ -123,7 +134,10 @@ function onKeyPress(event: KeyboardEvent): void {
 /** Close fixed sidebar if clicked outside. */
 function onClickedOutside(event: Event): void {
     if (!isActive.value || isAnimating.value) return;
-    if (props.overlay || !event.composedPath().includes(contentRef.value))
+    if (
+        props.overlay ||
+        (contentRef.value && !event.composedPath().includes(contentRef.value))
+    )
         event.preventDefault();
     cancel("outside");
 }
@@ -201,7 +215,7 @@ defineExpose({ close });
             <div
                 v-show="isActive"
                 v-bind="$attrs"
-                ref="rootRef"
+                ref="rootElement"
                 v-trap-focus="trapFocus"
                 data-oruga="modal"
                 :class="rootClasses"
@@ -216,7 +230,7 @@ defineExpose({ close });
                     @click="onClickedOutside" />
 
                 <div
-                    ref="contentRef"
+                    ref="contentElement"
                     :class="contentClasses"
                     :style="customStyle">
                     <!-- injected component for programmatic usage -->

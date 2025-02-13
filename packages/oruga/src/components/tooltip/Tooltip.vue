@@ -1,20 +1,16 @@
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, type PropType } from "vue";
+import { ref, computed, watch, nextTick, useId, type Component } from "vue";
 
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import {
-    defineClasses,
-    useEventListener,
-    useClickOutside,
-} from "@/composables";
+import { defineClasses, useClickOutside } from "@/composables";
 
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { TooltipProps } from "./props";
 
 /**
- * Display a brief helper text to your user
+ * Display a brief helper text to your user.
  * @displayName Tooltip
  * @style _tooltip.scss
  */
@@ -24,142 +20,22 @@ defineOptions({
     configField: "tooltip",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-    /** Tooltip text, unnecessary when content slot is used */
-    label: { type: String, default: undefined },
-    /**
-     * Color of the tooltip
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("tooltip.variant"),
-    },
-    /**
-     * Position of the Tooltip relative to the trigger
-     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
-     */
-    position: {
-        type: String,
-        default: () => getOption("tooltip.position", "auto"),
-        validator: (value: string) =>
-            [
-                "auto",
-                "top",
-                "bottom",
-                "left",
-                "right",
-                "top-right",
-                "top-left",
-                "bottom-left",
-                "bottom-right",
-            ].indexOf(value) > -1,
-    },
-    /** Tooltip will be always active */
-    always: { type: Boolean, default: false },
-    /** Tooltip will be disabled */
-    disabled: { type: Boolean, default: false },
-    /** Tooltip default animation */
-    animation: {
-        type: String,
-        default: () => getOption("tooltip.animation", "fade"),
-    },
-    /** Tooltip will be multilined */
-    multiline: { type: Boolean, default: false },
-    /** Tooltip trigger tag name */
-    triggerTag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("tooltip.triggerTag", "div"),
-    },
-    /**
-     * Tooltip trigger events
-     * @values hover, click, focus, contextmenu
-     */
-    triggers: {
-        type: Array as PropType<string[]>,
-        default: () => getOption("tooltip.triggers", ["hover"]),
-        validator: (values: string[]) =>
-            values.filter(
-                (value) =>
-                    ["click", "hover", "contextmenu", "focus"].indexOf(value) >
-                    -1,
-            ).length === values.length,
-    },
-    /** Tooltip delay before it appears (number in ms) */
-    delay: { type: Number, default: undefined },
-    /**
-     * Tooltip auto close options (pressing escape, clicking the content or outside)
-     * @values true, false, content, outside, escape
-     */
-    closeable: {
-        type: [Array, Boolean] as PropType<string[] | boolean>,
-        default: () =>
-            getOption("tooltip.closeable", ["escape", "outside", "content"]),
-    },
-    /**
-     * Append the component to another part of the DOM.
-     * Set `true` to append the component to the body.
-     * In addition, any CSS selector string or an actual DOM node can be used.
-     */
-    teleport: {
-        type: [Boolean, String, Object],
-        default: () => getOption("dropdown.teleport", false),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when the dropdown is teleported */
-    teleportClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip content */
-    contentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip trigger position */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip trigger */
-    triggerClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip content when is multiline */
-    multilineClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip trigger when is always visible */
-    alwaysClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip arrow */
-    arrowClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the tooltip arrow position */
-    arrowPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<TooltipProps>(), {
+    override: undefined,
+    active: false,
+    label: undefined,
+    variant: () => getDefault("tooltip.variant"),
+    position: () => getDefault("tooltip.position", "auto"),
+    always: false,
+    disabled: false,
+    animation: () => getDefault("tooltip.animation", "fade"),
+    multiline: false,
+    triggerTag: () => getDefault("tooltip.triggerTag", "div"),
+    triggers: () => getDefault("tooltip.triggers", ["hover", "focus"]),
+    delay: undefined,
+    closeable: () =>
+        getDefault("tooltip.closeable", ["escape", "outside", "content"]),
+    teleport: () => getDefault("dropdown.teleport", false),
 });
 
 const emits = defineEmits<{
@@ -167,11 +43,11 @@ const emits = defineEmits<{
      * active prop two-way binding
      * @param value {boolean} - updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /** on active change to false event */
-    (e: "close"): void;
+    close: [];
     /** on active change to true event */
-    (e: "open"): void;
+    open: [];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });
@@ -180,6 +56,8 @@ watch(isActive, (value) => {
     if (value) emits("open");
     else emits("close");
 });
+
+const tooltipId = useId();
 
 const timer = ref();
 
@@ -193,41 +71,8 @@ watch(
 
 // --- Event Handler ---
 
-const contentRef = ref<HTMLElement>();
+const contentRef = ref<HTMLElement | Component>();
 const triggerRef = ref<HTMLElement>();
-
-const eventCleanups: (() => void)[] = [];
-
-watch(isActive, (value) => {
-    // on active set event handler
-    if (value && isClient) {
-        setTimeout(() => {
-            if (cancelOptions.value.indexOf("outside") >= 0) {
-                // set outside handler
-                eventCleanups.push(
-                    useClickOutside(contentRef, onClickedOutside, {
-                        ignore: [triggerRef],
-                        immediate: true,
-                        passive: true,
-                    }),
-                );
-            }
-
-            if (cancelOptions.value.indexOf("escape") >= 0) {
-                // set keyup handler
-                eventCleanups.push(
-                    useEventListener("keyup", onKeyPress, document, {
-                        immediate: true,
-                    }),
-                );
-            }
-        });
-    } else if (!value) {
-        // on close cleanup event handler
-        eventCleanups.forEach((fn) => fn());
-        eventCleanups.length = 0;
-    }
-});
 
 const cancelOptions = computed<string[]>(() =>
     typeof props.closeable === "boolean"
@@ -237,41 +82,48 @@ const cancelOptions = computed<string[]>(() =>
         : props.closeable,
 );
 
+// set click outside handler
+if (isClient && cancelOptions.value.includes("outside")) {
+    useClickOutside([contentRef, triggerRef], onClickedOutside, {
+        trigger: isActive,
+        passive: true,
+    });
+}
+
 /** Close tooltip if clicked outside. */
 function onClickedOutside(): void {
     if (!isActive.value || props.always) return;
-    if (cancelOptions.value.indexOf("outside") < 0) return;
+    if (!cancelOptions.value.includes("outside")) return;
     isActive.value = false;
 }
 
-/** Keypress event that is bound to the document */
-function onKeyPress(event: KeyboardEvent): void {
-    if (isActive.value && (event.key === "Escape" || event.key === "Esc")) {
-        if (cancelOptions.value.indexOf("escape") < 0) return;
-        isActive.value = false;
-    }
+/** Escape keydown event that is bound to the trigger */
+function onEscape(): void {
+    if (!isActive.value) return;
+    if (!cancelOptions.value.includes("escape")) return;
+    isActive.value = false;
 }
 
 function onClick(): void {
-    if (props.triggers.indexOf("click") < 0) return;
+    if (!props.triggers.includes("click")) return;
     // if not active, toggle after clickOutside event
     // this fixes toggling programmatic
     nextTick(() => setTimeout(() => open()));
 }
 
 function onContextMenu(event: Event): void {
-    if (props.triggers.indexOf("contextmenu") < 0) return;
+    if (!props.triggers.includes("contextmenu")) return;
     event.preventDefault();
     open();
 }
 
 function onFocus(): void {
-    if (props.triggers.indexOf("focus") < 0) return;
+    if (!props.triggers.includes("focus")) return;
     open();
 }
 
 function onHover(): void {
-    if (props.triggers.indexOf("hover") < 0) return;
+    if (!props.triggers.includes("hover")) return;
     open();
 }
 
@@ -288,7 +140,7 @@ function open(): void {
 }
 
 function onClose(): void {
-    if (cancelOptions.value.indexOf("content") < 0) return;
+    if (!cancelOptions.value.includes("content")) return;
     isActive.value = !props.closeable;
     if (timer.value && props.closeable) clearTimeout(timer.value);
 }
@@ -359,6 +211,8 @@ const contentClasses = defineClasses(
             ref="triggerRef"
             :class="triggerClasses"
             aria-haspopup="true"
+            :aria-describedby="tooltipId"
+            @keydown.escape="onEscape"
             @click="onClick"
             @contextmenu="onContextMenu"
             @mouseenter="onHover"
@@ -383,8 +237,10 @@ const contentClasses = defineClasses(
             <transition :name="animation">
                 <div
                     v-show="isActive || (always && !disabled)"
+                    :id="tooltipId"
                     :ref="(el) => (contentRef = setContent(el as HTMLElement))"
-                    :class="contentClasses">
+                    :class="contentClasses"
+                    role="tooltip">
                     <span :class="arrowClasses"></span>
 
                     <!--

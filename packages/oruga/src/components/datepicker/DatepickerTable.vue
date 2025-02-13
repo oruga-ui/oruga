@@ -36,12 +36,12 @@ const props = defineProps({
 
 const emits = defineEmits<{
     /** modelValue prop two-way binding */
-    (e: "update:modelValue", value: Date | Date[]): void;
+    "update:model-value": [value: Date | Date[]];
     /** focusedDate prop two-way binding */
-    (e: "update:focusedDate", value: FocusedDate): void;
-    (e: "range-start", value: Date): void;
-    (e: "range-end", value: Date): void;
-    (e: "week-number-click", value: number): void;
+    "update:focusedDate": [value: FocusedDate];
+    "range-start": [value: Date];
+    "range-end": [value: Date];
+    "week-number-click": [value: number];
 }>();
 
 const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
@@ -164,7 +164,7 @@ function onSelectedDate(date: Date): void {
     else if (isTrueish(props.pickerProps.range)) handleSelectRangeDate(date);
     else if (isTrueish(props.pickerProps.multiple))
         handleSelectMultipleDates(date);
-    else emits("update:modelValue", date);
+    else emits("update:model-value", date);
 }
 
 /*
@@ -185,7 +185,7 @@ function handleSelectRangeDate(date: Date): void {
             selectedEndDate.value = date;
         }
         emits("range-end", date);
-        emits("update:modelValue", [
+        emits("update:model-value", [
             selectedBeginDate.value,
             selectedEndDate.value,
         ]);
@@ -219,7 +219,7 @@ function handleSelectMultipleDates(date: Date): void {
     } else {
         multipleSelectedDates = [...multipleSelectedDates, date];
     }
-    emits("update:modelValue", multipleSelectedDates);
+    emits("update:model-value", multipleSelectedDates);
 }
 
 function onRangeHoverEndDate(date: Date): void {

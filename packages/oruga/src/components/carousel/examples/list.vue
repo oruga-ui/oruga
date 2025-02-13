@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 
 const carousel = ref(1);
 
-const settings = reactive({
-    arrows: true,
-    arrowsHover: true,
-    dragable: true,
-    itemsToShow: 4,
-    itemsToList: 1,
-    repeat: false,
-});
+const arrows = ref(true);
+const arrowsHover = ref(true);
+const dragable = ref(true);
+const itemsToShow = ref(4);
+const itemsToList = ref(1);
+const repeat = ref(false);
 
 const items = [
     {
@@ -48,25 +46,25 @@ const items = [
     <section>
         <o-field grouped>
             <o-field>
-                <o-switch v-model="settings.arrows" label="Arrow" />
+                <o-switch v-model="arrows" label="Arrow" />
             </o-field>
             <o-field>
                 <o-switch
-                    v-model="settings.arrowsHover"
-                    :disabled="!settings.arrows"
+                    v-model="arrowsHover"
+                    :disabled="!arrows"
                     label="Arrow on hover" />
             </o-field>
             <o-field>
-                <o-switch v-model="settings.dragable" label="Drag event" />
+                <o-switch v-model="dragable" label="Drag event" />
             </o-field>
             <o-field>
-                <o-switch v-model="settings.repeat" label="Repeat" />
+                <o-switch v-model="repeat" label="Repeat" />
             </o-field>
         </o-field>
         <o-field grouped>
             <o-field label="Items to Show">
                 <o-input
-                    v-model="settings.itemsToShow"
+                    v-model="itemsToShow"
                     type="number"
                     number
                     min="1"
@@ -74,7 +72,7 @@ const items = [
             </o-field>
             <o-field label="Items to List">
                 <o-input
-                    v-model="settings.itemsToList"
+                    v-model="itemsToList"
                     type="number"
                     number
                     min="1"
@@ -83,12 +81,18 @@ const items = [
         </o-field>
 
         <o-carousel
-            v-bind="settings"
-            :key="settings.itemsToList + settings.itemsToShow"
-            v-model="carousel">
+            :key="itemsToList + itemsToShow"
+            v-model="carousel"
+            :arrows="arrows"
+            :arrows-hover="arrowsHover"
+            :dragable="dragable"
+            :items-to-show="itemsToShow"
+            :items-to-list="itemsToList"
+            :repeat="repeat">
             <o-carousel-item v-for="(item, i) in items" :key="i">
-                <img :src="item.image" />
+                <img :src="item.image" :alt="item.title" />
             </o-carousel-item>
         </o-carousel>
+        <p><b>Current slide index:</b> {{ carousel }}</p>
     </section>
 </template>

@@ -4,46 +4,67 @@ const subitem = "menu-item";
 const inspectData = [
     {
         class: "rootClass",
-        description: "Class of the root element (menu)",
+        description: "Class of the root element",
     },
     {
         class: "listClass",
         description: "Class of the menu list",
     },
     {
-        class: "listLabelClass",
-        description: "Class of the menu list label",
+        class: "labelClass",
+        description: "Class of the menu label",
     },
     {
         class: "itemClass",
-        description: "Class of the menu item",
+        description: "Class of the root element of menu item",
         subitem: true,
     },
     {
         class: "itemActiveClass",
-        description: "Class of the active menu item",
+        description: "Class of the menu item root when active",
+        subitem: true,
+    },
+    {
+        class: "itemFocusedClass",
+        description: "Class of the menu item root when focused",
         subitem: true,
     },
     {
         class: "itemDisabledClass",
+        description: "Class of the menu item root when disabled",
         properties: ["disabled"],
-        description: "Class of the disabled menu item",
         subitem: true,
     },
     {
-        class: "itemIconTextClass",
+        class: "itemButtonClass",
+        description: "Class of the menu item",
+        subitem: true,
+    },
+    {
+        class: "itemButtonActiveClass",
+        description: "Class of the menu item when active",
+        subitem: true,
+    },
+    {
+        class: "itemButtonFocusedClass",
+        description: "Class of the menu item when focused",
+        subitem: true,
+    },
+    {
+        class: "itemButtonDisabledClass",
+        description: "Class of the menu item when disabled",
+        properties: ["disabled"],
+        subitem: true,
+    },
+    {
+        class: "itemButtonIconClass",
+        description: "Class of the menu item with icon",
         properties: ["icon"],
-        description: "Class of the icon of menu item",
         subitem: true,
     },
     {
         class: "itemSubmenuClass",
-        description: "Class of the menu item when is a submenu",
-        subitem: true,
-    },
-    {
-        class: "itemWrapperClass",
-        description: "Class of the root element of menu item",
+        description: "Class of the menu item submenu",
         subitem: true,
     },
 ];

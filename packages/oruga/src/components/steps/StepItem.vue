@@ -1,17 +1,14 @@
-<script
-    setup
-    lang="ts"
-    generic="T extends string | number | object, C extends Component">
+<script setup lang="ts" generic="T, C extends Component">
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
-import { getOption } from "@/utils/config";
-import { isEqual } from "@/utils/helpers";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { StepsComponent, StepItemComponent } from "./types";
 import type { StepItemProps } from "./props";
 
 /**
+ * An step item used by the steps component.
  * @displayName Step Item
  */
 defineOptions({
@@ -28,11 +25,10 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
     step: undefined,
     variant: undefined,
     clickable: undefined,
+    disabled: false,
     visible: true,
-    icon: () => getOption("steps.icon"),
-    iconPack: () => getOption("steps.iconPack"),
-    tag: () => getOption("steps.itemTag", "button"),
-    ariaRole: () => getOption("steps.ariaRole", "tab"),
+    icon: () => getDefault("steps.icon"),
+    iconPack: () => getDefault("steps.iconPack"),
     content: undefined,
     component: undefined,
     props: undefined,
@@ -41,33 +37,36 @@ const props = withDefaults(defineProps<StepItemProps<T, C>>(), {
 
 const emits = defineEmits<{
     /** on step item activate event */
-    (e: "activate"): void;
+    activate: [];
     /** on step item deactivate event */
-    (e: "deactivate"): void;
+    deactivate: [];
 }>();
 
-const itemValue = props.value || useId();
+const itemValue = props.value ?? useId();
 
 const slots = useSlots();
 
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<StepItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
     $slots: slots,
-    classes: itemClasses.value,
+    stepClasses: stepClasses.value,
+    iconClasses: stepIconClasses.value,
+    labelClasses: stepLabelClasses.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,
 }));
 
-// inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<StepsComponent<T>>({
-    data: providedData,
-});
+/** inject functionalities and data from the parent component */
+const { parent, item } = useProviderChild<StepsComponent, StepItemComponent<T>>(
+    { data: providedData },
+);
 
 const transitionName = ref();
 
-const isActive = computed(() => isEqual(itemValue, parent.value.activeValue));
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const isTransitioning = ref(false);
 
@@ -82,6 +81,11 @@ const prevAnimation = computed(() => {
         parent.value.vertical && parent.value.animation.length === 4 ? 3 : 1;
     return parent.value.animation[idx];
 });
+
+/** shows if the step is clickable or not */
+const isClickable = computed(
+    () => props.clickable || item.value.index < parent.value.activeIndex,
+);
 
 /** Activate element, alter animation name based on the index. */
 function activate(oldIndex: number): void {
@@ -111,24 +115,50 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
-
-const itemClasses = defineClasses(
-    ["itemHeaderClass", "o-steps__nav-item"],
+const stepClasses = defineClasses(
+    ["stepClass", "o-steps__step"],
     [
-        "itemHeaderVariantClass",
-        "o-steps__nav-item--",
+        "stepVariantClass",
+        "o-steps__step--",
         computed(() => parent.value?.variant || props.variant),
         computed(() => !!parent.value?.variant || !!props.variant),
     ],
-    ["itemHeaderActiveClass", "o-steps__nav-item-active", null, isActive],
+    ["stepActiveClass", "o-steps__step--active", null, isActive],
+    ["stepClickableClass", "o-steps__step--clickable", null, isClickable],
     [
-        "itemHeaderPreviousClass",
-        "o-steps__nav-item-previous",
+        "stepDisabledClass",
+        "o-steps__step--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "stepPreviousClass",
+        "o-steps__step--previous",
         null,
         computed(() => item.value.index < parent.value?.activeIndex),
     ],
+    [
+        "stepNextClass",
+        "o-steps__step--next",
+        null,
+        computed(() => item.value.index > parent.value?.activeIndex),
+    ],
+    [
+        "stepLabelPositionClass",
+        "o-steps__step--label-",
+        computed(() => parent.value?.labelPosition),
+        computed(() => !!parent.value?.labelPosition),
+    ],
 );
+
+const stepLabelClasses = defineClasses([
+    "stepLabelClass",
+    "o-steps__step-label",
+]);
+
+const stepIconClasses = defineClasses(["stepIconClass", "o-steps__step-icon"]);
+
+const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
 </script>
 
 <template>
@@ -139,32 +169,32 @@ const itemClasses = defineClasses(
         :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
-        <template v-if="!parent.destroyOnHide || (isActive && visible)">
-            <div
-                v-show="isActive && visible"
-                ref="rootRef"
-                v-bind="$attrs"
-                :class="elementClasses"
-                :data-id="`steps-${item.identifier}`"
-                data-oruga="steps-item"
-                :tabindex="isActive ? 0 : -1"
-                :role="ariaRole"
-                aria-roledescription="item">
-                <!-- 
-                    @slot Step item content
-                -->
-                <slot>
-                    <!-- injected component -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}" />
+        <div
+            v-show="isActive && visible"
+            v-bind="$attrs"
+            :id="`tabpanel-${item.identifier}`"
+            data-oruga="steps-item"
+            :data-id="`steps-${item.identifier}`"
+            :class="panelClasses"
+            role="tabpanel"
+            :hidden="!isActive"
+            :aria-labelledby="`tab-${item.identifier}`"
+            aria-roledescription="item">
+            <!-- 
+                @slot Step item content
+                @binding {boolean} active - if item is shown 
+            -->
+            <slot :active="isActive && visible">
+                <!-- injected component -->
+                <component
+                    :is="component"
+                    v-if="component"
+                    v-bind="$props.props"
+                    v-on="$props.events || {}" />
 
-                    <!-- default content prop -->
-                    <template v-else>{{ content }}</template>
-                </slot>
-            </div>
-        </template>
+                <!-- default content prop -->
+                <template v-else>{{ content }}</template>
+            </slot>
+        </div>
     </Transition>
 </template>

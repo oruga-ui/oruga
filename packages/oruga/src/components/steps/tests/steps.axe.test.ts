@@ -1,13 +1,21 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
+import { nextTick } from "vue";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 import StepsExample from "./StepsExample.vue";
+import type { StepsProps } from "../props";
 
-describe("Steps axe tests", () => {
+type ExampleProps = ComponentProps<typeof StepsExample>;
+
+describe("OSteps axe tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases = [
+    const a11yCases: {
+        title: string;
+        props?: StepsProps<unknown> & ExampleProps;
+    }[] = [
         {
             title: "axe steps - base case",
             props: undefined,
@@ -51,7 +59,12 @@ describe("Steps axe tests", () => {
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
-        const wrapper = mount(StepsExample, props);
-        expect(await axe(wrapper.html())).toHaveNoViolations();
+        const wrapper = mount(StepsExample, {
+            props: { ...props },
+            attachTo: document.body,
+        });
+        await nextTick(); // await child items got rendered
+
+        expect(await axe(wrapper.element)).toHaveNoViolations();
     });
 });

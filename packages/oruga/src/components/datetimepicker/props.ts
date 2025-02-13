@@ -44,10 +44,20 @@ export type DatetimepickerProps = {
     parser?: (date: string) => DatetimepickerProps["modelValue"];
     /** Date creator function, default is `new Date()` */
     creator?: () => Date;
-    /** Dropdown position */
-    position?: string;
-    /** Enable mobile native input if mobile agent */
-    mobileNative?: boolean;
+    /**
+     * Position of the dropdown relative to the input
+     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
+     */
+    position?:
+        | "auto"
+        | "top"
+        | "bottom"
+        | "left"
+        | "right"
+        | "top-right"
+        | "top-left"
+        | "bottom-left"
+        | "bottom-right";
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -59,6 +69,8 @@ export type DatetimepickerProps = {
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
+    /** Enable mobile native input if mobile agent */
+    mobileNative?: boolean;
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.

@@ -5,8 +5,8 @@ import {
     ref,
     watch,
     nextTick,
+    useTemplateRef,
     type PropType,
-    type ComponentInstance,
 } from "vue";
 
 import ODropdown from "../dropdown/Dropdown.vue";
@@ -74,28 +74,28 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {Date, Array} updated active prop
+     * @param value {Date, Date[]} updated active prop
      */
-    (e: "update:value", value: Date | Array<Date> | undefined): void;
+    "update:value": [value: Date | Date[] | undefined];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /** on input focus event */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /** on input blur event */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /** on input invalid event */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /** on icon click event */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /** on icon right click event */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
     /** on dropdown left button press event */
-    (e: "left", event: Event): void;
+    left: [event: Event];
     /** on dropdown right button press event */
-    (e: "right", event: Event): void;
+    right: [event: Event];
 }>();
 
 const isMobileNative = computed(
@@ -108,9 +108,9 @@ const isMobileNative = computed(
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const dropdownRef = ref<ComponentInstance<typeof ODropdown>>();
-const inputRef = ref<ComponentInstance<typeof OInput>>();
-const nativeInputRef = ref<ComponentInstance<typeof OInput>>();
+const dropdownRef = useTemplateRef("dropdownComponent");
+const inputRef = useTemplateRef("inputComponent");
+const nativeInputRef = useTemplateRef("nativeInputComponent");
 
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : inputRef.value,
@@ -195,15 +195,11 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 watch(isActive, onActiveChange);
 
-const ariaRole = computed(() =>
-    !isTrueish(props.pickerProps.inline) ? "dialog" : undefined,
-);
-
 const triggers = computed(() =>
     isTrueish(props.pickerProps.openOnFocus) ? ["click"] : [],
 );
 
-if (isClient) useEventListener("keyup", onKeyPress);
+if (isClient) useEventListener(document, "keyup", onKeyPress);
 
 /** Keypress event that is bound to the document. */
 function onKeyPress(event: KeyboardEvent): void {
@@ -330,24 +326,21 @@ defineExpose({ focus: setFocus });
     <div :data-oruga="dataOruga" :class="rootClasses" @click="onNativeClick">
         <o-dropdown
             v-if="!isMobileNative"
-            ref="dropdownRef"
+            ref="dropdownComponent"
             v-bind="dropdownBind"
             v-model:active="isActive"
+            :triggers="triggers"
             :position="pickerProps.position"
             :disabled="pickerProps.disabled"
             :inline="pickerProps.inline"
             :mobile-modal="pickerProps.mobileModal"
+            :desktop-modal="pickerProps.desktopModal"
             :mobile-breakpoint="pickerProps.mobileBreakpoint"
-            :trap-focus="pickerProps.trapFocus"
-            :aria-role="ariaRole"
-            :aria-modal="!pickerProps.inline"
-            :tabindex="-1"
-            :teleport="pickerProps.teleport"
-            :triggers="triggers">
+            :teleport="pickerProps.teleport">
             <template v-if="!pickerProps.inline" #trigger>
                 <slot name="trigger">
                     <o-input
-                        ref="inputRef"
+                        ref="inputComponent"
                         v-bind="inputBind"
                         v-model="inputValue"
                         :placeholder="pickerProps.placeholder"
@@ -372,6 +365,7 @@ defineExpose({ focus: setFocus });
                         @icon-right-click="$emit('icon-right-click', $event)" />
                 </slot>
             </template>
+
             <o-dropdown-item
                 override
                 tag="div"
@@ -388,7 +382,7 @@ defineExpose({ focus: setFocus });
         <template v-else>
             <slot name="trigger">
                 <o-input
-                    ref="nativeInputRef"
+                    ref="nativeInputComponent"
                     v-bind="inputBind"
                     v-model="inputValue"
                     :type="initialNativeType"

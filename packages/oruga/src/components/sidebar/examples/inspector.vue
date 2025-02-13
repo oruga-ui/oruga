@@ -20,7 +20,7 @@ const inspectData = [
         class: "activeClass",
         properties: ["active"],
         description: "Class of sidebar component when its active",
-        action: () => {
+        action: (): void => {
             active.value = true;
         },
     },
@@ -28,15 +28,15 @@ const inspectData = [
         class: "teleportClass",
         properties: ["teleport"],
         description: "Class of sidebar when teleported",
-        action: () => {
+        action: (): void => {
             teleport.value = true;
         },
     },
     {
         class: "overlayClass",
         description: "Class of the sidebar overlay",
-        action: (cmp, data) => {
-            setTimeout(() => {
+        action: (cmp, data): void => {
+            setTimeout((): void => {
                 active.value = true;
                 data.overlay = true;
                 data.fullheight = true;
@@ -50,9 +50,9 @@ const inspectData = [
     {
         class: "inlineClass",
         description: "Class of the sidebar when its inlined",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             inline.value = true;
-            setTimeout(() => {
+            setTimeout((): void => {
                 active.value = true;
                 data.overlay = true;
                 data.fullheight = true;
@@ -63,7 +63,7 @@ const inspectData = [
         class: "fullheightClass",
         description: "Class of the sidebar when is fullheight",
         properties: ["fullheight"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullheight = true;
         },
     },
@@ -71,7 +71,7 @@ const inspectData = [
         class: "fullwidthClass",
         description: "Class of the sidebar when is fullwidth",
         properties: ["fullwidth"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullwidth = true;
         },
     },
@@ -79,7 +79,7 @@ const inspectData = [
         class: "positionClass",
         description: "Class of the sidebar position",
         properties: ["position"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             position.value = "right";
             data.right = true;
         },
@@ -88,7 +88,7 @@ const inspectData = [
         class: "reduceClass",
         description: "Class of the sidebar when reduced",
         properties: ["reduce"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.reduce = true;
         },
     },
@@ -96,7 +96,7 @@ const inspectData = [
         class: "expandOnHoverClass",
         description: "Class of the sidebar when expanded on hover",
         properties: ["expandOnHover"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expandOnHover = true;
         },
     },
@@ -105,7 +105,7 @@ const inspectData = [
         description: "Class of the sidebar variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },

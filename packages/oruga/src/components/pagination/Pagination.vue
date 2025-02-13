@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { computed, watch, nextTick, type PropType } from "vue";
+import { computed, watch, nextTick } from "vue";
 
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { PaginationProps } from "./props";
+import type { DynamicComponent } from "@/types";
 
 /**
- * A responsive and flexible pagination
+ * A responsive and flexible pagination.
  * @displayName Pagination
  * @style _pagination.scss
  */
@@ -21,176 +22,28 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Total count of items */
-    total: { type: Number, default: undefined },
-    /** Items count for each page */
-    perPage: {
-        type: [Number, String],
-        default: () => getOption("pagination.perPage", 20),
-    },
-    /** Current page number, use v-model:current to make it two-way binding */
-    current: { type: Number, default: 1 },
-    /** Number of pagination items to show before current page. */
-    rangeBefore: { type: Number, default: 1 },
-    /** Number of pagination items to show after current page. */
-    rangeAfter: { type: Number, default: 1 },
-    /**
-     * Pagination size
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("pagination.size"),
-    },
-    /** Enable simple style */
-    simple: {
-        type: Boolean,
-        default: () => getOption("pagination.simple", false),
-    },
-    /** Enable rounded button style */
-    rounded: {
-        type: Boolean,
-        default: () => getOption("pagination.rounded", false),
-    },
-    /**
-     * Buttons order
-     * @values centered, right, left
-     */
-    order: {
-        type: String,
-        default: () => getOption("pagination.order", "right"),
-        validator: (value: string) =>
-            ["centered", "right", "left"].indexOf(value) >= 0,
-    },
-    /** Pagination button tag name */
-    buttonTag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () =>
-            getOption<DynamicComponent>("pagination.buttonTag", "button"),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("pagination.iconPack"),
-    },
-    /** Icon to use for previous button */
-    iconPrev: {
-        type: String,
-        default: () => getOption("pagination.iconPrev", "chevron-left"),
-    },
-    /** Icon to use for next button */
-    iconNext: {
-        type: String,
-        default: () => getOption("pagination.iconNext", "chevron-right"),
-    },
-    /** Mobile breakpoint as `max-width` value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("pagination.mobileBreakpoint"),
-    },
-    /** Accessibility label for the next page button. */
-    ariaNextLabel: {
-        type: String,
-        default: () => getOption("pagination.ariaNextLabel", "Next page"),
-    },
-    /** Accessibility label for the previous page button. */
-    ariaPreviousLabel: {
-        type: String,
-        default: () =>
-            getOption("pagination.ariaPreviousLabel", "Previous page"),
-    },
-    /** Accessibility label for the page button. */
-    ariaPageLabel: {
-        type: String,
-        default: () => getOption("pagination.ariaPageLabel", "page"),
-    },
-    /** Accessibility label for the current page button. */
-    ariaCurrentLabel: {
-        type: String,
-        default: () => getOption("pagination.ariaCurrentLabel", "Current page"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the prev button */
-    prevButtonClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the next button */
-    nextButtonClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination list */
-    listClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination list items */
-    listItemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the link button */
-    linkClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the current link */
-    linkCurrentClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination ellipsis */
-    ellipsisClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the info in `simple` mode */
-    infoClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination order */
-    orderClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination in `simple` mode */
-    simpleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the pagination when rounded */
-    roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the disabled link */
-    linkDisabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class for the pagination size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of pagination component when on mobile */
-    mobileClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<PaginationProps>(), {
+    override: undefined,
+    total: undefined,
+    perPage: () => getDefault("pagination.perPage", 20),
+    current: 1,
+    rangeBefore: 1,
+    rangeAfter: 1,
+    size: () => getDefault("pagination.size"),
+    simple: () => getDefault("pagination.simple", false),
+    rounded: () => getDefault("pagination.rounded", false),
+    order: () => getDefault("pagination.order", "right"),
+    buttonTag: () => getDefault("pagination.buttonTag", "button"),
+    iconPack: () => getDefault("pagination.iconPack"),
+    iconPrev: () => getDefault("pagination.iconPrev", "chevron-left"),
+    iconNext: () => getDefault("pagination.iconNext", "chevron-right"),
+    mobileBreakpoint: () => getDefault("pagination.mobileBreakpoint"),
+    ariaNextLabel: () => getDefault("pagination.ariaNextLabel", "Next page"),
+    ariaPreviousLabel: () =>
+        getDefault("pagination.ariaPreviousLabel", "Previous page"),
+    ariaPageLabel: () => getDefault("pagination.ariaPageLabel", "Page"),
+    ariaCurrentLabel: () =>
+        getDefault("pagination.ariaCurrentLabel", "Current page"),
 });
 
 const emits = defineEmits<{
@@ -198,12 +51,12 @@ const emits = defineEmits<{
      * current prop two-way binding
      * @param value {number} updated current prop
      */
-    (e: "update:current", value: number): void;
+    "update:current": [value: number];
     /**
      * on current change event
      * @param value {number} current value
      */
-    (e: "change", event: number): void;
+    change: [event: number];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -230,14 +83,17 @@ const firstItem = computed(() => {
     return firstItem >= 0 ? firstItem : 0;
 });
 
-/** Check if previous button is available. */
-const hasPrev = computed(() => props.current > 1);
+/** Check if this is the first page. */
+const isFirst = computed(() => props.current <= 1);
 
 /** Check if first page button should be visible. */
 const hasFirst = computed(() => props.current >= 2 + props.rangeBefore);
 
 /** Check if first ellipsis should be visible. */
 const hasFirstEllipsis = computed(() => props.current >= props.rangeBefore + 4);
+
+/** Check if this is the last page. */
+const isLast = computed(() => props.current >= pageCount.value);
 
 /** Check if last page button should be visible. */
 const hasLast = computed(
@@ -248,9 +104,6 @@ const hasLast = computed(
 const hasLastEllipsis = computed(
     () => props.current < pageCount.value - (2 + props.rangeAfter),
 );
-
-/** Check if next button is available. */
-const hasNext = computed(() => props.current < pageCount.value);
 
 /**
  * Get near pages, 1 before and 1 after the current.
@@ -361,48 +214,38 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-pag--mobile", null, isMobile],
 );
 
-const prevBtnClasses = defineClasses(
-    ["prevButtonClass", "o-pag__previous"],
-    [
-        "linkDisabledClass",
-        "o-pag__link--disabled",
-        null,
-        computed(() => !hasPrev.value),
-    ],
-);
-
-const nextBtnClasses = defineClasses(
-    ["nextButtonClass", "o-pag__next"],
-    [
-        "linkDisabledClass",
-        "o-pag__link--disabled",
-        null,
-        computed(() => !hasNext.value),
-    ],
-);
-
 const infoClasses = defineClasses(["infoClass", "o-pag__info"]);
 
 const ellipsisClasses = defineClasses(["ellipsisClass", "o-pag__ellipsis"]);
 
 const listClasses = defineClasses(["listClass", "o-pag__list"]);
 
-const linkClasses = defineClasses(
-    ["linkClass", "o-pag__link"],
+const listItemClasses = defineClasses(["listItemClass", "o-pag__item"]);
+
+const buttonClasses = defineClasses(
+    ["buttonClass", "o-pag__btn"],
     [
         "roundedClass",
-        "o-pag__link--rounded",
+        "o-pag__btn--rounded",
         null,
         computed(() => props.rounded),
     ],
 );
 
-const linkCurrentClasses = defineClasses([
-    "linkCurrentClass",
-    "o-pag__link--current",
+const buttonCurrentClasses = defineClasses([
+    "buttonCurrentClass",
+    "o-pag__btn--current",
 ]);
 
-const listItemClasses = defineClasses(["listItemClass", "o-pag__item"]);
+const buttonPrevClasses = defineClasses(
+    ["buttonPrevClass", "o-pag__btn-previous"],
+    ["buttonDisabledClass", "o-pag__btn--disabled", null, isFirst],
+);
+
+const buttonNextClasses = defineClasses(
+    ["buttonNextClass", "o-pag__btn-next"],
+    ["buttonDisabledClass", "o-pag__btn--disabled", null, isLast],
+);
 
 // --- Expose Public Functionalities ---
 
@@ -424,9 +267,9 @@ defineExpose({ last, first, prev, next });
             v-bind="getPage(currentPage - 1, ariaPreviousLabel)">
             <o-pagination-button
                 v-bind="getPage(currentPage - 1, ariaPreviousLabel)"
-                :root-class="prevBtnClasses"
-                :link-class="linkClasses"
-                :link-current-class="linkCurrentClasses">
+                :root-class="buttonPrevClasses"
+                :button-class="buttonClasses"
+                :button-current-class="buttonCurrentClasses">
                 <o-icon
                     :icon="iconPrev"
                     :pack="iconPack"
@@ -434,6 +277,7 @@ defineExpose({ last, first, prev, next });
                     aria-hidden="true" />
             </o-pagination-button>
         </slot>
+
         <!-- 
             @slot Next button slot
             @binding {number} number - page number 
@@ -444,9 +288,9 @@ defineExpose({ last, first, prev, next });
         <slot name="next" v-bind="getPage(currentPage + 1, ariaNextLabel)">
             <o-pagination-button
                 v-bind="getPage(currentPage + 1, ariaNextLabel)"
-                :root-class="nextBtnClasses"
-                :link-class="linkClasses"
-                :link-current-class="linkCurrentClasses">
+                :root-class="buttonNextClasses"
+                :button-class="buttonClasses"
+                :button-current-class="buttonCurrentClasses">
                 <o-icon
                     :icon="iconNext"
                     :pack="iconPack"
@@ -474,10 +318,11 @@ defineExpose({ last, first, prev, next });
                 <slot v-bind="getPage(1)">
                     <o-pagination-button
                         v-bind="getPage(1)"
-                        :link-class="linkClasses"
-                        :link-current-class="linkCurrentClasses" />
+                        :button-class="buttonClasses"
+                        :button-current-class="buttonCurrentClasses" />
                 </slot>
             </li>
+
             <li v-if="hasFirstEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
@@ -490,8 +335,8 @@ defineExpose({ last, first, prev, next });
                 <slot v-bind="page">
                     <o-pagination-button
                         v-bind="page"
-                        :link-class="linkClasses"
-                        :link-current-class="linkCurrentClasses" />
+                        :button-class="buttonClasses"
+                        :button-current-class="buttonCurrentClasses" />
                 </slot>
             </li>
 
@@ -499,6 +344,7 @@ defineExpose({ last, first, prev, next });
             <li v-if="hasLastEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
+
             <li v-if="hasLast" :class="listItemClasses">
                 <!-- 
                     @slot Pagination button slot
@@ -510,8 +356,8 @@ defineExpose({ last, first, prev, next });
                 <slot v-bind="getPage(pageCount)">
                     <o-pagination-button
                         v-bind="getPage(pageCount)"
-                        :link-class="linkClasses"
-                        :link-current-class="linkCurrentClasses" />
+                        :button-class="buttonClasses"
+                        :button-current-class="buttonCurrentClasses" />
                 </slot>
             </li>
         </ul>

@@ -96,8 +96,6 @@ export type DatepickerProps<
     rulesForFirstWeek?: number;
     /** Define the range of years to show */
     yearsRange?: number[];
-    /** Trap dropdown on focus */
-    trapFocus?: boolean;
     /**
      * Position of the dropdown relative to the input
      * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
@@ -112,10 +110,6 @@ export type DatepickerProps<
         | "top-left"
         | "bottom-left"
         | "bottom-right";
-    /** Enable dropdown mobile modal */
-    mobileModal?: boolean;
-    /** Enable mobile native input if mobile agent */
-    mobileNative?: boolean;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -131,6 +125,12 @@ export type DatepickerProps<
     iconPrev?: string;
     /** Icon name for next icon */
     iconNext?: string;
+    /** Dropdown content is shown into a modal on mobile */
+    mobileModal?: boolean;
+    /** Dropdown content is shown into a modal on desktop */
+    desktopModal?: boolean;
+    /** Enable mobile native input if mobile agent */
+    mobileNative?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**
@@ -153,8 +153,12 @@ export type DatepickerProps<
           ) => string);
     /** Accessibility next button aria label */
     ariaNextLabel?: string;
-    /** Accessibility previous button aria label  */
+    /** Accessibility previous button aria label */
     ariaPreviousLabel?: string;
+    /** Accessibility month select aria label */
+    ariaSelectMonthLabel?: string;
+    /** Accessibility year select aria label */
+    ariaSelectYearLabel?: string;
 } & DatepickerClasses;
 
 // class props (will not be displayed in the docs)

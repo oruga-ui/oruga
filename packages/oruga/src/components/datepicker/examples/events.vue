@@ -1,51 +1,50 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 const thisMonth = new Date().getMonth();
 
 const bars = ref(false);
-const date = ref(new Date(2017, thisMonth, 1));
-const indicators = computed(() => (bars.value ? "bars" : "dots"));
+const date = ref(new Date(2020, thisMonth, 1));
 
 const events = [
-    { date: new Date(2017, thisMonth, 2) },
-    { date: new Date(2017, thisMonth, 6) },
+    { date: new Date(2020, thisMonth, 2) },
+    { date: new Date(2020, thisMonth, 6) },
     {
-        date: new Date(2017, thisMonth, 6),
+        date: new Date(2020, thisMonth, 6),
         type: "info",
     },
     {
-        date: new Date(2017, thisMonth, 8),
+        date: new Date(2020, thisMonth, 8),
         type: "danger",
     },
     {
-        date: new Date(2017, thisMonth, 10),
+        date: new Date(2020, thisMonth, 10),
         type: "success",
     },
     {
-        date: new Date(2017, thisMonth, 10),
+        date: new Date(2020, thisMonth, 10),
         type: "link",
     },
-    { date: new Date(2017, thisMonth, 12) },
+    { date: new Date(2020, thisMonth, 12) },
     {
-        date: new Date(2017, thisMonth, 12),
+        date: new Date(2020, thisMonth, 12),
         type: "warning",
     },
     {
-        date: new Date(2017, thisMonth, 16),
+        date: new Date(2020, thisMonth, 16),
         type: "danger",
     },
-    { date: new Date(2017, thisMonth, 20) },
+    { date: new Date(2020, thisMonth, 20) },
     {
-        date: new Date(2017, thisMonth, 29),
+        date: new Date(2020, thisMonth, 29),
         type: "success",
     },
     {
-        date: new Date(2017, thisMonth, 29),
+        date: new Date(2020, thisMonth, 29),
         type: "warning",
     },
     {
-        date: new Date(2017, thisMonth, 29),
+        date: new Date(2020, thisMonth, 29),
         type: "info",
     },
 ];
@@ -54,13 +53,13 @@ const events = [
 <template>
     <section>
         <o-field>
-            <o-switch v-model="bars" label="Bars" />
+            <o-switch v-model="bars" label="Indicator Bars" />
         </o-field>
 
         <o-datepicker
             v-model="date"
             inline
             :events="events"
-            :indicators="indicators" />
+            :indicators="bars ? 'bars' : 'dots'" />
     </section>
 </template>

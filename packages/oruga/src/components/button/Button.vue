@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { computed, type PropType } from "vue";
+import { computed } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { ButtonProps } from "./props";
 
 /**
- * The classic button, in different colors, sizes, and states
+ * The classic button, in different colors, sizes, and states.
  * @displayName Button
  * @style _button.scss
  */
@@ -19,154 +19,32 @@ defineOptions({
     configField: "button",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * Button tag name
-     * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
-     */
-    tag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("button.tag", "button"),
-    },
-    /**
-     * Color variant of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("button.variant"),
-    },
-    /**
-     * Size of the control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("button.size"),
-    },
-    /** Button label, unnecessary when default slot is used */
-    label: { type: String, default: undefined },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("button.iconPack", undefined),
-    },
-    /** Icon name to show on the left */
-    iconLeft: { type: String, default: undefined },
-    /** Icon name to show on the right */
-    iconRight: { type: String, default: undefined },
-    /** Enable rounded style */
-    rounded: {
-        type: Boolean,
-        default: () => getOption("button.rounded", false),
-    },
-    /** Button will be expanded (full-width) */
-    expanded: { type: Boolean, default: false },
-    /** Button will be disabled */
-    disabled: { type: Boolean, default: false },
-    /** Enable outlined style */
-    outlined: { type: Boolean, default: false },
-    /** Enable loading style */
-    loading: { type: Boolean, default: false },
-    /** Enable inverted style */
-    inverted: { type: Boolean, default: false },
-    /**
-     * Button type, like native
-     * @values button, submit, reset
-     */
-    nativeType: {
-        type: String,
-        default: "button",
-        validator: (value: string) =>
-            ["button", "submit", "reset"].indexOf(value) >= 0,
-    },
-    /** Accessibility Role attribute to be passed to the button. */
-    role: {
-        type: String,
-        default: () => getOption("button.role", "button"),
-    },
-    /**
-     * This is used internally
-     * @ignore
-     */
-    iconBoth: { type: Boolean, default: false },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button elements wrapper */
-    wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when outlined */
-    outlinedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button with loading */
-    loadingClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when inverted */
-    invertedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when expanded */
-    expandedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when rounded */
-    roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button when disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button icon */
-    iconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button icon on the left */
-    iconLeftClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button icon on the right */
-    iconRightClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button label */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the button variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<ButtonProps>(), {
+    override: undefined,
+    tag: () => getDefault("button.tag", "button"),
+    variant: () => getDefault("button.variant"),
+    size: () => getDefault("button.size"),
+    label: undefined,
+    rounded: () => getDefault("button.rounded", false),
+    expanded: false,
+    disabled: false,
+    outlined: false,
+    loading: false,
+    inverted: false,
+    type: "button",
+    iconPack: () => getDefault("button.iconPack"),
+    iconLeft: undefined,
+    iconRight: undefined,
+    iconBoth: false,
 });
+
+defineEmits<{
+    /**
+     * button click event
+     * @param event {Event} native event
+     */
+    click: [event: Event];
+}>();
 
 const computedTag = computed(() =>
     typeof props.disabled !== "undefined" && props.disabled !== false
@@ -175,10 +53,8 @@ const computedTag = computed(() =>
 );
 
 const computedNativeType = computed(() =>
-    props.tag === "button" || props.tag === "input" ? props.nativeType : null,
+    props.tag === "button" || props.tag === "input" ? props.type : null,
 );
-
-const computedDisabled = computed(() => (props.disabled ? true : null));
 
 // --- Computed Component Classes ---
 
@@ -240,11 +116,15 @@ const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
 <template>
     <component
         :is="computedTag"
-        :disabled="computedDisabled"
+        data-oruga="button"
         :type="computedNativeType"
+        role="button"
+        tabindex="0"
         :class="rootClasses"
-        :role="role"
-        data-oruga="button">
+        :disabled="disabled ? true : null"
+        @click="$emit('click', $event)"
+        @keydown.enter="$emit('click', $event)"
+        @keydown.space="$emit('click', $event)">
         <span :class="wrapperClasses">
             <o-icon
                 v-if="iconLeft"

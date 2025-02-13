@@ -1,15 +1,15 @@
-<script setup lang="ts" generic="T extends string | number | boolean | object">
-import { computed, ref, useAttrs, useId, type PropType } from "vue";
+<script setup lang="ts" generic="T">
+import { computed, useAttrs, useId, useSlots, useTemplateRef } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ComponentClass } from "@/types";
+import type { SwitchProps } from "./props";
 
 /**
- * Switch between two opposing states
+ * Switch between two opposing states.
  * @displayName Switch
  * @style _switch.scss
  */
@@ -20,205 +20,81 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The input value state
-     * @type string|number|boolean|object
-     */
-    modelValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("switch.variant"),
-    },
-    /**
-     * Color of the switch when is passive
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    passiveVariant: {
-        type: String,
-        default: () => getOption("switch.passiveVariant"),
-    },
-    /**
-     * Size of the control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("switch.size"),
-    },
-    /** Input label, unnecessary when default slot is used */
-    label: { type: String, default: undefined },
-    /**
-     * Same as native value
-     * @type string|number|boolean|object
-     */
-    nativeValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Same as native required */
-    required: { type: Boolean, default: false },
-    /** Name attribute on native checkbox */
-    name: { type: String, default: undefined },
-    /**
-     * Overrides the returned value when it's checked
-     * @type string|number|boolean|object
-     */
-    trueValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: true,
-    },
-    /**
-     * Overrides the returned value when it's not checked
-     * @type string|number|boolean|object
-     */
-    falseValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: false,
-    },
-    /** Rounded style */
-    rounded: { type: Boolean, default: true },
-    /** Label position */
-    position: { type: String, default: "right" },
-    /** Same as native autocomplete options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("switch.autocomplete", "off"),
-    },
-    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
-    id: { type: String, default: () => useId() },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when switch is disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the outer switch check */
-    switchClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the outer switch check when checked */
-    switchCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the inner switch check */
-    switchCheckClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch when rounded */
-    roundedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch passive variant */
-    passiveVariantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of switch label position */
-    positionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Root class of the native input checkbox */
-    inputClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the native input element when checked */
-    inputCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch label */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the switch variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<SwitchProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    id: () => useId(),
+    label: undefined,
+    variant: () => getDefault("switch.variant"),
+    passiveVariant: () => getDefault("switch.passiveVariant"),
+    size: () => getDefault("switch.size"),
+    position: () => getDefault("switch.right", "position"),
+    rounded: () => getDefault("switch.rounded", true),
+    required: false,
+    disabled: false,
+    name: undefined,
+    nativeValue: undefined,
+    trueValue: undefined,
+    falseValue: undefined,
+    autocomplete: () => getDefault("switch.autocomplete", "off"),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    "update:model-value": [value: T];
     /**
      * on input change event
-     * @param value {string | number | boolean | object} input value
+     * @param value {T} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T, event: Event): void;
+    input: [value: T, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
 }>();
 
-const inputRef = ref<HTMLInputElement>();
+const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
-const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
+const { onBlur, onFocus, onInvalid, setFocus, doClick } = useInputHandler(
     inputRef,
     emits,
     props,
 );
+
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const vmodel = defineModel<T>({ default: undefined });
+// set field labelId or create a unique label id if a label is given
+const labelId =
+    !!parentField.value || !!props.label || !!useSlots().default
+        ? parentField.value?.labelId || useId()
+        : undefined;
 
-// if not `label` is given and `id` is given set as `for` property on o-field wrapper
-if (!props.label && props.id) parentField?.value?.setInputId(props.id);
+// if no `label` is given and `id` is given set as `for` property on o-field wrapper
+if (!props.label && props.id) parentField.value?.setInputId(props.id);
+
+const vmodel = defineModel<T>({ default: undefined });
 
 const isChecked = computed(
     () =>
-        vmodel.value === props.trueValue ||
+        vmodel.value === (props.trueValue ?? true) ||
         (Array.isArray(vmodel.value) &&
             vmodel.value.includes(props.nativeValue)),
 );
@@ -227,12 +103,17 @@ function onInput(event: Event): void {
     emits("input", vmodel.value, event);
 }
 
+function clickInput(): void {
+    setFocus();
+    doClick();
+}
+
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
 const inputBind = computed(() => ({
-    ...parentField?.value?.inputAttrs,
+    ...parentField.value?.inputAttrs,
     ...attrs,
 }));
 
@@ -295,45 +176,43 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <label
-        ref="label"
-        :class="rootClasses"
-        data-oruga="switch"
-        role="switch"
-        :aria-checked="isChecked"
-        @click="setFocus"
-        @keydown.prevent.enter="setFocus">
+    <div :class="rootClasses" data-oruga="switch">
         <input
             v-bind="inputBind"
             :id="id"
-            ref="inputRef"
+            ref="inputElement"
             v-model="vmodel"
             type="checkbox"
             role="switch"
             data-oruga-input="switch"
             :class="inputClasses"
-            :disabled="disabled"
-            :required="required"
             :name="name"
-            :autocomplete="autocomplete"
             :value="nativeValue"
-            :true-value="trueValue"
-            :false-value="falseValue"
-            @click.stop
+            :true-value="trueValue ?? true"
+            :false-value="falseValue ?? false"
+            :required="required"
+            :disabled="disabled"
+            :autocomplete="autocomplete"
+            :aria-checked="isChecked"
+            :aria-labelledby="labelId"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @change="onInput" />
 
-        <span :class="switchClasses">
+        <span :class="switchClasses" @click.prevent="clickInput">
             <span :class="switchCheckClasses"></span>
         </span>
 
-        <span v-if="label || $slots.default" :class="labelClasses">
+        <label
+            v-if="label || $slots.default"
+            :id="labelId"
+            :for="id"
+            :class="labelClasses">
             <!--
                 @slot Override the label, default is label prop 
             -->
             <slot>{{ label }}</slot>
-        </span>
-    </label>
+        </label>
+    </div>
 </template>

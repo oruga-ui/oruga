@@ -4,12 +4,18 @@ import type { ClassBind } from "@/types";
 
 import type { TabItemProps } from "./props";
 
-export type TabItemComponent<T extends string | number | object> = TabItemProps<
-    T,
-    Component
-> & {
+export type TabsComponent = {
+    activeIndex: number;
+    type: string;
+    vertical: boolean;
+    animated: boolean;
+    animation: string[];
+    animateInitially: boolean;
+};
+
+export type TabItemComponent<T> = TabItemProps<T, Component> & {
     $slots: Slots;
-    classes: ClassBind[];
+    tabClasses: ClassBind[];
     iconClasses: ClassBind[];
     labelClasses: ClassBind[];
     isTransitioning: boolean;
@@ -17,18 +23,4 @@ export type TabItemComponent<T extends string | number | object> = TabItemProps<
     deactivate: (index: number) => void;
 };
 
-export type TabsComponent<T> = {
-    activeValue: T;
-    type: string;
-    vertical: boolean;
-    animated: boolean;
-    animation: string[];
-    animateInitially: boolean;
-    destroyOnHide: boolean;
-};
-
-export type TabItem<T extends string | number | object> = Omit<
-    ProviderItem<T>,
-    "data"
-> &
-    TabItemComponent<T>;
+export type TabItem<T> = Omit<ProviderItem<T>, "data"> & TabItemComponent<T>;

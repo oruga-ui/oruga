@@ -143,8 +143,8 @@ describe("OInput", () => {
         const wrapper = mount(OInput, {
             props: {
                 modelValue: "foo",
-                "onUpdate:modelValue": (e) =>
-                    wrapper.setProps({ modelValue: e }),
+                "onUpdate:modelValue": (modelValue) =>
+                    wrapper.setProps({ modelValue }),
             },
         });
 

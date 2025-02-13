@@ -14,7 +14,7 @@ const inspectData = [
         class: "verticalClass",
         description: "Class of Tabs component when vertical",
         properties: ["vertical"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.vertical = true;
         },
     },
@@ -22,7 +22,7 @@ const inspectData = [
         class: "expandedClass",
         description: "Class of Tabs component when expanded",
         properties: ["expanded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -30,53 +30,38 @@ const inspectData = [
         class: "multilineClass",
         description: "Class of Tabs component when multiline",
         properties: ["multiline"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.multiline = true;
         },
     },
     {
         class: "positionClass",
-        description:
-            "Class of Tabs component when when is vertical and its position changes",
-        properties: ["position", "vertical"],
+        description: "Class of Tabs component position",
+        properties: ["position"],
         suffixes: ["bottom", "left", "right"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.vertical = true;
             data.position = "right";
         },
     },
     {
-        class: "navClass",
-        description: "Class of the Tabs navigation",
-    },
-    {
-        class: "navSizeClass",
+        class: "sizeClass",
         description: "Size of the navigation",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
     {
-        class: "navTypeClass",
+        class: "typeClass",
         description: "Type of the navigation",
         properties: ["type"],
         suffixes: ["default", "boxed", "toggle", "pills"],
     },
     {
-        class: "navPositionClass",
-        description: "Class of the Tabs component nav position",
-        properties: ["position"],
-        suffixes: ["bottom", "left", "right"],
-        action: (cmp, data) => {
-            data.vertical = false;
-            data.position = "right";
-        },
-    },
-    {
-        class: "navItemClass",
-        description: "Class of the navigation item",
+        class: "tablistClass",
+        description: "Class of the tablist element",
     },
     {
         class: "tabClass",
@@ -87,16 +72,24 @@ const inspectData = [
         class: "tabActiveClass",
         description: "Class of the tab item when active",
         subitem: true,
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.active = true;
         },
+    },
+    {
+        class: "tabPreviousClass",
+        description: "Class of the nav item before the active one",
+    },
+    {
+        class: "tabNextClass",
+        description: "Class of the nav item after the active one",
     },
     {
         class: "tabDisabledClass",
         description: "Class of the tab item when disabled",
         properties: ["disabled"],
         subitem: true,
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },

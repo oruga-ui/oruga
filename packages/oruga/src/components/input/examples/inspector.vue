@@ -8,7 +8,7 @@ const inspectData = [
         class: "expandedClass",
         description: "Class of input when expanded",
         properties: ["expanded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -16,7 +16,7 @@ const inspectData = [
         class: "iconLeftSpaceClass",
         description: "Class of the left icon space inside the input",
         properties: ["icon"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.icon = "envelope";
         },
     },
@@ -24,7 +24,7 @@ const inspectData = [
         class: "iconRightSpaceClass",
         description: "Class of the right icon space inside the input",
         properties: ["iconRight"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.iconRight = "times-circle";
         },
     },
@@ -36,7 +36,7 @@ const inspectData = [
         class: "textareaClass",
         description: "Class of input when type textarea ",
         properties: ["type"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.type = "textarea";
         },
     },
@@ -44,7 +44,7 @@ const inspectData = [
         class: "roundedClass",
         description: "Class of input when rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.rounded = true;
         },
     },
@@ -52,7 +52,7 @@ const inspectData = [
         class: "disabledClass",
         description: "Class of input when disabled ",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
@@ -60,7 +60,7 @@ const inspectData = [
         class: "iconLeftClass",
         description: "Class of the left icon",
         properties: ["icon"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.icon = "envelope";
         },
     },
@@ -68,7 +68,7 @@ const inspectData = [
         class: "iconRightClass",
         description: "Class of the right icon",
         properties: ["iconRight"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.iconRight = "times-circle";
         },
     },
@@ -76,7 +76,7 @@ const inspectData = [
         class: "counterClass",
         description: "Class of the counter element",
         properties: ["counter", "maxlength"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.counter = true;
             data.maxlength = 10;
             const el = cmp.querySelector("input");
@@ -88,7 +88,7 @@ const inspectData = [
         description: "Class of the input size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -98,7 +98,7 @@ const inspectData = [
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         warning: "Variant property should be applied to the wrapping field",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fieldvariant = "warning";
         },
     },

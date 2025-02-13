@@ -1,15 +1,22 @@
 <script setup lang="ts" generic="C extends Component">
-import { computed, ref, onMounted, onBeforeMount, type Component } from "vue";
+import {
+    computed,
+    ref,
+    onMounted,
+    onBeforeMount,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import ONotification from "./Notification.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, getActiveClasses } from "@/composables";
 
 import type { NotificationNoticeProps } from "./props";
 
 /**
- * Notification Notice is an extension of the Notification component and is used for the programmatic usage
+ * Notification Notice is an extension of the Notification component and is used for the programmatic usage.
  * @displayName Notification Notice
  */
 defineOptions({
@@ -22,10 +29,10 @@ defineOptions({
 const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
     override: undefined,
     // container: undefined,
-    position: () => getOption("notification.position", "top"),
-    duration: () => getOption("notification.duration", 2000),
+    position: () => getDefault("notification.position", "top"),
+    duration: () => getDefault("notification.duration", 2000),
     infinite: false,
-    queue: () => getOption("notification.queue"),
+    queue: () => getDefault("notification.queue"),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -36,10 +43,10 @@ const emits = defineEmits<{
      * on component close event
      * @param value {unknown} - close event data
      */
-    (e: "close", ...args: unknown[]): void;
+    close: [...args: unknown[]];
 }>();
 
-const notificationRef = ref();
+const notificationRef = useTemplateRef("notificationComponent");
 
 const isActive = ref(true);
 
@@ -68,6 +75,7 @@ onBeforeMount(() => {
 
         if (parentTop.value && parentBottom.value) return;
 
+        // create notices top container if not alread there
         if (!parentTop.value) {
             parentTop.value = document.createElement("div");
             parentTop.value.className = `${rootClasses.join(
@@ -75,6 +83,7 @@ onBeforeMount(() => {
             )} ${topClasses.join(" ")}`;
         }
 
+        // create notices bottom container if not alread there
         if (!parentBottom.value) {
             parentBottom.value = document.createElement("div");
             parentBottom.value.className = `${rootClasses.join(
@@ -82,6 +91,7 @@ onBeforeMount(() => {
             )} ${bottomClasses.join(" ")}`;
         }
 
+        // append notices top and bottom container to given container
         props.container.appendChild(parentTop.value);
         props.container.appendChild(parentBottom.value);
 
@@ -126,13 +136,14 @@ const shouldQueue = computed(() =>
         : false,
 );
 
+/** move the rendered component template into the correct parent container */
 function showNotice(): void {
     if (!correctParent.value) return;
 
     if (shouldQueue.value) correctParent.value.innerHTML = "";
     correctParent.value.insertAdjacentElement(
         "afterbegin",
-        notificationRef.value.$el,
+        notificationRef.value?.$el,
     );
 }
 
@@ -184,7 +195,7 @@ defineExpose({ close });
 <template>
     <o-notification
         v-bind="$attrs"
-        ref="notificationRef"
+        ref="notificationComponent"
         v-model:active="isActive"
         :override="override"
         :position="position"

@@ -7,7 +7,7 @@
         <o-field label="Custom tick and label">
             <o-slider size="medium" :min="0" :max="10">
                 <template v-for="val in [3, 5, 8]" :key="val">
-                    <o-slider-tick :value="val" :val="val" />
+                    <o-slider-tick :value="val" :label="val" />
                 </template>
             </o-slider>
         </o-field>

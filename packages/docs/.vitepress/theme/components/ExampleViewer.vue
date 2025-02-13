@@ -182,9 +182,12 @@ function copy(val: string): void {
     margin-top: 1rem;
 }
 
-.odocs-example .odocs-spaced > * {
+.odocs-example .odocs-spaced p {
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    margin-right: 0.5rem;
+    > *:not(:last-child) {
+        margin-right: 0.5rem;
+    }
 }
 
 .odocs-panel {
@@ -205,5 +208,10 @@ function copy(val: string): void {
 
 .vp-doc .vp-code-group .blocks .lang {
     color: var(--vp-code-copy-code-hover-border-color);
+}
+
+.vp-code-group .tabs {
+    justify-content: start;
+    margin-bottom: 0;
 }
 </style>

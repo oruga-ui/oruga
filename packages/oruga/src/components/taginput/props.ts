@@ -1,7 +1,7 @@
 import type { ComponentClass } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
-export type TaginputProps<T extends string | number | object> = {
+export type TaginputProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The selected items, use v-model to make it two-way binding binding */
@@ -38,12 +38,6 @@ export type TaginputProps<T extends string | number | object> = {
     expanded?: boolean;
     /** Same as native input disabled */
     disabled?: boolean;
-    /**
-     * Array of keys
-     * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
-     * which will add a item when typing
-     */
-    confirmKeys?: string[];
     /** Array of chars used to split when pasting a new string */
     separators?: string[];
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
@@ -85,7 +79,7 @@ export type TaginputProps<T extends string | number | object> = {
     customValidity?:
         | string
         | ((
-              currentValue: T | null | undefined,
+              currentValue: T[] | null | undefined,
               state: ValidityState,
           ) => string);
     /**

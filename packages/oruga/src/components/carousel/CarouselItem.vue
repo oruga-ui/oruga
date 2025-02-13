@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { computed, type PropType } from "vue";
+import { computed } from "vue";
 
-import { getOption } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { CarouselComponent } from "./types";
-import type { ComponentClass } from "@/types";
+import type { CarouselItemProps } from "./props";
 
 /**
- * A Slideshow item used by the carousel
+ * A Slideshow item used by the carousel.
  * @displayName Carousel Item
  */
 defineOptions({
@@ -17,35 +16,12 @@ defineOptions({
     configField: "carousel",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** Make item clickable */
-    clickable: { type: Boolean, default: false },
-    /** Role attribute to be passed to the div wrapper for better accessibility */
-    ariaRole: {
-        type: String,
-        default: () => getOption("carousel.ariaRole", "option"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of carousel item */
-    itemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of carousel item when is active */
-    itemActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of carousel item when is clickable */
-    itemClickableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<CarouselItemProps>(), {
+    override: undefined,
+    clickable: false,
 });
 
-// Inject functionalities and data from the parent carousel component
+/** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<CarouselComponent>();
 
 const isActive = computed(() => parent.value.activeIndex === item.value.index);
@@ -73,16 +49,20 @@ const itemClasses = defineClasses(
 
 <template>
     <div
-        v-if="parent"
+        :id="`carouselpanel-${item.identifier}`"
+        data-oruga="carousel-item"
+        :data-id="`carousel-${item.identifier}`"
         :class="itemClasses"
         :style="itemStyle"
-        :data-id="`carousel-${item.identifier}`"
-        data-oruga="carousel-item"
-        :role="ariaRole"
-        aria-roledescription="item"
-        :aria-selected="isActive"
+        :role="parent.indicators ? 'tabpanel' : 'group'"
+        :aria-labelledby="`carousel-${item.identifier}`"
+        aria-roledescription="slide"
+        :aria-label="`${item.index + 1} of ${parent.total}`"
+        draggable="true"
         @click="onClick"
-        @keypress.enter="onClick">
+        @keypress.enter="onClick"
+        @dragstart="parent.onDrag"
+        @touchstart="parent.onDrag">
         <!--
             @slot Default content
         -->

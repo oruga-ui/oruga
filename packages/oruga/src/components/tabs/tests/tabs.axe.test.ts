@@ -1,13 +1,21 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 import { axe } from "jest-axe";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 import TabsExample from "./TabsAxeExample.vue";
+import type { TabsProps } from "../props";
 
-describe("Tabs axe tests", () => {
+type ExampleProps = ComponentProps<typeof TabsExample>;
+
+describe("OTabs axe tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases = [
+    const a11yCases: {
+        title: string;
+        props?: TabsProps<unknown> & ExampleProps;
+    }[] = [
         {
             title: "axe tabs - base case",
             props: undefined,
@@ -51,7 +59,12 @@ describe("Tabs axe tests", () => {
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
-        const wrapper = mount(TabsExample, props);
-        expect(await axe(wrapper.html())).toHaveNoViolations();
+        const wrapper = mount(TabsExample, {
+            props: { ...props },
+            attachTo: document.body,
+        });
+        await nextTick(); // await child items got rendered
+
+        expect(await axe(wrapper.element)).toHaveNoViolations();
     });
 });

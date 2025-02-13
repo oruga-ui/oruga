@@ -45,10 +45,10 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
-    (e: "select", value: Date): void;
-    (e: "hover-enddate", value: Date): void;
-    (e: "change-focus", value: Date): void;
-    (e: "week-number-click", value: number): void;
+    select: [value: Date];
+    "hover-enddate": [value: Date];
+    "change-focus": [value: Date];
+    "week-number-click": [value: number];
 }>();
 
 const { isDateSelectable, dateCreator } = useDatepickerMixins(
@@ -369,6 +369,8 @@ function eventClasses(event: DatepickerEvent): ClassBind[] {
             props.pickerProps.indicators,
             !!props.pickerProps.indicators,
         ],
+        // pass effect scope for rectivity binding
+        { scope },
     );
     return classes.value;
 }

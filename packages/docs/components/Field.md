@@ -2,7 +2,7 @@
 
 <div class="vp-doc">
 
-> Fields are used to add functionality to controls and to attach/group components and elements together
+The **Field** component is used to add functionality to controls and to attach/group components and elements together.
 
 </div>
 
@@ -13,6 +13,7 @@
 <example-field />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -25,7 +26,7 @@
 
 ## Field component
 
-> Fields are used to add functionality to controls and to attach/group components and elements together
+> Fields are used to add functionality to controls and to attach/group components and elements together.
 
 ```html
 <o-field></o-field>
@@ -41,9 +42,11 @@
 | horizontal       | Group label and control on the same line for horizontal forms                                                       | boolean          | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                 |
 | label            | Field label                                                                                                         | string           | -                                                                               |                                                                                                                                                             |
 | labelFor         | Same as native `for` set on the label                                                                               | string           | -                                                                               |                                                                                                                                                             |
+| labelId          | A unique HTML id for the field label to associate an input with                                                     | string           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                               |
 | labelSize        | Vertical size of input                                                                                              | string           | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;labelsize: undefined<br>}</code>        |
 | message          | Help message text                                                                                                   | string           | -                                                                               |                                                                                                                                                             |
-| messageTag       |                                                                                                                     | DynamicComponent | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;messageTag: "p"<br>}</code>             |
+| messageId        | A unique HTML id for the field message to associate an input with                                                   | string           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                               |
+| messageTag       | Message element tag name                                                                                            | DynamicComponent | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;messageTag: "p"<br>}</code>             |
 | mobileBreakpoint | Mobile breakpoint as `max-width` value                                                                              | string           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;mobileBreakpoint: undefined<br>}</code> |
 | override         | Override existing theme classes completely                                                                          | boolean          | -                                                                               |                                                                                                                                                             |
 | variant          | Color of the field and help message, also adds a matching icon.<br/>Used by Input, Select and Autocomplete.         | string           | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                                             |
@@ -78,7 +81,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -88,7 +92,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_field.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

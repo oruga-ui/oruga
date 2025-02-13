@@ -1,8 +1,13 @@
 import type { Component } from "vue";
-import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
-import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
+import type {
+    ComponentClass,
+    ComponentEmits,
+    DynamicComponent,
+    OptionsProp,
+} from "@/types";
+import type { ComponentProps } from "vue-component-type-helpers";
 
-export type TabsProps<T extends string | number | object> = {
+export type TabsProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -36,8 +41,10 @@ export type TabsProps<T extends string | number | object> = {
     type?: string;
     /** Tabs will be expanded (full-width) */
     expanded?: boolean;
-    /** Destroy tabItem on hide */
-    destroyOnHide?: boolean;
+    /** Tablist tag name */
+    tag?: DynamicComponent;
+    /** Set the tab active on navigation focus */
+    activateOnFocus?: boolean;
     /** Tab will have an animation */
     animated?: boolean;
     /**
@@ -49,40 +56,35 @@ export type TabsProps<T extends string | number | object> = {
     animateInitially?: boolean;
     /** Show tab items multiline when there is no space */
     multiline?: boolean;
+    /** Accessibility aria-label to be passed to the tablist wrapper element */
+    ariaLabel?: string;
 } & TabsClasses;
 
 // class props (will not be displayed in the docs)
 type TabsClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of Tabs component when when is vertical and its position changes */
+    /** Class of Tabs component position */
     positionClass: ComponentClass;
     /** Class of Tabs component when expanded */
     expandedClass: ComponentClass;
     /** Class of Tabs component when vertical */
     verticalClass: ComponentClass;
+    /** Size of the Tabs component */
+    sizeClass: ComponentClass;
+    /** Type of the Tabs component */
+    typeClass: ComponentClass;
     /** Class of Tabs component when multiline */
     multilineClass: ComponentClass;
-    /** Class of the Tabs component nav tabs */
-    navClass: ComponentClass;
-    /** Size of the navigation */
-    navSizeClass: ComponentClass;
-    /** Class of the Tabs component nav position */
-    navPositionClass: ComponentClass;
-    /** Type of the navigation */
-    navTypeClass: ComponentClass;
-    /** Class of the tab item */
-    navItemClass: ComponentClass;
+    /** Class of the tablist element */
+    tablistClass: ComponentClass;
     /** Class of the tab content */
     contentClass: ComponentClass;
     /** Class of the tab content when transitioning */
     transitioningClass: ComponentClass;
 }>;
 
-export type TabItemProps<
-    T extends string | number | object,
-    C extends Component,
-> = {
+export type TabItemProps<T, C extends Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -102,8 +104,6 @@ export type TabItemProps<
     iconPack?: string;
     /** Tabs item tag name */
     tag?: DynamicComponent;
-    /** Role attribute to be passed to the div wrapper for better accessibility */
-    ariaRole?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;
     /** Component to be injected. */
@@ -111,17 +111,19 @@ export type TabItemProps<
     /** Props to be binded to the injected component */
     props?: ComponentProps<C>;
     /** Events to be binded to the injected component */
-    events?: ComponentEmit<C>;
+    events?: ComponentEmits<C>;
 } & TabItemClasses;
 
 // class props (will not be displayed in the docs)
 type TabItemClasses = Partial<{
     /** Class of the tab item */
-    tabPanelClass: ComponentClass;
-    /** Class of the tab item */
     tabClass: ComponentClass;
     /** Class of the tab item when active */
     tabActiveClass: ComponentClass;
+    /** Class of the tab item before the active one */
+    tabPreviousClass: ComponentClass;
+    /** Class of the tab item after the active one */
+    tabNextClass: ComponentClass;
     /** Class of the tab item when disabled */
     tabDisabledClass: ComponentClass;
     /** Class of the tab item type */
@@ -130,4 +132,6 @@ type TabItemClasses = Partial<{
     tabIconClass: ComponentClass;
     /** Class of the tab item label */
     tabLabelClass: ComponentClass;
+    /** Class of the tab item panel */
+    tabPanelClass: ComponentClass;
 }>;

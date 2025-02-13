@@ -1,15 +1,15 @@
-<script setup lang="ts" generic="T extends string | number | object">
-import { useId, computed } from "vue";
+<script setup lang="ts" generic="T">
+import { useId, computed, useTemplateRef } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { DynamicComponent } from "@/types";
-import type { DropdownComponent } from "./types";
+import type { DropdownComponent, DropdownItemComponent } from "./types";
 import type { DropdownItemProps } from "./props";
 
 /**
+ * An option item used by the dropdown component.
  * @displayName Dropdown Item
  */
 defineOptions({
@@ -24,12 +24,9 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     label: undefined,
     disabled: false,
     clickable: true,
-    tag: () => getOption<DynamicComponent>("dropdown.itemTag", "div"),
-    tabindex: 0,
-    ariaRole: () => getOption("dropdown.itemAriaRole", "listitem"),
+    hidden: false,
+    tag: () => getDefault("dropdown.itemTag", "div"),
 });
-
-const itemValue = props.value || useId();
 
 const emits = defineEmits<{
     /**
@@ -37,11 +34,26 @@ const emits = defineEmits<{
      * @param value {string | number | object} value prop data
      * @param event {event} Native Event
      */
-    (e: "click", value: T, event: Event): void;
+    click: [value: T, event: Event];
 }>();
 
-// Inject functionalities and data from the parent component
-const { parent } = useProviderChild<DropdownComponent<T>>();
+const itemValue = props.value ?? useId();
+
+const rootRef = useTemplateRef<Element>("rootElement");
+
+// provided data is a computed ref to ensure reactivity
+const providedData = computed<DropdownItemComponent<T>>(() => ({
+    ...props,
+    $el: rootRef.value,
+    value: itemValue,
+    selectItem,
+}));
+
+/** inject functionalities and data from the parent component */
+const { parent, item } = useProviderChild<
+    DropdownComponent<T>,
+    DropdownItemComponent<T>
+>({ data: providedData });
 
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
@@ -56,10 +68,14 @@ const isActive = computed(() => {
     return isEqual(itemValue, parent.value.selected);
 });
 
+const isFocused = computed(
+    () => item.value.identifier === parent.value.focsuedIdentifier,
+);
+
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(itemValue as T);
+    parent.value.selectItem(itemValue as T, event);
     emits("click", itemValue as T, event);
 }
 
@@ -75,19 +91,23 @@ const rootClasses = defineClasses(
     ],
     ["itemActiveClass", "o-drop__item--active", null, isActive],
     ["itemClickableClass", "o-drop__item--clickable", null, isClickable],
+    ["itemFocusedClass", "o-drop__item--focused", null, isFocused],
 );
 </script>
 
 <template>
     <component
         :is="tag"
+        :id="`${parent.menuId}-${item.identifier}`"
+        ref="rootElement"
         :class="rootClasses"
-        :role="ariaRole"
-        :tabindex="tabindex"
         data-oruga="dropdown-item"
-        :aria-selected="isActive"
+        :data-id="`dropdown-${item.identifier}`"
+        :role="parent.selectable ? 'option' : 'menuitem'"
+        :aria-selected="parent.selectable ? isActive : undefined"
         :aria-disabled="disabled"
-        @click="selectItem">
+        @click="selectItem"
+        @keypress.enter="selectItem">
         <!--
             @slot Override the label, default is label prop 
         -->

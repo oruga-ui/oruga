@@ -54,14 +54,8 @@ export type TimepickerProps = {
     unselectableTimes?: Date[] | ((date: Date) => boolean);
     /** Reset the time inputs when meridian changes */
     resetOnMeridianChange?: boolean;
-    /** Dropdown trapFocus */
-    trapFocus?: boolean;
     /** Dropdown position */
     position?: string;
-    /** Enable dropdown mobile modal */
-    mobileModal?: boolean;
-    /** Enable mobile native input if mobile agent */
-    mobileNative?: boolean;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -73,6 +67,12 @@ export type TimepickerProps = {
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
+    /** Dropdown content is shown into a modal on mobile */
+    mobileModal?: boolean;
+    /** Dropdown content is shown into a modal on desktop */
+    desktopModal?: boolean;
+    /** Enable mobile native input if mobile agent */
+    mobileNative?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**
@@ -90,6 +90,12 @@ export type TimepickerProps = {
               currentValue: Date | null | undefined,
               state: ValidityState,
           ) => string);
+    /** Accessibility seconds select aria label */
+    ariaSelectSecondsLabel?: string;
+    /** Accessibility minutes select aria label */
+    ariaSelectMinutesLabel?: string;
+    /** Accessibility hours select aria label */
+    ariaSelectHoursLabel?: string;
 } & TimepickerClasses;
 
 // class props (will not be displayed in the docs)

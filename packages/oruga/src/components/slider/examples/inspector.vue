@@ -19,7 +19,7 @@ const inspectData = [
         description: "Class of the vertical slider size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -27,7 +27,7 @@ const inspectData = [
         class: "thumbRoundedClass",
         description: "Class when the slider is rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.rounded = true;
         },
     },
@@ -40,21 +40,21 @@ const inspectData = [
         class: "disabledClass",
         description: "Class when slider is disabled",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
     {
         class: "thumbWrapperClass",
         description: "Class of the thumb wrapper",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullScreen = true;
         },
     },
     {
         class: "thumbClass",
         description: "Class of the thumb",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.fullScreen = true;
         },
     },
@@ -63,7 +63,7 @@ const inspectData = [
         description: "Class of the slider variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.position = "static";
             data.variant = "warning";
         },
@@ -94,7 +94,12 @@ const inspectData = [
         v-slot="props"
         :inspect-data="inspectData"
         :subitem="subitem">
-        <o-slider v-bind="props" :min="1" :max="10" :value="4">
+        <o-slider
+            v-bind="props"
+            :min="1"
+            :max="10"
+            :value="4"
+            aria-label="inspector-demo">
             <o-slider-tick
                 v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
                 :key="val"

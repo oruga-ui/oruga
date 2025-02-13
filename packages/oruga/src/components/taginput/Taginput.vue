@@ -1,29 +1,32 @@
-<script setup lang="ts" generic="T extends string | number | object = string">
+<script setup lang="ts" generic="T = string">
 import {
     computed,
-    ref,
     useAttrs,
     useTemplateRef,
     useId,
     watchEffect,
+    type Component,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import {
     defineClasses,
     getActiveClasses,
     normalizeOptions,
     findOption,
     useInputHandler,
+    useSequentialId,
+    toOptionsGroup,
+    type OptionsGroupItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
 
 /**
- * A simple tag input field that can have autocomplete functionality
+ * A simple tag input field that can have autocomplete functionality.
  * @displayName Taginput
  * @style _taginput.scss
  */
@@ -42,35 +45,34 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     input: "",
     options: undefined,
     filter: undefined,
-    size: () => getOption("taginput.size"),
-    variant: () => getOption("taginput.variant"),
+    size: () => getDefault("taginput.size"),
+    variant: () => getDefault("taginput.variant"),
     maxitems: undefined,
     maxlength: undefined,
-    counter: () => getOption("taginput.counter", true),
+    counter: () => getDefault("taginput.counter", true),
     openOnFocus: false,
-    keepOpen: () => getOption("taginput.keepOpen", false),
+    keepOpen: () => getDefault("taginput.keepOpen", false),
     placeholder: undefined,
     expanded: false,
     disabled: false,
-    confirmKeys: () => getOption("taginput.confirmKeys", [",", "Tab", "Enter"]),
-    separators: () => getOption("taginput.separators", [","]),
+    separators: () => getDefault("taginput.separators", [",", "Enter", "Tab"]),
     keepFirst: false,
-    allowNew: () => getOption("taginput.allowNew", false),
-    allowDuplicates: () => getOption("taginput.allowDuplicates", false),
-    removeOnKeys: () => getOption("taginput.removeOnKeys", ["Backspace"]),
+    allowNew: () => getDefault("taginput.allowNew", false),
+    allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
+    removeOnKeys: () => getDefault("taginput.removeOnKeys", ["Backspace"]),
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
-    checkScroll: () => getOption("taginput.checkScroll", false),
-    closable: () => getOption("taginput.closable", true),
-    iconPack: () => getOption("taginput.iconPack"),
-    icon: () => getOption("taginput.icon"),
-    closeIcon: () => getOption("taginput.closeIcon", "close"),
-    ariaCloseLabel: () => getOption("taginput.ariaCloseLabel"),
-    autocomplete: () => getOption("taginput.autocomplete", "off"),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    checkScroll: () => getDefault("taginput.checkScroll", false),
+    closable: () => getDefault("taginput.closable", true),
+    iconPack: () => getDefault("taginput.iconPack"),
+    icon: () => getDefault("taginput.icon"),
+    closeIcon: () => getDefault("taginput.closeIcon", "close"),
+    ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel", "Remove"),
+    autocomplete: () => getDefault("taginput.autocomplete", "off"),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
-    teleport: () => getOption("taginput.teleport", false),
-    autocompleteClasses: () => getOption("taginput.autocompleteClasses", {}),
+    teleport: () => getDefault("taginput.teleport", false),
+    autocompleteClasses: () => getDefault("taginput.autocompleteClasses", {}),
 });
 
 const emits = defineEmits<{
@@ -78,59 +80,61 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string[] | number[] | object[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue[]): void;
+    "update:model-value": [value: ModelValue[]];
     /**
      * input prop two-way binding
      * @param value {string} updated input prop
      */
-    (e: "update:input", value: string): void;
+    "update:input": [value: string];
     /**
      * on input change event
      * @param value {string} input value
+     * @param event {Event} native event
      */
-    (e: "input", value: string): void;
+    input: [value: string, event: Event];
     /**
      * new item got added
      * @param value {string | number | object} added item
      */
-    (e: "add", value: T): void;
+    add: [value: T];
     /**
      * item got removed
      * @param value {string | number | object} removed item
      */
-    (e: "remove", value: T): void;
+    remove: [value: T];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
     /** the list inside the dropdown reached the start */
-    (e: "scroll-start"): void;
+    "scroll-start": [];
     /** the list inside the dropdown reached it's end */
-    (e: "scroll-end"): void;
+    "scroll-end": [];
 }>();
 
-const autocompleteRef = useTemplateRef("autocompleteRef");
+// define as Component to prevent docs memmory overload
+const autocompleteRef = useTemplateRef<Component>("autocompleteComponent");
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -148,16 +152,21 @@ const inputValue = defineModel<string>("input", { default: "" });
 const inputLength = computed(() => inputValue.value.trim().length);
 const itemsLength = computed(() => selectedItems.value?.length || 0);
 
-const isComposing = ref(false);
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const normalizedOptions = computed(() => normalizeOptions<T>(props.options));
+const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
+    return groupedOptions;
+});
 
 /** map the selected items into option items */
 const selectedOptions = computed(() => {
     if (!selectedItems.value) return [];
     return selectedItems.value.map((value) => {
-        const option = findOption(normalizedOptions, value);
+        const option = findOption<T>(groupedOptions, value);
         // return the found option or create a new option object
         if (option) return option;
         else return { label: value, value, key: useId() };
@@ -230,7 +239,7 @@ function addItem(item?: T | string): void {
     // after autocomplete events
     requestAnimationFrame(() => {
         inputValue.value = "";
-        emits("input", "");
+        emits("input", "", new Event("input"));
     });
 }
 
@@ -246,18 +255,18 @@ function removeItem(index: number, event?: Event): void {
 
 // --- Event Handler ---
 
-function onSelect(option: T): void {
+function onSelect(option: T | undefined): void {
     if (!option) return;
     addItem(option);
 }
 
-function onInput(value: string): void {
-    emits("input", value.trim());
+function onInput(value: string, event: Event): void {
+    emits("input", value.trim(), event);
 }
 
 function onKeydown(event: KeyboardEvent): void {
     if (
-        props.removeOnKeys.indexOf(event.key) >= 0 &&
+        props.removeOnKeys.includes(event.key) &&
         !inputValue.value?.length &&
         itemsLength.value > 0
     ) {
@@ -265,10 +274,9 @@ function onKeydown(event: KeyboardEvent): void {
         removeItem(itemsLength.value - 1);
     }
 
-    if (props.confirmKeys.indexOf(event.key) >= 0) {
-        // Allow Tab to advance to next field regardless
-        if (event.key !== "Tab") event.preventDefault();
-        if (event.key === "Enter" && isComposing.value) return;
+    if (props.separators.includes(event.key)) {
+        // If adding by comma, don't add the comma to the input
+        if (event.key === ",") event.preventDefault();
         // Add item if not select only
         if (props.allowNew) addItem();
     }
@@ -357,7 +365,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
                     <span> {{ option.label }}</span>
 
                     <o-icon
-                        v-if="closable"
+                        v-if="closable && !disabled"
                         :class="closeClasses"
                         :pack="iconPack"
                         :icon="closeIcon"
@@ -373,7 +381,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
 
             <o-autocomplete
                 v-show="hasInput"
-                ref="autocompleteRef"
+                ref="autocompleteComponent"
                 v-model:input="inputValue"
                 v-bind="autocompleteBind"
                 :options="options"
@@ -389,7 +397,6 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
                 :check-scroll="checkScroll"
-                :confirm-keys="confirmKeys"
                 :teleport="teleport"
                 :has-counter="false"
                 :use-html5-validation="false"
@@ -399,8 +406,6 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 @blur="onBlur"
                 @invalid="onInvalid"
                 @keydown="onKeydown"
-                @compositionstart="isComposing = true"
-                @compositionend="isComposing = false"
                 @select="onSelect"
                 @scroll-start="$emit('scroll-start')"
                 @scroll-end="$emit('scroll-end')"

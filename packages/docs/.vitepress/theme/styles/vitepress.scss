@@ -22,15 +22,28 @@
     max-width: none;
 }
 
+header .VPNavBar button {
+    border: unset;
+    box-shadow: unset;
+}
+
+.search-keyboard-shortcuts kbd {
+    color: inherit;
+}
+
 @media (min-width: 960px) {
     .VPContent .VPDoc .container > .content {
         padding: 0px 0px 128px;
+    }
+
+    .VPNavBar.has-sidebar .container {
+        max-width: 100% !important;
     }
 }
 
 
 .main {
-    h1, h2, h3 {
+    h1, h2, h3, h4 {
         position: relative;
         margin: 0;
         line-height: 1.5em;
@@ -51,8 +64,12 @@
     h3 {
         margin: 3rem 0 0;
         letter-spacing: -0.01em;
-        line-height: 1.5em;
-        font-size: 1.25em;
+        font-size: 1.3em;
+    }
+    h4 {
+        margin: 3rem 0 0;
+        letter-spacing: -0.01em;
+        font-size: 1.1em;
     }
 
     .header-anchor {
@@ -61,7 +78,7 @@
         padding-right: 0.23em;
         font-weight: 500;
         opacity: 0;
-        transition: color .25s,opacity .25s;
+        transition: color .25s, opacity .25s;
     }
 
     h1:hover .header-anchor, h1 .header-anchor:focus,

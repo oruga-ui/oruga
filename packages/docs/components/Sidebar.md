@@ -2,7 +2,8 @@
 
 <div class="vp-doc">
 
-> A sidebar to use as left/right overlay or static
+The **Sidebar** component can be toggled to appear from the left, right, top, or bottom edge of the viewport.
+The component can be used to show an overlay for navigation, shopping carts, and more.
 
 </div>
 
@@ -13,6 +14,7 @@
 <example-sidebar />
 
 </div>
+
 <div class="vp-example">
 
 ## Class props
@@ -25,7 +27,7 @@
 
 ## Sidebar component
 
-> A sidebar to use as left/right overlay or static
+> A sidebar to use as overlay.
 
 ```html
 <o-sidebar></o-sidebar>
@@ -38,21 +40,21 @@
 | active           | Whether siedbar is active or not, use v-model:active to make it two-way binding                                                                                                     | boolean                                | -                                    | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                        |
 | animation        | Custom animation (transition name)                                                                                                                                                  | string                                 | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;animation: undefined<br>}</code>             |
 | cancelable       | Is Sidebar cancleable by pressing escape or clicking outside.                                                                                                                       | boolean \| string[]                    | `escape`, `outside`, `true`, `false` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;cancelable: ["escape","outside"]<br>}</code> |
-| component        | Component to be injected, used to open a component sidebar programmatically.<br/>Close sidebar within the component by emitting a 'close' event — emits('close')                    | Component                              | -                                    |                                                                                                                                                                    |
+| component        | Component to be injected.<br/>Close the component by emitting a 'close' event — `$emit('close')`                                                                                    | Component                              | -                                    |                                                                                                                                                                    |
 | events           | Events to be binded to the injected component                                                                                                                                       | {}                                     | -                                    |                                                                                                                                                                    |
 | expandOnHover    | Expand sidebar on hover when reduced or mobile is reduce                                                                                                                            | boolean                                | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;expandOnHover: false<br>}</code>             |
 | fullheight       | Show sidebar in fullheight                                                                                                                                                          | boolean                                | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;fullheight: false<br>}</code>                |
 | fullwidth        | Show sidebar in fullwidth                                                                                                                                                           | boolean                                | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;fullwidth: false<br>}</code>                 |
 | inline           | Display the Sidebear inline                                                                                                                                                         | boolean                                | -                                    | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                        |
-| mobile           | Custom layout on mobile                                                                                                                                                             | "fullwidth" \| "reduced" \| "hidden"   | `fullwidth`, `reduced`, `hidden`     | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;mobile: undefined<br>}</code>                |
+| mobile           | Custom layout on mobile                                                                                                                                                             | "expanded" \| "hidden" \| "reduced"    | `expanded`, `reduced`, `hidden`      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;mobile: undefined<br>}</code>                |
 | mobileBreakpoint | Mobile breakpoint as `max-width` value                                                                                                                                              | string                                 | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;mobileBreakpoint: undefined<br>}</code>      |
 | overlay          | Show an overlay like modal                                                                                                                                                          | boolean                                | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;overlay: false<br>}</code>                   |
 | override         | Override existing theme classes completely                                                                                                                                          | boolean                                | -                                    |                                                                                                                                                                    |
-| position         | Sidebar position                                                                                                                                                                    | "top" \| "bottom" \| "left" \| "right" | `top`, `right`, `bottom`, `left`     | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;position: "left"<br>}</code>                 |
+| position         | Sidebar position                                                                                                                                                                    | "bottom" \| "left" \| "right" \| "top" | `top`, `right`, `bottom`, `left`     | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;position: "left"<br>}</code>                 |
 | props            | Props to be binded to the injected component                                                                                                                                        | any                                    | -                                    |                                                                                                                                                                    |
 | reduce           | Show a small sidebar                                                                                                                                                                | boolean                                | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;reduce: false<br>}</code>                    |
-| scroll           | Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,<br/>but will set body to position fixed, might break some layouts. | "keep" \| "clip"                       | `keep`, `clip`                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;scroll: "clip"<br>}</code>                   |
-| teleport         | Append the component to another part of the DOM.<br/>Set `true` to append the component to the body.<br/>In addition, any CSS selector string or an actual DOM node can be used.    | string \| boolean \| object            | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;teleport: false<br>}</code>                  |
+| scroll           | Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,<br/>but will set body to position fixed, might break some layouts. | "clip" \| "keep"                       | `keep`, `clip`                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;scroll: "clip"<br>}</code>                   |
+| teleport         | Append the component to another part of the DOM.<br/>Set `true` to append the component to the body.<br/>In addition, any CSS selector string or an actual DOM node can be used.    | boolean \| object \| string            | -                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>sidebar: {<br>&nbsp;&nbsp;teleport: false<br>}</code>                  |
 
 ### Events
 
@@ -91,7 +93,8 @@
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_sidebar.scss)
 
-</div><div class="theme-bulma">
+</div>
+<div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
@@ -107,7 +110,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_sidebar.scss)
 
-</div><div class="theme-bootstrap">
+</div>
+<div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 

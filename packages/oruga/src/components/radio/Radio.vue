@@ -1,15 +1,15 @@
-<script setup lang="ts" generic="T extends string | number | boolean | object">
-import { computed, ref, useAttrs, useId, type PropType } from "vue";
+<script setup lang="ts" generic="T">
+import { computed, useAttrs, useId, useSlots, useTemplateRef } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ComponentClass } from "@/types";
+import type { RadioProps } from "./props";
 
 /**
- * Select an option from a set
+ * Select an option from a set of options.
  * @displayName Radio
  * @style _radio.scss
  */
@@ -20,134 +20,51 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * The input value state
-     * @type string|number|boolean|object
-     */
-    modelValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /**
-     * Color of the control
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("radio.variant"),
-    },
-    /**
-     * Size of the control
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("radio.size"),
-    },
-    /** Input label, unnecessary when default slot is used */
-    label: { type: String, default: undefined },
-    /**
-     * Same as native value
-     * @type string|number|boolean|object
-     */
-    nativeValue: {
-        type: [String, Number, Boolean, Object] as PropType<T>,
-        default: undefined,
-    },
-    /** Same as native disabled */
-    disabled: { type: Boolean, default: false },
-    /** Same as native required */
-    required: { type: Boolean, default: false },
-    /** Same as native name */
-    name: { type: String, default: undefined },
-    /** Same as native autocomplete options to use in HTML5 validation */
-    autocomplete: {
-        type: String,
-        default: () => getOption("radio.autocomplete", "off"),
-    },
-    /** Same as native id. Also set the for label for o-field wrapper - default is an uuid. */
-    id: { type: String, default: () => useId() },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class when radio is disabled */
-    disabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the root element when checked */
-    checkedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the native input element */
-    inputClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the native input element when checked */
-    inputCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the radio label */
-    labelClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the radio size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the radio variant */
-    variantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<RadioProps<T>>(), {
+    override: undefined,
+    modelValue: undefined,
+    id: () => useId(),
+    label: undefined,
+    name: undefined,
+    variant: () => getDefault("radio.variant"),
+    size: () => getDefault("radio.size"),
+    disabled: false,
+    required: false,
+    nativeValue: undefined,
+    autocomplete: () => getDefault("radio.autocomplete", "off"),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: T): void;
+    "update:model-value": [value: T];
     /**
      * on input change event
-     * @param value {string | number | boolean | object} input value
+     * @param value {T} input value
      * @param event {Event} native event
      */
-    (e: "input", value: T, event: Event): void;
+    input: [value: T, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
 }>();
 
-const inputRef = ref<HTMLInputElement>();
+const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
 const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
@@ -159,10 +76,16 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const vmodel = defineModel<T>({ default: undefined });
+// set field labelId or create a unique label id if a label is given
+const labelId =
+    !!parentField.value || !!props.label || !!useSlots().default
+        ? parentField.value?.labelId || useId()
+        : undefined;
 
-// if not `label` is given and `id` is given set as `for` property on o-field wrapper
-if (!props.label && props.id) parentField?.value?.setInputId(props.id);
+// if no `label` is given and `id` is given set as `for` property on o-field wrapper
+if (!props.label && props.id) parentField.value?.setInputId(props.id);
+
+const vmodel = defineModel<T>({ default: undefined });
 
 const isChecked = computed(() => vmodel.value === props.nativeValue);
 
@@ -216,38 +139,36 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <label
-        ref="label"
-        :class="rootClasses"
-        data-oruga="radio"
-        role="radio"
-        :aria-checked="isChecked"
-        @click.stop="setFocus"
-        @keydown.prevent.enter="setFocus">
+    <div :class="rootClasses" data-oruga="radio">
         <input
             v-bind="inputBind"
             :id="id"
-            ref="inputRef"
+            ref="inputElement"
             v-model="vmodel"
             type="radio"
             data-oruga-input="radio"
             :class="inputClasses"
-            :disabled="disabled"
-            :required="required"
             :name="name"
-            :autocomplete="autocomplete"
             :value="nativeValue"
-            @click.stop
+            :required="required"
+            :disabled="disabled"
+            :autocomplete="autocomplete"
+            :aria-checked="isChecked"
+            :aria-labelledby="labelId"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
-            @input="onInput" />
+            @change="onInput" />
 
-        <span v-if="label || $slots.default" :class="labelClasses">
+        <label
+            v-if="label || $slots.default"
+            :id="labelId"
+            :for="id"
+            :class="labelClasses">
             <!--
                 @slot Override the label, default is label prop 
             -->
             <slot>{{ label }}</slot>
-        </span>
-    </label>
+        </label>
+    </div>
 </template>

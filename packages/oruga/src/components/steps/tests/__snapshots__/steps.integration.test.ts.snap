@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OSteps with OStepItem tests > test render correctly 1`] = `
+"<div class="o-steps" data-oruga="steps">
+  <ol class="o-steps__nav o-steps__nav--animated" role="tablist" aria-orientation="horizontal"></ol>
+  <section class="o-steps__content">
+    <!--
+                @slot Place step items here
+            -->
+    <transition-stub appear="false" persisted="true" css="true">
+      <div id="tabpanel-1" data-oruga="steps-item" role="tabpanel" data-id="steps-1" class="o-steps__panel" aria-labelledby="tab-1" aria-roledescription="item">
+        <!-- 
+                @slot Step item content
+                @binding {boolean} active - if item is shown 
+            -->
+        <!-- injected component -->
+        <!-- default content prop -->ABC
+      </div>
+    </transition-stub>
+  </section>
+  <!--
+            @slot Override step navigation
+            @binding {{disabled: boolean, action: (): void }} previous - previous button configs
+            @binding {{disabled: boolean, action: (): void }} next - next button configs
+        -->
+  <nav class="o-steps__navigation"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-btn o-btn--disabled" disabled="" aria-label="Previous"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+      <!--v-if-->
+      <!--v-if--></span>
+    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-btn o-btn--disabled" disabled="" aria-label="Next"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+      <!--v-if-->
+      <!--v-if--></span>
+    </button></nav>
+</div>"
+`;

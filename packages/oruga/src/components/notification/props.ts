@@ -1,12 +1,12 @@
 import type { Component } from "vue";
-import type { ComponentClass } from "@/types";
-import type { ComponentEmit, ComponentProps } from "vue-component-type-helpers";
+import type { ComponentClass, ComponentEmits } from "@/types";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 export type NotificationProps = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Message text (can contain HTML), unnecessary when default slot is used */
-    message?: string | string[];
+    /** Message text, unnecessary when default slot is used */
+    message?: string;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /**
@@ -104,13 +104,13 @@ export type NotificationNoticeProps<C extends Component> = {
     queue?: boolean;
     /**
      * Component to be injected.
-     * Close notification within the component by emitting a 'close' event — $emit('close').
+     * Close the component by emitting a 'close' event — `$emit('close')`
      */
     component?: Component;
     /** Props to be binded to the injected component */
     props?: ComponentProps<C>;
     /** Events to be binded to the injected component */
-    events?: ComponentEmit<C>;
+    events?: ComponentEmits<C>;
 } & NotificationNoticeClasses;
 
 // class props (will not be displayed in the docs)

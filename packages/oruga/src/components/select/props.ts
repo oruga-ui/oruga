@@ -3,10 +3,7 @@ import type { OptionsPropWithGroups } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
-export type SelectProps<
-    T extends string | number | object,
-    IsMultiple extends boolean = false,
-> = {
+export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
@@ -54,6 +51,10 @@ export type SelectProps<
     iconRightVariant?: string;
     /** Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. */
     id?: string;
+    /** Same as native autocomplete options to use in HTML5 validation */
+    autocomplete?: string;
+    /** Show status icon using field and variant prop */
+    statusIcon?: boolean;
     /** Enable HTML 5 native validation */
     useHtml5Validation?: boolean;
     /** Custom HTML 5 validation error to set on the form control */
@@ -63,10 +64,6 @@ export type SelectProps<
               currentValue: ValueType<T, IsMultiple> | null | undefined,
               state: ValidityState,
           ) => string);
-    /** Same as native autocomplete options to use in HTML5 validation */
-    autocomplete?: string;
-    /** Show status icon using field and variant prop */
-    statusIcon?: boolean;
 } & SelectClasses;
 
 // class props (will not be displayed in the docs)

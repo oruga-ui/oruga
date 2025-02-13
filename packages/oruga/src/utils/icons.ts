@@ -45,6 +45,7 @@ const faIcons = () => {
             "close-circle": "times-circle",
             close: "times",
             loading: "circle-notch",
+            "emoticon-sad": "frown",
         },
     };
 };
@@ -60,8 +61,7 @@ const getIcons = (): Record<string, IconConfig> => {
         fal: faIcons(),
     };
 
-    const customIconPacks =
-        getOption<Record<string, IconConfig>>("customIconPacks");
+    const customIconPacks = getOption("customIconPacks");
     if (customIconPacks) icons = merge(icons, customIconPacks, true);
 
     return icons;

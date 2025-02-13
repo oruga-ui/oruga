@@ -8,25 +8,27 @@ import {
     nextTick,
     readonly,
     toRaw,
-    type PropType,
+    useTemplateRef,
+    triggerRef,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    useEventListener,
     useProviderParent,
+    type ProviderItem,
 } from "@/composables";
 
 import type { CarouselComponent } from "./types";
-import type { ComponentClass, ClassBind } from "@/types";
+import type { ClassBind } from "@/types";
+import type { CarouselProps } from "./props";
 
 /**
- * A Slideshow for cycling images in confined spaces
+ * A Slideshow for cycling images in confined spaces.
  * @displayName Carousel
  * @requires ./CarouselItem.vue
  * @style _carousel.scss
@@ -37,176 +39,43 @@ defineOptions({
     configField: "carousel",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The index of the current active element */
-    modelValue: { type: Number, default: 0 },
-    /** Enable drag mode */
-    dragable: { type: Boolean, default: true },
-    /** Timer interval for `autoplay` */
-    interval: {
-        type: Number,
-        default: () => getOption("carousel.interval", 3500),
-    },
-    /** Move item automaticalls after `interval` */
-    autoplay: { type: Boolean, default: false },
-    /** Pause autoplay on hover */
-    pauseHover: { type: Boolean, default: false },
-    /** Repeat from the beginning after reaching the end */
-    repeat: { type: Boolean, default: false },
-    /** Show an overlay */
-    overlay: { type: Boolean, default: false },
-    /** Enable indicators */
-    indicators: { type: Boolean, default: true },
-    /** Place indicators inside the carousel */
-    indicatorInside: { type: Boolean, default: false },
-    /**
-     * Indicator interaction mode
-     * @values click, hover
-     */
-    indicatorMode: {
-        type: String,
-        default: "click",
-        validator: (value: string) => ["click", "hover"].indexOf(value) >= 0,
-    },
-    /** Position of the indicator - depends on used theme */
-    indicatorPosition: {
-        type: String,
-        default: () => getOption("carousel.indicatorPosition", "bottom"),
-    },
-    /** Style of the indicator - depends on used theme */
-    indicatorStyle: {
-        type: String,
-        default: () => getOption("carousel.indicatorStyle", "dots"),
-    },
-    /** Number of items to show at once*/
-    itemsToShow: {
-        type: Number,
-        default: () => getOption("carousel.itemsToShow", 1),
-    },
-    /** Number of items to switch at once */
-    itemsToList: {
-        type: Number,
-        default: () => getOption("carousel.itemsToList", 1),
-    },
-    /** Show next / prev arrows */
-    arrows: {
-        type: Boolean,
-        default: () => getOption("carousel.arrows", true),
-    },
-    /** Show next / prev arrows only on hover */
-    arrowsHover: {
-        type: Boolean,
-        default: () => getOption("carousel.arrowsHover", true),
-    },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("carousel.iconPack"),
-    },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: {
-        type: String,
-        default: () => getOption("carousel.iconSize"),
-    },
-    /** Icon name for previous icon */
-    iconPrev: {
-        type: String,
-        default: () => getOption("carousel.iconPrev", "chevron-left"),
-    },
-    /** Icon name for next icon */
-    iconNext: {
-        type: String,
-        default: () => getOption("carousel.iconNext", "chevron-right"),
-    },
-    /** Define these props for different screen sizes */
-    breakpoints: {
-        type: Object as PropType<Record<number, any>>,
-        default: () => ({}),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the root element in overlay */
-    overlayClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the wrapper element of carousel items */
-    wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of slider items */
-    itemsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of slider items on drag */
-    itemsDraggingClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of arrow elements */
-    arrowIconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of prev arrow element */
-    arrowIconPrevClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of next arrow element */
-    arrowIconNextClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator link element */
-    indicatorClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element */
-    indicatorsClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element when inside */
-    indicatorsInsideClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicators wrapper element when inside and position */
-    indicatorsInsidePositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator item element */
-    indicatorItemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator element when is active */
-    indicatorItemActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of indicator element to separate different styles */
-    indicatorItemStyleClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<CarouselProps>(), {
+    override: undefined,
+    modelValue: 0,
+    dragable: true,
+    autoplay: false,
+    interval: () => getDefault("carousel.interval", 3500),
+    pauseHover: false,
+    repeat: false,
+    overlay: false,
+    indicators: true,
+    indicatorInside: false,
+    indicatorPosition: () => getDefault("carousel.indicatorPosition", "bottom"),
+    indicatorStyle: () => getDefault("carousel.indicatorStyle", "dots"),
+    itemsToShow: () => getDefault("carousel.itemsToShow", 1),
+    itemsToList: () => getDefault("carousel.itemsToList", 1),
+    arrows: () => getDefault("carousel.arrows", true),
+    arrowsHover: () => getDefault("carousel.arrowsHover", true),
+    iconPack: () => getDefault("carousel.iconPack"),
+    iconSize: () => getDefault("carousel.iconSize"),
+    iconPrev: () => getDefault("carousel.iconPrev", "chevron-left"),
+    iconNext: () => getDefault("carousel.iconNext", "chevron-right"),
+    iconAutoplayPause: () => getDefault("carousel.iconAutoplayPause", "pause"),
+    iconAutoplayResume: () => getDefault("carousel.iconAutoplayResume", "play"),
+    breakpoints: () => ({}),
+    ariaAutoplayPauseLabel: () =>
+        getDefault(
+            "carousel.ariaAutoplayPauseLabel",
+            "Stop Automatic Slide Show",
+        ),
+    ariaAutoplayResumeLabel: () =>
+        getDefault(
+            "carousel.ariaAutoplayResumeLabel",
+            "Start Automatic Slide Show",
+        ),
+    ariaNextLabel: () => getDefault("carousel.ariaNextLabel", "Next Slide"),
+    ariaPreviousLabel: () =>
+        getDefault("carousel.ariaPreviousLabel", "Previous Slide"),
 });
 
 const emits = defineEmits<{
@@ -214,67 +83,85 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number} updated modelValue prop
      */
-    (e: "update:modelValue", value: number): void;
+    "update:model-value": [value: number];
     /**
-     * on carousel scroll event
-     * @param value {number} scroll index
+     * on carousel slide change event
+     * @param value {number} active index
      */
-    (e: "scroll", value: number): void;
+    change: [value: number];
     /**
      * on item click event
      * @param event {event} native event
      */
-    (e: "click", event: Event): void;
+    click: [event: Event];
 }>();
 
-const rootRef = ref();
+const rootRef = useTemplateRef("rootElement");
 
-function restartTimer(): void {
-    pauseTimer();
-    startTimer();
-}
-
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<CarouselComponent>(() => ({
-    restartTimer,
+    activeIndex: activeIndex.value,
+    indicators: props.indicators,
+    total: total.value,
     itemWidth: itemWidth.value,
-    activeIndex: scrollIndex.value,
+    onDrag: onDragStart,
     onClick: (event: Event): void => emits("click", event),
     setActive: (index: number): void => switchTo(index),
 }));
 
-/** Provide functionalities and data to child item components */
-const { childItems } = useProviderParent(rootRef, { data: provideData });
+/** provide functionalities and data to child item components */
+const { childItems } = useProviderParent({ rootRef, data: provideData });
 
+/** The real index of the active item */
 const activeIndex = defineModel<number>({ default: 0 });
-const scrollIndex = ref(props.modelValue);
+
+const total = computed(() => childItems.value.length);
+
+const indicatorItems = computed(() =>
+    childItems.value.filter(
+        (el, i) => mod(i, settings.value.itemsToList) === 0,
+    ),
+);
 
 let resizeObserver: ResizeObserver | undefined;
-const windowWidth = ref(0);
-
 if (isClient && window.ResizeObserver) {
     resizeObserver = new window.ResizeObserver(onRefresh);
 }
 
-const refresh_ = ref(0);
-
-/** When v-model is changed switch to the new active item. */
+/** watch specific props which need to refresh the component */
 watch(
-    () => props.modelValue,
-    (value) => {
-        if (value <= childItems.value.length - 1)
-            switchTo(value * settings.value.itemsToList, true);
-    },
+    [
+        () => props.itemsToList,
+        () => props.itemsToShow,
+        () => props.arrowsHover,
+        () => props.repeat,
+    ],
+    () => onRefresh(),
 );
 
-watch([() => props.itemsToList, () => props.itemsToShow], () => onRefresh());
+const windowWidth = ref(0);
+
+function onRefresh(): void {
+    activeIndex.value = 0;
+    // set HTML element with
+    windowWidth.value = window.innerWidth;
+    // trigger re creation of settings based on props
+    nextTick(() => triggerRef(settings));
+}
 
 onMounted(() => {
     if (isClient) {
-        if (window.ResizeObserver && resizeObserver)
+        if (window.ResizeObserver && resizeObserver && rootRef.value)
             resizeObserver.observe(rootRef.value);
 
-        onResized();
-        startTimer();
+        // set HTML element with
+        windowWidth.value = window.innerWidth;
+
+        // a prefers-reduced-motion user setting must always override autoplay
+        const hasReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        );
+        if (!hasReducedMotion?.matches) startTimer();
     }
 });
 
@@ -283,35 +170,19 @@ onBeforeUnmount(() => {
         if (window.ResizeObserver && resizeObserver)
             resizeObserver.disconnect();
 
-        dragEnd();
+        onDragEnd();
         pauseTimer();
     }
 });
-
-// add dom event handler
-if (isClient) {
-    useEventListener("resize", onResized, window);
-    useEventListener("animationend", onRefresh);
-    useEventListener("transitionend", onRefresh);
-    useEventListener("transitionstart", onRefresh);
-}
-
-function onResized(): void {
-    windowWidth.value = window.innerWidth;
-}
-
-function onRefresh(): void {
-    nextTick(() => refresh_.value++);
-}
 
 const settings = computed<typeof props>(() => {
     const breakpoints = Object.keys(props.breakpoints)
         .map(Number)
         .sort((a, b) => b - a);
 
-    const breakpoint = breakpoints.filter(
+    const breakpoint = breakpoints.find(
         (breakpoint) => windowWidth.value >= breakpoint,
-    )[0];
+    );
 
     const settings = toRaw(
         breakpoint ? { ...props, ...props.breakpoints[breakpoint] } : props,
@@ -325,33 +196,13 @@ const settings = computed<typeof props>(() => {
 
 const itemWidth = computed(() => {
     // Ensure component is mounted
-    if (!windowWidth.value) return 0;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const r = refresh_.value; // We force the computed property to refresh if this ref is changed
+    if (!windowWidth.value || !rootRef.value) return 0;
 
     const rect = rootRef.value.getBoundingClientRect();
     return rect.width / settings.value.itemsToShow;
 });
 
-const translation = computed(
-    () =>
-        -bound(
-            delta.value + scrollIndex.value * itemWidth.value,
-            0,
-            (childItems.value.length - settings.value.itemsToShow) *
-                itemWidth.value,
-        ),
-);
-
-const total = computed(() => childItems.value.length);
-
-const indicatorCount = computed(() =>
-    Math.ceil(total.value / settings.value.itemsToList),
-);
-
-const indicatorIndex = computed(() =>
-    Math.ceil(scrollIndex.value / settings.value.itemsToList),
-);
+// #region --- Switch Events ---
 
 const hasArrows = computed(
     () =>
@@ -359,53 +210,66 @@ const hasArrows = computed(
         !settings.value.arrowsHover,
 );
 
-const hasPrev = computed(
-    () => (settings.value.repeat || scrollIndex.value > 0) && hasArrows.value,
-);
+const hasPrev = computed(() => settings.value.repeat || activeIndex.value > 0);
 
 function onPrev(): void {
-    switchTo(scrollIndex.value - settings.value.itemsToList);
+    switchTo(activeIndex.value - settings.value.itemsToList);
 }
 
 const hasNext = computed(
     () =>
-        (settings.value.repeat || scrollIndex.value < total.value - 1) &&
-        hasArrows.value,
+        settings.value.repeat ||
+        activeIndex.value < total.value - settings.value.itemsToList,
 );
 
 function onNext(): void {
-    switchTo(scrollIndex.value + settings.value.itemsToList);
+    switchTo(activeIndex.value + settings.value.itemsToList);
 }
 
-function switchTo(index: number, onlyMove?: boolean): void {
+/** Go to the first viable item */
+function onHomePressed(): void {
+    switchTo(0);
+}
+
+/** Go to the last viable item */
+function onEndPressed(): void {
+    switchTo(total.value - settings.value.itemsToList);
+}
+
+/**
+ * Show the slide by index
+ * @param index the real index of the slide
+ */
+function switchTo(index: number): void {
     if (settings.value.repeat) index = mod(index, total.value);
+    index = bound(index, 0, total.value - 1);
 
-    index = bound(index, 0, total.value);
-    scrollIndex.value = index;
-    emits("scroll", indicatorIndex.value);
-
-    if (!onlyMove)
-        activeIndex.value = Math.ceil(index / settings.value.itemsToList);
+    activeIndex.value = index;
+    emits("change", index);
 }
 
-function onModeChange(trigger: string, index: number): void {
-    if (props.indicatorMode === trigger)
-        switchTo(index * settings.value.itemsToList);
+/** Set focus on a tab item. */
+function onChange(item: ProviderItem): void {
+    switchTo(item.index);
 }
 
-// --- Autoplay Feature ---
+// #endregion --- Switch Events ---
+
+// #region --- Autoplay Feature ---
 
 const isHovered = ref(false);
 let timer: NodeJS.Timeout | undefined;
+/** deactive autoplay feature */
+const isAutoplayPaused = ref(false);
 
 function onMouseEnter(): void {
     isHovered.value = true;
-    checkPause();
+    if (props.autoplay && props.pauseHover) pauseTimer();
 }
 
 function onMouseLeave(): void {
     isHovered.value = false;
-    startTimer();
+    if (props.autoplay && props.pauseHover) startTimer();
 }
 
 /** When autoplay is changed, start or pause timer accordingly */
@@ -425,8 +289,19 @@ watch(
     },
 );
 
+function onToggleAutoplay(): void {
+    if (!isAutoplayPaused.value) {
+        isAutoplayPaused.value = true;
+        pauseTimer();
+    } else {
+        isAutoplayPaused.value = false;
+        startTimer();
+    }
+}
+
 function startTimer(): void {
     if (!props.autoplay || timer) return;
+    if (isAutoplayPaused.value) return;
     timer = setInterval(() => {
         if (!props.repeat && !hasNext.value) pauseTimer();
         else onNext();
@@ -440,18 +315,24 @@ function pauseTimer(): void {
     }
 }
 
-function checkPause(): void {
-    if (props.pauseHover && props.autoplay) pauseTimer();
-}
+// #endregion --- Autoplay Feature ---
 
-// --- Drag & Drop Feature ---
+// #region --- Drag & Drop Feature ---
 
-const isTouch = ref(false);
 const dragX = ref();
-const hold = ref(0);
 const delta = ref(0);
 
 const isDragging = computed(() => isDefined(dragX.value));
+
+const translation = computed(
+    () =>
+        -bound(
+            delta.value + activeIndex.value * itemWidth.value,
+            0,
+            (childItems.value.length - settings.value.itemsToShow) *
+                itemWidth.value,
+        ),
+);
 
 /** handle drag event */
 function onDragStart(event: TouchEvent | MouseEvent): void {
@@ -461,63 +342,46 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
         ((event as MouseEvent).button !== 0 && event.type !== "touchstart")
     )
         return;
-    hold.value = Date.now();
-    isTouch.value = !!(event as TouchEvent).touches;
-    dragX.value = isTouch.value
+
+    delta.value = 0;
+    // get dragging start x value
+    dragX.value = !!(event as TouchEvent).touches
         ? (event as TouchEvent).touches[0].clientX
         : (event as MouseEvent).clientX;
-    if (isTouch.value) {
-        pauseTimer();
-    }
-    if (isClient) {
-        window.addEventListener(
-            isTouch.value ? "touchmove" : "mousemove",
-            dragMove,
-        );
-        window.addEventListener(
-            isTouch.value ? "touchend" : "mouseup",
-            dragEnd,
-        );
-    }
+
+    // stop timer when dragging starts
+    pauseTimer();
 }
 
-function dragMove(event: TouchEvent | MouseEvent): void {
+function onDragOver(event: TouchEvent | MouseEvent): void {
     if (!isDragging.value) return;
-    const dragEndX = (event as TouchEvent).touches
+
+    const dragEndX = !!(event as TouchEvent).touches
         ? (
               (event as TouchEvent).changedTouches[0] ||
               (event as TouchEvent).touches[0]
           ).clientX
         : (event as MouseEvent).clientX;
+    // calc transition delta value
     delta.value = dragX.value - dragEndX;
-    // prevent event if not touch event
-    if (!(event as TouchEvent).touches) event.preventDefault();
 }
 
-function dragEnd(event?: TouchEvent | MouseEvent): void {
-    if (!isDragging.value && !hold.value) return;
-    if (hold.value) {
-        const signCheck = sign(delta.value);
-        const results = Math.round(
-            Math.abs(delta.value / itemWidth.value) + 0.15,
-        ); // Hack
-        switchTo(scrollIndex.value + signCheck * results);
-    }
+function onDragEnd(): void {
+    if (!isDragging.value) return;
+    // switch slide
+    const signCheck = sign(delta.value);
+    const results = Math.round(Math.abs(delta.value / itemWidth.value) + 0.15); // Hack
+    switchTo(activeIndex.value + signCheck * results);
+
+    // cleanup
     delta.value = 0;
     dragX.value = undefined;
-    if ((event as TouchEvent)?.touches) startTimer();
 
-    if (isClient) {
-        window.removeEventListener(
-            isTouch.value ? "touchmove" : "mousemove",
-            dragMove,
-        );
-        window.removeEventListener(
-            isTouch.value ? "touchend" : "mouseup",
-            dragEnd,
-        );
-    }
+    // atart timer after dragging ends
+    startTimer();
 }
+
+// #endregion --- Drag & Drop Feature ---
 
 // --- Computed Component Classes ---
 
@@ -548,6 +412,11 @@ const arrowIconNextClasses = defineClasses([
     "o-car__arrow__icon-next",
 ]);
 
+const arrowIconAutoplayClasses = defineClasses([
+    "arrowIconAutoplayClass",
+    "o-car__arrow__icon-autoplay",
+]);
+
 const indicatorsClasses = defineClasses(
     ["indicatorsClass", "o-car__indicators"],
     [
@@ -572,7 +441,7 @@ const indicatorItemClasses = defineClasses(
         "indicatorItemStyleClass",
         "o-car__indicator__item--",
         props.indicatorStyle,
-        !!props.indicatorStyle,
+        computed(() => !!props.indicatorStyle),
     ],
 );
 
@@ -581,9 +450,11 @@ const indicatorItemActiveClasses = defineClasses([
     "o-car__indicator__item--active",
 ]);
 
-function indicatorItemAppliedClasses(index: number): ClassBind[] {
+function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
     const activeClasses =
-        indicatorIndex.value === index ? indicatorItemActiveClasses.value : [];
+        activeIndex.value === item.index
+            ? indicatorItemActiveClasses.value
+            : [];
 
     return [...indicatorItemClasses.value, ...activeClasses];
 }
@@ -591,31 +462,56 @@ function indicatorItemAppliedClasses(index: number): ClassBind[] {
 
 <template>
     <div
-        ref="rootRef"
+        ref="rootElement"
         :class="rootClasses"
         data-oruga="carousel"
         role="region"
+        aria-roledescription="carousel"
         @mouseover="onMouseEnter"
         @mouseleave="onMouseLeave"
-        @focus="onMouseEnter"
-        @blur="onMouseLeave"
+        @focusin="onMouseEnter"
+        @focusout="onMouseLeave"
         @keydown.left="onPrev"
-        @keydown.right="onNext">
+        @keydown.right="onNext"
+        @keydown.home.prevent="onHomePressed"
+        @keydown.end.prevent="onEndPressed">
         <div :class="wrapperClasses">
-            <div
-                :class="itemsClasses"
-                :style="'transform:translateX(' + translation + 'px)'"
-                tabindex="0"
-                role="group"
-                draggable="true"
-                aria-roledescription="carousel"
-                @mousedown="onDragStart"
-                @touchstart="onDragStart">
-                <!--
-                    @slot Display carousel item
-                -->
-                <slot />
-            </div>
+            <!--
+                @slot Override the pause/resume button
+                @binding {boolean} autoplay if autoplay is active
+                @binding {(): void} toggle toggle autoplay
+            -->
+            <slot
+                name="pause"
+                :autoplay="!isAutoplayPaused"
+                :toggle="onToggleAutoplay">
+                <template v-if="autoplay">
+                    <o-icon
+                        :class="[
+                            ...arrowIconClasses,
+                            ...arrowIconAutoplayClasses,
+                        ]"
+                        :pack="iconPack"
+                        :icon="
+                            !isAutoplayPaused
+                                ? iconAutoplayPause
+                                : iconAutoplayResume
+                        "
+                        :size="iconSize"
+                        both
+                        role="button"
+                        tabindex="0"
+                        :aria-label="
+                            !isAutoplayPaused
+                                ? ariaAutoplayPauseLabel
+                                : ariaAutoplayResumeLabel
+                        "
+                        @click="onToggleAutoplay"
+                        @keydown.enter.prevent="onToggleAutoplay"
+                        @keydown.space.prevent="onToggleAutoplay" />
+                </template>
+            </slot>
+
             <!--
                 @slot Override the arrows
                 @binding {boolean} has-prev has prev arrow button 
@@ -631,7 +527,7 @@ function indicatorItemAppliedClasses(index: number): ClassBind[] {
                 :next="onNext">
                 <template v-if="arrows">
                     <o-icon
-                        v-show="hasPrev"
+                        v-show="hasArrows && hasPrev"
                         :class="[...arrowIconClasses, ...arrowIconPrevClasses]"
                         :pack="iconPack"
                         :icon="iconPrev"
@@ -639,10 +535,12 @@ function indicatorItemAppliedClasses(index: number): ClassBind[] {
                         both
                         role="button"
                         tabindex="0"
+                        :aria-label="ariaPreviousLabel"
                         @click="onPrev"
-                        @keydown.enter="onPrev" />
+                        @keydown.enter.prevent="onPrev"
+                        @keydown.space.prevent="onPrev" />
                     <o-icon
-                        v-show="hasNext"
+                        v-show="hasArrows && hasNext"
                         :class="[...arrowIconClasses, ...arrowIconNextClasses]"
                         :pack="iconPack"
                         :icon="iconNext"
@@ -650,46 +548,64 @@ function indicatorItemAppliedClasses(index: number): ClassBind[] {
                         both
                         role="button"
                         tabindex="0"
+                        :aria-label="ariaNextLabel"
                         @click="onNext"
-                        @keydown.enter="onNext" />
+                        @keydown.enter.prevent="onNext"
+                        @keydown.space.prevent="onNext" />
                 </template>
             </slot>
+
+            <div
+                :class="itemsClasses"
+                :style="'transform:translateX(' + translation + 'px)'"
+                aria-roledescription="carousel-slide"
+                aria-atomic="false"
+                :aria-live="autoplay ? 'off' : 'polite'"
+                @dragend="onDragEnd"
+                @dragover="onDragOver"
+                @touchmove="onDragOver"
+                @touchend="onDragEnd">
+                <!--
+                    @slot Display carousel item
+                -->
+                <slot />
+            </div>
         </div>
 
         <!--
             @slot Override the indicators
             @binding {number} active active index 
             @binding {(idx: number): void} switch-to switch to item function
-            @binding {number} indicator-index current indicator index
         -->
-        <slot
-            :active="activeIndex"
-            :switch-to="switchTo"
-            :indicator-index="indicatorIndex"
-            name="indicators">
-            <template v-if="childItems.length">
-                <div v-if="indicators" :class="indicatorsClasses" role="group">
-                    <div
-                        v-for="(_, index) in indicatorCount"
-                        :key="index"
-                        :class="indicatorClasses"
-                        role="button"
-                        tabindex="0"
-                        @focus="onModeChange('hover', index)"
-                        @mouseover="onModeChange('hover', index)"
-                        @click="onModeChange('click', index)"
-                        @keypress.enter="onModeChange('click', index)">
-                        <!--
+        <slot name="indicators" :active="activeIndex" :switch-to="switchTo">
+            <div
+                v-if="indicators"
+                :class="indicatorsClasses"
+                role="tablist"
+                aria-label="Slides">
+                <div
+                    v-for="item in indicatorItems"
+                    :id="`carousel-${item.identifier}`"
+                    :key="item.index"
+                    :class="indicatorClasses"
+                    role="tab"
+                    :tabindex="modelValue === item.index ? '0' : '-1'"
+                    :aria-label="`Slide ${item.identifier}`"
+                    :aria-controls="`carouselpanel-${item.identifier}`"
+                    :aria-selected="modelValue === item.index"
+                    @click="onChange(item)"
+                    @keypress.enter="onChange(item)">
+                    <!--
                             @slot Override the indicator elements
                             @binding {index} index indicator index 
                         -->
-                        <slot :index="index" name="indicator">
-                            <span :class="indicatorItemAppliedClasses(index)" />
-                        </slot>
-                    </div>
+                    <slot :index="item.index" name="indicator">
+                        <span :class="indicatorItemAppliedClasses(item)" />
+                    </slot>
                 </div>
-            </template>
+            </div>
         </slot>
+
         <template v-if="overlay">
             <!-- @slot Overlay element -->
             <slot name="overlay" />

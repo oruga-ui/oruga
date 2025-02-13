@@ -237,7 +237,7 @@ describe("OSelect tests", () => {
         expect(emit![2][0]).toHaveLength(1);
     });
 
-    describe("render options props correctly", () => {
+    describe("handle options props correctly", () => {
         test("handle options as primitves correctly", () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
 
@@ -313,7 +313,7 @@ describe("OSelect tests", () => {
         test("handle grouped options correctly", () => {
             const options: OptionsGroupProp<string | number | object> = [
                 {
-                    group: "Black Sails",
+                    label: "Black Sails",
                     options: [
                         { label: "Flint", value: "flint" },
                         { label: "Silver", value: "silver" },
@@ -322,7 +322,7 @@ describe("OSelect tests", () => {
                     ],
                 },
                 {
-                    group: "Breaking Bad",
+                    label: "Breaking Bad",
                     options: {
                         heisenberg: "Heisenberg",
                         jesse: "Jesse",
@@ -331,7 +331,7 @@ describe("OSelect tests", () => {
                     },
                 },
                 {
-                    group: "Game of Thrones",
+                    label: "Game of Thrones",
                     attrs: { disabled: true },
                     options: [
                         "Tyrion Lannister",

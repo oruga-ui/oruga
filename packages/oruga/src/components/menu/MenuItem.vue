@@ -1,11 +1,12 @@
-<script setup lang="ts">
-import { ref, computed, type PropType } from "vue";
+<script setup lang="ts" generic="T">
+import { computed, ref, useId } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import {
     defineClasses,
+    normalizeOptions,
     useProviderChild,
     useProviderParent,
     type ProviderItem,
@@ -16,10 +17,10 @@ import type {
     MenuItemComponent,
     MenuItemProvider,
 } from "./types";
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { MenuItemProps } from "./props";
 
 /**
- * A menu list item
+ * A menu list item.
  * @displayName Menu Item
  */
 defineOptions({
@@ -29,178 +30,162 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /** The active state of the menu item, use v-model:active to make it two-way binding */
-    active: { type: Boolean, default: false },
-    /** Menu item label */
-    label: { type: String, default: undefined },
-    /** Menu item will be expanded */
-    expanded: { type: Boolean, default: false },
-    /** Menu item will be disabled */
-    disabled: { type: Boolean, default: false },
-    /** Icon to be shown */
-    icon: { type: String, default: undefined },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("menu.iconPack"),
-    },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: {
-        type: String,
-        default: () => getOption("menu.iconSize"),
-    },
-    /** Transition name to apply on menu list */
-    animation: {
-        type: String,
-        default: () => getOption("menu.animation", "slide"),
-    },
-    /** Menu item tag name */
-    tag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("menu.menuTag", "button"),
-    },
-    /**
-     * Role attribute to be passed to the list item for better accessibility.
-     * @values listitem, menuitem
-     */
-    ariaRole: {
-        type: String,
-        default: () => getOption("menu.itemAriaRole", "menuitem"),
-    },
-    // class props (will not be displayed in the docs)
-    /** Class of the menu item */
-    itemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the active menu item */
-    itemActiveClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the disabled menu item */
-    itemDisabledClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the icon of menu item */
-    itemIconTextClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the menu item when is a submenu */
-    itemSubmenuClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the root element of menu item */
-    itemWrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<MenuItemProps<T>>(), {
+    override: undefined,
+    active: false,
+    options: undefined,
+    label: undefined,
+    expanded: false,
+    disabled: false,
+    hidden: false,
+    submenuId: () => useId(),
+    icon: undefined,
+    iconPack: () => getDefault("menu.iconPack"),
+    iconSize: () => getDefault("menu.iconSize"),
+    animation: () => getDefault("menu.animation", "slide"),
+    tag: () => getDefault("menu.itemTag", "button"),
 });
 
-defineEmits<{
+const emits = defineEmits<{
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
-     * expanded prop two-way binding
-     * @param value {boolean} updated expanded prop
+     * onclick event
+     * @param value {string | number | object} value prop data
+     * @param event {event} Native Event
      */
-    (e: "update:expanded", value: boolean): void;
+    click: [value: T, event: Event];
 }>();
 
-const providedData = computed<MenuItemComponent>(() => ({
-    reset,
-}));
+const itemValue = props.value ?? useId();
 
-// inject functionalities and data from the parent menu component
-const { parent, item } = useProviderChild<MenuComponent, MenuItemComponent>({
-    data: providedData,
-});
-
-// inject functionalities and data from the parent menu-item component
-const providedItem = useProviderChild<MenuItemProvider>({
-    key: "menu-item",
-    needParent: false,
-});
-
-const isActive = defineModel<boolean>("active", { default: false });
-
-const isExpanded = defineModel<boolean>("expanded", { default: false });
-
-/** template identifier */
-const identifier = computed(() =>
-    providedItem.parent.value
-        ? `menu-item-${providedItem.item.value?.identifier}`
-        : `menu-${item.value.identifier}`,
-);
-
-function onClick(): void {
-    if (props.disabled) return;
-    triggerReset();
-    if (parent.value.accordion) isExpanded.value = !isExpanded.value;
-    if (parent.value.activable) isActive.value = !isActive.value;
-}
-
-function triggerReset(child?: ProviderItem<MenuItemComponent>): void {
-    // The point of this method is to collect references to the clicked item and any parent,
-    // this way we can skip resetting those elements.
-    if (typeof providedItem.parent.value?.triggerReset === "function") {
-        providedItem.parent.value.triggerReset(item.value);
-    }
-    // else if not a sub item reset parent menu
-    else if (typeof parent.value.resetMenu === "function") {
-        parent.value.resetMenu(child ? [item.value, child] : [item.value]);
-    }
-}
-
-function reset(): void {
-    if (parent.value.accordion) isExpanded.value = false;
-    if (parent.value.activable) isActive.value = false;
-}
-
-const rootRef = ref();
-
-// provided data is a computed ref to enjure reactivity
-const provideData = computed<MenuItemProvider>(() => ({
+// provided data is a computed ref to ensure reactivity
+const provideData = computed<MenuItemProvider<T>>(() => ({
+    expanded: isExpanded.value,
+    setExpand,
     triggerReset,
 }));
 
 /** provide functionalities and data to child item components */
-useProviderParent(rootRef, { key: "menu-item", data: provideData });
+const { childItems } = useProviderParent({
+    key: "menu-item",
+    data: provideData,
+});
 
-// --- Computed Component Classes ---
+/** inject functionalities and data from the parent menu-item component */
+const menuItem = useProviderChild<MenuItemProvider<T>>({
+    key: "menu-item",
+    needParent: false,
+});
 
-const wrapperClasses = defineClasses([
-    "itemWrapperClass",
-    "o-menu__item__wrapper",
-]);
+// provided data is a computed ref to ensure reactivity
+const providedData = computed<MenuItemComponent<T>>(() => ({
+    ...props,
+    value: itemValue,
+    parent: menuItem.parent.value,
+    hasChildren: hasChildren.value,
+    expanded: isExpanded.value,
+    setExpand,
+    reset,
+    selectItem,
+}));
+
+/** inject functionalities and data from the parent menu component */
+const { parent, item } = useProviderChild<
+    MenuComponent<T>,
+    MenuItemComponent<T>
+>({ data: providedData });
+
+const nextSequence = parent.value.nextSequence;
+
+/** normalized programamtic options */
+const normalizedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
+
+const isActive = defineModel<boolean>("active", { default: false });
+
+const hasChildren = computed(() => !!childItems.value.length);
+
+const isFocused = computed(
+    () => item.value.identifier === parent.value.focsuedIdentifier,
+);
+
+function selectItem(event: Event): void {
+    if (props.disabled || parent.value.disabled) return;
+    triggerReset();
+    isActive.value = !isActive.value;
+    if (parent.value.accordion) isExpanded.value = isActive.value;
+    parent.value.selectItem(isActive.value ? item.value : undefined);
+    emits("click", itemValue as T, event);
+}
+
+function triggerReset(childs?: ProviderItem<MenuItemComponent<T>>[]): void {
+    // The point of this method is to collect references to the clicked item and any parent,
+    // this way we can skip resetting those elements.
+    if (typeof menuItem.parent.value?.triggerReset === "function") {
+        menuItem.parent.value.triggerReset(
+            childs ? [item.value, ...childs] : [item.value],
+        );
+    }
+    // else if not a sub item reset parent menu
+    else if (typeof parent.value.resetMenu === "function") {
+        parent.value.resetMenu(childs ? [item.value, ...childs] : [item.value]);
+    }
+}
+
+const isExpanded = ref(props.expanded);
+// always expand if not accordion feature
+if (!parent.value.accordion) isExpanded.value = true;
+
+function setExpand(state: boolean): void {
+    if (!parent.value.accordion) return;
+    isExpanded.value = state;
+
+    if (typeof menuItem.parent.value?.setExpand === "function")
+        menuItem.parent.value.setExpand(state);
+}
+
+function reset(): void {
+    if (parent.value.accordion) isExpanded.value = false;
+    isActive.value = false;
+}
+
+// #region --- Computed Component Classes ---
 
 const itemClasses = defineClasses(
     ["itemClass", "o-menu__item"],
     ["itemActiveClass", "o-menu__item--active", null, isActive],
+    ["itemFocusedClass", "o-menu__item--focused", null, isFocused],
     [
         "itemDisabledClass",
         "o-menu__item--disabled",
         null,
-        computed(() => props.disabled),
+        computed(() => props.disabled || parent.value.disabled),
+    ],
+);
+
+const buttonClasses = defineClasses(
+    ["itemButtonClass", "o-menu__item__button"],
+    ["itemButtonActiveClass", "o-menu__item__button--active", null, isActive],
+    [
+        "itemButtonFocusedClass",
+        "o-menu__item__button--focused",
+        null,
+        isFocused,
     ],
     [
-        "itemIconTextClass",
-        "o-menu__item--icon-text",
+        "itemButtonDisabledClass",
+        "o-menu__item__button--disabled",
+        null,
+        computed(() => props.disabled || parent.value.disabled),
+    ],
+    [
+        "itemButtonIconClass",
+        "o-menu__item__button--icon",
         null,
         computed(() => !!props.icon),
     ],
@@ -210,24 +195,31 @@ const submenuClasses = defineClasses([
     "itemSubmenuClass",
     "o-menu__item__submenu",
 ]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
     <li
-        ref="rootRef"
-        :role="ariaRole"
-        :class="wrapperClasses"
-        :data-id="identifier"
+        v-show="!hidden"
+        :id="`${parent.menuId}-${item.identifier}`"
         data-oruga="menu-item"
-        aria-roledescription="item">
+        :data-id="`menu-${item.identifier}`"
+        :class="itemClasses"
+        role="none">
         <component
             :is="tag"
             v-bind="$attrs"
-            :class="itemClasses"
-            role="button"
-            :disabled="disabled"
-            @keyup.enter="onClick()"
-            @click="onClick()">
+            :class="buttonClasses"
+            :role="parent.role + 'item'"
+            :disabled="disabled || parent.disabled"
+            tabindex="-1"
+            :aria-selected="parent.role == 'tree' ? isActive : undefined"
+            :aria-disabled="disabled || parent.disabled"
+            :aria-expanded="hasChildren ? isExpanded : undefined"
+            :aria-owns="hasChildren ? submenuId : undefined"
+            @keyup.enter="selectItem"
+            @click="selectItem">
             <o-icon
                 v-if="icon"
                 :icon="icon"
@@ -244,15 +236,26 @@ const submenuClasses = defineClasses([
         </component>
 
         <!-- sub menu items -->
-        <template v-if="$slots.default">
-            <transition :name="animation">
-                <ul v-show="isExpanded" :class="submenuClasses">
-                    <!--
+        <transition v-if="$slots.default || options" :name="animation">
+            <ul
+                v-show="isExpanded"
+                :id="submenuId"
+                :class="submenuClasses"
+                tabindex="-1"
+                role="group">
+                <!--
                         @slot Place menu items here 
                     -->
-                    <slot />
-                </ul>
-            </transition>
-        </template>
+                <slot>
+                    <OMenuItem
+                        v-for="option in normalizedOptions"
+                        :key="option.key"
+                        v-bind="option.attrs"
+                        :value="option.value"
+                        :label="option.label"
+                        :hidden="option.hidden" />
+                </slot>
+            </ul>
+        </transition>
     </li>
 </template>

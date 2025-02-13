@@ -5,6 +5,8 @@ import OTooltip from "../tooltip/Tooltip.vue";
 
 import { isClient } from "@/utils/ssr";
 
+import { injectField } from "../field/fieldInjection";
+
 import type { SliderProps } from "./props";
 import type { ClassBind, WithRequired } from "@/types";
 
@@ -32,14 +34,17 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {number | number[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: number | number[]): void;
+    "update:model-value": [value: number | number[]];
     /** on value change event */
-    (e: "change"): void;
+    change: [];
     /** on drag start event */
-    (e: "dragstart"): void;
+    dragstart: [];
     /** on drag end event */
-    (e: "dragend"): void;
+    dragend: [];
 }>();
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
 
 const isFocused = ref(false);
 const dragging = ref(false);
@@ -193,7 +198,7 @@ function setPosition(percent: number | undefined): void {
     let value =
         ((steps * stepLength) / 100) * (max.value - min.value) + min.value;
     value = parseFloat(value.toFixed(precision.value));
-    emits("update:modelValue", value);
+    emits("update:model-value", value);
 
     if (!dragging.value && value !== oldValue.value) oldValue.value = value;
 }
@@ -217,6 +222,7 @@ defineExpose({ setPosition });
                 :tabindex="disabled ? undefined : 0"
                 role="slider"
                 :aria-label="ariaLabel"
+                :aria-labelledby="parentField?.labelId"
                 :aria-valuenow="modelValue"
                 :aria-valuemin="min"
                 :aria-valuemax="max"

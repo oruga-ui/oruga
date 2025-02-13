@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T, K extends string">
 import { computed, getCurrentInstance } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
@@ -8,6 +8,7 @@ import type { TableColumnComponent, TableComponent } from "./types";
 import type { TableColumnProps } from "./props";
 
 /**
+ * Define a column used by the table component.
  * @displayName Table Column
  */
 defineOptions({
@@ -16,18 +17,18 @@ defineOptions({
     configField: "table",
 });
 
-const props = withDefaults(defineProps<TableColumnProps<T>>(), {
+const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     label: undefined,
     field: undefined,
     formatter: undefined,
     subheading: undefined,
-    meta: undefined,
     width: undefined,
     numeric: false,
     position: undefined,
     searchable: false,
     sortable: false,
     visible: true,
+    hidden: false,
     sticky: false,
     headerSelectable: false,
     customSort: undefined,
@@ -46,6 +47,7 @@ const isHeaderUnselectable = computed(
 
 const vm = getCurrentInstance();
 
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<TableColumnComponent<T>>(() => ({
     ...props,
     $el: vm!.proxy!,
@@ -55,9 +57,11 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
     tdClasses: tdClasses.value,
 }));
 
-const { parent, item } = useProviderChild<TableComponent<T>>({
-    data: providedData,
-});
+/** inject functionalities and data from the parent component */
+const { parent, item } = useProviderChild<
+    TableComponent,
+    TableColumnComponent<T>
+>({ data: providedData });
 
 // --- Computed Component Classes ---
 
@@ -66,11 +70,7 @@ const thClasses = defineClasses(
         "thCurrentSortClass",
         "o-table__th-current-sort",
         null,
-        computed(
-            () =>
-                parent.value?.currentSortColumn?.identifier ===
-                item.value.identifier,
-        ),
+        computed(() => parent.value?.isColumnSorted(item.value)),
     ],
     [
         "thSortableClass",
@@ -118,14 +118,14 @@ const tdClasses = defineClasses(
 // these properties are just for type addings
 // slot props will be set in Table.vue
 const row = {} as any;
-const column = {} as TableColumnProps<T>;
+const column = {} as TableColumnProps<T, K>;
 const index = 0;
 const toggle = () => {};
 const filters = {} as Record<string, string>;
 </script>
 
 <template>
-    <span :data-id="item.identifier" data-oruga="table-column">
+    <span data-oruga="table-column" :data-id="`table-${item.identifier}`">
         {{ label }}
 
         <!--

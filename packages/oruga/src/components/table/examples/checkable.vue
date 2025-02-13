@@ -2,33 +2,7 @@
 import { ref } from "vue";
 import type { TableColumn } from "@oruga-ui/oruga-next";
 
-const columns = ref<TableColumn[]>([
-    {
-        field: "id",
-        label: "ID",
-        width: "40",
-        numeric: true,
-    },
-    {
-        field: "first_name",
-        label: "First Name",
-    },
-    {
-        field: "last_name",
-        label: "Last Name",
-    },
-    {
-        field: "date",
-        label: "Date",
-        position: "centered",
-    },
-    {
-        field: "gender",
-        label: "Gender",
-    },
-]);
-
-const data = ref([
+const data = [
     {
         id: 1,
         first_name: "Jesse",
@@ -64,10 +38,36 @@ const data = ref([
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-]);
+];
 
-const checkboxPosition = ref("left");
-const checkedRows = ref([data.value[1], data.value[3]]);
+const columns: TableColumn<(typeof data)[number]>[] = [
+    {
+        field: "id",
+        label: "ID",
+        width: "40",
+        numeric: true,
+    },
+    {
+        field: "first_name",
+        label: "First Name",
+    },
+    {
+        field: "last_name",
+        label: "Last Name",
+    },
+    {
+        field: "date",
+        label: "Date",
+        position: "centered",
+    },
+    {
+        field: "gender",
+        label: "Gender",
+    },
+];
+
+const checkboxPosition = ref<"left" | "right">("left");
+const checkedRows = ref([data[1], data[3]]);
 </script>
 
 <template>
@@ -79,7 +79,7 @@ const checkedRows = ref([data.value[1], data.value[3]]);
                 icon-left="times"
                 label="Clear checked"
                 @click="checkedRows = []" />
-            <o-select v-model="checkboxPosition">
+            <o-select v-model="checkboxPosition" aria-label="Checkbox position">
                 <option value="left">Checkbox at left</option>
                 <option value="right">Checkbox at right</option>
             </o-select>

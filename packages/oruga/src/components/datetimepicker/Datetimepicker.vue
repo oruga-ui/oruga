@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import {
-    computed,
-    ref,
-    useTemplateRef,
-    watch,
-    type ComponentPublicInstance,
-} from "vue";
+import { computed, ref, useTemplateRef, watch } from "vue";
 
 import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
 import OInput from "../input/Input.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDate, isMobileAgent, pad } from "@/utils/helpers";
 import { defineClasses, useInputHandler } from "@/composables";
 
@@ -22,7 +16,7 @@ import type { TimepickerProps } from "../timepicker/props";
 import type { DatetimepickerProps } from "./props";
 
 /**
- * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+ * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile.
  * @displayName Datetimepicker
  * @style _datetimepicker.scss
  */
@@ -33,6 +27,8 @@ defineOptions({
     inheritAttrs: false,
 });
 
+type ModelValue = DatetimepickerProps["modelValue"];
+
 const props = withDefaults(defineProps<DatetimepickerProps>(), {
     override: undefined,
     modelValue: undefined,
@@ -41,26 +37,26 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     timepicker: undefined,
     minDatetime: undefined,
     maxDatetime: undefined,
-    size: () => getOption("datetimepicker.size"),
+    size: () => getDefault("datetimepicker.size"),
     expanded: false,
     rounded: false,
     placeholder: undefined,
     readonly: false,
     disabled: false,
     inline: false,
-    openOnFocus: () => getOption("datetimepicker.openOnFocus", true),
-    locale: () => getOption("locale"),
-    formatter: getOption("datetimepicker.dateFormatter"),
-    parser: getOption("datetimepicker.dateParser"),
-    creator: getOption("datetimepicker.datetimeCreator"),
+    openOnFocus: () => getDefault("datetimepicker.openOnFocus", true),
+    locale: () => getDefault("locale"),
+    formatter: getDefault("datetimepicker.dateFormatter"),
+    parser: getDefault("datetimepicker.dateParser"),
+    creator: getDefault("datetimepicker.datetimeCreator"),
     position: undefined,
-    mobileNative: () => getOption("datetimepicker.mobileNative", true),
-    iconPack: () => getOption("datetimepicker.iconPack"),
-    icon: () => getOption("datetimepicker.icon"),
-    iconRight: () => getOption("datetimepicker.iconRight"),
+    iconPack: () => getDefault("datetimepicker.iconPack"),
+    icon: () => getDefault("datetimepicker.icon"),
+    iconRight: () => getDefault("datetimepicker.iconRight"),
     iconRightClickable: false,
-    teleport: () => getOption("datetimepicker.teleport", false),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    mobileNative: () => getDefault("datetimepicker.mobileNative", true),
+    teleport: () => getDefault("datetimepicker.teleport", false),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
 });
 
@@ -69,63 +65,61 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {Date} updated modelValue prop
      */
-    (e: "update:modelValue", value: Date): void;
+    "update:model-value": [value: Date];
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
      */
-    (e: "update:active", value: boolean): void;
+    "update:active": [value: boolean];
     /**
      * on range start is selected event
      * @param value {Date} range start date
      */
-    (e: "range-start", value: Date): void;
+    "range-start": [value: Date];
     /**
      * on range end is selected event
      * @param value {Date} range end date
      */
-    (e: "range-end", value: Date): void;
+    "range-end": [value: Date];
     /**
      * on month change event
      * @param value {number} month number
      */
-    (e: "change-month", value: number): void;
+    "change-month": [value: number];
     /**
      * on year change event
      * @param value {number} year number
      */
-    (e: "change-year", value: number): void;
+    "change-year": [value: number];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
-const datepickerRef = useTemplateRef<ComponentPublicInstance>("datepickerRef");
-const timepickerRef = useTemplateRef<ComponentPublicInstance>("timepickerRef");
-const nativeInputRef =
-    useTemplateRef<ComponentPublicInstance>("nativeInputRef");
+const datepickerRef = useTemplateRef("datepickerComponent");
+const nativeInputRef = useTemplateRef("nativeInputComponent");
 
 const timepickerProps = ref<TimepickerProps | undefined>(props.timepicker);
 watch(
@@ -165,14 +159,14 @@ const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 /** Dropdown active state */
 const isActive = defineModel<boolean>("active", { default: false });
 
-const vmodel = defineModel<typeof props.modelValue>({ default: undefined });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 function updateVModel(value: Date | Date[] | undefined): void {
+    if (Array.isArray(value)) return updateVModel(value[0]);
     if (!value) {
         vmodel.value = undefined;
         return;
     }
-    if (Array.isArray(value)) return updateVModel(value[0]);
 
     let date = new Date(value.getTime());
     if (props.modelValue) {
@@ -283,7 +277,7 @@ function parse(value: string): Date | undefined {
     return isDate(date) ? date : undefined;
 }
 
-function formatNative(value: typeof props.modelValue): string {
+function formatNative(value: ModelValue): string {
     const date = value ? new Date(value) : undefined;
     if (date && isDate(date)) {
         const year = date.getFullYear();
@@ -350,7 +344,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 <template>
     <o-datepicker
         v-if="!isMobileNative || inline"
-        ref="datepickerRef"
+        ref="datepickerComponent"
         v-bind="{ ...$attrs, ...datepicker }"
         v-model:active="isActive"
         :model-value="vmodel"
@@ -391,7 +385,6 @@ defineExpose({ focus: setFocus, value: vmodel });
         <template #footer>
             <div :class="timepickerWrapperClasses">
                 <o-timepicker
-                    ref="timepickerRef"
                     v-bind="timepicker"
                     v-model="vmodel"
                     inline
@@ -404,7 +397,7 @@ defineExpose({ focus: setFocus, value: vmodel });
                     :locale="locale" />
             </div>
 
-            <template v-if="$slots.footer !== undefined">
+            <template v-if="$slots.footer">
                 <!--
                     @slot Define an additional footer
                 -->
@@ -417,7 +410,7 @@ defineExpose({ focus: setFocus, value: vmodel });
     <o-input
         v-else
         v-bind="$attrs"
-        ref="nativeInputRef"
+        ref="nativeInputComponent"
         type="datetime-local"
         autocomplete="off"
         :value="formatNative(vmodel)"

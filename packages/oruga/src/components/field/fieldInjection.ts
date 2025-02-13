@@ -6,17 +6,16 @@ import {
     type InjectionKey,
 } from "vue";
 
-import Field from "./Field.vue";
 import { getOption } from "@/utils/config";
+import type { FieldProps } from "./props";
 
-export type FieldProps = InstanceType<typeof Field>["$props"];
-
-type FieldData = {
-    $el: Element;
+export type FieldData = {
+    $el: Element | null;
     props: FieldProps;
     hasInnerField: boolean;
     variant?: string;
     message?: string;
+    labelId: string;
     inputAttrs: object;
     addInnerField: () => void;
     setInputId: (value: string) => void;
@@ -27,14 +26,14 @@ type FieldData = {
 };
 
 /** provide/inject type */
-type ProvidedField = ComputedRef<FieldData> | undefined;
+type ProvidedField = ComputedRef<FieldData | undefined>;
 
 /** provide/inject key */
 const $FieldKey: InjectionKey<ProvidedField> = Symbol("FielData");
 
 /**
  * Provide field component data via dependency injection.
- * Provided data is a computed ref to enjure reactivity.
+ * Provided data is a computed ref to ensure reactivity.
  */
 export function provideField(data: ProvidedField): void {
     provide($FieldKey, data);
@@ -42,12 +41,15 @@ export function provideField(data: ProvidedField): void {
 
 /** Inject parent field component if used inside one. **/
 export function injectField(): {
-    parentField?: ComputedRef<FieldData> | undefined;
+    parentField: ComputedRef<FieldData | undefined>;
     statusVariantIcon: ComputedRef<string>;
     statusVariant: ComputedRef<string | undefined>;
     statusMessage: ComputedRef<string | undefined>;
 } {
-    const parentField = inject($FieldKey, undefined);
+    const parentField = inject(
+        $FieldKey,
+        computed(() => undefined),
+    );
 
     /** Get the message prop from parent if it's a Field. */
     const statusMessage = computed<string | undefined>(() => {
@@ -68,19 +70,16 @@ export function injectField(): {
         return undefined;
     });
 
-    const statusVariantIconConfig = getOption<Record<string, string>>(
-        "statusVariantIcon",
-        {
-            success: "check",
-            danger: "alert-circle",
-            info: "information",
-            warning: "alert",
-        },
-    );
+    const statusVariantIconConfig = getOption("statusVariantIcon", {
+        success: "check",
+        danger: "alert-circle",
+        info: "information",
+        warning: "alert",
+    });
 
     /** Icon name based on the variant. */
     const statusVariantIcon = computed<string>(() => {
-        if (!statusVariant.value) return "";
+        if (!statusVariant.value || !statusVariantIconConfig) return "";
         return statusVariantIconConfig[statusVariant.value] || "";
     });
 

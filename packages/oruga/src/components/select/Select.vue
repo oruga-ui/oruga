@@ -1,21 +1,23 @@
-<script
-    setup
-    lang="ts"
-    generic="
-        T extends string | number | object,
-        IsMultiple extends boolean = false
-    ">
-import { computed, watch, ref, nextTick, useAttrs, useId } from "vue";
+<script setup lang="ts" generic="T, IsMultiple extends boolean = false">
+import {
+    computed,
+    watch,
+    nextTick,
+    useAttrs,
+    useId,
+    useTemplateRef,
+} from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { isDefined, isTrueish } from "@/utils/helpers";
 import {
     defineClasses,
     isGroupOption,
     normalizeOptions,
     useInputHandler,
+    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -23,7 +25,7 @@ import { injectField } from "../field/fieldInjection";
 import type { SelectProps } from "./props";
 
 /**
- * Select an item in a dropdown list. Use with Field to access all functionalities
+ * Select an item in a list. Use with Field to access all functionalities.
  * @displayName Select
  * @style _select.scss
  */
@@ -41,61 +43,61 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     modelValue: undefined,
     // multiple: false,
     options: undefined,
-    size: () => getOption("select.size"),
-    variant: () => getOption("select.variant"),
+    size: () => getDefault("select.size"),
+    variant: () => getDefault("select.variant"),
     placeholder: undefined,
     disabled: false,
     required: false,
     expanded: false,
     rounded: false,
     nativeSize: undefined,
-    iconPack: () => getOption("select.iconPack"),
-    icon: () => getOption("select.icon"),
+    iconPack: () => getDefault("select.iconPack"),
+    icon: () => getDefault("select.icon"),
     iconClickable: false,
-    iconRight: () => getOption("select.iconRight"),
+    iconRight: () => getDefault("select.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
     id: () => useId(),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidation: "",
-    autocomplete: () => getOption("select.autocomplete", "off"),
-    statusIcon: () => getOption("statusIcon", true),
+    autocomplete: () => getDefault("select.autocomplete", "off"),
+    statusIcon: () => getDefault("statusIcon", true),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | boolean | object | array} updated modelValue prop
+     * @param value {T | T[]} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
-const selectRef = ref<HTMLInputElement>();
+const selectRef = useTemplateRef("selectElement");
 
 // use form input functionality
 const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus, isValid } =
@@ -133,8 +135,13 @@ watch(
     { immediate: true, flush: "post" },
 );
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
-const normalizedptions = computed(() => normalizeOptions<T>(props.options));
+const normalizedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 const placeholderVisible = computed(
     () =>
@@ -270,7 +277,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         <select
             v-bind="inputBind"
             :id="id"
-            ref="selectRef"
+            ref="selectElement"
             v-model="vmodel"
             data-oruga-input="select"
             :class="selectClasses"
@@ -297,12 +304,13 @@ defineExpose({ focus: setFocus, value: vmodel });
                 @slot Override the options, default is options prop
             -->
             <slot>
-                <template v-for="option in normalizedptions" :key="option.key">
+                <template v-for="option in normalizedOptions" :key="option.key">
                     <optgroup
                         v-if="isGroupOption(option)"
                         v-show="!option.hidden"
                         v-bind="option.attrs"
-                        :label="option.group">
+                        :label="option.label"
+                        :value="option.value">
                         <option
                             v-for="_option in option.options"
                             v-show="!_option.hidden"

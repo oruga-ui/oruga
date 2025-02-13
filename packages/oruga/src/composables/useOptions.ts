@@ -2,7 +2,7 @@ import { toValue, type MaybeRefOrGetter } from "vue";
 import { isEqual } from "@/utils/helpers";
 
 /**
- * Options should always be formatted as an array of objects with label and value properties.
+ * Internal OptionsItem representation object with additional state information.
  *
  * @internal
  */
@@ -14,15 +14,14 @@ export type OptionsItem<V = unknown> = OptionsPropItem<V> & {
 };
 
 /**
- * Options should always be formatted as an array of objects with label and value
- * properties.
+ * Options should always be formatted as an array of objects with label and value properties.
  *
  * @public
  */
 export type OptionsPropItem<V = unknown> = {
     /** displayed option label */
     label: string;
-    /** used option value */
+    /** the real option value */
     value: V;
     /** additional attributes bound to the option element */
     attrs?: {
@@ -48,7 +47,9 @@ export type OptionsProp<V = string | number | object> =
  */
 export type OptionsGroupItem<V = unknown> = {
     /** displayed option group label */
-    group?: string;
+    label?: string;
+    /** the real option group value */
+    value?: V;
     /** list of options */
     options: OptionsItem<V>[];
     /** additional attributes bound to the options grouü element */
@@ -66,7 +67,9 @@ export type OptionsGroupItem<V = unknown> = {
  */
 export type OptionsGroupPropItem<V = unknown> = {
     /** displayed option group label */
-    group: string;
+    label?: string;
+    /** the real option group value */
+    value?: V;
     /** list of options */
     options: OptionsProp<V>;
     /** additional attributes bound to the options grouü element */
@@ -93,14 +96,12 @@ export type OptionsPropWithGroups<V = unknown> =
     | OptionsProp<V>
     | OptionsGroupProp<V>;
 
-type NormalizedOptions<
-    V,
-    O extends OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
-> =
-    O extends OptionsProp<V>
-        ? OptionsItem<V>[]
-        : O extends OptionsGroupPropItem<V>
-          ? OptionsGroupItem<V>[]
+/** Normalized external options prop for internal usage */
+type NormalizedOptions<V, O extends OptionsPropWithGroups<V> | undefined> =
+    O extends OptionsGroupProp<V>
+        ? OptionsGroupItem<V>[]
+        : O extends OptionsProp<V>
+          ? OptionsItem<V>[]
           : never[];
 
 /**
@@ -109,14 +110,13 @@ type NormalizedOptions<
  *
  * @param options - An un-normalized {@link OptionsPropWithGroups}.
  *
- * @returns A list of {@link OptionsItem | OptionsGroupItem}.
+ * @returns A list of {@link OptionsItem} | {@link OptionsGroupItem}.
  */
 export function normalizeOptions<
     V,
     O extends OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
-    R extends NormalizedOptions<V, O> = NormalizedOptions<V, O>,
->(options?: O): R {
-    if (!options) return [] as R;
+>(options: O | undefined, uuid: () => string): NormalizedOptions<V, O> {
+    if (!options) return [] as NormalizedOptions<V, O>;
 
     if (Array.isArray(options))
         return options.map(
@@ -126,39 +126,39 @@ export function normalizeOptions<
                     return {
                         label: String(option),
                         value: String(option),
-                        key: crypto.randomUUID(),
+                        key: uuid(),
                     } as OptionsItem<V>;
 
                 if (typeof option == "object") {
-                    if ("group" in option) {
+                    if ("options" in option) {
                         // process group options
-                        const options = normalizeOptions(option.options);
+                        const options = normalizeOptions(option.options, uuid);
                         // create options group item
                         return {
                             ...option,
                             options,
-                            key: crypto.randomUUID(),
+                            key: uuid(),
                         } as OptionsGroupItem<V>;
                     } else if ("value" in option) {
                         // create options item
                         return {
                             ...option,
-                            key: crypto.randomUUID(),
+                            key: uuid(),
                         } as OptionsItem<V>;
                     }
                 }
                 return option as OptionsItem<V>;
             },
-        ) as R;
+        ) as NormalizedOptions<V, O>;
 
     return Object.keys(options).map(
         (value: string): OptionsItem<string> => ({
             // create option from object key/value
             label: options[value],
             value,
-            key: crypto.randomUUID(),
+            key: uuid(),
         }),
-    ) as R;
+    ) as NormalizedOptions<V, O>;
 }
 
 /**
@@ -168,7 +168,7 @@ export function normalizeOptions<
  * @returns option is OptionsGroupItem
  */
 export function isGroupOption(
-    option: OptionsItem | OptionsGroupItem,
+    option: Partial<OptionsItem | OptionsGroupItem>,
 ): option is OptionsGroupItem {
     return (
         option && typeof option === "object" && Array.isArray(option.options)
@@ -177,6 +177,7 @@ export function isGroupOption(
 
 export function toOptionsGroup<V>(
     options: OptionsItem<V>[] | OptionsGroupItem<V>[],
+    key: string,
 ): OptionsGroupItem<V>[] {
     if (!Array.isArray(options)) return [];
 
@@ -186,7 +187,7 @@ export function toOptionsGroup<V>(
     if (isGroup) return [...options] as OptionsGroupItem<V>[];
 
     // create a list with a single group
-    return [{ options, key: crypto.randomUUID() }] as OptionsGroupItem<V>[];
+    return [{ options, key }] as OptionsGroupItem<V>[];
 }
 
 export function toOptionsList<V>(
@@ -201,56 +202,31 @@ export function toOptionsList<V>(
 }
 
 /**
- * Applies an reactive filter for a list of options {@link OptionsItem | OptionsGroupItem} based on a given value.
+ * Applies an filter function for a list of options {@link OptionsItem | OptionsGroupItem}.
  * Options are filtered by setting the hidden attribute.
- * A custom filter function can be given.
- * @param options Options to filter
- * @param value Value to filter for
- * @param customFilter optional filter function
+ * The options reactivity is not triggered by this.
+ * @param options - Options to filter
+ * @param filter - filter function
  */
-export function filterOptionsItems<
-    V,
-    O extends OptionsItem<V>[] | OptionsGroupItem<V>[],
->(
-    options: MaybeRefOrGetter<O>,
-    value: MaybeRefOrGetter<string>,
-    customFilter?: (option: V, value: string) => boolean,
-): O {
-    function filter(option: OptionsItem<V>, value: string): boolean {
-        if (typeof customFilter === "function")
-            return customFilter(option.value, toValue(value));
-        else
-            return !String(option.label)
-                .toLowerCase()
-                .includes(value?.toLowerCase());
-    }
-
-    function filterOptions(
-        options: OptionsItem<V>[] | OptionsGroupItem<V>[],
-        value: string,
-    ): void {
-        options.forEach((option: OptionsItem<V> | OptionsGroupItem<V>) => {
-            if (isGroupOption(option)) {
-                filterOptions(option.options, value);
-                // hide the whole group if every group options is hidden
-                option.hidden = option.options.every((option) => option.hidden);
-            } else {
-                // hide the option if filtered
-                option.hidden = filter(option, value);
-            }
-        });
-    }
-
-    // filter options by value
-    filterOptions(toValue(options), toValue(value));
-
-    // return options as new array
-    return [...toValue(options)] as O;
+export function filterOptionsItems<V>(
+    options: MaybeRefOrGetter<OptionsItem<V>[] | OptionsGroupItem<V>[]>,
+    filter: (option: OptionsItem<V>) => boolean,
+): void {
+    toValue(options).forEach((option: OptionsItem<V> | OptionsGroupItem<V>) => {
+        if (isGroupOption(option)) {
+            filterOptionsItems(option.options, filter);
+            // hide the whole group if every group options is hidden
+            option.hidden = option.options.every((option) => option.hidden);
+        } else {
+            // hide the option if filtered
+            option.hidden = filter(option);
+        }
+    });
 }
 
 /**
  * Checks if no options are given or every existing options are hidden.
- * @param options  - A list of {@link OptionsItem | OptionsGroupItem} to check for a given value
+ * @param options - A list of {@link OptionsItem | OptionsGroupItem} to check for a given value
  *
  * @returns boolean
  */
@@ -265,7 +241,7 @@ export function checkOptionsEmpty(
             // check if every options are hidden
             return checkOptionsEmpty(option.options);
         // check if option is hidden
-        else return !isOptionValid(option);
+        else return !isOptionViable(option);
     });
 }
 
@@ -303,7 +279,7 @@ export function findOption<V>(
  * Given an options list, find the first value.
  * @param options - An options list (with groups)
  */
-export function firstValidOption<V>(
+export function firstViableOption<V>(
     options:
         | MaybeRefOrGetter<OptionsItem<V>[]>
         | MaybeRefOrGetter<OptionsGroupItem<V>[]>,
@@ -314,16 +290,16 @@ export function firstValidOption<V>(
         if (typeof option !== "object" && option) continue;
         if (isGroupOption(option)) {
             // option in group
-            const found = firstValidOption(option.options);
+            const found = firstViableOption(option.options);
             if (found !== undefined) return found;
         }
-        // check if option is valid
-        else if (isOptionValid(option)) return option;
+        // check if option is viable
+        else if (isOptionViable(option)) return option;
     }
 
     return undefined;
 }
 
-export function isOptionValid(option: MaybeRefOrGetter<OptionsItem>): boolean {
+export function isOptionViable(option: MaybeRefOrGetter<OptionsItem>): boolean {
     return !toValue(option).hidden && !toValue(option).attrs?.disabled;
 }

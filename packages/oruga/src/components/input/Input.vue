@@ -13,7 +13,8 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
+import { isTrueish } from "@/utils/helpers";
 import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -21,7 +22,7 @@ import { injectField } from "../field/fieldInjection";
 import type { InputProps } from "./props";
 
 /**
- * Get user Input. Use with Field to access all functionalities
+ * Get user Input. Use with Field to access all functionalities.
  * @displayName Input
  * @style _input.scss
  */
@@ -39,29 +40,29 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     modelValue: undefined,
     // number: false,
     type: "text",
-    size: getOption("input.size"),
-    variant: getOption("input.variant"),
+    size: () => getDefault("input.size"),
+    variant: () => getDefault("input.variant"),
     placeholder: undefined,
     expanded: false,
     rounded: false,
     disabled: false,
     passwordReveal: false,
     maxlength: undefined,
-    counter: getOption("input.counter", false),
+    counter: () => getDefault("input.counter", false),
     autosize: false,
-    iconPack: getOption("input.iconPack", undefined),
-    icon: getOption("input.icon", undefined),
+    iconPack: () => getDefault("input.iconPack"),
+    icon: () => getDefault("input.icon"),
     iconClickable: false,
-    iconRight: getOption("input.iconRight", undefined),
+    iconRight: () => getDefault("input.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    clearable: getOption("input.clearable", false),
-    clearIcon: getOption("input.clearIcon", "close-circle"),
-    statusIcon: getOption("statusIcon", true),
-    debounce: getOption("autocomplete.debounce", 400),
-    autocomplete: getOption("input.autocomplete", "off"),
+    clearable: () => getDefault("input.clearable", false),
+    clearIcon: () => getDefault("input.clearIcon", "close-circle"),
+    statusIcon: () => getDefault("statusIcon", true),
+    debounce: () => getDefault("autocomplete.debounce", 400),
+    autocomplete: () => getDefault("input.autocomplete", "off"),
     id: () => useId(),
-    useHtml5Validation: getOption("useHtml5Validation", true),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
 });
 
@@ -70,48 +71,43 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {string | number} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string, event: Event): void;
+    input: [value: string, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
 }>();
 
 // --- Validation Feature ---
 
-const inputRef = useTemplateRef<HTMLInputElement>("inputRef");
-const textareaRef = useTemplateRef<HTMLInputElement>("textareaRef");
-
-const elementRef = computed<HTMLInputElement | null>(() =>
-    props.type === "textarea" ? textareaRef.value : inputRef.value,
-);
+const inputRef = useTemplateRef<HTMLInputElement>("inputElement");
 
 // use form input functionalities
 const {
@@ -122,7 +118,7 @@ const {
     setFocus,
     isValid,
     isFocused,
-} = useInputHandler(elementRef, emits, props);
+} = useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
@@ -131,7 +127,12 @@ const vmodel = defineModel<ModelValue, string, string, ModelValue>({
     // cast incomming value to string
     get: (value) => (typeof value !== "undefined" ? String(value) : ""),
     // cast outgoing value to number if prop number is true
-    set: (value) => (props.number ? Number(value) : String(value)),
+    set: (value) =>
+        typeof value == "undefined"
+            ? value
+            : isTrueish(props.number)
+              ? Number(value)
+              : String(value),
     default: undefined,
 });
 
@@ -168,22 +169,21 @@ const height = ref("auto");
 function resize(): void {
     height.value = "auto";
     nextTick(() => {
-        if (!textareaRef.value) return;
-        const scrollHeight = textareaRef.value.scrollHeight;
+        if (props.type !== "textarea" || !inputRef.value) return;
+        const scrollHeight = inputRef.value.scrollHeight;
         height.value = scrollHeight + "px";
     });
 }
 
 /** Computed inline styles for autoresize */
-const computedStyles = computed(
-    (): StyleValue =>
-        props.autosize
-            ? {
-                  resize: "none",
-                  height: height.value,
-                  overflow: "hidden",
-              }
-            : {},
+const computedStyles = computed<StyleValue>(() =>
+    props.type === "textarea" && props.autosize
+        ? {
+              resize: "none",
+              height: height.value,
+              overflow: "hidden",
+          }
+        : {},
 );
 
 let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
@@ -232,7 +232,7 @@ function iconClick(event: Event): void {
 function rightIconClick(event: Event): void {
     if (props.passwordReveal) togglePasswordVisibility();
     else if (props.clearable)
-        vmodel.value = (props.number ? 0 : "") as ModelValue;
+        vmodel.value = (isTrueish(props.number) ? 0 : "") as ModelValue;
     if (props.iconRightClickable) {
         emits("icon-right-click", event);
         nextTick(() => setFocus());
@@ -341,11 +341,20 @@ defineExpose({ focus: setFocus, value: vmodel });
 
 <template>
     <div data-oruga="input" :class="rootClasses">
+        <o-icon
+            v-if="icon"
+            :class="iconLeftClasses"
+            :clickable="iconClickable"
+            :icon="icon"
+            :pack="iconPack"
+            :size="size"
+            @click="iconClick" />
+
         <input
             v-if="type !== 'textarea'"
             v-bind="inputBind"
             :id="id"
-            ref="inputRef"
+            ref="inputElement"
             v-model="vmodel"
             :data-oruga-input="inputType"
             :type="inputType"
@@ -363,7 +372,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             v-else
             v-bind="inputBind"
             :id="id"
-            ref="textareaRef"
+            ref="inputElement"
             v-model="vmodel"
             data-oruga-input="textarea"
             :class="inputClasses"
@@ -375,15 +384,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             @focus="onFocus"
             @invalid="onInvalid"
             @input="debouncedInput" />
-
-        <o-icon
-            v-if="icon"
-            :class="iconLeftClasses"
-            :clickable="iconClickable"
-            :icon="icon"
-            :pack="iconPack"
-            :size="size"
-            @click="iconClick" />
 
         <o-icon
             v-if="hasIconRight"

@@ -21,7 +21,7 @@ const selected = ref();
 </script>
 
 <template>
-    <section>
+    <section class="odocs-spaced">
         <o-field label="Find a JS framework">
             <o-autocomplete
                 v-model="selected"
@@ -32,10 +32,9 @@ const selected = ref();
                 icon="search"
                 clearable
                 open-on-focus>
-                <template #empty>No results found</template>
             </o-autocomplete>
-        </o-field>
 
-        <p><b>Selected:</b> {{ selected }}</p>
+            <p><b>Selected:</b> {{ selected }}</p>
+        </o-field>
     </section>
 </template>

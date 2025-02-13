@@ -10,7 +10,7 @@ const inspectData: InspectData<ButtonClasses> = {
     wrapperClass: {
         class: "wrapperClass",
         description: "Class of the button elements wrapper",
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -19,7 +19,7 @@ const inspectData: InspectData<ButtonClasses> = {
         description: "Class of the button when outlined",
         properties: ["outlined"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "primary";
             data.outlined = true;
         },
@@ -28,7 +28,7 @@ const inspectData: InspectData<ButtonClasses> = {
         class: "loadingClass",
         description: "Class of the button with loading",
         properties: ["loading"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.loading = true;
         },
     },
@@ -37,7 +37,7 @@ const inspectData: InspectData<ButtonClasses> = {
         description: "Class of the button when inverted",
         properties: ["inverted"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "primary";
             data.inverted = true;
         },
@@ -46,7 +46,7 @@ const inspectData: InspectData<ButtonClasses> = {
         class: "expandedClass",
         description: "Class of the button when expanded",
         properties: ["expanded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.expanded = true;
         },
     },
@@ -54,7 +54,7 @@ const inspectData: InspectData<ButtonClasses> = {
         class: "roundedClass",
         description: "Class of the button when rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.rounded = true;
         },
     },
@@ -62,7 +62,7 @@ const inspectData: InspectData<ButtonClasses> = {
         class: "disabledClass",
         description: "Class of the button when disabled",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.disabled = true;
         },
     },
@@ -74,7 +74,7 @@ const inspectData: InspectData<ButtonClasses> = {
         class: "iconClass",
         description: "Class of the button icon",
         properties: ["iconLeft", "iconRight"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data["icon-left"] = "plus";
         },
     },
@@ -82,7 +82,7 @@ const inspectData: InspectData<ButtonClasses> = {
         class: "iconLeftClass",
         description: "Class of the button icon on the left",
         properties: ["iconLeft"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data["icon-left"] = "plus";
         },
     },
@@ -90,7 +90,7 @@ const inspectData: InspectData<ButtonClasses> = {
         class: "iconRightClass",
         description: "Class of the button icon on the right",
         properties: ["iconRight"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data["icon-right"] = "plus";
         },
     },
@@ -99,7 +99,7 @@ const inspectData: InspectData<ButtonClasses> = {
         description: "Class of the button size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "large";
         },
     },
@@ -108,7 +108,7 @@ const inspectData: InspectData<ButtonClasses> = {
         description: "Class of the button variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.variant = "warning";
         },
     },

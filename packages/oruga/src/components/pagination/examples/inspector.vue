@@ -18,14 +18,30 @@ const inspectData = [
         warning: "Switch to mobile view to see it in action!",
     },
     {
-        class: "prevButtonClass",
+        class: "buttonClass",
+        description: "Class of the link button",
+        specificity: "when <b>mobileClass</b> is applied",
+    },
+    {
+        class: "buttonCurrentClass",
+        description: "Class of the current link",
+    },
+    {
+        class: "buttonPrevClass",
         description: "Class of the prev button",
         specificity: "when <b>mobileClass</b> is applied",
     },
     {
-        class: "nextButtonClass",
+        class: "buttonNextClass",
         description: "Class of the next button",
         specificity: "when <b>mobileClass</b> is applied",
+    },
+    {
+        class: "buttonDisabledClass",
+        description: "Class of the disabled link",
+        action: (): void => {
+            current.value = 20;
+        },
     },
     {
         class: "listClass",
@@ -33,17 +49,8 @@ const inspectData = [
         specificity: "when <b>mobileClass</b> is applied",
     },
     {
-        class: "linkClass",
-        description: "Class of the link button",
-        specificity: "when <b>mobileClass</b> is applied",
-    },
-    {
         class: "listItemClass",
         description: "Class of the pagination list items",
-    },
-    {
-        class: "linkCurrentClass",
-        description: "Class of the current link",
     },
     {
         class: "ellipsisClass",
@@ -54,7 +61,7 @@ const inspectData = [
         class: "infoClass",
         description: "Class of the info in `simple` mode",
         properties: ["simple"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.simple = true;
         },
     },
@@ -63,7 +70,7 @@ const inspectData = [
         description: "Class of the pagination order",
         properties: ["order"],
         suffixes: ["centered", "right", "left"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.order = "centered";
         },
     },
@@ -71,7 +78,7 @@ const inspectData = [
         class: "simpleClass",
         description: "Class of the pagination in `simple` mode",
         properties: ["simple"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.simple = true;
         },
     },
@@ -79,15 +86,8 @@ const inspectData = [
         class: "roundedClass",
         description: "Class of the pagination when rounded",
         properties: ["rounded"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.rounded = true;
-        },
-    },
-    {
-        class: "linkDisabledClass",
-        description: "Class of the disabled link",
-        action: () => {
-            current.value = 20;
         },
     },
     {
@@ -95,7 +95,7 @@ const inspectData = [
         description: "Class for the pagination size",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data) => {
+        action: (cmp, data): void => {
             data.size = "small";
         },
     },

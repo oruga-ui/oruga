@@ -6,7 +6,7 @@ const activeStep = ref("1");
 const isStepsClickable = ref(false);
 const isAnimated = ref(true);
 const isVertical = ref(false);
-const isProfileSuccess = ref(false);
+const isProfileWarning = ref(false);
 const isRounded = ref(true);
 const enableProfileActivateEvent = ref(false);
 // Navigation
@@ -18,13 +18,10 @@ const nextIcon = ref("chevron-right");
 // Misc
 const showSocial = ref(false);
 const labelPosition = ref<"bottom" | "left" | "right">("bottom");
-const stepsPosition = ref<"left" | "right" | "centered">("left");
 
-const onProfileActivate = () => {
-    if (enableProfileActivateEvent.value) {
-        alert("Profile Activated");
-    }
-};
+function onProfileActivate(): void {
+    if (enableProfileActivateEvent.value) alert("Profile Activated");
+}
 </script>
 
 <template>
@@ -54,8 +51,8 @@ const onProfileActivate = () => {
                     label="Custom Navigation" />
             </o-field>
             <o-field>
-                <o-switch v-model="isProfileSuccess">
-                    Set <code>success</code> for profile
+                <o-switch v-model="isProfileWarning">
+                    Set <code>warning</code> for profile
                 </o-switch>
             </o-field>
             <o-field>
@@ -66,6 +63,13 @@ const onProfileActivate = () => {
         </o-field>
 
         <o-field v-if="hasNavigation" grouped>
+            <o-field label="Label position">
+                <o-select v-model="labelPosition">
+                    <option value="bottom">Bottom</option>
+                    <option value="right">Right</option>
+                    <option value="left">Left</option>
+                </o-select>
+            </o-field>
             <o-field label="Prev icon">
                 <o-select v-model="prevIcon">
                     <option value="chevron-left">Chevron</option>
@@ -76,19 +80,6 @@ const onProfileActivate = () => {
                 <o-select v-model="nextIcon">
                     <option value="chevron-right">Chevron</option>
                     <option value="arrow-right">Arrow</option>
-                </o-select>
-            </o-field>
-            <o-field label="Label position">
-                <o-select v-model="labelPosition">
-                    <option value="bottom">Bottom</option>
-                    <option value="right">Right</option>
-                    <option value="left">Left</option>
-                </o-select>
-            </o-field>
-            <o-field label="Steps position">
-                <o-select v-model="stepsPosition">
-                    <option value="right">Right</option>
-                    <option value="left">Left</option>
                 </o-select>
             </o-field>
         </o-field>
@@ -102,7 +93,6 @@ const onProfileActivate = () => {
             :icon-prev="prevIcon"
             :icon-next="nextIcon"
             :label-position="labelPosition"
-            :position="stepsPosition"
             destroy-on-hide>
             <o-step-item
                 value="1"
@@ -118,7 +108,7 @@ const onProfileActivate = () => {
                 step="2"
                 label="Profile"
                 :clickable="isStepsClickable"
-                :variant="isProfileSuccess ? 'success' : ''"
+                :variant="isProfileWarning ? 'warning' : ''"
                 @activate="onProfileActivate">
                 <h1 class="title has-text-centered">Profile</h1>
                 Lorem ipsum dolor sit amet.

@@ -1,47 +1,39 @@
-<script setup lang="ts" generic="T extends string | number | object">
+<script setup lang="ts" generic="T">
 import {
     computed,
-    nextTick,
     ref,
     watch,
     useAttrs,
-    onMounted,
     useSlots,
     useId,
     triggerRef,
     watchEffect,
+    useTemplateRef,
+    toValue,
     type Component,
+    type MaybeRefOrGetter,
 } from "vue";
-import type { ComponentExposed } from "vue-component-type-helpers";
 
 import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
-import { getOption } from "@/utils/config";
-import { isClient } from "@/utils/ssr";
+import { getDefault } from "@/utils/config";
 import {
-    unrefElement,
     defineClasses,
     normalizeOptions,
     toOptionsGroup,
     toOptionsList,
     findOption,
     checkOptionsEmpty,
-    firstValidOption,
     filterOptionsItems,
     useInputHandler,
-    useEventListener,
+    useSequentialId,
 } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
 
-import type {
-    DynamicComponent,
-    ClassBind,
-    OptionsItem,
-    OptionsGroupItem,
-} from "@/types";
+import type { OptionsItem, OptionsGroupItem } from "@/types";
 import type { AutocompleteProps } from "./props";
 
 enum SpecialOption {
@@ -49,13 +41,8 @@ enum SpecialOption {
     Footer,
 }
 
-/** True if the specified option is a special option. */
-function isSpecialOption(option: any): option is SpecialOption {
-    return option in SpecialOption;
-}
-
 /**
- * Extended input that provide suggestions while the user types
+ * Extended input that provide suggestions while the user types.
  * @displayName Autocomplete
  * @style _autocomplete.scss
  */
@@ -75,123 +62,108 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     options: undefined,
     filter: undefined,
     type: "text",
-    menuTag: () => getOption<DynamicComponent>("autocomplete.menuTag", "div"),
-    itemTag: () => getOption<DynamicComponent>("autocomplete.itemTag", "div"),
-    size: () => getOption("autocomplete.size"),
-    position: () => getOption("autocomplete.position", "auto"),
+    menuTag: () => getDefault("autocomplete.menuTag", "div"),
+    itemTag: () => getDefault("autocomplete.itemTag", "div"),
+    size: () => getDefault("autocomplete.size"),
+    position: () => getDefault("autocomplete.position", "auto"),
     placeholder: undefined,
     expanded: false,
     rounded: false,
     disabled: false,
     maxlength: undefined,
-    checkScroll: () => getOption("autocomplete.checkScroll", false),
-    debounce: () => getOption("autocomplete.debounce", 400),
-    keepFirst: () => getOption("autocomplete.keepFirst", false),
-    clearOnSelect: () => getOption("autocomplete.clearOnSelect", false),
-    openOnFocus: () => getOption("autocomplete.openOnFocus", false),
-    keepOpen: () => getOption("autocomplete.keepOpen", false),
-    maxHeight: () => getOption("autocomplete.maxHeight"),
-    confirmKeys: () => getOption("autocomplete.confirmKeys", ["Tab", "Enter"]),
-    mobileModal: () => getOption("autocomplete.mobileModal", false),
-    animation: () => getOption("autocomplete.animation", "fade"),
-    selectOnClickOutside: false,
+    checkScroll: () => getDefault("autocomplete.checkScroll", false),
+    debounce: () => getDefault("autocomplete.debounce", 400),
+    keepFirst: () => getDefault("autocomplete.keepFirst", false),
+    clearOnSelect: () => getDefault("autocomplete.clearOnSelect", false),
+    openOnFocus: () => getDefault("autocomplete.openOnFocus", false),
+    keepOpen: () => getDefault("autocomplete.keepOpen", false),
+    maxHeight: () => getDefault("autocomplete.maxHeight"),
+    selectOnClose: false,
     selectableHeader: false,
     selectableFooter: false,
-    iconPack: () => getOption("autocomplete.iconPack"),
-    icon: () => getOption("autocomplete.icon"),
+    iconPack: () => getDefault("autocomplete.iconPack"),
+    icon: () => getDefault("autocomplete.icon"),
     iconClickable: false,
-    iconRight: () => getOption("autocomplete.iconRight"),
+    iconRight: () => getDefault("autocomplete.iconRight"),
     iconRightClickable: false,
     iconRightVariant: undefined,
-    clearable: () => getOption("autocomplete.clearable", false),
-    clearIcon: () => getOption("autocomplete.clearIcon", "close-circle"),
-    statusIcon: () => getOption("statusIcon", true),
-    autocomplete: () => getOption("autocomplete.autocomplete", "off"),
-    useHtml5Validation: () => getOption("useHtml5Validation", true),
+    clearable: () => getDefault("autocomplete.clearable", false),
+    clearIcon: () => getDefault("autocomplete.clearIcon", "close-circle"),
+    statusIcon: () => getDefault("statusIcon", true),
+    desktopModal: () => getDefault("dropdown.desktopModal", false),
+    mobileModal: () => getDefault("autocomplete.mobileModal", false),
+    animation: () => getDefault("autocomplete.animation", "fade"),
+    autocomplete: () => getDefault("autocomplete.autocomplete", "off"),
+    useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
-    teleport: () => getOption("autocomplete.teleport", false),
-    inputClasses: () => getOption("autocomplete.inputClasses", {}),
+    teleport: () => getDefault("autocomplete.teleport", false),
+    inputClasses: () => getDefault("autocomplete.inputClasses", {}),
 });
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number | object} updated modelValue prop
+     * @param value {T} updated modelValue prop
      */
-    (e: "update:modelValue", value: ModelValue): void;
+    "update:model-value": [value: ModelValue];
     /**
      * input prop two-way binding
      * @param value {string} updated input prop
      */
-    (e: "update:input", value: string): void;
+    "update:input": [value: string];
     /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
      */
-    (e: "input", value: string, event: Event): void;
+    input: [value: string, event: Event];
     /**
      * selected element changed event
-     * @param value {string | number | object} selected value
-     * @param event {Event} native event
+     * @param value {T} selected value
      */
-    (e: "select", value: ModelValue, event: Event): void;
+    select: [value: ModelValue];
     /**
      * header is selected
-     * @param event {Event} native event
      */
-    (e: "select-header", event: Event): void;
+    "select-header": [];
     /**
      * footer is selected
-     * @param event {Event} native event
      */
-    (e: "select-footer", event: Event): void;
+    "select-footer": [];
     /**
      * on input focus event
      * @param event {Event} native event
      */
-    (e: "focus", event: Event): void;
+    focus: [event: Event];
     /**
      * on input blur event
      * @param event {Event} native event
      */
-    (e: "blur", event: Event): void;
+    blur: [event: Event];
     /**
      * on input invalid event
      * @param event {Event} native event
      */
-    (e: "invalid", event: Event): void;
+    invalid: [event: Event];
     /**
      * on icon click event
      * @param event {Event} native event
      */
-    (e: "icon-click", event: Event): void;
+    "icon-click": [event: Event];
     /**
      * on icon right click event
      * @param event {Event} native event
      */
-    (e: "icon-right-click", event: Event): void;
+    "icon-right-click": [event: Event];
     /** the list inside the dropdown reached the start */
-    (e: "scroll-start"): void;
+    "scroll-start": [];
     /** the list inside the dropdown reached it's end */
-    (e: "scroll-end"): void;
+    "scroll-end": [];
 }>();
 
 const slots = useSlots();
-const inputRef = ref<ComponentExposed<typeof OInput>>();
-const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
-const footerRef = ref<HTMLElement>();
-const headerRef = ref<HTMLElement>();
-const itemRefs = ref<(HTMLElement | Component)[]>([]);
-
-function setItemRef(
-    el: HTMLElement | Component | null,
-    groupIndex: number,
-    itemIndex: number,
-): void {
-    if (groupIndex === 0 && itemIndex === 0) itemRefs.value.splice(0);
-    if (el) itemRefs.value.push(el);
-}
+// define as Component to prevent docs memmory overload
+const inputRef = useTemplateRef<Component>("inputComponent");
 
 // use form input functionalities
 const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
@@ -211,10 +183,13 @@ const inputValue = defineModel<string>("input", { default: "" });
 /** create a unique id for the menu */
 const menuId = useId();
 
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
 /** normalized programamtic options */
 const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
-    const normalizedOptions = normalizeOptions<T>(props.options);
-    const groupedOptions = toOptionsGroup(normalizedOptions);
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
     return groupedOptions;
 });
 
@@ -224,10 +199,22 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
  */
 watchEffect(() => {
     // filter options by input value
-    filterOptionsItems(groupedOptions, inputValue, props.filter);
+    filterOptionsItems<T>(groupedOptions, (o) => filterItems(o, inputValue));
     // trigger reactive update of groupedOptions
     triggerRef(groupedOptions);
 });
+
+function filterItems(
+    option: OptionsItem<T>,
+    value: MaybeRefOrGetter<string>,
+): boolean {
+    if (typeof props.filter === "function")
+        return props.filter(option.value, toValue(value));
+    else
+        return !String(option.label)
+            .toLowerCase()
+            .includes(toValue(value)?.toLowerCase());
+}
 
 // set initial inputValue if selected is given
 if (selectedValue.value) {
@@ -242,6 +229,10 @@ watch(isEmpty, (empty) => {
     if (isFocused.value) isActive.value = !empty || !!slots.empty;
 });
 
+// --- Select Feature ---
+
+const dropdownValue = ref();
+
 /**
  * When updating input's value:
  * 1. If value isn't the same as selected, set null
@@ -253,212 +244,65 @@ watch(
         // find the option for the current selected value
         const currentOption = findOption(groupedOptions, selectedValue);
         // clear selected if option label does not match the selected value
-        if (
-            currentOption &&
-            currentOption.label !== value &&
-            !props.clearOnSelect
-        )
-            setSelected(undefined, false);
+        if (currentOption && currentOption.label !== value) {
+            // clear selected value
+            selectedValue.value = undefined;
+        }
 
         // Close dropdown if data is empty
-        if (isEmpty.value && !slots.empty) isActive.value = false;
-        // Close dropdown if input is clear or else open it
-        else if (isFocused.value && (!props.openOnFocus || value))
-            isActive.value = !!value;
-    },
-    { flush: "post" },
-);
-
-const closeableOptions = computed(() => {
-    const options = ["escape", "outside"];
-    if (!props.keepOpen) options.push("content");
-    return options;
-});
-
-function onDropdownClose(method: string): void {
-    if (method !== "outside") return;
-    if (props.keepFirst && hoveredOption.value && props.selectOnClickOutside)
-        setSelected(hoveredOption.value, true);
-}
-
-// --- Select Feature ---
-
-/**
- * Set which option is currently selected, update v-model,
- * update input value and close dropdown.
- */
-function setSelected(
-    option: OptionsItem<T> | undefined,
-    closeDropdown: boolean = true,
-    event?: Event,
-): void {
-    selectedValue.value = option?.value;
-    emits("select", option?.value, event || new Event("select"));
-
-    if (option) {
-        if (props.clearOnSelect) inputValue.value = "";
-        else inputValue.value = option.label;
-        setHovered(undefined);
-    } else inputValue.value = "";
-
-    if (closeDropdown) nextTick(() => (isActive.value = false));
-    checkHtml5Validity();
-}
-
-/** Check if header or footer was selected. */
-function selectHeaderOrFooterByClick(
-    event: Event,
-    origin?: SpecialOption,
-    closeDropdown = true,
-): void {
-    if (
-        props.selectableHeader &&
-        (headerHovered.value || origin === SpecialOption.Header)
-    ) {
-        emits("select-header", event);
-        if (origin) setHovered(undefined);
-        if (closeDropdown) isActive.value = false;
-    }
-    if (
-        props.selectableFooter &&
-        (footerHovered.value || origin === SpecialOption.Footer)
-    ) {
-        emits("select-footer", event);
-        if (origin) setHovered(undefined);
-        if (closeDropdown) isActive.value = false;
-    }
-}
-
-// --- Hover Feature ---
-
-const hoveredOption = ref<OptionsItem<T>>();
-const headerHovered = ref(false);
-const footerHovered = ref(false);
-
-/** Select first option if "keep-first" */
-watch(
-    groupedOptions,
-    (options) => {
-        // Keep first option always pre-selected
-        if (props.keepFirst) {
-            if (isActive.value) hoverFirstOption();
-            else setHovered(undefined);
-        } else if (hoveredOption.value) {
-            // reset hovered with found option or undefined
-            const hoveredValue = findOption(options, hoveredOption.value.value);
-            setHovered(hoveredValue);
+        if (isEmpty.value && !slots.empty) {
+            isActive.value = false;
         }
     },
     { flush: "post" },
 );
 
-/** Set which option is currently hovered. */
-function setHovered(option: OptionsItem<T> | SpecialOption | undefined): void {
-    hoveredOption.value = isSpecialOption(option) ? undefined : option;
-    headerHovered.value = option === SpecialOption.Header;
-    footerHovered.value = option === SpecialOption.Footer;
-}
+function setSelected(item: T | SpecialOption | undefined): void {
+    let option: OptionsItem<T> | undefined = undefined;
 
-/** set first option as hovered */
-function hoverFirstOption(): void {
-    const option = firstValidOption(groupedOptions);
-    // set found option or undefined hovered
-    setHovered(option);
+    /** Check if header or footer was selected. */
+    if (item === SpecialOption.Header) {
+        emits("select-header");
+    } else if (item === SpecialOption.Footer) {
+        emits("select-footer");
+    } else if (item) {
+        // convert grouped options to simple list
+        const options: OptionsItem<T>[] = toOptionsList(groupedOptions);
+
+        // get option or undefined for header, footer or group
+        option = options.find((o) => o.value === item);
+    }
+
+    // set the selected dropdown value
+    dropdownValue.value = option;
+
+    // Set which option is currently selected, update v-model,
+    selectedValue.value = option?.value;
+    emits("select", option?.value);
+
+    // update input value
+    inputValue.value = props.clearOnSelect ? "" : option?.label || "";
+    checkHtml5Validity();
+
+    if (props.keepOpen) setFocus();
+    else isActive.value = false;
 }
 
 // --- Event Handler ---
 
-/**
- * Arrows keys listener.
- * If dropdown is active, set hovered option, or else just open.
- */
-function navigateItem(direction: 1 | -1): void {
-    if (!dropdownRef.value?.$content) return;
-    if (!isActive.value) {
-        isActive.value = true;
-        return;
-    }
-
-    const options: (SpecialOption | OptionsItem<T>)[] =
-        toOptionsList(groupedOptions);
-
-    // add header / footer if selectable
-    if (headerRef.value && props.selectableHeader)
-        options.unshift(SpecialOption.Header);
-    if (footerRef.value && props.selectableFooter)
-        options.push(SpecialOption.Footer);
-
-    // define current index
-    let index: number;
-    if (headerHovered.value) index = 0 + direction;
-    else if (footerHovered.value) index = options.length - 1 + direction;
-    else
-        index =
-            options.findIndex(
-                (o) =>
-                    !isSpecialOption(o) && o.key === hoveredOption.value?.key,
-            ) + direction;
-
-    // check if index overflow
-    index = index > options.length - 1 ? options.length - 1 : index;
-    // check if index underflow
-    index = index < 0 ? 0 : index;
-
-    // set hover state
-    setHovered(options[index]);
-
-    // get items from input
-    let items = itemRefs.value || [];
-    if (headerRef.value && props.selectableHeader)
-        items = [headerRef.value, ...items];
-    if (footerRef.value && props.selectableFooter)
-        items = [...items, footerRef.value];
-
-    const element = unrefElement(items[index]);
-    if (!element) return;
-
-    // define scroll position
-    const dropdownMenu = unrefElement(dropdownRef.value.$content);
-    const visMin = dropdownMenu.scrollTop;
-    const visMax =
-        dropdownMenu.scrollTop +
-        dropdownMenu.clientHeight -
-        element.clientHeight;
-
-    if (element.offsetTop < visMin) {
-        // is scolled top
-        dropdownMenu.scrollTop = element.offsetTop;
-    } else if (element.offsetTop >= visMax) {
-        // is scolled bottom
-        dropdownMenu.scrollTop =
-            element.offsetTop -
-            dropdownMenu.clientHeight +
-            element.clientHeight;
-    }
-    // trigger scroll
-    if (props.checkScroll) checkDropdownScroll();
-}
-
-/**
- * Key listener.
- * Select the hovered option.
- */
-function onKeydown(event: KeyboardEvent): void {
-    // prevent emit submit event
-    if (event.key === "Enter") event.preventDefault();
-    if (props.confirmKeys.indexOf(event.key) >= 0) {
-        // If adding by comma, don't add the comma to the input
-        if (event.key === ",") event.preventDefault();
-        // Close dropdown on select by Tab
-        const closeDropdown = !props.keepOpen || event.key === "Tab";
-        if (!hoveredOption.value) {
-            // header and footer uses headerHovered && footerHovered. If header or footer
-            // was selected then fire event otherwise just return so a value isn't selected
-            selectHeaderOrFooterByClick(event, undefined, closeDropdown);
-            return;
+/** emit input change event */
+function onInput(value: string, event: Event): void {
+    if (isFocused.value) {
+        if (!isActive.value && value && (!isEmpty.value || slots.empty)) {
+            // open dropdown if input has value and options are available
+            isActive.value = true;
+        } else if (isActive.value && !value && !props.keepOpen) {
+            // close dropdown if input has not value and is not keep open
+            isActive.value = false;
         }
-        setSelected(hoveredOption.value, closeDropdown, event);
     }
+    emits("input", value, event);
+    checkHtml5Validity();
 }
 
 /**
@@ -466,10 +310,7 @@ function onKeydown(event: KeyboardEvent): void {
  * If value is the same as selected, select all text.
  */
 function handleFocus(event: Event): void {
-    if (props.openOnFocus) {
-        isActive.value = true;
-        if (props.keepFirst) hoverFirstOption();
-    }
+    if (props.openOnFocus) isActive.value = true;
     onFocus(event);
 }
 
@@ -481,14 +322,9 @@ function handleBlur(event: Event): void {
     onBlur(event);
 }
 
-/** emit input change event */
-function onInput(value: string, event: Event): void {
-    if (props.keepFirst && !selectedValue.value) hoverFirstOption();
-    emits("input", value, event);
-    checkHtml5Validity();
-}
+// #endregion --- Event Handler ---
 
-// --- Icon Feature ---
+// #region --- Icon Feature ---
 
 const computedIconRight = computed(() =>
     props.clearable && inputValue.value && props.clearIcon
@@ -502,44 +338,13 @@ const computedIconRightClickable = computed(() =>
 
 function rightIconClick(event: Event): void {
     if (props.clearable) {
-        setSelected(undefined, false);
-        if (props.openOnFocus) setFocus();
+        inputValue.value = "";
     } else emits("icon-right-click", event);
 }
 
-// --- InfitiveScroll Feature ---
+// #endregion --- Icon Feature ---
 
-onMounted(() => {
-    if (isClient && props.checkScroll && dropdownRef.value?.$content)
-        useEventListener(
-            "scroll",
-            checkDropdownScroll,
-            dropdownRef.value.$content,
-            { immediate: true },
-        );
-});
-
-/** Check if the scroll list inside the dropdown reached the top or it's end. */
-function checkDropdownScroll(): void {
-    if (!dropdownRef.value?.$content) return;
-    const dropdown = unrefElement(dropdownRef.value.$content);
-    if (!dropdown) return;
-    const trashhold = dropdown.offsetTop;
-    const headerHeight = headerRef.value?.clientHeight || 0;
-    const footerHeight = (footerRef.value?.clientHeight || 0) + trashhold;
-    if (dropdown.clientHeight !== dropdown.scrollHeight) {
-        if (
-            dropdown.scrollTop + dropdown.clientHeight + footerHeight >=
-            dropdown.scrollHeight
-        ) {
-            emits("scroll-end");
-        } else if (dropdown.scrollTop <= headerHeight) {
-            emits("scroll-start");
-        }
-    }
-}
-
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const attrs = useAttrs();
 
@@ -553,11 +358,6 @@ const rootClasses = defineClasses(["rootClass", "o-acp"]);
 
 const itemClasses = defineClasses(["itemClass", "o-acp__item"]);
 
-const itemHoverClasses = defineClasses([
-    "itemHoverClass",
-    "o-acp__item--hover",
-]);
-
 const itemEmptyClasses = defineClasses([
     "itemEmptyClass",
     "o-acp__item--empty",
@@ -568,24 +368,17 @@ const itemGroupClasses = defineClasses([
     "o-acp__item-group-title",
 ]);
 
-const itemHeaderClasses = defineClasses(
-    ["itemHeaderClass", "o-acp__item-header"],
-    ["itemHoverClass", "o-acp__item--hover", null, headerHovered],
-);
+const itemHeaderClasses = defineClasses([
+    "itemHeaderClass",
+    "o-acp__item-header",
+]);
 
-const itemFooterClasses = defineClasses(
-    ["itemFooterClass", "o-acp__item-footer"],
-    ["itemHoverClass", "o-acp__item--hover", null, footerHovered],
-);
+const itemFooterClasses = defineClasses([
+    "itemFooterClass",
+    "o-acp__item-footer",
+]);
 
-function itemAppliedClasses(option: OptionsItem<T>): ClassBind[] {
-    const hoverClasses =
-        option.key === hoveredOption.value?.key ? itemHoverClasses.value : [];
-
-    return [...itemClasses.value, ...hoverClasses];
-}
-
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ focus: setFocus, value: inputValue });
@@ -593,31 +386,33 @@ defineExpose({ focus: setFocus, value: inputValue });
 
 <template>
     <o-dropdown
-        ref="dropdownRef"
-        v-model="selectedValue"
+        v-model="dropdownValue"
         v-model:active="isActive"
         data-oruga="autocomplete"
         :class="rootClasses"
         :menu-id="menuId"
-        :menu-tabindex="-1"
         :menu-tag="menuTag"
-        scrollable
-        aria-role="listbox"
-        :tabindex="-1"
-        :trap-focus="false"
         :triggers="[]"
+        scrollable
+        selectable
+        :keep-open="keepOpen"
+        :keep-first="keepFirst"
+        :check-scroll="checkScroll"
+        :select-on-close="selectOnClose"
         :disabled="disabled"
-        :closeable="closeableOptions"
+        :desktop-modal="desktopModal"
         :mobile-modal="mobileModal"
         :max-height="maxHeight"
         :animation="animation"
         :position="position"
         :teleport="teleport"
         :expanded="expanded"
-        @close="onDropdownClose">
+        @select="setSelected"
+        @scroll-start="emits('scroll-start')"
+        @scroll-end="emits('scroll-end')">
         <template #trigger>
             <o-input
-                ref="inputRef"
+                ref="inputComponent"
                 v-bind="inputBind"
                 v-model="inputValue"
                 :type="type"
@@ -634,39 +429,23 @@ defineExpose({ focus: setFocus, value: inputValue });
                 :disabled="disabled"
                 :status-icon="statusIcon"
                 :debounce="debounce"
-                role="combobox"
-                :aria-activedescendant="
-                    hoveredOption ? `${menuId}-${hoveredOption.key}` : null
-                "
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
                 :aria-controls="menuId"
-                :aria-expanded="isActive"
                 :use-html5-validation="false"
                 @input="onInput"
                 @focus="handleFocus"
                 @blur="handleBlur"
                 @invalid="onInvalid"
-                @keydown="onKeydown"
-                @keydown.up.prevent="navigateItem(-1)"
-                @keydown.down.prevent="navigateItem(1)"
-                @icon-click="(event) => $emit('icon-click', event)"
+                @icon-click="emits('icon-click', $event)"
                 @icon-right-click="rightIconClick" />
         </template>
 
         <o-dropdown-item
             v-if="$slots.header"
-            :id="`${menuId}-header`"
-            ref="headerRef"
             :tag="itemTag"
             :value="SpecialOption.Header"
             :clickable="selectableHeader"
-            tabindex="-1"
-            aria-role="option"
-            :aria-selected="headerHovered"
-            :class="[...itemClasses, ...itemHeaderClasses]"
-            @click="
-                (v, e) => selectHeaderOrFooterByClick(e, SpecialOption.Header)
-            ">
+            :class="[...itemClasses, ...itemHeaderClasses]">
             <!--
                 @slot Define an additional header
             -->
@@ -675,46 +454,40 @@ defineExpose({ focus: setFocus, value: inputValue });
 
         <template v-for="(group, groupIndex) in groupedOptions">
             <o-dropdown-item
-                v-if="group.group"
+                v-if="group.label"
                 v-show="!group.hidden"
-                v-bind="group.attrs"
                 :key="group.key"
+                v-bind="group.attrs"
+                :hidden="group.hidden"
+                :value="group.value"
                 :tag="itemTag"
+                role="presentation"
                 :clickable="false"
-                tabindex="-1"
                 :class="[...itemClasses, ...itemGroupClasses]">
                 <!--
-                    @slot Override the option grpup
+                    @slot Override the option group
                     @binding {object} group - options group
                     @binding {number} index - option index
                 -->
                 <slot
                     v-if="$slots.group"
                     name="group"
-                    :group="group.group"
+                    :group="group.label"
                     :index="groupIndex" />
                 <span v-else>
-                    {{ group.group }}
+                    {{ group.label }}
                 </span>
             </o-dropdown-item>
 
             <o-dropdown-item
                 v-for="(option, optionIndex) in group.options"
                 v-show="!option.hidden"
-                v-bind="option.attrs"
-                :id="`${menuId}-${option.key}`"
                 :key="option.key"
-                :ref="(el) => setItemRef(el, groupIndex, optionIndex)"
-                :tag="itemTag"
+                v-bind="option.attrs"
                 :value="option.value"
-                :class="itemAppliedClasses(option)"
-                aria-role="option"
-                :aria-selected="
-                    hoveredOption ? option.key === hoveredOption.key : undefined
-                "
-                @click="
-                    (value, event) => setSelected(option, !keepOpen, event)
-                ">
+                :hidden="option.hidden"
+                :tag="itemTag"
+                :class="itemClasses">
                 <!--
                     @slot Override the select option
                     @binding {object} option - option object
@@ -744,18 +517,10 @@ defineExpose({ focus: setFocus, value: inputValue });
 
         <o-dropdown-item
             v-if="$slots.footer"
-            :id="`${menuId}-footer`"
-            ref="footerRef"
             :tag="itemTag"
             :value="SpecialOption.Footer"
             :clickable="selectableFooter"
-            tabindex="-1"
-            aria-role="option"
-            :aria-selected="footerHovered"
-            :class="[...itemClasses, ...itemFooterClasses]"
-            @click="
-                (v, e) => selectHeaderOrFooterByClick(e, SpecialOption.Footer)
-            ">
+            :class="[...itemClasses, ...itemFooterClasses]">
             <!--
                 @slot Define an additional footer
             -->
