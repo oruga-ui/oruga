@@ -126,13 +126,13 @@ const tabClasses = defineClasses(
         computed(() => props.disabled),
     ],
     [
-        "navItemPreviousClass",
+        "tabPreviousClass",
         "o-tabs__tab--previous",
         null,
         computed(() => item.value.index < parent.value?.activeIndex),
     ],
     [
-        "navItemNextClass",
+        "tabNextClass",
         "o-tabs__tab--next",
         null,
         computed(() => item.value.index > parent.value?.activeIndex),

@@ -19,11 +19,9 @@ const nextIcon = ref("chevron-right");
 const showSocial = ref(false);
 const labelPosition = ref<"bottom" | "left" | "right">("bottom");
 
-const onProfileActivate = () => {
-    if (enableProfileActivateEvent.value) {
-        alert("Profile Activated");
-    }
-};
+function onProfileActivate(): void {
+    if (enableProfileActivateEvent.value) alert("Profile Activated");
+}
 </script>
 
 <template>

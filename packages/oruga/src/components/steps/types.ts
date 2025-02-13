@@ -16,7 +16,6 @@ export type StepsComponent = {
 
 export type StepItemComponent<T> = StepItemProps<T, Component> & {
     $slots: Slots;
-    navClasses: ClassBind[];
     stepClasses: ClassBind[];
     iconClasses: ClassBind[];
     labelClasses: ClassBind[];

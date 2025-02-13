@@ -82,51 +82,40 @@ const inspectData = [
         warning: "Click on a marker to see it in action",
     },
     {
-        class: "navClass",
-        description: "Class of the steps nav container",
+        class: "listClass",
+        description: "Class of the steps list container",
     },
     {
-        class: "navItemClass",
-        description: "Class of the nav item",
-        specificity: "when <b>positionClass</b> is applied",
+        class: "stepClass",
+        description: "Class of the content item",
         subitem: true,
     },
     {
-        class: "navItemActiveClass",
-        description: "Class of the nav item when active",
-        subitem: true,
-    },
-    {
-        class: "navItemPreviousClass",
-        description: "Class of the nav item before the active one",
+        class: "stepPreviousClass",
+        description: "Class of the step item before the active one",
         subitem: true,
         action: (): void => {
             activeStep.value = 2;
         },
     },
     {
-        class: "navItemNextClass",
-        description: "CClass of the nav item after the active one",
+        class: "stepNextClass",
+        description: "CClass of the step item after the active one",
         subitem: true,
         action: (): void => {
             activeStep.value = 2;
         },
     },
     {
-        class: "navItemVariantClass",
+        class: "stepVariantClass",
         description:
-            "Class of the nav item with variant (default value by parent steps component)",
+            "Class of the step item with variant (default value by parent steps component)",
         subitem: true,
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
         },
-    },
-    {
-        class: "stepClass",
-        description: "Class of the content item",
-        subitem: true,
     },
     {
         class: "stepActiveClass",
