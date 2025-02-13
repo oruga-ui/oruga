@@ -7,8 +7,8 @@ describe("ODatetimepicker tests", () => {
     enableAutoUnmount(afterEach);
 
     beforeEach(() => {
-        vi.useFakeTimers();
-        vi.setSystemTime(new Date(2000, 0, 0));
+        // vi.useFakeTimers();
+        // vi.setSystemTime(new Date(2000, 0, 0));
     });
 
     afterEach(() => {
@@ -16,6 +16,8 @@ describe("ODatetimepicker tests", () => {
     });
 
     test("render correctly", () => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date(2000, 0, 0));
         const wrapper = mount(ODatetimepicker, {
             props: { modelValue: new Date(2000, 0, 1) },
         });
