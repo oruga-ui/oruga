@@ -17,37 +17,38 @@ defineProps({
     subitem: { type: String, default: undefined },
 });
 
-const component = useTemplateRef("component");
+const componentElement = useTemplateRef("component");
 
-const inspectedClass = ref<InspectClass>({} as InspectClass);
+const inspectClass = ref<InspectClass>({} as InspectClass);
 
 const classes = ref({});
 const data = ref({});
-const classesApplied = ref<string | undefined>();
-const interval = ref<ReturnType<typeof setInterval>>();
+const appliedClasses = ref<string | undefined>();
+let interval: NodeJS.Timeout | undefined;
 
 onUnmounted(() => {
-    clearInterval(interval.value);
-    interval.value = undefined;
+    clearInterval(interval);
+    interval = undefined;
 });
 
-watch(inspectedClass, ({ className, action }) => {
+watch(inspectClass, ({ className, action }) => {
     // clear values
-    clearInterval(interval.value);
-    interval.value = undefined;
+    clearInterval(interval);
+    interval = undefined;
     classes.value = {};
     data.value = {};
     nextTick(() => {
         // perform action
-        if (action && component.value) action(component.value, data.value);
+        if (action && componentElement.value)
+            action(componentElement.value, data.value);
         // add INSPECT_CLASS to class by className
         setValueByPath(classes.value, className, () => INSPECT_CLASS);
-        interval.value = setInterval(() => {
+        interval = setInterval(() => {
             // get element class
             const el = document.getElementsByClassName(INSPECT_CLASS)[0];
             if (el) {
-                clearInterval(interval.value);
-                classesApplied.value = el.className.replace(INSPECT_CLASS, "");
+                clearInterval(interval);
+                appliedClasses.value = el.className.replace(INSPECT_CLASS, "");
             }
         }, 300);
     });
@@ -56,21 +57,17 @@ watch(inspectedClass, ({ className, action }) => {
 
 <template>
     <div id="inspector-wrapper" ref="component">
-        <div v-show="classesApplied">
+        <div v-show="!!appliedClasses">
             <b>'Classes applied to the element'</b>
-            <div class="odocs-classes-applied">{{ classesApplied }}</div>
+            <div class="odocs-classes-applied">{{ appliedClasses }}</div>
         </div>
 
-        <ClientOnly>
-            <slot v-bind="{ ...classes, ...data }" />
-        </ClientOnly>
+        <slot v-bind="{ ...classes, ...data }" />
 
-        <ClientOnly>
-            <Inspector
-                :inspect-data="inspectData"
-                :subitem="subitem"
-                @inspect="inspectedClass = $event" />
-        </ClientOnly>
+        <Inspector
+            :inspect-data="inspectData"
+            :subitem="subitem"
+            @inspect="inspectClass = $event" />
     </div>
 </template>
 

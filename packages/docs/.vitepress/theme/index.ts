@@ -33,10 +33,10 @@ hljs.registerLanguage("scss", scss);
 hljs.registerLanguage("css", css);
 
 // Import theme definitions
-import themes from "@docs/themes.json";
+import { Themes, type ThemeConfig } from "@docs";
 
 // load last used theme or set a default one
-function loadTheme() {
+function loadTheme(): ThemeConfig {
     const cache = localStorage.getItem("oruga-ui.com:theme");
     if (cache && cache !== "undefined") {
         try {
@@ -45,10 +45,10 @@ function loadTheme() {
                 return themeConfig;
         } catch (e) {
             console.warn(e);
-            return themes[1];
+            return Themes[1];
         }
     }
-    return themes[1];
+    return Themes[1];
 }
 
 export default {

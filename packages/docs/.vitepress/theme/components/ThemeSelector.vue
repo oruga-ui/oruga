@@ -1,13 +1,13 @@
 <script setup lang="ts">
 // Import theme definitions
-import themes from "@docs/themes.json";
+import { Themes, type ThemeConfig } from "@docs";
 
 const selectedTheme = defineModel<any>("theme");
 
 selectedTheme.value = loadTheme();
 
 // load last used theme or set a default one
-function loadTheme() {
+function loadTheme(): ThemeConfig {
     const cache = localStorage.getItem("oruga-ui.com:theme");
     if (cache && cache !== "undefined") {
         try {
@@ -16,10 +16,10 @@ function loadTheme() {
                 return themeConfig;
         } catch (e) {
             console.log(e);
-            return themes[1];
+            return Themes[1];
         }
     }
-    return themes[1];
+    return Themes[1];
 }
 
 function onThemeChange(theme: unknown): void {
@@ -43,7 +43,7 @@ function onThemeChange(theme: unknown): void {
             </span>
         </template>
 
-        <o-dropdown-item v-for="item in themes" :key="item.key" :value="item">
+        <o-dropdown-item v-for="item in Themes" :key="item.key" :value="item">
             {{ item.label }}
         </o-dropdown-item>
     </o-dropdown>

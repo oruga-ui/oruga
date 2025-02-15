@@ -1,3 +1,12 @@
+export type ThemeConfig = {
+    label: string;
+    key: string;
+    path: string;
+    git: string;
+    src: string;
+    cdn: string;
+};
+
 export type InspectData<T = object> = {
     [K in keyof Required<T>]: InspectClassDescription<T, K>;
 };

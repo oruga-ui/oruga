@@ -1,16 +1,9 @@
 import * as fs from "fs";
 import path from "path";
 
-export type ThemeConfig = {
-    label: string;
-    key: string;
-    path: string;
-    git: string;
-    src: string;
-    cdn: string;
-};
-
 import themes from "./themes.json";
+import type { ThemeConfig } from "./types";
+
 const Themes = themes as ThemeConfig[];
 
 export { Themes };
