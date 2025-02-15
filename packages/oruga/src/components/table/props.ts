@@ -182,7 +182,7 @@ export type TableProps<T> = {
 } & TableClasses;
 
 // class props (will not be displayed in the docs)
-type TableClasses = Partial<{
+export type TableClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the Table */

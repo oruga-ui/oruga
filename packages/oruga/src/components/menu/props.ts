@@ -39,7 +39,7 @@ export type MenuProps<T> = {
 } & MenuClasses;
 
 // class props (will not be displayed in the docs)
-type MenuClasses = Partial<{
+export type MenuClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the menu list */
@@ -86,7 +86,7 @@ export type MenuItemProps<T> = {
 } & MenuItemClasses;
 
 // class props (will not be displayed in the docs)
-type MenuItemClasses = Partial<{
+export type MenuItemClasses = Partial<{
     /** Class of the root element of menu item */
     itemClass: ComponentClass;
     /** Class of the menu item root when active */

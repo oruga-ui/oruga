@@ -71,7 +71,7 @@ export type StepsProps<T> = {
 } & StepsClasses;
 
 // class props (will not be displayed in the docs)
-type StepsClasses = Partial<{
+export type StepsClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Size of the steps */
@@ -144,7 +144,7 @@ export type StepItemProps<T, C extends Component> = {
 } & StepItemClasses;
 
 // class props (will not be displayed in the docs)
-type StepItemClasses = Partial<{
+export type StepItemClasses = Partial<{
     /** Class of the step item */
     stepClass: ComponentClass;
     /** Class of the step item with variant (default value by parent steps component) */

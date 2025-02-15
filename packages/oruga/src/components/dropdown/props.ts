@@ -90,7 +90,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
 } & DropdownClasses;
 
 // class props (will not be displayed in the docs)
-type DropdownClasses = Partial<{
+export type DropdownClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class when the dropdown is teleported */
@@ -148,7 +148,7 @@ export type DropdownItemProps<T> = {
 } & DropdownItemClasses;
 
 // class props (will not be displayed in the docs)
-type DropdownItemClasses = Partial<{
+export type DropdownItemClasses = Partial<{
     /** Class of the dropdown item */
     itemClass: ComponentClass;
     /** Class of the dropdown item when active  */

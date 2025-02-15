@@ -62,7 +62,7 @@ export type SidebarProps<C extends Component> = {
 } & SidebarClasses;
 
 // class props (will not be displayed in the docs)
-type SidebarClasses = Partial<{
+export type SidebarClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of sidebar component when its active */

@@ -42,7 +42,7 @@ export type UploadProps<
 } & UploadClasses;
 
 // class props (will not be displayed in the docs)
-type UploadClasses = Partial<{
+export type UploadClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the Upload when draggable */

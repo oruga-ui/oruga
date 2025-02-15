@@ -54,7 +54,7 @@ export type ButtonProps = {
 } & ButtonClasses;
 
 // class props (will not be displayed in the docs)
-type ButtonClasses = Partial<{
+export type ButtonClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the button elements wrapper */

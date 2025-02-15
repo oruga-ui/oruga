@@ -51,7 +51,7 @@ export type PaginationProps = {
 } & PaginationClasses;
 
 // class props (will not be displayed in the docs)
-type PaginationClasses = Partial<{
+export type PaginationClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the pagination list */

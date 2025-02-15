@@ -46,7 +46,7 @@ export type IconProps = {
 } & IconClasses;
 
 // class props (will not be displayed in the docs)
-type IconClasses = Partial<{
+export type IconClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the icon when clickable */

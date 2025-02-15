@@ -89,7 +89,7 @@ export type DatetimepickerProps = {
 } & DatetimePickerClasses;
 
 // class props (will not be displayed in the docs)
-type DatetimePickerClasses = Partial<{
+export type DatetimePickerClasses = Partial<{
     /** Class of the Datepicker wrapper */
     datepickerWrapperClass: ComponentClass;
     /** Class of the Timepicker wrapper */

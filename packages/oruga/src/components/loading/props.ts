@@ -33,7 +33,7 @@ export type LoadingProps = {
 } & LoadingClasses;
 
 // class props (will not be displayed in the docs)
-type LoadingClasses = Partial<{
+export type LoadingClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class for the root element when fullpage */

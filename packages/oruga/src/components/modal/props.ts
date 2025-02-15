@@ -66,7 +66,7 @@ export type ModalProps<C extends Component> = {
 } & ModalClasses;
 
 // class props (will not be displayed in the docs)
-type ModalClasses = Partial<{
+export type ModalClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of modal component when its active */

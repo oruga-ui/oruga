@@ -58,7 +58,7 @@ export type SliderProps<IsRange extends boolean> = {
 } & SelectClasses;
 
 // class props (will not be displayed in the docs)
-type SelectClasses = Partial<{
+export type SelectClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the vertical slider size */

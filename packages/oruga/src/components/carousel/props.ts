@@ -64,7 +64,7 @@ export type CarouselProps = {
 } & CarouselClasses;
 
 // class props (will not be displayed in the docs)
-type CarouselClasses = Partial<{
+export type CarouselClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the root element in overlay */
@@ -105,7 +105,7 @@ export type CarouselItemProps = {
 } & CarouselItemClasses;
 
 // class props (will not be displayed in the docs)
-type CarouselItemClasses = Partial<{
+export type CarouselItemClasses = Partial<{
     /** Class of carousel item */
     itemClass: ComponentClass;
     /** Class of carousel item when is active */

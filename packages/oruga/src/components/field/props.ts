@@ -42,7 +42,7 @@ export type FieldProps = {
 } & FieldClasses;
 
 // class props (will not be displayed in the docs)
-type FieldClasses = Partial<{
+export type FieldClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class to align label and control in horizontal forms */

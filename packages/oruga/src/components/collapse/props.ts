@@ -19,7 +19,7 @@ export type CollapseProps = {
 } & CollapseClasses;
 
 // class props (will not be displayed in the docs)
-type CollapseClasses = Partial<{
+export type CollapseClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the trigger element */

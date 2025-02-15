@@ -58,7 +58,7 @@ export type NotificationProps = {
 } & NotificationClasses;
 
 // class props (will not be displayed in the docs)
-type NotificationClasses = Partial<{
+export type NotificationClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the close button */
@@ -114,7 +114,7 @@ export type NotificationNoticeProps<C extends Component> = {
 } & NotificationNoticeClasses;
 
 // class props (will not be displayed in the docs)
-type NotificationNoticeClasses = Partial<{
+export type NotificationNoticeClasses = Partial<{
     /** Root class of the notice */
     noticeClass: ComponentClass;
     /** Class of the notice when positioned */

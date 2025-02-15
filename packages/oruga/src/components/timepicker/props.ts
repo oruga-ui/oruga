@@ -99,7 +99,7 @@ export type TimepickerProps = {
 } & TimepickerClasses;
 
 // class props (will not be displayed in the docs)
-type TimepickerClasses = Partial<{
+export type TimepickerClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the Timepicker component size */

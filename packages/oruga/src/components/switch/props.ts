@@ -54,7 +54,7 @@ export type SwitchProps<T> = {
 } & SwitchClasses;
 
 // class props (will not be displayed in the docs)
-type SwitchClasses = Partial<{
+export type SwitchClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class when switch is disabled */

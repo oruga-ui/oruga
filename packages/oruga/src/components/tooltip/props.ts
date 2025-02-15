@@ -57,7 +57,7 @@ export type TooltipProps = {
 } & TooltipClasses;
 
 // class props (will not be displayed in the docs)
-type TooltipClasses = Partial<{
+export type TooltipClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class when the dropdown is teleported */

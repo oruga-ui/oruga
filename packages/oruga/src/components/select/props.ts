@@ -67,7 +67,7 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
 } & SelectClasses;
 
 // class props (will not be displayed in the docs)
-type SelectClasses = Partial<{
+export type SelectClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the native select element */

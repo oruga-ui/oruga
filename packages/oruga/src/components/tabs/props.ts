@@ -61,7 +61,7 @@ export type TabsProps<T> = {
 } & TabsClasses;
 
 // class props (will not be displayed in the docs)
-type TabsClasses = Partial<{
+export type TabsClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of Tabs component position */
@@ -115,7 +115,7 @@ export type TabItemProps<T, C extends Component> = {
 } & TabItemClasses;
 
 // class props (will not be displayed in the docs)
-type TabItemClasses = Partial<{
+export type TabItemClasses = Partial<{
     /** Class of the tab item */
     tabClass: ComponentClass;
     /** Class of the tab item when active */
