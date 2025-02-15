@@ -12,7 +12,7 @@ export type InspectData<T = object> = {
 };
 
 export type InspectClassDescription<T = object, c extends keyof T = keyof T> = {
-    /** classn name */
+    /** class name */
     class: c;
     /** class description */
     description: string;
