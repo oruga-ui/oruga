@@ -49,7 +49,7 @@
     "publish:examples:pre": "cp ../../README.md . && npm run build && npm publish --tag pre"
   },
   "peerDependencies": {
-    "@oruga-ui/oruga-next": "0.10.0-pre",
+    "@oruga-ui/oruga-next": "0.10.0-pre.1",
     "vue": "^3.0.0"
   },
   "dependencies": {
