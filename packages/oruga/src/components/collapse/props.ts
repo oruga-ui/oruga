@@ -12,6 +12,8 @@ export type CollapseProps = {
      * @values top, bottom
      */
     position?: "top" | "bottom";
+    /** Expand the trigger to fullwidth */
+    expanded?: boolean;
     /** Id property of the content container - default is an uuid */
     contentId?: string;
     /** Id property of the trigger container - default is an uuid */
@@ -22,6 +24,10 @@ export type CollapseProps = {
 export type CollapseClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Clas of the root element with position */
+    positionClass: ComponentClass;
     /** Class of the trigger element */
     triggerClass: ComponentClass;
     /** Class of the content */

@@ -75,19 +75,21 @@ export type CarouselClasses = Partial<{
     itemsClass: ComponentClass;
     /** Class of slider items on drag */
     itemsDraggingClass: ComponentClass;
-    /** Class of arrow elements */
-    arrowIconClass: ComponentClass;
-    /** Class of prev arrow element */
-    arrowIconPrevClass: ComponentClass;
-    /** Class of next arrow element */
-    arrowIconNextClass: ComponentClass;
-    /** Class of indicators wrapper element */
+    /** Class of icon buttons */
+    iconClass: ComponentClass;
+    /** Class of prev icon button element */
+    iconPrevClass: ComponentClass;
+    /** Class of next icon button element */
+    iconNextClass: ComponentClass;
+    /** Class of autoplay icon button element */
+    iconAutoplayClass: ComponentClass;
+    /** Class of indicators tablist element */
     indicatorsClass: ComponentClass;
-    /** Class of indicators wrapper element when inside */
+    /** Class of indicators tablist element when inside */
     indicatorsInsideClass: ComponentClass;
-    /** Class of indicators wrapper element when inside and position */
+    /** Class of indicators tablist element when inside and position */
     indicatorsInsidePositionClass: ComponentClass;
-    /** Class of indicator link element */
+    /** Class of indicator tab element */
     indicatorClass: ComponentClass;
     /** Class of indicator item element */
     indicatorItemClass: ComponentClass;

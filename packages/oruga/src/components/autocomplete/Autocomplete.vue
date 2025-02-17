@@ -112,6 +112,11 @@ const emits = defineEmits<{
      */
     "update:input": [value: string];
     /**
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
+     */
+    "update:active": [value: boolean];
+    /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
@@ -172,7 +177,8 @@ const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const isActive = ref(false);
+/** The active state of the dropdown, use v-model:active to make it two-way binding */
+const isActive = defineModel<boolean>("active", { default: false });
 
 /** The selected value, use v-model to make it two-way binding */
 const selectedValue = defineModel<ModelValue>({ default: undefined });

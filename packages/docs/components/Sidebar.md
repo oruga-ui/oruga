@@ -17,7 +17,7 @@ The component can be used to show an overlay for navigation, shopping carts, and
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-sidebar-viewer />
 

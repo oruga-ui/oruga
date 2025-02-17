@@ -11,6 +11,8 @@ export type AutocompleteProps<T> = {
     modelValue?: T;
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;
+    /** The active state of the dropdown, use v-model:active to make it two-way binding */
+    active?: boolean;
     /** Autocomplete options */
     options?: OptionsPropWithGroups<T>;
     /** Function to filter the option based on the input value - default is label string comparison */

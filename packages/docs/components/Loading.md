@@ -16,7 +16,7 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-loading-viewer />
 

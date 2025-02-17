@@ -1,131 +1,230 @@
 <script setup lang="ts">
-import { ref, useTemplateRef } from "vue";
+import { ref } from "vue";
+import type { InspectData } from "@/docs";
+import type { DropdownClasses, DropdownItemClasses } from "../props";
 
-const dropdownbtn = useTemplateRef<HTMLElement>("dropdownBtn");
 const currentMenu = ref("");
+
 const subitem = "dropdownitem";
 
-const inspectData = [
-    {
+const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
+    triggerClass: {
         class: "triggerClass",
-        description: "Class of the trigger element",
+        description: "Class of the trigger element.",
     },
-    {
+    teleportClass: {
         class: "teleportClass",
-        description: "Class when the dropdown is teleported",
+        description: "Class when the dropdown is teleported.",
         properties: ["teleport"],
         action: (cmp, data): void => {
             data.teleport = true;
-            setTimeout(() => dropdownbtn.value?.click(), 300);
+            data.active = true;
         },
     },
-    {
-        class: "menuMobileOverlayClass",
-        description: "Class of the overlay when on mobile",
-        warning: "Switch to mobile view to see it in action!",
-        specificity: "when <b>mobileClass</b> is applied",
-        action: (): void => {
-            setTimeout(() => dropdownbtn.value?.click(), 300);
-        },
-    },
-    {
-        class: "menuClass",
-        description: "Class of the dropdown menu",
-        specificity:
-            "when <b>inlineClass</b> or <b>mobileClass</b> or <b>expandedClass</b> is applied",
-        action: (): void => {
-            setTimeout(() => dropdownbtn.value?.click(), 300);
-        },
-    },
-    {
+    disabledClass: {
         class: "disabledClass",
-        description: "Class of dropdown when disabled",
+        description: "Class of the root element when disabled.",
         properties: ["disabled"],
         action: (cmp, data): void => {
             data.disabled = true;
         },
     },
-    {
-        class: "menuActiveClass",
-        description: "Class of dropdown menu when active",
-        properties: ["inline", "active"],
-        action: (): void => {
-            setTimeout(() => dropdownbtn.value?.click(), 300);
-        },
-    },
-    {
+    inlineClass: {
         class: "inlineClass",
-        description: "Class of dropdown menu when inline",
+        description: "Class of the root element when inline.",
         properties: ["inline"],
         action: (cmp, data): void => {
             data.inline = true;
         },
     },
-    {
-        class: "menuPositionClass",
-        description: "Class of dropdown menu position",
-        properties: ["position"],
-        suffixes: ["top-right", "top-left", "bottom-right", "bottom-left"],
-        action: (cmp, data): void => {
-            data.position = "top-right";
-            setTimeout(() => dropdownbtn.value?.click(), 300);
-        },
-    },
-    {
+    mobileClass: {
         class: "mobileClass",
-        description: "Class of dropdown when on mobile",
-        warning: "Switch to mobile view to see it in action!",
-        action: (): void => {
-            setTimeout(() => dropdownbtn.value?.click(), 300);
-        },
+        description: "Class of the root element when on mobile.",
+        info: "Switch to mobile view to see it in action!",
     },
-    {
+    expandedClass: {
         class: "expandedClass",
-        description: "Class of dropdown when expanded",
+        description: "Class of the root element when expanded.",
         properties: ["expanded"],
         action: (cmp, data): void => {
             data.expanded = true;
         },
     },
-    {
+    activeClass: {
+        class: "activeClass",
+        description: "Class of the root element when menu is active or inline.",
+        properties: ["active", "inline"],
+        action: (cmp, data): void => {
+            data.active = true;
+        },
+    },
+    hoverableClass: {
+        class: "hoverableClass",
+        description: "Class of the root element when has trigger hover.",
+        properties: ["triggers"],
+        action: (cmp, data): void => {
+            data.triggers = ["hover"];
+        },
+    },
+    positionClass: {
+        class: "positionClass",
+        description: "Class of the root element when has postion.",
+        properties: ["position"],
+        suffixes: [
+            "auto",
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-right",
+            "top-left",
+            "bottom-left",
+            "bottom-right",
+            "auto",
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-right",
+            "top-left",
+            "bottom-left",
+            "bottom-right",
+        ],
+        action: (cmp, data): void => {
+            data.position = ["bottom"];
+        },
+    },
+    modalClass: {
+        class: "modalClass",
+        description: "Class of the root element when shown as modal.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (cmp, data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+        },
+    },
+    overlayClass: {
+        class: "overlayClass",
+        description: "Class of the overlay element when shown as modal.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (cmp, data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+            data.active = true;
+        },
+    },
+    menuClass: {
+        class: "menuClass",
+        description: "Class of the dropdown menu element.",
+        action: (cmp, data): void => {
+            data.inline = true;
+        },
+    },
+    menuActiveClass: {
+        class: "menuActiveClass",
+        description: "Class of dropdown menu element when active or inline.",
+        properties: ["inline", "active"],
+        action: (cmp, data): void => {
+            data.active = true;
+            data.inline = true;
+        },
+    },
+    menuPositionClass: {
+        class: "menuPositionClass",
+        description: "Class of dropdown menu when has position.",
+        properties: ["position"],
+        suffixes: [
+            "auto",
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-right",
+            "top-left",
+            "bottom-left",
+            "bottom-right",
+            "auto",
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-right",
+            "top-left",
+            "bottom-left",
+            "bottom-right",
+        ],
+        action: (cmp, data): void => {
+            data.position = "top-right";
+            data.active = true;
+        },
+    },
+    itemClass: {
         class: "itemClass",
-        description: "Class of the dropdown item",
+        description: "Class of the dropdown item element",
         subitem: true,
-        action: (): void => {
-            setTimeout(() => dropdownbtn.value?.click(), 300);
+        action: (cmp, data): void => {
+            data.inline = true;
         },
     },
-    {
+    itemActiveClass: {
         class: "itemActiveClass",
-        description: "Class of the dropdown item when active",
+        description: "Class of the dropdown item element when active.",
         subitem: true,
-        action: (): void => {
-            setTimeout(() => dropdownbtn.value?.click(), 300);
+        action: (cmp, data): void => {
+            data.inline = true;
         },
     },
-    {
+    itemDisabledClass: {
         class: "itemDisabledClass",
-        subitem: true,
-        description: "Class of the dropdown item when disabled",
+        description: "Class of the dropdown item element when disabled.",
         properties: ["disabled"],
-        action: (): void => {
-            setTimeout(() => dropdownbtn.value?.click(), 300);
-        },
-    },
-    {
-        class: "itemClickableClass",
         subitem: true,
-        description: "Class of the dropdown item when clickable",
-        properties: ["clickable"],
-        action: (): void => {
-            setTimeout(() => dropdownbtn.value?.click(), 300);
+        action: (cmp, data): void => {
+            data.inline = true;
         },
     },
-];
+    itemClickableClass: {
+        class: "itemClickableClass",
+        description: "Class of the dropdown item element when clickable",
+        properties: ["clickable"],
+        subitem: true,
+        action: (cmp, data): void => {
+            data.inline = true;
+        },
+    },
+    itemFocusedClass: {
+        class: "itemFocusedClass",
+        description: "Class of the dropdown item element when focused",
+        subitem: true,
+        action: (cmp, data): void => {
+            data.inline = true;
+        },
+    },
+    scrollClipClass: {
+        class: "scrollClipClass",
+        description:
+            "Class of the body when dropdown is open and scroll is clip.",
+        properties: ["scroll"],
+        action: (cmp, data): void => {
+            data.scroll = "clip";
+            data.active = true;
+        },
+    },
+    noScrollClass: {
+        class: "noScrollClass",
+        description:
+            "Class of the body when dropdown is open and scroll is not clip.",
+        properties: ["scroll"],
+        action: (cmp, data): void => {
+            data.scroll = "";
+            data.active = true;
+        },
+    },
+};
 </script>
 
 <template>
@@ -136,7 +235,6 @@ const inspectData = [
         <o-dropdown v-model="currentMenu" v-bind="props">
             <template #trigger="{ active }">
                 <o-button
-                    ref="dropdownBtn"
                     label="Click me!"
                     variant="primary"
                     :icon-right="active ? 'caret-up' : 'caret-down'" />

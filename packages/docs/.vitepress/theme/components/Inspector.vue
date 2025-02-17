@@ -3,8 +3,7 @@ import { computed, ref, type PropType } from "vue";
 import type { InspectData, InspectClassDescription, InspectClass } from "@docs";
 
 const props = defineProps({
-    inspectData: { type: Object as PropType<InspectData>, required: true },
-    subitem: { type: String, default: undefined },
+    data: { type: Object as PropType<InspectData>, required: true },
 });
 
 const emits = defineEmits<{
@@ -13,10 +12,8 @@ const emits = defineEmits<{
 
 const selectedElementIndex = ref<number>();
 
-const classesToInspect = computed(() =>
-    Object.values(props.inspectData).toSorted((propa, propb) =>
-        propa.class < propb.class ? -1 : propa.class > propb.class ? 1 : 0,
-    ),
+const classesToInspect = computed<InspectClassDescription[]>(() =>
+    Object.values(props.data),
 );
 
 function addDotToTheEnd(value: string): string {
@@ -135,20 +132,23 @@ function inspectClass(
                     <td v-if="!data.subitem">{{ data.class }}</td>
                     <td v-if="data.subitem">
                         ▷
-                        <a :href="`#${subitem}-component`">{{ data.class }}</a>
+                        <a :href="`#${data.subitem}-component`">
+                            {{ data.class }}
+                        </a>
                     </td>
                     <td>
                         <span>{{ addDotToTheEnd(data.description) }}</span>
                         <span v-if="data.relatedComponent">
-                            More detail
+                            More details
                             <a
                                 target="_blank"
                                 :href="`/components/${data.relatedComponent}.html#class-props`">
                                 here
                             </a>
+                            .
                         </span>
-                        <span v-if="data.warning">
-                            <br />👉 <i><span v-html="data.warning"></span></i>
+                        <span v-if="data.info">
+                            <br />👉 <i><span v-html="data.info"></span></i>
                         </span>
                         <span v-if="data.specificity">
                             <br />🔍

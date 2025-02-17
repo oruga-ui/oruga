@@ -7,7 +7,6 @@ import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
 
 import InspectorWrapper from "./components/InspectorWrapper.vue";
-import Inspector from "./components/Inspector.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
 
@@ -61,7 +60,6 @@ export default {
 
         // add documentation components
         app.component("InspectorWrapper", InspectorWrapper);
-        app.component("Inspector", Inspector);
         app.component("ExampleViewer", ExampleViewer);
         app.component("Expo", Expo);
 

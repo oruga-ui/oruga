@@ -16,7 +16,7 @@ The **Modal** component is classic modal overlay, in which you can include any c
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-modal-viewer />
 

@@ -17,7 +17,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-datepicker-viewer />
 

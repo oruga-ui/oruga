@@ -17,7 +17,7 @@ Oruga is compatible with both [Material Design Icons](https://materialdesignicon
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-icon-viewer />
 

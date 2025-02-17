@@ -22,7 +22,7 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-carousel-viewer />
 

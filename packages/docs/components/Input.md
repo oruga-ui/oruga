@@ -18,7 +18,7 @@ Combine it with the Field component to access all functionalities.
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-input-viewer />
 

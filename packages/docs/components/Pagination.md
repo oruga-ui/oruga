@@ -16,7 +16,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-pagination-viewer />
 

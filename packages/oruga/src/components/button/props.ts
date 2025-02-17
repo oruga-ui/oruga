@@ -61,10 +61,10 @@ export type ButtonClasses = Partial<{
     wrapperClass: ComponentClass;
     /** Class of the button when outlined */
     outlinedClass: ComponentClass;
-    /** Class of the button with loading */
-    loadingClass: ComponentClass;
     /** Class of the button when inverted */
     invertedClass: ComponentClass;
+    /** Class of the button with loading */
+    loadingClass: ComponentClass;
     /** Class of the button when expanded */
     expandedClass: ComponentClass;
     /** Class of the button when rounded */

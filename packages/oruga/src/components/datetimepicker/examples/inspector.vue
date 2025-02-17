@@ -1,36 +1,20 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useOruga } from "@/utils/programmatic";
+import type { InspectData } from "@/docs";
+import type { DatetimePickerClasses } from "../props";
 
-const datetimepicker = ref();
-
-// get programmatic oruga access
-const oruga = useOruga();
-const triggerClass =
-    oruga.config.getOption("input.iconLeftClass", "o-input__icon-left") ??
-    "o-input__icon-left";
-
-function openDatetimePicker(): void {
-    setTimeout((): void => {
-        datetimepicker.value.$el
-            .getElementsByClassName(triggerClass)[0]
-            .click();
-    }, 500);
-}
-
-const inspectData = [
-    {
+const inspectData: InspectData<DatetimePickerClasses> = {
+    datepickerWrapperClass: {
         class: "datepickerWrapperClass",
-        description: "Class of the Datepicker wrapper",
+        description: "Class of the Datepicker wrapper element.",
     },
-    {
+    timepickerWrapperClass: {
         class: "timepickerWrapperClass",
-        description: "Class of the Timepicker wrapper",
-        action: (): void => {
-            openDatetimePicker();
+        description: "Class of the Timepicker wrapper element.",
+        action: (cmp, data): void => {
+            data.active = true;
         },
     },
-];
+};
 </script>
 
 <template>
@@ -38,7 +22,6 @@ const inspectData = [
         <o-field label="Select datetime">
             <o-datetimepicker
                 v-bind="props"
-                ref="datetimepicker"
                 placeholder="Click to select..."
                 icon="calendar"
                 horizontal-time-picker />

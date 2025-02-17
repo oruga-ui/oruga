@@ -19,7 +19,7 @@ The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-button-viewer />
 

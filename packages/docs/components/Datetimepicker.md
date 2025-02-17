@@ -18,7 +18,7 @@ The component is based on the Datepicker component.
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-datetimepicker-viewer />
 

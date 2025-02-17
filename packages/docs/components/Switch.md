@@ -19,7 +19,7 @@ Use it with the Field component to access all the functionalities.
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-switch-viewer />
 

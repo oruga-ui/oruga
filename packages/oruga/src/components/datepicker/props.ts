@@ -165,27 +165,31 @@ export type DatepickerProps<
 export type DatepickerClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the Datepicker size */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
-    /** Class of the Datepicker box where you choose the date */
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class of the root element when on mobile */
+    mobileClass: ComponentClass;
+    /** Class of the box container element where you choose the date */
     boxClass: ComponentClass;
-    /** Class of the Datepicker header inside the box */
+    /** Class of the header inside the box */
     headerClass: ComponentClass;
-    /** Class of the Datepicker buttons inside the box */
+    /** Class of the buttons inside the box */
     headerButtonsClass: ComponentClass;
-    /** Class of the Datepicker buttons inside the box when a size is choosen */
+    /** Class of the buttons inside the box when a size is choosen */
     headerButtonsSizeClass: ComponentClass;
-    /** Class of the prev button inside the Datepicker box */
+    /** Class of the prev button inside the box */
     prevButtonClass: ComponentClass;
-    /** Class of the next button inside the Datepicker box */
+    /** Class of the next button inside the box */
     nextButtonClass: ComponentClass;
-    /** Class of the month and year selects container inside the Datepicker box */
+    /** Class of the month and year selects container inside the box */
     listsClass: ComponentClass;
-    /** Class of the Datepicker footer */
+    /** Class of the footer element */
     footerClass: ComponentClass;
-    /** Class of the Datepicker table inside the box */
+    /** Class of the dates table inside the box */
     tableClass: ComponentClass;
-    /** Class of Datepicker header with days of the week inside the table */
+    /** Class of dates table header with days of the week */
     tableHeadClass: ComponentClass;
     /** Class of the cell inside the table header */
     tableHeadCellClass: ComponentClass;
@@ -229,40 +233,38 @@ export type DatepickerClasses = Partial<{
     tableEventVariantClass: ComponentClass;
     /** Class of the event indicator */
     tableEventIndicatorsClass: ComponentClass;
-    /** Class of the Datepicker table inside the box when type is month */
+    /** Class of the month table inside the box when type is `month` */
     monthClass: ComponentClass;
-    /** Class of the table body inside the box when type is month */
+    /** Class of the table body inside the box when type is `month` */
     monthBodyClass: ComponentClass;
-    /** Class of the table container when type is month */
+    /** Class of the table container when type is `month` */
     monthTableClass: ComponentClass;
-    /** Class of the table cell when type is month */
+    /** Class of the table cell when type is `month` */
     monthCellClass: ComponentClass;
-    /** Class of table cell when it's selected when type is month */
+    /** Class of table cell when it's selected when type is `month` */
     monthCellSelectedClass: ComponentClass;
-    /** Class of the first selected table cell when in range when type is month */
+    /** Class of the first selected table cell when in range when type is `month` */
     monthCellFirstSelectedClass: ComponentClass;
-    /** Class of the table cells within the range when the range is selected when type is month */
+    /** Class of the table cells within the range when the range is selected when type is `month` */
     monthCellWithinSelectedClass: ComponentClass;
-    /** Class of the last selected table cell during range selection when type is month */
+    /** Class of the last selected table cell during range selection when type is `month` */
     monthCellLastSelectedClass: ComponentClass;
-    /** Class of the first hovered table cell during range selection when type is month */
+    /** Class of the first hovered table cell during range selection when type is `month` */
     monthCellWithinHoveredRangeClass: ComponentClass;
-    /** Class of the table cell when hovered during range selection when type is month */
+    /** Class of the table cell when hovered during range selection when type is `month` */
     monthCellFirstHoveredClass: ComponentClass;
-    /** Class of the table cell when hovered during range selection and cell is in range when type is month */
+    /** Class of the table cell when hovered during range selection and cell is in range when type is `month` */
     monthCellWithinHoveredClass: ComponentClass;
-    /** Class of the last table cell hovered during range selection when type is month */
+    /** Class of the last table cell hovered during range selection when type is `month` */
     monthCellLastHoveredClass: ComponentClass;
-    /** Class of the table cell of the current day when type is month */
+    /** Class of the table cell of the current day when type is `month` */
     monthCellTodayClass: ComponentClass;
-    /** Class of the table cell that is selectable when type is month */
+    /** Class of the table cell that is selectable when type is `month` */
     monthCellSelectableClass: ComponentClass;
-    /** Class of the table cell that is unselectable when type is month */
+    /** Class of the table cell that is unselectable when type is `month` */
     monthCellUnselectableClass: ComponentClass;
-    /**Class of the events container when type is month */
+    /** Class of the events container when type is `month` */
     monthCellEventsClass: ComponentClass;
-    /** Class of the Datepicker when on mobile */
-    mobileClass: ComponentClass;
     /** Class for the underlaying dropdown component */
     dropdownClass: ComponentClass;
     /** Class for the HTML input element */

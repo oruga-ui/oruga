@@ -21,7 +21,7 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-steps-viewer />
 

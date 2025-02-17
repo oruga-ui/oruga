@@ -21,7 +21,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-table-viewer />
 

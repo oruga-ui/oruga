@@ -17,7 +17,7 @@ The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/W
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-collapse-viewer />
 
@@ -39,6 +39,7 @@ The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/W
 | --------- | ---------------------------------------------------------------------------- | ----------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | animation | Custom animation (transition name)                                           | string            | -               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code> |
 | contentId | Id property of the content container - default is an uuid                    | string            | -               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                        |
+| expanded  | Expand the trigger to fullwidth                                              | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
 | open      | Whether collapse is open or not, use v-model:open to make it two-way binding | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                           |
 | override  | Override existing theme classes completely                                   | boolean           | -               |                                                                                                                                                      |
 | position  | Trigger position                                                             | "bottom" \| "top" | `top`, `bottom` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |

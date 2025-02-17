@@ -16,7 +16,7 @@ The **Skeleton** component is a placeholder for content to load.
 
 <div class="vp-example">
 
-## Class props
+## Class Inspector
 
 <inspector-skeleton-viewer />
 
