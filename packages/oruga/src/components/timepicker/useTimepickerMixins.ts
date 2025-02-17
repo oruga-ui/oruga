@@ -1,6 +1,6 @@
 import { computed } from "vue";
 import { matchWithGroups } from "../datepicker/utils";
-import type { TimepickerProps } from "./types";
+import type { TimepickerProps } from "./props";
 
 const AM = "AM" as const;
 const PM = "PM" as const;

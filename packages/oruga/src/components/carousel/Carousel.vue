@@ -240,7 +240,7 @@ function onEndPressed(): void {
  * Show the slide by index
  * @param index the real index of the slide
  */
-function switchTo(index: number): void {
+function switchTo(index: number = 0): void {
     if (settings.value.repeat) index = mod(index, total.value);
     index = bound(index, 0, total.value - 1);
 

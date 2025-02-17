@@ -149,11 +149,6 @@ const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     props,
 );
 
-watch([() => isMobileNative.value, () => props.inline], () => {
-    // $refs attached, it's time to refresh datepicker (input)
-    if (datepickerRef.value) datepickerRef.value.$forceUpdate();
-});
-
 const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 
 /** Dropdown active state */
