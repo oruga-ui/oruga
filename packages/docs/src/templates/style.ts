@@ -3,9 +3,9 @@ import * as fs from "fs";
 import { type SafeDocgenCLIConfig } from "vue-docgen-cli/lib/config";
 import { getThemePath, Themes, type ThemeConfig } from "../themes-helper";
 
-export const docsRegex = "/* @docs */";
+const docsRegex = "/* @docs */";
 
-export function getVariablesFromContent(content: string) {
+function getVariablesFromContent(content: string): string[] {
     const docs = content.substring(
         content.indexOf(docsRegex) + docsRegex.length,
         content.lastIndexOf(docsRegex),
