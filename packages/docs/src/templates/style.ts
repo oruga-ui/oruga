@@ -5,6 +5,12 @@ import { getThemePath, Themes, type ThemeConfig } from "../themes-helper";
 
 const docsRegex = "/* @docs */";
 
+/** files with variables for a component */
+const variablePaths = (name: string): string[] => [
+    `/scss/components/${name}`,
+    `/scss/component-defaults/${name}`,
+];
+
 function getVariablesFromContent(content: string): string[] {
     const docs = content.substring(
         content.indexOf(docsRegex) + docsRegex.length,
@@ -20,51 +26,35 @@ function getVariablesFromContent(content: string): string[] {
 export function renderer(config: SafeDocgenCLIConfig, name: string): string {
     const renderThemeVariables = (theme: ThemeConfig): string => {
         const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
-        const componentPath = getThemePath(
-            theme,
-            config.cwd,
-            `/scss/components/${name}`,
-        );
-        const componentDefaultsPath = getThemePath(
-            theme,
-            config.cwd,
-            `/scss/component-defaults/${name}`,
-        );
 
-        if (!componentPath && !componentDefaultsPath) return noStyle;
+        // define all files with variables for a component
+        const paths = variablePaths(name);
 
-        let cssContent = "";
-        let defaultsContent = "";
+        const files: string[] = paths
+            // get the theme file by path
+            .map((filePath) => getThemePath(theme, config.cwd, filePath))
+            // remove non existing paths
+            .filter((p) => !!p)
+            // load file content for path
+            .map((filePath) => {
+                try {
+                    const cssFile = path.resolve(config.cwd, filePath);
+                    return fs.readFileSync(cssFile, "utf8");
+                } catch (e) {
+                    // Log errors but allow the process to continue.
+                    // We expect every component to have a scss file, but docs should render even if none is found.
+                    console.error(e);
+                    return "";
+                }
+            })
+            // remove files without docs string
+            .filter((content) => content.includes(docsRegex));
 
-        try {
-            const cssFile = path.resolve(config.cwd, componentPath);
-            cssContent = fs.readFileSync(cssFile, "utf8");
-        } catch (e) {
-            // Log errors but allow the process to continue. We expect every component to have a scss file, but docs should render even if none is found
-            console.error(e);
-        }
+        // check if component has variables
+        if (!files.length) return noStyle;
 
-        try {
-            const defaultsFile = path.resolve(
-                config.cwd,
-                componentDefaultsPath,
-            );
-            defaultsContent = fs.readFileSync(defaultsFile, "utf8");
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (e) {
-            // Swallow error and move on. We expect some components will not have defaults.
-        }
-
-        if (
-            !cssContent.includes(docsRegex) &&
-            !defaultsContent.includes(docsRegex)
-        )
-            return noStyle;
-
-        const variables = [
-            ...getVariablesFromContent(cssContent),
-            ...getVariablesFromContent(defaultsContent),
-        ];
+        // extract variables from file content
+        const variables = files.flatMap(getVariablesFromContent);
 
         return `
 | SASS Variable  | Default |
