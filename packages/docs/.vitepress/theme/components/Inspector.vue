@@ -3,7 +3,7 @@ import { computed, ref, type PropType } from "vue";
 import type { InspectData, InspectClassDescription, InspectClass } from "@docs";
 
 const props = defineProps({
-    data: { type: Object as PropType<InspectData>, required: true },
+    inspectData: { type: Object as PropType<InspectData>, required: true },
 });
 
 const emits = defineEmits<{
@@ -13,7 +13,7 @@ const emits = defineEmits<{
 const selectedElementIndex = ref<number>();
 
 const classesToInspect = computed<InspectClassDescription[]>(() =>
-    Object.values(props.data),
+    Object.values(props.inspectData),
 );
 
 function addDotToTheEnd(value: string): string {
@@ -121,7 +121,7 @@ function inspectClass(
                         inspector__highlight: index === selectedElementIndex,
                     }">
                     <td v-if="!data.subitem">{{ data.class }}</td>
-                    <td v-if="data.subitem">
+                    <td v-else>
                         ▷
                         <a :href="`#${data.subitem}-component`">
                             {{ data.class }}
