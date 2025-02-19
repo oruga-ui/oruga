@@ -141,17 +141,6 @@ function inspectClass(
                         <span v-if="data.info">
                             <br />👉 <i><span v-html="data.info"></span></i>
                         </span>
-                        <span v-if="data.specificity">
-                            <br />🔍
-                            <i>
-                                <span>
-                                    Classes applied have a higher specificity
-                                    than expected when
-                                    <b v-html="data.specificity"></b>
-                                    is applied.
-                                </span>
-                            </i>
-                        </span>
                     </td>
                     <td>
                         <span v-if="data.properties">
