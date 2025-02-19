@@ -20,11 +20,6 @@ export type InspectClassDescription<T = object, C extends keyof T = keyof T> = {
     subitem?: string;
     /** info message */
     info?: string;
-    /**
-     * @deprecated
-     * related class which is needed to be shown
-     */
-    specificity?: string;
     /** properties related by the class */
     properties?: string[];
     /** suffixes the class can have */

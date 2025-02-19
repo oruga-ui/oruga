@@ -59,7 +59,7 @@ function inspectClass(
                         <b>Inspect</b> button to find the exact element where a
                         specific class prop acts. <br /><br />
                         In the <i>Class props inspector</i> there are other
-                        columns
+                        columns:
                     </p>
                 </div>
 
@@ -81,12 +81,6 @@ function inspectClass(
                         you want to inspect.<br />
                         👉 This icon indicates some warning, e.g.
                         <i>this Class prop is visible only on mobile.</i><br />
-                        🔍 This icon indicates that you should pay attention to
-                        CSS specificity. See
-                        <a href="/documentation/#deal-with-specificity">
-                            "Deal with specificity"
-                        </a>
-                        section in the documentation.
                     </p>
                 </div>
 
@@ -105,10 +99,7 @@ function inspectClass(
                     <p>
                         This column contains all the possible suffixes that
                         you'll receive if you use a function to customize your
-                        Class prop. You'll find more info in the
-                        <a href="/documentation/#overriding-classes">
-                            "Overriding section" </a
-                        >.
+                        Class prop.
                     </p>
                 </div>
             </div>
