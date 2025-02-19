@@ -20,14 +20,6 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-dropdown-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Dropdown component
@@ -133,6 +125,22 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 | Name    | Description                               | Bindings |
 | ------- | ----------------------------------------- | -------- |
 | default | Override the label, default is label prop |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-dropdownitem-viewer />
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-dropdown-viewer />
 
 </div>
 

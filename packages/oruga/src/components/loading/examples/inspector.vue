@@ -1,47 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { InspectData } from "@/docs";
+import type { LoadingClasses } from "../props";
 
 const loading = ref(false);
-const inspectData = [
-    {
+
+const inspectData: InspectData<LoadingClasses> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
         action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
             loading.value = true;
         },
     },
-    {
-        class: "overlayClass",
-        description: "Class of the loading overlay",
-        action: (cmp, data): void => {
-            data.cancelable = true;
-            data.fullPage = false;
-            loading.value = true;
-        },
-    },
-    {
-        class: "iconClass",
-        description: "Class for the loading icon",
-        action: (cmp, data): void => {
-            data.cancelable = true;
-            data.fullPage = false;
-            loading.value = true;
-        },
-    },
-    {
-        class: "labelClass",
-        description: "Class for the loading label",
-        action: (cmp, data): void => {
-            data.cancelable = true;
-            data.fullPage = false;
-            loading.value = true;
-        },
-    },
-    {
+    fullPageClass: {
         class: "fullPageClass",
-        description: "Class for the root element when fullpage",
+        description: "Class for the root element when fullpage.",
         properties: ["fullPage"],
         action: (cmp, data): void => {
             data.fullPage = true;
@@ -49,10 +25,38 @@ const inspectData = [
             loading.value = true;
         },
     },
-    {
+    overlayClass: {
+        class: "overlayClass",
+        description: "Class of the loading overlay element.",
+        action: (cmp, data): void => {
+            data.cancelable = true;
+            data.fullPage = false;
+            loading.value = true;
+        },
+    },
+    iconClass: {
+        class: "iconClass",
+        description: "Class for the loading icon element.",
+        action: (cmp, data): void => {
+            data.cancelable = true;
+            data.fullPage = false;
+            data.icon = "loading";
+            loading.value = true;
+        },
+    },
+    labelClass: {
+        class: "labelClass",
+        description: "Class for the loading label element.",
+        action: (cmp, data): void => {
+            data.cancelable = true;
+            data.fullPage = false;
+            data.label = "Loading...";
+            loading.value = true;
+        },
+    },
+    scrollClipClass: {
         class: "scrollClipClass",
-        description: "Class of the full page when scroll is clip",
-        specificity: "when <b>fullPage</b> is applied",
+        description: "Class of the body when fullpage and scroll is clip",
         properties: ["scroll"],
         action: (cmp, data): void => {
             data.fullPage = true;
@@ -60,10 +64,9 @@ const inspectData = [
             loading.value = true;
         },
     },
-    {
+    noScrollClass: {
         class: "noScrollClass",
-        description: "Class of the modal when scroll is not clip",
-        specificity: "when <b>fullPage</b> is applied",
+        description: "Class of body when fullpage and scroll is not clip",
         properties: ["scroll"],
         action: (cmp, data): void => {
             data.fullPage = true;
@@ -71,7 +74,7 @@ const inspectData = [
             loading.value = true;
         },
     },
-];
+};
 </script>
 
 <template>

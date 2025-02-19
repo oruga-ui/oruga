@@ -15,14 +15,6 @@ The component can be used to show an overlay for navigation, shopping carts, and
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-sidebar-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Sidebar component
@@ -68,6 +60,14 @@ The component can be used to show an overlay for navigation, shopping carts, and
 | Name    | Description                                        | Bindings                                                     |
 | ------- | -------------------------------------------------- | ------------------------------------------------------------ |
 | default | Sidebar default content, default is component prop | **close** `(...args):void` - function to close the component |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-sidebar-viewer />
 
 </div>
 

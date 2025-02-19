@@ -21,14 +21,6 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-tabs-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Tabs component
@@ -117,6 +109,22 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 | ------- | -------------------------- | --------------------------------------- |
 | default | Override tab panel content | **active** `boolean` - if item is shown |
 | header  | Override tab header label  | **active** `boolean` - if item is shown |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-tabitem-viewer />
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-tabs-viewer />
 
 </div>
 

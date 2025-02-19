@@ -17,14 +17,6 @@ Use it with the Field component to access all the functionalities.
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-timepicker-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Timepicker component
@@ -100,6 +92,14 @@ Use it with the Field component to access all the functionalities.
 | ------- | -------------------------------------- | -------- |
 | trigger | Override the trigger                   |          |
 | footer  | Define an additional content on footer |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-timepicker-viewer />
 
 </div>
 

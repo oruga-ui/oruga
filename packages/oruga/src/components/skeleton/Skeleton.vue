@@ -52,13 +52,13 @@ const rootClasses = defineClasses(
 const itemClasses = defineClasses(
     ["itemClass", "o-sklt__item"],
     [
-        "itemRoundedClass",
+        "roundedClass",
         "o-sklt__item--rounded",
         null,
         computed(() => props.rounded),
     ],
     [
-        "animationClass",
+        "animatedClass",
         "o-sklt__item--animated",
         null,
         computed(() => props.animated),

@@ -15,14 +15,6 @@ The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/W
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-collapse-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Collapse component
@@ -59,6 +51,14 @@ The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/W
 | ------- | --------------------------- | ---------------------------------------- |
 | trigger | Define the collapse trigger | **open** `boolean` - collapse open state |
 | default | Default content             |                                          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-collapse-viewer />
 
 </div>
 

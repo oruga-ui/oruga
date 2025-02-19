@@ -55,24 +55,24 @@ export type FieldClasses = Partial<{
     groupedClass: ComponentClass;
     /** Class when fields fill up multiple lines */
     groupMultilineClass: ComponentClass;
-    /** Class for field label */
+    /** Class for the field label element*/
     labelClass: ComponentClass;
-    /** Class for field label size */
+    /** Class for the field label element with size */
     labelSizeClass: ComponentClass;
-    /** Class of the label field variant */
+    /** Class for the field label element with variant */
     labelVariantClass: ComponentClass;
-    /** Class for field body */
+    /** Class for the field body wrapper element*/
     bodyClass: ComponentClass;
-    /** Class for components automatically attached together when inside a field */
+    /** Class of the inner wrapper when components automatically attached together when inside a field */
     addonsClass: ComponentClass;
-    /** Class for the field message */
+    /** Class for the field message element */
     messageClass: ComponentClass;
-    /** Class of the message field variant */
+    /** Class for the field message element with variant */
     messageVariantClass: ComponentClass;
-    /** Class of file component when on mobile */
+    /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Class for the focused field */
+    /** Class of the root element when the form element is focused */
     focusedClass: ComponentClass;
-    /** Class for the filled field */
+    /** Class of the root element when the form element is filled */
     filledClass: ComponentClass;
 }>;

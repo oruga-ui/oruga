@@ -1,73 +1,76 @@
 <script setup lang="ts">
-const inspectData = [
-    {
+import type { InspectData } from "@/docs";
+import type { TooltipClasses } from "../props";
+
+const inspectData: InspectData<TooltipClasses> = {
+    rootClass: {
         class: "rootClass",
-        description: "Root class of the element",
+        description: "Class of root element.",
     },
-    {
-        class: "contentClass",
-        description: "Class of the tooltip content",
+    teleportClass: {
+        class: "teleportClass",
+        description: "Class of the root element when teleported.",
+        properties: ["teleport"],
+        action: (cmp, data): void => {
+            data.teleport = true;
+        },
     },
-    {
+    triggerClass: {
         class: "triggerClass",
-        description: "Class of the tooltip trigger",
+        description: "Class of the trigger element.",
     },
-    {
-        class: "multilineClass",
-        description: "Class of the tooltip content when is multiline",
-        properties: ["multiline"],
-        action: (cmp, data): void => {
-            data.multiline = true;
-        },
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the content element.",
     },
-    {
-        class: "arrowClass",
-        description: "Class of the tooltip arrow",
-    },
-    {
-        class: "arrowPositionClass",
-        description: "Class of the tooltip arrow position",
-        properties: ["position"],
-        suffixes: ["top", "bottom", "left", "right"],
-        action: (cmp, data): void => {
-            data.position = "right";
-        },
-    },
-    {
+    positionClass: {
         class: "positionClass",
-        description: "Class of the tooltip trigger position",
+        description: "Class of the content element with position.",
         properties: ["position"],
         suffixes: ["top", "bottom", "left", "right"],
         action: (cmp, data): void => {
             data.position = "right";
         },
     },
-    {
-        class: "alwaysClass",
-        description: "Class of the tooltip trigger when is always visible",
-        properties: ["always"],
-        action: (cmp, data): void => {
-            data.always = true;
-        },
-    },
-    {
+    variantClass: {
         class: "variantClass",
-        description: "Class of the tooltip variant",
+        description: "Class of the content element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
-    {
-        class: "teleportClass",
-        description: "Class when the dropdown is teleported",
-        properties: ["teleport"],
+    multilineClass: {
+        class: "multilineClass",
+        description: "Class of the content element when is multiline.",
+        properties: ["multiline"],
         action: (cmp, data): void => {
-            data.teleport = true;
+            data.multiline = true;
         },
     },
-];
+    alwaysClass: {
+        class: "alwaysClass",
+        description: "Class of the content element when is always visible.",
+        properties: ["always"],
+        action: (cmp, data): void => {
+            data.always = true;
+        },
+    },
+    arrowClass: {
+        class: "arrowClass",
+        description: "Class of the arrow element.",
+    },
+    arrowPositionClass: {
+        class: "arrowPositionClass",
+        description: "Class of the arrow element with position.",
+        properties: ["position"],
+        suffixes: ["top", "bottom", "left", "right"],
+        action: (cmp, data): void => {
+            data.position = "right";
+        },
+    },
+};
 </script>
 
 <template>

@@ -74,31 +74,31 @@ export type StepsProps<T> = {
 export type StepsClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Size of the steps */
-    sizeClass: ComponentClass;
-    /** Class of the steps variant */
-    variantClass: ComponentClass;
-    /** Class of the tooltip trigger */
-    verticalClass: ComponentClass;
-    /** Class of the Steps component when is vertical and its position changes */
-    positionClass: ComponentClass;
-    /** Class of steps component when on mobile */
+    /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
+    /** Size of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
+    /** Class of the root element when is vertical */
+    verticalClass: ComponentClass;
+    /** Class of the root element when is vertical and has position */
+    positionClass: ComponentClass;
     /** Class of the steps list container */
     listClass: ComponentClass;
-    /** Class of Steps component when animation gets triggered */
+    /** Class of steps list container when animated */
     animatedClass: ComponentClass;
-    /** Class of the Steps component dividers */
+    /** Class of the step item divider element */
     dividerClass: ComponentClass;
-    /** Class of the Steps markers trigger when are rounded */
-    markerRoundedClass: ComponentClass;
-    /** Class of the Steps component marker */
+    /** Class of the step item marker element */
     markerClass: ComponentClass;
-    /** Class of the Steps component content */
+    /** Class of the step item marker element when rounded */
+    markerRoundedClass: ComponentClass;
+    /** Class of the content element */
     contentClass: ComponentClass;
-    /** Class of the Steps component content when transition is happening */
+    /** Class of the content element when transitioning */
     transitioningClass: ComponentClass;
-    /** Class of the Steps component navigation element */
+    /** Class of the navigation element */
     navigationClass: ComponentClass;
 }>;
 
@@ -145,26 +145,26 @@ export type StepItemProps<T, C extends Component> = {
 
 // class props (will not be displayed in the docs)
 export type StepItemClasses = Partial<{
-    /** Class of the step item */
+    /** Class of the step item element. */
     stepClass: ComponentClass;
-    /** Class of the step item with variant (default value by parent steps component) */
-    stepVariantClass: ComponentClass;
-    /** Class of the step item before the active one */
-    stepPreviousClass: ComponentClass;
-    /** Class of the step item after the active one */
-    stepNextClass: ComponentClass;
-    /** Class of the step item when active */
+    /** Class of the step item element when active */
     stepActiveClass: ComponentClass;
-    /** Class of the step item when clickable */
+    /** Class of the step item element with variant (default value by parent steps component) */
+    stepVariantClass: ComponentClass;
+    /** Class of the step item element when clickable */
     stepClickableClass: ComponentClass;
-    /** Class of the step item when disabled */
+    /** Class of the step item element when disabled */
     stepDisabledClass: ComponentClass;
-    /** Class of the step item label when positioned */
-    stepLabelPositionClass: ComponentClass;
-    /** Class of the step item label */
+    /** Class of the step item element when positioned */
+    stepPositionClass: ComponentClass;
+    /** Class of the step item element before the active one */
+    stepPreviousClass: ComponentClass;
+    /** Class of the step item element after the active one */
+    stepNextClass: ComponentClass;
+    /** Class of the step item label element */
     stepLabelClass: ComponentClass;
-    /** Class of the step item icon */
+    /** Class of the step item icon element */
     stepIconClass: ComponentClass;
-    /** Class of the content item */
+    /** Class of the step panel element */
     stepPanelClass: ComponentClass;
 }>;

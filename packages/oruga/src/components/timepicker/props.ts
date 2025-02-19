@@ -102,13 +102,15 @@ export type TimepickerProps = {
 export type TimepickerClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the Timepicker component size */
+    /** Class of the root element when on mobile */
+    mobileClass: ComponentClass;
+    /** Class of the root element component size */
     sizeClass: ComponentClass;
-    /** Class of the Timepicker component box where you choose the date */
+    /** Class of the dropdown box element where you choose the date */
     boxClass: ComponentClass;
-    /** Class of the Timepicker separator */
+    /** Class of the select separator element */
     separatorClass: ComponentClass;
-    /** Class of the Timepicker footer */
+    /** Class of the footer element */
     footerClass: ComponentClass;
     /** Class for the underlaying dropdown component */
     dropdownClass: ComponentClass;

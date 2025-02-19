@@ -15,14 +15,6 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-datepicker-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Datepicker component
@@ -116,6 +108,14 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | header  | Override the header         |          |
 | body    | Override the body           |          |
 | footer  | Define an additional footer |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-datepicker-viewer />
 
 </div>
 

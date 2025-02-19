@@ -17,14 +17,6 @@ The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-button-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Button component
@@ -66,6 +58,14 @@ The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/
 | Name    | Description                               | Bindings |
 | ------- | ----------------------------------------- | -------- |
 | default | Override the label, default is label prop |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-button-viewer />
 
 </div>
 

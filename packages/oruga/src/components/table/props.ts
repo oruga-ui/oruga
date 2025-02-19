@@ -185,70 +185,70 @@ export type TableProps<T> = {
 export type TableClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the Table */
-    tableClass: ComponentClass;
-    /** Class of the Table wrapper */
-    wrapperClass: ComponentClass;
-    /** Class of the Table footer */
-    footerClass: ComponentClass;
-    /** Class of the Table when it is empty */
-    emptyClass: ComponentClass;
-    /** Class of the Table when is bordered */
-    borderedClass: ComponentClass;
-    /** Class of the Table when rows are striped */
-    stripedClass: ComponentClass;
-    /** Class of the Table when rows are narrowed */
-    narrowedClass: ComponentClass;
-    /** Class of the Table when is hoverable */
-    hoverableClass: ComponentClass;
-    /** Class of the Table wrapper when header is sticky */
-    stickyHeaderClass: ComponentClass;
-    /** Class of the Table wrapper when its content is scrollable */
-    scrollableClass: ComponentClass;
-    /** Class of the Table row when selected */
-    trSelectedClass: ComponentClass;
-    /** Class of the Table row when checkable and checked */
-    trCheckedClass: ComponentClass;
-    /** Class of the detail Table row  */
-    trDetailedClass: ComponentClass;
-    /** Class of the Table row when table is empty */
-    trEmptyClass: ComponentClass;
-    /** Class of the Table `th` element */
-    thClass: ComponentClass;
-    /** Class of the Table `th` element when component is positioned */
-    thPositionClass: ComponentClass;
-    /** Class of the Table `th` element when component is sticky" */
-    thStickyClass: ComponentClass;
-    /** Class of the Table `th` element when is checkable */
-    thCheckboxClass: ComponentClass;
-    /** Class of the Table `th` element currently sorted */
-    thCurrentSortClass: ComponentClass;
-    /** Class of the sortable Table `th` element */
-    thSortableClass: ComponentClass;
-    /** Class of the Table `th` element that is unsortable */
-    thUnselectableClass: ComponentClass;
-    /** Class of the Table sort icon in the header */
-    thSortIconClass: ComponentClass;
-    /** Class of the Table `th` element of the detail column of triggers */
-    thDetailedClass: ComponentClass;
-    /** Class of the Table `th` subheading element */
-    thSubheadingClass: ComponentClass;
-    /** Class of the Table `td` element */
-    tdClass: ComponentClass;
-    /** Class of the Table `td` element when component is positioned */
-    tdPositionClass: ComponentClass;
-    /** Class of the Table `td` element when component is sticky */
-    tdStickyClass: ComponentClass;
-    /** Class of the Table `td` element when is checkable */
-    tdCheckboxClass: ComponentClass;
-    /** Class of the Table `td` element that contains the chevron to trigger details */
-    tdDetailedChevronClass: ComponentClass;
+    /** Class of the root element when on mobile */
+    mobileClass: ComponentClass;
     /** Class of the sortable form wrapper on mobile */
     mobileSortClass: ComponentClass;
-    /** Class of the Table pagination wrapper */
+    /** Class of the table wrapper element */
+    wrapperClass: ComponentClass;
+    /** Class of the table wrapper element when header is sticky */
+    stickyHeaderClass: ComponentClass;
+    /** Class of the table wrapper element when its content is scrollable */
+    scrollableClass: ComponentClass;
+    /** Class of the Table */
+    tableClass: ComponentClass;
+    /** Class of the table elemnet when bordered */
+    borderedClass: ComponentClass;
+    /** Class of the table element when striped */
+    stripedClass: ComponentClass;
+    /** Class of the table element when narrowed */
+    narrowedClass: ComponentClass;
+    /** Class of the table element when hoverable */
+    hoverableClass: ComponentClass;
+    /** Class of the table element when it is empty */
+    emptyClass: ComponentClass;
+    /** Class of the table `th` element */
+    thClass: ComponentClass;
+    /** Class of the table `th` element with position */
+    thPositionClass: ComponentClass;
+    /** Class of the table `th` element when checkable */
+    thCheckboxClass: ComponentClass;
+    /** Class of the table `th` element when checkbox is sticky */
+    thStickyClass: ComponentClass;
+    /** Class of the table `th` element of the detail column of triggers */
+    thDetailedClass: ComponentClass;
+    /** Class of the table `th` element when sortable */
+    thSortableClass: ComponentClass;
+    /** Class of the table header sort icon element */
+    thSortIconClass: ComponentClass;
+    /** Class of the table `th` element that is currently sorted */
+    thCurrentSortClass: ComponentClass;
+    /** Class of the table `th` element that is unsortable */
+    thUnselectableClass: ComponentClass;
+    /** Class of the table `th` subheading element */
+    thSubheadingClass: ComponentClass;
+    /** Class of the table `tr` element when selected */
+    trSelectedClass: ComponentClass;
+    /** Class of the table `tr` element when checkable and checked */
+    trCheckedClass: ComponentClass;
+    /** Class of the table `tr` element when detailed  */
+    trDetailedClass: ComponentClass;
+    /** Class of the table `tr` element when table is empty */
+    trEmptyClass: ComponentClass;
+    /** Class of the table `td` element */
+    tdClass: ComponentClass;
+    /** Class of the table `td` element with position */
+    tdPositionClass: ComponentClass;
+    /** Class of the table `td` element when column is sticky */
+    tdStickyClass: ComponentClass;
+    /** Class of the table `td` element when row is checkable */
+    tdCheckboxClass: ComponentClass;
+    /** Class of the table `td` element that contains the chevron to trigger details */
+    tdDetailedChevronClass: ComponentClass;
+    /** Class of the Table pagination wrapper element */
     paginationWrapperClass: ComponentClass;
-    /** Class of the Table component when on mobile */
-    mobileClass: ComponentClass;
+    /** Class of the table footer element */
+    footerClass: ComponentClass;
     /**
      * Class configuration for the internal loading component
      * @ignore

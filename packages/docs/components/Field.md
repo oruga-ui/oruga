@@ -14,14 +14,6 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-field-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Field component
@@ -58,6 +50,14 @@ The **Field** component is used to add functionality to controls and to attach/g
 | label   | Override the label   | **label** `string` - label property  |
 | message | Override the message | **message** `string` - field message |
 | default | Default content      |                                      |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-field-viewer />
 
 </div>
 

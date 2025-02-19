@@ -94,18 +94,18 @@ export type TaginputProps<T> = {
 export type TaginputClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of input when expanded */
+    /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class of the input container */
-    containerClass: ComponentClass;
-    /** Class of the input container size */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
-    /** Class of the entered item variant */
+    /** Class of the root element with variant */
     variantClass: ComponentClass;
-    /** Class of the close button of entered item */
-    closeClass: ComponentClass;
-    /** Class of the entered item */
+    /** Class of the inner container element */
+    containerClass: ComponentClass;
+    /** Class of the tag item element */
     itemClass: ComponentClass;
+    /** Class of the tag item close button element */
+    closeClass: ComponentClass;
     /** Class of the counter element */
     counterClass: ComponentClass;
     /**

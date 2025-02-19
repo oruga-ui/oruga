@@ -1,108 +1,126 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { InspectData } from "@/docs";
+import type { FieldClasses } from "../props";
 
 const name = ref("");
 
-const inspectData = [
-    {
+const inspectData: InspectData<FieldClasses> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
+    mobileClass: {
         class: "mobileClass",
-        description: "Class of file component when on mobile",
-        warning: "Switch to mobile view to see it in action!",
+        description: "Class of the root element when on mobile.",
+        info: "Switch to mobile view to see it in action!",
     },
-    {
+    focusedClass: {
+        class: "focusedClass",
+        description:
+            "Class of the root element when the form element is focused.",
+        info: "Will be controlled by the focus event emitted by form elements.",
+        action: (cmp): void => {
+            cmp.focus();
+        },
+    },
+    filledClass: {
+        class: "filledClass",
+        description:
+            "Class of the root element when the form element is filled.",
+        info: "Will be controlled by the form element.",
+        action: (): void => {
+            name.value = "Oruga";
+        },
+    },
+    horizontalClass: {
         class: "horizontalClass",
-        description: "Class to align label and control in horizontal forms",
+        description: "Class to align label and control in horizontal forms.",
         properties: ["horizontal"],
-        specificity: "when <b>horizontal</b> is applied",
         action: (cmp, data): void => {
             data.horizontal = true;
         },
     },
-    {
+    horizontalLabelClass: {
         class: "horizontalLabelClass",
-        description: "Class for field label when horizontal",
+        description: "Class for field label when horizontal.",
         properties: ["horizontal"],
-        specificity: "when <b>horizontal</b> is applied",
         action: (cmp, data): void => {
             data.horizontal = true;
         },
     },
-    {
+    horizontalBodyClass: {
         class: "horizontalBodyClass",
-        description: "Class for field body when horizontal",
-        specificity: "when <b>horizontal</b> is applied",
+        description: "Class for field body when horizontal.",
         properties: ["horizontal"],
         action: (cmp, data): void => {
             data.horizontal = true;
         },
     },
-    {
+    groupedClass: {
         class: "groupedClass",
-        description: "Class when fields are grouped together",
+        description:
+            "Class of the inner wrapper when fields are grouped together.",
         properties: ["grouped"],
         action: (cmp, data): void => {
             data.grouped = true;
         },
     },
-    {
+    groupMultilineClass: {
         class: "groupMultilineClass",
-        description: "Class when fields fill up multiple lines",
+        description:
+            "Class of the inner wrapper when fields fill up multiple lines.",
         properties: ["groupMultiline"],
         action: (cmp, data): void => {
             data.groupMultiline = true;
         },
     },
-    {
-        class: "labelClass",
-        description: "Class for field label",
+    addonsClass: {
+        class: "addonsClass",
+        description:
+            "Class of the inner wrapper when components automatically attached together.",
+        info: "Use the <code>expanded</code> prop on the control to fill up the remaining space.",
+        action: (cmp, data): void => {
+            data.expanded = true;
+        },
     },
-    {
+    bodyClass: {
+        class: "bodyClass",
+        description: "Class for the field body wrapper element.",
+    },
+    labelClass: {
+        class: "labelClass",
+        description: "Class for the field label element.",
+    },
+    labelSizeClass: {
         class: "labelSizeClass",
-        description: "Class for field label size",
+        description: "Class for the field label element with size.",
         properties: ["labelSize"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
             data.labelSize = "large";
         },
     },
-    {
+    labelVariantClass: {
         class: "labelVariantClass",
-        description: "Class of the label field variant",
+        description: "Class of the label field with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "info";
         },
     },
-    {
-        class: "bodyClass",
-        description: "Class for field body",
-    },
-    {
-        class: "addonsClass",
-        description:
-            "Class for components automatically attached together when inside a field",
-        warning:
-            "Use the <code>expanded</code> prop on the control to fill up the remaining space",
-        action: (cmp, data): void => {
-            data.expanded = true;
-        },
-    },
-    {
+    messageClass: {
         class: "messageClass",
-        description: "Class for the field message",
+        description: "Class of the the field message element.",
         properties: ["message"],
         action: (cmp, data): void => {
             data.message = "This is a message for the field";
         },
     },
-    {
+    messageVariantClass: {
         class: "messageVariantClass",
-        description: "Class of the message field variant",
+        description: "Class of the field message element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
@@ -110,23 +128,7 @@ const inspectData = [
             data.message = "This is a message for the field";
         },
     },
-    {
-        class: "focusedClass",
-        description: "Class for the focused field",
-        warning: "focus event emitted by form elements",
-        action: (cmp): void => {
-            cmp.focus();
-        },
-    },
-    {
-        class: "filledClass",
-        description: "Class for the filled field",
-        warning: "when it contains a input",
-        action: (): void => {
-            name.value = "Oruga";
-        },
-    },
-];
+};
 </script>
 
 <template>

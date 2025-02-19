@@ -42,9 +42,9 @@ export type MenuProps<T> = {
 export type MenuClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the menu list */
+    /** Class of the menu list element */
     listClass: ComponentClass;
-    /** Class of the menu label */
+    /** Class of the menu label element */
     labelClass: ComponentClass;
 }>;
 
@@ -87,24 +87,24 @@ export type MenuItemProps<T> = {
 
 // class props (will not be displayed in the docs)
 export type MenuItemClasses = Partial<{
-    /** Class of the root element of menu item */
+    /** Class of the menu item root element */
     itemClass: ComponentClass;
-    /** Class of the menu item root when active */
+    /** Class of the menu item root element when active */
     itemActiveClass: ComponentClass;
-    /** Class of the menu item root when focused */
+    /** Class of the menu item root element when focused */
     itemFocusedClass: ComponentClass;
-    /** Class of the menu item root when disabled */
+    /** Class of the menu item root element when disabled */
     itemDisabledClass: ComponentClass;
-    /** Class of the menu item */
+    /** Class of the menu button element */
     itemButtonClass: ComponentClass;
-    /** Class of the menu item when active*/
+    /** Class of the menu button elementwhen active*/
     itemButtonActiveClass: ComponentClass;
-    /** Class of the menu item when focused */
+    /** Class of the menu button element when focused */
     itemButtonFocusedClass: ComponentClass;
-    /** Class of the menu item when disabled */
+    /** Class of the menu button element when disabled */
     itemButtonDisabledClass: ComponentClass;
-    /** Class of the menu item with icon */
+    /** Class of the menu button element with icon */
     itemButtonIconClass: ComponentClass;
-    /** Class of the menu item submenu */
+    /** Class of the menu item submenu element */
     itemSubmenuClass: ComponentClass;
 }>;

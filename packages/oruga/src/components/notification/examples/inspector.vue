@@ -1,59 +1,18 @@
 <script setup lang="ts">
-const inspectData = [
-    {
+import type { InspectData } from "@/docs";
+import type { NotificationClasses, NotificationNoticeClasses } from "../props";
+
+const inspectData: InspectData<
+    NotificationClasses & NotificationNoticeClasses
+> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
-        warning: "You have to declare a class when override mode",
+        description: "Class of the root element.",
+        info: "You have to declare a class when override mode.",
     },
-    {
-        class: "noticeClass",
-        description: "Root class of the notice",
-        nospec: true,
-    },
-    {
-        class: "noticePositionClass",
-        description: "Class of the notice when positioned",
-        properties: ["position"],
-        suffixes: [
-            "top-right",
-            "top",
-            "top-left",
-            "bottom-right",
-            "bottom",
-            "bottom-left",
-        ],
-        action: (cmp, data): void => {
-            data.position = "top-right";
-        },
-        nospec: true,
-    },
-    {
-        class: "noticeContainerClass",
-        description: "Class of the custom container element",
-    },
-    {
-        class: "closeClass",
-        description: "Class of the close button container",
-        properties: ["closable"],
-        action: (cmp, data): void => {
-            data.closable = true;
-        },
-    },
-    {
-        class: "contentClass",
-        description: "Class of the content element",
-    },
-    {
-        class: "iconClass",
-        description: "Class of the icon on the left",
-        properties: ["type"],
-        action: (cmp, data): void => {
-            data.type = "info";
-        },
-    },
-    {
+    positionClass: {
         class: "positionClass",
-        description: "Class of the element when positioned",
+        description: "Class of the root element when positioned.",
         properties: ["position"],
         suffixes: [
             "top-right",
@@ -63,26 +22,71 @@ const inspectData = [
             "bottom",
             "bottom-left",
         ],
-        warning:
-            "You have to declare a class for top and bottom position when override mode",
+        info: "You have to declare a class for top and bottom position when override mode.",
         action: (cmp, data): void => {
             data.position = "top-right";
         },
     },
-    {
-        class: "wrapperClass",
-        description: "Class of the wrapper element",
-    },
-    {
+    variantClass: {
         class: "variantClass",
-        description: "Class of the notification variant",
+        description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
-];
+    wrapperClass: {
+        class: "wrapperClass",
+        description: "Class of the wrapper element.",
+    },
+    iconClass: {
+        class: "iconClass",
+        description: "Class of the icon element on the left.",
+        properties: ["type"],
+        action: (cmp, data): void => {
+            data.type = "info";
+        },
+    },
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the content element.",
+    },
+    closeClass: {
+        class: "closeClass",
+        description: "Class of the close button element.",
+        properties: ["closable"],
+        action: (cmp, data): void => {
+            data.closable = true;
+        },
+    },
+    noticeClass: {
+        class: "noticeClass",
+        description: "Root class of the notice wrapper.",
+        nospec: true,
+    },
+    noticePositionClass: {
+        class: "noticePositionClass",
+        description: "Class of the notice wrapper when positioned.",
+        properties: ["position"],
+        suffixes: [
+            "top-right",
+            "top",
+            "top-left",
+            "bottom-right",
+            "bottom",
+            "bottom-left",
+        ],
+        action: (cmp, data): void => {
+            data.position = "top-right";
+        },
+        nospec: true,
+    },
+    noticeContainerClass: {
+        class: "noticeContainerClass",
+        description: "Class of the notice container element.",
+    },
+};
 </script>
 
 <template>

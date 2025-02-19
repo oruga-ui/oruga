@@ -54,32 +54,32 @@ export type PaginationProps = {
 export type PaginationClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the pagination list */
-    listClass: ComponentClass;
-    /** Class of the pagination list items */
-    listItemClass: ComponentClass;
-    /** Class of the link button */
-    buttonClass: ComponentClass;
-    /** Class of the current link */
-    buttonCurrentClass: ComponentClass;
-    /** Class of the disabled link */
-    buttonDisabledClass: ComponentClass;
-    /** Class of the prev button */
-    buttonPrevClass: ComponentClass;
-    /** Class of the next button */
-    buttonNextClass: ComponentClass;
-    /** Class of the pagination ellipsis */
-    ellipsisClass: ComponentClass;
+    /** Class of the root element when on mobile */
+    mobileClass: ComponentClass;
+    /** Class of the root element with order */
+    orderClass: ComponentClass;
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element when in `simple` mode */
+    simpleClass: ComponentClass;
     /** Class of the info in `simple` mode */
     infoClass: ComponentClass;
-    /** Class of the pagination order */
-    orderClass: ComponentClass;
-    /** Class of the pagination in `simple` mode */
-    simpleClass: ComponentClass;
-    /** Class of the pagination when rounded */
+    /** Class of the items list element */
+    listClass: ComponentClass;
+    /** Class of an list item element */
+    listItemClass: ComponentClass;
+    /** Class of the ellipsis element */
+    ellipsisClass: ComponentClass;
+    /** Class of the button element */
+    buttonClass: ComponentClass;
+    /** Class of the button element when rounded */
     roundedClass: ComponentClass;
-    /** Class for the pagination size */
-    sizeClass: ComponentClass;
-    /** Class of pagination component when on mobile */
-    mobileClass: ComponentClass;
+    /** Class of the current button element */
+    buttonCurrentClass: ComponentClass;
+    /** Class of the prev button element */
+    buttonPrevClass: ComponentClass;
+    /** Class of the next button element */
+    buttonNextClass: ComponentClass;
+    /** Class of the prev or next button when disabled */
+    buttonDisabledClass: ComponentClass;
 }>;

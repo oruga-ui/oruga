@@ -16,14 +16,6 @@ Use it with the Field component to access all the functionalities.
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-taginput-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Taginput component
@@ -98,6 +90,14 @@ Use it with the Field component to access all the functionalities.
 | empty    | Define content for empty state |                                                                                                                  |
 | footer   | Define an additional footer    |                                                                                                                  |
 | counter  | Override the counter           | **items** `number` - items count<br/>**total** `number` - total count                                            |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-taginput-viewer />
 
 </div>
 

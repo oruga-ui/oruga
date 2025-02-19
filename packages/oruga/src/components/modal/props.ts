@@ -69,18 +69,18 @@ export type ModalProps<C extends Component> = {
 export type ModalClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of modal component when its active */
-    activeClass: ComponentClass;
-    /** Class of the modal overlay */
-    overlayClass: ComponentClass;
-    /** Class of the modal content */
-    contentClass: ComponentClass;
-    /** Class of the close button */
-    closeClass: ComponentClass;
-    /** Class of the modal when fullscreen */
-    fullScreenClass: ComponentClass;
-    /** Class of modal component when on mobile */
+    /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
+    /** Class of the root element when active */
+    activeClass: ComponentClass;
+    /** Class of the overlay element */
+    overlayClass: ComponentClass;
+    /** Class of the content element */
+    contentClass: ComponentClass;
+    /** Class of the close button element */
+    closeClass: ComponentClass;
+    /** Class of the content element when fullscreen */
+    fullScreenClass: ComponentClass;
     /** Class of the body when modal is open and scroll is clip */
     scrollClipClass: ComponentClass;
     /** Class of the body when modal is open and scroll is not clip */

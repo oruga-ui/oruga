@@ -19,14 +19,6 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-steps-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Steps component
@@ -120,6 +112,22 @@ Breaking things down into multiple steps can improve the user experience by keep
 | Name    | Description       | Bindings                                |
 | ------- | ----------------- | --------------------------------------- |
 | default | Step item content | **active** `boolean` - if item is shown |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-stepitem-viewer />
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-steps-viewer />
 
 </div>
 

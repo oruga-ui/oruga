@@ -14,14 +14,6 @@ The **Skeleton** component is a placeholder for content to load.
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-skeleton-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Skeleton component
@@ -46,6 +38,14 @@ The **Skeleton** component is a placeholder for content to load.
 | rounded   | Enable rounded style                         | boolean                         | -                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>skeleton: {<br>&nbsp;&nbsp;rounded: true<br>}</code>  |
 | size      | Size of skeleton                             | string                          | `small`, `medium`, `large`  |                                                                                                                                                   |
 | width     | Custom width                                 | number \| string                | -                           |                                                                                                                                                   |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-skeleton-viewer />
 
 </div>
 

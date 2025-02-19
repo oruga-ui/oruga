@@ -64,23 +64,23 @@ export type TabsProps<T> = {
 export type TabsClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of Tabs component position */
+    /** Class of the root element with position */
     positionClass: ComponentClass;
-    /** Class of Tabs component when expanded */
-    expandedClass: ComponentClass;
-    /** Class of Tabs component when vertical */
-    verticalClass: ComponentClass;
-    /** Size of the Tabs component */
+    /** Size of the root element with size */
     sizeClass: ComponentClass;
-    /** Type of the Tabs component */
+    /** Type of the root element with type */
     typeClass: ComponentClass;
-    /** Class of Tabs component when multiline */
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class of the root element when vertical */
+    verticalClass: ComponentClass;
+    /** Class of the root element when multilined */
     multilineClass: ComponentClass;
     /** Class of the tablist element */
     tablistClass: ComponentClass;
-    /** Class of the tab content */
+    /** Class of the tab item wrapper element */
     contentClass: ComponentClass;
-    /** Class of the tab content when transitioning */
+    /** Class of the tab item wrapper element when transitioning */
     transitioningClass: ComponentClass;
 }>;
 
@@ -116,22 +116,22 @@ export type TabItemProps<T, C extends Component> = {
 
 // class props (will not be displayed in the docs)
 export type TabItemClasses = Partial<{
-    /** Class of the tab item */
+    /** Class of the tab item element */
     tabClass: ComponentClass;
-    /** Class of the tab item when active */
+    /** Class of the tab item element when active */
     tabActiveClass: ComponentClass;
-    /** Class of the tab item before the active one */
+    /** Class of the tab item element before the active one */
     tabPreviousClass: ComponentClass;
-    /** Class of the tab item after the active one */
+    /** Class of the tab item element after the active one */
     tabNextClass: ComponentClass;
-    /** Class of the tab item when disabled */
+    /** Class of the tab item element when disabled */
     tabDisabledClass: ComponentClass;
-    /** Class of the tab item type */
+    /** Class of the tab item element with type */
     tabTypeClass: ComponentClass;
-    /** Class of the tab item icon */
+    /** Class of the tab item icon element */
     tabIconClass: ComponentClass;
-    /** Class of the tab item label */
+    /** Class of the tab item label element */
     tabLabelClass: ComponentClass;
-    /** Class of the tab item panel */
+    /** Class of the tab item panel element */
     tabPanelClass: ComponentClass;
 }>;

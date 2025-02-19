@@ -14,14 +14,6 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-loading-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Loading component
@@ -61,6 +53,14 @@ The **Loading** component allows you to display a loading state for use on a glo
 | Name    | Description             | Bindings                                            |
 | ------- | ----------------------- | --------------------------------------------------- |
 | default | Override icon and label | **close** `close` - function to close the component |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-loading-viewer />
 
 </div>
 

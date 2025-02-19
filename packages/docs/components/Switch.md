@@ -17,14 +17,6 @@ Use it with the Field component to access all the functionalities.
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-switch-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Switch component
@@ -73,6 +65,14 @@ Use it with the Field component to access all the functionalities.
 | Name    | Description                               | Bindings |
 | ------- | ----------------------------------------- | -------- |
 | default | Override the label, default is label prop |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-switch-viewer />
 
 </div>
 

@@ -513,8 +513,8 @@ const inspectData: InspectData<DatepickerClasses> = {
     },
     inputClass: {
         class: "inputClass",
-        relatedClass: "inputClasses.rootClass",
         description: "Classes to apply on the input element.",
+        relatedClass: "inputClasses.rootClass",
         relatedComponent: "Input",
     },
     inputClasses: {
@@ -524,8 +524,8 @@ const inspectData: InspectData<DatepickerClasses> = {
     },
     dropdownClass: {
         class: "dropdownClass",
-        relatedClass: "dropdownClasses.rootClass",
         description: "Classes to apply on the dropdown element.",
+        relatedClass: "dropdownClasses.rootClass",
         relatedComponent: "Dropdown",
         action: (cmp, data): void => {
             data.active = true;

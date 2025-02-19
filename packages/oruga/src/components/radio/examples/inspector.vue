@@ -1,58 +1,61 @@
 <script setup lang="ts">
-const inspectData = [
-    {
+import type { InspectData } from "@/docs";
+import type { RadioClasses } from "../props";
+
+const inspectData: InspectData<RadioClasses> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
-        class: "labelClass",
-        description: "Class of the radio label",
-    },
-    {
+    checkedClass: {
         class: "checkedClass",
-        description: "Class of the root element when checked",
+        description: "Class of the root element when checked.",
         action: (cmp, data): void => {
             data.checkbox = "default";
         },
     },
-    {
-        class: "inputClass",
-        description: "Class of the native input element",
-    },
-    {
-        class: "inputCheckedClass",
-        description: "Class of the native input element when checked",
-        action: (cmp, data): void => {
-            data.checkbox = "default";
-        },
-    },
-    {
+    sizeClass: {
         class: "sizeClass",
-        description: "Class of the radio size",
+        description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
             data.size = "large";
         },
     },
-    {
-        class: "disabledClass",
-        description: "Class when radio is disabled",
-        properties: ["disabled"],
-        action: (cmp, data): void => {
-            data.disabled = true;
-        },
-    },
-    {
+    variantClass: {
         class: "variantClass",
-        description: "Class of the radio variant",
+        description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
-];
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (cmp, data): void => {
+            data.disabled = true;
+        },
+    },
+    inputClass: {
+        class: "inputClass",
+        description: "Class of the native input element.",
+    },
+    inputCheckedClass: {
+        class: "inputCheckedClass",
+        description: "Class of the native input element when checked.",
+        action: (cmp, data): void => {
+            data.checkbox = "default";
+        },
+    },
+    labelClass: {
+        class: "labelClass",
+        description: "Class of the radio label element.",
+    },
+};
 </script>
 
 <template>

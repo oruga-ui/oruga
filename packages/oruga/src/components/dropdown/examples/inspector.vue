@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import type { InspectData } from "@/docs";
 import type { DropdownClasses, DropdownItemClasses } from "../props";
-
-const currentMenu = ref("");
-
-const subitem = "dropdownitem";
 
 const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     rootClass: {
@@ -165,7 +160,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     itemClass: {
         class: "itemClass",
         description: "Class of the dropdown item element",
-        subitem: true,
+        subitem: "dropdownitem",
         action: (cmp, data): void => {
             data.inline = true;
         },
@@ -173,7 +168,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     itemActiveClass: {
         class: "itemActiveClass",
         description: "Class of the dropdown item element when active.",
-        subitem: true,
+        subitem: "dropdownitem",
         action: (cmp, data): void => {
             data.inline = true;
         },
@@ -182,7 +177,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
         class: "itemDisabledClass",
         description: "Class of the dropdown item element when disabled.",
         properties: ["disabled"],
-        subitem: true,
+        subitem: "dropdownitem",
         action: (cmp, data): void => {
             data.inline = true;
         },
@@ -191,7 +186,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
         class: "itemClickableClass",
         description: "Class of the dropdown item element when clickable",
         properties: ["clickable"],
-        subitem: true,
+        subitem: "dropdownitem",
         action: (cmp, data): void => {
             data.inline = true;
         },
@@ -199,7 +194,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     itemFocusedClass: {
         class: "itemFocusedClass",
         description: "Class of the dropdown item element when focused",
-        subitem: true,
+        subitem: "dropdownitem",
         action: (cmp, data): void => {
             data.inline = true;
         },
@@ -228,11 +223,8 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
 </script>
 
 <template>
-    <inspector-wrapper
-        v-slot="props"
-        :inspect-data="inspectData"
-        :subitem="subitem">
-        <o-dropdown v-model="currentMenu" v-bind="props">
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+        <o-dropdown v-bind="props">
             <template #trigger="{ active }">
                 <o-button
                     label="Click me!"

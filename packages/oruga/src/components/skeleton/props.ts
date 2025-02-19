@@ -33,14 +33,14 @@ export type SkeletonProps = {
 export type SkeletonClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the skeleton animation */
-    animationClass: ComponentClass;
-    /** Class of the skeleton position */
+    /** Class of the root element with position */
     positionClass: ComponentClass;
-    /** Class of the skeleton item */
+    /** Class of the skeleton item element */
     itemClass: ComponentClass;
-    /** Class of the skeleton item rounded */
-    itemRoundedClass: ComponentClass;
-    /** Class of the skeleton size */
+    /** Class of the skeleton item element when rounded */
+    roundedClass: ComponentClass;
+    /** Class of the skeleton item element when animated */
+    animatedClass: ComponentClass;
+    /** Class of the skeleton item element with size */
     sizeClass: ComponentClass;
 }>;

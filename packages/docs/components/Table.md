@@ -19,14 +19,6 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 </div>
 
-<div class="vp-example">
-
-## Class Inspector
-
-<inspector-table-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Table component
@@ -206,6 +198,22 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | header     | Override header label     | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | subheading | Override subheading label | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-tablecolumn-viewer />
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-table-viewer />
 
 </div>
 

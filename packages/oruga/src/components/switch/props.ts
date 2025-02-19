@@ -57,28 +57,28 @@ export type SwitchProps<T> = {
 export type SwitchClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class when switch is disabled */
-    disabledClass: ComponentClass;
-    /** Class of the outer switch check */
-    switchClass: ComponentClass;
-    /** Class of the outer switch check when checked */
-    switchCheckedClass: ComponentClass;
-    /** Class of the inner switch check */
-    switchCheckClass: ComponentClass;
-    /** Class of the switch when rounded */
-    roundedClass: ComponentClass;
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
     /** Class of the switch passive variant */
     passiveVariantClass: ComponentClass;
-    /** Class of switch label position */
+    /** Class of the root element with position */
     positionClass: ComponentClass;
-    /** Root class of the native input checkbox */
+    /** Class when switch is disabled */
+    disabledClass: ComponentClass;
+    /** Class of the native input element */
     inputClass: ComponentClass;
     /** Class of the native input element when checked */
     inputCheckedClass: ComponentClass;
-    /** Class of the switch label */
+    /** Class of the outer switch check element */
+    switchClass: ComponentClass;
+    /** Class of the outer switch check element when checked */
+    switchCheckedClass: ComponentClass;
+    /** Class of the switch check element when rounded */
+    roundedClass: ComponentClass;
+    /** Class of the inner switch check element */
+    switchCheckClass: ComponentClass;
+    /** Class of the switch label element */
     labelClass: ComponentClass;
-    /** Class of the switch size */
-    sizeClass: ComponentClass;
-    /** Class of the switch variant */
-    variantClass: ComponentClass;
 }>;

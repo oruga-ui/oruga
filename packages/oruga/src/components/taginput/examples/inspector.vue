@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { InspectData } from "@/docs";
+import type { TaginputClasses } from "../props";
 import type { OptionsPropItem } from "@oruga-ui/oruga-next";
 
 const options: OptionsPropItem[] = [
@@ -196,68 +198,68 @@ const options: OptionsPropItem[] = [
 
 const tags = ref([options[1].value]);
 
-const inspectData = [
-    {
+const inspectData: InspectData<TaginputClasses> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
+    expandedClass: {
         class: "expandedClass",
-        description: "Class of input when expanded",
+        description: "Class of the root element when expanded.",
         properties: ["expanded"],
         action: (cmp, data): void => {
             data.expanded = true;
         },
     },
-    {
-        class: "containerClass",
-        description: "Class of the input container",
-    },
-    {
+    sizeClass: {
         class: "sizeClass",
-        description: "Class of the input container size",
+        description: "Class of the root element with size.",
         properties: ["size"],
         action: (cmp, data): void => {
             data.size = "large";
         },
     },
-    {
-        class: "itemClass",
-        description: "Class of the entered item",
-    },
-    {
+    variantClass: {
         class: "variantClass",
-        description: "Class of the entered item variant",
+        description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
-    {
+    containerClass: {
+        class: "containerClass",
+        description: "Class of the inner container element.",
+    },
+    itemClass: {
+        class: "itemClass",
+        description: "Class of the tag item element.",
+    },
+    closeClass: {
         class: "closeClass",
+        description: "Class of the tag item close button element.",
         properties: ["closable"],
-        description: "Class of the close button of entered item",
         action: (cmp, data): void => {
             data.closable = true;
         },
     },
-    {
+    counterClass: {
         class: "counterClass",
-        description: "Class of the counter element",
+        description: "Class of the counter element.",
         properties: ["counter", "maxitems"],
         action: (cmp, data): void => {
             data.counter = true;
             data.maxitems = 5;
         },
     },
-    {
+    autocompleteClasses: {
         class: "autocompleteClasses",
-        realClass: "autocompleteClasses.inputClass",
-        description: "Classes to apply on internal autocomplete.",
-        componentRef: "Autocomplete",
+        description: "Classes to apply on internal autocomplete component.",
+        relatedClass: "autocompleteClasses.inputClass",
+        relatedComponent: "Autocomplete",
     },
-];
+};
 </script>
 
 <template>
