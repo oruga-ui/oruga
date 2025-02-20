@@ -151,8 +151,8 @@ export type DropdownItemProps<T> = {
 type DropdownItemClasses = Partial<{
     /** Class of the dropdown item */
     itemClass: ComponentClass;
-    /** Class of the dropdown item when active  */
-    itemActiveClass: ComponentClass;
+    /** Class of the dropdown item when selected  */
+    itemSelectedClass: ComponentClass;
     /** Class of the dropdown items when focused */
     itemFocusedClass: ComponentClass;
     /** Class of the dropdown item when clickable */
