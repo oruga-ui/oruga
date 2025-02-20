@@ -340,21 +340,29 @@ function dateMultipleSelected(dateOne, dates, multiple = false): boolean {
     );
 }
 
-const monthClasses = defineClasses(["monthClass", "o-dpck__month"]);
+const monthClasses = defineClasses(
+    ["monthClass", "o-dpck__month"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const monthBodyClasses = defineClasses([
-    "monthBodyClass",
-    "o-dpck__month__body",
-]);
+const monthBodyClasses = defineClasses(
+    ["monthBodyClass", "o-dpck__month__body"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const monthTableClasses = defineClasses([
-    "monthTableClass",
-    "o-dpck__month__table",
-]);
+const monthTableClasses = defineClasses(
+    ["monthTableClass", "o-dpck__month__table"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
 const monthCellClasses = defineClasses(
     ["monthCellClass", "o-dpck__month__cell"],
     ["monthCellEventsClass", "o-dpck__month__cell--events", null, hasEvents],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
 );
 
 // Registers a dispose callback on the current active effect scope.
