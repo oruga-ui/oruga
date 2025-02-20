@@ -59,6 +59,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     input: "",
+    active: false,
     options: undefined,
     filter: undefined,
     type: "text",

@@ -983,14 +983,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rounded: boolean;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of the skeleton animation */
-                animationClass: ClassDefinition;
                 /** Class of the skeleton position */
                 positionClass: ClassDefinition;
                 /** Class of the skeleton item */
                 itemClass: ClassDefinition;
                 /** Class of the skeleton item rounded */
-                itemRoundedClass: ClassDefinition;
+                roundedClass: ClassDefinition;
+                /** Class of the skeleton animation */
+                animatedClass: ClassDefinition;
                 /** Class of the skeleton size */
                 sizeClass: ClassDefinition;
             }>;
@@ -1539,6 +1539,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 arrowClass: ClassDefinition;
                 /** Class of the tooltip arrow position */
                 arrowPositionClass: ClassDefinition;
+                /** Class of the tooltip arrow with variant */
+                arrowVariantClass: ClassDefinition;
             }>;
         upload?: ComponentConfigBase &
             Partial<{

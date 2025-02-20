@@ -78,4 +78,6 @@ export type TooltipClasses = Partial<{
     arrowClass: ComponentClass;
     /** Class of the arrow element with position */
     arrowPositionClass: ComponentClass;
+    /** Class of the tooltip arrow with variant */
+    arrowVariantClass: ComponentClass;
 }>;

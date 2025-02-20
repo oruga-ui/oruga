@@ -196,7 +196,7 @@ const arrowClasses = defineClasses(
         computed(() => !!autoPosition.value),
     ],
     [
-        "variantArrowClass",
+        "arrowVariantClass",
         "o-tip__arrow--",
         computed(() => props.variant),
         computed(() => !!props.variant),
