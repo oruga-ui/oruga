@@ -7,13 +7,9 @@ const inspectData: InspectData<ButtonClasses> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
-    wrapperClass: {
-        class: "wrapperClass",
-        description: "Class of the internal wrapper element.",
-    },
     sizeClass: {
         class: "sizeClass",
-        description: "Class of the button size.",
+        description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
@@ -22,7 +18,7 @@ const inspectData: InspectData<ButtonClasses> = {
     },
     variantClass: {
         class: "variantClass",
-        description: "Class of the button variant.",
+        description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
@@ -31,7 +27,7 @@ const inspectData: InspectData<ButtonClasses> = {
     },
     outlinedClass: {
         class: "outlinedClass",
-        description: "Class of the button when outlined.",
+        description: "Class of the root element when outlined.",
         properties: ["outlined"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
@@ -41,7 +37,7 @@ const inspectData: InspectData<ButtonClasses> = {
     },
     invertedClass: {
         class: "invertedClass",
-        description: "Class of the button when inverted.",
+        description: "Class of the root element when inverted.",
         properties: ["inverted"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
@@ -51,7 +47,7 @@ const inspectData: InspectData<ButtonClasses> = {
     },
     loadingClass: {
         class: "loadingClass",
-        description: "Class of the button with loading.",
+        description: "Class of the root element when loading.",
         properties: ["loading"],
         action: (cmp, data): void => {
             data.loading = true;
@@ -59,7 +55,7 @@ const inspectData: InspectData<ButtonClasses> = {
     },
     expandedClass: {
         class: "expandedClass",
-        description: "Class of the button when expanded.",
+        description: "Class of the root element when expanded.",
         properties: ["expanded"],
         action: (cmp, data): void => {
             data.expanded = true;
@@ -67,7 +63,7 @@ const inspectData: InspectData<ButtonClasses> = {
     },
     roundedClass: {
         class: "roundedClass",
-        description: "Class of the button when rounded.",
+        description: "Class of the root element when rounded.",
         properties: ["rounded"],
         action: (cmp, data): void => {
             data.rounded = true;
@@ -81,13 +77,13 @@ const inspectData: InspectData<ButtonClasses> = {
             data.disabled = true;
         },
     },
-    labelClass: {
-        class: "labelClass",
-        description: "Class of the button label.",
+    wrapperClass: {
+        class: "wrapperClass",
+        description: "Class of the inner wrapper element.",
     },
     iconClass: {
         class: "iconClass",
-        description: "Class of the button icon.",
+        description: "Class of the icon element.",
         properties: ["iconLeft", "iconRight"],
         action: (cmp, data): void => {
             data["icon-left"] = "plus";
@@ -95,7 +91,7 @@ const inspectData: InspectData<ButtonClasses> = {
     },
     iconLeftClass: {
         class: "iconLeftClass",
-        description: "Class of the button icon on the left.",
+        description: "Class of the icon element on the left.",
         properties: ["iconLeft"],
         action: (cmp, data): void => {
             data["icon-left"] = "plus";
@@ -103,11 +99,15 @@ const inspectData: InspectData<ButtonClasses> = {
     },
     iconRightClass: {
         class: "iconRightClass",
-        description: "Class of the button icon on the right.",
+        description: "Class of the icon element on the right.",
         properties: ["iconRight"],
         action: (cmp, data): void => {
             data["icon-right"] = "plus";
         },
+    },
+    labelClass: {
+        class: "labelClass",
+        description: "Class of the label element.",
     },
 };
 </script>

@@ -38,7 +38,6 @@ const inspectData: InspectData<SliderClasses> = {
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
-            data.position = "static";
             data.variant = "warning";
         },
     },
@@ -78,19 +77,19 @@ const inspectData: InspectData<SliderClasses> = {
     tickClass: {
         class: "tickClass",
         subitem: "slidertick",
-        description: "Class of slider tick element.",
+        description: "Class of the slider tick element.",
         properties: ["ticks"],
     },
     tickHiddenClass: {
         class: "tickHiddenClass",
         subitem: "slidertick",
-        description: "Class of slider tick element when is hidden",
+        description: "Class of the slider tick element when is hidden.",
         properties: ["ticks"],
     },
     tickLabelClass: {
         class: "tickLabelClass",
         subitem: "slidertick",
-        description: "Class of slider tick label element",
+        description: "Class of the slider tick label element",
         properties: ["ticks"],
     },
 };
@@ -99,16 +98,16 @@ const inspectData: InspectData<SliderClasses> = {
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-slider
-            v-bind="props"
             :min="1"
             :max="10"
             :value="4"
-            aria-label="inspector-demo">
+            aria-label="inspector-demo"
+            v-bind="props">
             <o-slider-tick
                 v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
                 :key="val"
-                v-bind="props"
-                :value="val">
+                :value="val"
+                v-bind="props">
                 {{ val }}
             </o-slider-tick>
         </o-slider>

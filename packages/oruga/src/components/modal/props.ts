@@ -77,10 +77,10 @@ export type ModalClasses = Partial<{
     overlayClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
-    /** Class of the close button element */
-    closeClass: ComponentClass;
     /** Class of the content element when fullscreen */
     fullScreenClass: ComponentClass;
+    /** Class of the close button element */
+    closeClass: ComponentClass;
     /** Class of the body when modal is open and scroll is clip */
     scrollClipClass: ComponentClass;
     /** Class of the body when modal is open and scroll is not clip */

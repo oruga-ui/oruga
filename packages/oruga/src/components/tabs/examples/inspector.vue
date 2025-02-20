@@ -31,6 +31,9 @@ const inspectData: InspectData<TabsClasses & TabItemClasses> = {
         description: "Class of the root element with type.",
         properties: ["type"],
         suffixes: ["default", "boxed", "toggle", "pills"],
+        action: (cmp, data): void => {
+            data.type = "boxed";
+        },
     },
     expandedClass: {
         class: "expandedClass",
@@ -76,12 +79,12 @@ const inspectData: InspectData<TabsClasses & TabItemClasses> = {
     tabPreviousClass: {
         class: "tabPreviousClass",
         subitem: "tabitem",
-        description: "Class of the nav item element before the active one.",
+        description: "Class of the tab item element before the active one.",
     },
     tabNextClass: {
         class: "tabNextClass",
         subitem: "tabitem",
-        description: "Class of the nav item element after the active one.",
+        description: "Class of the tab item element after the active one.",
     },
     tabDisabledClass: {
         class: "tabDisabledClass",
@@ -91,13 +94,6 @@ const inspectData: InspectData<TabsClasses & TabItemClasses> = {
         action: (cmp, data): void => {
             data.disabled = true;
         },
-    },
-    tabTypeClass: {
-        class: "tabTypeClass",
-        subitem: "tabitem",
-        description: "Class of the tab item with type.",
-        properties: ["type"],
-        suffixes: ["default", "boxed", "toggle", "pills"],
     },
     tabIconClass: {
         class: "tabIconClass",
@@ -123,7 +119,7 @@ const inspectData: InspectData<TabsClasses & TabItemClasses> = {
     tabPanelClass: {
         class: "tabPanelClass",
         subitem: "tabitem",
-        description: "Class of the tab item panel element.",
+        description: "Class of the tab panel element.",
     },
 };
 </script>

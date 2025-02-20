@@ -1,6 +1,6 @@
 <template>
     <section>
-        <o-collapse :open="false" trigger-class="trigger">
+        <o-collapse :open="false" expanded trigger-class="trigger">
             <template #trigger="{ open }">
                 <b>{{ open ? "Close" : "Open" }} Collapse!</b>
             </template>
@@ -23,7 +23,6 @@
 
 <style lang="css" scoped>
 :deep(.trigger) {
-    width: 100%;
     padding: 1rem;
     background-color: var(--vp-c-brand-1);
     color: white;

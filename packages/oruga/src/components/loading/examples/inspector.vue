@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import type { InspectData } from "@/docs";
 import type { LoadingClasses } from "../props";
-
-const loading = ref(false);
 
 const inspectData: InspectData<LoadingClasses> = {
     rootClass: {
@@ -12,7 +9,7 @@ const inspectData: InspectData<LoadingClasses> = {
         action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
-            loading.value = true;
+            data.active = true;
         },
     },
     fullPageClass: {
@@ -22,36 +19,36 @@ const inspectData: InspectData<LoadingClasses> = {
         action: (cmp, data): void => {
             data.fullPage = true;
             data.cancelable = true;
-            loading.value = true;
+            data.active = true;
         },
     },
     overlayClass: {
         class: "overlayClass",
-        description: "Class of the loading overlay element.",
+        description: "Class of the overlay element.",
         action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
-            loading.value = true;
+            data.active = true;
         },
     },
     iconClass: {
         class: "iconClass",
-        description: "Class for the loading icon element.",
+        description: "Class for the icon element.",
         action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
             data.icon = "loading";
-            loading.value = true;
+            data.active = true;
         },
     },
     labelClass: {
         class: "labelClass",
-        description: "Class for the loading label element.",
+        description: "Class for the label element.",
         action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
             data.label = "Loading...";
-            loading.value = true;
+            data.active = true;
         },
     },
     scrollClipClass: {
@@ -61,17 +58,17 @@ const inspectData: InspectData<LoadingClasses> = {
         action: (cmp, data): void => {
             data.fullPage = true;
             data.scroll = "clip";
-            loading.value = true;
+            data.active = true;
         },
     },
     noScrollClass: {
         class: "noScrollClass",
-        description: "Class of body when fullpage and scroll is not clip",
+        description: "Class of the body when fullpage and scroll is not clip",
         properties: ["scroll"],
         action: (cmp, data): void => {
             data.fullPage = true;
             data.scroll = "";
-            loading.value = true;
+            data.active = true;
         },
     },
 };
@@ -84,11 +81,10 @@ const inspectData: InspectData<LoadingClasses> = {
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
             sapien laoreet elit
             <o-loading
-                v-bind="props"
-                v-model:active="loading"
                 icon="sync-alt"
                 :icon-spin="true"
-                label="Loading...">
+                label="Loading..."
+                v-bind="props">
             </o-loading>
         </p>
         <b>Click on "Inspect" button to open the loading</b>

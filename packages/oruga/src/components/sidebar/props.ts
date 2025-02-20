@@ -67,7 +67,7 @@ export type SidebarClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Class of the root element when its active */
+    /** Class of the root element when active */
     activeClass: ComponentClass;
     /** Class of the root element when teleported */
     teleportClass: ComponentClass;

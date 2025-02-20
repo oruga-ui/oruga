@@ -93,34 +93,34 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
 export type DropdownClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class when the dropdown is teleported */
+    /** Class of the root element when on mobile */
+    mobileClass: ComponentClass;
+    /** Class of the root element when shown as modal */
+    modalClass: ComponentClass;
+    /** Class of the root element when teleported */
     teleportClass: ComponentClass;
+    /** Class of the root element when inlined */
+    inlineClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class for the root element with position */
+    positionClass: ComponentClass;
+    /** Class for the root element when active or inline */
+    activeClass: ComponentClass;
+    /** Class for the root element when trigger is hoverable */
+    hoverableClass: ComponentClass;
     /** Class of the trigger element */
     triggerClass: ComponentClass;
-    /** Class of dropdown menu when inline */
-    inlineClass: ComponentClass;
-    /** Class of the dropdown menu */
+    /** Class of the menu element */
     menuClass: ComponentClass;
-    /** Class of dropdown menu position */
+    /** Class of the menu element with position */
     menuPositionClass: ComponentClass;
-    /** Class of dropdown menu when active */
+    /** Class of the menu element when active or inline */
     menuActiveClass: ComponentClass;
-    /** Class of dropdown when on mobile */
-    mobileClass: ComponentClass;
-    /** Class of dropdown when on is shown as modal */
-    modalClass: ComponentClass;
     /** Class of the overlay when is shown as modal */
     overlayClass: ComponentClass;
-    /** Class of dropdown when disabled */
-    disabledClass: ComponentClass;
-    /** Class of dropdown when expanded */
-    expandedClass: ComponentClass;
-    /** Class for the root element indicating position of dropdown */
-    positionClass: ComponentClass;
-    /** Class for the root element indicating whether the dropdown is open */
-    activeClass: ComponentClass;
-    /** Class for the root element when the dropdown is hoverable */
-    hoverableClass: ComponentClass;
     /** Class of the body when dropdown is open and scroll is clip */
     scrollClipClass: ComponentClass;
     /** Class of the body when dropdown is open and scroll is not clip */
@@ -149,14 +149,14 @@ export type DropdownItemProps<T> = {
 
 // class props (will not be displayed in the docs)
 export type DropdownItemClasses = Partial<{
-    /** Class of the dropdown item */
+    /** Class of the item element. */
     itemClass: ComponentClass;
-    /** Class of the dropdown item when active  */
-    itemActiveClass: ComponentClass;
-    /** Class of the dropdown items when focused */
+    /** Class of the item element when selected */
+    itemSelectedClass: ComponentClass;
+    /** Class of the item element when focused */
     itemFocusedClass: ComponentClass;
-    /** Class of the dropdown item when clickable */
+    /** Class of the item element when clickable */
     itemClickableClass: ComponentClass;
-    /** Class of the dropdown item when disabled */
+    /** Class of the item element when disabled */
     itemDisabledClass: ComponentClass;
 }>;

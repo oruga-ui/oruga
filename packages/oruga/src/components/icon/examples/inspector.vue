@@ -9,7 +9,7 @@ const inspectData: InspectData<IconClasses> = {
     },
     clickableClass: {
         class: "clickableClass",
-        description: "Class of the the root element when clickable.",
+        description: "Class of the root element when clickable.",
         properties: ["clickable"],
         action: (cmp, data): void => {
             data.clickable = true;
@@ -46,6 +46,6 @@ const inspectData: InspectData<IconClasses> = {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-icon v-bind="props" pack="ionicons" icon="home" size="large" />
+        <o-icon pack="ionicons" icon="home" size="large" v-bind="props" />
     </inspector-wrapper>
 </template>

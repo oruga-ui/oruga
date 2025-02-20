@@ -7,13 +7,6 @@ const inspectData: InspectData<CheckboxClasses> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
-    checkedClass: {
-        class: "checkedClass",
-        description: "Class of the root element when checked.",
-        action: (cmp, data): void => {
-            data.checkbox = true;
-        },
-    },
     sizeClass: {
         class: "sizeClass",
         description: "Class of the root element with size.",
@@ -21,14 +14,6 @@ const inspectData: InspectData<CheckboxClasses> = {
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
             data.size = "large";
-        },
-    },
-    disabledClass: {
-        class: "disabledClass",
-        description: "Class of the root element when disabled.",
-        properties: ["disabled"],
-        action: (cmp, data): void => {
-            data.disabled = true;
         },
     },
     variantClass: {
@@ -40,20 +25,35 @@ const inspectData: InspectData<CheckboxClasses> = {
             data.variant = "warning";
         },
     },
+    checkedClass: {
+        class: "checkedClass",
+        description: "Class of the root element when checked.",
+        action: (cmp, data): void => {
+            data.checkbox = true;
+        },
+    },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (cmp, data): void => {
+            data.disabled = true;
+        },
+    },
     inputClass: {
         class: "inputClass",
-        description: "Class of the checkbox input element.",
+        description: "Class of the native input element.",
     },
     inputCheckedClass: {
         class: "inputCheckedClass",
-        description: "Class of the checkbox input element when checked.",
+        description: "Class of the native input element when checked.",
         action: (cmp, data): void => {
             data.checkbox = true;
         },
     },
     indeterminateClass: {
         class: "indeterminateClass",
-        description: "Class of the checkbox input element when indeterminate.",
+        description: "Class of the native input element when indeterminate.",
         properties: ["indeterminate"],
         action: (cmp, data): void => {
             data.indeterminate = true;
@@ -61,15 +61,15 @@ const inspectData: InspectData<CheckboxClasses> = {
     },
     labelClass: {
         class: "labelClass",
-        description: "Class of the checkbox label element.",
+        description: "Class of the label element.",
     },
 };
 </script>
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-checkbox v-model="props.checkbox" v-bind="props"
-            >Checkbox</o-checkbox
-        >
+        <o-checkbox v-model="props.checkbox" v-bind="props">
+            Checkbox
+        </o-checkbox>
     </inspector-wrapper>
 </template>

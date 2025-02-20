@@ -29,7 +29,7 @@ const inspectData: InspectData<InputClasses> = {
     },
     textareaClass: {
         class: "textareaClass",
-        description: "Class of the input element when type textarea.",
+        description: "Class of the native input element when type textarea.",
         properties: ["type"],
         action: (cmp, data): void => {
             data.type = "textarea";
@@ -37,7 +37,7 @@ const inspectData: InspectData<InputClasses> = {
     },
     roundedClass: {
         class: "roundedClass",
-        description: "Class of the input element when rounded.",
+        description: "Class of the native input element when rounded.",
         properties: ["rounded"],
         action: (cmp, data): void => {
             data.rounded = true;
@@ -45,7 +45,7 @@ const inspectData: InspectData<InputClasses> = {
     },
     disabledClass: {
         class: "disabledClass",
-        description: "Class of the input element when disabled.",
+        description: "Class of the native input element when disabled.",
         properties: ["disabled"],
         action: (cmp, data): void => {
             data.disabled = true;
@@ -53,7 +53,7 @@ const inspectData: InspectData<InputClasses> = {
     },
     sizeClass: {
         class: "sizeClass",
-        description: "Class of the input element with size.",
+        description: "Class of the native input element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
@@ -62,17 +62,17 @@ const inspectData: InspectData<InputClasses> = {
     },
     variantClass: {
         class: "variantClass",
-        description: "Class of the input element with variant",
+        description: "Class of the native input element with variant",
+        info: "Variant property should be applied to the wrapping field.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        info: "Variant property should be applied to the wrapping field",
         action: (cmp, data): void => {
             data.fieldvariant = "warning";
         },
     },
     iconLeftSpaceClass: {
         class: "iconLeftSpaceClass",
-        description: "Class of the input element with left icon space.",
+        description: "Class of the native input element with left icon space.",
         properties: ["icon"],
         action: (cmp, data): void => {
             data.icon = "envelope";
@@ -80,7 +80,7 @@ const inspectData: InspectData<InputClasses> = {
     },
     iconRightSpaceClass: {
         class: "iconRightSpaceClass",
-        description: "Class of the input element with right icon space.",
+        description: "Class of the native input element with right icon space.",
         properties: ["iconRight"],
         action: (cmp, data): void => {
             data.iconRight = "times-circle";
@@ -117,7 +117,7 @@ const inspectData: InspectData<InputClasses> = {
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-field :variant="props.fieldvariant">
-            <o-input v-bind="props" placeholder="Input"></o-input>
+            <o-input placeholder="Input" v-bind="props" />
         </o-field>
     </inspector-wrapper>
 </template>

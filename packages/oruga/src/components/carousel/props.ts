@@ -69,13 +69,13 @@ export type CarouselClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element in overlay */
     overlayClass: ComponentClass;
-    /** Class of the wrapper element of carousel items */
+    /** Class of the inner wrapper element */
     wrapperClass: ComponentClass;
-    /** Class of slider items */
+    /** Class of items container element */
     itemsClass: ComponentClass;
-    /** Class of slider items on drag */
+    /* *Class of items container element when dragging */
     itemsDraggingClass: ComponentClass;
-    /** Class of icon buttons */
+    /** Class of icon button elements */
     iconClass: ComponentClass;
     /** Class of prev icon button element */
     iconPrevClass: ComponentClass;
@@ -93,7 +93,7 @@ export type CarouselClasses = Partial<{
     indicatorClass: ComponentClass;
     /** Class of indicator item element */
     indicatorItemClass: ComponentClass;
-    /** Class of indicator element when is active */
+    /** Class of indicator element when active */
     indicatorItemActiveClass: ComponentClass;
     /** Class of indicator element to separate different styles */
     indicatorItemStyleClass: ComponentClass;
@@ -108,10 +108,10 @@ export type CarouselItemProps = {
 
 // class props (will not be displayed in the docs)
 export type CarouselItemClasses = Partial<{
-    /** Class of carousel item */
+    /** Class of item element */
     itemClass: ComponentClass;
-    /** Class of carousel item when is active */
+    /** Class of item element when active */
     itemActiveClass: ComponentClass;
-    /** Class of carousel item when is clickable */
+    /** Class of item element when clickable */
     itemClickableClass: ComponentClass;
 }>;

@@ -158,7 +158,7 @@ const inspectData: InspectData<TableClasses> = {
         class: "emptyClass",
         description: "Class of the table element when it is empty.",
         action: (cmp, data): void => {
-            data.isEmpty = true;
+            data.data = [];
         },
     },
     thClass: {
@@ -239,6 +239,7 @@ const inspectData: InspectData<TableClasses> = {
         action: (cmp, data): void => {
             data.tableClass = "inspector_table";
             data.mobileCards = true;
+            data.detailed = true;
         },
     },
     trCheckedClass: {
@@ -288,6 +289,7 @@ const inspectData: InspectData<TableClasses> = {
         properties: ["detailed"],
         action: (cmp, data): void => {
             data.mobileCards = true;
+            data.detailed = true;
         },
     },
     paginationWrapperClass: {
@@ -310,7 +312,6 @@ const inspectData: InspectData<TableClasses> = {
     loadingClasses: {
         class: "loadingClasses",
         description: "Classes to apply on the internal loading component.",
-        relatedClass: "loadingClasses.rootClass",
         relatedComponent: "Loading",
     },
 };
@@ -318,11 +319,7 @@ const inspectData: InspectData<TableClasses> = {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-table
-            v-bind="props"
-            :data="props.isEmpty ? [] : data"
-            :columns="columns"
-            detailed>
+        <o-table :data="data" :columns="columns" v-bind="props">
             <template #footer> This is the footer </template>
             <template #detail> DETAILS </template>
         </o-table>

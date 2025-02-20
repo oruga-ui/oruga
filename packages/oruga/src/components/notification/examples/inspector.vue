@@ -62,12 +62,12 @@ const inspectData: InspectData<
     },
     noticeClass: {
         class: "noticeClass",
-        description: "Root class of the notice wrapper.",
+        description: "Class of the notice wrapper element.",
         nospec: true,
     },
     noticePositionClass: {
         class: "noticePositionClass",
-        description: "Class of the notice wrapper when positioned.",
+        description: "Class of the notice wrapper element when positioned.",
         properties: ["position"],
         suffixes: [
             "top-right",

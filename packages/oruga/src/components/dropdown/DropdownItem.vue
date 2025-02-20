@@ -59,7 +59,7 @@ const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
 );
 
-const isActive = computed(() => {
+const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
     if (parent.value.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected: T) =>
@@ -89,7 +89,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => parent.value.disabled || props.disabled),
     ],
-    ["itemActiveClass", "o-drop__item--active", null, isActive],
+    ["itemSelectedClass", "o-drop__item--active", null, isSelected],
     ["itemClickableClass", "o-drop__item--clickable", null, isClickable],
     ["itemFocusedClass", "o-drop__item--focused", null, isFocused],
 );
@@ -104,7 +104,7 @@ const rootClasses = defineClasses(
         data-oruga="dropdown-item"
         :data-id="`dropdown-${item.identifier}`"
         :role="parent.selectable ? 'option' : 'menuitem'"
-        :aria-selected="parent.selectable ? isActive : undefined"
+        :aria-selected="parent.selectable ? isSelected : undefined"
         :aria-disabled="disabled"
         @click="selectItem"
         @keypress.enter="selectItem">

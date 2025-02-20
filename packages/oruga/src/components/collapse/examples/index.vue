@@ -9,9 +9,7 @@ import AccordionCode from "./accordion.vue?raw";
 <template>
     <div class="vp-doc">
         <h3 id="base">Base</h3>
-        <p>
-            A custom trigger can be passed in the <code>trigger</code> slot. The
-        </p>
+        <p>A custom trigger can be passed in the <code>trigger</code> slot.</p>
         <div class="info custom-block">
             <p class="custom-block-title">Accessibility Note:</p>
             The trigger container is already an interactive element with the

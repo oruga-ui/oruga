@@ -58,7 +58,6 @@ const inspectData: InspectData<AutocompleteClasses> = {
     inputClasses: {
         class: "inputClasses",
         description: "Classes to apply on the internal input component.",
-        relatedClass: "inputClasses.rootClass",
         relatedComponent: "Input",
     },
 };

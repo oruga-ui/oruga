@@ -14,7 +14,7 @@ const inspectData: InspectData<SidebarClasses> = {
     },
     activeClass: {
         class: "activeClass",
-        description: "Class of the root element when its active.",
+        description: "Class of the root element when active.",
         properties: ["active"],
         action: (cmp, data): void => {
             data.active = true;
@@ -31,6 +31,7 @@ const inspectData: InspectData<SidebarClasses> = {
     inlineClass: {
         class: "inlineClass",
         description: "Class of the root element when inlined.",
+        properties: ["inline"],
         action: (cmp, data): void => {
             data.inline = true;
             data.active = true;
@@ -63,7 +64,7 @@ const inspectData: InspectData<SidebarClasses> = {
     },
     positionClass: {
         class: "positionClass",
-        description: "Class of the content element with position",
+        description: "Class of the content element with position.",
         properties: ["position"],
         action: (cmp, data): void => {
             data.position = "right";
@@ -88,7 +89,7 @@ const inspectData: InspectData<SidebarClasses> = {
     },
     reduceClass: {
         class: "reduceClass",
-        description: "Class of the content element when reduced",
+        description: "Class of the content element when reduced.",
         properties: ["reduce"],
         action: (cmp, data): void => {
             data.reduce = true;
@@ -96,7 +97,7 @@ const inspectData: InspectData<SidebarClasses> = {
     },
     expandOnHoverClass: {
         class: "expandOnHoverClass",
-        description: "Class of the content element when expanded on hover",
+        description: "Class of the content element when expanded on hover.",
         properties: ["expandOnHover"],
         action: (cmp, data): void => {
             data.expandOnHover = true;

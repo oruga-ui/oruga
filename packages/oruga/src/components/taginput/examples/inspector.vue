@@ -215,6 +215,7 @@ const inspectData: InspectData<TaginputClasses> = {
         class: "sizeClass",
         description: "Class of the root element with size.",
         properties: ["size"],
+        suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
             data.size = "large";
         },
@@ -256,7 +257,6 @@ const inspectData: InspectData<TaginputClasses> = {
     autocompleteClasses: {
         class: "autocompleteClasses",
         description: "Classes to apply on internal autocomplete component.",
-        relatedClass: "autocompleteClasses.inputClass",
         relatedComponent: "Autocomplete",
     },
 };

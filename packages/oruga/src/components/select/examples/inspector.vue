@@ -25,7 +25,7 @@ const inspectData: InspectData<SelectClasses> = {
     },
     sizeClass: {
         class: "sizeClass",
-        description: "Class of the select element with size.",
+        description: "Class of the native select element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
@@ -34,7 +34,7 @@ const inspectData: InspectData<SelectClasses> = {
     },
     variantClass: {
         class: "variantClass",
-        description: "Class of the select element with variant.",
+        description: "Class of the native select element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
@@ -44,7 +44,7 @@ const inspectData: InspectData<SelectClasses> = {
     },
     roundedClass: {
         class: "roundedClass",
-        description: "Class of select element when rounded.",
+        description: "Class of the native select element when rounded.",
         properties: ["rounded"],
         action: (cmp, data): void => {
             data.rounded = true;
@@ -52,7 +52,7 @@ const inspectData: InspectData<SelectClasses> = {
     },
     multipleClass: {
         class: "multipleClass",
-        description: "Class of the select element when multiple.",
+        description: "Class of the native select element when multiple.",
         properties: ["multiple"],
         action: (cmp, data): void => {
             data.multiple = true;
@@ -60,7 +60,7 @@ const inspectData: InspectData<SelectClasses> = {
     },
     disabledClass: {
         class: "disabledClass",
-        description: "Class of select element when disabled.",
+        description: "Class of the native select element when disabled.",
         properties: ["disabled"],
         action: (cmp, data): void => {
             data.disabled = true;
@@ -68,16 +68,16 @@ const inspectData: InspectData<SelectClasses> = {
     },
     placeholderClass: {
         class: "placeholderClass",
-        description: "Class of the select element with an placeholder.",
+        description: "Class of the native select element with a placeholder.",
     },
     arrowedClass: {
         class: "arrowedClass",
-        description: "Class of the select element when with an arrow.",
+        description: "Class of the native select element with an arrow.",
         info: "It applies the arrow icon using background-image and background-position on select element. An alternative to override it is iconRight prop (globally or not).",
     },
     iconLeftSpaceClass: {
         class: "iconLeftSpaceClass",
-        description: "Class of the select element with left icon space.",
+        description: "Class of the native select element with left icon space.",
         properties: ["icon"],
         action: (cmp, data): void => {
             data.icon = "envelope";
@@ -85,7 +85,8 @@ const inspectData: InspectData<SelectClasses> = {
     },
     iconRightSpaceClass: {
         class: "iconRightSpaceClass",
-        description: "Class of the select element with right icon space.",
+        description:
+            "Class of the native select element with right icon space.",
         properties: ["iconRight"],
         action: (cmp, data): void => {
             data.iconRight = "times-circle";

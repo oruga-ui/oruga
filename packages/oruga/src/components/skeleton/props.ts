@@ -35,12 +35,12 @@ export type SkeletonClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element with position */
     positionClass: ComponentClass;
-    /** Class of the skeleton item element */
+    /** Class of the item element */
     itemClass: ComponentClass;
-    /** Class of the skeleton item element when rounded */
+    /** Class of the item element when rounded */
     roundedClass: ComponentClass;
-    /** Class of the skeleton item element when animated */
+    /** Class of the item element when animated */
     animatedClass: ComponentClass;
-    /** Class of the skeleton item element with size */
+    /** Class of the item element with size */
     sizeClass: ComponentClass;
 }>;

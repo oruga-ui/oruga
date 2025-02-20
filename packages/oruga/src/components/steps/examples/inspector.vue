@@ -79,12 +79,12 @@ const inspectData: InspectData<StepsClasses & StepItemClasses> = {
     },
     contentClass: {
         class: "contentClass",
-        description: "Class of the content element.",
-        specificity: "when <b>positionClass</b> is applied",
+        description: "Class of the step item wrapper element.",
     },
     transitioningClass: {
         class: "transitioningClass",
-        description: "Class of the content element when transitioning",
+        description:
+            "Class of the step item wrapper element when transitioning.",
         info: "Click on a marker to see it in action!",
     },
     stepClass: {

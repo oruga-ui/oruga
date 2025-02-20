@@ -84,7 +84,7 @@ const inspectData: InspectData<TooltipClasses> = {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-tooltip v-bind="props" label="Tooltip!" always>
+        <o-tooltip label="Tooltip!" always v-bind="props">
             <o-button label="Delayed" />
         </o-tooltip>
     </inspector-wrapper>

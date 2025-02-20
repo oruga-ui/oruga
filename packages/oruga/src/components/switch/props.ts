@@ -61,11 +61,11 @@ export type SwitchClasses = Partial<{
     sizeClass: ComponentClass;
     /** Class of the root element with variant */
     variantClass: ComponentClass;
-    /** Class of the switch passive variant */
+    /** Class of the root element with passive variant */
     passiveVariantClass: ComponentClass;
     /** Class of the root element with position */
     positionClass: ComponentClass;
-    /** Class when switch is disabled */
+    /** Class of the root element when disabled */
     disabledClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;

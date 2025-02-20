@@ -23,7 +23,7 @@ const inspectData: InspectData<SwitchClasses> = {
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
-            data.checkValue.value = true;
+            data.modelValue = true;
         },
     },
     passiveVariantClass: {
@@ -33,7 +33,7 @@ const inspectData: InspectData<SwitchClasses> = {
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.passiveVariant = "danger";
-            data.checkValue.value = false;
+            data.modelValue = false;
         },
     },
     positionClass: {
@@ -60,7 +60,7 @@ const inspectData: InspectData<SwitchClasses> = {
         class: "inputCheckedClass",
         description: "Class of the native input element when checked.",
         action: (cmp, data): void => {
-            data.checkValue.value = true;
+            data.modelValue = true;
         },
     },
     switchClass: {
@@ -71,7 +71,7 @@ const inspectData: InspectData<SwitchClasses> = {
         class: "switchCheckedClass",
         description: "Class of the outer switch check element when checked.",
         action: (cmp, data): void => {
-            data.checkValue.value = true;
+            data.modelValue = true;
         },
     },
     roundedClass: {

@@ -45,34 +45,34 @@ export type FieldProps = {
 export type FieldClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class to align label and control in horizontal forms */
-    horizontalClass: ComponentClass;
-    /** Class for field label when horizontal */
-    horizontalLabelClass: ComponentClass;
-    /** "Class for field body when horizontal */
-    horizontalBodyClass: ComponentClass;
-    /** Class when fields are grouped together */
-    groupedClass: ComponentClass;
-    /** Class when fields fill up multiple lines */
-    groupMultilineClass: ComponentClass;
-    /** Class for the field label element*/
-    labelClass: ComponentClass;
-    /** Class for the field label element with size */
-    labelSizeClass: ComponentClass;
-    /** Class for the field label element with variant */
-    labelVariantClass: ComponentClass;
-    /** Class for the field body wrapper element*/
-    bodyClass: ComponentClass;
-    /** Class of the inner wrapper when components automatically attached together when inside a field */
-    addonsClass: ComponentClass;
-    /** Class for the field message element */
-    messageClass: ComponentClass;
-    /** Class for the field message element with variant */
-    messageVariantClass: ComponentClass;
     /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
     /** Class of the root element when the form element is focused */
     focusedClass: ComponentClass;
     /** Class of the root element when the form element is filled */
     filledClass: ComponentClass;
+    /** Class for the body wrapper element*/
+    bodyClass: ComponentClass;
+    /** Class for innter wrapper element when grouped */
+    groupedClass: ComponentClass;
+    /** Class for innter wrapper element when grouped multiple lines */
+    groupMultilineClass: ComponentClass;
+    /** Class of the inner wrapper element when element get automatically attached together inside a field */
+    addonsClass: ComponentClass;
+    /** Class to align label and control in horizontal forms */
+    horizontalClass: ComponentClass;
+    /** Class for the label element when horizontal */
+    horizontalLabelClass: ComponentClass;
+    /** Class for the body element when horizontal */
+    horizontalBodyClass: ComponentClass;
+    /** Class for the label element*/
+    labelClass: ComponentClass;
+    /** Class for the label element with size */
+    labelSizeClass: ComponentClass;
+    /** Class for the label element with variant */
+    labelVariantClass: ComponentClass;
+    /** Class for the message element */
+    messageClass: ComponentClass;
+    /** Class for the message element with variant */
+    messageVariantClass: ComponentClass;
 }>;

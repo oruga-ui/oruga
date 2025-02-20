@@ -5,7 +5,7 @@ import type { PaginationClasses } from "../props";
 const inspectData: InspectData<PaginationClasses> = {
     rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
     mobileClass: {
         class: "mobileClass",
@@ -40,7 +40,7 @@ const inspectData: InspectData<PaginationClasses> = {
     },
     infoClass: {
         class: "infoClass",
-        description: "Class of the info in `simple` mode.",
+        description: "Class of the page info in `simple` mode.",
         properties: ["simple"],
         action: (cmp, data): void => {
             data.simple = true;
@@ -84,7 +84,7 @@ const inspectData: InspectData<PaginationClasses> = {
     },
     buttonDisabledClass: {
         class: "buttonDisabledClass",
-        description: "Class of the prev or next button when disabled",
+        description: "Class of the prev or next button when disabled.",
         action: (cmp, data): void => {
             data.current = 20;
         },

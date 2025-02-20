@@ -50,20 +50,20 @@ export type CheckboxProps<T> = {
 export type CheckboxClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class when checkbox is disabled */
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
+    /** Class of the root element when disabled */
     disabledClass: ComponentClass;
     /** Class of the root element when checked */
     checkedClass: ComponentClass;
-    /** Class of the checkbox input */
+    /** Class of the native input element */
     inputClass: ComponentClass;
-    /** Class of the checkbox input when checked */
+    /** Class of the native input element when checked */
     inputCheckedClass: ComponentClass;
-    /** Class when checkbox is indeterminate */
+    /** Class of the native input element when indeterminate */
     indeterminateClass: ComponentClass;
-    /** Class of the checkbox labe */
+    /** Class of the label element  */
     labelClass: ComponentClass;
-    /** Class of the checkbox size */
-    sizeClass: ComponentClass;
-    /** Class of the checkbox variant */
-    variantClass: ComponentClass;
 }>;

@@ -38,18 +38,20 @@ const inspectData: InspectData<CollapseClasses> = {
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-collapse
             animation="slide"
-            v-bind="props"
             :open="true"
-            style="border: 1px solid #dfe2e5">
+            expanded
+            class="card"
+            v-bind="props">
             <template #trigger="props">
-                <div class="card-header" style="width: 100%">
-                    <p class="card-header-title">
-                        Collapse Title
+                <div class="card-header" role="button">
+                    <span class="card-header-title"> Collapse Title </span>
+                    <span class="card-header-icon">
                         <o-icon
                             :icon="props.open ? 'caret-up' : 'caret-down'" />
-                    </p>
+                    </span>
                 </div>
             </template>
+
             <div class="card-content">
                 <div class="content">Collapse Content</div>
             </div>

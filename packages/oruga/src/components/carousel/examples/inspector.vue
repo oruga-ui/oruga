@@ -17,24 +17,24 @@ const inspectData: InspectData<CarouselClasses & CarouselItemClasses> = {
     },
     overlayClass: {
         class: "overlayClass",
-        properties: ["overlay"],
         description: "Class of the root element when overlay.",
+        properties: ["overlay"],
         action: (cmp, data): void => {
             data.overlay = true;
         },
     },
     wrapperClass: {
         class: "wrapperClass",
-        description: "Class of the carousel items wrapper element.",
+        description: "Class of the inner wrapper element.",
     },
     itemsClass: {
         class: "itemsClass",
-        description: "Class of slider items container.",
+        description: "Class of items container element.",
     },
     itemsDraggingClass: {
         class: "itemsDraggingClass",
+        description: "Class of items container element when dragging.",
         properties: ["dragable"],
-        description: "Class of slider items container when dragging.",
     },
     iconClass: {
         class: "iconClass",
@@ -61,17 +61,17 @@ const inspectData: InspectData<CarouselClasses & CarouselItemClasses> = {
     },
     indicatorsInsideClass: {
         class: "indicatorsInsideClass",
-        properties: ["indicatorInside"],
         description: "Class of indicators tablist element when inside.",
+        properties: ["indicatorInside"],
         action: (cmp, data): void => {
             data.indicatorInside = true;
         },
     },
     indicatorsInsidePositionClass: {
         class: "indicatorsInsidePositionClass",
-        properties: ["indicatorInside", "indicatorPosition"],
         description:
             "Class of indicators tablist element when inside and position.",
+        properties: ["indicatorInside", "indicatorPosition"],
         action: (cmp, data): void => {
             data.indicatorInside = true;
             data.indicatorPosition = "top";
@@ -79,7 +79,7 @@ const inspectData: InspectData<CarouselClasses & CarouselItemClasses> = {
     },
     indicatorClass: {
         class: "indicatorClass",
-        description: "Class of indicator tab element",
+        description: "Class of indicator tab element.",
     },
     indicatorItemClass: {
         class: "indicatorItemClass",
@@ -87,7 +87,7 @@ const inspectData: InspectData<CarouselClasses & CarouselItemClasses> = {
     },
     indicatorItemActiveClass: {
         class: "indicatorItemActiveClass",
-        description: "Class of indicator item element when is active.",
+        description: "Class of indicator item element when active.",
     },
     indicatorItemStyleClass: {
         class: "indicatorItemStyleClass",
@@ -100,19 +100,19 @@ const inspectData: InspectData<CarouselClasses & CarouselItemClasses> = {
     },
     itemClass: {
         class: "itemClass",
-        subitem: "carousel-item",
-        description: "Class of carousel item.",
+        subitem: "carouselitem",
+        description: "Class of item element.",
     },
     itemActiveClass: {
         class: "itemActiveClass",
-        subitem: "carousel-item",
-        description: "Class of carousel item when is active.",
+        subitem: "carouselitem",
+        description: "Class of item element when active.",
     },
     itemClickableClass: {
         class: "itemClickableClass",
-        subitem: "carousel-item",
+        subitem: "carouselitem",
+        description: "Class of item element when clickable.",
         properties: ["clickable"],
-        description: "Class of carousel item when is clickable.",
     },
 };
 </script>
@@ -120,13 +120,13 @@ const inspectData: InspectData<CarouselClasses & CarouselItemClasses> = {
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-carousel v-bind="props">
-            <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
+            <o-carouselitem v-for="(carousel, i) in carousels" :key="i">
                 <section
                     class="ex-slide"
                     :style="{ 'background-color': carousel.color }">
                     <h1>{{ carousel.text }}</h1>
                 </section>
-            </o-carousel-item>
+            </o-carouselitem>
         </o-carousel>
     </inspector-wrapper>
 </template>

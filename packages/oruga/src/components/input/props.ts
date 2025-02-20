@@ -98,17 +98,17 @@ export type InputClasses = Partial<{
     textareaClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;
-    /** Class of the input element when rounded */
+    /** Class of the native input element when rounded */
     roundedClass: ComponentClass;
-    /** Class of the input element when disabled */
+    /** Class of the native input element when disabled */
     disabledClass: ComponentClass;
-    /** Class of the input element with size */
+    /** Class of the native input element with size */
     sizeClass: ComponentClass;
-    /** Class of the input element with variant */
+    /** Class of the native input element with variant */
     variantClass: ComponentClass;
-    /** Class of the input element with left icon space */
+    /** Class of the native input element with left icon space */
     iconLeftSpaceClass: ComponentClass;
-    /** Class of the input element with right icon space */
+    /** Class of the native input element with right icon space */
     iconRightSpaceClass: ComponentClass;
     /** Class of the left icon element */
     iconLeftClass: ComponentClass;

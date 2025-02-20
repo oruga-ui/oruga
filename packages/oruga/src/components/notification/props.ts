@@ -115,9 +115,9 @@ export type NotificationNoticeProps<C extends Component> = {
 
 // class props (will not be displayed in the docs)
 export type NotificationNoticeClasses = Partial<{
-    /** Root class of the notice wrapper */
+    /** Class of the notice wrapper element */
     noticeClass: ComponentClass;
-    /** Class of the notice wrapper when positioned */
+    /** Class of the notice wrapper element when positioned */
     noticePositionClass: ComponentClass;
     /** Class of the notice container element */
     noticeContainerClass: ComponentClass;

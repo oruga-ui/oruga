@@ -66,9 +66,9 @@ export type TabsClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element with position */
     positionClass: ComponentClass;
-    /** Size of the root element with size */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
-    /** Type of the root element with type */
+    /** Class of the root element with type */
     typeClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
@@ -126,12 +126,10 @@ export type TabItemClasses = Partial<{
     tabNextClass: ComponentClass;
     /** Class of the tab item element when disabled */
     tabDisabledClass: ComponentClass;
-    /** Class of the tab item element with type */
-    tabTypeClass: ComponentClass;
     /** Class of the tab item icon element */
     tabIconClass: ComponentClass;
     /** Class of the tab item label element */
     tabLabelClass: ComponentClass;
-    /** Class of the tab item panel element */
+    /** Class of the tab panel element */
     tabPanelClass: ComponentClass;
 }>;

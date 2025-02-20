@@ -75,16 +75,16 @@ export type SliderClasses = Partial<{
     thumbWrapperClass: ComponentClass;
     /** Class to the thumb wrapper element when the slider is dragged */
     thumbWrapperDraggingClass: ComponentClass;
-    /** Class of the thumb element- */
+    /** Class of the thumb element */
     thumbClass: ComponentClass;
     /** Class of the thumb element when rounded */
     thumbRoundedClass: ComponentClass;
     /** Class of the thumb element when is dragged */
     thumbDraggingClass: ComponentClass;
-    /** Class of slider tick element */
+    /** Class of the slider tick element */
     tickClass: ComponentClass;
-    /** Class of slider tick element when is hidden */
+    /** Class of the slider tick element when is hidden */
     tickHiddenClass: ComponentClass;
-    /** Class of slider tick label element */
+    /** Class of the slider tick label element */
     tickLabelClass: ComponentClass;
 }>;

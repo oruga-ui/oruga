@@ -5,11 +5,11 @@ import type { DatetimePickerClasses } from "../props";
 const inspectData: InspectData<DatetimePickerClasses> = {
     datepickerWrapperClass: {
         class: "datepickerWrapperClass",
-        description: "Class of the Datepicker wrapper element.",
+        description: "Class of the Datepicker component wrapper element.",
     },
     timepickerWrapperClass: {
         class: "timepickerWrapperClass",
-        description: "Class of the Timepicker wrapper element.",
+        description: "Class of the Timepicker component wrapper element.",
         action: (cmp, data): void => {
             data.active = true;
         },
@@ -21,10 +21,10 @@ const inspectData: InspectData<DatetimePickerClasses> = {
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-field label="Select datetime">
             <o-datetimepicker
-                v-bind="props"
                 placeholder="Click to select..."
                 icon="calendar"
-                horizontal-time-picker />
+                horizontal-time-picker
+                v-bind="props" />
         </o-field>
     </inspector-wrapper>
 </template>

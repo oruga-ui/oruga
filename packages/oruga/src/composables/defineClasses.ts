@@ -32,7 +32,7 @@ type ComputedClass = readonly [
     apply?: MaybeRefOrGetter<boolean> | null,
 ];
 
-/** Helperfunction to get all active classes from a class binding list */
+/** Helper function to get all active classes from a class binding list */
 export const getActiveClasses = (
     classes: MaybeRefOrGetter<ClassBind[]>,
 ): string[] => {

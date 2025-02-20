@@ -18,18 +18,18 @@ const inspectData: InspectData<SkeletonClasses> = {
     },
     itemClass: {
         class: "itemClass",
-        description: "Class of the skeleton item element.",
+        description: "Class of the item element.",
     },
     animatedClass: {
         class: "animatedClass",
-        description: "Class of the skeleton item element when animated.",
+        description: "Class of the item element when animated.",
         action: (cmp, data): void => {
             data.animated = true;
         },
     },
     roundedClass: {
         class: "roundedClass",
-        description: "Class of the skeleton item element when rounded.",
+        description: "Class of the item element when rounded.",
         properties: ["rounded"],
         action: (cmp, data): void => {
             data.rounded = true;
@@ -37,7 +37,7 @@ const inspectData: InspectData<SkeletonClasses> = {
     },
     sizeClass: {
         class: "sizeClass",
-        description: "Class of the skeleton item element with size.",
+        description: "Class of the item element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
@@ -49,6 +49,6 @@ const inspectData: InspectData<SkeletonClasses> = {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-skeleton v-bind="props" width="264px" :count="2" />
+        <o-skeleton width="264px" :count="2" v-bind="props" />
     </inspector-wrapper>
 </template>

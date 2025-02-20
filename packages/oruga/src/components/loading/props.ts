@@ -38,14 +38,14 @@ export type LoadingClasses = Partial<{
     rootClass: ComponentClass;
     /** Class for the root element when fullpage */
     fullPageClass: ComponentClass;
-    /** Class of the loading overlay element*/
+    /** Class of the overlay element*/
     overlayClass: ComponentClass;
-    /** Class for the loading icon element*/
+    /** Class for the icon element*/
     iconClass: ComponentClass;
-    /** Class for the loading label element*/
+    /** Class for the label element*/
     labelClass: ComponentClass;
     /** Class of the body when fullpage and scroll is clip */
     scrollClipClass: ComponentClass;
-    /** Class of body when fullpage and scroll is not clip*/
+    /** Class of the body when fullpage and scroll is not clip */
     noScrollClass: ComponentClass;
 }>;

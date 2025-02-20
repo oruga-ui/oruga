@@ -97,7 +97,7 @@ export type MenuItemClasses = Partial<{
     itemDisabledClass: ComponentClass;
     /** Class of the menu button element */
     itemButtonClass: ComponentClass;
-    /** Class of the menu button elementwhen active*/
+    /** Class of the menu button element when active*/
     itemButtonActiveClass: ComponentClass;
     /** Class of the menu button element when focused */
     itemButtonFocusedClass: ComponentClass;

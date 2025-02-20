@@ -112,12 +112,6 @@ function beforeLeave(): void {
 
 const tabClasses = defineClasses(
     ["tabClass", "o-tabs__tab"],
-    [
-        "tabTypeClass",
-        "o-tabs__tab--",
-        computed(() => parent.value.type),
-        computed(() => !!parent.value.type),
-    ],
     ["tabActiveClass", "o-tabs__tab--active", null, isActive],
     [
         "tabDisabledClass",

@@ -7,13 +7,23 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
-    triggerClass: {
-        class: "triggerClass",
-        description: "Class of the trigger element.",
+    mobileClass: {
+        class: "mobileClass",
+        description: "Class of the root element when on mobile.",
+        info: "Switch to mobile view to see it in action!",
+    },
+    modalClass: {
+        class: "modalClass",
+        description: "Class of the root element when shown as modal.",
+        properties: ["mobileModal", "desktopModal"],
+        action: (cmp, data): void => {
+            data.mobileModal = true;
+            data.desktopModal = true;
+        },
     },
     teleportClass: {
         class: "teleportClass",
-        description: "Class when the dropdown is teleported.",
+        description: "Class of the root element when teleported.",
         properties: ["teleport"],
         action: (cmp, data): void => {
             data.teleport = true;
@@ -30,16 +40,11 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     },
     inlineClass: {
         class: "inlineClass",
-        description: "Class of the root element when inline.",
+        description: "Class of the root element when inlined.",
         properties: ["inline"],
         action: (cmp, data): void => {
             data.inline = true;
         },
-    },
-    mobileClass: {
-        class: "mobileClass",
-        description: "Class of the root element when on mobile.",
-        info: "Switch to mobile view to see it in action!",
     },
     expandedClass: {
         class: "expandedClass",
@@ -51,7 +56,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     },
     activeClass: {
         class: "activeClass",
-        description: "Class of the root element when menu is active or inline.",
+        description: "Class of the root element when active or inline.",
         properties: ["active", "inline"],
         action: (cmp, data): void => {
             data.active = true;
@@ -59,7 +64,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     },
     hoverableClass: {
         class: "hoverableClass",
-        description: "Class of the root element when has trigger hover.",
+        description: "Class of the root element when trigger is hoverable.",
         properties: ["triggers"],
         action: (cmp, data): void => {
             data.triggers = ["hover"];
@@ -67,7 +72,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     },
     positionClass: {
         class: "positionClass",
-        description: "Class of the root element when has postion.",
+        description: "Class of the root element with postion.",
         properties: ["position"],
         suffixes: [
             "auto",
@@ -93,14 +98,9 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
             data.position = ["bottom"];
         },
     },
-    modalClass: {
-        class: "modalClass",
-        description: "Class of the root element when shown as modal.",
-        properties: ["mobileModal", "desktopModal"],
-        action: (cmp, data): void => {
-            data.mobileModal = true;
-            data.desktopModal = true;
-        },
+    triggerClass: {
+        class: "triggerClass",
+        description: "Class of the trigger element.",
     },
     overlayClass: {
         class: "overlayClass",
@@ -114,14 +114,14 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     },
     menuClass: {
         class: "menuClass",
-        description: "Class of the dropdown menu element.",
+        description: "Class of the menu element.",
         action: (cmp, data): void => {
             data.inline = true;
         },
     },
     menuActiveClass: {
         class: "menuActiveClass",
-        description: "Class of dropdown menu element when active or inline.",
+        description: "Class of the menu element when active or inline.",
         properties: ["inline", "active"],
         action: (cmp, data): void => {
             data.active = true;
@@ -130,7 +130,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     },
     menuPositionClass: {
         class: "menuPositionClass",
-        description: "Class of dropdown menu when has position.",
+        description: "Class of the menu element with position.",
         properties: ["position"],
         suffixes: [
             "auto",
@@ -159,42 +159,42 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
     },
     itemClass: {
         class: "itemClass",
-        description: "Class of the dropdown item element",
         subitem: "dropdownitem",
+        description: "Class of the item element.",
         action: (cmp, data): void => {
             data.inline = true;
         },
     },
-    itemActiveClass: {
-        class: "itemActiveClass",
-        description: "Class of the dropdown item element when active.",
+    itemSelectedClass: {
+        class: "itemSelectedClass",
         subitem: "dropdownitem",
+        description: "Class of the item element when selected.",
         action: (cmp, data): void => {
             data.inline = true;
         },
     },
     itemDisabledClass: {
         class: "itemDisabledClass",
-        description: "Class of the dropdown item element when disabled.",
-        properties: ["disabled"],
         subitem: "dropdownitem",
+        description: "Class of the item element when disabled.",
+        properties: ["disabled"],
         action: (cmp, data): void => {
             data.inline = true;
         },
     },
     itemClickableClass: {
         class: "itemClickableClass",
-        description: "Class of the dropdown item element when clickable",
-        properties: ["clickable"],
         subitem: "dropdownitem",
+        description: "Class of the item element when clickable.",
+        properties: ["clickable"],
         action: (cmp, data): void => {
             data.inline = true;
         },
     },
     itemFocusedClass: {
         class: "itemFocusedClass",
-        description: "Class of the dropdown item element when focused",
         subitem: "dropdownitem",
+        description: "Class of the item element when focused.",
         action: (cmp, data): void => {
             data.inline = true;
         },

@@ -62,7 +62,7 @@ export type PaginationClasses = Partial<{
     sizeClass: ComponentClass;
     /** Class of the root element when in `simple` mode */
     simpleClass: ComponentClass;
-    /** Class of the info in `simple` mode */
+    /** Class of the page info in `simple` mode */
     infoClass: ComponentClass;
     /** Class of the items list element */
     listClass: ComponentClass;

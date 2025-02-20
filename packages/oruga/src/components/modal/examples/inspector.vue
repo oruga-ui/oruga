@@ -40,13 +40,6 @@ const inspectData: InspectData<ModalClasses> = {
             data.active = true;
         },
     },
-    closeClass: {
-        class: "closeClass",
-        description: "Class of the close button element.",
-        action: (cmp, data): void => {
-            data.active = true;
-        },
-    },
     fullScreenClass: {
         class: "fullScreenClass",
         description: "Class of the content element when fullscreen.",
@@ -54,6 +47,13 @@ const inspectData: InspectData<ModalClasses> = {
         action: (cmp, data): void => {
             data.active = true;
             data.fullScreen = true;
+        },
+    },
+    closeClass: {
+        class: "closeClass",
+        description: "Class of the close button element.",
+        action: (cmp, data): void => {
+            data.active = true;
         },
     },
     scrollClipClass: {

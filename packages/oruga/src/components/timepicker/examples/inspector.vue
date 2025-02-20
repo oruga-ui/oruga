@@ -75,7 +75,6 @@ const inspectData: InspectData<TimepickerClasses> = {
     selectClasses: {
         class: "selectClasses",
         description: "Classes to apply on internal select component.",
-        relatedClass: "selectClasses.selectClass",
         relatedComponent: "Select",
         action: (cmp, data): void => {
             data.active = true;
@@ -87,7 +86,7 @@ const inspectData: InspectData<TimepickerClasses> = {
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-field label="Select time">
-            <o-timepicker v-bind="props" placeholder="Click to select...">
+            <o-timepicker placeholder="Click to select..." v-bind="props">
                 <div>This is the footer</div>
             </o-timepicker>
         </o-field>

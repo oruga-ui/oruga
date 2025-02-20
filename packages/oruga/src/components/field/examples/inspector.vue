@@ -33,6 +33,36 @@ const inspectData: InspectData<FieldClasses> = {
             name.value = "Oruga";
         },
     },
+    bodyClass: {
+        class: "bodyClass",
+        description: "Class for the body wrapper element.",
+    },
+    groupedClass: {
+        class: "groupedClass",
+        description: "Class of the inner wrapper when grouped.",
+        properties: ["grouped"],
+        action: (cmp, data): void => {
+            data.grouped = true;
+        },
+    },
+    groupMultilineClass: {
+        class: "groupMultilineClass",
+        description:
+            "lass for innter wrapper element when grouped multiple lines.",
+        properties: ["groupMultiline"],
+        action: (cmp, data): void => {
+            data.groupMultiline = true;
+        },
+    },
+    addonsClass: {
+        class: "addonsClass",
+        description:
+            " Class of the inner wrapper element when element get automatically attached together inside a field.",
+        info: "Use the <code>expanded</code> prop on the control to fill up the remaining space.",
+        action: (cmp, data): void => {
+            data.expanded = true;
+        },
+    },
     horizontalClass: {
         class: "horizontalClass",
         description: "Class to align label and control in horizontal forms.",
@@ -43,7 +73,7 @@ const inspectData: InspectData<FieldClasses> = {
     },
     horizontalLabelClass: {
         class: "horizontalLabelClass",
-        description: "Class for field label when horizontal.",
+        description: "Class for the label element when horizontal.",
         properties: ["horizontal"],
         action: (cmp, data): void => {
             data.horizontal = true;
@@ -51,50 +81,19 @@ const inspectData: InspectData<FieldClasses> = {
     },
     horizontalBodyClass: {
         class: "horizontalBodyClass",
-        description: "Class for field body when horizontal.",
+        description: "Class for the body element when horizontal.",
         properties: ["horizontal"],
         action: (cmp, data): void => {
             data.horizontal = true;
         },
     },
-    groupedClass: {
-        class: "groupedClass",
-        description:
-            "Class of the inner wrapper when fields are grouped together.",
-        properties: ["grouped"],
-        action: (cmp, data): void => {
-            data.grouped = true;
-        },
-    },
-    groupMultilineClass: {
-        class: "groupMultilineClass",
-        description:
-            "Class of the inner wrapper when fields fill up multiple lines.",
-        properties: ["groupMultiline"],
-        action: (cmp, data): void => {
-            data.groupMultiline = true;
-        },
-    },
-    addonsClass: {
-        class: "addonsClass",
-        description:
-            "Class of the inner wrapper when components automatically attached together.",
-        info: "Use the <code>expanded</code> prop on the control to fill up the remaining space.",
-        action: (cmp, data): void => {
-            data.expanded = true;
-        },
-    },
-    bodyClass: {
-        class: "bodyClass",
-        description: "Class for the field body wrapper element.",
-    },
     labelClass: {
         class: "labelClass",
-        description: "Class for the field label element.",
+        description: "Class for the label element.",
     },
     labelSizeClass: {
         class: "labelSizeClass",
-        description: "Class for the field label element with size.",
+        description: "Class for the label element with size.",
         properties: ["labelSize"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
@@ -103,7 +102,7 @@ const inspectData: InspectData<FieldClasses> = {
     },
     labelVariantClass: {
         class: "labelVariantClass",
-        description: "Class of the label field with variant.",
+        description: "Class of the label element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
@@ -112,7 +111,7 @@ const inspectData: InspectData<FieldClasses> = {
     },
     messageClass: {
         class: "messageClass",
-        description: "Class of the the field message element.",
+        description: "Class of the the message element.",
         properties: ["message"],
         action: (cmp, data): void => {
             data.message = "This is a message for the field";
@@ -120,7 +119,7 @@ const inspectData: InspectData<FieldClasses> = {
     },
     messageVariantClass: {
         class: "messageVariantClass",
-        description: "Class of the field message element with variant.",
+        description: "Class of the message element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
@@ -133,7 +132,7 @@ const inspectData: InspectData<FieldClasses> = {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-field v-bind="props" label="Field" grouped>
+        <o-field label="Field" grouped v-bind="props">
             <o-input v-model="name" name="name" placeholder="Name" expanded />
             <o-input
                 name="email"
