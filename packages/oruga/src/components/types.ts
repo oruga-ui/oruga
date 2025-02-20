@@ -984,13 +984,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the skeleton animation */
-                animationClass: ClassDefinition;
+                animatedClass: ClassDefinition;
                 /** Class of the skeleton position */
                 positionClass: ClassDefinition;
                 /** Class of the skeleton item */
                 itemClass: ClassDefinition;
                 /** Class of the skeleton item rounded */
-                itemRoundedClass: ClassDefinition;
+                roundedClass: ClassDefinition;
                 /** Class of the skeleton size */
                 sizeClass: ClassDefinition;
             }>;
