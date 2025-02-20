@@ -12,6 +12,8 @@ export type CollapseProps = {
      * @values top, bottom
      */
     position?: "top" | "bottom";
+    /** Expand the trigger to fullwidth */
+    expanded?: boolean;
     /** Id property of the content container - default is an uuid */
     contentId?: string;
     /** Id property of the trigger container - default is an uuid */
