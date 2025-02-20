@@ -84,7 +84,7 @@ export type TabsClasses = Partial<{
     transitioningClass: ComponentClass;
 }>;
 
-export type TabItemProps<T, C extends Component> = {
+export type TabItemProps<T, C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

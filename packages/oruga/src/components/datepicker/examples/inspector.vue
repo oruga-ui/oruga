@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { DatepickerClasses } from "../props";
+import type { DatepickerClasses, DatepickerProps } from "../props";
 
 const events = [
     {
@@ -13,7 +13,10 @@ const events = [
     },
 ];
 
-const inspectData: InspectData<DatepickerClasses> = {
+const inspectData: InspectData<
+    DatepickerClasses,
+    DatepickerProps<true | false>
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -220,7 +223,7 @@ const inspectData: InspectData<DatepickerClasses> = {
         info: "See it in action selecting a date range.",
         properties: ["range"],
         action: (cmp, data): void => {
-            data.type = "";
+            data.type = "date";
             data.range = true;
             data.inline = true;
             data.tableClass = "datepicker__table";
@@ -314,7 +317,7 @@ const inspectData: InspectData<DatepickerClasses> = {
     tableEventVariantClass: {
         class: "tableEventVariantClass",
         description: "Class of the event indicator element with variant.",
-        properties: ["variant in event"],
+        properties: ["events"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.inline = true;
@@ -324,7 +327,7 @@ const inspectData: InspectData<DatepickerClasses> = {
     tableEventIndicatorsClass: {
         class: "tableEventIndicatorsClass",
         description: "Class of the event indicator wrapper element.",
-        properties: ["indicator"],
+        properties: ["indicators"],
         suffixes: ["bars", "dots", "*"],
         action: (cmp, data): void => {
             data.inline = true;

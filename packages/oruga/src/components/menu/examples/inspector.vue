@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { MenuClasses, MenuItemClasses } from "../props";
+import type {
+    MenuClasses,
+    MenuItemClasses,
+    MenuProps,
+    MenuItemProps,
+} from "../props";
 
-const inspectData: InspectData<MenuClasses & MenuItemClasses> = {
+const inspectData: InspectData<
+    MenuClasses & MenuItemClasses,
+    MenuProps<unknown> & MenuItemProps<unknown>
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

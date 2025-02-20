@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { DropdownClasses, DropdownItemClasses } from "../props";
+import type {
+    DropdownClasses,
+    DropdownItemClasses,
+    DropdownProps,
+    DropdownItemProps,
+} from "../props";
 
-const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
+const inspectData: InspectData<
+    DropdownClasses & DropdownItemClasses,
+    DropdownProps<unknown> & DropdownItemProps<unknown>
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -95,7 +103,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
             "bottom-right",
         ],
         action: (cmp, data): void => {
-            data.position = ["bottom"];
+            data.position = "bottom";
         },
     },
     triggerClass: {
@@ -215,7 +223,7 @@ const inspectData: InspectData<DropdownClasses & DropdownItemClasses> = {
             "Class of the body when dropdown is open and scroll is not clip.",
         properties: ["scroll"],
         action: (cmp, data): void => {
-            data.scroll = "";
+            data.scroll = "keep";
             data.active = true;
         },
     },

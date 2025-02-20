@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { NotificationClasses, NotificationNoticeClasses } from "../props";
+import type {
+    NotificationClasses,
+    NotificationNoticeClasses,
+    NotificationProps,
+} from "../props";
 
 const inspectData: InspectData<
-    NotificationClasses & NotificationNoticeClasses
+    NotificationClasses & NotificationNoticeClasses,
+    NotificationProps
 > = {
     rootClass: {
         class: "rootClass",

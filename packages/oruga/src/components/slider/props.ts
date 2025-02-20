@@ -1,6 +1,6 @@
 import type { ComponentClass } from "@/types";
 
-export type SliderProps<IsRange extends boolean> = {
+export type SliderProps<IsRange extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */

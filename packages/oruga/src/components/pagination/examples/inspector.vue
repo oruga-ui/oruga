@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { PaginationClasses } from "../props";
+import type { PaginationClasses, PaginationProps } from "../props";
 
-const inspectData: InspectData<PaginationClasses> = {
+const inspectData: InspectData<PaginationClasses, PaginationProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

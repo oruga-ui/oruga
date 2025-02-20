@@ -83,6 +83,12 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
+    /**
+     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
+     * but will set body to position fixed, might break some layouts.
+     * @values keep, clip
+     */
+    scroll?: "keep" | "clip";
     /** Ensures that each input has an accessible name. */
     labelledby?: string;
     /** Accessibility aria-label to be passed to the trigger element - usefull if selectable */

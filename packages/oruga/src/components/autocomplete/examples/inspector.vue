@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
 import type { InspectData } from "@/docs";
-import type { AutocompleteClasses } from "../props";
+import type { AutocompleteClasses, AutocompleteProps } from "../props";
 
 const options: OptionsGroupProp<string> = [
     {
@@ -10,7 +10,10 @@ const options: OptionsGroupProp<string> = [
     },
 ];
 
-const inspectData: InspectData<AutocompleteClasses> = {
+const inspectData: InspectData<
+    AutocompleteClasses,
+    AutocompleteProps<unknown>
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

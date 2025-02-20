@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { UploadClasses } from "../props";
+import type { UploadClasses, UploadProps } from "../props";
 
-const inspectData: InspectData<UploadClasses> = {
+const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

@@ -3,9 +3,9 @@ import path from "path";
 
 import themes from "./themes.json";
 import type { ThemeConfig } from "./types";
+export type { ThemeConfig };
 
 const Themes = themes as ThemeConfig[];
-
 export { Themes };
 
 export function getThemePath(

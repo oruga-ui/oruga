@@ -102,7 +102,7 @@ export type StepsClasses = Partial<{
     navigationClass: ComponentClass;
 }>;
 
-export type StepItemProps<T, C extends Component> = {
+export type StepItemProps<T, C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**

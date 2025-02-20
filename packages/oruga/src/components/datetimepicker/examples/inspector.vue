@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { DatetimePickerClasses } from "../props";
+import type { DatetimePickerClasses, DatetimepickerProps } from "../props";
 
-const inspectData: InspectData<DatetimePickerClasses> = {
+const inspectData: InspectData<DatetimePickerClasses, DatetimepickerProps> = {
     datepickerWrapperClass: {
         class: "datepickerWrapperClass",
         description: "Class of the Datepicker component wrapper element.",

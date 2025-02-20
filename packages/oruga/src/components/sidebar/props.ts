@@ -2,7 +2,7 @@ import type { Component } from "vue";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
-export type SidebarProps<C extends Component> = {
+export type SidebarProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** Whether siedbar is active or not, use v-model:active to make it two-way binding */

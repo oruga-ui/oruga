@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { CheckboxClasses } from "../props";
+import type { CheckboxClasses, CheckboxProps } from "../props";
 
-const inspectData: InspectData<CheckboxClasses> = {
+const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -29,7 +29,7 @@ const inspectData: InspectData<CheckboxClasses> = {
         class: "checkedClass",
         description: "Class of the root element when checked.",
         action: (cmp, data): void => {
-            data.checkbox = true;
+            data.modelValue = true;
         },
     },
     disabledClass: {
@@ -48,7 +48,7 @@ const inspectData: InspectData<CheckboxClasses> = {
         class: "inputCheckedClass",
         description: "Class of the native input element when checked.",
         action: (cmp, data): void => {
-            data.checkbox = true;
+            data.modelValue = true;
         },
     },
     indeterminateClass: {
@@ -68,8 +68,6 @@ const inspectData: InspectData<CheckboxClasses> = {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-checkbox v-model="props.checkbox" v-bind="props">
-            Checkbox
-        </o-checkbox>
+        <o-checkbox v-bind="props"> Checkbox </o-checkbox>
     </inspector-wrapper>
 </template>

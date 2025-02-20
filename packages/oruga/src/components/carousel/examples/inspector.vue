@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { CarouselClasses, CarouselItemClasses } from "../props";
+import type {
+    CarouselClasses,
+    CarouselItemClasses,
+    CarouselProps,
+    CarouselItemProps,
+} from "../props";
 
 const carousels = [
     { text: "Slide 1", color: "#445e00" },
@@ -10,7 +15,10 @@ const carousels = [
     { text: "Slide 5", color: "#005c98" },
 ];
 
-const inspectData: InspectData<CarouselClasses & CarouselItemClasses> = {
+const inspectData: InspectData<
+    CarouselClasses & CarouselItemClasses,
+    CarouselProps & CarouselItemProps
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

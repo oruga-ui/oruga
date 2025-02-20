@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { SidebarClasses } from "../props";
+import type { SidebarClasses, SidebarProps } from "../props";
 
-const inspectData: InspectData<SidebarClasses> = {
+const inspectData: InspectData<SidebarClasses, SidebarProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -68,7 +68,6 @@ const inspectData: InspectData<SidebarClasses> = {
         properties: ["position"],
         action: (cmp, data): void => {
             data.position = "right";
-            data.right = true;
         },
     },
     fullheightClass: {

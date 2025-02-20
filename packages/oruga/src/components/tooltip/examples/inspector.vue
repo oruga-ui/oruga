@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { TooltipClasses } from "../props";
+import type { TooltipClasses, TooltipProps } from "../props";
 
-const inspectData: InspectData<TooltipClasses> = {
+const inspectData: InspectData<TooltipClasses, TooltipProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

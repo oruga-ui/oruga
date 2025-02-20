@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { SwitchClasses } from "../props";
+import type { SwitchClasses, SwitchProps } from "../props";
 
-const inspectData: InspectData<SwitchClasses> = {
+const inspectData: InspectData<SwitchClasses, SwitchProps<unknown>> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

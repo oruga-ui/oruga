@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { StepsClasses, StepItemClasses } from "../props";
+import type {
+    StepsClasses,
+    StepItemClasses,
+    StepsProps,
+    StepItemProps,
+} from "../props";
 
-const inspectData: InspectData<StepsClasses & StepItemClasses> = {
+const inspectData: InspectData<
+    StepsClasses & StepItemClasses,
+    StepsProps<unknown> & StepItemProps<unknown>
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

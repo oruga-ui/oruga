@@ -76,6 +76,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     mobileBreakpoint: () => getDefault("dropdown.mobileBreakpoint"),
     animation: () => getDefault("dropdown.animation", "fade"),
     teleport: () => getDefault("dropdown.teleport", false),
+    scroll: () => getDefault("dropdown.scroll", "keep"),
 });
 
 const emits = defineEmits<{
@@ -194,7 +195,7 @@ const menuStyle = computed(() => ({
 
 const hoverable = computed(() => props.triggers.includes("hover"));
 
-const toggleScroll = usePreventScrolling(true);
+const toggleScroll = usePreventScrolling(props.scroll === "keep");
 
 // set infinite scroll handler
 if (isClient && props.scrollable && props.checkScroll)

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { InspectData } from "@/docs";
-import type { FieldClasses } from "../props";
+import type { FieldClasses, FieldProps } from "../props";
 
 const name = ref("");
 
-const inspectData: InspectData<FieldClasses> = {
+const inspectData: InspectData<FieldClasses, FieldProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -48,7 +48,7 @@ const inspectData: InspectData<FieldClasses> = {
     groupMultilineClass: {
         class: "groupMultilineClass",
         description:
-            "lass for innter wrapper element when grouped multiple lines.",
+            "Class for inner wrapper element when grouped multiple lines.",
         properties: ["groupMultiline"],
         action: (cmp, data): void => {
             data.groupMultiline = true;
@@ -57,10 +57,9 @@ const inspectData: InspectData<FieldClasses> = {
     addonsClass: {
         class: "addonsClass",
         description:
-            " Class of the inner wrapper element when element get automatically attached together inside a field.",
-        info: "Use the <code>expanded</code> prop on the control to fill up the remaining space.",
+            "Class of the inner wrapper element when element get automatically attached together inside a field.",
         action: (cmp, data): void => {
-            data.expanded = true;
+            data.addons = true;
         },
     },
     horizontalClass: {

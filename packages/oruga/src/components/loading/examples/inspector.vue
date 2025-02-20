@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { LoadingClasses } from "../props";
+import type { LoadingClasses, LoadingProps } from "../props";
 
-const inspectData: InspectData<LoadingClasses> = {
+const inspectData: InspectData<LoadingClasses, LoadingProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -67,8 +67,8 @@ const inspectData: InspectData<LoadingClasses> = {
         properties: ["scroll"],
         action: (cmp, data): void => {
             data.fullPage = true;
-            data.scroll = "";
             data.active = true;
+            data.scroll = "keep";
         },
     },
 };

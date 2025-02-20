@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { CollapseClasses } from "../props";
+import type { CollapseClasses, CollapseProps } from "../props";
 
-const inspectData: InspectData<CollapseClasses> = {
+const inspectData: InspectData<CollapseClasses, CollapseProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

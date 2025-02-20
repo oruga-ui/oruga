@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { InspectData } from "@/docs";
-import type { TaginputClasses } from "../props";
+import type { TaginputClasses, TaginputProps } from "../props";
 import type { OptionsPropItem } from "@oruga-ui/oruga-next";
 
 const options: OptionsPropItem[] = [
@@ -198,7 +198,7 @@ const options: OptionsPropItem[] = [
 
 const tags = ref([options[1].value]);
 
-const inspectData: InspectData<TaginputClasses> = {
+const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",

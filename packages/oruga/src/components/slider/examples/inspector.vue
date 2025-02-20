@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { SliderClasses } from "../props";
+import type { SliderClasses, SliderProps } from "../props";
 
-const inspectData: InspectData<SliderClasses> = {
+const inspectData: InspectData<SliderClasses, SliderProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -44,9 +44,6 @@ const inspectData: InspectData<SliderClasses> = {
     thumbWrapperClass: {
         class: "thumbWrapperClass",
         description: "Class of the thumb wrapper element.",
-        action: (cmp, data): void => {
-            data.fullScreen = true;
-        },
     },
     thumbWrapperDraggingClass: {
         class: "thumbWrapperDraggingClass",
@@ -57,9 +54,6 @@ const inspectData: InspectData<SliderClasses> = {
     thumbClass: {
         class: "thumbClass",
         description: "Class of the thumb element.",
-        action: (cmp, data): void => {
-            data.fullScreen = true;
-        },
     },
     thumbRoundedClass: {
         class: "thumbRoundedClass",

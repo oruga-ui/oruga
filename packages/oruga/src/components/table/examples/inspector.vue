@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { TableClasses } from "../props";
+import type { TableClasses, TableProps, TableColumnProps } from "../props";
 import type { TableColumn } from "../types";
 
 const data = [
@@ -81,7 +81,10 @@ const columns: TableColumn[] = [
     },
 ];
 
-const inspectData: InspectData<TableClasses> = {
+const inspectData: InspectData<
+    TableClasses,
+    TableProps<unknown> & TableColumnProps<unknown>
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -104,7 +107,7 @@ const inspectData: InspectData<TableClasses> = {
         class: "stickyHeaderClass",
         description:
             "Class of the table wrapper element when header is sticky.",
-        properties: ["sticky-header"],
+        properties: ["stickyHeader"],
         action: (cmp, data): void => {
             data.stickyHeader = true;
         },
@@ -149,7 +152,7 @@ const inspectData: InspectData<TableClasses> = {
     hoverableClass: {
         class: "hoverableClass",
         description: "Class of the table element when hoverable.",
-        properties: ["hoverable or focusable"],
+        properties: ["hoverable"],
         action: (cmp, data): void => {
             data.hoverable = true;
         },
@@ -216,7 +219,7 @@ const inspectData: InspectData<TableClasses> = {
     thUnselectableClass: {
         class: "thUnselectableClass",
         description: "Class of the Table `th` element that is unsortable.",
-        properties: ["!headerSelectable and sortable"],
+        properties: ["headerSelectable", "sortable"],
     },
     thSubheadingClass: {
         class: "thSubheadingClass",

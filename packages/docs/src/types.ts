@@ -7,11 +7,18 @@ export type ThemeConfig = {
     cdn: string;
 };
 
-export type InspectData<T = object> = {
-    [K in keyof Required<T>]: InspectClassDescription<T, K>;
+export type InspectData<
+    T extends object = object,
+    P extends object = object,
+> = {
+    [K in keyof Required<T>]: InspectClassDescription<T, K, P>;
 };
 
-export type InspectClassDescription<T = object, C extends keyof T = keyof T> = {
+export type InspectClassDescription<
+    T = object,
+    C extends keyof T = keyof T,
+    P extends object = object,
+> = {
     /** class name */
     class: C;
     /** class description */
@@ -21,7 +28,7 @@ export type InspectClassDescription<T = object, C extends keyof T = keyof T> = {
     /** info message */
     info?: string;
     /** properties related by the class */
-    properties?: string[];
+    properties?: (keyof P)[];
     /** suffixes the class can have */
     suffixes?: string[];
     /** disables the inspect button */
@@ -31,7 +38,7 @@ export type InspectClassDescription<T = object, C extends keyof T = keyof T> = {
     /** related class of another component */
     relatedClass?: string;
     /** function which get called on inspect button clicked */
-    action?: (cmp: HTMLElement, data: any) => void;
+    action?: (cmp: HTMLElement, data: P) => void;
 };
 
 export type InspectClass = {

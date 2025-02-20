@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { ModalClasses } from "../props";
+import type { ModalClasses, ModalProps } from "../props";
 
-const inspectData: InspectData<ModalClasses> = {
+const inspectData: InspectData<ModalClasses, ModalProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -72,7 +72,7 @@ const inspectData: InspectData<ModalClasses> = {
         properties: ["scroll"],
         action: (cmp, data): void => {
             data.active = true;
-            data.scroll = "";
+            data.scroll = "keep";
         },
     },
 };

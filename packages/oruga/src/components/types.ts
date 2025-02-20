@@ -468,6 +468,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: boolean | object | string;
+                /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
+but will set body to position fixed, might break some layouts. */
+                scroll: "clip" | "keep";
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element when on mobile */
@@ -533,9 +536,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 filledClass: ClassDefinition;
                 /** Class for the body wrapper element */
                 bodyClass: ClassDefinition;
-                /** Class for innter wrapper element when grouped */
+                /** Class for inner wrapper element when grouped */
                 groupedClass: ClassDefinition;
-                /** Class for innter wrapper element when grouped multiple lines */
+                /** Class for inner wrapper element when grouped multiple lines */
                 groupMultilineClass: ClassDefinition;
                 /** Class of the inner wrapper element when element get automatically attached together inside a field */
                 addonsClass: ClassDefinition;

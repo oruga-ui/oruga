@@ -53,9 +53,9 @@ export type FieldClasses = Partial<{
     filledClass: ComponentClass;
     /** Class for the body wrapper element*/
     bodyClass: ComponentClass;
-    /** Class for innter wrapper element when grouped */
+    /** Class for inner wrapper element when grouped */
     groupedClass: ComponentClass;
-    /** Class for innter wrapper element when grouped multiple lines */
+    /** Class for inner wrapper element when grouped multiple lines */
     groupMultilineClass: ComponentClass;
     /** Class of the inner wrapper element when element get automatically attached together inside a field */
     addonsClass: ComponentClass;

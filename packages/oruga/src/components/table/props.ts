@@ -256,7 +256,7 @@ export type TableClasses = Partial<{
     loadingClasses: object;
 }>;
 
-export type TableColumnProps<T, K extends keyof T | string> = {
+export type TableColumnProps<T, K extends keyof T | string = keyof T> = {
     /** Define the column label */
     label?: string;
     /** Define an object property key if data is an object */

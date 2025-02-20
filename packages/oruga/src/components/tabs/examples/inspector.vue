@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { TabsClasses, TabItemClasses } from "../props";
+import type {
+    TabsClasses,
+    TabItemClasses,
+    TabsProps,
+    TabItemProps,
+} from "../props";
 
-const inspectData: InspectData<TabsClasses & TabItemClasses> = {
+const inspectData: InspectData<
+    TabsClasses & TabItemClasses,
+    TabsProps<unknown> & TabItemProps<unknown>
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -73,7 +81,7 @@ const inspectData: InspectData<TabsClasses & TabItemClasses> = {
         subitem: "tabitem",
         description: "Class of the tab item element when active.",
         action: (cmp, data): void => {
-            data.active = true;
+            data.modelValue = 1;
         },
     },
     tabPreviousClass: {

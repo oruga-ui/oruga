@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { RadioClasses } from "../props";
+import type { RadioClasses, RadioProps } from "../props";
 
-const inspectData: InspectData<RadioClasses> = {
+const inspectData: InspectData<RadioClasses, RadioProps<unknown>> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
@@ -11,7 +11,7 @@ const inspectData: InspectData<RadioClasses> = {
         class: "checkedClass",
         description: "Class of the root element when checked.",
         action: (cmp, data): void => {
-            data.checkbox = "default";
+            data.modelValue = true;
         },
     },
     sizeClass: {
@@ -48,7 +48,7 @@ const inspectData: InspectData<RadioClasses> = {
         class: "inputCheckedClass",
         description: "Class of the native input element when checked.",
         action: (cmp, data): void => {
-            data.checkbox = "default";
+            data.modelValue = true;
         },
     },
     labelClass: {
@@ -60,8 +60,6 @@ const inspectData: InspectData<RadioClasses> = {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-radio v-model="props.checkbox" native-value="default" v-bind="props">
-            Radio
-        </o-radio>
+        <o-radio v-bind="props"> Radio </o-radio>
     </inspector-wrapper>
 </template>

@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import type { InspectData } from "@/docs";
-import type { SelectClasses } from "../props";
+import type { SelectClasses, SelectProps } from "../props";
 
-const inspectData: InspectData<SelectClasses> = {
+const inspectData: InspectData<
+    SelectClasses,
+    SelectProps<unknown, true | false> & {
+        fieldvariant: string;
+        fieldmessage: string;
+    }
+> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
