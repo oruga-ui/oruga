@@ -84,7 +84,7 @@ const columns: TableColumn[] = [
 const inspectData: InspectData<TableClasses> = {
     rootClass: {
         class: "rootClass",
-        description: "Class of root element.",
+        description: "Class of the root element.",
     },
     mobileClass: {
         class: "mobileClass",

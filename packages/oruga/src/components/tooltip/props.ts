@@ -68,7 +68,7 @@ export type TooltipClasses = Partial<{
     contentClass: ComponentClass;
     /** Class of the content element with position */
     positionClass: ComponentClass;
-    /** Class of the content element variant */
+    /** Class of the content element with variant */
     variantClass: ComponentClass;
     /** Class of the content element when is multiline */
     multilineClass: ComponentClass;
@@ -78,6 +78,6 @@ export type TooltipClasses = Partial<{
     arrowClass: ComponentClass;
     /** Class of the arrow element with position */
     arrowPositionClass: ComponentClass;
-    /** Class of the tooltip arrow with variant */
+    /** Class of the arrow element with variant */
     arrowVariantClass: ComponentClass;
 }>;

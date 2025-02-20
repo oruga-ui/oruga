@@ -14,7 +14,7 @@ const inspectData: InspectData<PaginationClasses> = {
     },
     orderClass: {
         class: "orderClass",
-        description: "Class of root element with order",
+        description: "Class of the root element with order",
         properties: ["order"],
         suffixes: ["centered", "right", "left"],
         action: (cmp, data): void => {

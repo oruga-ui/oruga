@@ -5,7 +5,7 @@ import type { TooltipClasses } from "../props";
 const inspectData: InspectData<TooltipClasses> = {
     rootClass: {
         class: "rootClass",
-        description: "Class of root element.",
+        description: "Class of the root element.",
     },
     teleportClass: {
         class: "teleportClass",
@@ -68,6 +68,15 @@ const inspectData: InspectData<TooltipClasses> = {
         suffixes: ["top", "bottom", "left", "right"],
         action: (cmp, data): void => {
             data.position = "right";
+        },
+    },
+    arrowVariantClass: {
+        class: "arrowVariantClass",
+        description: "Class of the arrow element with variant.",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (cmp, data): void => {
+            data.variant = "warning";
         },
     },
 };

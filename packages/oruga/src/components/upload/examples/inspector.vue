@@ -5,7 +5,7 @@ import type { UploadClasses } from "../props";
 const inspectData: InspectData<UploadClasses> = {
     rootClass: {
         class: "rootClass",
-        description: "Class of root element.",
+        description: "Class of the root element.",
     },
     expandedClass: {
         class: "expandedClass",

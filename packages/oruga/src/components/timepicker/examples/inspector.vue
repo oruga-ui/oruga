@@ -5,7 +5,7 @@ import type { TimepickerClasses } from "../props";
 const inspectData: InspectData<TimepickerClasses> = {
     rootClass: {
         class: "rootClass",
-        description: "Class of root element.",
+        description: "Class of the root element.",
     },
     mobileClass: {
         class: "mobileClass",
