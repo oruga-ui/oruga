@@ -11,11 +11,14 @@ import SlotsCode from "./slots.vue?raw";
 import Limits from "./limits.vue";
 import LimitsCode from "./limits.vue?raw";
 
+import Disabled from "./disabled.vue";
+import DisabledCode from "./disabled.vue?raw";
+
 import Variants from "./variants.vue";
 import VariantsCode from "./variants.vue?raw";
 
-import Disabled from "./disabled.vue";
-import DisabledCode from "./disabled.vue?raw";
+import Sizes from "./sizes.vue";
+import SizesCode from "./sizes.vue?raw";
 </script>
 
 <template>
@@ -84,5 +87,12 @@ import DisabledCode from "./disabled.vue?raw";
             Different styles can be achieved with the <code>variant</code> prop.
         </p>
         <ExampleViewer :component="Variants" :code="VariantsCode" />
+
+        <h3 id="sizes">Sizes</h3>
+        <p>
+            The component can be displayed in different sizes using the
+            <code>size</code> prop.
+        </p>
+        <ExampleViewer :component="Sizes" :code="SizesCode" />
     </div>
 </template>
