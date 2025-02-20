@@ -20,6 +20,7 @@ defineOptions({
 const props = withDefaults(defineProps<CollapseProps>(), {
     override: undefined,
     open: true,
+    expanded: false,
     animation: () => getDefault("collapse.animation", "fade"),
     position: () => getDefault("collapse.position", "top"),
     contentId: () => useId(),
@@ -59,7 +60,15 @@ const rootClasses = defineClasses(
     ],
 );
 
-const triggerClasses = defineClasses(["triggerClass", "o-clps__trigger"]);
+const triggerClasses = defineClasses(
+    ["triggerClass", "o-clps__trigger"],
+    [
+        "expandedClass",
+        "o-clps__trigger--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+);
 
 const contentClasses = defineClasses(["contentClass", "o-clps__content"]);
 </script>
