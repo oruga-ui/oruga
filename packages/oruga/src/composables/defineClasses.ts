@@ -53,6 +53,12 @@ type DefineClassesOptions = {
      * @default effectScope()
      */
     scope?: EffectScope;
+    /**
+     * Pass a custom props object which will be watched on additionaly to the current component instance props.
+     * this will recompute the class bind property when the class property change.
+     * @default vm.proxy?.$props
+     */
+    props?: Record<string, any>;
 };
 
 export function defineClasses(
@@ -130,7 +136,10 @@ export function defineClasses(
         scope.run(() => {
             // recompute the class bind property when the class property change
             watch(
-                () => vm.proxy?.$props[className],
+                [
+                    () => vm.proxy?.$props[className],
+                    () => (options?.props ? options?.props[className] : null),
+                ],
                 () => {
                     // recompute the class bind property
                     const classBind = getClassBind();
