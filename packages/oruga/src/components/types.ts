@@ -1539,6 +1539,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 arrowClass: ClassDefinition;
                 /** Class of the tooltip arrow position */
                 arrowPositionClass: ClassDefinition;
+                /** Class of the tooltip arrow with variant */
+                arrowVariantClass: ClassDefinition;
             }>;
         upload?: ComponentConfigBase &
             Partial<{
