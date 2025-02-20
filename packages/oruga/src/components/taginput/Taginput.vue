@@ -313,17 +313,24 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
-);
-
-const containerClasses = defineClasses(
-    ["containerClass", "o-taginput__container"],
     [
         "sizeClass",
-        "o-taginput__container--",
+        "o-taginput--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
+    [
+        "variantClass",
+        "o-taginput--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
 );
+
+const containerClasses = defineClasses([
+    "containerClass",
+    "o-taginput__container",
+]);
 
 const itemClasses = defineClasses(
     ["itemClass", "o-taginput__item"],
