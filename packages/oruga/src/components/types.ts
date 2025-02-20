@@ -498,8 +498,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemTag: DynamicComponent;
                 /** Class of the dropdown item */
                 itemClass: ClassDefinition;
-                /** Class of the dropdown item when active */
-                itemActiveClass: ClassDefinition;
+                /** Class of the dropdown item when selected */
+                itemSelectedClass: ClassDefinition;
                 /** Class of the dropdown items when focused */
                 itemFocusedClass: ClassDefinition;
                 /** Class of the dropdown item when clickable */
