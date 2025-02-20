@@ -73,7 +73,7 @@ export type CarouselClasses = Partial<{
     wrapperClass: ComponentClass;
     /** Class of items container element */
     itemsClass: ComponentClass;
-    /* *Class of items container element when dragging */
+    /* Class of items container element when dragging */
     itemsDraggingClass: ComponentClass;
     /** Class of icon button elements */
     iconClass: ComponentClass;

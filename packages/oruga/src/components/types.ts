@@ -82,32 +82,32 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rounded: boolean;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of the button elements wrapper */
-                wrapperClass: ClassDefinition;
-                /** Class of the button when outlined */
-                outlinedClass: ClassDefinition;
-                /** Class of the button when inverted */
-                invertedClass: ClassDefinition;
-                /** Class of the button with loading */
-                loadingClass: ClassDefinition;
-                /** Class of the button when expanded */
-                expandedClass: ClassDefinition;
-                /** Class of the button when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of the button when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the button icon */
-                iconClass: ClassDefinition;
-                /** Class of the button icon on the left */
-                iconLeftClass: ClassDefinition;
-                /** Class of the button icon on the right */
-                iconRightClass: ClassDefinition;
-                /** Class of the button label */
-                labelClass: ClassDefinition;
-                /** Class of the button size */
+                /** Class of the root element with size */
                 sizeClass: ClassDefinition;
-                /** Class of the button variant */
+                /** Class of the root element with variant */
                 variantClass: ClassDefinition;
+                /** Class of the root element when outlined */
+                outlinedClass: ClassDefinition;
+                /** Class of the root element when inverted */
+                invertedClass: ClassDefinition;
+                /** Class of the root element when loading */
+                loadingClass: ClassDefinition;
+                /** Class of the root element when expanded */
+                expandedClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the inner wrapper element */
+                wrapperClass: ClassDefinition;
+                /** Class of the icon element */
+                iconClass: ClassDefinition;
+                /** Class of the icon element on the left */
+                iconLeftClass: ClassDefinition;
+                /** Class of the icon element on the right */
+                iconRightClass: ClassDefinition;
+                /** Class of the label element */
+                labelClass: ClassDefinition;
             }>;
         carousel?: ComponentConfigBase &
             Partial<{
@@ -149,13 +149,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the root element in overlay */
                 overlayClass: ClassDefinition;
-                /** Class of the wrapper element of carousel items */
+                /** Class of the inner wrapper element */
                 wrapperClass: ClassDefinition;
-                /** Class of slider items */
+                /** Class of items container element */
                 itemsClass: ClassDefinition;
-                /** Class of slider items on drag */
+                /**  */
                 itemsDraggingClass: ClassDefinition;
-                /** Class of icon buttons */
+                /** Class of icon button elements */
                 iconClass: ClassDefinition;
                 /** Class of prev icon button element */
                 iconPrevClass: ClassDefinition;
@@ -173,15 +173,15 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 indicatorClass: ClassDefinition;
                 /** Class of indicator item element */
                 indicatorItemClass: ClassDefinition;
-                /** Class of indicator element when is active */
+                /** Class of indicator element when active */
                 indicatorItemActiveClass: ClassDefinition;
                 /** Class of indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
-                /** Class of carousel item */
+                /** Class of item element */
                 itemClass: ClassDefinition;
-                /** Class of carousel item when is active */
+                /** Class of item element when active */
                 itemActiveClass: ClassDefinition;
-                /** Class of carousel item when is clickable */
+                /** Class of item element when clickable */
                 itemClickableClass: ClassDefinition;
             }>;
         checkbox?: ComponentConfigBase &
@@ -194,22 +194,22 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class when checkbox is disabled */
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element when disabled */
                 disabledClass: ClassDefinition;
                 /** Class of the root element when checked */
                 checkedClass: ClassDefinition;
-                /** Class of the checkbox input */
+                /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the checkbox input when checked */
+                /** Class of the native input element when checked */
                 inputCheckedClass: ClassDefinition;
-                /** Class when checkbox is indeterminate */
+                /** Class of the native input element when indeterminate */
                 indeterminateClass: ClassDefinition;
-                /** Class of the checkbox labe */
+                /** Class of the label element */
                 labelClass: ClassDefinition;
-                /** Class of the checkbox size */
-                sizeClass: ClassDefinition;
-                /** Class of the checkbox variant */
-                variantClass: ClassDefinition;
             }>;
         collapse?: ComponentConfigBase &
             Partial<{
@@ -241,15 +241,11 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Close dropdown on click */
                 closeOnClick: boolean;
                 /** Custom function to format a date into a string */
-                formatter:
-                    | ((date: Date | [] | Date[] | [Date, Date]) => string)
-                    | undefined;
+                formatter: ((date: Date | [] | Date[] | [Date, Date]) => string) | undefined;
                 /** Custom function to parse a string into a date */
-                parser:
-                    | ((date: string) => Date | [] | Date[] | [Date, Date])
-                    | undefined;
+                parser: ((date: string) => Date | [] | Date[] | [Date, Date]) | undefined;
                 /** Date creator function, default is `new Date()` */
-                creator: () => Date;
+                creator: (() => Date);
                 /** Define a list of weeks which can not be selected */
                 unselectableDaysOfWeek: number[];
                 /** Show nearby month days */
@@ -294,103 +290,103 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 ariaSelectYearLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
+                /** Class of the root element when on mobile */
+                mobileClass: ClassDefinition;
                 /** Class of the root element with size */
                 sizeClass: ClassDefinition;
                 /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
-                /** Class of the root element when on mobile */
-                mobileClass: ClassDefinition;
                 /** Class of the box container element where you choose the date */
                 boxClass: ClassDefinition;
-                /** Class of the header inside the box */
+                /** Class of the header element inside the box */
                 headerClass: ClassDefinition;
-                /** Class of the buttons inside the box */
+                /** Class of the button elements inside the box */
                 headerButtonsClass: ClassDefinition;
-                /** Class of the buttons inside the box when a size is choosen */
+                /** Class of the button elements inside the box with size */
                 headerButtonsSizeClass: ClassDefinition;
-                /** Class of the prev button inside the box */
+                /** Class of the prev button element inside the box */
                 prevButtonClass: ClassDefinition;
-                /** Class of the next button inside the box */
+                /** Class of the next button element inside the box */
                 nextButtonClass: ClassDefinition;
                 /** Class of the month and year selects container inside the box */
                 listsClass: ClassDefinition;
                 /** Class of the footer element */
                 footerClass: ClassDefinition;
-                /** Class of the dates table inside the box */
+                /** Class of the dates table element inside the box */
                 tableClass: ClassDefinition;
-                /** Class of dates table header with days of the week */
+                /** Class of dates table header element with days of the week */
                 tableHeadClass: ClassDefinition;
-                /** Class of the cell inside the table header */
+                /** Class of the cell element inside the table header */
                 tableHeadCellClass: ClassDefinition;
-                /** Class of the table body inside the box */
+                /** Class of the table body element inside the box */
                 tableBodyClass: ClassDefinition;
-                /** Class of the table row */
+                /** Class of the table row element */
                 tableRowClass: ClassDefinition;
-                /** Class of the table cell */
+                /** Class of the table cell element */
                 tableCellClass: ClassDefinition;
-                /** Class of the table cell when nearby month days are hidden */
+                /** Class of the table cell element when nearby month days are hidden */
                 tableCellInvisibleClass: ClassDefinition;
-                /** Class of table cell when it's selected */
+                /** Class of table cell element when selected */
                 tableCellSelectedClass: ClassDefinition;
-                /** Class of the first selected table cell when in range */
+                /** Class of the first selected table cell element when in range */
                 tableCellFirstSelectedClass: ClassDefinition;
-                /** Class of the table cells within the range when the range is selected */
+                /** Class of the table cell elements within the range when the range is selected */
                 tableCellWithinSelectedClass: ClassDefinition;
-                /** Class of the last selected table cell during range selection */
+                /** Class of the last selected table cell element during range selection */
                 tableCellLastSelectedClass: ClassDefinition;
-                /** Class of the first hovered table cell during range selection */
+                /** Class of the first hovered table cell element during range selection */
                 tableCellFirstHoveredClass: ClassDefinition;
-                /** Class of the table cell when hovered during range selection */
+                /** Class of the table cell element when hovered during range selection */
                 tableCellWithinHoveredClass: ClassDefinition;
-                /** Class of the last table cell hovered during range selection */
+                /** Class of the last table cell element hovered during range selection */
                 tableCellLastHoveredClass: ClassDefinition;
-                /** Class of the table cell of the current day */
+                /** Class of the table cell element of the current day */
                 tableCellTodayClass: ClassDefinition;
-                /** Class of the table cell that is selectable */
+                /** Class of the table cell element when selectable */
                 tableCellSelectableClass: ClassDefinition;
-                /** Class of the table cell that is unselectable */
+                /** Class of the table cell element when unselectable */
                 tableCellUnselectableClass: ClassDefinition;
-                /** Class of the table cell when nearby days (prev/next month) are selectable */
+                /** Class of the table cell element when nearby days (prev/next month) are selectable */
                 tableCellNearbyClass: ClassDefinition;
-                /** Class of the cell of a row when at least one event is present */
+                /** Class of the cell element of a row when at least one event is present */
                 tableCellEventsClass: ClassDefinition;
                 /** Class of the events container */
                 tableEventsClass: ClassDefinition;
-                /** Class of the event */
+                /** Class of the event element */
                 tableEventClass: ClassDefinition;
-                /** Class of the event indicator when a `variant` is specified */
+                /** Class of the event indicator element with variant */
                 tableEventVariantClass: ClassDefinition;
-                /** Class of the event indicator */
+                /** Class of the event indicator wrapper element */
                 tableEventIndicatorsClass: ClassDefinition;
-                /** Class of the month table inside the box when type is `month` */
+                /** Class of the month table element inside the box when type is `month` */
                 monthClass: ClassDefinition;
-                /** Class of the table body inside the box when type is `month` */
+                /** Class of the table body element inside the box when type is `month` */
                 monthBodyClass: ClassDefinition;
                 /** Class of the table container when type is `month` */
                 monthTableClass: ClassDefinition;
-                /** Class of the table cell when type is `month` */
+                /** Class of the table cell element when type is `month` */
                 monthCellClass: ClassDefinition;
-                /** Class of table cell when it's selected when type is `month` */
+                /** Class of table cell element when selected when type is `month` */
                 monthCellSelectedClass: ClassDefinition;
-                /** Class of the first selected table cell when in range when type is `month` */
+                /** Class of the first selected table cell element when in range when type is `month` */
                 monthCellFirstSelectedClass: ClassDefinition;
-                /** Class of the table cells within the range when the range is selected when type is `month` */
+                /** Class of the table cell elements within the range when the range is selected when type is `month` */
                 monthCellWithinSelectedClass: ClassDefinition;
-                /** Class of the last selected table cell during range selection when type is `month` */
+                /** Class of the last selected table cell element during range selection when type is `month` */
                 monthCellLastSelectedClass: ClassDefinition;
-                /** Class of the first hovered table cell during range selection when type is `month` */
+                /** Class of the first hovered table cell element during range selection when type is `month` */
                 monthCellWithinHoveredRangeClass: ClassDefinition;
-                /** Class of the table cell when hovered during range selection when type is `month` */
+                /** Class of the table cell element when hovered during range selection when type is `month` */
                 monthCellFirstHoveredClass: ClassDefinition;
-                /** Class of the table cell when hovered during range selection and cell is in range when type is `month` */
+                /** Class of the table cell element when hovered during range selection and cell is in range when type is `month` */
                 monthCellWithinHoveredClass: ClassDefinition;
-                /** Class of the last table cell hovered during range selection when type is `month` */
+                /** Class of the last table cell element when hovered during range selection when type is `month` */
                 monthCellLastHoveredClass: ClassDefinition;
-                /** Class of the table cell of the current day when type is `month` */
+                /** Class of the table cell element of the current day when type is `month` */
                 monthCellTodayClass: ClassDefinition;
-                /** Class of the table cell that is selectable when type is `month` */
+                /** Class of the table cell element when selectable when type is `month` */
                 monthCellSelectableClass: ClassDefinition;
-                /** Class of the table cell that is unselectable when type is `month` */
+                /** Class of the table cell element when unselectable when type is `month` */
                 monthCellUnselectableClass: ClassDefinition;
                 /** Class of the events container when type is `month` */
                 monthCellEventsClass: ClassDefinition;
@@ -416,7 +412,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to parse a string into a date */
                 dateParser: ((date: string) => Date) | undefined;
                 /** Date creator function, default is `new Date()` */
-                datetimeCreator: () => Date;
+                datetimeCreator: (() => Date);
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -429,9 +425,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: boolean | object | string;
-                /** Class of the Datepicker wrapper */
+                /** Class of the Datepicker component wrapper element */
                 datepickerWrapperClass: ClassDefinition;
-                /** Class of the Timepicker wrapper */
+                /** Class of the Timepicker component wrapper element */
                 timepickerWrapperClass: ClassDefinition;
             }>;
         dropdown?: ComponentConfigBase &
@@ -441,16 +437,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Max height of dropdown content */
                 maxHeight: number | string;
                 /** Position of the dropdown relative to the trigger */
-                position:
-                    | "auto"
-                    | "bottom-left"
-                    | "bottom-right"
-                    | "bottom"
-                    | "left"
-                    | "right"
-                    | "top-left"
-                    | "top-right"
-                    | "top";
+                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Dropdown menu tag name */
@@ -458,13 +445,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Dropdown trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Dropdown will be triggered by any events */
-                triggers: (
-                    | "click"
-                    | "contextmenu"
-                    | "focus"
-                    | "keydown"
-                    | "hover"
-                )[];
+                triggers: ("click" | "contextmenu" | "focus" | "keydown" | "hover")[];
                 /** Keep dropdown list open when item get selected */
                 keepOpen: boolean;
                 /** The first option will always be pre-selected (easier to just hit enter or tab) */
@@ -489,49 +470,49 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: boolean | object | string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class when the dropdown is teleported */
+                /** Class of the root element when on mobile */
+                mobileClass: ClassDefinition;
+                /** Class of the root element when shown as modal */
+                modalClass: ClassDefinition;
+                /** Class of the root element when teleported */
                 teleportClass: ClassDefinition;
+                /** Class of the root element when inlined */
+                inlineClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the root element when expanded */
+                expandedClass: ClassDefinition;
+                /** Class for the root element with position */
+                positionClass: ClassDefinition;
+                /** Class for the root element when active or inline */
+                activeClass: ClassDefinition;
+                /** Class for the root element when trigger is hoverable */
+                hoverableClass: ClassDefinition;
                 /** Class of the trigger element */
                 triggerClass: ClassDefinition;
-                /** Class of dropdown menu when inline */
-                inlineClass: ClassDefinition;
-                /** Class of the dropdown menu */
+                /** Class of the menu element */
                 menuClass: ClassDefinition;
-                /** Class of dropdown menu position */
+                /** Class of the menu element with position */
                 menuPositionClass: ClassDefinition;
-                /** Class of dropdown menu when active */
+                /** Class of the menu element when active or inline */
                 menuActiveClass: ClassDefinition;
-                /** Class of dropdown when on mobile */
-                mobileClass: ClassDefinition;
-                /** Class of dropdown when on is shown as modal */
-                modalClass: ClassDefinition;
                 /** Class of the overlay when is shown as modal */
                 overlayClass: ClassDefinition;
-                /** Class of dropdown when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of dropdown when expanded */
-                expandedClass: ClassDefinition;
-                /** Class for the root element indicating position of dropdown */
-                positionClass: ClassDefinition;
-                /** Class for the root element indicating whether the dropdown is open */
-                activeClass: ClassDefinition;
-                /** Class for the root element when the dropdown is hoverable */
-                hoverableClass: ClassDefinition;
                 /** Class of the body when dropdown is open and scroll is clip */
                 scrollClipClass: ClassDefinition;
                 /** Class of the body when dropdown is open and scroll is not clip */
                 noScrollClass: ClassDefinition;
                 /** Dropdown item tag name */
                 itemTag: DynamicComponent;
-                /** Class of the dropdown item */
+                /** Class of the item element. */
                 itemClass: ClassDefinition;
-                /** Class of the dropdown item when active */
-                itemActiveClass: ClassDefinition;
-                /** Class of the dropdown items when focused */
+                /** Class of the item element when selected */
+                itemSelectedClass: ClassDefinition;
+                /** Class of the item element when focused */
                 itemFocusedClass: ClassDefinition;
-                /** Class of the dropdown item when clickable */
+                /** Class of the item element when clickable */
                 itemClickableClass: ClassDefinition;
-                /** Class of the dropdown item when disabled */
+                /** Class of the item element when disabled */
                 itemDisabledClass: ClassDefinition;
             }>;
         field?: ComponentConfigBase &
@@ -544,36 +525,36 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobileBreakpoint: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class to align label and control in horizontal forms */
-                horizontalClass: ClassDefinition;
-                /** Class for field label when horizontal */
-                horizontalLabelClass: ClassDefinition;
-                /** "Class for field body when horizontal */
-                horizontalBodyClass: ClassDefinition;
-                /** Class when fields are grouped together */
-                groupedClass: ClassDefinition;
-                /** Class when fields fill up multiple lines */
-                groupMultilineClass: ClassDefinition;
-                /** Class for the field label element */
-                labelClass: ClassDefinition;
-                /** Class for the field label element with size */
-                labelSizeClass: ClassDefinition;
-                /** Class for the field label element with variant */
-                labelVariantClass: ClassDefinition;
-                /** Class for the field body wrapper element */
-                bodyClass: ClassDefinition;
-                /** Class of the inner wrapper when components automatically attached together when inside a field */
-                addonsClass: ClassDefinition;
-                /** Class for the field message element */
-                messageClass: ClassDefinition;
-                /** Class for the field message element with variant */
-                messageVariantClass: ClassDefinition;
                 /** Class of the root element when on mobile */
                 mobileClass: ClassDefinition;
                 /** Class of the root element when the form element is focused */
                 focusedClass: ClassDefinition;
                 /** Class of the root element when the form element is filled */
                 filledClass: ClassDefinition;
+                /** Class for the body wrapper element */
+                bodyClass: ClassDefinition;
+                /** Class for innter wrapper element when grouped */
+                groupedClass: ClassDefinition;
+                /** Class for innter wrapper element when grouped multiple lines */
+                groupMultilineClass: ClassDefinition;
+                /** Class of the inner wrapper element when element get automatically attached together inside a field */
+                addonsClass: ClassDefinition;
+                /** Class to align label and control in horizontal forms */
+                horizontalClass: ClassDefinition;
+                /** Class for the label element when horizontal */
+                horizontalLabelClass: ClassDefinition;
+                /** Class for the body element when horizontal */
+                horizontalBodyClass: ClassDefinition;
+                /** Class for the label element */
+                labelClass: ClassDefinition;
+                /** Class for the label element with size */
+                labelSizeClass: ClassDefinition;
+                /** Class for the label element with variant */
+                labelVariantClass: ClassDefinition;
+                /** Class for the message element */
+                messageClass: ClassDefinition;
+                /** Class for the message element with variant */
+                messageVariantClass: ClassDefinition;
             }>;
         icon?: ComponentConfigBase &
             Partial<{
@@ -627,17 +608,17 @@ See icon library documentation for custom classes. */
                 textareaClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the input element when rounded */
+                /** Class of the native input element when rounded */
                 roundedClass: ClassDefinition;
-                /** Class of the input element when disabled */
+                /** Class of the native input element when disabled */
                 disabledClass: ClassDefinition;
-                /** Class of the input element with size */
+                /** Class of the native input element with size */
                 sizeClass: ClassDefinition;
-                /** Class of the input element with variant */
+                /** Class of the native input element with variant */
                 variantClass: ClassDefinition;
-                /** Class of the input element with left icon space */
+                /** Class of the native input element with left icon space */
                 iconLeftSpaceClass: ClassDefinition;
-                /** Class of the input element with right icon space */
+                /** Class of the native input element with right icon space */
                 iconRightSpaceClass: ClassDefinition;
                 /** Class of the left icon element */
                 iconLeftClass: ClassDefinition;
@@ -665,11 +646,11 @@ but will set body to position fixed, might break some layouts. */
                 rootClass: ClassDefinition;
                 /** Class for the root element when fullpage */
                 fullPageClass: ClassDefinition;
-                /** Class of the loading overlay element */
+                /** Class of the overlay element */
                 overlayClass: ClassDefinition;
-                /** Class for the loading icon element */
+                /** Class for the icon element */
                 iconClass: ClassDefinition;
-                /** Class for the loading label element */
+                /** Class for the label element */
                 labelClass: ClassDefinition;
                 /** Class of the body when fullpage and scroll is clip */
                 scrollClipClass: ClassDefinition;
@@ -705,7 +686,7 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                 itemDisabledClass: ClassDefinition;
                 /** Class of the menu button element */
                 itemButtonClass: ClassDefinition;
-                /** Class of the menu button elementwhen active */
+                /** Class of the menu button element when active */
                 itemButtonActiveClass: ClassDefinition;
                 /** Class of the menu button element when focused */
                 itemButtonFocusedClass: ClassDefinition;
@@ -757,10 +738,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 overlayClass: ClassDefinition;
                 /** Class of the content element */
                 contentClass: ClassDefinition;
-                /** Class of the close button element */
-                closeClass: ClassDefinition;
                 /** Class of the content element when fullscreen */
                 fullScreenClass: ClassDefinition;
+                /** Class of the close button element */
+                closeClass: ClassDefinition;
                 /** Class of the body when modal is open and scroll is clip */
                 scrollClipClass: ClassDefinition;
                 /** Class of the body when modal is open and scroll is not clip */
@@ -771,13 +752,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Color of the control */
                 variant: string;
                 /** Which position the notification will appear when programmatically */
-                position:
-                    | "bottom-left"
-                    | "bottom-right"
-                    | "bottom"
-                    | "top-left"
-                    | "top-right"
-                    | "top";
+                position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Icon pack to use */
@@ -810,7 +785,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 queue: boolean;
                 /** Class of the notice wrapper element */
                 noticeClass: ClassDefinition;
-                /** Class of the notice wrapper when positioned */
+                /** Class of the notice wrapper element when positioned */
                 noticePositionClass: ClassDefinition;
                 /** Class of the notice container element */
                 noticeContainerClass: ClassDefinition;
@@ -855,7 +830,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 sizeClass: ClassDefinition;
                 /** Class of the root element when in `simple` mode */
                 simpleClass: ClassDefinition;
-                /** Class of the info in `simple` mode */
+                /** Class of the page info in `simple` mode */
                 infoClass: ClassDefinition;
                 /** Class of the items list element */
                 listClass: ClassDefinition;
@@ -917,29 +892,29 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of the root elelement with variant */
+                /** Class of the root element with variant */
                 rootVariantClass: ClassDefinition;
                 /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
                 /** Class of the native select element */
                 selectClass: ClassDefinition;
-                /** Class of the select element when multiple */
+                /** Class of the native select element when multiple */
                 multipleClass: ClassDefinition;
-                /** Class of the select element with size */
+                /** Class of the native select element with size */
                 sizeClass: ClassDefinition;
-                /** Class of the select element with variant */
+                /** Class of the native select element with variant */
                 variantClass: ClassDefinition;
-                /** Class of the select element when disabled */
+                /** Class of the native select element when disabled */
                 disabledClass: ClassDefinition;
-                /** Class of the select element when rounded */
+                /** Class of the native select element when rounded */
                 roundedClass: ClassDefinition;
-                /** Class of the select element with anplaceholder */
+                /** Class of the native select element with a placeholder */
                 placeholderClass: ClassDefinition;
-                /** Class of the select element with an arrow */
+                /** Class of the native select element with an arrow */
                 arrowedClass: ClassDefinition;
-                /** Class of the select element with left icon space */
+                /** Class of the native select element with left icon space */
                 iconLeftSpaceClass: ClassDefinition;
-                /** Class of the select element with right icon space */
+                /** Class of the native select element with right icon space */
                 iconRightSpaceClass: ClassDefinition;
                 /** Class of the left icon element */
                 iconLeftClass: ClassDefinition;
@@ -979,7 +954,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the root element when on mobile */
                 mobileClass: ClassDefinition;
-                /** Class of the root element when its active */
+                /** Class of the root element when active */
                 activeClass: ClassDefinition;
                 /** Class of the root element when teleported */
                 teleportClass: ClassDefinition;
@@ -1018,13 +993,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the root element with position */
                 positionClass: ClassDefinition;
-                /** Class of the skeleton item element */
+                /** Class of the item element */
                 itemClass: ClassDefinition;
-                /** Class of the skeleton item element when rounded */
+                /** Class of the item element when rounded */
                 roundedClass: ClassDefinition;
-                /** Class of the skeleton item element when animated */
+                /** Class of the item element when animated */
                 animatedClass: ClassDefinition;
-                /** Class of the skeleton item element with size */
+                /** Class of the item element with size */
                 sizeClass: ClassDefinition;
             }>;
         slider?: ComponentConfigBase &
@@ -1059,17 +1034,17 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 thumbWrapperClass: ClassDefinition;
                 /** Class to the thumb wrapper element when the slider is dragged */
                 thumbWrapperDraggingClass: ClassDefinition;
-                /** Class of the thumb element- */
+                /** Class of the thumb element */
                 thumbClass: ClassDefinition;
                 /** Class of the thumb element when rounded */
                 thumbRoundedClass: ClassDefinition;
                 /** Class of the thumb element when is dragged */
                 thumbDraggingClass: ClassDefinition;
-                /** Class of slider tick element */
+                /** Class of the slider tick element */
                 tickClass: ClassDefinition;
-                /** Class of slider tick element when is hidden */
+                /** Class of the slider tick element when is hidden */
                 tickHiddenClass: ClassDefinition;
-                /** Class of slider tick label element */
+                /** Class of the slider tick label element */
                 tickLabelClass: ClassDefinition;
             }>;
         steps?: ComponentConfigBase &
@@ -1146,9 +1121,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 markerClass: ClassDefinition;
                 /** Class of the step item marker element when rounded */
                 markerRoundedClass: ClassDefinition;
-                /** Class of the content element */
+                /** Class of the step item wrapper element */
                 contentClass: ClassDefinition;
-                /** Class of the content element when transitioning */
+                /** Class of the step item wrapper element when transitioning */
                 transitioningClass: ClassDefinition;
                 /** Class of the navigation element */
                 navigationClass: ClassDefinition;
@@ -1173,11 +1148,11 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 sizeClass: ClassDefinition;
                 /** Class of the root element with variant */
                 variantClass: ClassDefinition;
-                /** Class of the switch passive variant */
+                /** Class of the root element with passive variant */
                 passiveVariantClass: ClassDefinition;
                 /** Class of the root element with position */
                 positionClass: ClassDefinition;
-                /** Class when switch is disabled */
+                /** Class of the root element when disabled */
                 disabledClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
@@ -1199,7 +1174,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
                 rowKey: string;
                 /** Define individual class for a row */
-                rowClass: (row: unknown, index: number) => string;
+                rowClass: ((row: unknown, index: number) => string);
                 /** Border to all cells */
                 bordered: boolean;
                 /** Whether table is striped */
@@ -1217,7 +1192,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Color of the checkbox when checkable (if checkable) */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
-                isRowCheckable: (row: unknown) => boolean;
+                isRowCheckable: ((row: unknown) => boolean);
                 /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
                 backendSorting: boolean;
                 /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
@@ -1231,7 +1206,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Icon pack to use */
                 iconPack: string;
                 /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
-                isDetailedVisible: (row: unknown) => boolean;
+                isDetailedVisible: ((row: unknown) => boolean);
                 /** Allow detail icon and column to be visible (if detailed) */
                 showDetailIcon: boolean;
                 /** Icon name of detail action (if detailed) */
@@ -1371,13 +1346,11 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tabNextClass: ClassDefinition;
                 /** Class of the tab item element when disabled */
                 tabDisabledClass: ClassDefinition;
-                /** Class of the tab item element with type */
-                tabTypeClass: ClassDefinition;
                 /** Class of the tab item icon element */
                 tabIconClass: ClassDefinition;
                 /** Class of the tab item label element */
                 tabLabelClass: ClassDefinition;
-                /** Class of the tab item panel element */
+                /** Class of the tab panel element */
                 tabPanelClass: ClassDefinition;
                 /** Color of the control */
                 variant: string;
@@ -1401,9 +1374,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the root element with position */
                 positionClass: ClassDefinition;
-                /** Size of the root element with size */
+                /** Class of the root element with size */
                 sizeClass: ClassDefinition;
-                /** Type of the root element with type */
+                /** Class of the root element with type */
                 typeClass: ClassDefinition;
                 /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
@@ -1488,7 +1461,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to parse a string into a date */
                 parser: ((date: string) => Date) | undefined;
                 /** time creator function, default is `new Date()` */
-                creator: () => Date;
+                creator: (() => Date);
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -1541,16 +1514,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Color of the tooltip */
                 variant: string;
                 /** Position of the Tooltip relative to the trigger */
-                position:
-                    | "auto"
-                    | "bottom-left"
-                    | "bottom-right"
-                    | "bottom"
-                    | "left"
-                    | "right"
-                    | "top-left"
-                    | "top-right"
-                    | "top";
+                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
                 /** Tooltip default animation */
                 animation: string;
                 /** Tooltip trigger tag name */
