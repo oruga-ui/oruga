@@ -190,7 +190,7 @@ const perPage = ref(3);
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field>
                 <o-switch v-model="isPaginated" label="Paginated" />
             </o-field>

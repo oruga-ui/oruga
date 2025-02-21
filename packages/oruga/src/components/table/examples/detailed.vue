@@ -108,7 +108,7 @@ const detailedRows = ref([data.value[0]]);
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-checkbox v-model="showDetailIcon" label="Show detail chevron" />
             <o-checkbox
                 v-model="showDefaultDetail"

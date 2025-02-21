@@ -28,7 +28,7 @@ const selected = ref();
 
 <template>
     <section class="odocs-spaced">
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-switch v-model="keepFirst">Keep first</o-switch>
             <o-switch v-model="keepOpen">Keep open</o-switch>
             <o-switch v-model="openOnFocus">Open on focus</o-switch>
