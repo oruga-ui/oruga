@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<FieldProps>(), {
     messageId: () => useId(),
     grouped: false,
     addons: false,
-    multilined: false,
+    multiline: false,
     horizontal: false,
     mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
