@@ -58,12 +58,10 @@ export type CheckboxClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the root element when checked */
     checkedClass: ComponentClass;
+    /** Class of the the root element when indeterminate */
+    indeterminateClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;
-    /** Class of the native input element when checked */
-    inputCheckedClass: ComponentClass;
-    /** Class of the native input element when indeterminate */
-    indeterminateClass: ComponentClass;
-    /** Class of the label element  */
+    /** Class of the label element */
     labelClass: ComponentClass;
 }>;

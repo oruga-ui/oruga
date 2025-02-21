@@ -2,7 +2,7 @@
 
 exports[`OTabs tests > OTab with OTabItem integration tests > test render correctly 1`] = `
 "<div class="o-tabs o-tabs--default" data-oruga="tabs">
-  <div class="o-tabs__tablist" role="tablist" aria-orientation="horizontal">
+  <div class="o-tabs__list" role="tablist" aria-orientation="horizontal">
     <!--
                 @slot Additional slot before tabs
             --><button id="tab-1" class="o-tabs__tab o-tabs__tab--active" role="tab" tabindex="0" aria-current="true" aria-controls="tabpanel-1" aria-selected="true">
@@ -44,7 +44,7 @@ exports[`OTabs tests > OTabItem > render correctly 1`] = `
 
 exports[`OTabs tests > render correctly 1`] = `
 "<div class="o-tabs o-tabs--default" data-oruga="tabs">
-  <div class="o-tabs__tablist" role="tablist" aria-orientation="horizontal">
+  <div class="o-tabs__list" role="tablist" aria-orientation="horizontal">
     <!--
                 @slot Additional slot before tabs
             -->

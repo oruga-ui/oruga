@@ -90,26 +90,28 @@ export type InputProps<IsNumber extends boolean = false> = {
 export type InputClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class to the root element when a right icon is used */
+    /** Class of the root element when rounded */
+    roundedClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the root element when type `textarea` */
+    textareaClass: ComponentClass;
+    /** Class to the root element when has a right icon */
     hasIconRightClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;
-    /** Class of the native input when type `textarea` */
-    textareaClass: ComponentClass;
-    /** Class of the native input element when rounded */
-    roundedClass: ComponentClass;
-    /** Class of the native input element when disabled */
-    disabledClass: ComponentClass;
-    /** Class of the native input element with size */
-    sizeClass: ComponentClass;
-    /** Class of the native input element with variant */
-    variantClass: ComponentClass;
     /** Class of the native input element with left icon space */
     iconLeftSpaceClass: ComponentClass;
     /** Class of the native input element with right icon space */
     iconRightSpaceClass: ComponentClass;
+    /** Class of the native input element with placeholder */
+    placeholderClass: ComponentClass;
     /** Class of the left icon element */
     iconLeftClass: ComponentClass;
     /** Class of the right icon element */

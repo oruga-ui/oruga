@@ -70,25 +70,25 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
 export type SelectClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
     /** Class of the root element with variant */
-    rootVariantClass: ComponentClass;
+    variantClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the root element when rounded */
+    roundedClass: ComponentClass;
+    /** Class of the root element when has icon right */
+    hasIconRightClass: ComponentClass;
+    /** Class of the root element when multiple */
+    multipleClass: ComponentClass;
     /** Class of the native select element */
     selectClass: ComponentClass;
-    /** Class of the native select element when multiple */
-    multipleClass: ComponentClass;
-    /** Class of the native select element with size */
-    sizeClass: ComponentClass;
-    /** Class of the native select element with variant */
-    variantClass: ComponentClass;
-    /** Class of the native select element when disabled */
-    disabledClass: ComponentClass;
-    /** Class of the native select element when rounded */
-    roundedClass: ComponentClass;
-    /** Class of the native select element with a placeholder */
+    /** Class of the native select element with placeholder */
     placeholderClass: ComponentClass;
-    /** Class of the native select element with an arrow */
+    /** Class of the native select element when arrowed */
     arrowedClass: ComponentClass;
     /** Class of the native select element with left icon space */
     iconLeftSpaceClass: ComponentClass;

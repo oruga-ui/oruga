@@ -31,12 +31,12 @@ export type FieldProps = {
      * (see which ones at the top of the page).
      */
     grouped?: boolean;
-    /** Allow controls to fill up multiple lines, making it responsive */
-    groupMultiline?: boolean;
-    /** Group label and control on the same line for horizontal forms */
-    horizontal?: boolean;
     /** Field automatically attach controls together */
     addons?: boolean;
+    /** Allow controls to fill up multiple lines, making it responsive */
+    multiline?: boolean;
+    /** Group label and control on the same line for horizontal forms */
+    horizontal?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
 } & FieldClasses;
@@ -55,10 +55,10 @@ export type FieldClasses = Partial<{
     bodyClass: ComponentClass;
     /** Class for inner wrapper element when grouped */
     groupedClass: ComponentClass;
-    /** Class for inner wrapper element when grouped multiple lines */
-    groupMultilineClass: ComponentClass;
     /** Class of the inner wrapper element when element get automatically attached together inside a field */
     addonsClass: ComponentClass;
+    /** Class for inner body wrapper element when fill up multiple lines */
+    multilineClass: ComponentClass;
     /** Class to align label and control in horizontal forms */
     horizontalClass: ComponentClass;
     /** Class for the label element when horizontal */

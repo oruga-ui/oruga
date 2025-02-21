@@ -10,12 +10,55 @@ const inspectData: InspectData<
         class: "rootClass",
         description: "Class of the root element.",
     },
+    sizeClass: {
+        class: "sizeClass",
+        description: "Class of the root element with size.",
+        properties: ["size"],
+        suffixes: ["small", "medium", "large"],
+        action: (cmp, data): void => {
+            data.size = "large";
+        },
+    },
+    variantClass: {
+        class: "variantClass",
+        description: "Class of the root element with variant.",
+        info: "Variant property should be applied to the wrapping field.",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (cmp, data): void => {
+            data.fieldvariant = "warning";
+        },
+    },
     expandedClass: {
         class: "expandedClass",
         description: "Class of the root element when expanded.",
         properties: ["expanded"],
         action: (cmp, data): void => {
             data.expanded = true;
+        },
+    },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (cmp, data): void => {
+            data.disabled = true;
+        },
+    },
+    roundedClass: {
+        class: "roundedClass",
+        description: "Class of the root element when rounded.",
+        properties: ["rounded"],
+        action: (cmp, data): void => {
+            data.rounded = true;
+        },
+    },
+    textareaClass: {
+        class: "textareaClass",
+        description: "Class of the root element when type `textarea`.",
+        properties: ["type"],
+        action: (cmp, data): void => {
+            data.type = "textarea";
         },
     },
     hasIconRightClass: {
@@ -30,48 +73,9 @@ const inspectData: InspectData<
         class: "inputClass",
         description: "Class of the native input element.",
     },
-    textareaClass: {
-        class: "textareaClass",
-        description: "Class of the native input element when type `textarea`.",
-        properties: ["type"],
-        action: (cmp, data): void => {
-            data.type = "textarea";
-        },
-    },
-    roundedClass: {
-        class: "roundedClass",
-        description: "Class of the native input element when rounded.",
-        properties: ["rounded"],
-        action: (cmp, data): void => {
-            data.rounded = true;
-        },
-    },
-    disabledClass: {
-        class: "disabledClass",
-        description: "Class of the native input element when disabled.",
-        properties: ["disabled"],
-        action: (cmp, data): void => {
-            data.disabled = true;
-        },
-    },
-    sizeClass: {
-        class: "sizeClass",
-        description: "Class of the native input element with size.",
-        properties: ["size"],
-        suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
-            data.size = "large";
-        },
-    },
-    variantClass: {
-        class: "variantClass",
-        description: "Class of the native input element with variant",
-        info: "Variant property should be applied to the wrapping field.",
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
-            data.fieldvariant = "warning";
-        },
+    placeholderClass: {
+        class: "placeholderClass",
+        description: "Class of the native input element with a placeholder.",
     },
     iconLeftSpaceClass: {
         class: "iconLeftSpaceClass",

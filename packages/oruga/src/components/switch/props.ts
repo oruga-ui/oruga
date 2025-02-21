@@ -69,16 +69,14 @@ export type SwitchClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the root element when rounded */
     roundedClass: ComponentClass;
+    /** Class of the root element when checked */
+    checkedClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;
-    /** Class of the native input element when checked */
-    inputCheckedClass: ComponentClass;
-    /** Class of the outer switch check element */
-    switchClass: ComponentClass;
-    /** Class of the outer switch check element when checked */
-    switchCheckedClass: ComponentClass;
-    /** Class of the inner switch check element */
-    switchCheckClass: ComponentClass;
-    /** Class of the switch label element */
+    /** Class of the track background element of the toggle */
+    trackClass: ComponentClass;
+    /** Class of the thumb element that slides on the track */
+    thumbClass: ComponentClass;
+    /** Class of the label element */
     labelClass: ComponentClass;
 }>;

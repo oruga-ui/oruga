@@ -21,7 +21,7 @@ describe("OInput", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("input");
         expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-input__wrapper")).toBeTruthy();
+        expect(wrapper.classes("o-input")).toBeTruthy();
     });
 
     test("test basic", async () => {
@@ -31,7 +31,8 @@ describe("OInput", () => {
 
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
-        expect(input.classes()).toContain("o-input");
+        expect(input.classes()).toContain("o-input__input");
+        expect(input.element.tagName).toBe("INPUT");
 
         const value = "some value";
         await input.setValue(value);
@@ -45,10 +46,13 @@ describe("OInput", () => {
     test("render textarea element when type is textarea", () => {
         const wrapper = mount(OInput, { props: { type: "textarea" } });
 
+        expect(wrapper.classes()).toContain("o-input--textarea");
+
         const input = wrapper.find("textarea");
         expect(input.exists()).toBeTruthy();
-        expect(input.classes()).toContain("o-input");
-        expect(input.attributes().style).toBeFalsy();
+        expect(input.classes()).toContain("o-input__input");
+        expect(input.attributes("style")).toBeFalsy();
+        expect(input.element.tagName).toBe("TEXTAREA");
     });
 
     test("add inline style and call resize for textarea when autosize is true", async () => {
@@ -128,15 +132,42 @@ describe("OInput", () => {
             props: { placeholder: "Awesome!", readonly: true },
         });
 
-        const target = wrapper.find("input");
-        expect(target.element.getAttribute("placeholder")).toBe("Awesome!");
-        expect(target.attributes("readonly")).toBe("");
+        const input = wrapper.find("input");
+        expect(input.element.getAttribute("placeholder")).toBe("Awesome!");
+        expect(input.attributes("readonly")).toBe("");
     });
 
     test("expands input when expanded property is passed", async () => {
         const wrapper = mount(OInput, { props: { expanded: true } });
 
-        expect(wrapper.classes()).toContain("o-input__wrapper--expanded");
+        expect(wrapper.classes()).toContain("o-input--expanded");
+    });
+
+    test("render accordingly when has size prop", () => {
+        const wrapper = mount(OInput, {
+            props: { size: "large" },
+        });
+
+        expect(wrapper.classes("o-input--large")).toBeTruthy();
+    });
+
+    test("render accordingly when has variant prop", () => {
+        const wrapper = mount(OInput, {
+            props: { variant: "danger" },
+        });
+
+        expect(wrapper.classes("o-input--danger")).toBeTruthy();
+    });
+
+    test("render accordingly when is disabled", () => {
+        const wrapper = mount(OInput, {
+            props: { disabled: true },
+        });
+
+        expect(wrapper.classes("o-input--disabled")).toBeTruthy();
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        expect(input.attributes("disabled")).not.toBeUndefined();
     });
 
     test("keep its value on blur", async () => {

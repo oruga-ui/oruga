@@ -54,8 +54,6 @@ export type RadioClasses = Partial<{
     checkedClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;
-    /** Class of the native input element when checked */
-    inputCheckedClass: ComponentClass;
-    /** Class of the radio label element */
+    /** Class of the label element */
     labelClass: ComponentClass;
 }>;

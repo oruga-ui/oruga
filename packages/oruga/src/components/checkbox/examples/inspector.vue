@@ -7,6 +7,13 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
+    checkedClass: {
+        class: "checkedClass",
+        description: "Class of the root element when checked.",
+        action: (cmp, data): void => {
+            data.modelValue = true;
+        },
+    },
     sizeClass: {
         class: "sizeClass",
         description: "Class of the root element with size.",
@@ -25,13 +32,6 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
             data.variant = "warning";
         },
     },
-    checkedClass: {
-        class: "checkedClass",
-        description: "Class of the root element when checked.",
-        action: (cmp, data): void => {
-            data.modelValue = true;
-        },
-    },
     disabledClass: {
         class: "disabledClass",
         description: "Class of the root element when disabled.",
@@ -40,24 +40,17 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
             data.disabled = true;
         },
     },
-    inputClass: {
-        class: "inputClass",
-        description: "Class of the native input element.",
-    },
-    inputCheckedClass: {
-        class: "inputCheckedClass",
-        description: "Class of the native input element when checked.",
-        action: (cmp, data): void => {
-            data.modelValue = true;
-        },
-    },
     indeterminateClass: {
         class: "indeterminateClass",
-        description: "Class of the native input element when indeterminate.",
+        description: "Class of the root element when indeterminate.",
         properties: ["indeterminate"],
         action: (cmp, data): void => {
             data.indeterminate = true;
         },
+    },
+    inputClass: {
+        class: "inputClass",
+        description: "Class of the native input element.",
     },
     labelClass: {
         class: "labelClass",

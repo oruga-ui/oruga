@@ -1,8 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OSelect tests > render correctly 1`] = `
-"<div class="o-ctrl-sel" data-oruga="select">
-  <!--v-if--><select id="v-0" data-oruga-input="select" class="o-sel o-sel--placeholder o-sel--arrowed" autocomplete="off">
+"<div class="o-select" data-oruga="select">
+  <!--v-if--><select id="v-0" data-oruga-input="select" class="o-select__input o-select__input--placeholder o-select__input--arrowed" autocomplete="off">
     <!--v-if-->
     <!--
                 @slot Override the options, default is options prop

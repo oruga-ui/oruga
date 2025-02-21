@@ -26,7 +26,7 @@ function onProfileActivate(): void {
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field>
                 <o-switch v-model="showSocial" label="Show Social step" />
             </o-field>

@@ -65,7 +65,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemHeaderClass: ClassDefinition;
                 /** Class of the menu footer item */
                 itemFooterClass: ClassDefinition;
-                /** Classes to apply on internal input component */
+                /** Class configuration for the internal input component */
                 inputClasses: Record<string, any>;
             }>;
         button?: ComponentConfigBase &
@@ -202,12 +202,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 disabledClass: ClassDefinition;
                 /** Class of the root element when checked */
                 checkedClass: ClassDefinition;
+                /** Class of the the root element when indeterminate */
+                indeterminateClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the native input element when checked */
-                inputCheckedClass: ClassDefinition;
-                /** Class of the native input element when indeterminate */
-                indeterminateClass: ClassDefinition;
                 /** Class of the label element */
                 labelClass: ClassDefinition;
             }>;
@@ -350,7 +348,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tableCellNearbyClass: ClassDefinition;
                 /** Class of the cell element of a row when at least one event is present */
                 tableCellEventsClass: ClassDefinition;
-                /** Class of the events container */
+                /** Class of the events container element */
                 tableEventsClass: ClassDefinition;
                 /** Class of the event element */
                 tableEventClass: ClassDefinition;
@@ -538,10 +536,10 @@ but will set body to position fixed, might break some layouts. */
                 bodyClass: ClassDefinition;
                 /** Class for inner wrapper element when grouped */
                 groupedClass: ClassDefinition;
-                /** Class for inner wrapper element when grouped multiple lines */
-                groupMultilineClass: ClassDefinition;
                 /** Class of the inner wrapper element when element get automatically attached together inside a field */
                 addonsClass: ClassDefinition;
+                /** Class for inner body wrapper element when fill up multiple lines */
+                multilineClass: ClassDefinition;
                 /** Class to align label and control in horizontal forms */
                 horizontalClass: ClassDefinition;
                 /** Class for the label element when horizontal */
@@ -570,14 +568,14 @@ See icon library documentation for custom classes. */
                 customClass: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of the root element when clickable */
-                clickableClass: ClassDefinition;
-                /** Class of the root element when spin */
-                spinClass: ClassDefinition;
                 /** Class of the root element with size */
                 sizeClass: ClassDefinition;
                 /** Class of the root element with variant */
                 variantClass: ClassDefinition;
+                /** Class of the root element when clickable */
+                clickableClass: ClassDefinition;
+                /** Class of the root element when spin */
+                spinClass: ClassDefinition;
             }>;
         input?: ComponentConfigBase &
             Partial<{
@@ -603,26 +601,28 @@ See icon library documentation for custom classes. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
                 /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
-                /** Class to the root element when a right icon is used */
-                hasIconRightClass: ClassDefinition;
-                /** Class of input when type textarea */
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the root element when type `textarea` */
                 textareaClass: ClassDefinition;
+                /** Class to the root element when has a right icon */
+                hasIconRightClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the native input element when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of the native input element when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the native input element with size */
-                sizeClass: ClassDefinition;
-                /** Class of the native input element with variant */
-                variantClass: ClassDefinition;
                 /** Class of the native input element with left icon space */
                 iconLeftSpaceClass: ClassDefinition;
                 /** Class of the native input element with right icon space */
                 iconRightSpaceClass: ClassDefinition;
+                /** Class of the native input element with placeholder */
+                placeholderClass: ClassDefinition;
                 /** Class of the left icon element */
                 iconLeftClass: ClassDefinition;
                 /** Class of the right icon element */
@@ -874,9 +874,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 checkedClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the native input element when checked */
-                inputCheckedClass: ClassDefinition;
-                /** Class of the radio label element */
+                /** Class of the label element */
                 labelClass: ClassDefinition;
             }>;
         select?: ComponentConfigBase &
@@ -895,25 +893,25 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
                 /** Class of the root element with variant */
-                rootVariantClass: ClassDefinition;
+                variantClass: ClassDefinition;
                 /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when has icon right */
+                hasIconRightClass: ClassDefinition;
+                /** Class of the root element when multiple */
+                multipleClass: ClassDefinition;
                 /** Class of the native select element */
                 selectClass: ClassDefinition;
-                /** Class of the native select element when multiple */
-                multipleClass: ClassDefinition;
-                /** Class of the native select element with size */
-                sizeClass: ClassDefinition;
-                /** Class of the native select element with variant */
-                variantClass: ClassDefinition;
-                /** Class of the native select element when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the native select element when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of the native select element with a placeholder */
+                /** Class of the native select element with placeholder */
                 placeholderClass: ClassDefinition;
-                /** Class of the native select element with an arrow */
+                /** Class of the native select element when arrowed */
                 arrowedClass: ClassDefinition;
                 /** Class of the native select element with left icon space */
                 iconLeftSpaceClass: ClassDefinition;
@@ -1062,12 +1060,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 stepActiveClass: ClassDefinition;
                 /** Class of the step item element with variant (default value by parent steps component) */
                 stepVariantClass: ClassDefinition;
+                /** Class of the step item element when positioned */
+                stepPositionClass: ClassDefinition;
                 /** Class of the step item element when clickable */
                 stepClickableClass: ClassDefinition;
                 /** Class of the step item element when disabled */
                 stepDisabledClass: ClassDefinition;
-                /** Class of the step item element when positioned */
-                stepPositionClass: ClassDefinition;
                 /** Class of the step item element before the active one */
                 stepPreviousClass: ClassDefinition;
                 /** Class of the step item element after the active one */
@@ -1114,19 +1112,19 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 verticalClass: ClassDefinition;
                 /** Class of the root element when is vertical and has position */
                 positionClass: ClassDefinition;
-                /** Class of the steps list container */
+                /** Class of the list container element */
                 listClass: ClassDefinition;
-                /** Class of steps list container when animated */
+                /** Class of the list container when animated */
                 animatedClass: ClassDefinition;
-                /** Class of the step item divider element */
+                /** Class of the item divider element */
                 dividerClass: ClassDefinition;
-                /** Class of the step item marker element */
+                /** Class of the item marker element */
                 markerClass: ClassDefinition;
-                /** Class of the step item marker element when rounded */
+                /** Class of the item marker element when rounded */
                 markerRoundedClass: ClassDefinition;
-                /** Class of the step item wrapper element */
+                /** Class of the panels wrapper element */
                 contentClass: ClassDefinition;
-                /** Class of the step item wrapper element when transitioning */
+                /** Class of the panels wrapper element when transitioning */
                 transitioningClass: ClassDefinition;
                 /** Class of the navigation element */
                 navigationClass: ClassDefinition;
@@ -1157,19 +1155,17 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 positionClass: ClassDefinition;
                 /** Class of the root element when disabled */
                 disabledClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when checked */
+                checkedClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the native input element when checked */
-                inputCheckedClass: ClassDefinition;
-                /** Class of the outer switch check element */
-                switchClass: ClassDefinition;
-                /** Class of the outer switch check element when checked */
-                switchCheckedClass: ClassDefinition;
-                /** Class of the switch check element when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of the inner switch check element */
-                switchCheckClass: ClassDefinition;
-                /** Class of the switch label element */
+                /** Class of the track background element of the toggle */
+                trackClass: ClassDefinition;
+                /** Class of the thumb element that slides on the track */
+                thumbClass: ClassDefinition;
+                /** Class of the label element */
                 labelClass: ClassDefinition;
             }>;
         table?: ComponentConfigBase &
@@ -1387,11 +1383,11 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 verticalClass: ClassDefinition;
                 /** Class of the root element when multilined */
                 multilineClass: ClassDefinition;
-                /** Class of the tablist element */
-                tablistClass: ClassDefinition;
-                /** Class of the tab item wrapper element */
+                /** Class of the list container element */
+                listClass: ClassDefinition;
+                /** Class of the panels wrapper element */
                 contentClass: ClassDefinition;
-                /** Class of the tab item wrapper element when transitioning */
+                /** Class of the panels wrapper element when transitioning */
                 transitioningClass: ClassDefinition;
             }>;
         taginput?: ComponentConfigBase &

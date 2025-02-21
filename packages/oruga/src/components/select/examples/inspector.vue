@@ -13,25 +13,9 @@ const inspectData: InspectData<
         class: "rootClass",
         description: "Class of the root element.",
     },
-    expandedClass: {
-        class: "expandedClass",
-        description: "Class of the root element when expanded.",
-        properties: ["expanded"],
-        action: (cmp, data): void => {
-            data.expanded = true;
-        },
-    },
-    rootVariantClass: {
-        class: "rootVariantClass",
-        description: "Class of the root element with variant.",
-    },
-    selectClass: {
-        class: "selectClass",
-        description: "Class of the native select element.",
-    },
     sizeClass: {
         class: "sizeClass",
-        description: "Class of the native select element with size.",
+        description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
@@ -40,7 +24,7 @@ const inspectData: InspectData<
     },
     variantClass: {
         class: "variantClass",
-        description: "Class of the native select element with variant.",
+        description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
@@ -48,29 +32,49 @@ const inspectData: InspectData<
             data.fieldmessage = "Info for this field";
         },
     },
+    expandedClass: {
+        class: "expandedClass",
+        description: "Class of the root element when expanded.",
+        properties: ["expanded"],
+        action: (cmp, data): void => {
+            data.expanded = true;
+        },
+    },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (cmp, data): void => {
+            data.disabled = true;
+        },
+    },
     roundedClass: {
         class: "roundedClass",
-        description: "Class of the native select element when rounded.",
+        description: "Class of the root element when rounded.",
         properties: ["rounded"],
         action: (cmp, data): void => {
             data.rounded = true;
         },
     },
+    hasIconRightClass: {
+        class: "hasIconRightClass",
+        description: "Class to the root element when a right icon is used.",
+        properties: ["iconRight"],
+        action: (cmp, data): void => {
+            data.iconRight = "times-circle";
+        },
+    },
     multipleClass: {
         class: "multipleClass",
-        description: "Class of the native select element when multiple.",
+        description: "Class of the root element when multiple.",
         properties: ["multiple"],
         action: (cmp, data): void => {
             data.multiple = true;
         },
     },
-    disabledClass: {
-        class: "disabledClass",
-        description: "Class of the native select element when disabled.",
-        properties: ["disabled"],
-        action: (cmp, data): void => {
-            data.disabled = true;
-        },
+    selectClass: {
+        class: "selectClass",
+        description: "Class of the native select element.",
     },
     placeholderClass: {
         class: "placeholderClass",

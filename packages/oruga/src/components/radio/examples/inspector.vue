@@ -44,13 +44,6 @@ const inspectData: InspectData<RadioClasses, RadioProps<unknown>> = {
         class: "inputClass",
         description: "Class of the native input element.",
     },
-    inputCheckedClass: {
-        class: "inputCheckedClass",
-        description: "Class of the native input element when checked.",
-        action: (cmp, data): void => {
-            data.modelValue = true;
-        },
-    },
     labelClass: {
         class: "labelClass",
         description: "Class of the radio label element.",

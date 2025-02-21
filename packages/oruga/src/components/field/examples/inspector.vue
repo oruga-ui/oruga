@@ -39,27 +39,27 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
     },
     groupedClass: {
         class: "groupedClass",
-        description: "Class of the inner wrapper when grouped.",
+        description: "Class of the inner body wrapper when grouped.",
         properties: ["grouped"],
         action: (cmp, data): void => {
             data.grouped = true;
         },
     },
-    groupMultilineClass: {
-        class: "groupMultilineClass",
-        description:
-            "Class for inner wrapper element when grouped multiple lines.",
-        properties: ["groupMultiline"],
-        action: (cmp, data): void => {
-            data.groupMultiline = true;
-        },
-    },
     addonsClass: {
         class: "addonsClass",
         description:
-            "Class of the inner wrapper element when element get automatically attached together inside a field.",
+            "Class of the inner body wrapper element when element get automatically attached together inside a field.",
         action: (cmp, data): void => {
             data.addons = true;
+        },
+    },
+    multilineClass: {
+        class: "multilineClass",
+        description:
+            "Class for inner body wrapper element when fill up multiple lines.",
+        properties: ["multiline"],
+        action: (cmp, data): void => {
+            data.multiline = true;
         },
     },
     horizontalClass: {

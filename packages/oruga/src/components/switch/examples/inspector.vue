@@ -7,6 +7,13 @@ const inspectData: InspectData<SwitchClasses, SwitchProps<unknown>> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
+    checkedClass: {
+        class: "checkedClass",
+        description: "Class of the root element when checked.",
+        action: (cmp, data): void => {
+            data.modelValue = true;
+        },
+    },
     sizeClass: {
         class: "sizeClass",
         description: "Class of the root element with size.",
@@ -64,27 +71,13 @@ const inspectData: InspectData<SwitchClasses, SwitchProps<unknown>> = {
         class: "inputClass",
         description: "Class of the native input element.",
     },
-    inputCheckedClass: {
-        class: "inputCheckedClass",
-        description: "Class of the native input element when checked.",
-        action: (cmp, data): void => {
-            data.modelValue = true;
-        },
+    trackClass: {
+        class: "trackClass",
+        description: "Class of the track background element of the toggle.",
     },
-    switchClass: {
-        class: "switchClass",
-        description: "Class of the outer switch check element.",
-    },
-    switchCheckedClass: {
-        class: "switchCheckedClass",
-        description: "Class of the outer switch check element when checked.",
-        action: (cmp, data): void => {
-            data.modelValue = true;
-        },
-    },
-    switchCheckClass: {
-        class: "switchCheckClass",
-        description: "Class of the inner switch check element.",
+    thumbClass: {
+        class: "thumbClass",
+        description: "Class of the thumb element that slides on the track.",
     },
     labelClass: {
         class: "labelClass",
