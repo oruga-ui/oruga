@@ -59,7 +59,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemClass: ClassDefinition;
                 /** Class of the menu items group title */
                 itemGroupTitleClass: ClassDefinition;
-                /** Class of the menu empty placeholder item */
+                /** Class of the empty menu placeholder item */
                 itemEmptyClass: ClassDefinition;
                 /** Class of the menu header item */
                 itemHeaderClass: ClassDefinition;
@@ -382,9 +382,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 monthCellLastHoveredClass: ClassDefinition;
                 /** Class of the table cell element of the current day when type is `month` */
                 monthCellTodayClass: ClassDefinition;
-                /** Class of the table cell element when selectable when type is `month` */
+                /** Class of the table cell element whis is selectable when type is `month` */
                 monthCellSelectableClass: ClassDefinition;
-                /** Class of the table cell element when unselectable when type is `month` */
+                /** Class of the table cell element whis is unselectable when type is `month` */
                 monthCellUnselectableClass: ClassDefinition;
                 /** Class of the events container when type is `month` */
                 monthCellEventsClass: ClassDefinition;
@@ -538,7 +538,7 @@ but will set body to position fixed, might break some layouts. */
                 groupedClass: ClassDefinition;
                 /** Class of the inner wrapper element when element get automatically attached together inside a field */
                 addonsClass: ClassDefinition;
-                /** Class for inner body wrapper element when fill up multiple lines */
+                /** Class for inner body wrapper element to fill up multiple lines */
                 multilineClass: ClassDefinition;
                 /** Class to align label and control in horizontal forms */
                 horizontalClass: ClassDefinition;
@@ -837,7 +837,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 infoClass: ClassDefinition;
                 /** Class of the items list element */
                 listClass: ClassDefinition;
-                /** Class of an list item element */
+                /** Class of the list item element */
                 listItemClass: ClassDefinition;
                 /** Class of the ellipsis element */
                 ellipsisClass: ClassDefinition;
@@ -1122,9 +1122,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 markerClass: ClassDefinition;
                 /** Class of the item marker element when rounded */
                 markerRoundedClass: ClassDefinition;
-                /** Class of the panels wrapper element */
+                /** Class of the panel container element */
                 contentClass: ClassDefinition;
-                /** Class of the panels wrapper element when transitioning */
+                /** Class of the panel container element when transitioning */
                 transitioningClass: ClassDefinition;
                 /** Class of the navigation element */
                 navigationClass: ClassDefinition;
@@ -1385,9 +1385,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 multilineClass: ClassDefinition;
                 /** Class of the list container element */
                 listClass: ClassDefinition;
-                /** Class of the panels wrapper element */
+                /** Class of the panel container element */
                 contentClass: ClassDefinition;
-                /** Class of the panels wrapper element when transitioning */
+                /** Class of the panel container element when transitioning */
                 transitioningClass: ClassDefinition;
             }>;
         taginput?: ComponentConfigBase &

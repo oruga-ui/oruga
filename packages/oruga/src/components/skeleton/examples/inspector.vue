@@ -20,6 +20,15 @@ const inspectData: InspectData<SkeletonClasses, SkeletonProps> = {
         class: "itemClass",
         description: "Class of the item element.",
     },
+    sizeClass: {
+        class: "sizeClass",
+        description: "Class of the item element with size.",
+        properties: ["size"],
+        suffixes: ["small", "medium", "large"],
+        action: (cmp, data): void => {
+            data.size = "large";
+        },
+    },
     animatedClass: {
         class: "animatedClass",
         description: "Class of the item element when animated.",
@@ -33,15 +42,6 @@ const inspectData: InspectData<SkeletonClasses, SkeletonProps> = {
         properties: ["rounded"],
         action: (cmp, data): void => {
             data.rounded = true;
-        },
-    },
-    sizeClass: {
-        class: "sizeClass",
-        description: "Class of the item element with size.",
-        properties: ["size"],
-        suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
-            data.size = "large";
         },
     },
 };

@@ -57,7 +57,7 @@ export type FieldClasses = Partial<{
     groupedClass: ComponentClass;
     /** Class of the inner wrapper element when element get automatically attached together inside a field */
     addonsClass: ComponentClass;
-    /** Class for inner body wrapper element when fill up multiple lines */
+    /** Class for inner body wrapper element to fill up multiple lines */
     multilineClass: ComponentClass;
     /** Class to align label and control in horizontal forms */
     horizontalClass: ComponentClass;

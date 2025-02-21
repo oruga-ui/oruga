@@ -10,6 +10,7 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
     checkedClass: {
         class: "checkedClass",
         description: "Class of the root element when checked.",
+        properties: ["modelValue"],
         action: (cmp, data): void => {
             data.modelValue = true;
         },

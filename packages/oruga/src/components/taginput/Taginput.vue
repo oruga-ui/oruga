@@ -287,12 +287,6 @@ function onKeydown(event: KeyboardEvent): void {
 const rootClasses = defineClasses(
     ["rootClass", "o-taginput"],
     [
-        "expandedClass",
-        "o-taginput--expanded",
-        null,
-        computed(() => props.expanded),
-    ],
-    [
         "sizeClass",
         "o-taginput--",
         computed(() => props.size),
@@ -303,6 +297,12 @@ const rootClasses = defineClasses(
         "o-taginput--",
         computed(() => props.variant),
         computed(() => !!props.variant),
+    ],
+    [
+        "expandedClass",
+        "o-taginput--expanded",
+        null,
+        computed(() => props.expanded),
     ],
 );
 

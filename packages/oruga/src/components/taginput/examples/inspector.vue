@@ -203,14 +203,6 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
-    expandedClass: {
-        class: "expandedClass",
-        description: "Class of the root element when expanded.",
-        properties: ["expanded"],
-        action: (cmp, data): void => {
-            data.expanded = true;
-        },
-    },
     sizeClass: {
         class: "sizeClass",
         description: "Class of the root element with size.",
@@ -227,6 +219,14 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
+        },
+    },
+    expandedClass: {
+        class: "expandedClass",
+        description: "Class of the root element when expanded.",
+        properties: ["expanded"],
+        action: (cmp, data): void => {
+            data.expanded = true;
         },
     },
     containerClass: {

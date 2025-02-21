@@ -259,9 +259,9 @@ export type DatepickerClasses = Partial<{
     monthCellLastHoveredClass: ComponentClass;
     /** Class of the table cell element of the current day when type is `month` */
     monthCellTodayClass: ComponentClass;
-    /** Class of the table cell element when selectable when type is `month` */
+    /** Class of the table cell element whis is selectable when type is `month` */
     monthCellSelectableClass: ComponentClass;
-    /** Class of the table cell element when unselectable when type is `month` */
+    /** Class of the table cell element whis is unselectable when type is `month` */
     monthCellUnselectableClass: ComponentClass;
     /** Class of the events container when type is `month` */
     monthCellEventsClass: ComponentClass;

@@ -94,9 +94,9 @@ export type StepsClasses = Partial<{
     markerClass: ComponentClass;
     /** Class of the item marker element when rounded */
     markerRoundedClass: ComponentClass;
-    /** Class of the panels wrapper element */
+    /** Class of the panel container element */
     contentClass: ComponentClass;
-    /** Class of the panels wrapper element when transitioning */
+    /** Class of the panel container element when transitioning */
     transitioningClass: ComponentClass;
     /** Class of the navigation element */
     navigationClass: ComponentClass;

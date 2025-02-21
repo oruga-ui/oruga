@@ -36,7 +36,7 @@ const inspectData: InspectData<
     },
     itemEmptyClass: {
         class: "itemEmptyClass",
-        description: "Class of the menu empty placeholder item.",
+        description: "Class of the empty menu placeholder item.",
         action: (cmp, data): void => {
             data.input = "|";
             data.active = true;

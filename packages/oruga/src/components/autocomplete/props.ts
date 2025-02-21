@@ -118,7 +118,7 @@ export type AutocompleteClasses = Partial<{
     itemClass: ComponentClass;
     /** Class of the menu items group title */
     itemGroupTitleClass: ComponentClass;
-    /** Class of the menu empty placeholder item */
+    /** Class of the empty menu placeholder item */
     itemEmptyClass: ComponentClass;
     /** Class of the menu header item */
     itemHeaderClass: ComponentClass;

@@ -83,7 +83,7 @@ const inspectData: InspectData<
     arrowedClass: {
         class: "arrowedClass",
         description: "Class of the native select element with an arrow.",
-        info: "It applies the arrow icon using background-image and background-position on select element. An alternative to override it is iconRight prop (globally or not).",
+        info: "It applies the arrow icon using background-image and background-position on select element. An alternative to override this is the iconRight prop (globally or not).",
     },
     iconLeftSpaceClass: {
         class: "iconLeftSpaceClass",

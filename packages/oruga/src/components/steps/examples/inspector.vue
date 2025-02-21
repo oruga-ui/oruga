@@ -87,11 +87,11 @@ const inspectData: InspectData<
     },
     contentClass: {
         class: "contentClass",
-        description: "Class of the panels wrapper element.",
+        description: "Class of the panel container element.",
     },
     transitioningClass: {
         class: "transitioningClass",
-        description: "Class of the panels wrapper element when transitioning.",
+        description: "Class of the panel container element when transitioning.",
         info: "Click on a marker to see it in action!",
     },
     navigationClass: {

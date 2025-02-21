@@ -52,7 +52,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
     },
     listItemClass: {
         class: "listItemClass",
-        description: "Class of an list item element.",
+        description: "Class of the list item element.",
     },
     ellipsisClass: {
         class: "ellipsisClass",

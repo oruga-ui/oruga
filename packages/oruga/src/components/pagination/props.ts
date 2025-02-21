@@ -66,7 +66,7 @@ export type PaginationClasses = Partial<{
     infoClass: ComponentClass;
     /** Class of the items list element */
     listClass: ComponentClass;
-    /** Class of an list item element */
+    /** Class of the list item element */
     listItemClass: ComponentClass;
     /** Class of the ellipsis element */
     ellipsisClass: ComponentClass;

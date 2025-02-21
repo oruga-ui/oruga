@@ -56,7 +56,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
     multilineClass: {
         class: "multilineClass",
         description:
-            "Class for inner body wrapper element when fill up multiple lines.",
+            "Class for inner body wrapper element to fill up multiple lines.",
         properties: ["multiline"],
         action: (cmp, data): void => {
             data.multiline = true;
@@ -89,11 +89,12 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
     labelClass: {
         class: "labelClass",
         description: "Class for the label element.",
+        properties: ["label"],
     },
     labelSizeClass: {
         class: "labelSizeClass",
         description: "Class for the label element with size.",
-        properties: ["labelSize"],
+        properties: ["label", "labelSize"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
             data.labelSize = "large";
@@ -102,7 +103,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
     labelVariantClass: {
         class: "labelVariantClass",
         description: "Class of the label element with variant.",
-        properties: ["variant"],
+        properties: ["label", "variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "info";
@@ -119,7 +120,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
     messageVariantClass: {
         class: "messageVariantClass",
         description: "Class of the message element with variant.",
-        properties: ["variant"],
+        properties: ["message", "variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "info";
