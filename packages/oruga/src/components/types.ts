@@ -526,7 +526,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class when fields are grouped together */
                 groupedClass: ClassDefinition;
                 /** Class when fields fill up multiple lines */
-                groupMultilineClass: ClassDefinition;
+                multilineClass: ClassDefinition;
                 /** Class for field label */
                 labelClass: ClassDefinition;
                 /** Class for field label size */

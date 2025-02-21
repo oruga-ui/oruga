@@ -95,8 +95,12 @@ const hasLabel = computed(() => props.label || !!slots.label);
 
 const hasMessage = computed(() => !!fieldMessage.value || !!slots.message);
 
-const isGrouped = computed(
-    () => props.grouped || hasInnerField.value || hasAddons.value,
+const hasBody = computed(
+    () =>
+        props.grouped ||
+        props.multiline ||
+        hasInnerField.value ||
+        hasAddons.value,
 );
 
 const hasAddons = computed(
@@ -175,16 +179,6 @@ const rootClasses = defineClasses(
     ["filledClass", "o-field--filled", null, isFilled],
 );
 
-const messageClasses = defineClasses(
-    ["messageClass", "o-field__message"],
-    [
-        "messageVariantClass",
-        "o-field__message-",
-        fieldVariant,
-        computed(() => !!fieldVariant.value),
-    ],
-);
-
 const labelClasses = defineClasses(
     ["labelClass", "o-field__label"],
     [
@@ -201,8 +195,6 @@ const labelClasses = defineClasses(
     ],
 );
 
-const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
-
 const horizontalLabelClasses = defineClasses([
     "horizontalLabelClass",
     "o-field__horizontal-label",
@@ -213,7 +205,9 @@ const horizontalBodyClasses = defineClasses([
     "o-field__horizontal-body",
 ]);
 
-const innerFieldClasses = defineClasses(
+const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
+
+const innerBodyClasses = defineClasses(
     ["rootClass", "o-field"],
     ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
     [
@@ -227,6 +221,16 @@ const innerFieldClasses = defineClasses(
         "o-field--multiline",
         null,
         computed(() => props.multiline),
+    ],
+);
+
+const messageClasses = defineClasses(
+    ["messageClass", "o-field__message"],
+    [
+        "messageVariantClass",
+        "o-field__message-",
+        fieldVariant,
+        computed(() => !!fieldVariant.value),
     ],
 );
 </script>
@@ -287,8 +291,8 @@ const innerFieldClasses = defineClasses(
             </template>
         </div>
 
-        <div v-else-if="isGrouped" :class="bodyClasses">
-            <div :class="innerFieldClasses">
+        <div v-else-if="hasBody" :class="bodyClasses">
+            <div :class="innerBodyClasses">
                 <!--
                    @slot Default content
                 -->
