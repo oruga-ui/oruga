@@ -67,9 +67,17 @@ const inspectData: InspectData<
             data.multiline = true;
         },
     },
-    tablistClass: {
-        class: "tablistClass",
-        description: "Class of the tablist element.",
+    listClass: {
+        class: "listClass",
+        description: "Class of the list container element.",
+    },
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the panels wrapper element.",
+    },
+    transitioningClass: {
+        class: "transitioningClass",
+        description: "Class of the panels wrapper element when transitioning.",
     },
     tabClass: {
         class: "tabClass",
@@ -114,15 +122,6 @@ const inspectData: InspectData<
         subitem: "tabitem",
         description: "Class of the tab item label element.",
         properties: ["label"],
-    },
-    contentClass: {
-        class: "contentClass",
-        description: "Class of the tab item wrapper element.",
-    },
-    transitioningClass: {
-        class: "transitioningClass",
-        description:
-            "Class of the tab item wrapper element when transitioning.",
     },
     tabPanelClass: {
         class: "tabPanelClass",

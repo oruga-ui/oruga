@@ -256,7 +256,7 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
     },
     autocompleteClasses: {
         class: "autocompleteClasses",
-        description: "Classes to apply on internal autocomplete component.",
+        description: "Classes to apply on the internal autocomplete component.",
         relatedComponent: "Autocomplete",
     },
 };

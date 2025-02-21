@@ -134,9 +134,8 @@ function inspectClass(
                             <a
                                 target="_blank"
                                 :href="`/components/${data.relatedComponent}.html#class-props`">
-                                here
+                                here.
                             </a>
-                            .
                         </span>
                         <span v-if="data.info">
                             <br />👉 <i><span v-html="data.info"></span></i>

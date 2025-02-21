@@ -46,18 +46,18 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
     },
     inputClass: {
         class: "inputClass",
-        description: "Classes to apply on the input element.",
+        description: "Class to apply on the input element.",
         relatedClass: "inputClasses.rootClass",
         relatedComponent: "Input",
     },
     inputClasses: {
         class: "inputClasses",
-        description: "Classes to apply on internal input component.",
+        description: "Classes to apply on the internal input component.",
         relatedComponent: "Input",
     },
     dropdownClass: {
         class: "dropdownClass",
-        description: "Classes to apply on the dropdown element.",
+        description: "Class to apply on the dropdown element.",
         relatedClass: "dropdownClasses.rootClass",
         relatedComponent: "Dropdown",
         action: (cmp, data): void => {
@@ -74,7 +74,7 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
     },
     selectClasses: {
         class: "selectClasses",
-        description: "Classes to apply on internal select component.",
+        description: "Classes to apply on the internal select component.",
         relatedComponent: "Select",
         action: (cmp, data): void => {
             data.active = true;

@@ -76,11 +76,11 @@ export type TabsClasses = Partial<{
     verticalClass: ComponentClass;
     /** Class of the root element when multilined */
     multilineClass: ComponentClass;
-    /** Class of the tablist element */
-    tablistClass: ComponentClass;
-    /** Class of the tab item wrapper element */
+    /** Class of the list container element */
+    listClass: ComponentClass;
+    /** Class of the panels wrapper element */
     contentClass: ComponentClass;
-    /** Class of the tab item wrapper element when transitioning */
+    /** Class of the panels wrapper element when transitioning */
     transitioningClass: ComponentClass;
 }>;
 

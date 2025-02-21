@@ -67,6 +67,8 @@ export type SwitchClasses = Partial<{
     positionClass: ComponentClass;
     /** Class of the root element when disabled */
     disabledClass: ComponentClass;
+    /** Class of the root element when rounded */
+    roundedClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;
     /** Class of the native input element when checked */
@@ -75,8 +77,6 @@ export type SwitchClasses = Partial<{
     switchClass: ComponentClass;
     /** Class of the outer switch check element when checked */
     switchCheckedClass: ComponentClass;
-    /** Class of the switch check element when rounded */
-    roundedClass: ComponentClass;
     /** Class of the inner switch check element */
     switchCheckClass: ComponentClass;
     /** Class of the switch label element */

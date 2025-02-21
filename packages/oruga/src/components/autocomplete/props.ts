@@ -1,5 +1,6 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
+import type { InputProps } from "../input/props";
 
 export type AutocompleteProps<T> = {
     /** Override existing theme classes completely */
@@ -124,8 +125,8 @@ export type AutocompleteClasses = Partial<{
     /** Class of the menu footer item */
     itemFooterClass: ComponentClass;
     /**
-     * Classes to apply on internal input component
+     * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: object;
+    inputClasses: InputProps<false>;
 }>;

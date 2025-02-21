@@ -225,7 +225,7 @@ export type DatepickerClasses = Partial<{
     tableCellNearbyClass: ComponentClass;
     /** Class of the cell element of a row when at least one event is present */
     tableCellEventsClass: ComponentClass;
-    /** Class of the events container */
+    /** Class of the events container element */
     tableEventsClass: ComponentClass;
     /** Class of the event element */
     tableEventClass: ComponentClass;

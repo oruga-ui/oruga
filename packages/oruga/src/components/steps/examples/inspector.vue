@@ -59,11 +59,11 @@ const inspectData: InspectData<
     },
     listClass: {
         class: "listClass",
-        description: "Class of the steps list container.",
+        description: "Class of the list container element.",
     },
     animatedClass: {
         class: "animatedClass",
-        description: "Class of steps list container when animated.",
+        description: "Class of the list container when animated.",
         properties: ["animated"],
         action: (cmp, data): void => {
             data.animated = true;
@@ -71,15 +71,15 @@ const inspectData: InspectData<
     },
     dividerClass: {
         class: "dividerClass",
-        description: "Class of the step item divider element.",
+        description: "Class of the item divider element.",
     },
     markerClass: {
         class: "markerClass",
-        description: "Class of the step item marker element.",
+        description: "Class of the item marker element.",
     },
     markerRoundedClass: {
         class: "markerRoundedClass",
-        description: "Class of the step item marker element when rounded.",
+        description: "Class of the item marker element when rounded.",
         properties: ["rounded"],
         action: (cmp, data): void => {
             data.position = "right";
@@ -87,13 +87,16 @@ const inspectData: InspectData<
     },
     contentClass: {
         class: "contentClass",
-        description: "Class of the step item wrapper element.",
+        description: "Class of the panels wrapper element.",
     },
     transitioningClass: {
         class: "transitioningClass",
-        description:
-            "Class of the step item wrapper element when transitioning.",
+        description: "Class of the panels wrapper element when transitioning.",
         info: "Click on a marker to see it in action!",
+    },
+    navigationClass: {
+        class: "navigationClass",
+        description: "Class of the navigation element",
     },
     stepClass: {
         class: "stepClass",
@@ -114,6 +117,16 @@ const inspectData: InspectData<
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
+        },
+    },
+    stepPositionClass: {
+        class: "stepPositionClass",
+        subitem: "stepitem",
+        description: "Class of the step item element when positioned.",
+        properties: ["labelPosition"],
+        suffixes: ["bottom", "right", "left"],
+        action: (cmp, data): void => {
+            data.labelPosition = "right";
         },
     },
     stepClickableClass: {
@@ -144,16 +157,6 @@ const inspectData: InspectData<
             data.modelValue = 2;
         },
     },
-    stepPositionClass: {
-        class: "stepPositionClass",
-        subitem: "stepitem",
-        description: "Class of the step item element when positioned.",
-        properties: ["labelPosition"],
-        suffixes: ["bottom", "right", "left"],
-        action: (cmp, data): void => {
-            data.labelPosition = "right";
-        },
-    },
     stepLabelClass: {
         class: "stepLabelClass",
         subitem: "stepitem",
@@ -168,10 +171,6 @@ const inspectData: InspectData<
         class: "stepPanelClass",
         subitem: "stepitem",
         description: "Class of the step panel element.",
-    },
-    navigationClass: {
-        class: "navigationClass",
-        description: "Class of the navigation element",
     },
 };
 </script>

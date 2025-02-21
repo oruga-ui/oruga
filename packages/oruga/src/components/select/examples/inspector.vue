@@ -23,7 +23,7 @@ const inspectData: InspectData<
     },
     rootVariantClass: {
         class: "rootVariantClass",
-        description: "Class of the root elelement with variant.",
+        description: "Class of the root element with variant.",
     },
     selectClass: {
         class: "selectClass",

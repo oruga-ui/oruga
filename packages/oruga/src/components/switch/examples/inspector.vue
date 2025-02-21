@@ -46,10 +46,18 @@ const inspectData: InspectData<SwitchClasses, SwitchProps<unknown>> = {
     },
     disabledClass: {
         class: "disabledClass",
-        description: "Class when root element when disabled.",
+        description: "Class of the root element when disabled.",
         properties: ["disabled"],
         action: (cmp, data): void => {
             data.disabled = true;
+        },
+    },
+    roundedClass: {
+        class: "roundedClass",
+        description: "Class of the root element when rounded.",
+        properties: ["rounded"],
+        action: (cmp, data): void => {
+            data.rounded = true;
         },
     },
     inputClass: {
@@ -72,14 +80,6 @@ const inspectData: InspectData<SwitchClasses, SwitchProps<unknown>> = {
         description: "Class of the outer switch check element when checked.",
         action: (cmp, data): void => {
             data.modelValue = true;
-        },
-    },
-    roundedClass: {
-        class: "roundedClass",
-        description: "Class of the switch check element when rounded.",
-        properties: ["rounded"],
-        action: (cmp, data): void => {
-            data.rounded = true;
         },
     },
     switchCheckClass: {

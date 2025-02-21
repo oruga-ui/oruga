@@ -32,7 +32,7 @@ const inspectData: InspectData<
     },
     textareaClass: {
         class: "textareaClass",
-        description: "Class of the native input element when type textarea.",
+        description: "Class of the native input element when type `textarea`.",
         properties: ["type"],
         action: (cmp, data): void => {
             data.type = "textarea";

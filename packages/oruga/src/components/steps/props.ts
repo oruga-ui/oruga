@@ -84,19 +84,19 @@ export type StepsClasses = Partial<{
     verticalClass: ComponentClass;
     /** Class of the root element when is vertical and has position */
     positionClass: ComponentClass;
-    /** Class of the steps list container */
+    /** Class of the list container element */
     listClass: ComponentClass;
-    /** Class of steps list container when animated */
+    /** Class of the list container when animated */
     animatedClass: ComponentClass;
-    /** Class of the step item divider element */
+    /** Class of the item divider element */
     dividerClass: ComponentClass;
-    /** Class of the step item marker element */
+    /** Class of the item marker element */
     markerClass: ComponentClass;
-    /** Class of the step item marker element when rounded */
+    /** Class of the item marker element when rounded */
     markerRoundedClass: ComponentClass;
-    /** Class of the step item wrapper element */
+    /** Class of the panels wrapper element */
     contentClass: ComponentClass;
-    /** Class of the step item wrapper element when transitioning */
+    /** Class of the panels wrapper element when transitioning */
     transitioningClass: ComponentClass;
     /** Class of the navigation element */
     navigationClass: ComponentClass;
@@ -151,12 +151,12 @@ export type StepItemClasses = Partial<{
     stepActiveClass: ComponentClass;
     /** Class of the step item element with variant (default value by parent steps component) */
     stepVariantClass: ComponentClass;
+    /** Class of the step item element when positioned */
+    stepPositionClass: ComponentClass;
     /** Class of the step item element when clickable */
     stepClickableClass: ComponentClass;
     /** Class of the step item element when disabled */
     stepDisabledClass: ComponentClass;
-    /** Class of the step item element when positioned */
-    stepPositionClass: ComponentClass;
     /** Class of the step item element before the active one */
     stepPreviousClass: ComponentClass;
     /** Class of the step item element after the active one */

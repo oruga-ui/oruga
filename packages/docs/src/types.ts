@@ -41,7 +41,7 @@ export type InspectClassDescription<
     action?: (cmp: HTMLElement, data: P) => void;
 };
 
-export type InspectClass = {
+export type InspectClass<P extends object = object> = {
     className: string;
-    action?: (cmp: HTMLElement, data: unknown) => void;
+    action?: (cmp: HTMLElement, data: P) => void;
 };

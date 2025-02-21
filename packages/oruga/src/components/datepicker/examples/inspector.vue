@@ -300,7 +300,7 @@ const inspectData: InspectData<
     },
     tableEventsClass: {
         class: "tableEventsClass",
-        description: "Class of the events container.",
+        description: "Class of the events container element.",
         action: (cmp, data): void => {
             data.inline = true;
             data.active = true;
@@ -516,18 +516,18 @@ const inspectData: InspectData<
     },
     inputClass: {
         class: "inputClass",
-        description: "Classes to apply on the input element.",
+        description: "Class to apply on the input element.",
         relatedClass: "inputClasses.rootClass",
         relatedComponent: "Input",
     },
     inputClasses: {
         class: "inputClasses",
-        description: "Classes to apply on internal input component.",
+        description: "Classes to apply on the internal input component.",
         relatedComponent: "Input",
     },
     dropdownClass: {
         class: "dropdownClass",
-        description: "Classes to apply on the dropdown element.",
+        description: "Class to apply on the dropdown element.",
         relatedClass: "dropdownClasses.rootClass",
         relatedComponent: "Dropdown",
         action: (cmp, data): void => {
@@ -545,7 +545,7 @@ const inspectData: InspectData<
     selectClasses: {
         class: "selectClasses",
         description:
-            "Classes to apply on internal select component (month and year list).",
+            "Classes to apply on the internal select component (month and year list).",
         relatedComponent: "Select",
         action: (cmp, data): void => {
             data.active = true;

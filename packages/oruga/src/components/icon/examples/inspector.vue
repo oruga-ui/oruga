@@ -7,22 +7,6 @@ const inspectData: InspectData<IconClasses, IconProps> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
-    clickableClass: {
-        class: "clickableClass",
-        description: "Class of the root element when clickable.",
-        properties: ["clickable"],
-        action: (cmp, data): void => {
-            data.clickable = true;
-        },
-    },
-    spinClass: {
-        class: "spinClass",
-        description: "Class of the root element when spin.",
-        properties: ["spin"],
-        action: (cmp, data): void => {
-            data.spin = true;
-        },
-    },
     sizeClass: {
         class: "sizeClass",
         description: "Class of the root element with size.",
@@ -39,6 +23,22 @@ const inspectData: InspectData<IconClasses, IconProps> = {
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
+        },
+    },
+    clickableClass: {
+        class: "clickableClass",
+        description: "Class of the root element when clickable.",
+        properties: ["clickable"],
+        action: (cmp, data): void => {
+            data.clickable = true;
+        },
+    },
+    spinClass: {
+        class: "spinClass",
+        description: "Class of the root element when spin.",
+        properties: ["spin"],
+        action: (cmp, data): void => {
+            data.spin = true;
         },
     },
 };
