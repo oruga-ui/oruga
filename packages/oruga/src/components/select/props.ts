@@ -70,32 +70,32 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
 type SelectClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the root element when rounded */
+    roundedClass: ComponentClass;
+    /** Class of the root element when has icon right */
+    hasIconRightClass: ComponentClass;
+    /** Class of the root element when multiple */
+    multipleClass: ComponentClass;
     /** Class of the native select element */
     selectClass: ComponentClass;
-    /** Class of the left icon space inside the select */
+    /** Class of the native select element with left icon space */
     iconLeftSpaceClass: ComponentClass;
-    /** Class of the right icon space inside the select */
+    /** Class of the native select element with right icon space */
     iconRightSpaceClass: ComponentClass;
-    /** Class of select when rounded */
-    roundedClass: ComponentClass;
-    /** Class of the select when multiple mode is active */
-    multipleClass: ComponentClass;
-    /** Class of select when expanded */
-    expandedClass: ComponentClass;
-    /** Class of select when disabled */
-    disabledClass: ComponentClass;
-    /** Class of the left icon */
-    iconLeftClass: ComponentClass;
-    /** Class of the right icon */
-    iconRightClass: ComponentClass;
-    /** Class of the select size */
-    sizeClass: ComponentClass;
-    /** Class of the select variant */
-    variantClass: ComponentClass;
-    /** Class of the select placeholder */
+    /** Class of the native select element with placeholder */
     placeholderClass: ComponentClass;
-    /** Class of the select arrow */
-    arrowClass: ComponentClass;
-    /** Class of the select variant for the root element*/
-    rootVariantClass: ComponentClass;
+    /** Class of the native select element when arrowed */
+    arrowedClass: ComponentClass;
+    /** Class of the left icon element */
+    iconLeftClass: ComponentClass;
+    /** Class of the right icon element */
+    iconRightClass: ComponentClass;
 }>;
