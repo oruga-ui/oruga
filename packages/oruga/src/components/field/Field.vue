@@ -39,9 +39,9 @@ const props = withDefaults(defineProps<FieldProps>(), {
     messageTag: () => getDefault("field.messageTag", "p"),
     messageId: () => useId(),
     grouped: false,
-    groupMultiline: false,
-    horizontal: false,
     addons: false,
+    multilined: false,
+    horizontal: false,
     mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
 
@@ -96,11 +96,7 @@ const hasLabel = computed(() => props.label || !!slots.label);
 const hasMessage = computed(() => !!fieldMessage.value || !!slots.message);
 
 const isGrouped = computed(
-    () =>
-        props.grouped ||
-        props.groupMultiline ||
-        hasInnerField.value ||
-        hasAddons.value,
+    () => props.grouped || hasInnerField.value || hasAddons.value,
 );
 
 const hasAddons = computed(
@@ -221,16 +217,16 @@ const innerFieldClasses = defineClasses(
     ["rootClass", "o-field"],
     ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
     [
-        "groupMultilineClass",
-        "o-field--grouped-multiline",
-        null,
-        computed(() => props.groupMultiline),
-    ],
-    [
         "addonsClass",
         "o-field--addons",
         null,
         computed(() => !props.grouped && hasAddons.value),
+    ],
+    [
+        "multilineClass",
+        "o-field--multiline",
+        null,
+        computed(() => props.multiline),
     ],
 );
 </script>
@@ -250,6 +246,7 @@ const innerFieldClasses = defineClasses(
                 <slot name="label" :label="label">{{ label }}</slot>
             </label>
         </div>
+
         <template v-else>
             <label
                 v-if="hasLabel"
