@@ -326,7 +326,12 @@ const inputClasses = defineClasses(
         null,
         hasIconRight,
     ],
-    ["placeholderClass", "o-sel__input--placeholder", null, placeholderVisible],
+    [
+        "placeholderClass",
+        "o-input__input--placeholder",
+        null,
+        placeholderVisible,
+    ],
 );
 
 const iconLeftClasses = defineClasses(["iconLeftClass", "o-input__icon-left"]);
