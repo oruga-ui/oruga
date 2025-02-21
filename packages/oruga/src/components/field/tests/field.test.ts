@@ -80,9 +80,9 @@ describe("OField tests", () => {
             expect(innerField.classes()).toContain("o-field--grouped");
         });
 
-        test('react accordingly when "groupMultiline" prop is set', () => {
+        test('react accordingly when "multiline" prop is set', () => {
             const wrapper = mount(OField, {
-                props: { groupMultiline: true },
+                props: { multiline: true },
                 slots: {
                     default: [OInput, '<button class="button">Button</button>'],
                 },
@@ -91,9 +91,7 @@ describe("OField tests", () => {
             const body = wrapper.find(".o-field__body");
             expect(body.exists()).toBeTruthy();
             const innerField = body.find(".o-field");
-            expect(innerField.classes()).toContain(
-                "o-field--grouped-multiline",
-            );
+            expect(innerField.classes()).toContain("o-field--multiline");
         });
     });
 
