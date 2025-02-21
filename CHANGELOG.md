@@ -1,3 +1,51 @@
+# [0.10.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.9.3...v0.10.0-pre.1) (2025-02-21)
+
+
+### Bug Fixes
+
+* **checkbox|radio|switch:** correct labelId formula issues with label slot ([#1166](https://github.com/oruga-ui/oruga/issues/1166)) ([4e00a9e](https://github.com/oruga-ui/oruga/commit/4e00a9e4834060b1c0a3aa3a86e18adbed15e259))
+* **datepicker:** make table and month class props reactive ([#1195](https://github.com/oruga-ui/oruga/issues/1195)) ([47e526a](https://github.com/oruga-ui/oruga/commit/47e526a1e0c5ac5284cb428ee24035ec3f7e49a0))
+* solve several a11y issues ([#1184](https://github.com/oruga-ui/oruga/issues/1184)) ([bdabeb6](https://github.com/oruga-ui/oruga/commit/bdabeb6ca8e83e66891308295b93245a3337d6dc))
+* **table:** prevent table paginate unsafe property inheritance ([#1162](https://github.com/oruga-ui/oruga/issues/1162)) ([e0d17c6](https://github.com/oruga-ui/oruga/commit/e0d17c6318942c2f8244f59b845a5d5dd2f63e0a))
+* **table:** solve a table columns ordering problem ([#1171](https://github.com/oruga-ui/oruga/issues/1171)) ([ccae595](https://github.com/oruga-ui/oruga/commit/ccae5953d382df0fc2b633e33f3556622729d655))
+* **tabs|steps:** replace falsly check with nullish check for default `value` prop ([#1173](https://github.com/oruga-ui/oruga/issues/1173)) ([eecd0c3](https://github.com/oruga-ui/oruga/commit/eecd0c39be6f4cc6d2af9f72332629f3a7badd5e))
+* **taginput:** prevent item removing when is `disabled` ([#1177](https://github.com/oruga-ui/oruga/issues/1177)) ([b17edb6](https://github.com/oruga-ui/oruga/commit/b17edb68c76790e567e0721e9fbda8a5ff7846e8))
+* **tooltip:** make `arrowVariantClass` class available ([#1198](https://github.com/oruga-ui/oruga/issues/1198)) ([58a4002](https://github.com/oruga-ui/oruga/commit/58a4002917a38d67f4edcb3f75197279e0f89af4))
+
+
+### Features
+
+* **autocomplete:** add `v-model:active` prop ([#1193](https://github.com/oruga-ui/oruga/issues/1193)) ([7f2871c](https://github.com/oruga-ui/oruga/commit/7f2871ce93d242d557f503077e1cdcc6566ea3ef))
+* **button:** support w3c WAI-ARIA pattern ([#1185](https://github.com/oruga-ui/oruga/issues/1185)) ([205e502](https://github.com/oruga-ui/oruga/commit/205e502784c0296cccf106fc3016aba89e9c1f35))
+* **carousel:** support w3c WAI-ARIA pattern ([#1180](https://github.com/oruga-ui/oruga/issues/1180)) ([bab6b37](https://github.com/oruga-ui/oruga/commit/bab6b37c69b947ee3d8a69fe70033fe448136e32))
+* **collapse:** add `expanded` prop ([#1194](https://github.com/oruga-ui/oruga/issues/1194)) ([6ead0ac](https://github.com/oruga-ui/oruga/commit/6ead0ac6c0047127819e1f7ee9b2fa0e9ed15731))
+* **collapse:** support w3c WAI-ARIA pattern ([#1186](https://github.com/oruga-ui/oruga/issues/1186)) ([5d60eed](https://github.com/oruga-ui/oruga/commit/5d60eedfd69cd7eb13e52fe0ae6f29e3455d1ee0))
+* **dropdown:** add `closeOnScroll` feature ([bde7ab1](https://github.com/oruga-ui/oruga/commit/bde7ab18a6bcd6dd87bf1455a8732b5de694bf55))
+* **dropdown:** apply w3c WAI-ARIA (a11y) pattern ([#1143](https://github.com/oruga-ui/oruga/issues/1143)) ([b1db037](https://github.com/oruga-ui/oruga/commit/b1db03712c20710a237f81f643677e6bb729e337))
+* **dropdown:** make `closeOnOutside`, `selectOnFocus` and `selectOnClose` configurable ([#1182](https://github.com/oruga-ui/oruga/issues/1182)) ([8e235f3](https://github.com/oruga-ui/oruga/commit/8e235f336f5ee2615a7b578f9aba252452920b43))
+* **field:** change prop `groupMultiline` to `multiline` ([#1200](https://github.com/oruga-ui/oruga/issues/1200)) ([3b36782](https://github.com/oruga-ui/oruga/commit/3b367826da8218ed70b249451af2f689b11f273c))
+* **menu:** support w3c WAI-ARIA pattern | add `options` prop ([#1154](https://github.com/oruga-ui/oruga/issues/1154)) ([b07cc5a](https://github.com/oruga-ui/oruga/commit/b07cc5a4a962c2afb0c9ee737d385d90b3a77451))
+* **programmatic:** add programmatic instance `count()` function ([#1161](https://github.com/oruga-ui/oruga/issues/1161)) ([c9b7e25](https://github.com/oruga-ui/oruga/commit/c9b7e257bd03c0f38a799278ba344522e59916b7))
+* **programmatic:** make programmatic components devtools compatible ([#1175](https://github.com/oruga-ui/oruga/issues/1175)) ([40dd968](https://github.com/oruga-ui/oruga/commit/40dd9681705e29128135f3c341bcf279c1ae502f))
+* **skeleton:** rename classes to match pattern ([#1196](https://github.com/oruga-ui/oruga/issues/1196)) ([9bf2b34](https://github.com/oruga-ui/oruga/commit/9bf2b348ac01a8d41ca4bf6ff5378108d60afbeb))
+* **slider:** add slider thumb aria-labelledby connection to the field wrapper ([#1165](https://github.com/oruga-ui/oruga/issues/1165)) ([86d1d7e](https://github.com/oruga-ui/oruga/commit/86d1d7e7339fd5f57746eaaf657c2d7257a82266))
+* **steps/tabs:** remove prop `destroyOnHide` ([#1138](https://github.com/oruga-ui/oruga/issues/1138)) ([ce11b3e](https://github.com/oruga-ui/oruga/commit/ce11b3e540e0a9b2d426d9fa2680386bb7eb709a))
+* **steps:** support w3c WAI-ARIA pattern ([#1183](https://github.com/oruga-ui/oruga/issues/1183)) ([c0f9c9f](https://github.com/oruga-ui/oruga/commit/c0f9c9f5147ba6886e7764d72404be8a62a9da5f))
+* **table:** rename prop `debounceSearch` to `filterDebounce` to match other props ([#1176](https://github.com/oruga-ui/oruga/issues/1176)) ([ceb15e8](https://github.com/oruga-ui/oruga/commit/ceb15e88bca6c80085ee6498b36b4fdb18167210))
+* **table:** rename prop `headerCheckable` to `checkableHeader` to match other props ([dac6748](https://github.com/oruga-ui/oruga/commit/dac6748f358f9f8d5935d90f6f8ea0b69e18ee63))
+* **table:** rename prop `headerCheckable` to `checkableHeader` to match other props ([#1178](https://github.com/oruga-ui/oruga/issues/1178)) ([a8324c9](https://github.com/oruga-ui/oruga/commit/a8324c9388863537f9f22b5e939fc194cbf8ceef))
+* **table:** support w3c WAI-ARIA (a11y) pattern ([#1135](https://github.com/oruga-ui/oruga/issues/1135)) ([ee8c00e](https://github.com/oruga-ui/oruga/commit/ee8c00e04e1c58d70f607ccd8c7fb86ea2cddc88))
+* **tabs:** support w3c WAI-ARIA pattern ([#1170](https://github.com/oruga-ui/oruga/issues/1170)) ([2f55c88](https://github.com/oruga-ui/oruga/commit/2f55c883bebd557bddab4ad43798f6f69c2aaef6))
+* **tabs:** update tab html structure and classes  ([#1120](https://github.com/oruga-ui/oruga/issues/1120)) ([72662d3](https://github.com/oruga-ui/oruga/commit/72662d34ab6147b100bd11ca3819221c705aa1a4))
+* **taginput:** move variant and size class to root element ([#1197](https://github.com/oruga-ui/oruga/issues/1197)) ([aef344b](https://github.com/oruga-ui/oruga/commit/aef344be5d82240b9fc437e98b49c95f2b323eba))
+* **tooltip:** support w3c WAI-ARIA pattern ([#1146](https://github.com/oruga-ui/oruga/issues/1146)) ([8e87a15](https://github.com/oruga-ui/oruga/commit/8e87a152642d12b21388e4ee6ad8e51015d0d80d))
+* unify HTML input based component classes ([#1201](https://github.com/oruga-ui/oruga/issues/1201)) ([f96628f](https://github.com/oruga-ui/oruga/commit/f96628f96635d9c2f52259c4173251d219d45d62))
+
+
+### Detailed Changes
+_following with the main release..._
+
+
 ## [0.9.3](https://github.com/oruga-ui/oruga/compare/v0.9.2...v0.9.3) (2024-12-19)
 
 
