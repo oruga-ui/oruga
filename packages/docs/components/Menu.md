@@ -110,14 +110,6 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ## Class Inspector
 
-<inspector-menuitem-viewer />
-
-</div>
-
-<div class="vp-example">
-
-## Class Inspector
-
 <inspector-menu-viewer />
 
 </div>

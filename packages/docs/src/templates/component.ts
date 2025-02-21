@@ -72,9 +72,15 @@ ${
         ? requiresMd.map((component) => component.content).join(" ")
         : ""
 }
+${
+    isSubComponent
+        ? ""
+        : `
 <div class="vp-example">
 ${renderClasses(component)}
 </div>
+`
+}
 ${
     style
         ? `

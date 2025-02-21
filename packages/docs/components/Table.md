@@ -205,14 +205,6 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 ## Class Inspector
 
-<inspector-tablecolumn-viewer />
-
-</div>
-
-<div class="vp-example">
-
-## Class Inspector
-
 <inspector-table-viewer />
 
 </div>

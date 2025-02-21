@@ -119,14 +119,6 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 ## Class Inspector
 
-<inspector-stepitem-viewer />
-
-</div>
-
-<div class="vp-example">
-
-## Class Inspector
-
 <inspector-steps-viewer />
 
 </div>

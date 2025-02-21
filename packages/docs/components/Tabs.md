@@ -116,14 +116,6 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ## Class Inspector
 
-<inspector-tabitem-viewer />
-
-</div>
-
-<div class="vp-example">
-
-## Class Inspector
-
 <inspector-tabs-viewer />
 
 </div>

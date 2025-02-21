@@ -112,14 +112,6 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ## Class Inspector
 
-<inspector-carouselitem-viewer />
-
-</div>
-
-<div class="vp-example">
-
-## Class Inspector
-
 <inspector-carousel-viewer />
 
 </div>

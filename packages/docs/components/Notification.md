@@ -105,14 +105,6 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ## Class Inspector
 
-<inspector-notificationnotice-viewer />
-
-</div>
-
-<div class="vp-example">
-
-## Class Inspector
-
 <inspector-notification-viewer />
 
 </div>

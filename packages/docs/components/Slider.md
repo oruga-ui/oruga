@@ -102,14 +102,6 @@ Use it with the Field component to access all the functionalities.
 
 ## Class Inspector
 
-<inspector-slidertick-viewer />
-
-</div>
-
-<div class="vp-example">
-
-## Class Inspector
-
 <inspector-slider-viewer />
 
 </div>
