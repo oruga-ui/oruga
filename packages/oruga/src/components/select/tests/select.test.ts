@@ -41,7 +41,7 @@ describe("OSelect tests", () => {
 
         const select = wrapper.find("select");
         expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel-iconspace-left")).toBeTruthy();
+        expect(select.classes("o-sel--iconspace-left")).toBeTruthy();
 
         await iconElement.trigger("click");
         expect(wrapper.emitted("icon-click")).toBeUndefined();
@@ -75,7 +75,7 @@ describe("OSelect tests", () => {
 
         const select = wrapper.find("select");
         expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel-iconspace-right")).toBeTruthy();
+        expect(select.classes("o-sel--iconspace-right")).toBeTruthy();
 
         await iconElement.trigger("click");
         expect(wrapper.emitted("icon-right-click")).toBeUndefined();
