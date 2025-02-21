@@ -14,7 +14,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
-import { isTrueish } from "@/utils/helpers";
+import { isDefined, isTrueish } from "@/utils/helpers";
 import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -199,6 +199,10 @@ function onInput(event: Event): void {
     emits("input", value, event);
 }
 
+const placeholderVisible = computed(
+    () => !isDefined(vmodel.value) || vmodel.value === "",
+);
+
 // --- Icon Feature ---
 
 const hasIconRight = computed(() => {
@@ -273,24 +277,7 @@ const inputBind = computed(() => ({
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-input__wrapper"],
-    [
-        "expandedClass",
-        "o-input__wrapper--expanded",
-        null,
-        computed(() => props.expanded),
-    ],
-    [
-        "hasIconRightClass",
-        "o-input__wrapper--has-icon-right",
-        null,
-        hasIconRight,
-    ],
-);
-
-const inputClasses = defineClasses(
-    ["inputClass", "o-input"],
-    ["roundedClass", "o-input--rounded", null, computed(() => props.rounded)],
+    ["rootClass", "o-input"],
     [
         "sizeClass",
         "o-input--",
@@ -304,24 +291,47 @@ const inputClasses = defineClasses(
         computed(() => !!statusVariant.value || !!props.variant),
     ],
     [
+        "expandedClass",
+        "o-input--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+    [
         "disabledClass",
         "o-input--disabled",
         null,
         computed(() => props.disabled),
     ],
+    ["roundedClass", "o-input--rounded", null, computed(() => props.rounded)],
+    ["hasIconRightClass", "o-input--icon-right", null, hasIconRight],
     [
         "textareaClass",
-        "o-input__textarea",
+        "o-input--textarea",
         null,
         computed(() => props.type === "textarea"),
     ],
+);
+
+const inputClasses = defineClasses(
+    ["inputClass", "o-input__input"],
     [
         "iconLeftSpaceClass",
-        "o-input--iconspace-left",
+        "o-input__input--iconspace-left",
         null,
         computed(() => !!props.icon),
     ],
-    ["iconRightSpaceClass", "o-input--iconspace-right", null, hasIconRight],
+    [
+        "iconRightSpaceClass",
+        "o-input__input--iconspace-right",
+        null,
+        hasIconRight,
+    ],
+    [
+        "placeholderClass",
+        "o-input__input--placeholder",
+        null,
+        placeholderVisible,
+    ],
 );
 
 const iconLeftClasses = defineClasses(["iconLeftClass", "o-input__icon-left"]);

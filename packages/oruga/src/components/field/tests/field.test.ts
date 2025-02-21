@@ -22,7 +22,7 @@ describe("OField tests", () => {
             props: { variant },
             slots: { default: [OInput] },
         });
-        const input = wrapper.find(".o-input__wrapper");
+        const input = wrapper.find('[data-oruga="input"]');
         expect(input.exists()).toBeTruthy();
         expect(input.find(".o-icon").classes()).toContain("o-icon--danger");
     });
@@ -34,7 +34,7 @@ describe("OField tests", () => {
                 props: { message },
                 slots: { default: [OInput] },
             });
-            const messageDiv = wrapper.find("p.o-field__message");
+            const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
             expect(messageDiv.text()).toEqual(message);
         });
