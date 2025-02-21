@@ -192,22 +192,20 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class when checkbox is disabled */
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element when disabled */
                 disabledClass: ClassDefinition;
                 /** Class of the root element when checked */
                 checkedClass: ClassDefinition;
-                /** Class of the checkbox input */
-                inputClass: ClassDefinition;
-                /** Class of the checkbox input when checked */
-                inputCheckedClass: ClassDefinition;
-                /** Class when checkbox is indeterminate */
+                /** Class of the the root element when indeterminate */
                 indeterminateClass: ClassDefinition;
-                /** Class of the checkbox labe */
+                /** Class of the native input element */
+                inputClass: ClassDefinition;
+                /** Class of the label element */
                 labelClass: ClassDefinition;
-                /** Class of the checkbox size */
-                sizeClass: ClassDefinition;
-                /** Class of the checkbox variant */
-                variantClass: ClassDefinition;
             }>;
         collapse?: ComponentConfigBase &
             Partial<{
@@ -592,32 +590,34 @@ See icon library documentation for custom classes. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of input when expanded */
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
-                /** Class of input when type textarea */
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the root element when type `textarea` */
                 textareaClass: ClassDefinition;
-                /** Class of the left icon space inside the input */
-                iconLeftSpaceClass: ClassDefinition;
-                /** Class of the right icon space inside the input */
-                iconRightSpaceClass: ClassDefinition;
+                /** Class to the root element when has a right icon */
+                hasIconRightClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of input when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of input when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the left icon */
+                /** Class of the native input element with left icon space */
+                iconLeftSpaceClass: ClassDefinition;
+                /** Class of the native input element with right icon space */
+                iconRightSpaceClass: ClassDefinition;
+                /** Class of the native input element with placeholder */
+                placeholderClass: ClassDefinition;
+                /** Class of the left icon element */
                 iconLeftClass: ClassDefinition;
-                /** Class of the right icon */
+                /** Class of the right icon element */
                 iconRightClass: ClassDefinition;
-                /** Class to display when a right icon is used */
-                hasIconRightClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
-                /** Class of the input size */
-                sizeClass: ClassDefinition;
-                /** Class of the input variant */
-                variantClass: ClassDefinition;
             }>;
         loading?: ComponentConfigBase &
             Partial<{
@@ -853,20 +853,18 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class when radio is disabled */
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element when disabled */
                 disabledClass: ClassDefinition;
                 /** Class of the root element when checked */
                 checkedClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the native input element when checked */
-                inputCheckedClass: ClassDefinition;
-                /** Class of the radio label */
+                /** Class of the label element */
                 labelClass: ClassDefinition;
-                /** Class of the radio size */
-                sizeClass: ClassDefinition;
-                /** Class of the radio variant */
-                variantClass: ClassDefinition;
             }>;
         select?: ComponentConfigBase &
             Partial<{
@@ -884,34 +882,34 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element when expanded */
+                expandedClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when has icon right */
+                hasIconRightClass: ClassDefinition;
+                /** Class of the root element when multiple */
+                multipleClass: ClassDefinition;
                 /** Class of the native select element */
                 selectClass: ClassDefinition;
-                /** Class of the left icon space inside the select */
+                /** Class of the native select element with left icon space */
                 iconLeftSpaceClass: ClassDefinition;
-                /** Class of the right icon space inside the select */
+                /** Class of the native select element with right icon space */
                 iconRightSpaceClass: ClassDefinition;
-                /** Class of select when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of the select when multiple mode is active */
-                multipleClass: ClassDefinition;
-                /** Class of select when expanded */
-                expandedClass: ClassDefinition;
-                /** Class of select when disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the left icon */
-                iconLeftClass: ClassDefinition;
-                /** Class of the right icon */
-                iconRightClass: ClassDefinition;
-                /** Class of the select size */
-                sizeClass: ClassDefinition;
-                /** Class of the select variant */
-                variantClass: ClassDefinition;
-                /** Class of the select placeholder */
+                /** Class of the native select element with placeholder */
                 placeholderClass: ClassDefinition;
-                /** Class of the select arrow */
-                arrowClass: ClassDefinition;
-                /** Class of the select variant for the root element */
-                rootVariantClass: ClassDefinition;
+                /** Class of the native select element when arrowed */
+                arrowedClass: ClassDefinition;
+                /** Class of the left icon element */
+                iconLeftClass: ClassDefinition;
+                /** Class of the right icon element */
+                iconRightClass: ClassDefinition;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
@@ -1136,30 +1134,28 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 autocomplete: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class when switch is disabled */
-                disabledClass: ClassDefinition;
-                /** Class of the outer switch check */
-                switchClass: ClassDefinition;
-                /** Class of the outer switch check when checked */
-                switchCheckedClass: ClassDefinition;
-                /** Class of the inner switch check */
-                switchCheckClass: ClassDefinition;
-                /** Class of the switch when rounded */
-                roundedClass: ClassDefinition;
-                /** Class of the switch passive variant */
-                passiveVariantClass: ClassDefinition;
-                /** Class of switch label position */
-                positionClass: ClassDefinition;
-                /** Root class of the native input checkbox */
-                inputClass: ClassDefinition;
-                /** Class of the native input element when checked */
-                inputCheckedClass: ClassDefinition;
-                /** Class of the switch label */
-                labelClass: ClassDefinition;
-                /** Class of the switch size */
+                /** Class of the root element with size */
                 sizeClass: ClassDefinition;
-                /** Class of the switch variant */
+                /** Class of the root element with variant */
                 variantClass: ClassDefinition;
+                /** Class of the root element with passive variant */
+                passiveVariantClass: ClassDefinition;
+                /** Class of the root element with position */
+                positionClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when checked */
+                checkedClass: ClassDefinition;
+                /** Class of the native input element */
+                inputClass: ClassDefinition;
+                /** Class of the track background element of the toggle */
+                trackClass: ClassDefinition;
+                /** Class of the thumb element that slides on the track */
+                thumbClass: ClassDefinition;
+                /** Class of the label element */
+                labelClass: ClassDefinition;
             }>;
         table?: ComponentConfigBase &
             Partial<{
