@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
-const selected = ref(null);
+import type { InspectData } from "@/docs";
+import type { TableClasses, TableProps, TableColumnProps } from "../props";
+import type { TableColumn } from "../types";
 
 const data = [
     {
@@ -27,7 +27,7 @@ const data = [
     },
 ];
 
-const columns = [
+const columns: TableColumn[] = [
     {
         field: "id",
         label: "ID",
@@ -81,222 +81,223 @@ const columns = [
     },
 ];
 
-const inspectData = [
-    {
+const inspectData: InspectData<
+    TableClasses,
+    TableProps<unknown> & TableColumnProps<unknown>
+> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of Table root element",
+        description: "Class of the root element.",
     },
-    {
-        class: "tableClass",
-        description: "Class of the Table",
+    mobileClass: {
+        class: "mobileClass",
+        description: "Class of the root and wrapper element when on mobile.",
+        info: "Switch to mobile view to see it in action!",
     },
-    {
+    mobileSortClass: {
+        class: "mobileSortClass",
+        description: "Class of the sortable form wrapper on mobile.",
+        info: "Switch to mobile view to see it in action!",
+    },
+    wrapperClass: {
         class: "wrapperClass",
-        description: "Class of the Table wrapper",
+        description: "Class of the table wrapper element.",
     },
-    {
-        class: "emptyClass",
-        description: "Class of the Table when it is empty",
-        action: (cmp, data): void => {
-            data.isEmpty = true;
-        },
-    },
-    {
-        class: "footerClass",
-        description: "Class of the Table footer",
-        action: (cmp, data): void => {
-            data.tableClass = "inspector_table";
-        },
-    },
-    {
-        class: "borderedClass",
-        properties: ["bordered"],
-        description: "Class of the Table when is bordered",
-        action: (cmp, data): void => {
-            data.bordered = true;
-        },
-    },
-    {
-        class: "stripedClass",
-        properties: ["striped"],
-        description: "Class of the Table when rows are striped",
-        action: (cmp, data): void => {
-            data.striped = true;
-        },
-    },
-    {
-        class: "narrowedClass",
-        properties: ["narrowed"],
-        description: "Class of the Table when rows are narrowed",
-        action: (cmp, data): void => {
-            data.narrowed = true;
-        },
-    },
-    {
-        class: "hoverableClass",
-        properties: ["hoverable or focusable"],
-        description: "Class of the Table when is hoverable",
-        action: (cmp, data): void => {
-            data.hoverable = true;
-        },
-    },
-    {
+    stickyHeaderClass: {
         class: "stickyHeaderClass",
-        properties: ["sticky-header"],
-        description: "Class of the Table wrapper when header is sticky",
+        description:
+            "Class of the table wrapper element when header is sticky.",
+        properties: ["stickyHeader"],
         action: (cmp, data): void => {
             data.stickyHeader = true;
         },
     },
-    {
+    scrollableClass: {
         class: "scrollableClass",
-        properties: ["scrollable"],
         description:
-            "Class of the Table wrapper when its content is scrollable",
+            "Class of the table wrapper element when its content is scrollable.",
+        properties: ["scrollable"],
         action: (cmp, data): void => {
             data.scrollable = true;
         },
     },
-    {
-        class: "trDetailedClass",
-        description: "Class of the detail Table row ",
-        properties: ["detailed"],
-        warning: "Expand details to see it in action!",
+    tableClass: {
+        class: "tableClass",
+        description: "Class of the table element.",
+    },
+    borderedClass: {
+        class: "borderedClass",
+        description: "Class of the table element when bordered.",
+        properties: ["bordered"],
         action: (cmp, data): void => {
-            data.tableClass = "inspector_table";
-            data.mobileCards = true;
+            data.bordered = true;
         },
     },
-    {
-        class: "trSelectedClass",
-        description: "Class of the Table row when selected",
-        warning: "Select a row of the table to see it in action!",
+    stripedClass: {
+        class: "stripedClass",
+        properties: ["striped"],
+        description: "Class of the table element when striped.",
         action: (cmp, data): void => {
-            data.tableClass = "inspector_table";
+            data.striped = true;
         },
     },
-    {
-        class: "trCheckedClass",
-        description: "Class of the Table row when checkable and checked",
-        warning: "Select a row of the table to see it in action!",
-        properties: ["checkable"],
+    narrowedClass: {
+        class: "narrowedClass",
+        description: "Class of the table element when narrowed.",
+        properties: ["narrowed"],
         action: (cmp, data): void => {
-            data.checkable = true;
+            data.narrowed = true;
         },
     },
-    {
-        class: "trEmptyClass",
-        description: "Class of the Table row when table is empty",
+    hoverableClass: {
+        class: "hoverableClass",
+        description: "Class of the table element when hoverable.",
+        properties: ["hoverable"],
+        action: (cmp, data): void => {
+            data.hoverable = true;
+        },
+    },
+    emptyClass: {
+        class: "emptyClass",
+        description: "Class of the table element when it is empty.",
         action: (cmp, data): void => {
             data.data = [];
         },
     },
-    {
+    thClass: {
         class: "thClass",
-        description: "Class of the Table `th` element",
+        description: "Class of the table `th` element",
     },
-    {
+    thPositionClass: {
+        class: "thPositionClass",
+        description: "Class of the table `th` element with position.",
+        suffixes: ["left", "centered", "right"],
+        properties: ["position"],
+    },
+    thCheckboxClass: {
         class: "thCheckboxClass",
-        description: "Class of the Table `th` element when is checkable",
+        description: "Class of the table `th` element when checkable.",
         properties: ["checkable"],
         action: (cmp, data): void => {
             data.checkable = true;
         },
     },
-    {
+    thStickyClass: {
+        class: "thStickyClass",
+        description: "Class of the table `th` element when checkbox is sticky.",
+        properties: ["stickyCheckbox"],
+        action: (cmp, data): void => {
+            data.checkable = true;
+            data.stickyCheckbox = true;
+        },
+    },
+    thDetailedClass: {
         class: "thDetailedClass",
         description:
-            "Class of the Table `th` element of the detail column of triggers",
+            "Class of the table `th` element of the detail column of triggers.",
         properties: ["detailed"],
         action: (cmp, data): void => {
             data.detailed = true;
         },
     },
-    {
-        class: "thCurrentSortClass",
-        description: "Class of the Table `th` element currently sorted",
-        warning:
-            "Click on 'First Name' header to sort elements and see it in action!",
-    },
-    {
+    thSortableClass: {
         class: "thSortableClass",
-        description: "Class of the sortable Table `th` element",
+        description: "Class of the table `th` element when sortable.",
         properties: ["sortable"],
     },
-    {
-        class: "thUnselectableClass",
-        description: "Class of the Table `th` element that is unsortable",
-        properties: ["!headerSelectable and sortable"],
-    },
-    {
-        class: "thPositionClass",
-        description:
-            "Class of the Table `th` element when component is positioned",
-        suffixes: ["left", "centered", "right"],
-        properties: ["position"],
-    },
-    {
-        class: "thStickyClass",
-        description: "Class of the Table `th` element when component is sticky",
-        properties: ["sticky"],
-    },
-    {
+    thSortIconClass: {
         class: "thSortIconClass",
-        description: "Class of the Table sort icon in the header",
-        warning:
-            "Click on 'First Name' header to sort elements and see it in action!",
+        description: "Class of the table header sort icon element.",
+        info: "Click on 'First Name' header to sort elements and see it in action!",
     },
-    {
+    thCurrentSortClass: {
+        class: "thCurrentSortClass",
+        description:
+            "Class of the table `th` element that is currently sorted.",
+        info: "Click on 'First Name' header to sort elements and see it in action!",
+    },
+    thUnselectableClass: {
+        class: "thUnselectableClass",
+        description: "Class of the Table `th` element that is unsortable.",
+        properties: ["headerSelectable", "sortable"],
+    },
+    thSubheadingClass: {
         class: "thSubheadingClass",
-        description: "Class of the Table `th` subheading element",
+        description: "Class of the table `th` subheading element",
         properties: ["subheading"],
     },
-    {
-        class: "tdClass",
-        description: "Class of the Table `td` element",
+    trSelectedClass: {
+        class: "trSelectedClass",
+        description: "Class of the table `tr` element when selected.",
+        info: "Select a row of the table to see it in action!",
+        action: (cmp, data): void => {
+            data.tableClass = "inspector_table";
+        },
     },
-    {
-        class: "tdCheckboxClass",
-        description: "Class of the Table `td` element when is checkable",
+    trDetailedClass: {
+        class: "trDetailedClass",
+        description: "Class of the table `tr` element when detailed. ",
+        info: "Expand details to see it in action!",
+        properties: ["detailed"],
+        action: (cmp, data): void => {
+            data.tableClass = "inspector_table";
+            data.mobileCards = true;
+            data.detailed = true;
+        },
+    },
+    trCheckedClass: {
+        class: "trCheckedClass",
+        description:
+            "Class of the table `tr` element when checkable and checked.",
+        info: "Select a row of the table to see it in action!",
         properties: ["checkable"],
         action: (cmp, data): void => {
             data.checkable = true;
         },
     },
-    {
-        class: "tdDetailedChevronClass",
-        properties: ["detailed"],
-        description:
-            "Class of the Table `td` element that contains the chevron to trigger details",
+    trEmptyClass: {
+        class: "trEmptyClass",
+        description: "Class of the table `tr` element when table is empty.",
         action: (cmp, data): void => {
-            data.mobileCards = true;
+            data.data = [];
         },
     },
-    {
+    tdClass: {
+        class: "tdClass",
+        description: "Class of the Table `td` element.",
+    },
+    tdPositionClass: {
         class: "tdPositionClass",
-        description:
-            "Class of the Table `td` element when component is positioned",
+        description: "Class of the table `td` element with position.",
         suffixes: ["left", "centered", "right"],
         properties: ["position"],
     },
-    {
+    tdStickyClass: {
         class: "tdStickyClass",
-        description: "Class of the Table `td` element when component is sticky",
+        description: "Class of the table `td` element when column is sticky.",
         properties: ["sticky"],
     },
-    {
-        class: "mobileSortClass",
-        description: "Class of the sortable form wrapper on mobile",
-        warning: "Switch to mobile view to see it in action!",
+    tdCheckboxClass: {
+        class: "tdCheckboxClass",
+        description: "Class of the table `td` element when row is checkable.",
+        properties: ["checkable"],
+        action: (cmp, data): void => {
+            data.checkable = true;
+        },
     },
-    {
-        class: "mobileClass",
-        description: "Class of the Table component when on mobile",
-        warning: "Switch to mobile view to see it in action!",
+    tdDetailedChevronClass: {
+        class: "tdDetailedChevronClass",
+        description:
+            "Class of the table `td` element that contains the chevron to trigger details.",
+        properties: ["detailed"],
+        action: (cmp, data): void => {
+            data.mobileCards = true;
+            data.detailed = true;
+        },
     },
-    {
+    paginationWrapperClass: {
         class: "paginationWrapperClass",
-        description: "Class of the Table pagination wrapper",
+        description: "Class of the table pagination wrapper element.",
         properties: ["paginated"],
         action: (cmp, data): void => {
             data.paginated = true;
@@ -304,17 +305,24 @@ const inspectData = [
             data.perPage = 2;
         },
     },
-];
+    footerClass: {
+        class: "footerClass",
+        description: "Class of the table footer element.",
+        action: (cmp, data): void => {
+            data.tableClass = "inspector_table";
+        },
+    },
+    loadingClasses: {
+        class: "loadingClasses",
+        description: "Classes to apply on the internal loading component.",
+        relatedComponent: "Loading",
+    },
+};
 </script>
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-table
-            v-bind="props"
-            v-model:selected="selected"
-            :data="props.isEmpty ? [] : data"
-            :columns="columns"
-            detailed>
+        <o-table :data="data" :columns="columns" v-bind="props">
             <template #footer> This is the footer </template>
             <template #detail> DETAILS </template>
         </o-table>

@@ -54,33 +54,33 @@ export type ButtonProps = {
 } & ButtonClasses;
 
 // class props (will not be displayed in the docs)
-type ButtonClasses = Partial<{
+export type ButtonClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the button elements wrapper */
-    wrapperClass: ComponentClass;
-    /** Class of the button when outlined */
-    outlinedClass: ComponentClass;
-    /** Class of the button with loading */
-    loadingClass: ComponentClass;
-    /** Class of the button when inverted */
-    invertedClass: ComponentClass;
-    /** Class of the button when expanded */
-    expandedClass: ComponentClass;
-    /** Class of the button when rounded */
-    roundedClass: ComponentClass;
-    /** Class of the button when disabled */
-    disabledClass: ComponentClass;
-    /** Class of the button icon */
-    iconClass: ComponentClass;
-    /** Class of the button icon on the left */
-    iconLeftClass: ComponentClass;
-    /** Class of the button icon on the right */
-    iconRightClass: ComponentClass;
-    /** Class of the button label */
-    labelClass: ComponentClass;
-    /** Class of the button size */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
-    /** Class of the button variant */
+    /** Class of the root element with variant */
     variantClass: ComponentClass;
+    /** Class of the root element when outlined */
+    outlinedClass: ComponentClass;
+    /** Class of the root element when inverted */
+    invertedClass: ComponentClass;
+    /** Class of the root element when loading */
+    loadingClass: ComponentClass;
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class of the root element when rounded */
+    roundedClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the inner wrapper element */
+    wrapperClass: ComponentClass;
+    /** Class of the icon element */
+    iconClass: ComponentClass;
+    /** Class of the icon element on the left */
+    iconLeftClass: ComponentClass;
+    /** Class of the icon element on the right */
+    iconRightClass: ComponentClass;
+    /** Class of the label element */
+    labelClass: ComponentClass;
 }>;

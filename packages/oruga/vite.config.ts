@@ -52,6 +52,8 @@ export default defineConfig(({ mode }) => ({
             "@oruga-ui/oruga-next": fileURLToPath(
                 new URL("./src/index.ts", import.meta.url),
             ),
+            // add docs prefix
+            "@/docs": fileURLToPath(new URL("../docs/src", import.meta.url)),
             // add '@' alias to src
             "@": fileURLToPath(new URL("./src", import.meta.url)),
         },

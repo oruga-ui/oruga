@@ -19,14 +19,6 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-notification-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Notification component
@@ -106,6 +98,14 @@ It is designed to mimic the push notifications that have been popularized by mob
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-notification-viewer />
 
 </div>
 

@@ -15,14 +15,6 @@ Oruga is compatible with both [Material Design Icons](https://materialdesignicon
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-icon-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Icon component
@@ -47,6 +39,14 @@ Oruga is compatible with both [Material Design Icons](https://materialdesignicon
 | size       | Icon size                                  | string           | `small`, `medium`, `large`                                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>icon: {<br>&nbsp;&nbsp;size: undefined<br>}</code>    |
 | spin       | Enable spin effect on icon                 | boolean          | -                                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
 | variant    | Color of the icon                          | string           | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>icon: {<br>&nbsp;&nbsp;variant: undefined<br>}</code> |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-icon-viewer />
 
 </div>
 

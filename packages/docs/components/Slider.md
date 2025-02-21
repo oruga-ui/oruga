@@ -20,14 +20,6 @@ Use it with the Field component to access all the functionalities.
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-slider-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Slider component
@@ -103,6 +95,14 @@ Use it with the Field component to access all the functionalities.
 | Name    | Description                                  | Bindings |
 | ------- | -------------------------------------------- | -------- |
 | default | Override tick content, default is label prop |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-slider-viewer />
 
 </div>
 

@@ -67,7 +67,7 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
 } & SelectClasses;
 
 // class props (will not be displayed in the docs)
-type SelectClasses = Partial<{
+export type SelectClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the root element with size */
@@ -86,14 +86,14 @@ type SelectClasses = Partial<{
     multipleClass: ComponentClass;
     /** Class of the native select element */
     selectClass: ComponentClass;
-    /** Class of the native select element with left icon space */
-    iconLeftSpaceClass: ComponentClass;
-    /** Class of the native select element with right icon space */
-    iconRightSpaceClass: ComponentClass;
     /** Class of the native select element with placeholder */
     placeholderClass: ComponentClass;
     /** Class of the native select element when arrowed */
     arrowedClass: ComponentClass;
+    /** Class of the native select element with left icon space */
+    iconLeftSpaceClass: ComponentClass;
+    /** Class of the native select element with right icon space */
+    iconRightSpaceClass: ComponentClass;
     /** Class of the left icon element */
     iconLeftClass: ComponentClass;
     /** Class of the right icon element */

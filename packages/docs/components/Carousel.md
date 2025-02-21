@@ -20,14 +20,6 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-carousel-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Carousel component
@@ -113,6 +105,14 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 | Name    | Description     | Bindings |
 | ------- | --------------- | -------- |
 | default | Default content |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-carousel-viewer />
 
 </div>
 

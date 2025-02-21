@@ -1,42 +1,23 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import type { InspectData } from "@/docs";
+import type {
+    TabsClasses,
+    TabItemClasses,
+    TabsProps,
+    TabItemProps,
+} from "../props";
 
-const activeTab = ref(1);
-
-const subitem = "tabitem";
-
-const inspectData = [
-    {
+const inspectData: InspectData<
+    TabsClasses & TabItemClasses,
+    TabsProps<unknown> & TabItemProps<unknown>
+> = {
+    rootClass: {
         class: "rootClass",
-        description: "Root class of the element",
+        description: "Class of the root element.",
     },
-    {
-        class: "verticalClass",
-        description: "Class of Tabs component when vertical",
-        properties: ["vertical"],
-        action: (cmp, data): void => {
-            data.vertical = true;
-        },
-    },
-    {
-        class: "expandedClass",
-        description: "Class of Tabs component when expanded",
-        properties: ["expanded"],
-        action: (cmp, data): void => {
-            data.expanded = true;
-        },
-    },
-    {
-        class: "multilineClass",
-        description: "Class of Tabs component when multiline",
-        properties: ["multiline"],
-        action: (cmp, data): void => {
-            data.multiline = true;
-        },
-    },
-    {
+    positionClass: {
         class: "positionClass",
-        description: "Class of Tabs component position",
+        description: "Class of the root element with position.",
         properties: ["position"],
         suffixes: ["bottom", "left", "right"],
         action: (cmp, data): void => {
@@ -44,96 +25,115 @@ const inspectData = [
             data.position = "right";
         },
     },
-    {
+    sizeClass: {
         class: "sizeClass",
-        description: "Size of the navigation",
+        description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
             data.size = "large";
         },
     },
-    {
+    typeClass: {
         class: "typeClass",
-        description: "Type of the navigation",
+        description: "Class of the root element with type.",
         properties: ["type"],
         suffixes: ["default", "boxed", "toggle", "pills"],
-    },
-    {
-        class: "tablistClass",
-        description: "Class of the tablist element",
-    },
-    {
-        class: "tabClass",
-        description: "Class of the tab item",
-        subitem: true,
-    },
-    {
-        class: "tabActiveClass",
-        description: "Class of the tab item when active",
-        subitem: true,
         action: (cmp, data): void => {
-            data.active = true;
+            data.type = "boxed";
         },
     },
-    {
+    expandedClass: {
+        class: "expandedClass",
+        description: "Class of the root element when expanded.",
+        properties: ["expanded"],
+        action: (cmp, data): void => {
+            data.expanded = true;
+        },
+    },
+    verticalClass: {
+        class: "verticalClass",
+        description: "Class of the root element when vertical.",
+        properties: ["vertical"],
+        action: (cmp, data): void => {
+            data.vertical = true;
+        },
+    },
+    multilineClass: {
+        class: "multilineClass",
+        description: "Class of the root element when multilined.",
+        properties: ["multiline"],
+        action: (cmp, data): void => {
+            data.multiline = true;
+        },
+    },
+    listClass: {
+        class: "listClass",
+        description: "Class of the list container element.",
+    },
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the panel container element.",
+    },
+    transitioningClass: {
+        class: "transitioningClass",
+        description: "Class of the panel container element when transitioning.",
+    },
+    tabClass: {
+        class: "tabClass",
+        subitem: "tabitem",
+        description: "Class of the tab item element.",
+    },
+    tabActiveClass: {
+        class: "tabActiveClass",
+        subitem: "tabitem",
+        description: "Class of the tab item element when active.",
+        action: (cmp, data): void => {
+            data.modelValue = 1;
+        },
+    },
+    tabPreviousClass: {
         class: "tabPreviousClass",
-        description: "Class of the nav item before the active one",
+        subitem: "tabitem",
+        description: "Class of the tab item element before the active one.",
     },
-    {
+    tabNextClass: {
         class: "tabNextClass",
-        description: "Class of the nav item after the active one",
+        subitem: "tabitem",
+        description: "Class of the tab item element after the active one.",
     },
-    {
+    tabDisabledClass: {
         class: "tabDisabledClass",
-        description: "Class of the tab item when disabled",
+        subitem: "tabitem",
+        description: "Class of the tab item element when disabled.",
         properties: ["disabled"],
-        subitem: true,
         action: (cmp, data): void => {
             data.disabled = true;
         },
     },
-    {
-        class: "tabTypeClass",
-        description: "Class of the tab item type",
-        properties: ["type"],
-        subitem: true,
-        suffixes: ["default", "boxed", "toggle", "pills"],
-    },
-    {
+    tabIconClass: {
         class: "tabIconClass",
-        description: "Class of the tab item icon",
+        subitem: "tabitem",
+        description: "Class of the tab item icon element.",
         properties: ["icon"],
-        subitem: true,
     },
-    {
+    tabLabelClass: {
         class: "tabLabelClass",
-        description: "Class of the tab item label",
+        subitem: "tabitem",
+        description: "Class of the tab item label element.",
         properties: ["label"],
-        subitem: true,
     },
-    {
-        class: "contentClass",
-        description: "Class of the tab content",
-    },
-    {
-        class: "transitioningClass",
-        description: "Class of the tab content when transitioning",
-    },
-    {
+    tabPanelClass: {
         class: "tabPanelClass",
-        description: "Class of the tab item panel",
-        subitem: true,
+        subitem: "tabitem",
+        description: "Class of the tab panel element.",
     },
-];
+};
 </script>
 
 <template>
-    <inspector-wrapper
-        v-slot="props"
-        :inspect-data="inspectData"
-        :subitem="subitem">
-        <o-tabs v-model="activeTab" v-bind="props">
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+        <o-tabs v-bind="props">
             <o-tab-item
                 v-bind="props"
                 :value="1"

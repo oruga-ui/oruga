@@ -260,7 +260,7 @@ const contentClasses = defineClasses(
         computed(
             () =>
                 props.fullwidth ||
-                (props.mobile === "expanded" && isMobile.value),
+                (isMobile.value && props.mobile === "expanded"),
         ),
     ],
     [
@@ -269,12 +269,12 @@ const contentClasses = defineClasses(
         null,
         computed(
             () =>
-                props.reduce || (props.mobile === "reduced" && isMobile.value),
+                props.reduce || (isMobile.value && props.mobile === "reduced"),
         ),
     ],
     [
         "expandOnHoverClass",
-        "o-side__content--reduced-expand",
+        "o-side__content--hover-expand",
         null,
         computed(
             () =>

@@ -19,14 +19,6 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-menu-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Menu component
@@ -111,6 +103,14 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 | ------- | --------------------- | ----------------------------------------------------------------------------------------- |
 | label   | Override label        | **expanded** `boolean` - item expanded state<br/>**active** `boolean` - item active state |
 | default | Place menu items here |                                                                                           |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-menu-viewer />
 
 </div>
 

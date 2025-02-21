@@ -555,22 +555,6 @@ function onSecondsChange(value: string): void {
 
 // --- Computed Component Classes ---
 
-const selectSelectClasses = defineClasses([
-    "selectClasses.selectClass",
-    "o-tpck__select",
-]);
-
-const selectPlaceholderClasses = defineClasses([
-    "selectClasses.placeholderClass",
-    "o-tpck__select-placeholder",
-]);
-
-const selectBind = computed(() => ({
-    "select-class": getActiveClasses(selectSelectClasses),
-    "placeholder-class": getActiveClasses(selectPlaceholderClasses),
-    ...props.selectClasses,
-}));
-
 const rootClasses = defineClasses(
     ["rootClass", "o-tpck"],
     [
@@ -593,6 +577,22 @@ const pickerDropdownClasses = defineClasses([
 
 const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
 const boxClassBind = computed(() => getActiveClasses(boxClasses));
+
+const selectSelectClasses = defineClasses([
+    "selectClasses.selectClass",
+    "o-tpck__select",
+]);
+
+const selectPlaceholderClasses = defineClasses([
+    "selectClasses.placeholderClass",
+    "o-tpck__select-placeholder",
+]);
+
+const selectBind = computed(() => ({
+    "select-class": getActiveClasses(selectSelectClasses),
+    "placeholder-class": getActiveClasses(selectPlaceholderClasses),
+    ...props.selectClasses,
+}));
 
 // --- Expose Public Functionalities ---
 

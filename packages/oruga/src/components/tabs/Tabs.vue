@@ -277,7 +277,7 @@ const rootClasses = defineClasses(
     ],
 );
 
-const tablistClasses = defineClasses(["tablistClass", "o-tabs__tablist"]);
+const tablistClasses = defineClasses(["listClass", "o-tabs__list"]);
 
 const contentClasses = defineClasses(
     ["contentClass", "o-tabs__content"],

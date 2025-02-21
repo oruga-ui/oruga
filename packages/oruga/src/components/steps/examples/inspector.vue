@@ -1,172 +1,183 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import type { InspectData } from "@/docs";
+import type {
+    StepsClasses,
+    StepItemClasses,
+    StepsProps,
+    StepItemProps,
+} from "../props";
 
-const activeStep = ref(1);
-
-const subitem = "stepitem";
-const inspectData = [
-    {
+const inspectData: InspectData<
+    StepsClasses & StepItemClasses,
+    StepsProps<unknown> & StepItemProps<unknown>
+> = {
+    rootClass: {
         class: "rootClass",
-        description: "Root class of the element",
+        description: "Class of the root element.",
     },
-    {
+    mobileClass: {
         class: "mobileClass",
-        description: "Class of steps component when on mobile",
-        warning: "Switch to mobile view to see it in action!",
+        description: "Class of the root element when on mobile.",
+        info: "Switch to mobile view to see it in action!",
     },
-    {
+    sizeClass: {
         class: "sizeClass",
-        description: "Size of the steps",
+        description: "Size of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
         action: (cmp, data): void => {
             data.size = "large";
         },
     },
-    {
-        class: "verticalClass",
-        description: "Class of the tooltip trigger",
-        properties: ["vertical"],
-        action: (cmp, data): void => {
-            data.vertical = true;
-        },
-    },
-    {
-        class: "positionClass",
-        description:
-            "Class of the Steps component when is vertical and its position changes",
-        properties: ["position", "vertical"],
-        suffixes: ["bottom", "left", "right"],
-        action: (cmp, data): void => {
-            data.vertical = true;
-            data.position = "right";
-        },
-    },
-    {
-        class: "animatedClass",
-        description: "Class of Steps component when animation gets triggered",
-        properties: ["animated"],
-        action: (cmp, data): void => {
-            data.animated = true;
-        },
-    },
-    {
-        class: "dividerClass",
-        description: "Class of the Steps component dividers",
-        specificity:
-            "when <b>mobileClass</b> or <b>itemHeaderActiveClass</b> or <b>itemHeaderPreviousClass</b> or <b>positionClass</b> is applied",
-    },
-    {
-        class: "markerClass",
-        description: "Class of the Steps component marker",
-        specificity:
-            "when <b>itemHeaderActiveClass</b> or <b>itemHeaderPreviousClass</b> is applied",
-    },
-    {
-        class: "markerRoundedClass",
-        description: "Class of the Steps markers trigger when are rounded",
-        properties: ["rounded"],
-        action: (cmp, data): void => {
-            data.position = "right";
-        },
-    },
-    {
-        class: "contentClass",
-        description: "Class of the Steps component content",
-        specificity: "when <b>positionClass</b> is applied",
-    },
-    {
-        class: "transitioningClass",
-        description:
-            "Class of the Steps component content when transition is happening",
-        warning: "Click on a marker to see it in action",
-    },
-    {
-        class: "listClass",
-        description: "Class of the steps list container",
-    },
-    {
-        class: "stepClass",
-        description: "Class of the content item",
-        subitem: true,
-    },
-    {
-        class: "stepPreviousClass",
-        description: "Class of the step item before the active one",
-        subitem: true,
-        action: (): void => {
-            activeStep.value = 2;
-        },
-    },
-    {
-        class: "stepNextClass",
-        description: "CClass of the step item after the active one",
-        subitem: true,
-        action: (): void => {
-            activeStep.value = 2;
-        },
-    },
-    {
-        class: "stepVariantClass",
-        description:
-            "Class of the step item with variant (default value by parent steps component)",
-        subitem: true,
+    variantClass: {
+        class: "variantClass",
+        description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data): void => {
             data.variant = "warning";
         },
     },
-    {
+    positionClass: {
+        class: "positionClass",
+        description:
+            "Class of the root element when is vertical and has position.",
+        properties: ["position", "vertical"],
+        suffixes: ["left", "right", "centered"],
+        action: (cmp, data): void => {
+            data.vertical = true;
+            data.position = "right";
+        },
+    },
+    verticalClass: {
+        class: "verticalClass",
+        description: "Class of the root element when is vertical.",
+        properties: ["vertical"],
+        action: (cmp, data): void => {
+            data.vertical = true;
+        },
+    },
+    listClass: {
+        class: "listClass",
+        description: "Class of the list container element.",
+    },
+    animatedClass: {
+        class: "animatedClass",
+        description: "Class of the list container when animated.",
+        properties: ["animated"],
+        action: (cmp, data): void => {
+            data.animated = true;
+        },
+    },
+    dividerClass: {
+        class: "dividerClass",
+        description: "Class of the item divider element.",
+    },
+    markerClass: {
+        class: "markerClass",
+        description: "Class of the item marker element.",
+    },
+    markerRoundedClass: {
+        class: "markerRoundedClass",
+        description: "Class of the item marker element when rounded.",
+        properties: ["rounded"],
+        action: (cmp, data): void => {
+            data.position = "right";
+        },
+    },
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the panel container element.",
+    },
+    transitioningClass: {
+        class: "transitioningClass",
+        description: "Class of the panel container element when transitioning.",
+        info: "Click on a marker to see it in action!",
+    },
+    navigationClass: {
+        class: "navigationClass",
+        description: "Class of the navigation element",
+    },
+    stepClass: {
+        class: "stepClass",
+        subitem: "stepitem",
+        description: "Class of the step item element.",
+    },
+    stepActiveClass: {
         class: "stepActiveClass",
-        description: "Class of the tab item when active",
+        subitem: "stepitem",
+        description: "Class of the step item element when active.",
     },
-    {
-        class: "stepClickableClass",
-        description: "Class of the Steps component item when clickable",
-        properties: ["clickable"],
+    stepVariantClass: {
+        class: "stepVariantClass",
+        subitem: "stepitem",
+        description:
+            "Class of the step item element with variant (default value by parent steps component).",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (cmp, data): void => {
+            data.variant = "warning";
+        },
     },
-    {
-        class: "stepDisabledClass",
-        description: "Class of the Steps component item when disabled",
-        properties: ["disabled"],
-    },
-    {
-        class: "stepLabelPositionClass",
-        description: "Class of the Step component item label when positioned",
+    stepPositionClass: {
+        class: "stepPositionClass",
+        subitem: "stepitem",
+        description: "Class of the step item element when positioned.",
         properties: ["labelPosition"],
         suffixes: ["bottom", "right", "left"],
         action: (cmp, data): void => {
             data.labelPosition = "right";
         },
     },
-    {
+    stepClickableClass: {
+        class: "stepClickableClass",
+        subitem: "stepitem",
+        description: "Class of the step item element when clickable.",
+        properties: ["clickable"],
+    },
+    stepDisabledClass: {
+        class: "stepDisabledClass",
+        subitem: "stepitem",
+        description: "Class of the step item element when disabled.",
+        properties: ["disabled"],
+    },
+    stepPreviousClass: {
+        class: "stepPreviousClass",
+        subitem: "stepitem",
+        description: "Class of the step item element before the active one.",
+        action: (cmp, data): void => {
+            data.modelValue = 2;
+        },
+    },
+    stepNextClass: {
+        class: "stepNextClass",
+        subitem: "stepitem",
+        description: "Class of the step item element after the active one.",
+        action: (cmp, data): void => {
+            data.modelValue = 2;
+        },
+    },
+    stepLabelClass: {
         class: "stepLabelClass",
-        description: "Class of the Step component item label",
+        subitem: "stepitem",
+        description: "Class of the step item label element.",
     },
-    {
+    stepIconClass: {
         class: "stepIconClass",
-        description: "Class of the Step component item icon",
+        subitem: "stepitem",
+        description: "Class of the step item icon element.",
     },
-    {
+    stepPanelClass: {
         class: "stepPanelClass",
-        description: "Class of the step item panel",
-        subitem: true,
+        subitem: "stepitem",
+        description: "Class of the step panel element.",
     },
-    {
-        class: "navigationClass",
-        description: "Class of the Steps component navigation element",
-        specificity: "when <b>positionClass</b> is applied",
-    },
-];
+};
 </script>
 
 <template>
-    <inspector-wrapper
-        v-slot="props"
-        :inspect-data="inspectData"
-        :subitem="subitem">
-        <o-steps v-bind="props" v-model="activeStep">
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+        <o-steps v-bind="props">
             <o-step-item
                 v-bind="props"
                 label="Account"

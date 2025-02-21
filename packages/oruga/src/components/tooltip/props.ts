@@ -57,27 +57,27 @@ export type TooltipProps = {
 } & TooltipClasses;
 
 // class props (will not be displayed in the docs)
-type TooltipClasses = Partial<{
+export type TooltipClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class when the dropdown is teleported */
+    /** Class of the root element when teleported */
     teleportClass: ComponentClass;
-    /** Class of the tooltip content */
-    contentClass: ComponentClass;
-    /** Class of the tooltip trigger position */
-    positionClass: ComponentClass;
-    /** Class of the tooltip trigger */
+    /** Class of the trigger element */
     triggerClass: ComponentClass;
-    /** Class of the tooltip content when is multiline */
-    multilineClass: ComponentClass;
-    /** Class of the tooltip trigger when is always visible */
-    alwaysClass: ComponentClass;
-    /** Class of the tooltip variant */
+    /** Class of the content element */
+    contentClass: ComponentClass;
+    /** Class of the content element with position */
+    positionClass: ComponentClass;
+    /** Class of the content element with variant */
     variantClass: ComponentClass;
-    /** Class of the tooltip arrow */
+    /** Class of the content element when is multiline */
+    multilineClass: ComponentClass;
+    /** Class of the content element when is always visible */
+    alwaysClass: ComponentClass;
+    /** Class of the arrow element */
     arrowClass: ComponentClass;
-    /** Class of the tooltip arrow position */
+    /** Class of the arrow element with position */
     arrowPositionClass: ComponentClass;
-    /** Class of the tooltip arrow with variant */
+    /** Class of the arrow element with variant */
     arrowVariantClass: ComponentClass;
 }>;

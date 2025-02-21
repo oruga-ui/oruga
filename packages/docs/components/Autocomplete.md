@@ -16,14 +16,6 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-autocomplete-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Autocomplete component
@@ -109,6 +101,14 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 | default | Override the select option     | **option** `object` - option object<br/>**value** `unknown` - option value<br/>**index** `number` - option index |
 | empty   | Define content for empty state |                                                                                                                  |
 | footer  | Define an additional footer    |                                                                                                                  |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-autocomplete-viewer />
 
 </div>
 

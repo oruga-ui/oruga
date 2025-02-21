@@ -511,6 +511,9 @@ const rootClasses = defineClasses(
     ["expandedClass", "o-dpck--expanded", null, computed(() => props.expanded)],
 );
 
+const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
+const boxClassBind = computed(() => getActiveClasses(boxClasses));
+
 const headerClasses = defineClasses(["headerClass", "o-dpck__header"]);
 
 const headerButtonsClasses = defineClasses(
@@ -541,9 +544,6 @@ const pickerDropdownClasses = defineClasses([
     "dropdownClass",
     "o-tpck__dropdown",
 ]);
-
-const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses));
 
 // --- Expose Public Functionalities ---
 

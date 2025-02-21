@@ -1,71 +1,92 @@
 <script setup lang="ts">
-import { onUnmounted, ref, watch, nextTick, type PropType } from "vue";
-import { setValueByPath } from "../../../../oruga/src/utils/helpers";
+import {
+    onUnmounted,
+    ref,
+    watch,
+    nextTick,
+    useTemplateRef,
+    type PropType,
+} from "vue";
+import { setValueByPath } from "@oruga-ui/oruga-next";
+import type { InspectClass, InspectData } from "@docs";
+import Inspector from "./Inspector.vue";
 
 const INSPECT_CLASS = "odocs-inspected-element";
 
 defineProps({
-    inspectData: { type: Array as PropType<unknown[]>, required: true },
-    subitem: { type: String, default: undefined },
+    inspectData: { type: Object as PropType<InspectData>, required: true },
 });
 
-const component = ref<HTMLElement | null>(null);
+const componentElement = useTemplateRef("componentRef");
 
-const inspectClass = ref<{
-    className: string;
-    action: (cmp: HTMLElement, data: unknown) => void;
-}>({} as any);
+const inspectClass = ref<InspectClass>({} as InspectClass);
 
-const classes = ref({});
+/** additional data applied to the inspected component */
 const data = ref({});
-const classesApplied = ref<string | undefined>();
-const interval = ref<ReturnType<typeof setInterval>>();
+/** additional classes applied to the inspected component */
+const classes = ref({});
+/** applied classed of the HTML element */
+const appliedClasses = ref<string | undefined>();
+let interval: NodeJS.Timeout | undefined;
 
 onUnmounted(() => {
-    clearInterval(interval.value);
-    interval.value = undefined;
+    clearInterval(interval);
+    interval = undefined;
 });
 
 watch(inspectClass, ({ className, action }) => {
     // clear values
-    clearInterval(interval.value);
-    interval.value = undefined;
+    clearInterval(interval);
+    interval = undefined;
     classes.value = {};
     data.value = {};
+
     nextTick(() => {
         // perform action
-        if (action && component.value) action(component.value, data.value);
-        // add INSPECT_CLASS to class by className
-        setValueByPath(classes.value, className, () => INSPECT_CLASS);
-        interval.value = setInterval(() => {
-            // get element class
-            const el = document.getElementsByClassName(INSPECT_CLASS)[0];
-            if (el) {
-                clearInterval(interval.value);
-                classesApplied.value = el.className.replace(INSPECT_CLASS, "");
-            }
-        }, 300);
+        if (action && componentElement.value)
+            action(componentElement.value, data.value);
+
+        nextTick(() => {
+            // add INSPECT_CLASS to class by className
+            setValueByPath(classes.value, className, () => INSPECT_CLASS);
+            interval = setInterval(() => {
+                // get element class
+                const el = document.getElementsByClassName(INSPECT_CLASS)[0];
+                if (el) {
+                    clearInterval(interval);
+                    appliedClasses.value = el.className.replace(
+                        INSPECT_CLASS,
+                        "",
+                    );
+                }
+            }, 300);
+
+            // scroll to inspector
+            if (componentElement.value)
+                window.scrollTo({
+                    left: 0,
+                    top: componentElement.value?.offsetTop,
+                    behavior: "smooth",
+                });
+        });
     });
 });
 </script>
 
 <template>
-    <div id="inspector-wrapper" ref="component">
-        <div v-show="classesApplied">
-            <b>'Classes applied to the element'</b>
-            <div class="odocs-classes-applied">{{ classesApplied }}</div>
-        </div>
+    <div id="inspector-wrapper" ref="componentRef">
+        <transition name="fade">
+            <div v-show="!!appliedClasses">
+                <b>Classes applied to the element:</b>
+                <div class="odocs-classes-applied">{{ appliedClasses }}</div>
+            </div>
+        </transition>
 
-        <ClientOnly>
-            <slot v-bind="{ ...classes, ...data }" />
-        </ClientOnly>
+        <slot v-bind="{ ...classes, ...data }" />
 
-        <ClientOnly>
-            <Inspector
-                :inspect-data="inspectData"
-                :subitem="subitem"
-                @inspect="inspectClass = $event" />
-        </ClientOnly>
+        <Inspector
+            :inspect-data="inspectData"
+            @inspect="inspectClass = $event" />
     </div>
 </template>
 

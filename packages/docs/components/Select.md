@@ -16,14 +16,6 @@ Use it with the Field component to access all the functionalities.
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-select-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Select component
@@ -79,6 +71,14 @@ Use it with the Field component to access all the functionalities.
 | ----------- | --------------------------------------------- | -------- |
 | placeholder | Override the placeholder                      |          |
 | default     | Override the options, default is options prop |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-select-viewer />
 
 </div>
 

@@ -47,7 +47,6 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     overlay: () => getDefault("modal.overlay", true),
     cancelable: () =>
         getDefault("modal.cancelable", ["escape", "x", "outside"]),
-    scroll: () => getDefault("modal.scroll", "keep"),
     trapFocus: () => getDefault("modal.trapFocus", true),
     ariaRole: () => getDefault("modal.ariaRole", "dialog"),
     ariaLabel: () => getDefault("modal.ariaLabel"),
@@ -56,6 +55,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
+    scroll: () => getDefault("modal.scroll", "keep"),
     component: undefined,
     props: undefined,
     events: undefined,

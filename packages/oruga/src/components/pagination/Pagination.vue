@@ -87,7 +87,7 @@ const firstItem = computed(() => {
 const isFirst = computed(() => props.current <= 1);
 
 /** Check if first page button should be visible. */
-const hasFirst = computed(() => props.current >= 2 + props.rangeBefore);
+const hasFirst = computed(() => props.current >= props.rangeBefore + 2);
 
 /** Check if first ellipsis should be visible. */
 const hasFirstEllipsis = computed(() => props.current >= props.rangeBefore + 4);

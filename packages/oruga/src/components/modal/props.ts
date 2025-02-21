@@ -2,7 +2,7 @@ import type { Component } from "vue";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
-export type ModalProps<C extends Component> = {
+export type ModalProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
@@ -66,21 +66,21 @@ export type ModalProps<C extends Component> = {
 } & ModalClasses;
 
 // class props (will not be displayed in the docs)
-type ModalClasses = Partial<{
+export type ModalClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of modal component when its active */
-    activeClass: ComponentClass;
-    /** Class of the modal overlay */
-    overlayClass: ComponentClass;
-    /** Class of the modal content */
-    contentClass: ComponentClass;
-    /** Class of the close button */
-    closeClass: ComponentClass;
-    /** Class of the modal when fullscreen */
-    fullScreenClass: ComponentClass;
-    /** Class of modal component when on mobile */
+    /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
+    /** Class of the root element when active */
+    activeClass: ComponentClass;
+    /** Class of the overlay element */
+    overlayClass: ComponentClass;
+    /** Class of the content element */
+    contentClass: ComponentClass;
+    /** Class of the content element when fullscreen */
+    fullScreenClass: ComponentClass;
+    /** Class of the close button element */
+    closeClass: ComponentClass;
     /** Class of the body when modal is open and scroll is clip */
     scrollClipClass: ComponentClass;
     /** Class of the body when modal is open and scroll is not clip */

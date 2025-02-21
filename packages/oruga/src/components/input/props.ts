@@ -4,7 +4,7 @@ export type InputType<IsNumber extends boolean> = IsNumber extends true
     ? number
     : string;
 
-export type InputProps<IsNumber extends boolean> = {
+export type InputProps<IsNumber extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -87,7 +87,7 @@ export type InputProps<IsNumber extends boolean> = {
 } & InputClasses;
 
 // class props (will not be displayed in the docs)
-type InputClasses = Partial<{
+export type InputClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the root element with size */

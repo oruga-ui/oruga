@@ -14,14 +14,6 @@ The **Pagination** component is responsive and flexible way to indicate a series
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-pagination-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Pagination component
@@ -70,6 +62,14 @@ The **Pagination** component is responsive and flexible way to indicate a series
 | previous | Previous button slot   | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event:Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
 | next     | Next button slot       | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event:Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
 | default  | Pagination button slot | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event:Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-pagination-viewer />
 
 </div>
 

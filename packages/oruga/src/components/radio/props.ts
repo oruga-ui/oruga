@@ -41,7 +41,7 @@ export type RadioProps<T> = {
 } & RadioClasses;
 
 // class props (will not be displayed in the docs)
-type RadioClasses = Partial<{
+export type RadioClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the root element with size */

@@ -33,19 +33,19 @@ export type LoadingProps = {
 } & LoadingClasses;
 
 // class props (will not be displayed in the docs)
-type LoadingClasses = Partial<{
+export type LoadingClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class for the root element when fullpage */
     fullPageClass: ComponentClass;
-    /** Class of the loading overlay */
+    /** Class of the overlay element*/
     overlayClass: ComponentClass;
-    /** Class for the loading icon */
+    /** Class for the icon element*/
     iconClass: ComponentClass;
-    /** Class for the loading label */
+    /** Class for the label element*/
     labelClass: ComponentClass;
-    /** Class of the body when loading is fullpage and scroll is clip */
+    /** Class of the body when fullpage and scroll is clip */
     scrollClipClass: ComponentClass;
-    /** Class of the body when loading is fullpage and scroll is not clip */
+    /** Class of the body when fullpage and scroll is not clip */
     noScrollClass: ComponentClass;
 }>;

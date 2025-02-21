@@ -14,14 +14,6 @@ The **Modal** component is classic modal overlay, in which you can include any c
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-modal-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Modal component
@@ -69,6 +61,14 @@ The **Modal** component is classic modal overlay, in which you can include any c
 | Name    | Description                                    | Bindings                                                      |
 | ------- | ---------------------------------------------- | ------------------------------------------------------------- |
 | default | Modal default content, default is content prop | **close** `(...args): void` - function to close the component |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-modal-viewer />
 
 </div>
 

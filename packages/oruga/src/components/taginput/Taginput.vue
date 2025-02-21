@@ -284,35 +284,8 @@ function onKeydown(event: KeyboardEvent): void {
 
 // --- Computed Component Classes ---
 
-const attrs = useAttrs();
-
-const autocompleteRootClasses = defineClasses([
-    "autocompleteClasses.rootClass",
-    "o-taginput__autocomplete",
-]);
-
-const autocompleteInputClasses = defineClasses([
-    "autocompleteClasses.inputClasses.inputClass",
-    "o-taginput__input",
-]);
-
-const autocompleteBind = computed(() => ({
-    ...attrs,
-    "root-class": getActiveClasses(autocompleteRootClasses),
-    "input-classes": {
-        "input-class": getActiveClasses(autocompleteInputClasses),
-    },
-    ...props.autocompleteClasses,
-}));
-
 const rootClasses = defineClasses(
     ["rootClass", "o-taginput"],
-    [
-        "expandedClass",
-        "o-taginput--expanded",
-        null,
-        computed(() => props.expanded),
-    ],
     [
         "sizeClass",
         "o-taginput--",
@@ -324,6 +297,12 @@ const rootClasses = defineClasses(
         "o-taginput--",
         computed(() => props.variant),
         computed(() => !!props.variant),
+    ],
+    [
+        "expandedClass",
+        "o-taginput--expanded",
+        null,
+        computed(() => props.expanded),
     ],
 );
 
@@ -345,6 +324,27 @@ const itemClasses = defineClasses(
 const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
+
+const autocompleteRootClasses = defineClasses([
+    "autocompleteClasses.rootClass",
+    "o-taginput__autocomplete",
+]);
+
+const autocompleteInputClasses = defineClasses([
+    "autocompleteClasses.inputClasses.inputClass",
+    "o-taginput__input",
+]);
+
+const attrs = useAttrs();
+
+const autocompleteBind = computed(() => ({
+    ...attrs,
+    "root-class": getActiveClasses(autocompleteRootClasses),
+    "input-classes": {
+        "input-class": getActiveClasses(autocompleteInputClasses),
+    },
+    ...props.autocompleteClasses,
+}));
 
 // --- Expose Public Functionalities ---
 

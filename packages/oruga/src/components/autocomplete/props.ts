@@ -1,5 +1,6 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
+import type { InputProps } from "../input/props";
 
 export type AutocompleteProps<T> = {
     /** Override existing theme classes completely */
@@ -110,22 +111,22 @@ export type AutocompleteProps<T> = {
 } & AutocompleteClasses;
 
 // class props (will not be displayed in the docs)
-type AutocompleteClasses = Partial<{
+export type AutocompleteClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the menu items */
     itemClass: ComponentClass;
     /** Class of the menu items group title */
     itemGroupTitleClass: ComponentClass;
-    /** Class of the menu empty placeholder item */
+    /** Class of the empty menu placeholder item */
     itemEmptyClass: ComponentClass;
     /** Class of the menu header item */
     itemHeaderClass: ComponentClass;
     /** Class of the menu footer item */
     itemFooterClass: ComponentClass;
     /**
-     * Classes to apply on internal input component
+     * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: object;
+    inputClasses: InputProps<false>;
 }>;

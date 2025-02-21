@@ -254,6 +254,16 @@ const fillClasses = defineClasses(
     ],
 );
 
+const thumbWrapperClasses = defineClasses(
+    ["thumbWrapperClass", "o-slide__thumb-wrapper"],
+    [
+        "thumbWrapperDraggingClass",
+        "o-slide__thumb-wrapper--dragging",
+        null,
+        dragging,
+    ],
+);
+
 const thumbClasses = defineClasses(
     ["thumbClass", "o-slide__thumb"],
     ["thumbDraggingClass", "o-slide__thumb--dragging", null, dragging],
@@ -262,16 +272,6 @@ const thumbClasses = defineClasses(
         "o-slide__thumb--rounded",
         null,
         computed(() => props.rounded),
-    ],
-);
-
-const thumbWrapperClasses = defineClasses(
-    ["thumbWrapperClass", "o-slide__thumb-wrapper"],
-    [
-        "thumbWrapperDraggingClass",
-        "o-slide__thumb-wrapper--dragging",
-        null,
-        dragging,
     ],
 );
 
