@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { TaginputClasses, TaginputProps } from "../props";
 import type { OptionsPropItem } from "@oruga-ui/oruga-next";
 

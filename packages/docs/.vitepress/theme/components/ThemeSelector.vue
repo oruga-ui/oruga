@@ -1,31 +1,14 @@
 <script setup lang="ts">
-// Import theme definitions
-import { Themes, type ThemeConfig } from "@docs";
+import { Themes, type ThemeConfig } from "@docs/themes";
+import { loadTheme, saveTheme } from "..";
 
-const selectedTheme = defineModel<any>("theme");
+const selectedTheme = defineModel<ThemeConfig>("theme");
 
 selectedTheme.value = loadTheme();
 
-// load last used theme or set a default one
-function loadTheme(): ThemeConfig {
-    const cache = localStorage.getItem("oruga-ui.com:theme");
-    if (cache && cache !== "undefined") {
-        try {
-            const themeConfig = JSON.parse(cache);
-            if (themeConfig && typeof themeConfig === "object")
-                return themeConfig;
-        } catch (e) {
-            console.log(e);
-            return Themes[1];
-        }
-    }
-    return Themes[1];
-}
-
-function onThemeChange(theme: unknown): void {
+function onThemeChange(theme: ThemeConfig): void {
     selectedTheme.value = theme;
-    localStorage.setItem("oruga-ui.com:theme", JSON.stringify(theme));
-    location.reload();
+    saveTheme(theme);
 }
 </script>
 

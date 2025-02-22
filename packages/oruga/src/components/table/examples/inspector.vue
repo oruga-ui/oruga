@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { TableClasses, TableProps, TableColumnProps } from "../props";
 import type { TableColumn } from "../types";
 

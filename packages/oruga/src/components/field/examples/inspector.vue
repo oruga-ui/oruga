@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { FieldClasses, FieldProps } from "../props";
 
 const name = ref("");

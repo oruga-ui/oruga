@@ -19,7 +19,7 @@
    ], 
    "paths": {
       "@/*": ["src/*"],
-      "@/docs": ["../docs/src"],
+      "@docs": ["../docs/src/types"],
       "@oruga-ui/oruga-next": ["src/index"],
     },
     "lib": [
@@ -31,7 +31,7 @@
   },
   "include": [
     "env.d.ts",
-    "../docs/src",
+    "../docs/src/types.ts",
     "src/**/*", 
     "src/**/*.ts", 
     "src/**/*.d.ts", 

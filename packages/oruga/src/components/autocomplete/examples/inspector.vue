@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { AutocompleteClasses, AutocompleteProps } from "../props";
 
 const options: OptionsGroupProp<string> = [
