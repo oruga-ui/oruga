@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/examples",
-  "version": "0.9.3",
+  "version": "0.10.0-pre.1",
   "homepage": "https://oruga-ui.com",
   "description": "Oruga component examples",
   "license": "MIT",
@@ -49,7 +49,7 @@
     "publish:examples:pre": "cp ../../README.md . && npm run build && npm publish --tag pre"
   },
   "peerDependencies": {
-    "@oruga-ui/oruga-next": "0.9.3",
+    "@oruga-ui/oruga-next": "0.10.0-pre.1",
     "vue": "^3.0.0"
   },
   "dependencies": {
