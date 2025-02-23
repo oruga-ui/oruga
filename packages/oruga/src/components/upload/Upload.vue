@@ -197,22 +197,32 @@ const inputBind = computed(() => ({
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-upl"],
-    ["expandedClass", "o-upl--expanded", null, computed(() => props.expanded)],
-    ["disabledClass", "o-upl--disabled", null, computed(() => props.disabled)],
+    ["rootClass", "o-upload"],
+    [
+        "expandedClass",
+        "o-upload--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+    [
+        "disabledClass",
+        "o-upload--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
 );
 
 const draggableClasses = defineClasses(
-    ["draggableClass", "o-upl__draggable"],
+    ["draggableClass", "o-upload__draggable"],
     [
         "hoveredClass",
-        "o-upl__draggable--hovered",
+        "o-upload__draggable--hovered",
         null,
         computed(() => !props.variant && dragDropFocus.value),
     ],
     [
         "variantClass",
-        "o-upl__draggable--hovered-",
+        "o-upload__draggable--hovered-",
         computed(() => props.variant),
         computed(() => !!props.variant && dragDropFocus.value),
     ],

@@ -225,37 +225,37 @@ function beforeLeave(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-side"],
-    ["mobileClass", "o-side--mobile", null, isMobile],
-    ["activeClass", "o-side--active", null, isActive],
+    ["rootClass", "o-sidebar"],
+    ["mobileClass", "o-sidebar--mobile", null, isMobile],
+    ["activeClass", "o-sidebar--active", null, isActive],
     [
         "teleportClass",
-        "o-side--teleport",
+        "o-sidebar--teleport",
         null,
         computed(() => !!props.teleport),
     ],
-    ["inlineClass", "o-side--inline", null, computed(() => props.inline)],
+    ["inlineClass", "o-sidebar--inline", null, computed(() => props.inline)],
 );
 
-const overlayClasses = defineClasses(["overlayClass", "o-side__overlay"]);
+const overlayClasses = defineClasses(["overlayClass", "o-sidebar__overlay"]);
 
 const contentClasses = defineClasses(
-    ["contentClass", "o-side__content"],
+    ["contentClass", "o-sidebar__content"],
     [
         "positionClass",
-        "o-side__content--",
+        "o-sidebar__content--",
         computed(() => props.position),
         computed(() => !!props.position),
     ],
     [
         "fullheightClass",
-        "o-side__content--fullheight",
+        "o-sidebar__content--fullheight",
         null,
         computed(() => props.fullheight),
     ],
     [
         "fullwidthClass",
-        "o-side__content--fullwidth",
+        "o-sidebar__content--fullwidth",
         null,
         computed(
             () =>
@@ -265,7 +265,7 @@ const contentClasses = defineClasses(
     ],
     [
         "reduceClass",
-        "o-side__content--reduced",
+        "o-sidebar__content--reduced",
         null,
         computed(
             () =>
@@ -274,7 +274,7 @@ const contentClasses = defineClasses(
     ],
     [
         "expandOnHoverClass",
-        "o-side__content--hover-expand",
+        "o-sidebar__content--hover-expand",
         null,
         computed(
             () =>
@@ -282,10 +282,10 @@ const contentClasses = defineClasses(
                 (!isMobile.value || props.mobile !== "expanded"),
         ),
     ],
-    ["visibleClass", "o-side__content--visible", null, isActive],
+    ["visibleClass", "o-sidebar__content--visible", null, isActive],
     [
         "hiddenClass",
-        "o-side__content--hidden",
+        "o-sidebar__content--hidden",
         null,
         computed(() => !isActive.value),
     ],

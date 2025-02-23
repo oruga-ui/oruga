@@ -106,15 +106,15 @@ function close(...args: unknown[]): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-load"],
-    ["fullPageClass", "o-load--fullpage", null, isFullPage],
+    ["rootClass", "o-loading"],
+    ["fullPageClass", "o-loading--fullpage", null, isFullPage],
 );
 
-const overlayClasses = defineClasses(["overlayClass", "o-load__overlay"]);
+const overlayClasses = defineClasses(["overlayClass", "o-loading__overlay"]);
 
-const iconClasses = defineClasses(["iconClass", "o-load__icon"]);
+const iconClasses = defineClasses(["iconClass", "o-loading__icon"]);
 
-const labelClasses = defineClasses(["labelClass", "o-load__label"]);
+const labelClasses = defineClasses(["labelClass", "o-loading__label"]);
 
 // --- Expose Public Functionalities ---
 

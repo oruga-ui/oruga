@@ -361,28 +361,28 @@ const inputBind = computed(() => ({
     ...props.inputClasses,
 }));
 
-const rootClasses = defineClasses(["rootClass", "o-acp"]);
+const rootClasses = defineClasses(["rootClass", "o-autocomplete"]);
 
-const itemClasses = defineClasses(["itemClass", "o-acp__item"]);
+const itemClasses = defineClasses(["itemClass", "o-autocomplete__item"]);
 
 const itemEmptyClasses = defineClasses([
     "itemEmptyClass",
-    "o-acp__item--empty",
+    "o-autocomplete__item--empty",
 ]);
 
 const itemGroupClasses = defineClasses([
     "itemGroupTitleClass",
-    "o-acp__item-group-title",
+    "o-autocomplete__item-group-title",
 ]);
 
 const itemHeaderClasses = defineClasses([
     "itemHeaderClass",
-    "o-acp__item-header",
+    "o-autocomplete__item-header",
 ]);
 
 const itemFooterClasses = defineClasses([
     "itemFooterClass",
-    "o-acp__item-footer",
+    "o-autocomplete__item-footer",
 ]);
 
 // #endregion --- Computed Component Classes ---

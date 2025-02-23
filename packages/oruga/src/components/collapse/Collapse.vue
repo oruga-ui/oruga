@@ -51,26 +51,26 @@ function toggle(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-clps"],
+    ["rootClass", "o-collapse"],
     [
         "positionClass",
-        "o-clps--",
+        "o-collapse--",
         computed(() => props.position),
         computed(() => !!props.position),
     ],
 );
 
 const triggerClasses = defineClasses(
-    ["triggerClass", "o-clps__trigger"],
+    ["triggerClass", "o-collapse__trigger"],
     [
         "expandedClass",
-        "o-clps__trigger--expanded",
+        "o-collapse__trigger--expanded",
         null,
         computed(() => props.expanded),
     ],
 );
 
-const contentClasses = defineClasses(["contentClass", "o-clps__content"]);
+const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
 </script>
 
 <template>

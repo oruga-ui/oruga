@@ -36,11 +36,11 @@ function onClick(event: Event): void {
 // --- Computed Component Classes ---
 
 const itemClasses = defineClasses(
-    ["itemClass", "o-car__item"],
-    ["itemActiveClass", "o-car__item--active", null, isActive],
+    ["itemClass", "o-carousel__item"],
+    ["itemActiveClass", "o-carousel__item--active", null, isActive],
     [
         "itemClickableClass",
-        "o-car__item--clickable",
+        "o-carousel__item--clickable",
         null,
         computed(() => props.clickable),
     ],

@@ -296,7 +296,7 @@ describe("OAutocomplete tests", () => {
 
         expect(wrapper.emitted("select-header")).toHaveLength(1);
 
-        const header = wrapper.find(".o-acp__item-header");
+        const header = wrapper.find(".o-autocomplete__item-header");
         expect(header.exists()).toBeTruthy();
         await header.trigger("click");
 
@@ -328,7 +328,7 @@ describe("OAutocomplete tests", () => {
 
         expect(wrapper.emitted("select-footer")).toHaveLength(1);
 
-        const footer = wrapper.find(".o-acp__item-footer");
+        const footer = wrapper.find(".o-autocomplete__item-footer");
         expect(footer.exists()).toBeTruthy();
         await footer.trigger("click");
 
@@ -339,8 +339,8 @@ describe("OAutocomplete tests", () => {
         const wrapper = mount(OAutocomplete, {
             props: { options: OPTIONS, menuTag: "ul", itemTag: "li" },
         });
-        expect(wrapper.find("ul.o-drop__menu").exists()).toBeTruthy();
-        expect(wrapper.find("li.o-acp__item").exists()).toBeTruthy();
+        expect(wrapper.find("ul.o-dropdown__menu").exists()).toBeTruthy();
+        expect(wrapper.find("li.o-dropdown__item").exists()).toBeTruthy();
     });
 
     describe("render options props correctly", () => {

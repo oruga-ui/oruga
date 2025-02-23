@@ -57,13 +57,13 @@ const tickStyle = computed(() => ({ left: position.value + "%" }));
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["tickClass", "o-slide__tick"],
-    ["tickHiddenClass", "o-slide__tick--hidden", null, hidden],
+    ["tickClass", "o-slider__tick"],
+    ["tickHiddenClass", "o-slider__tick--hidden", null, hidden],
 );
 
 const tickLabelClasses = defineClasses([
     "tickLabelClass",
-    "o-slide__tick-label",
+    "o-slider__tick-label",
 ]);
 </script>
 

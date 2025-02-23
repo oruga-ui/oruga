@@ -556,36 +556,39 @@ function onSecondsChange(value: string): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-tpck"],
+    ["rootClass", "o-timepicker"],
     [
         "sizeClass",
-        "o-tpck--",
+        "o-timepicker--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    ["mobileClass", "o-tpck--mobile", null, isMobile],
+    ["mobileClass", "o-timepicker--mobile", null, isMobile],
 );
 
-const separatorClasses = defineClasses(["separatorClass", "o-tpck__separtor"]);
+const separatorClasses = defineClasses([
+    "separatorClass",
+    "o-timepicker__separtor",
+]);
 
-const footerClasses = defineClasses(["footerClass", "o-tpck__footer"]);
+const footerClasses = defineClasses(["footerClass", "o-timepicker__footer"]);
 
 const pickerDropdownClasses = defineClasses([
     "dropdownClass",
-    "o-tpck__dropdown",
+    "o-timepicker__dropdown",
 ]);
 
-const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
+const boxClasses = defineClasses(["boxClass", "o-timepicker__box"]);
 const boxClassBind = computed(() => getActiveClasses(boxClasses));
 
 const selectSelectClasses = defineClasses([
     "selectClasses.selectClass",
-    "o-tpck__select",
+    "o-timepicker__select",
 ]);
 
 const selectPlaceholderClasses = defineClasses([
     "selectClasses.placeholderClass",
-    "o-tpck__select-placeholder",
+    "o-timepicker__select-placeholder",
 ]);
 
 const selectBind = computed(() => ({
