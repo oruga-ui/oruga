@@ -85,14 +85,19 @@ function copy(val: string): void {
 
 <template>
     <!-- eslint-disable vue/no-v-html -->
-    <div v-if="component" ref="nodeRef" class="odocs-example odocs-mt">
+    <div v-if="component" ref="nodeRef" class="odocs-example">
         <ClientOnly>
-            <component :is="component" />
+            <!-- wrap example in a shadow root web component -->
+            <example-showcase>
+                <component :is="component" />
+            </example-showcase>
         </ClientOnly>
     </div>
-    <div v-if="showCode" class="vp-doc odocs-mt">
+
+    <div v-if="showCode" class="odocs-code">
         <o-collapse
             v-model:open="isOpen"
+            expanded
             root-class="odocs-panel"
             trigger-class="odocs-panel-trigger"
             content-class="odocs-panel-content">
@@ -178,40 +183,38 @@ function copy(val: string): void {
 </template>
 
 <style lang="scss">
-.odocs-mt {
+.odocs-example {
     margin-top: 1rem;
 }
 
-.odocs-example .odocs-spaced p {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    > *:not(:last-child) {
-        margin-right: 0.5rem;
-    }
-}
+.odocs-code {
+    margin-top: 1rem;
 
-.odocs-panel {
-    .odocs-panel-trigger {
-        cursor: pointer;
-        text-align: center;
-        padding: 0.5rem;
-        background-color: var(--vp-button-alt-bg);
-        width: 100%;
-    }
+    .odocs-panel {
+        .odocs-panel-trigger {
+            cursor: pointer;
+            text-align: center;
+            padding: 0.5rem;
+            background-color: var(--vp-button-alt-bg);
+            width: 100%;
+        }
 
-    .odocs-panel-content {
-        pre {
-            background-color: #0d1117;
+        .odocs-panel-content {
+            pre {
+                background-color: #0d1117;
+            }
         }
     }
-}
 
-.vp-doc .vp-code-group .blocks .lang {
-    color: var(--vp-code-copy-code-hover-border-color);
-}
+    .vp-code-group {
+        .blocks .lang {
+            color: var(--vp-code-copy-code-hover-border-color);
+        }
 
-.vp-code-group .tabs {
-    justify-content: start;
-    margin-bottom: 0;
+        .tabs {
+            justify-content: start;
+            margin-bottom: 0;
+        }
+    }
 }
 </style>

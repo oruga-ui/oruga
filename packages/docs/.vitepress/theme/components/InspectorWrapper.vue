@@ -30,18 +30,19 @@ const appliedClasses = ref<string | undefined>();
 let interval: NodeJS.Timeout | undefined;
 
 onUnmounted(() => {
-    clearInterval(interval);
+    clearTimeout(interval);
     interval = undefined;
 });
 
-watch(inspectClass, ({ className, action }) => {
-    // clear values
-    clearInterval(interval);
-    interval = undefined;
-    classes.value = {};
-    data.value = {};
+watch(
+    inspectClass,
+    ({ className, action }) => {
+        // clear values
+        clearTimeout(interval);
+        interval = undefined;
+        classes.value = {};
+        data.value = {};
 
-    nextTick(() => {
         // perform action
         if (action && componentElement.value)
             action(componentElement.value, data.value);
@@ -49,14 +50,19 @@ watch(inspectClass, ({ className, action }) => {
         nextTick(() => {
             // add INSPECT_CLASS to class by className
             setValueByPath(classes.value, className, () => INSPECT_CLASS);
-            interval = setInterval(() => {
+            interval = setTimeout(() => {
                 // get element class
                 const el = document.getElementsByClassName(INSPECT_CLASS)[0];
                 if (el) {
-                    clearInterval(interval);
+                    clearTimeout(interval);
                     appliedClasses.value = el.className.replace(
                         INSPECT_CLASS,
                         "",
+                    );
+                } else {
+                    console.warn(
+                        "Could not found element with class:",
+                        INSPECT_CLASS,
                     );
                 }
             }, 300);
@@ -69,8 +75,9 @@ watch(inspectClass, ({ className, action }) => {
                     behavior: "smooth",
                 });
         });
-    });
-});
+    },
+    { flush: "post" },
+);
 </script>
 
 <template>

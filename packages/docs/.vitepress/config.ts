@@ -130,6 +130,16 @@ export default defineConfig({
         }
         */
     },
+
+    vue: {
+        template: {
+            compilerOptions: {
+                // register exmaple-showcase web component
+                isCustomElement: (tag) => ["example-showcase"].includes(tag),
+            },
+        },
+    },
+
     vite: {
         // Vite config options
         resolve: {

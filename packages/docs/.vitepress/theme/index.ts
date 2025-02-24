@@ -6,6 +6,7 @@ import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
 
+import ExampleShowcase from "./components/ExampleShowcase";
 import InspectorWrapper from "./components/InspectorWrapper.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
@@ -77,6 +78,9 @@ export default {
         app.component("ExampleViewer", ExampleViewer);
         app.component("Expo", Expo);
 
+        // register example-showcase web component
+        customElements.define("example-showcase", ExampleShowcase);
+
         // import example components
         const examples = import.meta.glob<DefineComponent>(
             "../../../oruga/src/components/**/examples/index.vue",
@@ -130,7 +134,7 @@ export default {
                 }
             }
 
-            // add theme style
+            // create an HTML link element for the current theme cdn
             const link = document.createElement("link");
             link.rel = "stylesheet";
             link.href = theme.cdn;
