@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { RadioClasses, RadioProps } from "../props";
 
 const inspectData: InspectData<RadioClasses, RadioProps<unknown>> = {

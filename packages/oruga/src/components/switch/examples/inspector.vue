@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { SwitchClasses, SwitchProps } from "../props";
 
 const inspectData: InspectData<SwitchClasses, SwitchProps<unknown>> = {

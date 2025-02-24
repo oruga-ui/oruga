@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { CollapseClasses, CollapseProps } from "../props";
 
 const inspectData: InspectData<CollapseClasses, CollapseProps> = {

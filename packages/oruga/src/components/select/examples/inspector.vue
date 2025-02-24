@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { SelectClasses, SelectProps } from "../props";
 
 const inspectData: InspectData<

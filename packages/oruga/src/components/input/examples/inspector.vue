@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { InputClasses, InputProps } from "../props";
 
 const inspectData: InspectData<

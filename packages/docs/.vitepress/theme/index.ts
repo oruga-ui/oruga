@@ -32,22 +32,36 @@ hljs.registerLanguage("scss", scss);
 hljs.registerLanguage("css", css);
 
 // Import theme definitions
-import { Themes, type ThemeConfig } from "@docs";
+import { Themes, type ThemeConfig } from "@docs/themes";
 
-// load last used theme or set a default one
-function loadTheme(): ThemeConfig {
-    const cache = localStorage.getItem("oruga-ui.com:theme");
-    if (cache && cache !== "undefined") {
-        try {
-            const themeConfig = JSON.parse(cache);
-            if (themeConfig && typeof themeConfig === "object")
-                return themeConfig;
-        } catch (e) {
-            console.warn(e);
-            return Themes[1];
+const STORAGEKEY = "oruga-ui.com:theme";
+
+/** load the last used theme or get a default one */
+export function loadTheme(): ThemeConfig {
+    if (typeof window !== "undefined") {
+        const cache = window.localStorage.getItem(STORAGEKEY);
+        if (cache && cache !== "undefined") {
+            try {
+                const themeConfig = JSON.parse(cache);
+                if (themeConfig && typeof themeConfig === "object")
+                    return themeConfig;
+            } catch (e) {
+                console.warn(e);
+                return Themes[1];
+            }
         }
     }
     return Themes[1];
+}
+
+/** save the theme config to load later */
+export function saveTheme(theme: ThemeConfig): void {
+    if (typeof window === "undefined") {
+        console.log("The window object is not available in this environment.");
+    } else {
+        window.localStorage.setItem(STORAGEKEY, JSON.stringify(theme));
+        location.reload();
+    }
 }
 
 export default {

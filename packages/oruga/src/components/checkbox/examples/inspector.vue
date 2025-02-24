@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { CheckboxClasses, CheckboxProps } from "../props";
 
 const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
