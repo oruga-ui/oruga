@@ -30,9 +30,7 @@ describe("OCarousel tests", () => {
             data: () => ({ carousels }),
             template: `<o-carousel indicator-inside>
             <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
-                <article
-                    class="ex-slide"
-                    :style="{ 'background-color': carousel.color }">
+                <article :style="{ 'background-color': carousel.color }">
                     <h1>{{ carousel.text }}</h1>
                 </article>
             </o-carousel-item>

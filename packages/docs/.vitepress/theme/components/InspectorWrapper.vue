@@ -115,11 +115,7 @@ watch(
     </div>
 </template>
 
-<style lang="scss">
-.odocs-inspected-element {
-    border: 2px solid #bd1313 !important;
-}
-
+<style lang="scss" scoped>
 .odocs-classes-applied {
     display: flex;
     align-items: center;

@@ -129,11 +129,16 @@ const inspectData: InspectData<
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-carousel v-bind="props">
             <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
-                <section
-                    class="ex-slide"
-                    :style="{ 'background-color': carousel.color }">
+                <article
+                    class="example-slide"
+                    :style="{
+                        'background-color': carousel.color,
+                        padding: '9rem 4.5rem',
+                        color: '#ffffff',
+                        'text-align': 'center',
+                    }">
                     <h1>{{ carousel.text }}</h1>
-                </section>
+                </article>
             </o-carousel-item>
         </o-carousel>
     </inspector-wrapper>

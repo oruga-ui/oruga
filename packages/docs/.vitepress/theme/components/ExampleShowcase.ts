@@ -39,6 +39,11 @@ export default class extends HTMLElement {
         // Create some CSS to apply to the shadow root
         const stylesheet = new CSSStyleSheet();
         stylesheet.replaceSync(`
+            /** class of the inpected element in the Class Inpector */
+            .odocs-inspected-element {
+                border: 2px solid var(--vp-c-caution-1) !important;
+            }
+            
             .odocs-spaced p {
                 margin-top: 0.5rem;
                 margin-bottom: 0.5rem;
@@ -46,12 +51,6 @@ export default class extends HTMLElement {
 
             .odocs-spaced p > *:not(:last-child) {
                 margin-right: 0.5rem;
-            }
-
-            .example-slide {
-                padding: 9rem 4.5rem;
-                color: #ffffff;
-                text-align: center;
             }
         `);
 
