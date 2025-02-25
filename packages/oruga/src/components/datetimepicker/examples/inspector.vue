@@ -10,7 +10,7 @@ const inspectData: InspectData<DatetimePickerClasses, DatetimepickerProps> = {
     timepickerWrapperClass: {
         class: "timepickerWrapperClass",
         description: "Class of the Timepicker component wrapper element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },

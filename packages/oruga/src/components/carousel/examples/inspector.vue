@@ -27,7 +27,7 @@ const inspectData: InspectData<
         class: "overlayClass",
         description: "Class of the root element when overlay.",
         properties: ["overlay"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.overlay = true;
         },
     },
@@ -51,7 +51,7 @@ const inspectData: InspectData<
     iconPrevClass: {
         class: "iconPrevClass",
         description: "Class of prev icon button element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.modelValue = 1;
         },
     },
@@ -71,7 +71,7 @@ const inspectData: InspectData<
         class: "indicatorsInsideClass",
         description: "Class of indicators tablist element when inside.",
         properties: ["indicatorInside"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.indicatorInside = true;
         },
     },
@@ -80,7 +80,7 @@ const inspectData: InspectData<
         description:
             "Class of indicators tablist element when inside and position.",
         properties: ["indicatorInside", "indicatorPosition"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.indicatorInside = true;
             data.indicatorPosition = "top";
         },
@@ -102,7 +102,7 @@ const inspectData: InspectData<
         properties: ["indicatorStyle"],
         description:
             "Class of indicator item element to separate different styles.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.indicatorStyle = "lines";
         },
     },

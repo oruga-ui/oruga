@@ -44,8 +44,7 @@ watch(
         data.value = {};
 
         // perform action
-        if (action && showcaseElement.value)
-            action(showcaseElement.value, data.value);
+        if (typeof action === "function") action(data.value);
 
         // await property got changed by called action
         nextTick(() => {
