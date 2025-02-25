@@ -43,8 +43,7 @@ watch(inspectClass, ({ className, action }) => {
 
     nextTick(() => {
         // perform action
-        if (action && componentElement.value)
-            action(componentElement.value, data.value);
+        if (typeof action === "function") action(data.value);
 
         nextTick(() => {
             // add INSPECT_CLASS to class by className

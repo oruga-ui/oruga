@@ -15,7 +15,7 @@ const inspectData: InspectData<
         description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -25,7 +25,7 @@ const inspectData: InspectData<
         info: "Variant property should be applied to the wrapping field.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.fieldvariant = "warning";
         },
     },
@@ -33,7 +33,7 @@ const inspectData: InspectData<
         class: "expandedClass",
         description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
@@ -41,7 +41,7 @@ const inspectData: InspectData<
         class: "disabledClass",
         description: "Class of the root element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
@@ -49,7 +49,7 @@ const inspectData: InspectData<
         class: "roundedClass",
         description: "Class of the root element when rounded.",
         properties: ["rounded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.rounded = true;
         },
     },
@@ -57,7 +57,7 @@ const inspectData: InspectData<
         class: "textareaClass",
         description: "Class of the root element when type `textarea`.",
         properties: ["type"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.type = "textarea";
         },
     },
@@ -65,7 +65,7 @@ const inspectData: InspectData<
         class: "hasIconRightClass",
         description: "Class to the root element when a right icon is used.",
         properties: ["iconRight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.clearable = true;
         },
     },
@@ -81,7 +81,7 @@ const inspectData: InspectData<
         class: "iconLeftSpaceClass",
         description: "Class of the native input element with left icon space.",
         properties: ["icon"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.icon = "envelope";
         },
     },
@@ -89,7 +89,7 @@ const inspectData: InspectData<
         class: "iconRightSpaceClass",
         description: "Class of the native input element with right icon space.",
         properties: ["iconRight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.iconRight = "times-circle";
         },
     },
@@ -97,7 +97,7 @@ const inspectData: InspectData<
         class: "iconLeftClass",
         description: "Class of the left icon element.",
         properties: ["icon"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.icon = "envelope";
         },
     },
@@ -105,7 +105,7 @@ const inspectData: InspectData<
         class: "iconRightClass",
         description: "Class of the right icon element.",
         properties: ["iconRight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.iconRight = "times-circle";
         },
     },
@@ -113,7 +113,7 @@ const inspectData: InspectData<
         class: "counterClass",
         description: "Class of the counter element.",
         properties: ["counter", "maxlength"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.counter = true;
             data.maxlength = 10;
         },
