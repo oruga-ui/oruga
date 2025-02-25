@@ -9,7 +9,7 @@ import {
 } from "vue";
 import { setValueByPath } from "@oruga-ui/oruga-next";
 import type { InspectClass, InspectData } from "@docs";
-import Inspector from "./Inspector.vue";
+import InspectorTable from "./InspectorTable.vue";
 
 const INSPECT_CLASS = "odocs-inspected-element";
 
@@ -17,7 +17,7 @@ defineProps({
     inspectData: { type: Object as PropType<InspectData>, required: true },
 });
 
-const componentElement = useTemplateRef("componentRef");
+const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 
 const inspectClass = ref<InspectClass>({} as InspectClass);
 
@@ -44,17 +44,27 @@ watch(
         data.value = {};
 
         // perform action
-        if (action && componentElement.value)
-            action(componentElement.value, data.value);
+        if (action && showcaseElement.value)
+            action(showcaseElement.value, data.value);
 
+        // await property got changed by called action
         nextTick(() => {
-            // add INSPECT_CLASS to class by className
+            // add INSPECT_CLASS to class by `className`
             setValueByPath(classes.value, className, () => INSPECT_CLASS);
             interval = setTimeout(() => {
-                // get element class
-                const el = document.getElementsByClassName(INSPECT_CLASS)[0];
+                // get example showcase root
+                const wrapper =
+                    showcaseElement.value?.shadowRoot?.getElementById(
+                        "inspector-wrapper",
+                    );
+
+                // get DOM element by added INSPECT_CLASS
+                const el = wrapper?.getElementsByClassName(INSPECT_CLASS)[0];
+
                 if (el) {
                     clearTimeout(interval);
+                    // remove INSPECT_CLASS from the DOM element
+                    // extract other classes from the DOM element
                     appliedClasses.value = el.className.replace(
                         INSPECT_CLASS,
                         "",
@@ -68,10 +78,10 @@ watch(
             }, 300);
 
             // scroll to inspector
-            if (componentElement.value)
+            if (showcaseElement.value)
                 window.scrollTo({
                     left: 0,
-                    top: componentElement.value?.offsetTop,
+                    top: showcaseElement.value?.offsetTop,
                     behavior: "smooth",
                 });
         });
@@ -81,7 +91,7 @@ watch(
 </script>
 
 <template>
-    <div id="inspector-wrapper" ref="componentRef">
+    <div>
         <transition name="fade">
             <div v-show="!!appliedClasses">
                 <b>Classes applied to the element:</b>
@@ -89,9 +99,13 @@ watch(
             </div>
         </transition>
 
-        <slot v-bind="{ ...classes, ...data }" />
+        <example-showcase ref="showcaseRef">
+            <div id="inspector-wrapper">
+                <slot v-bind="{ ...classes, ...data }" />
+            </div>
+        </example-showcase>
 
-        <Inspector
+        <InspectorTable
             :inspect-data="inspectData"
             @inspect="inspectClass = $event" />
     </div>
