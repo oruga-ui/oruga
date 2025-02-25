@@ -38,7 +38,7 @@
     "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
     "replace-in-file": "^8.3.0",
-    "npm-check-updates": "^17.1.14",
-    "tsx": "^4.19.2"
+    "npm-check-updates": "^17.1.15",
+    "tsx": "^4.19.3"
   }
 }
