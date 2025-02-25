@@ -86,6 +86,7 @@ function copy(val: string): void {
 <template>
     <!-- eslint-disable vue/no-v-html -->
     <div v-if="component" ref="nodeRef" class="odocs-example">
+        <!-- web components cannot be rendered in server side -->
         <ClientOnly>
             <!-- wrap example in a shadow root web component -->
             <example-showcase>

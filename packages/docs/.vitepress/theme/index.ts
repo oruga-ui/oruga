@@ -79,7 +79,8 @@ export default {
         app.component("Expo", Expo);
 
         // register example-showcase web component
-        customElements.define("example-showcase", ExampleShowcase);
+        if (!import.meta.env.SSR)
+            customElements.define("example-showcase", ExampleShowcase);
 
         // import example components
         const examples = import.meta.glob<DefineComponent>(

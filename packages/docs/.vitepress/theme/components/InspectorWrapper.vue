@@ -99,11 +99,15 @@ watch(
             </div>
         </transition>
 
-        <example-showcase ref="showcaseRef">
-            <div id="inspector-wrapper">
-                <slot v-bind="{ ...classes, ...data }" />
-            </div>
-        </example-showcase>
+        <!-- web components cannot be rendered in server side -->
+        <ClientOnly>
+            <!-- wrap example in a shadow root web component -->
+            <example-showcase ref="showcaseRef">
+                <div id="inspector-wrapper">
+                    <slot v-bind="{ ...classes, ...data }" />
+                </div>
+            </example-showcase>
+        </ClientOnly>
 
         <InspectorTable
             :inspect-data="inspectData"
