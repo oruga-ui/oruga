@@ -375,24 +375,29 @@ function eventClasses(event: DatepickerEvent): ClassBind[] {
     return classes.value;
 }
 
-const tableRowClasses = defineClasses(["tableRowClass", "o-dpck__table__row"]);
+const tableRowClasses = defineClasses(
+    ["tableRowClass", "o-dpck__table__row"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const tableCellClasses = defineClasses([
-    "tableCellClass",
-    "o-dpck__table__cell",
-]);
+const tableCellClasses = defineClasses(
+    ["tableCellClass", "o-dpck__table__cell"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const tableEventsClasses = defineClasses([
-    "tableEventsClass",
-    "o-dpck__table__events",
-]);
+const tableEventsClasses = defineClasses(
+    ["tableEventsClass", "o-dpck__table__events"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const cellEventsClass = defineClasses([
-    "tableCellEventsClass",
-    "o-dpck__table__cell--events",
-    null,
-    hasEvents,
-]);
+const cellEventsClass = defineClasses(
+    ["tableCellEventsClass", "o-dpck__table__cell--events", null, hasEvents],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 </script>
 
 <template>

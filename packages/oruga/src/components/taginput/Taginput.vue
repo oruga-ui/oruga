@@ -284,29 +284,20 @@ function onKeydown(event: KeyboardEvent): void {
 
 // --- Computed Component Classes ---
 
-const attrs = useAttrs();
-
-const autocompleteRootClasses = defineClasses([
-    "autocompleteClasses.rootClass",
-    "o-taginput__autocomplete",
-]);
-
-const autocompleteInputClasses = defineClasses([
-    "autocompleteClasses.inputClasses.inputClass",
-    "o-taginput__input",
-]);
-
-const autocompleteBind = computed(() => ({
-    ...attrs,
-    "root-class": getActiveClasses(autocompleteRootClasses),
-    "input-classes": {
-        "input-class": getActiveClasses(autocompleteInputClasses),
-    },
-    ...props.autocompleteClasses,
-}));
-
 const rootClasses = defineClasses(
     ["rootClass", "o-taginput"],
+    [
+        "sizeClass",
+        "o-taginput--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "variantClass",
+        "o-taginput--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
     [
         "expandedClass",
         "o-taginput--expanded",
@@ -315,15 +306,10 @@ const rootClasses = defineClasses(
     ],
 );
 
-const containerClasses = defineClasses(
-    ["containerClass", "o-taginput__container"],
-    [
-        "sizeClass",
-        "o-taginput__container--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-);
+const containerClasses = defineClasses([
+    "containerClass",
+    "o-taginput__container",
+]);
 
 const itemClasses = defineClasses(
     ["itemClass", "o-taginput__item"],
@@ -338,6 +324,27 @@ const itemClasses = defineClasses(
 const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
+
+const autocompleteRootClasses = defineClasses([
+    "autocompleteClasses.rootClass",
+    "o-taginput__autocomplete",
+]);
+
+const autocompleteInputClasses = defineClasses([
+    "autocompleteClasses.inputClasses.inputClass",
+    "o-taginput__input",
+]);
+
+const attrs = useAttrs();
+
+const autocompleteBind = computed(() => ({
+    ...attrs,
+    "root-class": getActiveClasses(autocompleteRootClasses),
+    "input-classes": {
+        "input-class": getActiveClasses(autocompleteInputClasses),
+    },
+    ...props.autocompleteClasses,
+}));
 
 // --- Expose Public Functionalities ---
 

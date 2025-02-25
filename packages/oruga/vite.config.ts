@@ -52,6 +52,10 @@ export default defineConfig(({ mode }) => ({
             "@oruga-ui/oruga-next": fileURLToPath(
                 new URL("./src/index.ts", import.meta.url),
             ),
+            // add docs prefix
+            "@docs": fileURLToPath(
+                new URL("../docs/src/types.ts", import.meta.url),
+            ),
             // add '@' alias to src
             "@": fileURLToPath(new URL("./src", import.meta.url)),
         },
@@ -71,7 +75,7 @@ export default defineConfig(({ mode }) => ({
                       name: "Oruga",
                       entry: resolve(__dirname, "src/index.ts"),
                       formats: ["umd", "es"],
-                      fileName: (format) =>
+                      fileName: (format): string =>
                           format === "umd" ? "oruga.js" : "oruga.mjs",
                   }
                 : // build rollup output verions for all entries

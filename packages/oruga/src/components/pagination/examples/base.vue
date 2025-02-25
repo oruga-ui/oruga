@@ -16,7 +16,7 @@ const size = ref("");
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field label="Total">
                 <o-input v-model="total" type="number" number />
             </o-field>
@@ -24,7 +24,7 @@ const size = ref("");
                 <o-input v-model="perPage" type="number" number />
             </o-field>
         </o-field>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field label="Show buttons before current">
                 <o-input v-model="rangeBefore" type="number" number min="0" />
             </o-field>
@@ -32,7 +32,7 @@ const size = ref("");
                 <o-input v-model="rangeAfter" type="number" number min="0" />
             </o-field>
         </o-field>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field label="Order">
                 <o-select v-model="order">
                     <option value="left">left</option>

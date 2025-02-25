@@ -1,6 +1,6 @@
 import type { ComponentClass } from "@/types";
 
-export type SliderProps<IsRange extends boolean> = {
+export type SliderProps<IsRange extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state */
@@ -55,36 +55,36 @@ export type SliderProps<IsRange extends boolean> = {
     locale?: string | string[];
     /** Accessibility aria-label to to be passed to the slider thumb element. */
     ariaLabel?: string;
-} & SelectClasses;
+} & SliderClasses;
 
 // class props (will not be displayed in the docs)
-type SelectClasses = Partial<{
+export type SliderClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the vertical slider size */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
-    /** Class of the slider track */
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the slider track element. */
     trackClass: ComponentClass;
     /** Class of the filled part of the slider */
     fillClass: ComponentClass;
-    /** Class when slider is disabled */
-    disabledClass: ComponentClass;
-    /** Class of the slider variant */
+    /** Class of the filled part of the slider with variant */
     variantClass: ComponentClass;
-    /** Class of the thumb wrapper */
+    /** Class of the thumb wrapper element */
     thumbWrapperClass: ComponentClass;
-    /** Class to display on the wrapper element when the slider is dragged */
+    /** Class to the thumb wrapper element when the slider is dragged */
     thumbWrapperDraggingClass: ComponentClass;
-    /** Class of the thumb */
+    /** Class of the thumb element */
     thumbClass: ComponentClass;
-    /** Class when the slider is rounded */
+    /** Class of the thumb element when rounded */
     thumbRoundedClass: ComponentClass;
-    /** Class when the thumb gets dragged */
+    /** Class of the thumb element when is dragged */
     thumbDraggingClass: ComponentClass;
-    /** Class of slider tick */
+    /** Class of the slider tick element */
     tickClass: ComponentClass;
-    /** Class when slider tick is hidden */
+    /** Class of the slider tick element when is hidden */
     tickHiddenClass: ComponentClass;
-    /** Class of tick label */
+    /** Class of the slider tick label element */
     tickLabelClass: ComponentClass;
 }>;

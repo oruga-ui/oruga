@@ -102,6 +102,8 @@ const rootClasses = defineClasses(
     ["disabledClass", "o-btn--disabled", null, computed(() => props.disabled)],
 );
 
+const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
+
 const labelClasses = defineClasses(["labelClass", "o-btn__label"]);
 
 const iconClasses = defineClasses(["iconClass", "o-btn__icon"]);
@@ -109,8 +111,6 @@ const iconClasses = defineClasses(["iconClass", "o-btn__icon"]);
 const iconLeftClasses = defineClasses(["iconLeftClass", "o-btn__icon-left"]);
 
 const iconRightClasses = defineClasses(["iconRightClass", "o-btn__icon-right"]);
-
-const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
 </script>
 
 <template>
@@ -133,12 +133,14 @@ const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
                 :size="size"
                 :both="iconBoth"
                 :class="[...iconClasses, ...iconLeftClasses]" />
+
             <span v-if="label || $slots.default" :class="labelClasses">
                 <!--
                     @slot Override the label, default is label prop 
                 -->
                 <slot>{{ label }}</slot>
             </span>
+
             <o-icon
                 v-if="iconRight"
                 :pack="iconPack"

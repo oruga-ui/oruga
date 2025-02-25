@@ -50,10 +50,6 @@ ${
 <div class="vp-example">
 ${renderExamples(component)}
 </div>
-
-<div class="vp-example">
-${renderClasses(component)}
-</div>
 `
 }
 <div class="vp-doc">
@@ -66,7 +62,6 @@ ${description ? "> " + description : ""}
 <o-${tag}></o-${tag}>
 \`\`\`
 
-
 ${renderedUsage.props}
 ${renderedUsage.methods}
 ${renderedUsage.events}
@@ -76,6 +71,15 @@ ${
     requiresMd.length
         ? requiresMd.map((component) => component.content).join(" ")
         : ""
+}
+${
+    isSubComponent
+        ? ""
+        : `
+<div class="vp-example">
+${renderClasses(component)}
+</div>
+`
 }
 ${
     style

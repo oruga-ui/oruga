@@ -126,16 +126,16 @@ const rootClasses = defineClasses(
         computed(() => !!props.size),
     ],
     [
-        "disabledClass",
-        "o-switch--disabled",
-        null,
-        computed(() => props.disabled),
-    ],
-    [
         "variantClass",
         "o-switch--",
         computed(() => props.variant),
         computed(() => !!props.variant),
+    ],
+    [
+        "passiveVariantClass",
+        "o-switch--",
+        computed(() => props.passiveVariant + "-passive"),
+        computed(() => !!props.passiveVariant),
     ],
     [
         "positionClass",
@@ -144,28 +144,20 @@ const rootClasses = defineClasses(
         computed(() => !!props.position),
     ],
     [
-        "passiveVariantClass",
-        "o-switch--",
-        computed(() => props.passiveVariant + "-passive"),
-        computed(() => !!props.passiveVariant),
+        "disabledClass",
+        "o-switch--disabled",
+        null,
+        computed(() => props.disabled),
     ],
-);
-
-const inputClasses = defineClasses(
-    ["inputClass", "o-switch__input"],
-    ["inputCheckedClass", "o-switch__input--checked", null, isChecked],
-);
-
-const switchClasses = defineClasses(
-    ["switchClass", "o-switch__check"],
-    ["switchCheckedClass", "o-switch__check--checked", null, isChecked],
     ["roundedClass", "o-switch--rounded", null, computed(() => props.rounded)],
+    ["checkedClass", "o-switch--checked", null, isChecked],
 );
 
-const switchCheckClasses = defineClasses(
-    ["switchCheckClass", "o-switch__check-switch"],
-    ["roundedClass", "o-switch--rounded", null, computed(() => props.rounded)],
-);
+const inputClasses = defineClasses(["inputClass", "o-switch__input"]);
+
+const trackClasses = defineClasses(["trackClass", "o-switch__track"]);
+
+const thumbClasses = defineClasses(["thumbClass", "o-switch__thumb"]);
 
 const labelClasses = defineClasses(["labelClass", "o-switch__label"]);
 
@@ -200,8 +192,8 @@ defineExpose({ focus: setFocus, value: vmodel });
             @invalid="onInvalid"
             @change="onInput" />
 
-        <span :class="switchClasses" @click.prevent="clickInput">
-            <span :class="switchCheckClasses"></span>
+        <span :class="trackClasses" @click.prevent="clickInput">
+            <span :class="thumbClasses"></span>
         </span>
 
         <label

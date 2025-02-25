@@ -10,8 +10,8 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 @binding {T | T[]} value - the selected value
                 @binding {() => void} toggle - toggle dropdown active state
             -->
-      <div data-oruga="input" class="o-input__wrapper">
-        <!--v-if--><input class="o-dtpck__date o-input" id="v-1" data-oruga-input="text" type="text" autocomplete="off">
+      <div data-oruga="input" class="o-input">
+        <!--v-if--><input class="o-dtpck__date o-input__input" id="v-1" data-oruga-input="text" type="text" autocomplete="off">
         <!--v-if-->
         <!--v-if-->
       </div>
@@ -42,8 +42,8 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 <!--v-if--></span>
               </button>
               <div class="o-dpck__header__list">
-                <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select aria-label="Select Month" id="v-3" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                <div class="o-select" data-oruga="select">
+                  <!--v-if--><select aria-label="Select Month" id="v-3" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop
@@ -63,8 +63,8 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                   </select>
                   <!--v-if-->
                 </div>
-                <div class="o-ctrl-sel" data-oruga="select">
-                  <!--v-if--><select aria-label="Select Year" id="v-4" data-oruga-input="select" class="o-sel o-sel-arrow" autocomplete="off">
+                <div class="o-select" data-oruga="select">
+                  <!--v-if--><select aria-label="Select Year" id="v-4" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
                     <!--v-if-->
                     <!--
                 @slot Override the options, default is options prop

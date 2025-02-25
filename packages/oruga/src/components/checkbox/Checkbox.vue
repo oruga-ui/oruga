@@ -112,35 +112,37 @@ const inputBind = computed(() => ({
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-chk"],
-    ["checkedClass", "o-chk--checked", null, isChecked],
+    ["rootClass", "o-check"],
     [
         "sizeClass",
-        "o-chk--",
+        "o-check--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    ["disabledClass", "o-chk--disabled", null, computed(() => props.disabled)],
     [
         "variantClass",
-        "o-chk--",
+        "o-check--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
-);
-
-const inputClasses = defineClasses(
-    ["inputClass", "o-chk__input"],
-    ["inputCheckedClass", "o-chk__input--checked", null, isChecked],
+    [
+        "disabledClass",
+        "o-check--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    ["checkedClass", "o-check--checked", null, isChecked],
     [
         "indeterminateClass",
-        "o-chk__input--indeterminate",
+        "o-check--indeterminate",
         null,
         computed(() => props.indeterminate),
     ],
 );
 
-const labelClasses = defineClasses(["labelClass", "o-chk__label"]);
+const inputClasses = defineClasses(["inputClass", "o-check__input"]);
+
+const labelClasses = defineClasses(["labelClass", "o-check__label"]);
 
 // --- Expose Public Functionalities ---
 

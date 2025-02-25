@@ -16,14 +16,6 @@ The component is based on the Datepicker component.
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-datetimepicker-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Datetimepicker component
@@ -88,6 +80,14 @@ The component is based on the Datepicker component.
 | Name   | Description                 | Bindings |
 | ------ | --------------------------- | -------- |
 | footer | Define an additional footer |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-datetimepicker-viewer />
 
 </div>
 

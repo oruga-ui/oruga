@@ -18,14 +18,6 @@ Use it with the Field component to access all the functionalities.
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-checkbox-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Checkbox component
@@ -72,6 +64,14 @@ Use it with the Field component to access all the functionalities.
 | Name    | Description                         | Bindings |
 | ------- | ----------------------------------- | -------- |
 | default | Content slot, default is label prop |          |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-checkbox-viewer />
 
 </div>
 

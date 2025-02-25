@@ -58,19 +58,19 @@ export type NotificationProps = {
 } & NotificationClasses;
 
 // class props (will not be displayed in the docs)
-type NotificationClasses = Partial<{
+export type NotificationClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the close button */
+    /** Class of the root element when positioned */
+    positionClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
+    /** Class of the close button element */
     closeClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
-    /** Class of the icon on the left */
+    /** Class of the icon element on the left */
     iconClass: ComponentClass;
-    /** Class of the element when positioned */
-    positionClass: ComponentClass;
-    /** Class of the notification variant */
-    variantClass: ComponentClass;
     /** Class of the wrapper element */
     wrapperClass: ComponentClass;
 }>;
@@ -114,11 +114,11 @@ export type NotificationNoticeProps<C extends Component> = {
 } & NotificationNoticeClasses;
 
 // class props (will not be displayed in the docs)
-type NotificationNoticeClasses = Partial<{
-    /** Root class of the notice */
+export type NotificationNoticeClasses = Partial<{
+    /** Class of the notice wrapper element */
     noticeClass: ComponentClass;
-    /** Class of the notice when positioned */
+    /** Class of the notice wrapper element when positioned */
     noticePositionClass: ComponentClass;
-    /** Class of the custom container element */
+    /** Class of the notice container element */
     noticeContainerClass: ComponentClass;
 }>;

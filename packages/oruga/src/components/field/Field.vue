@@ -39,9 +39,9 @@ const props = withDefaults(defineProps<FieldProps>(), {
     messageTag: () => getDefault("field.messageTag", "p"),
     messageId: () => useId(),
     grouped: false,
-    groupMultiline: false,
-    horizontal: false,
     addons: false,
+    multiline: false,
+    horizontal: false,
     mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
 
@@ -95,10 +95,10 @@ const hasLabel = computed(() => props.label || !!slots.label);
 
 const hasMessage = computed(() => !!fieldMessage.value || !!slots.message);
 
-const isGrouped = computed(
+const hasBody = computed(
     () =>
         props.grouped ||
-        props.groupMultiline ||
+        props.multiline ||
         hasInnerField.value ||
         hasAddons.value,
 );
@@ -179,16 +179,6 @@ const rootClasses = defineClasses(
     ["filledClass", "o-field--filled", null, isFilled],
 );
 
-const messageClasses = defineClasses(
-    ["messageClass", "o-field__message"],
-    [
-        "messageVariantClass",
-        "o-field__message-",
-        fieldVariant,
-        computed(() => !!fieldVariant.value),
-    ],
-);
-
 const labelClasses = defineClasses(
     ["labelClass", "o-field__label"],
     [
@@ -205,8 +195,6 @@ const labelClasses = defineClasses(
     ],
 );
 
-const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
-
 const horizontalLabelClasses = defineClasses([
     "horizontalLabelClass",
     "o-field__horizontal-label",
@@ -217,20 +205,32 @@ const horizontalBodyClasses = defineClasses([
     "o-field__horizontal-body",
 ]);
 
-const innerFieldClasses = defineClasses(
+const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
+
+const innerBodyClasses = defineClasses(
     ["rootClass", "o-field"],
     ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
-    [
-        "groupMultilineClass",
-        "o-field--grouped-multiline",
-        null,
-        computed(() => props.groupMultiline),
-    ],
     [
         "addonsClass",
         "o-field--addons",
         null,
         computed(() => !props.grouped && hasAddons.value),
+    ],
+    [
+        "multilineClass",
+        "o-field--multiline",
+        null,
+        computed(() => props.multiline),
+    ],
+);
+
+const messageClasses = defineClasses(
+    ["messageClass", "o-field__message"],
+    [
+        "messageVariantClass",
+        "o-field__message-",
+        fieldVariant,
+        computed(() => !!fieldVariant.value),
     ],
 );
 </script>
@@ -250,6 +250,7 @@ const innerFieldClasses = defineClasses(
                 <slot name="label" :label="label">{{ label }}</slot>
             </label>
         </div>
+
         <template v-else>
             <label
                 v-if="hasLabel"
@@ -290,8 +291,8 @@ const innerFieldClasses = defineClasses(
             </template>
         </div>
 
-        <div v-else-if="isGrouped" :class="bodyClasses">
-            <div :class="innerFieldClasses">
+        <div v-else-if="hasBody" :class="bodyClasses">
+            <div :class="innerBodyClasses">
                 <!--
                    @slot Default content
                 -->

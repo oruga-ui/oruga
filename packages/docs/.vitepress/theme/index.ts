@@ -7,7 +7,6 @@ import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
 
 import InspectorWrapper from "./components/InspectorWrapper.vue";
-import Inspector from "./components/Inspector.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
 
@@ -33,22 +32,36 @@ hljs.registerLanguage("scss", scss);
 hljs.registerLanguage("css", css);
 
 // Import theme definitions
-import themes from "@docs/themes.json";
+import { Themes, type ThemeConfig } from "@docs/themes";
 
-// load last used theme or set a default one
-function loadTheme() {
-    const cache = localStorage.getItem("oruga-ui.com:theme");
-    if (cache && cache !== "undefined") {
-        try {
-            const themeConfig = JSON.parse(cache);
-            if (themeConfig && typeof themeConfig === "object")
-                return themeConfig;
-        } catch (e) {
-            console.warn(e);
-            return themes[1];
+const STORAGEKEY = "oruga-ui.com:theme";
+
+/** load the last used theme or get a default one */
+export function loadTheme(): ThemeConfig {
+    if (typeof window !== "undefined") {
+        const cache = window.localStorage.getItem(STORAGEKEY);
+        if (cache && cache !== "undefined") {
+            try {
+                const themeConfig = JSON.parse(cache);
+                if (themeConfig && typeof themeConfig === "object")
+                    return themeConfig;
+            } catch (e) {
+                console.warn(e);
+                return Themes[1];
+            }
         }
     }
-    return themes[1];
+    return Themes[1];
+}
+
+/** save the theme config to load later */
+export function saveTheme(theme: ThemeConfig): void {
+    if (typeof window === "undefined") {
+        console.log("The window object is not available in this environment.");
+    } else {
+        window.localStorage.setItem(STORAGEKEY, JSON.stringify(theme));
+        location.reload();
+    }
 }
 
 export default {
@@ -61,7 +74,6 @@ export default {
 
         // add documentation components
         app.component("InspectorWrapper", InspectorWrapper);
-        app.component("Inspector", Inspector);
         app.component("ExampleViewer", ExampleViewer);
         app.component("Expo", Expo);
 

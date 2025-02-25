@@ -16,14 +16,6 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-autocomplete-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Autocomplete component
@@ -38,6 +30,7 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 
 | Prop name          | Description                                                                                                                                                                      | Type                                                                   | Values                                            | Default                                                                                                                                                          |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active             | The active state of the dropdown, use v-model:active to make it two-way binding                                                                                                  | boolean                                                                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
 | animation          | Transition name to apply on dropdown list                                                                                                                                        | string                                                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>         |
 | autocomplete       | Native options to use in HTML5 validation                                                                                                                                        | string                                                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>       |
 | checkScroll        | Makes the component check if list reached scroll start or end and emit scroll events.                                                                                            | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;checkScroll: false<br>}</code>        |
@@ -86,6 +79,7 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 | ------------------ | --------------------------------------------------------------------- | ---------------------------------------------- |
 | update:model-value | **value** `T` - updated modelValue prop                               | modelValue prop two-way binding                |
 | update:input       | **value** `string` - updated input prop                               | input prop two-way binding                     |
+| update:active      | **value** `boolean` - updated active prop                             | active prop two-way binding                    |
 | input              | **value** `string` - input value<br/>**event** `Event` - native event | on input change event                          |
 | select             | **value** `T` - selected value                                        | selected element changed event                 |
 | select-header      |                                                                       | header is selected                             |
@@ -107,6 +101,14 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 | default | Override the select option     | **option** `object` - option object<br/>**value** `unknown` - option value<br/>**index** `number` - option index |
 | empty   | Define content for empty state |                                                                                                                  |
 | footer  | Define an additional footer    |                                                                                                                  |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-autocomplete-viewer />
 
 </div>
 

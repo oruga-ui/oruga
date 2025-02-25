@@ -159,22 +159,6 @@ const rootClasses = defineClasses(
 
 const triggerClasses = defineClasses(["triggerClass", "o-tip__trigger"]);
 
-const arrowClasses = defineClasses(
-    ["arrowClass", "o-tip__arrow"],
-    [
-        "arrowPositionClass",
-        "o-tip__arrow--",
-        autoPosition,
-        computed(() => !!autoPosition.value),
-    ],
-    [
-        "variantArrowClass",
-        "o-tip__arrow--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
-);
-
 const contentClasses = defineClasses(
     ["contentClass", "o-tip__content"],
     [
@@ -200,6 +184,22 @@ const contentClasses = defineClasses(
         "o-tip__content--always",
         null,
         computed(() => props.always),
+    ],
+);
+
+const arrowClasses = defineClasses(
+    ["arrowClass", "o-tip__arrow"],
+    [
+        "arrowPositionClass",
+        "o-tip__arrow--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "arrowVariantClass",
+        "o-tip__arrow--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
     ],
 );
 </script>

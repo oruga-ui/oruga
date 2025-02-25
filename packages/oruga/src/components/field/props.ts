@@ -31,48 +31,48 @@ export type FieldProps = {
      * (see which ones at the top of the page).
      */
     grouped?: boolean;
-    /** Allow controls to fill up multiple lines, making it responsive */
-    groupMultiline?: boolean;
-    /** Group label and control on the same line for horizontal forms */
-    horizontal?: boolean;
     /** Field automatically attach controls together */
     addons?: boolean;
+    /** Allow controls to fill up multiple lines, making it responsive */
+    multiline?: boolean;
+    /** Group label and control on the same line for horizontal forms */
+    horizontal?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
 } & FieldClasses;
 
 // class props (will not be displayed in the docs)
-type FieldClasses = Partial<{
+export type FieldClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
+    /** Class of the root element when on mobile */
+    mobileClass: ComponentClass;
+    /** Class of the root element when the form element is focused */
+    focusedClass: ComponentClass;
+    /** Class of the root element when the form element is filled */
+    filledClass: ComponentClass;
+    /** Class for the body wrapper element*/
+    bodyClass: ComponentClass;
+    /** Class for inner wrapper element when grouped */
+    groupedClass: ComponentClass;
+    /** Class of the inner wrapper element when element get automatically attached together inside a field */
+    addonsClass: ComponentClass;
+    /** Class for inner body wrapper element to fill up multiple lines */
+    multilineClass: ComponentClass;
     /** Class to align label and control in horizontal forms */
     horizontalClass: ComponentClass;
-    /** Class for field label when horizontal */
+    /** Class for the label element when horizontal */
     horizontalLabelClass: ComponentClass;
-    /** "Class for field body when horizontal */
+    /** Class for the body element when horizontal */
     horizontalBodyClass: ComponentClass;
-    /** Class when fields are grouped together */
-    groupedClass: ComponentClass;
-    /** Class when fields fill up multiple lines */
-    groupMultilineClass: ComponentClass;
-    /** Class for field label */
+    /** Class for the label element*/
     labelClass: ComponentClass;
-    /** Class for field label size */
+    /** Class for the label element with size */
     labelSizeClass: ComponentClass;
-    /** Class of the label field variant */
+    /** Class for the label element with variant */
     labelVariantClass: ComponentClass;
-    /** Class for field body */
-    bodyClass: ComponentClass;
-    /** Class for components automatically attached together when inside a field */
-    addonsClass: ComponentClass;
-    /** Class for the field message */
+    /** Class for the message element */
     messageClass: ComponentClass;
-    /** Class of the message field variant */
+    /** Class for the message element with variant */
     messageVariantClass: ComponentClass;
-    /** Class of file component when on mobile */
-    mobileClass: ComponentClass;
-    /** Class for the focused field */
-    focusedClass: ComponentClass;
-    /** Class for the filled field */
-    filledClass: ComponentClass;
 }>;

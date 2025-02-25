@@ -1,60 +1,39 @@
 <template>
     <section>
-        <o-field label="Primary">
+        <o-field label="Small">
             <o-taginput
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
-                variant="primary"
+                size="small"
                 placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>
 
-        <o-field label="Secondary">
+        <o-field label="Default">
             <o-taginput
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
-                variant="secondary"
                 placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>
 
-        <o-field label="Success">
+        <o-field label="Medium">
             <o-taginput
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
-                variant="success"
+                variant="medium"
                 placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>
 
-        <o-field label="Info">
+        <o-field label="Large">
             <o-taginput
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
-                variant="info"
-                placeholder="Add an item"
-                allow-new
-                allow-duplicates />
-        </o-field>
-
-        <o-field label="Warning">
-            <o-taginput
-                :model-value="['One']"
-                :options="['One', 'Two', 'Three', 'Four']"
-                variant="warning"
-                placeholder="Add an item"
-                allow-new
-                allow-duplicates />
-        </o-field>
-
-        <o-field label="Danger">
-            <o-taginput
-                :model-value="['One']"
-                :options="['One', 'Two', 'Three', 'Four']"
-                variant="danger"
+                variant="large"
                 placeholder="Add an item"
                 allow-new
                 allow-duplicates />

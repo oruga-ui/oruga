@@ -1,154 +1,140 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import type { InspectData } from "@docs";
+import type { SidebarClasses, SidebarProps } from "../props";
 
-const inline = ref(false);
-const active = ref(false);
-const teleport = ref(false);
-const position = ref<"left" | "top" | "bottom" | "right">("left");
-
-const inspectData = [
-    {
+const inspectData: InspectData<SidebarClasses, SidebarProps> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
+    mobileClass: {
         class: "mobileClass",
-        description: "Class of sidebar component when on mobile",
-        warning: "Switch to mobile view to see it in action!",
+        description: "Class of the root element when on mobile.",
+        info: "Switch to mobile view to see it in action!",
     },
-    {
+    activeClass: {
         class: "activeClass",
+        description: "Class of the root element when active.",
         properties: ["active"],
-        description: "Class of sidebar component when its active",
-        action: (): void => {
-            active.value = true;
+        action: (cmp, data): void => {
+            data.active = true;
         },
     },
-    {
+    teleportClass: {
         class: "teleportClass",
+        description: "Class of the root element when teleported.",
         properties: ["teleport"],
-        description: "Class of sidebar when teleported",
-        action: (): void => {
-            teleport.value = true;
-        },
-    },
-    {
-        class: "overlayClass",
-        description: "Class of the sidebar overlay",
         action: (cmp, data): void => {
-            setTimeout((): void => {
-                active.value = true;
-                data.overlay = true;
-                data.fullheight = true;
-            }, 400);
+            data.teleport = true;
         },
     },
-    {
-        class: "contentClass",
-        description: "Class of the sidebar content",
-    },
-    {
+    inlineClass: {
         class: "inlineClass",
-        description: "Class of the sidebar when its inlined",
+        description: "Class of the root element when inlined.",
+        properties: ["inline"],
         action: (cmp, data): void => {
-            inline.value = true;
-            setTimeout((): void => {
-                active.value = true;
-                data.overlay = true;
-                data.fullheight = true;
-            }, 400);
+            data.inline = true;
+            data.active = true;
+            data.overlay = true;
+            data.fullheight = true;
         },
     },
-    {
+    overlayClass: {
+        class: "overlayClass",
+        description: "Class of the overlay element.",
+        action: (cmp, data): void => {
+            data.active = true;
+            data.overlay = true;
+            data.fullheight = true;
+        },
+    },
+    contentClass: {
+        class: "contentClass",
+        description: "Class of the content element.",
+    },
+    visibleClass: {
+        class: "visibleClass",
+        description: "Class of the content element when visible.",
+        properties: ["active"],
+    },
+    hiddenClass: {
+        class: "hiddenClass",
+        description: "Class of the content element when hidden.",
+        properties: ["active"],
+    },
+    positionClass: {
+        class: "positionClass",
+        description: "Class of the content element with position.",
+        properties: ["position"],
+        action: (cmp, data): void => {
+            data.position = "right";
+        },
+    },
+    fullheightClass: {
         class: "fullheightClass",
-        description: "Class of the sidebar when is fullheight",
+        description: "Class of the content element when fullheight.",
         properties: ["fullheight"],
         action: (cmp, data): void => {
             data.fullheight = true;
         },
     },
-    {
+    fullwidthClass: {
         class: "fullwidthClass",
-        description: "Class of the sidebar when is fullwidth",
+        description: "Class of the content element when fullwidth.",
         properties: ["fullwidth"],
         action: (cmp, data): void => {
             data.fullwidth = true;
         },
     },
-    {
-        class: "positionClass",
-        description: "Class of the sidebar position",
-        properties: ["position"],
-        action: (cmp, data): void => {
-            position.value = "right";
-            data.right = true;
-        },
-    },
-    {
+    reduceClass: {
         class: "reduceClass",
-        description: "Class of the sidebar when reduced",
+        description: "Class of the content element when reduced.",
         properties: ["reduce"],
         action: (cmp, data): void => {
             data.reduce = true;
         },
     },
-    {
+    expandOnHoverClass: {
         class: "expandOnHoverClass",
-        description: "Class of the sidebar when expanded on hover",
+        description: "Class of the content element when expanded on hover.",
         properties: ["expandOnHover"],
         action: (cmp, data): void => {
             data.expandOnHover = true;
         },
     },
-    {
-        class: "variantClass",
-        description: "Class of the sidebar variant",
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
+    scrollClipClass: {
+        class: "scrollClipClass",
+        description: "Class of the body when is visible and scroll is clip.",
+        properties: ["scroll"],
         action: (cmp, data): void => {
-            data.variant = "warning";
+            data.scroll = "clip";
         },
     },
-    {
-        class: "visibleClass",
-        properties: ["active"],
-        description: "Class of the sidebar content when sidebar is visible",
-    },
-    {
-        class: "hiddenClass",
-        properties: ["active"],
-        description: "Class of the sidebar content when sidebar is hidden",
-    },
-    {
-        class: "scrollClipClass",
-        description: "Class of the body when sidebar clipped",
-    },
-    {
+    noScrollClass: {
         class: "noScrollClass",
-        description: "Class of the body when sidebar is not clipped",
+        description:
+            "Class of the body when is visible and scroll is not clip.",
+        properties: ["scroll"],
+        action: (cmp, data): void => {
+            data.scroll = "clip";
+        },
     },
-];
+};
 </script>
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-sidebar
-            v-bind="props"
-            v-model:active="active"
-            :inline
-            :teleport
-            :position
-            variant="primary">
+        <o-sidebar v-bind="props">
             <img
                 width="128"
                 src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
                 alt="Lightweight UI components for Vue.js" />
             <section style="padding: 1em">
-                <h5>Example 1</h5>
-                <h5>Example 2</h5>
-                <h5>Example 3</h5>
-                <h5>Example 4</h5>
-                <h5>Example 5</h5>
+                <p>Example 1</p>
+                <p>Example 2</p>
+                <p>Example 3</p>
+                <p>Example 4</p>
+                <p>Example 5</p>
             </section>
         </o-sidebar>
     </inspector-wrapper>

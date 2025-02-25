@@ -1,77 +1,77 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import type { InspectData } from "@docs";
+import type { LoadingClasses, LoadingProps } from "../props";
 
-const loading = ref(false);
-const inspectData = [
-    {
+const inspectData: InspectData<LoadingClasses, LoadingProps> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
         action: (cmp, data): void => {
             data.cancelable = true;
             data.fullPage = false;
-            loading.value = true;
+            data.active = true;
         },
     },
-    {
-        class: "overlayClass",
-        description: "Class of the loading overlay",
-        action: (cmp, data): void => {
-            data.cancelable = true;
-            data.fullPage = false;
-            loading.value = true;
-        },
-    },
-    {
-        class: "iconClass",
-        description: "Class for the loading icon",
-        action: (cmp, data): void => {
-            data.cancelable = true;
-            data.fullPage = false;
-            loading.value = true;
-        },
-    },
-    {
-        class: "labelClass",
-        description: "Class for the loading label",
-        action: (cmp, data): void => {
-            data.cancelable = true;
-            data.fullPage = false;
-            loading.value = true;
-        },
-    },
-    {
+    fullPageClass: {
         class: "fullPageClass",
-        description: "Class for the root element when fullpage",
+        description: "Class for the root element when fullpage.",
         properties: ["fullPage"],
         action: (cmp, data): void => {
             data.fullPage = true;
             data.cancelable = true;
-            loading.value = true;
+            data.active = true;
         },
     },
-    {
+    overlayClass: {
+        class: "overlayClass",
+        description: "Class of the overlay element.",
+        action: (cmp, data): void => {
+            data.cancelable = true;
+            data.fullPage = false;
+            data.active = true;
+        },
+    },
+    iconClass: {
+        class: "iconClass",
+        description: "Class for the icon element.",
+        action: (cmp, data): void => {
+            data.cancelable = true;
+            data.fullPage = false;
+            data.icon = "loading";
+            data.active = true;
+        },
+    },
+    labelClass: {
+        class: "labelClass",
+        description: "Class for the label element.",
+        action: (cmp, data): void => {
+            data.cancelable = true;
+            data.fullPage = false;
+            data.label = "Loading...";
+            data.active = true;
+        },
+    },
+    scrollClipClass: {
         class: "scrollClipClass",
-        description: "Class of the full page when scroll is clip",
-        specificity: "when <b>fullPage</b> is applied",
+        description: "Class of the body when fullpage and scroll is clip",
         properties: ["scroll"],
         action: (cmp, data): void => {
             data.fullPage = true;
             data.scroll = "clip";
-            loading.value = true;
+            data.active = true;
         },
     },
-    {
+    noScrollClass: {
         class: "noScrollClass",
-        description: "Class of the modal when scroll is not clip",
-        specificity: "when <b>fullPage</b> is applied",
+        description: "Class of the body when fullpage and scroll is not clip",
         properties: ["scroll"],
         action: (cmp, data): void => {
             data.fullPage = true;
-            data.scroll = "";
-            loading.value = true;
+            data.active = true;
+            data.scroll = "keep";
         },
     },
-];
+};
 </script>
 
 <template>
@@ -81,11 +81,10 @@ const inspectData = [
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
             sapien laoreet elit
             <o-loading
-                v-bind="props"
-                v-model:active="loading"
                 icon="sync-alt"
                 :icon-spin="true"
-                label="Loading...">
+                label="Loading..."
+                v-bind="props">
             </o-loading>
         </p>
         <b>Click on "Inspect" button to open the loading</b>

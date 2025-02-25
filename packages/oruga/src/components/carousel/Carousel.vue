@@ -397,25 +397,20 @@ const itemsClasses = defineClasses(
     ["itemsDraggingClass", "o-car__items--dragging", null, isDragging],
 );
 
-const arrowIconClasses = defineClasses([
-    "arrowIconClass",
-    "o-car__arrow__icon",
-]);
+const prevIconClasses = defineClasses(
+    ["iconClass", "o-car__icon"],
+    ["iconPrevClass", "o-car__icon-prev"],
+);
 
-const arrowIconPrevClasses = defineClasses([
-    "arrowIconPrevClass",
-    "o-car__arrow__icon-prev",
-]);
+const nextIconClasses = defineClasses(
+    ["iconClass", "o-car__icon"],
+    ["iconNextClass", "o-car__icon-next"],
+);
 
-const arrowIconNextClasses = defineClasses([
-    "arrowIconNextClass",
-    "o-car__arrow__icon-next",
-]);
-
-const arrowIconAutoplayClasses = defineClasses([
-    "arrowIconAutoplayClass",
-    "o-car__arrow__icon-autoplay",
-]);
+const autoplayIconClasses = defineClasses(
+    ["iconClass", "o-car__icon"],
+    ["iconAutoplayClass", "o-car__icon-autoplay"],
+);
 
 const indicatorsClasses = defineClasses(
     ["indicatorsClass", "o-car__indicators"],
@@ -487,10 +482,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                 :toggle="onToggleAutoplay">
                 <template v-if="autoplay">
                     <o-icon
-                        :class="[
-                            ...arrowIconClasses,
-                            ...arrowIconAutoplayClasses,
-                        ]"
+                        :class="autoplayIconClasses"
                         :pack="iconPack"
                         :icon="
                             !isAutoplayPaused
@@ -528,7 +520,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                 <template v-if="arrows">
                     <o-icon
                         v-show="hasArrows && hasPrev"
-                        :class="[...arrowIconClasses, ...arrowIconPrevClasses]"
+                        :class="prevIconClasses"
                         :pack="iconPack"
                         :icon="iconPrev"
                         :size="iconSize"
@@ -541,7 +533,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         @keydown.space.prevent="onPrev" />
                     <o-icon
                         v-show="hasArrows && hasNext"
-                        :class="[...arrowIconClasses, ...arrowIconNextClasses]"
+                        :class="nextIconClasses"
                         :pack="iconPack"
                         :icon="iconNext"
                         :size="iconSize"

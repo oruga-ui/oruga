@@ -15,14 +15,6 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-tooltip-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Tooltip component
@@ -66,6 +58,14 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 | ------- | -------------------------------------- | ------------------------------------------- |
 | default | Tooltip trigger slot                   | **active** `boolean` - tooltip active state |
 | content | Tooltip content, default is label prop |                                             |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-tooltip-viewer />
 
 </div>
 

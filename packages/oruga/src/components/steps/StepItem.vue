@@ -144,8 +144,8 @@ const stepClasses = defineClasses(
         computed(() => item.value.index > parent.value?.activeIndex),
     ],
     [
-        "stepLabelPositionClass",
-        "o-steps__step--label-",
+        "stepPositionClass",
+        "o-steps__step--",
         computed(() => parent.value?.labelPosition),
         computed(() => !!parent.value?.labelPosition),
     ],

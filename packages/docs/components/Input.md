@@ -16,14 +16,6 @@ Combine it with the Field component to access all functionalities.
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-input-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Input component
@@ -79,6 +71,14 @@ Combine it with the Field component to access all functionalities.
 | invalid            | **event** `Event` - native event                                      | on input invalid event          |
 | icon-click         | **event** `Event` - native event                                      | on icon click event             |
 | icon-right-click   | **event** `Event` - native event                                      | on icon right click event       |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-input-viewer />
 
 </div>
 

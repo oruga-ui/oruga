@@ -72,7 +72,7 @@ const checkedRows = ref([data[1], data[3]]);
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-button
                 variant="danger"
                 :disabled="!checkedRows.length"

@@ -15,14 +15,6 @@ Use it with the Field component to access all the functionalities.
 
 </div>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-upload-viewer />
-
-</div>
-
 <div class="vp-doc">
 
 ## Upload component
@@ -63,6 +55,14 @@ Use it with the Field component to access all the functionalities.
 | Name    | Description     | Bindings                                                                           |
 | ------- | --------------- | ---------------------------------------------------------------------------------- |
 | default | Default content | **onclick** `(event:Event): void` - click handler, only needed if a button is used |
+
+</div>
+
+<div class="vp-example">
+
+## Class Inspector
+
+<inspector-upload-viewer />
 
 </div>
 

@@ -52,7 +52,7 @@ const hasMobileCards = ref(true);
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-switch v-model="isBordered" label="Bordered" />
             <o-switch v-model="isStriped" label="Striped" />
             <o-switch v-model="isNarrowed" label="Narrowed" />

@@ -1,19 +1,7 @@
 import * as fs from "fs";
 import path from "path";
 
-export type ThemeConfig = {
-    label: string;
-    key: string;
-    path: string;
-    git: string;
-    src: string;
-    cdn: string;
-};
-
-import themes from "./themes.json";
-const Themes = themes as ThemeConfig[];
-
-export { Themes };
+import { Themes, type ThemeConfig } from "./themes";
 
 export function getThemePath(
     theme: ThemeConfig,

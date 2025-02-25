@@ -997,6 +997,22 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-table__root--mobile", null, isMobileActive],
 );
 
+const tableWrapperClasses = defineClasses(
+    ["wrapperClass", "o-table__wrapper"],
+    [
+        "stickyHeaderClass",
+        "o-table__wrapper--sticky-header",
+        null,
+        computed(() => props.stickyHeader),
+    ],
+    ["scrollableClass", "o-table__wrapper--scrollable", null, isScrollable],
+    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
+);
+
+const tableWrapperStyle = computed(() => ({
+    height: toCssDimension(props.height),
+}));
+
 const tableClasses = defineClasses(
     ["tableClass", "o-table"],
     [
@@ -1029,24 +1045,6 @@ const tableClasses = defineClasses(
         computed(() => !availableRows.value.length),
     ],
 );
-
-const tableWrapperClasses = defineClasses(
-    ["wrapperClass", "o-table__wrapper"],
-    [
-        "stickyHeaderClass",
-        "o-table__wrapper--sticky-header",
-        null,
-        computed(() => props.stickyHeader),
-    ],
-    ["scrollableClass", "o-table__wrapper--scrollable", null, isScrollable],
-    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
-);
-
-const tableWrapperStyle = computed(() => ({
-    height: toCssDimension(props.height),
-}));
-
-const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
 
@@ -1108,6 +1106,8 @@ const tdDetailedChevronClasses = defineClasses([
     "tdDetailedChevronClass",
     "o-table__td-chevron",
 ]);
+
+const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const mobileSortClasses = defineClasses([
     "mobileSortClass",
