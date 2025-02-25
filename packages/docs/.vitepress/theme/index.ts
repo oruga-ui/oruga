@@ -11,7 +11,7 @@ import InspectorWrapper from "./components/InspectorWrapper.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
 
-import Oruga, { useOruga } from "@oruga-ui/oruga-next";
+import Oruga from "@oruga-ui/oruga-next";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
@@ -105,16 +105,11 @@ export default {
             );
         }
 
-        // import oruga component with theme config
-        app.use(Oruga, {
+        // basic docs config
+        let orugaConfig = {
             iconPack: "fas",
             iconComponent: "vue-fontawesome",
-        });
-
-        const oruga = useOruga();
-
-        // set oruga as global prop for docs
-        app.config.globalProperties.$oruga = oruga;
+        };
 
         if (typeof window !== "undefined") {
             const theme = loadTheme();
@@ -122,24 +117,19 @@ export default {
             // update oruga config by theme config
             switch (theme.key) {
                 case "theme-bulma": {
-                    bulmaConfig.iconPack = "fas";
-                    bulmaConfig.iconComponent = "vue-fontawesome";
-                    oruga.config.setOptions(bulmaConfig);
+                    // update base orugaConfig with bulmaConfig
+                    orugaConfig = Object.assign(orugaConfig, bulmaConfig);
                     break;
                 }
                 case "theme-bootstrap": {
-                    bootstrapConfig.iconPack = "fas";
-                    bootstrapConfig.iconComponent = "vue-fontawesome";
-                    oruga.config.setOptions(bootstrapConfig);
+                    // update base orugaConfig with bootstrapConfig
+                    orugaConfig = Object.assign(orugaConfig, bootstrapConfig);
                     break;
                 }
             }
-
-            // create an HTML link element for the current theme cdn
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = theme.cdn;
-            document.head.appendChild(link);
         }
+
+        // import oruga component with theme config
+        app.use(Oruga, orugaConfig);
     },
 };

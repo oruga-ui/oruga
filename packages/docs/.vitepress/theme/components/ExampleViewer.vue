@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, useTemplateRef, nextTick } from "vue";
 import MarkdownIt from "markdown-it";
 import MarkdownItHighlightjs from "markdown-it-highlightjs";
 
@@ -21,61 +21,77 @@ const codeComputed = computed(() => {
         .replace("@/oruga", "@oruga-ui/oruga-next");
 });
 
-const scriptCode = computed(() =>
-    codeComputed.value.includes('<script setup lang="ts">')
-        ? codeComputed.value.substring(
-              codeComputed.value.indexOf('<script setup lang="ts">') +
-                  '<script setup lang="ts">'.length,
-              codeComputed.value.lastIndexOf("/script>") - 1,
-          )
-        : "",
-);
+const scriptCode = computed(() => {
+    if (!codeComputed.value.includes('<script setup lang="ts">')) return "";
 
-const templateCode = computed(() =>
-    codeComputed.value.includes("<template>")
-        ? codeComputed.value
-              .substring(
-                  codeComputed.value.indexOf("<template>") +
-                      "<template>".length,
-                  codeComputed.value.lastIndexOf("</template>"),
-              )
-              // remove prefix whitespace
-              .split(/(\r\n|\n|\r)/gm)
-              .map((l) => l.replace("    ", ""))
-              .join("")
-        : "",
-);
+    const startIndex =
+        codeComputed.value.indexOf('<script setup lang="ts">') +
+        '<script setup lang="ts">'.length;
+    const endIndex = codeComputed.value.lastIndexOf("/script>") - 1;
 
-const styleCode = computed(() =>
-    codeComputed.value.includes("<style")
-        ? codeComputed.value
-              .substring(
-                  codeComputed.value.indexOf("<style") + "<s>".length,
-                  codeComputed.value.lastIndexOf("</style>"),
-              )
-              // remove prefix whitespace
-              .split(/(\r\n|\n|\r)/gm)
-              .join("")
-        : "",
-);
+    return codeComputed.value.substring(startIndex, endIndex);
+});
+
+const templateCode = computed(() => {
+    if (!codeComputed.value.includes("<template>")) return "";
+
+    const startIndex =
+        codeComputed.value.indexOf("<template>") + "<template>".length;
+    const endIndex = codeComputed.value.lastIndexOf("</template>");
+
+    return (
+        codeComputed.value
+            .substring(startIndex, endIndex)
+            // remove prefix whitespace
+            .split(/(\r\n|\n|\r)/gm)
+            .map((l) => l.replace("    ", ""))
+            .join("")
+    );
+});
+
+const styleCode = computed(() => {
+    if (!codeComputed.value.includes("<style")) return "";
+
+    const _startIndex = codeComputed.value.indexOf("<style");
+    const startIndex =
+        _startIndex +
+        codeComputed.value.substring(_startIndex).indexOf(">") +
+        1;
+    const endIndex = codeComputed.value.lastIndexOf("</style>");
+
+    return (
+        codeComputed.value
+            .substring(startIndex, endIndex)
+            // remove prefix whitespace
+            .split(/(\r\n|\n|\r)/gm)
+            .join("")
+    );
+});
 
 const isOpen = ref(props.open);
 const tab = ref(
     templateCode.value ? "HTML" : scriptCode.value ? "SCRIPT" : "STYLE",
 );
-const nodeRef = ref<any>(null);
+
+const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 
 onMounted(() => {
-    let node = nodeRef.value?.parentNode;
-    while (node) {
-        if (node && node.classList && node.classList.contains("vp-doc")) {
-            if (node.parentNode && node.parentNode.classList.contains("main")) {
-                node.classList.remove("vp-doc");
-                break;
-            }
-        }
-        node = node.parentNode;
-    }
+    nextTick(() => {
+        if (!styleCode.value) return;
+        // create some CSS to apply to the shadow root
+        const stylesheet = new CSSStyleSheet();
+        stylesheet.replaceSync(styleCode.value);
+
+        // get example showcase root
+        const shadowRoot = showcaseElement.value?.shadowRoot;
+        if (!shadowRoot) return;
+
+        // attach the created style to the shadow root
+        shadowRoot.adoptedStyleSheets = [
+            ...(shadowRoot.adoptedStyleSheets || []),
+            stylesheet,
+        ];
+    });
 });
 
 function copy(val: string): void {
@@ -85,11 +101,11 @@ function copy(val: string): void {
 
 <template>
     <!-- eslint-disable vue/no-v-html -->
-    <div v-if="component" ref="nodeRef" class="odocs-example">
+    <div v-if="component" class="odocs-example">
         <!-- web components cannot be rendered in server side -->
         <ClientOnly>
             <!-- wrap example in a shadow root web component -->
-            <example-showcase>
+            <example-showcase ref="showcaseRef">
                 <component :is="component" />
             </example-showcase>
         </ClientOnly>

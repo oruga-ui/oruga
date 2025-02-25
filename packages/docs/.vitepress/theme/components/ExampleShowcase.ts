@@ -30,13 +30,15 @@ export default class extends HTMLElement {
     }
 
     connectedCallback(): void {
+        if (!this.shadowRoot) return;
+
         // The slot content must be moved to the shadow root
         // for the scoped style above to be applied.
-        this.shadowRoot?.append(...this.childNodes);
+        this.shadowRoot.append(...this.childNodes);
 
         // Create some CSS to apply to the shadow root
-        const style = document.createElement("style");
-        style.textContent = `
+        const stylesheet = new CSSStyleSheet();
+        stylesheet.replaceSync(`
             .odocs-spaced p {
                 margin-top: 0.5rem;
                 margin-bottom: 0.5rem;
@@ -45,9 +47,18 @@ export default class extends HTMLElement {
             .odocs-spaced p > *:not(:last-child) {
                 margin-right: 0.5rem;
             }
-        `;
 
-        // Attach the created elements to the shadow root
-        this.shadowRoot?.appendChild(style);
+            .example-slide {
+                padding: 9rem 4.5rem;
+                color: #ffffff;
+                text-align: center;
+            }
+        `);
+
+        // Attach the created style to the shadow root
+        this.shadowRoot.adoptedStyleSheets = [
+            ...(this.shadowRoot.adoptedStyleSheets || []),
+            stylesheet,
+        ];
     }
 }
