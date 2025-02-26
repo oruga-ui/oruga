@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type {
     CarouselClasses,
     CarouselItemClasses,
@@ -27,7 +27,7 @@ const inspectData: InspectData<
         class: "overlayClass",
         description: "Class of the root element when overlay.",
         properties: ["overlay"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.overlay = true;
         },
     },
@@ -51,7 +51,7 @@ const inspectData: InspectData<
     iconPrevClass: {
         class: "iconPrevClass",
         description: "Class of prev icon button element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.modelValue = 1;
         },
     },
@@ -71,7 +71,7 @@ const inspectData: InspectData<
         class: "indicatorsInsideClass",
         description: "Class of indicators tablist element when inside.",
         properties: ["indicatorInside"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.indicatorInside = true;
         },
     },
@@ -80,7 +80,7 @@ const inspectData: InspectData<
         description:
             "Class of indicators tablist element when inside and position.",
         properties: ["indicatorInside", "indicatorPosition"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.indicatorInside = true;
             data.indicatorPosition = "top";
         },
@@ -102,7 +102,7 @@ const inspectData: InspectData<
         properties: ["indicatorStyle"],
         description:
             "Class of indicator item element to separate different styles.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.indicatorStyle = "lines";
         },
     },
@@ -129,11 +129,16 @@ const inspectData: InspectData<
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-carousel v-bind="props">
             <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
-                <section
-                    class="ex-slide"
-                    :style="{ 'background-color': carousel.color }">
+                <article
+                    class="example-slide"
+                    :style="{
+                        'background-color': carousel.color,
+                        padding: '9rem 4.5rem',
+                        color: '#ffffff',
+                        'text-align': 'center',
+                    }">
                     <h1>{{ carousel.text }}</h1>
-                </section>
+                </article>
             </o-carousel-item>
         </o-carousel>
     </inspector-wrapper>

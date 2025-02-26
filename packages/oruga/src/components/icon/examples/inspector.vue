@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { IconClasses, IconProps } from "../props";
 
 const inspectData: InspectData<IconClasses, IconProps> = {
@@ -12,7 +12,7 @@ const inspectData: InspectData<IconClasses, IconProps> = {
         description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -21,7 +21,7 @@ const inspectData: InspectData<IconClasses, IconProps> = {
         description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -29,7 +29,7 @@ const inspectData: InspectData<IconClasses, IconProps> = {
         class: "clickableClass",
         description: "Class of the root element when clickable.",
         properties: ["clickable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.clickable = true;
         },
     },
@@ -37,7 +37,7 @@ const inspectData: InspectData<IconClasses, IconProps> = {
         class: "spinClass",
         description: "Class of the root element when spin.",
         properties: ["spin"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.spin = true;
         },
     },

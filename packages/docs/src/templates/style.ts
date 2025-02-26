@@ -1,7 +1,8 @@
 import path from "path";
 import * as fs from "fs";
 import { type SafeDocgenCLIConfig } from "vue-docgen-cli/lib/config";
-import { getThemePath, Themes, type ThemeConfig } from "../themes-helper";
+import { Themes, type ThemeConfig } from "../themes";
+import { getThemePath } from "../themes-helper";
 
 const docsRegex = "/* @docs */";
 

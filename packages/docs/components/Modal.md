@@ -1,20 +1,20 @@
 # Modal
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Modal** component is classic modal overlay, in which you can include any content you want.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-modal />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Modal component
 
@@ -62,17 +62,17 @@ The **Modal** component is classic modal overlay, in which you can include any c
 | ------- | ---------------------------------------------- | ------------------------------------------------------------- |
 | default | Modal default content, default is content prop | **close** `(...args): void` - function to close the component |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-modal-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -111,4 +111,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

@@ -1,21 +1,21 @@
 # Tooltip
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Tooltip** component displays a short contextual help text when the user hovers over it.
 The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-tooltip />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Tooltip component
 
@@ -59,17 +59,17 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 | default | Tooltip trigger slot                   | **active** `boolean` - tooltip active state |
 | content | Tooltip content, default is label prop |                                             |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-tooltip-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -129,4 +129,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

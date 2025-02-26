@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { TimepickerClasses, TimepickerProps } from "../props";
 
 const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
@@ -17,7 +17,7 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
             data.active = true;
         },
@@ -26,21 +26,21 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         class: "boxClass",
         description:
             "Class of the dropdown box element where you choose the date.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
     separatorClass: {
         class: "separatorClass",
         description: "Class of the select separator element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
     footerClass: {
         class: "footerClass",
         description: "Class of the footer element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -60,7 +60,7 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         description: "Class to apply on the dropdown element.",
         relatedClass: "dropdownClasses.rootClass",
         relatedComponent: "Dropdown",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -68,7 +68,7 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         class: "dropdownClasses",
         description: "Classes to apply on the internal dropdown component.",
         relatedComponent: "Dropdown",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -76,7 +76,7 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         class: "selectClasses",
         description: "Classes to apply on the internal select component.",
         relatedComponent: "Select",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -92,9 +92,3 @@ const inspectData: InspectData<TimepickerClasses, TimepickerProps> = {
         </o-field>
     </inspector-wrapper>
 </template>
-
-<style>
-.datepicker__table {
-    border-collapse: collapse;
-}
-</style>

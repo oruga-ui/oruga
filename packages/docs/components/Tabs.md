@@ -4,24 +4,24 @@ sidebarDepth: 2
 
 # Tabs
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Tabs** component is a responsive horizontal navigation bar that allows the user to easily switch between content.
 *Tab panels*are a set of individual content sections, where only one content panel can be displayed at a time.
 Each tab panel has an associated tab element that, when activated, displays the panel. The list of tab elements is arranged along one edge of the currently displayed panel, the top edge.
 The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-tabs />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Tabs component
 
@@ -67,9 +67,9 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 | after   | Additional slot after tabs  |          |
 | default | Place tab items here        |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## TabItem component
 
@@ -110,17 +110,17 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 | default | Override tab panel content | **active** `boolean` - if item is shown |
 | header  | Override tab header label  | **active** `boolean` - if item is shown |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-tabs-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -198,4 +198,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { SidebarClasses, SidebarProps } from "../props";
 
 const inspectData: InspectData<SidebarClasses, SidebarProps> = {
@@ -16,7 +16,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "activeClass",
         description: "Class of the root element when active.",
         properties: ["active"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -24,7 +24,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "teleportClass",
         description: "Class of the root element when teleported.",
         properties: ["teleport"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.teleport = true;
         },
     },
@@ -32,7 +32,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "inlineClass",
         description: "Class of the root element when inlined.",
         properties: ["inline"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
             data.overlay = true;
@@ -42,7 +42,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
     overlayClass: {
         class: "overlayClass",
         description: "Class of the overlay element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
             data.overlay = true;
             data.fullheight = true;
@@ -66,7 +66,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "positionClass",
         description: "Class of the content element with position.",
         properties: ["position"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "right";
         },
     },
@@ -74,7 +74,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "fullheightClass",
         description: "Class of the content element when fullheight.",
         properties: ["fullheight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.fullheight = true;
         },
     },
@@ -82,7 +82,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "fullwidthClass",
         description: "Class of the content element when fullwidth.",
         properties: ["fullwidth"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.fullwidth = true;
         },
     },
@@ -90,7 +90,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "reduceClass",
         description: "Class of the content element when reduced.",
         properties: ["reduce"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.reduce = true;
         },
     },
@@ -98,7 +98,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "expandOnHoverClass",
         description: "Class of the content element when expanded on hover.",
         properties: ["expandOnHover"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expandOnHover = true;
         },
     },
@@ -106,7 +106,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         class: "scrollClipClass",
         description: "Class of the body when is visible and scroll is clip.",
         properties: ["scroll"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.scroll = "clip";
         },
     },
@@ -115,7 +115,7 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
         description:
             "Class of the body when is visible and scroll is not clip.",
         properties: ["scroll"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.scroll = "clip";
         },
     },

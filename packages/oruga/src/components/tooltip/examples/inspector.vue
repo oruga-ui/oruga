@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { TooltipClasses, TooltipProps } from "../props";
 
 const inspectData: InspectData<TooltipClasses, TooltipProps> = {
@@ -11,7 +11,7 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
         class: "teleportClass",
         description: "Class of the root element when teleported.",
         properties: ["teleport"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.teleport = true;
         },
     },
@@ -28,7 +28,7 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
         description: "Class of the content element with position.",
         properties: ["position"],
         suffixes: ["top", "bottom", "left", "right"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "right";
         },
     },
@@ -37,7 +37,7 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
         description: "Class of the content element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -45,7 +45,7 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
         class: "multilineClass",
         description: "Class of the content element when is multiline.",
         properties: ["multiline"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.multiline = true;
         },
     },
@@ -53,7 +53,7 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
         class: "alwaysClass",
         description: "Class of the content element when is always visible.",
         properties: ["always"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.always = true;
         },
     },
@@ -66,7 +66,7 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
         description: "Class of the arrow element with position.",
         properties: ["position"],
         suffixes: ["top", "bottom", "left", "right"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "right";
         },
     },
@@ -75,7 +75,7 @@ const inspectData: InspectData<TooltipClasses, TooltipProps> = {
         description: "Class of the arrow element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },

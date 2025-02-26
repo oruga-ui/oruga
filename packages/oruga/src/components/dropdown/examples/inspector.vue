@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type {
     DropdownClasses,
     DropdownItemClasses,
@@ -24,7 +24,7 @@ const inspectData: InspectData<
         class: "modalClass",
         description: "Class of the root element when shown as modal.",
         properties: ["mobileModal", "desktopModal"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.mobileModal = true;
             data.desktopModal = true;
         },
@@ -33,7 +33,7 @@ const inspectData: InspectData<
         class: "teleportClass",
         description: "Class of the root element when teleported.",
         properties: ["teleport"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.teleport = true;
             data.active = true;
         },
@@ -42,7 +42,7 @@ const inspectData: InspectData<
         class: "disabledClass",
         description: "Class of the root element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
@@ -50,7 +50,7 @@ const inspectData: InspectData<
         class: "inlineClass",
         description: "Class of the root element when inlined.",
         properties: ["inline"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
         },
     },
@@ -58,7 +58,7 @@ const inspectData: InspectData<
         class: "expandedClass",
         description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
@@ -66,7 +66,7 @@ const inspectData: InspectData<
         class: "activeClass",
         description: "Class of the root element when active or inline.",
         properties: ["active", "inline"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -74,7 +74,7 @@ const inspectData: InspectData<
         class: "hoverableClass",
         description: "Class of the root element when trigger is hoverable.",
         properties: ["triggers"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.triggers = ["hover"];
         },
     },
@@ -102,7 +102,7 @@ const inspectData: InspectData<
             "bottom-left",
             "bottom-right",
         ],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "bottom";
         },
     },
@@ -114,7 +114,7 @@ const inspectData: InspectData<
         class: "overlayClass",
         description: "Class of the overlay element when shown as modal.",
         properties: ["mobileModal", "desktopModal"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.mobileModal = true;
             data.desktopModal = true;
             data.active = true;
@@ -123,7 +123,7 @@ const inspectData: InspectData<
     menuClass: {
         class: "menuClass",
         description: "Class of the menu element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
         },
     },
@@ -131,7 +131,7 @@ const inspectData: InspectData<
         class: "menuActiveClass",
         description: "Class of the menu element when active or inline.",
         properties: ["inline", "active"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
             data.inline = true;
         },
@@ -160,7 +160,7 @@ const inspectData: InspectData<
             "bottom-left",
             "bottom-right",
         ],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "top-right";
             data.active = true;
         },
@@ -169,7 +169,7 @@ const inspectData: InspectData<
         class: "itemClass",
         subitem: "dropdownitem",
         description: "Class of the item element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
         },
     },
@@ -177,7 +177,7 @@ const inspectData: InspectData<
         class: "itemSelectedClass",
         subitem: "dropdownitem",
         description: "Class of the item element when selected.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
         },
     },
@@ -186,7 +186,7 @@ const inspectData: InspectData<
         subitem: "dropdownitem",
         description: "Class of the item element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
         },
     },
@@ -195,7 +195,7 @@ const inspectData: InspectData<
         subitem: "dropdownitem",
         description: "Class of the item element when clickable.",
         properties: ["clickable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
         },
     },
@@ -203,7 +203,7 @@ const inspectData: InspectData<
         class: "itemFocusedClass",
         subitem: "dropdownitem",
         description: "Class of the item element when focused.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
         },
     },
@@ -212,7 +212,7 @@ const inspectData: InspectData<
         description:
             "Class of the body when dropdown is open and scroll is clip.",
         properties: ["scroll"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.scroll = "clip";
             data.active = true;
         },
@@ -222,7 +222,7 @@ const inspectData: InspectData<
         description:
             "Class of the body when dropdown is open and scroll is not clip.",
         properties: ["scroll"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.scroll = "keep";
             data.active = true;
         },

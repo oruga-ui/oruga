@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { ModalClasses, ModalProps } from "../props";
 
 const inspectData: InspectData<ModalClasses, ModalProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -14,7 +14,7 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
         class: "mobileClass",
         description: "Class of the root element when on mobile.",
         info: "Switch to mobile view to see it in action!",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -22,21 +22,21 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
         class: "activeClass",
         description: "Class of the root element when active.",
         properties: ["active"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
     overlayClass: {
         class: "overlayClass",
         description: "Class of the overlay element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
     contentClass: {
         class: "contentClass",
         description: "Class of the content element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -44,7 +44,7 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
         class: "fullScreenClass",
         description: "Class of the content element when fullscreen.",
         properties: ["fullScreen"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
             data.fullScreen = true;
         },
@@ -52,7 +52,7 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
     closeClass: {
         class: "closeClass",
         description: "Class of the close button element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -60,7 +60,7 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
         class: "scrollClipClass",
         description: "Class of the body when modal is open and scroll is clip.",
         properties: ["scroll"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
             data.scroll = "clip";
         },
@@ -70,7 +70,7 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
         description:
             "Class of the body when modal is open and scroll is not clip.",
         properties: ["scroll"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
             data.scroll = "keep";
         },

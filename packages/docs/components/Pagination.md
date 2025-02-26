@@ -1,20 +1,20 @@
 # Pagination
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Pagination** component is responsive and flexible way to indicate a series of related content exists across multiple pages.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-pagination />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Pagination component
 
@@ -63,17 +63,17 @@ The **Pagination** component is responsive and flexible way to indicate a series
 | next     | Next button slot       | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event:Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
 | default  | Pagination button slot | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event:Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-pagination-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -122,4 +122,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

@@ -4,23 +4,23 @@ sidebarDepth: 2
 
 # Slider
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Slider** input component let user select a value or range from a given range with a graphic slider.
 The component implements the W3C ARIA APG [Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/).
 Use it with the Field component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-slider />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Slider component
 
@@ -72,9 +72,9 @@ Use it with the Field component to access all the functionalities.
 | ------- | ----------------------------------- | -------- |
 | default | Define additional slider ticks here |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## SliderTick component
 
@@ -96,17 +96,17 @@ Use it with the Field component to access all the functionalities.
 | ------- | -------------------------------------------- | -------- |
 | default | Override tick content, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-slider-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -183,4 +183,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

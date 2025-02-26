@@ -1,21 +1,21 @@
 # Collapse
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Collapse** component is an easy way to toggle the visibility of content with show/hide functionality.
 The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-collapse />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Collapse component
 
@@ -52,17 +52,17 @@ The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/W
 | trigger | Define the collapse trigger | **open** `boolean` - collapse open state |
 | default | Default content             |                                          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-collapse-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -89,4 +89,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

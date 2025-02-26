@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, type PropType } from "vue";
 import type { InspectData, InspectClassDescription, InspectClass } from "@docs";
+import { VPButton } from "vitepress/theme";
 
 const props = defineProps({
     inspectData: { type: Object as PropType<InspectData>, required: true },
@@ -158,13 +159,15 @@ function inspectClass(
                         </span>
                     </td>
                     <td>
-                        <o-button
+                        <VPButton
                             v-if="!data.nospec === true"
-                            label="Inspect"
-                            variant="warning"
-                            class="inspector__btn"
-                            type="button"
-                            @click="inspectClass(index, data)" />
+                            text="Inspect"
+                            :theme="
+                                selectedElementIndex == index ? 'alt' : 'brand'
+                            "
+                            @click="inspectClass(index, data)">
+                            Inspect
+                        </VPButton>
                     </td>
                 </tr>
             </tbody>
@@ -196,7 +199,7 @@ function inspectClass(
 .inspector__highlight,
 .inspector__highlight code,
 .inspector__highlight a {
-    background: #bd1313 !important;
+    background: var(--vp-c-note-2) !important;
     color: white !important;
 }
 </style>

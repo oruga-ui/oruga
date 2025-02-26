@@ -1,23 +1,23 @@
 # Switch
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Switch** input component — sometimes called "toggle" — offers a choice between one of two values;
 it's a great option when you want the user to toggle a feature on or off.
 This component implements the W3C ARIA APG [Switch Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/).
 Use it with the Field component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-switch />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Switch component
 
@@ -66,17 +66,17 @@ Use it with the Field component to access all the functionalities.
 | ------- | ----------------------------------------- | -------- |
 | default | Override the label, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-switch-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -128,4 +128,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

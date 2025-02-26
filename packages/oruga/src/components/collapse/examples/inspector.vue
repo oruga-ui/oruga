@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { CollapseClasses, CollapseProps } from "../props";
 
 const inspectData: InspectData<CollapseClasses, CollapseProps> = {
@@ -11,7 +11,7 @@ const inspectData: InspectData<CollapseClasses, CollapseProps> = {
         class: "positionClass",
         description: "Class of the root element with position.",
         properties: ["position"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "top";
         },
     },
@@ -23,7 +23,7 @@ const inspectData: InspectData<CollapseClasses, CollapseProps> = {
         class: "expandedClass",
         description: "Class of the trigger element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
