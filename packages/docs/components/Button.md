@@ -89,6 +89,7 @@ The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/
 | $button-line-height               | var(--#{$prefix}base-line-height)               |
 | $button-margin-icon-to-text       | 0.1875em                                        |
 | $button-margin                    | 0                                               |
+| $button-spacer                    | 0.5rem                                          |
 | $button-height                    | $control-height                                 |
 | $button-padding                   | $control-padding-vertical 0.75em                |
 | $button-rounded-border-radius     | var( --#{$prefix}#{base-border-radius-rounded}) |
