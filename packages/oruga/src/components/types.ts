@@ -298,10 +298,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 boxClass: ClassDefinition;
                 /** Class of the header element inside the box */
                 headerClass: ClassDefinition;
-                /** Class of the button elements inside the box */
-                headerButtonsClass: ClassDefinition;
-                /** Class of the button elements inside the box with size */
-                headerButtonsSizeClass: ClassDefinition;
                 /** Class of the prev button element inside the box */
                 prevButtonClass: ClassDefinition;
                 /** Class of the next button element inside the box */
@@ -352,14 +348,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tableEventsClass: ClassDefinition;
                 /** Class of the event element */
                 tableEventClass: ClassDefinition;
-                /** Class of the event indicator element with variant */
+                /** Class of the event element with variant */
                 tableEventVariantClass: ClassDefinition;
-                /** Class of the event indicator wrapper element */
-                tableEventIndicatorsClass: ClassDefinition;
+                /** Class of the event element with indicator */
+                tableEventIndicatorClass: ClassDefinition;
                 /** Class of the month table element inside the box when type is `month` */
                 monthClass: ClassDefinition;
-                /** Class of the table body element inside the box when type is `month` */
-                monthBodyClass: ClassDefinition;
                 /** Class of the table container when type is `month` */
                 monthTableClass: ClassDefinition;
                 /** Class of the table cell element when type is `month` */
@@ -388,6 +382,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 monthCellUnselectableClass: ClassDefinition;
                 /** Class of the events container when type is `month` */
                 monthCellEventsClass: ClassDefinition;
+                /** Class of the events container element when type is `month` */
+                monthEventsClass: ClassDefinition;
+                /** Class of the event element when type is `month` */
+                monthEventClass: ClassDefinition;
+                /** Class of the event element with variant when type is `month` */
+                monthEventVariantClass: ClassDefinition;
+                /** Class of the event element with indicator when type is `month` */
+                monthEventIndicatorClass: ClassDefinition;
                 /** Class for the underlaying dropdown component */
                 dropdownClass: ClassDefinition;
                 /** Class for the HTML input element */

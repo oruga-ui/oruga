@@ -60,25 +60,6 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
-    headerButtonsClass: {
-        class: "headerButtonsClass",
-        description: "Class of the button elements inside the box.",
-        action: (data): void => {
-            data.inline = true;
-            data.active = true;
-        },
-    },
-    headerButtonsSizeClass: {
-        class: "headerButtonsSizeClass",
-        description: "Class of the button elements inside the box with size.",
-        properties: ["size"],
-        suffixes: ["small", "medium", "large"],
-        action: (data): void => {
-            data.size = "large";
-            data.inline = true;
-            data.active = true;
-        },
-    },
     prevButtonClass: {
         class: "prevButtonClass",
         description: "Class of the prev button element inside the box.",
@@ -316,7 +297,7 @@ const inspectData: InspectData<
     },
     tableEventVariantClass: {
         class: "tableEventVariantClass",
-        description: "Class of the event indicator element with variant.",
+        description: "Class of the event element with variant.",
         properties: ["events"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (data): void => {
@@ -324,9 +305,9 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
-    tableEventIndicatorsClass: {
-        class: "tableEventIndicatorsClass",
-        description: "Class of the event indicator wrapper element.",
+    tableEventIndicatorClass: {
+        class: "tableEventIndicatorClass",
+        description: "Class of the event element with indicator.",
         properties: ["indicators"],
         suffixes: ["bars", "dots", "*"],
         action: (data): void => {
@@ -340,16 +321,6 @@ const inspectData: InspectData<
         description:
             "Class of the month table element inside the box when type is `month`.",
         properties: ["type"],
-        action: (data): void => {
-            data.inline = true;
-            data.type = "month";
-            data.active = true;
-        },
-    },
-    monthBodyClass: {
-        class: "monthBodyClass",
-        description:
-            "Class of the table body element inside the box when type is `month`.",
         action: (data): void => {
             data.inline = true;
             data.type = "month";
@@ -511,6 +482,46 @@ const inspectData: InspectData<
         action: (data): void => {
             data.inline = true;
             data.type = "month";
+            data.active = true;
+        },
+    },
+    monthEventsClass: {
+        class: "monthEventsClass",
+        description:
+            "Class of the events container element when type is `month`.",
+        action: (data): void => {
+            data.inline = true;
+            data.active = true;
+        },
+    },
+    monthEventClass: {
+        class: "monthEventClass",
+        description: "Class of the event element when type is `month`.",
+        action: (data): void => {
+            data.inline = true;
+            data.active = true;
+        },
+    },
+    monthEventVariantClass: {
+        class: "monthEventVariantClass",
+        description:
+            "Class of the event element with variant when type is `month`.",
+        properties: ["events"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (data): void => {
+            data.inline = true;
+            data.active = true;
+        },
+    },
+    monthEventIndicatorClass: {
+        class: "monthEventIndicatorClass",
+        description:
+            "Class of the event element with indicator when type is `month`.",
+        properties: ["indicators"],
+        suffixes: ["bars", "dots", "*"],
+        action: (data): void => {
+            data.inline = true;
+            data.indicators = "bars";
             data.active = true;
         },
     },

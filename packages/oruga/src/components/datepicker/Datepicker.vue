@@ -500,45 +500,43 @@ function nextDate(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-dpck"],
+    ["rootClass", "o-datepicker"],
     [
         "sizeClass",
-        "o-dpck--",
+        "o-datepicker--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    ["mobileClass", "o-dpck--mobile", null, isMobile],
-    ["expandedClass", "o-dpck--expanded", null, computed(() => props.expanded)],
+    ["mobileClass", "o-datepicker--mobile", null, isMobile],
+    [
+        "expandedClass",
+        "o-datepicker--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
 );
 
-const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
+const boxClasses = defineClasses(["boxClass", "o-datepicker__box"]);
 const boxClassBind = computed(() => getActiveClasses(boxClasses));
 
-const headerClasses = defineClasses(["headerClass", "o-dpck__header"]);
-
-const headerButtonsClasses = defineClasses(
-    ["headerButtonsClass", "o-dpck__header__buttons"],
-    [
-        "headerButtonsSizeClass",
-        "o-dpck__header__buttons--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-);
+const headerClasses = defineClasses(["headerClass", "o-datepicker__header"]);
 
 const prevButtonClasses = defineClasses([
     "prevButtonClass",
-    "o-dpck__header__previous",
+    "o-datepicker__header__previous",
 ]);
 
 const nextButtonClasses = defineClasses([
     "nextButtonClass",
-    "o-dpck__header__next",
+    "o-datepicker__header__next",
 ]);
 
-const listsClasses = defineClasses(["listsClass", "o-dpck__header__list"]);
+const listsClasses = defineClasses([
+    "listsClass",
+    "o-datepicker__header__list",
+]);
 
-const footerClasses = defineClasses(["footerClass", "o-dpck__footer"]);
+const footerClasses = defineClasses(["footerClass", "o-datepicker__footer"]);
 
 const pickerDropdownClasses = defineClasses([
     "dropdownClass",
@@ -587,57 +585,57 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 @slot Override the header
             -->
             <slot name="header">
-                <div :class="headerButtonsClasses">
-                    <OButton
-                        v-if="!disabled"
-                        :class="prevButtonClasses"
-                        :disabled="!showPrev"
-                        :aria-label="ariaPreviousLabel"
-                        :icon-pack="iconPack"
-                        :icon-left="iconPrev"
-                        @click.prevent="prev"
-                        @keydown.enter.prevent="prev"
-                        @keydown.space.prevent="prev" />
+                <OButton
+                    v-if="!disabled"
+                    :class="prevButtonClasses"
+                    :disabled="!showPrev"
+                    :icon-pack="iconPack"
+                    :icon-left="iconPrev"
+                    :size="size"
+                    :aria-label="ariaPreviousLabel"
+                    @click.prevent="prev"
+                    @keydown.enter.prevent="prev"
+                    @keydown.space.prevent="prev" />
 
-                    <OButton
-                        v-if="!disabled"
-                        :class="nextButtonClasses"
-                        :disabled="!showNext"
-                        :aria-label="ariaNextLabel"
-                        :icon-pack="iconPack"
-                        :icon-left="iconNext"
-                        @click.prevent="next"
-                        @keydown.enter.prevent="next"
-                        @keydown.space.prevent="next" />
+                <OButton
+                    v-if="!disabled"
+                    :class="nextButtonClasses"
+                    :disabled="!showNext"
+                    :icon-pack="iconPack"
+                    :icon-left="iconNext"
+                    :size="size"
+                    :aria-label="ariaNextLabel"
+                    @click.prevent="next"
+                    @keydown.enter.prevent="next"
+                    @keydown.space.prevent="next" />
 
-                    <div :class="listsClasses">
-                        <o-select
-                            v-if="!isTypeMonth"
-                            v-bind="selectClasses"
-                            v-model="focusedDateData.month"
-                            :disabled="disabled"
-                            :size="size"
-                            :options="listOfMonths"
-                            :aria-label="ariaSelectMonthLabel"
-                            :use-html5-validation="false"
-                            @keydown.left.stop.prevent="prev"
-                            @keydown.right.stop.prevent="next" />
+                <div :class="listsClasses">
+                    <o-select
+                        v-if="!isTypeMonth"
+                        v-bind="selectClasses"
+                        v-model="focusedDateData.month"
+                        :disabled="disabled"
+                        :size="size"
+                        :options="listOfMonths"
+                        :aria-label="ariaSelectMonthLabel"
+                        :use-html5-validation="false"
+                        @keydown.left.stop.prevent="prev"
+                        @keydown.right.stop.prevent="next" />
 
-                        <o-select
-                            v-bind="selectClasses"
-                            v-model="focusedDateData.year"
-                            :disabled="disabled"
-                            :size="size"
-                            :options="listOfYears"
-                            :aria-label="ariaSelectYearLabel"
-                            :use-html5-validation="false"
-                            @keydown.left.stop.prevent="prev"
-                            @keydown.right.stop.prevent="next"
-                            @keydown.up.stop.prevent="focusedDateData.year += 1"
-                            @keydown.down.stop.prevent="
-                                focusedDateData.year -= 1
-                            " />
-                    </div>
+                    <o-select
+                        v-bind="selectClasses"
+                        v-model="focusedDateData.year"
+                        :disabled="disabled"
+                        :size="size"
+                        :options="listOfYears"
+                        :aria-label="ariaSelectYearLabel"
+                        :use-html5-validation="false"
+                        @keydown.left.stop.prevent="prev"
+                        @keydown.right.stop.prevent="next"
+                        @keydown.up.stop.prevent="focusedDateData.year += 1"
+                        @keydown.down.stop.prevent="
+                            focusedDateData.year -= 1
+                        " />
                 </div>
             </slot>
         </header>
@@ -654,6 +652,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 :picker-props="props"
                 @range-start="(date) => $emit('range-start', date)"
                 @range-end="(date) => $emit('range-end', date)" />
+
             <o-datepicker-table
                 v-else
                 v-model="vmodel"
