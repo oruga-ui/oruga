@@ -20,7 +20,7 @@ const inspectData: InspectData<
         description: "Class of the root element with position.",
         properties: ["position"],
         suffixes: ["bottom", "left", "right"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.vertical = true;
             data.position = "right";
         },
@@ -30,7 +30,7 @@ const inspectData: InspectData<
         description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -39,7 +39,7 @@ const inspectData: InspectData<
         description: "Class of the root element with type.",
         properties: ["type"],
         suffixes: ["default", "boxed", "toggle", "pills"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.type = "boxed";
         },
     },
@@ -47,7 +47,7 @@ const inspectData: InspectData<
         class: "expandedClass",
         description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
@@ -55,7 +55,7 @@ const inspectData: InspectData<
         class: "verticalClass",
         description: "Class of the root element when vertical.",
         properties: ["vertical"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.vertical = true;
         },
     },
@@ -63,7 +63,7 @@ const inspectData: InspectData<
         class: "multilineClass",
         description: "Class of the root element when multilined.",
         properties: ["multiline"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.multiline = true;
         },
     },
@@ -88,7 +88,7 @@ const inspectData: InspectData<
         class: "tabActiveClass",
         subitem: "tabitem",
         description: "Class of the tab item element when active.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.modelValue = 1;
         },
     },
@@ -107,7 +107,7 @@ const inspectData: InspectData<
         subitem: "tabitem",
         description: "Class of the tab item element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },

@@ -17,7 +17,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
         description: "Class of the root element with order",
         properties: ["order"],
         suffixes: ["centered", "right", "left"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.order = "centered";
         },
     },
@@ -26,7 +26,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
         description: "Class for the root elemnt with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "small";
         },
     },
@@ -34,7 +34,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
         class: "simpleClass",
         description: "Class of the root element when in `simple` mode",
         properties: ["simple"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.simple = true;
         },
     },
@@ -42,7 +42,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
         class: "infoClass",
         description: "Class of the page info in `simple` mode.",
         properties: ["simple"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.simple = true;
         },
     },
@@ -66,7 +66,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
         class: "roundedClass",
         description: "Class of the button element when rounded.",
         properties: ["rounded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.rounded = true;
         },
     },
@@ -85,7 +85,7 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
     buttonDisabledClass: {
         class: "buttonDisabledClass",
         description: "Class of the prev or next button when disabled.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.current = 20;
         },
     },

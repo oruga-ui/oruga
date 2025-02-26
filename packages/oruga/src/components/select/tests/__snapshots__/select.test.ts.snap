@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OSelect tests > render correctly 1`] = `
-"<div class="o-select" data-oruga="select">
+"<div data-oruga="select" class="o-select">
   <!--v-if--><select id="v-0" data-oruga-input="select" class="o-select__input o-select__input--placeholder o-select__input--arrowed" autocomplete="off">
     <!--v-if-->
     <!--

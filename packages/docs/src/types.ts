@@ -38,10 +38,10 @@ export type InspectClassDescription<
     /** related class of another component */
     relatedClass?: string;
     /** function which get called on inspect button clicked */
-    action?: (cmp: HTMLElement, data: P) => void;
+    action?: (data: P) => void;
 };
 
 export type InspectClass<P extends object = object> = {
     className: string;
-    action?: (cmp: HTMLElement, data: P) => void;
+    action?: (data: P) => void;
 };

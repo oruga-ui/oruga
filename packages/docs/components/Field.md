@@ -1,20 +1,20 @@
 # Field
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Field** component is used to add functionality to controls and to attach/group components and elements together.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-field />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Field component
 
@@ -51,17 +51,17 @@ The **Field** component is used to add functionality to controls and to attach/g
 | message | Override the message | **message** `string` - field message |
 | default | Default content      |                                      |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-field-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -107,4 +107,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

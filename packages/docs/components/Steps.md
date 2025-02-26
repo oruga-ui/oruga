@@ -4,22 +4,22 @@ sidebarDepth: 2
 
 # Steps
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Steps** component allows you to create a wizard or easily break your process steps into multiple steps.
 Breaking things down into multiple steps can improve the user experience by keeping them small and accessible compared to listing them all at once.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-steps />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Steps component
 
@@ -69,9 +69,9 @@ Breaking things down into multiple steps can improve the user experience by keep
 | default    | Place step items here    |                                                                                                                                                             |
 | navigation | Override step navigation | **previous** `{disabled: boolean, action: (): void }` - previous button configs<br/>**next** `{disabled: boolean, action: (): void }` - next button configs |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## StepItem component
 
@@ -113,17 +113,17 @@ Breaking things down into multiple steps can improve the user experience by keep
 | ------- | ----------------- | --------------------------------------- |
 | default | Step item content | **active** `boolean` - if item is shown |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-steps-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -200,4 +200,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

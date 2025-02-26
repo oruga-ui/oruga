@@ -208,9 +208,9 @@ defineExpose({ setPosition });
 
 <template>
     <div
+        data-oruga="slider-thumb"
         :class="thumbWrapperClasses"
-        :style="wrapperStyle"
-        data-oruga="slider-thumb">
+        :style="wrapperStyle">
         <o-tooltip
             :label="formattedValue"
             :variant="computedTooltipVariant"

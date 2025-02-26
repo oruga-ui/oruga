@@ -12,7 +12,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -21,7 +21,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -30,7 +30,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         description: "Class of the root element when outlined.",
         properties: ["outlined"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "primary";
             data.outlined = true;
         },
@@ -40,7 +40,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         description: "Class of the root element when inverted.",
         properties: ["inverted"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "primary";
             data.inverted = true;
         },
@@ -49,7 +49,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         class: "loadingClass",
         description: "Class of the root element when loading.",
         properties: ["loading"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.loading = true;
         },
     },
@@ -57,7 +57,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         class: "expandedClass",
         description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
@@ -65,7 +65,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         class: "roundedClass",
         description: "Class of the root element when rounded.",
         properties: ["rounded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.rounded = true;
         },
     },
@@ -73,7 +73,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         class: "disabledClass",
         description: "Class of the button when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
@@ -85,7 +85,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         class: "iconClass",
         description: "Class of the icon element.",
         properties: ["iconLeft", "iconRight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data["icon-left"] = "plus";
         },
     },
@@ -93,7 +93,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         class: "iconLeftClass",
         description: "Class of the icon element on the left.",
         properties: ["iconLeft"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data["icon-left"] = "plus";
         },
     },
@@ -101,7 +101,7 @@ const inspectData: InspectData<ButtonClasses, ButtonProps> = {
         class: "iconRightClass",
         description: "Class of the icon element on the right.",
         properties: ["iconRight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data["icon-right"] = "plus";
         },
     },

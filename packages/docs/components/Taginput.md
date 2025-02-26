@@ -1,22 +1,22 @@
 # Taginput
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Taginput** input component allows users to search through a list of options and apply any number of tags.
 The component is based on the Autocomplete component and supports the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
 Use it with the Field component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-taginput />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Taginput component
 
@@ -91,17 +91,17 @@ Use it with the Field component to access all the functionalities.
 | footer   | Define an additional footer    |                                                                                                                  |
 | counter  | Override the counter           | **items** `number` - items count<br/>**total** `number` - total count                                            |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-taginput-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -153,4 +153,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

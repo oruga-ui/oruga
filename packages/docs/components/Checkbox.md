@@ -1,6 +1,6 @@
 # Checkbox
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Checkbox** input component uses [HTML's native checkbox input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox).
 It can display one or many options to a user and is a great way to allow users to select multiple items from a list.
@@ -8,17 +8,17 @@ The component supports single and multiple checkbox inputs.
 The component supports the W3C ARIA APG [Checkbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/).
 Use it with the Field component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-checkbox />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Checkbox component
 
@@ -65,17 +65,17 @@ Use it with the Field component to access all the functionalities.
 | ------- | ----------------------------------- | -------- |
 | default | Content slot, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-checkbox-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -132,4 +132,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

@@ -1,23 +1,23 @@
 # Button
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Button** component uses [HTML's native button element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) by default.
 The `label` prop is used to populate the text of the button — or alternatively you can use the default slot.
 The button can be have different colors, sizes, and states.
 The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-button />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Button component
 
@@ -59,17 +59,17 @@ The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/
 | ------- | ----------------------------------------- | -------- |
 | default | Override the label, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-button-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -126,4 +126,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

@@ -11,7 +11,7 @@ exports[`OModal tests > render correctly 1`] = `
                         @slot Modal default content, default is content prop
                         @binding {(...args): void} close - function to close the component
                     -->
-      <!--v-if--><span class="o-icon o-icon--clickable o-icon--medium o-modal__close" data-oruga="icon" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-close mdi-36px"></i></span>
+      <!--v-if--><span data-oruga="icon" class="o-icon o-icon--clickable o-icon--medium o-modal__close" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-close mdi-36px"></i></span>
     </div>
   </div>
 </transition-stub>

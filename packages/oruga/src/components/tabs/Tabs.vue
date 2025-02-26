@@ -291,7 +291,7 @@ const contentClasses = defineClasses(
 </script>
 
 <template>
-    <div ref="rootElement" :class="rootClasses" data-oruga="tabs">
+    <div ref="rootElement" data-oruga="tabs" :class="rootClasses">
         <component
             :is="props.tag"
             :class="tablistClasses"

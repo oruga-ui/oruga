@@ -1152,7 +1152,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="table">
+    <div data-oruga="table" :class="rootClasses">
         <div ref="slotsWrapper" style="display: none">
             <!--
                 @slot Place o-table-column here
@@ -1237,11 +1237,11 @@ defineExpose({ rows: tableRows, sort: sortByField });
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
                 v-if="tableColumns.length"
+                v-bind="$attrs"
                 :class="tableClasses"
                 :tabindex="selectable || isScrollable ? 0 : undefined"
                 :aria-rowcount="rowCount"
                 :aria-colcount="columnCount"
-                v-bind="$attrs"
                 @keydown.prevent.up="onArrowPressed(-1, $event)"
                 @keydown.prevent.down="onArrowPressed(1, $event)"
                 @keydown.prevent.home="selectRow(availableRows[0], $event)"

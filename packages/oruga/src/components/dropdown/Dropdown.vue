@@ -467,49 +467,59 @@ function isItemViable(item: DropdownChildItem<T>): boolean {
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-drop"],
-    ["disabledClass", "o-drop--disabled", null, computed(() => props.disabled)],
-    ["expandedClass", "o-drop--expanded", null, computed(() => props.expanded)],
-    ["inlineClass", "o-drop--inline", null, computed(() => props.inline)],
-    ["mobileClass", "o-drop--mobile", null, isMobile],
-    ["modalClass", "o-drop--modal", null, isModal],
-    ["hoverableClass", "o-drop--hoverable", null, hoverable],
+    ["rootClass", "o-dropdown"],
+    [
+        "disabledClass",
+        "o-dropdown--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "expandedClass",
+        "o-dropdown--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+    ["inlineClass", "o-dropdown--inline", null, computed(() => props.inline)],
+    ["mobileClass", "o-dropdown--mobile", null, isMobile],
+    ["modalClass", "o-dropdown--modal", null, isModal],
+    ["hoverableClass", "o-dropdown--hoverable", null, hoverable],
     [
         "positionClass",
-        "o-drop--position-",
+        "o-dropdown--position-",
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
     [
         "activeClass",
-        "o-drop--active",
+        "o-dropdown--active",
         null,
         computed(() => isActive.value || props.inline),
     ],
 );
 
-const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
+const triggerClasses = defineClasses(["triggerClass", "o-dropdown__trigger"]);
 
 const teleportClasses = defineClasses([
     "teleportClass",
-    "o-drop--teleport",
+    "o-dropdown--teleport",
     null,
     computed(() => !!props.teleport),
 ]);
 
-const overlayClasses = defineClasses(["overlayClass", "o-drop__overlay"]);
+const overlayClasses = defineClasses(["overlayClass", "o-dropdown__overlay"]);
 
 const menuClasses = defineClasses(
-    ["menuClass", "o-drop__menu"],
+    ["menuClass", "o-dropdown__menu"],
     [
         "menuPositionClass",
-        "o-drop__menu--",
+        "o-dropdown__menu--",
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
     [
         "menuActiveClass",
-        "o-drop__menu--active",
+        "o-dropdown__menu--active",
         null,
         computed(() => isActive.value || props.inline),
     ],

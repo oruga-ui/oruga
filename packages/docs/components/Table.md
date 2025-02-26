@@ -4,22 +4,22 @@ sidebarDepth: 2
 
 # Table
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Table** component uses [HTML's native table element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table).
 It allows tabular data to be displayed in a responsive way with special case cells.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-table />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Table component
 
@@ -156,9 +156,9 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | loading     | Override loading component                                                                  | **loading** `boolean` - is loading state enabled                                                                                                                                      |
 | bottom-left | Additional slot if table is paginated                                                       |                                                                                                                                                                                       |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## TableColumn component
 
@@ -199,17 +199,17 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | subheading | Override subheading label | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-table-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -293,4 +293,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

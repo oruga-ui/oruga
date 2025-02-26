@@ -28,7 +28,7 @@ const inspectData: InspectData<
             "bottom-left",
         ],
         info: "You have to declare a class for top and bottom position when override mode.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "top-right";
         },
     },
@@ -37,7 +37,7 @@ const inspectData: InspectData<
         description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -49,7 +49,7 @@ const inspectData: InspectData<
         class: "iconClass",
         description: "Class of the icon element on the left.",
         properties: ["type"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.type = "info";
         },
     },
@@ -61,7 +61,7 @@ const inspectData: InspectData<
         class: "closeClass",
         description: "Class of the close button element.",
         properties: ["closable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.closable = true;
         },
     },
@@ -82,7 +82,7 @@ const inspectData: InspectData<
             "bottom",
             "bottom-left",
         ],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "top-right";
         },
         nospec: true,

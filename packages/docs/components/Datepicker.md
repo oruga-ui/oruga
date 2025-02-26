@@ -1,21 +1,21 @@
 # Datepicker
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Datepicker** input component allow users to select a date from a customizable calendar, and type the date directly into the input with full internationalization support.
 The input opens a simple dropdown/modal for selecting a date, and uses the native datepicker for mobile.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-datepicker />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Datepicker component
 
@@ -109,17 +109,17 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | body    | Override the body           |          |
 | footer  | Define an additional footer |          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-datepicker-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -230,4 +230,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

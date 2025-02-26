@@ -4,22 +4,22 @@ sidebarDepth: 2
 
 # Notification
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Notification** component is a lightweight and easily customizable alert message.
 It is designed to mimic the push notifications that have been popularized by mobile and desktop operating systems.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-notification />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Notification component
 
@@ -62,9 +62,9 @@ It is designed to mimic the push notifications that have been popularized by mob
 | inner   | Notification inner content, outside of the message container | **close** `(...args): void` - function to close the notification |
 | default | Notification default content, default is message prop        | **close** `(...args): void` - function to close the notification |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## NotificationNotice component
 
@@ -99,17 +99,17 @@ It is designed to mimic the push notifications that have been popularized by mob
 | ------- | ----------- | -------- |
 | default |             |          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-notification-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -168,4 +168,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

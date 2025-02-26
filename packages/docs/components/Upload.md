@@ -1,21 +1,21 @@
 # Upload
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Upload** input component uses [HTML's native file input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file). It allows users to select files from their device for upload. In addition to native input features, it adds support for Drag and drop and clearing the input.
 Use it with the Field component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-upload />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Upload component
 
@@ -56,17 +56,17 @@ Use it with the Field component to access all the functionalities.
 | ------- | --------------- | ---------------------------------------------------------------------------------- |
 | default | Default content | **onclick** `(event:Event): void` - click handler, only needed if a button is used |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-upload-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -118,4 +118,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

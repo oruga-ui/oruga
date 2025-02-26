@@ -31,7 +31,7 @@ const inspectData: InspectData<
         description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -39,7 +39,7 @@ const inspectData: InspectData<
         class: "expandedClass",
         description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
@@ -47,7 +47,7 @@ const inspectData: InspectData<
         class: "boxClass",
         description:
             "Class of the box container element where you choose the date.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -55,26 +55,7 @@ const inspectData: InspectData<
     headerClass: {
         class: "headerClass",
         description: "Class of the header element inside the box.",
-        action: (cmp, data): void => {
-            data.inline = true;
-            data.active = true;
-        },
-    },
-    headerButtonsClass: {
-        class: "headerButtonsClass",
-        description: "Class of the button elements inside the box.",
-        action: (cmp, data): void => {
-            data.inline = true;
-            data.active = true;
-        },
-    },
-    headerButtonsSizeClass: {
-        class: "headerButtonsSizeClass",
-        description: "Class of the button elements inside the box with size.",
-        properties: ["size"],
-        suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
-            data.size = "large";
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -82,7 +63,7 @@ const inspectData: InspectData<
     prevButtonClass: {
         class: "prevButtonClass",
         description: "Class of the prev button element inside the box.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -90,7 +71,7 @@ const inspectData: InspectData<
     nextButtonClass: {
         class: "nextButtonClass",
         description: "Class of the next button element inside the box.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -99,7 +80,7 @@ const inspectData: InspectData<
         class: "listsClass",
         description:
             "Class of the month and year selects container inside the box.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -107,7 +88,7 @@ const inspectData: InspectData<
     footerClass: {
         class: "footerClass",
         description: "Class of the footer element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -115,7 +96,7 @@ const inspectData: InspectData<
     tableClass: {
         class: "tableClass",
         description: "Class of the dates table element inside the box",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -124,7 +105,7 @@ const inspectData: InspectData<
         class: "tableHeadClass",
         description:
             "Class of dates table header element with days of the week.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -132,7 +113,7 @@ const inspectData: InspectData<
     tableHeadCellClass: {
         class: "tableHeadCellClass",
         description: "Class of the cell element inside the table header.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -140,7 +121,7 @@ const inspectData: InspectData<
     tableBodyClass: {
         class: "tableBodyClass",
         description: "Class of the table body element inside the box.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -148,7 +129,7 @@ const inspectData: InspectData<
     tableRowClass: {
         class: "tableRowClass",
         description: "Class of the table row element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -156,7 +137,7 @@ const inspectData: InspectData<
     tableCellClass: {
         class: "tableCellClass",
         description: "Class of the table cell element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -166,7 +147,7 @@ const inspectData: InspectData<
         description:
             "Class of the table cell element when nearby month days are hidden.",
         properties: ["nearbyMonthDays"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.nearbyMonthDays = false;
             data.inline = true;
             data.active = true;
@@ -175,7 +156,7 @@ const inspectData: InspectData<
     tableCellSelectedClass: {
         class: "tableCellSelectedClass",
         description: "Class of table cell element when it is selected.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -186,7 +167,7 @@ const inspectData: InspectData<
             "Class of the first selected table cell element when in range.",
         info: "See it in action selecting a date range.",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.range = true;
             data.inline = true;
             data.active = true;
@@ -198,7 +179,7 @@ const inspectData: InspectData<
             "Class of the table cell elements within the range when the range is selected.",
         info: "See it in action selecting a date range.",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.range = true;
             data.inline = true;
             data.active = true;
@@ -210,7 +191,7 @@ const inspectData: InspectData<
             "Class of the last selected table cell element during range selection.",
         info: "See it in action selecting a date range.",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.range = true;
             data.inline = true;
             data.active = true;
@@ -222,7 +203,7 @@ const inspectData: InspectData<
             "Class of the first hovered table cell element during range selection.",
         info: "See it in action selecting a date range.",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.type = "date";
             data.range = true;
             data.inline = true;
@@ -236,7 +217,7 @@ const inspectData: InspectData<
             "Class of the table cell element when hovered during range selection.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.range = true;
             data.inline = true;
             data.active = true;
@@ -248,7 +229,7 @@ const inspectData: InspectData<
             "Class of the last table cell element hovered during range selection.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.range = true;
             data.inline = true;
             data.active = true;
@@ -257,7 +238,7 @@ const inspectData: InspectData<
     tableCellTodayClass: {
         class: "tableCellTodayClass",
         description: "Class of the table cell element of the current day.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -265,7 +246,7 @@ const inspectData: InspectData<
     tableCellSelectableClass: {
         class: "tableCellSelectableClass",
         description: "Class of the table cell element when selectable.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -273,7 +254,7 @@ const inspectData: InspectData<
     tableCellUnselectableClass: {
         class: "tableCellUnselectableClass",
         description: "Class of the table cell element when unselectable.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -283,7 +264,7 @@ const inspectData: InspectData<
         description:
             "Class of the table cell element when nearby days (prev/next month) are selectable.",
         properties: ["nearbySelectableMonthDays"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.nearbySelectableMonthDays = true;
             data.active = true;
@@ -293,7 +274,7 @@ const inspectData: InspectData<
         class: "tableCellEventsClass",
         description:
             "Class of the cell element of a row when at least one event is present.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -301,7 +282,7 @@ const inspectData: InspectData<
     tableEventsClass: {
         class: "tableEventsClass",
         description: "Class of the events container element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
@@ -309,27 +290,27 @@ const inspectData: InspectData<
     tableEventClass: {
         class: "tableEventClass",
         description: "Class of the event element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
     },
     tableEventVariantClass: {
         class: "tableEventVariantClass",
-        description: "Class of the event indicator element with variant.",
+        description: "Class of the event element with variant.",
         properties: ["events"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.active = true;
         },
     },
-    tableEventIndicatorsClass: {
-        class: "tableEventIndicatorsClass",
-        description: "Class of the event indicator wrapper element.",
+    tableEventIndicatorClass: {
+        class: "tableEventIndicatorClass",
+        description: "Class of the event element with indicator.",
         properties: ["indicators"],
         suffixes: ["bars", "dots", "*"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.indicators = "bars";
             data.active = true;
@@ -340,17 +321,7 @@ const inspectData: InspectData<
         description:
             "Class of the month table element inside the box when type is `month`.",
         properties: ["type"],
-        action: (cmp, data): void => {
-            data.inline = true;
-            data.type = "month";
-            data.active = true;
-        },
-    },
-    monthBodyClass: {
-        class: "monthBodyClass",
-        description:
-            "Class of the table body element inside the box when type is `month`.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.active = true;
@@ -359,7 +330,7 @@ const inspectData: InspectData<
     monthTableClass: {
         class: "monthTableClass",
         description: "Class of the table container when type is `month`.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.active = true;
@@ -368,7 +339,7 @@ const inspectData: InspectData<
     monthCellClass: {
         class: "monthCellClass",
         description: "Class of the table cell element when type is `month`.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.active = true;
@@ -378,7 +349,7 @@ const inspectData: InspectData<
         class: "monthCellSelectedClass",
         description:
             "Class of table cell element when selected when type is `month`.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.active = true;
@@ -390,7 +361,7 @@ const inspectData: InspectData<
             "Class of the first selected table cell element when in range when type is `month`.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.range = true;
@@ -403,7 +374,7 @@ const inspectData: InspectData<
             "Class of the table cell elements within the range when the range is selected when type is `month`.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.range = true;
@@ -416,7 +387,7 @@ const inspectData: InspectData<
             "Class of the last selected table cell element during range selection when type is `month`.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.range = true;
@@ -429,7 +400,7 @@ const inspectData: InspectData<
             "Class of the first hovered table cell element during range selection when type is `month`.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.range = true;
@@ -442,7 +413,7 @@ const inspectData: InspectData<
             "Class of the table cell element when hovered during range selection when type is `month`.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.range = true;
@@ -455,7 +426,7 @@ const inspectData: InspectData<
             "Class of the table cell element when hovered during range selection and cell is in range when type is `month`.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.range = true;
@@ -468,7 +439,7 @@ const inspectData: InspectData<
             "Class of the last table cell element when hovered during range selection when type is `month`.",
         info: "See it in action selecting a date range",
         properties: ["range"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.range = true;
@@ -479,7 +450,7 @@ const inspectData: InspectData<
         class: "monthCellTodayClass",
         description:
             "Class of the table cell element of the current day when type is `month`.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.active = true;
@@ -489,7 +460,7 @@ const inspectData: InspectData<
         class: "monthCellSelectableClass",
         description:
             "Class of the table cell element when selectable when type is `month`.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.active = true;
@@ -499,7 +470,7 @@ const inspectData: InspectData<
         class: "monthCellUnselectableClass",
         description:
             "Class of the table cell element when unselectable when type is `month`.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
             data.active = true;
@@ -508,9 +479,49 @@ const inspectData: InspectData<
     monthCellEventsClass: {
         class: "monthCellEventsClass",
         description: "Class of the events container when type is `month`.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.inline = true;
             data.type = "month";
+            data.active = true;
+        },
+    },
+    monthEventsClass: {
+        class: "monthEventsClass",
+        description:
+            "Class of the events container element when type is `month`.",
+        action: (data): void => {
+            data.inline = true;
+            data.active = true;
+        },
+    },
+    monthEventClass: {
+        class: "monthEventClass",
+        description: "Class of the event element when type is `month`.",
+        action: (data): void => {
+            data.inline = true;
+            data.active = true;
+        },
+    },
+    monthEventVariantClass: {
+        class: "monthEventVariantClass",
+        description:
+            "Class of the event element with variant when type is `month`.",
+        properties: ["events"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (data): void => {
+            data.inline = true;
+            data.active = true;
+        },
+    },
+    monthEventIndicatorClass: {
+        class: "monthEventIndicatorClass",
+        description:
+            "Class of the event element with indicator when type is `month`.",
+        properties: ["indicators"],
+        suffixes: ["bars", "dots", "*"],
+        action: (data): void => {
+            data.inline = true;
+            data.indicators = "bars";
             data.active = true;
         },
     },
@@ -530,7 +541,7 @@ const inspectData: InspectData<
         description: "Class to apply on the dropdown element.",
         relatedClass: "dropdownClasses.rootClass",
         relatedComponent: "Dropdown",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -538,7 +549,7 @@ const inspectData: InspectData<
         class: "dropdownClasses",
         description: "Classes to apply on the internal dropdown component.",
         relatedComponent: "Dropdown",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -547,7 +558,7 @@ const inspectData: InspectData<
         description:
             "Classes to apply on the internal select component (month and year list).",
         relatedComponent: "Select",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -566,9 +577,3 @@ const inspectData: InspectData<
         </o-datepicker>
     </inspector-wrapper>
 </template>
-
-<style>
-.datepicker__table {
-    border-collapse: collapse;
-}
-</style>

@@ -108,7 +108,7 @@ const inspectData: InspectData<
         description:
             "Class of the table wrapper element when header is sticky.",
         properties: ["stickyHeader"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.stickyHeader = true;
         },
     },
@@ -117,7 +117,7 @@ const inspectData: InspectData<
         description:
             "Class of the table wrapper element when its content is scrollable.",
         properties: ["scrollable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.scrollable = true;
         },
     },
@@ -129,7 +129,7 @@ const inspectData: InspectData<
         class: "borderedClass",
         description: "Class of the table element when bordered.",
         properties: ["bordered"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.bordered = true;
         },
     },
@@ -137,7 +137,7 @@ const inspectData: InspectData<
         class: "stripedClass",
         properties: ["striped"],
         description: "Class of the table element when striped.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.striped = true;
         },
     },
@@ -145,7 +145,7 @@ const inspectData: InspectData<
         class: "narrowedClass",
         description: "Class of the table element when narrowed.",
         properties: ["narrowed"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.narrowed = true;
         },
     },
@@ -153,14 +153,14 @@ const inspectData: InspectData<
         class: "hoverableClass",
         description: "Class of the table element when hoverable.",
         properties: ["hoverable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.hoverable = true;
         },
     },
     emptyClass: {
         class: "emptyClass",
         description: "Class of the table element when it is empty.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.data = [];
         },
     },
@@ -178,7 +178,7 @@ const inspectData: InspectData<
         class: "thCheckboxClass",
         description: "Class of the table `th` element when checkable.",
         properties: ["checkable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.checkable = true;
         },
     },
@@ -186,7 +186,7 @@ const inspectData: InspectData<
         class: "thStickyClass",
         description: "Class of the table `th` element when checkbox is sticky.",
         properties: ["stickyCheckbox"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.checkable = true;
             data.stickyCheckbox = true;
         },
@@ -196,7 +196,7 @@ const inspectData: InspectData<
         description:
             "Class of the table `th` element of the detail column of triggers.",
         properties: ["detailed"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.detailed = true;
         },
     },
@@ -230,7 +230,7 @@ const inspectData: InspectData<
         class: "trSelectedClass",
         description: "Class of the table `tr` element when selected.",
         info: "Select a row of the table to see it in action!",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.tableClass = "inspector_table";
         },
     },
@@ -239,7 +239,7 @@ const inspectData: InspectData<
         description: "Class of the table `tr` element when detailed. ",
         info: "Expand details to see it in action!",
         properties: ["detailed"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.tableClass = "inspector_table";
             data.mobileCards = true;
             data.detailed = true;
@@ -251,14 +251,14 @@ const inspectData: InspectData<
             "Class of the table `tr` element when checkable and checked.",
         info: "Select a row of the table to see it in action!",
         properties: ["checkable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.checkable = true;
         },
     },
     trEmptyClass: {
         class: "trEmptyClass",
         description: "Class of the table `tr` element when table is empty.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.data = [];
         },
     },
@@ -281,7 +281,7 @@ const inspectData: InspectData<
         class: "tdCheckboxClass",
         description: "Class of the table `td` element when row is checkable.",
         properties: ["checkable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.checkable = true;
         },
     },
@@ -290,7 +290,7 @@ const inspectData: InspectData<
         description:
             "Class of the table `td` element that contains the chevron to trigger details.",
         properties: ["detailed"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.mobileCards = true;
             data.detailed = true;
         },
@@ -299,7 +299,7 @@ const inspectData: InspectData<
         class: "paginationWrapperClass",
         description: "Class of the table pagination wrapper element.",
         properties: ["paginated"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.paginated = true;
             data.paginationSimple = true;
             data.perPage = 2;
@@ -308,7 +308,7 @@ const inspectData: InspectData<
     footerClass: {
         class: "footerClass",
         description: "Class of the table footer element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.tableClass = "inspector_table";
         },
     },
@@ -328,9 +328,3 @@ const inspectData: InspectData<
         </o-table>
     </inspector-wrapper>
 </template>
-
-<style>
-.inspector_table {
-    border-collapse: collapse;
-}
-</style>

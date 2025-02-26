@@ -20,9 +20,6 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         description:
             "Class of the root element when the form element is focused.",
         info: "Will be controlled by the focus event emitted by form elements.",
-        action: (cmp): void => {
-            cmp.focus();
-        },
     },
     filledClass: {
         class: "filledClass",
@@ -41,7 +38,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         class: "groupedClass",
         description: "Class of the inner body wrapper when grouped.",
         properties: ["grouped"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.grouped = true;
         },
     },
@@ -49,7 +46,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         class: "addonsClass",
         description:
             "Class of the inner body wrapper element when element get automatically attached together inside a field.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.addons = true;
         },
     },
@@ -58,7 +55,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         description:
             "Class for inner body wrapper element to fill up multiple lines.",
         properties: ["multiline"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.multiline = true;
         },
     },
@@ -66,7 +63,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         class: "horizontalClass",
         description: "Class to align label and control in horizontal forms.",
         properties: ["horizontal"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.horizontal = true;
         },
     },
@@ -74,7 +71,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         class: "horizontalLabelClass",
         description: "Class for the label element when horizontal.",
         properties: ["horizontal"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.horizontal = true;
         },
     },
@@ -82,7 +79,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         class: "horizontalBodyClass",
         description: "Class for the body element when horizontal.",
         properties: ["horizontal"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.horizontal = true;
         },
     },
@@ -96,7 +93,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         description: "Class for the label element with size.",
         properties: ["label", "labelSize"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.labelSize = "large";
         },
     },
@@ -105,7 +102,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         description: "Class of the label element with variant.",
         properties: ["label", "variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "info";
         },
     },
@@ -113,7 +110,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         class: "messageClass",
         description: "Class of the the message element.",
         properties: ["message"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.message = "This is a message for the field";
         },
     },
@@ -122,7 +119,7 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         description: "Class of the message element with variant.",
         properties: ["message", "variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "info";
             data.message = "This is a message for the field";
         },

@@ -2,10 +2,10 @@
 
 exports[`OSidebar tests > render correctly 1`] = `
 "<!--teleport start-->
-<div class="o-side" data-oruga="sidebar">
+<div data-oruga="sidebar" class="o-sidebar">
   <!--v-if-->
   <transition-stub name="slide-prev" appear="false" persisted="true" css="true">
-    <div class="o-side__content o-side__content--left o-side__content--hidden" style="display: none;">
+    <div class="o-sidebar__content o-sidebar__content--left o-sidebar__content--hidden" style="display: none;">
       <!--
                         @slot Sidebar default content, default is component prop
                         @binding {(...args):void} close - function to close the component

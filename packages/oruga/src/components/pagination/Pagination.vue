@@ -197,36 +197,39 @@ function changePage(page: number, event: Event): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-pag"],
+    ["rootClass", "o-pagination"],
     [
         "orderClass",
-        "o-pag--",
+        "o-pagination--",
         computed(() => props.order),
         computed(() => !!props.order),
     ],
     [
         "sizeClass",
-        "o-pag--",
+        "o-pagination--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    ["simpleClass", "o-pag--simple", null, computed(() => props.simple)],
-    ["mobileClass", "o-pag--mobile", null, isMobile],
+    ["simpleClass", "o-pagination--simple", null, computed(() => props.simple)],
+    ["mobileClass", "o-pagination--mobile", null, isMobile],
 );
 
-const infoClasses = defineClasses(["infoClass", "o-pag__info"]);
+const infoClasses = defineClasses(["infoClass", "o-pagination__info"]);
 
-const ellipsisClasses = defineClasses(["ellipsisClass", "o-pag__ellipsis"]);
+const ellipsisClasses = defineClasses([
+    "ellipsisClass",
+    "o-pagination__ellipsis",
+]);
 
-const listClasses = defineClasses(["listClass", "o-pag__list"]);
+const listClasses = defineClasses(["listClass", "o-pagination__list"]);
 
-const listItemClasses = defineClasses(["listItemClass", "o-pag__item"]);
+const listItemClasses = defineClasses(["listItemClass", "o-pagination__item"]);
 
 const buttonClasses = defineClasses(
-    ["buttonClass", "o-pag__btn"],
+    ["buttonClass", "o-pagination__btn"],
     [
         "roundedClass",
-        "o-pag__btn--rounded",
+        "o-pagination__btn--rounded",
         null,
         computed(() => props.rounded),
     ],
@@ -234,17 +237,17 @@ const buttonClasses = defineClasses(
 
 const buttonCurrentClasses = defineClasses([
     "buttonCurrentClass",
-    "o-pag__btn--current",
+    "o-pagination__btn--current",
 ]);
 
 const buttonPrevClasses = defineClasses(
-    ["buttonPrevClass", "o-pag__btn-previous"],
-    ["buttonDisabledClass", "o-pag__btn--disabled", null, isFirst],
+    ["buttonPrevClass", "o-pagination__btn-previous"],
+    ["buttonDisabledClass", "o-pagination__btn--disabled", null, isFirst],
 );
 
 const buttonNextClasses = defineClasses(
-    ["buttonNextClass", "o-pag__btn-next"],
-    ["buttonDisabledClass", "o-pag__btn--disabled", null, isLast],
+    ["buttonNextClass", "o-pagination__btn-next"],
+    ["buttonDisabledClass", "o-pagination__btn--disabled", null, isLast],
 );
 
 // --- Expose Public Functionalities ---
@@ -254,7 +257,7 @@ defineExpose({ last, first, prev, next });
 </script>
 
 <template>
-    <nav :class="rootClasses" data-oruga="pagination">
+    <nav data-oruga="pagination" :class="rootClasses">
         <!-- 
             @slot Previous button slot
             @binding {number} number - page number 
