@@ -426,10 +426,10 @@ const indicatorsClasses = defineClasses(
         computed(() => !!props.indicatorInside),
     ],
     [
-        "indicatorsInsidePositionClass",
-        "o-carousel__indicators--inside--",
+        "indicatorsPositionClass",
+        "o-carousel__indicators--",
         computed(() => props.indicatorPosition),
-        computed(() => props.indicatorInside && !!props.indicatorPosition),
+        computed(() => !!props.indicatorPosition),
     ],
 );
 
@@ -443,7 +443,7 @@ const indicatorItemClasses = defineClasses(
     [
         "indicatorItemStyleClass",
         "o-carousel__indicator__item--",
-        props.indicatorStyle,
+        computed(() => props.indicatorStyle),
         computed(() => !!props.indicatorStyle),
     ],
 );

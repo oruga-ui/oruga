@@ -87,8 +87,8 @@ export type CarouselClasses = Partial<{
     indicatorsClass: ComponentClass;
     /** Class of indicators tablist element when inside */
     indicatorsInsideClass: ComponentClass;
-    /** Class of indicators tablist element when inside and position */
-    indicatorsInsidePositionClass: ComponentClass;
+    /** Class of indicators tablist element with position */
+    indicatorsPositionClass: ComponentClass;
     /** Class of indicator tab element */
     indicatorClass: ComponentClass;
     /** Class of indicator item element */

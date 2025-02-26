@@ -309,9 +309,9 @@ defineExpose({ close });
         <div
             v-show="!hideOnMobile"
             ref="rootElement"
+            v-bind="$attrs"
             data-oruga="sidebar"
-            :class="rootClasses"
-            v-bind="$attrs">
+            :class="rootClasses">
             <div
                 v-if="overlay && isActive"
                 :class="overlayClasses"
