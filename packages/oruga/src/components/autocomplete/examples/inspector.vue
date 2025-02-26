@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { OptionsGroupProp } from "@oruga-ui/oruga-next";
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { AutocompleteClasses, AutocompleteProps } from "../props";
 
 const options: OptionsGroupProp<string> = [
@@ -21,7 +21,7 @@ const inspectData: InspectData<
     itemClass: {
         class: "itemClass",
         description: "Class of the menu items.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.input = "Q";
             data.active = true;
         },
@@ -29,7 +29,7 @@ const inspectData: InspectData<
     itemGroupTitleClass: {
         class: "itemGroupTitleClass",
         description: "Class of the menu items group title.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.input = "Q";
             data.active = true;
         },
@@ -37,7 +37,7 @@ const inspectData: InspectData<
     itemEmptyClass: {
         class: "itemEmptyClass",
         description: "Class of the empty menu placeholder item.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.input = "|";
             data.active = true;
         },
@@ -45,7 +45,7 @@ const inspectData: InspectData<
     itemHeaderClass: {
         class: "itemHeaderClass",
         description: "Class of the menu header item.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.input = "Q";
             data.active = true;
         },
@@ -53,7 +53,7 @@ const inspectData: InspectData<
     itemFooterClass: {
         class: "itemFooterClass",
         description: "Class of the menu footer item.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.input = "Q";
             data.active = true;
         },

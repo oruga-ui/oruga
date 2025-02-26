@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { UploadClasses, UploadProps } from "../props";
 
 const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
@@ -11,7 +11,7 @@ const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
         class: "expandedClass",
         description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
@@ -19,7 +19,7 @@ const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
         class: "disabledClass",
         description: "Class of the root element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
@@ -27,7 +27,7 @@ const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
         class: "draggableClass",
         description: "Class of the dragable container element.",
         properties: ["dragDrop"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.dragDrop = true;
         },
     },
@@ -36,7 +36,7 @@ const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
         description: "Class of the dragable container element when hovered.",
         info: "Drag & drop a file to see it in action!",
         properties: ["dragDrop"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.dragDrop = true;
         },
     },
@@ -46,7 +46,7 @@ const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
         info: "Drag & drop a file to see it in action!",
         properties: ["variant", "dragDrop"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
             data.dragDrop = true;
         },

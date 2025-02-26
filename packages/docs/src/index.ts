@@ -1,2 +1,2 @@
 export * from "./types";
-export * from "./themes-helper";
+export * from "./themes";

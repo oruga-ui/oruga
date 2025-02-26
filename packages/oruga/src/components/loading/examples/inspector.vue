@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { LoadingClasses, LoadingProps } from "../props";
 
 const inspectData: InspectData<LoadingClasses, LoadingProps> = {
     rootClass: {
         class: "rootClass",
         description: "Class of the root element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.cancelable = true;
             data.fullPage = false;
             data.active = true;
@@ -16,7 +16,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
         class: "fullPageClass",
         description: "Class for the root element when fullpage.",
         properties: ["fullPage"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.fullPage = true;
             data.cancelable = true;
             data.active = true;
@@ -25,7 +25,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
     overlayClass: {
         class: "overlayClass",
         description: "Class of the overlay element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.cancelable = true;
             data.fullPage = false;
             data.active = true;
@@ -34,7 +34,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
     iconClass: {
         class: "iconClass",
         description: "Class for the icon element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.cancelable = true;
             data.fullPage = false;
             data.icon = "loading";
@@ -44,7 +44,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
     labelClass: {
         class: "labelClass",
         description: "Class for the label element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.cancelable = true;
             data.fullPage = false;
             data.label = "Loading...";
@@ -55,7 +55,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
         class: "scrollClipClass",
         description: "Class of the body when fullpage and scroll is clip",
         properties: ["scroll"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.fullPage = true;
             data.scroll = "clip";
             data.active = true;
@@ -65,7 +65,7 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
         class: "noScrollClass",
         description: "Class of the body when fullpage and scroll is not clip",
         properties: ["scroll"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.fullPage = true;
             data.active = true;
             data.scroll = "keep";

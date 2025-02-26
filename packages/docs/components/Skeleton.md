@@ -1,20 +1,20 @@
 # Skeleton
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Skeleton** component can be used as a loading animations or space-fillers while waiting for the actual content to load.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-skeleton />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Skeleton component
 
@@ -39,17 +39,17 @@ The **Skeleton** component can be used as a loading animations or space-fillers 
 | size      | Size of skeleton                             | string                          | `small`, `medium`, `large`  |                                                                                                                                                   |
 | width     | Custom width                                 | number \| string                | -                           |                                                                                                                                                   |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-skeleton-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -95,4 +95,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

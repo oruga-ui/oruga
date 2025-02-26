@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { SliderClasses, SliderProps } from "../props";
 
 const inspectData: InspectData<SliderClasses, SliderProps> = {
@@ -12,7 +12,7 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
         description: "Class of the root elment with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -20,7 +20,7 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
         class: "disabledClass",
         description: "Class of the root element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
@@ -37,7 +37,7 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
         description: "Class of the filled part of the slider with variant",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -59,7 +59,7 @@ const inspectData: InspectData<SliderClasses, SliderProps> = {
         class: "thumbRoundedClass",
         description: "Class of the thumb element when rounded.",
         properties: ["rounded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.rounded = true;
         },
     },

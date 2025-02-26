@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { SkeletonClasses, SkeletonProps } from "../props";
 
 const inspectData: InspectData<SkeletonClasses, SkeletonProps> = {
@@ -12,7 +12,7 @@ const inspectData: InspectData<SkeletonClasses, SkeletonProps> = {
         description: "Class of the root element with position.",
         properties: ["position"],
         suffixes: ["left", "centered", "right"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "centered";
         },
     },
@@ -25,14 +25,14 @@ const inspectData: InspectData<SkeletonClasses, SkeletonProps> = {
         description: "Class of the item element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
     animatedClass: {
         class: "animatedClass",
         description: "Class of the item element when animated.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.animated = true;
         },
     },
@@ -40,7 +40,7 @@ const inspectData: InspectData<SkeletonClasses, SkeletonProps> = {
         class: "roundedClass",
         description: "Class of the item element when rounded.",
         properties: ["rounded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.rounded = true;
         },
     },

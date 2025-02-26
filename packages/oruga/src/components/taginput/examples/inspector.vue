@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { TaginputClasses, TaginputProps } from "../props";
 import type { OptionsPropItem } from "@oruga-ui/oruga-next";
 
@@ -208,7 +208,7 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
         description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -217,7 +217,7 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
         description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -225,7 +225,7 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
         class: "expandedClass",
         description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
@@ -241,7 +241,7 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
         class: "closeClass",
         description: "Class of the tag item close button element.",
         properties: ["closable"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.closable = true;
         },
     },
@@ -249,7 +249,7 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
         class: "counterClass",
         description: "Class of the counter element.",
         properties: ["counter", "maxitems"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.counter = true;
             data.maxitems = 5;
         },

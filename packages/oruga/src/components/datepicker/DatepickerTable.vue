@@ -237,31 +237,31 @@ function onChangeFocus(date: Date): void {
 // --- Computed Component Classes ---
 
 const tableClasses = defineClasses(
-    ["tableClass", "o-dpck__table"],
+    ["tableClass", "o-datepicker__table"],
     // passing the picker props will add reactivity to property changes
     { props: props.pickerProps },
 );
 
 const tableHeadClasses = defineClasses(
-    ["tableHeadClass", "o-dpck__table__head"],
+    ["tableHeadClass", "o-datepicker__table__head"],
     // passing the picker props will add reactivity to property changes
     { props: props.pickerProps },
 );
 
 const tableCellClasses = defineClasses(
-    ["tableCellClass", "o-dpck__table__cell"],
+    ["tableCellClass", "o-datepicker__table__cell"],
     // passing the picker props will add reactivity to property changes
     { props: props.pickerProps },
 );
 
 const tableHeadCellClasses = defineClasses(
-    ["tableHeadCellClass", "o-dpck__table__head-cell"],
+    ["tableHeadCellClass", "o-datepicker__table__head-cell"],
     // passing the picker props will add reactivity to property changes
     { props: props.pickerProps },
 );
 
 const tableBodyClasses = defineClasses(
-    ["tableBodyClass", "o-dpck__table__body"],
+    ["tableBodyClass", "o-datepicker__table__body"],
     // passing the picker props will add reactivity to property changes
     { props: props.pickerProps },
 );

@@ -4,23 +4,23 @@ sidebarDepth: 2
 
 # Dropdown
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Dropdown** component is very versatile and can be used as contextual overlays for displaying lists as a quick menu or even toggleable to allow users to select a value from a list of content options.
 Unlike native select elements, the dropdown input allows you to customize both its appearance and behavior.
 The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-dropdown />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Dropdown component
 
@@ -91,9 +91,9 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 | group   | Override the option group                                                                    | **group** `object` - options group<br/>**index** `number` - option index                                                                                 |
 | after   | Place extra `o-dropdown-item` components here, even if you have some options defined by prop |                                                                                                                                                          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## DropdownItem component
 
@@ -127,17 +127,17 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 | ------- | ----------------------------------------- | -------- |
 | default | Override the label, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-dropdown-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -204,4 +204,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type {
     StepsClasses,
     StepItemClasses,
@@ -25,7 +25,7 @@ const inspectData: InspectData<
         description: "Size of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -34,7 +34,7 @@ const inspectData: InspectData<
         description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -44,7 +44,7 @@ const inspectData: InspectData<
             "Class of the root element when is vertical and has position.",
         properties: ["position", "vertical"],
         suffixes: ["left", "right", "centered"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.vertical = true;
             data.position = "right";
         },
@@ -53,7 +53,7 @@ const inspectData: InspectData<
         class: "verticalClass",
         description: "Class of the root element when is vertical.",
         properties: ["vertical"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.vertical = true;
         },
     },
@@ -65,7 +65,7 @@ const inspectData: InspectData<
         class: "animatedClass",
         description: "Class of the list container when animated.",
         properties: ["animated"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.animated = true;
         },
     },
@@ -81,7 +81,7 @@ const inspectData: InspectData<
         class: "markerRoundedClass",
         description: "Class of the item marker element when rounded.",
         properties: ["rounded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.position = "right";
         },
     },
@@ -115,7 +115,7 @@ const inspectData: InspectData<
             "Class of the step item element with variant (default value by parent steps component).",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -125,7 +125,7 @@ const inspectData: InspectData<
         description: "Class of the step item element when positioned.",
         properties: ["labelPosition"],
         suffixes: ["bottom", "right", "left"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.labelPosition = "right";
         },
     },
@@ -145,7 +145,7 @@ const inspectData: InspectData<
         class: "stepPreviousClass",
         subitem: "stepitem",
         description: "Class of the step item element before the active one.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.modelValue = 2;
         },
     },
@@ -153,7 +153,7 @@ const inspectData: InspectData<
         class: "stepNextClass",
         subitem: "stepitem",
         description: "Class of the step item element after the active one.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.modelValue = 2;
         },
     },

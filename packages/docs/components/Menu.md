@@ -4,22 +4,22 @@ sidebarDepth: 2
 
 # Menu
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Menu** component displays a hierarchical list for any type of vertical navigation, where the items can be expanded or collapsed.
 The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-menu />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Menu component
 
@@ -59,9 +59,9 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 | label   | Override icon and label | **focused** `T` - the focused item value<br/><br/>**selected** `T` - the selected item value<br/> |
 | default | Place menu items here   | **focused** `T` - the focused item value<br/><br/>**selected** `T` - the selected item value<br/> |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## MenuItem component
 
@@ -104,17 +104,17 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 | label   | Override label        | **expanded** `boolean` - item expanded state<br/>**active** `boolean` - item active state |
 | default | Place menu items here |                                                                                           |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-menu-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -177,4 +177,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

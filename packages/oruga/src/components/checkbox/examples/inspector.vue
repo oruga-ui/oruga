@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { CheckboxClasses, CheckboxProps } from "../props";
 
 const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
@@ -11,7 +11,7 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
         class: "checkedClass",
         description: "Class of the root element when checked.",
         properties: ["modelValue"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.modelValue = true;
         },
     },
@@ -20,7 +20,7 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
         description: "Class of the root element with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "large";
         },
     },
@@ -29,7 +29,7 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
         description: "Class of the root element with variant.",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "warning";
         },
     },
@@ -37,7 +37,7 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
         class: "disabledClass",
         description: "Class of the root element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
@@ -45,7 +45,7 @@ const inspectData: InspectData<CheckboxClasses, CheckboxProps<unknown>> = {
         class: "indeterminateClass",
         description: "Class of the root element when indeterminate.",
         properties: ["indeterminate"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.indeterminate = true;
         },
     },

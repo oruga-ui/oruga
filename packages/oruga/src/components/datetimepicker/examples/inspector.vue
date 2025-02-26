@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type { DatetimePickerClasses, DatetimepickerProps } from "../props";
 
 const inspectData: InspectData<DatetimePickerClasses, DatetimepickerProps> = {
@@ -10,7 +10,7 @@ const inspectData: InspectData<DatetimePickerClasses, DatetimepickerProps> = {
     timepickerWrapperClass: {
         class: "timepickerWrapperClass",
         description: "Class of the Timepicker component wrapper element.",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.active = true;
         },
     },
@@ -28,9 +28,3 @@ const inspectData: InspectData<DatetimePickerClasses, DatetimepickerProps> = {
         </o-field>
     </inspector-wrapper>
 </template>
-
-<style>
-.datepicker__table {
-    border-collapse: collapse;
-}
-</style>

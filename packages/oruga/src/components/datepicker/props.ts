@@ -175,10 +175,6 @@ export type DatepickerClasses = Partial<{
     boxClass: ComponentClass;
     /** Class of the header element inside the box */
     headerClass: ComponentClass;
-    /** Class of the button elements inside the box */
-    headerButtonsClass: ComponentClass;
-    /** Class of the button elements inside the box with size */
-    headerButtonsSizeClass: ComponentClass;
     /** Class of the prev button element inside the box */
     prevButtonClass: ComponentClass;
     /** Class of the next button element inside the box */
@@ -229,14 +225,12 @@ export type DatepickerClasses = Partial<{
     tableEventsClass: ComponentClass;
     /** Class of the event element */
     tableEventClass: ComponentClass;
-    /** Class of the event indicator element with variant */
+    /** Class of the event element with variant */
     tableEventVariantClass: ComponentClass;
-    /** Class of the event indicator wrapper element */
-    tableEventIndicatorsClass: ComponentClass;
+    /** Class of the event element with indicator */
+    tableEventIndicatorClass: ComponentClass;
     /** Class of the month table element inside the box when type is `month` */
     monthClass: ComponentClass;
-    /** Class of the table body element inside the box when type is `month` */
-    monthBodyClass: ComponentClass;
     /** Class of the table container when type is `month` */
     monthTableClass: ComponentClass;
     /** Class of the table cell element when type is `month` */
@@ -265,6 +259,14 @@ export type DatepickerClasses = Partial<{
     monthCellUnselectableClass: ComponentClass;
     /** Class of the events container when type is `month` */
     monthCellEventsClass: ComponentClass;
+    /** Class of the events container element when type is `month` */
+    monthEventsClass: ComponentClass;
+    /** Class of the event element when type is `month` */
+    monthEventClass: ComponentClass;
+    /** Class of the event element with variant when type is `month` */
+    monthEventVariantClass: ComponentClass;
+    /** Class of the event element with indicator when type is `month` */
+    monthEventIndicatorClass: ComponentClass;
     /** Class for the underlaying dropdown component */
     dropdownClass: ComponentClass;
     /** Class for the HTML input element */

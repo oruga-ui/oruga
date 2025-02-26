@@ -130,6 +130,16 @@ export default defineConfig({
         }
         */
     },
+
+    vue: {
+        template: {
+            compilerOptions: {
+                // prevent compiling for exmaple-showcase web component
+                isCustomElement: (tag) => ["example-showcase"].includes(tag),
+            },
+        },
+    },
+
     vite: {
         // Vite config options
         resolve: {
@@ -144,6 +154,13 @@ export default defineConfig({
                 ),
                 // add '@docs' alias to docs src folder
                 "@docs": fileURLToPath(new URL("./../src", import.meta.url)),
+            },
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: "modern-compiler",
+                },
             },
         },
     },

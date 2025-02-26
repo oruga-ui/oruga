@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InspectData } from "@/docs";
+import type { InspectData } from "@docs";
 import type {
     MenuClasses,
     MenuItemClasses,
@@ -43,7 +43,7 @@ const inspectData: InspectData<
         subitem: "menuitem",
         description: "Class of the menu item root element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
@@ -67,7 +67,7 @@ const inspectData: InspectData<
         subitem: "menuitem",
         description: "Class of the menu button element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
@@ -76,7 +76,7 @@ const inspectData: InspectData<
         subitem: "menuitem",
         description: "Class of the menu button element with icon.",
         properties: ["icon"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.icon = "times-circle";
         },
     },

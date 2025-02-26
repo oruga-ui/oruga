@@ -1,22 +1,22 @@
 # Input
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Input** component uses [HTML's native text input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text).
 It allows a user to enter a single line of text.
 Combine it with the Field component to access all functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-input />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Input component
 
@@ -72,17 +72,17 @@ Combine it with the Field component to access all functionalities.
 | icon-click         | **event** `Event` - native event                                      | on icon click event             |
 | icon-right-click   | **event** `Event` - native event                                      | on icon right click event       |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-input-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -136,4 +136,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>
