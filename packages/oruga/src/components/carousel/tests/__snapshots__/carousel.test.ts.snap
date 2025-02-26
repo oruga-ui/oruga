@@ -27,7 +27,7 @@ exports[`OCarousel tests > render correctly 1`] = `
             @binding {number} active active index 
             @binding {(idx: number): void} switch-to switch to item function
         -->
-  <div class="o-carousel__indicators" role="tablist" aria-label="Slides"></div>
+  <div class="o-carousel__indicators o-carousel__indicators--bottom" role="tablist" aria-label="Slides"></div>
   <!--v-if-->
 </div>"
 `;
@@ -99,7 +99,7 @@ exports[`OCarousel tests > render integration correctly 1`] = `
             @binding {number} active active index 
             @binding {(idx: number): void} switch-to switch to item function
         -->
-  <div class="o-carousel__indicators o-carousel__indicators--inside o-carousel__indicators--inside--bottom" role="tablist" aria-label="Slides">
+  <div class="o-carousel__indicators o-carousel__indicators--inside o-carousel__indicators--bottom" role="tablist" aria-label="Slides">
     <div id="carousel-1" class="o-carousel__indicator" role="tab" tabindex="0" aria-label="Slide 1" aria-controls="carouselpanel-1" aria-selected="true">
       <!--
                             @slot Override the indicator elements
