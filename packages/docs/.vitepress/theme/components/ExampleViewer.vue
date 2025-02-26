@@ -76,21 +76,38 @@ const tab = ref(
 const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 
 onMounted(() => {
+    // await component got rendered
     nextTick(() => {
-        if (!styleCode.value) return;
-        // create some CSS to apply to the shadow root
-        const stylesheet = new CSSStyleSheet();
-        stylesheet.replaceSync(styleCode.value);
+        if (!styleCode.value || !props.component) return;
 
-        // get example showcase root
+        // get example-showcase root
         const shadowRoot = showcaseElement.value?.shadowRoot;
         if (!shadowRoot) return;
 
-        // attach the created style to the shadow root
-        shadowRoot.adoptedStyleSheets = [
-            ...(shadowRoot.adoptedStyleSheets || []),
-            stylesheet,
-        ];
+        if (styleCode.value.includes("@import")) {
+            const importUrl = styleCode.value.substring(
+                styleCode.value.indexOf('"') + 1,
+                styleCode.value.indexOf('";'),
+            );
+
+            // create an HTML link element for the import
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = importUrl;
+
+            // inject the link within the shadow root.
+            shadowRoot.appendChild(link);
+        } else {
+            // create some CSS to apply to the shadow root
+            const stylesheet = new CSSStyleSheet();
+            stylesheet.replaceSync(styleCode.value);
+
+            // attach the created style to the shadow root
+            shadowRoot.adoptedStyleSheets = [
+                ...(shadowRoot.adoptedStyleSheets || []),
+                stylesheet,
+            ];
+        }
     });
 });
 
@@ -213,6 +230,7 @@ function copy(val: string): void {
             text-align: center;
             padding: 0.5rem;
             background-color: var(--vp-button-alt-bg);
+            border-radius: 2px;
             width: 100%;
         }
 

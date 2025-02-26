@@ -134,7 +134,7 @@ export default defineConfig({
     vue: {
         template: {
             compilerOptions: {
-                // register exmaple-showcase web component
+                // prevent compiling for exmaple-showcase web component
                 isCustomElement: (tag) => ["example-showcase"].includes(tag),
             },
         },
