@@ -27,7 +27,7 @@ hljs.registerLanguage("css", css);
 
 // import example styling
 import "../../../node_modules/vitepress/dist/client/theme-default/styles/vars.css";
-import "../../../node_modules/vitepress/dist/client/theme-default/styles/base.css";
+// import "../../../node_modules/vitepress/dist/client/theme-default/styles/base.css";
 import "../../../node_modules/vitepress/dist/client/theme-default/styles/components/vp-code-group.css";
 import "../../../node_modules/vitepress/dist/client/theme-default/styles/components/vp-code.css";
 // import "../../../node_modules/vitepress/dist/client/theme-default/styles/components/vp-doc.css";
