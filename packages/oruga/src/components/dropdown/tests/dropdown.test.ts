@@ -28,7 +28,7 @@ describe("ODropdown tests", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("dropdown");
         expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-drop")).toBeTruthy();
+        expect(wrapper.classes("o-dropdown")).toBeTruthy();
 
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
@@ -36,6 +36,7 @@ describe("ODropdown tests", () => {
             expect(items.at(idx)!.attributes("data-oruga")).toBe(
                 "dropdown-item",
             );
+            expect(items.at(idx)!.classes("o-dropdown__item")).toBeTruthy();
             expect(items.at(idx)!.text()).toBe(option.label);
         });
     });
@@ -67,7 +68,7 @@ describe("ODropdown tests", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("dropdown");
         expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-drop")).toBeTruthy();
+        expect(wrapper.classes("o-dropdown")).toBeTruthy();
 
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
@@ -75,6 +76,7 @@ describe("ODropdown tests", () => {
             expect(items.at(idx)!.attributes("data-oruga")).toBe(
                 "dropdown-item",
             );
+            expect(items.at(idx)!.classes("o-dropdown__item")).toBeTruthy();
             expect(items.at(idx)!.text()).toBe(option);
         });
     });

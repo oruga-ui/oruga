@@ -2,8 +2,8 @@
 
 exports[`ODatepicker > render correctly 1`] = `
 "<div data-oruga="datepicker" class="o-datepicker">
-  <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--position-bottom-left">
-    <div class="o-drop__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
+  <div data-oruga="dropdown" class="o-dropdown o-tpck__dropdown o-dropdown--position-bottom-left">
+    <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
@@ -19,7 +19,7 @@ exports[`ODatepicker > render correctly 1`] = `
     <!--teleport start-->
     <!--v-if-->
     <transition-stub name="fade" appear="false" persisted="true" css="true">
-      <div id="v-0" tabindex="-1" class="o-drop__menu o-drop__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
+      <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
         <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
@@ -33,10 +33,10 @@ exports[`ODatepicker > render correctly 1`] = `
           <header class="o-datepicker__header">
             <!--
                 @slot Override the header
-            --><button data-oruga="button" type="button" role="button" tabindex="0" class="o-btn o-datepicker__header__previous" aria-label="Previous Page"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+            --><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__previous" aria-label="Previous Page"><span class="o-button__wrapper"><span class="o-icon o-button__icon o-button__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
               <!--v-if-->
               <!--v-if--></span>
-            </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-btn o-datepicker__header__next" aria-label="Next Page"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__next" aria-label="Next Page"><span class="o-button__wrapper"><span class="o-icon o-button__icon o-button__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
               <!--v-if-->
               <!--v-if--></span>
             </button>

@@ -37,7 +37,7 @@ describe("OAutocomplete tests", () => {
 
     test("has a dropdown menu hidden by default", () => {
         const wrapper = mount(OAutocomplete, { attachTo: document.body });
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
     });
@@ -81,7 +81,7 @@ describe("OAutocomplete tests", () => {
         await input.trigger("focus");
         await input.setValue(VALUE_TYPED);
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeTruthy();
 
@@ -110,7 +110,7 @@ describe("OAutocomplete tests", () => {
         // open menu
         await input.trigger("focus");
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeTruthy();
 
@@ -132,7 +132,7 @@ describe("OAutocomplete tests", () => {
         await input.trigger("focus");
         await setTimeout(); // await event handler get set
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeTruthy();
 
@@ -149,7 +149,7 @@ describe("OAutocomplete tests", () => {
             attachTo: document.body,
         });
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
 
@@ -168,7 +168,7 @@ describe("OAutocomplete tests", () => {
             attachTo: document.body,
         });
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
 
@@ -190,7 +190,7 @@ describe("OAutocomplete tests", () => {
             attachTo: document.body,
         });
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
 

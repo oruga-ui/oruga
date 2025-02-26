@@ -1,9 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OTimepicker tests > render correctly 1`] = `
-"<div data-oruga="timepicker" class="o-tpck">
-  <div data-oruga="dropdown" class="o-drop o-tpck__dropdown o-drop--modal o-drop--position-bottom-left">
-    <div class="o-drop__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
+"<div data-oruga="timepicker" class="o-timepicker">
+  <div data-oruga="dropdown" class="o-dropdown o-timepicker__dropdown o-dropdown--modal o-dropdown--position-bottom-left">
+    <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
@@ -18,22 +18,22 @@ exports[`OTimepicker tests > render correctly 1`] = `
     </div>
     <!--teleport start-->
     <transition-stub name="fade" appear="false" persisted="true" css="true">
-      <div class="o-drop__overlay" tabindex="-1" style="display: none;"></div>
+      <div class="o-dropdown__overlay" tabindex="-1" style="display: none;"></div>
     </transition-stub>
     <transition-stub name="fade" appear="false" persisted="true" css="true">
-      <div id="v-0" tabindex="-1" class="o-drop__menu o-drop__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
+      <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
         <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {number} focusedIndex - index of the focused element
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
-        <div id="v-0-1" class="o-tpck__box" data-oruga="dropdown-item" data-id="dropdown-1" role="menuitem" aria-disabled="false">
+        <div id="v-0-1" class="o-timepicker__box" data-oruga="dropdown-item" data-id="dropdown-1" role="menuitem" aria-disabled="false">
           <!--
             @slot Override the label, default is label prop 
         -->
           <div class="" data-oruga="select">
-            <!--v-if--><select aria-label="Select Hour" id="v-3" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select aria-label="Select Hour" id="v-3" data-oruga-input="select" class="o-timepicker__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop
@@ -64,9 +64,9 @@ exports[`OTimepicker tests > render correctly 1`] = `
               <option value="23">23</option>
             </select>
             <!--v-if-->
-          </div><span class="o-tpck__separtor">:</span>
+          </div><span class="o-timepicker__separtor">:</span>
           <div class="" data-oruga="select">
-            <!--v-if--><select aria-label="Select Minute" id="v-4" data-oruga-input="select" class="o-tpck__select" autocomplete="off">
+            <!--v-if--><select aria-label="Select Minute" id="v-4" data-oruga-input="select" class="o-timepicker__select" autocomplete="off">
               <!--v-if-->
               <!--
                 @slot Override the options, default is options prop

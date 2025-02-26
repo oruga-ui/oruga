@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OCheckbox tests > render correctly 1`] = `
-"<div class="o-check" data-oruga="checkbox"><input id="v-0" type="checkbox" data-oruga-input="checkbox" class="o-check__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false" aria-labelledby="v-1"><label id="v-1" for="v-0" class="o-check__label">
+"<div class="o-checkbox" data-oruga="checkbox"><input id="v-0" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false" aria-labelledby="v-1"><label id="v-1" for="v-0" class="o-checkbox__label">
     <!--
                 @slot Content slot, default is label prop
             -->My Input

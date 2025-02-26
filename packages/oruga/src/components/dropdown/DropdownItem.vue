@@ -82,16 +82,16 @@ function selectItem(event: Event): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["itemClass", "o-drop__item"],
+    ["itemClass", "o-dropdown__item"],
     [
         "itemDisabledClass",
-        "o-drop__item--disabled",
+        "o-dropdown__item--disabled",
         null,
         computed(() => parent.value.disabled || props.disabled),
     ],
-    ["itemSelectedClass", "o-drop__item--active", null, isSelected],
-    ["itemClickableClass", "o-drop__item--clickable", null, isClickable],
-    ["itemFocusedClass", "o-drop__item--focused", null, isFocused],
+    ["itemSelectedClass", "o-dropdown__item--active", null, isSelected],
+    ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
+    ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
 </script>
 
