@@ -1,22 +1,22 @@
 # Autocomplete
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Autocomplete** input component allows you to search through a list of options.
 It is an advanced input that provides suggestions as the user types.
 Based on the Dropdown component, the Autocomplete component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-autocomplete />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Autocomplete component
 
@@ -102,17 +102,17 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 | empty   | Define content for empty state |                                                                                                                  |
 | footer  | Define an additional footer    |                                                                                                                  |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-autocomplete-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -150,4 +150,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

@@ -328,9 +328,3 @@ const inspectData: InspectData<
         </o-table>
     </inspector-wrapper>
 </template>
-
-<style>
-.inspector_table {
-    border-collapse: collapse;
-}
-</style>

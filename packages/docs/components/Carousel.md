@@ -4,23 +4,23 @@ sidebarDepth: 2
 
 # Carousel
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Carousel** component is a slideshow for cycling through a set of elements — images or text like - a carousel, referred to as slides, by sequentially displaying a subset of one or more slides.
 One slide is displayed at a time, and users can activate a next or previous slide control that hides the current slide and "rotates" the next or previous slide into view.
 The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-carousel />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Carousel component
 
@@ -81,9 +81,9 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 | indicator  | Override the indicator elements  | **index** `index` - indicator index                                                                                                                                                                             |
 | overlay    | Overlay element                  |                                                                                                                                                                                                                 |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## CarouselItem component
 
@@ -106,17 +106,17 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 | ------- | --------------- | -------- |
 | default | Default content |          |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-carousel-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -182,4 +182,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

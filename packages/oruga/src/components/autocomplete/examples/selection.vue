@@ -42,6 +42,7 @@ const selected = ref();
                 v-model="selected"
                 :options="options"
                 placeholder="e.g. Vue"
+                icon="search"
                 :keep-first="keepFirst"
                 :open-on-focus="openOnFocus"
                 :keep-open="keepOpen"

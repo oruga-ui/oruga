@@ -1,20 +1,20 @@
 # Loading
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Loading** component allows you to display a loading state for use on a global state or a specific element.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-loading />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Loading component
 
@@ -54,17 +54,17 @@ The **Loading** component allows you to display a loading state for use on a glo
 | ------- | ----------------------- | --------------------------------------------------- |
 | default | Override icon and label | **close** `close` - function to close the component |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-loading-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -110,4 +110,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

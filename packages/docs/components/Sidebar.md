@@ -1,21 +1,21 @@
 # Sidebar
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Sidebar** component can be toggled to appear from the left, right, top, or bottom edge of the viewport.
 The component can be used to show an overlay for navigation, shopping carts, and more.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-sidebar />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Sidebar component
 
@@ -61,17 +61,17 @@ The component can be used to show an overlay for navigation, shopping carts, and
 | ------- | -------------------------------------------------- | ------------------------------------------------------------ |
 | default | Sidebar default content, default is component prop | **close** `(...args):void` - function to close the component |
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-classes">
 
 ## Class Inspector
 
 <inspector-sidebar-viewer />
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -124,4 +124,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

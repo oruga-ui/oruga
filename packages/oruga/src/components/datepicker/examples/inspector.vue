@@ -566,9 +566,3 @@ const inspectData: InspectData<
         </o-datepicker>
     </inspector-wrapper>
 </template>
-
-<style>
-.datepicker__table {
-    border-collapse: collapse;
-}
-</style>

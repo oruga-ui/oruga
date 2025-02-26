@@ -31,7 +31,7 @@ ${isSubComponent ? "" : `# ${deprecated ? `~~${displayName}~~` : displayName}`}
 ${
     requires || isSubComponent
         ? ""
-        : `<div class="vp-doc">
+        : `<section class="odocs-head">
 ${deprecated ? `> **Deprecated** ${(deprecated[0] as ParamTag).description}\n` : ""}
 ${functional ? renderedUsage.functionalTag : ""}
 ${author ? author.map((a) => `Author: ${(a as ParamTag).description}\n`) : ""}
@@ -40,19 +40,19 @@ ${version ? `Version: ${(version[0] as ParamTag).description}\n` : ""}
 ${see ? see.map((s) => `[See](${(s as ParamTag).description})\n`) : ""}
 ${link ? link.map((l) => `[See](${(l as ParamTag).description})\n`) : ""}
 ${docsBlocks ? docsBlocks : ""}
-</div>
+</section>
 `
 }
 ${
     isSubComponent
         ? ""
         : `
-<div class="vp-example">
+<section class="odocs-examples">
 ${renderExamples(component)}
-</div>
+</section>
 `
 }
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## ${component} component
 
@@ -66,7 +66,7 @@ ${renderedUsage.props}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
-</div>
+</section>
 ${
     requiresMd.length
         ? requiresMd.map((component) => component.content).join(" ")
@@ -76,17 +76,17 @@ ${
     isSubComponent
         ? ""
         : `
-<div class="vp-example">
+<section class="odocs-classes">
 ${renderClasses(component)}
-</div>
+</section>
 `
 }
 ${
     style
         ? `
-<div class="vp-doc">
+<section class="odocs-style">
 ${renderStyle(config, String((style[0] as ParamTag).description ?? component))}
-</div>`
+</section>`
         : ""
 }`;
 }

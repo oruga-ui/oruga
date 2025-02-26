@@ -56,7 +56,7 @@ exports[`OCarousel tests > render integration correctly 1`] = `
         <!--
             @slot Default content
         -->
-        <article class="ex-slide" style="background-color: rgb(68, 94, 0);">
+        <article style="background-color: rgb(68, 94, 0);">
           <h1>Slide 1</h1>
         </article>
       </div>
@@ -64,7 +64,7 @@ exports[`OCarousel tests > render integration correctly 1`] = `
         <!--
             @slot Default content
         -->
-        <article class="ex-slide" style="background-color: rgb(0, 103, 36);">
+        <article style="background-color: rgb(0, 103, 36);">
           <h1>Slide 2</h1>
         </article>
       </div>
@@ -72,7 +72,7 @@ exports[`OCarousel tests > render integration correctly 1`] = `
         <!--
             @slot Default content
         -->
-        <article class="ex-slide" style="background-color: rgb(182, 0, 0);">
+        <article style="background-color: rgb(182, 0, 0);">
           <h1>Slide 3</h1>
         </article>
       </div>
@@ -80,7 +80,7 @@ exports[`OCarousel tests > render integration correctly 1`] = `
         <!--
             @slot Default content
         -->
-        <article class="ex-slide" style="background-color: rgb(244, 195, 0);">
+        <article style="background-color: rgb(244, 195, 0);">
           <h1>Slide 4</h1>
         </article>
       </div>
@@ -88,7 +88,7 @@ exports[`OCarousel tests > render integration correctly 1`] = `
         <!--
             @slot Default content
         -->
-        <article class="ex-slide" style="background-color: rgb(0, 92, 152);">
+        <article style="background-color: rgb(0, 92, 152);">
           <h1>Slide 5</h1>
         </article>
       </div>

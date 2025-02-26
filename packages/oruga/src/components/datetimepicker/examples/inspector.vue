@@ -28,9 +28,3 @@ const inspectData: InspectData<DatetimePickerClasses, DatetimepickerProps> = {
         </o-field>
     </inspector-wrapper>
 </template>
-
-<style>
-.datepicker__table {
-    border-collapse: collapse;
-}
-</style>
