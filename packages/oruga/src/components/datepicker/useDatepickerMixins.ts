@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { matchWithGroups } from "./utils";
-import type { DatepickerProps } from "./props";
 import { isTrueish } from "@/utils/helpers";
+import type { DatepickerProps } from "./props";
 
 /** Time Format Feature */
 export function useDatepickerMixins<R extends boolean, M extends boolean>(
