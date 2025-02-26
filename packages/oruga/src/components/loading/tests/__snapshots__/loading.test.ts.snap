@@ -7,7 +7,7 @@ exports[`OLoading tests > render correctly 1`] = `
     <!-- 
                 @slot Override icon and label
                 @binding {close} close - function to close the component
-            --><span class="o-icon o-icon--spin o-icon--medium o-loading__icon" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-loading mdi-36px"></i></span>
+            --><span data-oruga="icon" class="o-icon o-icon--spin o-icon--medium o-loading__icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-loading mdi-36px"></i></span>
     <!--v-if-->
   </div>
 </transition-stub>"

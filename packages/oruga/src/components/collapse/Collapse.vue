@@ -74,7 +74,7 @@ const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="collapse">
+    <div data-oruga="collapse" :class="rootClasses">
         <div
             :id="triggerId"
             :class="triggerClasses"

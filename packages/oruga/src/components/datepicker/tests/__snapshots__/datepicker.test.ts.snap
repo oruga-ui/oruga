@@ -11,7 +11,7 @@ exports[`ODatepicker > render correctly 1`] = `
                 @binding {() => void} toggle - toggle dropdown active state
             -->
       <div data-oruga="input" class="o-input">
-        <!--v-if--><input id="v-1" data-oruga-input="text" type="text" class="o-input__input" autocomplete="off">
+        <!--v-if--><input id="v-1" type="text" data-oruga-input="text" class="o-input__input" autocomplete="off">
         <!--v-if-->
         <!--v-if-->
       </div>
@@ -26,22 +26,22 @@ exports[`ODatepicker > render correctly 1`] = `
                         @binding {number} focusedIndex - index of the focused element
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
-        <div id="v-0-1" class="o-datepicker__box" data-oruga="dropdown-item" data-id="dropdown-1" role="menuitem" aria-disabled="false">
+        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-datepicker__box" role="menuitem" aria-disabled="false">
           <!--
             @slot Override the label, default is label prop 
         -->
           <header class="o-datepicker__header">
             <!--
                 @slot Override the header
-            --><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__previous" aria-label="Previous Page"><span class="o-button__wrapper"><span class="o-icon o-button__icon o-button__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+            --><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__previous" aria-label="Previous Page"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span>
               <!--v-if-->
               <!--v-if--></span>
-            </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__next" aria-label="Next Page"><span class="o-button__wrapper"><span class="o-icon o-button__icon o-button__icon-left" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-datepicker__header__next" aria-label="Next Page"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
               <!--v-if-->
               <!--v-if--></span>
             </button>
             <div class="o-datepicker__header__list">
-              <div class="o-select" data-oruga="select">
+              <div data-oruga="select" class="o-select">
                 <!--v-if--><select aria-label="Select Month" id="v-3" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
                   <!--v-if-->
                   <!--
@@ -62,7 +62,7 @@ exports[`ODatepicker > render correctly 1`] = `
                 </select>
                 <!--v-if-->
               </div>
-              <div class="o-select" data-oruga="select">
+              <div data-oruga="select" class="o-select">
                 <!--v-if--><select aria-label="Select Year" id="v-4" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
                   <!--v-if-->
                   <!--

@@ -205,7 +205,7 @@ const arrowClasses = defineClasses(
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="tooltip">
+    <div data-oruga="tooltip" :class="rootClasses">
         <component
             :is="triggerTag"
             ref="triggerRef"

@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OCarousel tests > render correctly 1`] = `
-"<div class="o-carousel" data-oruga="carousel" role="region" aria-roledescription="carousel">
+"<div data-oruga="carousel" class="o-carousel" role="region" aria-roledescription="carousel">
   <div class="o-carousel__wrapper">
     <!--
                 @slot Override the pause/resume button
@@ -15,7 +15,7 @@ exports[`OCarousel tests > render correctly 1`] = `
                 @binding {boolean} has-next has next arrow button 
                 @binding {(): void} prev switch to prev item function
                 @binding {(): void} next switch to next item function
-            --><span class="o-icon o-carousel__icon o-carousel__icon-prev" data-oruga="icon" role="button" tabindex="0" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span class="o-icon o-carousel__icon o-carousel__icon-next" data-oruga="icon" role="button" tabindex="0" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            --><span data-oruga="icon" class="o-icon o-carousel__icon o-carousel__icon-prev" role="button" tabindex="0" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span data-oruga="icon" class="o-icon o-carousel__icon o-carousel__icon-next" role="button" tabindex="0" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
     <div class="o-carousel__items" style="transform: translateX(0px);" aria-roledescription="carousel-slide" aria-atomic="false" aria-live="polite">
       <!--
                     @slot Display carousel item
@@ -33,7 +33,7 @@ exports[`OCarousel tests > render correctly 1`] = `
 `;
 
 exports[`OCarousel tests > render integration correctly 1`] = `
-"<div class="o-carousel" data-oruga="carousel" role="region" aria-roledescription="carousel">
+"<div data-oruga="carousel" class="o-carousel" role="region" aria-roledescription="carousel">
   <div class="o-carousel__wrapper">
     <!--
                 @slot Override the pause/resume button
@@ -47,7 +47,7 @@ exports[`OCarousel tests > render integration correctly 1`] = `
                 @binding {boolean} has-next has next arrow button 
                 @binding {(): void} prev switch to prev item function
                 @binding {(): void} next switch to next item function
-            --><span class="o-icon o-carousel__icon o-carousel__icon-prev" data-oruga="icon" role="button" tabindex="0" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span class="o-icon o-carousel__icon o-carousel__icon-next" data-oruga="icon" role="button" tabindex="0" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            --><span data-oruga="icon" class="o-icon o-carousel__icon o-carousel__icon-prev" role="button" tabindex="0" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span data-oruga="icon" class="o-icon o-carousel__icon o-carousel__icon-next" role="button" tabindex="0" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
     <div class="o-carousel__items" style="transform: translateX(0px);" aria-roledescription="carousel-slide" aria-atomic="false" aria-live="polite">
       <!--
                     @slot Display carousel item

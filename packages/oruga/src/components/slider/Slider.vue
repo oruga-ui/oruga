@@ -282,9 +282,10 @@ defineExpose({ value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="slider" @click="onSliderClick">
+    <div data-oruga="slider" :class="rootClasses" @click="onSliderClick">
         <div ref="sliderElement" :class="trackClasses">
             <div :class="fillClasses" :style="barStyle" />
+
             <template v-if="ticks">
                 <o-slider-tick
                     v-for="(val, key) in tickValues"

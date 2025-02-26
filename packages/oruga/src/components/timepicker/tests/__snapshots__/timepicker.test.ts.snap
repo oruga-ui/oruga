@@ -11,7 +11,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
                 @binding {() => void} toggle - toggle dropdown active state
             -->
       <div data-oruga="input" class="o-input">
-        <!--v-if--><input id="v-1" data-oruga-input="text" type="text" class="o-input__input" autocomplete="off">
+        <!--v-if--><input id="v-1" type="text" data-oruga-input="text" class="o-input__input" autocomplete="off">
         <!--v-if-->
         <!--v-if-->
       </div>
@@ -28,11 +28,11 @@ exports[`OTimepicker tests > render correctly 1`] = `
                         @binding {number} focusedIndex - index of the focused element
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
-        <div id="v-0-1" class="o-timepicker__box" data-oruga="dropdown-item" data-id="dropdown-1" role="menuitem" aria-disabled="false">
+        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-timepicker__box" role="menuitem" aria-disabled="false">
           <!--
             @slot Override the label, default is label prop 
         -->
-          <div class="" data-oruga="select">
+          <div data-oruga="select" class="">
             <!--v-if--><select aria-label="Select Hour" id="v-3" data-oruga-input="select" class="o-timepicker__select" autocomplete="off">
               <!--v-if-->
               <!--
@@ -65,7 +65,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
             </select>
             <!--v-if-->
           </div><span class="o-timepicker__separtor">:</span>
-          <div class="" data-oruga="select">
+          <div data-oruga="select" class="">
             <!--v-if--><select aria-label="Select Minute" id="v-4" data-oruga-input="select" class="o-timepicker__select" autocomplete="off">
               <!--v-if-->
               <!--

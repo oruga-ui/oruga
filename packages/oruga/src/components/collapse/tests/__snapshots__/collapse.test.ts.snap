@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OCollapse tests > render correctly 1`] = `
-"<div class="o-collapse o-collapse--top" data-oruga="collapse">
+"<div data-oruga="collapse" class="o-collapse o-collapse--top">
   <div id="v-1" class="o-collapse__trigger" role="button" tabindex="0" aria-controls="v-0" aria-expanded="true">
     <!--
                 @slot Define the collapse trigger

@@ -235,7 +235,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <label :class="rootClasses" data-oruga="upload">
+    <label data-oruga="upload" :class="rootClasses">
         <template v-if="!dragDrop">
             <!--
                 @slot Default content

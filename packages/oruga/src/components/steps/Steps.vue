@@ -333,7 +333,7 @@ const navigationClasses = defineClasses([
 </script>
 
 <template>
-    <div ref="rootElement" :class="rootClasses" data-oruga="steps">
+    <div ref="rootElement" data-oruga="steps" :class="rootClasses">
         <ol
             :class="tablistClasses"
             role="tablist"

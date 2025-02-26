@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OUpload tests > render correctly 1`] = `
-"<label class="o-upload" data-oruga="upload">
+"<label data-oruga="upload" class="o-upload">
   <!--
                 @slot Default content
                 @binding {(event:Event): void} onclick - click handler, only needed if a button is used

@@ -1,15 +1,15 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OSlider tests > render correctly 1`] = `
-"<div class="o-slider" data-oruga="slider">
+"<div data-oruga="slider" class="o-slider">
   <div class="o-slider__track">
     <div class="o-slider__fill" style="width: 0%; left: 0%;"></div>
     <!--v-if-->
     <!--
                 @slot Define additional slider ticks here
              -->
-    <div class="o-slider__thumb-wrapper" style="left: 0%;" data-oruga="slider-thumb">
-      <div class="o-tooltip" data-oruga="tooltip">
+    <div data-oruga="slider-thumb" class="o-slider__thumb-wrapper" style="left: 0%;">
+      <div data-oruga="tooltip" class="o-tooltip">
         <div class="o-tooltip__trigger" aria-haspopup="true" aria-describedby="v-0">
           <!--
                 @slot Tooltip trigger slot

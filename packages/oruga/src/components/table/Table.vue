@@ -1152,7 +1152,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="table">
+    <div data-oruga="table" :class="rootClasses">
         <div ref="slotsWrapper" style="display: none">
             <!--
                 @slot Place o-table-column here

@@ -151,7 +151,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="checkbox">
+    <div data-oruga="checkbox" :class="rootClasses">
         <input
             v-bind="inputBind"
             :id="id"

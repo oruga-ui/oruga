@@ -466,8 +466,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
 <template>
     <div
         ref="rootElement"
-        :class="rootClasses"
         data-oruga="carousel"
+        :class="rootClasses"
         role="region"
         aria-roledescription="carousel"
         @mouseover="onMouseEnter"

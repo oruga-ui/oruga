@@ -10,7 +10,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                 @binding {() => void} toggle - toggle dropdown active state
             -->
     <div data-oruga="input" class="o-input">
-      <!--v-if--><input aria-autocomplete="list" aria-controls="v-0" id="v-1" data-oruga-input="text" type="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+      <!--v-if--><input aria-autocomplete="list" aria-controls="v-0" id="v-1" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
       <!--v-if-->
       <!--v-if-->
     </div>
@@ -27,7 +27,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     -->
       <!--v-if-->
       <!--v-if-->
-      <div id="v-0-1" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-1" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -38,7 +38,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>Angular</span>
       </div>
-      <div id="v-0-2" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-2" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -49,7 +49,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>Angular 2</span>
       </div>
-      <div id="v-0-3" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-3" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -60,7 +60,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>Aurelia</span>
       </div>
-      <div id="v-0-4" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-4" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-4" data-oruga="dropdown-item" data-id="dropdown-4" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -71,7 +71,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>Backbone</span>
       </div>
-      <div id="v-0-5" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-5" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-5" data-oruga="dropdown-item" data-id="dropdown-5" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -82,7 +82,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>Ember</span>
       </div>
-      <div id="v-0-6" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-6" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-6" data-oruga="dropdown-item" data-id="dropdown-6" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -93,7 +93,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>jQuery</span>
       </div>
-      <div id="v-0-7" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-7" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-7" data-oruga="dropdown-item" data-id="dropdown-7" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -104,7 +104,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>Meteor</span>
       </div>
-      <div id="v-0-8" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-8" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-8" data-oruga="dropdown-item" data-id="dropdown-8" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -115,7 +115,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>Node.js</span>
       </div>
-      <div id="v-0-9" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-9" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-9" data-oruga="dropdown-item" data-id="dropdown-9" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -126,7 +126,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>Polymer</span>
       </div>
-      <div id="v-0-10" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-10" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-10" data-oruga="dropdown-item" data-id="dropdown-10" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -137,7 +137,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>React</span>
       </div>
-      <div id="v-0-11" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-11" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-11" data-oruga="dropdown-item" data-id="dropdown-11" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
@@ -148,7 +148,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                     @binding {unknown} value - option value
                 --><span>RxJS</span>
       </div>
-      <div id="v-0-12" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" data-oruga="dropdown-item" data-id="dropdown-12" role="option" aria-selected="false" aria-disabled="false">
+      <div id="v-0-12" data-oruga="dropdown-item" data-id="dropdown-12" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" aria-selected="false" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop 
         -->
