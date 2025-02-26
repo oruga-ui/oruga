@@ -214,8 +214,8 @@ defineExpose({ close });
             @before-leave="beforeLeave">
             <div
                 v-show="isActive"
-                v-bind="$attrs"
                 ref="rootElement"
+                v-bind="$attrs"
                 v-trap-focus="trapFocus"
                 data-oruga="modal"
                 :class="rootClasses"

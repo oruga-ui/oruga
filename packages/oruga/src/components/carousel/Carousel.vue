@@ -386,63 +386,71 @@ function onDragEnd(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-car"],
-    ["overlayClass", "o-car__overlay", null, computed(() => props.overlay)],
+    ["rootClass", "o-carousel"],
+    [
+        "overlayClass",
+        "o-carousel__overlay",
+        null,
+        computed(() => props.overlay),
+    ],
 );
 
-const wrapperClasses = defineClasses(["wrapperClass", "o-car__wrapper"]);
+const wrapperClasses = defineClasses(["wrapperClass", "o-carousel__wrapper"]);
 
 const itemsClasses = defineClasses(
-    ["itemsClass", "o-car__items"],
-    ["itemsDraggingClass", "o-car__items--dragging", null, isDragging],
+    ["itemsClass", "o-carousel__items"],
+    ["itemsDraggingClass", "o-carousel__items--dragging", null, isDragging],
 );
 
 const prevIconClasses = defineClasses(
-    ["iconClass", "o-car__icon"],
-    ["iconPrevClass", "o-car__icon-prev"],
+    ["iconClass", "o-carousel__icon"],
+    ["iconPrevClass", "o-carousel__icon-prev"],
 );
 
 const nextIconClasses = defineClasses(
-    ["iconClass", "o-car__icon"],
-    ["iconNextClass", "o-car__icon-next"],
+    ["iconClass", "o-carousel__icon"],
+    ["iconNextClass", "o-carousel__icon-next"],
 );
 
 const autoplayIconClasses = defineClasses(
-    ["iconClass", "o-car__icon"],
-    ["iconAutoplayClass", "o-car__icon-autoplay"],
+    ["iconClass", "o-carousel__icon"],
+    ["iconAutoplayClass", "o-carousel__icon-autoplay"],
 );
 
 const indicatorsClasses = defineClasses(
-    ["indicatorsClass", "o-car__indicators"],
+    ["indicatorsClass", "o-carousel__indicators"],
     [
         "indicatorsInsideClass",
-        "o-car__indicators--inside",
+        "o-carousel__indicators--inside",
         null,
         computed(() => !!props.indicatorInside),
     ],
     [
-        "indicatorsInsidePositionClass",
-        "o-car__indicators--inside--",
+        "indicatorsPositionClass",
+        "o-carousel__indicators--",
         computed(() => props.indicatorPosition),
-        computed(() => props.indicatorInside && !!props.indicatorPosition),
+        computed(() => !!props.indicatorPosition),
     ],
 );
 
-const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
+const indicatorClasses = defineClasses([
+    "indicatorClass",
+    "o-carousel__indicator",
+]);
 
 const indicatorItemClasses = defineClasses(
-    ["indicatorItemClass", "o-car__indicator__item"],
+    ["indicatorItemClass", "o-carousel__indicator__item"],
     [
         "indicatorItemStyleClass",
-        "o-car__indicator__item--",
-        props.indicatorStyle,
+        "o-carousel__indicator__item--",
+        computed(() => props.indicatorStyle),
         computed(() => !!props.indicatorStyle),
     ],
 );
 
 const indicatorItemActiveClasses = defineClasses([
     "indicatorItemActiveClass",
-    "o-car__indicator__item--active",
+    "o-carousel__indicator__item--active",
 ]);
 
 function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
@@ -458,8 +466,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
 <template>
     <div
         ref="rootElement"
-        :class="rootClasses"
         data-oruga="carousel"
+        :class="rootClasses"
         role="region"
         aria-roledescription="carousel"
         @mouseover="onMouseEnter"

@@ -227,49 +227,49 @@ function onDragEnd(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-slide"],
+    ["rootClass", "o-slider"],
     [
         "sizeClass",
-        "o-slide--",
+        "o-slider--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
     [
         "disabledClass",
-        "o-slide--disabled",
+        "o-slider--disabled",
         null,
         computed(() => props.disabled),
     ],
 );
 
-const trackClasses = defineClasses(["trackClass", "o-slide__track"]);
+const trackClasses = defineClasses(["trackClass", "o-slider__track"]);
 
 const fillClasses = defineClasses(
-    ["fillClass", "o-slide__fill"],
+    ["fillClass", "o-slider__fill"],
     [
         "variantClass",
-        "o-slide__fill--",
+        "o-slider__fill--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
 );
 
 const thumbWrapperClasses = defineClasses(
-    ["thumbWrapperClass", "o-slide__thumb-wrapper"],
+    ["thumbWrapperClass", "o-slider__thumb-wrapper"],
     [
         "thumbWrapperDraggingClass",
-        "o-slide__thumb-wrapper--dragging",
+        "o-slider__thumb-wrapper--dragging",
         null,
         dragging,
     ],
 );
 
 const thumbClasses = defineClasses(
-    ["thumbClass", "o-slide__thumb"],
-    ["thumbDraggingClass", "o-slide__thumb--dragging", null, dragging],
+    ["thumbClass", "o-slider__thumb"],
+    ["thumbDraggingClass", "o-slider__thumb--dragging", null, dragging],
     [
         "thumbRoundedClass",
-        "o-slide__thumb--rounded",
+        "o-slider__thumb--rounded",
         null,
         computed(() => props.rounded),
     ],
@@ -282,9 +282,10 @@ defineExpose({ value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="slider" @click="onSliderClick">
+    <div data-oruga="slider" :class="rootClasses" @click="onSliderClick">
         <div ref="sliderElement" :class="trackClasses">
             <div :class="fillClasses" :style="barStyle" />
+
             <template v-if="ticks">
                 <o-slider-tick
                     v-for="(val, key) in tickValues"

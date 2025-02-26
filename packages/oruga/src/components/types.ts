@@ -167,8 +167,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 indicatorsClass: ClassDefinition;
                 /** Class of indicators tablist element when inside */
                 indicatorsInsideClass: ClassDefinition;
-                /** Class of indicators tablist element when inside and position */
-                indicatorsInsidePositionClass: ClassDefinition;
+                /** Class of indicators tablist element with position */
+                indicatorsPositionClass: ClassDefinition;
                 /** Class of indicator tab element */
                 indicatorClass: ClassDefinition;
                 /** Class of indicator item element */

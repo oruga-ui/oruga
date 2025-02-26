@@ -194,8 +194,8 @@ defineExpose({ close });
 
 <template>
     <o-notification
-        v-bind="$attrs"
         ref="notificationComponent"
+        v-bind="$attrs"
         v-model:active="isActive"
         :override="override"
         :position="position"

@@ -59,58 +59,71 @@ const computedNativeType = computed(() =>
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-btn"],
+    ["rootClass", "o-button"],
     [
         "sizeClass",
-        "o-btn--",
+        "o-button--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
     [
         "variantClass",
-        "o-btn--",
+        "o-button--",
         computed(() => props.variant),
         computed(() => !!props.variant && !props.outlined && !props.inverted),
     ],
     [
         "outlinedClass",
-        "o-btn--outlined",
+        "o-button--outlined",
         null,
         computed(() => props.outlined && !props.variant),
     ],
     [
         "invertedClass",
-        "o-btn--inverted",
+        "o-button--inverted",
         null,
         computed(() => props.inverted && !props.variant),
     ],
     [
         "outlinedClass",
-        "o-btn--outlined-",
+        "o-button--outlined-",
         computed(() => props.variant),
         computed(() => props.outlined && !!props.variant),
     ],
     [
         "invertedClass",
-        "o-btn--inverted-",
+        "o-button--inverted-",
         computed(() => props.variant),
         computed(() => props.inverted && !!props.variant),
     ],
-    ["expandedClass", "o-btn--expanded", null, computed(() => props.expanded)],
-    ["loadingClass", "o-btn--loading", null, computed(() => props.loading)],
-    ["roundedClass", "o-btn--rounded", null, computed(() => props.rounded)],
-    ["disabledClass", "o-btn--disabled", null, computed(() => props.disabled)],
+    [
+        "expandedClass",
+        "o-button--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+    ["loadingClass", "o-button--loading", null, computed(() => props.loading)],
+    ["roundedClass", "o-button--rounded", null, computed(() => props.rounded)],
+    [
+        "disabledClass",
+        "o-button--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
 );
 
-const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
+const wrapperClasses = defineClasses(["wrapperClass", "o-button__wrapper"]);
 
-const labelClasses = defineClasses(["labelClass", "o-btn__label"]);
+const labelClasses = defineClasses(["labelClass", "o-button__label"]);
 
-const iconClasses = defineClasses(["iconClass", "o-btn__icon"]);
+const iconClasses = defineClasses(["iconClass", "o-button__icon"]);
 
-const iconLeftClasses = defineClasses(["iconLeftClass", "o-btn__icon-left"]);
+const iconLeftClasses = defineClasses(["iconLeftClass", "o-button__icon-left"]);
 
-const iconRightClasses = defineClasses(["iconRightClass", "o-btn__icon-right"]);
+const iconRightClasses = defineClasses([
+    "iconRightClass",
+    "o-button__icon-right",
+]);
 </script>
 
 <template>

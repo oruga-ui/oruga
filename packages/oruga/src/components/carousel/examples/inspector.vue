@@ -75,11 +75,10 @@ const inspectData: InspectData<
             data.indicatorInside = true;
         },
     },
-    indicatorsInsidePositionClass: {
-        class: "indicatorsInsidePositionClass",
-        description:
-            "Class of indicators tablist element when inside and position.",
-        properties: ["indicatorInside", "indicatorPosition"],
+    indicatorsPositionClass: {
+        class: "indicatorsPositionClass",
+        description: "Class of indicators tablist element with position.",
+        properties: ["indicatorPosition"],
         action: (data): void => {
             data.indicatorInside = true;
             data.indicatorPosition = "top";

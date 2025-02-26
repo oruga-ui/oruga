@@ -149,11 +149,6 @@ const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     props,
 );
 
-watch([() => isMobileNative.value, () => props.inline], () => {
-    // $refs attached, it's time to refresh datepicker (input)
-    if (datepickerRef.value) datepickerRef.value.$forceUpdate();
-});
-
 const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 
 /** Dropdown active state */
@@ -327,12 +322,12 @@ function onChangeNativePicker(event: Event): void {
 
 const datepickerWrapperClasses = defineClasses([
     "datepickerWrapperClass",
-    "o-dtpck__date",
+    "o-datetimepicker__date",
 ]);
 
 const timepickerWrapperClasses = defineClasses([
     "timepickerWrapperClass",
-    "o-dtpck__time",
+    "o-datetimepicker__time",
 ]);
 
 // --- Expose Public Functionalities ---

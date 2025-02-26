@@ -112,37 +112,37 @@ const inputBind = computed(() => ({
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-check"],
+    ["rootClass", "o-checkbox"],
     [
         "sizeClass",
-        "o-check--",
+        "o-checkbox--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
     [
         "variantClass",
-        "o-check--",
+        "o-checkbox--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
     [
         "disabledClass",
-        "o-check--disabled",
+        "o-checkbox--disabled",
         null,
         computed(() => props.disabled),
     ],
-    ["checkedClass", "o-check--checked", null, isChecked],
+    ["checkedClass", "o-checkbox--checked", null, isChecked],
     [
         "indeterminateClass",
-        "o-check--indeterminate",
+        "o-checkbox--indeterminate",
         null,
         computed(() => props.indeterminate),
     ],
 );
 
-const inputClasses = defineClasses(["inputClass", "o-check__input"]);
+const inputClasses = defineClasses(["inputClass", "o-checkbox__input"]);
 
-const labelClasses = defineClasses(["labelClass", "o-check__label"]);
+const labelClasses = defineClasses(["labelClass", "o-checkbox__label"]);
 
 // --- Expose Public Functionalities ---
 
@@ -151,7 +151,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="checkbox">
+    <div data-oruga="checkbox" :class="rootClasses">
         <input
             v-bind="inputBind"
             :id="id"

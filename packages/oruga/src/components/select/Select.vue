@@ -272,7 +272,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="select">
+    <div data-oruga="select" :class="rootClasses">
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"
