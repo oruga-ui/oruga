@@ -23,11 +23,11 @@ export type LoadingProps = {
      */
     iconSize?: string;
     /**
-     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-     * but will set body to position fixed, might break some layouts.
-     * @values keep, clip
+     * Set `true` to remove the body scrollbar.
+     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+     * but will set the body to a fixed position, which may break some layouts.
      */
-    scroll?: "keep" | "clip";
+    clipScroll?: boolean;
     /** Role attribute to be passed to the div wrapper for better accessibility */
     role?: string;
 } & LoadingClasses;
@@ -44,8 +44,8 @@ export type LoadingClasses = Partial<{
     iconClass: ComponentClass;
     /** Class for the label element*/
     labelClass: ComponentClass;
-    /** Class of the body when fullpage and scroll is clip */
+    /** Class of the body when fullpage and scroll is clipped */
     scrollClipClass: ComponentClass;
-    /** Class of the body when fullpage and scroll is not clip */
-    noScrollClass: ComponentClass;
+    /** Class of the body when fullpage and scroll is keeped */
+    scrollKeepClass: ComponentClass;
 }>;

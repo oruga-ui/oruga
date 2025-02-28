@@ -23,11 +23,11 @@ export type ModalProps<C extends Component = Component> = {
      */
     cancelable?: string[] | boolean;
     /**
-     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-     * but will set body to position fixed, might break some layouts.
-     * @values keep, clip
+     * Set `true` to remove the body scrollbar.
+     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+     * but will set the body to a fixed position, which may break some layouts.
      */
-    scroll?: "keep" | "clip";
+    clipScroll?: boolean;
     /** Trap focus inside the modal */
     trapFocus?: boolean;
     /**
@@ -81,8 +81,8 @@ export type ModalClasses = Partial<{
     fullScreenClass: ComponentClass;
     /** Class of the close button element */
     closeClass: ComponentClass;
-    /** Class of the body when modal is open and scroll is clip */
+    /** Class of the body when modal is open and scroll is clipped */
     scrollClipClass: ComponentClass;
-    /** Class of the body when modal is open and scroll is not clip */
-    noScrollClass: ComponentClass;
+    /** Class of the body when modal is open and scroll is keeped */
+    scrollKeepClass: ComponentClass;
 }>;

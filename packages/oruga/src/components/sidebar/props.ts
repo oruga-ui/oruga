@@ -37,11 +37,11 @@ export type SidebarProps<C extends Component = Component> = {
      */
     cancelable?: string[] | boolean;
     /**
-     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-     * but will set body to position fixed, might break some layouts.
-     * @values keep, clip
+     * Set `true` to remove the body scrollbar.
+     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+     * but will set the body to a fixed position, which may break some layouts.
      */
-    scroll?: "clip" | "keep";
+    clipScroll?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**
@@ -91,8 +91,8 @@ export type SidebarClasses = Partial<{
     reduceClass: ComponentClass;
     /** Class of the content element when expanded on hover */
     expandOnHoverClass: ComponentClass;
-    /** Class of the body when is visible and scroll is clip */
+    /** Class of the body when is visible and scroll is clipped */
     scrollClipClass: ComponentClass;
-    /** Class of the body when is visible and scroll is not clip */
-    noScrollClass: ComponentClass;
+    /** Class of the body when is visible and scroll is keeped */
+    scrollKeepClass: ComponentClass;
 }>;

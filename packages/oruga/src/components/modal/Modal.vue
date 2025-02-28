@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
-    scroll: () => getDefault("modal.scroll", "keep"),
+    clipScroll: () => getDefault("modal.clipScroll", false),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -97,7 +97,7 @@ const customStyle = computed(() =>
     !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
 );
 
-const toggleScroll = usePreventScrolling(props.scroll === "keep");
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
 watch(isActive, (value) => {
     if (props.overlay) toggleScroll(value);

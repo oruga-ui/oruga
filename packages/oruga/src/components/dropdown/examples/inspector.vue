@@ -209,21 +209,19 @@ const inspectData: InspectData<
     },
     scrollClipClass: {
         class: "scrollClipClass",
-        description:
-            "Class of the body when dropdown is open and scroll is clip.",
-        properties: ["scroll"],
+        description: "Class of the body when is open and scroll is clipped.",
+        properties: ["clipScroll"],
         action: (data): void => {
-            data.scroll = "clip";
+            data.clipScroll = true;
             data.active = true;
         },
     },
-    noScrollClass: {
-        class: "noScrollClass",
-        description:
-            "Class of the body when dropdown is open and scroll is not clip.",
-        properties: ["scroll"],
+    scrollKeepClass: {
+        class: "scrollKeepClass",
+        description: "Class of the body when is open and scroll is keeped.",
+        properties: ["clipScroll"],
         action: (data): void => {
-            data.scroll = "keep";
+            data.clipScroll = false;
             data.active = true;
         },
     },
