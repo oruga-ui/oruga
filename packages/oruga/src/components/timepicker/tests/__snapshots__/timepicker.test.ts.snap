@@ -2,7 +2,7 @@
 
 exports[`OTimepicker tests > render correctly 1`] = `
 "<div data-oruga="timepicker" class="o-timepicker">
-  <div data-oruga="dropdown" class="o-dropdown o-timepicker__dropdown o-dropdown--modal o-dropdown--position-bottom-left">
+  <div data-oruga="dropdown" class="o-dropdown o-timepicker__dropdown o-dropdown--position-bottom-left">
     <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
@@ -17,9 +17,7 @@ exports[`OTimepicker tests > render correctly 1`] = `
       </div>
     </div>
     <!--teleport start-->
-    <transition-stub name="fade" appear="false" persisted="true" css="true">
-      <div class="o-dropdown__overlay" tabindex="-1" style="display: none;"></div>
-    </transition-stub>
+    <!--v-if-->
     <transition-stub name="fade" appear="false" persisted="true" css="true">
       <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
         <!--

@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     icon: () => getDefault("timepicker.icon"),
     iconRight: () => getDefault("timepicker.iconRight"),
     iconRightClickable: false,
-    desktopModal: () => getDefault("timepicker.desktopModal", true),
+    desktopModal: () => getDefault("timepicker.desktopModal", false),
     mobileModal: () => getDefault("timepicker.mobileModal", true),
     mobileNative: () => getDefault("timepicker.mobileNative", true),
     mobileBreakpoint: () => getDefault("timepicker.mobileBreakpoint"),

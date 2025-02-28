@@ -419,6 +419,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 icon: string;
                 /** Icon to be added on the right side */
                 iconRight: string;
+                /** Dropdown content is shown into a modal on mobile */
+                mobileModal: boolean;
+                /** Dropdown content is shown into a modal on desktop */
+                desktopModal: boolean;
                 /** Enable mobile native input if mobile agent */
                 mobileNative: boolean;
                 /** Append the component to another part of the DOM.
