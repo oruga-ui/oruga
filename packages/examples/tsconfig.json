@@ -32,6 +32,8 @@
     "../oruga/src/**/*.vue",
   ],
   "exclude": [
+    "../oruga/src/__tests__/**",
+    "../oruga/src/**/*.test.ts",
     "node_modules",
     "dist"
   ]
