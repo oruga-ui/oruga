@@ -646,7 +646,7 @@ See icon library documentation for custom classes. */
                 /** Set `true` to remove the body scrollbar.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts. */
-                scrclipScrolloll: boolean;
+                clipScroll: boolean;
                 /** Role attribute to be passed to the div wrapper for better accessibility */
                 role: string;
                 /** Class of the root element */
@@ -950,7 +950,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Set `true` to remove the body scrollbar.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts. */
-                scroll: boolean;
+                clipScroll: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.

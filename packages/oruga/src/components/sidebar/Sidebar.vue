@@ -45,7 +45,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     expandOnHover: () => getDefault("sidebar.expandOnHover", false),
     animation: () => getDefault("sidebar.animation"),
     cancelable: () => getDefault("sidebar.cancelable", ["escape", "outside"]),
-    clipScroll: () => getDefault("sidebar.scroll", true),
+    clipScroll: () => getDefault("sidebar.clipScroll", false),
     mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
     teleport: () => getDefault("sidebar.teleport", false),
     component: undefined,

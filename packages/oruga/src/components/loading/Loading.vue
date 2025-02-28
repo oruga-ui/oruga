@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     icon: () => getDefault("loading.icon", "loading"),
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
-    clipScroll: () => getDefault("loading.scrclipScrolloll", false),
+    clipScroll: () => getDefault("loading.clipScroll", false),
     role: () => getDefault("loading.role", "dialog"),
 });
 
