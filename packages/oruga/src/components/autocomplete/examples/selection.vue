@@ -33,7 +33,6 @@ const selected = ref();
             <o-switch v-model="keepOpen">Keep open</o-switch>
             <o-switch v-model="openOnFocus">Open on focus</o-switch>
             <o-switch v-model="selectOnClose">Select on close</o-switch>
-            <o-switch v-model="selectOnClose">Select on close</o-switch>
             <o-switch v-model="clearOnSelect">Clear on Select</o-switch>
         </o-field>
 

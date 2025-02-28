@@ -165,6 +165,7 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
 }
 
 /**
+ * @deprecated not used
  * Returns true if it is a DOM element
  * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
  */

@@ -1,4 +1,8 @@
-import type { Component, ComponentInternalInstance } from "vue";
+import type {
+    Component,
+    ComponentInternalInstance,
+    MaybeRefOrGetter,
+} from "vue";
 import {
     InstanceRegistry,
     ComponentProgrammatic,
@@ -37,7 +41,7 @@ const NotificationProgrammatic = {
      */
     open<C extends Component>(
         options: string | NotificationProgrammaticOptions<C>,
-        target?: string | HTMLElement | null,
+        target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose {
         const _options: NotificationProgrammaticOptions<C> =
             typeof options === "string" ? { message: options } : options;

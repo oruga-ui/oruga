@@ -49,6 +49,7 @@ export default defineConfig({
                 // for externalized deps
                 globals: {
                     vue: "Vue",
+                    "@oruga-ui/oruga-next": "@oruga-ui/oruga-next",
                 },
             },
         },
