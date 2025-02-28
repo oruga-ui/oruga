@@ -51,7 +51,7 @@ const props = defineProps({
      */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption<DynamicComponent>("breadcrumb.tag", "section"),
+        default: () => getOption("breadcrumb.tag", "section"),
     },
     // -----------------------------------------------------------------
     /**

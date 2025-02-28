@@ -1,7 +1,7 @@
 <template>
     <section class="odocs-spaced">
         <!--  Position left -->
-        <o-breadcrumb tag="div" align="left">
+        <o-breadcrumb tag="section" align="left">
             <o-breadcrumb-item tag="a" href="/" active="true" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
@@ -13,7 +13,7 @@
             </o-breadcrumb-item>
         </o-breadcrumb>
         <!--  Position center -->
-        <o-breadcrumb tag="div" align="centered">
+        <o-breadcrumb tag="section" align="centered">
             <o-breadcrumb-item tag="router-link" to="/" active-variant="primary"
                 >Home
             </o-breadcrumb-item>
@@ -25,7 +25,7 @@
             </o-breadcrumb-item>
         </o-breadcrumb>
         <!--  Position right -->
-        <o-breadcrumb tag="div" align="right">
+        <o-breadcrumb tag="section" align="right">
             <o-breadcrumb-item tag="router-link" to="/" active-variant="primary"
                 >Home
             </o-breadcrumb-item>

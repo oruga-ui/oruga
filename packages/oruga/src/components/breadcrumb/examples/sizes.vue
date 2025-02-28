@@ -2,7 +2,7 @@
     <section class="odocs-spaced">
         <!--  Size small -->
         <o-breadcrumb
-            tag="div"
+            tag="section"
             separator="has-arrow-separator"
             size="small"
             align="center">
@@ -18,7 +18,7 @@
         </o-breadcrumb>
         <!--  Size medium -->
         <o-breadcrumb
-            tag="div"
+            tag="section"
             separator="has-arrow-separator"
             size="medium"
             align="center">
@@ -34,7 +34,7 @@
         </o-breadcrumb>
         <!--  Size large -->
         <o-breadcrumb
-            tag="div"
+            tag="section"
             separator="has-arrow-separator"
             size="large"
             align="center">

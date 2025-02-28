@@ -2,7 +2,7 @@
     <section>
         <!-- has-slash-separator -->
         <o-breadcrumb
-            tag="div"
+            tag="section"
             separator="has-slash-separator"
             size="medium"
             align="center">
@@ -12,7 +12,7 @@
         </o-breadcrumb>
         <!-- has-chevron-separator -->
         <o-breadcrumb
-            tag="div"
+            tag="section"
             separator="has-chevron-separator"
             size="medium"
             align="center">
@@ -22,7 +22,7 @@
         </o-breadcrumb>
         <!-- has-arrow-separator -->
         <o-breadcrumb
-            tag="div"
+            tag="section"
             separator="has-arrow-separator"
             size="medium"
             align="center">
@@ -32,7 +32,7 @@
         </o-breadcrumb>
         <!-- has-dot-separator -->
         <o-breadcrumb
-            tag="div"
+            tag="section"
             separator="has-dot-separator"
             size="medium"
             align="center">

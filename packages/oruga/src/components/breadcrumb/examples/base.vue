@@ -3,7 +3,8 @@
         <o-breadcrumb
             separator="has-arrow-separator"
             size="medium"
-            align="center">
+            align="center"
+            tag="section">
             <o-breadcrumb-item
                 tag="a"
                 href="/"
@@ -19,7 +20,7 @@
             </o-breadcrumb-item>
         </o-breadcrumb>
         <o-breadcrumb
-            tag="div"
+            tag="section"
             separator="has-arrow-separator"
             size="medium"
             align="center">
