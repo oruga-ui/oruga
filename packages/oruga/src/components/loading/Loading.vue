@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     icon: () => getDefault("loading.icon", "loading"),
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
-    scroll: () => getDefault("loading.scroll", "keep"),
+    clipScroll: () => getDefault("loading.scrclipScrolloll", false),
     role: () => getDefault("loading.role", "dialog"),
 });
 
@@ -63,7 +63,7 @@ const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-const toggleScroll = usePreventScrolling(props.scroll === "keep");
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
 watch(isActive, (value) => {
     if (isFullPage.value) toggleScroll(value);

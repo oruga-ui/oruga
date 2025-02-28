@@ -76,7 +76,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     mobileBreakpoint: () => getDefault("dropdown.mobileBreakpoint"),
     animation: () => getDefault("dropdown.animation", "fade"),
     teleport: () => getDefault("dropdown.teleport", false),
-    scroll: () => getDefault("dropdown.scroll", "keep"),
+    clipScroll: () => getDefault("dropdown.clipScroll", false),
 });
 
 const emits = defineEmits<{
@@ -195,7 +195,7 @@ const menuStyle = computed(() => ({
 
 const hoverable = computed(() => props.triggers.includes("hover"));
 
-const toggleScroll = usePreventScrolling(props.scroll === "keep");
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
 // set infinite scroll handler
 if (isClient && props.scrollable && props.checkScroll)
@@ -224,10 +224,6 @@ watch(
             // keep first option always pre-selected
             if (!props.inline && props.keepFirst && !focusedItem.value)
                 moveFocus(1);
-        } else if (!value) {
-            // select item when dropdown closed
-            if (props.selectOnClose && focusedItem.value?.data?.value)
-                selectItem(focusedItem.value.data.value);
         }
         if (isModal.value) toggleScroll(value);
     },
@@ -357,6 +353,11 @@ function open(method: string, event: Event): void {
 function close(method: string, event: Event): void {
     if (!isActive.value) return;
     emits("close", method, event);
+
+    // select item when dropdown closed
+    if (props.selectOnClose && focusedItem.value?.data?.value)
+        selectItem(focusedItem.value.data.value);
+
     isActive.value = false;
     focusedItem.value = undefined;
     if (timer) clearTimeout(timer);

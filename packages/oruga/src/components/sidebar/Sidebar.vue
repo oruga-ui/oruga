@@ -4,7 +4,6 @@ import {
     computed,
     watch,
     onMounted,
-    onBeforeUnmount,
     useTemplateRef,
     type Component,
 } from "vue";
@@ -13,10 +12,10 @@ import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    getActiveClasses,
     useClickOutside,
     useEventListener,
     useMatchMedia,
+    usePreventScrolling,
 } from "@/composables";
 
 import type { SidebarProps } from "./props";
@@ -46,7 +45,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     expandOnHover: () => getDefault("sidebar.expandOnHover", false),
     animation: () => getDefault("sidebar.animation"),
     cancelable: () => getDefault("sidebar.cancelable", ["escape", "outside"]),
-    scroll: () => getDefault("sidebar.scroll", "clip"),
+    clipScroll: () => getDefault("sidebar.scroll", true),
     mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
     teleport: () => getDefault("sidebar.teleport", false),
     component: undefined,
@@ -100,29 +99,18 @@ const hideOnMobile = computed(
     () => props.mobile === "hidden" && isMobile.value,
 );
 
-const savedScrollTop = ref<number>();
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
-watch(isActive, () => {
-    if (props.overlay) handleScroll();
-});
+watch(
+    isActive,
+    (value) => {
+        if (props.overlay) toggleScroll(value);
+    },
+    { flush: "post" },
+);
 
 onMounted(() => {
-    if (isActive.value && props.overlay) handleScroll();
-});
-
-onBeforeUnmount(() => {
-    if (isClient && props.overlay) {
-        // reset scroll
-        const scrollto = savedScrollTop.value
-            ? savedScrollTop.value
-            : document.documentElement.scrollTop;
-        if (scrollClass.value) {
-            document.body.classList.remove(...scrollClass.value);
-            document.documentElement.classList.remove(...scrollClass.value);
-        }
-        document.documentElement.scrollTop = scrollto;
-        document.body.style.top = "";
-    }
+    if (isActive.value && props.overlay) toggleScroll(true);
 });
 
 // --- Events Feature ---
@@ -173,39 +161,6 @@ function cancel(method: string): void {
 function close(...args: unknown[]): void {
     isActive.value = false;
     emits("close", args);
-}
-
-function handleScroll(): void {
-    if (!isClient) return;
-
-    if (props.scroll === "clip") {
-        if (scrollClass.value?.length) {
-            if (isActive.value) {
-                document.documentElement.classList.add(...scrollClass.value);
-            } else {
-                document.documentElement.classList.remove(...scrollClass.value);
-            }
-        }
-        return;
-    }
-
-    savedScrollTop.value = savedScrollTop.value
-        ? savedScrollTop.value
-        : document.documentElement.scrollTop;
-
-    if (scrollClass.value) {
-        if (isActive.value) document.body.classList.add(...scrollClass.value);
-        else document.body.classList.remove(...scrollClass.value);
-    }
-
-    if (isActive.value) {
-        document.body.style.top = `-${savedScrollTop.value}px`;
-        return;
-    }
-
-    document.documentElement.scrollTop = savedScrollTop.value;
-    document.body.style.top = "";
-    savedScrollTop.value = undefined;
 }
 
 // --- Animation Feature ---
@@ -290,14 +245,6 @@ const contentClasses = defineClasses(
         computed(() => !isActive.value),
     ],
 );
-
-const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
-const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
-
-const scrollClass = computed(() =>
-    getActiveClasses(props.scroll === "clip" ? scrollClasses : noScrollClasses),
-);
-
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */

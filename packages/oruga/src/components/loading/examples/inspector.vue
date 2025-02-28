@@ -54,21 +54,21 @@ const inspectData: InspectData<LoadingClasses, LoadingProps> = {
     scrollClipClass: {
         class: "scrollClipClass",
         description: "Class of the body when fullpage and scroll is clip",
-        properties: ["scroll"],
+        properties: ["clipScroll"],
         action: (data): void => {
             data.fullPage = true;
-            data.scroll = "clip";
             data.active = true;
+            data.clipScroll = true;
         },
     },
-    noScrollClass: {
-        class: "noScrollClass",
+    scrollKeepClass: {
+        class: "scrollKeepClass",
         description: "Class of the body when fullpage and scroll is not clip",
-        properties: ["scroll"],
+        properties: ["clipScroll"],
         action: (data): void => {
             data.fullPage = true;
             data.active = true;
-            data.scroll = "keep";
+            data.clipScroll = false;
         },
     },
 };
