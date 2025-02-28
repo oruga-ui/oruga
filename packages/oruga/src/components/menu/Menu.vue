@@ -217,6 +217,10 @@ function isItemViable(item: MenuChildItem<T>): boolean {
     );
 }
 
+function onFocusLeave(): void {
+    focusedItem.value = undefined;
+}
+
 // #endregion --- Focus Feature ---
 
 // #region --- Computed Component Classes ---
@@ -231,7 +235,11 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
 </script>
 
 <template>
-    <nav ref="rootElement" data-oruga="menu" :class="rootClasses">
+    <nav
+        ref="rootElement"
+        data-oruga="menu"
+        :class="rootClasses"
+        @focusout="onFocusLeave">
         <div v-if="label || $slots.label" :id="labelId" :class="labelClasses">
             <!-- 
                 @slot Override icon and label
@@ -263,8 +271,8 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
             :aria-labelledby="labelId"
             @keydown.left="onCollapse"
             @keydown.right="onExpend"
-            @keydown.enter="onEnter"
-            @keydown.space="onEnter"
+            @keydown.enter.prevent="onEnter"
+            @keydown.space.prevent="onEnter"
             @keydown.up.prevent="onUpPressed"
             @keydown.down.prevent="onDownPressed"
             @keydown.home.prevent="onHomePressed"
