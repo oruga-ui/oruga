@@ -24,7 +24,7 @@ import ScrollCode from "./scroll.vue?raw";
         The autocomplete input can only contain one item at a time. For the
         multiple selection version, see the
         <a href="/components/taginput.html">
-            <b>taginput</b>
+            <b>Taginput</b>
         </a>
         component.
     </p>
