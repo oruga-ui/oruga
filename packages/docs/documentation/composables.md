@@ -148,7 +148,7 @@ type ProgrammaticInterface = {
      * The options argument depend on the component. 
      * The target specifies the element the component get rendered into - default is `document.body`.
      */
-    open: (options: Record<string, any>, target?: string | HTMLElement) => ProgrammaticExpose;
+    open: (options: Record<string, any>, target?: MaybeRefOrGetter<string | HTMLElement | null>) => ProgrammaticExpose;
     /** 
      * Close the last registred instance in the programmatic instance registry.
      * Any arguments which get passed to the exposed `close()` function of the component.
@@ -200,10 +200,9 @@ oruga.programmatic.open(
         onClose: (...args: unknown[]) => { ... }, // on close event handler
     }
 );
-
 ```
 
-The programmatic interface of this component looks much like the other programmatic component interfaces. However, the `open()` function takes some different attributes. The type definition of the `open()` function looks like this:
+The programmatic interface of this component looks much like the other programmatic component interfaces. However, the `open()` function takes some different attributes. This is the type definition of the `open()` function:
 
 ```typescript
 type open = <C extends VNodeTypes>(
@@ -219,7 +218,7 @@ type ProgrammaticOptions<C extends VNodeTypes> = {
      * The target specifies the element the component get rendered into.
      * @default `document.body`.
      */
-    target?: string | HTMLElement; 
+    target?: MaybeRefOrGetter<string | HTMLElement | null>; 
     /**
      * Specify the template `id` for the programmatic container element.
      * @default `programmatic-app`

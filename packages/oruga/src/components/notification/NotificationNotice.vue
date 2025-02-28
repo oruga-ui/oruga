@@ -28,7 +28,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
     override: undefined,
-    // container: undefined,
+    container: undefined,
     position: () => getDefault("notification.position", "top"),
     duration: () => getDefault("notification.duration", 2000),
     infinite: false,

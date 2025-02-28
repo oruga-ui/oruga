@@ -1,4 +1,8 @@
-import { type Component, type ComponentInternalInstance } from "vue";
+import {
+    type Component,
+    type ComponentInternalInstance,
+    type MaybeRefOrGetter,
+} from "vue";
 import {
     InstanceRegistry,
     ComponentProgrammatic,
@@ -36,7 +40,7 @@ const SidebarProgrammatic = {
      */
     open<C extends Component>(
         options: SidebarProgrammaticOptions<C>,
-        target?: string | HTMLElement | null,
+        target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose {
         const componentProps: SidebarProps<C> = {
             active: true, // set the active default state to true

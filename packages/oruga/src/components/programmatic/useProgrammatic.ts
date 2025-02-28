@@ -1,14 +1,16 @@
 import {
     createApp,
+    toValue,
     type App,
     type ComponentInternalInstance,
     type EmitsToProps,
+    type MaybeRefOrGetter,
     type VNodeTypes,
 } from "vue";
 
 import InstanceRegistry from "@/components/programmatic/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
-import { isElement } from "@/utils/helpers";
+import { unrefElement } from "@/composables";
 
 import {
     ProgrammaticComponent,
@@ -32,7 +34,7 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
      * Specify a target the component get rendered into.
      * @default `document.body`
      */
-    target?: string | HTMLElement | null;
+    target?: MaybeRefOrGetter<string | HTMLElement | null>;
     /**
      * Specify the template `id` for the programmatic container element.
      * @default `programmatic-app`
@@ -65,14 +67,16 @@ export const ComponentProgrammatic = {
     ): ProgrammaticExpose {
         options = { registry, ...options };
 
-        // define the target container - either HTML `body` or by a given query selector
+        // define the target container - either HTML `body` or by a given query selector or element
+        const targetQuery = toValue(options.target);
         const target =
-            typeof options.target === "string"
-                ? document.querySelector<HTMLElement>(options.target) ||
-                  document.body
-                : isElement(options?.target)
-                  ? options.target
-                  : document.body;
+            (typeof targetQuery === "string"
+                ? // query element if target is a string
+                  document.querySelector<HTMLElement>(targetQuery)
+                : // else unwrap element
+                  unrefElement(targetQuery)) ||
+            // else use default
+            document.body;
 
         // create app container
         let container: HTMLDivElement | undefined =
