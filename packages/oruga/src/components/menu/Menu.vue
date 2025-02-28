@@ -217,7 +217,7 @@ function isItemViable(item: MenuChildItem<T>): boolean {
     );
 }
 
-function onFocusOut(): void {
+function onFocusLeave(): void {
     focusedItem.value = undefined;
 }
 
@@ -239,7 +239,7 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
         ref="rootElement"
         data-oruga="menu"
         :class="rootClasses"
-        @focusout="onFocusOut">
+        @focusout="onFocusLeave">
         <div v-if="label || $slots.label" :id="labelId" :class="labelClasses">
             <!-- 
                 @slot Override icon and label
