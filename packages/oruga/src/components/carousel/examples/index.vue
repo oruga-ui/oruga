@@ -8,8 +8,11 @@ import ListCode from "./list.vue?raw";
 import Indicators from "./indicators.vue";
 import IndicatorsCode from "./indicators.vue?raw";
 
-import Customise from "./customise.vue";
-import CustomiseCode from "./customise.vue?raw";
+import Custom from "./custom.vue";
+import CustomCode from "./custom.vue?raw";
+
+import Autoplay from "./autplay.vue";
+import AutoplayCode from "./autplay.vue?raw";
 </script>
 
 <template>
@@ -25,14 +28,23 @@ import CustomiseCode from "./customise.vue?raw";
     </p>
     <ExampleViewer :component="List" :code="ListCode" />
 
-    <h3 id="indicatios">Custom Indicators</h3>
+    <h3 id="indicatios">Indicators</h3>
+    <p>
+        <code>indicators</code>
+        <code>indicatorInside</code>
+        <code>indicatorPosition</code>
+        <code>indicatorStyle</code>
+    </p>
+    <ExampleViewer :component="Indicators" :code="IndicatorsCode" />
+
+    <h3 id="custom">Custom Indicators</h3>
     <p>
         Alongside the previous/next controls, the indicators can be customised
         by using the <code>indicators</code> slot. The indicators let users jump
         directly to a particular slide.
     </p>
     <p>Click on the slide to open the gallery mode.</p>
-    <ExampleViewer :component="Indicators" :code="IndicatorsCode" />
+    <ExampleViewer :component="Custom" :code="CustomCode" />
 
     <h3 id="autoplay">Autoplay</h3>
     <p>
@@ -55,5 +67,5 @@ import CustomiseCode from "./customise.vue?raw";
             enough time to explore slide content.
         </p>
     </div>
-    <ExampleViewer :component="Customise" :code="CustomiseCode" />
+    <ExampleViewer :component="Autoplay" :code="AutoplayCode" />
 </template>
