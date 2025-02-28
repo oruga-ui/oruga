@@ -34,7 +34,7 @@ export type LoadingProps = {
      * DOM container element for programmatic usage.
      * @ignore internal property
      */
-    container: HTMLElement;
+    container?: HTMLElement;
 } & LoadingClasses;
 
 // class props (will not be displayed in the docs)

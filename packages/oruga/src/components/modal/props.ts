@@ -58,7 +58,7 @@ export type ModalProps<C extends Component = Component> = {
      * DOM container element for programmatic usage.
      * @ignore internal property
      */
-    container: HTMLElement;
+    container?: HTMLElement;
     /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
