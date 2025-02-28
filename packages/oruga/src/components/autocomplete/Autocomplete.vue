@@ -254,6 +254,7 @@ watch(
         if (currentOption && currentOption.label !== value) {
             // clear selected value
             selectedValue.value = undefined;
+            dropdownValue.value = undefined;
         }
 
         // Close dropdown if data is empty

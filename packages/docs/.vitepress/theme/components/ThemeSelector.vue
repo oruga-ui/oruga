@@ -15,6 +15,7 @@ function onThemeChange(theme: ThemeConfig): void {
 <template>
     <o-dropdown
         :model-value="selectedTheme"
+        override
         root-class="theme-selector"
         menu-class="theme-drop__menu"
         selectable

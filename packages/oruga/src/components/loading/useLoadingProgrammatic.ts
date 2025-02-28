@@ -1,4 +1,4 @@
-import { type ComponentInternalInstance } from "vue";
+import { type ComponentInternalInstance, type MaybeRefOrGetter } from "vue";
 import {
     InstanceRegistry,
     ComponentProgrammatic,
@@ -34,7 +34,7 @@ const LoadingProgrammatic = {
      */
     open(
         options: string | LoadingProgrammaticOptions,
-        target?: string | HTMLElement | null,
+        target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose {
         const _options: LoadingProgrammaticOptions =
             typeof options === "string" ? { label: options } : options;

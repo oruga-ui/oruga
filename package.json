@@ -14,6 +14,7 @@
     "dev": "concurrently \"npm run build:lib:watch\" \"npm run build:docs:watch\"",
     "test": "npm run test:coverage --workspace @oruga-ui/oruga-next",
     "test:ts": "npm run test:ts --workspace @oruga-ui/oruga-next",
+    "build": "npm run build:lib && npm run build:examples && npm run build:docs",
     "build:docs": "npm run docs:build --workspace @oruga-ui/docs-next",
     "build:docs:watch": "npm run docs:dev --workspace @oruga-ui/docs-next",
     "build:lib": "npm run build:lib --workspace @oruga-ui/oruga-next",
