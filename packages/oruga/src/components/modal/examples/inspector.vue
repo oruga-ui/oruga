@@ -58,7 +58,7 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
     },
     scrollClipClass: {
         class: "scrollClipClass",
-        description: "Class of the body when modal is open and scroll is clip.",
+        description: "Class of the body when is open and scroll is clipped.",
         properties: ["clipScroll"],
         action: (data): void => {
             data.active = true;
@@ -67,8 +67,7 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
     },
     scrollKeepClass: {
         class: "scrollKeepClass",
-        description:
-            "Class of the body when modal is open and scroll is not clip.",
+        description: "Class of the body when is open and scroll is keeped.",
         properties: ["clipScroll"],
         action: (data): void => {
             data.active = true;
