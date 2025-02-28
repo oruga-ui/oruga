@@ -1,8 +1,11 @@
 import {
     createApp,
+    inject,
+    toValue,
     type App,
     type ComponentInternalInstance,
     type EmitsToProps,
+    type MaybeRefOrGetter,
     type VNodeTypes,
 } from "vue";
 
@@ -66,13 +69,22 @@ export const ComponentProgrammatic = {
         options = { registry, ...options };
 
         // define the target container - either HTML `body` or by a given query selector
-        const target =
+        let target =
             typeof options.target === "string"
                 ? document.querySelector<HTMLElement>(options.target) ||
                   document.body
                 : isElement(options?.target)
                   ? options.target
                   : document.body;
+
+        VueInstance.runWithContext(() => {
+            // inject programmatic target override from app instance if available
+            // this is used by the docs
+            const programmaticTarget = inject<MaybeRefOrGetter<HTMLElement>>(
+                "$PROGRAMMATIC-TARGET",
+            );
+            if (programmaticTarget) target = toValue(programmaticTarget);
+        });
 
         // create app container
         let container: HTMLDivElement | undefined =
@@ -106,7 +118,8 @@ export const ComponentProgrammatic = {
         });
 
         // share the current context to the new app instance if running inside a nother app
-        if (VueInstance) app._context = VueInstance._context;
+        if (VueInstance)
+            app._context = Object.assign(app._context, VueInstance._context);
 
         // render the new vue instance into the container
         app.mount(container);
