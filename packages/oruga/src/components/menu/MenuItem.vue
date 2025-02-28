@@ -218,8 +218,9 @@ const submenuClasses = defineClasses([
             :aria-disabled="disabled || parent.disabled"
             :aria-expanded="hasChildren ? isExpanded : undefined"
             :aria-owns="hasChildren ? submenuId : undefined"
-            @keyup.enter="selectItem"
-            @click="selectItem">
+            @click="selectItem"
+            @keydown.enter="selectItem"
+            @keydown.space="selectItem">
             <o-icon
                 v-if="icon"
                 :icon="icon"
