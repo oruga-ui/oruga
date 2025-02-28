@@ -55,6 +55,11 @@ export type ModalProps<C extends Component = Component> = {
      */
     teleport?: boolean | string | object;
     /**
+     * DOM container element for programmatic usage.
+     * @ignore internal property
+     */
+    container: HTMLElement;
+    /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
      */
