@@ -6,6 +6,8 @@ import { defineClasses } from "@/composables";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
 
+import type { BreadcrumbProps } from "./props";
+
 /**
  * The classic breadcrumb, in different colors, sizes, and states
  * @displayName Breadcrumb

@@ -8,6 +8,8 @@ import OIcon from "../icon/Icon.vue";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
 
+import type { BreadcrumbItemProps } from "./props";
+
 /**
  * The classic breadrcumb item, in different colors, sizes, and states
  * @displayName Breadcrumb Item
