@@ -69,6 +69,10 @@ export type DatetimepickerProps = {
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
+    /** Dropdown content is shown into a modal on mobile */
+    mobileModal?: boolean;
+    /** Dropdown content is shown into a modal on desktop */
+    desktopModal?: boolean;
     /** Enable mobile native input if mobile agent */
     mobileNative?: boolean;
     /**

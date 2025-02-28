@@ -54,6 +54,8 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     icon: () => getDefault("datetimepicker.icon"),
     iconRight: () => getDefault("datetimepicker.iconRight"),
     iconRightClickable: false,
+    desktopModal: () => getDefault("datetimepicker.desktopModal", false),
+    mobileModal: () => getDefault("datetimepicker.mobileModal", true),
     mobileNative: () => getDefault("datetimepicker.mobileNative", true),
     teleport: () => getDefault("datetimepicker.teleport", false),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
@@ -365,6 +367,8 @@ defineExpose({ focus: setFocus, value: vmodel });
         :range="false"
         :multiple="false"
         :disabled="disabled"
+        :desktop-modal="desktopModal"
+        :mobile-modal="mobileModal"
         :mobile-native="isMobileNative"
         :locale="locale"
         :teleport="teleport"
