@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// -----------------------------------------------------------------------------------------
+// THIS COMPONENT IS USED AS WEB COMPONENT TO WRAP EXAMPLES AND TO ENCAPSULATE THEME STYLING
+// -----------------------------------------------------------------------------------------
+
 import { useShadowRoot, useHost, onMounted } from "vue";
 import { loadTheme } from "..";
 
