@@ -468,9 +468,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */
                 teleport: boolean | object | string;
-                /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-but will set body to position fixed, might break some layouts. */
-                scroll: "clip" | "keep";
+                /** Set `true` to remove the body scrollbar.
+When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+but will set the body to a fixed position, which may break some layouts. */
+                clipScroll: boolean;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element when on mobile */
@@ -501,10 +502,10 @@ but will set body to position fixed, might break some layouts. */
                 menuActiveClass: ClassDefinition;
                 /** Class of the overlay when is shown as modal */
                 overlayClass: ClassDefinition;
-                /** Class of the body when dropdown is open and scroll is clip */
+                /** Class of the body when dropdown is open and scroll is clipped */
                 scrollClipClass: ClassDefinition;
-                /** Class of the body when dropdown is open and scroll is not clip */
-                noScrollClass: ClassDefinition;
+                /** Class of the body when dropdown is open and scroll is keeped */
+                scrollKeepClass: ClassDefinition;
                 /** Dropdown item tag name */
                 itemTag: DynamicComponent;
                 /** Class of the item element. */
@@ -642,9 +643,10 @@ See icon library documentation for custom classes. */
                 iconSpin: boolean;
                 /** Icon size */
                 iconSize: string;
-                /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-but will set body to position fixed, might break some layouts. */
-                scroll: "clip" | "keep";
+                /** Set `true` to remove the body scrollbar.
+When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+but will set the body to a fixed position, which may break some layouts. */
+                scrclipScrolloll: boolean;
                 /** Role attribute to be passed to the div wrapper for better accessibility */
                 role: string;
                 /** Class of the root element */
@@ -657,10 +659,10 @@ but will set body to position fixed, might break some layouts. */
                 iconClass: ClassDefinition;
                 /** Class for the label element */
                 labelClass: ClassDefinition;
-                /** Class of the body when fullpage and scroll is clip */
+                /** Class of the body when fullpage and scroll is clipped */
                 scrollClipClass: ClassDefinition;
-                /** Class of the body when fullpage and scroll is not clip */
-                noScrollClass: ClassDefinition;
+                /** Class of the body when fullpage and scroll is keeped */
+                scrollKeepClass: ClassDefinition;
             }>;
         menu?: ComponentConfigBase &
             Partial<{
@@ -712,9 +714,10 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                 overlay: boolean;
                 /** Is Modal cancleable by clicking 'X', pressing escape or clicking outside */
                 cancelable: boolean | string[];
-                /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-but will set body to position fixed, might break some layouts. */
-                scroll: "clip" | "keep";
+                /** Set `true` to remove the body scrollbar.
+When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+but will set the body to a fixed position, which may break some layouts. */
+                clipScroll: boolean;
                 /** Trap focus inside the modal */
                 trapFocus: boolean;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
@@ -747,10 +750,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 fullScreenClass: ClassDefinition;
                 /** Class of the close button element */
                 closeClass: ClassDefinition;
-                /** Class of the body when modal is open and scroll is clip */
+                /** Class of the body when modal is open and scroll is clipped */
                 scrollClipClass: ClassDefinition;
-                /** Class of the body when modal is open and scroll is not clip */
-                noScrollClass: ClassDefinition;
+                /** Class of the body when modal is open and scroll is keeped */
+                scrollKeepClass: ClassDefinition;
             }>;
         notification?: ComponentConfigBase &
             Partial<{
@@ -944,9 +947,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 animation: string;
                 /** Is Sidebar cancleable by pressing escape or clicking outside. */
                 cancelable: boolean | string[];
-                /** Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-but will set body to position fixed, might break some layouts. */
-                scroll: "clip" | "keep";
+                /** Set `true` to remove the body scrollbar.
+When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+but will set the body to a fixed position, which may break some layouts. */
+                scroll: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -981,10 +985,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 reduceClass: ClassDefinition;
                 /** Class of the content element when expanded on hover */
                 expandOnHoverClass: ClassDefinition;
-                /** Class of the body when is visible and scroll is clip */
+                /** Class of the body when is visible and scroll is clipped */
                 scrollClipClass: ClassDefinition;
-                /** Class of the body when is visible and scroll is not clip */
-                noScrollClass: ClassDefinition;
+                /** Class of the body when is visible and scroll is keeped */
+                scrollKeepClass: ClassDefinition;
             }>;
         skeleton?: ComponentConfigBase &
             Partial<{
