@@ -1,7 +1,7 @@
 import type { App, Component, Plugin, defineComponent } from "vue";
 import { useOruga, addProgrammatic } from "./programmatic";
 
-export let VueInstance: App;
+export let VueInstance: App | undefined;
 
 /** set the global vue instance */
 export const setVueInstance = (Vue: App): void => {

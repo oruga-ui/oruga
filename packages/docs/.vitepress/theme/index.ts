@@ -1,4 +1,4 @@
-import { markRaw } from "vue";
+import { defineCustomElement, markRaw } from "vue";
 import type { App, DefineComponent } from "vue";
 
 // THEME
@@ -6,7 +6,7 @@ import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
 
-import ExampleShowcase from "./components/ExampleShowcase";
+import ExampleShowcase from "./components/ExampleShowcase.ce.vue";
 import InspectorWrapper from "./components/InspectorWrapper.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
@@ -79,8 +79,14 @@ export default {
         app.component("Expo", Expo);
 
         // register example-showcase web component
-        if (!import.meta.env.SSR)
-            customElements.define("example-showcase", ExampleShowcase);
+        if (!import.meta.env.SSR) {
+            customElements.define(
+                "example-showcase",
+                defineCustomElement(ExampleShowcase, {
+                    configureApp: () => app,
+                }),
+            );
+        }
 
         // import example components
         const examples = import.meta.glob<DefineComponent>(
