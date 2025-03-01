@@ -11,8 +11,8 @@ import IndicatorsCode from "./indicators.vue?raw";
 import Custom from "./custom.vue";
 import CustomCode from "./custom.vue?raw";
 
-import Autoplay from "./autplay.vue";
-import AutoplayCode from "./autplay.vue?raw";
+import Autoplay from "./autoplay.vue";
+import AutoplayCode from "./autoplay.vue?raw";
 </script>
 
 <template>
@@ -20,30 +20,34 @@ import AutoplayCode from "./autplay.vue?raw";
     <p>Here is a basic example of a carousel with some slides.</p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3 id="list">Carousel List</h3>
-    <p>
-        The <code>items-to-show</code> and <code>items-to-list</code> props can
-        be used to specify the number of items to be displayed and rotated at
-        once.
-    </p>
-    <ExampleViewer :component="List" :code="ListCode" />
-
     <h3 id="indicatios">Indicators</h3>
     <p>
-        <code>indicators</code>
-        <code>indicatorInside</code>
-        <code>indicatorPosition</code>
-        <code>indicatorStyle</code>
+        Alongside the previous/next controls, slide indicators can be activated
+        using the <code>indicators</code> prop. Indicators allow the user to
+        jump directly to a particular slide.The position can be set with the
+        <code>indicatorPosition</code> and <code>indicatorInside</code> props to
+        display the indicators at the top or bottom and inside or outside the
+        slide. If there is more than one style defined for the indicators in a
+        theme, the style can be customised by using the
+        <code>indicatorStyle</code> prop.
     </p>
     <ExampleViewer :component="Indicators" :code="IndicatorsCode" />
 
-    <h3 id="custom">Custom Indicators</h3>
+    <h3 id="list">Carousel List</h3>
     <p>
-        Alongside the previous/next controls, the indicators can be customised
-        by using the <code>indicators</code> slot. The indicators let users jump
-        directly to a particular slide.
+        The component is capable of displaying and rotating more than one slide
+        at a time. Therefore, the <code>items-to-show</code> and
+        <code>items-to-list</code> props can be used to specify the number of
+        items to be shown and rotated at once.
     </p>
-    <p>Click on the slide to open the gallery mode.</p>
+    <ExampleViewer :component="List" :code="ListCode" />
+
+    <h3 id="slideshow">Slideshow</h3>
+    <p>
+        Using the <code>indicators</code> slot, the indicators can be further
+        customised to create a custom style like a picture gallery slideshow.
+        Click on the slide to open the gallery mode.
+    </p>
     <ExampleViewer :component="Custom" :code="CustomCode" />
 
     <h3 id="autoplay">Autoplay</h3>

@@ -5,8 +5,8 @@ const carousel = ref(1);
 
 const indicators = ref(true);
 const indicatorInside = ref(true);
-const indicatorPosition = ref<string>();
-const indicatorStyle = ref<string>();
+const indicatorPosition = ref<string>("top");
+const indicatorStyle = ref<string>("dots");
 
 const items = [
     {
@@ -51,15 +51,17 @@ const items = [
                     v-model="indicatorInside"
                     label="Show indicators inside" />
             </o-field>
-            <o-field>
-                <o-switch
-                    v-model="indicatorPosition"
-                    label="Select indicators position" />
+            <o-field label="Select indicators position">
+                <o-select v-model="indicatorPosition">
+                    <option value="top">Top</option>
+                    <option value="bottom">bottom</option>
+                </o-select>
             </o-field>
-            <o-field>
-                <o-switch
-                    v-model="indicatorStyle"
-                    label="Select indicators style" />
+            <o-field label="Select indicators style">
+                <o-select v-model="indicatorStyle">
+                    <option value="dots">Dots</option>
+                    <option value="lines">Lines</option>
+                </o-select>
             </o-field>
         </o-field>
 
