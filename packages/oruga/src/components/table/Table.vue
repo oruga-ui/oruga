@@ -1619,7 +1619,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             </td>
                         </tr>
 
-                        <transition
+                        <transition-group
                             v-if="props.detailed"
                             :name="detailTransition">
                             <template v-if="isActiveDetailRow(row)">
@@ -1650,7 +1650,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     </td>
                                 </tr>
                             </template>
-                        </transition>
+                        </transition-group>
                     </template>
 
                     <tr v-if="!availableRows.length" :class="trEmptyClasses">
