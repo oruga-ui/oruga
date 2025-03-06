@@ -150,12 +150,12 @@ const isTransitioning = computed(() =>
 
 // --- EVENT HANDLER ---
 
-/** Click the item after or before the current active item. */
+/** Activate the item after or before the current active item. */
 function activateItem(fowardIndex: 1 | -1): void {
     const index = (activeItem.value?.index ?? 0) + fowardIndex;
     if (index < 0 || index >= items.value.length) return;
     const item = items.value[index];
-    itemClick(item);
+    if (vmodel.value !== item.value) performAction(item.value);
 }
 
 /** Item click listener, emit input event and change active child. */
@@ -163,6 +163,7 @@ function itemClick(item: StepItem<T>): void {
     if (!isItemClickable(item)) return;
     if (vmodel.value !== item.value) performAction(item.value);
 }
+
 /** Return if the step should be clickable or not. */
 function isItemClickable(item: StepItem<T>): boolean {
     if (typeof item.clickable === "undefined")
@@ -171,13 +172,17 @@ function isItemClickable(item: StepItem<T>): boolean {
 }
 
 /** Check if previous button is available. */
-const hasPrev = computed(() =>
-    isDefined(getFirstViableIndex((activeItem.value?.index ?? 0) - 1, false)),
+const hasPrev = computed(
+    () =>
+        getFirstViableIndex((activeItem.value?.index ?? 0) - 1, false) !==
+        undefined,
 );
 
 /** Check if next button is available. */
-const hasNext = computed(() =>
-    isDefined(getFirstViableIndex((activeItem.value?.index ?? 0) + 1, true)),
+const hasNext = computed(
+    () =>
+        getFirstViableIndex((activeItem.value?.index ?? 0) + 1, true) !==
+        undefined,
 );
 
 /** Focus the next item if possible. */
@@ -238,7 +243,7 @@ function getFirstViableIndex(
     ) {
         const item = items.value[newIndex];
         // Break if the item at this index is viable (not disabled and is visible)
-        if (item.visible && !item.disabled && isItemClickable(item)) break;
+        if (item.visible && !item.disabled) break;
     }
 
     if (newIndex < 0 || newIndex >= items.value.length) return undefined;
@@ -287,7 +292,7 @@ const rootClasses = defineClasses(
     ],
     [
         "positionClass",
-        "o-steps-position-",
+        "o-steps--position-",
         computed(() => props.position),
         computed(() => !!props.position && props.vertical),
     ],

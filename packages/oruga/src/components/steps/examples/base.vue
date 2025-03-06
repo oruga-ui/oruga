@@ -92,8 +92,7 @@ function onProfileActivate(): void {
             :has-navigation="hasNavigation"
             :icon-prev="prevIcon"
             :icon-next="nextIcon"
-            :label-position="labelPosition"
-            destroy-on-hide>
+            :label-position="labelPosition">
             <o-step-item
                 value="1"
                 step="1"
