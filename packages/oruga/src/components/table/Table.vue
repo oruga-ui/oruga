@@ -872,7 +872,7 @@ const showDetailRowIcon = computed(
 
 /** toggle to show/hide details slot */
 function toggleDetails(row: TableRow<T>): void {
-    if (isVisibleDetailRow(row)) {
+    if (isDetailRowVisible(row)) {
         closeDetailRow(row);
         emits("details-close", row.value);
     } else {
@@ -893,12 +893,11 @@ function closeDetailRow(row: TableRow<T>): void {
         visibleDetailedRows.value = visibleDetailedRows.value.toSpliced(idx, 1);
 }
 
-function isVisibleDetailRow(row: TableRow<T>): boolean {
-    return visibleDetailedRows.value.some((r) => isRowEqual(r, row.value));
-}
-
-function isActiveDetailRow(row: TableRow<T>): boolean {
-    return props.detailed && isVisibleDetailRow(row);
+function isDetailRowVisible(row: TableRow<T>): boolean {
+    return (
+        props.detailed &&
+        visibleDetailedRows.value.some((r) => isRowEqual(r, row.value))
+    );
 }
 
 // #endregion --- Detail Row Feature ---
@@ -1536,7 +1535,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     v-if="isDetailedVisible(row.value)"
                                     :icon="detailIcon"
                                     :pack="iconPack"
-                                    :rotation="isVisibleDetailRow(row) ? 90 : 0"
+                                    :rotation="isDetailRowVisible(row) ? 90 : 0"
                                     role="button"
                                     tabindex="0"
                                     clickable
@@ -1622,7 +1621,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         <transition-group
                             v-if="props.detailed"
                             :name="detailTransition">
-                            <template v-if="isActiveDetailRow(row)">
+                            <template v-if="isDetailRowVisible(row)">
                                 <!--
                                     @slot Place row detail content here
                                     @binding {T} row - row content
