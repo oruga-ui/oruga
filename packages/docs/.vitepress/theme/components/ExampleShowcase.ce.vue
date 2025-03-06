@@ -40,6 +40,9 @@ link.href =
 shadowRoot.appendChild(link);
 </script>
 
+<!-- eslint-disable-next-line vue/valid-template-root -->
+<template></template>
+
 <style>
 /** class of the inpected element in the Class Inpector */
 .odocs-inspected-element {
