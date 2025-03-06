@@ -172,17 +172,13 @@ function isItemClickable(item: StepItem<T>): boolean {
 }
 
 /** Check if previous button is available. */
-const hasPrev = computed(
-    () =>
-        getFirstViableIndex((activeItem.value?.index ?? 0) - 1, false) !==
-        undefined,
+const hasPrev = computed(() =>
+    isDefined(getFirstViableIndex((activeItem.value?.index ?? 0) - 1, false)),
 );
 
 /** Check if next button is available. */
-const hasNext = computed(
-    () =>
-        getFirstViableIndex((activeItem.value?.index ?? 0) + 1, true) !==
-        undefined,
+const hasNext = computed(() =>
+    isDefined(getFirstViableIndex((activeItem.value?.index ?? 0) + 1, true)),
 );
 
 /** Focus the next item if possible. */
