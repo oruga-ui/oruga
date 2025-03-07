@@ -190,8 +190,8 @@ const inspectData: InspectData<
                 v-bind="props"
                 label="Profile"
                 icon="user"
-                clickable
-                step="2">
+                step="2"
+                clickable>
                 <h1 class="title has-text-centered">Profile</h1>
                 Lorem ipsum dolor sit amet.
             </o-step-item>

@@ -23,7 +23,7 @@
             <o-taginput
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
-                variant="medium"
+                size="medium"
                 placeholder="Add an item"
                 allow-new
                 allow-duplicates />
@@ -33,7 +33,7 @@
             <o-taginput
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
-                variant="large"
+                size="large"
                 placeholder="Add an item"
                 allow-new
                 allow-duplicates />
