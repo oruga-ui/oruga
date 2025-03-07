@@ -27,7 +27,7 @@ export const getOptions = (): OrugaOptions => {
 export const getOption = <K extends string = string>(
     path: K,
     defaultValue?: DeepType<OrugaOptions, K>,
-): DeepType<OrugaOptions, K> => {
+): DeepType<OrugaOptions, K> | undefined => {
     return getValueByPath(globalOptions.value, path, defaultValue);
 };
 
