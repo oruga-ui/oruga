@@ -226,10 +226,10 @@ const listClasses = defineClasses(["listClass", "o-pagination__list"]);
 const listItemClasses = defineClasses(["listItemClass", "o-pagination__item"]);
 
 const buttonClasses = defineClasses(
-    ["buttonClass", "o-pagination__btn"],
+    ["buttonClass", "o-pagination__button"],
     [
         "roundedClass",
-        "o-pagination__btn--rounded",
+        "o-pagination__button--rounded",
         null,
         computed(() => props.rounded),
     ],
@@ -237,17 +237,17 @@ const buttonClasses = defineClasses(
 
 const buttonCurrentClasses = defineClasses([
     "buttonCurrentClass",
-    "o-pagination__btn--current",
+    "o-pagination__button--current",
 ]);
 
 const buttonPrevClasses = defineClasses(
-    ["buttonPrevClass", "o-pagination__btn-previous"],
-    ["buttonDisabledClass", "o-pagination__btn--disabled", null, isFirst],
+    ["buttonPrevClass", "o-pagination__button-previous"],
+    ["buttonDisabledClass", "o-pagination__button--disabled", null, isFirst],
 );
 
 const buttonNextClasses = defineClasses(
-    ["buttonNextClass", "o-pagination__btn-next"],
-    ["buttonDisabledClass", "o-pagination__btn--disabled", null, isLast],
+    ["buttonNextClass", "o-pagination__button-next"],
+    ["buttonDisabledClass", "o-pagination__button--disabled", null, isLast],
 );
 
 // --- Expose Public Functionalities ---
