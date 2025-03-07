@@ -112,7 +112,7 @@ const provideData = computed<CarouselComponent>(() => ({
 /** provide functionalities and data to child item components */
 const { childItems } = useProviderParent({ rootRef, data: provideData });
 
-/** The real index of the active item */
+// the real index of the active item, use v-model to make it two-way binding
 const activeIndex = defineModel<number>({ default: 0 });
 
 const total = computed(() => childItems.value.length);

@@ -143,10 +143,10 @@ const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
     props,
 );
 
-/** the selected items, use v-model to make it two-way binding */
+// the selected items, use v-model to make it two-way binding
 const selectedItems = defineModel<ModelValue>({ default: undefined });
 
-/** the value of the inner input, use v-model:input to make it two-way binding */
+// the value of the inner input, use v-model:input to make it two-way binding
 const inputValue = defineModel<string>("input", { default: "" });
 
 const inputLength = computed(() => inputValue.value.trim().length);

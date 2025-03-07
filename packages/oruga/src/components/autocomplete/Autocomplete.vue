@@ -178,13 +178,13 @@ const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-/** The active state of the dropdown, use v-model:active to make it two-way binding */
+// the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
-/** The selected value, use v-model to make it two-way binding */
+// the selected value, use v-model to make it two-way binding
 const selectedValue = defineModel<ModelValue>({ default: undefined });
 
-/** The value of the inner input, use v-model:input to make it two-way binding */
+// the value of the inner input, use v-model:input to make it two-way binding
 const inputValue = defineModel<string>("input", { default: "" });
 
 /** create a unique id for the menu */
