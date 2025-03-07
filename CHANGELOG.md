@@ -1,3 +1,25 @@
+# [0.10.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.1...v0.10.0-pre.2) (2025-03-07)
+
+
+### Bug Fixes
+
+* **autocomplete:** clear dropdown value when selected value get cleared ([#1213](https://github.com/oruga-ui/oruga/issues/1213)) ([551aecb](https://github.com/oruga-ui/oruga/commit/551aecbd9d53a4f1d660109384eccfdccc779c30))
+* **datetimepicker:** add missing `mobileModal` and `desktopModal` props ([#1211](https://github.com/oruga-ui/oruga/issues/1211)) ([2ae4573](https://github.com/oruga-ui/oruga/commit/2ae45730327cfef5877b37ce7bdec53da9f415d0))
+* **menu:** solve keyboard navigation issues ([#1214](https://github.com/oruga-ui/oruga/issues/1214)) ([f273db5](https://github.com/oruga-ui/oruga/commit/f273db516f61ace864fecf4c5d0b5845ad26e546))
+* **steps:** solve steps button navigation does not work properly ([#1221](https://github.com/oruga-ui/oruga/issues/1221)) ([38d8926](https://github.com/oruga-ui/oruga/commit/38d89262413f9392850585541905229bc395d59f))
+* **table:** use transition-group instead of transition for detail slot ([#1217](https://github.com/oruga-ui/oruga/issues/1217)) ([e03afcc](https://github.com/oruga-ui/oruga/commit/e03afcca5df6123e7889b551f3bdfc56c947d0ba))
+
+
+### Features
+
+* change `scroll` prop to `clipScroll` & `noScrollClass` class to `scrollKeepClass` ([#1212](https://github.com/oruga-ui/oruga/issues/1212)) ([2405151](https://github.com/oruga-ui/oruga/commit/240515172370f7670904c25d85f28d0cac2f18b2))
+* **classes:** unify default classes by using the full component name instead of an abbreviation ([#1204](https://github.com/oruga-ui/oruga/issues/1204)) ([81042f0](https://github.com/oruga-ui/oruga/commit/81042f0820a4633db3e17fad918a6f28eef8f48f))
+* **datepicker:** unify class names & remove unnecessary classes ([#1205](https://github.com/oruga-ui/oruga/issues/1205)) ([8777256](https://github.com/oruga-ui/oruga/commit/8777256d18ca3bec6702adc6bf06637ba0fc0a95))
+* **pagination:** update pagination button default classes ([#1219](https://github.com/oruga-ui/oruga/issues/1219)) ([d8adf1e](https://github.com/oruga-ui/oruga/commit/d8adf1ec555ccad4764da474a91a0b1724056033))
+* **programmatic:** accept reactive element for `target` prop ([#1208](https://github.com/oruga-ui/oruga/issues/1208)) ([f6beaed](https://github.com/oruga-ui/oruga/commit/f6beaed8fa317dbe5e962a72ae84852b29cb72c2))
+
+
+
 # [0.10.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.9.3...v0.10.0-pre.1) (2025-02-21)
 
 
