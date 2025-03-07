@@ -8,14 +8,14 @@ exports[`OPagination tests > render correctly 1`] = `
             @binding {boolean} isCurrent - if page is current
             @binding {(event:Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
-        --><button role="button" tabindex="0" class="o-pagination__btn-previous o-pagination__btn--disabled o-pagination__btn" aria-label="Previous page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span></button>
+        --><button role="button" tabindex="0" class="o-pagination__button-previous o-pagination__button--disabled o-pagination__button" aria-label="Previous page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span></button>
   <!-- 
             @slot Next button slot
             @binding {number} number - page number 
             @binding {boolean} isCurrent - if page is current
             @binding {(event:Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
-        --><button role="button" tabindex="0" class="o-pagination__btn-next o-pagination__btn--disabled o-pagination__btn" aria-label="Next page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span></button>
+        --><button role="button" tabindex="0" class="o-pagination__button-next o-pagination__button--disabled o-pagination__button" aria-label="Next page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span></button>
   <ul class="o-pagination__list">
     <!--First-->
     <!--v-if-->
