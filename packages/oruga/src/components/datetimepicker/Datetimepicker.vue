@@ -153,9 +153,10 @@ const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
 
 const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 
-/** Dropdown active state */
+// the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
+// the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 function updateVModel(value: Date | Date[] | undefined): void {

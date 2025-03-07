@@ -133,10 +133,10 @@ const {
 
 const pickerRef = useTemplateRef("pickerComponent");
 
-/** modelvalue of selected date */
+// the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-/** Dropdown active state */
+// the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
 const hoursSelected = ref<number>();

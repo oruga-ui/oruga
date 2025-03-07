@@ -172,10 +172,10 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const pickerRef = useTemplateRef("pickerComponent");
 
-/** modelvalue of selected date, use v-model to make it two-way binding */
+// the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-/** Dropdown active state */
+// the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
 const isTypeMonth = computed(() => props.type === "month");

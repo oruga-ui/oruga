@@ -158,10 +158,10 @@ const isNotEmpty = computed(() => childItems.value.some(isItemViable));
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-/** The selected item value, use v-model to make it two-way binding */
+// the selected item value, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-/** The active state of the dropdown, use v-model:active to make it two-way binding */
+// the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
 // set field labelId or create a unique label id if a label is given
