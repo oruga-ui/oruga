@@ -59,7 +59,7 @@ const plugin: Plugin = {
         }
 
         // add documentation components
-        app.component("ExampleViewer", ExampleShowcase);
+        app.component("ExampleShowcase", ExampleShowcase);
         app.component("ExampleViewer", ExampleViewer);
         app.component("ClientOnly", ClientOnly);
     },

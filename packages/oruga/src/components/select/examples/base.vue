@@ -5,7 +5,7 @@
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
                 <option value="vane">Vane</option>
-                <option value="Billy">billy</option>
+                <option value="billy">Billy</option>
             </o-select>
         </o-field>
 
@@ -14,7 +14,7 @@
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
                 <option value="vane">Vane</option>
-                <option value="Billy">billy</option>
+                <option value="billy">Billy</option>
             </o-select>
         </o-field>
 
@@ -26,7 +26,7 @@
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
                 <option value="vane">Vane</option>
-                <option value="Billy">billy</option>
+                <option value="billy">Billy</option>
             </o-select>
         </o-field>
 
@@ -35,7 +35,7 @@
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
                 <option value="vane">Vane</option>
-                <option value="Billy">billy</option>
+                <option value="billy">Billy</option>
             </o-select>
         </o-field>
 

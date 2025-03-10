@@ -2,7 +2,7 @@
 
 exports[`ODatetimepicker tests > render correctly 1`] = `
 "<div data-oruga="datetimepicker" class="o-datepicker o-datetimepicker__date">
-  <div data-oruga="dropdown" class="o-dropdown o-tpck__dropdown o-dropdown--position-bottom-left">
+  <div data-oruga="dropdown" class="o-dropdown o-datepicker__dropdown o-dropdown--position-bottom-left">
     <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0">
       <!--
                 @slot Override the trigger element, default is label prop
