@@ -8,6 +8,7 @@ import {
     useSlots,
     toValue,
     useTemplateRef,
+    toRaw,
     triggerRef,
     type MaybeRefOrGetter,
 } from "vue";
@@ -126,7 +127,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     filterDebounce: () => getDefault("table.filterDebounce", 300),
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
-    emptyIconSize: () => getDefault("table.emptyIconSize", "large"),
+    emptyIconSize: () => getDefault("table.emptyIconSize"),
     loading: false,
     loadingIcon: () => getDefault("table.loadingIcon", "loading"),
     loadingLabel: () => getDefault("table.loadingLabel"),
@@ -534,8 +535,8 @@ function isRowEqual(
     sourceRow: MaybeRefOrGetter<T>,
     targetRow: MaybeRefOrGetter<T>,
 ): boolean {
-    const el1 = toValue(sourceRow);
-    const el2 = toValue(targetRow);
+    const el1 = toRaw(toValue(sourceRow));
+    const el2 = toRaw(toValue(targetRow));
     if (!isDefined(targetRow)) return false;
     if (typeof props.customCompare === "function")
         return props.customCompare(el1, el2);
