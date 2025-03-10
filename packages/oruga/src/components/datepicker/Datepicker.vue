@@ -540,7 +540,7 @@ const footerClasses = defineClasses(["footerClass", "o-datepicker__footer"]);
 
 const pickerDropdownClasses = defineClasses([
     "dropdownClass",
-    "o-tpck__dropdown",
+    "o-datepicker__dropdown",
 ]);
 
 // --- Expose Public Functionalities ---
