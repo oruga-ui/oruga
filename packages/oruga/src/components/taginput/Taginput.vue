@@ -276,7 +276,7 @@ function onKeydown(event: KeyboardEvent): void {
         // remove last item
         removeItem(itemsLength.value - 1);
     }
-    addItem((event as any as InputEvent).inputType);
+    addItem(event.charCode);
 
     if (props.separators.includes(event.key)) {
         // If adding by comma, don't add the comma to the input
@@ -284,6 +284,17 @@ function onKeydown(event: KeyboardEvent): void {
         // Add item if not select only and dropdown selection is closed
         if (props.allowNew && !isDropdownActive.value) addItem();
     }
+}
+
+function onBackspace(event: KeyboardEvent): void {
+    if (!inputValue.value?.length && itemsLength.value > 0)
+        // remove last item
+        removeItem(itemsLength.value - 1);
+}
+
+function onEnter(event: KeyboardEvent): void {
+    // Add item if not select only and dropdown selection is closed
+    if (props.allowNew && !isDropdownActive.value) addItem();
 }
 
 // --- Computed Component Classes ---
@@ -417,7 +428,9 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 @focus="onFocus"
                 @blur="onBlur"
                 @invalid="onInvalid"
-                @keydown="onKeydown"
+                @keydown.enter="onEnter"
+                @keydown.tab="onEnter"
+                @keydown.backspace="onBackspace"
                 @select="onSelect"
                 @scroll-start="$emit('scroll-start')"
                 @scroll-end="$emit('scroll-end')"
