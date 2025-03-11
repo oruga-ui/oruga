@@ -439,6 +439,7 @@ defineExpose({ focus: setFocus, value: inputValue });
                 :debounce="debounce"
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
                 :aria-controls="menuId"
+                enterkeyhint="enter"
                 :use-html5-validation="false"
                 @input="onInput"
                 @focus="handleFocus"

@@ -38,20 +38,12 @@ export type TaginputProps<T> = {
     expanded?: boolean;
     /** Same as native input disabled */
     disabled?: boolean;
-    /** Array of chars used to split when pasting a new string */
-    separators?: string[];
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
     keepFirst?: boolean;
     /** Allows adding new items */
     allowNew?: boolean;
     /** Allows adding the same item multiple time */
     allowDuplicates?: boolean;
-    /**
-     * Allow removing last item when pressing given keys
-     * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
-     * if input is empty
-     */
-    removeOnKeys?: string[];
     /** Function to validate the value of a new item before it got added */
     validateItem?: (value: T | string) => boolean;
     /** Function to create a new item to push into v-model (items) */

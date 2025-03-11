@@ -1408,18 +1408,16 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 variant: string;
                 /** Show counter when maxlength or maxtags props are passed */
                 counter: boolean;
+                /** Opens a dropdown with choices when the input field is focused */
+                openOnFocus: boolean;
                 /** Keep open dropdown list after select */
                 keepOpen: boolean;
-                /** Array of chars used to split when pasting a new string */
-                separators: string[];
+                /** The first option will always be pre-selected (easier to just hit enter or tab) */
+                keepFirst: boolean;
                 /** Allows adding new items */
                 allowNew: boolean;
                 /** Allows adding the same item multiple time */
                 allowDuplicates: boolean;
-                /** Allow removing last item when pressing given keys
-(https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
-if input is empty */
-                removeOnKeys: string[];
                 /** Makes the component check if list reached scroll start or end and emit scroll events. */
                 checkScroll: boolean;
                 /** Add close/delete button to the item */
