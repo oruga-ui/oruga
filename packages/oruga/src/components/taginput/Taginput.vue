@@ -267,32 +267,32 @@ function onInput(value: string, event: Event): void {
     emits("input", value?.trim(), event);
 }
 
-function onKeydown(event: KeyboardEvent): void {
-    if (
-        props.removeOnKeys.includes(event.key) &&
-        !inputValue.value?.length &&
-        itemsLength.value > 0
-    ) {
-        // remove last item
-        removeItem(itemsLength.value - 1);
-    }
-    addItem(event.charCode);
+// function onKeydown(event: KeyboardEvent): void {
+//     if (
+//         props.removeOnKeys.includes(event.key) &&
+//         !inputValue.value?.length &&
+//         itemsLength.value > 0
+//     ) {
+//         // remove last item
+//         removeItem(itemsLength.value - 1);
+//     }
+//     addItem(event.charCode);
 
-    if (props.separators.includes(event.key)) {
-        // If adding by comma, don't add the comma to the input
-        if (event.key === ",") event.preventDefault();
-        // Add item if not select only and dropdown selection is closed
-        if (props.allowNew && !isDropdownActive.value) addItem();
-    }
-}
+//     if (props.separators.includes(event.key)) {
+//         // If adding by comma, don't add the comma to the input
+//         if (event.key === ",") event.preventDefault();
+//         // Add item if not select only and dropdown selection is closed
+//         if (props.allowNew && !isDropdownActive.value) addItem();
+//     }
+// }
 
-function onBackspace(event: KeyboardEvent): void {
+function onBackspace(): void {
     if (!inputValue.value?.length && itemsLength.value > 0)
         // remove last item
         removeItem(itemsLength.value - 1);
 }
 
-function onEnter(event: KeyboardEvent): void {
+function onEnter(): void {
     // Add item if not select only and dropdown selection is closed
     if (props.allowNew && !isDropdownActive.value) addItem();
 }
