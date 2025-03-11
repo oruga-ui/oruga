@@ -1,3 +1,15 @@
+# [0.10.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.2...v0.10.0-pre.3) (2025-03-11)
+
+
+### Bug Fixes
+
+* **table:** solve checkable not working ([#1224](https://github.com/oruga-ui/oruga/issues/1224)) ([ae64412](https://github.com/oruga-ui/oruga/commit/ae644128b2afcd9a517d2e4e2779b09be12f2efd))
+* **taginput:** enable virtual keyboard compatibility ([#1230](https://github.com/oruga-ui/oruga/issues/1230)) ([0d3a791](https://github.com/oruga-ui/oruga/commit/0d3a791cd224494bb07560f8c6a7d7cb25a801b4))
+* **taginput:** prevent double adding when `allowNew` and dropdown is open ([#1228](https://github.com/oruga-ui/oruga/issues/1228)) ([c92cc90](https://github.com/oruga-ui/oruga/commit/c92cc9039e41bf33d0890a7b019e0ee07dfb0d89))
+* **dropdown:** set item focused on hover ([#1226](https://github.com/oruga-ui/oruga/issues/1226)) ([edb523d](https://github.com/oruga-ui/oruga/commit/edb523d8807c9e194337d63a305f81419c36df54))
+
+
+
 # [0.10.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.1...v0.10.0-pre.2) (2025-03-07)
 
 
