@@ -594,7 +594,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                     :aria-controls="`carouselpanel-${item.identifier}`"
                     :aria-selected="modelValue === item.index"
                     @click="onChange(item)"
-                    @keypress.enter="onChange(item)">
+                    @keydown.enter="onChange(item)"
+                    @keydown.space="onChange(item)">
                     <!--
                             @slot Override the indicator elements
                             @binding {index} index indicator index 

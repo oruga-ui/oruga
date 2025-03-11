@@ -113,8 +113,8 @@ const rootClasses = defineClasses(
         :aria-disabled="disabled"
         @click="selectItem"
         @mouseenter="focusItem"
-        @keypress.enter="selectItem"
-        @keypress.space="selectItem">
+        @keydown.enter="selectItem"
+        @keydown.space="selectItem">
         <!--
             @slot Override the label, default is label prop 
         -->
