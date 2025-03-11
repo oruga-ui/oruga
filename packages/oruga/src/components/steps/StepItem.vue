@@ -54,6 +54,7 @@ const providedData = computed<StepItemComponent<T>>(() => ({
     stepClasses: stepClasses.value,
     iconClasses: stepIconClasses.value,
     labelClasses: stepLabelClasses.value,
+    isClickable: isClickable.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,

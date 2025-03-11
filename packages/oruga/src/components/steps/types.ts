@@ -19,6 +19,7 @@ export type StepItemComponent<T> = StepItemProps<T, Component> & {
     stepClasses: ClassBind[];
     iconClasses: ClassBind[];
     labelClasses: ClassBind[];
+    isClickable: boolean;
     isTransitioning: boolean;
     activate: (index: number) => void;
     deactivate: (index: number) => void;
