@@ -51,16 +51,14 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     maxitems: undefined,
     maxlength: undefined,
     counter: () => getDefault("taginput.counter", true),
-    openOnFocus: true,
+    openOnFocus: () => getDefault("taginput.openOnFocus", true),
     keepOpen: () => getDefault("taginput.keepOpen", false),
     placeholder: undefined,
     expanded: false,
     disabled: false,
-    separators: () => getDefault("taginput.separators", [",", "Enter", "Tab"]),
-    keepFirst: false,
+    keepFirst: () => getDefault("taginput.keepFirst", false),
     allowNew: () => getDefault("taginput.allowNew", false),
     allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
-    removeOnKeys: () => getDefault("taginput.removeOnKeys", ["Backspace"]),
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
     checkScroll: () => getDefault("taginput.checkScroll", false),
@@ -186,37 +184,10 @@ watchEffect(() => {
     if (!hasInput.value) onBlur(new Event("blur"));
 });
 
-/**
- * If input has pasteSeparators prop,
- * returning new RegExp used to split pasted string.
- */
-const separatorsAsRegExp = computed(() =>
-    props.separators.length
-        ? new RegExp(
-              props.separators
-                  .map((s) =>
-                      s ? s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") : null,
-                  )
-                  .join("|"),
-              "g",
-          )
-        : null,
-);
-
 function addItem(item?: T | string): void {
     item = item || inputValue.value.trim();
 
     if (item) {
-        if (typeof item === "string") {
-            const reg = separatorsAsRegExp.value;
-            if (reg && item.match(reg)) {
-                item.split(reg)
-                    .map((t) => t.trim())
-                    .filter((t) => t.length !== 0)
-                    .map(addItem);
-                return;
-            }
-        }
         const itemToAdd = props.createItem(item);
 
         if (!selectedItems.value?.length) {
@@ -266,25 +237,6 @@ function onSelect(option: T | undefined): void {
 function onInput(value: string, event: Event): void {
     emits("input", value?.trim(), event);
 }
-
-// function onKeydown(event: KeyboardEvent): void {
-//     if (
-//         props.removeOnKeys.includes(event.key) &&
-//         !inputValue.value?.length &&
-//         itemsLength.value > 0
-//     ) {
-//         // remove last item
-//         removeItem(itemsLength.value - 1);
-//     }
-//     addItem(event.charCode);
-
-//     if (props.separators.includes(event.key)) {
-//         // If adding by comma, don't add the comma to the input
-//         if (event.key === ",") event.preventDefault();
-//         // Add item if not select only and dropdown selection is closed
-//         if (props.allowNew && !isDropdownActive.value) addItem();
-//     }
-// }
 
 function onBackspace(): void {
     if (!inputValue.value?.length && itemsLength.value > 0)
