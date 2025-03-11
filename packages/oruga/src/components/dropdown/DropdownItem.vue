@@ -75,8 +75,13 @@ const isFocused = computed(
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(itemValue as T, event);
+    parent.value.selectItem(item.value, event);
     emits("click", itemValue as T, event);
+}
+
+/** Hover listener, focus the item. */
+function focusItem(): void {
+    parent.value.focusItem(item.value);
 }
 
 // --- Computed Component Classes ---
@@ -107,7 +112,9 @@ const rootClasses = defineClasses(
         :aria-selected="parent.selectable ? isSelected : undefined"
         :aria-disabled="disabled"
         @click="selectItem"
-        @keypress.enter="selectItem">
+        @mouseenter="focusItem"
+        @keypress.enter="selectItem"
+        @keypress.space="selectItem">
         <!--
             @slot Override the label, default is label prop 
         -->
