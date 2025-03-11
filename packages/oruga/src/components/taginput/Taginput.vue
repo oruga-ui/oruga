@@ -5,6 +5,7 @@ import {
     useTemplateRef,
     useId,
     watchEffect,
+    ref,
     type Component,
 } from "vue";
 
@@ -50,7 +51,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     maxitems: undefined,
     maxlength: undefined,
     counter: () => getDefault("taginput.counter", true),
-    openOnFocus: false,
+    openOnFocus: true,
     keepOpen: () => getDefault("taginput.keepOpen", false),
     placeholder: undefined,
     expanded: false,
@@ -142,6 +143,8 @@ const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
     emits,
     props,
 );
+
+const isDropdownActive = ref(false);
 
 // the selected items, use v-model to make it two-way binding
 const selectedItems = defineModel<ModelValue>({ default: undefined });
@@ -261,7 +264,7 @@ function onSelect(option: T | undefined): void {
 }
 
 function onInput(value: string, event: Event): void {
-    emits("input", value.trim(), event);
+    emits("input", value?.trim(), event);
 }
 
 function onKeydown(event: KeyboardEvent): void {
@@ -277,8 +280,8 @@ function onKeydown(event: KeyboardEvent): void {
     if (props.separators.includes(event.key)) {
         // If adding by comma, don't add the comma to the input
         if (event.key === ",") event.preventDefault();
-        // Add item if not select only
-        if (props.allowNew) addItem();
+        // Add item if not select only and dropdown selection is closed
+        if (props.allowNew && !isDropdownActive.value) addItem();
     }
 }
 
@@ -389,6 +392,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
             <o-autocomplete
                 v-show="hasInput"
                 ref="autocompleteComponent"
+                v-model:active="isDropdownActive"
                 v-model:input="inputValue"
                 v-bind="autocompleteBind"
                 :options="options"

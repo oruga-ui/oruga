@@ -195,8 +195,7 @@ watch(
 );
 
 function onInput(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    emits("input", value, event);
+    emits("input", vmodel.value, event);
 }
 
 const placeholderVisible = computed(
