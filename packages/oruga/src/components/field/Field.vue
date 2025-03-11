@@ -40,7 +40,6 @@ const props = withDefaults(defineProps<FieldProps>(), {
     messageId: () => useId(),
     grouped: false,
     addons: false,
-    multiline: false,
     horizontal: false,
     mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
@@ -96,11 +95,7 @@ const hasLabel = computed(() => props.label || !!slots.label);
 const hasMessage = computed(() => !!fieldMessage.value || !!slots.message);
 
 const hasBody = computed(
-    () =>
-        props.grouped ||
-        props.multiline ||
-        hasInnerField.value ||
-        hasAddons.value,
+    () => props.grouped || hasInnerField.value || hasAddons.value,
 );
 
 const hasAddons = computed(
@@ -215,12 +210,6 @@ const innerBodyClasses = defineClasses(
         "o-field--addons",
         null,
         computed(() => !props.grouped && hasAddons.value),
-    ],
-    [
-        "multilineClass",
-        "o-field--multiline",
-        null,
-        computed(() => props.multiline),
     ],
 );
 
