@@ -60,7 +60,8 @@ const itemClasses = defineClasses(
         :aria-label="`${item.index + 1} of ${parent.total}`"
         draggable="true"
         @click="onClick"
-        @keypress.enter="onClick"
+        @keydown.enter="onClick"
+        @keydown.space="onClick"
         @dragstart="parent.onDrag"
         @touchstart="parent.onDrag">
         <!--
