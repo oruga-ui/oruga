@@ -10,7 +10,7 @@ const options = ref<OptionsPropItem<any>[]>([]);
 const selected = ref<any>();
 const value = ref("");
 
-async function getAsyncData(_value): Promise<void> {
+async function getAsyncData(_value: string): Promise<void> {
     if (value.value !== _value) {
         value.value = _value;
         options.value = [];

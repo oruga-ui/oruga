@@ -44,7 +44,7 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     </p>
     <ExampleViewer :component="Teleport" :code="TeleportCode" />
 
-    <h3 id="component">Dynamic Prop</h3>
+    <h3 id="component">Dynamic Component</h3>
     <p>
         Instead of using the default slot, the <code>component</code> prop
         allows to pass any component that will be programmatically rendered
