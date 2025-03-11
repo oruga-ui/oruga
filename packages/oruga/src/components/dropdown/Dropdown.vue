@@ -131,6 +131,7 @@ const provideData = computed<DropdownComponent<T>>(() => ({
     selected: vmodel.value,
     focsuedIdentifier: focusedItem.value?.identifier,
     selectItem,
+    focusItem,
 }));
 
 /** provide functionalities and data to child item components */
@@ -230,53 +231,6 @@ watch(
     { flush: "post" },
 );
 
-// #region --- Select Feature ---
-
-/**
- * Click listener from DropdownItem.
- *   1. Set new selected item.
- *   2. Update v-model.
- *   3. Close the dropdown.
- */
-function selectItem(value: T, event?: Event): void {
-    emits("select", value);
-
-    if (props.selectable) {
-        // set selected option
-        if (isTrueish(props.multiple)) {
-            if (vmodel.value && Array.isArray(vmodel.value)) {
-                if (!vmodel.value.includes(value)) {
-                    // add a value
-                    vmodel.value = [...vmodel.value, value] as ModelValue;
-                } else {
-                    // remove a value
-                    vmodel.value = vmodel.value.filter(
-                        (val) => val !== value,
-                    ) as ModelValue;
-                }
-            } else {
-                // init new value array
-                vmodel.value = [value] as ModelValue;
-            }
-            // emit change after vmodel has changed
-            nextTick(() => emits("change", vmodel.value));
-        } else {
-            if (vmodel.value !== value) {
-                // update a single value
-                vmodel.value = value as ModelValue;
-                // emit change after vmodel has changed
-                nextTick(() => emits("change", vmodel.value));
-            }
-        }
-    }
-
-    triggerRef.value?.focus();
-    if (props.keepOpen || !isActive.value || !event) return;
-    close("content", event);
-}
-
-// #endregion --- Select Feature ---
-
 // #region --- Trigger Handler ---
 
 /** Close dropdown if clicked outside. */
@@ -356,7 +310,7 @@ function close(method: string, event: Event): void {
 
     // select item when dropdown closed
     if (props.selectOnClose && focusedItem.value?.data?.value)
-        selectItem(focusedItem.value.data.value);
+        selectItem(focusedItem.value);
 
     isActive.value = false;
     focusedItem.value = undefined;
@@ -365,9 +319,62 @@ function close(method: string, event: Event): void {
 
 // #endregion --- Trigger Handler ---
 
+// #region --- Select Feature ---
+
+/**
+ * Click listener from DropdownItem.
+ *   1. Set new selected item.
+ *   2. Update v-model.
+ *   3. Close the dropdown.
+ */
+function selectItem(item: DropdownChildItem<T>, event?: Event): void {
+    const value = item.data!.value!;
+    emits("select", value);
+
+    if (props.selectable) {
+        // set selected option
+        if (isTrueish(props.multiple)) {
+            if (vmodel.value && Array.isArray(vmodel.value)) {
+                if (!vmodel.value.includes(value)) {
+                    // add a value
+                    vmodel.value = [...vmodel.value, value] as ModelValue;
+                } else {
+                    // remove a value
+                    vmodel.value = vmodel.value.filter(
+                        (val) => val !== value,
+                    ) as ModelValue;
+                }
+            } else {
+                // init new value array
+                vmodel.value = [value] as ModelValue;
+            }
+            // emit change after vmodel has changed
+            nextTick(() => emits("change", vmodel.value));
+        } else {
+            if (vmodel.value !== value) {
+                // update a single value
+                vmodel.value = value as ModelValue;
+                // emit change after vmodel has changed
+                nextTick(() => emits("change", vmodel.value));
+            }
+        }
+    }
+
+    triggerRef.value?.focus();
+    if (props.keepOpen || !isActive.value || !event) return;
+    close("content", event);
+}
+
+// #endregion --- Select Feature ---
+
 // #region --- Focus Feature ---
 
 const focusedItem = ref<DropdownChildItem<T>>();
+
+/** Hover listener from DropdownItem. */
+function focusItem(value: DropdownChildItem<T>): void {
+    focusedItem.value = value;
+}
 
 /** Set focus on a tab item. */
 function moveFocus(delta: 1 | -1): void {
@@ -378,9 +385,8 @@ function moveFocus(delta: 1 | -1): void {
 
 /** Set focus on a dropdown item. */
 function setFocus(item: DropdownChildItem<T>): void {
-    if (props.selectOnFocus && item.data?.value) {
-        selectItem(item.data.value, new Event("focus"));
-    }
+    if (props.selectOnFocus && item.data?.value)
+        selectItem(item, new Event("focus"));
 
     const dropdownMenu = unrefElement(menuRef);
     const element = unrefElement(item.data?.$el);

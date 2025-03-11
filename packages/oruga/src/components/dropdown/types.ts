@@ -8,7 +8,8 @@ export type DropdownComponent<T> = {
     menuId: string;
     selected: T | T[] | undefined;
     focsuedIdentifier: string | undefined;
-    selectItem: (value: T, event: Event) => void;
+    selectItem: (value: DropdownChildItem<T>, event: Event) => void;
+    focusItem: (value: DropdownChildItem<T>) => void;
 };
 
 export type DropdownItemComponent<T> = DropdownItemProps<T> & {
