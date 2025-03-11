@@ -50,15 +50,6 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
             data.addons = true;
         },
     },
-    multilineClass: {
-        class: "multilineClass",
-        description:
-            "Class for inner body wrapper element to fill up multiple lines.",
-        properties: ["multiline"],
-        action: (data): void => {
-            data.multiline = true;
-        },
-    },
     horizontalClass: {
         class: "horizontalClass",
         description: "Class to align label and control in horizontal forms.",

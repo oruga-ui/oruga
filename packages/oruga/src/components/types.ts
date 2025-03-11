@@ -545,8 +545,6 @@ but will set the body to a fixed position, which may break some layouts. */
                 groupedClass: ClassDefinition;
                 /** Class of the inner wrapper element when element get automatically attached together inside a field */
                 addonsClass: ClassDefinition;
-                /** Class for inner body wrapper element to fill up multiple lines */
-                multilineClass: ClassDefinition;
                 /** Class to align label and control in horizontal forms */
                 horizontalClass: ClassDefinition;
                 /** Class for the label element when horizontal */
