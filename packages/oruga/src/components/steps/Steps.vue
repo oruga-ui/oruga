@@ -160,15 +160,9 @@ function activateItem(fowardIndex: 1 | -1): void {
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem<T>): void {
-    if (!isItemClickable(item)) return;
+    // determines if the step is clickable or not
+    if (!item.isClickable) return;
     if (vmodel.value !== item.value) performAction(item.value);
-}
-
-/** Return if the step should be clickable or not. */
-function isItemClickable(item: StepItem<T>): boolean {
-    if (typeof item.clickable === "undefined")
-        return item.index < (activeItem.value?.index ?? 0);
-    return item.clickable;
 }
 
 /** Check if previous button is available. */
