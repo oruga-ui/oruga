@@ -276,7 +276,7 @@ function onKeydown(event: KeyboardEvent): void {
         // remove last item
         removeItem(itemsLength.value - 1);
     }
-    addItem(event.code.length + "");
+    addItem((event as any as InputEvent).inputType);
 
     if (props.separators.includes(event.key)) {
         // If adding by comma, don't add the comma to the input
