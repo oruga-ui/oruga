@@ -14,7 +14,7 @@ import { useOruga } from "@oruga-ui/oruga-next";
 The `config` interface can be used to customise the Oruga [global configuration](/documentation/customisation) by overriding the `Config` object programmatically:
 
 ```typescript
-import { useOruga } from '@oruga-ui/oruga-next';
+import { useOruga, type OrugaOptions } from '@oruga-ui/oruga-next';
 
 const oruga = useOruga();
 
@@ -22,7 +22,7 @@ const oruga = useOruga();
 const config = oruga.config.getOptions();
 
 // modify the config object
-const myThemeConfig = {
+const myThemeConfig: OrugaOptions = {
     ...config,
     autocomplete: {
         rootClass: 'autocomplete-root',
@@ -38,13 +38,13 @@ oruga.config.setOptions(myThemeConfig);
 However, you can also customise each component by using the dedicated `ConfigProgrammatic` object, which is the same as the one added to the object provided by the main `useOruga()` composable:
 
 ```typescript
-import { ConfigProgrammatic } from '@oruga-ui/oruga-next';
+import { ConfigProgrammatic, type OrugaOptions } from '@oruga-ui/oruga-next';
 
 // get the current config
 const config = ConfigProgrammatic.getOptions();
 
 // modify the config object
-const myThemeConfig = {
+const myThemeConfig: OrugaOptions = {
     ...config,
     autocomplete: {
         rootClass: 'autocomplete-root',
