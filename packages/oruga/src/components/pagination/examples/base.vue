@@ -67,6 +67,7 @@ const size = ref("");
         </o-field>
 
         <hr />
+
         <o-pagination
             v-model:current="current"
             :total="total"
