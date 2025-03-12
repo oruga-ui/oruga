@@ -202,6 +202,24 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeTruthy();
     });
 
+    test("do not open when openOnFocus and empty options", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: [], openOnFocus: true },
+            attachTo: document.body,
+        });
+
+        const dropdown = wrapper.find(".o-dropdown__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
+
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+
+        await input.trigger("focus");
+
+        expect(dropdown.isVisible()).toBeFalsy();
+    });
+
     test("reset events before destroy", async () => {
         document.removeEventListener = vi.fn();
         window.removeEventListener = vi.fn();
