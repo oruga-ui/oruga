@@ -1,3 +1,12 @@
+# [0.10.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.3...v0.10.0-pre.4) (2025-03-12)
+
+
+### Bug Fixes
+
+* **autocomplete:** do not open dropdown when `openOnFocus` and empty options ([#1233](https://github.com/oruga-ui/oruga/issues/1233)) ([a27947f](https://github.com/oruga-ui/oruga/commit/a27947f2bf4af7999ed1b88f40e36b00b8059b83))
+
+
+
 # [0.10.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.2...v0.10.0-pre.3) (2025-03-11)
 
 
