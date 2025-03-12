@@ -168,6 +168,7 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
+
 // define as Component to prevent docs memmory overload
 const inputRef = useTemplateRef<Component>("inputComponent");
 
@@ -318,7 +319,12 @@ function onInput(value: string, event: Event): void {
  * If value is the same as selected, select all text.
  */
 function handleFocus(event: Event): void {
-    if (props.openOnFocus) isActive.value = true;
+    // open dropdown if `openOnFocus` and has options
+    if (
+        props.openOnFocus &&
+        (!!props.options?.length || !!slots.header || !!slots.footer)
+    )
+        isActive.value = true;
     onFocus(event);
 }
 
