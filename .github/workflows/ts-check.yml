@@ -16,5 +16,5 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies 📦
         run: npm install
-      - name: Check TS 🧐
+      - name: Run typescript check 🧐
         run: npm run test:ts
