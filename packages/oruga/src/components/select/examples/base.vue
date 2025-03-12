@@ -51,7 +51,7 @@
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
                 <option value="vane">Vane</option>
-                <option value="Billy" disabled>billy</option>
+                <option value="billy" disabled>Billy</option>
             </o-select>
         </o-field>
     </section>
