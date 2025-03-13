@@ -1,3 +1,23 @@
+# [0.10.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.3...v0.10.0-pre.4) (2025-03-13)
+
+
+### Bug Fixes
+
+* **autocomplete:** do not open dropdown when `openOnFocus` and empty options ([#1233](https://github.com/oruga-ui/oruga/issues/1233)) ([a27947f](https://github.com/oruga-ui/oruga/commit/a27947f2bf4af7999ed1b88f40e36b00b8059b83))
+
+
+### Features
+
+* **switch:** remove extra track and thumb HTML elements ([#1238](https://github.com/oruga-ui/oruga/issues/1238)) ([615d10a](https://github.com/oruga-ui/oruga/commit/615d10ac74bdc806372a5ed76d591bbcc0bcea9a))
+* **table:** remove redundant TableColumn prop `visible` ([#1240](https://github.com/oruga-ui/oruga/issues/1240)) ([61eeb0a](https://github.com/oruga-ui/oruga/commit/61eeb0a2c59996635f66ad6881122f85b9ab253f))
+* update several `role` attributes ([#1239](https://github.com/oruga-ui/oruga/issues/1239)) ([c8d26f7](https://github.com/oruga-ui/oruga/commit/c8d26f7793bf009e8409ba757477380d1803724c))
+
+
+### Detailed Changes
+_following with the main release..._
+
+
+
 # [0.10.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.2...v0.10.0-pre.3) (2025-03-11)
 
 
@@ -7,6 +27,10 @@
 * **taginput:** enable virtual keyboard compatibility ([#1230](https://github.com/oruga-ui/oruga/issues/1230)) ([0d3a791](https://github.com/oruga-ui/oruga/commit/0d3a791cd224494bb07560f8c6a7d7cb25a801b4))
 * **taginput:** prevent double adding when `allowNew` and dropdown is open ([#1228](https://github.com/oruga-ui/oruga/issues/1228)) ([c92cc90](https://github.com/oruga-ui/oruga/commit/c92cc9039e41bf33d0890a7b019e0ee07dfb0d89))
 * **dropdown:** set item focused on hover ([#1226](https://github.com/oruga-ui/oruga/issues/1226)) ([edb523d](https://github.com/oruga-ui/oruga/commit/edb523d8807c9e194337d63a305f81419c36df54))
+
+
+### Detailed Changes
+_following with the main release..._
 
 
 
@@ -29,6 +53,10 @@
 * **datepicker:** unify class names & remove unnecessary classes ([#1205](https://github.com/oruga-ui/oruga/issues/1205)) ([8777256](https://github.com/oruga-ui/oruga/commit/8777256d18ca3bec6702adc6bf06637ba0fc0a95))
 * **pagination:** update pagination button default classes ([#1219](https://github.com/oruga-ui/oruga/issues/1219)) ([d8adf1e](https://github.com/oruga-ui/oruga/commit/d8adf1ec555ccad4764da474a91a0b1724056033))
 * **programmatic:** accept reactive element for `target` prop ([#1208](https://github.com/oruga-ui/oruga/issues/1208)) ([f6beaed](https://github.com/oruga-ui/oruga/commit/f6beaed8fa317dbe5e962a72ae84852b29cb72c2))
+
+
+### Detailed Changes
+_following with the main release..._
 
 
 
@@ -78,6 +106,7 @@
 
 ### Detailed Changes
 _following with the main release..._
+
 
 
 ## [0.9.3](https://github.com/oruga-ui/oruga/compare/v0.9.2...v0.9.3) (2024-12-19)
