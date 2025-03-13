@@ -128,35 +128,34 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                               | Default                                |
-| ------------------------------------------- | -------------------------------------- |
-| $tabs-disabled-opacity                      | var(--#{$prefix}base-disabled-opacity) |
-| $tabs-font-size                             | var(--#{$prefix}base-font-size)        |
-| $tabs-icon-margin                           | 0.5em                                  |
-| $tabs-content-padding                       | 1rem                                   |
-| $tabs-margin-bottom                         | 1.5rem                                 |
-| $tabs-border-bottom-color                   | var(--#{$prefix}grey-lighter)          |
-| $tabs-border-bottom-style                   | solid                                  |
-| $tabs-border-bottom-width                   | 1px                                    |
-| $tabs-link-color                            | hsl(0, 0%, 29%)                        |
-| $tabs-link-active-border-bottom-color       | var(--#{$prefix}primary)               |
-| $tabs-link-active-color                     | var(--#{$prefix}primary)               |
-| $tabs-link-line-height                      | var(--#{$prefix}base-line-height)      |
-| $tabs-link-padding                          | 0.5em 1em                              |
-| $tabs-boxed-link-radius                     | var(--#{$prefix}base-border-radius)    |
-| $tabs-boxed-link-hover-background-color     | hsl(0, 0%, 96%)                        |
-| $tabs-boxed-link-hover-border-bottom-color  | hsl(0, 0%, 86%)                        |
-| $tabs-boxed-link-active-background-color    | hsl(0, 0%, 100%)                       |
-| $tabs-boxed-link-active-border-color        | hsl(0, 0%, 86%)                        |
-| $tabs-boxed-link-active-border-bottom-color | transparent                            |
-| $tabs-toggle-link-border-color              | hsl(0, 0%, 86%)                        |
-| $tabs-toggle-link-border-style              | solid                                  |
-| $tabs-toggle-link-border-width              | 1px                                    |
-| $tabs-toggle-link-hover-background-color    | hsl(0, 0%, 96%)                        |
-| $tabs-toggle-link-hover-border-color        | hsl(0, 0%, 71%)                        |
-| $tabs-toggle-link-active-background-color   | var(--#{$prefix}primary)               |
-| $tabs-toggle-link-active-border-color       | var(--#{$prefix}primary)               |
-| $tabs-toggle-link-active-color              | var(--#{$prefix}primary-invert)        |
+| SASS Variable                              | Default                                |
+| ------------------------------------------ | -------------------------------------- |
+| $tabs-disabled-opacity                     | var(--#{$prefix}base-disabled-opacity) |
+| $tabs-font-size                            | var(--#{$prefix}base-font-size)        |
+| $tabs-icon-margin                          | 0 0.5em 0 0                            |
+| $tabs-content-padding                      | 1rem                                   |
+| $tabs-margin-bottom                        | 1.5rem                                 |
+| $tabs-border-bottom-color                  | var(--#{$prefix}grey-lighter)          |
+| $tabs-border-bottom-style                  | solid                                  |
+| $tabs-border-bottom-width                  | 1px                                    |
+| $tabs-tab-color                            | hsl(0, 0%, 29%)                        |
+| $tabs-tab-active-border-bottom-color       | var(--#{$prefix}primary)               |
+| $tabs-tab-active-color                     | var(--#{$prefix}primary)               |
+| $tabs-tab-padding                          | 0.5em 1em                              |
+| $tabs-boxed-tab-radius                     | var(--#{$prefix}base-border-radius)    |
+| $tabs-boxed-tab-hover-background-color     | hsl(0, 0%, 96%)                        |
+| $tabs-boxed-tab-hover-border-bottom-color  | hsl(0, 0%, 86%)                        |
+| $tabs-boxed-tab-active-background-color    | hsl(0, 0%, 100%)                       |
+| $tabs-boxed-tab-active-border-color        | hsl(0, 0%, 86%)                        |
+| $tabs-boxed-tab-active-border-bottom-color | transparent                            |
+| $tabs-toggle-tab-border-color              | hsl(0, 0%, 86%)                        |
+| $tabs-toggle-tab-border-style              | solid                                  |
+| $tabs-toggle-tab-border-width              | 1px                                    |
+| $tabs-toggle-tab-hover-background-color    | hsl(0, 0%, 96%)                        |
+| $tabs-toggle-tab-hover-border-color        | hsl(0, 0%, 71%)                        |
+| $tabs-toggle-tab-active-background-color   | var(--#{$prefix}primary)               |
+| $tabs-toggle-tab-active-border-color       | var(--#{$prefix}primary)               |
+| $tabs-toggle-tab-active-color              | var(--#{$prefix}primary-invert)        |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tabs.scss)
 

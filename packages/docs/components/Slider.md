@@ -148,7 +148,12 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                | Default                            |
 | ---------------------------- | ---------------------------------- |
-| $slider-colors               | var.$colors                        |
+| $slider-tick-label-size      | 0.75rem                            |
+| $slider-thumb-shadow         | none                               |
+| $slider-thumb-to-track-ratio | 2                                  |
+| $slider-tick-to-track-ratio  | 0.5                                |
+| $slider-tick-width           | 3px                                |
+| $slider-colors               | dv.$colors                         |
 | $slider-radius               | css.getVar("radius")               |
 | $slider-background           | css.getVar("grey-lighter")         |
 | $slider-color                | css.getVar("primary")              |
@@ -157,13 +162,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $slider-thumb-background     | css.getVar("scheme-main")          |
 | $slider-thumb-radius         | css.getVar("radius")               |
 | $slider-thumb-border         | 1px solid css.getVar("grey-light") |
-| $slider-thumb-shadow         | none                               |
-| $slider-thumb-to-track-ratio | 2                                  |
-| $slider-tick-to-track-ratio  | 0.5                                |
-| $slider-tick-width           | 3px                                |
 | $slider-tick-radius          | css.getVar("radius")               |
 | $slider-tick-background      | css.getVar("grey-light")           |
-| $slider-tick-label-size      | 0.75rem                            |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_slider.scss)
 

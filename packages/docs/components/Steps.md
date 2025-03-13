@@ -161,8 +161,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                   | Default                             |
 | ------------------------------- | ----------------------------------- |
-| $steps-colors                   | var.$colors                         |
-| $steps-mobile-breakpoint        | vars.$tablet                        |
+| $steps-divider-height           | 0.2em                               |
+| $steps-vertical-padding         | 1em 0                               |
+| $steps-colors                   | dv.$colors                          |
+| $steps-mobile-breakpoint        | iv.$tablet                          |
 | $steps-marker-background        | css.getVar("grey-light")            |
 | $steps-marker-color             | css.getVar("scheme-main")           |
 | $steps-marker-border            | 0.2em solid css.getVar("white")     |
@@ -171,9 +173,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $steps-previous-background      | css.getVar("primary")               |
 | $steps-active-color             | css.getVar("primary")               |
 | $steps-active-background        | css.getVar("scheme-main")           |
-| $steps-divider-height           | 0.2em                               |
 | $steps-details-background-color | css.getVar("body-background-color") |
-| $steps-vertical-padding         | 1em 0                               |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_steps.scss)
 

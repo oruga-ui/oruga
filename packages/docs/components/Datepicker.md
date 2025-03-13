@@ -132,10 +132,9 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | $datepicker-font-size                             | var(--#{$prefix}base-font-size)                                   |
 | $datepicker-box-padding                           | 0.5rem 1rem                                                       |
 | $datepicker-header-padding                        | 0.5rem 0                                                          |
-| $datepicker-header-margin                         | 0 0 0.5rem 0                                                      |
+| $datepicker-header-spacer                         | 0.5rem                                                            |
 | $datepicker-header-border-bottom                  | 1px solid var(--#{$prefix}grey-lighter)                           |
 | $datepicker-footer-padding                        | 0.5rem 0.5rem 0 0.5rem                                            |
-| $datepicker-footer-margin                         | 0.5rem 0                                                          |
 | $datepicker-footer-border-top                     | 1px solid var(--#{$prefix}grey-lighter)                           |
 | $datepicker-table-head-padding                    | 0 0 0.875rem 0                                                    |
 | $datepicker-table-head-margin                     | 0 0 0.875rem 0                                                    |
@@ -169,8 +168,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | $datepicker-btn-height                            | 2.25em                                                            |
 | $datepicker-btn-hover-border-color                | var(--#{$prefix}grey-light)                                       |
 | $datepicker-btn-hover-color                       | #363636                                                           |
-| $datepicker-btn-line-height                       | var(--#{$prefix}base-line-height)                                 |
-| $datepicker-btn-margin                            | 0.25rem                                                           |
+| $datepicker-btn-hover-background-color            | transparent                                                       |
 | $datepicker-btn-min-width                         | 2.25em                                                            |
 | $datepicker-btn-padding                           | 0.5em 0.5em                                                       |
 
@@ -183,8 +181,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                              | Default                                    |
 | ------------------------------------------ | ------------------------------------------ |
-| $datepicker-colors                         | var.$colors                                |
+| $datepicker-colors                         | dv.$colors                                 |
 | $datepicker-header-color                   | css.getVar("grey")                         |
+| $datepicker-header-spacer                  | 0.5em                                      |
 | $datepicker-today-border                   | solid 1px rgba(css.getVar("primary"), 0.5) |
 | $datepicker-item-color                     | css.getVar("grey-dark")                    |
 | $datepicker-item-disabled-color            | css.getVar("grey-light")                   |
@@ -222,9 +221,6 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $datepicker-month-width         | 20rem                                   |
 | $datepicker-month-cell-spacer   | calc($spacer \* 0.5)                    |
 | $datepicker-month-cell-height   | 2.5rem                                  |
-| $datepicker-dropdown-width      | calc(100vw - 40px)                      |
-| $datepicker-dropdown-min-width  | 380px                                   |
-| $datepicker-dropdown-max-width  | 420px                                   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_datepicker.scss)
 

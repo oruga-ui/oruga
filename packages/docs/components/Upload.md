@@ -80,7 +80,7 @@ Use it with the Field component to access all the functionalities.
 | $upload-draggable-border-radius      | var(--#{$prefix}base-border-radius)     |
 | $upload-draggable-disabled-opacity   | var( --#{$prefix}base-disabled-opacity) |
 | $upload-draggable-hover-border-color | var(--#{$prefix}grey)                   |
-| $upload-draggable-padding            | 0.25em                                  |
+| $upload-draggable-padding            | 2em                                     |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_upload.scss)
 
@@ -91,9 +91,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable             | Default                  |
 | ------------------------- | ------------------------ |
-| $upload-colors            | file.$file-colors        |
 | $upload-bg                | transparent              |
-| $upload-draggable-padding | 0.5rem                   |
+| $upload-draggable-padding | 2em                      |
+| $upload-colors            | file.$file-colors        |
 | $upload-border-color      | css.getVar("grey-light") |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_upload.scss)
