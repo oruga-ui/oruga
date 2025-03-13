@@ -187,7 +187,6 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | subheading       | Define a column sub heading                            | string                                                  | -                           |                                                             |
 | tdAttrs          | Adds native attributes to td                           | object                                                  | -                           |                                                             |
 | thAttrs          | Adds native attributes to th                           | object                                                  | -                           |                                                             |
-| visible          | Define whether the column is visible or not            | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>  |
 | width            | Column fixed width                                     | number \| string                                        | -                           |                                                             |
 
 ### Slots
