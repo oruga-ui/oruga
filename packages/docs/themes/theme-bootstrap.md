@@ -3,13 +3,14 @@
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
 ```scss
-$speed-slow: 150ms !default;
-$speed-slower: 250ms !default;
-$easing: ease !default;
 // adds :root variables also as :host
 $enable-host: true !default;
 
-// Sizes
+$speed-slow: 150ms !default;
+$speed-slower: 250ms !default;
+$easing: ease !default;
+
+// sizes variants
 $sizes: (
     "x-small": 0.5rem,
     "small": 0.75rem,
@@ -18,7 +19,7 @@ $sizes: (
     "x-large": 2rem,
 ) !default;
 
-// Adding aditional gray-light color to colors map
+// adding aditional gray-light color to colors map
 $custom-colors: (
     "gray-light": $gray-300,
 );

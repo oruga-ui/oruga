@@ -15,6 +15,9 @@ $sizes-map: (
 // This file is home to defaulted variables which need to be passed to Bulma, or to general defaulted variables which are not part of a particular component
 
 
+// adds :root variables also as :host
+$enable-host: true !default;
+
 $speed-slow: 150ms !default;
 $speed-slower: 250ms !default;
 
