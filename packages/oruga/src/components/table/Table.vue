@@ -473,7 +473,7 @@ function filterTableRows(): void {
                 tableRows.value.length > perPage &&
                 (row.index < pageStart || row.index >= pageEnd)
             )
-                // return row is invisible  (filtered out)
+                // return row is invisible (filtered out)
                 return true;
         }
 
