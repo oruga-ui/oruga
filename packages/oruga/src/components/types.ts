@@ -651,8 +651,6 @@ See icon library documentation for custom classes. */
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts. */
                 clipScroll: boolean;
-                /** Role attribute to be passed to the div wrapper for better accessibility */
-                role: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class for the root element when fullpage */
@@ -672,7 +670,7 @@ but will set the body to a fixed position, which may break some layouts. */
             Partial<{
                 /** Role attribute to be passed to the list container for better accessibility.
 Use menu only in situations where your dropdown is related to a navigation menu. */
-                ariaRole: "menu" | "tree";
+                role: "menu" | "tree";
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon size */
@@ -725,7 +723,7 @@ but will set the body to a fixed position, which may break some layouts. */
                 /** Trap focus inside the modal */
                 trapFocus: boolean;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
-                ariaRole: "alertdialog" | "dialog";
+                role: "alertdialog" | "dialog";
                 /** Accessibility aria-label to be passed to the div wrapper element */
                 ariaLabel: string;
                 /** Automatically focus modal when active */

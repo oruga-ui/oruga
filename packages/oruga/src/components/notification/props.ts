@@ -96,6 +96,11 @@ export type NotificationNoticeProps<C extends Component> = {
         | "bottom-right"
         | "bottom"
         | "bottom-left";
+    /**
+     * Color of the control
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    variant?: string;
     /** Hide notification after duration (in miliseconds) */
     duration?: number;
     /** Show the Notification infinitely until it is dismissed. */
