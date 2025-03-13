@@ -27,7 +27,6 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     position: undefined,
     searchable: false,
     sortable: false,
-    visible: true,
     hidden: false,
     sticky: false,
     headerSelectable: false,
