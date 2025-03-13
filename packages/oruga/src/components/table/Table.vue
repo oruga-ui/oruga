@@ -471,9 +471,9 @@ function filterTableRows(): void {
             // if not only one page and not on active page
             if (
                 tableRows.value.length > perPage &&
-                (row.index < pageStart || row.index > pageEnd)
+                (row.index < pageStart || row.index >= pageEnd)
             )
-                // return row is invisible
+                // return row is invisible  (filtered out)
                 return true;
         }
 
@@ -482,7 +482,7 @@ function filterTableRows(): void {
             // return row is visible based on filters
             return !isRowFiltered(row.value);
 
-        // return row is visible
+        // return row is visible (not filtered out)
         return false;
     });
 }
