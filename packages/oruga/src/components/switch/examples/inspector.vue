@@ -72,14 +72,6 @@ const inspectData: InspectData<SwitchClasses, SwitchProps<unknown>> = {
         class: "inputClass",
         description: "Class of the native input element.",
     },
-    trackClass: {
-        class: "trackClass",
-        description: "Class of the track background element of the toggle.",
-    },
-    thumbClass: {
-        class: "thumbClass",
-        description: "Class of the thumb element that slides on the track.",
-    },
     labelClass: {
         class: "labelClass",
         description: "Class of the switch label element.",

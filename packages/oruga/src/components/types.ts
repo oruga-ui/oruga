@@ -1169,10 +1169,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 checkedClass: ClassDefinition;
                 /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the track background element of the toggle */
-                trackClass: ClassDefinition;
-                /** Class of the thumb element that slides on the track */
-                thumbClass: ClassDefinition;
                 /** Class of the label element */
                 labelClass: ClassDefinition;
             }>;
