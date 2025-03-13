@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     cancelable: () =>
         getDefault("modal.cancelable", ["escape", "x", "outside"]),
     trapFocus: () => getDefault("modal.trapFocus", true),
-    ariaRole: () => getDefault("modal.ariaRole", "dialog"),
+    role: () => getDefault("modal.role", "dialog"),
     ariaLabel: () => getDefault("modal.ariaLabel"),
     autoFocus: () => getDefault("modal.autoFocus", true),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
@@ -220,7 +220,7 @@ defineExpose({ close });
                 data-oruga="modal"
                 :class="rootClasses"
                 :tabindex="-1"
-                :role="ariaRole"
+                :role="role"
                 :aria-label="ariaLabel"
                 :aria-modal="isActive">
                 <div

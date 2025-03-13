@@ -1708,8 +1708,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :full-page="false"
                     :active="loading"
                     :icon="loadingIcon"
-                    :label="loadingLabel"
-                    role="status" />
+                    :label="loadingLabel" />
             </slot>
         </div>
 

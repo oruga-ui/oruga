@@ -29,6 +29,7 @@ defineOptions({
 const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
     override: undefined,
     container: undefined,
+    variant: () => getDefault("notification.variant"),
     position: () => getDefault("notification.position", "top"),
     duration: () => getDefault("notification.duration", 2000),
     infinite: false,
@@ -81,6 +82,8 @@ onBeforeMount(() => {
             parentTop.value.className = `${rootClasses.join(
                 " ",
             )} ${topClasses.join(" ")}`;
+            parentTop.value.role = "region";
+            parentTop.value.ariaLive = "polite";
         }
 
         // create notices bottom container if not alread there
@@ -89,6 +92,8 @@ onBeforeMount(() => {
             parentBottom.value.className = `${rootClasses.join(
                 " ",
             )} ${bottomClasses.join(" ")}`;
+            parentBottom.value.role = "region";
+            parentBottom.value.ariaLive = "polite";
         }
 
         // append notices top and bottom container to given container
@@ -134,6 +139,10 @@ const shouldQueue = computed(() =>
         ? parentTop.value.childElementCount > 0 ||
           parentBottom.value.childElementCount > 0
         : false,
+);
+
+const isAlert = computed(
+    () => props.variant === "warning" || props.variant === "danger",
 );
 
 /** move the rendered component template into the correct parent container */
@@ -199,6 +208,7 @@ defineExpose({ close });
         v-model:active="isActive"
         :override="override"
         :position="position"
+        :role="isAlert ? 'alert' : 'status'"
         @close="close">
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->

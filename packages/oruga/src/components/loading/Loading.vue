@@ -36,7 +36,6 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
     clipScroll: () => getDefault("loading.clipScroll", false),
-    role: () => getDefault("loading.role", "dialog"),
 });
 
 const emits = defineEmits<{
@@ -128,8 +127,9 @@ defineExpose({ close });
             v-if="isActive"
             ref="rootElement"
             data-oruga="loading"
-            :role="role"
-            :class="rootClasses">
+            :class="rootClasses"
+            role="status"
+            aria-live="polite">
             <div
                 :class="overlayClasses"
                 :tabindex="-1"
