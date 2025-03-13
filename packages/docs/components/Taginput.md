@@ -109,14 +109,14 @@ Use it with the Field component to access all the functionalities.
 
 | SASS Variable                   | Default                             |
 | ------------------------------- | ----------------------------------- |
-| $taginput-counter-font-size     | 0.75rem                             |
+| $taginput-counter-font-size     | 0.75em                              |
 | $taginput-counter-margin        | 0.25rem 0 0 0.5rem                  |
 | $taginput-item-background-color | var(--#{$prefix}primary)            |
 | $taginput-item-color            | var(--#{$prefix}primary-invert)     |
 | $taginput-item-border-radius    | var(--#{$prefix}base-border-radius) |
 | $taginput-item-margin           | 0.275em                             |
 | $taginput-item-padding          | 0 0.75em 0 0.75em                   |
-| $taginput-margin-icon-to-text   | 0.1875em                            |
+| $taginput-item-icon-margin      | 0.5em                               |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
 
@@ -127,7 +127,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable      | Default |
 | ------------------ | ------- |
-| $taginput-height   | 2em     |
+| $taginput-height   | 100%    |
 | $taginput-tag-size | 0.9em   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_taginput.scss)

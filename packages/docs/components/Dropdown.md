@@ -182,11 +182,15 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                         | Default                                                                                             |
 | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| $dropdown-mobile-breakpoint           | vars.$desktop                                                                                       |
-| $dropdown-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
+| $dropdown-content-max-height          | 200px                                                                                               |
 | $dropdown-disabled-opacity            | 0.5                                                                                                 |
 | $dropdown-gap                         | 0px                                                                                                 |
 | $dropdown-z                           | 40                                                                                                  |
+| $dropdown-mobile-breakpoint           | iv.$desktop                                                                                         |
+| $dropdown-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
+| $dropdown-modal-width                 | 75%                                                                                                 |
+| $dropdown-modal-min-width             | 25%                                                                                                 |
+| $dropdown-modal-max-width             | calc(100vw - 40px)                                                                                  |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_dropdown.scss)
 
@@ -199,6 +203,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | ------------------------------- | ---------------------- |
 | $dropdown-modal-menu-zindex     | $zindex-modal          |
 | $dropdown-modal-backdrop-zindex | $zindex-modal-backdrop |
+| $dropdown-modal-width           | 75%                    |
+| $dropdown-modal-min-width       | 25%                    |
+| $dropdown-modal-max-width       | calc(100vw - 40px)     |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
 

@@ -106,7 +106,7 @@ Combine it with the Field component to access all functionalities.
 | $input-margin                | 0                                                     |
 | $input-padding               | $control-padding-vertical $control-padding-horizontal |
 | $input-counter-font-size     | 0.75rem                                               |
-| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
+| $input-counter-margin        | 0.25rem 0.5rem                                        |
 | $input-textarea-max-height   | 600px                                                 |
 | $input-textarea-min-height   | 120px                                                 |
 | $input-textarea-padding      | 0.625em                                               |
@@ -118,7 +118,12 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default    |
+| ------------- | ---------- |
+| $input-colors | dv.$colors |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_input.scss)
+
 </div>
 <div class="theme-bootstrap">
 

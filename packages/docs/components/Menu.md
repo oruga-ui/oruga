@@ -125,6 +125,7 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 | SASS Variable                      | Default                             |
 | ---------------------------------- | ----------------------------------- |
 | $menu-item-color                   | var(--#{$prefix}grey-dark)          |
+| $menu-item-background-color        | transparent                         |
 | $menu-item-hover-color             | var(--#{$prefix}black)              |
 | $menu-item-hover-background-color  | var(--#{$prefix}grey-light)         |
 | $menu-item-active-color            | var(--#{$prefix}primary-invert)     |
@@ -134,7 +135,7 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 | $menu-list-border-radius           | var(--#{$prefix}base-border-radius) |
 | $menu-list-line-height             | 1.25em                              |
 | $menu-item-padding                 | 0.5em 0.75em                        |
-| $menu-nested-list-margin           | 0.75em                              |
+| $menu-nested-list-margin           | 0.75em 1.25em                       |
 | $menu-nested-list-padding-left     | 0.75em                              |
 | $menu-label-color                  | $grey                               |
 | $menu-label-font-size              | 0.75em                              |
@@ -154,24 +155,26 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable              | Default                        |
-| -------------------------- | ------------------------------ |
-| $menu-label-bg             | transparent                    |
-| $menu-label-color          | var(--#{$prefix}body-color)    |
-| $menu-label-font-size      | 0.75em                         |
-| $menu-list-line-height     | 1.25em                         |
-| $menu-item-padding         | 0.5em 0.75em                   |
-| $menu-item-bg              | transparent                    |
-| $menu-item-color           | var(--#{$prefix}body-color)    |
-| $menu-item-active-bg       | var(--#{$prefix}primary)       |
-| $menu-item-active-color    | var(--#{$prefix}white)         |
-| $menu-item-disabled-bg     | transparent                    |
-| $menu-item-disabled-color  | var(--#{$prefix}secondary)     |
-| $menu-item-border-radius   | var(--#{$prefix}border-radius) |
-| $menu-icon-spacer          | 0.5rem                         |
-| $menu-submenu-border-left  | 1px solid #445e00              |
-| $menu-submenu-padding-left | 0.75em                         |
-| $menu-submenu-margin       | 0.75em                         |
+| SASS Variable             | Default                        |
+| ------------------------- | ------------------------------ |
+| $menu-label-bg            | transparent                    |
+| $menu-label-color         | var(--#{$prefix}body-color)    |
+| $menu-label-font-size     | 0.75em                         |
+| $menu-list-line-height    | 1.25em                         |
+| $menu-item-padding        | 0.5em 0.75em                   |
+| $menu-item-bg             | transparent                    |
+| $menu-item-color          | var(--#{$prefix}body-color)    |
+| $menu-item-active-bg      | var(--#{$prefix}primary)       |
+| $menu-item-active-color   | var(--#{$prefix}white)         |
+| $menu-item-disabled-bg    | transparent                    |
+| $menu-item-disabled-color | var(--#{$prefix}secondary)     |
+| $menu-item-border-radius  | var(--#{$prefix}border-radius) |
+| $menu-item-hover-bg       | var(--#{$prefix}tertiary-bg)   |
+| $menu-item-hover-color    | var(--#{$prefix}body-color)    |
+| $menu-icon-spacer         | 0.5rem                         |
+| $menu-submenu-border-left | 1px solid #445e00              |
+| $menu-submenu-padding     | 0 0.75em                       |
+| $menu-submenu-margin      | 0.75em 1.25em                  |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_menu.scss)
 

@@ -84,18 +84,18 @@ Use it with the Field component to access all the functionalities.
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                   | Default                                                                                          |
-| ------------------------------- | ------------------------------------------------------------------------------------------------ |
-| $switch-active-background-color | var(--#{$prefix}primary)                                                                         |
-| $switch-action-background       | #f5f5f5                                                                                          |
-| $switch-background              | var(--#{$prefix}grey-light)                                                                      |
-| $switch-border-radius           | var(--#{$prefix}base-border-radius)                                                              |
-| $switch-box-shadow              | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |
-| $switch-disabled-opacity        | var(--#{$prefix}base-disabled-opacity)                                                           |
-| $switch-margin-label            | 0.5em                                                                                            |
-| $switch-padding                 | 0.2em                                                                                            |
-| $switch-rounded-border-radius   | var( --#{$prefix}base-border-radius-rounded)                                                     |
-| $switch-width                   | 2.75 \* 1em                                                                                      |
+| SASS Variable                 | Default                                                   |
+| ----------------------------- | --------------------------------------------------------- |
+| $switch-spacer                | 0.5em                                                     |
+| $switch-width                 | 2.75em                                                    |
+| $switch-height                | 1.5em                                                     |
+| $switch-background            | var(--#{$prefix}grey-light)                               |
+| $switch-toggle-background     | #f5f5f5                                                   |
+| $switch-border                | $control-border-width solid var(--#{$prefix}grey-lighter) |
+| $switch-border-radius         | var(--#{$prefix}base-border-radius)                       |
+| $switch-border-radius-rounded | var( --#{$prefix}base-border-radius-rounded)              |
+| $switch-checked-background    | var(--#{$prefix}primary)                                  |
+| $switch-disabled-opacity      | var(--#{$prefix}base-disabled-opacity)                    |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_switch.scss)
 
@@ -106,9 +106,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                   | Default                  |
 | ------------------------------- | ------------------------ |
-| $switch-colors                  | var.$colors              |
 | $switch-width                   | 2.75em                   |
 | $switch-padding                 | 0.2em                    |
+| $switch-colors                  | dv.$colors               |
 | $switch-background-color        | css.getVar("grey-light") |
 | $switch-active-background-color | css.getVar("primary")    |
 | $switch-shadow                  | css.getVar("shadow")     |
@@ -122,7 +122,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 
 | SASS Variable  | Default |
 | -------------- | ------- |
-| $switch-spacer | 0.5rem  |
+| $switch-spacer | 0.5em   |
+| $switch-width  | 2.75em  |
+| $switch-height | 1.5em   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_switch.scss)
 

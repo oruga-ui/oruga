@@ -3,6 +3,18 @@
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
 ```scss
+// This file is home to defaulted variables which DO reference bulma but are not part of a particular component
+
+
+$sizes-map: (
+    "small": dv.$size-small,
+    "normal": dv.$size-normal,
+    "medium": dv.$size-medium,
+    "large": dv.$size-large,
+) !default;
+// This file is home to defaulted variables which need to be passed to Bulma, or to general defaulted variables which are not part of a particular component
+
+
 $speed-slow: 150ms !default;
 $speed-slower: 250ms !default;
 
@@ -12,26 +24,17 @@ $secondary: #6c757d !default;
 // alternative to focus-shadow-size
 $active-shadow-size: 0 0 0.5em !default;
 
-// make the custom colors extandable by providing a new variable to override
-$custom-colors: () !default;
+$theme-bulma-custom-colors: () !default;
 
-@forward "bulma/sass/utilities/derived-variables" with (
-    // adding aditional colors to colors map
-    $custom-colors:
-        map.merge(
-            // merge our custom-colors with the overridable map
-            ("secondary": $secondary),
-            $custom-colors
-        )
+// Merge any user-defined custom colors with the custom colors defined by the theme. This will be passes to Bulma as $custom-colors
+// This is the one variable in this file which is not defaulted, but it collects defaulted values so it counts. It's going to be passed into bulma so it has to be here so it comes first
+// merge our custom-colors with the overridable map
+$theme-bulma-custom-colors-merged: map.merge(
+    (
+        "secondary": $secondary,
+    ),
+    $theme-bulma-custom-colors
 );
-
-
-$sizes-map: (
-    "small": vars.$size-small,
-    "normal": vars.$size-normal,
-    "medium": vars.$size-medium,
-    "large": vars.$size-large,
-) !default;
 ```
 
 See ➜ 📄 [SCSS files](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/)

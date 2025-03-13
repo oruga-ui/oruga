@@ -2,14 +2,14 @@ import path from "path";
 import * as fs from "fs";
 import { type SafeDocgenCLIConfig } from "vue-docgen-cli/lib/config";
 import { Themes, type ThemeConfig } from "../themes";
-import { getThemePath } from "../themes-helper";
+import { getThemePath } from "./themes";
 
 const docsRegex = "/* @docs */";
 
 /** files with variables for a component */
 const variablePaths = (name: string): string[] => [
     `/scss/components/${name}`,
-    `/scss/component-defaults/${name}`,
+    `/scss/variables/component-defaults/${name}`,
 ];
 
 function getVariablesFromContent(content: string): string[] {

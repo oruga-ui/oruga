@@ -99,10 +99,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                  | Default               |
 | ------------------------------ | --------------------- |
-| $radio-colors                  | var.$colors           |
+| $radio-size                    | 1.25em                |
+| $radio-colors                  | dv.$colors            |
 | $radio-active-background-color | css.getVar("primary") |
 | $radio-border-color            | css.getVar("grey")    |
-| $radio-size                    | 1.25em                |
 | $radio-shadow                  | css.getVar("shadow")  |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_radio.scss)

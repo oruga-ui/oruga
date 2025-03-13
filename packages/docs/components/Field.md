@@ -69,15 +69,15 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                  | Default      |
-| ------------------------------ | ------------ |
-| $field-label-color             | #363636      |
-| $field-label-font-weight       | 600          |
-| $field-margin-bottom           | 0.75rem      |
-| $field-message-font-size       | 0.75rem      |
-| $field-message-margin-top      | 0.25rem      |
-| $field-margin-right            | 0.37rem      |
-| $field-horizontal-label-margin | 0 1.5rem 0 0 |
+| SASS Variable             | Default      |
+| ------------------------- | ------------ |
+| $field-label-color        | #363636      |
+| $field-label-font-weight  | 600          |
+| $field-margin-bottom      | 0.75rem      |
+| $field-message-font-size  | 0.75rem      |
+| $field-message-margin-top | 0.25rem      |
+| $field-spacer             | 0.5rem       |
+| $field-horizontal-spacer  | 0 1.5rem 0 0 |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
 
@@ -97,11 +97,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable                 | Default             |
-| ----------------------------- | ------------------- |
-| $input-field-grouped-spacer   | 0.5rem              |
-| $input-field-margin-bottom    | $spacer             |
-| $input-field-btn-border-color | $input-border-color |
+| SASS Variable               | Default     |
+| --------------------------- | ----------- |
+| $input-field-margin-bottom  | $spacer     |
+| $input-field-grouped-spacer | $spacer / 2 |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
 

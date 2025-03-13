@@ -100,13 +100,13 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                        | Default                                                                                             |
 | ------------------------------------ | --------------------------------------------------------------------------------------------------- |
-| $sidebar-colors                      | var.$colors                                                                                         |
 | $sidebar-z                           | 40                                                                                                  |
-| $sidebar-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
-| $sidebar-shadow                      | css.getVar("shadow")                                                                                |
 | $sidebar-width                       | 260px                                                                                               |
 | $sidebar-height                      | 260px                                                                                               |
 | $sidebar-mobile-width                | 80px                                                                                                |
+| $sidebar-colors                      | dv.$colors                                                                                          |
+| $sidebar-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
+| $sidebar-shadow                      | css.getVar("shadow")                                                                                |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_sidebar.scss)
 
@@ -117,7 +117,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 
 | SASS Variable           | Default |
 | ----------------------- | ------- |
-| $sidebar-reduced-width  | 5rem    |
+| $sidebar-reduced-width  | 10rem   |
 | $sidebar-reduced-height | 10vh    |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_sidebar.scss)

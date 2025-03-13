@@ -57,12 +57,12 @@ The **Skeleton** component can be used as a loading animations or space-fillers 
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable           | Default                                                                                      |
-| ----------------------- | -------------------------------------------------------------------------------------------- |
-| $skeleton-background    | linear-gradient( 90deg, $grey-lighter 25%,  rgba($grey-lighter, 0.5) 50%, $grey-lighter 75%) |
-| $skeleton-border-radius | var(--#{$prefix}base-border-radius)                                                          |
-| $skeleton-duration      | 1.5s                                                                                         |
-| $skeleton-margin        | 0.5rem 0 0 0                                                                                 |
+| SASS Variable           | Default                                                                                        |
+| ----------------------- | ---------------------------------------------------------------------------------------------- |
+| $skeleton-background    | linear-gradient( 90deg, $grey-lighter 25%,    rgba($grey-lighter, 0.5) 50%, $grey-lighter 75%) |
+| $skeleton-border-radius | var(--#{$prefix}base-border-radius)                                                            |
+| $skeleton-duration      | 1.5s                                                                                           |
+| $skeleton-margin        | 0.5rem 0 0 0                                                                                   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_skeleton.scss)
 
@@ -73,9 +73,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable           | Default              |
 | ----------------------- | -------------------- |
-| $skeleton-border-radius | css.getVar("radius") |
 | $skeleton-duration      | 1.5s                 |
 | $skeleton-margin-top    | 0.5rem               |
+| $skeleton-border-radius | css.getVar("radius") |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_skeleton.scss)
 

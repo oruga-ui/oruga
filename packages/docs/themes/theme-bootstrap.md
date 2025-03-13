@@ -6,19 +6,21 @@
 $speed-slow: 150ms !default;
 $speed-slower: 250ms !default;
 $easing: ease !default;
+// adds :root variables also as :host
+$enable-host: true !default;
 
 // Sizes
 $sizes: (
-  "x-small": 0.5rem,
-  "small": 0.75rem,
-  "medium": 1.25rem,
-  "large": 1.5rem,
-  "x-large": 2rem,
+    "x-small": 0.5rem,
+    "small": 0.75rem,
+    "medium": 1.25rem,
+    "large": 1.5rem,
+    "x-large": 2rem,
 ) !default;
 
 // Adding aditional gray-light color to colors map
 $custom-colors: (
-  "gray-light": $gray-300,
+    "gray-light": $gray-300,
 );
 $colors: map.merge($colors, $custom-colors);
 

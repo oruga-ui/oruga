@@ -101,15 +101,15 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                    | Default                          |
 | -------------------------------- | -------------------------------- |
-| $tooltip-colors                  | var.$colors                      |
 | $tooltip-arrow-size              | 5px                              |
 | $tooltip-arrow-margin            | 2px                              |
 | $tooltip-content-multiline-width | 300px                            |
+| $tooltip-shadow                  | 0 1px 2px 1px rgba(0, 1, 0, 0.2) |
+| $tooltip-z                       | 38                               |
+| $tooltip-colors                  | dv.$colors                       |
 | $tooltip-border-radius           | css.getVar("radius")             |
 | $tooltip-bg                      | css.getVar("scheme-main-bis")    |
-| $tooltip-shadow                  | 0 1px 2px 1px rgba(0, 1, 0, 0.2) |
 | $tooltip-color                   | css.getVar("text-body")          |
-| $tooltip-z                       | 38                               |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tooltip.scss)
 
