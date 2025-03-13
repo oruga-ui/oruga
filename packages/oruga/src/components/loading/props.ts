@@ -28,8 +28,6 @@ export type LoadingProps = {
      * but will set the body to a fixed position, which may break some layouts.
      */
     clipScroll?: boolean;
-    /** Role attribute to be passed to the div wrapper for better accessibility */
-    role?: string;
     /**
      * DOM container element for programmatic usage.
      * @ignore internal property

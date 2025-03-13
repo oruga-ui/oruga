@@ -72,7 +72,7 @@ const emits = defineEmits<{
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
-const { onBlur, onFocus, onInvalid, setFocus, doClick } = useInputHandler(
+const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     inputRef,
     emits,
     props,
@@ -101,11 +101,6 @@ const isChecked = computed(
 
 function onInput(event: Event): void {
     emits("input", vmodel.value, event);
-}
-
-function clickInput(): void {
-    setFocus();
-    doClick();
 }
 
 // --- Computed Component Classes ---
@@ -155,10 +150,6 @@ const rootClasses = defineClasses(
 
 const inputClasses = defineClasses(["inputClass", "o-switch__input"]);
 
-const trackClasses = defineClasses(["trackClass", "o-switch__track"]);
-
-const thumbClasses = defineClasses(["thumbClass", "o-switch__thumb"]);
-
 const labelClasses = defineClasses(["labelClass", "o-switch__label"]);
 
 // --- Expose Public Functionalities ---
@@ -191,10 +182,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             @focus="onFocus"
             @invalid="onInvalid"
             @change="onInput" />
-
-        <span :class="trackClasses" @click.prevent="clickInput">
-            <span :class="thumbClasses"></span>
-        </span>
 
         <label
             v-if="label || $slots.default"
