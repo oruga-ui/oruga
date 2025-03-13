@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<MenuProps<T>>(), {
     disabled: false,
     menuId: () => useId(),
     labelId: () => useId(),
-    role: () => getDefault("menu.ariaRole", "tree"),
+    role: () => getDefault("menu.role", "tree"),
     icon: undefined,
     iconPack: () => getDefault("menu.iconPack"),
     iconSize: () => getDefault("menu.iconSize"),

@@ -278,11 +278,6 @@ export type TableColumnProps<T, K extends keyof T | string = keyof T> = {
     searchable?: boolean;
     /** Enable column sortability */
     sortable?: boolean;
-    /**
-     * Define whether the column is visible or not
-     * @deprecated use `hidden` instead
-     */
-    visible?: boolean;
     /** Define whether the column is visible or not */
     hidden?: boolean;
     /** Whether the column is sticky or not */

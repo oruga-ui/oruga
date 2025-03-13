@@ -1302,7 +1302,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
-                                v-if="column.visible && !column.hidden"
+                                v-if="!column.hidden"
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style"
@@ -1401,7 +1401,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
-                                v-if="column.visible && !column.hidden"
+                                v-if="!column.hidden"
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style">
@@ -1454,7 +1454,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
-                                v-if="column.visible && !column.hidden"
+                                v-if="!column.hidden"
                                 :style="isMobileActive ? {} : column.style"
                                 :class="[
                                     ...thBaseClasses,
@@ -1571,7 +1571,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 v-for="column in tableColumns"
                                 :key="column.identifier">
                                 <o-slot-component
-                                    v-if="column.visible && !column.hidden"
+                                    v-if="!column.hidden"
                                     v-bind="column.tdAttrsData[row.index]"
                                     :component="column.$el"
                                     name="default"
@@ -1708,8 +1708,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :full-page="false"
                     :active="loading"
                     :icon="loadingIcon"
-                    :label="loadingLabel"
-                    role="status" />
+                    :label="loadingLabel" />
             </slot>
         </div>
 

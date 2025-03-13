@@ -34,7 +34,7 @@ export type ModalProps<C extends Component = Component> = {
      * Role attribute to be passed to the div wrapper for better accessibility.
      * @values dialog, alertdialog
      */
-    ariaRole?: "dialog" | "alertdialog";
+    role?: "dialog" | "alertdialog";
     /** Accessibility aria-label to be passed to the div wrapper element */
     ariaLabel?: string;
     /** Automatically focus modal when active */
