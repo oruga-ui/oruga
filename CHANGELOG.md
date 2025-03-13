@@ -1,3 +1,310 @@
+# [0.10.0](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.4...v0.10.0) (2025-03-13)
+
+
+These Changes are accumulated from all pre-releases.
+
+
+### Detailed Changes
+
+
+Legend:
+* ⚠️: breaking change
+* `~` : changed
+* `-` : removed
+* `+` : added
+* A -> B : renamed
+
+
+#### Autocomplete
+
+* `+` prop: active
+* `-` prop: confirmKeys
+* `+` prop: desktopModal
+* `+` prop: selectOnClose	
+* `-` prop: selectOnClickOutside
+
+* `+` event: update:active
+
+
+#### Button
+
+* `-` prop: ariaRole
+
+* `+` event: click
+
+
+#### Carousel
+
+* `+` prop: ariaAutoplayPauseLabel
+* `+` prop: ariaAutoplayResumeLabel
+* `+` prop: ariaNextLabel
+* `+` prop: ariaPreviousLabel
+* `+` prop: iconAutoplayPause
+* `+` prop: iconAutoplayResume
+* ️`-` ⚠️ prop: indicatorMode
+
+* `-` ⚠️ event: scroll
+* `+` event: change
+
+* `+` slot: pause
+
+* `+` class: iconAutoplayClass
+* `~` class: indicatorsInsidePositionClass -> indicatorsPositionClass
+
+
+#### Checkbox
+
+* `-` class: inputCheckedClass
+
+
+#### Collapse
+
+* `+` prop: expanded
+* `+` prop: triggerId
+
+* `+` class: positionClass
+* `+` class: expandedClass
+
+
+#### Datepicker
+
+* `+` prop: ariaSelectMonthLabel
+* `+` prop: ariaSelectYearLabel
+* `+` prop: desktopModal
+
+* `+` class: monthEventClass
+* `+` class: monthEventVariantClass
+* `+` class: monthEventIndicatorClass
+
+
+#### Datetimepicker
+
+* `+` prop: desktopModal
+* `+` prop: mobileModal
+
+
+#### Dropdown
+
+* `-` prop: ariaRole
+* `+` prop: ariaLabel
+* `~` ⚠️ prop: scroll -> clipScroll
+* `+` prop: closeOnOutside
+* `+` prop: closeOnScroll
+* `+` prop: keepFirst
+* `+` prop: keepOpen
+* `+` prop: labelledby
+* `-` prop: menuTabindex
+* `-` prop: tabindex
+* `+` prop: selectOnClose
+* `+` prop: selectOnFocus
+* `+` prop: selectable
+* `-` prop: trapFocus
+
+* `+` event: change
+* `+` event: open
+
+* `+` slot: before
+* `+` slot: after
+* `+` slot: group
+
+* `~` class: noScrollClass -> scrollKeepClass
+
+
+#### DropdownItem
+
+* `-` prop: ariaRole
+* `+` prop: hidden
+* `-` prop: tabindex
+
+* `+` class: modalClass
+* `+` class: hoverableClass
+* `+` class: positionClass
+* `~` ⚠️ class: menuMobileOverlayClass -> overlayClass
+* `+` class: scrollClipClass
+* `+` class: scrollKeepClass
+* `+` class: itemFocusedClass
+
+
+#### Field
+
+* `~` ⚠️ prop: groupMultiline -> multiline
+* `+` prop: labelId
+* `+` prop: messageId
+
+
+#### Icon
+
+--
+
+#### Input
+
+--
+
+
+#### Loading
+
+* `~` ⚠️ prop: scroll -> clipScroll
+
+* `~` class: noScrollClass -> scrollKeepClass
+
+
+#### Menu
+
+* `+` prop: modelValue
+* `-` ⚠️ prop: activable
+* `-` prop: ariaRole
+* `+` prop: disabled
+* `+` prop: labelId
+* `+` prop: menuId
+* `+` prop: options
+* `+` prop: role
+
+* `+` event: update:modelValue
+
+
+#### MenuItem
+
+* `-` prop: ariaRole
+* `+` prop: hidden
+* `+` prop: options
+* `+` prop: submenuId
+* `+` prop: value
+
+* `-` event: update:expanded	
+* `+` event: click
+
+* `+` class: itemFocusedClass
+* `+` class: itemDisabledClass	
+
+
+#### Modal
+
+* `~` ⚠️ prop: scroll -> clipScroll
+* `~` prop: ariaRole -> role
+
+* `~` class: noScrollClass -> scrollKeepClass
+
+
+#### Notification 
+
+--
+
+
+#### Pagination 
+
+--
+
+
+#### Radio
+
+* `-` class: iputCheckedClass
+
+
+#### Select
+
+* `-` ⚠️  class: arrowClass  -> arrowedClass
+
+
+#### Sidebar
+
+* `~` ⚠️ prop: scroll -> clipScroll
+
+* `~` class: noScrollClass -> scrollKeepClass
+
+
+#### Slider
+
+--
+
+
+#### Steps
+
+* `-` prop: activateOnFocus
+* `+` prop: ariaLabel
+* `-` ⚠️ prop: destroyOnHide
+
+* `~` ⚠️ class: navClass -> listClass
+
+
+#### StepsItem
+
+* `-` prop: ariaRole
+* `-` prop: tag
+
+* `~` ⚠️ class: navItemClass -> stepClass
+* `~` ⚠️ class: navItemActiveClass -> stepActiveClass
+* `~` ⚠️ class: navItemVariantClass -> stepVariantClass
+* `~` ⚠️ class: navItemPreviousClass -> stepPreviousClass
+* `~` ⚠️ class: navItemNextClass -> stepNextClass
+* `+` class: stepPositionClass
+
+
+#### Switch
+
+* `-` ⚠️ class: iputCheckedClass
+* `-` ⚠️ class: switchClass
+* `-` ⚠️ class: switchCheckClass
+* `-` ⚠️ class: switchCheckedClass
+
+
+#### Table 
+
+* `~` ⚠️ prop: debounceSearch -> filterDebounce
+* `~` ⚠️ prop: headerCheckable -> checkableHeader
+
+* `-` ⚠️ event: processed
+
+
+#### TableColumn
+
+* `+` prop: hidden
+* `-` prop: visible
+
+
+#### Tabs
+
+* `+` prop: ariaLabel
+* `-` ⚠️ prop: destroyOnHide
+* `+` prop: tag
+
+* `~` ⚠️ class: navPositionClass -> positionClass
+* `~` ⚠️ class: navSizeClass -> sizeClass
+* `~` ⚠️ class: navTypeClass -> typeClass
+* `~` ⚠️ class: navClass -> listclass
+
+
+#### TabItem
+
+* `+` class: tabPreviousClass
+* `+` class: tabNextClass
+* `-` class: tabTypeClass
+
+
+#### Taginput
+
+* `-` ⚠️ prop: confirmKeys
+* `-` ⚠️ prop: removeOnKeys
+
+
+#### Timepicker
+
+* `+` prop: ariaSelectHoursLabel
+* `+` prop: ariaSelectMinutesLabel
+* `+` prop: ariaSelectSecondsLabel
+* `+` prop: desktopModal
+* `-` prop: trapFocus
+
+#### Tooltip
+
+--
+
+
+#### Upload
+
+--
+
+
+
 # [0.10.0-pre.4](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.3...v0.10.0-pre.4) (2025-03-13)
 
 
@@ -383,19 +690,19 @@ Legend:
 *  `+` prop: customCompare
 *  ⚠️ `~` prop: customRowKey -> rowKey
 *  ⚠️ `~` prop: customIsChecked -> isRowChecked (to match other props name pattern)
-*  ⚠️ `~` props: hasDetailedVisible -> isDetailedVisible (to match other props name pattern)
+*  ⚠️ `~` prop: hasDetailedVisible -> isDetailedVisible (to match other props name pattern)
 *  `-` prop: detailKey (use rowKey instead)
-*  `+` props: emptyIcon
-*  `+` props: emptyIconSize
-*  `+` props: emptyLabel
-*  `+` props: filtersIcon
-*  `+` props: filtersPlaceholder
-*  `+` props: loadingIcon
-*  `+` props: loadingLabel
-*  ⚠️ `~` props: openedDetailed -> detailedRows (to match props name pattern)
-*  `+` props: selectable
-*  `+` props: tdAttrs
-*  `+` props: thAttrs
+*  `+` prop: emptyIcon
+*  `+` prop: emptyIconSize
+*  `+` prop: emptyLabel
+*  `+` prop: filtersIcon
+*  `+` prop: filtersPlaceholder
+*  `+` prop: loadingIcon
+*  `+` prop: loadingLabel
+*  ⚠️ `~` prop: openedDetailed -> detailedRows (to match props name pattern)
+*  `+` prop: selectable
+*  `+` prop: tdAttrs
+*  `+` prop: thAttrs
  
 *  `~` event: update:openedDetailed -> update:detailedRows	
  
@@ -404,7 +711,7 @@ Legend:
  
 #### TableColumn
 
-*  `+` props: formatter
+*  `+` prop: formatter
  
 *  `~` types: improve slots type
  
@@ -424,19 +731,19 @@ Legend:
 *  `+` class: navItemPreviousClass
 *  `+` class: navItemNextClass
  
-*  `+` props: options
+*  `+` prop: options
  
 *  `+` type: remove modelValue type restrictions
  
 #### Taginput
 
 *  `+` prop: input (v-model:input)
-*  `-` props: allowAutocomplete 
-*  ⚠️ `~` props: data -> options (type changed)
+*  `-` prop: allowAutocomplete 
+*  ⚠️ `~` prop: data -> options (type changed)
 *  ⚠️ `-` prop: field (replaced by strict options type)
 *  ⚠️ `-` prop: groupField (replaced by strict options type)
 *  ⚠️ `-` prop: groupOptions (replaced by strict options type)
-*  ⚠️ `~` props: beforeAdding -> validateItem
+*  ⚠️ `~` prop: beforeAdding -> validateItem
 *  `+` prop: filter
 *  `-` prop: validationMessage
 *  `+` prop: customValidity
