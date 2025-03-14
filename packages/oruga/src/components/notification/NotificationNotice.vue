@@ -209,6 +209,7 @@ defineExpose({ close });
         :override="override"
         :position="position"
         :role="isAlert ? 'alert' : 'status'"
+        :aria-atomic="true"
         @close="close">
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->
