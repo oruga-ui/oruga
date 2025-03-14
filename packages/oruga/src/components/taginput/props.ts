@@ -38,20 +38,12 @@ export type TaginputProps<T> = {
     expanded?: boolean;
     /** Same as native input disabled */
     disabled?: boolean;
-    /** Array of chars used to split when pasting a new string */
-    separators?: string[];
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
     keepFirst?: boolean;
     /** Allows adding new items */
     allowNew?: boolean;
     /** Allows adding the same item multiple time */
     allowDuplicates?: boolean;
-    /**
-     * Allow removing last item when pressing given keys
-     * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values),
-     * if input is empty
-     */
-    removeOnKeys?: string[];
     /** Function to validate the value of a new item before it got added */
     validateItem?: (value: T | string) => boolean;
     /** Function to create a new item to push into v-model (items) */
@@ -91,21 +83,21 @@ export type TaginputProps<T> = {
 } & TaginputClasses;
 
 // class props (will not be displayed in the docs)
-type TaginputClasses = Partial<{
+export type TaginputClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of input when expanded */
+    /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class of the input container */
-    containerClass: ComponentClass;
-    /** Class of the input container size */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
-    /** Class of the entered item variant */
+    /** Class of the root element with variant */
     variantClass: ComponentClass;
-    /** Class of the close button of entered item */
-    closeClass: ComponentClass;
-    /** Class of the entered item */
+    /** Class of the inner container element */
+    containerClass: ComponentClass;
+    /** Class of the tag item element */
     itemClass: ComponentClass;
+    /** Class of the tag item close button element */
+    closeClass: ComponentClass;
     /** Class of the counter element */
     counterClass: ComponentClass;
     /**

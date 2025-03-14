@@ -19,16 +19,14 @@ const nextIcon = ref("chevron-right");
 const showSocial = ref(false);
 const labelPosition = ref<"bottom" | "left" | "right">("bottom");
 
-const onProfileActivate = () => {
-    if (enableProfileActivateEvent.value) {
-        alert("Profile Activated");
-    }
-};
+function onProfileActivate(): void {
+    if (enableProfileActivateEvent.value) alert("Profile Activated");
+}
 </script>
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field>
                 <o-switch v-model="showSocial" label="Show Social step" />
             </o-field>
@@ -94,8 +92,7 @@ const onProfileActivate = () => {
             :has-navigation="hasNavigation"
             :icon-prev="prevIcon"
             :icon-next="nextIcon"
-            :label-position="labelPosition"
-            destroy-on-hide>
+            :label-position="labelPosition">
             <o-step-item
                 value="1"
                 step="1"

@@ -1,28 +1,20 @@
 # Pagination
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Pagination** component is responsive and flexible way to indicate a series of related content exists across multiple pages.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-pagination />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-pagination-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Pagination component
 
@@ -71,9 +63,17 @@ The **Pagination** component is responsive and flexible way to indicate a series
 | next     | Next button slot       | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event:Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
 | default  | Pagination button slot | **number** `number` - page number<br/>**isCurrent** `boolean` - if page is current<br/>**onClick** `(event:Event): void` - click handler<br/>**ariaLabel** `string` - aria-label attribute |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-pagination-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -81,25 +81,27 @@ The **Pagination** component is responsive and flexible way to indicate a series
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                             | Default                                      |
-| ----------------------------------------- | -------------------------------------------- |
-| $pagination-disabled-opacity              | var(--#{$prefix}base-disabled-opacity)       |
-| $pagination-ellipsis-color                | var(--#{$prefix}grey-light)                  |
-| $pagination-link-border-color             | var(--#{$prefix}grey-lighter)                |
-| $pagination-link-border-radius            | var(--#{$prefix}base-border-radius)          |
-| $pagination-link-border                   | 1px solid transparent                        |
-| $pagination-link-color                    | #363636                                      |
-| $pagination-link-current-background-color | var(--#{$prefix}primary)                     |
-| $pagination-link-current-border-color     | var(--#{$prefix}primary)                     |
-| $pagination-link-current-color            | #fff                                         |
-| $pagination-link-height                   | 2.25em                                       |
-| $pagination-link-hover-border-color       | var(--#{$prefix}grey-light)                  |
-| $pagination-link-line-height              | var(--#{$prefix}base-line-height)            |
-| $pagination-link-margin                   | 0.25rem                                      |
-| $pagination-link-min-width                | 2.25em                                       |
-| $pagination-link-padding                  | 0.5em 0.5em                                  |
-| $pagination-margin                        | -0.25rem                                     |
-| $pagination-rounded-border-radius         | var( --#{$prefix}base-border-radius-rounded) |
+| SASS Variable                               | Default                                      |
+| ------------------------------------------- | -------------------------------------------- |
+| $pagination-disabled-opacity                | var(--#{$prefix}base-disabled-opacity)       |
+| $pagination-ellipsis-color                  | var(--#{$prefix}grey-light)                  |
+| $pagination-button-border-color             | var(--#{$prefix}grey-light)                  |
+| $pagination-button-border-radius            | var(--#{$prefix}base-border-radius)          |
+| $pagination-button-border                   | 1px solid transparent                        |
+| $pagination-button-color                    | var(--#{$prefix}black)                       |
+| $pagination-button-background-color         | transparent                                  |
+| $pagination-button-background-color-hover   | var( --#{$prefix}grey-lighter)               |
+| $pagination-button-current-background-color | var(--#{$prefix}primary)                     |
+| $pagination-button-current-border-color     | var(--#{$prefix}primary)                     |
+| $pagination-button-current-color            | #fff                                         |
+| $pagination-button-height                   | 2.25em                                       |
+| $pagination-button-hover-border-color       | var(--#{$prefix}grey-light)                  |
+| $pagination-button-line-height              | var(--#{$prefix}base-line-height)            |
+| $pagination-button-margin                   | 0.25rem                                      |
+| $pagination-button-min-width                | 2.25em                                       |
+| $pagination-button-padding                  | 0.5em 0.5em                                  |
+| $pagination-margin                          | -0.25rem                                     |
+| $pagination-rounded-border-radius           | var( --#{$prefix}base-border-radius-rounded) |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
 
@@ -122,4 +124,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

@@ -1,1 +1,2 @@
-The **Collapse** component is an easy way to toggle the visibility of content.
+The **Collapse** component is an easy way to toggle the visibility of content with show/hide functionality.
+The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).

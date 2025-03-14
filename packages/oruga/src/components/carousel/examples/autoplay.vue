@@ -40,6 +40,7 @@ const repeat = ref(false);
                     label="Repeat" />
             </o-field>
         </o-field>
+
         <o-field grouped>
             <o-field label="Value">
                 <o-input
@@ -66,10 +67,11 @@ const repeat = ref(false);
             :autoplay="autoplay"
             :pause-hover="pauseHover"
             :interval="interval"
-            :repeat="repeat">
+            :repeat="repeat"
+            :arrows-hover="false">
             <o-carousel-item v-for="(slide, i) in carousels" :key="i">
                 <section
-                    class="ex-slide"
+                    class="example-slide"
                     :style="{ 'background-color': slide.color }">
                     <h1>{{ slide.text }}</h1>
                     <o-input :placeholder="slide.text" />
@@ -79,3 +81,11 @@ const repeat = ref(false);
         </o-carousel>
     </section>
 </template>
+
+<style>
+.example-slide {
+    padding: 9rem 4.5rem;
+    color: #ffffff;
+    text-align: center;
+}
+</style>

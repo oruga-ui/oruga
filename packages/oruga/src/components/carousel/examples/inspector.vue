@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import type { InspectData } from "@docs";
+import type {
+    CarouselClasses,
+    CarouselItemClasses,
+    CarouselProps,
+    CarouselItemProps,
+} from "../props";
+
 const carousels = [
     { text: "Slide 1", color: "#445e00" },
     { text: "Slide 2", color: "#006724" },
@@ -7,121 +15,129 @@ const carousels = [
     { text: "Slide 5", color: "#005c98" },
 ];
 
-const subitem = "carousel-item";
-
-const inspectData = [
-    {
+const inspectData: InspectData<
+    CarouselClasses & CarouselItemClasses,
+    CarouselProps & CarouselItemProps
+> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
+    overlayClass: {
         class: "overlayClass",
+        description: "Class of the root element when overlay.",
         properties: ["overlay"],
-        description: "Class of the root element in overlay",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.overlay = true;
         },
     },
-    {
+    wrapperClass: {
         class: "wrapperClass",
-        description: "Class of the wrapper element of carousel items",
+        description: "Class of the inner wrapper element.",
     },
-    {
+    itemsClass: {
         class: "itemsClass",
-        description: "Class of slider items",
+        description: "Class of items container element.",
     },
-    {
+    itemsDraggingClass: {
         class: "itemsDraggingClass",
-        description: "Class of slider items on drag",
+        description: "Class of items container element when dragging.",
+        properties: ["dragable"],
     },
-    {
-        class: "arrowIconClass",
-        description: "Class of arrow elements",
+    iconClass: {
+        class: "iconClass",
+        description: "Class of icon button elements.",
     },
-    {
-        class: "arrowIconPrevClass",
-        description: "Class of prev arrow element",
+    iconPrevClass: {
+        class: "iconPrevClass",
+        description: "Class of prev icon button element.",
+        action: (data): void => {
+            data.modelValue = 1;
+        },
     },
-    {
-        class: "arrowIconNextClass",
-        description: "Class of next arrow element",
+    iconNextClass: {
+        class: "iconNextClass",
+        description: "Class of next icon button element.",
     },
-    {
-        class: "arrowIconAutoplayClass",
-        description: "Class of autoplay button element",
+    iconAutoplayClass: {
+        class: "iconAutoplayClass",
+        description: "Class of autoplay icon button element.",
     },
-    {
-        class: "indicatorClass",
-        description: "Class of indicator link element",
-    },
-    {
+    indicatorsClass: {
         class: "indicatorsClass",
-        description: "Class of indicators wrapper element",
+        description: "Class of indicators tablist element.",
     },
-    {
+    indicatorsInsideClass: {
         class: "indicatorsInsideClass",
+        description: "Class of indicators tablist element when inside.",
         properties: ["indicatorInside"],
-        description: "Class of indicators wrapper element when inside",
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.indicatorInside = true;
         },
     },
-    {
-        class: "indicatorsInsidePositionClass",
-        properties: ["indicatorInside", "indicatorPosition"],
-        description:
-            "Class of indicators wrapper element when inside and position",
-        action: (cmp, data): void => {
+    indicatorsPositionClass: {
+        class: "indicatorsPositionClass",
+        description: "Class of indicators tablist element with position.",
+        properties: ["indicatorPosition"],
+        action: (data): void => {
             data.indicatorInside = true;
             data.indicatorPosition = "top";
         },
     },
-    {
+    indicatorClass: {
+        class: "indicatorClass",
+        description: "Class of indicator tab element.",
+    },
+    indicatorItemClass: {
         class: "indicatorItemClass",
-        description: "Class of indicator item element",
+        description: "Class of indicator item element.",
     },
-    {
+    indicatorItemActiveClass: {
         class: "indicatorItemActiveClass",
-        description: "Class of indicator element when is active",
+        description: "Class of indicator item element when active.",
     },
-    {
+    indicatorItemStyleClass: {
         class: "indicatorItemStyleClass",
         properties: ["indicatorStyle"],
-        description: "Class of indicator element to separate different styles",
-        action: (cmp, data): void => {
+        description:
+            "Class of indicator item element to separate different styles.",
+        action: (data): void => {
             data.indicatorStyle = "lines";
         },
     },
-    {
+    itemClass: {
         class: "itemClass",
-        description: "Class of carousel item",
+        subitem: "carouselitem",
+        description: "Class of item element.",
     },
-    {
+    itemActiveClass: {
         class: "itemActiveClass",
-        subitem: true,
-        description: "Class of carousel item when is active",
+        subitem: "carouselitem",
+        description: "Class of item element when active.",
     },
-    {
+    itemClickableClass: {
         class: "itemClickableClass",
-        subitem: true,
+        subitem: "carouselitem",
+        description: "Class of item element when clickable.",
         properties: ["clickable"],
-        description: "Class of carousel item when is clickable",
     },
-];
+};
 </script>
 
 <template>
-    <inspector-wrapper
-        v-slot="props"
-        :inspect-data="inspectData"
-        :subitem="subitem">
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-carousel v-bind="props">
             <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
-                <section
-                    class="ex-slide"
-                    :style="{ 'background-color': carousel.color }">
+                <article
+                    class="example-slide"
+                    :style="{
+                        'background-color': carousel.color,
+                        padding: '9rem 4.5rem',
+                        color: '#ffffff',
+                        'text-align': 'center',
+                    }">
                     <h1>{{ carousel.text }}</h1>
-                </section>
+                </article>
             </o-carousel-item>
         </o-carousel>
     </inspector-wrapper>

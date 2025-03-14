@@ -35,8 +35,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     icon: () => getDefault("loading.icon", "loading"),
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
-    scroll: () => getDefault("loading.scroll", "keep"),
-    role: () => getDefault("loading.role", "dialog"),
+    clipScroll: () => getDefault("loading.clipScroll", false),
 });
 
 const emits = defineEmits<{
@@ -63,7 +62,7 @@ const isFullPage = defineModel<boolean>("fullPage", { default: true });
 
 const isActive = defineModel<boolean>("active", { default: false });
 
-const toggleScroll = usePreventScrolling(props.scroll === "keep");
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
 watch(isActive, (value) => {
     if (isFullPage.value) toggleScroll(value);
@@ -106,15 +105,15 @@ function close(...args: unknown[]): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-load"],
-    ["fullPageClass", "o-load--fullpage", null, isFullPage],
+    ["rootClass", "o-loading"],
+    ["fullPageClass", "o-loading--fullpage", null, isFullPage],
 );
 
-const overlayClasses = defineClasses(["overlayClass", "o-load__overlay"]);
+const overlayClasses = defineClasses(["overlayClass", "o-loading__overlay"]);
 
-const iconClasses = defineClasses(["iconClass", "o-load__icon"]);
+const iconClasses = defineClasses(["iconClass", "o-loading__icon"]);
 
-const labelClasses = defineClasses(["labelClass", "o-load__label"]);
+const labelClasses = defineClasses(["labelClass", "o-loading__label"]);
 
 // --- Expose Public Functionalities ---
 
@@ -128,8 +127,9 @@ defineExpose({ close });
             v-if="isActive"
             ref="rootElement"
             data-oruga="loading"
-            :role="role"
-            :class="rootClasses">
+            :class="rootClasses"
+            role="status"
+            aria-live="polite">
             <div
                 :class="overlayClasses"
                 :tabindex="-1"

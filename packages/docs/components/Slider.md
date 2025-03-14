@@ -4,31 +4,23 @@ sidebarDepth: 2
 
 # Slider
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Slider** input component let user select a value or range from a given range with a graphic slider.
 The component implements the W3C ARIA APG [Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/).
 Use it with the Field component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-slider />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-slider-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Slider component
 
@@ -80,9 +72,9 @@ Use it with the Field component to access all the functionalities.
 | ------- | ----------------------------------- | -------- |
 | default | Define additional slider ticks here |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## SliderTick component
 
@@ -104,9 +96,17 @@ Use it with the Field component to access all the functionalities.
 | ------- | -------------------------------------------- | -------- |
 | default | Override tick content, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-slider-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -148,7 +148,12 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                | Default                            |
 | ---------------------------- | ---------------------------------- |
-| $slider-colors               | var.$colors                        |
+| $slider-tick-label-size      | 0.75rem                            |
+| $slider-thumb-shadow         | none                               |
+| $slider-thumb-to-track-ratio | 2                                  |
+| $slider-tick-to-track-ratio  | 0.5                                |
+| $slider-tick-width           | 3px                                |
+| $slider-colors               | dv.$colors                         |
 | $slider-radius               | css.getVar("radius")               |
 | $slider-background           | css.getVar("grey-lighter")         |
 | $slider-color                | css.getVar("primary")              |
@@ -157,13 +162,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $slider-thumb-background     | css.getVar("scheme-main")          |
 | $slider-thumb-radius         | css.getVar("radius")               |
 | $slider-thumb-border         | 1px solid css.getVar("grey-light") |
-| $slider-thumb-shadow         | none                               |
-| $slider-thumb-to-track-ratio | 2                                  |
-| $slider-tick-to-track-ratio  | 0.5                                |
-| $slider-tick-width           | 3px                                |
 | $slider-tick-radius          | css.getVar("radius")               |
 | $slider-tick-background      | css.getVar("grey-light")           |
-| $slider-tick-label-size      | 0.75rem                            |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_slider.scss)
 
@@ -183,4 +183,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

@@ -54,6 +54,8 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     icon: () => getDefault("datetimepicker.icon"),
     iconRight: () => getDefault("datetimepicker.iconRight"),
     iconRightClickable: false,
+    desktopModal: () => getDefault("datetimepicker.desktopModal", false),
+    mobileModal: () => getDefault("datetimepicker.mobileModal", true),
     mobileNative: () => getDefault("datetimepicker.mobileNative", true),
     teleport: () => getDefault("datetimepicker.teleport", false),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
@@ -149,16 +151,12 @@ const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     props,
 );
 
-watch([() => isMobileNative.value, () => props.inline], () => {
-    // $refs attached, it's time to refresh datepicker (input)
-    if (datepickerRef.value) datepickerRef.value.$forceUpdate();
-});
-
 const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 
-/** Dropdown active state */
+// the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
+// the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
 function updateVModel(value: Date | Date[] | undefined): void {
@@ -327,12 +325,12 @@ function onChangeNativePicker(event: Event): void {
 
 const datepickerWrapperClasses = defineClasses([
     "datepickerWrapperClass",
-    "o-dtpck__date",
+    "o-datetimepicker__date",
 ]);
 
 const timepickerWrapperClasses = defineClasses([
     "timepickerWrapperClass",
-    "o-dtpck__time",
+    "o-datetimepicker__time",
 ]);
 
 // --- Expose Public Functionalities ---
@@ -370,6 +368,8 @@ defineExpose({ focus: setFocus, value: vmodel });
         :range="false"
         :multiple="false"
         :disabled="disabled"
+        :desktop-modal="desktopModal"
+        :mobile-modal="mobileModal"
         :mobile-native="isMobileNative"
         :locale="locale"
         :teleport="teleport"

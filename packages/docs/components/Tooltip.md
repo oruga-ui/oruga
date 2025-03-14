@@ -1,29 +1,21 @@
 # Tooltip
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Tooltip** component displays a short contextual help text when the user hovers over it.
 The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-tooltip />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-tooltip-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Tooltip component
 
@@ -67,9 +59,17 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 | default | Tooltip trigger slot                   | **active** `boolean` - tooltip active state |
 | content | Tooltip content, default is label prop |                                             |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-tooltip-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -101,15 +101,15 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                    | Default                          |
 | -------------------------------- | -------------------------------- |
-| $tooltip-colors                  | var.$colors                      |
 | $tooltip-arrow-size              | 5px                              |
 | $tooltip-arrow-margin            | 2px                              |
 | $tooltip-content-multiline-width | 300px                            |
+| $tooltip-shadow                  | 0 1px 2px 1px rgba(0, 1, 0, 0.2) |
+| $tooltip-z                       | 38                               |
+| $tooltip-colors                  | dv.$colors                       |
 | $tooltip-border-radius           | css.getVar("radius")             |
 | $tooltip-bg                      | css.getVar("scheme-main-bis")    |
-| $tooltip-shadow                  | 0 1px 2px 1px rgba(0, 1, 0, 0.2) |
 | $tooltip-color                   | css.getVar("text-body")          |
-| $tooltip-z                       | 38                               |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tooltip.scss)
 
@@ -129,4 +129,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

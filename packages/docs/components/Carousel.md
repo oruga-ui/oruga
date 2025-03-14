@@ -4,31 +4,23 @@ sidebarDepth: 2
 
 # Carousel
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Carousel** component is a slideshow for cycling through a set of elements — images or text like - a carousel, referred to as slides, by sequentially displaying a subset of one or more slides.
 One slide is displayed at a time, and users can activate a next or previous slide control that hides the current slide and "rotates" the next or previous slide into view.
-Tthe component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
+The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-carousel />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-carousel-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Carousel component
 
@@ -89,9 +81,9 @@ Tthe component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org
 | indicator  | Override the indicator elements  | **index** `index` - indicator index                                                                                                                                                                             |
 | overlay    | Overlay element                  |                                                                                                                                                                                                                 |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## CarouselItem component
 
@@ -114,9 +106,17 @@ Tthe component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org
 | ------- | --------------- | -------- |
 | default | Default content |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-carousel-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -124,33 +124,37 @@ Tthe component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                          | Default                                                                         |
-| -------------------------------------- | ------------------------------------------------------------------------------- |
-| $carousel-arrow-background             | var(--#{$prefix}white)                                                          |
-| $carousel-arrow-color                  | var(--#{$prefix}primary)                                                        |
-| $carousel-arrow-icon-spaced            | 1.5rem                                                                          |
-| $carousel-arrow-top                    | 50%                                                                             |
-| $carousel-arrow-size                   | 1.5rem                                                                          |
-| $carousel-arrow-border-radius          | var( --#{$prefix}base-border-radius-rounded)                                    |
-| $carousel-arrow-border                 | 1px solid $carousel-arrow-background                                            |
-| $carousel-arrow-transition             | var(--#{$prefix}transition-duration)  var(--#{$prefix}transition-timing)        |
-| $carousel-indicators-background        | rgba(var(--#{$prefix}white), 0.5)                                               |
-| $carousel-indicators-padding           | 0.5rem                                                                          |
-| $carousel-indicator-margin             | 0 0.5rem 0 0                                                                    |
-| $carousel-indicator-color              | var(--#{$prefix}primary)                                                        |
-| $carousel-indicator-background         | var(--#{$prefix}white)                                                          |
-| $carousel-indicator-border             | 1px solid $carousel-indicator-color                                             |
-| $carousel-indicator-active-background  | $carousel-indicator-color                                                       |
-| $carousel-indicator-active-border      | 1px solid $carousel-indicator-color                                             |
-| $carousel-indicator-transition         | var(--#{$prefix}transition-duration)  var(--#{$prefix}transition-timing)        |
-| $carousel-indicator-size               | 10px                                                                            |
-| $carousel-indicator-dots-border-radius | var( --#{$prefix}base-border-radius)                                            |
-| $carousel-indicator-lines-height       | 5px                                                                             |
-| $carousel-indicator-lines-width        | 25px                                                                            |
-| $carousel-items-transition             | all var(--#{$prefix}transition-duration)  var(--#{$prefix}transition-timing) 0s |
-| $carousel-item-border                  | 2px solid transparent                                                           |
-| $carousel-overlay-background           | hsla(0, 0%, 4%, 0.86)                                                           |
-| $carousel-overlay-zindex               | 40                                                                              |
+| SASS Variable                          | Default                                                                           |
+| -------------------------------------- | --------------------------------------------------------------------------------- |
+| $carousel-arrow-background             | var(--#{$prefix}white)                                                            |
+| $carousel-arrow-color                  | var(--#{$prefix}primary)                                                          |
+| $carousel-arrow-icon-spaced            | 1.5rem                                                                            |
+| $carousel-arrow-top                    | 50%                                                                               |
+| $carousel-arrow-size                   | 1.5rem                                                                            |
+| $carousel-arrow-border-radius          | var( --#{$prefix}base-border-radius-rounded)                                      |
+| $carousel-arrow-border                 | 1px solid $carousel-arrow-background                                              |
+| $carousel-arrow-transition             | var(--#{$prefix}transition-duration)    var(--#{$prefix}transition-timing)        |
+| $carousel-autoplay-top                 | 1em                                                                               |
+| $carousel-autoplay-left                | $carousel-arrow-icon-spaced                                                       |
+| $carousel-autoplay-right               | unset                                                                             |
+| $carousel-autoplay-bottom              | unset                                                                             |
+| $carousel-indicators-background        | rgba(var(--#{$prefix}white), 0.5)                                                 |
+| $carousel-indicators-padding           | 0.5rem                                                                            |
+| $carousel-indicator-margin             | 0 0.5rem 0 0                                                                      |
+| $carousel-indicator-color              | var(--#{$prefix}primary)                                                          |
+| $carousel-indicator-background         | var(--#{$prefix}white)                                                            |
+| $carousel-indicator-border             | 1px solid $carousel-indicator-color                                               |
+| $carousel-indicator-active-background  | $carousel-indicator-color                                                         |
+| $carousel-indicator-active-border      | 1px solid $carousel-indicator-color                                               |
+| $carousel-indicator-transition         | var(--#{$prefix}transition-duration)    var(--#{$prefix}transition-timing)        |
+| $carousel-indicator-size               | 10px                                                                              |
+| $carousel-indicator-dots-border-radius | var( --#{$prefix}base-border-radius)                                              |
+| $carousel-indicator-lines-height       | 5px                                                                               |
+| $carousel-indicator-lines-width        | 25px                                                                              |
+| $carousel-items-transition             | all var(--#{$prefix}transition-duration)    var(--#{$prefix}transition-timing) 0s |
+| $carousel-item-border                  | 2px solid transparent                                                             |
+| $carousel-overlay-background           | hsla(0, 0%, 4%, 0.86)                                                             |
+| $carousel-overlay-zindex               | 40                                                                                |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)
 
@@ -159,18 +163,18 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-| SASS Variable                  | Default                                 |
-| ------------------------------ | --------------------------------------- |
-| $carousel-arrow-background     | css.getVar("scheme-main")               |
-| $carousel-arrow-color          | css.getVar("primary")                   |
-| $carousel-arrow-icon-spaced    | 1.5rem                                  |
-| $carousel-arrow-top            | 50%                                     |
-| $carousel-indicator-background | rgba(css.getVar("scheme-invert"), 0.5)  |
-| $carousel-indicator-border     | css.getVar("scheme-main")               |
-| $carousel-indicator-color      | css.getVar("primary")                   |
-| $carousel-indicator-spaced     | 0.5rem                                  |
-| $carousel-overlay-background   | rgba(css.getVar("scheme-invert"), 0.86) |
-| $carousel-overlay-z            | 40                                      |
+| SASS Variable                  | Default                                                                              |
+| ------------------------------ | ------------------------------------------------------------------------------------ |
+| $carousel-arrow-icon-spaced    | 1.5rem                                                                               |
+| $carousel-arrow-top            | 50%                                                                                  |
+| $carousel-indicator-spaced     | 0.5rem                                                                               |
+| $carousel-overlay-z            | 40                                                                                   |
+| $carousel-arrow-background     | css.getVar("scheme-main")                                                            |
+| $carousel-arrow-color          | css.getVar("primary")                                                                |
+| $carousel-indicator-background | rgba(css.getVar("scheme-invert"), 0.5)                                               |
+| $carousel-indicator-border     | css.getVar("scheme-main")                                                            |
+| $carousel-indicator-color      | css.getVar("primary")                                                                |
+| $carousel-overlay-background   | hsla( css.getVar(scheme-h), css.getVar(scheme-s), css.getVar(scheme-invert-l), 0.86) |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_carousel.scss)
 
@@ -182,4 +186,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

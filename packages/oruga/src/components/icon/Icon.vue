@@ -121,7 +121,7 @@ const rootClasses = defineClasses(
 </script>
 
 <template>
-    <span :class="rootClasses" data-oruga="icon" :style="rootStyle">
+    <span data-oruga="icon" :class="rootClasses" :style="rootStyle">
         <!-- custom icon component -->
         <component
             :is="component"

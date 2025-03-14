@@ -8,6 +8,7 @@ import {
     useSlots,
     toValue,
     useTemplateRef,
+    toRaw,
     triggerRef,
     type MaybeRefOrGetter,
 } from "vue";
@@ -126,7 +127,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     filterDebounce: () => getDefault("table.filterDebounce", 300),
     emptyLabel: () => getDefault("table.emptyLabel"),
     emptyIcon: () => getDefault("table.emptyIcon"),
-    emptyIconSize: () => getDefault("table.emptyIconSize", "large"),
+    emptyIconSize: () => getDefault("table.emptyIconSize"),
     loading: false,
     loadingIcon: () => getDefault("table.loadingIcon", "loading"),
     loadingLabel: () => getDefault("table.loadingLabel"),
@@ -345,7 +346,7 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
 const slotsRef = useTemplateRef("slotsWrapper");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<TableComponent>(() => ({
     isColumnSorted,
 }));
@@ -534,8 +535,8 @@ function isRowEqual(
     sourceRow: MaybeRefOrGetter<T>,
     targetRow: MaybeRefOrGetter<T>,
 ): boolean {
-    const el1 = toValue(sourceRow);
-    const el2 = toValue(targetRow);
+    const el1 = toRaw(toValue(sourceRow));
+    const el2 = toRaw(toValue(targetRow));
     if (!isDefined(targetRow)) return false;
     if (typeof props.customCompare === "function")
         return props.customCompare(el1, el2);
@@ -872,7 +873,7 @@ const showDetailRowIcon = computed(
 
 /** toggle to show/hide details slot */
 function toggleDetails(row: TableRow<T>): void {
-    if (isVisibleDetailRow(row)) {
+    if (isDetailRowVisible(row)) {
         closeDetailRow(row);
         emits("details-close", row.value);
     } else {
@@ -893,12 +894,11 @@ function closeDetailRow(row: TableRow<T>): void {
         visibleDetailedRows.value = visibleDetailedRows.value.toSpliced(idx, 1);
 }
 
-function isVisibleDetailRow(row: TableRow<T>): boolean {
-    return visibleDetailedRows.value.some((r) => isRowEqual(r, row.value));
-}
-
-function isActiveDetailRow(row: TableRow<T>): boolean {
-    return props.detailed && isVisibleDetailRow(row);
+function isDetailRowVisible(row: TableRow<T>): boolean {
+    return (
+        props.detailed &&
+        visibleDetailedRows.value.some((r) => isRowEqual(r, row.value))
+    );
 }
 
 // #endregion --- Detail Row Feature ---
@@ -997,6 +997,22 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-table__root--mobile", null, isMobileActive],
 );
 
+const tableWrapperClasses = defineClasses(
+    ["wrapperClass", "o-table__wrapper"],
+    [
+        "stickyHeaderClass",
+        "o-table__wrapper--sticky-header",
+        null,
+        computed(() => props.stickyHeader),
+    ],
+    ["scrollableClass", "o-table__wrapper--scrollable", null, isScrollable],
+    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
+);
+
+const tableWrapperStyle = computed(() => ({
+    height: toCssDimension(props.height),
+}));
+
 const tableClasses = defineClasses(
     ["tableClass", "o-table"],
     [
@@ -1029,24 +1045,6 @@ const tableClasses = defineClasses(
         computed(() => !availableRows.value.length),
     ],
 );
-
-const tableWrapperClasses = defineClasses(
-    ["wrapperClass", "o-table__wrapper"],
-    [
-        "stickyHeaderClass",
-        "o-table__wrapper--sticky-header",
-        null,
-        computed(() => props.stickyHeader),
-    ],
-    ["scrollableClass", "o-table__wrapper--scrollable", null, isScrollable],
-    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
-);
-
-const tableWrapperStyle = computed(() => ({
-    height: toCssDimension(props.height),
-}));
-
-const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
 const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
 
@@ -1109,6 +1107,8 @@ const tdDetailedChevronClasses = defineClasses([
     "o-table__td-chevron",
 ]);
 
+const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
+
 const mobileSortClasses = defineClasses([
     "mobileSortClass",
     "o-table__mobile-sort",
@@ -1152,7 +1152,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="table">
+    <div data-oruga="table" :class="rootClasses">
         <div ref="slotsWrapper" style="display: none">
             <!--
                 @slot Place o-table-column here
@@ -1237,11 +1237,11 @@ defineExpose({ rows: tableRows, sort: sortByField });
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
             <table
                 v-if="tableColumns.length"
+                v-bind="$attrs"
                 :class="tableClasses"
                 :tabindex="selectable || isScrollable ? 0 : undefined"
                 :aria-rowcount="rowCount"
                 :aria-colcount="columnCount"
-                v-bind="$attrs"
                 @keydown.prevent.up="onArrowPressed(-1, $event)"
                 @keydown.prevent.down="onArrowPressed(1, $event)"
                 @keydown.prevent.home="selectRow(availableRows[0], $event)"
@@ -1302,7 +1302,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
-                                v-if="column.visible && !column.hidden"
+                                v-if="!column.hidden"
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style"
@@ -1401,7 +1401,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
-                                v-if="column.visible && !column.hidden"
+                                v-if="!column.hidden"
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style">
@@ -1454,7 +1454,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
-                                v-if="column.visible && !column.hidden"
+                                v-if="!column.hidden"
                                 :style="isMobileActive ? {} : column.style"
                                 :class="[
                                     ...thBaseClasses,
@@ -1536,7 +1536,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     v-if="isDetailedVisible(row.value)"
                                     :icon="detailIcon"
                                     :pack="iconPack"
-                                    :rotation="isVisibleDetailRow(row) ? 90 : 0"
+                                    :rotation="isDetailRowVisible(row) ? 90 : 0"
                                     role="button"
                                     tabindex="0"
                                     clickable
@@ -1571,7 +1571,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 v-for="column in tableColumns"
                                 :key="column.identifier">
                                 <o-slot-component
-                                    v-if="column.visible && !column.hidden"
+                                    v-if="!column.hidden"
                                     v-bind="column.tdAttrsData[row.index]"
                                     :component="column.$el"
                                     name="default"
@@ -1619,10 +1619,10 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             </td>
                         </tr>
 
-                        <transition
+                        <transition-group
                             v-if="props.detailed"
                             :name="detailTransition">
-                            <template v-if="isActiveDetailRow(row)">
+                            <template v-if="isDetailRowVisible(row)">
                                 <!--
                                     @slot Place row detail content here
                                     @binding {T} row - row content
@@ -1650,7 +1650,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     </td>
                                 </tr>
                             </template>
-                        </transition>
+                        </transition-group>
                     </template>
 
                     <tr v-if="!availableRows.length" :class="trEmptyClasses">
@@ -1708,8 +1708,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :full-page="false"
                     :active="loading"
                     :icon="loadingIcon"
-                    :label="loadingLabel"
-                    role="status" />
+                    :label="loadingLabel" />
             </slot>
         </div>
 

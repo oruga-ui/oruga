@@ -64,34 +64,36 @@ export type CarouselProps = {
 } & CarouselClasses;
 
 // class props (will not be displayed in the docs)
-type CarouselClasses = Partial<{
+export type CarouselClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the root element in overlay */
     overlayClass: ComponentClass;
-    /** Class of the wrapper element of carousel items */
+    /** Class of the inner wrapper element */
     wrapperClass: ComponentClass;
-    /** Class of slider items */
+    /** Class of items container element */
     itemsClass: ComponentClass;
-    /** Class of slider items on drag */
+    /* Class of items container element when dragging */
     itemsDraggingClass: ComponentClass;
-    /** Class of arrow elements */
-    arrowIconClass: ComponentClass;
-    /** Class of prev arrow element */
-    arrowIconPrevClass: ComponentClass;
-    /** Class of next arrow element */
-    arrowIconNextClass: ComponentClass;
-    /** Class of indicators wrapper element */
+    /** Class of icon button elements */
+    iconClass: ComponentClass;
+    /** Class of prev icon button element */
+    iconPrevClass: ComponentClass;
+    /** Class of next icon button element */
+    iconNextClass: ComponentClass;
+    /** Class of autoplay icon button element */
+    iconAutoplayClass: ComponentClass;
+    /** Class of indicators tablist element */
     indicatorsClass: ComponentClass;
-    /** Class of indicators wrapper element when inside */
+    /** Class of indicators tablist element when inside */
     indicatorsInsideClass: ComponentClass;
-    /** Class of indicators wrapper element when inside and position */
-    indicatorsInsidePositionClass: ComponentClass;
-    /** Class of indicator link element */
+    /** Class of indicators tablist element with position */
+    indicatorsPositionClass: ComponentClass;
+    /** Class of indicator tab element */
     indicatorClass: ComponentClass;
     /** Class of indicator item element */
     indicatorItemClass: ComponentClass;
-    /** Class of indicator element when is active */
+    /** Class of indicator element when active */
     indicatorItemActiveClass: ComponentClass;
     /** Class of indicator element to separate different styles */
     indicatorItemStyleClass: ComponentClass;
@@ -105,11 +107,11 @@ export type CarouselItemProps = {
 } & CarouselItemClasses;
 
 // class props (will not be displayed in the docs)
-type CarouselItemClasses = Partial<{
-    /** Class of carousel item */
+export type CarouselItemClasses = Partial<{
+    /** Class of item element */
     itemClass: ComponentClass;
-    /** Class of carousel item when is active */
+    /** Class of item element when active */
     itemActiveClass: ComponentClass;
-    /** Class of carousel item when is clickable */
+    /** Class of item element when clickable */
     itemClickableClass: ComponentClass;
 }>;

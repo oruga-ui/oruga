@@ -27,7 +27,6 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     position: undefined,
     searchable: false,
     sortable: false,
-    visible: true,
     hidden: false,
     sticky: false,
     headerSelectable: false,
@@ -47,7 +46,7 @@ const isHeaderUnselectable = computed(
 
 const vm = getCurrentInstance();
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<TableColumnComponent<T>>(() => ({
     ...props,
     $el: vm!.proxy!,

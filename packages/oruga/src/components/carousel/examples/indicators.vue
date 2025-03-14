@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const gallery = ref(false);
+const carousel = ref(1);
 
-const indicators = ref(false);
-const itemsToShow = ref(2);
-const breakpoints = ref({
-    768: {
-        itemsToShow: 4,
-    },
-    960: {
-        itemsToShow: 6,
-    },
-});
+const indicators = ref(true);
+const indicatorInside = ref(true);
+const indicatorPosition = ref<string>("top");
+const indicatorStyle = ref<string>("dots");
 
 const items = [
     {
@@ -44,78 +38,44 @@ const items = [
         image: "https://picsum.photos/id/7/1230/500",
     },
 ];
-
-function switchGallery(value): void {
-    gallery.value = value;
-
-    if (value) document.documentElement.classList.add("o-clipped");
-    else document.documentElement.classList.remove("o-clipped");
-}
 </script>
 
 <template>
     <section>
+        <o-field grouped>
+            <o-field>
+                <o-switch v-model="indicators" label="Show indicators" />
+            </o-field>
+            <o-field>
+                <o-switch
+                    v-model="indicatorInside"
+                    label="Show indicators inside" />
+            </o-field>
+            <o-field label="Select indicators position">
+                <o-select v-model="indicatorPosition">
+                    <option value="top">Top</option>
+                    <option value="bottom">bottom</option>
+                </o-select>
+            </o-field>
+            <o-field label="Select indicators style">
+                <o-select v-model="indicatorStyle">
+                    <option value="dots">Dots</option>
+                    <option value="lines">Lines</option>
+                </o-select>
+            </o-field>
+        </o-field>
+
         <o-carousel
-            :autoplay="false"
-            :overlay="gallery"
-            :arrows="false"
-            @click="switchGallery(true)">
-            <o-carousel-item v-for="(item, i) in items" :key="i" clickable>
-                <div class="image">
-                    <img :src="item.image" />
-                </div>
+            v-model="carousel"
+            :indicators="indicators"
+            :indicator-inside="indicatorInside"
+            :indicator-position="indicatorPosition"
+            :indicator-style="indicatorStyle">
+            <o-carousel-item v-for="(item, i) in items" :key="i">
+                <img :src="item.image" :alt="item.title" />
             </o-carousel-item>
-
-            <template #indicators="{ active, switchTo }">
-                <o-carousel
-                    :model-value="active"
-                    :indicators="indicators"
-                    :items-to-show="itemsToShow"
-                    :breakpoints="breakpoints"
-                    @update:model-value="switchTo($event)">
-                    <o-carousel-item
-                        v-for="(item, i) in items"
-                        :key="i"
-                        clickable
-                        item-class="img-indicator"
-                        item-active-class="img-indicator-active">
-                        <img :src="item.image" />
-                    </o-carousel-item>
-                </o-carousel>
-            </template>
-
-            <template #overlay>
-                <o-icon
-                    v-if="gallery"
-                    icon="times"
-                    root-class="ex-close-icon"
-                    clickable
-                    @click="switchGallery(false)" />
-                <div style="color: #ffffff; text-align: center">
-                    Hello, I'm an overlay!
-                </div>
-            </template>
         </o-carousel>
+
+        <p><b>Current slide index:</b> {{ carousel }}</p>
     </section>
 </template>
-
-<style scoped>
-.image img {
-    display: block;
-    height: auto;
-    width: 100%;
-}
-.img-indicator {
-    filter: grayscale(100%);
-}
-.img-indicator-active {
-    filter: grayscale(0%);
-}
-.ex-close-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #ffffff;
-    z-index: 99;
-}
-</style>

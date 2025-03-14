@@ -6,6 +6,10 @@ const value = ref(15);
 
 <template>
     <section>
+        <o-field label="Default">
+            <o-slider v-model="value" :rounded="true" :tooltip="true" />
+        </o-field>
+
         <o-field label="Primary">
             <o-slider
                 v-model="value"

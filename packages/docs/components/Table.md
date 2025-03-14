@@ -4,30 +4,22 @@ sidebarDepth: 2
 
 # Table
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Table** component uses [HTML's native table element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table).
 It allows tabular data to be displayed in a responsive way with special case cells.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-table />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-table-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Table component
 
@@ -68,7 +60,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | draggable             | Allows rows to be draggable                                                                                                                                                                        | boolean                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
 | draggableColumn       | Allows columns to be draggable                                                                                                                                                                     | boolean                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
 | emptyIcon             | Icon to be shown when the table is empty                                                                                                                                                           | string                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;emptyIcon: undefined<br>}</code>             |
-| emptyIconSize         | Size of empty icon                                                                                                                                                                                 | string                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;emptyIconSize: "large"<br>}</code>           |
+| emptyIconSize         | Size of empty icon                                                                                                                                                                                 | string                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;emptyIconSize: undefined<br>}</code>         |
 | emptyLabel            | Label to be shown when the table is empty                                                                                                                                                          | string                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;emptyLabel: undefined<br>}</code>            |
 | filterDebounce        | Filtering debounce time (in milliseconds)                                                                                                                                                          | number                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;filterDebounce: 300<br>}</code>              |
 | filtersEvent          | Add a native event to filter                                                                                                                                                                       | string                                                            | -                                                                               | <code style='white-space: nowrap; padding: 0;'>""</code>                                                                                                         |
@@ -164,9 +156,9 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | loading     | Override loading component                                                                  | **loading** `boolean` - is loading state enabled                                                                                                                                      |
 | bottom-left | Additional slot if table is paginated                                                       |                                                                                                                                                                                       |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## TableColumn component
 
@@ -195,7 +187,6 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | subheading       | Define a column sub heading                            | string                                                  | -                           |                                                             |
 | tdAttrs          | Adds native attributes to td                           | object                                                  | -                           |                                                             |
 | thAttrs          | Adds native attributes to th                           | object                                                  | -                           |                                                             |
-| visible          | Define whether the column is visible or not            | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>  |
 | width            | Column fixed width                                     | number \| string                                        | -                           |                                                             |
 
 ### Slots
@@ -207,9 +198,17 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | subheading | Override subheading label | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-table-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -217,44 +216,45 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                          | Default                                                                                   |
-| -------------------------------------- | ----------------------------------------------------------------------------------------- |
-| $table-background-color                | #fff                                                                                      |
-| $table-background                      | #f5f5f5                                                                                   |
-| $table-boder                           | 1px solid transparent                                                                     |
-| $table-border-radius                   | var(--#{$prefix}base-border-radius)                                                       |
-| $table-card-box-shadow                 | 0 2px 3px rgba(var(--#{$prefix}black), 0.1),  0 0 0 1px rgba(var(--#{$prefix}black), 0.1) |
-| $table-card-cell-font-weight           | 600                                                                                       |
-| $table-card-cell-padding               | 0 0.5em 0 0                                                                               |
-| $table-card-cell-text-align            | left                                                                                      |
-| $table-card-detail-margin              | -1rem 0 0 0                                                                               |
-| $table-card-margin                     | 0 0 1rem 0                                                                                |
-| $table-color                           | black                                                                                     |
-| $table-current-sort-border-color       | var(--#{$prefix}grey)                                                                     |
-| $table-current-sort-font-weight        | 700                                                                                       |
-| $table-current-sort-hover-border-color | var(--#{$prefix}grey)                                                                     |
-| $table-detail-background               | #fafafa                                                                                   |
-| $table-detail-box-shadow               | inset 0 1px 3px var(--#{$prefix}grey)                                                     |
-| $table-detail-chevron-color            | var(--#{$prefix}primary)                                                                  |
-| $table-detail-chevron-width            | 40px                                                                                      |
-| $table-detail-padding                  | 1rem                                                                                      |
-| $table-focus-border-color              | var(--#{$prefix}primary)                                                                  |
-| $table-focus-box-shadow                | 0 0 0 0.125em rgba(var(--#{$prefix}primary), 0.25)                                        |
-| $table-hoverable-background-color      | #fafafa                                                                                   |
-| $table-narrow-padding                  | 0.25em 0.5em                                                                              |
-| $table-row-active-background-color     | var(--#{$prefix}primary)                                                                  |
-| $table-row-active-color                | var(--#{$prefix}primary-invert)                                                           |
-| $table-sticky-header-height            | 300px                                                                                     |
-| $table-sticky-zindex                   | 1                                                                                         |
-| $table-striped-background-color        | #fafafa                                                                                   |
-| $table-td-border                       | 1px solid var(--#{$prefix}grey-lighter)                                                   |
-| $table-td-padding                      | 0.5em 0.75em                                                                              |
-| $table-th-border                       | 2px solid var(--#{$prefix}grey-lighter)                                                   |
-| $table-th-checkbox-width               | 40px                                                                                      |
-| $table-th-color                        | #363636                                                                                   |
-| $table-th-detail-width                 | 14px                                                                                      |
-| $table-th-font-weight                  | 600                                                                                       |
-| $table-th-padding                      | 0.5em 0.75em                                                                              |
+| SASS Variable                          | Default                                                                                     |
+| -------------------------------------- | ------------------------------------------------------------------------------------------- |
+| $table-background-color                | #fff                                                                                        |
+| $table-background                      | #f5f5f5                                                                                     |
+| $table-boder                           | 1px solid transparent                                                                       |
+| $table-border-radius                   | var(--#{$prefix}base-border-radius)                                                         |
+| $table-card-box-shadow                 | 0 2px 3px rgba(var(--#{$prefix}black), 0.1),    0 0 0 1px rgba(var(--#{$prefix}black), 0.1) |
+| $table-card-cell-font-weight           | 600                                                                                         |
+| $table-card-cell-padding               | 0 0.5em 0 0                                                                                 |
+| $table-card-cell-text-align            | left                                                                                        |
+| $table-card-detail-margin              | -1rem 0 0 0                                                                                 |
+| $table-card-margin                     | 0 0 1rem 0                                                                                  |
+| $table-color                           | black                                                                                       |
+| $table-current-sort-border-color       | var(--#{$prefix}grey)                                                                       |
+| $table-current-sort-font-weight        | 700                                                                                         |
+| $table-current-sort-hover-border-color | var(--#{$prefix}grey)                                                                       |
+| $table-detail-background               | #fafafa                                                                                     |
+| $table-detail-box-shadow               | inset 0 1px 3px var(--#{$prefix}grey)                                                       |
+| $table-detail-chevron-color            | var(--#{$prefix}primary)                                                                    |
+| $table-detail-chevron-width            | 40px                                                                                        |
+| $table-detail-padding                  | 1rem                                                                                        |
+| $table-focus-border-color              | var(--#{$prefix}primary)                                                                    |
+| $table-focus-box-shadow                | 0 0 0 0.125em rgba(var(--#{$prefix}primary), 0.25)                                          |
+| $table-hoverable-background-color      | #fafafa                                                                                     |
+| $table-narrow-padding                  | 0.25em 0.5em                                                                                |
+| $table-row-active-background-color     | var(--#{$prefix}primary)                                                                    |
+| $table-row-active-color                | var(--#{$prefix}primary-invert)                                                             |
+| $table-sticky-header-height            | 300px                                                                                       |
+| $table-sticky-zindex                   | 1                                                                                           |
+| $table-striped-background-color        | #fafafa                                                                                     |
+| $table-td-border                       | 1px solid var(--#{$prefix}grey-lighter)                                                     |
+| $table-td-padding                      | 0.5em 0.75em                                                                                |
+| $table-th-border                       | 2px solid var(--#{$prefix}grey-lighter)                                                     |
+| $table-th-checkbox-width               | 40px                                                                                        |
+| $table-th-color                        | #363636                                                                                     |
+| $table-th-detail-width                 | 14px                                                                                        |
+| $table-th-font-weight                  | 600                                                                                         |
+| $table-th-padding                      | 0.5em 0.75em                                                                                |
+| $table-pagination-padding              | 0.5em 0                                                                                     |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_table.scss)
 
@@ -283,8 +283,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $table-sticky-bg                   | initial                       |
 | $table-sticky-color                | initial                       |
 | $table-sticky-header-height        | 350px                         |
-| $table-detail-padding              | 0.5rem 0.75rem                |
+| $table-detail-padding              | 0.5em 0.75em                  |
 | $table-detail-bg                   | var(--#{$prefix}gray-light)   |
+| $table-empty-padding               | 1.5em 0                       |
 | $table-sortable-hover-border-color | var(--#{$prefix}secondary)    |
 | $table-current-sort-bg             | var(--#{$prefix}gray-light)   |
 | $table-card-spacer                 | $spacer                       |
@@ -293,4 +294,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

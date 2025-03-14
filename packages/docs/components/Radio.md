@@ -1,30 +1,22 @@
 # Radio
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Radio** input component uses [HTML's native radio inputs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio) to allow a user to select one value from a set of options.
 The component supports the W3C ARIA APG [Radio Group Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/).
 Use it with the Field component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-radio />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-radio-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Radio component
 
@@ -68,9 +60,17 @@ Use it with the Field component to access all the functionalities.
 | ------- | ----------------------------------------- | -------- |
 | default | Override the label, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-radio-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -99,10 +99,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                  | Default               |
 | ------------------------------ | --------------------- |
-| $radio-colors                  | var.$colors           |
+| $radio-size                    | 1.25em                |
+| $radio-colors                  | dv.$colors            |
 | $radio-active-background-color | css.getVar("primary") |
 | $radio-border-color            | css.getVar("grey")    |
-| $radio-size                    | 1.25em                |
 | $radio-shadow                  | css.getVar("shadow")  |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_radio.scss)
@@ -115,4 +115,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

@@ -1,13 +1,15 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { axe } from "jest-axe";
+import { nextTick } from "vue";
 
 import ORadio from "../Radio.vue";
+import type { RadioProps } from "../props";
 
 describe("OCheckbox axe tests", () => {
     enableAutoUnmount(afterEach);
 
-    const a11yCases = [
+    const a11yCases: { title: string; props?: RadioProps<unknown> }[] = [
         {
             title: "axe radio - base case",
             props: { label: "Switch Label" },
@@ -39,6 +41,7 @@ describe("OCheckbox axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

@@ -98,7 +98,7 @@ const emits = defineEmits<{
 
 const rootRef = useTemplateRef("rootElement");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<CarouselComponent>(() => ({
     activeIndex: activeIndex.value,
     indicators: props.indicators,
@@ -112,7 +112,7 @@ const provideData = computed<CarouselComponent>(() => ({
 /** provide functionalities and data to child item components */
 const { childItems } = useProviderParent({ rootRef, data: provideData });
 
-/** The real index of the active item */
+// the real index of the active item, use v-model to make it two-way binding
 const activeIndex = defineModel<number>({ default: 0 });
 
 const total = computed(() => childItems.value.length);
@@ -240,7 +240,7 @@ function onEndPressed(): void {
  * Show the slide by index
  * @param index the real index of the slide
  */
-function switchTo(index: number): void {
+function switchTo(index: number = 0): void {
     if (settings.value.repeat) index = mod(index, total.value);
     index = bound(index, 0, total.value - 1);
 
@@ -386,68 +386,71 @@ function onDragEnd(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-car"],
-    ["overlayClass", "o-car__overlay", null, computed(() => props.overlay)],
+    ["rootClass", "o-carousel"],
+    [
+        "overlayClass",
+        "o-carousel__overlay",
+        null,
+        computed(() => props.overlay),
+    ],
 );
 
-const wrapperClasses = defineClasses(["wrapperClass", "o-car__wrapper"]);
+const wrapperClasses = defineClasses(["wrapperClass", "o-carousel__wrapper"]);
 
 const itemsClasses = defineClasses(
-    ["itemsClass", "o-car__items"],
-    ["itemsDraggingClass", "o-car__items--dragging", null, isDragging],
+    ["itemsClass", "o-carousel__items"],
+    ["itemsDraggingClass", "o-carousel__items--dragging", null, isDragging],
 );
 
-const arrowIconClasses = defineClasses([
-    "arrowIconClass",
-    "o-car__arrow__icon",
-]);
+const prevIconClasses = defineClasses(
+    ["iconClass", "o-carousel__icon"],
+    ["iconPrevClass", "o-carousel__icon-prev"],
+);
 
-const arrowIconPrevClasses = defineClasses([
-    "arrowIconPrevClass",
-    "o-car__arrow__icon-prev",
-]);
+const nextIconClasses = defineClasses(
+    ["iconClass", "o-carousel__icon"],
+    ["iconNextClass", "o-carousel__icon-next"],
+);
 
-const arrowIconNextClasses = defineClasses([
-    "arrowIconNextClass",
-    "o-car__arrow__icon-next",
-]);
-
-const arrowIconAutoplayClasses = defineClasses([
-    "arrowIconAutoplayClass",
-    "o-car__arrow__icon-autoplay",
-]);
+const autoplayIconClasses = defineClasses(
+    ["iconClass", "o-carousel__icon"],
+    ["iconAutoplayClass", "o-carousel__icon-autoplay"],
+);
 
 const indicatorsClasses = defineClasses(
-    ["indicatorsClass", "o-car__indicators"],
+    ["indicatorsClass", "o-carousel__indicators"],
     [
         "indicatorsInsideClass",
-        "o-car__indicators--inside",
+        "o-carousel__indicators--inside",
         null,
         computed(() => !!props.indicatorInside),
     ],
     [
-        "indicatorsInsidePositionClass",
-        "o-car__indicators--inside--",
+        "indicatorsPositionClass",
+        "o-carousel__indicators--",
         computed(() => props.indicatorPosition),
-        computed(() => props.indicatorInside && !!props.indicatorPosition),
+        computed(() => !!props.indicatorPosition),
     ],
 );
 
-const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
+const indicatorClasses = defineClasses([
+    "indicatorClass",
+    "o-carousel__indicator",
+]);
 
 const indicatorItemClasses = defineClasses(
-    ["indicatorItemClass", "o-car__indicator__item"],
+    ["indicatorItemClass", "o-carousel__indicator__item"],
     [
         "indicatorItemStyleClass",
-        "o-car__indicator__item--",
-        props.indicatorStyle,
+        "o-carousel__indicator__item--",
+        computed(() => props.indicatorStyle),
         computed(() => !!props.indicatorStyle),
     ],
 );
 
 const indicatorItemActiveClasses = defineClasses([
     "indicatorItemActiveClass",
-    "o-car__indicator__item--active",
+    "o-carousel__indicator__item--active",
 ]);
 
 function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
@@ -463,8 +466,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
 <template>
     <div
         ref="rootElement"
-        :class="rootClasses"
         data-oruga="carousel"
+        :class="rootClasses"
         role="region"
         aria-roledescription="carousel"
         @mouseover="onMouseEnter"
@@ -487,10 +490,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                 :toggle="onToggleAutoplay">
                 <template v-if="autoplay">
                     <o-icon
-                        :class="[
-                            ...arrowIconClasses,
-                            ...arrowIconAutoplayClasses,
-                        ]"
+                        :class="autoplayIconClasses"
                         :pack="iconPack"
                         :icon="
                             !isAutoplayPaused
@@ -528,7 +528,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                 <template v-if="arrows">
                     <o-icon
                         v-show="hasArrows && hasPrev"
-                        :class="[...arrowIconClasses, ...arrowIconPrevClasses]"
+                        :class="prevIconClasses"
                         :pack="iconPack"
                         :icon="iconPrev"
                         :size="iconSize"
@@ -541,7 +541,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         @keydown.space.prevent="onPrev" />
                     <o-icon
                         v-show="hasArrows && hasNext"
-                        :class="[...arrowIconClasses, ...arrowIconNextClasses]"
+                        :class="nextIconClasses"
                         :pack="iconPack"
                         :icon="iconNext"
                         :size="iconSize"
@@ -594,7 +594,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                     :aria-controls="`carouselpanel-${item.identifier}`"
                     :aria-selected="modelValue === item.index"
                     @click="onChange(item)"
-                    @keypress.enter="onChange(item)">
+                    @keydown.enter="onChange(item)"
+                    @keydown.space="onChange(item)">
                     <!--
                             @slot Override the indicator elements
                             @binding {index} index indicator index 

@@ -115,8 +115,8 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
         <article
             v-show="isActive"
             v-bind="$attrs"
-            :class="rootClasses"
-            data-oruga="notification">
+            data-oruga="notification"
+            :class="rootClasses">
             <button
                 v-if="closable"
                 :class="closeClasses"
@@ -126,9 +126,9 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 <o-icon
                     clickable
                     :pack="iconPack"
-                    both
                     :icon="closeIcon"
-                    :size="closeIconSize" />
+                    :size="closeIconSize"
+                    both />
             </button>
 
             <!--
@@ -143,8 +143,8 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                     :icon="computedIcon"
                     :pack="iconPack"
                     :class="iconClasses"
-                    both
                     :size="iconSize"
+                    both
                     aria-hidden />
                 <div :class="contentClasses">
                     <!--

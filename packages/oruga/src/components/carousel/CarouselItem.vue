@@ -36,11 +36,11 @@ function onClick(event: Event): void {
 // --- Computed Component Classes ---
 
 const itemClasses = defineClasses(
-    ["itemClass", "o-car__item"],
-    ["itemActiveClass", "o-car__item--active", null, isActive],
+    ["itemClass", "o-carousel__item"],
+    ["itemActiveClass", "o-carousel__item--active", null, isActive],
     [
         "itemClickableClass",
-        "o-car__item--clickable",
+        "o-carousel__item--clickable",
         null,
         computed(() => props.clickable),
     ],
@@ -60,7 +60,8 @@ const itemClasses = defineClasses(
         :aria-label="`${item.index + 1} of ${parent.total}`"
         draggable="true"
         @click="onClick"
-        @keypress.enter="onClick"
+        @keydown.enter="onClick"
+        @keydown.space="onClick"
         @dragstart="parent.onDrag"
         @touchstart="parent.onDrag">
         <!--

@@ -37,7 +37,10 @@ function selectMonth(month: number | undefined): void {
                 :first-day-of-week="1"
                 placeholder="Click to select...">
                 <template #trigger>
-                    <o-button icon-left="calendar" variant="primary" />
+                    <o-button
+                        icon-left="calendar"
+                        variant="primary"
+                        aria-label="Open Calendar" />
                 </template>
 
                 <template #header>

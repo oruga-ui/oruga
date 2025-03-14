@@ -14,7 +14,7 @@ import { useOruga } from "@oruga-ui/oruga-next";
 The `config` interface can be used to customise the Oruga [global configuration](/documentation/customisation) by overriding the `Config` object programmatically:
 
 ```typescript
-import { useOruga } from '@oruga-ui/oruga-next';
+import { useOruga, type OrugaOptions } from '@oruga-ui/oruga-next';
 
 const oruga = useOruga();
 
@@ -22,7 +22,7 @@ const oruga = useOruga();
 const config = oruga.config.getOptions();
 
 // modify the config object
-const myThemeConfig = {
+const myThemeConfig: OrugaOptions = {
     ...config,
     autocomplete: {
         rootClass: 'autocomplete-root',
@@ -38,13 +38,13 @@ oruga.config.setOptions(myThemeConfig);
 However, you can also customise each component by using the dedicated `ConfigProgrammatic` object, which is the same as the one added to the object provided by the main `useOruga()` composable:
 
 ```typescript
-import { ConfigProgrammatic } from '@oruga-ui/oruga-next';
+import { ConfigProgrammatic, type OrugaOptions } from '@oruga-ui/oruga-next';
 
 // get the current config
 const config = ConfigProgrammatic.getOptions();
 
 // modify the config object
-const myThemeConfig = {
+const myThemeConfig: OrugaOptions = {
     ...config,
     autocomplete: {
         rootClass: 'autocomplete-root',
@@ -148,7 +148,7 @@ type ProgrammaticInterface = {
      * The options argument depend on the component. 
      * The target specifies the element the component get rendered into - default is `document.body`.
      */
-    open: (options: Record<string, any>, target?: string | HTMLElement) => ProgrammaticExpose;
+    open: (options: Record<string, any>, target?: MaybeRefOrGetter<string | HTMLElement | null>) => ProgrammaticExpose;
     /** 
      * Close the last registred instance in the programmatic instance registry.
      * Any arguments which get passed to the exposed `close()` function of the component.
@@ -200,10 +200,9 @@ oruga.programmatic.open(
         onClose: (...args: unknown[]) => { ... }, // on close event handler
     }
 );
-
 ```
 
-The programmatic interface of this component looks much like the other programmatic component interfaces. However, the `open()` function takes some different attributes. The type definition of the `open()` function looks like this:
+The programmatic interface of this component looks much like the other programmatic component interfaces. However, the `open()` function takes some different attributes. This is the type definition of the `open()` function:
 
 ```typescript
 type open = <C extends VNodeTypes>(
@@ -219,7 +218,7 @@ type ProgrammaticOptions<C extends VNodeTypes> = {
      * The target specifies the element the component get rendered into.
      * @default `document.body`.
      */
-    target?: string | HTMLElement; 
+    target?: MaybeRefOrGetter<string | HTMLElement | null>; 
     /**
      * Specify the template `id` for the programmatic container element.
      * @default `programmatic-app`

@@ -25,6 +25,7 @@ const isCardModalActive = ref(false);
             <p style="text-align: center">
                 <img
                     style="background-color: white"
+                    alt="Oruga logo"
                     src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
             </p>
         </o-modal>

@@ -6,7 +6,7 @@ import docgen, {
 } from "vue-docgen-cli/lib/docgen";
 import { findFileCaseInsensitive, getFilenameWithoutExtension } from "./utils";
 import { createVueComponentMetaChecker } from "./parser/vue-component-meta-helper";
-import { createThemeDocs } from "./themes-helper";
+import { createThemeDocs } from "./templates/themes";
 
 // custom templates
 import renderEvents from "./templates/events";
@@ -138,5 +138,5 @@ export async function run(): Promise<void> {
     console.log("Generating docs finished.");
 }
 
-// execute scripts
+// execute script
 run();

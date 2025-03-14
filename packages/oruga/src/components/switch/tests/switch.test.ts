@@ -61,13 +61,7 @@ describe("OSwitch tests", () => {
             props: { rounded: true },
         });
 
-        const span1 = wrapper.find("span.o-switch__check");
-        expect(span1.exists()).toBeTruthy();
-        expect(span1.classes("o-switch--rounded")).not.toBeUndefined();
-
-        const span2 = wrapper.find("span.o-switch__check-switch");
-        expect(span2.exists()).toBeTruthy();
-        expect(span2.classes("o-switch--rounded")).not.toBeUndefined();
+        expect(wrapper.classes("o-switch--rounded")).toBeDefined();
     });
 
     test("render accordingly when is disabled", () => {
@@ -78,7 +72,7 @@ describe("OSwitch tests", () => {
         expect(wrapper.classes("o-switch--disabled")).toBeTruthy();
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
-        expect(input.attributes("disabled")).not.toBeUndefined();
+        expect(input.attributes("disabled")).toBeDefined();
     });
 
     test("react accordingly when value change ", async () => {

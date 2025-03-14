@@ -59,6 +59,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     input: "",
+    active: false,
     options: undefined,
     filter: undefined,
     type: "text",
@@ -112,6 +113,11 @@ const emits = defineEmits<{
      */
     "update:input": [value: string];
     /**
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
+     */
+    "update:active": [value: boolean];
+    /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
@@ -162,6 +168,7 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
+
 // define as Component to prevent docs memmory overload
 const inputRef = useTemplateRef<Component>("inputComponent");
 
@@ -172,12 +179,13 @@ const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const isActive = ref(false);
+// the active state of the dropdown, use v-model:active to make it two-way binding
+const isActive = defineModel<boolean>("active", { default: false });
 
-/** The selected value, use v-model to make it two-way binding */
+// the selected value, use v-model to make it two-way binding
 const selectedValue = defineModel<ModelValue>({ default: undefined });
 
-/** The value of the inner input, use v-model:input to make it two-way binding */
+// the value of the inner input, use v-model:input to make it two-way binding
 const inputValue = defineModel<string>("input", { default: "" });
 
 /** create a unique id for the menu */
@@ -247,6 +255,7 @@ watch(
         if (currentOption && currentOption.label !== value) {
             // clear selected value
             selectedValue.value = undefined;
+            dropdownValue.value = undefined;
         }
 
         // Close dropdown if data is empty
@@ -310,7 +319,12 @@ function onInput(value: string, event: Event): void {
  * If value is the same as selected, select all text.
  */
 function handleFocus(event: Event): void {
-    if (props.openOnFocus) isActive.value = true;
+    // open dropdown if `openOnFocus` and has options
+    if (
+        props.openOnFocus &&
+        (!!props.options?.length || !!slots.header || !!slots.footer)
+    )
+        isActive.value = true;
     onFocus(event);
 }
 
@@ -354,28 +368,28 @@ const inputBind = computed(() => ({
     ...props.inputClasses,
 }));
 
-const rootClasses = defineClasses(["rootClass", "o-acp"]);
+const rootClasses = defineClasses(["rootClass", "o-autocomplete"]);
 
-const itemClasses = defineClasses(["itemClass", "o-acp__item"]);
+const itemClasses = defineClasses(["itemClass", "o-autocomplete__item"]);
 
 const itemEmptyClasses = defineClasses([
     "itemEmptyClass",
-    "o-acp__item--empty",
+    "o-autocomplete__item--empty",
 ]);
 
 const itemGroupClasses = defineClasses([
     "itemGroupTitleClass",
-    "o-acp__item-group-title",
+    "o-autocomplete__item-group-title",
 ]);
 
 const itemHeaderClasses = defineClasses([
     "itemHeaderClass",
-    "o-acp__item-header",
+    "o-autocomplete__item-header",
 ]);
 
 const itemFooterClasses = defineClasses([
     "itemFooterClass",
-    "o-acp__item-footer",
+    "o-autocomplete__item-footer",
 ]);
 
 // #endregion --- Computed Component Classes ---
@@ -431,6 +445,7 @@ defineExpose({ focus: setFocus, value: inputValue });
                 :debounce="debounce"
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
                 :aria-controls="menuId"
+                enterkeyhint="enter"
                 :use-html5-validation="false"
                 @input="onInput"
                 @focus="handleFocus"

@@ -4,7 +4,6 @@ import {
     computed,
     watch,
     onMounted,
-    onBeforeUnmount,
     useTemplateRef,
     type Component,
 } from "vue";
@@ -13,10 +12,10 @@ import { getDefault } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    getActiveClasses,
     useClickOutside,
     useEventListener,
     useMatchMedia,
+    usePreventScrolling,
 } from "@/composables";
 
 import type { SidebarProps } from "./props";
@@ -46,7 +45,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     expandOnHover: () => getDefault("sidebar.expandOnHover", false),
     animation: () => getDefault("sidebar.animation"),
     cancelable: () => getDefault("sidebar.cancelable", ["escape", "outside"]),
-    scroll: () => getDefault("sidebar.scroll", "clip"),
+    clipScroll: () => getDefault("sidebar.clipScroll", false),
     mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
     teleport: () => getDefault("sidebar.teleport", false),
     component: undefined,
@@ -100,29 +99,18 @@ const hideOnMobile = computed(
     () => props.mobile === "hidden" && isMobile.value,
 );
 
-const savedScrollTop = ref<number>();
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
-watch(isActive, () => {
-    if (props.overlay) handleScroll();
-});
+watch(
+    isActive,
+    (value) => {
+        if (props.overlay) toggleScroll(value);
+    },
+    { flush: "post" },
+);
 
 onMounted(() => {
-    if (isActive.value && props.overlay) handleScroll();
-});
-
-onBeforeUnmount(() => {
-    if (isClient && props.overlay) {
-        // reset scroll
-        const scrollto = savedScrollTop.value
-            ? savedScrollTop.value
-            : document.documentElement.scrollTop;
-        if (scrollClass.value) {
-            document.body.classList.remove(...scrollClass.value);
-            document.documentElement.classList.remove(...scrollClass.value);
-        }
-        document.documentElement.scrollTop = scrollto;
-        document.body.style.top = "";
-    }
+    if (isActive.value && props.overlay) toggleScroll(true);
 });
 
 // --- Events Feature ---
@@ -175,39 +163,6 @@ function close(...args: unknown[]): void {
     emits("close", args);
 }
 
-function handleScroll(): void {
-    if (!isClient) return;
-
-    if (props.scroll === "clip") {
-        if (scrollClass.value?.length) {
-            if (isActive.value) {
-                document.documentElement.classList.add(...scrollClass.value);
-            } else {
-                document.documentElement.classList.remove(...scrollClass.value);
-            }
-        }
-        return;
-    }
-
-    savedScrollTop.value = savedScrollTop.value
-        ? savedScrollTop.value
-        : document.documentElement.scrollTop;
-
-    if (scrollClass.value) {
-        if (isActive.value) document.body.classList.add(...scrollClass.value);
-        else document.body.classList.remove(...scrollClass.value);
-    }
-
-    if (isActive.value) {
-        document.body.style.top = `-${savedScrollTop.value}px`;
-        return;
-    }
-
-    document.documentElement.scrollTop = savedScrollTop.value;
-    document.body.style.top = "";
-    savedScrollTop.value = undefined;
-}
-
 // --- Animation Feature ---
 
 const isAnimating = ref(!props.active);
@@ -225,56 +180,56 @@ function beforeLeave(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-side"],
-    ["mobileClass", "o-side--mobile", null, isMobile],
-    ["activeClass", "o-side--active", null, isActive],
+    ["rootClass", "o-sidebar"],
+    ["mobileClass", "o-sidebar--mobile", null, isMobile],
+    ["activeClass", "o-sidebar--active", null, isActive],
     [
         "teleportClass",
-        "o-side--teleport",
+        "o-sidebar--teleport",
         null,
         computed(() => !!props.teleport),
     ],
-    ["inlineClass", "o-side--inline", null, computed(() => props.inline)],
+    ["inlineClass", "o-sidebar--inline", null, computed(() => props.inline)],
 );
 
-const overlayClasses = defineClasses(["overlayClass", "o-side__overlay"]);
+const overlayClasses = defineClasses(["overlayClass", "o-sidebar__overlay"]);
 
 const contentClasses = defineClasses(
-    ["contentClass", "o-side__content"],
+    ["contentClass", "o-sidebar__content"],
     [
         "positionClass",
-        "o-side__content--",
+        "o-sidebar__content--",
         computed(() => props.position),
         computed(() => !!props.position),
     ],
     [
         "fullheightClass",
-        "o-side__content--fullheight",
+        "o-sidebar__content--fullheight",
         null,
         computed(() => props.fullheight),
     ],
     [
         "fullwidthClass",
-        "o-side__content--fullwidth",
+        "o-sidebar__content--fullwidth",
         null,
         computed(
             () =>
                 props.fullwidth ||
-                (props.mobile === "expanded" && isMobile.value),
+                (isMobile.value && props.mobile === "expanded"),
         ),
     ],
     [
         "reduceClass",
-        "o-side__content--reduced",
+        "o-sidebar__content--reduced",
         null,
         computed(
             () =>
-                props.reduce || (props.mobile === "reduced" && isMobile.value),
+                props.reduce || (isMobile.value && props.mobile === "reduced"),
         ),
     ],
     [
         "expandOnHoverClass",
-        "o-side__content--reduced-expand",
+        "o-sidebar__content--hover-expand",
         null,
         computed(
             () =>
@@ -282,22 +237,14 @@ const contentClasses = defineClasses(
                 (!isMobile.value || props.mobile !== "expanded"),
         ),
     ],
-    ["visibleClass", "o-side__content--visible", null, isActive],
+    ["visibleClass", "o-sidebar__content--visible", null, isActive],
     [
         "hiddenClass",
-        "o-side__content--hidden",
+        "o-sidebar__content--hidden",
         null,
         computed(() => !isActive.value),
     ],
 );
-
-const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
-const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
-
-const scrollClass = computed(() =>
-    getActiveClasses(props.scroll === "clip" ? scrollClasses : noScrollClasses),
-);
-
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
@@ -310,8 +257,8 @@ defineExpose({ close });
             v-show="!hideOnMobile"
             ref="rootElement"
             v-bind="$attrs"
-            :class="rootClasses"
-            data-oruga="sidebar">
+            data-oruga="sidebar"
+            :class="rootClasses">
             <div
                 v-if="overlay && isActive"
                 :class="overlayClasses"

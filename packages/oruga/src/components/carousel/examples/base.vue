@@ -13,7 +13,7 @@ const carousels = [
         <o-carousel indicator-inside>
             <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
                 <article
-                    class="ex-slide"
+                    class="example-slide"
                     :style="{ 'background-color': carousel.color }">
                     <h1>{{ carousel.text }}</h1>
                 </article>
@@ -21,3 +21,11 @@ const carousels = [
         </o-carousel>
     </section>
 </template>
+
+<style>
+.example-slide {
+    padding: 9rem 4.5rem;
+    color: #ffffff;
+    text-align: center;
+}
+</style>

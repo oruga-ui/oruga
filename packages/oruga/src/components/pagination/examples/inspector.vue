@@ -1,115 +1,105 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import type { InspectData } from "@docs";
+import type { PaginationClasses, PaginationProps } from "../props";
 
-const total = ref(200);
-const current = ref(10);
-const perPage = ref(10);
-const rangeBefore = ref(3);
-const rangeAfter = ref(1);
-
-const inspectData = [
-    {
+const inspectData: InspectData<PaginationClasses, PaginationProps> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
+    mobileClass: {
         class: "mobileClass",
-        description: "Class of pagination component when on mobile",
-        warning: "Switch to mobile view to see it in action!",
+        description: "Class of the root element when on mobile.",
+        info: "Switch to mobile view to see it in action!",
     },
-    {
-        class: "buttonClass",
-        description: "Class of the link button",
-        specificity: "when <b>mobileClass</b> is applied",
-    },
-    {
-        class: "buttonCurrentClass",
-        description: "Class of the current link",
-    },
-    {
-        class: "buttonPrevClass",
-        description: "Class of the prev button",
-        specificity: "when <b>mobileClass</b> is applied",
-    },
-    {
-        class: "buttonNextClass",
-        description: "Class of the next button",
-        specificity: "when <b>mobileClass</b> is applied",
-    },
-    {
-        class: "buttonDisabledClass",
-        description: "Class of the disabled link",
-        action: (): void => {
-            current.value = 20;
-        },
-    },
-    {
-        class: "listClass",
-        description: "Class of the pagination list",
-        specificity: "when <b>mobileClass</b> is applied",
-    },
-    {
-        class: "listItemClass",
-        description: "Class of the pagination list items",
-    },
-    {
-        class: "ellipsisClass",
-        description: "Class of the pagination ellipsis",
-        specificity: "when <b>mobileClass</b> is applied",
-    },
-    {
-        class: "infoClass",
-        description: "Class of the info in `simple` mode",
-        properties: ["simple"],
-        action: (cmp, data): void => {
-            data.simple = true;
-        },
-    },
-    {
+    orderClass: {
         class: "orderClass",
-        description: "Class of the pagination order",
+        description: "Class of the root element with order",
         properties: ["order"],
         suffixes: ["centered", "right", "left"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.order = "centered";
         },
     },
-    {
-        class: "simpleClass",
-        description: "Class of the pagination in `simple` mode",
-        properties: ["simple"],
-        action: (cmp, data): void => {
-            data.simple = true;
-        },
-    },
-    {
-        class: "roundedClass",
-        description: "Class of the pagination when rounded",
-        properties: ["rounded"],
-        action: (cmp, data): void => {
-            data.rounded = true;
-        },
-    },
-    {
+    sizeClass: {
         class: "sizeClass",
-        description: "Class for the pagination size",
+        description: "Class for the root elemnt with size.",
         properties: ["size"],
         suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.size = "small";
         },
     },
-];
+    simpleClass: {
+        class: "simpleClass",
+        description: "Class of the root element when in `simple` mode",
+        properties: ["simple"],
+        action: (data): void => {
+            data.simple = true;
+        },
+    },
+    infoClass: {
+        class: "infoClass",
+        description: "Class of the page info in `simple` mode.",
+        properties: ["simple"],
+        action: (data): void => {
+            data.simple = true;
+        },
+    },
+    listClass: {
+        class: "listClass",
+        description: "Class of the items list element.",
+    },
+    listItemClass: {
+        class: "listItemClass",
+        description: "Class of the list item element.",
+    },
+    ellipsisClass: {
+        class: "ellipsisClass",
+        description: "Class of the ellipsis element.",
+    },
+    buttonClass: {
+        class: "buttonClass",
+        description: "Class of the button element.",
+    },
+    roundedClass: {
+        class: "roundedClass",
+        description: "Class of the button element when rounded.",
+        properties: ["rounded"],
+        action: (data): void => {
+            data.rounded = true;
+        },
+    },
+    buttonCurrentClass: {
+        class: "buttonCurrentClass",
+        description: "Class of the current button element.",
+    },
+    buttonPrevClass: {
+        class: "buttonPrevClass",
+        description: "Class of the prev button element.",
+    },
+    buttonNextClass: {
+        class: "buttonNextClass",
+        description: "Class of the next button element.",
+    },
+    buttonDisabledClass: {
+        class: "buttonDisabledClass",
+        description: "Class of the prev or next button when disabled.",
+        action: (data): void => {
+            data.current = 20;
+        },
+    },
+};
 </script>
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-pagination
-            v-bind="props"
-            v-model:current="current"
-            :total="total"
-            :range-before="rangeBefore"
-            :range-after="rangeAfter"
-            :per-page="perPage" />
+            :total="200"
+            :per-page="10"
+            :current="10"
+            :range-before="3"
+            :range-after="1"
+            v-bind="props" />
     </inspector-wrapper>
 </template>

@@ -37,7 +37,7 @@ describe("OAutocomplete tests", () => {
 
     test("has a dropdown menu hidden by default", () => {
         const wrapper = mount(OAutocomplete, { attachTo: document.body });
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
     });
@@ -81,7 +81,7 @@ describe("OAutocomplete tests", () => {
         await input.trigger("focus");
         await input.setValue(VALUE_TYPED);
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeTruthy();
 
@@ -110,7 +110,7 @@ describe("OAutocomplete tests", () => {
         // open menu
         await input.trigger("focus");
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeTruthy();
 
@@ -132,7 +132,7 @@ describe("OAutocomplete tests", () => {
         await input.trigger("focus");
         await setTimeout(); // await event handler get set
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeTruthy();
 
@@ -149,7 +149,7 @@ describe("OAutocomplete tests", () => {
             attachTo: document.body,
         });
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
 
@@ -168,7 +168,7 @@ describe("OAutocomplete tests", () => {
             attachTo: document.body,
         });
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
 
@@ -190,7 +190,7 @@ describe("OAutocomplete tests", () => {
             attachTo: document.body,
         });
 
-        const dropdown = wrapper.find(".o-drop__menu");
+        const dropdown = wrapper.find(".o-dropdown__menu");
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
 
@@ -200,6 +200,24 @@ describe("OAutocomplete tests", () => {
         await input.trigger("focus");
 
         expect(dropdown.isVisible()).toBeTruthy();
+    });
+
+    test("do not open when openOnFocus and empty options", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: [], openOnFocus: true },
+            attachTo: document.body,
+        });
+
+        const dropdown = wrapper.find(".o-dropdown__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
+
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+
+        await input.trigger("focus");
+
+        expect(dropdown.isVisible()).toBeFalsy();
     });
 
     test("reset events before destroy", async () => {
@@ -296,7 +314,7 @@ describe("OAutocomplete tests", () => {
 
         expect(wrapper.emitted("select-header")).toHaveLength(1);
 
-        const header = wrapper.find(".o-acp__item-header");
+        const header = wrapper.find(".o-autocomplete__item-header");
         expect(header.exists()).toBeTruthy();
         await header.trigger("click");
 
@@ -328,7 +346,7 @@ describe("OAutocomplete tests", () => {
 
         expect(wrapper.emitted("select-footer")).toHaveLength(1);
 
-        const footer = wrapper.find(".o-acp__item-footer");
+        const footer = wrapper.find(".o-autocomplete__item-footer");
         expect(footer.exists()).toBeTruthy();
         await footer.trigger("click");
 
@@ -339,8 +357,8 @@ describe("OAutocomplete tests", () => {
         const wrapper = mount(OAutocomplete, {
             props: { options: OPTIONS, menuTag: "ul", itemTag: "li" },
         });
-        expect(wrapper.find("ul.o-drop__menu").exists()).toBeTruthy();
-        expect(wrapper.find("li.o-acp__item").exists()).toBeTruthy();
+        expect(wrapper.find("ul.o-dropdown__menu").exists()).toBeTruthy();
+        expect(wrapper.find("li.o-dropdown__item").exists()).toBeTruthy();
     });
 
     describe("render options props correctly", () => {
