@@ -1,3 +1,18 @@
+## [0.10.1](https://github.com/oruga-ui/oruga/compare/v0.10.0...v0.10.1) (2025-03-14)
+
+
+### Bug Fixes
+
+* **programmatic:** prevent console warning in dev mode ([#1246](https://github.com/oruga-ui/oruga/issues/1246)) ([0531d98](https://github.com/oruga-ui/oruga/commit/0531d9857d467565e3ad93b6fa3a8a144943dd23))
+* **table:** show correct amount of rows when paginated ([#1244](https://github.com/oruga-ui/oruga/issues/1244)) ([bd6b368](https://github.com/oruga-ui/oruga/commit/bd6b3686ee7cffeb50a220631b38e70b2e5f96f4))
+
+
+### Features
+
+* **notification:** add `aria-atomic` for programmatic notice ([#1247](https://github.com/oruga-ui/oruga/issues/1247)) ([0455458](https://github.com/oruga-ui/oruga/commit/045545846c0c3b1881376d2f8dc313ebd0340f26))
+
+
+
 # [0.10.0](https://github.com/oruga-ui/oruga/compare/v0.10.0-pre.4...v0.10.0) (2025-03-13)
 
 
