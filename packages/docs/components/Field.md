@@ -97,10 +97,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable               | Default     |
-| --------------------------- | ----------- |
-| $input-field-margin-bottom  | $spacer     |
-| $input-field-grouped-spacer | $spacer / 2 |
+| SASS Variable               | Default           |
+| --------------------------- | ----------------- |
+| $input-field-margin-bottom  | $spacer           |
+| $input-field-grouped-spacer | calc($spacer / 2) |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
 
