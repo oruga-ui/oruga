@@ -65,7 +65,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
     "sass": "^1.85.1",
-    "vite": "^6.2.1",
+    "vite": "^6.2.2",
     "vite-plugin-dts": "^4.5.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitepress": "^1.6.3"

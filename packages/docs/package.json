@@ -21,7 +21,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@highlightjs/vue-plugin": "2.1.2",
-    "@oruga-ui/theme-bootstrap": "0.8.1",
+    "@oruga-ui/theme-bootstrap": "0.8.2",
     "@oruga-ui/theme-bulma": "0.6.1",
     "@oruga-ui/theme-oruga": "0.6.0",
     "highlight.js": "11.11.1",
@@ -29,12 +29,12 @@
     "markdown-it-highlightjs": "^4.2.0"
   },
   "devDependencies": {
-    "@types/node": "^22.13.9",
+    "@types/node": "^22.13.10",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.5.0",
     "@vue/tsconfig": "^0.7.0",
     "concurrently": "9.1.2",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "eslint-plugin-vue": "^9.32.0",
     "prettier": "^3.5.3",
     "sass": "^1.85.1",
