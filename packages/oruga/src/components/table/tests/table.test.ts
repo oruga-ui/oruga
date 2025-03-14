@@ -496,4 +496,46 @@ describe("OTable tests", () => {
             expect(checkboxes[0].attributes("disabled")).toBe("");
         });
     });
+
+    describe("test pageable", () => {
+        test("show correct amount of rows per page", async () => {
+            let perPage = 3;
+
+            let wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    paginated: true,
+                    data: data,
+                    perPage: perPage,
+                },
+            });
+            await nextTick();
+
+            let body = wrapper.find("tbody");
+            let trs = body.findAll("tr");
+            expect(trs).toHaveLength(perPage);
+
+            perPage = 5;
+
+            wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    paginated: true,
+                    data: data,
+                    perPage: perPage,
+                },
+            });
+            await nextTick();
+
+            body = wrapper.find("tbody");
+            trs = body.findAll("tr");
+            expect(trs).toHaveLength(perPage);
+        });
+    });
 });
