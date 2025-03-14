@@ -8,22 +8,32 @@ exports[`OPagination tests > render correctly 1`] = `
             @binding {boolean} isCurrent - if page is current
             @binding {(event:Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
-        --><button role="button" tabindex="0" class="o-pagination__button-previous o-pagination__button--disabled o-pagination__button" aria-label="Previous page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span></button>
+        --><button role="button" disabled="" class="o-pagination__button-previous o-pagination__button--disabled o-pagination__button" aria-label="Previous page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span></button>
   <!-- 
             @slot Next button slot
             @binding {number} number - page number 
             @binding {boolean} isCurrent - if page is current
             @binding {(event:Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
-        --><button role="button" tabindex="0" class="o-pagination__button-next o-pagination__button--disabled o-pagination__button" aria-label="Next page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span></button>
+        --><button role="button" tabindex="0" class="o-pagination__button-next o-pagination__button" aria-label="Next page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span></button>
   <ul class="o-pagination__list">
     <!--First-->
     <!--v-if-->
     <!--v-if-->
     <!--Pages-->
+    <li class="o-pagination__item"><button role="button" tabindex="0" class="o-pagination__button o-pagination__button--current" aria-label="Current page, Page 1." aria-current="true">1</button></li>
+    <li class="o-pagination__item"><button role="button" tabindex="0" class="o-pagination__button" aria-label="Page 2." aria-current="false">2</button></li>
     <!--Last-->
-    <!--v-if-->
-    <!--v-if-->
+    <li class="o-pagination__item"><span class="o-pagination__ellipsis">…</span></li>
+    <li class="o-pagination__item">
+      <!-- 
+                    @slot Pagination button slot
+                    @binding {number} number - page number 
+                    @binding {boolean} isCurrent - if page is current
+                    @binding {(event:Event): void} onClick - click handler
+                    @binding {string} ariaLabel - aria-label attribute
+                --><button role="button" tabindex="0" class="o-pagination__button" aria-label="Page 5." aria-current="false">5</button>
+    </li>
   </ul>
 </nav>"
 `;

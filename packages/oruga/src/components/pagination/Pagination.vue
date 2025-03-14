@@ -270,6 +270,7 @@ defineExpose({ last, first, prev, next });
             v-bind="getPage(currentPage - 1, ariaPreviousLabel)">
             <o-pagination-button
                 v-bind="getPage(currentPage - 1, ariaPreviousLabel)"
+                :disabled="isFirst"
                 :root-class="buttonPrevClasses"
                 :button-class="buttonClasses"
                 :button-current-class="buttonCurrentClasses">
@@ -291,6 +292,7 @@ defineExpose({ last, first, prev, next });
         <slot name="next" v-bind="getPage(currentPage + 1, ariaNextLabel)">
             <o-pagination-button
                 v-bind="getPage(currentPage + 1, ariaNextLabel)"
+                :disabled="isLast"
                 :root-class="buttonNextClasses"
                 :button-class="buttonClasses"
                 :button-current-class="buttonCurrentClasses">
