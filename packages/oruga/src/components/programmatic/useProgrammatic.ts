@@ -82,9 +82,9 @@ export const ComponentProgrammatic = {
         VueInstance?.runWithContext(() => {
             // inject programmatic target override from app instance if available
             // this is used by the docs
-            const programmaticTarget = inject<MaybeRefOrGetter<HTMLElement>>(
-                "$PROGRAMMATIC-TARGET",
-            );
+            const programmaticTarget = inject<
+                MaybeRefOrGetter<HTMLElement> | undefined
+            >("$PROGRAMMATIC-TARGET", undefined);
             if (programmaticTarget) target = toValue(programmaticTarget);
         });
 
