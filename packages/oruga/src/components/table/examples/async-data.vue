@@ -7,7 +7,7 @@ const loading = ref(false);
 const sortField = ref("vote_count");
 const sortOrder = ref<"asc" | "desc">("desc");
 const page = ref(1);
-const perPage = ref(20);
+const perPage = ref(5);
 
 function loadAsyncData(): void {
     const params = [
