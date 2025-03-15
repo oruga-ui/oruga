@@ -240,6 +240,17 @@ describe("OInput", () => {
         expect(emitted).toEqual([[11], [12], [13], [12], [11]]);
     });
 
+    test("check is empty when null", async () => {
+        const wrapper = mount(OInput, {
+            // @ts-expect-error special check for null instead of undefined
+            props: { modelValue: null },
+        });
+
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+        expect(input.element.value).toEqual("");
+    });
+
     test("react accordingly when method focus() is called", async () => {
         const wrapper = mount(OInput);
 
