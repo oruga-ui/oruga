@@ -1,3 +1,13 @@
+## [0.10.2](https://github.com/oruga-ui/oruga/compare/v0.10.1...v0.10.2) (2025-03-17)
+
+
+### Bug Fixes
+
+* **input:** include `null` check for modelValue parsing ([#1251](https://github.com/oruga-ui/oruga/issues/1251)) ([c0e7cb7](https://github.com/oruga-ui/oruga/commit/c0e7cb7f3a25e4ce07a65907603cdc0ac62c46a3))
+* **programmatic:** return exposed functionalities from programmatic component instance ([#1252](https://github.com/oruga-ui/oruga/issues/1252)) ([5835d1a](https://github.com/oruga-ui/oruga/commit/5835d1adb284f07027cb8aa0b8c247fb8038b862))
+
+
+
 ## [0.10.1](https://github.com/oruga-ui/oruga/compare/v0.10.0...v0.10.1) (2025-03-14)
 
 
