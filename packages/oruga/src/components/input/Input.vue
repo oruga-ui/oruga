@@ -125,10 +125,10 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 
 const vmodel = defineModel<ModelValue, string, string, ModelValue>({
     // cast incomming value to string
-    get: (value) => (typeof value !== "undefined" ? String(value) : ""),
+    get: (value) => (isDefined(value) ? String(value) : ""),
     // cast outgoing value to number if prop number is true
     set: (value) =>
-        typeof value == "undefined"
+        !isDefined(value)
             ? value
             : isTrueish(props.number)
               ? Number(value)
