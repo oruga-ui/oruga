@@ -124,10 +124,10 @@ export const ComponentProgrammatic = {
             app._context = Object.assign(app._context, VueInstance._context);
 
         // render the new vue instance into the container
-        app.mount(container);
+        const instance = app.mount(container);
 
-        // return exposed programmatic functionalities
-        return app?._instance?.exposed as ProgrammaticExpose;
+        // return exposed programmatic functionalities from the mounted component instance
+        return instance as unknown as ProgrammaticExpose;
     },
     /** close the last registred instance in the global programmatic instance registry */
     close(...args: unknown[]): void {
