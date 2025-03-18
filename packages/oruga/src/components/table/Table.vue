@@ -762,11 +762,14 @@ function sort(
 
     currentSortColumn.value = column;
 
-    // if not backend sorted, sort rows by mutating the tableRows array
-    if (!props.backendSorting) sortByColumn(tableRows.value);
+    // if not backend sorted
+    if (!props.backendSorting) {
+        // sort rows by mutating the tableRows array
+        sortByColumn(tableRows.value);
 
-    // recalculate the page filter
-    filterTableRows();
+        // recalculate the page filter
+        filterTableRows();
+    }
 }
 
 function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
