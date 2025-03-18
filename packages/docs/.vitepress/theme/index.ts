@@ -48,11 +48,11 @@ export function loadTheme(): ThemeConfig {
                     return themeConfig;
             } catch (e) {
                 console.warn(e);
-                return Themes[1];
+                return Themes[0];
             }
         }
     }
-    return Themes[1];
+    return Themes[0];
 }
 
 /** save the theme config to load later */
