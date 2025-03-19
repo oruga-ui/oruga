@@ -25,7 +25,7 @@ export const getOptions = (): OrugaOptions => {
     return Object.assign({}, toRaw(globalOptions.value));
 };
 
-export const getOption = <K extends keyof OrugaOptions>(
+export const getOption = <K extends keyof OrugaOptions | string>(
     path: K,
     defaultValue?: DeepType<OrugaOptions, K>,
 ): DeepType<OrugaOptions, K> | undefined => {

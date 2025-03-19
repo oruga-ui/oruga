@@ -83,6 +83,8 @@ export type GlobalConfig = Partial<{
     ) => void;
     /** You can use transformClasses globally if you need to transform classes for any component. */
     transformClasses: TransformFunction;
+    /** Mobile breakpoint as `max-width` value */
+    mobileBreakpoint: string;
     /**
      * In case you want to override existing Oruga default classes all components completely,
      * you can specify the override behaviour here globaly.
