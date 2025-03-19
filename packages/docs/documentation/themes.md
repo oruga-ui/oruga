@@ -14,7 +14,7 @@ These themes are currently available:
 - [Bootstrap Theme](https://github.com/oruga-ui/theme-bootstrap) (based on [Bootstrap](https://getbootstrap.com/) styling)
 
 ::: tip Theme Preview
-You can change the active theme for this documentation site using the drop down menu in the navigation bar.
+You can change the active theme for this documentation site using the dropdown menu in the navigation bar.
 :::
 
 
@@ -30,7 +30,7 @@ You can easily customise each theme at global and component level using CSS or S
 Each theme has its own global and component variables, mostly of them with default values defined.
 The theme-specific global variables can be found on this page under [Global Theme Variables](#global-theme-variables). 
 For component-specific customisation, see a component's `Sass Variables` section, where you'll find a complete list of all the SASS variables (with their respective default values) that you can redefine for each component (an example can be found in the [Button Sass variables](/components/Button.html#sass-variables)).
-Change the active theme to the theme-specific variables.
+Change the active theme in the navigation bar to see the theme-specific variables.
 
 To use *SASS/SCSS variables*, you must use the .scss version of a theme from the package's distribution folder. 
 For example, the Oruga theme:
@@ -187,7 +187,7 @@ createApp(...)
     });
 ```
 
-You can see this code in action in [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind)(code [here](https://github.com/oruga-ui/demo-multiframework/blob/master/src/assets/oruga-tailwindcss.css#L64))
+You can see this code in action in [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind) (code [here](https://github.com/oruga-ui/demo-multiframework/blob/master/src/assets/oruga-tailwindcss.css#L64))
 
 Sometimes components change the way elements are positioned (horizontally, vertically...), this is another case of higher specificity. In the [Steps](/components/Steps.html) component the `vertical` attribute disposes the steps vertically changing the `height` of the steps `divider`.
 
@@ -229,9 +229,6 @@ createApp(...)
         }
     });
 ```
-
-In the Oruga documentation you'll find a special note (🔍) in the `Class Prop Inspector` for classes with a higher specificity.
-
 
 ## Bulma Theme
 
@@ -315,9 +312,7 @@ See the [theme repository](https://github.com/oruga-ui/theme-bootstrap) and the 
 You can change the active theme in the navigation bar to see the specific global variables for another theme.
 :::
 
-<!--@include: ./../themes/theme-orugabase.md-->
-
-<!--@include: ./../themes/theme-orugafull.md-->
+<!--@include: ./../themes/theme-oruga.md-->
 
 <!--@include: ./../themes/theme-bulma.md-->
 

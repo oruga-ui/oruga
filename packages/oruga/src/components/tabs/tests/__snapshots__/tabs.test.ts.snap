@@ -1,15 +1,57 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`OTabs tests > OTab with OTabItem integration tests > test render correctly 1`] = `
+"<div data-oruga="tabs" class="o-tabs o-tabs--default">
+  <div class="o-tabs__list" role="tablist" aria-orientation="horizontal">
+    <!--
+                @slot Additional slot before tabs
+            --><button id="tab-1" class="o-tabs__tab o-tabs__tab--active" role="tab" tabindex="0" aria-current="true" aria-controls="tabpanel-1" aria-selected="true">
+      <!--v-if--><span class="o-tabs__tab-label">Account</span>
+    </button>
+    <!--
+                @slot Additional slot after tabs
+            -->
+  </div>
+  <section class="o-tabs__content">
+    <!--
+                @slot Place tab items here
+            -->
+    <transition-stub appear="false" persisted="true" css="true">
+      <div id="tabpanel-1" data-oruga="tabs-item" data-id="tabs-1" class="o-tabs__panel" role="tabpanel" aria-labelledby="tab-1" aria-roledescription="item">
+        <!-- 
+                @slot Override tab panel content
+                @binding {boolean} active - if item is shown 
+            -->
+        <!-- injected component -->
+        <!-- default content prop -->ABC
+        <!--
+                Do not render these slots here.
+                These are only for documentation purposes.
+                Slots are defined in tabs component.
+            -->
+        <!--v-if-->
+      </div>
+    </transition-stub>
+  </section>
+</div>"
+`;
+
+exports[`OTabs tests > OTabItem > render correctly 1`] = `
+"<button id="tab-2" class="o-tabs__tab o-tabs__tab--next" role="tab" tabindex="-1" aria-controls="tabpanel-2" aria-selected="false">
+  <!--v-if--><span class="o-tabs__tab-label"></span>
+</button>"
+`;
+
 exports[`OTabs tests > render correctly 1`] = `
-"<div class="o-tabs" data-oruga="tabs">
-  <nav class="o-tabs__nav o-tabs__nav--default" role="tablist" aria-orientation="horizontal">
+"<div data-oruga="tabs" class="o-tabs o-tabs--default">
+  <div class="o-tabs__list" role="tablist" aria-orientation="horizontal">
     <!--
                 @slot Additional slot before tabs
             -->
     <!--
                 @slot Additional slot after tabs
             -->
-  </nav>
+  </div>
   <section class="o-tabs__content">
     <!--
                 @slot Place tab items here

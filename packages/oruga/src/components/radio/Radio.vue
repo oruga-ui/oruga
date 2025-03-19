@@ -9,7 +9,7 @@ import { injectField } from "../field/fieldInjection";
 import type { RadioProps } from "./props";
 
 /**
- * Select an option from a set
+ * Select an option from a set of options.
  * @displayName Radio
  * @style _radio.scss
  */
@@ -78,7 +78,7 @@ const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId =
-    !!parentField.value || !!props.label || !!useSlots().label
+    !!parentField.value || !!props.label || !!useSlots().default
         ? parentField.value?.labelId || useId()
         : undefined;
 
@@ -104,7 +104,6 @@ const inputBind = computed(() => ({
 
 const rootClasses = defineClasses(
     ["rootClass", "o-radio"],
-    ["checkedClass", "o-radio--checked", null, isChecked],
     [
         "sizeClass",
         "o-radio--",
@@ -112,23 +111,21 @@ const rootClasses = defineClasses(
         computed(() => !!props.size),
     ],
     [
-        "disabledClass",
-        "o-radio--disabled",
-        null,
-        computed(() => props.disabled),
-    ],
-    [
         "variantClass",
         "o-radio--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
+    [
+        "disabledClass",
+        "o-radio--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    ["checkedClass", "o-radio--checked", null, isChecked],
 );
 
-const inputClasses = defineClasses(
-    ["inputClass", "o-radio__input"],
-    ["inputCheckedClass", "o-radio__input--checked", null, isChecked],
-);
+const inputClasses = defineClasses(["inputClass", "o-radio__input"]);
 
 const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
 
@@ -139,7 +136,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="radio">
+    <div data-oruga="radio" :class="rootClasses">
         <input
             v-bind="inputBind"
             :id="id"

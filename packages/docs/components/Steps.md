@@ -4,30 +4,26 @@ sidebarDepth: 2
 
 # Steps
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> Responsive horizontal process steps
+The **Steps** component allows you to create a wizard or easily break your process steps into multiple steps.
+Breaking things down into multiple steps can improve the user experience by keeping them small and accessible compared to listing them all at once.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-steps />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-steps-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Steps component
 
-> Responsive horizontal process steps
+> Responsive horizontal process steps.
 
 ```html
 <o-steps></o-steps>
@@ -37,12 +33,13 @@ sidebarDepth: 2
 
 | Prop name         | Description                                                                                                                   | Type                                                 | Values                                                                          | Default                                                                                                                                                                                             |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| activateOnFocus   | Set the step active on navigation focus                                                                                       | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                         |
 | animateInitially  | Apply animation on the initial render                                                                                         | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;animateInitially: false<br>}</code>                                             |
 | animated          | Step navigation is animated                                                                                                   | boolean                                              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;animated: true<br>}</code>                                                      |
 | animation         | Transition animation name                                                                                                     | [string, string, string, string] \| [string, string] | `[next`, `prev]`, `[right`, `left`, `down`, `up]`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;animation: [ "slide-next", "slide-prev", "slide-down", "slide-up",]<br>}</code> |
+| ariaLabel         | Accessibility aria-label to be passed to the tablist wrapper element                                                          | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;ariaLabel: undefined<br>}</code>                                                |
 | ariaNextLabel     | Accessibility next button aria label                                                                                          | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;ariaNextLabel: "Next"<br>}</code>                                               |
 | ariaPreviousLabel | Accessibility previous button aria label                                                                                      | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;ariaPreviousLabel: "Previous"<br>}</code>                                       |
-| destroyOnHide     | Destroy stepItem on hide                                                                                                      | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                                         |
 | hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean                                              | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                                                          |
 | iconNext          | Icon to use for navigation button                                                                                             | string                                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconNext: "chevron-right"<br>}</code>                                           |
 | iconPack          | Icon pack to use for the navigation                                                                                           | string                                               | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>                                                 |
@@ -72,10 +69,13 @@ sidebarDepth: 2
 | default    | Place step items here    |                                                                                                                                                             |
 | navigation | Override step navigation | **previous** `{disabled: boolean, action: (): void }` - previous button configs<br/>**next** `{disabled: boolean, action: (): void }` - next button configs |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
+
 ## StepItem component
+
+> An step item used by the steps component.
 
 ```html
 <o-step-item></o-step-item>
@@ -85,7 +85,6 @@ sidebarDepth: 2
 
 | Prop name | Description                                                                                                                        | Type                   | Values | Default                                                                                                                                             |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  | Role attribute to be passed to the li wrapper for better accessibility                                                             | string                 | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;ariaRole: "tab"<br>}</code>     |
 | clickable | Item can be used directly to navigate.<br/>If undefined, previous steps are clickable while the others are not                     | boolean                | -      |                                                                                                                                                     |
 | component | Component to be injected.                                                                                                          | Component              | -      |                                                                                                                                                     |
 | content   | Text content, unnecessary when default slot is used                                                                                | string                 | -      |                                                                                                                                                     |
@@ -97,7 +96,6 @@ sidebarDepth: 2
 | override  | Override existing theme classes completely                                                                                         | boolean                | -      |                                                                                                                                                     |
 | props     | Props to be binded to the injected component                                                                                       | any                    | -      |                                                                                                                                                     |
 | step      | Step marker content (when there is no icon)                                                                                        | number \| string       | -      |                                                                                                                                                     |
-| tag       | Step item tag name                                                                                                                 | DynamicComponent       | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
 | value     | Item value (it will be used as v-model of wrapper component) - default is an uuid                                                  | string\|number\|object | -      |                                                                                                                                                     |
 | variant   | Default style for the step.<br/>This will override parent type.<br/>Could be used to set a completed step to "success" for example | string                 | -      |                                                                                                                                                     |
 | visible   | Show/hide item                                                                                                                     | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                          |
@@ -115,9 +113,18 @@ sidebarDepth: 2
 | ------- | ----------------- | --------------------------------------- |
 | default | Step item content | **active** `boolean` - if item is shown |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-steps-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -154,8 +161,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                   | Default                             |
 | ------------------------------- | ----------------------------------- |
-| $steps-colors                   | var.$colors                         |
-| $steps-mobile-breakpoint        | vars.$tablet                        |
+| $steps-divider-height           | 0.2em                               |
+| $steps-vertical-padding         | 1em 0                               |
+| $steps-colors                   | dv.$colors                          |
+| $steps-mobile-breakpoint        | iv.$tablet                          |
 | $steps-marker-background        | css.getVar("grey-light")            |
 | $steps-marker-color             | css.getVar("scheme-main")           |
 | $steps-marker-border            | 0.2em solid css.getVar("white")     |
@@ -164,9 +173,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $steps-previous-background      | css.getVar("primary")               |
 | $steps-active-color             | css.getVar("primary")               |
 | $steps-active-background        | css.getVar("scheme-main")           |
-| $steps-divider-height           | 0.2em                               |
 | $steps-details-background-color | css.getVar("body-background-color") |
-| $steps-vertical-padding         | 1em 0                               |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_steps.scss)
 
@@ -193,4 +200,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

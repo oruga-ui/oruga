@@ -12,7 +12,7 @@ import type { SliderComponent } from "./types";
 import type { SliderProps } from "./props";
 
 /**
- * A slider to select a value or range from a given range
+ * A slider to select a value or range from a given range.
  * @displayName Slider
  * @requires ./SliderTick.vue
  * @style _slider.scss
@@ -75,7 +75,7 @@ const sliderRef = useTemplateRef("sliderElement");
 const thumbStartRef = useTemplateRef("thumbStartComponent");
 const thumbEndRef = useTemplateRef("thumbEndComponent");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<SliderComponent>(() => ({
     max: props.max,
     min: props.min,
@@ -227,51 +227,51 @@ function onDragEnd(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-slide"],
+    ["rootClass", "o-slider"],
     [
         "sizeClass",
-        "o-slide--",
+        "o-slider--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
     [
         "disabledClass",
-        "o-slide--disabled",
+        "o-slider--disabled",
         null,
         computed(() => props.disabled),
     ],
 );
 
-const trackClasses = defineClasses(["trackClass", "o-slide__track"]);
+const trackClasses = defineClasses(["trackClass", "o-slider__track"]);
 
 const fillClasses = defineClasses(
-    ["fillClass", "o-slide__fill"],
+    ["fillClass", "o-slider__fill"],
     [
         "variantClass",
-        "o-slide__fill--",
+        "o-slider__fill--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
 );
 
-const thumbClasses = defineClasses(
-    ["thumbClass", "o-slide__thumb"],
-    ["thumbDraggingClass", "o-slide__thumb--dragging", null, dragging],
+const thumbWrapperClasses = defineClasses(
+    ["thumbWrapperClass", "o-slider__thumb-wrapper"],
     [
-        "thumbRoundedClass",
-        "o-slide__thumb--rounded",
+        "thumbWrapperDraggingClass",
+        "o-slider__thumb-wrapper--dragging",
         null,
-        computed(() => props.rounded),
+        dragging,
     ],
 );
 
-const thumbWrapperClasses = defineClasses(
-    ["thumbWrapperClass", "o-slide__thumb-wrapper"],
+const thumbClasses = defineClasses(
+    ["thumbClass", "o-slider__thumb"],
+    ["thumbDraggingClass", "o-slider__thumb--dragging", null, dragging],
     [
-        "thumbWrapperDraggingClass",
-        "o-slide__thumb-wrapper--dragging",
+        "thumbRoundedClass",
+        "o-slider__thumb--rounded",
         null,
-        dragging,
+        computed(() => props.rounded),
     ],
 );
 
@@ -282,9 +282,10 @@ defineExpose({ value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="slider" @click="onSliderClick">
+    <div data-oruga="slider" :class="rootClasses" @click="onSliderClick">
         <div ref="sliderElement" :class="trackClasses">
             <div :class="fillClasses" :style="barStyle" />
+
             <template v-if="ticks">
                 <o-slider-tick
                     v-for="(val, key) in tickValues"

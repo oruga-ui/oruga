@@ -9,7 +9,7 @@ import { injectField } from "../field/fieldInjection";
 import type { SwitchProps } from "./props";
 
 /**
- * Switch between two opposing states
+ * Switch between two opposing states.
  * @displayName Switch
  * @style _switch.scss
  */
@@ -72,7 +72,7 @@ const emits = defineEmits<{
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
-const { onBlur, onFocus, onInvalid, setFocus, doClick } = useInputHandler(
+const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
     inputRef,
     emits,
     props,
@@ -83,7 +83,7 @@ const { parentField } = injectField();
 
 // set field labelId or create a unique label id if a label is given
 const labelId =
-    !!parentField.value || !!props.label || !!useSlots().label
+    !!parentField.value || !!props.label || !!useSlots().default
         ? parentField.value?.labelId || useId()
         : undefined;
 
@@ -101,11 +101,6 @@ const isChecked = computed(
 
 function onInput(event: Event): void {
     emits("input", vmodel.value, event);
-}
-
-function clickInput(): void {
-    setFocus();
-    doClick();
 }
 
 // --- Computed Component Classes ---
@@ -126,16 +121,16 @@ const rootClasses = defineClasses(
         computed(() => !!props.size),
     ],
     [
-        "disabledClass",
-        "o-switch--disabled",
-        null,
-        computed(() => props.disabled),
-    ],
-    [
         "variantClass",
         "o-switch--",
         computed(() => props.variant),
         computed(() => !!props.variant),
+    ],
+    [
+        "passiveVariantClass",
+        "o-switch--",
+        computed(() => props.passiveVariant + "-passive"),
+        computed(() => !!props.passiveVariant),
     ],
     [
         "positionClass",
@@ -144,28 +139,16 @@ const rootClasses = defineClasses(
         computed(() => !!props.position),
     ],
     [
-        "passiveVariantClass",
-        "o-switch--",
-        computed(() => props.passiveVariant + "-passive"),
-        computed(() => !!props.passiveVariant),
+        "disabledClass",
+        "o-switch--disabled",
+        null,
+        computed(() => props.disabled),
     ],
-);
-
-const inputClasses = defineClasses(
-    ["inputClass", "o-switch__input"],
-    ["inputCheckedClass", "o-switch__input--checked", null, isChecked],
-);
-
-const switchClasses = defineClasses(
-    ["switchClass", "o-switch__check"],
-    ["switchCheckedClass", "o-switch__check--checked", null, isChecked],
     ["roundedClass", "o-switch--rounded", null, computed(() => props.rounded)],
+    ["checkedClass", "o-switch--checked", null, isChecked],
 );
 
-const switchCheckClasses = defineClasses(
-    ["switchCheckClass", "o-switch__check-switch"],
-    ["roundedClass", "o-switch--rounded", null, computed(() => props.rounded)],
-);
+const inputClasses = defineClasses(["inputClass", "o-switch__input"]);
 
 const labelClasses = defineClasses(["labelClass", "o-switch__label"]);
 
@@ -176,7 +159,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="switch">
+    <div data-oruga="switch" :class="rootClasses">
         <input
             v-bind="inputBind"
             :id="id"
@@ -199,10 +182,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             @focus="onFocus"
             @invalid="onInvalid"
             @change="onInput" />
-
-        <span :class="switchClasses" @click.prevent="clickInput">
-            <span :class="switchCheckClasses"></span>
-        </span>
 
         <label
             v-if="label || $slots.default"

@@ -5,6 +5,8 @@ import OTooltip from "../tooltip/Tooltip.vue";
 
 import { isClient } from "@/utils/ssr";
 
+import { injectField } from "../field/fieldInjection";
+
 import type { SliderProps } from "./props";
 import type { ClassBind, WithRequired } from "@/types";
 
@@ -40,6 +42,9 @@ const emits = defineEmits<{
     /** on drag end event */
     dragend: [];
 }>();
+
+// inject parent field component if used inside one
+const { parentField } = injectField();
 
 const isFocused = ref(false);
 const dragging = ref(false);
@@ -203,9 +208,9 @@ defineExpose({ setPosition });
 
 <template>
     <div
+        data-oruga="slider-thumb"
         :class="thumbWrapperClasses"
-        :style="wrapperStyle"
-        data-oruga="slider-thumb">
+        :style="wrapperStyle">
         <o-tooltip
             :label="formattedValue"
             :variant="computedTooltipVariant"
@@ -217,6 +222,7 @@ defineExpose({ setPosition });
                 :tabindex="disabled ? undefined : 0"
                 role="slider"
                 :aria-label="ariaLabel"
+                :aria-labelledby="parentField?.labelId"
                 :aria-valuenow="modelValue"
                 :aria-valuemin="min"
                 :aria-valuemax="max"

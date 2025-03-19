@@ -16,7 +16,7 @@ import { defineClasses, getActiveClasses } from "@/composables";
 import type { NotificationNoticeProps } from "./props";
 
 /**
- * Notification Notice is an extension of the Notification component and is used for the programmatic usage
+ * Notification Notice is an extension of the Notification component and is used for the programmatic usage.
  * @displayName Notification Notice
  */
 defineOptions({
@@ -28,7 +28,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
     override: undefined,
-    // container: undefined,
+    container: undefined,
+    variant: () => getDefault("notification.variant"),
     position: () => getDefault("notification.position", "top"),
     duration: () => getDefault("notification.duration", 2000),
     infinite: false,
@@ -75,20 +76,27 @@ onBeforeMount(() => {
 
         if (parentTop.value && parentBottom.value) return;
 
+        // create notices top container if not alread there
         if (!parentTop.value) {
             parentTop.value = document.createElement("div");
             parentTop.value.className = `${rootClasses.join(
                 " ",
             )} ${topClasses.join(" ")}`;
+            parentTop.value.role = "region";
+            parentTop.value.ariaLive = "polite";
         }
 
+        // create notices bottom container if not alread there
         if (!parentBottom.value) {
             parentBottom.value = document.createElement("div");
             parentBottom.value.className = `${rootClasses.join(
                 " ",
             )} ${bottomClasses.join(" ")}`;
+            parentBottom.value.role = "region";
+            parentBottom.value.ariaLive = "polite";
         }
 
+        // append notices top and bottom container to given container
         props.container.appendChild(parentTop.value);
         props.container.appendChild(parentBottom.value);
 
@@ -133,6 +141,11 @@ const shouldQueue = computed(() =>
         : false,
 );
 
+const isAlert = computed(
+    () => props.variant === "warning" || props.variant === "danger",
+);
+
+/** move the rendered component template into the correct parent container */
 function showNotice(): void {
     if (!correctParent.value) return;
 
@@ -190,11 +203,13 @@ defineExpose({ close });
 
 <template>
     <o-notification
-        v-bind="$attrs"
         ref="notificationComponent"
+        v-bind="$attrs"
         v-model:active="isActive"
         :override="override"
         :position="position"
+        :role="isAlert ? 'alert' : 'status'"
+        :aria-atomic="true"
         @close="close">
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->

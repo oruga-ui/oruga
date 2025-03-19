@@ -20,7 +20,7 @@ const props = defineProps({
     /** Value of single tick */
     value: { type: Number, required: true },
     /** Tick label */
-    label: { type: String, default: undefined },
+    label: { type: [String, Number], default: undefined },
     tickClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
@@ -57,19 +57,19 @@ const tickStyle = computed(() => ({ left: position.value + "%" }));
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["tickClass", "o-slide__tick"],
-    ["tickHiddenClass", "o-slide__tick--hidden", null, hidden],
+    ["tickClass", "o-slider__tick"],
+    ["tickHiddenClass", "o-slider__tick--hidden", null, hidden],
 );
 
 const tickLabelClasses = defineClasses([
     "tickLabelClass",
-    "o-slide__tick-label",
+    "o-slider__tick-label",
 ]);
 </script>
 
 <template>
-    <div :class="rootClasses" :style="tickStyle" data-oruga="slider-tick">
-        <span v-if="$slots.default" :class="tickLabelClasses">
+    <div data-oruga="slider-tick" :class="rootClasses" :style="tickStyle">
+        <span v-if="$slots.default || label" :class="tickLabelClasses">
             <!-- 
                 @slot Override tick content, default is label prop
              -->

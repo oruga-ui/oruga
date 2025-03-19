@@ -1,29 +1,25 @@
 # Tooltip
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> Display a brief helper text to your user
+The **Tooltip** component displays a short contextual help text when the user hovers over it.
+The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-tooltip />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-tooltip-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Tooltip component
 
-> Display a brief helper text to your user
+> Display a brief helper text to your user.
 
 ```html
 <o-tooltip></o-tooltip>
@@ -36,7 +32,7 @@
 | active     | Whether tooltip is active or not, use v-model:active to make it two-way binding                                                                                                  | boolean                                                                                                          | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                 |
 | always     | Tooltip will be always active                                                                                                                                                    | boolean                                                                                                          | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                 |
 | animation  | Tooltip default animation                                                                                                                                                        | string                                                                                                           | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>                         |
-| closeable  | Tooltip auto close options (pressing escape, clicking the content or outside)                                                                                                    | boolean \| string[]                                                                                              | `true`, `false`, `content`, `outside`, `escape`                                                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;closeable: ["escape","outside","content"]<br>}</code> |
+| closeable  | Tooltip auto close options (pressing escape, clicking the content or outside)                                                                                                    | boolean \| ("content" \| "escape" \| "outside")[]                                                                | `true`, `false`, `content`, `outside`, `escape`                                                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;closeable: ["escape","outside","content"]<br>}</code> |
 | delay      | Tooltip delay before it appears (number in ms)                                                                                                                                   | number                                                                                                           | -                                                                                                |                                                                                                                                                                             |
 | disabled   | Tooltip will be disabled                                                                                                                                                         | boolean                                                                                                          | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                                 |
 | label      | Tooltip text, unnecessary when content slot is used                                                                                                                              | string                                                                                                           | -                                                                                                |                                                                                                                                                                             |
@@ -45,7 +41,7 @@
 | position   | Position of the Tooltip relative to the trigger                                                                                                                                  | "auto" \| "bottom-left" \| "bottom-right" \| "bottom" \| "left" \| "right" \| "top-left" \| "top-right" \| "top" | `auto`, `top`, `bottom`, `left`, `right`, `top-right`, `top-left`, `bottom-left`, `bottom-right` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;position: "auto"<br>}</code>                          |
 | teleport   | Append the component to another part of the DOM.<br/>Set `true` to append the component to the body.<br/>In addition, any CSS selector string or an actual DOM node can be used. | boolean \| object \| string                                                                                      | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;teleport: false<br>}</code>                          |
 | triggerTag | Tooltip trigger tag name                                                                                                                                                         | DynamicComponent                                                                                                 | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;triggerTag: "div"<br>}</code>                         |
-| triggers   | Tooltip trigger events                                                                                                                                                           | ("click" \| "contextmenu" \| "focus" \| "hover")[]                                                               | `hover`, `click`, `focus`, `contextmenu`                                                         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;triggers: ["hover"]<br>}</code>                       |
+| triggers   | Tooltip trigger events                                                                                                                                                           | ("click" \| "contextmenu" \| "focus" \| "hover")[]                                                               | `hover`, `click`, `focus`, `contextmenu`                                                         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;triggers: ["hover","focus"]<br>}</code>               |
 | variant    | Color of the tooltip                                                                                                                                                             | string                                                                                                           | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>                        |
 
 ### Events
@@ -63,9 +59,18 @@
 | default | Tooltip trigger slot                   | **active** `boolean` - tooltip active state |
 | content | Tooltip content, default is label prop |                                             |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-tooltip-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -96,15 +101,15 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                    | Default                          |
 | -------------------------------- | -------------------------------- |
-| $tooltip-colors                  | var.$colors                      |
 | $tooltip-arrow-size              | 5px                              |
 | $tooltip-arrow-margin            | 2px                              |
 | $tooltip-content-multiline-width | 300px                            |
+| $tooltip-shadow                  | 0 1px 2px 1px rgba(0, 1, 0, 0.2) |
+| $tooltip-z                       | 38                               |
+| $tooltip-colors                  | dv.$colors                       |
 | $tooltip-border-radius           | css.getVar("radius")             |
 | $tooltip-bg                      | css.getVar("scheme-main-bis")    |
-| $tooltip-shadow                  | 0 1px 2px 1px rgba(0, 1, 0, 0.2) |
 | $tooltip-color                   | css.getVar("text-body")          |
-| $tooltip-z                       | 38                               |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tooltip.scss)
 
@@ -124,4 +129,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

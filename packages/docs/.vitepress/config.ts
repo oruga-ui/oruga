@@ -34,6 +34,10 @@ const getStartedItems = [
         text: "Themes",
         link: "/documentation/themes",
     },
+    {
+        text: "Composable",
+        link: "/documentation/composables",
+    },
 ];
 
 export default defineConfig({
@@ -62,7 +66,7 @@ export default defineConfig({
     appearance: false,
     themeConfig: {
         logo: "/logo.png",
-        outline: [2, 3],
+        outline: [2, 4],
         search: {
             provider: "local",
         },
@@ -77,7 +81,7 @@ export default defineConfig({
             { text: "Expo", link: "/expo/" },
             {
                 text: "Support",
-                items: [{ text: "Ko-fi", link: "https://ko-fi.com/orugaui" }],
+                items: [{ text: "Ko-fi", link: "https://ko-fi.com/mlmoravek" }],
             },
             {
                 text: `v${version}`,
@@ -126,6 +130,16 @@ export default defineConfig({
         }
         */
     },
+
+    vue: {
+        template: {
+            compilerOptions: {
+                // prevent compiling for exmaple-showcase web component
+                isCustomElement: (tag) => ["example-showcase"].includes(tag),
+            },
+        },
+    },
+
     vite: {
         // Vite config options
         resolve: {
@@ -140,6 +154,13 @@ export default defineConfig({
                 ),
                 // add '@docs' alias to docs src folder
                 "@docs": fileURLToPath(new URL("./../src", import.meta.url)),
+            },
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: "modern-compiler",
+                },
             },
         },
     },

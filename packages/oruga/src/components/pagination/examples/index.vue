@@ -11,5 +11,6 @@ import SlotsCode from "./slots.vue?raw";
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="slots">Slots</h3>
+    <p>Use slots to override the specific buttons.</p>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 </template>

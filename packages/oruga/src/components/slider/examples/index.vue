@@ -23,17 +23,28 @@ import RangeCode from "./range.vue?raw";
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="sizes">Sizes</h3>
+    <p>
+        The component can be displayed in different sizes using the
+        <code>size</code> prop.
+    </p>
     <ExampleViewer :component="Sizes" :code="SizesCode" />
 
     <h3 id="variants">Variants</h3>
+    <p>Different styles can be achieved with the <code>variant</code> prop.</p>
     <ExampleViewer :component="Variants" :code="VariantsCode" />
 
     <h3 id="customize">Customise</h3>
     <ExampleViewer :component="Customise" :code="CustomiseCode" />
 
     <h3 id="tick">Tick and label</h3>
+    <p>Customise the labels using slots.</p>
     <ExampleViewer :component="TickAndLabel" :code="TickAndLabelCode" />
 
     <h3 id="range">Range</h3>
+    <p>
+        When the <code>range</code> prop is set, the
+        <code>modelValue</code> property will be an array of two values instead
+        of a single value.
+    </p>
     <ExampleViewer :component="Range" :code="RangeCode" />
 </template>

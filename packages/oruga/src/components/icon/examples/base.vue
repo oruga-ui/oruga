@@ -1,24 +1,24 @@
 <template>
-    <section>
-        <div class="odocs-spaced">
+    <section class="odocs-spaced">
+        <p>
             <o-icon pack="fas" icon="user" size="small" />
             <o-icon pack="fas" icon="home" size="small" />
             <o-icon pack="fas" icon="tachometer-alt" size="small" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-icon pack="fas" icon="user" />
             <o-icon pack="fas" icon="home" />
             <o-icon pack="fas" icon="tachometer-alt" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-icon pack="fas" icon="user" size="medium" />
             <o-icon pack="fas" icon="home" size="medium" />
             <o-icon pack="fas" icon="tachometer-alt" size="medium" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-icon pack="fas" icon="user" size="large" variant="success" />
 
             <o-icon pack="fas" icon="home" size="large" variant="info" />
@@ -28,9 +28,9 @@
                 icon="tachometer-alt"
                 size="large"
                 variant="primary" />
-        </div>
+        </p>
 
-        <div class="odocs-spaced">
+        <p>
             <o-button variant="success">
                 <o-icon pack="fas" icon="check" />
                 <span>Finish</span>
@@ -45,6 +45,6 @@
                 <o-icon pack="fas" icon="sync-alt" spin />
                 <span>Refresh</span>
             </o-button>
-        </div>
+        </p>
     </section>
 </template>

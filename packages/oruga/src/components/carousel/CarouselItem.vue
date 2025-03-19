@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { CarouselComponent } from "./types";
 import type { CarouselItemProps } from "./props";
 
 /**
- * A Slideshow item used by the carousel
+ * A Slideshow item used by the carousel.
  * @displayName Carousel Item
  */
 defineOptions({
@@ -20,7 +19,6 @@ defineOptions({
 const props = withDefaults(defineProps<CarouselItemProps>(), {
     override: undefined,
     clickable: false,
-    ariaRole: () => getDefault("carousel.ariaRole", "option"),
 });
 
 /** inject functionalities and data from the parent component */
@@ -38,11 +36,11 @@ function onClick(event: Event): void {
 // --- Computed Component Classes ---
 
 const itemClasses = defineClasses(
-    ["itemClass", "o-car__item"],
-    ["itemActiveClass", "o-car__item--active", null, isActive],
+    ["itemClass", "o-carousel__item"],
+    ["itemActiveClass", "o-carousel__item--active", null, isActive],
     [
         "itemClickableClass",
-        "o-car__item--clickable",
+        "o-carousel__item--clickable",
         null,
         computed(() => props.clickable),
     ],
@@ -51,16 +49,21 @@ const itemClasses = defineClasses(
 
 <template>
     <div
-        v-if="parent"
-        :class="itemClasses"
-        :style="itemStyle"
+        :id="`carouselpanel-${item.identifier}`"
         data-oruga="carousel-item"
         :data-id="`carousel-${item.identifier}`"
-        :role="ariaRole"
-        aria-roledescription="item"
-        :aria-selected="isActive"
+        :class="itemClasses"
+        :style="itemStyle"
+        :role="parent.indicators ? 'tabpanel' : 'group'"
+        :aria-labelledby="`carousel-${item.identifier}`"
+        aria-roledescription="slide"
+        :aria-label="`${item.index + 1} of ${parent.total}`"
+        draggable="true"
         @click="onClick"
-        @keypress.enter="onClick">
+        @keydown.enter="onClick"
+        @keydown.space="onClick"
+        @dragstart="parent.onDrag"
+        @touchstart="parent.onDrag">
         <!--
             @slot Default content
         -->

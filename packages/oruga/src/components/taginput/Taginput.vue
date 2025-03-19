@@ -1,11 +1,11 @@
 <script setup lang="ts" generic="T = string">
 import {
     computed,
-    ref,
     useAttrs,
     useTemplateRef,
     useId,
     watchEffect,
+    ref,
     type Component,
 } from "vue";
 
@@ -20,12 +20,14 @@ import {
     findOption,
     useInputHandler,
     useSequentialId,
+    toOptionsGroup,
+    type OptionsGroupItem,
 } from "@/composables";
 
 import type { TaginputProps } from "./props";
 
 /**
- * A simple tag input field that can have autocomplete functionality
+ * A simple tag input field that can have autocomplete functionality.
  * @displayName Taginput
  * @style _taginput.scss
  */
@@ -49,18 +51,14 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     maxitems: undefined,
     maxlength: undefined,
     counter: () => getDefault("taginput.counter", true),
-    openOnFocus: false,
+    openOnFocus: () => getDefault("taginput.openOnFocus", true),
     keepOpen: () => getDefault("taginput.keepOpen", false),
     placeholder: undefined,
     expanded: false,
     disabled: false,
-    confirmKeys: () =>
-        getDefault("taginput.confirmKeys", [",", "Tab", "Enter"]),
-    separators: () => getDefault("taginput.separators", [","]),
-    keepFirst: false,
+    keepFirst: () => getDefault("taginput.keepFirst", false),
     allowNew: () => getDefault("taginput.allowNew", false),
     allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
-    removeOnKeys: () => getDefault("taginput.removeOnKeys", ["Backspace"]),
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
     checkScroll: () => getDefault("taginput.checkScroll", false),
@@ -68,7 +66,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
     closeIcon: () => getDefault("taginput.closeIcon", "close"),
-    ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel"),
+    ariaCloseLabel: () => getDefault("taginput.ariaCloseLabel", "Remove"),
     autocomplete: () => getDefault("taginput.autocomplete", "off"),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: undefined,
@@ -144,30 +142,32 @@ const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
     props,
 );
 
-/** the selected items, use v-model to make it two-way binding */
+const isDropdownActive = ref(false);
+
+// the selected items, use v-model to make it two-way binding
 const selectedItems = defineModel<ModelValue>({ default: undefined });
 
-/** the value of the inner input, use v-model:input to make it two-way binding */
+// the value of the inner input, use v-model:input to make it two-way binding
 const inputValue = defineModel<string>("input", { default: "" });
 
 const inputLength = computed(() => inputValue.value.trim().length);
 const itemsLength = computed(() => selectedItems.value?.length || 0);
 
-const isComposing = ref(false);
-
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
-);
+const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
+    const normalizedOptions = normalizeOptions<T>(props.options, nextSequence);
+    const groupedOptions = toOptionsGroup<T>(normalizedOptions, nextSequence());
+    return groupedOptions;
+});
 
 /** map the selected items into option items */
 const selectedOptions = computed(() => {
     if (!selectedItems.value) return [];
     return selectedItems.value.map((value) => {
-        const option = findOption(normalizedOptions, value);
+        const option = findOption<T>(groupedOptions, value);
         // return the found option or create a new option object
         if (option) return option;
         else return { label: value, value, key: useId() };
@@ -184,37 +184,10 @@ watchEffect(() => {
     if (!hasInput.value) onBlur(new Event("blur"));
 });
 
-/**
- * If input has pasteSeparators prop,
- * returning new RegExp used to split pasted string.
- */
-const separatorsAsRegExp = computed(() =>
-    props.separators.length
-        ? new RegExp(
-              props.separators
-                  .map((s) =>
-                      s ? s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") : null,
-                  )
-                  .join("|"),
-              "g",
-          )
-        : null,
-);
-
 function addItem(item?: T | string): void {
     item = item || inputValue.value.trim();
 
     if (item) {
-        if (typeof item === "string") {
-            const reg = separatorsAsRegExp.value;
-            if (reg && item.match(reg)) {
-                item.split(reg)
-                    .map((t) => t.trim())
-                    .filter((t) => t.length !== 0)
-                    .map(addItem);
-                return;
-            }
-        }
         const itemToAdd = props.createItem(item);
 
         if (!selectedItems.value?.length) {
@@ -262,53 +235,36 @@ function onSelect(option: T | undefined): void {
 }
 
 function onInput(value: string, event: Event): void {
-    emits("input", value.trim(), event);
+    emits("input", value?.trim(), event);
 }
 
-function onKeydown(event: KeyboardEvent): void {
-    if (
-        props.removeOnKeys.indexOf(event.key) >= 0 &&
-        !inputValue.value?.length &&
-        itemsLength.value > 0
-    ) {
+function onBackspace(): void {
+    if (!inputValue.value?.length && itemsLength.value > 0)
         // remove last item
         removeItem(itemsLength.value - 1);
-    }
+}
 
-    if (props.confirmKeys.indexOf(event.key) >= 0) {
-        // Allow Tab to advance to next field regardless
-        if (event.key !== "Tab") event.preventDefault();
-        if (event.key === "Enter" && isComposing.value) return;
-        // Add item if not select only
-        if (props.allowNew) addItem();
-    }
+function onEnter(): void {
+    // Add item if not select only and dropdown selection is closed
+    if (props.allowNew && !isDropdownActive.value) addItem();
 }
 
 // --- Computed Component Classes ---
 
-const attrs = useAttrs();
-
-const autocompleteRootClasses = defineClasses([
-    "autocompleteClasses.rootClass",
-    "o-taginput__autocomplete",
-]);
-
-const autocompleteInputClasses = defineClasses([
-    "autocompleteClasses.inputClasses.inputClass",
-    "o-taginput__input",
-]);
-
-const autocompleteBind = computed(() => ({
-    ...attrs,
-    "root-class": getActiveClasses(autocompleteRootClasses),
-    "input-classes": {
-        "input-class": getActiveClasses(autocompleteInputClasses),
-    },
-    ...props.autocompleteClasses,
-}));
-
 const rootClasses = defineClasses(
     ["rootClass", "o-taginput"],
+    [
+        "sizeClass",
+        "o-taginput--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "variantClass",
+        "o-taginput--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
     [
         "expandedClass",
         "o-taginput--expanded",
@@ -317,15 +273,10 @@ const rootClasses = defineClasses(
     ],
 );
 
-const containerClasses = defineClasses(
-    ["containerClass", "o-taginput__container"],
-    [
-        "sizeClass",
-        "o-taginput__container--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-);
+const containerClasses = defineClasses([
+    "containerClass",
+    "o-taginput__container",
+]);
 
 const itemClasses = defineClasses(
     ["itemClass", "o-taginput__item"],
@@ -340,6 +291,27 @@ const itemClasses = defineClasses(
 const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
+
+const autocompleteRootClasses = defineClasses([
+    "autocompleteClasses.rootClass",
+    "o-taginput__autocomplete",
+]);
+
+const autocompleteInputClasses = defineClasses([
+    "autocompleteClasses.inputClasses.inputClass",
+    "o-taginput__input",
+]);
+
+const attrs = useAttrs();
+
+const autocompleteBind = computed(() => ({
+    ...attrs,
+    "root-class": getActiveClasses(autocompleteRootClasses),
+    "input-classes": {
+        "input-class": getActiveClasses(autocompleteInputClasses),
+    },
+    ...props.autocompleteClasses,
+}));
 
 // --- Expose Public Functionalities ---
 
@@ -367,7 +339,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
                     <span> {{ option.label }}</span>
 
                     <o-icon
-                        v-if="closable"
+                        v-if="closable && !disabled"
                         :class="closeClasses"
                         :pack="iconPack"
                         :icon="closeIcon"
@@ -384,6 +356,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
             <o-autocomplete
                 v-show="hasInput"
                 ref="autocompleteComponent"
+                v-model:active="isDropdownActive"
                 v-model:input="inputValue"
                 v-bind="autocompleteBind"
                 :options="options"
@@ -399,7 +372,6 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
                 :check-scroll="checkScroll"
-                :confirm-keys="confirmKeys"
                 :teleport="teleport"
                 :has-counter="false"
                 :use-html5-validation="false"
@@ -408,9 +380,9 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 @focus="onFocus"
                 @blur="onBlur"
                 @invalid="onInvalid"
-                @keydown="onKeydown"
-                @compositionstart="isComposing = true"
-                @compositionend="isComposing = false"
+                @keydown.enter="onEnter"
+                @keydown.tab="onEnter"
+                @keydown.backspace="onBackspace"
                 @select="onSelect"
                 @scroll-start="$emit('scroll-start')"
                 @scroll-end="$emit('scroll-end')"

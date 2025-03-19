@@ -7,7 +7,6 @@ export * from "./useDebounce";
 export * from "./useParentProvider";
 export * from "./useClickOutside";
 export * from "./useScrollingParent";
-export * from "./useObjectMap";
 export * from "./useOptions";
 export * from "./usePreventScrolling";
 export * from "./useSequentialId";

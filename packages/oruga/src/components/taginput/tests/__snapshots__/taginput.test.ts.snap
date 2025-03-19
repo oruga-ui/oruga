@@ -8,15 +8,16 @@ exports[`OTaginput tests > render correctly 1`] = `
                 @binding {(string, object)[]} items - selected items
                 @binding {object[]} options - selected options
             -->
-    <div data-oruga="autocomplete" class="o-drop o-drop--expanded o-drop--position-auto o-acp o-taginput__autocomplete">
-      <div tabindex="-1" class="o-drop__trigger" aria-haspopup="listbox">
+    <div data-oruga="autocomplete" class="o-dropdown o-dropdown--expanded o-dropdown--position-auto o-autocomplete o-taginput__autocomplete">
+      <div class="o-dropdown__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false" aria-controls="v-0">
         <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
+                @binding {T | T[]} value - the selected value
                 @binding {() => void} toggle - toggle dropdown active state
             -->
-        <div data-oruga="input" class="o-input__wrapper o-input__wrapper--expanded">
-          <!--v-if--><input has-counter="false" role="combobox" aria-autocomplete="list" aria-controls="v-0" aria-expanded="false" id="v-1" data-oruga-input="text" type="text" class="o-input o-taginput__input" autocomplete="off">
+        <div data-oruga="input" class="o-input o-input--expanded">
+          <!--v-if--><input has-counter="false" aria-autocomplete="list" aria-controls="v-0" enterkeyhint="enter" id="v-1" type="text" data-oruga-input="text" class="o-input__input o-taginput__input o-input__input--placeholder" autocomplete="off">
           <!--v-if-->
           <!--v-if-->
         </div>
@@ -24,13 +25,20 @@ exports[`OTaginput tests > render correctly 1`] = `
       <!--teleport start-->
       <!--v-if-->
       <transition-stub name="fade" appear="false" persisted="true" css="true">
-        <div id="v-0" tabindex="-1" class="o-drop__menu o-drop__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-hidden="true" aria-modal="false">
+        <div id="v-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-hidden="true" aria-multiselectable="false">
           <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
+                        @binding {number} focusedIndex - index of the focused element
                         @binding {() => void} toggle - toggle dropdown active state
                     -->
+          <!--
+                            @slot Place extra \`o-dropdown-item\` components here, even if you have some options defined by prop
+                        -->
           <!--v-if-->
+          <!--
+                            @slot Place extra \`o-dropdown-item\` components here, even if you have some options defined by prop
+                        -->
         </div>
       </transition-stub>
       <!--teleport end-->

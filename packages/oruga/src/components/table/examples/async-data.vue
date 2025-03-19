@@ -7,9 +7,9 @@ const loading = ref(false);
 const sortField = ref("vote_count");
 const sortOrder = ref<"asc" | "desc">("desc");
 const page = ref(1);
-const perPage = ref(20);
+const perPage = ref(5);
 
-const loadAsyncData = () => {
+function loadAsyncData(): void {
     const params = [
         "api_key=bb6f51bef07465653c3e553d6ab161a8",
         "language=en-US",
@@ -44,29 +44,29 @@ const loadAsyncData = () => {
             loading.value = false;
             throw error;
         });
-};
+}
 
 /*
  * Handle page-change event
  */
-const onPageChange = (p) => {
+function onPageChange(p): void {
     page.value = p;
     loadAsyncData();
-};
+}
 
 /*
  * Handle sort event
  */
-const onSort = (column, order) => {
+function onSort(column, order): void {
     sortField.value = column?.field;
     sortOrder.value = order;
     loadAsyncData();
-};
+}
 
 /*
  * Type style in relation to the value
  */
-const type = (value) => {
+function type(value): string {
     const number = parseFloat(value);
     if (number < 6) {
         return "is-danger";
@@ -74,8 +74,8 @@ const type = (value) => {
         return "is-warning";
     } else if (number >= 8) {
         return "is-success";
-    }
-};
+    } else return "";
+}
 
 onMounted(() => {
     loadAsyncData();

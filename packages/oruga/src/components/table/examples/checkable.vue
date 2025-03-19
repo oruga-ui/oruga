@@ -72,14 +72,14 @@ const checkedRows = ref([data[1], data[3]]);
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-button
                 variant="danger"
                 :disabled="!checkedRows.length"
                 icon-left="times"
                 label="Clear checked"
                 @click="checkedRows = []" />
-            <o-select v-model="checkboxPosition">
+            <o-select v-model="checkboxPosition" aria-label="Checkbox position">
                 <option value="left">Checkbox at left</option>
                 <option value="right">Checkbox at right</option>
             </o-select>
@@ -90,6 +90,7 @@ const checkedRows = ref([data[1], data[3]]);
             :data="data"
             :columns="columns"
             checkable
+            row-key="id"
             :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
             :checkbox-position="checkboxPosition">
             <template #bottom-left>

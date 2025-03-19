@@ -195,15 +195,11 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 watch(isActive, onActiveChange);
 
-const ariaRole = computed(() =>
-    !isTrueish(props.pickerProps.inline) ? "dialog" : undefined,
-);
-
 const triggers = computed(() =>
     isTrueish(props.pickerProps.openOnFocus) ? ["click"] : [],
 );
 
-if (isClient) useEventListener("keyup", onKeyPress);
+if (isClient) useEventListener(document, "keyup", onKeyPress);
 
 /** Keypress event that is bound to the document. */
 function onKeyPress(event: KeyboardEvent): void {
@@ -333,17 +329,14 @@ defineExpose({ focus: setFocus });
             ref="dropdownComponent"
             v-bind="dropdownBind"
             v-model:active="isActive"
+            :triggers="triggers"
             :position="pickerProps.position"
             :disabled="pickerProps.disabled"
             :inline="pickerProps.inline"
             :mobile-modal="pickerProps.mobileModal"
+            :desktop-modal="pickerProps.desktopModal"
             :mobile-breakpoint="pickerProps.mobileBreakpoint"
-            :trap-focus="pickerProps.trapFocus"
-            :aria-role="ariaRole"
-            :aria-modal="!pickerProps.inline"
-            :tabindex="-1"
-            :teleport="pickerProps.teleport"
-            :triggers="triggers">
+            :teleport="pickerProps.teleport">
             <template v-if="!pickerProps.inline" #trigger>
                 <slot name="trigger">
                     <o-input
@@ -372,6 +365,7 @@ defineExpose({ focus: setFocus });
                         @icon-right-click="$emit('icon-right-click', $event)" />
                 </slot>
             </template>
+
             <o-dropdown-item
                 override
                 tag="div"

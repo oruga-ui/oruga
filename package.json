@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.9.2",
+  "version": "0.10.2",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -14,6 +14,7 @@
     "dev": "concurrently \"npm run build:lib:watch\" \"npm run build:docs:watch\"",
     "test": "npm run test:coverage --workspace @oruga-ui/oruga-next",
     "test:ts": "npm run test:ts --workspace @oruga-ui/oruga-next",
+    "build": "npm run build:lib && npm run build:examples && npm run build:docs",
     "build:docs": "npm run docs:build --workspace @oruga-ui/docs-next",
     "build:docs:watch": "npm run docs:dev --workspace @oruga-ui/docs-next",
     "build:lib": "npm run build:lib --workspace @oruga-ui/oruga-next",
@@ -30,13 +31,15 @@
     "release": "npm run version && npm run changelog",
     "version": "tsx .scripts/sync-version.ts && git add .",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\""
+    "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\"",
+    "update": "ncu -u --workspaces --root"
   },
   "devDependencies": {
-    "concurrently": "^9.0.1",
+    "concurrently": "^9.1.2",
     "conventional-changelog": "^6.0.0",
     "conventional-changelog-cli": "^5.0.0",
-    "replace-in-file": "^7.1.0",
-    "tsx": "^4.19.2"
+    "replace-in-file": "^8.3.0",
+    "npm-check-updates": "^17.1.15",
+    "tsx": "^4.19.3"
   }
 }

@@ -79,47 +79,37 @@ app.use(Oruga, {
 </script>
 
 <template>
-    <div class="vp-doc">
-        Oruga is compatible with both
-        <a href="https://materialdesignicons.com/" target="_blank">
-            Material Design Icons
-        </a>
-        and
-        <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but
-        you can also add your own custom icon pack.<br />
+    <h3 id="base">Base</h3>
+    <ExampleViewer :component="Base" :code="BaseCode" />
 
-        <h3 id="base">Base</h3>
-        <ExampleViewer :component="Base" :code="BaseCode" />
+    <h3 id="custom">Custom icon pack</h3>
+    <p>You can also add it during Oruga import as default config.</p>
 
-        <h3 id="custom">Custom icon pack</h3>
-        <p>You can also add it during Oruga import as default config.</p>
-
-        <div class="tip custom-block">
-            <p class="custom-block-title">TIP</p>
-            <p>
-                Take a look at below example code (click on "Show code") to know
-                all internal icons to replace with the releated icons of your
-                custom icon pack
-            </p>
-        </div>
-        <ExampleViewer :component="CustomIconPack" :code="CustomIconPackCode" />
-
-        <h3 id="override">Override icon pack</h3>
+    <div class="tip custom-block">
+        <p class="custom-block-title">TIP</p>
         <p>
-            You can also customize some properties of the default icon packs. In
-            this example, default sizes for FontAwesome have been modified.
+            Take a look at below example code (click on "Show code") to know all
+            internal icons to replace with the releated icons of your custom
+            icon pack
         </p>
-        <ExampleViewer :code="customIconConfigCode" :open="true" />
-
-        <h3 id="component">Custom icon component</h3>
-        <div class="tip custom-block">
-            <p class="custom-block-title">TIP</p>
-            <p>
-                You can set the `iconComponent` config option to render icons
-                with the vue-fontawesome component (it should work with other
-                Vue icon components as well).
-            </p>
-        </div>
-        <ExampleViewer :code="faIconConfigCode" :open="true" />
     </div>
+    <ExampleViewer :component="CustomIconPack" :code="CustomIconPackCode" />
+
+    <h3 id="override">Override icon pack</h3>
+    <p>
+        You can also customize some properties of the default icon packs. In
+        this example, default sizes for FontAwesome have been modified.
+    </p>
+    <ExampleViewer :code="customIconConfigCode" :open="true" />
+
+    <h3 id="component">Custom icon component</h3>
+    <div class="tip custom-block">
+        <p class="custom-block-title">TIP</p>
+        <p>
+            You can set the `iconComponent` config option to render icons with
+            the vue-fontawesome component (it should work with other Vue icon
+            components as well).
+        </p>
+    </div>
+    <ExampleViewer :code="faIconConfigCode" :open="true" />
 </template>

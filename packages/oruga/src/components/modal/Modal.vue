@@ -26,7 +26,7 @@ import {
 import type { ModalProps } from "./props";
 
 /**
- * Classic modal overlay to include any content you may need
+ * Classic modal overlay to include any content you may need.
  * @displayName Modal
  * @style _modal.scss
  */
@@ -47,15 +47,15 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     overlay: () => getDefault("modal.overlay", true),
     cancelable: () =>
         getDefault("modal.cancelable", ["escape", "x", "outside"]),
-    scroll: () => getDefault("modal.scroll", "keep"),
     trapFocus: () => getDefault("modal.trapFocus", true),
-    ariaRole: () => getDefault("modal.ariaRole", "dialog"),
+    role: () => getDefault("modal.role", "dialog"),
     ariaLabel: () => getDefault("modal.ariaLabel"),
     autoFocus: () => getDefault("modal.autoFocus", true),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
+    clipScroll: () => getDefault("modal.clipScroll", false),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -97,7 +97,7 @@ const customStyle = computed(() =>
     !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
 );
 
-const toggleScroll = usePreventScrolling(props.scroll === "keep");
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
 watch(isActive, (value) => {
     if (props.overlay) toggleScroll(value);
@@ -116,7 +116,7 @@ onMounted(() => {
 
 if (isClient) {
     // register onKeyPress event listener when is active
-    useEventListener("keyup", onKeyPress, rootRef, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
 
     if (!props.overlay)
         // register outside click event listener when is active
@@ -214,13 +214,13 @@ defineExpose({ close });
             @before-leave="beforeLeave">
             <div
                 v-show="isActive"
-                v-bind="$attrs"
                 ref="rootElement"
+                v-bind="$attrs"
                 v-trap-focus="trapFocus"
                 data-oruga="modal"
                 :class="rootClasses"
                 :tabindex="-1"
-                :role="ariaRole"
+                :role="role"
                 :aria-label="ariaLabel"
                 :aria-modal="isActive">
                 <div

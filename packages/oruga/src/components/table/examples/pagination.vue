@@ -190,7 +190,7 @@ const perPage = ref(3);
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field>
                 <o-switch v-model="isPaginated" label="Paginated" />
             </o-field>
@@ -201,13 +201,18 @@ const perPage = ref(3);
                     label="Simple pagination" />
             </o-field>
             <o-field>
-                <o-select v-model="defaultSortDirection">
+                <o-select
+                    v-model="defaultSortDirection"
+                    aria-label="Sort direction">
                     <option value="asc">Default sort direction: ASC</option>
                     <option value="desc">Default sort direction: DESC</option>
                 </o-select>
             </o-field>
             <o-field>
-                <o-select v-model="perPage" :disabled="!isPaginated">
+                <o-select
+                    v-model="perPage"
+                    :disabled="!isPaginated"
+                    aria-label="Rows per page">
                     <option value="3">3 per page</option>
                     <option value="5">5 per page</option>
                     <option value="10">10 per page</option>
@@ -216,21 +221,24 @@ const perPage = ref(3);
                 </o-select>
             </o-field>
             <o-field>
-                <o-select v-model="paginationPosition" :disabled="!isPaginated">
+                <o-select
+                    v-model="paginationPosition"
+                    :disabled="!isPaginated"
+                    aria-label="Pagination position">
                     <option value="bottom">bottom pagination</option>
                     <option value="top">top pagination</option>
                     <option value="both">both</option>
                 </o-select>
             </o-field>
             <o-field>
-                <o-select v-model="sortIcon">
+                <o-select v-model="sortIcon" aria-label="Arrow icon">
                     <option value="arrow-up">Arrow sort icon</option>
                     <option value="caret-up">Caret sort icon</option>
                     <option value="chevron-up">Chevron sort icon</option>
                 </o-select>
             </o-field>
             <o-field>
-                <o-select v-model="sortIconSize">
+                <o-select v-model="sortIconSize" aria-label="Sort icon size">
                     <option value="small">Small sort icon</option>
                     <option value="">Regular sort icon</option>
                     <option value="medium">Medium sort icon</option>
@@ -255,9 +263,9 @@ const perPage = ref(3);
             :per-page="perPage"
             :pagination-simple="isPaginationSimple"
             :pagination-position="paginationPosition"
-            :default-sort-direction="defaultSortDirection"
             :sort-icon="sortIcon"
             :sort-icon-size="sortIconSize"
+            :default-sort-direction="defaultSortDirection"
             default-sort="user.first_name">
             <o-table-column
                 v-slot="{ row }"

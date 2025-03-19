@@ -1,6 +1,7 @@
 export function renderer(name: string): string {
     name = name.toLowerCase();
-    return `## Class props
+    return `
+## Class Inspector
 
 <inspector-${name}-viewer />
 `;

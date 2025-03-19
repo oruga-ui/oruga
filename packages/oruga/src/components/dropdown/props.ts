@@ -3,7 +3,7 @@ import type { OptionsPropWithGroups } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
-export type DropdownProps<T, IsMultiple extends boolean> = {
+export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The selected option value */
@@ -20,8 +20,12 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
     disabled?: boolean;
     /** Dropdown content (items) are shown inline, trigger is removed */
     inline?: boolean;
+    /** Enables item selection */
+    selectable?: boolean;
     /** Dropdown content will be scrollable */
     scrollable?: boolean;
+    /** Makes the component check if menu reached scroll start or end and emit scroll events. */
+    checkScroll?: boolean;
     /** Max height of dropdown content */
     maxHeight?: string | number;
     /**
@@ -38,22 +42,12 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
         | "top-left"
         | "bottom-left"
         | "bottom-right";
-    /** Dropdown content (items) are shown into a modal on mobile */
-    mobileModal?: boolean;
-    /** Dropdown content (items) are shown into a modal on desktop */
-    desktopModal?: boolean;
     /** Custom animation (transition name) */
     animation?: string;
-    /** Trap focus inside the dropdown. */
-    trapFocus?: boolean;
-    /** Makes the component check if menu reached scroll start or end and emit scroll events. */
-    checkScroll?: boolean;
     /** Dropdown will be expanded (full-width) */
     expanded?: boolean;
     /** HTML element Id of the dropdown menu element */
     menuId?: string;
-    /** Tabindex of the dropdown menu element */
-    menuTabindex?: number;
     /** Dropdown menu tag name */
     menuTag?: DynamicComponent;
     /** Dropdown trigger tag name */
@@ -62,22 +56,25 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
      * Dropdown will be triggered by any events
      * @values click, hover, contextmenu, focus
      */
-    triggers?: ("click" | "hover" | "contextmenu" | "focus")[];
+    triggers?: ("click" | "keydown" | "hover" | "contextmenu" | "focus")[];
     /** Dropdown delay before it appears (number in ms) */
     delay?: number;
-    /**
-     * Dropdown close options (pressing escape, clicking the content or outside)
-     * @values true, false, escape, outside, content
-     */
-    closeable?: string[] | boolean;
-    /** Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key) */
-    tabindex?: number;
-    /**
-     * Role attribute to be passed to the list container for better accessibility.
-     * Use menu only in situations where your dropdown is related to a navigation menu.
-     * @values list, listbox, menu, dialog
-     */
-    ariaRole?: "list" | "listbox" | "menu" | "dialog";
+    /** Keep dropdown list open when item get selected */
+    keepOpen?: boolean;
+    /** The first option will always be pre-selected (easier to just hit enter or tab) */
+    keepFirst?: boolean;
+    /** Close Dropdown when clicked outside */
+    closeOnOutside?: boolean;
+    /** Close Dropdown when page get scrolled */
+    closeOnScroll?: boolean;
+    /** Select current focused item when focused */
+    selectOnFocus?: boolean;
+    /** Select current focused item when closed */
+    selectOnClose?: boolean;
+    /** Dropdown content (items) are shown into a modal on mobile */
+    mobileModal?: boolean;
+    /** Dropdown content (items) are shown into a modal on desktop */
+    desktopModal?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**
@@ -86,44 +83,54 @@ export type DropdownProps<T, IsMultiple extends boolean> = {
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
+    /**
+     * Set `true` to remove the body scrollbar.
+     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+     * but will set the body to a fixed position, which may break some layouts.
+     */
+    clipScroll?: boolean;
+    /** Ensures that each input has an accessible name. */
+    labelledby?: string;
+    /** Accessibility aria-label to be passed to the trigger element - usefull if selectable */
+    ariaLabel?: string;
 } & DropdownClasses;
 
 // class props (will not be displayed in the docs)
-type DropdownClasses = Partial<{
+export type DropdownClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class when the dropdown is teleported */
+    /** Class of the root element when on mobile */
+    mobileClass: ComponentClass;
+    /** Class of the root element when shown as modal */
+    modalClass: ComponentClass;
+    /** Class of the root element when teleported */
     teleportClass: ComponentClass;
+    /** Class of the root element when inlined */
+    inlineClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class for the root element with position */
+    positionClass: ComponentClass;
+    /** Class for the root element when active or inline */
+    activeClass: ComponentClass;
+    /** Class for the root element when trigger is hoverable */
+    hoverableClass: ComponentClass;
     /** Class of the trigger element */
     triggerClass: ComponentClass;
-    /** Class of dropdown menu when inline */
-    inlineClass: ComponentClass;
-    /** Class of the dropdown menu */
+    /** Class of the menu element */
     menuClass: ComponentClass;
-    /** Class of dropdown menu position */
+    /** Class of the menu element with position */
     menuPositionClass: ComponentClass;
-    /** Class of dropdown menu when active */
+    /** Class of the menu element when active or inline */
     menuActiveClass: ComponentClass;
-    /** Class of dropdown when on mobile */
-    mobileClass: ComponentClass;
-    /** Class of dropdown when on is shown as modal */
-    modalClass: ComponentClass;
     /** Class of the overlay when is shown as modal */
     overlayClass: ComponentClass;
-    /** Class of dropdown when disabled */
-    disabledClass: ComponentClass;
-    /** Class of dropdown when expanded */
-    expandedClass: ComponentClass;
-    /** Class for the root element indicating position of dropdown */
-    positionClass: ComponentClass;
-    /** Class for the root element indicating whether the dropdown is open */
-    activeClass: ComponentClass;
-    /** Class for the root element when the dropdown is hoverable */
-    hoverableClass: ComponentClass;
-    /** Class of the body when dropdown is open and scroll is clip */
+    /** Class of the body when dropdown is open and scroll is clipped */
     scrollClipClass: ComponentClass;
-    /** Class of the body when dropdown is open and scroll is not clip */
-    noScrollClass: ComponentClass;
+    /** Class of the body when dropdown is open and scroll is keeped */
+    scrollKeepClass: ComponentClass;
 }>;
 
 export type DropdownItemProps<T> = {
@@ -140,26 +147,22 @@ export type DropdownItemProps<T> = {
     disabled?: boolean;
     /** Item is clickable and emit an event */
     clickable?: boolean;
+    /** Define whether the item is visible or not */
+    hidden?: boolean;
     /** Dropdown item tag name */
     tag?: DynamicComponent;
-    /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
-    tabindex?: number | string;
-    /**
-     * Role attribute to be passed to the list item for better accessibility.
-     * Use menuitem only in situations where your dropdown is related to a navigation menu.
-     * @values listitem, menuitem, button
-     */
-    ariaRole?: string;
 } & DropdownItemClasses;
 
 // class props (will not be displayed in the docs)
-type DropdownItemClasses = Partial<{
-    /** Class of the dropdown item */
+export type DropdownItemClasses = Partial<{
+    /** Class of the item element. */
     itemClass: ComponentClass;
-    /** Class of the dropdown item when active  */
-    itemActiveClass: ComponentClass;
-    /** Class of the dropdown item when clickable */
+    /** Class of the item element when selected */
+    itemSelectedClass: ComponentClass;
+    /** Class of the item element when focused */
+    itemFocusedClass: ComponentClass;
+    /** Class of the item element when clickable */
     itemClickableClass: ComponentClass;
-    /** Class of the dropdown item when disabled */
+    /** Class of the item element when disabled */
     itemDisabledClass: ComponentClass;
 }>;

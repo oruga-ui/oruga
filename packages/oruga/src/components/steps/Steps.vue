@@ -27,7 +27,7 @@ import type { StepItem, StepItemComponent, StepsComponent } from "./types";
 import type { StepsProps } from "./props";
 
 /**
- * Responsive horizontal process steps
+ * Responsive horizontal process steps.
  * @displayName Steps
  * @requires ./StepItem.vue
  * @style _steps.scss
@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
     iconPrev: () => getDefault("steps.iconPrev", "chevron-left"),
     iconNext: () => getDefault("steps.iconNext", "chevron-right"),
     hasNavigation: true,
-    destroyOnHide: false,
+    activateOnFocus: false,
     animated: () => getDefault("steps.animated", true),
     animation: () =>
         getDefault("steps.animation", [
@@ -65,6 +65,7 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
     labelPosition: () => getDefault("steps.labelPosition", "bottom"),
     rounded: true,
     mobileBreakpoint: () => getDefault("steps.mobileBreakpoint"),
+    ariaLabel: () => getDefault("steps.ariaLabel"),
     ariaNextLabel: () => getDefault("steps.ariaNextLabel", "Next"),
     ariaPreviousLabel: () => getDefault("steps.ariaPreviousLabel", "Previous"),
 });
@@ -87,18 +88,14 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const rootRef = useTemplateRef("rootElement");
 
-/** The selected item value, use v-model to make it two-way binding */
-const vmodel = defineModel<ModelValue>({ default: undefined });
-
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const provideData = computed<StepsComponent>(() => ({
-    activeIndex: activeItem.value?.index || 0,
+    activeIndex: activeItem.value?.index ?? 0,
     labelPosition: props.labelPosition,
     vertical: props.vertical,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
-    destroyOnHide: props.destroyOnHide,
     variant: props.variant,
 }));
 
@@ -125,19 +122,21 @@ const groupedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
+/** The selected item value, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
+
 /** When v-model is changed set the new active step. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (vmodel.value !== value) performAction(value as T);
+        if (vmodel.value !== value) performAction(value);
     },
 );
 
-const activeItem = ref<StepItem<T>>(
-    items.value.find((item) => item.value === props.modelValue) ||
-        items.value[0],
-);
+/** the active item */
+const activeItem = ref<StepItem<T>>();
 
+// set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
         ? items.value.find((item) => item.value === vmodel.value) ||
@@ -149,72 +148,101 @@ const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
 );
 
-/** Check if previous button is available. */
-const hasPrev = computed(() => !!prevItem.value);
+// --- EVENT HANDLER ---
 
-/** Check if next button is available. */
-const hasNext = computed(() => !!nextItem.value);
-
-/** Retrieves the previous visible item */
-const prevItem = computed(() => {
-    if (!activeItem.value) return undefined;
-
-    let prevItem: StepItem<T> | undefined;
-    let idx =
-        items.value.findIndex(
-            (item) => item.identifier === activeItem.value.identifier,
-        ) - 1;
-    for (; idx >= 0; idx--) {
-        if (items.value[idx].visible) {
-            prevItem = items.value[idx];
-            break;
-        }
-    }
-    return prevItem;
-});
-
-/** Retrieves the next visible item */
-const nextItem = computed(() => {
-    let nextItem: StepItem<T> | undefined;
-    let idx = activeItem.value
-        ? items.value.findIndex(
-              (item) => item.identifier === activeItem.value.identifier,
-          ) + 1
-        : 0;
-    for (; idx < items.value.length; idx++) {
-        if (items.value[idx].visible) {
-            nextItem = items.value[idx];
-            break;
-        }
-    }
-    return nextItem;
-});
-
-/** Return if the step should be clickable or not. */
-function isItemClickable(item: StepItem<T>): boolean {
-    if (item.clickable === undefined)
-        return item.index < activeItem.value?.index;
-    return item.clickable;
-}
-
-/** Previous button click listener. */
-function prev(): void {
-    if (hasPrev.value && prevItem.value) itemClick(prevItem.value);
-}
-
-/** Previous button click listener. */
-function next(): void {
-    if (hasNext.value && nextItem.value) itemClick(nextItem.value);
+/** Activate the item after or before the current active item. */
+function activateItem(fowardIndex: 1 | -1): void {
+    const index = (activeItem.value?.index ?? 0) + fowardIndex;
+    if (index < 0 || index >= items.value.length) return;
+    const item = items.value[index];
+    if (vmodel.value !== item.value) performAction(item.value);
 }
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem<T>): void {
-    if (vmodel.value !== item.value) performAction(item.value as T);
+    // determines if the step is clickable or not
+    if (!item.isClickable) return;
+    if (vmodel.value !== item.value) performAction(item.value);
+}
+
+/** Check if previous button is available. */
+const hasPrev = computed(() =>
+    isDefined(getFirstViableIndex((activeItem.value?.index ?? 0) - 1, false)),
+);
+
+/** Check if next button is available. */
+const hasNext = computed(() =>
+    isDefined(getFirstViableIndex((activeItem.value?.index ?? 0) + 1, true)),
+);
+
+/** Focus the next item if possible. */
+function onNext(index: number): void {
+    const viableIndex = getFirstViableIndex(index + 1, true);
+    if (isDefined(viableIndex)) moveFocus(viableIndex);
+}
+
+/** Focus the previous item if possible. */
+function onPrev(index: number): void {
+    const viableIndex = getFirstViableIndex(index - 1, false);
+    if (isDefined(viableIndex)) moveFocus(viableIndex);
+}
+
+/** Focus the first viable item. */
+function onHomePressed(): void {
+    const viableIndex = getFirstViableIndex(0, true);
+    if (isDefined(viableIndex)) moveFocus(viableIndex);
+}
+
+/** Focus the last viable item. */
+function onEndPressed(): void {
+    const viableIndex = getFirstViableIndex(items.value.length - 1, false);
+    if (isDefined(viableIndex)) moveFocus(viableIndex);
+}
+
+/** Set focus on a step item or click it if `activateOnFocus`. */
+function moveFocus(index: number): void {
+    if (index < 0 || index >= items.value.length) return;
+    const item = items.value[index];
+
+    if (props.activateOnFocus) {
+        itemClick(item);
+    } else {
+        const el = rootRef.value?.querySelector<HTMLElement>(
+            `#tab-${item.identifier}`,
+        );
+        el?.focus();
+    }
+}
+
+/**
+ * Get the first 'viable' child, starting at startingIndex and in the direction specified
+ * by the boolean parameter forward. In other words, first try to select the child at index
+ * startingIndex, and if it is not visible or it is disabled, then go to the index in the
+ * specified direction until either returning to startIndex or finding a viable child item.
+ */
+function getFirstViableIndex(
+    startingIndex: number,
+    forward: boolean,
+): number | undefined {
+    const direction = forward ? 1 : -1;
+    let newIndex = startingIndex;
+    for (
+        ;
+        newIndex > 0 && newIndex < items.value.length;
+        newIndex += direction
+    ) {
+        const item = items.value[newIndex];
+        // Break if the item at this index is viable (not disabled and is visible)
+        if (item.visible && !item.disabled) break;
+    }
+
+    if (newIndex < 0 || newIndex >= items.value.length) return undefined;
+    return newIndex;
 }
 
 /** Activate next child and deactivate prev child */
-function performAction(newValue: T): void {
-    const oldValue = activeItem.value.value;
+function performAction(newValue: ModelValue): void {
+    const oldValue = activeItem.value?.value;
     const oldItem = activeItem.value;
     const newItem =
         items.value.find((item) => item.value === newValue) || items.value[0];
@@ -226,7 +254,7 @@ function performAction(newValue: T): void {
 
     nextTick(() => {
         vmodel.value = newValue;
-        emits("change", newValue, oldValue as T);
+        emits("change", newValue, oldValue);
     });
 }
 
@@ -254,18 +282,18 @@ const rootClasses = defineClasses(
     ],
     [
         "positionClass",
-        "o-steps-position-",
+        "o-steps--position-",
         computed(() => props.position),
         computed(() => !!props.position && props.vertical),
     ],
     ["mobileClass", "o-steps--mobile", null, isMobile],
 );
 
-const navClasses = defineClasses(
-    ["navClass", "o-steps__nav"],
+const tablistClasses = defineClasses(
+    ["listClass", "o-steps__list"],
     [
         "animatedClass",
-        "o-steps__nav--animated",
+        "o-steps__list--animated",
         null,
         computed(() => props.animated),
     ],
@@ -300,54 +328,49 @@ const navigationClasses = defineClasses([
 </script>
 
 <template>
-    <div ref="rootElement" :class="rootClasses" data-oruga="steps">
+    <div ref="rootElement" data-oruga="steps" :class="rootClasses">
         <ol
-            :class="navClasses"
+            :class="tablistClasses"
             role="tablist"
+            :aria-label="ariaLabel"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
             <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
                 :id="`tab-${childItem.identifier}`"
                 :key="childItem.identifier"
-                :class="childItem.navClasses"
-                :role="childItem.ariaRole"
+                :class="childItem.stepClasses"
+                role="tab"
+                :tabindex="childItem.value === activeItem?.value ? 0 : -1"
                 :aria-current="
-                    childItem.value === activeItem.value ? 'step' : undefined
+                    childItem.value === activeItem?.value ? 'step' : undefined
                 "
                 :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="childItem.value === activeItem.value">
+                :aria-selected="childItem.value === activeItem?.value"
+                @click="itemClick(childItem)"
+                @keydown.enter.prevent="itemClick(childItem)"
+                @keydown.space.prevent="itemClick(childItem)"
+                @keydown.left.prevent="onPrev(childItem.index)"
+                @keydown.right.prevent="onNext(childItem.index)"
+                @keydown.home.prevent="onHomePressed"
+                @keydown.end.prevent="onEndPressed">
                 <span v-if="index > 0" :class="dividerClasses" />
 
-                <component
-                    :is="childItem.tag"
-                    role="button"
-                    :tabindex="isItemClickable(childItem) ? 0 : null"
-                    :class="childItem.classes"
-                    @click="isItemClickable(childItem) && itemClick(childItem)"
-                    @keydown.enter="
-                        isItemClickable(childItem) && itemClick(childItem)
-                    "
-                    @keydown.left.prevent="prev"
-                    @keydown.right.prevent="next"
-                    @keydown.up.prevent="prev"
-                    @keydown.down.prevent="next">
-                    <div :class="markerClasses">
-                        <o-icon
-                            v-if="childItem.icon"
-                            :class="childItem.iconClasses"
-                            :icon="childItem.icon"
-                            :pack="childItem.iconPack"
-                            :size="size" />
-                        <span v-else-if="childItem.step">
-                            {{ childItem.step }}
-                        </span>
-                    </div>
+                <div :class="markerClasses">
+                    <o-icon
+                        v-if="childItem.icon"
+                        :class="childItem.iconClasses"
+                        :icon="childItem.icon"
+                        :pack="childItem.iconPack"
+                        :size="size" />
+                    <span v-else-if="childItem.step">
+                        {{ childItem.step }}
+                    </span>
+                </div>
 
-                    <div :class="childItem.labelClasses">
-                        {{ childItem.label }}
-                    </div>
-                </component>
+                <div :class="childItem.labelClasses">
+                    {{ childItem.label }}
+                </div>
             </li>
         </ol>
 
@@ -373,8 +396,8 @@ const navigationClasses = defineClasses([
         -->
         <slot
             name="navigation"
-            :previous="{ disabled: !hasPrev, action: prev }"
-            :next="{ disabled: !hasNext, action: next }">
+            :previous="{ disabled: !hasPrev, action: () => activateItem(-1) }"
+            :next="{ disabled: !hasNext, action: () => activateItem(1) }">
             <nav v-if="hasNavigation" :class="navigationClasses">
                 <o-button
                     role="button"
@@ -383,7 +406,7 @@ const navigationClasses = defineClasses([
                     icon-both
                     :disabled="!hasPrev"
                     :aria-label="ariaPreviousLabel"
-                    @click.prevent="prev" />
+                    @click.prevent="activateItem(-1)" />
 
                 <o-button
                     role="button"
@@ -392,7 +415,7 @@ const navigationClasses = defineClasses([
                     icon-both
                     :disabled="!hasNext"
                     :aria-label="ariaNextLabel"
-                    @click.prevent="next" />
+                    @click.prevent="activateItem(1)" />
             </nav>
         </slot>
     </div>

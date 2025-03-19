@@ -2,7 +2,6 @@
 import { ref } from "vue";
 
 const isOpen = ref(0);
-const isOpenAgain = ref(0);
 
 const collapses = ref([
     {
@@ -30,19 +29,19 @@ const collapses = ref([
             :key="index"
             class="card"
             animation="slide"
-            trigger-class="trigger-fullwidth"
+            expanded
             :open="isOpen == index"
-            @open="isOpen = index">
+            @update:open="isOpen = index">
             <template #trigger="props">
-                <div class="card-header" role="button">
+                <div class="card-header">
                     <span class="card-header-title">
                         {{ collapse.title }}
                     </span>
 
-                    <a class="card-header-icon">
-                        <o-icon :icon="props.open ? 'caret-up' : 'caret-down'">
-                        </o-icon>
-                    </a>
+                    <span class="card-header-icon">
+                        <o-icon
+                            :icon="props.open ? 'caret-up' : 'caret-down'" />
+                    </span>
                 </div>
             </template>
 
@@ -51,28 +50,9 @@ const collapses = ref([
             </div>
         </o-collapse>
     </section>
-
-    <br />
-
-    <section>
-        <article v-for="(collapse, index) of collapses" :key="index">
-            <o-collapse
-                animation="slide"
-                :open="isOpenAgain == index"
-                @update:open="isOpenAgain = index">
-                <template #trigger>
-                    <o-button variant="success" :label="collapse.title" />
-                </template>
-
-                <div class="card">
-                    <p class="card-content" v-html="collapse.text" />
-                </div>
-            </o-collapse>
-        </article>
-    </section>
 </template>
 
-<style>
+<style scoped>
 .card {
     position: relative;
     background-color: #fff;
@@ -100,9 +80,5 @@ const collapses = ref([
 
 .card-content {
     padding: 1.5rem;
-}
-
-.trigger-fullwidth {
-    width: 100%;
 }
 </style>

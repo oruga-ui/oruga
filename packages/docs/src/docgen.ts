@@ -6,7 +6,7 @@ import docgen, {
 } from "vue-docgen-cli/lib/docgen";
 import { findFileCaseInsensitive, getFilenameWithoutExtension } from "./utils";
 import { createVueComponentMetaChecker } from "./parser/vue-component-meta-helper";
-import { createThemeDocs } from "./themes-helper";
+import { createThemeDocs } from "./templates/themes";
 
 // custom templates
 import renderEvents from "./templates/events";
@@ -86,7 +86,8 @@ export async function run(): Promise<void> {
         },
         getDocFileName: (componentPath: string): string | false => {
             const files = [
-                path.join(path.dirname(componentPath), "Readme.md"),
+                path.join(path.dirname(componentPath), "readme.md"),
+                path.join(path.dirname(componentPath), "/examples/readme.md"),
                 // ComponentName.md
                 componentPath.replace(path.extname(componentPath), ".md"),
                 // FolderName.md when component definition file is index.js
@@ -97,21 +98,19 @@ export async function run(): Promise<void> {
             ];
             for (const file of files) {
                 const existingFile = findFileCaseInsensitive(file);
-                if (existingFile) {
-                    return existingFile;
-                }
+                if (existingFile) return existingFile;
             }
             return false;
         },
     });
 
     // construct edit url
-    if (!docgenConfig.getRepoEditUrl && docgenConfig.docsRepo) {
-        const branch = docgenConfig.docsBranch || "main";
-        const dir = docgenConfig.docsFolder || "";
-        docgenConfig.getRepoEditUrl = (p: string) =>
-            `https://github.com/${docgenConfig.docsRepo}/edit/${branch}/${dir}/${p}`;
-    }
+    // if (!docgenConfig.getRepoEditUrl && docgenConfig.docsRepo) {
+    //     const branch = docgenConfig.docsBranch || "main";
+    //     const dir = docgenConfig.docsFolder || "";
+    //     docgenConfig.getRepoEditUrl = (p: string) =>
+    //          `https://github.com/${docgenConfig.docsRepo}/edit/${branch}/${dir}/${p}`;
+    // }
 
     // extend the config with default vue-docgen-cli templates
     docgenConfig.templates = {
@@ -139,5 +138,5 @@ export async function run(): Promise<void> {
     console.log("Generating docs finished.");
 }
 
-// execute scripts
+// execute script
 run();

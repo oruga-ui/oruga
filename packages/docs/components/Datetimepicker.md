@@ -1,29 +1,26 @@
 # Datetimepicker
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+The **Datetimepicker** input component allow users to select a date and time based on their browser’s locale from a customizable calendar, and type the date directly into the input with full internationalization support.
+The input opens a simple dropdown/modal for selecting a date, and uses the native datetimepicker for mobile.
+The component is based on the Datepicker component.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-datetimepicker />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-datetimepicker-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Datetimepicker component
 
-> An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+> An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile.
 
 ```html
 <o-datetimepicker></o-datetimepicker>
@@ -37,6 +34,7 @@
 | creator            | Date creator function, default is `new Date()`                                                                                                                                   | (() =&gt; Date)                                                                                                  | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datetimepicker: {<br>&nbsp;&nbsp;datetimeCreator: undefined<br>}</code> |
 | customValidity     | Custom HTML 5 validation error to set on the form control                                                                                                                        | string \| ((currentValue: Date \| null , state: ValidityState) =&gt; string) \| undefined                        | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>""</code>                                                                                                            |
 | datepicker         | Define props for the underlying datepicker component                                                                                                                             | DatepickerProps                                                                                                  | -                                                                                                |                                                                                                                                                                     |
+| desktopModal       | Dropdown content is shown into a modal on desktop                                                                                                                                | boolean                                                                                                          | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datetimepicker: {<br>&nbsp;&nbsp;desktopModal: false<br>}</code>        |
 | disabled           | Same as native disabled                                                                                                                                                          | boolean                                                                                                          | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                         |
 | expanded           | Makes input full width when inside a grouped or addon field                                                                                                                      | boolean                                                                                                          | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                         |
 | formatter          | Custom function to format a date into a string                                                                                                                                   | ((date: Date ) =&gt; string) \| undefined                                                                        | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datetimepicker: {<br>&nbsp;&nbsp;dateFormatter: undefined<br>}</code>   |
@@ -48,6 +46,7 @@
 | locale             | Date format locale                                                                                                                                                               | string                                                                                                           | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;locale: undefined<br>}</code>                          |
 | maxDatetime        | Max date to select                                                                                                                                                               | Date                                                                                                             | -                                                                                                |                                                                                                                                                                     |
 | minDatetime        | Min date to select                                                                                                                                                               | Date                                                                                                             | -                                                                                                |                                                                                                                                                                     |
+| mobileModal        | Dropdown content is shown into a modal on mobile                                                                                                                                 | boolean                                                                                                          | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datetimepicker: {<br>&nbsp;&nbsp;mobileModal: true<br>}</code>          |
 | mobileNative       | Enable mobile native input if mobile agent                                                                                                                                       | boolean                                                                                                          | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datetimepicker: {<br>&nbsp;&nbsp;mobileNative: true<br>}</code>         |
 | v-model            | The input value state                                                                                                                                                            | Date                                                                                                             | -                                                                                                |                                                                                                                                                                     |
 | openOnFocus        | Open dropdown on focus                                                                                                                                                           | boolean                                                                                                          | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datetimepicker: {<br>&nbsp;&nbsp;openOnFocus: true<br>}</code>          |
@@ -84,9 +83,18 @@
 | ------ | --------------------------- | -------- |
 | footer | Define an additional footer |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-datetimepicker-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -112,4 +120,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

@@ -1,14 +1,15 @@
 <script setup lang="ts" generic="T">
-import { useId, computed } from "vue";
+import { useId, computed, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { DropdownComponent } from "./types";
+import type { DropdownComponent, DropdownItemComponent } from "./types";
 import type { DropdownItemProps } from "./props";
 
 /**
+ * An option item used by the dropdown component.
  * @displayName Dropdown Item
  */
 defineOptions({
@@ -23,12 +24,9 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
     label: undefined,
     disabled: false,
     clickable: true,
+    hidden: false,
     tag: () => getDefault("dropdown.itemTag", "div"),
-    tabindex: 0,
-    ariaRole: () => getDefault("dropdown.itemAriaRole", "listitem"),
 });
-
-const itemValue = props.value || useId();
 
 const emits = defineEmits<{
     /**
@@ -39,14 +37,29 @@ const emits = defineEmits<{
     click: [value: T, event: Event];
 }>();
 
+const itemValue = props.value ?? useId();
+
+const rootRef = useTemplateRef<Element>("rootElement");
+
+// provided data is a computed ref to ensure reactivity
+const providedData = computed<DropdownItemComponent<T>>(() => ({
+    ...props,
+    $el: rootRef.value,
+    value: itemValue,
+    selectItem,
+}));
+
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<DropdownComponent<T>>();
+const { parent, item } = useProviderChild<
+    DropdownComponent<T>,
+    DropdownItemComponent<T>
+>({ data: providedData });
 
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
 );
 
-const isActive = computed(() => {
+const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
     if (parent.value.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected: T) =>
@@ -55,40 +68,53 @@ const isActive = computed(() => {
     return isEqual(itemValue, parent.value.selected);
 });
 
+const isFocused = computed(
+    () => item.value.identifier === parent.value.focsuedIdentifier,
+);
+
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(itemValue as T);
+    parent.value.selectItem(item.value, event);
     emits("click", itemValue as T, event);
+}
+
+/** Hover listener, focus the item. */
+function focusItem(): void {
+    parent.value.focusItem(item.value);
 }
 
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["itemClass", "o-drop__item"],
+    ["itemClass", "o-dropdown__item"],
     [
         "itemDisabledClass",
-        "o-drop__item--disabled",
+        "o-dropdown__item--disabled",
         null,
         computed(() => parent.value.disabled || props.disabled),
     ],
-    ["itemActiveClass", "o-drop__item--active", null, isActive],
-    ["itemClickableClass", "o-drop__item--clickable", null, isClickable],
+    ["itemSelectedClass", "o-dropdown__item--active", null, isSelected],
+    ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
+    ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
 </script>
 
 <template>
     <component
         :is="tag"
-        :class="rootClasses"
+        :id="`${parent.menuId}-${item.identifier}`"
+        ref="rootElement"
         data-oruga="dropdown-item"
         :data-id="`dropdown-${item.identifier}`"
-        :role="ariaRole"
-        :tabindex="tabindex"
-        :aria-selected="isActive"
+        :class="rootClasses"
+        :role="parent.selectable ? 'option' : 'menuitem'"
+        :aria-selected="parent.selectable ? isSelected : undefined"
         :aria-disabled="disabled"
         @click="selectItem"
-        @keypress.enter="selectItem">
+        @mouseenter="focusItem"
+        @keydown.enter="selectItem"
+        @keydown.space="selectItem">
         <!--
             @slot Override the label, default is label prop 
         -->

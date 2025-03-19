@@ -1,29 +1,27 @@
 # Button
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> The classic button, in different colors, sizes, and states
+The **Button** component uses [HTML's native button element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) by default.
+The `label` prop is used to populate the text of the button — or alternatively you can use the default slot.
+The button can be have different colors, sizes, and states.
+The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-button />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-button-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Button component
 
-> The classic button, in different colors, sizes, and states
+> The classic button, in different colors, sizes, and states.
 
 ```html
 <o-button></o-button>
@@ -31,24 +29,29 @@
 
 ### Props
 
-| Prop name | Description                                              | Type                            | Values                                                                          | Default                                                                                                                                              |
-| --------- | -------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  | Accessibility Role attribute to be passed to the button. | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;ariaRole: "button"<br>}</code>  |
-| disabled  | Button will be disabled                                  | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
-| expanded  | Button will be expanded (full-width)                     | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
-| iconLeft  | Icon name to show on the left                            | string                          | -                                                                               |                                                                                                                                                      |
-| iconPack  | Icon pack to use                                         | string                          | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
-| iconRight | Icon name to show on the right                           | string                          | -                                                                               |                                                                                                                                                      |
-| inverted  | Enable inverted style                                    | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
-| label     | Button label, unnecessary when default slot is used      | string                          | -                                                                               |                                                                                                                                                      |
-| loading   | Enable loading style                                     | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
-| outlined  | Enable outlined style                                    | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
-| override  | Override existing theme classes completely               | boolean                         | -                                                                               |                                                                                                                                                      |
-| rounded   | Enable rounded style                                     | boolean                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;rounded: false<br>}</code>      |
-| size      | Size of the control                                      | string                          | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;size: undefined<br>}</code>     |
-| tag       | Button tag name                                          | DynamicComponent                | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;tag: "button"<br>}</code>       |
-| type      | Button type, like native                                 | "button" \| "reset" \| "submit" | `button`, `submit`, `reset`                                                     | <code style='white-space: nowrap; padding: 0;'>"button"</code>                                                                                       |
-| variant   | Color variant of the control                             | string                          | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
+| Prop name | Description                                         | Type                            | Values                                                                          | Default                                                                                                                                              |
+| --------- | --------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| disabled  | Button will be disabled                             | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
+| expanded  | Button will be expanded (full-width)                | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
+| iconLeft  | Icon name to show on the left                       | string                          | -                                                                               |                                                                                                                                                      |
+| iconPack  | Icon pack to use                                    | string                          | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconRight | Icon name to show on the right                      | string                          | -                                                                               |                                                                                                                                                      |
+| inverted  | Enable inverted style                               | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
+| label     | Button label, unnecessary when default slot is used | string                          | -                                                                               |                                                                                                                                                      |
+| loading   | Enable loading style                                | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
+| outlined  | Enable outlined style                               | boolean                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
+| override  | Override existing theme classes completely          | boolean                         | -                                                                               |                                                                                                                                                      |
+| rounded   | Enable rounded style                                | boolean                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;rounded: false<br>}</code>      |
+| size      | Size of the control                                 | string                          | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;size: undefined<br>}</code>     |
+| tag       | Button tag name                                     | DynamicComponent                | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;tag: "button"<br>}</code>       |
+| type      | Button type, like native                            | "button" \| "reset" \| "submit" | `button`, `submit`, `reset`                                                     | <code style='white-space: nowrap; padding: 0;'>"button"</code>                                                                                       |
+| variant   | Color variant of the control                        | string                          | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>button: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
+
+### Events
+
+| Event name | Properties                       | Description        |
+| ---------- | -------------------------------- | ------------------ |
+| click      | **event** `Event` - native event | button click event |
 
 ### Slots
 
@@ -56,9 +59,18 @@
 | ------- | ----------------------------------------- | -------- |
 | default | Override the label, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-button-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -77,6 +89,7 @@
 | $button-line-height               | var(--#{$prefix}base-line-height)               |
 | $button-margin-icon-to-text       | 0.1875em                                        |
 | $button-margin                    | 0                                               |
+| $button-spacer                    | 0.5rem                                          |
 | $button-height                    | $control-height                                 |
 | $button-padding                   | $control-padding-vertical 0.75em                |
 | $button-rounded-border-radius     | var( --#{$prefix}#{base-border-radius-rounded}) |
@@ -114,4 +127,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

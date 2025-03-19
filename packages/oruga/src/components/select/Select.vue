@@ -25,7 +25,7 @@ import { injectField } from "../field/fieldInjection";
 import type { SelectProps } from "./props";
 
 /**
- * Select an item in a dropdown list. Use with Field to access all functionalities
+ * Select an item in a list. Use with Field to access all functionalities.
  * @displayName Select
  * @style _select.scss
  */
@@ -139,7 +139,7 @@ watch(
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const normalizedptions = computed(() =>
+const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
@@ -190,72 +190,80 @@ const inputBind = computed(() => ({
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-ctrl-sel"],
-    [
-        "expandedClass",
-        "o-ctrl-sel--expanded",
-        null,
-        computed(() => props.expanded),
-    ],
-    [
-        "rootVariantClass",
-        "o-ctrl-sel--",
-        computed(() => statusVariant.value || props.variant),
-        computed(() => !!statusVariant.value || !!props.variant),
-    ],
-);
-
-const selectClasses = defineClasses(
-    ["selectClass", "o-sel"],
-    [
-        "roundedClass",
-        "o-sel--rounded",
-        null,
-        computed(() => isTrueish(props.rounded)),
-    ],
-    [
-        "multipleClass",
-        "o-sel--multiple",
-        null,
-        computed(() => isTrueish(props.multiple)),
-    ],
+    ["rootClass", "o-select"],
     [
         "sizeClass",
-        "o-sel--",
+        "o-select--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
     [
         "variantClass",
-        "o-sel--",
+        "o-select--",
         computed(() => statusVariant.value || props.variant),
         computed(() => !!statusVariant.value || !!props.variant),
     ],
     [
+        "expandedClass",
+        "o-select--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+    [
         "disabledClass",
-        "o-sel--disabled",
+        "o-select--disabled",
         null,
         computed(() => isTrueish(props.disabled)),
     ],
     [
+        "roundedClass",
+        "o-select--rounded",
+        null,
+        computed(() => isTrueish(props.rounded)),
+    ],
+    ["hasIconRightClass", "o-select--icon-right", null, hasIconRight],
+    [
+        "multipleClass",
+        "o-select--multiple",
+        null,
+        computed(() => isTrueish(props.multiple)),
+    ],
+);
+
+const selectClasses = defineClasses(
+    ["selectClass", "o-select__input"],
+    [
         "iconLeftSpaceClass",
-        "o-sel-iconspace-left",
+        "o-select__input--iconspace-left",
         null,
         computed(() => !!props.icon),
     ],
-    ["iconRightSpaceClass", "o-sel-iconspace-right", null, hasIconRight],
-    ["placeholderClass", "o-sel--placeholder", null, placeholderVisible],
     [
-        "arrowClass",
-        "o-sel-arrow",
+        "iconRightSpaceClass",
+        "o-select__input--iconspace-right",
+        null,
+        hasIconRight,
+    ],
+    [
+        "placeholderClass",
+        "o-select__input--placeholder",
+        null,
+        placeholderVisible,
+    ],
+    [
+        "arrowedClass",
+        "o-select__input--arrowed",
         null,
         computed(() => !hasIconRight.value && !isTrueish(props.multiple)),
     ],
 );
 
-const iconLeftClasses = defineClasses(["iconLeftClass", "o-sel__icon-left"]);
+const iconLeftClasses = defineClasses(["iconLeftClass", "o-select__icon-left"]);
 
-const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
+const iconRightClasses = defineClasses([
+    "iconRightClass",
+    "o-select__icon-right",
+]);
 
 // --- Expose Public Functionalities ---
 
@@ -264,7 +272,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="select">
+    <div data-oruga="select" :class="rootClasses">
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"
@@ -304,12 +312,13 @@ defineExpose({ focus: setFocus, value: vmodel });
                 @slot Override the options, default is options prop
             -->
             <slot>
-                <template v-for="option in normalizedptions" :key="option.key">
+                <template v-for="option in normalizedOptions" :key="option.key">
                     <optgroup
                         v-if="isGroupOption(option)"
                         v-show="!option.hidden"
                         v-bind="option.attrs"
-                        :label="option.group">
+                        :label="option.label"
+                        :value="option.value">
                         <option
                             v-for="_option in option.options"
                             v-show="!_option.hidden"

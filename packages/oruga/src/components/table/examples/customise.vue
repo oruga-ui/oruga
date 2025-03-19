@@ -52,7 +52,7 @@ const hasMobileCards = ref(true);
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-switch v-model="isBordered" label="Bordered" />
             <o-switch v-model="isStriped" label="Striped" />
             <o-switch v-model="isNarrowed" label="Narrowed" />
@@ -76,7 +76,9 @@ const hasMobileCards = ref(true);
             :checkable="isCheckbale"
             :loading="isLoading"
             :selectable="isSelectable"
-            :mobile-cards="hasMobileCards">
+            :mobile-cards="hasMobileCards"
+            empty-label="Table is empty"
+            empty-icon="frown">
             <o-table-column
                 v-slot="{ row }"
                 field="id"

@@ -89,13 +89,13 @@ export function sortBy<T>(
     key: DeepKeys<T>,
     fn?: (a: T, b: T, asc: boolean) => number,
     isAsc: boolean = false,
+    mutate: boolean = false,
 ): T[] {
-    let sorted: T[] = [];
     // Sorting without mutating original data
     if (fn && typeof fn === "function") {
-        sorted = [...array].sort((a, b) => fn(a, b, isAsc));
+        return (mutate ? array : [...array]).sort((a, b) => fn(a, b, isAsc));
     } else {
-        sorted = [...array].sort((a, b) => {
+        return (mutate ? array : [...array]).sort((a, b) => {
             // Get nested values from objects
             let newA: any = isObject(a) ? getValueByPath(a, key) : a;
             let newB: any = isObject(b) ? getValueByPath(b, key) : b;
@@ -115,8 +115,6 @@ export function sortBy<T>(
             return isAsc ? (newA > newB ? 1 : -1) : newA > newB ? -1 : 1;
         });
     }
-
-    return sorted;
 }
 
 /**
@@ -167,6 +165,7 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
 }
 
 /**
+ * @deprecated not used
  * Returns true if it is a DOM element
  * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
  */
@@ -197,9 +196,9 @@ export function getPropertyValue<O, K extends DeepKeys<O>>(
 ): string {
     if (!obj) return "";
 
-    const property = field
-        ? getValueByPath<O, K>(obj, field)
-        : (obj as DeepType<O, K>);
+    const property = (
+        field ? getValueByPath<O, K>(obj, field) : obj
+    ) as DeepType<O, K>;
 
     const label =
         typeof formatter === "function" ? formatter(property, obj) : property;
@@ -251,9 +250,9 @@ export function getValueByPath<O, K extends DeepKeys<O>>(
     obj: O,
     path: K,
     defaultValue?: DeepType<O, K>,
-): DeepType<O, K> {
-    if (!obj || typeof obj !== "object") return obj as DeepType<O, K>;
-    if (typeof path !== "string") return obj as DeepType<O, K>;
+): DeepType<O, K> | undefined {
+    if (!obj || typeof obj !== "object" || typeof path !== "string")
+        return defaultValue;
 
     const value: any = path
         .split(".")

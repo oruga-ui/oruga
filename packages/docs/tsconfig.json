@@ -9,7 +9,8 @@
     "baseUrl": ".",
     "types": ["node", "vite/client", "vitepress/client"],
     "paths": {
-      "@docs/*": ["src/*"],
+      "@docs": ["./src"],
+      "@docs/*": ["./src/*"],
       "@oruga-ui/oruga-next": ["../oruga/src"],
     },
   },

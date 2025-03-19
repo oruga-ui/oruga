@@ -1,20 +1,19 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OCollapse tests > render correctly 1`] = `
-"<div class="o-clps" data-oruga="collapse">
-  <div class="o-clps__trigger" role="button" tabindex="0">
+"<div data-oruga="collapse" class="o-collapse o-collapse--top">
+  <div id="v-1" class="o-collapse__trigger" role="button" tabindex="0" aria-controls="v-0" aria-expanded="true">
     <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
              -->
   </div>
   <transition-stub name="fade" appear="false" persisted="true" css="true">
-    <div id="v-0" class="o-clps__content">
+    <div id="v-0" class="o-collapse__content" aria-labelledby="v-1">
       <!--
                     @slot Default content
                 -->
     </div>
   </transition-stub>
-  <!--v-if-->
 </div>"
 `;

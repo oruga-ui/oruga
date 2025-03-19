@@ -1,29 +1,28 @@
 # Checkbox
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> Select a single or grouped options
+The **Checkbox** input component uses [HTML's native checkbox input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox).
+It can display one or many options to a user and is a great way to allow users to select multiple items from a list.
+The component supports single and multiple checkbox inputs.
+The component supports the W3C ARIA APG [Checkbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/).
+Use it with the Field component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-checkbox />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-checkbox-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Checkbox component
 
-> Select a single or grouped options
+> Select a single or grouped options.
 
 ```html
 <o-checkbox></o-checkbox>
@@ -66,9 +65,18 @@
 | ------- | ----------------------------------- | -------- |
 | default | Content slot, default is label prop |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-checkbox-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -103,11 +111,11 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | SASS Variable                     | Default                                                               |
 | --------------------------------- | --------------------------------------------------------------------- |
 | $checkbox-size                    | 1.25em                                                                |
-| $checkbox-colors                  | var.$colors                                                           |
 | $checkbox-background-color        | transparent                                                           |
+| $checkbox-border-width            | 2px                                                                   |
+| $checkbox-colors                  | dv.$colors                                                            |
 | $checkbox-border-color            | css.getVar("grey")                                                    |
 | $checkbox-border-radius           | css.getVar("radius")                                                  |
-| $checkbox-border-width            | 2px                                                                   |
 | $checkbox-checkmark-color         | css.getVar("primary-invert")                                          |
 | $checkbox-focus-color             | hsl(from css.getVar("grey") h s l / 80%)                              |
 | $checkbox-active-focus-color      | hsl( from css.getVar("checkbox-active-background-color") h s l / 80%) |
@@ -124,4 +132,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

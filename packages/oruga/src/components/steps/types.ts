@@ -4,17 +4,6 @@ import type { ClassBind } from "@/types";
 
 import type { StepItemProps } from "./props";
 
-export type StepItemComponent<T> = StepItemProps<T, Component> & {
-    $slots: Slots;
-    navClasses: ClassBind[];
-    classes: ClassBind[];
-    iconClasses: ClassBind[];
-    labelClasses: ClassBind[];
-    isTransitioning: boolean;
-    activate: (index: number) => void;
-    deactivate: (index: number) => void;
-};
-
 export type StepsComponent = {
     activeIndex: number;
     labelPosition: string;
@@ -22,8 +11,18 @@ export type StepsComponent = {
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
-    destroyOnHide: boolean;
     variant: string;
 };
 
-export type StepItem<T> = Omit<ProviderItem<T>, "data"> & StepItemComponent<T>;
+export type StepItemComponent<T> = StepItemProps<T, Component> & {
+    $slots: Slots;
+    stepClasses: ClassBind[];
+    iconClasses: ClassBind[];
+    labelClasses: ClassBind[];
+    isClickable: boolean;
+    isTransitioning: boolean;
+    activate: (index: number) => void;
+    deactivate: (index: number) => void;
+};
+
+export type StepItem<T> = Omit<ProviderItem, "data"> & StepItemComponent<T>;

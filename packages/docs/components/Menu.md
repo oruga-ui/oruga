@@ -4,30 +4,26 @@ sidebarDepth: 2
 
 # Menu
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> A simple menu
+The **Menu** component displays a hierarchical list for any type of vertical navigation, where the items can be expanded or collapsed.
+The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-menu />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-menu-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Menu component
 
-> A simple menu
+> A simple menu, for any type of vertical navigation.
 
 ```html
 <o-menu></o-menu>
@@ -35,30 +31,41 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description                                                                                                                                                      | Type                         | Values                                            | Default                                                                                                                                            |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| accordion | If sub menu items are collapsible                                                                                                                                | boolean                      | -                                                 | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
-| activable | If the menu items are clickable                                                                                                                                  | boolean                      | -                                                 | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
-| ariaRole  | Role attribute to be passed to the list container for better accessibility.<br/>Use menu only in situations where your dropdown is related to a navigation menu. | "dialog" \| "list" \| "menu" | `list`, `menu`, `dialog`                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;ariaRole: "menu"<br>}</code>    |
-| icon      | Icon to be shown                                                                                                                                                 | string                       | -                                                 |                                                                                                                                                    |
-| iconPack  | Icon pack to use                                                                                                                                                 | string                       | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
-| iconSize  | Icon size                                                                                                                                                        | string                       | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code> |
-| label     | Menu label                                                                                                                                                       | string                       | -                                                 |                                                                                                                                                    |
-| override  | Override existing theme classes completely                                                                                                                       | boolean                      | -                                                 |                                                                                                                                                    |
+| Prop name | Description                                                                                                                                                      | Type                                 | Values                                            | Default                                                                                                                                            |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| accordion | If sub menu items are collapsible                                                                                                                                | boolean                              | -                                                 | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
+| disabled  | Menu will be disabled                                                                                                                                            | boolean                              | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| icon      | Icon to be shown                                                                                                                                                 | string                               | -                                                 |                                                                                                                                                    |
+| iconPack  | Icon pack to use                                                                                                                                                 | string                               | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconSize  | Icon size                                                                                                                                                        | string                               | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code> |
+| label     | Menu label                                                                                                                                                       | string                               | -                                                 |                                                                                                                                                    |
+| labelId   | HTML element Id of the label element                                                                                                                             | string                               | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                      |
+| menuId    | HTML element Id of the ol list element                                                                                                                           | string                               | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                      |
+| v-model   | The selected item value, use v-model to make it two-way binding                                                                                                  | unknown                              | -                                                 |                                                                                                                                                    |
+| options   | Menu items, unnecessary when default slot is used                                                                                                                | OptionsPropWithGroups&lt;unknown&gt; | -                                                 |                                                                                                                                                    |
+| override  | Override existing theme classes completely                                                                                                                       | boolean                              | -                                                 |                                                                                                                                                    |
+| role      | Role attribute to be passed to the list container for better accessibility.<br/>Use menu only in situations where your dropdown is related to a navigation menu. | "menu" \| "tree"                     | `menu`, `tree`                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;role: "tree"<br>}</code>        |
+
+### Events
+
+| Event name         | Properties                              | Description                     |
+| ------------------ | --------------------------------------- | ------------------------------- |
+| update:model-value | **value** `T` - updated modelValue prop | modelValue prop two-way binding |
 
 ### Slots
 
-| Name    | Description             | Bindings |
-| ------- | ----------------------- | -------- |
-| label   | Override icon and label |          |
-| default | Place menu items here   |          |
+| Name    | Description             | Bindings                                                                                          |
+| ------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
+| label   | Override icon and label | **focused** `T` - the focused item value<br/><br/>**selected** `T` - the selected item value<br/> |
+| default | Place menu items here   | **focused** `T` - the focused item value<br/><br/>**selected** `T` - the selected item value<br/> |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
+
 ## MenuItem component
 
-> A menu list item
+> A menu list item.
 
 ```html
 <o-menu-item></o-menu-item>
@@ -66,26 +73,29 @@ sidebarDepth: 2
 
 ### Props
 
-| Prop name | Description                                                                      | Type             | Values                                            | Default                                                                                                                                                 |
-| --------- | -------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active    | The active state of the menu item, use v-model:active to make it two-way binding | boolean          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                             |
-| animation | Transition name to apply on menu list                                            | string           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;animation: "slide"<br>}</code>       |
-| ariaRole  | Role attribute to be passed to the list item for better accessibility.           | string           | `listitem`, `menuitem`                            | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;itemAriaRole: "menuitem"<br>}</code> |
-| disabled  | Menu item will be disabled                                                       | boolean          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                             |
-| expanded  | Menu item will be expanded                                                       | boolean          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                             |
-| icon      | Icon to be shown                                                                 | string           | -                                                 |                                                                                                                                                         |
-| iconPack  | Icon pack to use                                                                 | string           | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
-| iconSize  | Icon size                                                                        | string           | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code>      |
-| label     | Menu item label                                                                  | string           | -                                                 |                                                                                                                                                         |
-| override  | Override existing theme classes completely                                       | boolean          | -                                                 |                                                                                                                                                         |
-| tag       | Menu item tag name                                                               | DynamicComponent | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;menuTag: "button"<br>}</code>        |
+| Prop name | Description                                                                       | Type                       | Values                                            | Default                                                                                                                                            |
+| --------- | --------------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active    | The active state of the menu item, use v-model:active to make it two-way binding  | boolean                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| animation | Transition name to apply on menu list                                             | string                     | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;animation: "slide"<br>}</code>  |
+| disabled  | Menu item will be disabled                                                        | boolean                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| expanded  | Menu item will be expanded                                                        | boolean                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| hidden    | Define whether the item is visible or not                                         | boolean                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| icon      | Icon to be shown                                                                  | string                     | -                                                 |                                                                                                                                                    |
+| iconPack  | Icon pack to use                                                                  | string                     | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconSize  | Icon size                                                                         | string                     | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code> |
+| label     | Menu item label                                                                   | string                     | -                                                 |                                                                                                                                                    |
+| options   | Submenu items, unnecessary when default slot is used                              | OptionsProp&lt;unknown&gt; | -                                                 |                                                                                                                                                    |
+| override  | Override existing theme classes completely                                        | boolean                    | -                                                 |                                                                                                                                                    |
+| submenuId | HTML element Id of the sub menu ol list element                                   | string                     | -                                                 | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                      |
+| tag       | Menu item tag name                                                                | DynamicComponent           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>menu: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
+| value     | Item value (it will be used as v-model of wrapper component) - default is an uuid | unknown                    | -                                                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                             |
 
 ### Events
 
-| Event name      | Properties                                  | Description                   |
-| --------------- | ------------------------------------------- | ----------------------------- |
-| update:active   | **value** `boolean` - updated active prop   | active prop two-way binding   |
-| update:expanded | **value** `boolean` - updated expanded prop | expanded prop two-way binding |
+| Event name    | Properties                                                                                    | Description                 |
+| ------------- | --------------------------------------------------------------------------------------------- | --------------------------- |
+| update:active | **value** `boolean` - updated active prop                                                     | active prop two-way binding |
+| click         | **value** `string \| number \| object` - value prop data<br/>**event** `event` - Native Event | onclick event               |
 
 ### Slots
 
@@ -94,9 +104,18 @@ sidebarDepth: 2
 | label   | Override label        | **expanded** `boolean` - item expanded state<br/>**active** `boolean` - item active state |
 | default | Place menu items here |                                                                                           |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-menu-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -106,6 +125,7 @@ sidebarDepth: 2
 | SASS Variable                      | Default                             |
 | ---------------------------------- | ----------------------------------- |
 | $menu-item-color                   | var(--#{$prefix}grey-dark)          |
+| $menu-item-background-color        | transparent                         |
 | $menu-item-hover-color             | var(--#{$prefix}black)              |
 | $menu-item-hover-background-color  | var(--#{$prefix}grey-light)         |
 | $menu-item-active-color            | var(--#{$prefix}primary-invert)     |
@@ -115,7 +135,7 @@ sidebarDepth: 2
 | $menu-list-border-radius           | var(--#{$prefix}base-border-radius) |
 | $menu-list-line-height             | 1.25em                              |
 | $menu-item-padding                 | 0.5em 0.75em                        |
-| $menu-nested-list-margin           | 0.75em                              |
+| $menu-nested-list-margin           | 0.75em 1.25em                       |
 | $menu-nested-list-padding-left     | 0.75em                              |
 | $menu-label-color                  | $grey                               |
 | $menu-label-font-size              | 0.75em                              |
@@ -135,27 +155,29 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable              | Default                        |
-| -------------------------- | ------------------------------ |
-| $menu-label-bg             | transparent                    |
-| $menu-label-color          | var(--#{$prefix}body-color)    |
-| $menu-label-font-size      | 0.75em                         |
-| $menu-list-line-height     | 1.25em                         |
-| $menu-item-padding         | 0.5em 0.75em                   |
-| $menu-item-bg              | transparent                    |
-| $menu-item-color           | var(--#{$prefix}body-color)    |
-| $menu-item-active-bg       | var(--#{$prefix}primary)       |
-| $menu-item-active-color    | var(--#{$prefix}white)         |
-| $menu-item-disabled-bg     | transparent                    |
-| $menu-item-disabled-color  | var(--#{$prefix}secondary)     |
-| $menu-item-border-radius   | var(--#{$prefix}border-radius) |
-| $menu-icon-spacer          | 0.5rem                         |
-| $menu-submenu-border-left  | 1px solid #445e00              |
-| $menu-submenu-padding-left | 0.75em                         |
-| $menu-submenu-margin       | 0.75em                         |
+| SASS Variable             | Default                        |
+| ------------------------- | ------------------------------ |
+| $menu-label-bg            | transparent                    |
+| $menu-label-color         | var(--#{$prefix}body-color)    |
+| $menu-label-font-size     | 0.75em                         |
+| $menu-list-line-height    | 1.25em                         |
+| $menu-item-padding        | 0.5em 0.75em                   |
+| $menu-item-bg             | transparent                    |
+| $menu-item-color          | var(--#{$prefix}body-color)    |
+| $menu-item-active-bg      | var(--#{$prefix}primary)       |
+| $menu-item-active-color   | var(--#{$prefix}white)         |
+| $menu-item-disabled-bg    | transparent                    |
+| $menu-item-disabled-color | var(--#{$prefix}secondary)     |
+| $menu-item-border-radius  | var(--#{$prefix}border-radius) |
+| $menu-item-hover-bg       | var(--#{$prefix}tertiary-bg)   |
+| $menu-item-hover-color    | var(--#{$prefix}body-color)    |
+| $menu-icon-spacer         | 0.5rem                         |
+| $menu-submenu-border-left | 1px solid #445e00              |
+| $menu-submenu-padding     | 0 0.75em                       |
+| $menu-submenu-margin      | 0.75em 1.25em                  |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_menu.scss)
 
 </div>
 
-</div>
+</section>

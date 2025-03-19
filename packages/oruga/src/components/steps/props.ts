@@ -1,10 +1,5 @@
 import type { Component } from "vue";
-import type {
-    ComponentClass,
-    ComponentEmits,
-    DynamicComponent,
-    OptionsProp,
-} from "@/types";
+import type { ComponentClass, ComponentEmits, OptionsProp } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type StepsProps<T> = {
@@ -47,11 +42,8 @@ export type StepsProps<T> = {
      * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
      */
     hasNavigation?: boolean;
-    /**
-     * Destroy stepItem on hide
-     * @deprecated implement this yourself, using the `active` slot prop
-     */
-    destroyOnHide?: boolean;
+    /** Set the step active on navigation focus */
+    activateOnFocus?: boolean;
     /** Step navigation is animated */
     animated?: boolean;
     /**
@@ -70,6 +62,8 @@ export type StepsProps<T> = {
     rounded?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
+    /** Accessibility aria-label to be passed to the tablist wrapper element */
+    ariaLabel?: string;
     /** Accessibility next button aria label */
     ariaNextLabel?: string;
     /** Accessibility previous button aria label  */
@@ -77,38 +71,38 @@ export type StepsProps<T> = {
 } & StepsClasses;
 
 // class props (will not be displayed in the docs)
-type StepsClasses = Partial<{
+export type StepsClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Size of the steps */
-    sizeClass: ComponentClass;
-    /** Class of the steps variant */
-    variantClass: ComponentClass;
-    /** Class of the tooltip trigger */
-    verticalClass: ComponentClass;
-    /** Class of the Steps component when is vertical and its position changes */
-    positionClass: ComponentClass;
-    /** Class of steps component when on mobile */
+    /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Class of the steps nav container */
-    navClass: ComponentClass;
-    /** Class of Steps component when animation gets triggered */
+    /** Size of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
+    /** Class of the root element when is vertical */
+    verticalClass: ComponentClass;
+    /** Class of the root element when is vertical and has position */
+    positionClass: ComponentClass;
+    /** Class of the list container element */
+    listClass: ComponentClass;
+    /** Class of the list container when animated */
     animatedClass: ComponentClass;
-    /** Class of the Steps component dividers */
+    /** Class of the item divider element */
     dividerClass: ComponentClass;
-    /** Class of the Steps markers trigger when are rounded */
-    markerRoundedClass: ComponentClass;
-    /** Class of the Steps component marker */
+    /** Class of the item marker element */
     markerClass: ComponentClass;
-    /** Class of the Steps component content */
+    /** Class of the item marker element when rounded */
+    markerRoundedClass: ComponentClass;
+    /** Class of the panel container element */
     contentClass: ComponentClass;
-    /** Class of the Steps component content when transition is happening */
+    /** Class of the panel container element when transitioning */
     transitioningClass: ComponentClass;
-    /** Class of the Steps component navigation element */
+    /** Class of the navigation element */
     navigationClass: ComponentClass;
 }>;
 
-export type StepItemProps<T, C extends Component> = {
+export type StepItemProps<T, C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -139,10 +133,6 @@ export type StepItemProps<T, C extends Component> = {
     icon?: string;
     /** Icon pack */
     iconPack?: string;
-    /** Step item tag name */
-    tag?: DynamicComponent;
-    /** Role attribute to be passed to the li wrapper for better accessibility */
-    ariaRole?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;
     /** Component to be injected. */
@@ -154,31 +144,27 @@ export type StepItemProps<T, C extends Component> = {
 } & StepItemClasses;
 
 // class props (will not be displayed in the docs)
-type StepItemClasses = Partial<{
-    /** Class of the nav item */
-    navItemClass: ComponentClass;
-    /** Class of the nav item when active */
-    navItemActiveClass: ComponentClass;
-    /** Class of the nav item before the active one */
-    navItemPreviousClass: ComponentClass;
-    /** Class of the nav item after the active one */
-    navItemNextClass: ComponentClass;
-    /** Class of the nav item with variant (default value by parent steps component) */
-    navItemVariantClass: ComponentClass;
-    /** Class of the step item */
+export type StepItemClasses = Partial<{
+    /** Class of the step item element. */
     stepClass: ComponentClass;
-    /** Class of the tab item when active */
+    /** Class of the step item element when active */
     stepActiveClass: ComponentClass;
-    /** Class of the step item when clickable */
+    /** Class of the step item element with variant (default value by parent steps component) */
+    stepVariantClass: ComponentClass;
+    /** Class of the step item element when positioned */
+    stepPositionClass: ComponentClass;
+    /** Class of the step item element when clickable */
     stepClickableClass: ComponentClass;
-    /** Class of the step item when disabled */
+    /** Class of the step item element when disabled */
     stepDisabledClass: ComponentClass;
-    /** Class of the step item label when positioned */
-    stepLabelPositionClass: ComponentClass;
-    /** Class of the step item label */
+    /** Class of the step item element before the active one */
+    stepPreviousClass: ComponentClass;
+    /** Class of the step item element after the active one */
+    stepNextClass: ComponentClass;
+    /** Class of the step item label element */
     stepLabelClass: ComponentClass;
-    /** Class of the step item icon */
+    /** Class of the step item icon element */
     stepIconClass: ComponentClass;
-    /** Class of the content item */
+    /** Class of the step panel element */
     stepPanelClass: ComponentClass;
 }>;

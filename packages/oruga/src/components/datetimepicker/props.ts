@@ -58,8 +58,6 @@ export type DatetimepickerProps = {
         | "top-left"
         | "bottom-left"
         | "bottom-right";
-    /** Enable mobile native input if mobile agent */
-    mobileNative?: boolean;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -71,6 +69,12 @@ export type DatetimepickerProps = {
     iconRight?: string;
     /** Make the icon right clickable */
     iconRightClickable?: boolean;
+    /** Dropdown content is shown into a modal on mobile */
+    mobileModal?: boolean;
+    /** Dropdown content is shown into a modal on desktop */
+    desktopModal?: boolean;
+    /** Enable mobile native input if mobile agent */
+    mobileNative?: boolean;
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -89,9 +93,9 @@ export type DatetimepickerProps = {
 } & DatetimePickerClasses;
 
 // class props (will not be displayed in the docs)
-type DatetimePickerClasses = Partial<{
-    /** Class of the Datepicker wrapper */
+export type DatetimePickerClasses = Partial<{
+    /** Class of the Datepicker component wrapper element */
     datepickerWrapperClass: ComponentClass;
-    /** Class of the Timepicker wrapper */
+    /** Class of the Timepicker component wrapper element */
     timepickerWrapperClass: ComponentClass;
 }>;

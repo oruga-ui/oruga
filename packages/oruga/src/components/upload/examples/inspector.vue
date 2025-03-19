@@ -1,54 +1,57 @@
 <script setup lang="ts">
-const inspectData = [
-    {
+import type { InspectData } from "@docs";
+import type { UploadClasses, UploadProps } from "../props";
+
+const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
+    rootClass: {
         class: "rootClass",
-        description: "Root class of the element",
+        description: "Class of the root element.",
     },
-    {
-        class: "draggableClass",
-        description: "Class of the Upload when draggable",
-        properties: ["dragDrop"],
-        action: (cmp, data) => {
-            data.dragDrop = true;
-        },
-    },
-    {
+    expandedClass: {
         class: "expandedClass",
-        description: "Class of the Upload when expanded",
+        description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data) => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
-    {
+    disabledClass: {
         class: "disabledClass",
-        description: "Class of the Upload when disabled",
+        description: "Class of the root element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data) => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
-    {
-        class: "hoveredClass",
-        description: "Class of the Upload when hovered",
+    draggableClass: {
+        class: "draggableClass",
+        description: "Class of the dragable container element.",
         properties: ["dragDrop"],
-        warning: "Drag & drop a file to see it in action!",
-        action: (cmp, data) => {
+        action: (data): void => {
             data.dragDrop = true;
         },
     },
-    {
+    hoveredClass: {
+        class: "hoveredClass",
+        description: "Class of the dragable container element when hovered.",
+        info: "Drag & drop a file to see it in action!",
+        properties: ["dragDrop"],
+        action: (data): void => {
+            data.dragDrop = true;
+        },
+    },
+    variantClass: {
         class: "variantClass",
-        description: "Class of the Upload variant",
+        description: "Class of the dragable container element with variant.",
+        info: "Drag & drop a file to see it in action!",
         properties: ["variant", "dragDrop"],
         suffixes: ["primary", "info", "warning", "danger"],
-        warning: "Drag & drop a file to see it in action!",
-        action: (cmp, data) => {
+        action: (data): void => {
             data.variant = "warning";
             data.dragDrop = true;
         },
     },
-];
+};
 </script>
 
 <template>

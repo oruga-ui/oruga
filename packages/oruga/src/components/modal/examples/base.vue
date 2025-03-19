@@ -7,22 +7,25 @@ const isCardModalActive = ref(false);
 
 <template>
     <section class="odocs-spaced">
-        <o-button
-            label="Open modal"
-            size="medium"
-            variant="primary"
-            @click="isImageModalActive = true" />
+        <p>
+            <o-button
+                label="Open modal"
+                size="medium"
+                variant="primary"
+                @click="isImageModalActive = true" />
 
-        <o-button
-            label="Open modal (clip scroll)"
-            size="medium"
-            variant="primary"
-            @click="isCardModalActive = true" />
+            <o-button
+                label="Open modal (clip scroll)"
+                size="medium"
+                variant="primary"
+                @click="isCardModalActive = true" />
+        </p>
 
         <o-modal v-model:active="isImageModalActive">
             <p style="text-align: center">
                 <img
                     style="background-color: white"
+                    alt="Oruga logo"
                     src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
             </p>
         </o-modal>

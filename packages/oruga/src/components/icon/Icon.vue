@@ -8,7 +8,7 @@ import { defineClasses } from "@/composables";
 import type { IconProps } from "./props";
 
 /**
- * Icons take an important role of any application
+ * Icons take an important role of any application.
  * @displayName Icon
  * @style _icon.scss
  */
@@ -121,7 +121,7 @@ const rootClasses = defineClasses(
 </script>
 
 <template>
-    <span :class="rootClasses" data-oruga="icon" :style="rootStyle">
+    <span data-oruga="icon" :class="rootClasses" :style="rootStyle">
         <!-- custom icon component -->
         <component
             :is="component"

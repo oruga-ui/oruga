@@ -14,6 +14,7 @@ const active = ref(false);
             <o-button
                 icon-left="calendar"
                 variant="primary"
+                aria-label="Open Calendar"
                 @click="active = !active" />
         </o-field>
     </section>

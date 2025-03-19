@@ -14,7 +14,7 @@ import type { OptionsItem } from "@/types";
 import type { TimepickerProps } from "./props";
 
 /**
- * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
+ * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile.
  * @displayName Timepicker
  * @style _timepicker.scss
  */
@@ -54,20 +54,26 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     creator: getDefault("timepicker.creator"),
     unselectableTimes: undefined,
     resetOnMeridianChange: false,
-    trapFocus: () => getDefault("timepicker.trapFocus", true),
     position: undefined,
-    mobileModal: () => getDefault("timepicker.mobileModal", true),
-    mobileNative: () => getDefault("timepicker.mobileNative", true),
     iconPack: () => getDefault("timepicker.iconPack"),
     icon: () => getDefault("timepicker.icon"),
     iconRight: () => getDefault("timepicker.iconRight"),
     iconRightClickable: false,
+    desktopModal: () => getDefault("timepicker.desktopModal", false),
+    mobileModal: () => getDefault("timepicker.mobileModal", true),
+    mobileNative: () => getDefault("timepicker.mobileNative", true),
     mobileBreakpoint: () => getDefault("timepicker.mobileBreakpoint"),
     teleport: () => getDefault("timepicker.teleport", false),
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
     inputClasses: () => getDefault("timepicker.inputClasses"),
     dropdownClasses: () => getDefault("timepicker.dropdownClasses"),
+    ariaSelectSecondsLabel: () =>
+        getDefault("timepicker.ariaSelectSecondLabel", "Select Second"),
+    ariaSelectMinutesLabel: () =>
+        getDefault("timepicker.ariaSelectMinuteLabel", "Select Minute"),
+    ariaSelectHoursLabel: () =>
+        getDefault("timepicker.ariaSelectHourLabel", "Select Hour"),
     selectClasses: () => getDefault("timepicker.selectClasses"),
 });
 
@@ -127,10 +133,10 @@ const {
 
 const pickerRef = useTemplateRef("pickerComponent");
 
-/** modelvalue of selected date */
+// the modelvalue of selected date, use v-model to make it two-way binding
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-/** Dropdown active state */
+// the active state of the dropdown, use v-model:active to make it two-way binding
 const isActive = defineModel<boolean>("active", { default: false });
 
 const hoursSelected = ref<number>();
@@ -549,14 +555,40 @@ function onSecondsChange(value: string): void {
 
 // --- Computed Component Classes ---
 
+const rootClasses = defineClasses(
+    ["rootClass", "o-timepicker"],
+    [
+        "sizeClass",
+        "o-timepicker--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    ["mobileClass", "o-timepicker--mobile", null, isMobile],
+);
+
+const separatorClasses = defineClasses([
+    "separatorClass",
+    "o-timepicker__separtor",
+]);
+
+const footerClasses = defineClasses(["footerClass", "o-timepicker__footer"]);
+
+const pickerDropdownClasses = defineClasses([
+    "dropdownClass",
+    "o-timepicker__dropdown",
+]);
+
+const boxClasses = defineClasses(["boxClass", "o-timepicker__box"]);
+const boxClassBind = computed(() => getActiveClasses(boxClasses));
+
 const selectSelectClasses = defineClasses([
     "selectClasses.selectClass",
-    "o-tpck__select",
+    "o-timepicker__select",
 ]);
 
 const selectPlaceholderClasses = defineClasses([
     "selectClasses.placeholderClass",
-    "o-tpck__select-placeholder",
+    "o-timepicker__select-placeholder",
 ]);
 
 const selectBind = computed(() => ({
@@ -564,29 +596,6 @@ const selectBind = computed(() => ({
     "placeholder-class": getActiveClasses(selectPlaceholderClasses),
     ...props.selectClasses,
 }));
-
-const rootClasses = defineClasses(
-    ["rootClass", "o-tpck"],
-    [
-        "sizeClass",
-        "o-tpck--",
-        computed(() => props.size),
-        computed(() => !!props.size),
-    ],
-    ["mobileClass", "o-tpck--mobile", null, isMobile],
-);
-
-const separatorClasses = defineClasses(["separatorClass", "o-tpck__separtor"]);
-
-const footerClasses = defineClasses(["footerClass", "o-tpck__footer"]);
-
-const pickerDropdownClasses = defineClasses([
-    "dropdownClass",
-    "o-tpck__dropdown",
-]);
-
-const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses));
 
 // --- Expose Public Functionalities ---
 
@@ -631,6 +640,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             override
             :disabled="disabled"
             placeholder="00"
+            :aria-label="ariaSelectHoursLabel"
             :use-html5-validation="false"
             @change="onHoursChange($event.target.value)" />
 
@@ -642,6 +652,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             override
             :disabled="disabled"
             placeholder="00"
+            :aria-label="ariaSelectMinutesLabel"
             :use-html5-validation="false"
             @change="onMinutesChange($event.target.value)">
             <option
@@ -662,6 +673,7 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
                 override
                 :disabled="disabled"
                 placeholder="00"
+                :aria-label="ariaSelectSecondsLabel"
                 :use-html5-validation="false"
                 @change="onSecondsChange($event.target.value)">
                 <option
@@ -693,11 +705,11 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             </option>
         </o-select>
 
-        <footer v-if="$slots.default" :class="footerClasses">
+        <footer v-if="$slots.footer" :class="footerClasses">
             <!--
                 @slot Define an additional content on footer
             -->
-            <slot />
+            <slot name="footer" />
         </footer>
     </OPickerWrapper>
 </template>

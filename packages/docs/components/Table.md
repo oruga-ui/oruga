@@ -4,30 +4,26 @@ sidebarDepth: 2
 
 # Table
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> Tabulated data are sometimes needed, it's even better when it's responsive
+The **Table** component uses [HTML's native table element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table).
+It allows tabular data to be displayed in a responsive way with special case cells.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-table />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-table-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Table component
 
-> Tabulated data are sometimes needed, it's even better when it's responsive
+> Tabulated data are sometimes needed, it's even better when it's responsive.
 
 ```html
 <o-table></o-table>
@@ -46,6 +42,7 @@ sidebarDepth: 2
 | backendSorting        | Columns won't be sorted with Javascript, use with `sort` event to sort in your backend                                                                                                             | boolean                                                           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;backendSorting: false<br>}</code>            |
 | bordered              | Border to all cells                                                                                                                                                                                | boolean                                                           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;bordered: false<br>}</code>                  |
 | checkable             | Rows can be checked (multiple)                                                                                                                                                                     | boolean                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
+| checkableHeader       | Show check/uncheck all checkbox in table header when checkable (if checkable)                                                                                                                      | boolean                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                       |
 | checkboxPosition      | Position of the checkbox when checkable (if checkable)                                                                                                                                             | "left" \| "right"                                                 | `left`, `right`                                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;checkboxPosition: "left"<br>}</code>         |
 | checkboxVariant       | Color of the checkbox when checkable (if checkable)                                                                                                                                                | string                                                            | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;checkboxVariant: undefined<br>}</code>       |
 | checkedRows           | Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable)                                                                                                    | unknown[]                                                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>[]</code>                                                                                                         |
@@ -54,7 +51,6 @@ sidebarDepth: 2
 | customCompare         | Define a custom comparison function to check whether two row elements are equal.<br/>By default a `rowKey` comparison is performed if given. Otherwise a simple object comparison is done.         | ((a: unknown, b: unknown) =&gt; boolean)                          | -                                                                               |                                                                                                                                                                  |
 | customDetailRow       | Enable custom style on details (if detailed)                                                                                                                                                       | boolean                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
 | data                  | Table data                                                                                                                                                                                         | unknown[]                                                         | -                                                                               |                                                                                                                                                                  |
-| debounceSearch        | Filtering debounce time (in milliseconds)                                                                                                                                                          | number                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;debounceSearch: undefined<br>}</code>        |
 | defaultSort           | Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc']                                                                                                               | 'desc'] \| [string, 'asc' \| string                               | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;defaultSort: undefined<br>}</code>           |
 | defaultSortDirection  | Sets the default sort column direction on the first click                                                                                                                                          | 'asc'\|'desc'                                                     | `asc`, `desc`                                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;defaultSortDirection: "asc"<br>}</code>      |
 | detailIcon            | Icon name of detail action (if detailed)                                                                                                                                                           | string                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;detailIcon: "chevron-right"<br>}</code>      |
@@ -64,12 +60,12 @@ sidebarDepth: 2
 | draggable             | Allows rows to be draggable                                                                                                                                                                        | boolean                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
 | draggableColumn       | Allows columns to be draggable                                                                                                                                                                     | boolean                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
 | emptyIcon             | Icon to be shown when the table is empty                                                                                                                                                           | string                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;emptyIcon: undefined<br>}</code>             |
-| emptyIconSize         | Size of empty icon                                                                                                                                                                                 | string                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;emptyIconSize: "large"<br>}</code>           |
+| emptyIconSize         | Size of empty icon                                                                                                                                                                                 | string                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;emptyIconSize: undefined<br>}</code>         |
 | emptyLabel            | Label to be shown when the table is empty                                                                                                                                                          | string                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;emptyLabel: undefined<br>}</code>            |
+| filterDebounce        | Filtering debounce time (in milliseconds)                                                                                                                                                          | number                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;filterDebounce: 300<br>}</code>              |
 | filtersEvent          | Add a native event to filter                                                                                                                                                                       | string                                                            | -                                                                               | <code style='white-space: nowrap; padding: 0;'>""</code>                                                                                                         |
 | filtersIcon           | Icon of the column search input                                                                                                                                                                    | string                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;filterIcon: undefined<br>}</code>            |
 | filtersPlaceholder    | Placeholder of the column search input                                                                                                                                                             | string                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;filterPlaceholder: undefined<br>}</code>     |
-| headerCheckable       | Show check/uncheck all checkbox in table header when checkable (if checkable)                                                                                                                      | boolean                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                       |
 | height                | Table fixed height                                                                                                                                                                                 | number \| string                                                  | -                                                                               |                                                                                                                                                                  |
 | hoverable             | Rows are highlighted when hovering                                                                                                                                                                 | boolean                                                           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;hoverable: false<br>}</code>                 |
 | iconPack              | Icon pack to use                                                                                                                                                                                   | string                                                            | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>table: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>              |
@@ -109,38 +105,37 @@ sidebarDepth: 2
 
 ### Events
 
-| Event name          | Properties                                                                                                                                                                               | Description                                                |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| page-change         | **page** `number` - updated page                                                                                                                                                         | on pagination page change event                            |
-| dblclick            | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native click event                                                                          | on row double click event                                  |
-| mouseenter          | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native mouseenter event                                                                     | on row mouseenter event                                    |
-| mouseleave          | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native mouseleave event                                                                     | on row mouseleave event                                    |
-| contextmenu         | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native contextmenu event                                                                    | on row right click event                                   |
-| cell-click          | **row** `T` - row data<br/>**column** `TableColumn` - column data<br/>**index** `number` - row index<br/>**colindex** `number` - column index<br/>**event** `Event` - native click event | on cell click event                                        |
-| update:currentPage  | **value** `number` - updated currentPage prop                                                                                                                                            | currentPage prop two-way binding                           |
-| processed           | **value** `TableRow[]` - computed table rows                                                                                                                                             | is emitted each time the table data is processed into rows |
-| update:selected     | **value** `T` - updated select prop                                                                                                                                                      | select prop two-way binding                                |
-| select              | **newRow** `T` - new select value<br/>**oldRow** `T` - old select value                                                                                                                  | on row select event                                        |
-| check               | **value** `T[]` - all checked rows<br/>**row** `T` - row data                                                                                                                            | on row checked event                                       |
-| check-all           | **value** `T[]` - all checked rows                                                                                                                                                       | on all rows checked event                                  |
-| update:checkedRows  | **value** `T[]` - updated checkedRows prop                                                                                                                                               | checkedRows prop two-way binding                           |
-| sort                | **column** `TableColumn` - column data<br/>**direction** `string` - 'asc' or 'desc'<br/>**event** `Event` - native event                                                                 | on column sort change event                                |
-| filters-change      | **filters** `object` - filter object                                                                                                                                                     | on filter change event                                     |
-| filters-event       | **filtersEvent** `string` - props filtersEvent value<br/>**filters** `object` - filter object<br/>**event** `Event` - native event                                                       | on native filter event based on props filtersEvent         |
-| update:detailedRows | **value** `T[]` - updated detailedRows prop                                                                                                                                              | detailedRows prop two-way binding                          |
-| details-open        | **row** `T` - row data                                                                                                                                                                   | on details open event                                      |
-| details-close       | **row** `T` - row data                                                                                                                                                                   | on details close event                                     |
-| click               | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native click event                                                                          | on row click event                                         |
-| dragstart           | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native dragstart event                                                                   | on row dragstart event                                     |
-| dragend             | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native dragend event                                                                     | on row dragend event                                       |
-| drop                | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native drop event                                                                        | on row drop event                                          |
-| dragleave           | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native dragleave event                                                                   | on row dragleave event                                     |
-| dragover            | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native dragover event                                                                    | on row dragover event                                      |
-| columndragstart     | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndragstart event                                          | on column columndragstart event                            |
-| columndragend       | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndragend event                                            | on column columndragend event                              |
-| columndrop          | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndrop event                                               | on column columndrop event                                 |
-| columndragleave     | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndragleave event                                          | on column columndragleave event                            |
-| columndragover      | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndragover event                                           | on column columndragover event                             |
+| Event name          | Properties                                                                                                                                                                               | Description                                        |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| page-change         | **page** `number` - updated page                                                                                                                                                         | on pagination page change event                    |
+| dblclick            | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native click event                                                                          | on row double click event                          |
+| mouseenter          | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native mouseenter event                                                                     | on row mouseenter event                            |
+| mouseleave          | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native mouseleave event                                                                     | on row mouseleave event                            |
+| contextmenu         | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native contextmenu event                                                                    | on row right click event                           |
+| cell-click          | **row** `T` - row data<br/>**column** `TableColumn` - column data<br/>**index** `number` - row index<br/>**colindex** `number` - column index<br/>**event** `Event` - native click event | on cell click event                                |
+| update:currentPage  | **value** `number` - updated currentPage prop                                                                                                                                            | currentPage prop two-way binding                   |
+| update:selected     | **value** `T` - updated select prop                                                                                                                                                      | select prop two-way binding                        |
+| select              | **newRow** `T` - new select value<br/>**oldRow** `T` - old select value                                                                                                                  | on row select event                                |
+| check               | **value** `T[]` - all checked rows<br/>**row** `T` - row data                                                                                                                            | on row checked event                               |
+| check-all           | **value** `T[]` - all checked rows                                                                                                                                                       | on all rows checked event                          |
+| update:checkedRows  | **value** `T[]` - updated checkedRows prop                                                                                                                                               | checkedRows prop two-way binding                   |
+| sort                | **column** `TableColumn` - column data<br/>**direction** `string` - 'asc' or 'desc'<br/>**event** `Event` - native event                                                                 | on column sort change event                        |
+| filters-change      | **filters** `object` - filter object                                                                                                                                                     | on filter change event                             |
+| filters-event       | **filtersEvent** `string` - props filtersEvent value<br/>**filters** `object` - filter object<br/>**event** `Event` - native event                                                       | on native filter event based on props filtersEvent |
+| update:detailedRows | **value** `T[]` - updated detailedRows prop                                                                                                                                              | detailedRows prop two-way binding                  |
+| details-open        | **row** `T` - row data                                                                                                                                                                   | on details open event                              |
+| details-close       | **row** `T` - row data                                                                                                                                                                   | on details close event                             |
+| click               | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native click event                                                                          | on row click event                                 |
+| dragstart           | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native dragstart event                                                                   | on row dragstart event                             |
+| dragend             | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native dragend event                                                                     | on row dragend event                               |
+| drop                | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native drop event                                                                        | on row drop event                                  |
+| dragleave           | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native dragleave event                                                                   | on row dragleave event                             |
+| dragover            | **row** `T` - row data<br/>**index** `number` - index of draged row<br/>**event** `DragEvent` - native dragover event                                                                    | on row dragover event                              |
+| columndragstart     | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndragstart event                                          | on column columndragstart event                    |
+| columndragend       | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndragend event                                            | on column columndragend event                      |
+| columndrop          | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndrop event                                               | on column columndrop event                         |
+| columndragleave     | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndragleave event                                          | on column columndragleave event                    |
+| columndragover      | **column** `TableColumn` - column data<br/>**index** `number` - index of draged column<br/>**event** `DragEvent` - native columndragover event                                           | on column columndragover event                     |
 
 ### Slots
 
@@ -154,16 +149,20 @@ sidebarDepth: 2
 | caption     | Define a table caption here                                                                 |                                                                                                                                                                                       |
 | preheader   | Define preheader content here                                                               |                                                                                                                                                                                       |
 | check-all   | Override check all checkbox                                                                 | **is-all-checked** `boolean` - if all rows are checked<br/>**is-all-uncheckable** `boolean` - if check all is uncheckable<br/>**check-all** `(): void` - check all function           |
+| subheading  |                                                                                             |                                                                                                                                                                                       |
 | detail      | Place row detail content here                                                               | **row** `T` - row content<br/>**index** `number` - row index                                                                                                                          |
 | empty       | Define content if table is empty                                                            |                                                                                                                                                                                       |
 | footer      | Define a custom footer                                                                      | **column-count** `number` - counts of visible columns<br/>**row-count** `number` - counts of visible rows                                                                             |
 | loading     | Override loading component                                                                  | **loading** `boolean` - is loading state enabled                                                                                                                                      |
 | bottom-left | Additional slot if table is paginated                                                       |                                                                                                                                                                                       |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
+
 ## TableColumn component
+
+> Define a column used by the table component.
 
 ```html
 <o-table-column></o-table-column>
@@ -178,6 +177,7 @@ sidebarDepth: 2
 | field            | Define an object property key if data is an object     | string                                                  | -                           |                                                             |
 | formatter        | Provide a formatter function to edit the output        | ((value: unknown, row: unknown) =&gt; string)           | -                           |                                                             |
 | headerSelectable | Make header selectable                                 | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| hidden           | Define whether the column is visible or not            | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
 | label            | Define the column label                                | string                                                  | -                           |                                                             |
 | numeric          | Define column value as number                          | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
 | position         | Position of the column content                         | "centered" \| "left" \| "right"                         | `left`, `centered`, `right` |                                                             |
@@ -187,7 +187,6 @@ sidebarDepth: 2
 | subheading       | Define a column sub heading                            | string                                                  | -                           |                                                             |
 | tdAttrs          | Adds native attributes to td                           | object                                                  | -                           |                                                             |
 | thAttrs          | Adds native attributes to th                           | object                                                  | -                           |                                                             |
-| visible          | Define whether the column is visible or not            | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>  |
 | width            | Column fixed width                                     | number \| string                                        | -                           |                                                             |
 
 ### Slots
@@ -199,53 +198,63 @@ sidebarDepth: 2
 | subheading | Override subheading label | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-table-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                          | Default                                                                                   |
-| -------------------------------------- | ----------------------------------------------------------------------------------------- |
-| $table-background-color                | #fff                                                                                      |
-| $table-background                      | #f5f5f5                                                                                   |
-| $table-boder                           | 1px solid transparent                                                                     |
-| $table-border-radius                   | var(--#{$prefix}base-border-radius)                                                       |
-| $table-card-box-shadow                 | 0 2px 3px rgba(var(--#{$prefix}black), 0.1),  0 0 0 1px rgba(var(--#{$prefix}black), 0.1) |
-| $table-card-cell-font-weight           | 600                                                                                       |
-| $table-card-cell-padding               | 0 0.5em 0 0                                                                               |
-| $table-card-cell-text-align            | left                                                                                      |
-| $table-card-detail-margin              | -1rem 0 0 0                                                                               |
-| $table-card-margin                     | 0 0 1rem 0                                                                                |
-| $table-color                           | black                                                                                     |
-| $table-current-sort-border-color       | var(--#{$prefix}grey)                                                                     |
-| $table-current-sort-font-weight        | 700                                                                                       |
-| $table-current-sort-hover-border-color | var(--#{$prefix}grey)                                                                     |
-| $table-detail-background               | #fafafa                                                                                   |
-| $table-detail-box-shadow               | inset 0 1px 3px var(--#{$prefix}grey)                                                     |
-| $table-detail-chevron-color            | var(--#{$prefix}primary)                                                                  |
-| $table-detail-chevron-width            | 40px                                                                                      |
-| $table-detail-padding                  | 1rem                                                                                      |
-| $table-focus-border-color              | var(--#{$prefix}primary)                                                                  |
-| $table-focus-box-shadow                | 0 0 0 0.125em rgba(var(--#{$prefix}primary), 0.25)                                        |
-| $table-hoverable-background-color      | #fafafa                                                                                   |
-| $table-narrow-padding                  | 0.25em 0.5em                                                                              |
-| $table-row-active-background-color     | var(--#{$prefix}primary)                                                                  |
-| $table-row-active-color                | var(--#{$prefix}primary-invert)                                                           |
-| $table-sticky-header-height            | 300px                                                                                     |
-| $table-sticky-zindex                   | 1                                                                                         |
-| $table-striped-background-color        | #fafafa                                                                                   |
-| $table-td-border                       | 1px solid var(--#{$prefix}grey-lighter)                                                   |
-| $table-td-padding                      | 0.5em 0.75em                                                                              |
-| $table-th-border                       | 2px solid var(--#{$prefix}grey-lighter)                                                   |
-| $table-th-checkbox-width               | 40px                                                                                      |
-| $table-th-color                        | #363636                                                                                   |
-| $table-th-detail-width                 | 14px                                                                                      |
-| $table-th-font-weight                  | 600                                                                                       |
-| $table-th-padding                      | 0.5em 0.75em                                                                              |
+| SASS Variable                          | Default                                                                                     |
+| -------------------------------------- | ------------------------------------------------------------------------------------------- |
+| $table-background-color                | #fff                                                                                        |
+| $table-background                      | #f5f5f5                                                                                     |
+| $table-boder                           | 1px solid transparent                                                                       |
+| $table-border-radius                   | var(--#{$prefix}base-border-radius)                                                         |
+| $table-card-box-shadow                 | 0 2px 3px rgba(var(--#{$prefix}black), 0.1),    0 0 0 1px rgba(var(--#{$prefix}black), 0.1) |
+| $table-card-cell-font-weight           | 600                                                                                         |
+| $table-card-cell-padding               | 0 0.5em 0 0                                                                                 |
+| $table-card-cell-text-align            | left                                                                                        |
+| $table-card-detail-margin              | -1rem 0 0 0                                                                                 |
+| $table-card-margin                     | 0 0 1rem 0                                                                                  |
+| $table-color                           | black                                                                                       |
+| $table-current-sort-border-color       | var(--#{$prefix}grey)                                                                       |
+| $table-current-sort-font-weight        | 700                                                                                         |
+| $table-current-sort-hover-border-color | var(--#{$prefix}grey)                                                                       |
+| $table-detail-background               | #fafafa                                                                                     |
+| $table-detail-box-shadow               | inset 0 1px 3px var(--#{$prefix}grey)                                                       |
+| $table-detail-chevron-color            | var(--#{$prefix}primary)                                                                    |
+| $table-detail-chevron-width            | 40px                                                                                        |
+| $table-detail-padding                  | 1rem                                                                                        |
+| $table-focus-border-color              | var(--#{$prefix}primary)                                                                    |
+| $table-focus-box-shadow                | 0 0 0 0.125em rgba(var(--#{$prefix}primary), 0.25)                                          |
+| $table-hoverable-background-color      | #fafafa                                                                                     |
+| $table-narrow-padding                  | 0.25em 0.5em                                                                                |
+| $table-row-active-background-color     | var(--#{$prefix}primary)                                                                    |
+| $table-row-active-color                | var(--#{$prefix}primary-invert)                                                             |
+| $table-sticky-header-height            | 300px                                                                                       |
+| $table-sticky-zindex                   | 1                                                                                           |
+| $table-striped-background-color        | #fafafa                                                                                     |
+| $table-td-border                       | 1px solid var(--#{$prefix}grey-lighter)                                                     |
+| $table-td-padding                      | 0.5em 0.75em                                                                                |
+| $table-th-border                       | 2px solid var(--#{$prefix}grey-lighter)                                                     |
+| $table-th-checkbox-width               | 40px                                                                                        |
+| $table-th-color                        | #363636                                                                                     |
+| $table-th-detail-width                 | 14px                                                                                        |
+| $table-th-font-weight                  | 600                                                                                         |
+| $table-th-padding                      | 0.5em 0.75em                                                                                |
+| $table-pagination-padding              | 0.5em 0                                                                                     |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_table.scss)
 
@@ -274,8 +283,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $table-sticky-bg                   | initial                       |
 | $table-sticky-color                | initial                       |
 | $table-sticky-header-height        | 350px                         |
-| $table-detail-padding              | 0.5rem 0.75rem                |
+| $table-detail-padding              | 0.5em 0.75em                  |
 | $table-detail-bg                   | var(--#{$prefix}gray-light)   |
+| $table-empty-padding               | 1.5em 0                       |
 | $table-sortable-hover-border-color | var(--#{$prefix}secondary)    |
 | $table-current-sort-bg             | var(--#{$prefix}gray-light)   |
 | $table-card-spacer                 | $spacer                       |
@@ -284,4 +294,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

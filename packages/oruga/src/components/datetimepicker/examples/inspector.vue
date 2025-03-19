@@ -1,54 +1,30 @@
 <script setup lang="ts">
-import { getCurrentInstance, ref } from "vue";
+import type { InspectData } from "@docs";
+import type { DatetimePickerClasses, DatetimepickerProps } from "../props";
 
-const datetimepicker = ref();
-
-// get programmatic oruga access
-const app = getCurrentInstance();
-const oruga = app?.appContext.config.globalProperties.$oruga;
-
-const triggerClass = oruga?.config
-    ? oruga.config.getOption("dropdown.triggerClass", "o-drop__trigger")
-    : "o-drop__trigger";
-
-function openDatetimePicker() {
-    setTimeout(() => {
-        datetimepicker.value.$el
-            .getElementsByClassName(triggerClass)[0]
-            .click();
-    }, 500);
-}
-
-const inspectData = [
-    {
+const inspectData: InspectData<DatetimePickerClasses, DatetimepickerProps> = {
+    datepickerWrapperClass: {
         class: "datepickerWrapperClass",
-        description: "Class of the Datepicker wrapper",
+        description: "Class of the Datepicker component wrapper element.",
     },
-    {
+    timepickerWrapperClass: {
         class: "timepickerWrapperClass",
-        description: "Class of the Timepicker wrapper",
-        action: () => {
-            openDatetimePicker();
+        description: "Class of the Timepicker component wrapper element.",
+        action: (data): void => {
+            data.active = true;
         },
     },
-];
+};
 </script>
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-field label="Select datetime">
             <o-datetimepicker
-                v-bind="props"
-                ref="datetimepicker"
                 placeholder="Click to select..."
                 icon="calendar"
-                horizontal-time-picker />
+                horizontal-time-picker
+                v-bind="props" />
         </o-field>
     </inspector-wrapper>
 </template>
-
-<style>
-.datepicker__table {
-    border-collapse: collapse;
-}
-</style>

@@ -8,7 +8,7 @@ import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
 import ODropdown from "@/components/dropdown/Dropdown.vue";
 import ODropdownItem from "@/components/dropdown/DropdownItem.vue";
 
-describe("Dropdown tests", () => {
+describe("ODropdown tests", () => {
     const options: OptionsProp = [
         { label: "Item 1", value: 1 },
         { label: "Item 2", value: 2 },
@@ -28,7 +28,7 @@ describe("Dropdown tests", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("dropdown");
         expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-drop")).toBeTruthy();
+        expect(wrapper.classes("o-dropdown")).toBeTruthy();
 
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
@@ -36,6 +36,7 @@ describe("Dropdown tests", () => {
             expect(items.at(idx)!.attributes("data-oruga")).toBe(
                 "dropdown-item",
             );
+            expect(items.at(idx)!.classes("o-dropdown__item")).toBeTruthy();
             expect(items.at(idx)!.text()).toBe(option.label);
         });
     });
@@ -59,7 +60,7 @@ describe("Dropdown tests", () => {
         };
 
         const wrapper = mount(component, {
-            props: { options: simpleOptions },
+            props: { options: simpleOptions, selectable: true },
         });
         await nextTick(); // await dropdown item rendered
 
@@ -67,7 +68,7 @@ describe("Dropdown tests", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("dropdown");
         expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-drop")).toBeTruthy();
+        expect(wrapper.classes("o-dropdown")).toBeTruthy();
 
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
@@ -75,39 +76,42 @@ describe("Dropdown tests", () => {
             expect(items.at(idx)!.attributes("data-oruga")).toBe(
                 "dropdown-item",
             );
+            expect(items.at(idx)!.classes("o-dropdown__item")).toBeTruthy();
             expect(items.at(idx)!.text()).toBe(option);
         });
     });
 
     test("has configurable menu tag", () => {
         const wrapper = mount(ODropdown, { props: { menuTag: "ul" } });
-        expect(wrapper.find("ul.o-drop__menu").exists()).toBeTruthy();
+        expect(wrapper.find("ul.o-dropdown__menu").exists()).toBeTruthy();
     });
 
     test("has configurable trigger tag", () => {
         const wrapper = mount(ODropdown, { props: { triggerTag: "a" } });
-        expect(wrapper.find("a.o-drop__trigger").exists()).toBeTruthy();
+        expect(wrapper.find("a.o-dropdown__trigger").exists()).toBeTruthy();
     });
 
     test("reset events before destroy", async () => {
-        const wrapper = mount(ODropdown, { props: { active: true } });
-        await setTimeout(); // await event handler get set
-
         document.removeEventListener = vi.fn();
         window.removeEventListener = vi.fn();
 
+        const wrapper = mount(ODropdown, { props: { active: true } });
+        await setTimeout(); // await event handler get set
+
         wrapper.unmount();
 
+        expect(document.removeEventListener).toBeCalledTimes(1);
         // remove scroll listener
         expect(document.removeEventListener).toBeCalledWith(
             "scroll",
             expect.any(Function),
         );
-        // remove keyup listener
-        expect(document.removeEventListener).toBeCalledWith(
-            "keyup",
+
+        expect(window.removeEventListener).toBeCalledTimes(2);
+        // remove position listener
+        expect(window.removeEventListener).toBeCalledWith(
+            "resize",
             expect.any(Function),
-            expect.any(Object),
         );
         // remove click outside listener
         expect(window.removeEventListener).toBeCalledWith(
@@ -136,7 +140,7 @@ describe("Dropdown tests", () => {
             const wrapper = mount(ODropdown, {
                 props: { options: simpleOptions, label: triggerLabel },
             });
-            const trigger = wrapper.find(".o-drop__trigger");
+            const trigger = wrapper.find(".o-dropdown__trigger");
             expect(trigger.exists()).toBeTruthy();
             expect(trigger.text()).contain(triggerLabel);
         });
@@ -150,12 +154,12 @@ describe("Dropdown tests", () => {
             });
             await nextTick(); // await event handler get set
 
-            const menu = wrapper.find(".o-drop__menu");
+            const menu = wrapper.find(".o-dropdown__menu");
 
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
 
-            const items = wrapper.findAll(".o-drop__item");
+            const items = wrapper.findAll(".o-dropdown__item");
             expect(items.length).toBe(simpleOptions.length);
 
             await items[1].trigger("click");
@@ -163,50 +167,12 @@ describe("Dropdown tests", () => {
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
             );
-            expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("change")).toHaveLength(1);
-            expect(dropdown.emitted("change")![0][0]).toBe(simpleOptions[1]);
+            expect(dropdown.emitted("select")).toHaveLength(1);
+            expect(dropdown.emitted("select")![0][0]).toBe(simpleOptions[1]);
             expect(dropdown.emitted("close")).toHaveLength(1);
 
-            expect(wrapper.classes("o-drop--active")).toBeFalsy();
+            expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
-        });
-
-        test("react accordingly when clicking item with multiple", async () => {
-            const wrapper = mount(ODropdown, {
-                props: { options: simpleOptions, active: true, multiple: true },
-                attachTo: document.body,
-            });
-            await nextTick(); // await event handler get set
-
-            const menu = wrapper.find(".o-drop__menu");
-
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
-            expect(menu.isVisible()).toBeTruthy();
-
-            const items = wrapper.findAll(".o-drop__item");
-            expect(items.length).toBe(simpleOptions.length);
-
-            await items[1].trigger("click");
-
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
-            expect(menu.isVisible()).toBeTruthy();
-
-            await items[0].trigger("click");
-
-            const dropdown = wrapper.findComponent<ComponentPublicInstance>(
-                '[data-oruga="dropdown"]',
-            );
-            expect(dropdown.emitted("update:modelValue")).toHaveLength(2);
-            expect(dropdown.emitted("change")).toHaveLength(2);
-            expect(dropdown.emitted("change")![0][0]).toStrictEqual([
-                simpleOptions[1],
-            ]);
-            expect(dropdown.emitted("change")![1][0]).toStrictEqual([
-                simpleOptions[1],
-                simpleOptions[0],
-            ]);
-            expect(dropdown.emitted("close")).toBeUndefined();
         });
 
         test("react accordingly when clicking outside", async () => {
@@ -216,9 +182,9 @@ describe("Dropdown tests", () => {
             });
             await setTimeout(); // await event handler get set
 
-            const menu = wrapper.find(".o-drop__menu");
+            const menu = wrapper.find(".o-dropdown__menu");
 
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
 
             // click outside
@@ -230,7 +196,7 @@ describe("Dropdown tests", () => {
             expect(activeEmits).toHaveLength(1);
             expect(activeEmits![0][0]).toBeFalsy();
             expect(wrapper.emitted("close")).toHaveLength(1);
-            expect(wrapper.classes("o-drop--active")).toBeFalsy();
+            expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
         });
 
@@ -240,9 +206,9 @@ describe("Dropdown tests", () => {
             });
             await setTimeout(); // await event handler get set
 
-            const menu = wrapper.find(".o-drop__menu");
+            const menu = wrapper.find(".o-dropdown__menu");
 
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
 
             // click outside
@@ -252,19 +218,20 @@ describe("Dropdown tests", () => {
             // check dropdown closed
             expect(wrapper.emitted("update:active")).toBeUndefined();
             expect(wrapper.emitted("close")).toBeUndefined();
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
         });
 
-        test("react accordingly when clicking outside with closable", async () => {
+        test("react accordingly when clicking outside with closable false", async () => {
             const wrapper = mount(ODropdown, {
-                props: { active: true, closeable: false },
+                props: { active: true, closeOnOutside: false },
+                attachTo: document.body,
             });
             await setTimeout(); // await event handler get set
 
-            const menu = wrapper.find(".o-drop__menu");
+            const menu = wrapper.find(".o-dropdown__menu");
 
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
 
             // click outside
@@ -274,7 +241,7 @@ describe("Dropdown tests", () => {
             // check dropdown closed
             expect(wrapper.emitted("update:active")).toBeUndefined();
             expect(wrapper.emitted("close")).toBeUndefined();
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
         });
 
@@ -285,20 +252,20 @@ describe("Dropdown tests", () => {
             });
             await setTimeout(); // await event handler get set
 
-            const menu = wrapper.find(".o-drop__menu");
-            const trigger = wrapper.find(".o-drop__trigger");
+            const menu = wrapper.find(".o-dropdown__menu");
+            const trigger = wrapper.find(".o-dropdown__trigger");
 
-            expect(wrapper.classes("o-drop--active")).toBeFalsy();
+            expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
 
             // open on trigger click
             await trigger.trigger("click");
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
 
             // close on trigger click
             await trigger.trigger("click");
-            expect(wrapper.classes("o-drop--active")).toBeFalsy();
+            expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
         });
 
@@ -307,15 +274,15 @@ describe("Dropdown tests", () => {
                 props: { options: simpleOptions, disabled: true },
                 attachTo: document.body,
             });
-            const menu = wrapper.find(".o-drop__menu");
-            const trigger = wrapper.find(".o-drop__trigger");
+            const menu = wrapper.find(".o-dropdown__menu");
+            const trigger = wrapper.find(".o-dropdown__trigger");
 
-            expect(wrapper.classes("o-drop--active")).toBeFalsy();
+            expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
 
             await trigger.trigger("click");
 
-            expect(wrapper.classes("o-drop--active")).toBeFalsy();
+            expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
         });
 
@@ -326,16 +293,19 @@ describe("Dropdown tests", () => {
             });
             await setTimeout(); // await event handler get set
 
-            const menu = wrapper.find(".o-drop__menu");
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
+
+            const trigger = wrapper.find(".o-dropdown__trigger");
+            expect(trigger.exists()).toBeTruthy();
+            const menu = wrapper.find(".o-dropdown__menu");
+            expect(menu.exists()).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
 
-            document.dispatchEvent(
-                new KeyboardEvent("keyup", { key: "Escape" }),
-            );
+            // emit escape clicked event
+            await trigger.trigger("keydown", { key: "Escape" });
             await nextTick(); // await dom update
 
-            expect(wrapper.classes("o-drop--active")).toBeFalsy();
+            expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
             expect(menu.isVisible()).toBeFalsy();
         });
 
@@ -345,9 +315,9 @@ describe("Dropdown tests", () => {
             });
             await setTimeout(); // await event handler get set
 
-            const menu = wrapper.find(".o-drop__menu");
+            const menu = wrapper.find(".o-dropdown__menu");
 
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
 
             document.dispatchEvent(
@@ -355,7 +325,7 @@ describe("Dropdown tests", () => {
             );
             await nextTick(); // await dom update
 
-            expect(wrapper.classes("o-drop--active")).toBeTruthy();
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
             expect(menu.isVisible()).toBeTruthy();
         });
 
@@ -365,9 +335,9 @@ describe("Dropdown tests", () => {
                 attachTo: document.body,
             });
 
-            const trigger = wrapper.find(".o-drop__trigger");
+            const trigger = wrapper.find(".o-dropdown__trigger");
             await trigger.trigger("mouseenter");
-            expect(wrapper.find(".o-drop__menu").isVisible()).toBeFalsy();
+            expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeFalsy();
         });
 
         test("react accordingly when mouse over with trigger", async () => {
@@ -375,9 +345,36 @@ describe("Dropdown tests", () => {
                 props: { triggers: ["hover"] },
                 attachTo: document.body,
             });
-            const trigger = wrapper.find(".o-drop__trigger");
+            const trigger = wrapper.find(".o-dropdown__trigger");
             await trigger.trigger("mouseenter");
-            expect(wrapper.find(".o-drop__menu").isVisible()).toBeTruthy();
+            expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeTruthy();
+        });
+
+        test("react accordingly when page scolling", async () => {
+            const wrapper = mount(ODropdown, {
+                props: { active: true, closeOnScroll: true },
+                attachTo: document.body,
+            });
+            await setTimeout(); // await event handler get set
+
+            const menu = wrapper.find(".o-dropdown__menu");
+
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
+            expect(menu.isVisible()).toBeTruthy();
+
+            // do scroll
+            window.dispatchEvent(
+                new CustomEvent("scroll", { detail: "anything" }),
+            );
+            await nextTick(); // await dom update
+
+            // check dropdown closed
+            const activeEmits = wrapper.emitted("update:active");
+            expect(activeEmits).toHaveLength(1);
+            expect(activeEmits![0][0]).toBeFalsy();
+            expect(wrapper.emitted("close")).toHaveLength(1);
+            expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
+            expect(menu.isVisible()).toBeFalsy();
         });
     });
 
@@ -385,12 +382,13 @@ describe("Dropdown tests", () => {
         test("react accordingly when using teleport to body", () => {
             const wrapper = mount(ODropdown, { props: { teleport: true } });
 
-            expect(wrapper.find(".o-drop__menu").exists()).toBeFalsy();
+            expect(wrapper.find(".o-dropdown__menu").exists()).toBeFalsy();
 
-            const menu = document.getElementsByClassName("o-drop__menu");
+            const menu = document.getElementsByClassName("o-dropdown__menu");
             expect(menu.length).toBe(1);
-            const teleportWrapper =
-                document.getElementsByClassName("o-drop--teleport");
+            const teleportWrapper = document.getElementsByClassName(
+                "o-dropdown--teleport",
+            );
             expect(teleportWrapper.length).toBe(1);
         });
 
@@ -404,153 +402,194 @@ describe("Dropdown tests", () => {
                 props: { teleport: wrapperDiv },
             });
 
-            expect(wrapper.find(".o-drop__menu").exists()).toBeFalsy();
+            expect(wrapper.find(".o-dropdown__menu").exists()).toBeFalsy();
 
-            const menu = document.getElementsByClassName("o-drop__menu");
+            const menu = document.getElementsByClassName("o-dropdown__menu");
             expect(menu.length).toBe(1);
-            const teleportWrapper =
-                document.getElementsByClassName("o-drop--teleport");
+            const teleportWrapper = document.getElementsByClassName(
+                "o-dropdown--teleport",
+            );
             expect(teleportWrapper.length).toBe(1);
         });
     });
 
-    describe("test selection", () => {
+    describe("test selectable", () => {
         test("react accordingly when new item is selected", async () => {
             const wrapper = mount(ODropdown, {
-                props: { options, modelValue: options[0].value },
+                props: {
+                    active: true,
+                    options,
+                    modelValue: options[0].value,
+                    selectable: true,
+                },
             });
             await nextTick(); // await dropdown item rendered
 
-            const items = wrapper.findAll(".o-drop__item");
+            const items = wrapper.findAll(".o-dropdown__item");
             expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-drop__item--active")).toBeTruthy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             await items[2].trigger("click");
 
-            expect(items[0].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeTruthy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeTruthy();
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
             );
             expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("change")).toHaveLength(1);
-            expect(dropdown.emitted("change")![0][0]).toBe(options[2].value);
+            expect(dropdown.emitted("select")).toHaveLength(1);
+            expect(dropdown.emitted("select")![0][0]).toBe(options[2].value);
             expect(dropdown.emitted("close")).toHaveLength(1);
         });
 
         test("react accordingly when same item is selected", async () => {
             const wrapper = mount(ODropdown, {
-                props: { options, modelValue: options[0].value },
+                props: {
+                    active: true,
+                    options,
+                    modelValue: options[0].value,
+                    selectable: true,
+                },
             });
             await nextTick(); // await dropdown item rendered
 
-            const items = wrapper.findAll(".o-drop__item");
+            const items = wrapper.findAll(".o-dropdown__item");
             expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-drop__item--active")).toBeTruthy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             await items[0].trigger("click");
 
-            expect(items[0].classes("o-drop__item--active")).toBeTruthy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
             );
             expect(dropdown.emitted("update:modelValue")).toBeUndefined();
-            expect(dropdown.emitted("change")).toBeUndefined();
+            expect(dropdown.emitted("select")).toHaveLength(1);
+            expect(dropdown.emitted("select")![0][0]).toBe(options[0].value);
             expect(dropdown.emitted("close")).toHaveLength(1);
         });
 
         test("react accordingly when an item is selected with multiple prop", async () => {
             const wrapper = mount(ODropdown, {
-                props: { options, multiple: true },
+                props: {
+                    active: true,
+                    options,
+                    selectable: true,
+                    multiple: true,
+                    keepOpen: true,
+                },
+                attachTo: document.body,
             });
             await nextTick(); // await dropdown item rendered
 
-            const items = wrapper.findAll(".o-drop__item");
+            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
+
+            const menu = wrapper.find(".o-dropdown__menu");
+            expect(menu.exists()).toBeTruthy();
+            expect(menu.isVisible()).toBeTruthy();
+
+            const items = wrapper.findAll(".o-dropdown__item");
             expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             await items[0].trigger("click");
 
-            expect(items[0].classes("o-drop__item--active")).toBeTruthy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(menu.isVisible()).toBeTruthy();
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
             );
+            expect(dropdown.emitted("select")).toHaveLength(1);
+            expect(dropdown.emitted("select")![0]).toContain(options[0].value);
             expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("change")).toHaveLength(1);
-            expect(dropdown.emitted("change")![0][0]).toHaveLength(1);
-            expect(dropdown.emitted("change")![0][0]).toContain(
+            expect(dropdown.emitted("update:modelValue")![0][0]).toHaveLength(
+                1,
+            );
+            expect(dropdown.emitted("update:modelValue")![0][0]).toContain(
                 options[0].value,
             );
             expect(dropdown.emitted("close")).toBeUndefined();
 
             await items[2].trigger("click");
 
-            expect(items[0].classes("o-drop__item--active")).toBeTruthy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeTruthy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(menu.isVisible()).toBeTruthy();
 
+            expect(dropdown.emitted("select")).toHaveLength(2);
+            expect(dropdown.emitted("select")![1]).toContain(options[2].value);
             expect(dropdown.emitted("update:modelValue")).toHaveLength(2);
-            expect(dropdown.emitted("change")).toHaveLength(2);
-            expect(dropdown.emitted("change")![1][0]).toHaveLength(2);
-            expect(dropdown.emitted("change")![1][0]).toContain(
+            expect(dropdown.emitted("update:modelValue")![1][0]).toHaveLength(
+                2,
+            );
+            expect(dropdown.emitted("update:modelValue")![1][0]).toContain(
                 options[0].value,
             );
-            expect(dropdown.emitted("change")![1][0]).toContain(
+            expect(dropdown.emitted("update:modelValue")![1][0]).toContain(
                 options[2].value,
             );
             expect(dropdown.emitted("close")).toBeUndefined();
 
             await items[0].trigger("click");
-            expect(items[0].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeTruthy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeTruthy();
 
+            expect(dropdown.emitted("select")).toHaveLength(3);
+            expect(dropdown.emitted("select")![2]).toContain(options[0].value);
             expect(dropdown.emitted("update:modelValue")).toHaveLength(3);
-            expect(dropdown.emitted("change")).toHaveLength(3);
-            expect(dropdown.emitted("change")![2][0]).toHaveLength(1);
-            expect(dropdown.emitted("change")![2][0]).toContain(
+            expect(dropdown.emitted("update:modelValue")![2][0]).toHaveLength(
+                1,
+            );
+            expect(dropdown.emitted("update:modelValue")![2][0]).toContain(
                 options[2].value,
             );
             expect(dropdown.emitted("close")).toBeUndefined();
         });
 
-        test("react accordingly when item is selected without closeable", async () => {
+        test("react accordingly when item is selected with keepOpen", async () => {
             const wrapper = mount(ODropdown, {
-                props: { options, closeable: false },
+                props: {
+                    active: true,
+                    options,
+                    keepOpen: true,
+                    selectable: true,
+                },
             });
             await nextTick(); // await dropdown item rendered
 
-            const items = wrapper.findAll(".o-drop__item");
+            const items = wrapper.findAll(".o-dropdown__item");
             expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             await items[0].trigger("click");
 
-            expect(items[0].classes("o-drop__item--active")).toBeTruthy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
             );
             expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("change")).toHaveLength(1);
+            expect(dropdown.emitted("select")).toHaveLength(1);
             expect(dropdown.emitted("close")).toBeUndefined();
         });
 
@@ -561,39 +600,76 @@ describe("Dropdown tests", () => {
             });
             await nextTick(); // await dropdown item rendered
 
-            expect(wrapper.classes("o-drop--disabled")).toBeTruthy();
-            expect(wrapper.find(".o-drop__menu").isVisible()).toBeFalsy();
+            expect(wrapper.classes("o-dropdown--disabled")).toBeTruthy();
+            expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeFalsy();
 
-            const items = wrapper.findAll(".o-drop__item");
+            const items = wrapper.findAll(".o-dropdown__item");
             expect(items.length).toBe(simpleOptions.length);
-            expect(items[0].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             await items[0].trigger("click");
 
-            expect(items[0].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[1].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
             );
-            expect(dropdown.classes("o-drop--disabled")).toBeTruthy();
+            expect(dropdown.classes("o-dropdown--disabled")).toBeTruthy();
             expect(dropdown.emitted("update:modelValue")).toBeUndefined();
-            expect(dropdown.emitted("change")).toBeUndefined();
+            expect(dropdown.emitted("select")).toBeUndefined();
             expect(dropdown.emitted("close")).toBeUndefined();
+        });
+
+        test("react accordingly when selected with keydown", async () => {
+            const wrapper = mount(ODropdown, {
+                props: {
+                    options,
+                    selectable: true,
+                },
+                attachTo: document.body,
+            });
+
+            const trigger = wrapper.find(".o-dropdown__trigger");
+            expect(trigger.exists()).toBeTruthy();
+
+            // open menu with trigger click
+            await trigger.trigger("click");
+
+            let dropdown = wrapper.find(".o-dropdown__menu");
+
+            expect(dropdown.exists()).toBeTruthy();
+            expect(dropdown.isVisible()).toBeTruthy();
+
+            await trigger.trigger("keydown", { key: "Down" });
+            await trigger.trigger("keydown", { key: "Enter" });
+
+            expect(wrapper.emitted("select")).toStrictEqual([
+                [options[0].value],
+            ]);
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [options[0].value],
+            ]);
+
+            dropdown = wrapper.find(".o-dropdown__menu");
+
+            expect(dropdown.exists()).toBeTruthy();
+            expect(dropdown.isVisible()).toBeFalsy();
         });
     });
 
     describe("handle options props correctly", () => {
         test("react accordingly when is using objects values", async () => {
             const wrapper = mount(ODropdown, {
-                props: { options },
+                props: { active: true, options, selectable: true },
+                attachTo: document.body,
             });
             await nextTick(); // await dropdown item rendered
 
-            const items = wrapper.findAll(".o-drop__item");
+            const items = wrapper.findAll(".o-dropdown__item");
             expect(items.length).toBe(3);
 
             items.forEach((item, index) =>
@@ -602,9 +678,9 @@ describe("Dropdown tests", () => {
 
             const item = items[1];
             await item.trigger("click");
-            expect(items[0].classes("o-drop__item--active")).toBeFalsy();
-            expect(items[1].classes("o-drop__item--active")).toBeTruthy();
-            expect(items[2].classes("o-drop__item--active")).toBeFalsy();
+            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
+            expect(items[1].classes("o-dropdown__item--active")).toBeTruthy();
+            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
 
             const dropdown = wrapper.findComponent<ComponentPublicInstance>(
                 '[data-oruga="dropdown"]',
@@ -613,8 +689,8 @@ describe("Dropdown tests", () => {
             expect(dropdown.emitted("update:modelValue")![0][0]).toStrictEqual(
                 options[1].value,
             );
-            expect(dropdown.emitted("change")).toHaveLength(1);
-            expect(dropdown.emitted("change")![0][0]).toStrictEqual(
+            expect(dropdown.emitted("select")).toHaveLength(1);
+            expect(dropdown.emitted("select")![0][0]).toStrictEqual(
                 options[1].value,
             );
             expect(dropdown.emitted("close")).toHaveLength(1);
@@ -690,7 +766,7 @@ describe("Dropdown tests", () => {
         test("handle grouped options correctly", async () => {
             const options: OptionsGroupProp<string | number | object> = [
                 {
-                    group: "Black Sails",
+                    label: "Black Sails",
                     options: [
                         { label: "Flint", value: "flint" },
                         { label: "Silver", value: "silver" },
@@ -699,7 +775,7 @@ describe("Dropdown tests", () => {
                     ],
                 },
                 {
-                    group: "Breaking Bad",
+                    label: "Breaking Bad",
                     options: {
                         heisenberg: "Heisenberg",
                         jesse: "Jesse",
@@ -708,7 +784,7 @@ describe("Dropdown tests", () => {
                     },
                 },
                 {
-                    group: "Game of Thrones",
+                    label: "Game of Thrones",
                     attrs: { disabled: true },
                     options: [
                         "Tyrion Lannister",
@@ -734,7 +810,7 @@ describe("Dropdown tests", () => {
 
                 if (isGroup) {
                     const option = options[g_idx];
-                    expect(el.text()).toBe(option.group);
+                    expect(el.text()).toBe(option.label);
                     expect(el.attributes("aria-disabled")).toBe(
                         option.attrs?.disabled ? "true" : "false",
                     );

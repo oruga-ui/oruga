@@ -11,13 +11,13 @@ You can customise component classes in 3 different ways:
 
 - [Global configuration](#global)
 - [Individual configuration](#individual)
-- [Programmatically configuration](#programmatic)
+- [Programmatically configuration](/documentation/composables)
 
 ::: info
 Although all components have predefined classes, Oruga allows you to easily override the style of existing components by appending one or more classes, either globally or programmatically, to individual components.
 :::
 
-To configure a component, each component has a set of `class` properties which can be found in the `Class prop` section of a component (see for example [Autocomplete class props](/components/Autocomplete.html#class-props)).
+To configure a component, each component has a set of `class` properties which can be found in the `Class Inspector` section of a component (see for example [Autocomplete class inspector](/components/Autocomplete.html#class-inspector)).
 Here you can inspect the elements affected by each class property using the `Class Prop Inspector`. 
 
 <video class="oruga-doc-video" controls autoplay muted loop>
@@ -26,30 +26,32 @@ Here you can inspect the elements affected by each class property using the `Cla
 
 
 
-## Configuration {#global}
+## Global Configuration {#global}
 
 The easiest way to customise your components is set up a global configuration object with a <i>class-mapping</i> for each component.
 
-::: info
-While using TypeScript, the configuration object is defined by the type `OrugaOptions`.
-:::
-
 The Config object is defined as:
-```js
+```typescript
 {
-    globalProp: string|boolean|number|function|....,
-    componentName: {
+    [globalProp]: string|boolean|number|function|....,
+    [componentName]: {
         override: boolean,
-        classProp: string|boolean|number|function|....
+        [classProp]: string|boolean|number|function|....
     }
 }
 
 ```
 
+::: info
+While using TypeScript, the configuration object is defined by the type `OrugaOptions`.
+:::
+
 For example:
 
-```js
-{
+```typescript
+import type { OrugaOptions } from "@oruga-ui/oruga-next";
+
+const config: OrugaOptions = {
     iconPack: "fas",
     button: {
         override: true,
@@ -61,36 +63,36 @@ For example:
 
 ```
 
-The configuration object can the passed as option to the `Oruga` plugin:
+The configuration object can the passed as second option parameter to the `Oruga` plugin:
 
-```js
+```typescript
 import { createApp } from 'vue';
 import Oruga from '@oruga-ui/oruga-next';
 
 createApp(...)
     .use(Oruga, {
         autocomplete: {
-            rootClass: 'myautocomplete-root',
-            itemClass: 'myautocomplete-item',
+            rootClass: 'autocomplete-root',
+            itemClass: 'autocomplete-item',
             ...
         }
+        ...
     });
 ```
 
-You can also use an `array` to specify more than one class or a `function` to extend or override classes in a component. In case you use a function, a `suffix` is provided by the component and it can be used inside the function. For example, `menuPositionClass` in Autocomplete provides a suffix to specify the menu position (_top_, _bottom_), in this case you may define a function and append the suffix to the base class name
+You can also use an `array` to specify more than one class or a `function` to extend or override classes in a component. In case you use a function, a `suffix` is provided by the component and it can be used inside the function. For example, `positionClass` of the Dropdown component provides a suffix to specify the menu position (_top_, _bottom_), in this case you may define a function and append the suffix to the base class name.
 
-```js
+```typescript
 createApp(...)
     .use(Oruga, {
-        autocomplete: {
-            rootClass: ['autocomplete-root', 'additional-class']
-            menuPositionClass: {
-                class: (suffix) => {
-                    return `autocomplete-menu-${suffix}`
-                }
+        dropdown: {
+            rootClass: ['dropdown-root', 'additional-class'],
+            positionClass: {
+                class: (suffix) => `dropdown-menu-${suffix}`,
             },
-            itemClass: 'autocomplete-item',
+            itemClass: 'dropdown-item',
         }
+        ...
     });
 ```
 
@@ -99,101 +101,21 @@ For a better customisation experience, this function accepts the component's rea
 ```js
 createApp(...)
     .use(Oruga, {
-        input: {
+        button: {
             rootClass: (_, props) => {
-                if (props.iconRight) {
-                    return 'has-icons-right';
-                }
+                if (props.iconRight) return 'has-icons-right';
             },
             variantClass: (variant, props) => {
-                if (!props.outlined) {
-                    return `btn-${variant}`;
-                }
+                if (!props.outlined) return `btn-${variant}`;
             }
         },
         ...
     });
 ```
 
-### Overriding classes
+## Component properties {#individual}
 
-In case you want to override existing default Oruga classes completely, you can act as above and set the field `override` to true:
-
-```js
-createApp(...)
-    .use(Oruga, {
-        autocomplete: {
-            override: true,
-            rootClass: 'myautocomplete-root',
-            itemClass: 'myautocomplete-item',
-            ...
-        }
-    });
-```
-
-::: info
-While using themes like [Bootstrap](/documentation/themes#bootstrap) or [Bulma](/documentation/themes#bulma), this feature is used to create specific theme configs.
-:::
-
-Or directly in your component:
-
-```html
-<o-autocomplete
-    override
-    rootClass="myautocomplete-root">
-```
-
-::: warning
-In this case `override` property replaces **all** existing theme config classes completely, ignoring your configuration.
-:::
-
-You can also specify the override behaviour for each class:
-
-```js
-createApp(...)
-    .use(Oruga, {
-        autocomplete: {
-            rootClass: {
-                class: 'myautocomplete-root',
-                override: true
-            },
-            itemClass: 'myautocomplete-item',
-            ...
-        }
-    });
-```
-
-### Transform classes
-
-In case you want to transform applied `classes` you can use `transformClasses` function directly in your configuration:
-
-```js
-createApp(...)
-    .use(Oruga, {
-        button: {
-            transformClasses: (appliedClasses) => {
-                return appliedClasses.replace(/-/g, '--')
-            }
-        }
-        ...
-    })
-```
-
-You can also use `transformClasses` globally if you need to transform classes for any component:
-
-```js
-createApp(...)
-    .use(Oruga, {
-        transformClasses: (appliedClasses) => {
-            return appliedClasses.replace(/-/g, '--')
-        }
-        ...
-    })
-```
-
-### Component properties {#individual}
-
-You can also add and override classes to a component directly using `class` properties:
+You can add classes to a component directly using the specific `class` properties, which can be found in the `Class Inspector` section of a component:
 
 ```html
 <o-autocomplete 
@@ -201,107 +123,89 @@ You can also add and override classes to a component directly using `class` prop
     item-class="autocomplete-item" />
 ```
 
+
+## Overriding classes
+
+In case you want to override existing default Oruga classes completely, either for one component or for all, you can act as above and set the field `override` to true:
+
+```typescript
+createApp(...)
+    .use(Oruga, {
+        autocomplete: {
+            override: true,
+            rootClass: 'autocomplete-root',
+            itemClass: 'autocomplete-item',
+            ...
+        }
+    });
+```
+
+::: info
+While using themes such as [Bootstrap](/documentation/themes#bootstrap) or [Bulma](/documentation/themes#bulma), this feature is used to remove all default classes and to create specific theme configurations.
+:::
+
+This property can also be passed directly to the component:
+
+```html
+<o-autocomplete
+    override
+    rootClass="autocomplete-root">
+```
+
+::: warning
+In this case, the `override` property replaces **all** existing predefined classes for this component completely, ignoring your configuration.
+:::
+
+You can also specify the override behaviour for each class individually:
+
+```typescript
+createApp(...)
+    .use(Oruga, {
+        autocomplete: {
+            rootClass: {
+                override: true
+                class: 'autocomplete-root',
+            },
+            itemClass: 'autocomplete-item',
+            ...
+        }
+    });
+```
+
+## Transform classes
+
+In case you want to transform applied `classes` you can use the `transformClasses` function directly in your configuration, for each component or globally for any component:
+
+```typescript
+createApp(...)
+    .use(Oruga, {
+        // global transform function
+        transformClasses: (appliedClasses: string) => {
+            return appliedClasses.replace(/-/g, '--')
+        }
+        button: {
+            // component scoped transform function
+            transformClasses: (appliedClasses: string) => {
+                return appliedClasses.replace(/-/g, '--')
+            }
+        }
+        ...
+    })
+```
+
+
+
 ## Global Props
 
 | Field              | Description                                                                                                                                                                                  | Default |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| override           | In case you want to override existing Oruga default classes all components completely, you can specify the override behaviour here globaly.                                                  | <code style='white-space: nowrap; padding: 0;'>null</code>   |
+| override           | In case you want to completely override all the existing Oruga default classes for each component, you can specify the override behaviour here globaly.                                                  | <code style='white-space: nowrap; padding: 0;'>null</code>   |
 | iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
 | iconComponent      | Define a specific icon component                                                                                                                                                             | <code style='white-space: nowrap; padding: 0;'>null</code>    |
 | statusIcon         | Show status icon using field and variant prop                                                                                                                                                | <code style='white-space: nowrap; padding: 0;'>true</code>   |
-| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
-| useHtml5Validation | Enable default form components HTML5 validation attribute                                                                                                                                    | <code style='white-space: nowrap; padding: 0;'>true</code>    |
+| statusVariantIcon  | Default status variant and icon mapping name                                                                                                                                                 | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
+| useHtml5Validation | Enable HTML5 form validation attribute                                                                                                                                                       | <code style='white-space: nowrap; padding: 0;'>true</code>    |
 | invalidHandler | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
 
 Have a look at the docs of each component to know all the customisable fields/props by config.
 
-
-## Programmatic usage {#programmatic}
-
-As alternative Oruga provide a programmatic interface `useOruga()` to access the config as well as programmatic component interfaces such as [`Modal`](/components/Modal.html#programmatically) or [`Sidebar`](/components/Sidebar.html#programmatically).
-This interface gives you access to all registered programmatic components. A programmatic component interface get registered while using the main or an individual component plugin.
-
-
-### Programmatic component 
-
-If you use the default main plugin export or any plugin of a component with a programmatic interface, this interface will be registered and can be accessed using the `useOruga()` composable:
-
-```js
-import { useOruga } from "@oruga-ui/oruga-next";
-
-const oruga = useOruga();
-
-oruga.sidebar.open({
-    component: MyCoolComponent,
-    fullheight: true,
-    overlay: true,
-    destroyOnHide: true,
-});
-```
-
-### Programmatic config 
-
-The config can be customised for each component by overriding the `Config` object programmatically:
-
-```js
-import { useOruga } from '@oruga-ui/oruga-next';
-
-const oruga = useOruga();
-
-const config = oruga.config.getOptions();
-
-const myThemeConfig = {
-    ...config,
-    autocomplete: {
-        rootClass: 'autocomplete-root',
-        itemClass: 'autocomplete-item',
-        ...
-    }
-}
-
-oruga.config.setOptions(myThemeConfig);
-```
-
-However, you can also customise each component by using the dedicated `ConfigProgrammatic` object:
-
-```js
-import { ConfigProgrammatic } from '@oruga-ui/oruga-next';
-
-const config = ConfigProgrammatic.getOptions();
-
-const myThemeConfig = {
-    ...config,
-    autocomplete: {
-        rootClass: 'autocomplete-root',
-        itemClass: 'autocomplete-item',
-        ...
-    }
-}
-
-ConfigProgrammatic.setOptions(myThemeConfig);
-```
-
-If you use individual imports instead of the default main plugin export, the programmatic config will not be registered to the `useOruga()` interface by default.
-Therefore, you can make the config interface available by adding the dedicated `OrugaConfig` plugin:
-
-```js
-import { createApp } from 'vue';
-import { OAutocomplete, OSidebar, OrugaConfig, useOruga } from '@oruga-ui/oruga-next';
-
-createApp(...)
-    .component(OAutocomplete)
-    .component(OSidebar)
-    .use(OrugaConfig);
-
-const oruga = useOruga();
-
-const config = oruga.config.getOptions();
-
-config.setOption("autocomplete", {
-    rootClass: 'autocomplete-root',
-    itemClass: 'autocomplete-item',
-    ...
-});
-
-config.setOption("sidebar", { ... });
-```

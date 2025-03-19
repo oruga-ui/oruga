@@ -9,7 +9,7 @@ const type = ref("default");
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field label="Position">
                 <o-select v-model="position" placeholder="Position">
                     <option :value="undefined">Default</option>

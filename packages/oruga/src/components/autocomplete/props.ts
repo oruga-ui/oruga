@@ -1,5 +1,6 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
+import type { InputProps } from "../input/props";
 
 export type AutocompleteProps<T> = {
     /** Override existing theme classes completely */
@@ -11,6 +12,8 @@ export type AutocompleteProps<T> = {
     modelValue?: T;
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;
+    /** The active state of the dropdown, use v-model:active to make it two-way binding */
+    active?: boolean;
     /** Autocomplete options */
     options?: OptionsPropWithGroups<T>;
     /** Function to filter the option based on the input value - default is label string comparison */
@@ -22,7 +25,7 @@ export type AutocompleteProps<T> = {
     /** Menu item tag name */
     itemTag?: DynamicComponent;
     /**
-     * Size of the control
+     * Size of the input control
      * @values small, medium, large
      */
     size?: string;
@@ -41,32 +44,26 @@ export type AutocompleteProps<T> = {
     disabled?: boolean;
     /** Same as native maxlength, plus character counter */
     maxlength?: string | number;
-    /** Makes the component check if list reached scroll start or end and emit scroll events. */
-    checkScroll?: boolean;
     /** Number of milliseconds to delay before to emit input event */
     debounce?: number;
-    /** The first option will always be pre-selected (easier to just hit enter or tab) */
+    /** The first option will always be focused (easier to just hit enter or tab) */
     keepFirst?: boolean;
+    /** Keep open dropdown list after select */
+    keepOpen?: boolean;
     /** Clear input text on select */
     clearOnSelect?: boolean;
     /** Open dropdown list on focus */
     openOnFocus?: boolean;
-    /** Keep open dropdown list after select */
-    keepOpen?: boolean;
-    /** Max height of dropdown content */
-    maxHeight?: string | number;
-    /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
-    confirmKeys?: string[];
-    /** Dropdown content (items) are shown into a modal on mobile */
-    mobileModal?: boolean;
-    /** Transition name to apply on dropdown list */
-    animation?: string;
-    /** Trigger the select event for the first pre-selected option when clicking outside and `keep-first` is enabled */
-    selectOnClickOutside?: boolean;
+    /** Trigger the select event for focused option when drodpown got closed */
+    selectOnClose?: boolean;
     /** Allows the header in the autocomplete to be selectable */
     selectableHeader?: boolean;
     /** Allows the footer in the autocomplete to be selectable */
     selectableFooter?: boolean;
+    /** Max height of dropdown content */
+    maxHeight?: string | number;
+    /** Makes the component check if list reached scroll start or end and emit scroll events. */
+    checkScroll?: boolean;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -88,6 +85,12 @@ export type AutocompleteProps<T> = {
     clearIcon?: string;
     /** Show status icon using field and variant prop */
     statusIcon?: boolean;
+    /** Dropdown content (items) are shown into a modal on mobile */
+    mobileModal?: boolean;
+    /** Dropdown content (items) are shown into a modal on desktop */
+    desktopModal?: boolean;
+    /** Transition name to apply on dropdown list */
+    animation?: string;
     /** Native options to use in HTML5 validation */
     autocomplete?: string;
     /** Enable HTML 5 native validation */
@@ -108,24 +111,22 @@ export type AutocompleteProps<T> = {
 } & AutocompleteClasses;
 
 // class props (will not be displayed in the docs)
-type AutocompleteClasses = Partial<{
+export type AutocompleteClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the menu items */
     itemClass: ComponentClass;
-    /** Class of the menu items on hover */
-    itemHoverClass: ComponentClass;
     /** Class of the menu items group title */
     itemGroupTitleClass: ComponentClass;
-    /** Class of the menu empty placeholder item */
+    /** Class of the empty menu placeholder item */
     itemEmptyClass: ComponentClass;
     /** Class of the menu header item */
     itemHeaderClass: ComponentClass;
     /** Class of the menu footer item */
     itemFooterClass: ComponentClass;
     /**
-     * Classes to apply on internal input component
+     * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: object;
+    inputClasses: InputProps<false>;
 }>;

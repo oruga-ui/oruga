@@ -238,7 +238,7 @@ function cellClasses(day: Date): ClassBind[] {
     const classes = defineClasses(
         [
             "tableCellSelectedClass",
-            "o-dpck__table__cell--selected",
+            "o-datepicker__table__cell--selected",
             null,
             dateMatch(day, props.selectedDate) ||
                 dateWithin(
@@ -249,7 +249,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "tableCellFirstSelectedClass",
-            "o-dpck__table__cell--first-selected",
+            "o-datepicker__table__cell--first-selected",
             null,
             dateMatch(
                 day,
@@ -261,7 +261,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "tableCellWithinSelectedClass",
-            "o-dpck__table__cell--within-selected",
+            "o-datepicker__table__cell--within-selected",
             null,
             dateWithin(
                 day,
@@ -271,7 +271,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "tableCellLastSelectedClass",
-            "o-dpck__table__cell--last-selected",
+            "o-datepicker__table__cell--last-selected",
             null,
             dateMatch(
                 day,
@@ -283,7 +283,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "tableCellFirstHoveredClass",
-            "o-dpck__table__cell--first-hovered",
+            "o-datepicker__table__cell--first-hovered",
             null,
             dateMatch(
                 day,
@@ -294,13 +294,13 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "tableCellWithinHoveredClass",
-            "o-dpck__table__cell--within-hovered",
+            "o-datepicker__table__cell--within-hovered",
             null,
             dateWithin(day, props.hoveredDateRange),
         ],
         [
             "tableCellLastHoveredClass",
-            "o-dpck__table__cell--last-hovered",
+            "o-datepicker__table__cell--last-hovered",
             null,
             dateMatch(
                 day,
@@ -311,13 +311,13 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "tableCellTodayClass",
-            "o-dpck__table__cell--today",
+            "o-datepicker__table__cell--today",
             null,
             dateMatch(day, dateCreator()),
         ],
         [
             "tableCellSelectableClass",
-            "o-dpck__table__cell--selectable",
+            "o-datepicker__table__cell--selectable",
             null,
             isDateSelectable(day, props.month) &&
                 !props.pickerProps.disabled &&
@@ -325,20 +325,20 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "tableCellUnselectableClass",
-            "o-dpck__table__cell--unselectable",
+            "o-datepicker__table__cell--unselectable",
             null,
             !isDateSelectable(day, props.month) || props.pickerProps.disabled,
         ],
         [
             "tableCellInvisibleClass",
-            "o-dpck__table__cell--invisible",
+            "o-datepicker__table__cell--invisible",
             null,
             !props.pickerProps.nearbyMonthDays &&
                 day.getMonth() !== props.month,
         ],
         [
             "tableCellNearbyClass",
-            "o-dpck__table__cell--nearby",
+            "o-datepicker__table__cell--nearby",
             null,
             props.pickerProps.nearbySelectableMonthDays &&
                 day.getMonth() !== props.month,
@@ -356,16 +356,16 @@ function cellClasses(day: Date): ClassBind[] {
 
 function eventClasses(event: DatepickerEvent): ClassBind[] {
     const classes = defineClasses(
-        ["tableEventClass", "o-dpck__table__event"],
+        ["tableEventClass", "o-datepicker__table__event"],
         [
             "tableEventVariantClass",
-            "o-dpck__table__event--",
+            "o-datepicker__table__event--",
             event.type,
             !!event.type,
         ],
         [
-            "tableEventIndicatorsClass",
-            "o-dpck__table__event--",
+            "tableEventIndicatorClass",
+            "o-datepicker__table__event--",
             props.pickerProps.indicators,
             !!props.pickerProps.indicators,
         ],
@@ -375,24 +375,34 @@ function eventClasses(event: DatepickerEvent): ClassBind[] {
     return classes.value;
 }
 
-const tableRowClasses = defineClasses(["tableRowClass", "o-dpck__table__row"]);
+const tableRowClasses = defineClasses(
+    ["tableRowClass", "o-datepicker__table__row"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const tableCellClasses = defineClasses([
-    "tableCellClass",
-    "o-dpck__table__cell",
-]);
+const tableCellClasses = defineClasses(
+    ["tableCellClass", "o-datepicker__table__cell"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const tableEventsClasses = defineClasses([
-    "tableEventsClass",
-    "o-dpck__table__events",
-]);
+const tableEventsClasses = defineClasses(
+    ["tableEventsClass", "o-datepicker__table__events"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const cellEventsClass = defineClasses([
-    "tableCellEventsClass",
-    "o-dpck__table__cell--events",
-    null,
-    hasEvents,
-]);
+const cellEventsClass = defineClasses(
+    [
+        "tableCellEventsClass",
+        "o-datepicker__table__cell--events",
+        null,
+        hasEvents,
+    ],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 </script>
 
 <template>

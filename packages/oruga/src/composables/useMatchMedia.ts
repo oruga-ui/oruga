@@ -1,4 +1,4 @@
-import { getCurrentInstance, ref } from "vue";
+import { getCurrentInstance, ref, type Ref } from "vue";
 import { getOption } from "@/utils/config";
 import { useEventListener } from "./useEventListener";
 import { isClient } from "@/utils/ssr";
@@ -7,9 +7,11 @@ import { isClient } from "@/utils/ssr";
  * Checks if the match media is mobile.
  * @param mobileBreakpoint px breakpoint
  */
-export function useMatchMedia(mobileBreakpoint?: string) {
+export function useMatchMedia(mobileBreakpoint?: string): {
+    isMobile: Ref<boolean>;
+} {
     const isMobile = ref(false);
-    const mediaQuery = ref();
+    const mediaQuery = ref<MediaQueryList>();
 
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
@@ -42,7 +44,7 @@ export function useMatchMedia(mobileBreakpoint?: string) {
 
     if (mediaQuery.value) {
         isMobile.value = mediaQuery.value.matches;
-        useEventListener("change", onMatchMedia, mediaQuery.value);
+        useEventListener(mediaQuery.value, "change", onMatchMedia);
     } else {
         isMobile.value = false;
     }

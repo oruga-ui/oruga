@@ -37,11 +37,11 @@ describe("OSelect tests", () => {
             '[data-oruga="select"] > span[data-oruga="icon"]:first-child',
         );
         expect(iconElement.exists()).toBeTruthy();
-        expect(iconElement.classes("o-sel__icon-left")).toBeTruthy();
+        expect(iconElement.classes("o-select__icon-left")).toBeTruthy();
 
         const select = wrapper.find("select");
         expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel-iconspace-left")).toBeTruthy();
+        expect(select.classes("o-select__input--iconspace-left")).toBeTruthy();
 
         await iconElement.trigger("click");
         expect(wrapper.emitted("icon-click")).toBeUndefined();
@@ -56,7 +56,7 @@ describe("OSelect tests", () => {
             '[data-oruga="select"] > span[data-oruga="icon"]:first-child',
         );
         expect(iconElement.exists()).toBeTruthy();
-        expect(iconElement.classes("o-sel__icon-left")).toBeTruthy();
+        expect(iconElement.classes("o-select__icon-left")).toBeTruthy();
 
         await iconElement.trigger("click");
         expect(wrapper.emitted("icon-click")).toHaveLength(1);
@@ -71,11 +71,11 @@ describe("OSelect tests", () => {
             '[data-oruga="select"] > span[data-oruga="icon"]:last-child',
         );
         expect(iconElement.exists()).toBeTruthy();
-        expect(iconElement.classes("o-sel__icon-right")).toBeTruthy();
+        expect(iconElement.classes("o-select__icon-right")).toBeTruthy();
 
         const select = wrapper.find("select");
         expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel-iconspace-right")).toBeTruthy();
+        expect(select.classes("o-select__input--iconspace-right")).toBeTruthy();
 
         await iconElement.trigger("click");
         expect(wrapper.emitted("icon-right-click")).toBeUndefined();
@@ -90,7 +90,7 @@ describe("OSelect tests", () => {
             '[data-oruga="select"] > span[data-oruga="icon"]:last-child',
         );
         expect(iconElement.exists()).toBeTruthy();
-        expect(iconElement.classes("o-sel__icon-right")).toBeTruthy();
+        expect(iconElement.classes("o-select__icon-right")).toBeTruthy();
 
         await iconElement.trigger("click");
         expect(wrapper.emitted("icon-right-click")).toHaveLength(1);
@@ -117,9 +117,7 @@ describe("OSelect tests", () => {
             props: { size: "large" },
         });
 
-        const select = wrapper.find("select");
-        expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel--large")).toBeTruthy();
+        expect(wrapper.classes("o-select--large")).toBeTruthy();
     });
 
     test("render accordingly when has variant prop", () => {
@@ -127,11 +125,7 @@ describe("OSelect tests", () => {
             props: { variant: "danger" },
         });
 
-        expect(wrapper.classes("o-ctrl-sel--danger")).toBeTruthy();
-
-        const select = wrapper.find("select");
-        expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel--danger")).toBeTruthy();
+        expect(wrapper.classes("o-select--danger")).toBeTruthy();
     });
 
     test("render accordingly when has placeholder prop", () => {
@@ -143,7 +137,7 @@ describe("OSelect tests", () => {
 
         const select = wrapper.find("select");
         expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel--placeholder")).toBeTruthy();
+        expect(select.classes("o-select__input--placeholder")).toBeTruthy();
 
         const options = select.findAll("option");
         expect(options.length).toBe(1);
@@ -155,12 +149,20 @@ describe("OSelect tests", () => {
             props: { disabled: true },
         });
 
+        expect(wrapper.classes("o-select--disabled")).toBeTruthy();
+
         const select = wrapper.find("select");
         expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel--disabled")).toBeTruthy();
-        expect(select.attributes("disabled")).not.toBeUndefined();
+        expect(select.attributes("disabled")).toBeDefined();
     });
 
+    test("expands input when expanded property is passed", async () => {
+        const wrapper = mount(OSelect, {
+            props: { expanded: true },
+        });
+
+        expect(wrapper.classes()).toContain("o-select--expanded");
+    });
     test("react accordingly when value change ", async () => {
         const wrapper = mount(OSelect, {
             props: { options },
@@ -203,9 +205,11 @@ describe("OSelect tests", () => {
             },
         });
 
+        expect(wrapper.classes("o-select--multiple")).toBeTruthy();
+
         const select = wrapper.find("select");
         expect(select.exists()).toBeTruthy();
-        expect(select.classes("o-sel--multiple")).toBeTruthy();
+        expect(select.attributes("multiple")).toBeDefined();
 
         // check all options are there
         const optionValues = wrapper.findAll("option");
@@ -313,7 +317,7 @@ describe("OSelect tests", () => {
         test("handle grouped options correctly", () => {
             const options: OptionsGroupProp<string | number | object> = [
                 {
-                    group: "Black Sails",
+                    label: "Black Sails",
                     options: [
                         { label: "Flint", value: "flint" },
                         { label: "Silver", value: "silver" },
@@ -322,7 +326,7 @@ describe("OSelect tests", () => {
                     ],
                 },
                 {
-                    group: "Breaking Bad",
+                    label: "Breaking Bad",
                     options: {
                         heisenberg: "Heisenberg",
                         jesse: "Jesse",
@@ -331,7 +335,7 @@ describe("OSelect tests", () => {
                     },
                 },
                 {
-                    group: "Game of Thrones",
+                    label: "Game of Thrones",
                     attrs: { disabled: true },
                     options: [
                         "Tyrion Lannister",

@@ -2,7 +2,7 @@ import type { Component } from "vue";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
-export type SidebarProps<C extends Component> = {
+export type SidebarProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** Whether siedbar is active or not, use v-model:active to make it two-way binding */
@@ -37,11 +37,11 @@ export type SidebarProps<C extends Component> = {
      */
     cancelable?: string[] | boolean;
     /**
-     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-     * but will set body to position fixed, might break some layouts.
-     * @values keep, clip
+     * Set `true` to remove the body scrollbar.
+     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+     * but will set the body to a fixed position, which may break some layouts.
      */
-    scroll?: "clip" | "keep";
+    clipScroll?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**
@@ -50,6 +50,11 @@ export type SidebarProps<C extends Component> = {
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
+    /**
+     * DOM container element for programmatic usage.
+     * @ignore internal property
+     */
+    container?: HTMLElement;
     /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
@@ -62,37 +67,37 @@ export type SidebarProps<C extends Component> = {
 } & SidebarClasses;
 
 // class props (will not be displayed in the docs)
-type SidebarClasses = Partial<{
+export type SidebarClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of sidebar component when its active */
-    activeClass: ComponentClass;
-    /** Class of sidebar when teleported */
-    teleportClass: ComponentClass;
-    /** Class of the sidebar overlay */
-    overlayClass: ComponentClass;
-    /** Class of the sidebar content */
-    contentClass: ComponentClass;
-    /** Class of the sidebar position */
-    positionClass: ComponentClass;
-    /** Class of the sidebar when is fullheight */
-    fullheightClass: ComponentClass;
-    /** Class of the sidebar when is fullwidth */
-    fullwidthClass: ComponentClass;
-    /** Class of the sidebar when its inlined */
-    inlineClass: ComponentClass;
-    /** Class of the sidebar when reduced */
-    reduceClass: ComponentClass;
-    /** Class of the sidebar when expanded on hover */
-    expandOnHoverClass: ComponentClass;
-    /** Class of sidebar component when on mobile */
+    /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Class of the body when sidebar clipped */
-    scrollClipClass: ComponentClass;
-    /** Class of the body when sidebar is not clipped */
-    noScrollClass: ComponentClass;
-    /** Class of the sidebar content when sidebar is hidden */
+    /** Class of the root element when active */
+    activeClass: ComponentClass;
+    /** Class of the root element when teleported */
+    teleportClass: ComponentClass;
+    /** Class of the root element when inlined */
+    inlineClass: ComponentClass;
+    /** Class of the overlay element */
+    overlayClass: ComponentClass;
+    /** Class of the content element */
+    contentClass: ComponentClass;
+    /** Class of the content element when hidden */
     hiddenClass: ComponentClass;
-    /** Class of the sidebar content when sidebar is visible */
+    /** Class of the content element when visible */
     visibleClass: ComponentClass;
+    /** Class of the content element with position */
+    positionClass: ComponentClass;
+    /** Class of the content element when is fullheight */
+    fullheightClass: ComponentClass;
+    /** Class of the content element when is fullwidth */
+    fullwidthClass: ComponentClass;
+    /** Class of the content element when reduced */
+    reduceClass: ComponentClass;
+    /** Class of the content element when expanded on hover */
+    expandOnHoverClass: ComponentClass;
+    /** Class of the body when is visible and scroll is clipped */
+    scrollClipClass: ComponentClass;
+    /** Class of the body when is visible and scroll is keeped */
+    scrollKeepClass: ComponentClass;
 }>;

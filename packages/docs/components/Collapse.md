@@ -1,29 +1,25 @@
 # Collapse
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> An easy way to toggle what you want
+The **Collapse** component is an easy way to toggle the visibility of content with show/hide functionality.
+The component supports the W3C ARIA APG [Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-collapse />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-collapse-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Collapse component
 
-> An easy way to toggle what you want
+> An easy way to toggle what you want.
 
 ```html
 <o-collapse></o-collapse>
@@ -35,9 +31,11 @@
 | --------- | ---------------------------------------------------------------------------- | ----------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | animation | Custom animation (transition name)                                           | string            | -               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code> |
 | contentId | Id property of the content container - default is an uuid                    | string            | -               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                        |
+| expanded  | Expand the trigger to fullwidth                                              | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
 | open      | Whether collapse is open or not, use v-model:open to make it two-way binding | boolean           | -               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                           |
 | override  | Override existing theme classes completely                                   | boolean           | -               |                                                                                                                                                      |
 | position  | Trigger position                                                             | "bottom" \| "top" | `top`, `bottom` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |
+| triggerId | Id property of the trigger container - default is an uuid                    | string            | -               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                        |
 
 ### Events
 
@@ -54,9 +52,18 @@
 | trigger | Define the collapse trigger | **open** `boolean` - collapse open state |
 | default | Default content             |                                          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-collapse-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -82,4 +89,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

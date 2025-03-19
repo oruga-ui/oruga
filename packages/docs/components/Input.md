@@ -1,29 +1,26 @@
 # Input
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> Get user Input. Use with Field to access all functionalities
+The **Input** component uses [HTML's native text input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text).
+It allows a user to enter a single line of text.
+Combine it with the Field component to access all functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-input />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-input-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Input component
 
-> Get user Input. Use with Field to access all functionalities
+> Get user Input. Use with Field to access all functionalities.
 
 ```html
 <o-input></o-input>
@@ -50,7 +47,7 @@
 | iconRightVariant   | Variant of right icon                                                               | string                                                                                                | -                                                                               |                                                                                                                                                           |
 | id                 | Same as native id. Also set the for label for o-field wrapper - default is an uuid. | string                                                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                             |
 | maxlength          | Same as native maxlength, plus character counter                                    | number \| string                                                                                      | -                                                                               |                                                                                                                                                           |
-| modelModifiers     |                                                                                     | Record&lt;string, true&gt;                                                                            | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                    |
+| modelModifiers     |                                                                                     | Partial&lt;Record&lt;string, true&gt;&gt;                                                             | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                    |
 | v-model            | The input value state                                                               | number \| string                                                                                      | -                                                                               |                                                                                                                                                           |
 | number             | Convert the ´modelValue`into type`number`                                           | boolean                                                                                               | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                    |
 | override           | Override existing theme classes completely                                          | boolean                                                                                               | -                                                                               |                                                                                                                                                           |
@@ -75,9 +72,18 @@
 | icon-click         | **event** `Event` - native event                                      | on icon click event             |
 | icon-right-click   | **event** `Event` - native event                                      | on icon right click event       |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-input-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -100,7 +106,7 @@
 | $input-margin                | 0                                                     |
 | $input-padding               | $control-padding-vertical $control-padding-horizontal |
 | $input-counter-font-size     | 0.75rem                                               |
-| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
+| $input-counter-margin        | 0.25rem 0.5rem                                        |
 | $input-textarea-max-height   | 600px                                                 |
 | $input-textarea-min-height   | 120px                                                 |
 | $input-textarea-padding      | 0.625em                                               |
@@ -112,7 +118,12 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default    |
+| ------------- | ---------- |
+| $input-colors | dv.$colors |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_input.scss)
+
 </div>
 <div class="theme-bootstrap">
 
@@ -130,4 +141,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

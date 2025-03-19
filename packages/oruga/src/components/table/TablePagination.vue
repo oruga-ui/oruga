@@ -9,6 +9,7 @@ defineOptions({
     isOruga: true,
     name: "OTablePagination",
     configField: "table",
+    inheritAttrs: false,
 });
 
 defineProps({
@@ -48,6 +49,7 @@ function pageChanged(page: number): void {
         <div>
             <slot />
         </div>
+
         <div>
             <o-pagination
                 v-if="paginated"

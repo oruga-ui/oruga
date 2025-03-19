@@ -1,29 +1,25 @@
 # Icon
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> Icons take an important role of any application
+The **Icon** component helps to display icons the right way. Icons are an important part of any application.
+Oruga is compatible with both [Material Design Icons](https://materialdesignicons.com/) and [FontAwesome 5](https://fontawesome.com/) but you can also add your own custom icon pack.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
+
 ## Examples
 
 <example-icon />
 
-</div>
+</section>
 
-<div class="vp-example">
-## Class props
+<section class="odocs-specs">
 
-<inspector-icon-viewer />
-
-</div>
-
-<div class="vp-doc">
 ## Icon component
 
-> Icons take an important role of any application
+> Icons take an important role of any application.
 
 ```html
 <o-icon></o-icon>
@@ -44,9 +40,18 @@
 | spin       | Enable spin effect on icon                 | boolean          | -                                                                                                                | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
 | variant    | Color of the icon                          | string           | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>icon: {<br>&nbsp;&nbsp;variant: undefined<br>}</code> |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-icon-viewer />
+
+</section>
+
+<section class="odocs-style">
+
 ## Sass variables
 
 <div class="theme-oruga">
@@ -83,4 +88,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>
