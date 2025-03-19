@@ -55,11 +55,6 @@ export type GlobalConfig = Partial<{
     /** Define a specific icon component */
     iconComponent: DynamicComponent;
     /**
-     * Teleport and programmatic default target
-     * @default document.body
-     */
-    teleportTarget: MaybeRefOrGetter<HTMLElement>;
-    /**
      * Show input status icon using field and variant prop
      * @default true
      */
@@ -71,6 +66,11 @@ export type GlobalConfig = Partial<{
         info: string;
         warning: string;
     };
+    /**
+     * Teleport and programmatic default target
+     * @default document.body
+     */
+    teleportTarget: MaybeRefOrGetter<HTMLElement>;
     /**
      * Enable default form components HTML5 validation attribute
      * @default true
