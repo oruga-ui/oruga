@@ -27,7 +27,7 @@ const data = ref({});
 const classes = ref({});
 /** applied classed of the HTML element */
 const appliedClasses = ref<string | undefined>();
-let interval: NodeJS.Timeout | undefined;
+let interval: ReturnType<typeof setTimeout> | undefined;
 
 onUnmounted(() => {
     clearTimeout(interval);
