@@ -10,3 +10,4 @@ export * from "./useScrollingParent";
 export * from "./useOptions";
 export * from "./usePreventScrolling";
 export * from "./useSequentialId";
+export * from "./useConfig";

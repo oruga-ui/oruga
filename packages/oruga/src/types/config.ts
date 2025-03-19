@@ -2,6 +2,7 @@
 import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
 import type { DynamicComponent } from "./utils";
+import type { MaybeRefOrGetter } from "vue";
 
 /** export option types */
 export type {
@@ -53,7 +54,15 @@ export type GlobalConfig = Partial<{
     customIconPacks: Record<string, IconConfig>;
     /** Define a specific icon component */
     iconComponent: DynamicComponent;
-    /** Show input status icon using field and variant prop */
+    /**
+     * Teleport and programmatic default target
+     * @default document.body
+     */
+    teleportTarget: MaybeRefOrGetter<HTMLElement>;
+    /**
+     * Show input status icon using field and variant prop
+     * @default true
+     */
     statusIcon: boolean;
     /** Default mapping of variant and icon name */
     statusVariantIcon: {
@@ -62,7 +71,10 @@ export type GlobalConfig = Partial<{
         info: string;
         warning: string;
     };
-    /** Enable default form components HTML5 validation attribute */
+    /**
+     * Enable default form components HTML5 validation attribute
+     * @default true
+     */
     useHtml5Validation: boolean;
     /** Custom HTML5 validation invalid handler */
     invalidHandler: (

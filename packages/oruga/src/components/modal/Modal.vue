@@ -21,6 +21,7 @@ import {
     useEventListener,
     useMatchMedia,
     usePreventScrolling,
+    useTeleportDefault,
 } from "@/composables";
 
 import type { ModalProps } from "./props";
@@ -83,7 +84,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
-        ? { to: "body", disabled: !props.teleport }
+        ? { to: useTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
 

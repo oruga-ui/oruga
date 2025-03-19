@@ -14,6 +14,7 @@ const globalOptions = ref<OrugaOptions>({
     useHtml5Validation: true,
     statusIcon: true,
     transformClasses: undefined,
+    teleportTarget: document.body,
 });
 
 export const setOptions = (options: OrugaOptions): void => {
@@ -24,7 +25,7 @@ export const getOptions = (): OrugaOptions => {
     return Object.assign({}, toRaw(globalOptions.value));
 };
 
-export const getOption = <K extends string = string>(
+export const getOption = <K extends keyof OrugaOptions>(
     path: K,
     defaultValue?: DeepType<OrugaOptions, K>,
 ): DeepType<OrugaOptions, K> | undefined => {
