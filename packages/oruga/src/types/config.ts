@@ -70,7 +70,7 @@ export type GlobalConfig = Partial<{
      * Teleport and programmatic default target
      * @default document.body
      */
-    teleportTarget: MaybeRefOrGetter<HTMLElement>;
+    teleportTarget: MaybeRefOrGetter<string | HTMLElement>;
     /**
      * Enable default form components HTML5 validation attribute
      * @default true
