@@ -11,3 +11,4 @@ export * from "./useOptions";
 export * from "./usePreventScrolling";
 export * from "./useSequentialId";
 export * from "./useConfig";
+export * from "./useTrapFocus";

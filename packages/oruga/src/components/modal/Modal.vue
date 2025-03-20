@@ -11,7 +11,6 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { vTrapFocus } from "@/directives/trapFocus";
 import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
@@ -22,6 +21,7 @@ import {
     useMatchMedia,
     usePreventScrolling,
     useTeleportDefault,
+    useTrapFocus,
 } from "@/composables";
 
 import type { ModalProps } from "./props";
@@ -74,6 +74,8 @@ const emits = defineEmits<{
      */
     close: [...args: unknown[]];
 }>();
+
+const { vTrapFocus } = useTrapFocus();
 
 const rootRef = useTemplateRef("rootElement");
 const contentRef = useTemplateRef("contentElement");
