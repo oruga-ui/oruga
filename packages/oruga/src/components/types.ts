@@ -953,6 +953,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts. */
                 clipScroll: boolean;
+                /** Trap focus inside the sidebar */
+                trapFocus: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
