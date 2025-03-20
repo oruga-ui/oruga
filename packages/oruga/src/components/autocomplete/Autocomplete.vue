@@ -62,6 +62,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     active: false,
     options: undefined,
     filter: undefined,
+    backendFiltering: () => getDefault("autocomplete.backendFiltering", false),
     type: "text",
     menuTag: () => getDefault("autocomplete.menuTag", "div"),
     itemTag: () => getDefault("autocomplete.itemTag", "div"),
@@ -201,16 +202,20 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     return groupedOptions;
 });
 
-/**
- * Applies an reactive filter for the options based on the input value.
- * Options are filtered by setting the hidden attribute.
- */
-watchEffect(() => {
-    // filter options by input value
-    filterOptionsItems<T>(groupedOptions, (o) => filterItems(o, inputValue));
-    // trigger reactive update of groupedOptions
-    triggerRef(groupedOptions);
-});
+// if not backend filtered
+if (!props.backendFiltering)
+    /**
+     * Applies an reactive filter for the options based on the input value.
+     * Options are filtered by setting the hidden attribute.
+     */
+    watchEffect(() => {
+        // filter options by input value
+        filterOptionsItems<T>(groupedOptions, (o) =>
+            filterItems(o, inputValue),
+        );
+        // trigger reactive update of groupedOptions
+        triggerRef(groupedOptions);
+    });
 
 function filterItems(
     option: OptionsItem<T>,

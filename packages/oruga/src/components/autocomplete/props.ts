@@ -16,6 +16,8 @@ export type AutocompleteProps<T> = {
     active?: boolean;
     /** Autocomplete options */
     options?: OptionsPropWithGroups<T>;
+    /** Options won't be filtered based on the input value with JavaScript on clientside */
+    backendFiltering?: boolean;
     /** Function to filter the option based on the input value - default is label string comparison */
     filter?: (option: T, value: string) => boolean;
     /** Input type */
@@ -62,7 +64,7 @@ export type AutocompleteProps<T> = {
     selectableFooter?: boolean;
     /** Max height of dropdown content */
     maxHeight?: string | number;
-    /** Makes the component check if list reached scroll start or end and emit scroll events. */
+    /** Makes the component check if list reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /**
      * Icon pack to use
