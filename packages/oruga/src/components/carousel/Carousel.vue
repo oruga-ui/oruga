@@ -258,7 +258,7 @@ function onChange(item: ProviderItem): void {
 // #region --- Autoplay Feature ---
 
 const isHovered = ref(false);
-let timer: NodeJS.Timeout | undefined;
+let timer: ReturnType<typeof setTimeout> | undefined;
 /** deactive autoplay feature */
 const isAutoplayPaused = ref(false);
 

@@ -10,7 +10,7 @@ export function useDebounce<A extends Array<unknown>>(
     wait: number,
     immediate?: boolean,
 ): (...args: A) => void {
-    let timeout: NodeJS.Timeout | undefined;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     return (...args: A) => {
         const later = (): void => {
             timeout = undefined;

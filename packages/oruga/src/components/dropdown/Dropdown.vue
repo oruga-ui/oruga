@@ -285,7 +285,7 @@ function toggle(method: string, event: Event): void {
     else close(method, event);
 }
 
-let timer: NodeJS.Timeout | undefined;
+let timer: ReturnType<typeof setTimeout> | undefined;
 
 function open(method: string, event: Event): void {
     if (props.disabled) return;
