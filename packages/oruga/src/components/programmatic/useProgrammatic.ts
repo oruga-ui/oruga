@@ -1,6 +1,5 @@
 import {
     createApp,
-    inject,
     toValue,
     type App,
     type ComponentInternalInstance,
@@ -11,7 +10,7 @@ import {
 
 import InstanceRegistry from "@/components/programmatic/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
-import { unrefElement } from "@/composables";
+import { useTeleportDefault, resolveElement } from "@/composables";
 
 import {
     ProgrammaticComponent,
@@ -68,25 +67,15 @@ export const ComponentProgrammatic = {
     ): ProgrammaticExpose {
         options = { registry, ...options };
 
-        // define the target container - either HTML `body` or by a given query selector or element
         const targetQuery = toValue(options.target);
-        let target =
-            (typeof targetQuery === "string"
-                ? // query element if target is a string
-                  document.querySelector<HTMLElement>(targetQuery)
-                : // else unwrap element
-                  unrefElement(targetQuery)) ||
-            // else use default
-            document.body;
-
-        VueInstance?.runWithContext(() => {
-            // inject programmatic target override from app instance if available
-            // this is used by the docs
-            const programmaticTarget = inject<
-                MaybeRefOrGetter<HTMLElement> | undefined
-            >("$PROGRAMMATIC-TARGET", undefined);
-            if (programmaticTarget) target = toValue(programmaticTarget);
-        });
+        // define the target container
+        const target: HTMLElement | null =
+            // either by a given query selector / element
+            (targetQuery && resolveElement(targetQuery)) ||
+            // or by the default teleport target config
+            resolveElement(useTeleportDefault());
+        if (!target)
+            throw new Error("ComponentProgrammatic - no target is defined.");
 
         // create app container
         let container: HTMLDivElement | undefined =
@@ -104,7 +93,7 @@ export const ComponentProgrammatic = {
                 app = undefined;
             }
             // clear container
-            if (container) {
+            if (container && target) {
                 target.removeChild(container);
                 container = undefined;
             }

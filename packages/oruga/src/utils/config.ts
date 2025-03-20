@@ -1,6 +1,7 @@
 import { ref, toRaw, type App } from "vue";
 import { getValueByPath, merge, setValueByPath } from "./helpers";
 import { setVueInstance } from "./plugins";
+import { isClient } from "./ssr";
 import type { DeepType, OrugaOptions } from "@/types";
 
 declare module "../index" {
@@ -14,6 +15,7 @@ const globalOptions = ref<OrugaOptions>({
     useHtml5Validation: true,
     statusIcon: true,
     transformClasses: undefined,
+    teleportTarget: () => (isClient ? document.body : "body"),
 });
 
 export const setOptions = (options: OrugaOptions): void => {
@@ -24,7 +26,7 @@ export const getOptions = (): OrugaOptions => {
     return Object.assign({}, toRaw(globalOptions.value));
 };
 
-export const getOption = <K extends string = string>(
+export const getOption = <K extends keyof OrugaOptions | string>(
     path: K,
     defaultValue?: DeepType<OrugaOptions, K>,
 ): DeepType<OrugaOptions, K> | undefined => {
