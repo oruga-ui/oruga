@@ -9,7 +9,11 @@ import {
     type PropType,
 } from "vue";
 import { isClient } from "@/utils/ssr";
-import { getScrollingParent, unrefElement } from "@/composables";
+import {
+    useTeleportDefault,
+    getScrollingParent,
+    unrefElement,
+} from "@/composables";
 
 type Position = "top" | "bottom" | "left" | "right";
 
@@ -70,14 +74,10 @@ const emits = defineEmits<{
     "update:position": [value: string];
 }>();
 
-const teleportTo = computed(() =>
-    typeof props.teleport === "boolean" ? "body" : props.teleport,
-);
-
-const teleportDisabled = computed(() =>
-    typeof props.teleport === "boolean" || !props.teleport
-        ? !props.teleport
-        : false,
+const _teleport = computed(() =>
+    typeof props.teleport === "boolean"
+        ? { to: useTeleportDefault(), disabled: !props.teleport }
+        : { to: props.teleport, disabled: false },
 );
 
 const contentRef = ref<HTMLElement | Component>();
@@ -310,8 +310,8 @@ const anchors = (rect: DOMRect): Record<Position, Point> => ({
 </script>
 
 <template>
-    <Teleport :to="teleportTo" :disabled="teleportDisabled">
-        <template v-if="teleportDisabled">
+    <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
+        <template v-if="_teleport.disabled">
             <slot :set-content="setContent" />
         </template>
         <template v-else>
