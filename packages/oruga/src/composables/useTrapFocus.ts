@@ -23,10 +23,26 @@ export function useTrapFocus(): {
     /** vue directive - trap focus on the current element */
     vTrapFocus: ObjectDirective<HTMLElement>;
 } {
-    let onKeyDown: ((event: KeyboardEvent) => void) | undefined;
+    /** keydown event, which compares event target with trap element */
+    let onKeyDown: ((event: KeyboardEvent) => void) | null = null;
 
-    const bind: DirectiveHook<HTMLElement> = (el, { value = true }) => {
-        /** keydown event, which compares event target with trap element */
+    function applyHandler(el: HTMLElement, value: boolean): void {
+        if (value) {
+            // move focus inside the root element
+            el.focus();
+
+            // set keydown event listener
+            if (typeof onKeyDown === "function")
+                el.addEventListener("keydown", onKeyDown);
+        } else {
+            // remove keydown event listener
+            if (typeof onKeyDown === "function")
+                el.removeEventListener("keydown", onKeyDown);
+        }
+    }
+
+    const bind: DirectiveHook<HTMLElement> = (el, { value }) => {
+        // create onKeyDown event listener
         onKeyDown = (event: KeyboardEvent): void => {
             const target = event.target as HTMLElement;
             if (!target) return;
@@ -58,27 +74,26 @@ export function useTrapFocus(): {
             }
         };
 
-        if (value) {
-            // move focus inside the root element
-            el.focus();
-            // set keydown event listener
-            el.addEventListener("keydown", onKeyDown);
-        } else
-            // remove keydown event listener
-            el.removeEventListener("keydown", onKeyDown);
+        applyHandler(el, value);
     };
 
     /** cleanup on unbind */
     const unbind: DirectiveHook = (el) => {
-        // remove keydown event listener
-        el.removeEventListener("keydown", onKeyDown);
-        onKeyDown = undefined;
+        // remove handler
+        applyHandler(el, false);
+        onKeyDown = null;
+    };
+
+    const update: DirectiveHook<HTMLElement> = (el, { value }) => {
+        // update handlers based on binding
+        applyHandler(el, value);
     };
 
     return {
         vTrapFocus: {
             mounted: bind,
             beforeUnmount: unbind,
+            updated: update,
         },
     };
 }
