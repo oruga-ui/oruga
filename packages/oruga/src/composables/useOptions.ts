@@ -210,18 +210,20 @@ export function toOptionsList<V>(
  */
 export function filterOptionsItems<V>(
     options: MaybeRefOrGetter<OptionsItem<V>[] | OptionsGroupItem<V>[]>,
-    filter: (option: OptionsItem<V>) => boolean,
+    filter: (option: OptionsItem<V>, index: number) => boolean,
 ): void {
-    toValue(options).forEach((option: OptionsItem<V> | OptionsGroupItem<V>) => {
-        if (isGroupOption(option)) {
-            filterOptionsItems(option.options, filter);
-            // hide the whole group if every group options is hidden
-            option.hidden = option.options.every((option) => option.hidden);
-        } else {
-            // hide the option if filtered
-            option.hidden = filter(option);
-        }
-    });
+    toValue(options).forEach(
+        (option: OptionsItem<V> | OptionsGroupItem<V>, idx: number) => {
+            if (isGroupOption(option)) {
+                filterOptionsItems(option.options, filter);
+                // hide the whole group if every group options is hidden
+                option.hidden = option.options.every((option) => option.hidden);
+            } else {
+                // hide the option if filtered
+                option.hidden = filter(option, idx);
+            }
+        },
+    );
 }
 
 /**
