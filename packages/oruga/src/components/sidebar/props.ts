@@ -42,6 +42,8 @@ export type SidebarProps<C extends Component = Component> = {
      * but will set the body to a fixed position, which may break some layouts.
      */
     clipScroll?: boolean;
+    /** Trap focus inside the sidebar */
+    trapFocus?: boolean;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**
