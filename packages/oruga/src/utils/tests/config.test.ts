@@ -1,4 +1,5 @@
 import { describe, test, expect } from "vitest";
+import { toValue } from "vue";
 
 import { getOption, getOptions, setOptions } from "../config";
 
@@ -12,6 +13,6 @@ describe("Configuration", () => {
 
     test("teleportTarget option should be `body`", () => {
         const option = getOption("teleportTarget");
-        expect(option).toBe(document.body);
+        expect(toValue(option)).toBe(document.body);
     });
 });
