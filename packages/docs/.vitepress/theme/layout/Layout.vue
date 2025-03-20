@@ -17,6 +17,7 @@ const shadowRoot = computed(() => showcaseWrapper.value?.shadowRoot);
 watch(
     shadowRoot,
     (target) => {
+        if (!target) return;
         const oruga = useOruga();
         oruga.config.setOption("teleportTarget", target);
     },
