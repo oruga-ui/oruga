@@ -465,13 +465,13 @@ function filterTableRows(): void {
     const pageEnd = pageStart + perPage;
 
     // update hidden state for each row
-    filterOptionsItems(tableRows, (row) => {
+    filterOptionsItems(tableRows, (row, idx) => {
         // if paginated not backend paginated, paginate row
         if (props.paginated || !props.backendPagination) {
             // if not only one page and not on active page
             if (
                 tableRows.value.length > perPage &&
-                (row.index < pageStart || row.index >= pageEnd)
+                (idx < pageStart || idx >= pageEnd)
             )
                 // return row is invisible (filtered out)
                 return true;
@@ -724,6 +724,16 @@ function initSort(): void {
     sortByField(sortField, sortDirection);
 }
 
+function sortByField(field: string, direction: "asc" | "desc"): void {
+    const sortColumn = tableColumns.value.find(
+        (column) => column.field === field,
+    );
+    if (sortColumn) {
+        isAsc.value = direction.toLowerCase() === "asc";
+        sort(sortColumn);
+    }
+}
+
 /**
  * Sort the column.
  * Toggle current direction on column if it's sortable
@@ -752,17 +762,13 @@ function sort(
 
     currentSortColumn.value = column;
 
-    // if not backend sorted, sort rows by mutating the tableRows array
-    if (!props.backendSorting) sortByColumn(tableRows.value);
-}
+    // if not backend sorted
+    if (!props.backendSorting) {
+        // sort rows by mutating the tableRows array
+        sortByColumn(tableRows.value);
 
-function sortByField(field: string, direction: "asc" | "desc"): void {
-    const sortColumn = tableColumns.value.find(
-        (column) => column.field === field,
-    );
-    if (sortColumn) {
-        isAsc.value = direction.toLowerCase() === "asc";
-        sort(sortColumn);
+        // recalculate the page filter
+        filterTableRows();
     }
 }
 

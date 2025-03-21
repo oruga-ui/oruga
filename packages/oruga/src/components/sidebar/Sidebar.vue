@@ -16,6 +16,8 @@ import {
     useEventListener,
     useMatchMedia,
     usePreventScrolling,
+    useTrapFocus,
+    useTeleportDefault,
 } from "@/composables";
 
 import type { SidebarProps } from "./props";
@@ -45,6 +47,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     expandOnHover: () => getDefault("sidebar.expandOnHover", false),
     animation: () => getDefault("sidebar.animation"),
     cancelable: () => getDefault("sidebar.cancelable", ["escape", "outside"]),
+    trapFocus: () => getDefault("sidebar.trapFocus", true),
     clipScroll: () => getDefault("sidebar.clipScroll", false),
     mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
     teleport: () => getDefault("sidebar.teleport", false),
@@ -66,6 +69,8 @@ const emits = defineEmits<{
     close: [...args: unknown[]];
 }>();
 
+const { vTrapFocus } = useTrapFocus();
+
 const rootRef = useTemplateRef("rootElement");
 const contentRef = useTemplateRef("contentElement");
 
@@ -75,7 +80,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
-        ? { to: "body", disabled: !props.teleport }
+        ? { to: useTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
 
@@ -257,6 +262,7 @@ defineExpose({ close });
             v-show="!hideOnMobile"
             ref="rootElement"
             v-bind="$attrs"
+            v-trap-focus="isActive && !inline && trapFocus"
             data-oruga="sidebar"
             :class="rootClasses">
             <div

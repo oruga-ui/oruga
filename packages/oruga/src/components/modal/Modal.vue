@@ -20,6 +20,7 @@ import {
     useEventListener,
     useMatchMedia,
     usePreventScrolling,
+    useTeleportDefault,
     useTrapFocus,
 } from "@/composables";
 
@@ -85,7 +86,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
-        ? { to: "body", disabled: !props.teleport }
+        ? { to: useTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
 
@@ -218,7 +219,7 @@ defineExpose({ close });
                 v-show="isActive"
                 ref="rootElement"
                 v-bind="$attrs"
-                v-trap-focus="trapFocus"
+                v-trap-focus="isActive && trapFocus"
                 data-oruga="modal"
                 :class="rootClasses"
                 :tabindex="-1"

@@ -955,6 +955,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts. */
                 clipScroll: boolean;
+                /** Trap focus inside the sidebar */
+                trapFocus: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -1198,7 +1200,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
                 isRowCheckable: ((row: unknown) => boolean);
-                /** Columns won't be sorted with JavaScript, use with `sort` event to sort in your backend */
+                /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
                 backendSorting: boolean;
                 /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
                 defaultSort: string | [string, "desc" | "asc"];
@@ -1232,7 +1234,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 paginationSimple: boolean;
                 /** Pagination buttons order (if paginated) */
                 paginationOrder: "centered" | "left" | "right";
-                /** Columns won't be filtered with JavaScript, use with `searchable` prop to the columns to filter in your backend */
+                /** Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend */
                 backendFiltering: boolean;
                 /** Icon of the column search input */
                 filterIcon: string;
