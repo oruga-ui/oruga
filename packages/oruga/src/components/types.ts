@@ -436,7 +436,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
-                /** Makes the component check if menu reached scroll start or end and */
+                /** Makes the component check if menu reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Max height of dropdown content */
                 maxHeight: number | string;
