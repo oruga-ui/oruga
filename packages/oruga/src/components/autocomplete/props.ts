@@ -16,6 +16,8 @@ export type AutocompleteProps<T> = {
     active?: boolean;
     /** Autocomplete options */
     options?: OptionsPropWithGroups<T>;
+    /** Options won't be filtered based on the input value on clientside */
+    backendFiltering?: boolean;
     /** Function to filter the option based on the input value - default is label string comparison */
     filter?: (option: T, value: string) => boolean;
     /** Input type */

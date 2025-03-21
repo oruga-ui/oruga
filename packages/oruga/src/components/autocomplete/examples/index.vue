@@ -5,6 +5,9 @@ import BaseCode from "./base.vue?raw";
 import Options from "./options.vue";
 import OptionsCode from "./options.vue?raw";
 
+import OptionsGrouped from "./options-grouped.vue";
+import OptionsGroupedCode from "./options-grouped.vue?raw";
+
 import Slots from "./slots.vue";
 import SlotsCode from "./slots.vue?raw";
 
@@ -62,6 +65,7 @@ import ScrollCode from "./scroll.vue?raw";
         </p>
     </div>
     <ExampleViewer :component="Options" :code="OptionsCode" />
+    <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 
     <h3 id="scroll">Slots</h3>
     <p>
@@ -73,11 +77,13 @@ import ScrollCode from "./scroll.vue?raw";
     </p>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 
-    <h3 id="scroll">Infinite Scroll</h3>
+    <h3 id="scroll">Infinite Scroll & Async Data</h3>
     <p>
         When <code>check-scroll</code> prop is set, the component will emits the
         <code>scroll-start</code> and <code>scroll-end</code> events. These
-        events can be used to load more options as needed.
+        events can be used to load more options as needed. Consider adding
+        <code>backend-filtering</code> when manually updating options on input
+        values changes.
     </p>
     <div class="info custom-block">
         <p class="custom-block-title">Note</p>

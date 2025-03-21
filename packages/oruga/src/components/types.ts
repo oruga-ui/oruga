@@ -9,6 +9,8 @@ declare module "../index" {
     interface OrugaOptions {
         autocomplete?: ComponentConfigBase &
             Partial<{
+                /** Options won't be filtered based on the input value on clientside */
+                backendFiltering: boolean;
                 /** Menu tag name */
                 menuTag: DynamicComponent;
                 /** Menu item tag name */

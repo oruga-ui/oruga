@@ -59,13 +59,14 @@ function getMoreAsyncData(): void {
 
 <template>
     <section class="odocs-spaced">
-        <o-field label="Find a movie">
+        <o-field label='Find a movie in the "The Movie Database (TMDB)"'>
             <o-autocomplete
                 v-model="selected"
                 :options="options"
                 placeholder="e.g. Fight Club"
                 expanded
                 check-scroll
+                backend-filtering
                 :debounce="500"
                 @input="getAsyncData"
                 @scroll-end="getMoreAsyncData">
