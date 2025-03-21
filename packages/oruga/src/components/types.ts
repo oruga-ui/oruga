@@ -1198,7 +1198,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
                 isRowCheckable: ((row: unknown) => boolean);
-                /** Columns won't be sorted with JavaScript, use with `sort` event to sort in your backend */
+                /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
                 backendSorting: boolean;
                 /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
                 defaultSort: string | [string, "desc" | "asc"];
@@ -1232,7 +1232,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 paginationSimple: boolean;
                 /** Pagination buttons order (if paginated) */
                 paginationOrder: "centered" | "left" | "right";
-                /** Columns won't be filtered with JavaScript, use with `searchable` prop to the columns to filter in your backend */
+                /** Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend */
                 backendFiltering: boolean;
                 /** Icon of the column search input */
                 filterIcon: string;

@@ -298,7 +298,7 @@ export function escapeRegExpChars(value: string): string {
 }
 
 /**
- * Remove accents/diacritics in a string in JavaScript
+ * Remove accents/diacritics in a string
  * https://stackoverflow.com/a/37511463
  */
 export function removeDiacriticsFromString(value: string): string {
