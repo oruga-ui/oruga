@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -29,8 +29,8 @@
     "publish:lib": "npm run publish:lib --workspace @oruga-ui/oruga-next",
     "publish:lib:pre": "npm run publish:lib:pre --workspace @oruga-ui/oruga-next",
     "release": "npm run version && npm run changelog",
-    "version": "tsx .scripts/sync-version.ts && git add .",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "version": "tsx .scripts/sync-version.ts",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\"",
     "update": "ncu -u --workspaces --root"
   },

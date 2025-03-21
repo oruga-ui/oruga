@@ -1,3 +1,20 @@
+## [0.10.3](https://github.com/oruga-ui/oruga/compare/v0.10.2...v0.10.3) (2025-03-21)
+
+
+### Bug Fixes
+
+* **modal:** solve `tapFocus` not working correctly ([#1256](https://github.com/oruga-ui/oruga/issues/1256)) ([db02046](https://github.com/oruga-ui/oruga/commit/db020469ce51a3ffa75009ce54dbb4290877f9be))
+* **table:** solve sort ordering when paginated ([#1255](https://github.com/oruga-ui/oruga/issues/1255)) ([71b2e56](https://github.com/oruga-ui/oruga/commit/71b2e560448c411773a9eb5711b2ca6799995c1a))
+
+
+### Features
+
+* **autocomplate:** add prop `backend-filtering` to disable option filtering ([#1260](https://github.com/oruga-ui/oruga/issues/1260)) ([bae9fe6](https://github.com/oruga-ui/oruga/commit/bae9fe6e10e0d0b686ceae734a353f1b1e964ce6))
+* **config:** add `teleportTarget` root config ([#1257](https://github.com/oruga-ui/oruga/issues/1257)) ([18c8f90](https://github.com/oruga-ui/oruga/commit/18c8f903afc19526f9810312d23973256059e875))
+* **sidebar:** add `trapFocus` functionality ([#1259](https://github.com/oruga-ui/oruga/issues/1259)) ([459338b](https://github.com/oruga-ui/oruga/commit/459338b61e71a87823c0f18667a412cc84596f19))
+
+
+
 ## [0.10.2](https://github.com/oruga-ui/oruga/compare/v0.10.1...v0.10.2) (2025-03-17)
 
 
