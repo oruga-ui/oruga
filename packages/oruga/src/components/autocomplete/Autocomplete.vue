@@ -229,12 +229,6 @@ function filterItems(
             .includes(toValue(value)?.toLowerCase());
 }
 
-// set initial inputValue if selected is given
-if (selectedValue.value) {
-    const selectedOption = findOption(groupedOptions, selectedValue);
-    if (selectedOption) inputValue.value = selectedOption.label;
-}
-
 /** is no option visible */
 const isEmpty = computed(() => checkOptionsEmpty(groupedOptions));
 
@@ -248,7 +242,7 @@ const dropdownValue = ref();
 
 /**
  * When updating input's value:
- * 1. If value isn't the same as selected, set null
+ * 1. If value isn't the same as selected, set undefined
  * 2. Close dropdown if value is clear or else open it
  */
 watch(
@@ -271,6 +265,29 @@ watch(
     { flush: "post" },
 );
 
+/**
+ * When updating selected value:
+ * 1. Set selected option label as input value
+ * 2. Set the selected option value as dropdown value
+ */
+watch(
+    selectedValue,
+    (value) => {
+        if (!value) return;
+        const option = findOption(groupedOptions, value);
+        if (!option) return;
+
+        // set selected option label as input value
+        inputValue.value = props.clearOnSelect ? "" : option.label;
+        checkHtml5Validity();
+
+        // set the selected option value as dropdown value
+        dropdownValue.value = option.value;
+    },
+    // set initial values if selected is given
+    { immediate: true },
+);
+
 function setSelected(item: T | SpecialOption | undefined): void {
     let option: OptionsItem<T> | undefined = undefined;
 
@@ -287,16 +304,9 @@ function setSelected(item: T | SpecialOption | undefined): void {
         option = options.find((o) => o.value === item);
     }
 
-    // set the selected dropdown value
-    dropdownValue.value = option;
-
-    // Set which option is currently selected, update v-model,
+    // set which option is currently selected, update v-model,
     selectedValue.value = option?.value;
     emits("select", option?.value);
-
-    // update input value
-    inputValue.value = props.clearOnSelect ? "" : option?.label || "";
-    checkHtml5Validity();
 
     if (props.keepOpen) setFocus();
     else isActive.value = false;
