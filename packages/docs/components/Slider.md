@@ -8,7 +8,7 @@ sidebarDepth: 2
 
 The **Slider** input component let user select a value or range from a given range with a graphic slider.
 The component implements the W3C ARIA APG [Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/).
-Use it with the Field component to access all the functionalities.
+Use it with the [Field](/components/field.html) component to access all the functionalities.
 
 </section>
 
