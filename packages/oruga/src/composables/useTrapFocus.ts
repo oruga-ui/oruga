@@ -8,14 +8,14 @@ function findFocusable(element: HTMLElement): NodeListOf<HTMLElement> | null {
     if (!element) return null;
     return element.querySelectorAll(`a[href]:not([tabindex="-1"]),
                                  area[href],
-                                 input:not([disabled]),
+                                 input:not([disabled]):not([type="hidden"]),
                                  select:not([disabled]),
                                  textarea:not([disabled]),
                                  button:not([disabled]),
                                  iframe,
                                  object,
                                  embed,
-                                 *[tabindex]:not([tabindex="-1"]),
+                                 *[tabindex]:not([tabindex="-1"]):not([disabled]),
                                  *[contenteditable]`);
 }
 
