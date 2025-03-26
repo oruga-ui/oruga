@@ -1,3 +1,13 @@
+## [0.10.4](https://github.com/oruga-ui/oruga/compare/v0.10.3...v0.10.4) (2025-03-26)
+
+
+### Bug Fixes
+
+* **1263:** solve autocomplete two-way-binding selection issues ([#1264](https://github.com/oruga-ui/oruga/issues/1264)) ([b587aef](https://github.com/oruga-ui/oruga/commit/b587aef55e7f11971f19bd09ff9979e98af21b14))
+* extend `trapFocus` elements query ([#1266](https://github.com/oruga-ui/oruga/issues/1266)) ([f7762dc](https://github.com/oruga-ui/oruga/commit/f7762dcff85474e5636dc4cd50c2856b43b93fbb))
+
+
+
 ## [0.10.3](https://github.com/oruga-ui/oruga/compare/v0.10.2...v0.10.3) (2025-03-21)
 
 
