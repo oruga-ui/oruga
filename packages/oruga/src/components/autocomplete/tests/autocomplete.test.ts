@@ -35,6 +35,14 @@ describe("OAutocomplete tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    test("has configurable menu and item tags", () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, menuTag: "ul", itemTag: "li" },
+        });
+        expect(wrapper.find("ul.o-dropdown__menu").exists()).toBeTruthy();
+        expect(wrapper.find("li.o-dropdown__item").exists()).toBeTruthy();
+    });
+
     test("has a dropdown menu hidden by default", () => {
         const wrapper = mount(OAutocomplete, { attachTo: document.body });
         const dropdown = wrapper.find(".o-dropdown__menu");
@@ -96,6 +104,43 @@ describe("OAutocomplete tests", () => {
 
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeFalsy();
+    });
+
+    test("set values correct when two-way-binded", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: {
+                options: OPTIONS,
+                modelValue: OPTIONS[2],
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper.setProps({ modelValue });
+                },
+            },
+        });
+        await nextTick();
+
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+
+        const dropdown = wrapper.find(".o-dropdown__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
+
+        const optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
+        expect(optionElements).toHaveLength(OPTIONS.length);
+
+        // check default selected value
+        expect(input.element.value).toBe(OPTIONS[2]);
+        expect(optionElements[2].classes("itemSelectedClass"));
+        expect(optionElements[2].attributes("aria-selected")).toBeTruthy();
+
+        // chenge selection
+        wrapper.setProps({ modelValue: OPTIONS[0] });
+        await nextTick();
+
+        // check new selected value
+        expect(input.element.value).toBe(OPTIONS[0]);
+        expect(optionElements[0].classes("itemSelectedClass"));
+        expect(optionElements[0].attributes("aria-selected")).toBeTruthy();
     });
 
     test("close dropdown on esc", async () => {
@@ -227,7 +272,7 @@ describe("OAutocomplete tests", () => {
         const wrapper = mount(OAutocomplete, {
             props: { options: OPTIONS },
         });
-        await setTimeout(); // await event handler get set
+        await nextTick(); // await event handler get set
 
         wrapper.unmount();
 
@@ -246,119 +291,144 @@ describe("OAutocomplete tests", () => {
         );
     });
 
-    test("clear button does not exist when the search input is empty", async () => {
-        const wrapper = mount(OAutocomplete, {
-            props: {
-                options: OPTIONS,
-                modelValue: "",
-                clearable: true,
-            },
-        });
+    describe("filtering", () => {
+        test("do not sort when `backend-filtering` is given", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: { options: OPTIONS, backendFiltering: true },
+            });
+            await nextTick();
 
-        const subject = wrapper.find(".o-icon");
-        expect(subject.exists()).toBeFalsy();
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            let optionElements = wrapper.findAll(
+                '[data-oruga="dropdown-item"]',
+            );
+            expect(optionElements).toHaveLength(OPTIONS.length);
+            optionElements.forEach((option) =>
+                expect(option.attributes("disabled")).toBeUndefined(),
+            );
+
+            await input.setValue(OPTIONS[2]);
+
+            // check that there are no out filtered elements
+            optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
+            expect(optionElements).toHaveLength(OPTIONS.length);
+            optionElements.forEach((option) =>
+                expect(option.attributes("disabled")).toBeUndefined(),
+            );
+        });
     });
 
-    test("clears search input text when clear button gets clicked", async () => {
-        const wrapper = mount(OAutocomplete, {
-            props: {
-                options: OPTIONS,
-                modelValue: OPTIONS[5],
-                clearable: true,
-            },
+    describe("clear button", () => {
+        test("clear button does not exist when the search input is empty", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: {
+                    options: OPTIONS,
+                    modelValue: "",
+                    clearable: true,
+                },
+            });
+
+            const subject = wrapper.find(".o-icon");
+            expect(subject.exists()).toBeFalsy();
         });
 
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-        expect(input.element.value).toBe(OPTIONS[5]);
+        test("clears search input text when clear button gets clicked", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: {
+                    options: OPTIONS,
+                    modelValue: OPTIONS[5],
+                    clearable: true,
+                },
+            });
 
-        const icon = wrapper.find(".o-icon");
-        expect(icon.exists()).toBeTruthy();
-        await icon.trigger("click");
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+            expect(input.element.value).toBe(OPTIONS[5]);
 
-        expect(input.element.value).toEqual("");
+            const icon = wrapper.find(".o-icon");
+            expect(icon.exists()).toBeTruthy();
+            await icon.trigger("click");
+
+            expect(input.element.value).toEqual("");
+        });
+
+        test("clear button does not appear when clearable property is not set to true", () => {
+            const wrapper = mount(OAutocomplete, {
+                props: { options: OPTIONS, modelValue: OPTIONS[5] },
+            });
+            const subject = wrapper.find(".o-icon").exists();
+
+            expect(subject).toBeFalsy();
+        });
     });
 
-    test("clear button does not appear when clearable property is not set to true", () => {
-        const wrapper = mount(OAutocomplete, {
-            props: { options: OPTIONS, modelValue: OPTIONS[5] },
+    describe("header & footer", () => {
+        test("can emit select-header by keyboard and click", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: {
+                    openOnFocus: true,
+                    keepOpen: true,
+                    selectableHeader: true,
+                    selectableFooter: true,
+                },
+                slots: {
+                    header: "<h1>SLOT HEADER</h1>",
+                    footer: "<h1>SLOT FOOTER</h1>",
+                },
+            });
+
+            const input = wrapper.find("input");
+            expect(input.exists()).toBeTruthy();
+
+            // open menu
+            await input.trigger("focus");
+
+            // move to header and select by enter
+            await input.trigger("keydown", { key: "Down" });
+            await input.trigger("keydown", { key: "Enter" });
+
+            expect(wrapper.emitted("select-header")).toHaveLength(1);
+
+            const header = wrapper.find(".o-autocomplete__item-header");
+            expect(header.exists()).toBeTruthy();
+            await header.trigger("click");
+
+            expect(wrapper.emitted("select-header")).toHaveLength(2);
         });
-        const subject = wrapper.find(".o-icon").exists();
 
-        expect(subject).toBeFalsy();
-    });
+        test("can emit select-footer by keyboard and click", async () => {
+            const wrapper = mount(OAutocomplete, {
+                props: {
+                    openOnFocus: true,
+                    keepOpen: true,
+                    selectableHeader: true,
+                    selectableFooter: true,
+                },
+                slots: {
+                    header: "<h1>SLOT HEADER</h1>",
+                    footer: "<h1>SLOT FOOTER</h1>",
+                },
+            });
+            const input = wrapper.find("input");
 
-    test("can emit select-header by keyboard and click", async () => {
-        const wrapper = mount(OAutocomplete, {
-            props: {
-                openOnFocus: true,
-                keepOpen: true,
-                selectableHeader: true,
-                selectableFooter: true,
-            },
-            slots: {
-                header: "<h1>SLOT HEADER</h1>",
-                footer: "<h1>SLOT FOOTER</h1>",
-            },
+            // open menu
+            await input.trigger("focus");
+
+            // move to footer and select by enter
+            await input.trigger("keydown", { key: "Down" });
+            await input.trigger("keydown", { key: "Down" });
+            await input.trigger("keydown", { key: "Enter" });
+
+            expect(wrapper.emitted("select-footer")).toHaveLength(1);
+
+            const footer = wrapper.find(".o-autocomplete__item-footer");
+            expect(footer.exists()).toBeTruthy();
+            await footer.trigger("click");
+
+            expect(wrapper.emitted("select-footer")).toHaveLength(2);
         });
-
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-
-        // open menu
-        await input.trigger("focus");
-
-        // move to header and select by enter
-        await input.trigger("keydown", { key: "Down" });
-        await input.trigger("keydown", { key: "Enter" });
-
-        expect(wrapper.emitted("select-header")).toHaveLength(1);
-
-        const header = wrapper.find(".o-autocomplete__item-header");
-        expect(header.exists()).toBeTruthy();
-        await header.trigger("click");
-
-        expect(wrapper.emitted("select-header")).toHaveLength(2);
-    });
-
-    test("can emit select-footer by keyboard and click", async () => {
-        const wrapper = mount(OAutocomplete, {
-            props: {
-                openOnFocus: true,
-                keepOpen: true,
-                selectableHeader: true,
-                selectableFooter: true,
-            },
-            slots: {
-                header: "<h1>SLOT HEADER</h1>",
-                footer: "<h1>SLOT FOOTER</h1>",
-            },
-        });
-        const input = wrapper.find("input");
-
-        // open menu
-        await input.trigger("focus");
-
-        // move to footer and select by enter
-        await input.trigger("keydown", { key: "Down" });
-        await input.trigger("keydown", { key: "Down" });
-        await input.trigger("keydown", { key: "Enter" });
-
-        expect(wrapper.emitted("select-footer")).toHaveLength(1);
-
-        const footer = wrapper.find(".o-autocomplete__item-footer");
-        expect(footer.exists()).toBeTruthy();
-        await footer.trigger("click");
-
-        expect(wrapper.emitted("select-footer")).toHaveLength(2);
-    });
-
-    test("has configurable menu and item tags", () => {
-        const wrapper = mount(OAutocomplete, {
-            props: { options: OPTIONS, menuTag: "ul", itemTag: "li" },
-        });
-        expect(wrapper.find("ul.o-dropdown__menu").exists()).toBeTruthy();
-        expect(wrapper.find("li.o-dropdown__item").exists()).toBeTruthy();
     });
 
     describe("render options props correctly", () => {

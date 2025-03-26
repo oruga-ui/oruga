@@ -24,6 +24,10 @@ const options: OptionsProp<string> = [
 ];
 
 const selected = ref();
+
+function changeselection(): void {
+    selected.value = options[0];
+}
 </script>
 
 <template>
@@ -34,6 +38,9 @@ const selected = ref();
             <o-switch v-model="openOnFocus">Open on focus</o-switch>
             <o-switch v-model="selectOnClose">Select on close</o-switch>
             <o-switch v-model="clearOnSelect">Clear on Select</o-switch>
+            <o-button @click="changeselection">
+                Set '{{ options[0] }}' selected
+            </o-button>
         </o-field>
 
         <o-field label="Find a name">
