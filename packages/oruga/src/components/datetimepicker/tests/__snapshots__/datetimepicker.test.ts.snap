@@ -10,8 +10,8 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                 @binding {T | T[]} value - the selected value
                 @binding {() => void} toggle - toggle dropdown active state
             -->
-      <div data-oruga="input" class="o-input">
-        <!--v-if--><input class="o-datetimepicker__date o-input__input" id="v-1" type="text" data-oruga-input="text" autocomplete="off">
+      <div data-oruga="input" class="o-input"><input class="o-datetimepicker__date o-input__input" id="v-1" type="text" data-oruga-input="text" autocomplete="off">
+        <!--v-if-->
         <!--v-if-->
         <!--v-if-->
       </div>
