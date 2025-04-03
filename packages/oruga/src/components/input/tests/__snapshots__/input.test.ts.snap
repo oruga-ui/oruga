@@ -1,8 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OInput > render correctly 1`] = `
-"<div data-oruga="input" class="o-input">
-  <!--v-if--><input id="v-0" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+"<div data-oruga="input" class="o-input"><input id="v-0" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+  <!--v-if-->
   <!--v-if-->
   <!--v-if-->
 </div>"
