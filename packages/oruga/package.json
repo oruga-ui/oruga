@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -94,7 +94,7 @@
     "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.2",
-    "vite": "^6.2.2",
+    "vite": "^6.2.3",
     "vite-plugin-dts": "^4.5.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.8",
