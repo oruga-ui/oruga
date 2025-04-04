@@ -239,6 +239,7 @@ watch(isEmpty, (empty) => {
 // --- Select Feature ---
 
 const dropdownValue = ref();
+const dropdownComponent = useTemplateRef("dropdownComponent");
 
 /**
  * When updating input's value:
@@ -286,6 +287,16 @@ watch(
     },
     // set initial values if selected is given
     { immediate: true },
+);
+
+watch(
+    groupedOptions,
+    () => {
+        if (props.keepFirst && isActive.value && dropdownComponent.value) {
+            dropdownComponent.value.focusFirst(true);
+        }
+    },
+    { deep: true },
 );
 
 function setSelected(item: T | SpecialOption | undefined): void {
@@ -415,6 +426,7 @@ defineExpose({ focus: setFocus, value: inputValue });
 
 <template>
     <o-dropdown
+        ref="dropdownComponent"
         v-model="dropdownValue"
         v-model:active="isActive"
         data-oruga="autocomplete"

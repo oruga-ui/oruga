@@ -223,8 +223,7 @@ watch(
         // on active set event handler if not open as modal
         if (value) {
             // keep first option always pre-selected
-            if (!props.inline && props.keepFirst && !focusedItem.value)
-                moveFocus(1);
+            focusFirst();
         }
         if (isModal.value) toggleScroll(value);
     },
@@ -370,6 +369,20 @@ function selectItem(item: DropdownChildItem<T>, event?: Event): void {
 // #region --- Focus Feature ---
 
 const focusedItem = ref<DropdownChildItem<T>>();
+
+function focusFirst(reset = false): void {
+    if (
+        isActive.value &&
+        !props.inline &&
+        props.keepFirst &&
+        (!focusedItem.value || reset)
+    ) {
+        if (reset) focusedItem.value = undefined;
+        nextTick(() => {
+            moveFocus(1);
+        });
+    }
+}
 
 /** Hover listener from DropdownItem. */
 function focusItem(value: DropdownChildItem<T>): void {
@@ -535,7 +548,12 @@ const menuClasses = defineClasses(
 // #endregion --- Computed Component Classes ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
+defineExpose({
+    $trigger: triggerRef,
+    $content: menuRef,
+    value: vmodel,
+    focusFirst,
+});
 </script>
 
 <template>
