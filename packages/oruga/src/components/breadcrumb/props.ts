@@ -1,6 +1,6 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
 
-export type BreadcrumbProps<> = {
+export type BreadcrumbProps = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -26,7 +26,7 @@ export type BreadcrumbProps<> = {
     tag?: DynamicComponent;
 } & BreadcrumbClasses;
 
-export type BreadcrumbItemProps<> = {
+export type BreadcrumbItemProps = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -34,12 +34,16 @@ export type BreadcrumbItemProps<> = {
      * @values true, false
      */
     active?: boolean;
-    activeVariant?: boolean;
+    /**
+     * Active color, works only when tag provided is a
+     * @values primary, success, warning, danger
+     */
+    activeVariant?: string;
     /**
      * breadcrumb item tag name
      * @values li, a, router-link, nuxt-link (or other nuxt alias)
      */
-    tag?: string;
+    tag?: DynamicComponent;
     /**
      * breadcrumb item is disabled
      * @values true, false

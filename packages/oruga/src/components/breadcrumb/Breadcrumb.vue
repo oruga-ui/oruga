@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { computed, type PropType } from "vue";
+import { computed } from "vue";
 
-import { getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
-
-import type { ComponentClass, DynamicComponent } from "@/types";
 
 import type { BreadcrumbProps } from "./props";
 
@@ -19,74 +17,82 @@ defineOptions({
     configField: "breadcrumb",
 });
 
-const props = defineProps({
-    /** Override existing theme classes completely */
-    override: { type: Boolean, default: undefined },
-    /**
-     * Size of the breadcrumb
-     * @values small, medium, large
-     */
-    size: {
-        type: String,
-        default: () => getOption("breadcrumb.size", "small"),
-    },
-    /**
-     * Position of the breadcrumb
-     * @values left, centered, right
-     */
-    align: {
-        type: String,
-        default: getOption("breadcrumb.align", "left"),
-    },
-    /**
-     * The breadcrumb separator between breadcrumb items
-     * @values
-     *  has-arrow-separator, has-dot-separator, has-slash-separator, has-bullet-separator, has-succeeds-separator, has-chevron-separator
-     */
-    separator: {
-        type: String,
-        default: () => getOption("breadcrumb.separator", "has-slash-separator"),
-    },
-    /**
-     * Tag of the breadcrumb
-     * @values div, section ...
-     */
-    tag: {
-        type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("breadcrumb.tag", "section"),
-    },
-    // -----------------------------------------------------------------
-    /**
-     * This is used internally
-     * @ignore
-     */
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the breadcrumb elements wrapper */
-    wrapperClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the breadcrumb size */
-    sizeClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the breadcrumb separator */
-    separatorClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    /** Class of the breadcrumb align */
-    alignClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+const props = withDefaults(defineProps<BreadcrumbProps>(), {
+    override: undefined,
+    size: () => getDefault("breadcrumb.size", "small"),
+    align: () => getDefault("breadcrumb.align", "left"),
+    separator: () => getDefault("breadcrumb.separator", "has-slash-separator"),
+    tag: () => getDefault("breadcrumb.tag", "section"),
 });
+
+// const props = defineProps({
+//     /** Override existing theme classes completely */
+//     override: { type: Boolean, default: undefined },
+//     /**
+//      * Size of the breadcrumb
+//      * @values small, medium, large
+//      */
+//     size: {
+//         type: String,
+//         default: () => getOption("breadcrumb.size", "small"),
+//     },
+//     /**
+//      * Position of the breadcrumb
+//      * @values left, centered, right
+//      */
+//     align: {
+//         type: String,
+//         default: getOption("breadcrumb.align", "left"),
+//     },
+//     /**
+//      * The breadcrumb separator between breadcrumb items
+//      * @values
+//      *  has-arrow-separator, has-dot-separator, has-slash-separator, has-bullet-separator, has-succeeds-separator, has-chevron-separator
+//      */
+//     separator: {
+//         type: String,
+//         default: () => getOption("breadcrumb.separator", "has-slash-separator"),
+//     },
+//     /**
+//      * Tag of the breadcrumb
+//      * @values div, section ...
+//      */
+//     tag: {
+//         type: [String, Object, Function] as PropType<DynamicComponent>,
+//         default: () => getOption("breadcrumb.tag", "section"),
+//     },
+//     // -----------------------------------------------------------------
+//     /**
+//      * This is used internally
+//      * @ignore
+//      */
+//     // class props (will not be displayed in the docs)
+//     /** Class of the root element */
+//     rootClass: {
+//         type: [String, Array, Function] as PropType<ComponentClass>,
+//         default: undefined,
+//     },
+//     /** Class of the breadcrumb elements wrapper */
+//     wrapperClass: {
+//         type: [String, Array, Function] as PropType<ComponentClass>,
+//         default: undefined,
+//     },
+//     /** Class of the breadcrumb size */
+//     sizeClass: {
+//         type: [String, Array, Function] as PropType<ComponentClass>,
+//         default: undefined,
+//     },
+//     /** Class of the breadcrumb separator */
+//     separatorClass: {
+//         type: [String, Array, Function] as PropType<ComponentClass>,
+//         default: undefined,
+//     },
+//     /** Class of the breadcrumb align */
+//     alignClass: {
+//         type: [String, Array, Function] as PropType<ComponentClass>,
+//         default: undefined,
+//     },
+// });
 
 const rootClasses = defineClasses(
     ["rootClass", "o-breadcrumb"],
