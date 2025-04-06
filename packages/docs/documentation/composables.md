@@ -14,7 +14,7 @@ import { useOruga } from "@oruga-ui/oruga-next";
 The `config` interface can be used to customise the Oruga [global configuration](/documentation/customisation) by overriding the `Config` object programmatically:
 
 ```typescript
-import { useOruga } from '@oruga-ui/oruga-next';
+import { useOruga, type OrugaOptions } from '@oruga-ui/oruga-next';
 
 const oruga = useOruga();
 
@@ -22,7 +22,7 @@ const oruga = useOruga();
 const config = oruga.config.getOptions();
 
 // modify the config object
-const myThemeConfig = {
+const myThemeConfig: OrugaOptions = {
     ...config,
     autocomplete: {
         rootClass: 'autocomplete-root',
@@ -38,13 +38,13 @@ oruga.config.setOptions(myThemeConfig);
 However, you can also customise each component by using the dedicated `ConfigProgrammatic` object, which is the same as the one added to the object provided by the main `useOruga()` composable:
 
 ```typescript
-import { ConfigProgrammatic } from '@oruga-ui/oruga-next';
+import { ConfigProgrammatic, type OrugaOptions } from '@oruga-ui/oruga-next';
 
 // get the current config
 const config = ConfigProgrammatic.getOptions();
 
 // modify the config object
-const myThemeConfig = {
+const myThemeConfig: OrugaOptions = {
     ...config,
     autocomplete: {
         rootClass: 'autocomplete-root',
@@ -148,7 +148,7 @@ type ProgrammaticInterface = {
      * The options argument depend on the component. 
      * The target specifies the element the component get rendered into - default is `document.body`.
      */
-    open: (options: Record<string, any>, target?: string | HTMLElement) => ProgrammaticExpose;
+    open: (options: Record<string, any>, target?: MaybeRefOrGetter<string | HTMLElement | null>) => ProgrammaticExpose;
     /** 
      * Close the last registred instance in the programmatic instance registry.
      * Any arguments which get passed to the exposed `close()` function of the component.
@@ -172,13 +172,16 @@ type ProgrammaticExpose = {
 ## Component Programmatic {#programmatic}
 Oruga comes with a component that is only available programmatically. This component can be used to mount **any** custom component programmatically, using the [Vue render function](https://vuejs.org/api/render-function.html#render-function-apis) and [Creating Vnodes](https://vuejs.org/guide/extras/render-function.html#render-function-recipes).
 
-The component works as follows: The programmatic component renders a wrapper component in a sperate shadow Vue instance. The separate Vue instance will have the same context object as the current one. The provided component is then rendered in a wrapper component that handles the Vue lifecycle events of the provided component.
-The rendered component is then extracted from the shadow Vue instance and placed into the target container of the real DOM instance.  
-By closing the instance of the wrapper component, for example by calling `oruga.programmatic.close()` from outside, or by firing a `close` event from inside the provided component, the wrapper component and the shadow Vue instance will be destroyed and DOM will be cleaned up.
+The component works like this: 
+The programmatic component creates a new, separate Vue instance, with a wrapper component as root element. 
+The new Vue instance can be seen in the [Vue Devtools](https://devtools.vuejs.org/) with the name `ProgrammaticApp`.
+The separate Vue instance will have the same context object as the current one and will be rendered into a `div` in the target DOM container (by default, it is rendered into the `body` element). 
+The provided component is then rendered into the wrapper component, which handles the Vue lifecycle events of the provided component.
+Closing the instance of the wrapper component, for example by calling `oruga.programmatic.close()` from outside, or by firing a `close` event from inside the provided component, will destroy the wrapper component and the new Vue instance, and clean up the DOM.
 
-> ***Note:*** When using the programmatic component, you may experience some DX issues if you run the Vue Devtools and inspect the programmatic component.
+> ***Note:*** For performance reasons, be careful not to open too many programmatic components at once, each of which will create a separate Vue instance.
 
-By adding this component using the main Oruga plugin or the dedicated `ComponentProgrammatic` plugin, the component adds an interface `programmatic` to the `useOruga()` composable and provides the `ComponentProgrammatic` object export, but it does not have a Vue component to mount directly. 
+By adding this component using the main Oruga plugin or the dedicated `ComponentProgrammatic` plugin, the component adds an interface `programmatic` to the `useOruga()` composable and provides the `ComponentProgrammatic` object export, but it does not have a Oruga component. 
 
 ```typescript
 import { useOruga } from "@oruga-ui/oruga-next";
@@ -191,17 +194,15 @@ const slot = "My default slot content";
 oruga.programmatic.open(
     MyComponent,
     {
-        target: document.body, // target the component get rendered into
+        target: document.body, // target container the programmatic component get rendered into
+        appId: "programmatic-app", // HTML #id of the app div rendered into the target container 
         props: { ... }, // component specific props
         onClose: (...args: unknown[]) => { ... }, // on close event handler
-    },
-    // component default slot render content
-    slot,
+    }
 );
-
 ```
 
-The programmatic interface of this component looks much like the other programmatic component interfaces. However, the `open()` function takes some different attributes. The type definition of the `open()` function looks like this:
+The programmatic interface of this component looks much like the other programmatic component interfaces. However, the `open()` function takes some different attributes. This is the type definition of the `open()` function:
 
 ```typescript
 type open = <C extends VNodeTypes>(
@@ -209,16 +210,20 @@ type open = <C extends VNodeTypes>(
     component: C, 
     /** render options */
     options?: ProgrammaticOptions<C>, 
-    /** default slot content */
-    slot?: unknown
 ) => ProgrammaticExpose;
 
 
 type ProgrammaticOptions<C extends VNodeTypes> = {
     /** 
-     * The target specifies the element the component get rendered into - default is `document.body`.
+     * The target specifies the element the component get rendered into.
+     * @default `document.body`.
      */
-    target?: string | HTMLElement; 
+    target?: MaybeRefOrGetter<string | HTMLElement | null>; 
+    /**
+     * Specify the template `id` for the programmatic container element.
+     * @default `programmatic-app`
+     */
+    appId?: string;
     /**
      * Props to be binded to the injected component. 
      * Both attributes and properties can be used in props.
@@ -226,7 +231,7 @@ type ProgrammaticOptions<C extends VNodeTypes> = {
      * `class` and `style` have the same object / array value support like in templates.
      * Event listeners should be passed as onXxx.
      */
-    props: ComponentProps<C>,
+    props?: ComponentProps<C>,
     /**
      * On component close event.
      * This get called when the component emits `close` or the exposed `close` function get called.

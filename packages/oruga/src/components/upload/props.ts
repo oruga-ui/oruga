@@ -4,7 +4,7 @@ type UploadType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type UploadProps<
     T extends object | typeof File,
-    IsMultiple extends boolean,
+    IsMultiple extends boolean = false,
 > = {
     /** Override existing theme classes completely */
     override?: boolean;
@@ -42,17 +42,17 @@ export type UploadProps<
 } & UploadClasses;
 
 // class props (will not be displayed in the docs)
-type UploadClasses = Partial<{
+export type UploadClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the Upload when draggable */
-    draggableClass: ComponentClass;
-    /** Class of the Upload variant */
-    variantClass: ComponentClass;
-    /** Class of the Upload when expanded */
+    /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class of the Upload when disabled */
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
+    /** Class of the dragable container element */
+    draggableClass: ComponentClass;
+    /** Class of the dragable container element when disabled */
     disabledClass: ComponentClass;
-    /** Class of the Upload when hovered */
+    /** Class of the dragable container element when hovered */
     hoveredClass: ComponentClass;
 }>;

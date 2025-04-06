@@ -37,7 +37,7 @@ describe("OCheckbox tests", () => {
             props: { size: "large" },
         });
 
-        expect(wrapper.classes("o-chk--large")).toBeTruthy();
+        expect(wrapper.classes("o-checkbox--large")).toBeTruthy();
     });
 
     test("render accordingly when has variant prop", () => {
@@ -45,7 +45,7 @@ describe("OCheckbox tests", () => {
             props: { variant: "danger" },
         });
 
-        expect(wrapper.classes("o-chk--danger")).toBeTruthy();
+        expect(wrapper.classes("o-checkbox--danger")).toBeTruthy();
     });
 
     test("render accordingly when is disabled", () => {
@@ -53,7 +53,7 @@ describe("OCheckbox tests", () => {
             props: { disabled: true },
         });
 
-        expect(wrapper.classes("o-chk--disabled")).toBeTruthy();
+        expect(wrapper.classes("o-checkbox--disabled")).toBeTruthy();
         const input = wrapper.find("input");
         expect(input.exists()).toBeTruthy();
         expect(input.attributes("disabled")).not.toBeUndefined();

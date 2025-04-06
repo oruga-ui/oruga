@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/examples",
-  "version": "0.9.3",
+  "version": "0.10.4",
   "homepage": "https://oruga-ui.com",
   "description": "Oruga component examples",
   "license": "MIT",
@@ -46,11 +46,10 @@
   "scripts": {
     "build": "rimraf dist && vite build",
     "publish:examples": "cp ../../README.md . && npm run build && npm publish",
-    "publish:examples:pre": "cp ../../README.md . && npm run build && npm publish --tag pre",
-    "update": "ncu -u"
+    "publish:examples:pre": "cp ../../README.md . && npm run build && npm publish --tag pre"
   },
   "peerDependencies": {
-    "@oruga-ui/oruga-next": "0.9.3",
+    "@oruga-ui/oruga-next": "0.10.4",
     "vue": "^3.0.0"
   },
   "dependencies": {
@@ -59,17 +58,16 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@highlightjs/vue-plugin": "2.1.2",
-    "highlight.js": "11.11.0",
+    "highlight.js": "11.11.1",
     "markdown-it": "^14.1.0",
     "markdown-it-highlightjs": "^4.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
-    "npm-check-updates": "^17.1.11",
-    "sass": "^1.83.0",
-    "vite": "^6.0.4",
-    "vite-plugin-dts": "^4.4.0",
+    "sass": "^1.85.1",
+    "vite": "^6.2.3",
+    "vite-plugin-dts": "^4.5.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitepress": "^1.5.0"
+    "vitepress": "^1.6.3"
   }
 }

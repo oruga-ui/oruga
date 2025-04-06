@@ -59,8 +59,10 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     override: undefined,
     modelValue: undefined,
     input: "",
+    active: false,
     options: undefined,
     filter: undefined,
+    backendFiltering: () => getDefault("autocomplete.backendFiltering", false),
     type: "text",
     menuTag: () => getDefault("autocomplete.menuTag", "div"),
     itemTag: () => getDefault("autocomplete.itemTag", "div"),
@@ -112,6 +114,11 @@ const emits = defineEmits<{
      */
     "update:input": [value: string];
     /**
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
+     */
+    "update:active": [value: boolean];
+    /**
      * on input change event
      * @param value {string} input value
      * @param event {Event} native event
@@ -162,6 +169,7 @@ const emits = defineEmits<{
 }>();
 
 const slots = useSlots();
+
 // define as Component to prevent docs memmory overload
 const inputRef = useTemplateRef<Component>("inputComponent");
 
@@ -172,12 +180,13 @@ const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused, setFocus } =
 // inject parent field component if used inside one
 const { parentField } = injectField();
 
-const isActive = ref(false);
+// the active state of the dropdown, use v-model:active to make it two-way binding
+const isActive = defineModel<boolean>("active", { default: false });
 
-/** The selected value, use v-model to make it two-way binding */
+// the selected value, use v-model to make it two-way binding
 const selectedValue = defineModel<ModelValue>({ default: undefined });
 
-/** The value of the inner input, use v-model:input to make it two-way binding */
+// the value of the inner input, use v-model:input to make it two-way binding
 const inputValue = defineModel<string>("input", { default: "" });
 
 /** create a unique id for the menu */
@@ -193,16 +202,20 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     return groupedOptions;
 });
 
-/**
- * Applies an reactive filter for the options based on the input value.
- * Options are filtered by setting the hidden attribute.
- */
-watchEffect(() => {
-    // filter options by input value
-    filterOptionsItems<T>(groupedOptions, (o) => filterItems(o, inputValue));
-    // trigger reactive update of groupedOptions
-    triggerRef(groupedOptions);
-});
+// if not backend filtered
+if (!props.backendFiltering)
+    /**
+     * Applies an reactive filter for the options based on the input value.
+     * Options are filtered by setting the hidden attribute.
+     */
+    watchEffect(() => {
+        // filter options by input value
+        filterOptionsItems<T>(groupedOptions, (o) =>
+            filterItems(o, inputValue),
+        );
+        // trigger reactive update of groupedOptions
+        triggerRef(groupedOptions);
+    });
 
 function filterItems(
     option: OptionsItem<T>,
@@ -214,12 +227,6 @@ function filterItems(
         return !String(option.label)
             .toLowerCase()
             .includes(toValue(value)?.toLowerCase());
-}
-
-// set initial inputValue if selected is given
-if (selectedValue.value) {
-    const selectedOption = findOption(groupedOptions, selectedValue);
-    if (selectedOption) inputValue.value = selectedOption.label;
 }
 
 /** is no option visible */
@@ -235,7 +242,7 @@ const dropdownValue = ref();
 
 /**
  * When updating input's value:
- * 1. If value isn't the same as selected, set null
+ * 1. If value isn't the same as selected, set undefined
  * 2. Close dropdown if value is clear or else open it
  */
 watch(
@@ -247,6 +254,7 @@ watch(
         if (currentOption && currentOption.label !== value) {
             // clear selected value
             selectedValue.value = undefined;
+            dropdownValue.value = undefined;
         }
 
         // Close dropdown if data is empty
@@ -255,6 +263,29 @@ watch(
         }
     },
     { flush: "post" },
+);
+
+/**
+ * When updating selected value:
+ * 1. Set selected option label as input value
+ * 2. Set the selected option value as dropdown value
+ */
+watch(
+    selectedValue,
+    (value) => {
+        if (!value) return;
+        const option = findOption(groupedOptions, value);
+        if (!option) return;
+
+        // set selected option label as input value
+        inputValue.value = props.clearOnSelect ? "" : option.label;
+        checkHtml5Validity();
+
+        // set the selected option value as dropdown value
+        dropdownValue.value = option.value;
+    },
+    // set initial values if selected is given
+    { immediate: true },
 );
 
 function setSelected(item: T | SpecialOption | undefined): void {
@@ -273,18 +304,12 @@ function setSelected(item: T | SpecialOption | undefined): void {
         option = options.find((o) => o.value === item);
     }
 
-    // set the selected dropdown value
-    dropdownValue.value = option;
-
-    // Set which option is currently selected, update v-model,
+    // set which option is currently selected, update v-model,
     selectedValue.value = option?.value;
     emits("select", option?.value);
 
-    // update input value
-    inputValue.value = props.clearOnSelect ? "" : option?.label || "";
-    checkHtml5Validity();
-
-    setFocus();
+    if (props.keepOpen) setFocus();
+    else isActive.value = false;
 }
 
 // --- Event Handler ---
@@ -309,7 +334,12 @@ function onInput(value: string, event: Event): void {
  * If value is the same as selected, select all text.
  */
 function handleFocus(event: Event): void {
-    if (props.openOnFocus) isActive.value = true;
+    // open dropdown if `openOnFocus` and has options
+    if (
+        props.openOnFocus &&
+        (!!props.options?.length || !!slots.header || !!slots.footer)
+    )
+        isActive.value = true;
     onFocus(event);
 }
 
@@ -353,28 +383,28 @@ const inputBind = computed(() => ({
     ...props.inputClasses,
 }));
 
-const rootClasses = defineClasses(["rootClass", "o-acp"]);
+const rootClasses = defineClasses(["rootClass", "o-autocomplete"]);
 
-const itemClasses = defineClasses(["itemClass", "o-acp__item"]);
+const itemClasses = defineClasses(["itemClass", "o-autocomplete__item"]);
 
 const itemEmptyClasses = defineClasses([
     "itemEmptyClass",
-    "o-acp__item--empty",
+    "o-autocomplete__item--empty",
 ]);
 
 const itemGroupClasses = defineClasses([
     "itemGroupTitleClass",
-    "o-acp__item-group-title",
+    "o-autocomplete__item-group-title",
 ]);
 
 const itemHeaderClasses = defineClasses([
     "itemHeaderClass",
-    "o-acp__item-header",
+    "o-autocomplete__item-header",
 ]);
 
 const itemFooterClasses = defineClasses([
     "itemFooterClass",
-    "o-acp__item-footer",
+    "o-autocomplete__item-footer",
 ]);
 
 // #endregion --- Computed Component Classes ---
@@ -430,6 +460,7 @@ defineExpose({ focus: setFocus, value: inputValue });
                 :debounce="debounce"
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
                 :aria-controls="menuId"
+                enterkeyhint="enter"
                 :use-html5-validation="false"
                 @input="onInput"
                 @focus="handleFocus"

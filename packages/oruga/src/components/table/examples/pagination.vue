@@ -190,7 +190,7 @@ const perPage = ref(3);
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-field>
                 <o-switch v-model="isPaginated" label="Paginated" />
             </o-field>
@@ -263,9 +263,9 @@ const perPage = ref(3);
             :per-page="perPage"
             :pagination-simple="isPaginationSimple"
             :pagination-position="paginationPosition"
-            :default-sort-direction="defaultSortDirection"
             :sort-icon="sortIcon"
             :sort-icon-size="sortIconSize"
+            :default-sort-direction="defaultSortDirection"
             default-sort="user.first_name">
             <o-table-column
                 v-slot="{ row }"

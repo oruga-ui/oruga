@@ -51,10 +51,7 @@ describe("useLoadingProgrammatic tests", () => {
         const label = "My loading Content";
 
         // open element
-        const { close } = LoadingProgrammatic.open(
-            label,
-            "#my-cool-container",
-        );
+        const { close } = LoadingProgrammatic.open(label, "#my-cool-container");
 
         // check element exist
         let loading = document.body.querySelector('[data-oruga="loading"]');

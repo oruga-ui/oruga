@@ -1,41 +1,38 @@
 <script setup lang="ts">
 import { computed, ref, type PropType } from "vue";
+import type { InspectData, InspectClassDescription, InspectClass } from "@docs";
+import { VPButton } from "vitepress/theme";
 
 const props = defineProps({
-    inspectData: {
-        type: Array as PropType<any[]>,
-        required: true,
-    },
-    subitem: {
-        type: String,
-        default: undefined,
-    },
+    inspectData: { type: Object as PropType<InspectData>, required: true },
 });
 
-const emits = defineEmits(["inspect"]);
+const emits = defineEmits<{
+    (e: "inspect", value: InspectClass): void;
+}>();
 
 const selectedElementIndex = ref<number>();
 
-const classesToInspect = computed(() =>
-    props.inspectData.toSorted((propa, propb) =>
-        propa.class < propb.class ? -1 : propa.class > propb.class ? 1 : 0,
-    ),
+const classesToInspect = computed<InspectClassDescription[]>(() =>
+    Object.values(props.inspectData),
 );
 
-function addDotToTheEnd(value: string) {
+function addDotToTheEnd(value: string): string {
     return !value.endsWith(".") ? value + "." : value;
 }
 
-function setByProperties(props: string[]) {
+function setByProperties(props: string[]): string | null {
     return props ? props.join("<br>") : null;
 }
 
-function inspectClass(index: number, selectedData: any) {
+function inspectClass(
+    index: number,
+    selectedClass: InspectClassDescription,
+): void {
     selectedElementIndex.value = index;
-    const selectedClass = selectedData.realClass || selectedData.class;
     emits("inspect", {
-        className: selectedClass,
-        action: selectedData.action,
+        className: selectedClass.relatedClass || selectedClass.class,
+        action: selectedClass.action,
     });
     document.getElementById("class-props")?.scrollIntoView();
 }
@@ -63,7 +60,7 @@ function inspectClass(index: number, selectedData: any) {
                         <b>Inspect</b> button to find the exact element where a
                         specific class prop acts. <br /><br />
                         In the <i>Class props inspector</i> there are other
-                        columns
+                        columns:
                     </p>
                 </div>
 
@@ -85,12 +82,6 @@ function inspectClass(index: number, selectedData: any) {
                         you want to inspect.<br />
                         👉 This icon indicates some warning, e.g.
                         <i>this Class prop is visible only on mobile.</i><br />
-                        🔍 This icon indicates that you should pay attention to
-                        CSS specificity. See
-                        <a href="/documentation/#deal-with-specificity">
-                            "Deal with specificity"
-                        </a>
-                        section in the documentation.
                     </p>
                 </div>
 
@@ -109,10 +100,7 @@ function inspectClass(index: number, selectedData: any) {
                     <p>
                         This column contains all the possible suffixes that
                         you'll receive if you use a function to customize your
-                        Class prop. You'll find more info in the
-                        <a href="/documentation/#overriding-classes">
-                            "Overriding section" </a
-                        >.
+                        Class prop.
                     </p>
                 </div>
             </div>
@@ -134,32 +122,24 @@ function inspectClass(index: number, selectedData: any) {
                         inspector__highlight: index === selectedElementIndex,
                     }">
                     <td v-if="!data.subitem">{{ data.class }}</td>
-                    <td v-if="data.subitem">
+                    <td v-else>
                         ▷
-                        <a :href="`#${subitem}-component`">{{ data.class }}</a>
+                        <a :href="`#${data.subitem}-component`">
+                            {{ data.class }}
+                        </a>
                     </td>
                     <td>
                         <span>{{ addDotToTheEnd(data.description) }}</span>
-                        <span v-if="data.componentRef">
-                            More detail
+                        <span v-if="data.relatedComponent">
+                            More details
                             <a
                                 target="_blank"
-                                :href="`/components/${data.componentRef}.html#class-props`">
-                                here
+                                :href="`/components/${data.relatedComponent}.html#class-props`">
+                                here.
                             </a>
                         </span>
-                        <span v-if="data.warning">
-                            <br />👉 <i><span v-html="data.warning"></span></i>
-                        </span>
-                        <span v-if="data.specificity">
-                            <br />🔍
-                            <i>
-                                <span>
-                                    Classes applied have a higher specificity
-                                    than expected
-                                    <span v-html="data.specificity"> </span>
-                                </span>
-                            </i>
+                        <span v-if="data.info">
+                            <br />👉 <i><span v-html="data.info"></span></i>
                         </span>
                     </td>
                     <td>
@@ -179,13 +159,15 @@ function inspectClass(index: number, selectedData: any) {
                         </span>
                     </td>
                     <td>
-                        <o-button
+                        <VPButton
                             v-if="!data.nospec === true"
-                            label="Inspect"
-                            variant="warning"
-                            class="inspector__btn"
-                            type="button"
-                            @click="inspectClass(index, data)" />
+                            text="Inspect"
+                            :theme="
+                                selectedElementIndex == index ? 'alt' : 'brand'
+                            "
+                            @click="inspectClass(index, data)">
+                            Inspect
+                        </VPButton>
                     </td>
                 </tr>
             </tbody>
@@ -217,7 +199,7 @@ function inspectClass(index: number, selectedData: any) {
 .inspector__highlight,
 .inspector__highlight code,
 .inspector__highlight a {
-    background: #bd1313 !important;
+    background: var(--vp-c-note-2) !important;
     color: white !important;
 }
 </style>

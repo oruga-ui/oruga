@@ -148,64 +148,64 @@ function onClose(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-tip"],
+    ["rootClass", "o-tooltip"],
     [
         "teleportClass",
-        "o-tip--teleport",
+        "o-tooltip--teleport",
         null,
         computed(() => !!props.teleport),
     ],
 );
 
-const triggerClasses = defineClasses(["triggerClass", "o-tip__trigger"]);
-
-const arrowClasses = defineClasses(
-    ["arrowClass", "o-tip__arrow"],
-    [
-        "arrowPositionClass",
-        "o-tip__arrow--",
-        autoPosition,
-        computed(() => !!autoPosition.value),
-    ],
-    [
-        "variantArrowClass",
-        "o-tip__arrow--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
-);
+const triggerClasses = defineClasses(["triggerClass", "o-tooltip__trigger"]);
 
 const contentClasses = defineClasses(
-    ["contentClass", "o-tip__content"],
+    ["contentClass", "o-tooltip__content"],
     [
         "positionClass",
-        "o-tip__content--",
+        "o-tooltip__content--",
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
     [
         "variantClass",
-        "o-tip__content--",
+        "o-tooltip__content--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
     [
         "multilineClass",
-        "o-tip__content--multiline",
+        "o-tooltip__content--multiline",
         null,
         computed(() => props.multiline),
     ],
     [
         "alwaysClass",
-        "o-tip__content--always",
+        "o-tooltip__content--always",
         null,
         computed(() => props.always),
+    ],
+);
+
+const arrowClasses = defineClasses(
+    ["arrowClass", "o-tooltip__arrow"],
+    [
+        "arrowPositionClass",
+        "o-tooltip__arrow--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "arrowVariantClass",
+        "o-tooltip__arrow--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
     ],
 );
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="tooltip">
+    <div data-oruga="tooltip" :class="rootClasses">
         <component
             :is="triggerTag"
             ref="triggerRef"

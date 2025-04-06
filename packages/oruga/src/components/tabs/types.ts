@@ -13,7 +13,6 @@ export type TabsComponent = {
     animateInitially: boolean;
 };
 
-
 export type TabItemComponent<T> = TabItemProps<T, Component> & {
     $slots: Slots;
     tabClasses: ClassBind[];

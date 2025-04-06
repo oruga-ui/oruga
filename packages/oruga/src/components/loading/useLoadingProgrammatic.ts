@@ -1,4 +1,4 @@
-import { type ComponentInternalInstance } from "vue";
+import { type ComponentInternalInstance, type MaybeRefOrGetter } from "vue";
 import {
     InstanceRegistry,
     ComponentProgrammatic,
@@ -17,16 +17,15 @@ declare module "../../index" {
 }
 
 /** loading component programmatic instance registry **/
-const instances = new InstanceRegistry<ComponentInternalInstance>();
+const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useLoadingProgrammatic composable options */
-export type LoadingProgrammaticOptions = Readonly<
-    Omit<LoadingProps, "label">
-> & {
-    label?: string | Array<unknown>;
-} & ProgrammaticComponentOptions;
+export type LoadingProgrammaticOptions = Readonly<LoadingProps> &
+    ProgrammaticComponentOptions;
 
 const LoadingProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: registry.count,
     /**
      * Create a new programmatic loading component instance.
      * @param options loading label string or loading component props object
@@ -35,17 +34,10 @@ const LoadingProgrammatic = {
      */
     open(
         options: string | LoadingProgrammaticOptions,
-        target?: string | HTMLElement | null,
+        target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose {
         const _options: LoadingProgrammaticOptions =
             typeof options === "string" ? { label: options } : options;
-
-        let slot;
-        // render content as slot when is an array
-        if (Array.isArray(_options.label)) {
-            slot = _options.label;
-            delete _options.label;
-        }
 
         const componentProps: LoadingProps = {
             active: true, // set the active default state to true
@@ -54,25 +46,20 @@ const LoadingProgrammatic = {
         };
 
         // create programmatic component
-        return ComponentProgrammatic.open(
-            Loading,
-            {
-                instances, // custom programmatic instance registry
-                target, // target the component get rendered into
-                props: componentProps, // component specific props
-                onClose: _options.onClose, // on close event handler
-            },
-            // component default slot render
-            slot,
-        );
+        return ComponentProgrammatic.open(Loading, {
+            registry, // custom programmatic instance registry
+            target, // target the component get rendered into
+            props: componentProps, // component specific props
+            onClose: _options.onClose, // on close event handler
+        });
     },
     /** Close the last registred instance in the loading programmatic instance registry. */
     close(...args: unknown[]): void {
-        instances.last()?.exposed?.close(...args);
+        registry.last()?.exposed?.close(...args);
     },
     /** Close all instances in the programmatic loading instance registry. */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed?.close(...args));
+        registry.walk((entry) => entry.exposed?.close(...args));
     },
 };
 

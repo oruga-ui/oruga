@@ -4,7 +4,7 @@ export type InputType<IsNumber extends boolean> = IsNumber extends true
     ? number
     : string;
 
-export type InputProps<IsNumber extends boolean> = {
+export type InputProps<IsNumber extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -87,33 +87,35 @@ export type InputProps<IsNumber extends boolean> = {
 } & InputClasses;
 
 // class props (will not be displayed in the docs)
-type InputClasses = Partial<{
+export type InputClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of input when expanded */
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
+    /** Class of the root element when expanded */
     expandedClass: ComponentClass;
-    /** Class of input when type textarea */
+    /** Class of the root element when rounded */
+    roundedClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the root element when type `textarea` */
     textareaClass: ComponentClass;
-    /** Class of the left icon space inside the input */
-    iconLeftSpaceClass: ComponentClass;
-    /** Class of the right icon space inside the input */
-    iconRightSpaceClass: ComponentClass;
+    /** Class to the root element when has a right icon */
+    hasIconRightClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;
-    /** Class of input when rounded */
-    roundedClass: ComponentClass;
-    /** Class of input when disabled */
-    disabledClass: ComponentClass;
-    /** Class of the left icon */
+    /** Class of the native input element with left icon space */
+    iconLeftSpaceClass: ComponentClass;
+    /** Class of the native input element with right icon space */
+    iconRightSpaceClass: ComponentClass;
+    /** Class of the native input element with placeholder */
+    placeholderClass: ComponentClass;
+    /** Class of the left icon element */
     iconLeftClass: ComponentClass;
-    /** Class of the right icon */
+    /** Class of the right icon element */
     iconRightClass: ComponentClass;
-    /** Class to display when a right icon is used */
-    hasIconRightClass: ComponentClass;
     /** Class of the counter element */
     counterClass: ComponentClass;
-    /** Class of the input size */
-    sizeClass: ComponentClass;
-    /** Class of the input variant */
-    variantClass: ComponentClass;
 }>;

@@ -28,7 +28,7 @@ export type ProgrammaticComponentProps<C extends VNodeTypes> = {
      */
     props?: ComponentProps<C> | { container?: HTMLElement };
     /** Programmatic component registry instance */
-    instances?: InstanceRegistry<ComponentInternalInstance>;
+    registry?: InstanceRegistry<ComponentInternalInstance>;
 };
 
 export type ProgrammaticComponentEmits = {
@@ -71,10 +71,10 @@ export const ProgrammaticComponent = defineComponent<
         const promise = new Promise<unknown>((p1) => (resolve = p1));
 
         // add component instance to instance register
-        onMounted(() => props.instances?.add(vm));
+        onMounted(() => props.registry?.add(vm));
 
         // remove component instance from instance register
-        onUnmounted(() => props.instances?.remove(vm));
+        onUnmounted(() => props.registry?.remove(vm));
 
         function close(...args: unknown[]): void {
             // emit `onClose` event
@@ -103,8 +103,9 @@ export const ProgrammaticComponent = defineComponent<
             );
     },
     {
+        name: "ProgrammaticApp",
         // manual runtime props declaration is currently still needed.
-        props: ["component", "props", "instances"],
+        props: ["component", "props", "registry"],
         // manual runtime emits declaration
         emits: ["close", "destroy"],
         // manual runtime slot declaration

@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OTable tests > render correctly 1`] = `
-"<div class="o-table__root" data-oruga="table">
+"<div data-oruga="table" class="o-table__root">
   <div style="display: none;">
     <!--
                 @slot Place o-table-column here
@@ -48,11 +48,11 @@ exports[`OTable tests > render correctly 1`] = `
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;" draggable="false" aria-colindex="1"><span>ID <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
-          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="2"><span>First Name <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
-          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="3"><span>Last Name <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
-          <th class="o-table__th o-table__th--sortable o-table__th--unselectable o-table__th--centered" draggable="false" aria-colindex="4"><span>Date <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
-          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="5"><span>Gender <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span class="o-icon o-icon--small" data-oruga="icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th><!-- checkable column right -->
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;" draggable="false" aria-colindex="1"><span>ID <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="2"><span>First Name <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="3"><span>Last Name <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable o-table__th--centered" draggable="false" aria-colindex="4"><span>Date <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th>
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="5"><span>Gender <span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></span></th><!-- checkable column right -->
           <!--v-if-->
         </tr>
         <!--v-if-->

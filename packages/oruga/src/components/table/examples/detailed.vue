@@ -102,19 +102,19 @@ const columnsVisible = ref({
     cleared: { title: "Stock Cleared", display: true },
 });
 const showDetailIcon = ref(true);
-const showDefaultDetail = ref(true);
+const showCustomDetail = ref(true);
 const detailedRows = ref([data.value[0]]);
 </script>
 
 <template>
     <section>
-        <o-field grouped group-multiline>
-            <o-checkbox v-model="showDetailIcon" label="Show detail chevron" />
-            <o-checkbox
-                v-model="showDefaultDetail"
-                label="Custom detail column" />
+        <o-field grouped multiline>
+            <o-switch v-model="showDetailIcon" label="Show detail chevron" />
+            <o-switch
+                v-model="showCustomDetail"
+                label="Custom custom detail row" />
             <div v-for="(column, index) in columnsVisible" :key="index">
-                <o-checkbox
+                <o-switch
                     v-model="column.display"
                     :label="`Show column '${column.title}'`" />
             </div>
@@ -127,7 +127,7 @@ const detailedRows = ref([data.value[0]]);
             row-key="name"
             :detailed-rows="detailedRows"
             :default-sort="['name', 'asc']"
-            :custom-detail-row="!showDefaultDetail"
+            :custom-detail-row="showCustomDetail"
             :show-detail-icon="showDetailIcon">
             <o-table-column
                 v-slot="{ row, toggleDetails }"
@@ -176,6 +176,7 @@ const detailedRows = ref([data.value[0]]);
             </o-table-column>
 
             <template #detail="{ row }">
+                <!-- when using `custom-detail-row`, make sure that each element in the slot has a unique `key` attribute -->
                 <tr v-for="item in row.items" :key="item.name">
                     <td v-if="showDetailIcon"></td>
                     <td v-show="columnsVisible['name'].display">

@@ -14,7 +14,7 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
-import { isTrueish } from "@/utils/helpers";
+import { isDefined, isTrueish } from "@/utils/helpers";
 import { defineClasses, useDebounce, useInputHandler } from "@/composables";
 
 import { injectField } from "../field/fieldInjection";
@@ -125,10 +125,10 @@ const { parentField, statusVariant, statusVariantIcon } = injectField();
 
 const vmodel = defineModel<ModelValue, string, string, ModelValue>({
     // cast incomming value to string
-    get: (value) => (typeof value !== "undefined" ? String(value) : ""),
+    get: (value) => (isDefined(value) ? String(value) : ""),
     // cast outgoing value to number if prop number is true
     set: (value) =>
-        typeof value == "undefined"
+        !isDefined(value)
             ? value
             : isTrueish(props.number)
               ? Number(value)
@@ -195,9 +195,12 @@ watch(
 );
 
 function onInput(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    emits("input", value, event);
+    emits("input", vmodel.value, event);
 }
+
+const placeholderVisible = computed(
+    () => !isDefined(vmodel.value) || vmodel.value === "",
+);
 
 // --- Icon Feature ---
 
@@ -273,24 +276,7 @@ const inputBind = computed(() => ({
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-input__wrapper"],
-    [
-        "expandedClass",
-        "o-input__wrapper--expanded",
-        null,
-        computed(() => props.expanded),
-    ],
-    [
-        "hasIconRightClass",
-        "o-input__wrapper--has-icon-right",
-        null,
-        hasIconRight,
-    ],
-);
-
-const inputClasses = defineClasses(
-    ["inputClass", "o-input"],
-    ["roundedClass", "o-input--rounded", null, computed(() => props.rounded)],
+    ["rootClass", "o-input"],
     [
         "sizeClass",
         "o-input--",
@@ -304,24 +290,47 @@ const inputClasses = defineClasses(
         computed(() => !!statusVariant.value || !!props.variant),
     ],
     [
+        "expandedClass",
+        "o-input--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+    [
         "disabledClass",
         "o-input--disabled",
         null,
         computed(() => props.disabled),
     ],
+    ["roundedClass", "o-input--rounded", null, computed(() => props.rounded)],
+    ["hasIconRightClass", "o-input--icon-right", null, hasIconRight],
     [
         "textareaClass",
-        "o-input__textarea",
+        "o-input--textarea",
         null,
         computed(() => props.type === "textarea"),
     ],
+);
+
+const inputClasses = defineClasses(
+    ["inputClass", "o-input__input"],
     [
         "iconLeftSpaceClass",
-        "o-input--iconspace-left",
+        "o-input__input--iconspace-left",
         null,
         computed(() => !!props.icon),
     ],
-    ["iconRightSpaceClass", "o-input--iconspace-right", null, hasIconRight],
+    [
+        "iconRightSpaceClass",
+        "o-input__input--iconspace-right",
+        null,
+        hasIconRight,
+    ],
+    [
+        "placeholderClass",
+        "o-input__input--placeholder",
+        null,
+        placeholderVisible,
+    ],
 );
 
 const iconLeftClasses = defineClasses(["iconLeftClass", "o-input__icon-left"]);
@@ -356,8 +365,8 @@ defineExpose({ focus: setFocus, value: vmodel });
             :id="id"
             ref="inputElement"
             v-model="vmodel"
-            :data-oruga-input="inputType"
             :type="inputType"
+            :data-oruga-input="inputType"
             :class="inputClasses"
             :maxlength="maxlength"
             :autocomplete="autocomplete"

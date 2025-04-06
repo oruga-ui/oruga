@@ -1,30 +1,22 @@
 # Select
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Select** input component uses [HTML's native select input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select).
 Select inputs can be single value selections, or multi-value selections by using the `multiple` attribute.
-Use it with the Field component to access all the functionalities.
+Use it with the [Field](/components/Field) component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-select />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-select-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Select component
 
@@ -80,9 +72,17 @@ Use it with the Field component to access all the functionalities.
 | placeholder | Override the placeholder                      |          |
 | default     | Override the options, default is options prop |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-select-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -125,4 +125,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

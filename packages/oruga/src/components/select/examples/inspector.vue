@@ -1,129 +1,124 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import type { InspectData } from "@docs";
+import type { SelectClasses, SelectProps } from "../props";
 
-const selectedOptions = ref<string | string[]>();
-
-const inspectData = [
-    {
+const inspectData: InspectData<
+    SelectClasses,
+    SelectProps<unknown, true | false> & {
+        fieldvariant: string;
+        fieldmessage: string;
+    }
+> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
-        action: (): void => {
-            selectedOptions.value = undefined;
+        description: "Class of the root element.",
+    },
+    sizeClass: {
+        class: "sizeClass",
+        description: "Class of the root element with size.",
+        properties: ["size"],
+        suffixes: ["small", "medium", "large"],
+        action: (data): void => {
+            data.size = "large";
         },
     },
-    {
-        class: "iconLeftSpaceClass",
-        description: "Class of the left icon space inside the select",
-        properties: ["icon"],
-        action: (cmp, data): void => {
-            data.icon = "envelope";
-            selectedOptions.value = undefined;
+    variantClass: {
+        class: "variantClass",
+        description: "Class of the root element with variant.",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (data): void => {
+            data.fieldvariant = "info";
+            data.fieldmessage = "Info for this field";
         },
     },
-    {
-        class: "iconRightSpaceClass",
-        description: "Class of the right icon space inside the select",
-        properties: ["iconRight"],
-        action: (cmp, data): void => {
-            data.iconRight = "times-circle";
-            selectedOptions.value = undefined;
-        },
-    },
-    {
-        class: "roundedClass",
-        description: "Class of select when rounded",
-        properties: ["rounded"],
-        action: (cmp, data): void => {
-            data.rounded = true;
-            selectedOptions.value = undefined;
-        },
-    },
-    {
-        class: "multipleClass",
-        description: "Class of the select when multiple mode is active",
-        properties: ["multiple"],
-        action: (cmp, data): void => {
-            data.multiple = true;
-            selectedOptions.value = [];
-        },
-    },
-    {
+    expandedClass: {
         class: "expandedClass",
-        description: "Class of select when expanded",
+        description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
-            selectedOptions.value = undefined;
         },
     },
-    {
+    disabledClass: {
         class: "disabledClass",
-        description: "Class of select when disabled ",
+        description: "Class of the root element when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
-    {
-        class: "iconLeftClass",
-        description: "Class of the left icon",
-        properties: ["icon"],
-        action: (cmp, data): void => {
-            data.icon = "envelope";
-            selectedOptions.value = undefined;
+    roundedClass: {
+        class: "roundedClass",
+        description: "Class of the root element when rounded.",
+        properties: ["rounded"],
+        action: (data): void => {
+            data.rounded = true;
         },
     },
-    {
-        class: "iconRightClass",
-        description: "Class of the right icon",
+    hasIconRightClass: {
+        class: "hasIconRightClass",
+        description: "Class to the root element when a right icon is used.",
         properties: ["iconRight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.iconRight = "times-circle";
-            selectedOptions.value = undefined;
         },
     },
-    {
-        class: "sizeClass",
-        description: "Class of the select size",
-        properties: ["size"],
-        suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
-            data.size = "large";
-            selectedOptions.value = undefined;
+    multipleClass: {
+        class: "multipleClass",
+        description: "Class of the root element when multiple.",
+        properties: ["multiple"],
+        action: (data): void => {
+            data.multiple = true;
         },
     },
-    {
-        class: "variantClass",
-        description: "Class of the select variant",
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
-            data.fieldvariant = "info";
-            data.fieldmessage = "Info for this field";
-            selectedOptions.value = undefined;
-        },
-    },
-    {
+    selectClass: {
         class: "selectClass",
-        description: "Class of the native select element",
+        description: "Class of the native select element.",
     },
-    {
+    placeholderClass: {
         class: "placeholderClass",
-        description: "Class of the select placeholder",
-        action: (): void => {
-            selectedOptions.value = undefined;
+        description: "Class of the native select element with a placeholder.",
+    },
+    arrowedClass: {
+        class: "arrowedClass",
+        description: "Class of the native select element with an arrow.",
+        info: "It applies the arrow icon using background-image and background-position on select element. An alternative to override this is the iconRight prop (globally or not).",
+    },
+    iconLeftSpaceClass: {
+        class: "iconLeftSpaceClass",
+        description: "Class of the native select element with left icon space.",
+        properties: ["icon"],
+        action: (data): void => {
+            data.icon = "envelope";
         },
     },
-    {
-        class: "arrowClass",
-        description: "Class of the select arrow",
-        warning:
-            "It applies the arrow icon using background-image and background-position on select element. An alternative to override it is iconRight prop (globally or not)",
-        action: (): void => {
-            selectedOptions.value = undefined;
+    iconRightSpaceClass: {
+        class: "iconRightSpaceClass",
+        description:
+            "Class of the native select element with right icon space.",
+        properties: ["iconRight"],
+        action: (data): void => {
+            data.iconRight = "times-circle";
         },
     },
-];
+    iconLeftClass: {
+        class: "iconLeftClass",
+        description: "Class of the left icon element.",
+        properties: ["icon"],
+        action: (data): void => {
+            data.icon = "envelope";
+        },
+    },
+    iconRightClass: {
+        class: "iconRightClass",
+        description: "Class of the right icon element.",
+        properties: ["iconRight"],
+        action: (data): void => {
+            data.iconRight = "times-circle";
+        },
+    },
+};
 </script>
 
 <template>
@@ -131,8 +126,8 @@ const inspectData = [
         <o-field :variant="props.fieldvariant" :message="props.fieldmessage">
             <o-select
                 v-bind="props"
-                v-model="selectedOptions"
-                placeholder="Select a character">
+                placeholder="Select a character"
+                aria-label="Select a character">
                 <optgroup label="Black Sails">
                     <option value="flint">Flint</option>
                     <option value="silver">Silver</option>

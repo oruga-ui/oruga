@@ -4,30 +4,22 @@ sidebarDepth: 2
 
 # Notification
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Notification** component is a lightweight and easily customizable alert message.
 It is designed to mimic the push notifications that have been popularized by mobile and desktop operating systems.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-notification />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-notification-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Notification component
 
@@ -50,7 +42,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 | icon           | Icon name to use                                                              | string                                                                            | -                                                                               |                                                                                                                                                                 |
 | iconPack       | Icon pack to use                                                              | string                                                                            | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
 | iconSize       | Icon size                                                                     | string                                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconSize: "large"<br>}</code>        |
-| message        | Message text (can contain HTML), unnecessary when default slot is used        | string \| string[]                                                                | -                                                                               |                                                                                                                                                                 |
+| message        | Message text, unnecessary when default slot is used                           | string                                                                            | -                                                                               |                                                                                                                                                                 |
 | override       | Override existing theme classes completely                                    | boolean                                                                           | -                                                                               |                                                                                                                                                                 |
 | position       | Which position the notification will appear when programmatically             | "bottom-left" \| "bottom-right" \| "bottom" \| "top-left" \| "top-right" \| "top" | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left`         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>          |
 | type           | Type (color) of the notification                                              | string                                                                            | `info`, `success`, `warning`, `danger`                                          |                                                                                                                                                                 |
@@ -70,9 +62,9 @@ It is designed to mimic the push notifications that have been popularized by mob
 | inner   | Notification inner content, outside of the message container | **close** `(...args): void` - function to close the notification |
 | default | Notification default content, default is message prop        | **close** `(...args): void` - function to close the notification |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## NotificationNotice component
 
@@ -84,16 +76,17 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ### Props
 
-| Prop name | Description                                                                                      | Type                                                                              | Values                                                                  | Default                                                                                                                                                 |
-| --------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| component | Component to be injected.<br/>Close the component by emitting a 'close' event — `$emit('close')` | Component                                                                         | -                                                                       |                                                                                                                                                         |
-| duration  | Hide notification after duration (in miliseconds)                                                | number                                                                            | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;duration: 2000<br>}</code>   |
-| events    | Events to be binded to the injected component                                                    | {}                                                                                | -                                                                       |                                                                                                                                                         |
-| infinite  | Show the Notification infinitely until it is dismissed.                                          | boolean                                                                           | -                                                                       | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                             |
-| override  | Override existing theme classes completely                                                       | boolean                                                                           | -                                                                       |                                                                                                                                                         |
-| position  | Which position the notification will appear.                                                     | "bottom-left" \| "bottom-right" \| "bottom" \| "top-left" \| "top-right" \| "top" | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>  |
-| props     | Props to be binded to the injected component                                                     | any                                                                               | -                                                                       |                                                                                                                                                         |
-| queue     | If notice should queue with others notices (snackbar/toast/notification).                        | boolean                                                                           | -                                                                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;queue: undefined<br>}</code> |
+| Prop name | Description                                                                                      | Type                                                                              | Values                                                                          | Default                                                                                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| component | Component to be injected.<br/>Close the component by emitting a 'close' event — `$emit('close')` | Component                                                                         | -                                                                               |                                                                                                                                                           |
+| duration  | Hide notification after duration (in miliseconds)                                                | number                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;duration: 2000<br>}</code>     |
+| events    | Events to be binded to the injected component                                                    | {}                                                                                | -                                                                               |                                                                                                                                                           |
+| infinite  | Show the Notification infinitely until it is dismissed.                                          | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                               |
+| override  | Override existing theme classes completely                                                       | boolean                                                                           | -                                                                               |                                                                                                                                                           |
+| position  | Which position the notification will appear.                                                     | "bottom-left" \| "bottom-right" \| "bottom" \| "top-left" \| "top-right" \| "top" | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left`         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;position: "top"<br>}</code>    |
+| props     | Props to be binded to the injected component                                                     | any                                                                               | -                                                                               |                                                                                                                                                           |
+| queue     | If notice should queue with others notices (snackbar/toast/notification).                        | boolean                                                                           | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;queue: undefined<br>}</code>   |
+| variant   | Color of the control                                                                             | string                                                                            | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;variant: undefined<br>}</code> |
 
 ### Events
 
@@ -107,9 +100,17 @@ It is designed to mimic the push notifications that have been popularized by mob
 | ------- | ----------- | -------- |
 | default |             |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-notification-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -168,4 +169,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

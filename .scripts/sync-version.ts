@@ -1,4 +1,4 @@
-import replace from 'replace-in-file';
+import { replaceInFileSync } from 'replace-in-file'
 
 const jsonPaths = [
   'package-lock.json',
@@ -20,7 +20,7 @@ const configJsonOptions = [{
 }]
 
 const replaceInFile = (config) =>
-  replace.sync(config).map((el) => el.file);
+  replaceInFileSync(config).map((el) => el.file);
 
 try {
   configJsonOptions.forEach(options => replaceInFile(options));

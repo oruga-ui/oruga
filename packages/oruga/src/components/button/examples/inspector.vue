@@ -1,115 +1,115 @@
 <script setup lang="ts">
-const inspectData = [
-    {
+import type { InspectData } from "@docs";
+import type { ButtonClasses, ButtonProps } from "../props";
+
+const inspectData: InspectData<ButtonClasses, ButtonProps> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
-        class: "wrapperClass",
-        description: "Class of the button elements wrapper",
-        action: (cmp, data): void => {
-            data.expanded = true;
+    sizeClass: {
+        class: "sizeClass",
+        description: "Class of the root element with size.",
+        properties: ["size"],
+        suffixes: ["small", "medium", "large"],
+        action: (data): void => {
+            data.size = "large";
         },
     },
-    {
+    variantClass: {
+        class: "variantClass",
+        description: "Class of the root element with variant.",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (data): void => {
+            data.variant = "warning";
+        },
+    },
+    outlinedClass: {
         class: "outlinedClass",
-        description: "Class of the button when outlined",
+        description: "Class of the root element when outlined.",
         properties: ["outlined"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "primary";
             data.outlined = true;
         },
     },
-    {
-        class: "loadingClass",
-        description: "Class of the button with loading",
-        properties: ["loading"],
-        action: (cmp, data): void => {
-            data.loading = true;
-        },
-    },
-    {
+    invertedClass: {
         class: "invertedClass",
-        description: "Class of the button when inverted",
+        description: "Class of the root element when inverted.",
         properties: ["inverted"],
         suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.variant = "primary";
             data.inverted = true;
         },
     },
-    {
+    loadingClass: {
+        class: "loadingClass",
+        description: "Class of the root element when loading.",
+        properties: ["loading"],
+        action: (data): void => {
+            data.loading = true;
+        },
+    },
+    expandedClass: {
         class: "expandedClass",
-        description: "Class of the button when expanded",
+        description: "Class of the root element when expanded.",
         properties: ["expanded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.expanded = true;
         },
     },
-    {
+    roundedClass: {
         class: "roundedClass",
-        description: "Class of the button when rounded",
+        description: "Class of the root element when rounded.",
         properties: ["rounded"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.rounded = true;
         },
     },
-    {
+    disabledClass: {
         class: "disabledClass",
-        description: "Class of the button when disabled",
+        description: "Class of the button when disabled.",
         properties: ["disabled"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data.disabled = true;
         },
     },
-    {
-        class: "labelClass",
-        description: "Class of the button label",
+    wrapperClass: {
+        class: "wrapperClass",
+        description: "Class of the inner wrapper element.",
     },
-    {
+    iconClass: {
         class: "iconClass",
-        description: "Class of the button icon",
+        description: "Class of the icon element.",
         properties: ["iconLeft", "iconRight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data["icon-left"] = "plus";
         },
     },
-    {
+    iconLeftClass: {
         class: "iconLeftClass",
-        description: "Class of the button icon on the left",
+        description: "Class of the icon element on the left.",
         properties: ["iconLeft"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data["icon-left"] = "plus";
         },
     },
-    {
+    iconRightClass: {
         class: "iconRightClass",
-        description: "Class of the button icon on the right",
+        description: "Class of the icon element on the right.",
         properties: ["iconRight"],
-        action: (cmp, data): void => {
+        action: (data): void => {
             data["icon-right"] = "plus";
         },
     },
-    {
-        class: "sizeClass",
-        description: "Class of the button size",
-        properties: ["size"],
-        suffixes: ["small", "medium", "large"],
-        action: (cmp, data): void => {
-            data.size = "large";
-        },
+    labelClass: {
+        class: "labelClass",
+        description: "Class of the label element.",
     },
-    {
-        class: "variantClass",
-        description: "Class of the button variant",
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (cmp, data): void => {
-            data.variant = "warning";
-        },
-    },
-];
+};
 </script>
 
 <template>

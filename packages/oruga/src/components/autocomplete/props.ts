@@ -1,5 +1,6 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
+import type { InputProps } from "../input/props";
 
 export type AutocompleteProps<T> = {
     /** Override existing theme classes completely */
@@ -11,8 +12,12 @@ export type AutocompleteProps<T> = {
     modelValue?: T;
     /** The value of the inner input, use v-model:input to make it two-way binding */
     input?: string;
+    /** The active state of the dropdown, use v-model:active to make it two-way binding */
+    active?: boolean;
     /** Autocomplete options */
     options?: OptionsPropWithGroups<T>;
+    /** Options won't be filtered based on the input value on clientside */
+    backendFiltering?: boolean;
     /** Function to filter the option based on the input value - default is label string comparison */
     filter?: (option: T, value: string) => boolean;
     /** Input type */
@@ -59,7 +64,7 @@ export type AutocompleteProps<T> = {
     selectableFooter?: boolean;
     /** Max height of dropdown content */
     maxHeight?: string | number;
-    /** Makes the component check if list reached scroll start or end and emit scroll events. */
+    /** Makes the component check if list reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /**
      * Icon pack to use
@@ -108,22 +113,22 @@ export type AutocompleteProps<T> = {
 } & AutocompleteClasses;
 
 // class props (will not be displayed in the docs)
-type AutocompleteClasses = Partial<{
+export type AutocompleteClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the menu items */
     itemClass: ComponentClass;
     /** Class of the menu items group title */
     itemGroupTitleClass: ComponentClass;
-    /** Class of the menu empty placeholder item */
+    /** Class of the empty menu placeholder item */
     itemEmptyClass: ComponentClass;
     /** Class of the menu header item */
     itemHeaderClass: ComponentClass;
     /** Class of the menu footer item */
     itemFooterClass: ComponentClass;
     /**
-     * Classes to apply on internal input component
+     * Class configuration for the internal input component
      * @ignore
      */
-    inputClasses: object;
+    inputClasses: InputProps<false>;
 }>;

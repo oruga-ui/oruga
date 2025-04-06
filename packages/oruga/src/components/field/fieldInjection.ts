@@ -33,7 +33,7 @@ const $FieldKey: InjectionKey<ProvidedField> = Symbol("FielData");
 
 /**
  * Provide field component data via dependency injection.
- * Provided data is a computed ref to enjure reactivity.
+ * Provided data is a computed ref to ensure reactivity.
  */
 export function provideField(data: ProvidedField): void {
     provide($FieldKey, data);

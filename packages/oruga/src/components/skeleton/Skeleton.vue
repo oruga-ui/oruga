@@ -40,32 +40,32 @@ const itemStyle = computed(() => ({
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-sklt"],
+    ["rootClass", "o-skeleton"],
     [
         "positionClass",
-        "o-sklt--",
+        "o-skeleton--",
         computed(() => props.position),
         computed(() => !!props.position),
     ],
 );
 
 const itemClasses = defineClasses(
-    ["itemClass", "o-sklt__item"],
+    ["itemClass", "o-skeleton__item"],
     [
-        "itemRoundedClass",
-        "o-sklt__item--rounded",
+        "roundedClass",
+        "o-skeleton__item--rounded",
         null,
         computed(() => props.rounded),
     ],
     [
-        "animationClass",
-        "o-sklt__item--animated",
+        "animatedClass",
+        "o-skeleton__item--animated",
         null,
         computed(() => props.animated),
     ],
     [
         "sizeClass",
-        "o-sklt__item--",
+        "o-skeleton__item--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],

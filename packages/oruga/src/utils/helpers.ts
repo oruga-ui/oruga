@@ -165,6 +165,7 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
 }
 
 /**
+ * @deprecated not used
  * Returns true if it is a DOM element
  * @source https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
  */
@@ -195,9 +196,9 @@ export function getPropertyValue<O, K extends keyof O | string>(
 ): string {
     if (!obj) return "";
 
-    const property = field
-        ? getValueByPath<O, K>(obj, field)
-        : (obj as DeepType<O, K>);
+    const property = (
+        field ? getValueByPath<O, K>(obj, field) : obj
+    ) as DeepType<O, K>;
 
     const label =
         typeof formatter === "function" ? formatter(property, obj) : property;
@@ -249,9 +250,9 @@ export function getValueByPath<O, K extends keyof O | string>(
     obj: O,
     path: K,
     defaultValue?: DeepType<O, K>,
-): DeepType<O, K> {
+): DeepType<O, K> | undefined {
     if (!obj || typeof obj !== "object" || typeof path !== "string")
-        return defaultValue ?? (obj as DeepType<O, K>);
+        return defaultValue;
 
     const value: any = path
         .split(".")
@@ -297,7 +298,7 @@ export function escapeRegExpChars(value: string): string {
 }
 
 /**
- * Remove accents/diacritics in a string in JavaScript
+ * Remove accents/diacritics in a string
  * https://stackoverflow.com/a/37511463
  */
 export function removeDiacriticsFromString(value: string): string {

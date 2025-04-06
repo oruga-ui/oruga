@@ -61,30 +61,30 @@ export type TabsProps<T> = {
 } & TabsClasses;
 
 // class props (will not be displayed in the docs)
-type TabsClasses = Partial<{
+export type TabsClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of Tabs component position */
+    /** Class of the root element with position */
     positionClass: ComponentClass;
-    /** Class of Tabs component when expanded */
-    expandedClass: ComponentClass;
-    /** Class of Tabs component when vertical */
-    verticalClass: ComponentClass;
-    /** Size of the Tabs component */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
-    /** Type of the Tabs component */
+    /** Class of the root element with type */
     typeClass: ComponentClass;
-    /** Class of Tabs component when multiline */
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class of the root element when vertical */
+    verticalClass: ComponentClass;
+    /** Class of the root element when multilined */
     multilineClass: ComponentClass;
-    /** Class of the tablist element */
-    tablistClass: ComponentClass;
-    /** Class of the tab content */
+    /** Class of the list container element */
+    listClass: ComponentClass;
+    /** Class of the panel container element */
     contentClass: ComponentClass;
-    /** Class of the tab content when transitioning */
+    /** Class of the panel container element when transitioning */
     transitioningClass: ComponentClass;
 }>;
 
-export type TabItemProps<T, C extends Component> = {
+export type TabItemProps<T, C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -115,23 +115,21 @@ export type TabItemProps<T, C extends Component> = {
 } & TabItemClasses;
 
 // class props (will not be displayed in the docs)
-type TabItemClasses = Partial<{
-    /** Class of the tab item */
+export type TabItemClasses = Partial<{
+    /** Class of the tab item element */
     tabClass: ComponentClass;
-    /** Class of the tab item when active */
+    /** Class of the tab item element when active */
     tabActiveClass: ComponentClass;
-    /** Class of the tab item before the active one */
+    /** Class of the tab item element before the active one */
     tabPreviousClass: ComponentClass;
-    /** Class of the tab item after the active one */
+    /** Class of the tab item element after the active one */
     tabNextClass: ComponentClass;
-    /** Class of the tab item when disabled */
+    /** Class of the tab item element when disabled */
     tabDisabledClass: ComponentClass;
-    /** Class of the tab item type */
-    tabTypeClass: ComponentClass;
-    /** Class of the tab item icon */
+    /** Class of the tab item icon element */
     tabIconClass: ComponentClass;
-    /** Class of the tab item label */
+    /** Class of the tab item label element */
     tabLabelClass: ComponentClass;
-    /** Class of the tab item panel */
+    /** Class of the tab panel element */
     tabPanelClass: ComponentClass;
 }>;

@@ -1,6 +1,6 @@
 <template>
     <section>
-        <o-menu>
+        <o-menu label="Links">
             <o-menu-item
                 label="Github"
                 icon="link"

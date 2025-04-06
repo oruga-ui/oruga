@@ -1,90 +1,110 @@
 <script setup lang="ts">
-const subitem = "menu-item";
+import type { InspectData } from "@docs";
+import type {
+    MenuClasses,
+    MenuItemClasses,
+    MenuProps,
+    MenuItemProps,
+} from "../props";
 
-const inspectData = [
-    {
+const inspectData: InspectData<
+    MenuClasses & MenuItemClasses,
+    MenuProps<unknown> & MenuItemProps<unknown>
+> = {
+    rootClass: {
         class: "rootClass",
-        description: "Class of the root element",
+        description: "Class of the root element.",
     },
-    {
+    listClass: {
         class: "listClass",
-        description: "Class of the menu list",
+        description: "Class of the menu list element.",
     },
-    {
+    labelClass: {
         class: "labelClass",
-        description: "Class of the menu label",
+        description: "Class of the menu label element.",
     },
-    {
+    itemClass: {
         class: "itemClass",
-        description: "Class of the root element of menu item",
-        subitem: true,
+        subitem: "menuitem",
+        description: "Class of the menu item root element.",
     },
-    {
+    itemActiveClass: {
         class: "itemActiveClass",
-        description: "Class of the menu item root when active",
-        subitem: true,
+        subitem: "menuitem",
+        description: "Class of the menu item root element when active.",
     },
-    {
+    itemFocusedClass: {
         class: "itemFocusedClass",
-        description: "Class of the menu item root when focused",
-        subitem: true,
+        subitem: "menuitem",
+        description: "Class of the menu item root element when focused.",
     },
-    {
+    itemDisabledClass: {
         class: "itemDisabledClass",
-        description: "Class of the menu item root when disabled",
+        subitem: "menuitem",
+        description: "Class of the menu item root element when disabled.",
         properties: ["disabled"],
-        subitem: true,
+        action: (data): void => {
+            data.disabled = true;
+        },
     },
-    {
+    itemButtonClass: {
         class: "itemButtonClass",
-        description: "Class of the menu item",
-        subitem: true,
+        subitem: "menuitem",
+        description: "Class of the menu button element.",
     },
-    {
+    itemButtonActiveClass: {
         class: "itemButtonActiveClass",
-        description: "Class of the menu item when active",
-        subitem: true,
+        subitem: "menuitem",
+        description: "Class of the menu button element when active.",
     },
-    {
+    itemButtonFocusedClass: {
         class: "itemButtonFocusedClass",
-        description: "Class of the menu item when focused",
-        subitem: true,
+        subitem: "menuitem",
+        description: "Class of the menu button element when focused.",
     },
-    {
+    itemButtonDisabledClass: {
         class: "itemButtonDisabledClass",
-        description: "Class of the menu item when disabled",
+        subitem: "menuitem",
+        description: "Class of the menu button element when disabled.",
         properties: ["disabled"],
-        subitem: true,
+        action: (data): void => {
+            data.disabled = true;
+        },
     },
-    {
+    itemButtonIconClass: {
         class: "itemButtonIconClass",
-        description: "Class of the menu item with icon",
+        subitem: "menuitem",
+        description: "Class of the menu button element with icon.",
         properties: ["icon"],
-        subitem: true,
+        action: (data): void => {
+            data.icon = "times-circle";
+        },
     },
-    {
+    itemSubmenuClass: {
         class: "itemSubmenuClass",
-        description: "Class of the menu item submenu",
-        subitem: true,
+        subitem: "menuitem",
+        description: "Class of the menu item submenu element.",
     },
-];
+};
 </script>
 
 <template>
-    <inspector-wrapper
-        v-slot="props"
-        :inspect-data="inspectData"
-        :subitem="subitem">
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
         <o-menu v-bind="props" label="Menu">
-            <o-menu-item v-bind="props" icon="info-circle" label="Info" />
-            <o-menu-item v-bind="props" icon="cog" label="Submenu" expanded>
-                <o-menu-item v-bind="props" icon="user" label="Users" />
-                <o-menu-item
+            <o-menuitem v-bind="props" icon="info-circle" label="Info" />
+            <o-menuitem
+                v-bind="props"
+                icon="cog"
+                label="Submenu"
+                active
+                expanded>
+                <o-menuitem v-bind="props" icon="user" label="Users" />
+                <o-menuitem
                     v-bind="props"
                     icon="money-bill"
                     label="Payments"
                     disabled />
-            </o-menu-item>
+            </o-menuitem>
         </o-menu>
     </inspector-wrapper>
 </template>
