@@ -2,6 +2,8 @@
 
 <div class="vp-doc">
 
+> The classic breadcrumb, in different colors, sizes, and states
+
 </div>
 
 <div class="vp-example">
@@ -32,13 +34,44 @@
 
 ### Props
 
-| Prop name | Description                                       | Type             | Values                                                                                                                                        | Default                                                                                                                                                               |
-| --------- | ------------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| align     | Position of the breadcrumb                        | string           | `left`, `centered`, `right`                                                                                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;align: "left"<br>}</code>                    |
-| override  | Override existing theme classes completely        | boolean          | -                                                                                                                                             |                                                                                                                                                                       |
-| separator | The breadcrumb separator between breadcrumb items | string           | ` has-arrow-separator`, `has-dot-separator`, `has-slash-separator`, `has-bullet-separator`, `has-succeeds-separator`, `has-chevron-separator` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: "has-slash-separator"<br>}</code> |
-| size      | Size of the breadcrumb                            | string           | `small`, `medium`, `large`                                                                                                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;size: "small"<br>}</code>                    |
-| tag       | Tag of the breadcrumb                             | DynamicComponent | `div`, `section ...`                                                                                                                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;tag: "section"<br>}</code>                   |
+| Prop name     | Description                                    | Type     | Values                      | Default    |
+| ------------- | ---------------------------------------------- | -------- | --------------------------- | ---------- |
+| align         | Position of breadcrumb                         | string   | `left`, `centered`, `right` | `left`     |
+| override      | Override existing theme classes completely     | boolean  |                             |            |
+| size          | Size of the breadcrumb                         | string   | `small`, `medium`, `large`  | `medium`   |
+| tag           | Tag of the breadcrumb                          | string   | `div`, `section` ...        | `section`  |
+| separator     | Separator between breadcrumb items             | string   | `has-arrow-separator`, `has-dot-separator`, `has-slash-separator`, `has-bullet-separator`, `has-succeeds-separator`, `has-chevron-separator` | `has-slash-separator` |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
+
+</div>
+
+<div class="vp-doc">
+
+## Breadcrumb item component
+
+> The classic breadcrumb item, in different colors, icons and states
+
+```html
+<o-breadcrumb></o-breadcrumb>
+```
+
+### Props
+
+| Prop name     | Description                                    | Type     | Values                      | Default    |
+| ------------- | ---------------------------------------------- | -------- | --------------------------- | ---------- |
+| active        | Active breadcrumb item                         | boolean  |  `primary`, `info`, `warning`, `danger`  | `false`     |
+| activeVariant | Variant of active breadcrumb item              | string   |                             | `primary`  |
+| disabled      | breadcrum item is disabled                     | boolean  |                             | `false`    |
+| tag           | Tag of the breadcrumb item                     | string   | `a`, `router-link`          | `a`        |
+| iconLeft      | Icon name to show on the left                  | string   |                             |            |
+| iconRight     | Icon name to show on the right                 | string   |                             |            |
+| iconBoth      | Icon name to show on both sides                | string   |                             |            |
+| iconPack      | Icon pack to use                               | string   | `mdi`, `fa`, `fas` and any other custom icon pack   |            |
 
 ### Slots
 

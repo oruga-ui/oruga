@@ -1,26 +1,18 @@
 # Breadcrumb Item
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-breadcrumbitem />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-breadcrumbitem-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## BreadcrumbItem component
 
@@ -49,4 +41,12 @@
 | ------- | ----------- | -------- |
 | default |             |          |
 
-</div>
+</section>
+
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-breadcrumbitem-viewer />
+
+</section>
