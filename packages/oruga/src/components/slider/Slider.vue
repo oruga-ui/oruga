@@ -99,16 +99,18 @@ const maxValue = computed(() =>
     Math.max(valueStart.value || props.min, valueEnd.value || props.max),
 );
 
+const isRange = computed(() => isTrueish(props.range));
+
 const vmodel = computed<ModelValue>(
     () =>
-        (isTrueish(props.range)
+        (isRange.value
             ? [minValue.value, maxValue.value]
             : valueStart.value || 0) as ModelValue,
 );
 
 /** update vmodel value on internal value change */
 watch([valueStart, valueEnd], () => {
-    if (isTrueish(props.range))
+    if (isRange.value)
         isThumbReversed.value =
             valueStart.value && valueEnd.value
                 ? valueStart.value > valueEnd.value
@@ -160,7 +162,7 @@ const tickValues = computed(() => {
 });
 
 const barSize = computed(() =>
-    isTrueish(props.range)
+    isRange.value
         ? `${
               (100 * (maxValue.value - minValue.value)) /
               (props.max - props.min)
@@ -171,7 +173,7 @@ const barSize = computed(() =>
 );
 
 const barStart = computed(() =>
-    isTrueish(props.range)
+    isRange.value
         ? `${(100 * (minValue.value - props.min)) / (props.max - props.min)}%`
         : "0%",
 );
@@ -187,14 +189,19 @@ function getSliderSize(): number {
 
 function onSliderClick(event: MouseEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
-    if (!sliderRef.value || !thumbStartRef.value || !thumbEndRef.value) return;
+    if (
+        !sliderRef.value ||
+        !thumbStartRef.value ||
+        (isRange.value && !thumbEndRef.value)
+    )
+        return;
 
     const sliderOffsetLeft = sliderRef.value.getBoundingClientRect().left;
     const percent =
         ((event.clientX - sliderOffsetLeft) / getSliderSize()) * 100;
     const targetValue = props.min + (percent * (props.max - props.min)) / 100;
     const diffFirst = Math.abs(targetValue - valueStart.value);
-    if (!isTrueish(props.range)) {
+    if (!isRange.value) {
         if (diffFirst < props.step / 2) return;
         thumbStartRef.value.setPosition(percent);
     } else {
@@ -204,7 +211,8 @@ function onSliderClick(event: MouseEvent): void {
             thumbStartRef.value.setPosition(percent);
         } else {
             if (diffSecond < props.step / 2) return;
-            thumbEndRef.value.setPosition(percent);
+            if (isRange.value && thumbEndRef.value)
+                thumbEndRef.value.setPosition(percent);
         }
     }
     emits("change", vmodel.value);
@@ -313,7 +321,7 @@ defineExpose({ value: vmodel });
                 @dragend="onDragEnd" />
 
             <o-slider-thumb
-                v-if="isTrueish(props.range)"
+                v-if="isRange"
                 ref="thumbEndComponent"
                 v-model="valueEnd"
                 :slider-props="props"
