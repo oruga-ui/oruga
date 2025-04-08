@@ -104,7 +104,6 @@ const inputBind = computed(() => ({
 
 const rootClasses = defineClasses(
     ["rootClass", "o-radio"],
-    ["checkedClass", "o-radio--checked", null, isChecked],
     [
         "sizeClass",
         "o-radio--",
@@ -112,23 +111,21 @@ const rootClasses = defineClasses(
         computed(() => !!props.size),
     ],
     [
-        "disabledClass",
-        "o-radio--disabled",
-        null,
-        computed(() => props.disabled),
-    ],
-    [
         "variantClass",
         "o-radio--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
+    [
+        "disabledClass",
+        "o-radio--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    ["checkedClass", "o-radio--checked", null, isChecked],
 );
 
-const inputClasses = defineClasses(
-    ["inputClass", "o-radio__input"],
-    ["inputCheckedClass", "o-radio__input--checked", null, isChecked],
-);
+const inputClasses = defineClasses(["inputClass", "o-radio__input"]);
 
 const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
 
@@ -139,7 +136,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="radio">
+    <div data-oruga="radio" :class="rootClasses">
         <input
             v-bind="inputBind"
             :id="id"

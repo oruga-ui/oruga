@@ -1,7 +1,7 @@
 import {
     type Component,
     type ComponentInternalInstance,
-    type VNodeTypes,
+    type MaybeRefOrGetter,
 } from "vue";
 import {
     InstanceRegistry,
@@ -21,16 +21,17 @@ declare module "../../index" {
 }
 
 /** modal component programmatic instance registry **/
-const instances = new InstanceRegistry<ComponentInternalInstance>();
+const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useModalProgrammatic composable options */
 export type ModalProgrammaticOptions<C extends Component> = Readonly<
-    Omit<ModalProps<C>, "content">
-> & {
-    content?: string | Array<unknown>;
-} & ProgrammaticComponentOptions;
+    ModalProps<C>
+> &
+    ProgrammaticComponentOptions;
 
 const ModalProgrammatic = {
+    /** Returns the number of registered active instances. */
+    count: registry.count,
     /**
      * Create a new programmatic modal component instance.
      * @param options modal content string or modal component props object
@@ -39,17 +40,10 @@ const ModalProgrammatic = {
      */
     open<C extends Component>(
         options: string | ModalProgrammaticOptions<C>,
-        target?: string | HTMLElement | null,
+        target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose {
         const _options: ModalProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
-
-        let slot;
-        // render content as slot when is an array
-        if (Array.isArray(_options.content)) {
-            slot = _options.content;
-            delete _options.content;
-        }
 
         const componentProps: ModalProps<C> = {
             active: true, // set the active default state to true
@@ -57,25 +51,20 @@ const ModalProgrammatic = {
         };
 
         // create programmatic component
-        return ComponentProgrammatic.open(
-            Modal as VNodeTypes,
-            {
-                instances, // custom programmatic instance registry
-                target, // target the component get rendered into
-                props: componentProps, // component specific props
-                onClose: _options.onClose, // on close event handler
-            },
-            // component default slot to render content
-            slot,
-        );
+        return ComponentProgrammatic.open(Modal, {
+            registry, // custom programmatic instance registry
+            target, // target the component get rendered into
+            props: componentProps, // component specific props
+            onClose: _options.onClose, // on close event handler
+        });
     },
     /** Close the last registred instance in the modal programmatic instance registry. */
     close(...args: unknown[]): void {
-        instances.last()?.exposed?.close(...args);
+        registry.last()?.exposed?.close(...args);
     },
     /** Close all instances in the programmatic modal instance registry. */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed?.close(...args));
+        registry.walk((entry) => entry.exposed?.close(...args));
     },
 };
 

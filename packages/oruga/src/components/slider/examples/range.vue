@@ -7,7 +7,7 @@ const numbers2 = ref<[number, number]>([2, 6]);
 
 <template>
     <section>
-        <o-field>
+        <o-field label="Range with ticks">
             <o-slider
                 v-model="numbers"
                 ticks
@@ -18,7 +18,7 @@ const numbers2 = ref<[number, number]>([2, 6]);
         </o-field>
         <p>{{ numbers }}</p>
 
-        <o-field>
+        <o-field label="Range with variant">
             <o-slider
                 v-model="numbers2"
                 variant="danger"

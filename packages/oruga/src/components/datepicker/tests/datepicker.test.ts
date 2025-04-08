@@ -7,8 +7,8 @@ describe("ODatepicker", () => {
     enableAutoUnmount(afterEach);
 
     beforeEach(() => {
-        vi.useFakeTimers();
-        vi.setSystemTime(new Date(2000, 0, 1));
+        // vi.useFakeTimers();
+        // vi.setSystemTime(new Date(2000, 0, 1));
     });
 
     afterEach(() => {
@@ -16,6 +16,8 @@ describe("ODatepicker", () => {
     });
 
     test("render correctly", () => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date(2000, 0, 1));
         const wrapper = mount(ODatepicker, {
             props: { modelValue: new Date(2000, 0, 1) },
         });
@@ -80,9 +82,9 @@ describe("ODatepicker", () => {
         });
 
         // check pre selected date
-        const cells = wrapper.findAll(".o-dpck__table__cell");
+        const cells = wrapper.findAll(".o-datepicker__table__cell");
         let selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--selected"),
+            c.classes("o-datepicker__table__cell--selected"),
         );
         // check only one date is selected
         expect(selectedCells.length).toBe(1);
@@ -94,8 +96,8 @@ describe("ODatepicker", () => {
         // select another date
         const cellToSelect1 = cells.find(
             (c) =>
-                c.classes("o-dpck__table__cell--selectable") &&
-                !c.classes("o-dpck__table__cell--selected"),
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect1).toBeDefined();
         await cellToSelect1!.trigger("click");
@@ -107,15 +109,15 @@ describe("ODatepicker", () => {
 
         // check two dates are selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--selected"),
+            c.classes("o-datepicker__table__cell--selected"),
         );
         expect(selectedCells.length).toBe(2);
 
         // select another date
         const cellToSelect2 = cells.find(
             (c) =>
-                c.classes("o-dpck__table__cell--selectable") &&
-                !c.classes("o-dpck__table__cell--selected"),
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect2).toBeDefined();
         await cellToSelect2!.trigger("click");
@@ -127,7 +129,7 @@ describe("ODatepicker", () => {
 
         // check three dates are selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--selected"),
+            c.classes("o-datepicker__table__cell--selected"),
         );
         expect(selectedCells.length).toBe(3);
 
@@ -141,7 +143,7 @@ describe("ODatepicker", () => {
 
         // check two dates are selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--selected"),
+            c.classes("o-datepicker__table__cell--selected"),
         );
         expect(selectedCells.length).toBe(2);
     });
@@ -152,9 +154,9 @@ describe("ODatepicker", () => {
         });
 
         // check pre selected date
-        const cells = wrapper.findAll(".o-dpck__table__cell");
+        const cells = wrapper.findAll(".o-datepicker__table__cell");
         let selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--selected"),
+            c.classes("o-datepicker__table__cell--selected"),
         );
         // check nothing is selected yet
         expect(selectedCells.length).toBe(0);
@@ -166,8 +168,8 @@ describe("ODatepicker", () => {
         // select first date
         let cellToSelect = cells.find(
             (c) =>
-                c.classes("o-dpck__table__cell--selectable") &&
-                !c.classes("o-dpck__table__cell--selected"),
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect).toBeDefined();
         await cellToSelect!.trigger("click");
@@ -178,15 +180,15 @@ describe("ODatepicker", () => {
 
         // check one date is selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--first-hovered"),
+            c.classes("o-datepicker__table__cell--first-hovered"),
         );
         expect(selectedCells.length).toBe(1);
 
         // select second date
         cellToSelect = cells.find(
             (c) =>
-                c.classes("o-dpck__table__cell--selectable") &&
-                !c.classes("o-dpck__table__cell--selected"),
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
         );
         await cellToSelect!.trigger("click");
 
@@ -197,27 +199,27 @@ describe("ODatepicker", () => {
 
         // check two dates are selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--selected"),
+            c.classes("o-datepicker__table__cell--selected"),
         );
         expect(selectedCells.length).not.toBe(0);
 
         // check one date is selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--first-selected"),
+            c.classes("o-datepicker__table__cell--first-selected"),
         );
         expect(selectedCells.length).toBe(1);
 
         // check one date is selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--last-selected"),
+            c.classes("o-datepicker__table__cell--last-selected"),
         );
         expect(selectedCells.length).toBe(1);
 
         // select another first date
         cellToSelect = cells.find(
             (c) =>
-                c.classes("o-dpck__table__cell--selectable") &&
-                !c.classes("o-dpck__table__cell--selected"),
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect).toBeDefined();
         // select another date
@@ -230,27 +232,27 @@ describe("ODatepicker", () => {
         // select second date
         cellToSelect = cells.find(
             (c) =>
-                c.classes("o-dpck__table__cell--selectable") &&
-                !c.classes("o-dpck__table__cell--selected"),
+                c.classes("o-datepicker__table__cell--selectable") &&
+                !c.classes("o-datepicker__table__cell--selected"),
         );
         expect(cellToSelect).toBeDefined();
         await cellToSelect!.trigger("click");
 
         // check two dates are selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--selected"),
+            c.classes("o-datepicker__table__cell--selected"),
         );
         expect(selectedCells.length).not.toBe(0);
 
         // check one date is selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--first-selected"),
+            c.classes("o-datepicker__table__cell--first-selected"),
         );
         expect(selectedCells.length).toBe(1);
 
         // check one date is selected
         selectedCells = cells.filter((c) =>
-            c.classes("o-dpck__table__cell--last-selected"),
+            c.classes("o-datepicker__table__cell--last-selected"),
         );
         expect(selectedCells.length).toBe(1);
 

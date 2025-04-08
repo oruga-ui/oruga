@@ -58,12 +58,14 @@ function switchGallery(value): void {
         <o-carousel
             :autoplay="false"
             :overlay="gallery"
+            :arrows="false"
             @click="switchGallery(true)">
-            <o-carousel-item v-for="(item, i) in items" :key="i">
+            <o-carousel-item v-for="(item, i) in items" :key="i" clickable>
                 <div class="image">
-                    <img :src="item.image" />
+                    <img :src="item.image" :alt="item.title" />
                 </div>
             </o-carousel-item>
+
             <template #indicators="{ active, switchTo }">
                 <o-carousel
                     :model-value="active"
@@ -77,10 +79,11 @@ function switchGallery(value): void {
                         clickable
                         item-class="img-indicator"
                         item-active-class="img-indicator-active">
-                        <img :src="item.image" />
+                        <img :src="item.image" :alt="item.title" />
                     </o-carousel-item>
                 </o-carousel>
             </template>
+
             <template #overlay>
                 <o-icon
                     v-if="gallery"

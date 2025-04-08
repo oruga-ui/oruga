@@ -11,20 +11,28 @@ import { defineClasses, getActiveClasses } from "./defineClasses";
 
 /**
  * Prevent the background from scrolling if toggled.
- * Adds `clippled` or `noscroll` class to the body.
- * `clip` removes the body scrollbar.
- * `keep` makes a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts.
- * @param noScroll keep scrollbar or not
+ * Adds `clipped` or `keeped` class to the body.
+ * True, alias `clip` removes the body scrollbar.
+ * False, alias `keep` makes a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts.
+ * @param clipScroll clip scrollbar or not
  */
 export function usePreventScrolling(
-    noScroll: MaybeRefOrGetter<boolean> = false,
+    clipScroll: MaybeRefOrGetter<boolean>,
 ): (active: boolean) => void {
-    const withScrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
-    const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
+    const scrollClipClasses = defineClasses([
+        "scrollClipClass",
+        "o-scroll-clip",
+    ]);
+    const scrollKeepClasses = defineClasses([
+        "scrollKeepClass",
+        "o-scroll-keep",
+    ]);
 
     const scrollClass = computed(() =>
         getActiveClasses(
-            toValue(noScroll) ? noScrollClasses.value : withScrollClasses.value,
+            toValue(clipScroll)
+                ? scrollClipClasses.value
+                : scrollKeepClasses.value,
         ),
     );
 
@@ -44,7 +52,7 @@ export function usePreventScrolling(
         if (active) document.body.classList.add(...scrollClass.value);
         else document.body.classList.remove(...scrollClass.value);
 
-        if (toValue(noScroll)) {
+        if (!toValue(clipScroll)) {
             if (active) {
                 document.body.style.top = `-${savedScrollTop.value}px`;
             } else {

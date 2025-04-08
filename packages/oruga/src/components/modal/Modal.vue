@@ -11,7 +11,6 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { vTrapFocus } from "@/directives/trapFocus";
 import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
@@ -21,6 +20,8 @@ import {
     useEventListener,
     useMatchMedia,
     usePreventScrolling,
+    useTeleportDefault,
+    useTrapFocus,
 } from "@/composables";
 
 import type { ModalProps } from "./props";
@@ -47,15 +48,15 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     overlay: () => getDefault("modal.overlay", true),
     cancelable: () =>
         getDefault("modal.cancelable", ["escape", "x", "outside"]),
-    scroll: () => getDefault("modal.scroll", "keep"),
     trapFocus: () => getDefault("modal.trapFocus", true),
-    ariaRole: () => getDefault("modal.ariaRole", "dialog"),
+    role: () => getDefault("modal.role", "dialog"),
     ariaLabel: () => getDefault("modal.ariaLabel"),
     autoFocus: () => getDefault("modal.autoFocus", true),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
+    clipScroll: () => getDefault("modal.clipScroll", false),
     component: undefined,
     props: undefined,
     events: undefined,
@@ -74,6 +75,8 @@ const emits = defineEmits<{
     close: [...args: unknown[]];
 }>();
 
+const { vTrapFocus } = useTrapFocus();
+
 const rootRef = useTemplateRef("rootElement");
 const contentRef = useTemplateRef("contentElement");
 
@@ -83,7 +86,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
-        ? { to: "body", disabled: !props.teleport }
+        ? { to: useTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
 
@@ -97,7 +100,7 @@ const customStyle = computed(() =>
     !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
 );
 
-const toggleScroll = usePreventScrolling(props.scroll === "keep");
+const toggleScroll = usePreventScrolling(props.clipScroll);
 
 watch(isActive, (value) => {
     if (props.overlay) toggleScroll(value);
@@ -214,13 +217,13 @@ defineExpose({ close });
             @before-leave="beforeLeave">
             <div
                 v-show="isActive"
-                v-bind="$attrs"
                 ref="rootElement"
-                v-trap-focus="trapFocus"
+                v-bind="$attrs"
+                v-trap-focus="isActive && trapFocus"
                 data-oruga="modal"
                 :class="rootClasses"
                 :tabindex="-1"
-                :role="ariaRole"
+                :role="role"
                 :aria-label="ariaLabel"
                 :aria-modal="isActive">
                 <div

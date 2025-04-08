@@ -66,7 +66,7 @@ describe("Menu axe tests", () => {
             props: { ...props },
             attachTo: document.body,
         });
-        await nextTick();
+        await nextTick(); // await child items got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

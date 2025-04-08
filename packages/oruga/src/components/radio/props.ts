@@ -41,21 +41,19 @@ export type RadioProps<T> = {
 } & RadioClasses;
 
 // class props (will not be displayed in the docs)
-type RadioClasses = Partial<{
+export type RadioClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class when radio is disabled */
+    /** Class of the root element with size */
+    sizeClass: ComponentClass;
+    /** Class of the root element with variant */
+    variantClass: ComponentClass;
+    /** Class of the root element when disabled */
     disabledClass: ComponentClass;
     /** Class of the root element when checked */
     checkedClass: ComponentClass;
     /** Class of the native input element */
     inputClass: ComponentClass;
-    /** Class of the native input element when checked */
-    inputCheckedClass: ComponentClass;
-    /** Class of the radio label */
+    /** Class of the label element */
     labelClass: ComponentClass;
-    /** Class of the radio size */
-    sizeClass: ComponentClass;
-    /** Class of the radio variant */
-    variantClass: ComponentClass;
 }>;

@@ -1,5 +1,5 @@
-@import "./vitepress";
-@import "./theming";
+@use "./vitepress";
+@use "./theming";
 
 // Custom Scrollbar mixin
 @mixin scrollbar {

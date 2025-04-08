@@ -5,6 +5,7 @@
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
                 variant="primary"
+                placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>
@@ -14,6 +15,7 @@
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
                 variant="secondary"
+                placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>
@@ -23,6 +25,7 @@
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
                 variant="success"
+                placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>
@@ -32,6 +35,7 @@
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
                 variant="info"
+                placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>
@@ -41,6 +45,7 @@
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
                 variant="warning"
+                placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>
@@ -50,6 +55,7 @@
                 :model-value="['One']"
                 :options="['One', 'Two', 'Three', 'Four']"
                 variant="danger"
+                placeholder="Add an item"
                 allow-new
                 allow-duplicates />
         </o-field>

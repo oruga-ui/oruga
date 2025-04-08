@@ -46,15 +46,15 @@ export type IconProps = {
 } & IconClasses;
 
 // class props (will not be displayed in the docs)
-type IconClasses = Partial<{
+export type IconClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of the icon when clickable */
-    clickableClass: ComponentClass;
-    /** Class of the element when spin */
-    spinClass: ComponentClass;
-    /** Class of the icon size */
+    /** Class of the root element with size */
     sizeClass: ComponentClass;
-    /** Class of the icon variant */
+    /** Class of the root element with variant */
     variantClass: ComponentClass;
+    /** Class of the root element when clickable */
+    clickableClass: ComponentClass;
+    /** Class of the root element when spin */
+    spinClass: ComponentClass;
 }>;

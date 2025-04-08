@@ -1,30 +1,22 @@
 # Input
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Input** component uses [HTML's native text input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text).
 It allows a user to enter a single line of text.
-Combine it with the Field component to access all functionalities.
+Combine it with the [Field](/components/Field) component to access all functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-input />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-input-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Input component
 
@@ -80,9 +72,17 @@ Combine it with the Field component to access all functionalities.
 | icon-click         | **event** `Event` - native event                                      | on icon click event             |
 | icon-right-click   | **event** `Event` - native event                                      | on icon right click event       |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-input-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -106,7 +106,7 @@ Combine it with the Field component to access all functionalities.
 | $input-margin                | 0                                                     |
 | $input-padding               | $control-padding-vertical $control-padding-horizontal |
 | $input-counter-font-size     | 0.75rem                                               |
-| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
+| $input-counter-margin        | 0.25rem 0.5rem                                        |
 | $input-textarea-max-height   | 600px                                                 |
 | $input-textarea-min-height   | 120px                                                 |
 | $input-textarea-padding      | 0.625em                                               |
@@ -118,7 +118,12 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable | Default    |
+| ------------- | ---------- |
+| $input-colors | dv.$colors |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_input.scss)
+
 </div>
 <div class="theme-bootstrap">
 
@@ -136,4 +141,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

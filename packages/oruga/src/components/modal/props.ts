@@ -2,7 +2,7 @@ import type { Component } from "vue";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
-export type ModalProps<C extends Component> = {
+export type ModalProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
@@ -23,18 +23,18 @@ export type ModalProps<C extends Component> = {
      */
     cancelable?: string[] | boolean;
     /**
-     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
-     * but will set body to position fixed, might break some layouts.
-     * @values keep, clip
+     * Set `true` to remove the body scrollbar.
+     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+     * but will set the body to a fixed position, which may break some layouts.
      */
-    scroll?: "keep" | "clip";
+    clipScroll?: boolean;
     /** Trap focus inside the modal */
     trapFocus?: boolean;
     /**
      * Role attribute to be passed to the div wrapper for better accessibility.
      * @values dialog, alertdialog
      */
-    ariaRole?: "dialog" | "alertdialog";
+    role?: "dialog" | "alertdialog";
     /** Accessibility aria-label to be passed to the div wrapper element */
     ariaLabel?: string;
     /** Automatically focus modal when active */
@@ -55,6 +55,11 @@ export type ModalProps<C extends Component> = {
      */
     teleport?: boolean | string | object;
     /**
+     * DOM container element for programmatic usage.
+     * @ignore internal property
+     */
+    container?: HTMLElement;
+    /**
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
      */
@@ -66,23 +71,23 @@ export type ModalProps<C extends Component> = {
 } & ModalClasses;
 
 // class props (will not be displayed in the docs)
-type ModalClasses = Partial<{
+export type ModalClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class of modal component when its active */
-    activeClass: ComponentClass;
-    /** Class of the modal overlay */
-    overlayClass: ComponentClass;
-    /** Class of the modal content */
-    contentClass: ComponentClass;
-    /** Class of the close button */
-    closeClass: ComponentClass;
-    /** Class of the modal when fullscreen */
-    fullScreenClass: ComponentClass;
-    /** Class of modal component when on mobile */
+    /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Class of the body when modal is open and scroll is clip */
+    /** Class of the root element when active */
+    activeClass: ComponentClass;
+    /** Class of the overlay element */
+    overlayClass: ComponentClass;
+    /** Class of the content element */
+    contentClass: ComponentClass;
+    /** Class of the content element when fullscreen */
+    fullScreenClass: ComponentClass;
+    /** Class of the close button element */
+    closeClass: ComponentClass;
+    /** Class of the body when modal is open and scroll is clipped */
     scrollClipClass: ComponentClass;
-    /** Class of the body when modal is open and scroll is not clip */
-    noScrollClass: ComponentClass;
+    /** Class of the body when modal is open and scroll is keeped */
+    scrollKeepClass: ComponentClass;
 }>;

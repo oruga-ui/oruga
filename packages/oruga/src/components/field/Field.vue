@@ -34,22 +34,18 @@ const props = withDefaults(defineProps<FieldProps>(), {
     label: undefined,
     labelSize: () => getDefault("field.labelsize"),
     labelFor: undefined,
+    labelId: () => useId(),
     message: undefined,
     messageTag: () => getDefault("field.messageTag", "p"),
+    messageId: () => useId(),
     grouped: false,
-    groupMultiline: false,
-    horizontal: false,
     addons: false,
+    multiline: false,
+    horizontal: false,
     mobileBreakpoint: () => getDefault("field.mobileBreakpoint"),
 });
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
-
-/** a unique id for the field message to associate an input with */
-const messageId = useId();
-
-/** a unique id for the field label to associate an input with */
-const labelId = useId();
 
 /** the unique id for the input to associate the label with */
 const inputId = ref(props.labelFor);
@@ -99,10 +95,10 @@ const hasLabel = computed(() => props.label || !!slots.label);
 
 const hasMessage = computed(() => !!fieldMessage.value || !!slots.message);
 
-const isGrouped = computed(
+const hasBody = computed(
     () =>
         props.grouped ||
-        props.groupMultiline ||
+        props.multiline ||
         hasInnerField.value ||
         hasAddons.value,
 );
@@ -142,20 +138,20 @@ function setInputId(value: string): void {
 }
 
 const inputAttrs = computed(() => ({
-    "aria-labelledby": labelId,
+    "aria-labelledby": props.labelId,
     ...(fieldVariant.value === "error"
-        ? { "aria-errormessage": messageId }
-        : { "aria-describedby": messageId }),
+        ? { "aria-errormessage": props.messageId }
+        : { "aria-describedby": props.messageId }),
 }));
 
-// Provided data is a computed ref to enjure reactivity.
+// Provided data is a computed ref to ensure reactivity.
 const provideData = computed<FieldData>(() => ({
     $el: rootRef.value,
     props,
     hasInnerField: hasInnerField.value,
     variant: fieldVariant.value,
     message: fieldMessage.value,
-    labelId,
+    labelId: props.labelId,
     inputAttrs: inputAttrs.value,
     addInnerField,
     setInputId,
@@ -183,16 +179,6 @@ const rootClasses = defineClasses(
     ["filledClass", "o-field--filled", null, isFilled],
 );
 
-const messageClasses = defineClasses(
-    ["messageClass", "o-field__message"],
-    [
-        "messageVariantClass",
-        "o-field__message-",
-        fieldVariant,
-        computed(() => !!fieldVariant.value),
-    ],
-);
-
 const labelClasses = defineClasses(
     ["labelClass", "o-field__label"],
     [
@@ -209,8 +195,6 @@ const labelClasses = defineClasses(
     ],
 );
 
-const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
-
 const horizontalLabelClasses = defineClasses([
     "horizontalLabelClass",
     "o-field__horizontal-label",
@@ -221,20 +205,32 @@ const horizontalBodyClasses = defineClasses([
     "o-field__horizontal-body",
 ]);
 
-const innerFieldClasses = defineClasses(
+const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
+
+const innerBodyClasses = defineClasses(
     ["rootClass", "o-field"],
     ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
-    [
-        "groupMultilineClass",
-        "o-field--grouped-multiline",
-        null,
-        computed(() => props.groupMultiline),
-    ],
     [
         "addonsClass",
         "o-field--addons",
         null,
         computed(() => !props.grouped && hasAddons.value),
+    ],
+    [
+        "multilineClass",
+        "o-field--multiline",
+        null,
+        computed(() => props.multiline),
+    ],
+);
+
+const messageClasses = defineClasses(
+    ["messageClass", "o-field__message"],
+    [
+        "messageVariantClass",
+        "o-field__message-",
+        fieldVariant,
+        computed(() => !!fieldVariant.value),
     ],
 );
 </script>
@@ -254,6 +250,7 @@ const innerFieldClasses = defineClasses(
                 <slot name="label" :label="label">{{ label }}</slot>
             </label>
         </div>
+
         <template v-else>
             <label
                 v-if="hasLabel"
@@ -278,6 +275,8 @@ const innerFieldClasses = defineClasses(
                     v-else
                     :variant="fieldVariant"
                     :addons="false"
+                    :label-id="labelId"
+                    :message-id="messageId"
                     :message-tag="messageTag"
                     :message-class="messageClass">
                     <!-- render inner default slot element -->
@@ -292,8 +291,8 @@ const innerFieldClasses = defineClasses(
             </template>
         </div>
 
-        <div v-else-if="isGrouped" :class="bodyClasses">
-            <div :class="innerFieldClasses">
+        <div v-else-if="hasBody" :class="bodyClasses">
+            <div :class="innerBodyClasses">
                 <!--
                    @slot Default content
                 -->

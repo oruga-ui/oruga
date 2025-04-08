@@ -5,7 +5,7 @@
 ```scss
 // Settings
 $prefix: "oruga-" !default;
-$enable-host: false !default;
+$enable-host: true !default;
 
 // Animations
 $animation-speed: 150ms !default;
@@ -15,22 +15,22 @@ $animation-timing: ease-out !default;
 // Font
 $base-font-family: 
 // Cross-platform generic font family (default user interface font)
-  system-ui,
-  // Safari for macOS and iOS (San Francisco)
-  -apple-system,
-  // Windows
-  "Segoe UI",
-  // Android
-  Roboto,
-  // older macOS and iOS
-  "Helvetica Neue",
-  // Linux
-  "Noto Sans",
-  "Liberation Sans",
-  // Basic web fallback
-  Arial,
-  // Sans serif fallback
-  sans-serif !default;
+    system-ui,
+    // Safari for macOS and iOS (San Francisco)
+    -apple-system,
+    // Windows
+    "Segoe UI",
+    // Android
+    Roboto,
+    // older macOS and iOS
+    "Helvetica Neue",
+    // Linux
+    "Noto Sans",
+    "Liberation Sans",
+    // Basic web fallback
+    Arial,
+    // Sans serif fallback
+    sans-serif !default;
 $base-font-size: 1rem !default;
 $base-font-weight: 400 !default;
 $base-line-height: 1.5 !default;
@@ -49,9 +49,9 @@ $control-box-shadow: inset 0 1px 2px hsla(0, 0%, 4%, 0.1);
 
 // Sizes
 $sizes: (
-  "small": 0.75rem,
-  "medium": 1.25rem,
-  "large": 1.5rem,
+    "small": 0.75rem,
+    "medium": 1.25rem,
+    "large": 1.5rem,
 ) !default;
 
 // Colors
@@ -77,30 +77,30 @@ $danger: #b60000 !default;
 $danger-invert: $white !default;
 
 $colors: (
-  "primary": (
-    $primary,
-    $primary-invert,
-  ),
-  "secondary": (
-    $secondary,
-    $secondary-invert,
-  ),
-  "success": (
-    $success,
-    $success-invert,
-  ),
-  "info": (
-    $info,
-    $info-invert,
-  ),
-  "warning": (
-    $warning,
-    $warning-invert,
-  ),
-  "danger": (
-    $danger,
-    $danger-invert,
-  ),
+    "primary": (
+        $primary,
+        $primary-invert,
+    ),
+    "secondary": (
+        $secondary,
+        $secondary-invert,
+    ),
+    "success": (
+        $success,
+        $success-invert,
+    ),
+    "info": (
+        $info,
+        $info-invert,
+    ),
+    "warning": (
+        $warning,
+        $warning-invert,
+    ),
+    "danger": (
+        $danger,
+        $danger-invert,
+    ),
 ) !default;
 ```
 

@@ -24,17 +24,23 @@ const options: OptionsProp<string> = [
 ];
 
 const selected = ref();
+
+function changeselection(): void {
+    selected.value = options[0];
+}
 </script>
 
 <template>
     <section class="odocs-spaced">
-        <o-field grouped group-multiline>
+        <o-field grouped multiline>
             <o-switch v-model="keepFirst">Keep first</o-switch>
             <o-switch v-model="keepOpen">Keep open</o-switch>
             <o-switch v-model="openOnFocus">Open on focus</o-switch>
             <o-switch v-model="selectOnClose">Select on close</o-switch>
-            <o-switch v-model="selectOnClose">Select on close</o-switch>
             <o-switch v-model="clearOnSelect">Clear on Select</o-switch>
+            <o-button @click="changeselection">
+                Set '{{ options[0] }}' selected
+            </o-button>
         </o-field>
 
         <o-field label="Find a name">
@@ -42,6 +48,7 @@ const selected = ref();
                 v-model="selected"
                 :options="options"
                 placeholder="e.g. Vue"
+                icon="search"
                 :keep-first="keepFirst"
                 :open-on-focus="openOnFocus"
                 :keep-open="keepOpen"

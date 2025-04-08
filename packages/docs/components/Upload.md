@@ -1,29 +1,21 @@
 # Upload
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Upload** input component uses [HTML's native file input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file). It allows users to select files from their device for upload. In addition to native input features, it adds support for Drag and drop and clearing the input.
-Use it with the Field component to access all the functionalities.
+Use it with the [Field](/components/Field) component to access all the functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-upload />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-upload-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Upload component
 
@@ -64,9 +56,17 @@ Use it with the Field component to access all the functionalities.
 | ------- | --------------- | ---------------------------------------------------------------------------------- |
 | default | Default content | **onclick** `(event:Event): void` - click handler, only needed if a button is used |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-upload-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -80,7 +80,7 @@ Use it with the Field component to access all the functionalities.
 | $upload-draggable-border-radius      | var(--#{$prefix}base-border-radius)     |
 | $upload-draggable-disabled-opacity   | var( --#{$prefix}base-disabled-opacity) |
 | $upload-draggable-hover-border-color | var(--#{$prefix}grey)                   |
-| $upload-draggable-padding            | 0.25em                                  |
+| $upload-draggable-padding            | 2em                                     |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_upload.scss)
 
@@ -91,9 +91,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable             | Default                  |
 | ------------------------- | ------------------------ |
-| $upload-colors            | file.$file-colors        |
 | $upload-bg                | transparent              |
-| $upload-draggable-padding | 0.5rem                   |
+| $upload-draggable-padding | 2em                      |
+| $upload-colors            | file.$file-colors        |
 | $upload-border-color      | css.getVar("grey-light") |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_upload.scss)
@@ -118,4 +118,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

@@ -1,30 +1,23 @@
 # Autocomplete
 
-<div class="vp-doc">
+<section class="odocs-head">
 
 The **Autocomplete** input component allows you to search through a list of options.
 It is an advanced input that provides suggestions as the user types.
-Based on the Dropdown component, the Autocomplete component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
+Based on the [Dropdown](/components/Dropdown) component, the component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
+Use it with the [Field](/components/Field) component to access all functionalities.
 
-</div>
+</section>
 
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-autocomplete />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-autocomplete-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Autocomplete component
 
@@ -38,9 +31,11 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 
 | Prop name          | Description                                                                                                                                                                      | Type                                                                   | Values                                            | Default                                                                                                                                                          |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active             | The active state of the dropdown, use v-model:active to make it two-way binding                                                                                                  | boolean                                                                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
 | animation          | Transition name to apply on dropdown list                                                                                                                                        | string                                                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>         |
 | autocomplete       | Native options to use in HTML5 validation                                                                                                                                        | string                                                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>       |
-| checkScroll        | Makes the component check if list reached scroll start or end and emit scroll events.                                                                                            | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;checkScroll: false<br>}</code>        |
+| backendFiltering   | Options won't be filtered based on the input value on clientside                                                                                                                 | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;backendFiltering: false<br>}</code>   |
+| checkScroll        | Makes the component check if list reached scroll start or end and emit scroll events                                                                                             | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;checkScroll: false<br>}</code>        |
 | clearIcon          | Icon name to be added on the clear button                                                                                                                                        | string                                                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;clearIcon: "close-circle"<br>}</code> |
 | clearOnSelect      | Clear input text on select                                                                                                                                                       | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;clearOnSelect: false<br>}</code>      |
 | clearable          | Add a button/icon to clear the inputed text                                                                                                                                      | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;clearable: false<br>}</code>          |
@@ -86,6 +81,7 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 | ------------------ | --------------------------------------------------------------------- | ---------------------------------------------- |
 | update:model-value | **value** `T` - updated modelValue prop                               | modelValue prop two-way binding                |
 | update:input       | **value** `string` - updated input prop                               | input prop two-way binding                     |
+| update:active      | **value** `boolean` - updated active prop                             | active prop two-way binding                    |
 | input              | **value** `string` - input value<br/>**event** `Event` - native event | on input change event                          |
 | select             | **value** `T` - selected value                                        | selected element changed event                 |
 | select-header      |                                                                       | header is selected                             |
@@ -108,9 +104,17 @@ Based on the Dropdown component, the Autocomplete component implements the W3C A
 | empty   | Define content for empty state |                                                                                                                  |
 | footer  | Define an additional footer    |                                                                                                                  |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
+
+## Class Inspector
+
+<inspector-autocomplete-viewer />
+
+</section>
+
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -129,12 +133,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-| SASS Variable                | Default |
-| ---------------------------- | ------- |
-| $dropdown-content-max-height | 200px   |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_autocomplete.scss)
-
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 <div class="theme-bootstrap">
 
@@ -148,4 +147,4 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/m
 
 </div>
 
-</div>
+</section>

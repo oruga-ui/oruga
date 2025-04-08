@@ -24,7 +24,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     selectable?: boolean;
     /** Dropdown content will be scrollable */
     scrollable?: boolean;
-    /** Makes the component check if menu reached scroll start or end and emit scroll events. */
+    /** Makes the component check if menu reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /** Max height of dropdown content */
     maxHeight?: string | number;
@@ -65,6 +65,8 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     keepFirst?: boolean;
     /** Close Dropdown when clicked outside */
     closeOnOutside?: boolean;
+    /** Close Dropdown when page get scrolled */
+    closeOnScroll?: boolean;
     /** Select current focused item when focused */
     selectOnFocus?: boolean;
     /** Select current focused item when closed */
@@ -81,6 +83,12 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
      * In addition, any CSS selector string or an actual DOM node can be used.
      */
     teleport?: boolean | string | object;
+    /**
+     * Set `true` to remove the body scrollbar.
+     * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
+     * but will set the body to a fixed position, which may break some layouts.
+     */
+    clipScroll?: boolean;
     /** Ensures that each input has an accessible name. */
     labelledby?: string;
     /** Accessibility aria-label to be passed to the trigger element - usefull if selectable */
@@ -88,41 +96,41 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
 } & DropdownClasses;
 
 // class props (will not be displayed in the docs)
-type DropdownClasses = Partial<{
+export type DropdownClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
-    /** Class when the dropdown is teleported */
+    /** Class of the root element when on mobile */
+    mobileClass: ComponentClass;
+    /** Class of the root element when shown as modal */
+    modalClass: ComponentClass;
+    /** Class of the root element when teleported */
     teleportClass: ComponentClass;
+    /** Class of the root element when inlined */
+    inlineClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Class of the root element when expanded */
+    expandedClass: ComponentClass;
+    /** Class for the root element with position */
+    positionClass: ComponentClass;
+    /** Class for the root element when active or inline */
+    activeClass: ComponentClass;
+    /** Class for the root element when trigger is hoverable */
+    hoverableClass: ComponentClass;
     /** Class of the trigger element */
     triggerClass: ComponentClass;
-    /** Class of dropdown menu when inline */
-    inlineClass: ComponentClass;
-    /** Class of the dropdown menu */
+    /** Class of the menu element */
     menuClass: ComponentClass;
-    /** Class of dropdown menu position */
+    /** Class of the menu element with position */
     menuPositionClass: ComponentClass;
-    /** Class of dropdown menu when active */
+    /** Class of the menu element when active or inline */
     menuActiveClass: ComponentClass;
-    /** Class of dropdown when on mobile */
-    mobileClass: ComponentClass;
-    /** Class of dropdown when on is shown as modal */
-    modalClass: ComponentClass;
     /** Class of the overlay when is shown as modal */
     overlayClass: ComponentClass;
-    /** Class of dropdown when disabled */
-    disabledClass: ComponentClass;
-    /** Class of dropdown when expanded */
-    expandedClass: ComponentClass;
-    /** Class for the root element indicating position of dropdown */
-    positionClass: ComponentClass;
-    /** Class for the root element indicating whether the dropdown is open */
-    activeClass: ComponentClass;
-    /** Class for the root element when the dropdown is hoverable */
-    hoverableClass: ComponentClass;
-    /** Class of the body when dropdown is open and scroll is clip */
+    /** Class of the body when dropdown is open and scroll is clipped */
     scrollClipClass: ComponentClass;
-    /** Class of the body when dropdown is open and scroll is not clip */
-    noScrollClass: ComponentClass;
+    /** Class of the body when dropdown is open and scroll is keeped */
+    scrollKeepClass: ComponentClass;
 }>;
 
 export type DropdownItemProps<T> = {
@@ -146,15 +154,15 @@ export type DropdownItemProps<T> = {
 } & DropdownItemClasses;
 
 // class props (will not be displayed in the docs)
-type DropdownItemClasses = Partial<{
-    /** Class of the dropdown item */
+export type DropdownItemClasses = Partial<{
+    /** Class of the item element. */
     itemClass: ComponentClass;
-    /** Class of the dropdown item when active  */
-    itemActiveClass: ComponentClass;
-    /** Class of the dropdown items when focused */
+    /** Class of the item element when selected */
+    itemSelectedClass: ComponentClass;
+    /** Class of the item element when focused */
     itemFocusedClass: ComponentClass;
-    /** Class of the dropdown item when clickable */
+    /** Class of the item element when clickable */
     itemClickableClass: ComponentClass;
-    /** Class of the dropdown item when disabled */
+    /** Class of the item element when disabled */
     itemDisabledClass: ComponentClass;
 }>;

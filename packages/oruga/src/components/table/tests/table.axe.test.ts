@@ -7,7 +7,7 @@ import { nextTick } from "vue";
 import type { TableColumn } from "../types";
 import type { TableProps } from "../props";
 
-describe("Table axe tests", () => {
+describe("OTable axe tests", () => {
     enableAutoUnmount(afterEach);
 
     const data = [
@@ -211,6 +211,7 @@ describe("Table axe tests", () => {
             attachTo: document.body,
         });
         await nextTick(); // await child component rendering
+
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });
 });

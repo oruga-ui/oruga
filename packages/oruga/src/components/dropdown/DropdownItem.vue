@@ -41,7 +41,7 @@ const itemValue = props.value ?? useId();
 
 const rootRef = useTemplateRef<Element>("rootElement");
 
-// provided data is a computed ref to enjure reactivity
+// provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
     ...props,
     $el: rootRef.value,
@@ -59,7 +59,7 @@ const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
 );
 
-const isActive = computed(() => {
+const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
     if (parent.value.multiple && Array.isArray(parent.value.selected))
         return parent.value.selected.some((selected: T) =>
@@ -75,23 +75,28 @@ const isFocused = computed(
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(itemValue as T, event);
+    parent.value.selectItem(item.value, event);
     emits("click", itemValue as T, event);
+}
+
+/** Hover listener, focus the item. */
+function focusItem(): void {
+    parent.value.focusItem(item.value);
 }
 
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
-    ["itemClass", "o-drop__item"],
+    ["itemClass", "o-dropdown__item"],
     [
         "itemDisabledClass",
-        "o-drop__item--disabled",
+        "o-dropdown__item--disabled",
         null,
         computed(() => parent.value.disabled || props.disabled),
     ],
-    ["itemActiveClass", "o-drop__item--active", null, isActive],
-    ["itemClickableClass", "o-drop__item--clickable", null, isClickable],
-    ["itemFocusedClass", "o-drop__item--focused", null, isFocused],
+    ["itemSelectedClass", "o-dropdown__item--active", null, isSelected],
+    ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
+    ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
 </script>
 
@@ -100,14 +105,16 @@ const rootClasses = defineClasses(
         :is="tag"
         :id="`${parent.menuId}-${item.identifier}`"
         ref="rootElement"
-        :class="rootClasses"
         data-oruga="dropdown-item"
         :data-id="`dropdown-${item.identifier}`"
+        :class="rootClasses"
         :role="parent.selectable ? 'option' : 'menuitem'"
-        :aria-selected="parent.selectable ? isActive : undefined"
+        :aria-selected="parent.selectable ? isSelected : undefined"
         :aria-disabled="disabled"
         @click="selectItem"
-        @keypress.enter="selectItem">
+        @mouseenter="focusItem"
+        @keydown.enter="selectItem"
+        @keydown.space="selectItem">
         <!--
             @slot Override the label, default is label prop 
         -->

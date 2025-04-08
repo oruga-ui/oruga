@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsProp, OptionsPropWithGroups } from "@oruga-ui/oruga-next";
+import type { OptionsProp } from "@oruga-ui/oruga-next";
 
 const options: OptionsProp = [
     {
@@ -194,74 +194,20 @@ const options: OptionsProp = [
     },
 ];
 
-const selected = ref(options[3].value);
-
-const groupOptions: OptionsPropWithGroups<string> = [
-    {
-        label: "Black Sails",
-        attrs: { disabled: true },
-        options: [
-            { label: "Flint", value: "flint" },
-            { label: "Silver", value: "silver" },
-            { label: "Vane", value: "vane" },
-            { label: "Billy", value: "billy" },
-            { label: "Jack", value: "silver", attrs: { disabled: true } },
-        ],
-    },
-    {
-        label: "Breaking Bad",
-        attrs: { disabled: true },
-        options: {
-            heisenberg: "Heisenberg",
-            jesse: "Jesse",
-            saul: "Saul",
-            mike: "Mike",
-        },
-    },
-    {
-        label: "Game of Thrones",
-        attrs: { disabled: true },
-        options: [
-            "Tyrion Lannister",
-            "Jamie Lannister",
-            "Daenerys Targaryen",
-            "Jon Snow",
-        ],
-    },
-];
-
-const groupSelected = ref();
+const selected = ref();
 </script>
 
 <template>
-    <section class="odocs-spaced">
-        <o-field grouped>
-            <o-field label="Find a name">
-                <o-autocomplete
-                    v-model="selected"
-                    :options="options"
-                    placeholder="e.g. Anne"
-                    open-on-focus
-                    selectable-header
-                    selectable-footer>
-                    <template #empty> No results found </template>
-                    <template #header> Header </template>
-                    <template #footer> Footer </template>
-                </o-autocomplete>
+    <section>
+        <o-field label="Options List">
+            <o-autocomplete
+                v-model="selected"
+                :options="options"
+                placeholder="Find a name..."
+                open-on-focus>
+            </o-autocomplete>
 
-                <p><b>Selected:</b> {{ selected }}</p>
-            </o-field>
-
-            <o-field label="Find a grouped name">
-                <o-autocomplete
-                    v-model="groupSelected"
-                    :options="groupOptions"
-                    open-on-focus>
-                    <template #header>List Groups</template>
-                </o-autocomplete>
-
-                <p><b>Selected:</b> {{ groupSelected }}</p>
-            </o-field>
+            <p><b>Selected:</b> {{ selected }}</p>
         </o-field>
     </section>
 </template>

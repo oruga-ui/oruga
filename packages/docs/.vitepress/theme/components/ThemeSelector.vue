@@ -1,38 +1,23 @@
 <script setup lang="ts">
-// Import theme definitions
-import themes from "@docs/themes.json";
+import { Themes, type ThemeConfig } from "@docs/themes";
+import { loadTheme, saveTheme } from "..";
 
-const selectedTheme = defineModel<any>("theme");
+const selectedTheme = defineModel<ThemeConfig>("theme");
 
 selectedTheme.value = loadTheme();
 
-// load last used theme or set a default one
-function loadTheme() {
-    const cache = localStorage.getItem("oruga-ui.com:theme");
-    if (cache && cache !== "undefined") {
-        try {
-            const themeConfig = JSON.parse(cache);
-            if (themeConfig && typeof themeConfig === "object")
-                return themeConfig;
-        } catch (e) {
-            console.log(e);
-            return themes[1];
-        }
-    }
-    return themes[1];
-}
-
-function onThemeChange(theme: unknown): void {
+function onThemeChange(theme: ThemeConfig): void {
     selectedTheme.value = theme;
-    localStorage.setItem("oruga-ui.com:theme", JSON.stringify(theme));
-    location.reload();
+    saveTheme(theme);
 }
 </script>
 
 <template>
     <o-dropdown
         :model-value="selectedTheme"
+        override
         root-class="theme-selector"
+        menu-class="theme-drop__menu"
         selectable
         aria-label="theme selection"
         @change="onThemeChange">
@@ -43,7 +28,12 @@ function onThemeChange(theme: unknown): void {
             </span>
         </template>
 
-        <o-dropdown-item v-for="item in themes" :key="item.key" :value="item">
+        <o-dropdown-item
+            v-for="item in Themes"
+            :key="item.key"
+            :value="item"
+            item-class="theme-drop__item"
+            item-selected-class="theme-drop__item--active">
             {{ item.label }}
         </o-dropdown-item>
     </o-dropdown>
@@ -62,42 +52,37 @@ function onThemeChange(theme: unknown): void {
     }
 }
 
-// default override for oruga base theme
-:deep(.o-drop__menu) {
+// style theme selector custom dropdown
+:deep(.theme-drop__menu) {
     position: absolute;
-    left: 0;
+    left: 25px;
     top: 100%;
     display: block;
-    min-width: var(--oruga-dropdown-menu-width, 12rem);
-    z-index: var(--oruga-dropdown-menu-zindex, 20);
-    background-color: var(--oruga-dropdown-menu-background, #ffffff);
-    border-radius: var(--oruga-dropdown-menu-border-radius, 4px);
-    box-shadow: var(
-        --oruga-dropdown-menu-box-shadow,
-        0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
-        0 0 0 1px rgba(10, 10, 10, 0.02)
-    );
-    padding: var(--oruga-dropdown-menu-padding, 0.5rem 0 0.5rem 0);
-    margin: var(--oruga-dropdown-menu-margin, 0);
+    min-width: 12rem;
+    z-index: 20;
+    background-color: var(--vp-input-bg-color);
+    border-color: var(--vp-input-border-color);
+    border-radius: 4px;
+    box-shadow: var(--vp-shadow-3);
+    padding: 0.5rem 0;
+    margin: 0;
 }
-:deep(.o-drop__item) {
+:deep(.theme-drop__item) {
     display: block;
     position: relative;
     cursor: pointer;
-    color: var(--oruga-dropdown-item-color, #000000);
-    font-size: var(--oruga-dropdown-item-font-size, 1rem);
-    font-weight: var(--oruga-dropdown-item-font-weight, 400);
-    line-height: var(--oruga-dropdown-item-line-height, 1.5);
-    padding: var(--oruga-dropdown-item-padding, 0.375rem 1rem);
+    color: var(--docsearch-text-color);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0.375rem 1rem;
     &:hover {
-        background-color: var(
-            --oruga-dropdown-item-hover-background-color,
-            #f5f5f5
-        );
-        color: var(--oruga-dropdown-item-hover-color, #000000);
+        background-color: var(--vp-c-gray-3);
+        color: var(--docsearch-text-color);
     }
 }
-:deep(.o-drop__item--active) {
-    color: var(--oruga-dropdown-item-active-color, #ffffff);
+:deep(.theme-drop__item--active) {
+    background-color: var(--vp-c-brand-1);
+    color: var(--vp-c-bg);
 }
 </style>

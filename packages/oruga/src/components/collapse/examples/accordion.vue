@@ -29,19 +29,19 @@ const collapses = ref([
             :key="index"
             class="card"
             animation="slide"
-            trigger-class="trigger-fullwidth"
+            expanded
             :open="isOpen == index"
-            @open="isOpen = index">
+            @update:open="isOpen = index">
             <template #trigger="props">
-                <div class="card-header" role="button">
+                <div class="card-header">
                     <span class="card-header-title">
                         {{ collapse.title }}
                     </span>
 
-                    <a class="card-header-icon">
-                        <o-icon :icon="props.open ? 'caret-up' : 'caret-down'">
-                        </o-icon>
-                    </a>
+                    <span class="card-header-icon">
+                        <o-icon
+                            :icon="props.open ? 'caret-up' : 'caret-down'" />
+                    </span>
                 </div>
             </template>
 
@@ -80,9 +80,5 @@ const collapses = ref([
 
 .card-content {
     padding: 1.5rem;
-}
-
-:deep(.trigger-fullwidth) {
-    width: 100%;
 }
 </style>

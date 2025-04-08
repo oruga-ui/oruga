@@ -1,4 +1,8 @@
-import type { Component, ComponentInternalInstance } from "vue";
+import type {
+    Component,
+    ComponentInternalInstance,
+    MaybeRefOrGetter,
+} from "vue";
 import {
     InstanceRegistry,
     ComponentProgrammatic,
@@ -18,21 +22,17 @@ declare module "../../index" {
 }
 
 /** notification component programmatic instance registry */
-const instances = new InstanceRegistry<ComponentInternalInstance>();
+const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useNotificationProgrammatic composable options */
 export type NotificationProgrammaticOptions<C extends Component> = Readonly<
-    Omit<
-        NotificationNoticeProps<C> & NotificationProps,
-        "message" | "container"
-    >
-> & {
-    message?: string | Array<unknown>;
-} & ProgrammaticComponentOptions;
+    Omit<NotificationNoticeProps<C> & NotificationProps, "container">
+> &
+    ProgrammaticComponentOptions;
 
 const NotificationProgrammatic = {
     /** Returns the number of registered active instances. */
-    count: instances.count,
+    count: registry.count,
     /**
      * Create a new programmatic notification component instance.
      * @param options notification message string or notification component props object
@@ -41,17 +41,10 @@ const NotificationProgrammatic = {
      */
     open<C extends Component>(
         options: string | NotificationProgrammaticOptions<C>,
-        target?: string | HTMLElement | null,
+        target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose {
         const _options: NotificationProgrammaticOptions<C> =
             typeof options === "string" ? { message: options } : options;
-
-        let slot;
-        // render message as slot when is an array
-        if (Array.isArray(_options.message)) {
-            slot = _options.message;
-            delete _options.message;
-        }
 
         const componentProps: NotificationNoticeProps<C> = {
             position: getOption("notification.position", "top-right"),
@@ -60,25 +53,20 @@ const NotificationProgrammatic = {
         };
 
         // create programmatic component
-        return ComponentProgrammatic.open(
-            NotificationNotice,
-            {
-                instances, // custom programmatic instance registry
-                target, // target the component get rendered into
-                props: componentProps, // component specific props
-                onClose: _options.onClose, // on close event handler
-            },
-            // component default slot render
-            slot,
-        );
+        return ComponentProgrammatic.open(NotificationNotice, {
+            registry, // custom programmatic instance registry
+            target, // target the component get rendered into
+            props: componentProps, // component specific props
+            onClose: _options.onClose, // on close event handler
+        });
     },
     /** Close the last registred instance in the notification programmatic instance registry. */
     close(...args: unknown[]): void {
-        instances.last()?.exposed?.close(...args);
+        registry.last()?.exposed?.close(...args);
     },
     /** Close all instances in the programmatic notification instance registry. */
     closeAll(...args: unknown[]): void {
-        instances.walk((entry) => entry.exposed?.close(...args));
+        registry.walk((entry) => entry.exposed?.close(...args));
     },
 };
 

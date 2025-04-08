@@ -54,10 +54,7 @@ describe("useModalProgrammatic tests", () => {
         const content = "My Modal Content";
 
         // open element
-        const { close } = ModalProgrammatic.open(
-            content,
-            "#my-cool-container",
-        );
+        const { close } = ModalProgrammatic.open(content, "#my-cool-container");
 
         // check element exist
         let modal = document.body.querySelector('[data-oruga="modal"]');

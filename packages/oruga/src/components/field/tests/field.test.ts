@@ -22,7 +22,7 @@ describe("OField tests", () => {
             props: { variant },
             slots: { default: [OInput] },
         });
-        const input = wrapper.find(".o-input__wrapper");
+        const input = wrapper.find('[data-oruga="input"]');
         expect(input.exists()).toBeTruthy();
         expect(input.find(".o-icon").classes()).toContain("o-icon--danger");
     });
@@ -34,7 +34,7 @@ describe("OField tests", () => {
                 props: { message },
                 slots: { default: [OInput] },
             });
-            const messageDiv = wrapper.find("p.o-field__message");
+            const messageDiv = wrapper.find(".o-field__message");
             expect(messageDiv.exists()).toBeTruthy();
             expect(messageDiv.text()).toEqual(message);
         });
@@ -80,9 +80,9 @@ describe("OField tests", () => {
             expect(innerField.classes()).toContain("o-field--grouped");
         });
 
-        test('react accordingly when "groupMultiline" prop is set', () => {
+        test('react accordingly when "multiline" prop is set', () => {
             const wrapper = mount(OField, {
-                props: { groupMultiline: true },
+                props: { multiline: true },
                 slots: {
                     default: [OInput, '<button class="button">Button</button>'],
                 },
@@ -91,9 +91,7 @@ describe("OField tests", () => {
             const body = wrapper.find(".o-field__body");
             expect(body.exists()).toBeTruthy();
             const innerField = body.find(".o-field");
-            expect(innerField.classes()).toContain(
-                "o-field--grouped-multiline",
-            );
+            expect(innerField.classes()).toContain("o-field--multiline");
         });
     });
 

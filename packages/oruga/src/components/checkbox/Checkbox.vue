@@ -112,35 +112,37 @@ const inputBind = computed(() => ({
 }));
 
 const rootClasses = defineClasses(
-    ["rootClass", "o-chk"],
-    ["checkedClass", "o-chk--checked", null, isChecked],
+    ["rootClass", "o-checkbox"],
     [
         "sizeClass",
-        "o-chk--",
+        "o-checkbox--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    ["disabledClass", "o-chk--disabled", null, computed(() => props.disabled)],
     [
         "variantClass",
-        "o-chk--",
+        "o-checkbox--",
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
-);
-
-const inputClasses = defineClasses(
-    ["inputClass", "o-chk__input"],
-    ["inputCheckedClass", "o-chk__input--checked", null, isChecked],
+    [
+        "disabledClass",
+        "o-checkbox--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    ["checkedClass", "o-checkbox--checked", null, isChecked],
     [
         "indeterminateClass",
-        "o-chk__input--indeterminate",
+        "o-checkbox--indeterminate",
         null,
         computed(() => props.indeterminate),
     ],
 );
 
-const labelClasses = defineClasses(["labelClass", "o-chk__label"]);
+const inputClasses = defineClasses(["inputClass", "o-checkbox__input"]);
+
+const labelClasses = defineClasses(["labelClass", "o-checkbox__label"]);
 
 // --- Expose Public Functionalities ---
 
@@ -149,7 +151,7 @@ defineExpose({ focus: setFocus, value: vmodel });
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="checkbox">
+    <div data-oruga="checkbox" :class="rootClasses">
         <input
             v-bind="inputBind"
             :id="id"

@@ -3,38 +3,14 @@ import { computed, onMounted, ref } from "vue";
 import VueTelescopeClient from "./VueTelescopeClient.js";
 
 const props = defineProps({
-    slugs: {
-        type: Object,
-        required: true,
-    },
-    imageWidth: {
-        type: Number,
-        default: 800,
-    },
-    sortBy: {
-        type: String,
-        default: "rank",
-    },
-    sortDirection: {
-        type: String,
-        default: "asc",
-    },
-    labelRetry: {
-        type: String,
-        default: "Retry",
-    },
-    labelError: {
-        type: String,
-        default: "Something went wrong!",
-    },
-    labelLoadMore: {
-        type: String,
-        default: "Load More",
-    },
-    labelLoading: {
-        type: String,
-        default: "Loading...",
-    },
+    slugs: { type: Object, required: true },
+    imageWidth: { type: Number, default: 800 },
+    sortBy: { type: String, default: "rank" },
+    sortDirection: { type: String, default: "asc" },
+    labelRetry: { type: String, default: "Retry" },
+    labelError: { type: String, default: "Something went wrong!" },
+    labelLoadMore: { type: String, default: "Load More" },
+    labelLoading: { type: String, default: "Loading..." },
 });
 
 const items = ref<any[]>([]);
@@ -53,7 +29,7 @@ onMounted(() => {
     firstLoadItems();
 });
 
-function firstLoadItems() {
+function firstLoadItems(): void {
     retry.value = false;
     client.value
         .getItemsCount(props.slugs, props.sortBy, props.sortDirection)
@@ -66,7 +42,7 @@ function firstLoadItems() {
         });
 }
 
-function loadItems() {
+function loadItems(): void {
     loading.value = true;
     client.value
         .getItems(
@@ -86,7 +62,7 @@ function loadItems() {
             loading.value = false;
         });
 }
-function loadMoreItems() {
+function loadMoreItems(): void {
     start.value += limit.value;
     loadItems();
 }

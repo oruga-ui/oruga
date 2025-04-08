@@ -46,7 +46,7 @@ const classes = computed(() => [
     <component
         :is="tag"
         role="button"
-        :tabindex="disabled ? null : 0"
+        :tabindex="disabled ? undefined : 0"
         :disabled="disabled"
         :class="classes"
         :aria-label="ariaLabel"

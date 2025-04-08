@@ -127,7 +127,7 @@ describe("ProgrammaticComponent tests", () => {
         const wrapper = mount(ProgrammaticComponent, {
             props: {
                 component: "div",
-                instances: instanceRegistry,
+                registry: instanceRegistry,
             },
         });
 

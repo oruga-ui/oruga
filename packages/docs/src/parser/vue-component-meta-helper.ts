@@ -67,7 +67,7 @@ export async function vueComponentMeta(
 
                 if (isEmpty || meta.type === TypeMeta.Unknown) {
                     console.warn(
-                        `Failure parsing component '${componentsMeta}': meta is empty.`,
+                        `Failure parsing component '${componentPath}': meta is empty.`,
                     );
                     return false;
                 }

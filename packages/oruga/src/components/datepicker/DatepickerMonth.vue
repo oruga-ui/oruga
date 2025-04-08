@@ -231,7 +231,9 @@ function onKeydown(event: KeyboardEvent, weekDay: Date): void {
  */
 function selectDate(date: Date): void {
     if (props.pickerProps.disabled || props.pickerProps.readonly) return;
-    else if (isTrueish(props.pickerProps.range)) handleSelectRangeDate(date);
+    if (!isDateSelectable(date)) return;
+
+    if (isTrueish(props.pickerProps.range)) handleSelectRangeDate(date);
     else if (isTrueish(props.pickerProps.multiple))
         handleSelectMultipleDates(date);
     else emits("update:model-value", date);
@@ -340,21 +342,28 @@ function dateMultipleSelected(dateOne, dates, multiple = false): boolean {
     );
 }
 
-const monthClasses = defineClasses(["monthClass", "o-dpck__month"]);
+const monthClasses = defineClasses(
+    ["monthClass", "o-datepicker__month"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
-const monthBodyClasses = defineClasses([
-    "monthBodyClass",
-    "o-dpck__month__body",
-]);
-
-const monthTableClasses = defineClasses([
-    "monthTableClass",
-    "o-dpck__month__table",
-]);
+const monthTableClasses = defineClasses(
+    ["monthTableClass", "o-datepicker__month__table"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
 
 const monthCellClasses = defineClasses(
-    ["monthCellClass", "o-dpck__month__cell"],
-    ["monthCellEventsClass", "o-dpck__month__cell--events", null, hasEvents],
+    ["monthCellClass", "o-datepicker__month__cell"],
+    [
+        "monthCellEventsClass",
+        "o-datepicker__month__cell--events",
+        null,
+        hasEvents,
+    ],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
 );
 
 // Registers a dispose callback on the current active effect scope.
@@ -364,13 +373,13 @@ const scope = effectScope();
 onUnmounted(() => scope.stop());
 
 /**
- * Build cellClasses for cell using validations
+ * Build classes for cell using validations
  */
 function cellClasses(day: Date): ClassBind[] {
     const classes = defineClasses(
         [
             "monthCellSelectedClass",
-            "o-dpck__month__cell--selected",
+            "o-datepicker__month__cell--selected",
             null,
             dateMatch(
                 day,
@@ -390,7 +399,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "monthCellFirstSelectedClass",
-            "o-dpck__month__cell--first-selected",
+            "o-datepicker__month__cell--first-selected",
             null,
             dateMatch(
                 day,
@@ -400,7 +409,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "monthCellWithinSelectedClass",
-            "o-dpck__month__cell--within-selected",
+            "o-datepicker__month__cell--within-selected",
             null,
             dateWithin(
                 day,
@@ -410,7 +419,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "monthCellLastSelectedClass",
-            "o-dpck__month__cell--last-selected",
+            "o-datepicker__month__cell--last-selected",
             null,
             dateMatch(
                 day,
@@ -420,7 +429,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "monthCellWithinHoveredRangeClass",
-            "o-dpck__month__cell--within-hovered-range",
+            "o-datepicker__month__cell--within-hovered-range",
             null,
             hoveredDateRange.value &&
                 hoveredDateRange.value.length === 2 &&
@@ -429,7 +438,7 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "monthCellFirstHoveredClass",
-            "o-dpck__month__cell--first-hovered",
+            "o-datepicker__month__cell--first-hovered",
             null,
             dateMatch(
                 day,
@@ -439,13 +448,13 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "monthCellWithinHoveredClass",
-            "o-dpck__month__cell--within-hovered",
+            "o-datepicker__month__cell--within-hovered",
             null,
             dateWithin(day, hoveredDateRange.value),
         ],
         [
             "monthCellLastHoveredClass",
-            "o-dpck__month__cell--last-hovered",
+            "o-datepicker__month__cell--last-hovered",
             null,
             dateMatch(
                 day,
@@ -455,13 +464,13 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "monthCellTodayClass",
-            "o-dpck__month__cell--today",
+            "o-datepicker__month__cell--today",
             null,
             dateMatch(day, dateCreator()),
         ],
         [
             "monthCellSelectableclass",
-            "o-dpck__month__cell--selectable",
+            "o-datepicker__month__cell--selectable",
             null,
             isDateSelectable(day) &&
                 !props.pickerProps.disabled &&
@@ -469,55 +478,90 @@ function cellClasses(day: Date): ClassBind[] {
         ],
         [
             "monthCellUnselectableClass",
-            "o-dpck__month__cell--unselectable",
+            "o-datepicker__month__cell--unselectable",
             null,
             !isDateSelectable(day) || props.pickerProps.disabled,
         ],
         // pass effect scope for rectivity binding
         { scope },
     );
-
     return [...monthCellClasses.value, ...classes.value];
+}
+
+const monthEventsClasses = defineClasses(
+    ["monthEventsClass", "o-datepicker__month__events"],
+    // passing the picker props will add reactivity to property changes
+    { props: props.pickerProps },
+);
+
+/**
+ * Build classes for event
+ */
+function eventClasses(event: DatepickerEvent): ClassBind[] {
+    const classes = defineClasses(
+        ["monthEventClass", "o-datepicker__month__event"],
+        [
+            "monthEventTypeClass",
+            "o-datepicker__month__event--",
+            event.type,
+            !!event.type,
+        ],
+        [
+            "monthEventIndicatorClass",
+            "o-datepicker__month__event--",
+            props.pickerProps.indicators,
+            !!props.pickerProps.indicators,
+        ],
+        // pass effect scope for rectivity binding
+        { scope },
+    );
+    return classes.value;
 }
 </script>
 
 <template>
     <section :class="monthClasses">
-        <div :class="monthBodyClasses">
-            <div :class="monthTableClasses">
-                <template v-for="(date, idx) in monthDates" :key="idx">
+        <div :class="monthTableClasses">
+            <template v-for="(date, idx) in monthDates" :key="idx">
+                <div
+                    v-if="
+                        !pickerProps.disabled &&
+                        !pickerProps.readonly &&
+                        isDateSelectable(date)
+                    "
+                    :ref="(el) => setMonthRef(date, el)"
+                    :class="cellClasses(date)"
+                    role="button"
+                    :tabindex="
+                        focusedDate.month === date.getMonth() ? undefined : 0
+                    "
+                    @click.prevent="selectDate(date)"
+                    @mouseenter="onRangeHoverEndDate(date)"
+                    @focus="onRangeHoverEndDate(date)"
+                    @keydown.prevent="onKeydown($event, date)">
+                    {{ monthNames[date.getMonth()] }}
                     <div
-                        v-if="
-                            !pickerProps.disabled &&
-                            !pickerProps.readonly &&
-                            isDateSelectable(date)
-                        "
-                        :ref="(el) => setMonthRef(date, el)"
-                        :class="cellClasses(date)"
-                        role="button"
-                        :tabindex="
-                            focusedDate.month === date.getMonth()
-                                ? undefined
-                                : 0
-                        "
-                        @click.prevent="selectDate(date)"
-                        @mouseenter="onRangeHoverEndDate(date)"
-                        @focus="onRangeHoverEndDate(date)"
-                        @keydown.prevent="onKeydown($event, date)">
-                        {{ monthNames[date.getMonth()] }}
-                        <div v-if="eventsDateMatch(date).length" class="events">
-                            <div
-                                v-for="(event, index) in eventsDateMatch(date)"
-                                :key="index"
-                                class="event"
-                                :class="event.type" />
-                        </div>
+                        v-if="eventsDateMatch(date).length"
+                        :class="monthEventsClasses">
+                        <div
+                            v-for="(event, index) in eventsDateMatch(date)"
+                            :key="index"
+                            :class="eventClasses(event)" />
                     </div>
-                    <div v-else :class="cellClasses(date)">
-                        {{ monthNames[date.getMonth()] }}
+                </div>
+
+                <div v-else :class="cellClasses(date)">
+                    {{ monthNames[date.getMonth()] }}
+                    <div
+                        v-if="eventsDateMatch(date).length"
+                        :class="monthEventsClasses">
+                        <div
+                            v-for="(event, index) in eventsDateMatch(date)"
+                            :key="index"
+                            :class="eventClasses(event)" />
                     </div>
-                </template>
-            </div>
+                </div>
+            </template>
         </div>
     </section>
 </template>

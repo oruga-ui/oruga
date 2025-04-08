@@ -5,7 +5,10 @@
             label="Subject"
             variant="danger"
             message="Please enter a subject">
-            <o-input name="subject" expanded />
+            <o-input
+                name="subject"
+                expanded
+                placeholder="Please enter a subject..." />
         </o-field>
 
         <o-field horizontal label="From">
@@ -26,7 +29,7 @@
         </o-field>
 
         <o-field horizontal label="Message">
-            <o-input type="textarea" />
+            <o-input type="textarea" placeholder="Enter a messasge..." />
         </o-field>
 
         <o-field horizontal>
