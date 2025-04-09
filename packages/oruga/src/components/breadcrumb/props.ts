@@ -58,6 +58,11 @@ export type BreadcrumbItemProps = {
     iconLeft?: string;
     /** Icon name to show on the right */
     iconRight?: string;
+    /**
+     * This is used internally
+     * @ignore
+     */
+    iconBoth?: boolean;
 } & BreadcrumbItemClasses;
 
 // class props (will not be displayed in the docs)

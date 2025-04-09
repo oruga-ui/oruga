@@ -25,10 +25,10 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
     activeVariant: () => getDefault("breadcrumb.activeVariant", "primary"),
     tag: () => getDefault("breadcrumb.tag", "a"),
     disabled: () => getDefault("breadcrumb.disabled", false),
-    // iconPack: () => getDefault("breadcrumb.iconPack", undefined),
+    iconPack: () => getDefault("breadcrumb.iconPack"),
     iconLeft: undefined,
     iconRight: undefined,
-    // iconBoth: false,
+    iconBoth: false,
 });
 
 // --- Computed Component Classes ---
