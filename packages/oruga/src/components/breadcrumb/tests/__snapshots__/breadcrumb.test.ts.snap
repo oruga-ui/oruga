@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<Breadcrumb> > rendeer correctly 1`] = `
+"<section class="o-breadcrumb" data-oruga="breadcrumb">
+  <!-- BreadcrumbItems -->
+</section>"
+`;
