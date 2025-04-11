@@ -19,7 +19,7 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     <h3 id="base">Base</h3>
     <p>
         The sidebar can be positioned go appear from each side of the viewport
-        using the <code>position</code> prop. Using <code>fullwidht</code> or
+        using the <code>position</code> prop. Using <code>fullwidth</code> or
         <code>fullheight</code>, the sidebar overlaps the entire viewport width
         or height.
     </p>
