@@ -210,6 +210,7 @@ defineExpose({ close });
         :position="position"
         :role="isAlert ? 'alert' : 'status'"
         :aria-atomic="true"
+        :variant="variant"
         @close="close">
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->
