@@ -36,7 +36,7 @@
             </o-breadcrumb-item>
             <o-breadcrumb-item
                 tag="router-link"
-                to="/components/Breadcrumb.html"
+                to="/components/Breadcrumb"
                 active-variant="primary"
                 >Breadcrumb
             </o-breadcrumb-item>

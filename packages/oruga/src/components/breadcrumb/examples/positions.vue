@@ -20,7 +20,7 @@
             <o-breadcrumb-item tag="router-link" to="/documentation/" active-variant="primary" disabled="true"
                 >Docs
             </o-breadcrumb-item>
-            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb.html" active-variant="primary"
+            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb" active-variant="primary"
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>
@@ -32,7 +32,7 @@
             <o-breadcrumb-item tag="router-link" to="/documentation/" disabled="true" active-variant="primary"
                 >Docs
             </o-breadcrumb-item>
-            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb.html" active-variant="primary"
+            <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb" active-variant="primary"
                 >Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>
