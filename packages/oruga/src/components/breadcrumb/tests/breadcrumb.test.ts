@@ -1,18 +1,24 @@
 import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
-// import { nextTick } from "vue";
+import { nextTick } from "vue";
 // import { setTimeout } from "timers/promises";
+import type { OptionsProp } from "@/composables";
 
-// import { OBreadcrumb } from "@/components/breadcrumb/Breadcrumb.vue";
 import OBreadcrumb from "@/components/breadcrumb/Breadcrumb.vue";
+import OBreadcrumbItem from "../BreadcrumbItem.vue";
+
 
 describe("<Breadcrumb>", () => {
     enableAutoUnmount(afterEach);
+      const options: OptionsProp = [
+        { label: "Item 1", value: 1 },
+        { label: "Item 2", value: 2 },
+        { label: "Item 3", value: 3 },
+    ];
 
     test("is called", () => {
-        // const wrapper = mount(OBreadcrumb);
         const triggerHTML =
-            '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>';
+            '<o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>';
         const wrapper = mount(OBreadcrumb, {
             slots: {
                 trigger: triggerHTML,
@@ -20,13 +26,14 @@ describe("<Breadcrumb>", () => {
         });
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
+        expect(wrapper.html()).toMatchSnapshot();
+        expect(wrapper.classes("o-breadcrumb")).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("breadcrumb");
     });
 
     test("rendeer correctly", () => {
-        // const wrapper = mount(OBreadcrumb);
         const triggerHTML =
-            '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>';
+            '<o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>';
         const wrapper = mount(OBreadcrumb, {
             slots: {
                 trigger: triggerHTML,
@@ -35,10 +42,34 @@ describe("<Breadcrumb>", () => {
         expect(wrapper.html()).toMatchSnapshot();
         expect(wrapper.classes("o-breadcrumb")).toBeTruthy();
     });
-    test("render items", () => {});
+    test("render items", async () => {
+        const component = {
+            components: { OBreadcrumb, OBreadcrumbItem },
+            props: ["options"],
+            template: `
+                <o-breadcrumb tag="section" align="centered">
+                    <o-breadcrumb-item tag="router-link" to="/" active-variant="primary"
+                        >Home
+                    </o-breadcrumb-item>
+                    <o-breadcrumb-item tag="router-link" to="/documentation/" active-variant="primary" disabled="true"
+                        >Docs
+                    </o-breadcrumb-item>
+                    <o-breadcrumb-item tag="router-link" to="/components/Breadcrumb" active-variant="primary"
+                        >Breadcrumb
+                    </o-breadcrumb-item>
+                </o-breadcrumb>
+            `,
+        };
+        const wrapper = mount(component);
+
+        await nextTick(); // await breadcrumb item rendered
+
+        const items = wrapper.findAllComponents(OBreadcrumbItem);
+        expect(items.length).toBe(3);
+    });
     test("is centered", () => {
         const triggerHTML =
-            '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>';
+            '<o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>';
 
         const wrapper = mount(OBreadcrumb, {
             slot: triggerHTML,
@@ -49,7 +80,7 @@ describe("<Breadcrumb>", () => {
     });
     test("is large ", () => {
         const triggerHTML =
-            '<breadcrumb-item tag="a" href="/">Home</breadcrumb-item>';
+            '<o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>';
 
         const wrapper = mount(OBreadcrumb, {
             slot: triggerHTML,

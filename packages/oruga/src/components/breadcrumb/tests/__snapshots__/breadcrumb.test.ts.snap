@@ -1,7 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`<Breadcrumb> > is called 1`] = `
+"<section class="o-breadcrumb o-breadcrumb__small o-breadcrumb__has-slash-separator o-breadcrumb__left" data-oruga="breadcrumb">
+  <!-- BreadcrumbItems -->
+</section>"
+`;
+
 exports[`<Breadcrumb> > rendeer correctly 1`] = `
-"<section class="o-breadcrumb" data-oruga="breadcrumb">
+"<section class="o-breadcrumb o-breadcrumb__small o-breadcrumb__has-slash-separator o-breadcrumb__left" data-oruga="breadcrumb">
   <!-- BreadcrumbItems -->
 </section>"
 `;

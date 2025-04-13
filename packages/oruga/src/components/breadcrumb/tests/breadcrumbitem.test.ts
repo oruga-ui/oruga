@@ -2,7 +2,7 @@ import { describe, test, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 
 // import OBreadcrumb from "@/components/breadcrumb/Breadcrumb.vue";
-// import { OBreadcrumbItem } from "../Breadcrumbitem.vue";
+import { OBreadcrumbItem } from "../Breadcrumbitem.vue";
 
 describe("<BreadcrumbItem>", () => {
     test("is active ", () => {});
