@@ -10,11 +10,6 @@ import OBreadcrumbItem from "../BreadcrumbItem.vue";
 
 describe("<Breadcrumb>", () => {
     enableAutoUnmount(afterEach);
-      const options: OptionsProp = [
-        { label: "Item 1", value: 1 },
-        { label: "Item 2", value: 2 },
-        { label: "Item 3", value: 3 },
-    ];
 
     test("is called", () => {
         const triggerHTML =
@@ -66,6 +61,9 @@ describe("<Breadcrumb>", () => {
 
         const items = wrapper.findAllComponents(OBreadcrumbItem);
         expect(items.length).toBe(3);
+        expect(items[0].classes("o-breadcrumb-item")).toBeTruthy();
+        expect(items[1].text()).toBe("Docs");
+        expect(items[2].attributes("to")).toBe("/components/Breadcrumb");
     });
     test("is centered", () => {
         const triggerHTML =
