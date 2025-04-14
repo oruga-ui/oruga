@@ -24,8 +24,12 @@ const options: OptionsProp = [
         },
     },
     {
-        label: "Videos",
+        label: "Words",
         value: 3,
+    },
+    {
+        label: "Videos",
+        value: 4,
         attrs: {
             icon: "video",
             disabled: true,
