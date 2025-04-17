@@ -40,7 +40,7 @@ describe("<BreadcrumbItem>", () => {
         await nextTick(); // await breadcrumb item rendered
 
         const items = wrapper.findAllComponents(OBreadcrumbItem);
-        expect(true).toBe(true);
+        expect(items[1].classes("o-breadcrumb-item__disabled")).toBeTruthy();
     });
     test("has icon", async () => {
         const wrapper = mount(component);
@@ -56,6 +56,6 @@ describe("<BreadcrumbItem>", () => {
         await nextTick(); // await breadcrumb item rendered
 
         const items = wrapper.findAllComponents(OBreadcrumbItem);
-        expect(true).toBe(true);
+        expect(items[2].attributes("href")).toBe("/components/Breadcrumb");
     });
 });
