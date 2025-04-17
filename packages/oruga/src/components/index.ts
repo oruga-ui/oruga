@@ -1,4 +1,5 @@
 export * from "./autocomplete";
+export * from "./breadcrumb";
 export * from "./button";
 export * from "./carousel";
 export * from "./checkbox";
