@@ -1,8 +1,6 @@
 import { describe, test, expect, afterEach } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-// import { setTimeout } from "timers/promises";
-import type { OptionsProp } from "@/composables";
 
 import OBreadcrumb from "@/components/breadcrumb/Breadcrumb.vue";
 import OBreadcrumbItem from "../BreadcrumbItem.vue";
