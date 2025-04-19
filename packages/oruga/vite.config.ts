@@ -32,6 +32,8 @@ const entries = {
     }, {} as any),
 };
 
+const browserTestPattern = "src/**/*.browser.test.{ts,js}";
+
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
 export default defineConfig(({ mode }) => ({
@@ -136,5 +138,29 @@ export default defineConfig(({ mode }) => ({
         coverage: {
             provider: "istanbul",
         },
+        workspace: [
+            {
+                extends: true,
+                test: {
+                    exclude: [browserTestPattern],
+                },
+            },
+            {
+                extends: true,
+                test: {
+                    include: [browserTestPattern],
+                    name: "oruga-browser",
+                    browser: {
+                        enabled: true,
+                        provider: "playwright",
+                        instances: [
+                            {
+                                browser: "chromium",
+                            },
+                        ],
+                    },
+                },
+            },
+        ],
     },
 }));
