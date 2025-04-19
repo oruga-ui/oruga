@@ -16,7 +16,8 @@ jobs:
         with:
           node-version: 22.x
           registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
       - name: Install dependencies 📦
-        run: npm install
+        run: npm ci
       - name: Build lib 🛠️
         run: npm run build:lib
