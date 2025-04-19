@@ -6,6 +6,11 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
     
     "lib": [],
-    "types": ["node", "jsdom"]
+    "types": [
+      "node",
+      "vite/client",
+      "@vitest/browser/providers/playwright",
+      "./components.d.ts"
+    ]
   }
 }

@@ -21,7 +21,7 @@ Object.defineProperty(window, "matchMedia", {
 beforeEach(() => {
     // mock time zone to unify test for everyone
     const DateTimeFormat = Intl.DateTimeFormat;
-    vi.spyOn(global.Intl, "DateTimeFormat").mockImplementation(
+    vi.spyOn(globalThis.Intl, "DateTimeFormat").mockImplementation(
         (_?, options?) =>
             new DateTimeFormat("en-GB", {
                 ...options,
