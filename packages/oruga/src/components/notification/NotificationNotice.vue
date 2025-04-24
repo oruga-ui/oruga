@@ -208,9 +208,9 @@ defineExpose({ close });
         v-model:active="isActive"
         :override="override"
         :position="position"
+        :variant="variant"
         :role="isAlert ? 'alert' : 'status'"
         :aria-atomic="true"
-        :variant="variant"
         @close="close">
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->
