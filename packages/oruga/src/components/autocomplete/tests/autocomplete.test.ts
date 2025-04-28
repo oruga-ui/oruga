@@ -247,6 +247,34 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeTruthy();
     });
 
+    test("keepFirst works as input changes", async () => {
+        const wrapper = mount(OAutocomplete, {
+            props: { options: OPTIONS, openOnFocus: true, keepFirst: true },
+            attachTo: document.body,
+        });
+
+        const dropdown = wrapper.find(".o-dropdown__menu");
+        expect(dropdown.exists()).toBeTruthy();
+        expect(dropdown.isVisible()).toBeFalsy();
+
+        const input = wrapper.find("input");
+        expect(input.exists()).toBeTruthy();
+
+        await input.trigger("focus");
+
+        expect(dropdown.isVisible()).toBeTruthy();
+
+        const focusedItem = wrapper.findAll(".o-dropdown__item--focused")[0];
+        expect(focusedItem.html()).toContain(OPTIONS[0]);
+
+        await input.setValue("v");
+
+        const updatedFocusedItem = wrapper.findAll(
+            ".o-dropdown__item--focused",
+        )[0];
+        expect(updatedFocusedItem.html()).toContain("Vue.js");
+    });
+
     test("do not open when openOnFocus and empty options", async () => {
         const wrapper = mount(OAutocomplete, {
             props: { options: [], openOnFocus: true },
