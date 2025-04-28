@@ -8,5 +8,3 @@
         </o-tabs>
     </section>
 </template>
-<script setup lang="ts">
-</script>
