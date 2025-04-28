@@ -61,7 +61,10 @@ describe("useNotificationProgrammatic tests", () => {
 
         // open element
         const { close } = NotificationProgrammatic.open(
-            { component },
+            {
+                component,
+                variant: "success",
+            },
             "#my-cool-container",
         );
 
@@ -72,6 +75,7 @@ describe("useNotificationProgrammatic tests", () => {
             '[data-oruga="notification"]',
         );
         expect(notification).not.toBeNull();
+        expect(notification?.className).toContain("o-notification--success");
 
         // check element exist
         const button = notification?.querySelector<HTMLElement>("button");
