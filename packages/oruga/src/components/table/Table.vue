@@ -1586,6 +1586,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         ...tdBaseClasses,
                                         ...column.tdClasses,
                                     ]"
+                                    :data-label="column.label"
                                     :style="isMobileActive ? {} : column.style"
                                     :props="{
                                         row: row.value,
