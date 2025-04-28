@@ -231,6 +231,17 @@ watch(
     { flush: "post" },
 );
 
+watch(
+    () => childItems.value,
+    () => {
+        if (isActive.value && !props.inline && props.keepFirst) {
+            focusedItem.value = undefined;
+            moveFocus(1);
+        }
+    },
+    { deep: true, flush: "post" },
+);
+
 // #region --- Trigger Handler ---
 
 /** Close dropdown if clicked outside. */
