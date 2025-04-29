@@ -222,13 +222,25 @@ watch(
     (value) => {
         // on active set event handler if not open as modal
         if (value) {
-            // keep first option always pre-selected
+            // keep first option always pre-focused
             if (!props.inline && props.keepFirst && !focusedItem.value)
                 moveFocus(1);
         }
         if (isModal.value) toggleScroll(value);
     },
     { flush: "post" },
+);
+
+watch(
+    childItems,
+    () => {
+        // change pre-focused element when items change and keepFirst
+        if (isActive.value && !props.inline && props.keepFirst) {
+            focusedItem.value = undefined;
+            moveFocus(1);
+        }
+    },
+    { deep: true, flush: "post" },
 );
 
 // #region --- Trigger Handler ---
