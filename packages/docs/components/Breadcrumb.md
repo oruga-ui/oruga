@@ -1,28 +1,18 @@
 # Breadcrumb
 
-<div class="vp-doc">
+<section class="odocs-head">
 
-> The classic breadcrumb, in different colors, sizes, and states
+</section>
 
-</div>
-
-<div class="vp-example">
+<section class="odocs-examples">
 
 ## Examples
 
 <example-breadcrumb />
 
-</div>
+</section>
 
-<div class="vp-example">
-
-## Class props
-
-<inspector-breadcrumb-viewer />
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-specs">
 
 ## Breadcrumb component
 
@@ -34,13 +24,13 @@
 
 ### Props
 
-| Prop name     | Description                                    | Type     | Values                      | Default    |
-| ------------- | ---------------------------------------------- | -------- | --------------------------- | ---------- |
-| align         | Position of breadcrumb                         | string   | `left`, `centered`, `right` | `left`     |
-| override      | Override existing theme classes completely     | boolean  |                             |            |
-| size          | Size of the breadcrumb                         | string   | `small`, `medium`, `large`  | `medium`   |
-| tag           | Tag of the breadcrumb                          | string   | `div`, `section` ...        | `section`  |
-| separator     | Separator between breadcrumb items             | string   | `has-arrow-separator`, `has-dot-separator`, `has-slash-separator`, `has-bullet-separator`, `has-succeeds-separator`, `has-chevron-separator` | `has-slash-separator` |
+| Prop name | Description                                       | Type             | Values                                                                                                                                        | Default                                                                                                                                                               |
+| --------- | ------------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| align     | Position of the breadcrumb                        | string           | `left`, `centered`, `right`                                                                                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;align: "left"<br>}</code>                    |
+| override  | Override existing theme classes completely        | boolean          | -                                                                                                                                             |                                                                                                                                                                       |
+| separator | The breadcrumb separator between breadcrumb items | string           | ` has-arrow-separator`, `has-dot-separator`, `has-slash-separator`, `has-bullet-separator`, `has-succeeds-separator`, `has-chevron-separator` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: "has-slash-separator"<br>}</code> |
+| size      | Size of the breadcrumb                            | string           | `small`, `medium`, `large`                                                                                                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;size: "small"<br>}</code>                    |
+| tag       | Tag of the breadcrumb                             | DynamicComponent | `div`, `section ...`                                                                                                                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;tag: "section"<br>}</code>                   |
 
 ### Slots
 
@@ -48,40 +38,17 @@
 | ------- | ----------- | -------- |
 | default |             |          |
 
-</div>
+</section>
 
-<div class="vp-doc">
+<section class="odocs-classes">
 
-## Breadcrumb item component
+## Class Inspector
 
-> The classic breadcrumb item, in different colors, icons and states
+<inspector-breadcrumb-viewer />
 
-```html
-<o-breadcrumb></o-breadcrumb>
-```
+</section>
 
-### Props
-
-| Prop name     | Description                                    | Type     | Values                      | Default    |
-| ------------- | ---------------------------------------------- | -------- | --------------------------- | ---------- |
-| active        | Active breadcrumb item                         | boolean  |  `primary`, `info`, `warning`, `danger`  | `false`     |
-| activeVariant | Variant of active breadcrumb item              | string   |                             | `primary`  |
-| disabled      | breadcrum item is disabled                     | boolean  |                             | `false`    |
-| tag           | Tag of the breadcrumb item                     | string   | `a`, `router-link`          | `a`        |
-| iconLeft      | Icon name to show on the left                  | string   |                             |            |
-| iconRight     | Icon name to show on the right                 | string   |                             |            |
-| iconBoth      | Icon name to show on both sides                | string   |                             |            |
-| iconPack      | Icon pack to use                               | string   | `mdi`, `fa`, `fas` and any other custom icon pack   |            |
-
-### Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
-
-</div>
-
-<div class="vp-doc">
+<section class="odocs-style">
 
 ## Sass variables
 
@@ -104,4 +71,4 @@
 <p>The theme does not have any custom variables for this component.</p>
 </div>
 
-</div>
+</section>

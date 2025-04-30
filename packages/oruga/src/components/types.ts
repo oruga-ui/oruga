@@ -70,6 +70,41 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class configuration for the internal input component */
                 inputClasses: Record<string, any>;
             }>;
+        breadcrumb?: ComponentConfigBase &
+            Partial<{
+                /** Size of the breadcrumb */
+                size: string;
+                /** Position of the breadcrumb */
+                align: string;
+                /** The breadcrumb separator between breadcrumb items */
+                separator: string;
+                /** Tag of the breadcrumb */
+                tag: DynamicComponent;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the breadcrumb elements wrapper */
+                wrapperClass: ClassDefinition;
+                /** Class of the breadcrumb size */
+                sizeClass: ClassDefinition;
+                /** Class of the breadcrumb separator */
+                separatorClass: ClassDefinition;
+                /** Class of the breadcrumb align */
+                alignClass: ClassDefinition;
+                /** breadcrumb item is active, works only when tag provided is a */
+                active: boolean;
+                /** Active color, works only when tag provided is a */
+                activeVariant: string;
+                /** breadcrumb item is disabled */
+                disabled: boolean;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Class of the breadcrumb icon */
+                iconClass: ClassDefinition;
+                /** Class of the breadcrumb icon on the left */
+                iconLeftClass: ClassDefinition;
+                /** Class of the breadcrumb icon on the right */
+                iconRightClass: ClassDefinition;
+            }>;
         button?: ComponentConfigBase &
             Partial<{
                 /** Button tag name */
