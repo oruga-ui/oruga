@@ -25,6 +25,8 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
     tag: () => getDefault("breadcrumb.tag", "section"),
 });
 
+// #region --- Computed Component Classes ---
+
 const rootClasses = defineClasses(
     ["rootClass", "o-breadcrumb"],
     [
@@ -46,6 +48,8 @@ const rootClasses = defineClasses(
         computed(() => !!props.align),
     ],
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>

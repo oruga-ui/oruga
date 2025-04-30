@@ -3,7 +3,7 @@ import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
 import OBreadcrumb from "@/components/breadcrumb/Breadcrumb.vue";
-import OBreadcrumbItem from "../BreadcrumbItem.vue";
+import OBreadcrumbItem from "@/components/breadcrumb//BreadcrumbItem.vue";
 
 describe("<BreadcrumbItem>", () => {
     const component = {
@@ -34,6 +34,7 @@ describe("<BreadcrumbItem>", () => {
         expect(items[0].classes("o-breadcrumb-item__primary")).toBeTruthy();
         expect(items[0].classes("active")).toBeTruthy();
     });
+
     test("is disabled", async () => {
         const wrapper = mount(component);
 
@@ -42,6 +43,7 @@ describe("<BreadcrumbItem>", () => {
         const items = wrapper.findAllComponents(OBreadcrumbItem);
         expect(items[1].classes("o-breadcrumb-item__disabled")).toBeTruthy();
     });
+
     test("has icon", async () => {
         const componentWithIcons = {
             components: { OBreadcrumb, OBreadcrumbItem },
@@ -70,6 +72,7 @@ describe("<BreadcrumbItem>", () => {
         expect(items[0].classes("o-breadcrumb-item__icon-left")).toBeTruthy();
         // expect(items[0].find(".fas")).toBeTruthy();
     });
+
     test("has href link", async () => {
         const wrapper = mount(component);
 

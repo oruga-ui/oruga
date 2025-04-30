@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { defineClasses } from "@/composables";
+import { computed } from "vue";
+
+import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
-
-import { computed } from "vue";
-import OIcon from "../icon/Icon.vue";
+import { defineClasses } from "@/composables";
 
 import type { BreadcrumbItemProps } from "./props";
 
@@ -31,10 +31,10 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
     iconBoth: false,
 });
 
-// --- Computed Component Classes ---
 const computedDisabled = computed(() =>
     props.disabled ? "o-breadcrumb-item__disabled" : null,
 );
+
 const computedActive = computed(() => {
     if (props.active && props.tag !== "router-link")
         return `o-breadcrumb-item__${props.activeVariant} active`;
@@ -42,7 +42,8 @@ const computedActive = computed(() => {
         return `o-breadcrumb-item__${props.activeVariant}`;
     return null;
 });
-// --- Computed Component Classes ---
+
+// #region --- Computed Component Classes ---
 
 const iconClasses = defineClasses(["iconClass", "o-breadcrumb-item__icon"]);
 
@@ -62,6 +63,8 @@ const wrapperClasses = defineClasses([
 ]);
 
 const rootClasses = defineClasses(["rootClass", "o-breadcrumb-item"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>

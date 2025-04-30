@@ -3,8 +3,7 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 
 import OBreadcrumb from "@/components/breadcrumb/Breadcrumb.vue";
-import OBreadcrumbItem from "../BreadcrumbItem.vue";
-
+import OBreadcrumbItem from "@/components/breadcrumb/BreadcrumbItem.vue";
 
 describe("<Breadcrumb>", () => {
     enableAutoUnmount(afterEach);
@@ -35,6 +34,7 @@ describe("<Breadcrumb>", () => {
         expect(wrapper.html()).toMatchSnapshot();
         expect(wrapper.classes("o-breadcrumb")).toBeTruthy();
     });
+
     test("render items", async () => {
         const component = {
             components: { OBreadcrumb, OBreadcrumbItem },
@@ -63,6 +63,7 @@ describe("<Breadcrumb>", () => {
         expect(items[1].text()).toBe("Docs");
         expect(items[2].attributes("to")).toBe("/components/Breadcrumb");
     });
+
     test("is centered", () => {
         const triggerHTML =
             '<o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>';
@@ -74,6 +75,7 @@ describe("<Breadcrumb>", () => {
 
         expect(wrapper.classes("o-breadcrumb__centered")).toBeTruthy();
     });
+
     test("is large ", () => {
         const triggerHTML =
             '<o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>';

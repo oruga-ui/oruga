@@ -26,6 +26,20 @@ export type BreadcrumbProps = {
     tag?: DynamicComponent;
 } & BreadcrumbClasses;
 
+// class props (will not be displayed in the docs)
+export type BreadcrumbClasses = Partial<{
+    /** Class of the root element */
+    rootClass: ComponentClass;
+    /** Class of the breadcrumb elements wrapper */
+    wrapperClass: ComponentClass;
+    /** Class of the breadcrumb size */
+    sizeClass: ComponentClass;
+    /** Class of the breadcrumb separator */
+    separatorClass: ComponentClass;
+    /** Class of the breadcrumb align */
+    alignClass: ComponentClass;
+}>;
+
 export type BreadcrumbItemProps = {
     /** Override existing theme classes completely */
     override?: boolean;
@@ -66,22 +80,7 @@ export type BreadcrumbItemProps = {
 } & BreadcrumbItemClasses;
 
 // class props (will not be displayed in the docs)
-type BreadcrumbClasses = Partial<{
-    // class props (will not be displayed in the docs)
-    /** Class of the root element */
-    rootClass: ComponentClass;
-    /** Class of the breadcrumb elements wrapper */
-    wrapperClass: ComponentClass;
-    /** Class of the breadcrumb size */
-    sizeClass: ComponentClass;
-    /** Class of the breadcrumb separator */
-    separatorClass: ComponentClass;
-    /** Class of the breadcrumb align */
-    alignClass: ComponentClass;
-}>;
-
-// class props (will not be displayed in the docs)
-type BreadcrumbItemClasses = Partial<{
+export type BreadcrumbItemClasses = Partial<{
     /** Class of the breadcrumb elements wrapper */
     wrapperClass: ComponentClass;
     /** Class of the breadcrumb icon */
