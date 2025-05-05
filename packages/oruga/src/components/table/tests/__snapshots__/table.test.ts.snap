@@ -66,11 +66,11 @@ exports[`OTable tests > render correctly 1`] = `
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" style="width: 40px;">1</td>
-          <td class="o-table__td">Jesse</td>
-          <td class="o-table__td">Simmons</td>
-          <td class="o-table__td o-table__td--centered">2016-10-15 13:43:27</td>
-          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <td class="o-table__td" data-label="ID" style="width: 40px;">1</td>
+          <td class="o-table__td" data-label="First Name">Jesse</td>
+          <td class="o-table__td" data-label="Last Name">Simmons</td>
+          <td class="o-table__td o-table__td--centered" data-label="Date">2016-10-15 13:43:27</td>
+          <td class="o-table__td" data-label="Gender">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
         <!--v-if-->
@@ -80,11 +80,11 @@ exports[`OTable tests > render correctly 1`] = `
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" style="width: 40px;">2</td>
-          <td class="o-table__td">John</td>
-          <td class="o-table__td">Jacobs</td>
-          <td class="o-table__td o-table__td--centered">2016-12-15 06:00:53</td>
-          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <td class="o-table__td" data-label="ID" style="width: 40px;">2</td>
+          <td class="o-table__td" data-label="First Name">John</td>
+          <td class="o-table__td" data-label="Last Name">Jacobs</td>
+          <td class="o-table__td o-table__td--centered" data-label="Date">2016-12-15 06:00:53</td>
+          <td class="o-table__td" data-label="Gender">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
         <!--v-if-->
@@ -94,11 +94,11 @@ exports[`OTable tests > render correctly 1`] = `
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" style="width: 40px;">3</td>
-          <td class="o-table__td">Tina</td>
-          <td class="o-table__td">Gilbert</td>
-          <td class="o-table__td o-table__td--centered">2016-04-26 06:26:28</td>
-          <td class="o-table__td">Female</td><!-- checkable column right -->
+          <td class="o-table__td" data-label="ID" style="width: 40px;">3</td>
+          <td class="o-table__td" data-label="First Name">Tina</td>
+          <td class="o-table__td" data-label="Last Name">Gilbert</td>
+          <td class="o-table__td o-table__td--centered" data-label="Date">2016-04-26 06:26:28</td>
+          <td class="o-table__td" data-label="Gender">Female</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
         <!--v-if-->
@@ -108,11 +108,11 @@ exports[`OTable tests > render correctly 1`] = `
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" style="width: 40px;">4</td>
-          <td class="o-table__td">Clarence</td>
-          <td class="o-table__td">Flores</td>
-          <td class="o-table__td o-table__td--centered">2016-04-10 10:28:46</td>
-          <td class="o-table__td">Male</td><!-- checkable column right -->
+          <td class="o-table__td" data-label="ID" style="width: 40px;">4</td>
+          <td class="o-table__td" data-label="First Name">Clarence</td>
+          <td class="o-table__td" data-label="Last Name">Flores</td>
+          <td class="o-table__td o-table__td--centered" data-label="Date">2016-04-10 10:28:46</td>
+          <td class="o-table__td" data-label="Gender">Male</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
         <!--v-if-->
@@ -122,11 +122,11 @@ exports[`OTable tests > render correctly 1`] = `
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" style="width: 40px;">5</td>
-          <td class="o-table__td">Anne</td>
-          <td class="o-table__td">Lee</td>
-          <td class="o-table__td o-table__td--centered">2016-12-06 14:38:38</td>
-          <td class="o-table__td">Female</td><!-- checkable column right -->
+          <td class="o-table__td" data-label="ID" style="width: 40px;">5</td>
+          <td class="o-table__td" data-label="First Name">Anne</td>
+          <td class="o-table__td" data-label="Last Name">Lee</td>
+          <td class="o-table__td o-table__td--centered" data-label="Date">2016-12-06 14:38:38</td>
+          <td class="o-table__td" data-label="Gender">Female</td><!-- checkable column right -->
           <!--v-if-->
         </tr>
         <!--v-if-->

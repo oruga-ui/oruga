@@ -112,7 +112,6 @@ plugins: [{ src: '~plugins/oruga.js' }]
 
 To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
 
-Take a look at the [official NuxtJS + Oruga example](https://github.com/oruga-ui/demo-nuxtjs).
 
 ## Contributing
 

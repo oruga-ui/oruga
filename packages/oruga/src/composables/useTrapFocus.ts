@@ -29,7 +29,7 @@ export function useTrapFocus(): {
     function applyHandler(el: HTMLElement, value: boolean): void {
         if (value) {
             // move focus inside the root element
-            el.focus();
+            el.focus({ preventScroll: true });
 
             // set keydown event listener
             if (typeof onKeyDown === "function")
