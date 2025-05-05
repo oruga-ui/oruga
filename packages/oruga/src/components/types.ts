@@ -74,35 +74,45 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Size of the breadcrumb */
                 size: string;
+                /** Color variant of the breadcrumb */
+                variant: string;
                 /** Position of the breadcrumb */
-                align: string;
-                /** The breadcrumb separator between breadcrumb items */
+                position: "centered" | "left" | "right";
+                /** The separator between breadcrumb items */
                 separator: string;
-                /** Tag of the breadcrumb */
-                tag: DynamicComponent;
+                /** Accessibility aria-label to be passed to the nav wrapper element */
+                ariaLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of the breadcrumb elements wrapper */
-                wrapperClass: ClassDefinition;
-                /** Class of the breadcrumb size */
+                /** Class of the root element with size */
                 sizeClass: ClassDefinition;
-                /** Class of the breadcrumb separator */
-                separatorClass: ClassDefinition;
-                /** Class of the breadcrumb align */
-                alignClass: ClassDefinition;
-                /** breadcrumb item is active, works only when tag provided is a */
-                active: boolean;
-                /** Active color, works only when tag provided is a */
-                activeVariant: string;
-                /** breadcrumb item is disabled */
-                disabled: boolean;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element with alignment */
+                positionClass: ClassDefinition;
+                /** Class of the list element */
+                listClass: ClassDefinition;
                 /** Icon pack to use */
                 iconPack: string;
-                /** Class of the breadcrumb icon */
+                /** Icon size */
+                iconSize: string;
+                /** Item tag name */
+                tag: DynamicComponent;
+                /** Class of the item element */
+                itemClass: ClassDefinition;
+                /** Class of the item element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the item element when active */
+                activeClass: ClassDefinition;
+                /** Class of the seperator element */
+                seperatorClass: ClassDefinition;
+                /** Class of the link element */
+                linkClass: ClassDefinition;
+                /** Class of the icon element */
                 iconClass: ClassDefinition;
-                /** Class of the breadcrumb icon on the left */
+                /** Class of the left icon element */
                 iconLeftClass: ClassDefinition;
-                /** Class of the breadcrumb icon on the right */
+                /** Class of the right icon element */
                 iconRightClass: ClassDefinition;
             }>;
         button?: ComponentConfigBase &

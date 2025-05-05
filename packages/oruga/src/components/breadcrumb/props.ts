@@ -1,10 +1,14 @@
-import type { ComponentClass, DynamicComponent, OptionsProp } from "@/types";
+import type {
+    ComponentClass,
+    DynamicComponent,
+    SimpleOptionsProp,
+} from "@/types";
 
 export type BreadcrumbProps = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** breadcrumb items, unnecessary when default slot is used */
-    options?: OptionsProp<never>;
+    options?: SimpleOptionsProp;
     /**
      * Size of the breadcrumb
      * @values small, medium, large
@@ -19,7 +23,7 @@ export type BreadcrumbProps = {
      * Position of the breadcrumb
      * @values left, centered, right
      */
-    align?: string;
+    position?: "left" | "centered" | "right";
     /** The separator between breadcrumb items */
     separator?: string;
     /** Accessibility aria-label to be passed to the nav wrapper element */
@@ -35,7 +39,7 @@ export type BreadcrumbClasses = Partial<{
     /** Class of the root element with variant */
     variantClass: ComponentClass;
     /** Class of the root element with alignment */
-    alignClass: ComponentClass;
+    positionClass: ComponentClass;
     /** Class of the list element */
     listClass: ComponentClass;
 }>;
@@ -80,14 +84,14 @@ export type BreadcrumbItemClasses = Partial<{
     disabledClass: ComponentClass;
     /** Class of the item element when active */
     activeClass: ComponentClass;
-    /** Class of the seperator element */
+    /** Class of the item seperator element */
     seperatorClass: ComponentClass;
-    /** Class of the link element */
+    /** Class of the item link element */
     linkClass: ComponentClass;
-    /** Class of the icon element */
+    /** Class of the item icon element */
     iconClass: ComponentClass;
-    /** Class of the left icon element */
+    /** Class of the item left icon element */
     iconLeftClass: ComponentClass;
-    /** Class of the right icon element */
+    /** Class of the item right icon element */
     iconRightClass: ComponentClass;
 }>;

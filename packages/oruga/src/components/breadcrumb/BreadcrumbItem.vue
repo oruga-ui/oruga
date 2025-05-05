@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
     iconRight: undefined,
     iconPack: () => getDefault("breadcrumb.iconPack"),
     iconSize: () => getDefault("breadcrumb.iconSize"),
-    tag: () => getDefault("breadcrumb.tag", "span"),
+    tag: () => getDefault("breadcrumb.tag", "a"),
 });
 
 /** inject functionalities and data from the parent component */

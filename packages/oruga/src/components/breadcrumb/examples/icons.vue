@@ -1,75 +1,69 @@
+<script setup lang="ts">
+import { ref } from "vue";
+
+const iconSize = ref<string>("");
+const size = ref<string>("");
+</script>
+
 <template>
     <section>
-        <!-- has-slash-separator -->
-        <o-breadcrumb
-            tag="section"
-            separator="has-slash-separator"
-            size="medium"
-            align="center">
-            <o-breadcrumb-item tag="a" active="true" active-variant="primary">
-                Home
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" disabled="true">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a"> Breadcrumb </o-breadcrumb-item>
-        </o-breadcrumb>
+        <o-field grouped>
+            <o-field label="Icon Size">
+                <o-select v-model="iconSize">
+                    <option value="small">Small</option>
+                    <option value="">Default</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </o-select>
+            </o-field>
 
-        <!-- has-chevron-separator -->
-        <o-breadcrumb
-            tag="section"
-            separator="has-chevron-separator"
-            size="medium"
-            align="center">
-            <o-breadcrumb-item tag="a" active="true" active-variant="primary"
-                >Home
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" disabled="true">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a"> Breadcrumb</o-breadcrumb-item>
-        </o-breadcrumb>
+            <o-field label="Text Size">
+                <o-select v-model="size">
+                    <option value="small">Small</option>
+                    <option value="">Default</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </o-select>
+            </o-field>
+        </o-field>
 
-        <!-- has-arrow-separator -->
-        <o-breadcrumb
-            tag="section"
-            separator="has-arrow-separator"
-            size="medium"
-            align="center">
+        <o-breadcrumb>
             <o-breadcrumb-item
-                tag="a"
+                label="Home"
+                :size="size"
                 icon-left="home"
-                active="true"
-                active-variant="primary">
-                Home
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" icon-left="plus" disabled="true">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" icon-left="location">
-                Breadcrumb
-            </o-breadcrumb-item>
+                :icon-size="iconSize"
+                active />
+            <o-breadcrumb-item
+                label="Docs"
+                :size="size"
+                icon-left="plus"
+                :icon-size="iconSize"
+                disabled />
+            <o-breadcrumb-item
+                label="Breadcrumb"
+                icon-left="location"
+                :icon-size="iconSize" />
         </o-breadcrumb>
 
-        <!-- has-dot-separator -->
-        <o-breadcrumb
-            tag="section"
-            separator="has-dot-separator"
-            size="medium"
-            align="center">
+        <o-breadcrumb>
             <o-breadcrumb-item
-                tag="a"
+                label="Home"
+                :size="size"
                 icon-right="home"
-                active="true"
-                active-variant="primary">
-                Home
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" icon-right="plus" disabled="true">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" icon-right="location">
-                Breadcrumb
-            </o-breadcrumb-item>
+                :icon-size="iconSize"
+                active />
+            <o-breadcrumb-item
+                label="Docs"
+                :size="size"
+                icon-right="plus"
+                :icon-size="iconSize"
+                disabled />
+            <o-breadcrumb-item
+                label="Breadcrumb"
+                :size="size"
+                icon-right="location"
+                :icon-size="iconSize" />
         </o-breadcrumb>
     </section>
 </template>

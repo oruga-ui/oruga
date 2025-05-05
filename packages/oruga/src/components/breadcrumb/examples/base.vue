@@ -1,47 +1,9 @@
 <template>
     <section>
-        <o-breadcrumb
-            separator="has-arrow-separator"
-            size="medium"
-            align="center"
-            tag="section">
-            <o-breadcrumb-item
-                tag="a"
-                href="/"
-                active="true"
-                active-variant="primary">
-                Homee
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" href="/documentation/" disabled="true">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html">
-                Breadcrumb
-            </o-breadcrumb-item>
-        </o-breadcrumb>
-
-        <o-breadcrumb
-            tag="section"
-            separator="has-arrow-separator"
-            size="medium"
-            align="center">
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/"
-                active-variant="primary">
-                Home
-            </o-breadcrumb-item>
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/documentation/"
-                disabled="true"
-                active-variant="primary">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/components/Breadcrumb"
-                active-variant="primary">
+        <o-breadcrumb>
+            <o-breadcrumb-item href="/"> Home </o-breadcrumb-item>
+            <o-breadcrumb-item disabled> Docs </o-breadcrumb-item>
+            <o-breadcrumb-item href="/components/Breadcrumb.html" active>
                 Breadcrumb
             </o-breadcrumb-item>
         </o-breadcrumb>

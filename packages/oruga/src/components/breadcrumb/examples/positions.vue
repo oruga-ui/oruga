@@ -1,66 +1,24 @@
 <template>
-    <section class="odocs-spaced">
-        <!--  Position left -->
-        <o-breadcrumb tag="section" align="left">
-            <o-breadcrumb-item
-                tag="a"
-                href="/"
-                active="true"
-                active-variant="primary">
-                Home
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" href="/documentation/" disabled="true">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html">
-                Breadcrumb
-            </o-breadcrumb-item>
+    <section>
+        <!-- Position left -->
+        <o-breadcrumb position="left">
+            <o-breadcrumb-item label="Home" href="/" />
+            <o-breadcrumb-item label="Docs" disabled />
+            <o-breadcrumb-item label="Breadcrumb" active />
         </o-breadcrumb>
 
-        <!--  Position center -->
-        <o-breadcrumb tag="section" align="centered">
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/"
-                active-variant="primary">
-                Home
-            </o-breadcrumb-item>
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/documentation/"
-                active-variant="primary"
-                disabled="true">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/components/Breadcrumb"
-                active-variant="primary">
-                Breadcrumb
-            </o-breadcrumb-item>
+        <!-- Position center -->
+        <o-breadcrumb position="centered">
+            <o-breadcrumb-item label="Home" href="/" />
+            <o-breadcrumb-item label="Docs" disabled />
+            <o-breadcrumb-item label="Breadcrumb" active />
         </o-breadcrumb>
 
-        <!--  Position right -->
-        <o-breadcrumb tag="section" align="right">
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/"
-                active-variant="primary">
-                Home
-            </o-breadcrumb-item>
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/documentation/"
-                disabled="true"
-                active-variant="primary">
-                Docs
-            </o-breadcrumb-item>
-            <o-breadcrumb-item
-                tag="router-link"
-                to="/components/Breadcrumb"
-                active-variant="primary">
-                Breadcrumb
-            </o-breadcrumb-item>
+        <!-- Position right -->
+        <o-breadcrumb position="right">
+            <o-breadcrumb-item label="Home" href="/" />
+            <o-breadcrumb-item label="Docs" disabled />
+            <o-breadcrumb-item label="Breadcrumb" active />
         </o-breadcrumb>
     </section>
 </template>

@@ -1,0 +1,2 @@
+The **Breadcrumb** is a simple navigational component that indicates the location of the current page within a list to parent pages in the navigation hierarchy. It helps users find their place within a website or web application. Breadcrumbs are often placed horizontally in front of the main content of a page. The elements are split by a sperator, either by css or by a given string.
+The component implements the W3C ARIA APG [Breadcrumb  Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/).

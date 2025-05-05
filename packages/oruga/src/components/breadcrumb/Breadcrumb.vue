@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
     options: undefined,
     size: () => getDefault("breadcrumb.size", "small"),
     variant: () => getDefault("breadcrumb.variant", "primary"),
-    align: () => getDefault("breadcrumb.align", "left"),
+    position: () => getDefault("breadcrumb.position", "left"),
     separator: () => getDefault("breadcrumb.separator"),
     ariaLabel: () => getDefault("modal.ariaLabel", "breadcrumb"),
 });
@@ -49,7 +49,7 @@ const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
 const normalizedOptions = computed(() =>
-    normalizeOptions<never>(props.options, nextSequence),
+    normalizeOptions(props.options, nextSequence),
 );
 
 // #region --- Computed Component Classes ---
@@ -69,10 +69,10 @@ const rootClasses = defineClasses(
         computed(() => !!props.variant),
     ],
     [
-        "alignClass",
+        "positionClass",
         "o-breadcrumb--",
-        computed(() => props.align),
-        computed(() => !!props.align),
+        computed(() => props.position),
+        computed(() => !!props.position),
     ],
 );
 
