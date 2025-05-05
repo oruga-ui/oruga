@@ -1,6 +1,14 @@
+---
+sidebarDepth: 2
+---
+
 # Breadcrumb
 
 <section class="odocs-head">
+
+The **Carousel** component is a slideshow for cycling through a set of elements — images or text like - a carousel, referred to as slides, by sequentially displaying a subset of one or more slides.
+One slide is displayed at a time, and users can activate a next or previous slide control that hides the current slide and "rotates" the next or previous slide into view.
+The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/).
 
 </section>
 
@@ -24,19 +32,55 @@
 
 ### Props
 
-| Prop name | Description                                       | Type             | Values                                                                                                                                        | Default                                                                                                                                                               |
-| --------- | ------------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| align     | Position of the breadcrumb                        | string           | `left`, `centered`, `right`                                                                                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;align: "left"<br>}</code>                    |
-| override  | Override existing theme classes completely        | boolean          | -                                                                                                                                             |                                                                                                                                                                       |
-| separator | The breadcrumb separator between breadcrumb items | string           | ` has-arrow-separator`, `has-dot-separator`, `has-slash-separator`, `has-bullet-separator`, `has-succeeds-separator`, `has-chevron-separator` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: "has-slash-separator"<br>}</code> |
-| size      | Size of the breadcrumb                            | string           | `small`, `medium`, `large`                                                                                                                    | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;size: "small"<br>}</code>                    |
-| tag       | Tag of the breadcrumb                             | DynamicComponent | `div`, `section ...`                                                                                                                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;tag: "section"<br>}</code>                   |
+| Prop name | Description                                                      | Type                     | Values                                                                          | Default                                                                                                                                                   |
+| --------- | ---------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| align     | Position of the breadcrumb                                       | string                   | `left`, `centered`, `right`                                                     | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;align: "left"<br>}</code>        |
+| ariaLabel | Accessibility aria-label to be passed to the nav wrapper element | string                   | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaLabel: "breadcrumb"<br>}</code>   |
+| options   | breadcrumb items, unnecessary when default slot is used          | OptionsProp&lt;never&gt; | -                                                                               |                                                                                                                                                           |
+| override  | Override existing theme classes completely                       | boolean                  | -                                                                               |                                                                                                                                                           |
+| separator | The separator between breadcrumb items                           | string                   | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: undefined<br>}</code> |
+| size      | Size of the breadcrumb                                           | string                   | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;size: "small"<br>}</code>        |
+| variant   | Color variant of the breadcrumb                                  | string                   | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;variant: "primary"<br>}</code>   |
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name    | Description                 | Bindings |
+| ------- | --------------------------- | -------- |
+| default | Place breadcrumb items here |          |
+
+</section>
+
+<section class="odocs-specs">
+
+## BreadcrumbItem component
+
+> The classic breadrcumb item, in different colors, sizes, and states
+
+```html
+<o-breadcrumb-item></o-breadcrumb-item>
+```
+
+### Props
+
+| Prop name | Description                                       | Type             | Values                                                      | Default                                                                                                                                                  |
+| --------- | ------------------------------------------------- | ---------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active    | Whether item is active or not                     | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| disabled  | Item is disabled                                  | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| hidden    | Define whether the item is visible or not         | boolean          | -                                                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
+| iconLeft  | Icon name to show on the left                     | string           | -                                                           |                                                                                                                                                          |
+| iconPack  | Icon pack to use                                  | string           | `mdi`, `fa`, `fas and any other custom icon pack`           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconRight | Icon name to show on the right                    | string           | -                                                           |                                                                                                                                                          |
+| iconSize  | Icon size                                         | string           | `small`, `medium`, `large`                                  | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code> |
+| label     | Item label, unnecessary when default slot is used | string           | -                                                           |                                                                                                                                                          |
+| override  | Override existing theme classes completely        | boolean          | -                                                           |                                                                                                                                                          |
+| tag       | Item tag name                                     | DynamicComponent | `li`, `a`, `router-link`, `nuxt-link (or other nuxt alias)` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;tag: "span"<br>}</code>         |
+
+### Slots
+
+| Name      | Description    | Bindings                                  |
+| --------- | -------------- | ----------------------------------------- |
+| seperator | Item seperator | **seperator** `string` - seperator string |
+| default   | Override label |                                           |
 
 </section>
 

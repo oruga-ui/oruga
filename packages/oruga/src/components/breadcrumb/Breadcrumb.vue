@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
-import { defineClasses } from "@/composables";
+import {
+    defineClasses,
+    normalizeOptions,
+    useProviderParent,
+    useSequentialId,
+} from "@/composables";
 
 import type { BreadcrumbProps } from "./props";
+import type { BreadcrumbComponent } from "./types";
 
 /**
  * The classic breadcrumb, in different colors, sizes, and states
  * @displayName Breadcrumb
+ * @requires ./BreadcrumbItem.vue
  * @style _breadcrumb.scss
  */
 defineOptions({
@@ -19,11 +26,31 @@ defineOptions({
 
 const props = withDefaults(defineProps<BreadcrumbProps>(), {
     override: undefined,
+    options: undefined,
     size: () => getDefault("breadcrumb.size", "small"),
+    variant: () => getDefault("breadcrumb.variant", "primary"),
     align: () => getDefault("breadcrumb.align", "left"),
-    separator: () => getDefault("breadcrumb.separator", "has-slash-separator"),
-    tag: () => getDefault("breadcrumb.tag", "section"),
+    separator: () => getDefault("breadcrumb.separator"),
+    ariaLabel: () => getDefault("modal.ariaLabel", "breadcrumb"),
 });
+
+const rootRef = useTemplateRef("rootElement");
+
+// provided data is a computed ref to ensure reactivity
+const provideData = computed<BreadcrumbComponent>(() => ({
+    separator: props.separator,
+}));
+
+/** provide functionalities and data to child item components */
+useProviderParent({ rootRef, data: provideData });
+
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
+/** normalized programamtic options */
+const normalizedOptions = computed(() =>
+    normalizeOptions<never>(props.options, nextSequence),
+);
 
 // #region --- Computed Component Classes ---
 
@@ -31,30 +58,48 @@ const rootClasses = defineClasses(
     ["rootClass", "o-breadcrumb"],
     [
         "sizeClass",
-        "o-breadcrumb__",
+        "o-breadcrumb--",
         computed(() => props.size),
         computed(() => !!props.size),
     ],
     [
-        "separatorClass",
-        "o-breadcrumb__",
-        computed(() => props.separator),
-        computed(() => !!props.separator),
+        "variantClass",
+        "o-breadcrumb--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
     ],
     [
         "alignClass",
-        "o-breadcrumb__",
+        "o-breadcrumb--",
         computed(() => props.align),
         computed(() => !!props.align),
     ],
 );
 
+const listClasses = defineClasses(["listClass", "o-breadcrumb__list"]);
+
 // #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <component :is="tag" :class="rootClasses" data-oruga="breadcrumb">
-        <!-- BreadcrumbItems -->
-        <slot></slot>
-    </component>
+    <nav
+        ref="rootElement"
+        data-oruga="breadcrumb"
+        :class="rootClasses"
+        :aria-label="ariaLabel">
+        <ol :class="listClasses">
+            <!--
+                @slot Place breadcrumb items here 
+            -->
+            <slot>
+                <OBreadcrumbItem
+                    v-for="option in normalizedOptions"
+                    :key="option.key"
+                    v-bind="option.attrs"
+                    :value="option.value"
+                    :label="option.label"
+                    :hidden="option.hidden" />
+            </slot>
+        </ol>
+    </nav>
 </template>

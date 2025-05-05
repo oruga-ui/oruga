@@ -4,9 +4,10 @@ import { computed } from "vue";
 import OIcon from "../icon/Icon.vue";
 
 import { getDefault } from "@/utils/config";
-import { defineClasses } from "@/composables";
+import { defineClasses, useProviderChild } from "@/composables";
 
 import type { BreadcrumbItemProps } from "./props";
+import type { BreadcrumbComponent } from "./types";
 
 /**
  * The classic breadrcumb item, in different colors, sizes, and states
@@ -16,76 +17,111 @@ defineOptions({
     isOruga: true,
     name: "OBreadcrumbItem",
     configField: "breadcrumb",
-    inheritAttrs: true,
+    inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
     override: undefined,
-    active: () => getDefault("breadcrumb.active", false),
-    activeVariant: () => getDefault("breadcrumb.activeVariant", "primary"),
-    tag: () => getDefault("breadcrumb.tag", "a"),
-    disabled: () => getDefault("breadcrumb.disabled", false),
-    iconPack: () => getDefault("breadcrumb.iconPack"),
+    label: undefined,
+    active: false,
+    disabled: false,
+    hidden: false,
     iconLeft: undefined,
     iconRight: undefined,
-    iconBoth: false,
+    iconPack: () => getDefault("breadcrumb.iconPack"),
+    iconSize: () => getDefault("breadcrumb.iconSize"),
+    tag: () => getDefault("breadcrumb.tag", "span"),
 });
 
-const computedDisabled = computed(() =>
-    props.disabled ? "o-breadcrumb-item__disabled" : null,
-);
-
-const computedActive = computed(() => {
-    if (props.active && props.tag !== "router-link")
-        return `o-breadcrumb-item__${props.activeVariant} active`;
-    if (props.tag == "router-link")
-        return `o-breadcrumb-item__${props.activeVariant}`;
-    return null;
-});
+/** inject functionalities and data from the parent component */
+const { parent, item } = useProviderChild<BreadcrumbComponent>();
 
 // #region --- Computed Component Classes ---
 
-const iconClasses = defineClasses(["iconClass", "o-breadcrumb-item__icon"]);
+const rootClasses = defineClasses(
+    ["itemClass", "o-breadcrumb__item"],
+    [
+        "disabledClass",
+        "o-breadcrumb__item--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "activeClass",
+        "o-breadcrumb__item--active",
+        null,
+        computed(() => props.active),
+    ],
+);
+
+const separatorClasses = defineClasses([
+    "seperatorClass",
+    "o-breadcrumb__item__seperator",
+]);
+
+const linkClasses = defineClasses(["linkClass", "o-breadcrumb__item__link"]);
+
+const iconClasses = defineClasses(["iconClass", "o-breadcrumb__item__icon"]);
 
 const iconLeftClasses = defineClasses([
     "iconLeftClass",
-    "o-breadcrumb-item__icon-left",
+    "o-breadcrumb__item__icon-left",
 ]);
 
 const iconRightClasses = defineClasses([
     "iconRightClass",
-    "o-breadcrumb-item__icon-right",
+    "o-breadcrumb__item__icon-right",
 ]);
-
-const wrapperClasses = defineClasses([
-    "wrapperClass",
-    "o-breadcrumb-item__wrapper",
-]);
-
-const rootClasses = defineClasses(["rootClass", "o-breadcrumb-item"]);
 
 // #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <component
-        :is="tag"
-        :class="[rootClasses, computedActive, computedDisabled]"
-        data-oruga="breadcrumb-item">
-        <span :class="wrapperClasses">
+    <li
+        v-show="!hidden"
+        data-oruga="breadcrumb-item"
+        :data-id="`breadcrumb-${item.identifier}`"
+        :class="rootClasses">
+        <!-- 
+            @slot Item seperator
+            @binding {string} seperator - seperator string
+        -->
+        <slot
+            v-if="item.index > 0"
+            name="seperator"
+            :seperator="parent.separator">
+            <span v-if="!!parent.separator" :class="separatorClasses">
+                {{ parent.separator }}
+            </span>
+        </slot>
+
+        <component
+            :is="tag"
+            v-bind="$attrs"
+            :class="linkClasses"
+            :disabled="disabled"
+            :active="active"
+            :aria-current="active ? 'page' : undefined">
             <o-icon
                 v-if="iconLeft"
-                :pack="iconPack"
                 :icon="iconLeft"
-                :both="iconBoth"
+                :pack="iconPack"
+                :size="iconSize"
                 :class="[...iconClasses, ...iconLeftClasses]" />
-            <slot></slot>
+
+            <!-- 
+                @slot Override label
+            -->
+            <slot>
+                <span>{{ label }}</span>
+            </slot>
+
             <o-icon
                 v-if="iconRight"
-                :pack="iconPack"
                 :icon="iconRight"
-                :both="iconBoth"
+                :pack="iconPack"
+                :size="iconSize"
                 :class="[...iconClasses, ...iconRightClasses]" />
-        </span>
-    </component>
+        </component>
+    </li>
 </template>
