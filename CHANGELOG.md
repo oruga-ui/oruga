@@ -1,3 +1,16 @@
+## [0.10.5](https://github.com/oruga-ui/oruga/compare/v0.10.4...v0.10.5) (2025-05-05)
+
+
+### Bug Fixes
+
+* **autocomplete:** keep first does not auto focus filtered options ([#1284](https://github.com/oruga-ui/oruga/issues/1284)) ([ab30f50](https://github.com/oruga-ui/oruga/commit/ab30f50f7222f1eb807c0b7bb33b84cb5fe9c4f5))
+* **notification:** solve programmatic does not pass `variant` prop to notification ([#1279](https://github.com/oruga-ui/oruga/issues/1279)) ([659e3e2](https://github.com/oruga-ui/oruga/commit/659e3e2e5ee1b3405ebef3631ee1d3ad94327fe3))
+* **slider:** solve non-range slider is not clickable ([#1274](https://github.com/oruga-ui/oruga/issues/1274)) ([6bf6de0](https://github.com/oruga-ui/oruga/commit/6bf6de0f97338dc761be60b2147ff1bc2fe6e4c0))
+* **table:** solve column labels are lost on mobile cards ([#1283](https://github.com/oruga-ui/oruga/issues/1283)) ([00aa60e](https://github.com/oruga-ui/oruga/commit/00aa60e45a8e097a52bc132549600d40d0fe2ad8))
+* **trapFocus:** add preventScroll for trapFocus first focus ([#1287](https://github.com/oruga-ui/oruga/issues/1287)) ([e5740a5](https://github.com/oruga-ui/oruga/commit/e5740a5caa6bc31d7b142be66425ee7319b4a1f5))
+
+
+
 ## [0.10.4](https://github.com/oruga-ui/oruga/compare/v0.10.3...v0.10.4) (2025-03-26)
 
 
