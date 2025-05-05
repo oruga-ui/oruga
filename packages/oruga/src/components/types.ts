@@ -104,15 +104,15 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 disabledClass: ClassDefinition;
                 /** Class of the item element when active */
                 activeClass: ClassDefinition;
-                /** Class of the seperator element */
+                /** Class of the item seperator element */
                 seperatorClass: ClassDefinition;
-                /** Class of the link element */
+                /** Class of the item link element */
                 linkClass: ClassDefinition;
-                /** Class of the icon element */
+                /** Class of the item icon element */
                 iconClass: ClassDefinition;
-                /** Class of the left icon element */
+                /** Class of the item left icon element */
                 iconLeftClass: ClassDefinition;
-                /** Class of the right icon element */
+                /** Class of the item right icon element */
                 iconRightClass: ClassDefinition;
             }>;
         button?: ComponentConfigBase &
