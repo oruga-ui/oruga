@@ -21,7 +21,7 @@ export type FieldProps = {
     /** A unique HTML id for the field label to associate an input with */
     labelId?: string;
     /** Help message text */
-    message?: string;
+    message?: string | string[];
     /** Message element tag name */
     messageTag?: DynamicComponent;
     /** A unique HTML id for the field message to associate an input with */
