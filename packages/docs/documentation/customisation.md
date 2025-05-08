@@ -141,7 +141,7 @@ createApp(...)
 ```
 
 ::: info
-While using themes such as [Bootstrap](/documentation/themes#bootstrap) or [Bulma](/documentation/themes#bulma), this feature is used to remove all default classes and to create specific theme configurations.
+While using themes such as [Bootstrap](/documentation/themes#bootstrap-theme) or [Bulma](/documentation/themes#bulma-theme), this feature is used to remove all default classes and to create specific theme configurations.
 :::
 
 This property can also be passed directly to the component:
