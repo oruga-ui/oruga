@@ -287,6 +287,9 @@ const messageClasses = defineClasses(
                     :message="index === 0 ? fieldMessage : undefined">
                     <!-- render inner default slot element -->
                     <component :is="element" />
+                    <template v-if="index === 0 && $slots.message" #message>
+                        <slot name="message" :message="fieldMessage" />
+                    </template>
                 </OField>
             </template>
         </div>

@@ -48,8 +48,8 @@ The **Field** component is used to add functionality to controls and to attach/g
 | Name    | Description          | Bindings                                       |
 | ------- | -------------------- | ---------------------------------------------- |
 | label   | Override the label   | **label** `string` - label property            |
-| default | Default content      |                                                |
 | message | Override the message | **message** `string, string[]` - field message |
+| default | Default content      |                                                |
 
 </section>
 
