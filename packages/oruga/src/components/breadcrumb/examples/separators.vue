@@ -1,6 +1,6 @@
 <template>
     <section>
-        <!-- Separatoer Slash -->
+        <!-- Separatoer slash -->
         <o-breadcrumb separator="/">
             <o-breadcrumb-item label="Home" />
             <o-breadcrumb-item label="Docs" disabled />
