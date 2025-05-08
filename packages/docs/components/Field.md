@@ -45,11 +45,11 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 ### Slots
 
-| Name    | Description          | Bindings                             |
-| ------- | -------------------- | ------------------------------------ |
-| label   | Override the label   | **label** `string` - label property  |
-| default | Default content      |                                      |
-| message | Override the message | **message** `string` - field message |
+| Name    | Description          | Bindings                                       |
+| ------- | -------------------- | ---------------------------------------------- |
+| label   | Override the label   | **label** `string` - label property            |
+| default | Default content      |                                                |
+| message | Override the message | **message** `string, string[]` - field message |
 
 </section>
 

@@ -314,7 +314,7 @@ const messageClasses = defineClasses(
             :class="messageClasses">
             <!--
                 @slot Override the message
-                @binding {string} message - field message 
+                @binding {string|string[]} message - field message 
             -->
             <slot name="message" :message="fieldMessage">
                 <template v-if="Array.isArray(fieldMessage)">
