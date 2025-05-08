@@ -14,7 +14,7 @@ export type FieldData = {
     props: FieldProps;
     hasInnerField: boolean;
     variant?: string;
-    message?: string;
+    message?: string | string[];
     labelId: string;
     inputAttrs: object;
     addInnerField: () => void;
@@ -22,7 +22,7 @@ export type FieldData = {
     setFocus: (value: boolean) => void;
     setFilled: (value: boolean) => void;
     setVariant: (value?: string) => void;
-    setMessage: (value?: string) => void;
+    setMessage: (value?: string | string[]) => void;
 };
 
 /** provide/inject type */
@@ -44,7 +44,7 @@ export function injectField(): {
     parentField: ComputedRef<FieldData | undefined>;
     statusVariantIcon: ComputedRef<string>;
     statusVariant: ComputedRef<string | undefined>;
-    statusMessage: ComputedRef<string | undefined>;
+    statusMessage: ComputedRef<string | string[] | undefined>;
 } {
     const parentField = inject(
         $FieldKey,
@@ -52,8 +52,14 @@ export function injectField(): {
     );
 
     /** Get the message prop from parent if it's a Field. */
-    const statusMessage = computed<string | undefined>(() => {
-        if (!parentField?.value?.message) return undefined;
+    const statusMessage = computed<string | string[] | undefined>(() => {
+        if (
+            (Array.isArray(parentField?.value?.message) &&
+                !parentField?.value?.message.length) ||
+            (!Array.isArray(parentField?.value?.message) &&
+                !parentField?.value?.message)
+        )
+            return undefined;
         return parentField?.value.message;
     });
 

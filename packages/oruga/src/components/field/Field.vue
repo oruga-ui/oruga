@@ -93,7 +93,12 @@ const slots = useSlots();
 
 const hasLabel = computed(() => props.label || !!slots.label);
 
-const hasMessage = computed(() => !!fieldMessage.value || !!slots.message);
+const hasMessage = computed(
+    () =>
+        (Array.isArray(fieldMessage.value) && fieldMessage.value.length) ||
+        (!Array.isArray(fieldMessage.value) && !!fieldMessage.value) ||
+        !!slots.message,
+);
 
 const hasBody = computed(
     () =>
@@ -130,7 +135,7 @@ function setFilled(value: boolean): void {
 function setVariant(value?: string): void {
     fieldVariant.value = value;
 }
-function setMessage(value?: string): void {
+function setMessage(value?: string | string[]): void {
     fieldMessage.value = value;
 }
 function setInputId(value: string): void {
@@ -278,14 +283,12 @@ const messageClasses = defineClasses(
                     :label-id="labelId"
                     :message-id="messageId"
                     :message-tag="messageTag"
-                    :message-class="messageClass">
+                    :message-class="messageClass"
+                    :message="index === 0 ? fieldMessage : undefined">
                     <!-- render inner default slot element -->
                     <component :is="element" />
-                    <!-- show field message here -->
-                    <template v-if="index === 0" #message>
-                        <slot name="message" :message="fieldMessage">
-                            {{ fieldMessage }}
-                        </slot>
+                    <template v-if="index === 0 && $slots.message" #message>
+                        <slot name="message" :message="fieldMessage" />
                     </template>
                 </OField>
             </template>
@@ -314,10 +317,18 @@ const messageClasses = defineClasses(
             :class="messageClasses">
             <!--
                 @slot Override the message
-                @binding {string} message - field message 
+                @binding {string|string[]} message - field message 
             -->
             <slot name="message" :message="fieldMessage">
-                {{ fieldMessage }}
+                <template v-if="Array.isArray(fieldMessage)">
+                    <div v-for="message in fieldMessage" :key="message">
+                        {{ message }}
+                    </div>
+                </template>
+
+                <template v-else>
+                    {{ fieldMessage }}
+                </template>
             </slot>
         </component>
     </div>
