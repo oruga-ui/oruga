@@ -187,7 +187,7 @@ createApp(...)
     });
 ```
 
-You can see this code in action in [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind) (code [here](https://github.com/oruga-ui/demo-multiframework/blob/master/src/assets/oruga-tailwindcss.css#L64))
+You can see this code in action in [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind) (code [here](https://github.com/oruga-ui/demo-multiframework/blob/master/src/assets/oruga-tailwindcss.css#L78))
 
 Sometimes components change the way elements are positioned (horizontally, vertically...), this is another case of higher specificity. In the [Steps](/components/Steps.html) component the `vertical` attribute disposes the steps vertically changing the `height` of the steps `divider`.
 
