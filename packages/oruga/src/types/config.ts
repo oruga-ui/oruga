@@ -11,6 +11,7 @@ export type {
     OptionsGroupItem,
     OptionsGroupPropItem,
     OptionsProp,
+    SimpleOptionsProp,
     OptionsGroupProp,
     OptionsPropWithGroups,
 } from "@/composables";

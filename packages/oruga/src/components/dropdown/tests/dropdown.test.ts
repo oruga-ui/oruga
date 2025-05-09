@@ -22,7 +22,7 @@ describe("ODropdown tests", () => {
         const wrapper = mount(ODropdown, {
             props: { options, label: "Some Trigger Label" },
         });
-        await nextTick(); // await dropdown item rendered
+        await nextTick(); // await dropdown items rendered
 
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
@@ -62,7 +62,7 @@ describe("ODropdown tests", () => {
         const wrapper = mount(component, {
             props: { options: simpleOptions, selectable: true },
         });
-        await nextTick(); // await dropdown item rendered
+        await nextTick(); // await dropdown items rendered
 
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();

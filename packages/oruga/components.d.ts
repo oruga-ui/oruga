@@ -2,6 +2,8 @@
 declare module "vue" {
     export interface GlobalComponents {
         OAutocomplete: (typeof import("../oruga/src/components"))["OAutocomplete"];
+        OBreadcrumb: (typeof import("../oruga/src/components"))["OBreadcrumb"];
+        OBreadcrumbItem: (typeof import("../oruga/src/components"))["OBreadcrumbItem"];
         OButton: (typeof import("../oruga/src/components"))["OButton"];
         OCarousel: (typeof import("../oruga/src/components"))["OCarousel"];
         OCarouselItem: (typeof import("../oruga/src/components"))["OCarouselItem"];

@@ -70,6 +70,51 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class configuration for the internal input component */
                 inputClasses: Record<string, any>;
             }>;
+        breadcrumb?: ComponentConfigBase &
+            Partial<{
+                /** Size of the breadcrumb */
+                size: string;
+                /** Color variant of the breadcrumb */
+                variant: string;
+                /** Position of the breadcrumb */
+                position: "centered" | "left" | "right";
+                /** The separator between breadcrumb items */
+                separator: string;
+                /** Accessibility aria-label to be passed to the nav wrapper element */
+                ariaLabel: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element with alignment */
+                positionClass: ClassDefinition;
+                /** Class of the list element */
+                listClass: ClassDefinition;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Icon size */
+                iconSize: string;
+                /** Item tag name */
+                tag: DynamicComponent;
+                /** Class of the item element */
+                itemClass: ClassDefinition;
+                /** Class of the item element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the item element when active */
+                activeClass: ClassDefinition;
+                /** Class of the item seperator element */
+                seperatorClass: ClassDefinition;
+                /** Class of the item link element */
+                linkClass: ClassDefinition;
+                /** Class of the item icon element */
+                iconClass: ClassDefinition;
+                /** Class of the item left icon element */
+                iconLeftClass: ClassDefinition;
+                /** Class of the item right icon element */
+                iconRightClass: ClassDefinition;
+            }>;
         button?: ComponentConfigBase &
             Partial<{
                 /** Button tag name */

@@ -30,6 +30,10 @@ export type OptionsPropItem<V = unknown> = {
     [index: string]: any;
 };
 
+export type SimpleOptionsProp =
+    | (string | number)[]
+    | Omit<OptionsPropItem<never>, "value">[];
+
 /**
  * The types of options that can be passed to the options prop.
  *
@@ -97,12 +101,17 @@ export type OptionsPropWithGroups<V = unknown> =
     | OptionsGroupProp<V>;
 
 /** Normalized external options prop for internal usage */
-type NormalizedOptions<V, O extends OptionsPropWithGroups<V> | undefined> =
+type NormalizedOptions<
+    V,
+    O extends OptionsPropWithGroups<V> | SimpleOptionsProp | undefined,
+> =
     O extends OptionsGroupProp<V>
         ? OptionsGroupItem<V>[]
         : O extends OptionsProp<V>
           ? OptionsItem<V>[]
-          : never[];
+          : O extends SimpleOptionsProp
+            ? OptionsItem<never>[]
+            : never[];
 
 /**
  * A function to normalize an array of objects, array of strings, or object of
@@ -114,7 +123,9 @@ type NormalizedOptions<V, O extends OptionsPropWithGroups<V> | undefined> =
  */
 export function normalizeOptions<
     V,
-    O extends OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
+    O extends
+        | SimpleOptionsProp
+        | OptionsPropWithGroups<V> = OptionsPropWithGroups<V>,
 >(options: O | undefined, uuid: () => string): NormalizedOptions<V, O> {
     if (!options) return [] as NormalizedOptions<V, O>;
 

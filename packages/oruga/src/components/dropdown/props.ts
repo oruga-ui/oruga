@@ -14,7 +14,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     options?: OptionsPropWithGroups<T>;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Trigger label, unnecessary when trgger slot is used */
+    /** Trigger label, unnecessary when trigger slot is used */
     label?: string;
     /** Dropdown is disabled */
     disabled?: boolean;
