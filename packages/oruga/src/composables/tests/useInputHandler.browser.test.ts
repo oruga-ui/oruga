@@ -139,6 +139,40 @@ describe("useInputHandler", () => {
             .toBeFalsy();
     });
 
+    test("scrolls to invalid inputs without fields", async () => {
+        const Spacer = (): VNode => h("div", { style: "height: 40em" });
+        const ScrollingForm = (): VNode =>
+            h(
+                "form",
+                {
+                    "data-testid": "form",
+                    style: "max-height: 4em; overflow-y: scroll;",
+                    onSubmit: () => false,
+                },
+                [
+                    h(OInput, { required: true }),
+                    h(Spacer),
+                    h(OButton, { type: "submit" }, () => "Submit"),
+                ],
+            );
+
+        const screen = render(ScrollingForm);
+        const input = screen.getByRole("textbox");
+        const submit = screen.getByRole("button");
+
+        submit.element().scrollIntoView();
+        const form = screen.getByTestId("form").element();
+        await expect
+            .poll(() => visibleWithin(form, input.element()))
+            .toBeFalsy();
+        await submit.click();
+
+        await expect.element(input).toHaveFocus();
+        await expect
+            .poll(() => visibleWithin(form, input.element()))
+            .toBeTruthy();
+    });
+
     test("hides validation message on input change", async () => {
         const screen = render(NativeForm);
         const input = screen.getByRole("textbox");
