@@ -19,6 +19,8 @@ export type NotificationProps = {
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
+    /** Enable rounded style */
+    rounded?: boolean;
     /**
      * Which position the notification will appear when programmatically
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
@@ -65,6 +67,8 @@ export type NotificationClasses = Partial<{
     positionClass: ComponentClass;
     /** Class of the root element with variant */
     variantClass: ComponentClass;
+    /** Class of the root element when rounded */
+    roundedClass: ComponentClass;
     /** Class of the close button element */
     closeClass: ComponentClass;
     /** Class of the content element */
