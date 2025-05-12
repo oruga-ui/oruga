@@ -31,6 +31,8 @@ import {
 // Components to be ignored for creating docs
 const IGNORE_COMPONENTS = [
     "*/DropdownItem.vue",
+    "*/BreadcrumbItem.vue",
+    "*/CarouselItem.vue",
     "*/SliderThumb.vue",
     "*/SliderTick.vue",
     "*/TableMobileSort.vue",
@@ -44,7 +46,6 @@ const IGNORE_COMPONENTS = [
     "*/DatepickerTableRow.vue",
     "*/DatepickerMonth.vue",
     "*/NotificationNotice.vue",
-    "*/CarouselItem.vue",
     "utils/**",
     "*/examples/**",
 ];

@@ -13,8 +13,8 @@ export type IconProps = {
      */
     pack?: string;
     /**
-     * 	Color of the icon
-     *  @values primary, info, success, warning, danger, and any other custom color
+     * Color of the icon
+     * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
     /**
