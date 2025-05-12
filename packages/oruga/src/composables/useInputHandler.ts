@@ -351,13 +351,18 @@ export function useInputHandler<T extends ValidatableFormElement>(
                     if (validationAttributeObserver.takeRecords().length > 0)
                         onAttributeChange();
                     validationAttributeObserver.disconnect();
+                    validationAttributeObserver = null;
                 }
 
                 // Update the watcher.
                 // Note that this branch is also used for the initial setup of the watcher.
                 // We're assuming that `maybeElement` will start out null when the watcher is created, which will
                 // cause the watcher to be triggered (with `oldEl == undefined`) once the component is mounted.
-                if (needWatcher && isDefined(el) && el !== oldEl) {
+                if (
+                    needWatcher &&
+                    isDefined(el) &&
+                    (validationAttributeObserver == null || el !== oldEl)
+                ) {
                     if (validationAttributeObserver == null) {
                         validationAttributeObserver = new MutationObserver(
                             onAttributeChange,

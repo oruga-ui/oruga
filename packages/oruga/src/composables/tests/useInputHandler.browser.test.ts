@@ -31,6 +31,10 @@ const NativeForm = defineComponent({
             type: Boolean,
             default: false,
         },
+        required: {
+            type: Boolean,
+            default: true,
+        },
     },
     setup: (props) => {
         const value = ref("");
@@ -44,7 +48,7 @@ const NativeForm = defineComponent({
                         customValidity: props.customValidity,
                         disabled: props.disabled,
                         modelValue: value.value,
-                        required: true,
+                        required: props.required,
                         onInput,
                     }),
                 ]),
@@ -144,6 +148,89 @@ describe("useInputHandler", () => {
         await expect.element(message).toBeInTheDocument();
         await input.click();
         await userEvent.keyboard("test");
+        await expect.element(message).not.toBeInTheDocument();
+    });
+
+    test("hides validation message when input is disabled", async () => {
+        const screen = render(NativeForm);
+        const input = screen.getByRole("textbox");
+        await input.click();
+        await userEvent.keyboard("{Tab}");
+        const message = findMessage(screen);
+        await expect.element(message).toBeInTheDocument();
+        screen.rerender({ disabled: true });
+        await expect.element(message).not.toBeInTheDocument();
+    });
+
+    test("hides validation message when parent fieldset is disabled", async () => {
+        const FieldsetForm = defineComponent({
+            name: "FieldsetForm",
+            props: {
+                disabled: {
+                    type: Boolean,
+                    default: false,
+                },
+            },
+            setup: (props) => {
+                return (): VNode =>
+                    h("form", { onSubmit: () => false }, [
+                        h(
+                            "fieldset",
+                            { disabled: props.disabled },
+                            h(OField, { "data-testid": "field" }, () =>
+                                h(OInput, { required: true }),
+                            ),
+                        ),
+                        h(OButton, { "native-type": "submit" }, () => "Submit"),
+                    ]);
+            },
+        });
+
+        const screen = render(FieldsetForm);
+        const input = screen.getByRole("textbox");
+        await input.click();
+        await userEvent.keyboard("{Tab}");
+        const message = findMessage(screen);
+        await expect.element(message).toBeInTheDocument();
+        screen.rerender({ disabled: true });
+        await expect.element(message).not.toBeInTheDocument();
+    });
+
+    test("hides validation message when validation attribute is removed", async () => {
+        const screen = render(NativeForm);
+        const input = screen.getByRole("textbox");
+        await input.click();
+        await userEvent.keyboard("{Tab}");
+        const message = findMessage(screen);
+        await expect.element(message).toBeInTheDocument();
+        screen.rerender({ required: false });
+        await expect.element(message).not.toBeInTheDocument();
+    });
+
+    test("hides validation message when validation attribute is changed", async () => {
+        const NumberForm = defineComponent({
+            name: "NumberForm",
+            props: {
+                max: {
+                    type: Number,
+                    default: 1,
+                },
+            },
+            setup: (props) => {
+                return (): VNode =>
+                    h(OField, { "data-testid": "field" }, () =>
+                        h(OInput, { type: "number", max: props.max, value: 2 }),
+                    );
+            },
+        });
+
+        const screen = render(NumberForm);
+        const input = screen.getByRole("spinbutton");
+        await input.click();
+        await userEvent.keyboard("{Tab}");
+        const message = findMessage(screen);
+        await expect.element(message).toBeInTheDocument();
+        screen.rerender({ max: 2 });
         await expect.element(message).not.toBeInTheDocument();
     });
 
