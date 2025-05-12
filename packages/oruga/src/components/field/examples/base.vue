@@ -31,10 +31,10 @@
         </o-field>
 
         <o-field
-            label="Wrong subject"
+            label="Multiple Messages"
             variant="danger"
-            message="Selected subject is wrong">
-            <o-select placeholder="Select a subject">
+            :message="['Selected option is wrong', 'Option is required']">
+            <o-select placeholder="Select an option">
                 <option value="1">Option 1</option>
                 <option value="2">Option 2</option>
             </o-select>
