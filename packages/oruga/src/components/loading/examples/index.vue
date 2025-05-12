@@ -28,7 +28,16 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
         This component provides a programmatic interface that can be accessed by
         the
         <a href="/documentation/composables.html"><code>useOruga()</code> </a>
-        composable.
+        composable. The composable can be used from outside the Vue instance.
+        For example, it can be used in Pinia or Vue Router with this syntax:
     </p>
+
+    <div class="language-js">
+        <pre>
+    import { useOruga } from "@oruga-ui/oruga-next";
+    const oruga = useOruga(); 
+    oruga.loading.open({...});</pre
+        >
+    </div>
     <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 </template>
