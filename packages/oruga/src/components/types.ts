@@ -808,6 +808,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Color of the control */
                 variant: string;
+                /** Enable rounded style */
+                rounded: boolean;
                 /** Which position the notification will appear when programmatically */
                 position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
                 /** Custom animation (transition name) */
@@ -828,6 +830,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 positionClass: ClassDefinition;
                 /** Class of the root element with variant */
                 variantClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
                 /** Class of the close button element */
                 closeClass: ClassDefinition;
                 /** Class of the content element */
