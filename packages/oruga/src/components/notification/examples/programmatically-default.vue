@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { h } from "vue";
 import { useOruga } from "@oruga-ui/oruga-next";
-import NotificationForm from "./_notification-form.vue";
 
 const oruga = useOruga();
 
@@ -17,23 +16,6 @@ function success(): void {
     });
 }
 
-function toast(): void {
-    oruga.notification.open({
-        message: "Something happened correctly!",
-        rootClass: "toast toast-notification",
-        position: "top",
-    });
-}
-
-function queueToast(): void {
-    oruga.notification.open({
-        message: "Current time: " + Date.now(),
-        rootClass: "toast toast-notification",
-        position: "top",
-        queue: true,
-    });
-}
-
 function danger(): void {
     oruga.notification.open({
         duration: 5000,
@@ -42,32 +24,13 @@ function danger(): void {
             "Something's not good, also I'm on ",
             h("b", "bottom"),
         ]),
-        position: "bottom-right",
+        position: "bottom",
         variant: "danger",
+        type: "danger",
         closable: true,
         onClose: () => {
             oruga.notification.open("Custom notification closed!");
         },
-    });
-}
-
-async function component(): Promise<void> {
-    const instance = oruga.notification.open({
-        component: NotificationForm,
-        position: "bottom-right",
-        variant: "warning",
-        infinite: true,
-    });
-
-    // wait until the notification got closed
-    const result = await instance.promise;
-
-    oruga.notification.open({
-        duration: 5000,
-        message: "Modal dialog returned " + JSON.stringify(result),
-        variant: "info",
-        position: "top",
-        closable: true,
     });
 }
 
@@ -89,32 +52,17 @@ function pause(): void {
                 size="medium"
                 @click="simple" />
             <o-button
-                label="Launch notification (custom)"
+                label="Launch notification (success)"
                 variant="success"
                 size="medium"
                 @click="success" />
         </p>
-
-        <p>
-            <o-button label="Launch toast" size="medium" @click="toast" />
-            <o-button
-                label="Launch toast (queued)"
-                variant="success"
-                size="medium"
-                @click="queueToast" />
-        </p>
-
         <p>
             <o-button
-                label="Launch notification (custom)"
+                label="Launch notification (danger)"
                 variant="danger"
                 size="medium"
                 @click="danger" />
-            <o-button
-                label="Launch notification (component)"
-                variant="warning"
-                size="medium"
-                @click="component" />
             <o-button
                 label="Launch notification (pause on hover)"
                 variant="warning"
