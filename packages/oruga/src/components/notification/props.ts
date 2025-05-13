@@ -103,9 +103,11 @@ export type NotificationNoticeProps<C extends Component> = {
     variant?: string;
     /** Hide notification after duration (in miliseconds) */
     duration?: number;
+    /** Pause and show on hover until hover off, if infinite is false. */
+    pauseOnHover?: boolean;
     /** Show the Notification infinitely until it is dismissed. */
     infinite?: boolean;
-    /** If notice should queue with others notices (snackbar/toast/notification). */
+    /** If notice should queue with others notices. */
     queue?: boolean;
     /**
      * Component to be injected.
