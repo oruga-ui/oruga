@@ -332,7 +332,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 @slot Override selected items
                 @binding {(string, object)[]} items - selected items
                 @binding {object[]} options - selected options
-                @binding {removeItem(index, event)} removeItem - remove item function
+                @binding {(index, event): void} removeItem - remove item function
             -->
             <slot
                 name="selected"

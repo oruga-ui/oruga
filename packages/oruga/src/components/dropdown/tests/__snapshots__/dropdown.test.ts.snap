@@ -7,7 +7,7 @@ exports[`ODropdown tests > render correctly with items 1`] = `
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
                 @binding {T | T[]} value - the selected value
-                @binding {() => void} toggle - toggle dropdown active state
+                @binding {(): void} toggle - toggle dropdown active state
             --><button class="">Component Trigger Label</button>
   </div>
   <!--teleport start-->
@@ -18,7 +18,7 @@ exports[`ODropdown tests > render correctly with items 1`] = `
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {number} focusedIndex - index of the focused element
-                        @binding {() => void} toggle - toggle dropdown active state
+                        @binding {(): void} toggle - toggle dropdown active state
                     -->
       <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable" role="option" aria-selected="false" aria-disabled="false">
         <!--
@@ -48,7 +48,7 @@ exports[`ODropdown tests > render correctly with options 1`] = `
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
                 @binding {T | T[]} value - the selected value
-                @binding {() => void} toggle - toggle dropdown active state
+                @binding {(): void} toggle - toggle dropdown active state
             -->Some Trigger Label
   </div>
   <!--teleport start-->
@@ -59,7 +59,7 @@ exports[`ODropdown tests > render correctly with options 1`] = `
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {number} focusedIndex - index of the focused element
-                        @binding {() => void} toggle - toggle dropdown active state
+                        @binding {(): void} toggle - toggle dropdown active state
                     -->
       <!--
                             @slot Place extra \`o-dropdown-item\` components here, even if you have some options defined by prop

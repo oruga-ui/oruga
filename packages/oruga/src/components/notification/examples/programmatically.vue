@@ -27,7 +27,7 @@ function toast(): void {
 
 function queueToast(): void {
     oruga.notification.open({
-        message: "Something happened correctly!",
+        message: "Current time: " + Date.now(),
         rootClass: "toast toast-notification",
         position: "top",
         queue: true,
@@ -70,6 +70,15 @@ async function component(): Promise<void> {
         closable: true,
     });
 }
+
+function pause(): void {
+    oruga.notification.open({
+        message: `I can be paused if you hover over me`,
+        variant: "warning",
+        type: "warning",
+        pauseOnHover: true,
+    });
+}
 </script>
 
 <template>
@@ -106,6 +115,11 @@ async function component(): Promise<void> {
                 variant="warning"
                 size="medium"
                 @click="component" />
+            <o-button
+                label="Launch notification (pause on hover)"
+                variant="warning"
+                size="medium"
+                @click="pause" />
         </p>
     </section>
 </template>

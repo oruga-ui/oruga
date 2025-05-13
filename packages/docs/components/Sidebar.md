@@ -58,9 +58,9 @@ The component can be used to show an overlay for navigation, shopping carts, and
 
 ### Slots
 
-| Name    | Description                                        | Bindings                                                     |
-| ------- | -------------------------------------------------- | ------------------------------------------------------------ |
-| default | Sidebar default content, default is component prop | **close** `(...args):void` - function to close the component |
+| Name    | Description                                        | Bindings                                                      |
+| ------- | -------------------------------------------------- | ------------------------------------------------------------- |
+| default | Sidebar default content, default is component prop | **close** `(...args): void` - function to close the component |
 
 </section>
 

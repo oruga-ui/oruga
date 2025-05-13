@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<NotificationProps>(), {
     active: true,
     type: undefined,
     variant: () => getDefault("notification.variant"),
+    rounded: () => getDefault("notification.rounded"),
     position: () => getDefault("notification.position", "top"),
     animation: () => getDefault("notification.animation", "fade"),
     icon: undefined,
@@ -86,6 +87,12 @@ const rootClasses = defineClasses(
         "o-notification--",
         computed(() => props.variant),
         computed(() => !!props.variant),
+    ],
+    [
+        "roundedClass",
+        "o-notification--rounded",
+        null,
+        computed(() => props.rounded),
     ],
     [
         "positionClass",
