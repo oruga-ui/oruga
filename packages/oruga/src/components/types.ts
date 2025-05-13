@@ -842,7 +842,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 wrapperClass: ClassDefinition;
                 /** Hide notification after duration (in miliseconds) */
                 duration: number;
-                /** If notice should queue with others notices (snackbar/toast/notification). */
+                /** If notice should queue with others notices. */
                 queue: boolean;
                 /** Class of the notice wrapper element */
                 noticeClass: ClassDefinition;
