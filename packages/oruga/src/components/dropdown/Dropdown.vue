@@ -588,7 +588,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
                 @binding {T | T[]} value - the selected value
-                @binding {() => void} toggle - toggle dropdown active state
+                @binding {(): void} toggle - toggle dropdown active state
             -->
             <slot
                 name="trigger"
@@ -642,7 +642,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {number} focusedIndex - index of the focused element
-                        @binding {() => void} toggle - toggle dropdown active state
+                        @binding {(): void} toggle - toggle dropdown active state
                     -->
                     <slot
                         :active="isActive"

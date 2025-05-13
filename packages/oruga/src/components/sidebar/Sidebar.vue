@@ -281,7 +281,7 @@ defineExpose({ close });
                     :class="contentClasses">
                     <!--
                         @slot Sidebar default content, default is component prop
-                        @binding {(...args):void} close - function to close the component
+                        @binding {(...args): void} close - function to close the component
                     -->
                     <slot :close="close">
                         <!-- injected component for programmatic usage -->
