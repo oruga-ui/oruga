@@ -25,6 +25,7 @@ export * from "./steps";
 export * from "./switch";
 export * from "./table";
 export * from "./tabs";
+export * from "./tag";
 export * from "./taginput";
 export * from "./timepicker";
 export * from "./tooltip";
