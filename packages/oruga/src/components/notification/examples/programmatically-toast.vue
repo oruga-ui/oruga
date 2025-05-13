@@ -43,7 +43,7 @@ function danger(): void {
 function queueToast(): void {
     oruga.notification.open({
         rootClass: "toast toast-notification",
-        message: "Something happened correctly!",
+        message: "Current time: " + Date.now(),
         position: "top",
         queue: true,
         rounded: true,
