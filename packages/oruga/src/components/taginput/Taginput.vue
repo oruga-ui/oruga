@@ -271,6 +271,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    [
+        "disabledClass",
+        "o-taginput--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
 );
 
 const containerClasses = defineClasses([
@@ -326,6 +332,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 @slot Override selected items
                 @binding {(string, object)[]} items - selected items
                 @binding {object[]} options - selected options
+                @binding {removeItem(index, event)} removeItem - remove item function
             -->
             <slot
                 name="selected"
