@@ -6,14 +6,14 @@ exports[`OPagination tests > render correctly 1`] = `
             @slot Previous button slot
             @binding {number} number - page number 
             @binding {boolean} isCurrent - if page is current
-            @binding {(event:Event): void} onClick - click handler
+            @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         --><button role="button" disabled="" class="o-pagination__button-previous o-pagination__button--disabled o-pagination__button" aria-label="Previous page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span></button>
   <!-- 
             @slot Next button slot
             @binding {number} number - page number 
             @binding {boolean} isCurrent - if page is current
-            @binding {(event:Event): void} onClick - click handler
+            @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         --><button role="button" tabindex="0" class="o-pagination__button-next o-pagination__button" aria-label="Next page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span></button>
   <ul class="o-pagination__list">
@@ -30,7 +30,7 @@ exports[`OPagination tests > render correctly 1`] = `
                     @slot Pagination button slot
                     @binding {number} number - page number 
                     @binding {boolean} isCurrent - if page is current
-                    @binding {(event:Event): void} onClick - click handler
+                    @binding {(event: Event): void} onClick - click handler
                     @binding {string} ariaLabel - aria-label attribute
                 --><button role="button" tabindex="0" class="o-pagination__button" aria-label="Page 5." aria-current="false">5</button>
     </li>

@@ -28,7 +28,7 @@ import SizesCode from "./sizes.vue?raw";
     <h3 id="autocomplete">Autocomplete</h3>
     <p>
         Unlike the dropdown or autocomplete components, the taginput component
-        allows you to enter an arbitrary value (a value taht is not in the list
+        allows you to enter an arbitrary value (a value that is not in the list
         of options). This is useful for creating new tags on the fly. To enable
         this feature, set the <code>allow-new</code> prop to true.
     </p>
