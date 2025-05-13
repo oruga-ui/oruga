@@ -83,13 +83,13 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 ### Slots
 
-| Name    | Description                                                                                  | Bindings                                                                                                                                                 |
-| ------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| trigger | Override the trigger element, default is label prop                                          | **active** `boolean` - dropdown active state<br/>**value** `T \| T[]` - the selected value<br/>**toggle** `() =&gt; void` - toggle dropdown active state |
-| default | Place dropdown items here                                                                    | **active** `boolean` - dropdown active state<br/><br/>**toggle** `() =&gt; void` - toggle dropdown active state                                          |
-| before  | Place extra `o-dropdown-item` components here, even if you have some options defined by prop |                                                                                                                                                          |
-| group   | Override the option group                                                                    | **group** `object` - options group<br/>**index** `number` - option index                                                                                 |
-| after   | Place extra `o-dropdown-item` components here, even if you have some options defined by prop |                                                                                                                                                          |
+| Name    | Description                                                                                  | Bindings                                                                                                                                            |
+| ------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| trigger | Override the trigger element, default is label prop                                          | **active** `boolean` - dropdown active state<br/>**value** `T \| T[]` - the selected value<br/>**toggle** `(): void` - toggle dropdown active state |
+| default | Place dropdown items here                                                                    | **active** `boolean` - dropdown active state<br/><br/>**toggle** `(): void` - toggle dropdown active state                                          |
+| before  | Place extra `o-dropdown-item` components here, even if you have some options defined by prop |                                                                                                                                                     |
+| group   | Override the option group                                                                    | **group** `object` - options group<br/>**index** `number` - option index                                                                            |
+| after   | Place extra `o-dropdown-item` components here, even if you have some options defined by prop |                                                                                                                                                     |
 
 </section>
 
