@@ -7,7 +7,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
                 @binding {T | T[]} value - the selected value
-                @binding {() => void} toggle - toggle dropdown active state
+                @binding {(): void} toggle - toggle dropdown active state
             -->
     <div data-oruga="input" class="o-input">
       <!--v-if--><input aria-autocomplete="list" aria-controls="v-0" enterkeyhint="enter" id="v-1" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
@@ -23,7 +23,7 @@ exports[`OAutocomplete tests > render correctly 1`] = `
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {number} focusedIndex - index of the focused element
-                        @binding {() => void} toggle - toggle dropdown active state
+                        @binding {(): void} toggle - toggle dropdown active state
                     -->
       <!--v-if-->
       <!--v-if-->

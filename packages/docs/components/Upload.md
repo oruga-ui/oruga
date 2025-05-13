@@ -52,9 +52,9 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Slots
 
-| Name    | Description     | Bindings                                                                           |
-| ------- | --------------- | ---------------------------------------------------------------------------------- |
-| default | Default content | **onclick** `(event:Event): void` - click handler, only needed if a button is used |
+| Name    | Description     | Bindings                                                                            |
+| ------- | --------------- | ----------------------------------------------------------------------------------- |
+| default | Default content | **onclick** `(event: Event): void` - click handler, only needed if a button is used |
 
 </section>
 

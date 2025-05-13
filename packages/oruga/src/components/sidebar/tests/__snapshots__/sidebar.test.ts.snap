@@ -8,7 +8,7 @@ exports[`OSidebar tests > render correctly 1`] = `
     <div class="o-sidebar__content o-sidebar__content--left o-sidebar__content--hidden" style="display: none;">
       <!--
                         @slot Sidebar default content, default is component prop
-                        @binding {(...args):void} close - function to close the component
+                        @binding {(...args): void} close - function to close the component
                     -->
       <!-- injected component for programmatic usage -->
       <!--v-if-->

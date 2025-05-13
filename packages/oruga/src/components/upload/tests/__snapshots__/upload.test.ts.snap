@@ -4,7 +4,7 @@ exports[`OUpload tests > render correctly 1`] = `
 "<label data-oruga="upload" class="o-upload">
   <!--
                 @slot Default content
-                @binding {(event:Event): void} onclick - click handler, only needed if a button is used
+                @binding {(event: Event): void} onclick - click handler, only needed if a button is used
             --><input type="file" data-oruga-input="file">
 </label>"
 `;
