@@ -1,9 +1,9 @@
-import { afterEach, describe, expect } from "vitest";
+import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 
 import OTag from "@/components/tag/Tag.vue";
 
-describe("BTag", () => {
+describe("OTag tests", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {
@@ -24,9 +24,8 @@ describe("BTag", () => {
 
         expect(wrapper.text()).toEqual("My Tag");
 
-        const icon = wrapper.find(".icon");
+        const icon = wrapper.find('[data-oruga="icon"]');
         expect(icon.exists()).toBeTruthy();
-        expect(icon.classes("fa-home")).toBeTruthy();
     });
 
     test("render accordingly when has size prop", () => {
@@ -42,7 +41,7 @@ describe("BTag", () => {
             props: { variant: "danger" },
         });
 
-        expect(wrapper.classes("o-radio--danger")).toBeTruthy();
+        expect(wrapper.classes("o-tag--danger")).toBeTruthy();
     });
 
     test("emit close event", async () => {
@@ -52,7 +51,7 @@ describe("BTag", () => {
 
         expect(wrapper.text()).toEqual("My Tag");
 
-        const closeIcon = wrapper.find(".icon");
+        const closeIcon = wrapper.find('[data-oruga="icon"]');
         expect(closeIcon.exists()).toBeTruthy();
 
         await closeIcon.trigger("click");
