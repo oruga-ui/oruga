@@ -11,12 +11,23 @@ import UseTypesCode from "./use-types.vue?raw";
 import AddCustomButtons from "./add-custom-buttons.vue";
 import AddCustomButtonsCode from "./add-custom-buttons.vue?raw";
 
-import Programmatically from "./programmatically.vue";
-import ProgrammaticallyCode from "./programmatically.vue?raw";
+import ProgrammaticallyDefault from "./programmatically-default.vue";
+import ProgrammaticallyDefaultCode from "./programmatically-default.vue?raw";
+
+import ProgrammaticallyToast from "./programmatically-toast.vue";
+import ProgrammaticallyToastCode from "./programmatically-toast.vue?raw";
+
+import ProgrammaticallyCustom from "./programmatically-custom.vue";
+import ProgrammaticallyCustomCode from "./programmatically-custom.vue?raw";
 </script>
 
 <template>
     <h3 id="base">Base</h3>
+
+    <p>
+        When a dialogue box seems a bit overkill for the task, notifications are
+        a good way to display a simple message to inform the user.
+    </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="variants">Variants</h3>
@@ -40,7 +51,38 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
         <a href="/documentation/composables.html">
             <code>useOruga()</code>
         </a>
-        composable.
+        composable. The composable can be used from outside the Vue instance.
+        For example, it can be used in Pinia or Vue Router with this syntax:
     </p>
-    <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
+
+    <div class="language-js">
+        <pre>
+    import { useOruga } from "@oruga-ui/oruga-next";
+    const oruga = useOruga(); 
+    oruga.notification.open('Notify!');</pre
+        >
+    </div>
+    <ExampleViewer
+        :component="ProgrammaticallyDefault"
+        :code="ProgrammaticallyDefaultCode" />
+    <br />
+
+    <p>
+        Toasts are lightweight notifications designed to resemble the push
+        notifications popularised by mobile and desktop operating systems. They
+        should consist of simple text only and be queued so as not to overwhelm
+        the user.
+    </p>
+    <ExampleViewer
+        :component="ProgrammaticallyToast"
+        :code="ProgrammaticallyToastCode" />
+    <br />
+
+    <p>
+        For a more advanced experience, you can also pass any custom component
+        via the <code>component</code> prop.
+    </p>
+    <ExampleViewer
+        :component="ProgrammaticallyCustom"
+        :code="ProgrammaticallyCustomCode" />
 </template>

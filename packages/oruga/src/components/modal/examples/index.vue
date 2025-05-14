@@ -49,11 +49,20 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
         <a href="/documentation/composables.html">
             <code>useOruga()</code>
         </a>
-        composable.
+        composable. The composable can be used from outside the Vue instance.
+        For example, it can be used in Pinia or Vue Router with this syntax:
     </p>
-    <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 
-    <h3 id="async">Programmatically (with promises and async/await)</h3>
+    <div class="language-js">
+        <pre>
+    import { useOruga } from "@oruga-ui/oruga-next";
+    const oruga = useOruga(); 
+    oruga.modal.open({...});</pre
+        >
+    </div>
+    <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
+    <br />
+
     <p>
         A programmatic instance returns a promise to await for. The promise gets
         resolved when the modal gets closed.
