@@ -1,6 +1,3 @@
-
-
-
 # Themes
 
 Because Oruga doesn't come with any CSS by default, we would like to provide you with a variety of ready-to-use <b>Themes</b>.

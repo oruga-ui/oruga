@@ -11,7 +11,7 @@ import { useOruga } from "@oruga-ui/oruga-next";
 
 ## Programmatic config {#config}
 
-The `config` interface can be used to customise the Oruga [global configuration](/documentation/customisation) by overriding the `Config` object programmatically:
+The `config` interface can be used to customise the Oruga [global configuration](/documentation/configuration) by overriding the `Config` object programmatically:
 
 ```typescript
 import { useOruga, type OrugaOptions } from '@oruga-ui/oruga-next';

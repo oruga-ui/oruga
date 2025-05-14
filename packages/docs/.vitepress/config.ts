@@ -27,8 +27,8 @@ const getStartedItems = [
         link: "/documentation/#introduction",
     },
     {
-        text: "Customisation",
-        link: "/documentation/customisation",
+        text: "Configuration",
+        link: "/documentation/configuration",
     },
     {
         text: "Themes",
