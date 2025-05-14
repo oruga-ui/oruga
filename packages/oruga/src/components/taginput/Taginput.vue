@@ -271,6 +271,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    [
+        "disabledClass",
+        "o-taginput--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
 );
 
 const containerClasses = defineClasses([
