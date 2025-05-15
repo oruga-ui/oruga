@@ -2,7 +2,6 @@ import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
 import LoadingProgrammatic from "../useLoadingProgrammatic";
-import { createVNode } from "vue";
 
 describe("useLoadingProgrammatic tests", () => {
     beforeEach(() => {
