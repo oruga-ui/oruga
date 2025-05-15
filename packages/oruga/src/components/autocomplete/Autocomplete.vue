@@ -410,7 +410,7 @@ const itemFooterClasses = defineClasses([
 // #endregion --- Computed Component Classes ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: inputValue });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
 </script>
 
 <template>
