@@ -36,7 +36,6 @@ export default [
       "vue/multi-word-component-names": ["off"],
       "vue/block-order": ["error", { order: ["script", "template", "style"] }],
       "vue/block-lang": ["error", { script: { lang: "ts" } }],
-      "vue/component-api-style": ["error", ["script-setup"]],
       "comma-dangle": ["error", "always-multiline"],
       "prettier/prettier": [
         "error",
