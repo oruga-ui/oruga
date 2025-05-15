@@ -2,6 +2,7 @@ import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
 import LoadingProgrammatic from "../useLoadingProgrammatic";
+import { createVNode } from "vue";
 
 describe("useLoadingProgrammatic tests", () => {
     beforeEach(() => {
@@ -35,7 +36,7 @@ describe("useLoadingProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');
         expect(loading).toBeNull();
 
@@ -64,7 +65,7 @@ describe("useLoadingProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');
         expect(loading).toBeNull();
 
@@ -90,7 +91,7 @@ describe("useLoadingProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');
         expect(loading).toBeNull();
     });
@@ -114,7 +115,7 @@ describe("useLoadingProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');
         expect(loading).toBeNull();
 

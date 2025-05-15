@@ -99,7 +99,7 @@ function cancel(method: string): void {
 /** set active to false and emit close event */
 function close(...args: unknown[]): void {
     isActive.value = false;
-    emits("close", args);
+    emits("close", ...args);
 }
 
 // --- Computed Component Classes ---
