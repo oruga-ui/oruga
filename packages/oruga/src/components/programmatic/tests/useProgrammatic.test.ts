@@ -39,7 +39,7 @@ describe("useProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         el = document.body.querySelector("#mycomp");
         expect(el).toBeNull();
 
@@ -72,7 +72,7 @@ describe("useProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         el = document.body.querySelector("#mycomp");
         expect(el).toBeNull();
 
@@ -99,7 +99,7 @@ describe("useProgrammatic tests", () => {
         el?.click();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         el = document.body.querySelector("button");
         expect(el).toBeNull();
 
@@ -127,7 +127,7 @@ describe("useProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         el = document.body.querySelector<HTMLButtonElement>(
             '[data-oruga="programmatic"]',
         );

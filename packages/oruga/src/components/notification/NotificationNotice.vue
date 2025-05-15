@@ -191,7 +191,7 @@ function onMouseLeave(): void {
 function close(...args: unknown[]): void {
     isActive.value = false;
     if (timer) clearTimeout(timer);
-    emits("close", args);
+    emits("close", ...args);
 }
 
 // --- Computed Component Classes ---

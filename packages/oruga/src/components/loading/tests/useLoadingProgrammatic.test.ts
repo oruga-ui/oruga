@@ -35,7 +35,7 @@ describe("useLoadingProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');
         expect(loading).toBeNull();
 
@@ -64,7 +64,7 @@ describe("useLoadingProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');
         expect(loading).toBeNull();
 
@@ -90,7 +90,7 @@ describe("useLoadingProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');
         expect(loading).toBeNull();
     });
@@ -114,7 +114,7 @@ describe("useLoadingProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');
         expect(loading).toBeNull();
 
