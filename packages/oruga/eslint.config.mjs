@@ -1,16 +1,27 @@
 /* eslint-env node */
 
 import vuePlugin from "eslint-plugin-vue";
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from "@vue/eslint-config-typescript";
 // import vueA11yPlugin from "eslint-plugin-vuejs-accessibility";
 import prettierPlugin from "eslint-plugin-prettier/recommended";
-import typescriptConfig from "@vue/eslint-config-typescript";
 import prettierConfig from "@vue/eslint-config-prettier";
 
 export default [
   // add more generic rulesets here
-  ...vuePlugin.configs["flat/recommended"],
+
+  // add vue with ts configs
+  ...defineConfigWithVueTs(
+    vuePlugin.configs["flat/recommended"],
+    vueTsConfigs.recommended,
+  ),
+
+  // add vue a11y configs
   // ...vueA11yPlugin.configs["flat/recommended"],
-  ...typescriptConfig(),
+
+  // add prettier configs
   prettierPlugin,
   prettierConfig,
 
