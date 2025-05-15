@@ -148,6 +148,6 @@ describe("useModalProgrammatic tests", () => {
         el = document.body.querySelector("button");
         expect(el).toBeNull();
 
-        expect(onClose).toHaveBeenCalledWith({action: 'ok'});
+        expect(onClose).toHaveBeenCalledWith({ action: 'ok' });
     });
 });
