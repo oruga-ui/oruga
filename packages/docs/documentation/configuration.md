@@ -1,21 +1,26 @@
 
-# Customisation
+# Configuration
 
-Oruga's superpower is its configurability and its <b>CSS framework agnostic</b> approach. <br />
-Each component can be individually customised and configured by defining specific classes using a <b>class-mapping approach</b>.
-Therefore, <b>Oruga comes without any styling by default</b>. 
-However, there are several official predefined configurations called [themes](/documentation/themes), which you can include and extend to give your application a individual look and feel.
-And <b>all components came with predefined classes </b> by default.
+Oruga's superpower is its configurability and its **CSS framework agnostic** approach.  
+Each component can be individually customised and configured by defining specific classes using a **class-mapping** approach.
+Therefore, **Oruga comes without any styling by default**. 
+However, there are several official predefined configurations called [themes](/documentation/themes), which you can include and extend to give your application a individual look and feel.  
+And **all components came with predefined classes** by default.
 
-You can customise component classes in 3 different ways:
+---
+
+All components behaves the same:
+
+- You can set predefined CSS classes globally for each component in the global config;
+- These classes can be static or dynamic, based on the component props;
+- Classes defined globally can be extended or overrided locally, by appending one or more classes, either inline or programmatically, to individual components;
+
+
+In detail, you can customise component classes in 3 different ways:
 
 - [Global configuration](#global)
-- [Individual configuration](#individual)
+- [Inline configuration](#individual)
 - [Programmatically configuration](/documentation/composables)
-
-::: info
-Although all components have predefined classes, Oruga allows you to easily override the style of existing components by appending one or more classes, either globally or programmatically, to individual components.
-:::
 
 To configure a component, each component has a set of `class` properties which can be found in the `Class Inspector` section of a component (see for example [Autocomplete class inspector](/components/Autocomplete.html#class-inspector)).
 Here you can inspect the elements affected by each class property using the `Class Prop Inspector`. 
@@ -33,10 +38,10 @@ The easiest way to customise your components is set up a global configuration ob
 The Config object is defined as:
 ```typescript
 {
-    [globalProp]: string|boolean|number|function|....,
+    [globalProp]: string|boolean|number|function|...
     [componentName]: {
-        override: boolean,
-        [classProp]: string|boolean|number|function|....
+        override: boolean
+        [classProp]: string|boolean|number|function|...
     }
 }
 
@@ -62,8 +67,9 @@ const config: OrugaOptions = {
 }
 
 ```
+### Static classes
 
-The configuration object can the passed as second option parameter to the `Oruga` plugin:
+Let’s say you want all your buttons to have a `btn` class. A configuration object can the passed as second argument to the default `Oruga` plugin, where you can define a `string` for each `class` property of each componentt (the `class` properties can be found in the `Class Inspector` section of each component):
 
 ```typescript
 import { createApp } from 'vue';
@@ -71,51 +77,75 @@ import Oruga from '@oruga-ui/oruga-next';
 
 createApp(...)
     .use(Oruga, {
-        autocomplete: {
-            rootClass: 'autocomplete-root',
-            itemClass: 'autocomplete-item',
+        button: {
+            rootClass: 'btn',
+            disabledClass: 'btn-disabled',
             ...
         }
         ...
     });
 ```
 
-You can also use an `array` to specify more than one class or a `function` to extend or override classes in a component. In case you use a function, a `suffix` is provided by the component and it can be used inside the function. For example, `positionClass` of the Dropdown component provides a suffix to specify the menu position (_top_, _bottom_), in this case you may define a function and append the suffix to the base class name.
+You can also use an `array` to specify more than one class.
+
+```typescript
+createApp(...)
+    .use(Oruga, {
+        button: {
+            rootClass: ['btn', 'text-color-red'],
+            disabledClass: 'btn-disabled',
+        }
+    });
+```
+
+### Dynamic classes
+
+The class options can also be a `function` to achieve more complex class definitions. 
+The returned value by the `function` must be a `string`.
+As first argument of the function a class `suffix` defined by a component property is provided. 
+
+For example, `positionClass` of the Dropdown component provides a suffix to specify the menu position (_top_, _bottom_), in this case you may define a function and append the suffix to the base class name.
 
 ```typescript
 createApp(...)
     .use(Oruga, {
         dropdown: {
             rootClass: ['dropdown-root', 'additional-class'],
-            positionClass: {
-                class: (suffix) => `dropdown-menu-${suffix}`,
-            },
-            itemClass: 'dropdown-item',
+            positionClass: (suffix) => `dropdown-menu-${suffix}`,
         }
-        ...
     });
 ```
 
-For a better customisation experience, this function accepts the component's read-only `props` as a second parameter. For example, when using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
+For a more in-depth customisation experience, the function provides the component's read-only `props` as a second argument. 
+
+For example, you may want to apply a variants class to buttons only when the element is not disabled:
 
 ```js
 createApp(...)
     .use(Oruga, {
         button: {
             rootClass: (_, props) => {
-                if (props.iconRight) return 'has-icons-right';
+                const classes = ["btn"]
+                if (props.iconRight) classes.push('has-icons-right');
+                return classes;
             },
-            variantClass: (variant, props) => {
-                if (!props.outlined) return `btn-${variant}`;
+            variantClass: (suffix, props) => {
+                if (!props.disabled) return `btn-${suffix}`;
             }
+            ...
         },
-        ...
     });
 ```
 
-## Component properties {#individual}
+With the configuration above:
 
-You can add classes to a component directly using the specific `class` properties, which can be found in the `Class Inspector` section of a component:
+- `<o-button variant="primary" />` will render `<button class="btn btn--primary"></button>`
+- `<o-button variant="primary" disabled />` will render `<button class="btn"></button>`
+
+
+## Inline Configuration {#individual}
+
+Being able to apply classes globally is a great way to avoid repetitions in the code. But it’s common to have several styles for the same component. Therefore, you can add classes to a component directly inline using specific `class` properties:
 
 ```html
 <o-autocomplete 
@@ -123,15 +153,21 @@ You can add classes to a component directly using the specific `class` propertie
     item-class="autocomplete-item" />
 ```
 
+All `class` properties for each component can be found in the `Class Inspector` section of a component page.  
+If it turns out that you also have classes defined globally in the config for this component, they will be merged together.  
+
 
 ## Overriding classes
 
-In case you want to override existing default Oruga classes completely, either for one component or for all, you can act as above and set the field `override` to true:
+In case you want to override existing default Oruga classes completely, either for one component or for all, you can act as above and set the field `override` to `true` either at config root level or individual component level:
 
 ```typescript
 createApp(...)
     .use(Oruga, {
+        // override at root level removes all existing classes 
+        override: true,
         autocomplete: {
+            // component scoped override removes all existing classes of this component
             override: true,
             rootClass: 'autocomplete-root',
             itemClass: 'autocomplete-item',
@@ -144,7 +180,7 @@ createApp(...)
 While using themes such as [Bootstrap](/documentation/themes#bootstrap-theme) or [Bulma](/documentation/themes#bulma-theme), this feature is used to remove all default classes and to create specific theme configurations.
 :::
 
-This property can also be passed directly to the component:
+This `override` property can also be passed directly to any component:
 
 ```html
 <o-autocomplete
@@ -153,7 +189,7 @@ This property can also be passed directly to the component:
 ```
 
 ::: warning
-In this case, the `override` property replaces **all** existing predefined classes for this component completely, ignoring your configuration.
+In this case, the `override` property replaces **all** existing predefined classes for the component completely, ignoring your configuration.
 :::
 
 You can also specify the override behaviour for each class individually:
@@ -163,7 +199,8 @@ createApp(...)
     .use(Oruga, {
         autocomplete: {
             rootClass: {
-                override: true
+                // class scoped override removes only specific existing classes
+                override: true,
                 class: 'autocomplete-root',
             },
             itemClass: 'autocomplete-item',
@@ -174,21 +211,21 @@ createApp(...)
 
 ## Transform classes
 
-In case you want to transform applied `classes` you can use the `transformClasses` function directly in your configuration, for each component or globally for any component:
+Additionally, if you want to transform the applied `classes` you can define a `transformClasses` function for each component, or for all components globally:
 
 ```typescript
 createApp(...)
     .use(Oruga, {
         // global transform function
         transformClasses: (appliedClasses: string) => {
-            return appliedClasses.replace(/-/g, '--')
-        }
+            return appliedClasses.replace(/-/g, '--');
+        },
         button: {
             // component scoped transform function
             transformClasses: (appliedClasses: string) => {
-                return appliedClasses.replace(/-/g, '--')
+                return appliedClasses.replace(/-/g, '--');
             }
-        }
+        },
         ...
     })
 ```
@@ -196,6 +233,10 @@ createApp(...)
 
 
 ## Global Props
+
+::: info
+Have a look at the docs of each component to know all the customisable fields/props by the config.
+:::
 
 | Field              | Description                                                                                                                                                                                  | Default |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
@@ -207,6 +248,4 @@ createApp(...)
 | teleportTarget     | Define the default target element for teleport and programmatic feature                                                                                                                                                        | <code style='white-space: nowrap; padding: 0;'>document.body</code>    |
 | useHtml5Validation | Enable HTML5 form validation attribute                                                                                                                                                       | <code style='white-space: nowrap; padding: 0;'>true</code>    |
 | invalidHandler | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
-
-Have a look at the docs of each component to know all the customisable fields/props by config.
 

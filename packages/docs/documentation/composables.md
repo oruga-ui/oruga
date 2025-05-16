@@ -1,6 +1,6 @@
 # Composable
 
-Besides the main Vue plugin and the components, Oruga provides a programmatic composable `useOruga()`, which can be used to access the config as well as any registered programmatic component interfaces. A programmatic component interface will be registered when using the main plugin or any individual component plugin.
+Besides the main Vue plugin and the components, Oruga provides a programmatic composable `useOruga()`, which can be used to access the config as well as any registered programmatic component interfaces. A programmatic component interface will be registered when using the main plugin or the individual component plugin.
 
 The composable can be imported by: 
 
@@ -11,7 +11,7 @@ import { useOruga } from "@oruga-ui/oruga-next";
 
 ## Programmatic config {#config}
 
-The `config` interface can be used to customise the Oruga [global configuration](/documentation/customisation) by overriding the `Config` object programmatically:
+The `config` interface can be used to customise the Oruga [global configuration](/documentation/configuration) by overriding the `Config` object programmatically:
 
 ```typescript
 import { useOruga, type OrugaOptions } from '@oruga-ui/oruga-next';
@@ -56,6 +56,7 @@ const myThemeConfig: OrugaOptions = {
 // update the config
 ConfigProgrammatic.setOptions(myThemeConfig);
 ```
+
 
 ### Individual config plugin {#configplugin}
 
@@ -135,6 +136,7 @@ NotificationProgrammatic.open({
 });
 ```
 
+
 ### Programmatic interface {#interface}
 
 The object for each programmatic interface of a component looks like this: 
@@ -168,6 +170,7 @@ type ProgrammaticExpose = {
     promise: Promise<unknown>;
 };
 ```
+
 
 ## Component Programmatic {#programmatic}
 Oruga comes with a component that is only available programmatically. This component can be used to mount **any** custom component programmatically, using the [Vue render function](https://vuejs.org/api/render-function.html#render-function-apis) and [Creating Vnodes](https://vuejs.org/guide/extras/render-function.html#render-function-recipes).
