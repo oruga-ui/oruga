@@ -1,19 +1,19 @@
 
 # Configuration
 
-Oruga's superpower is its configurability and its <b>CSS framework agnostic</b> approach. <br />
-Each component can be individually customised and configured by defining specific classes using a <b>class-mapping approach</b>.
-Therefore, <b>Oruga comes without any styling by default</b>. 
-However, there are several official predefined configurations called [themes](/documentation/themes), which you can include and extend to give your application a individual look and feel. <br />
-And <b>all components came with predefined classes </b> by default.
+Oruga's superpower is its configurability and its **CSS framework agnostic** approach.  
+Each component can be individually customised and configured by defining specific classes using a **class-mapping** approach.
+Therefore, **Oruga comes without any styling by default**. 
+However, there are several official predefined configurations called [themes](/documentation/themes), which you can include and extend to give your application a individual look and feel.  
+And **all components came with predefined classes** by default.
 
 ---
 
 All components behaves the same:
 
-- You can set predefined CSS classes globally for each component in the global config
-- These classes can be static or dynamic, based on the component props
-- Classes defined globally can be extended or overrided locally, by appending one or more classes, either inline or programmatically, to individual components
+- You can set predefined CSS classes globally for each component in the global config;
+- These classes can be static or dynamic, based on the component props;
+- Classes defined globally can be extended or overrided locally, by appending one or more classes, either inline or programmatically, to individual components;
 
 
 In detail, you can customise component classes in 3 different ways:
@@ -101,8 +101,8 @@ createApp(...)
 ### Dynamic classes
 
 The class options can also be a `function` to achieve more complex class definitions. 
-The returned value by the `function` option must be a `string`.
-As first argument of the function a `suffix` is provided by the component. 
+The returned value by the `function` must be a `string`.
+As first argument of the function a class `suffix` defined by a component property is provided. 
 
 For example, `positionClass` of the Dropdown component provides a suffix to specify the menu position (_top_, _bottom_), in this case you may define a function and append the suffix to the base class name.
 
@@ -116,9 +116,9 @@ createApp(...)
     });
 ```
 
-For a more in-depth customisation experience, the function also accepts the component's read-only `props` as a second argument. 
+For a more in-depth customisation experience, the function provides the component's read-only `props` as a second argument. 
 
-For example, when using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not disabled:
+For example, you may want to apply a variants class to buttons only when the element is not disabled:
 
 ```js
 createApp(...)
@@ -153,7 +153,8 @@ Being able to apply classes globally is a great way to avoid repetitions in the 
     item-class="autocomplete-item" />
 ```
 
-If it turns out that you also have classes defined globally in the config for this component, they will be merged together.
+All `class` properties for each component can be found in the `Class Inspector` section of a component page.  
+If it turns out that you also have classes defined globally in the config for this component, they will be merged together.  
 
 
 ## Overriding classes
@@ -199,7 +200,7 @@ createApp(...)
         autocomplete: {
             rootClass: {
                 // class scoped override removes only specific existing classes
-                override: true
+                override: true,
                 class: 'autocomplete-root',
             },
             itemClass: 'autocomplete-item',

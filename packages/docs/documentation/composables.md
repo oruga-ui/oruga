@@ -1,6 +1,6 @@
 # Composable
 
-Besides the main Vue plugin and the components, Oruga provides a programmatic composable `useOruga()`, which can be used to access the config as well as any registered programmatic component interfaces. A programmatic component interface will be registered when using the main plugin or any individual component plugin.
+Besides the main Vue plugin and the components, Oruga provides a programmatic composable `useOruga()`, which can be used to access the config as well as any registered programmatic component interfaces. A programmatic component interface will be registered when using the main plugin or the individual component plugin.
 
 The composable can be imported by: 
 
@@ -56,6 +56,7 @@ const myThemeConfig: OrugaOptions = {
 // update the config
 ConfigProgrammatic.setOptions(myThemeConfig);
 ```
+
 
 ### Individual config plugin {#configplugin}
 
@@ -135,6 +136,7 @@ NotificationProgrammatic.open({
 });
 ```
 
+
 ### Programmatic interface {#interface}
 
 The object for each programmatic interface of a component looks like this: 
@@ -168,6 +170,7 @@ type ProgrammaticExpose = {
     promise: Promise<unknown>;
 };
 ```
+
 
 ## Component Programmatic {#programmatic}
 Oruga comes with a component that is only available programmatically. This component can be used to mount **any** custom component programmatically, using the [Vue render function](https://vuejs.org/api/render-function.html#render-function-apis) and [Creating Vnodes](https://vuejs.org/guide/extras/render-function.html#render-function-recipes).
