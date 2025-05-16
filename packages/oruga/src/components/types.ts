@@ -769,8 +769,9 @@ but will set the body to a fixed position, which may break some layouts. */
                 clipScroll: boolean;
                 /** Trap focus inside the modal */
                 trapFocus: boolean;
-                /** Role attribute to be passed to the div wrapper for better accessibility. */
-                role: "alertdialog" | "dialog";
+                /** This enables the `alertdialog` role, allowing assistive technologies and browsers to distinguish alert modals from other modals.
+Alert modals interrupt the user's workflow to communicate an important messages and acquire an explicit response. */
+                alert: boolean;
                 /** Accessibility aria-label to be passed to the div wrapper element */
                 ariaLabel: string;
                 /** Automatically focus modal when active */

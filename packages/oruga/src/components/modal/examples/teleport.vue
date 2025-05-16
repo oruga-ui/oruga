@@ -7,7 +7,7 @@ const isActive = ref(false);
 <template>
     <section>
         <o-button
-            label="Open modal"
+            label="Open teleported modal"
             size="medium"
             variant="primary"
             @click="isActive = true" />
