@@ -45,7 +45,17 @@ const showBooks = ref(false);
             </o-tab-item>
 
             <o-tab-item :value="4" label="Words">
-                This text is much longer than the other examples. The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents. We live on a placid island of ignorance in the midst of black seas of infinity, and it was not meant that we should voyage far. The sciences, each straining in its own direction, have hitherto harmed us little; but some day the piecing together of dissociated knowledge will open up such terrifying vistas of reality, and of our frightful position therein, that we shall either go mad from the revelation or flee from the deadly light into the peace and safety of a new dark age.
+                This text is much longer than the other examples. The most
+                merciful thing in the world, I think, is the inability of the
+                human mind to correlate all its contents. We live on a placid
+                island of ignorance in the midst of black seas of infinity, and
+                it was not meant that we should voyage far. The sciences, each
+                straining in its own direction, have hitherto harmed us little;
+                but some day the piecing together of dissociated knowledge will
+                open up such terrifying vistas of reality, and of our frightful
+                position therein, that we shall either go mad from the
+                revelation or flee from the deadly light into the peace and
+                safety of a new dark age.
             </o-tab-item>
 
             <o-tab-item :value="5" label="Videos" icon="video" disabled>

@@ -38,7 +38,7 @@ describe("useModalProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         modal = document.body.querySelector('[data-oruga="modal"]');
         expect(modal).toBeNull();
 
@@ -67,7 +67,7 @@ describe("useModalProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         modal = document.body.querySelector('[data-oruga="modal"]');
         expect(modal).toBeNull();
 
@@ -100,12 +100,12 @@ describe("useModalProgrammatic tests", () => {
         button?.click();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         modal = document.body.querySelector('[data-oruga="modal"]');
         expect(modal).toBeNull();
     });
 
-    test("test close event working correctly", async () => {
+    test("test internal close (x) event working correctly", async () => {
         const content = "My Modal Content";
         const onClose = vi.fn();
 
@@ -120,10 +120,34 @@ describe("useModalProgrammatic tests", () => {
         el?.click();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         el = document.body.querySelector("button");
         expect(el).toBeNull();
 
         expect(onClose).toHaveBeenCalledOnce();
+    });
+
+    test("test external close event working correctly", async () => {
+        const component = createVNode({
+            template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
+        });
+        const onClose = vi.fn();
+
+        // open element
+        ModalProgrammatic.open({ component, onClose });
+
+        // check element exist
+        let el = document.body.querySelector<HTMLElement>("button");
+        expect(el).not.toBeNull();
+
+        // close element on 'x' button click
+        el?.click();
+        vi.runAllTimers();
+
+        // check element does not exist
+        el = document.body.querySelector("button");
+        expect(el).toBeNull();
+
+        expect(onClose).toHaveBeenCalledWith({ action: "ok" });
     });
 });

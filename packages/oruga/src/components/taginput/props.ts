@@ -88,6 +88,8 @@ export type TaginputClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
     /** Class of the root element with size */
     sizeClass: ComponentClass;
     /** Class of the root element with variant */
