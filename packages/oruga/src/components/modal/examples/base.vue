@@ -30,7 +30,7 @@ const isCardModalActive = ref(false);
             </p>
         </o-modal>
 
-        <o-modal v-model:active="isCardModalActive" :width="640" scroll="clip">
+        <o-modal v-model:active="isCardModalActive" :width="640" clip-scroll>
             <div style="padding: 10px; background-color: white">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.

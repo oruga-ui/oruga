@@ -17,7 +17,6 @@ import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
     useClickOutside,
-    useEventListener,
     useMatchMedia,
     usePreventScrolling,
     useTeleportDefault,
@@ -49,7 +48,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     cancelable: () =>
         getDefault("modal.cancelable", ["escape", "x", "outside"]),
     trapFocus: () => getDefault("modal.trapFocus", true),
-    role: () => getDefault("modal.role", "dialog"),
+    alert: () => getDefault("modal.alert", false),
     ariaLabel: () => getDefault("modal.ariaLabel"),
     autoFocus: () => getDefault("modal.autoFocus", true),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
@@ -117,22 +116,12 @@ onMounted(() => {
 
 // --- Events Feature ---
 
-if (isClient) {
-    // register onKeyPress event listener when is active
-    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
-
+if (isClient)
     if (!props.overlay)
         // register outside click event listener when is active
         useClickOutside(contentRef, onClickedOutside, {
             trigger: isActive,
         });
-}
-
-/** Keypress event that is bound to the document. */
-function onKeyPress(event: KeyboardEvent): void {
-    if (!isActive.value) return;
-    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
-}
 
 /** Close fixed sidebar if clicked outside. */
 function onClickedOutside(event: Event): void {
@@ -143,6 +132,12 @@ function onClickedOutside(event: Event): void {
     )
         event.preventDefault();
     cancel("outside");
+}
+
+/** Escape key press event bound to the component root. */
+function onEscapePress(): void {
+    if (!isActive.value) return;
+    cancel("escape");
 }
 
 /**
@@ -223,9 +218,10 @@ defineExpose({ close });
                 data-oruga="modal"
                 :class="rootClasses"
                 :tabindex="-1"
-                :role="role"
+                :role="alert ? 'alertdialog' : 'dialog'"
                 :aria-label="ariaLabel"
-                :aria-modal="isActive">
+                :aria-modal="isActive"
+                @keyup.escape="onEscapePress">
                 <div
                     v-if="overlay"
                     :class="overlayClasses"
@@ -254,11 +250,11 @@ defineExpose({ close });
                     <o-icon
                         v-if="showX"
                         v-show="!isAnimating"
-                        clickable
-                        both
                         :class="closeClasses"
                         :icon="closeIcon"
                         :size="closeIconSize"
+                        clickable
+                        both
                         @click="cancel('x')" />
                 </div>
             </div>

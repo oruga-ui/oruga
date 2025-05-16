@@ -69,3 +69,15 @@
         display: block;
     }
 }
+
+
+// define gloval scroll classes
+.o-scroll-clip,
+.scroll-hidden {
+ overflow: hidden;
+}
+
+.o-scroll-keep {
+    position: fixed;
+    overflow-y: scroll;
+}
