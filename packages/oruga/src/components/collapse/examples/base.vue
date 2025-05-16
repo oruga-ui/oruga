@@ -2,7 +2,10 @@
     <section>
         <o-collapse :open="false" expanded trigger-class="trigger">
             <template #trigger="{ open }">
-                <b>{{ open ? "Close" : "Open" }} Collapse!</b>
+                <b>
+                    <o-icon :icon="open ? 'chevron-down' : 'chevron-right'" />
+                    {{ open ? "Close" : "Open" }} Collapse!
+                </b>
             </template>
 
             <div class="notification">
