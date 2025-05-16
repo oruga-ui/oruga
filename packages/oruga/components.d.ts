@@ -36,6 +36,7 @@ declare module "vue" {
         OTableColumn: (typeof import("../oruga/src/components"))["OTableColumn"];
         OTabItem: (typeof import("../oruga/src/components"))["OTabItem"];
         OTabs: (typeof import("../oruga/src/components"))["OTabs"];
+        OTag: (typeof import("../oruga/src/components"))["OTag"];
         OTaginput: (typeof import("../oruga/src/components"))["OTaginput"];
         OTimepicker: (typeof import("../oruga/src/components"))["OTimepicker"];
         OTooltip: (typeof import("../oruga/src/components"))["OTooltip"];

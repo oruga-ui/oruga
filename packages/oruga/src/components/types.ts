@@ -1447,6 +1447,43 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the panel container element when transitioning */
                 transitioningClass: ClassDefinition;
             }>;
+        tag?: ComponentConfigBase &
+            Partial<{
+                /** Color variant of the breadcrumb */
+                variant: string;
+                /** Size of the control */
+                size: string;
+                /** Enable rounded style */
+                rounded: boolean;
+                /** The tag element will react to the hover states */
+                hoverable: boolean;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Close icon name */
+                closeIcon: string;
+                /** Icon pack to use for the close icon */
+                closeIconPack: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element when badge style */
+                badgeClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when hoverable */
+                hoverableClass: ClassDefinition;
+                /** Class of the label element */
+                labelClass: ClassDefinition;
+                /** Class of the icon element to the left of the tag */
+                iconClass: ClassDefinition;
+                /** Class of the tag item close button element */
+                closeClass: ClassDefinition;
+            }>;
         taginput?: ComponentConfigBase &
             Partial<{
                 /** Vertical size of the input control */
