@@ -32,7 +32,7 @@ export type IconProps = {
      * See icon library documentation for custom classes.
      */
     customClass?: string;
-    /** When true makes icon clickable */
+    /** Makes the icon interactive by clicking and focusable */
     clickable?: boolean;
     /** Enable spin effect on icon */
     spin?: boolean;
