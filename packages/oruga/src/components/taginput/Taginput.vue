@@ -170,7 +170,7 @@ const selectedOptions = computed(() => {
         const option = findOption<T>(groupedOptions, value);
         // return the found option or create a new option object
         if (option) return option;
-        else return { label: value, value, key: useId() };
+        else return { label: String(value), value, key: useId() };
     });
 });
 
@@ -340,14 +340,13 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 <o-tag
                     v-for="(option, index) in selectedOptions"
                     :key="option.key"
+                    :label="option.label"
                     :class="itemClasses"
                     :closeable="closable && !disabled"
                     :close-icon="closeIcon"
                     :close-icon-pack="iconPack"
                     :aria-close-label="ariaCloseLabel"
-                    @close="removeItem(index, $event)">
-                    {{ option.label }}
-                </o-tag>
+                    @close="removeItem(index, $event)" />
             </slot>
 
             <o-autocomplete
