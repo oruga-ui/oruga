@@ -50,7 +50,10 @@ export function useTrapFocus(): {
             // Need to get focusable each time since it can change between key events
             // ex. changing month in a datepicker
             const focusable = findFocusable(el);
-            if (!focusable?.length) return;
+            if (!focusable?.length) {
+                event.preventDefault();
+                return;
+            }
 
             const firstFocusable = focusable[0];
             const lastFocusable = focusable[focusable.length - 1];
