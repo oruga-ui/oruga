@@ -15,7 +15,7 @@ exports[`OCarousel tests > render correctly 1`] = `
                 @binding {boolean} has-next has next arrow button 
                 @binding {(): void} prev switch to prev item function
                 @binding {(): void} next switch to next item function
-            --><span data-oruga="icon" class="o-icon o-carousel__icon o-carousel__icon-prev" tabindex="0" role="button" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span data-oruga="icon" class="o-icon o-carousel__icon o-carousel__icon-next" tabindex="0" role="button" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            --><span data-oruga="icon" class="o-icon o-icon--clickable o-carousel__icon o-carousel__icon-prev" tabindex="0" role="button" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span data-oruga="icon" class="o-icon o-icon--clickable o-carousel__icon o-carousel__icon-next" tabindex="0" role="button" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
     <div class="o-carousel__items" style="transform: translateX(0px);" aria-roledescription="carousel-slide" aria-atomic="false" aria-live="polite">
       <!--
                     @slot Display carousel item
@@ -47,7 +47,7 @@ exports[`OCarousel tests > render integration correctly 1`] = `
                 @binding {boolean} has-next has next arrow button 
                 @binding {(): void} prev switch to prev item function
                 @binding {(): void} next switch to next item function
-            --><span data-oruga="icon" class="o-icon o-carousel__icon o-carousel__icon-prev" tabindex="0" role="button" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span data-oruga="icon" class="o-icon o-carousel__icon o-carousel__icon-next" tabindex="0" role="button" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            --><span data-oruga="icon" class="o-icon o-icon--clickable o-carousel__icon o-carousel__icon-prev" tabindex="0" role="button" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span data-oruga="icon" class="o-icon o-icon--clickable o-carousel__icon o-carousel__icon-next" tabindex="0" role="button" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
     <div class="o-carousel__items" style="transform: translateX(0px);" aria-roledescription="carousel-slide" aria-atomic="false" aria-live="polite">
       <!--
                     @slot Display carousel item
