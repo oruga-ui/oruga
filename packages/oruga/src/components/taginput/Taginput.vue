@@ -9,8 +9,8 @@ import {
     type Component,
 } from "vue";
 
-import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
+import OTag from "../tag/Tag.vue";
 
 import { getDefault } from "@/utils/config";
 import {
@@ -294,8 +294,6 @@ const itemClasses = defineClasses(
     ],
 );
 
-const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
-
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
 const autocompleteRootClasses = defineClasses([
@@ -339,25 +337,17 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 :items="selectedItems"
                 :options="selectedOptions"
                 :remove-item="removeItem">
-                <span
+                <o-tag
                     v-for="(option, index) in selectedOptions"
                     :key="option.key"
-                    :class="itemClasses">
-                    <span> {{ option.label }}</span>
-
-                    <o-icon
-                        v-if="closable && !disabled"
-                        :class="closeClasses"
-                        :pack="iconPack"
-                        :icon="closeIcon"
-                        clickable
-                        tabindex="0"
-                        role="button"
-                        :aria-label="ariaCloseLabel"
-                        both
-                        @keydown.enter="removeItem(index, $event)"
-                        @click="removeItem(index, $event)" />
-                </span>
+                    :class="itemClasses"
+                    :closeable="closable && !disabled"
+                    :close-icon="closeIcon"
+                    :close-icon-pack="iconPack"
+                    :aria-close-label="ariaCloseLabel"
+                    @close="removeItem(index, $event)">
+                    {{ option.label }}
+                </o-tag>
             </slot>
 
             <o-autocomplete
