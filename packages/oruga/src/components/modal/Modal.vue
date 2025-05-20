@@ -254,7 +254,6 @@ defineExpose({ close });
                         :icon="closeIcon"
                         :size="closeIconSize"
                         clickable
-                        both
                         @click="cancel('x')" />
                 </div>
             </div>

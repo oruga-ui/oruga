@@ -1353,7 +1353,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         <o-icon
                                             :icon="sortIcon"
                                             :pack="iconPack"
-                                            both
                                             :size="sortIconSize"
                                             :rotation="!isAsc ? 180 : 0" />
                                     </span>
@@ -1546,7 +1545,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     role="button"
                                     tabindex="0"
                                     clickable
-                                    both
                                     :aria-label="`Open ${row.label} details`"
                                     @click.prevent="toggleDetails(row)"
                                     @keydown.prevent.enter="toggleDetails(row)"
@@ -1670,8 +1668,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     v-if="emptyIcon"
                                     :icon="emptyIcon"
                                     :size="emptyIconSize"
-                                    :pack="iconPack"
-                                    both />
+                                    :pack="iconPack" />
                                 {{ emptyLabel }}
                             </slot>
                         </td>

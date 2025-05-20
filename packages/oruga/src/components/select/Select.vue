@@ -350,7 +350,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             :pack="iconPack"
             :size="size"
             :variant="rightIconVariant"
-            both
             @click="rightIconClick" />
     </div>
 </template>

@@ -402,7 +402,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             :pack="iconPack"
             :size="size"
             :variant="computedIconRightVariant"
-            both
             @click="rightIconClick" />
 
         <small
