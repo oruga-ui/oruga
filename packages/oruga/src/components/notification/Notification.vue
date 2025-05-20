@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<NotificationProps>(), {
     icon: undefined,
     iconPack: () => getDefault("notification.iconPack"),
     iconSize: () => getDefault("notification.iconSize", "large"),
-    closable: false,
+    closeable: false,
     closeIcon: () => getDefault("notification.closeIcon", "close"),
     closeIconSize: () => getDefault("notification.closeIconSize"),
     ariaCloseLabel: () => getDefault("notification.ariaCloseLabel", "Close"),
@@ -125,7 +125,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
             data-oruga="notification"
             :class="rootClasses">
             <button
-                v-if="closable"
+                v-if="closeable"
                 :class="closeClasses"
                 type="button"
                 :aria-label="ariaCloseLabel"

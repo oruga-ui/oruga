@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<TagProps>(), {
     size: () => getDefault("tag.size"),
     rounded: () => getDefault("tag.rounded", false),
     hoverable: () => getDefault("tag.hoverable", false),
-    closable: false,
+    closeable: false,
     icon: undefined,
     iconPack: () => getDefault("tag.iconPack"),
     closeIcon: () => getDefault("tag.closeIcon"),
@@ -106,7 +106,7 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
         -->
         <slot name="close" :close="close">
             <o-icon
-                v-if="closable"
+                v-if="closeable"
                 :class="closeClasses"
                 :pack="closeIconPack"
                 :icon="closeIcon"

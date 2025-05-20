@@ -68,9 +68,9 @@ const inspectData: InspectData<
     closeClass: {
         class: "closeClass",
         description: "Class of the close button element.",
-        properties: ["closable"],
+        properties: ["closeable"],
         action: (data): void => {
-            data.closable = true;
+            data.closeable = true;
         },
     },
     noticeClass: {

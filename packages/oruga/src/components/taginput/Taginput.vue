@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
     checkScroll: () => getDefault("taginput.checkScroll", false),
-    closable: () => getDefault("taginput.closable", true),
+    closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
     closeIcon: () => getDefault("taginput.closeIcon", "close"),
@@ -346,7 +346,7 @@ defineExpose({ focus: setFocus, value: selectedItems });
                     <span> {{ option.label }}</span>
 
                     <o-icon
-                        v-if="closable && !disabled"
+                        v-if="closeable && !disabled"
                         :class="closeClasses"
                         :pack="iconPack"
                         :icon="closeIcon"

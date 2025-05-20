@@ -1506,7 +1506,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Makes the component check if list reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Add close/delete button to the item */
-                closable: boolean;
+                closeable: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */

@@ -29,7 +29,7 @@ export type TagProps = {
      */
     iconPack?: string;
     /** Add close/delete button to the item */
-    closable?: boolean;
+    closeable?: boolean;
     /** Close icon name */
     closeIcon?: string;
     /**

@@ -1,20 +1,20 @@
 <template>
     <section class="odocs-spaced">
         <p>
-            <o-tag variant="primary" closable aria-close-label="Close tag">
-                Colored closable tag label
+            <o-tag variant="primary" closeable aria-close-label="Close tag">
+                Colored closeable tag label
             </o-tag>
 
             <o-tag
-                closable
+                closeable
                 close-icon="delete"
                 variant="success"
                 aria-close-label="Close tag">
-                Colored closable tag label with colored closed icon
+                Colored closeable tag label with colored closed icon
             </o-tag>
         </p>
         <p>
-            <o-tag closable aria-close-label="Close tag">
+            <o-tag closeable aria-close-label="Close tag">
                 <template #default>
                     Attached tag label with custom and colored icon
                 </template>
