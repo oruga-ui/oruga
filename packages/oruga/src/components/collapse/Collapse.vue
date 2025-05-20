@@ -83,8 +83,8 @@ const contentClasses = defineClasses(["contentClass", "o-collapse__content"]);
             :aria-controls="contentId"
             :aria-expanded="isOpen"
             @click="toggle"
-            @keydown.enter="toggle"
-            @keydown.space="toggle">
+            @keydown.enter.prevent="toggle"
+            @keydown.space.prevent="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
