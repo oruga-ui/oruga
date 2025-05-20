@@ -345,11 +345,11 @@ defineExpose({ focus: setFocus, value: vmodel });
         <o-icon
             v-if="hasIconRight"
             :class="iconRightClasses"
-            :clickable="iconRightClickable"
             :icon="rightIcon"
             :pack="iconPack"
             :size="size"
             :variant="rightIconVariant"
+            :clickable="iconRightClickable"
             both
             @click="rightIconClick" />
     </div>

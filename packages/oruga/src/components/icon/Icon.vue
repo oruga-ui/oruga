@@ -140,6 +140,7 @@ const rootClasses = defineClasses(
         :class="rootClasses"
         :style="rootStyle"
         :tabindex="clickable ? 0 : undefined"
+        :role="clickable ? 'button' : undefined"
         @click="onClick"
         @keydown.enter="onClick"
         @keydown.space="onClick">

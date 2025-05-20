@@ -779,6 +779,8 @@ but will set the body to a fixed position, which may break some layouts. */
                 closeIcon: string;
                 /** Size of close icon */
                 closeIconSize: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.

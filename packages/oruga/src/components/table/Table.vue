@@ -1353,9 +1353,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         <o-icon
                                             :icon="sortIcon"
                                             :pack="iconPack"
-                                            both
                                             :size="sortIconSize"
-                                            :rotation="!isAsc ? 180 : 0" />
+                                            :rotation="!isAsc ? 180 : 0"
+                                            both />
                                     </span>
                                 </span>
                             </th>
@@ -1543,16 +1543,10 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :icon="detailIcon"
                                     :pack="iconPack"
                                     :rotation="isDetailRowVisible(row) ? 90 : 0"
-                                    role="button"
-                                    tabindex="0"
                                     clickable
-                                    both
                                     :aria-label="`Open ${row.label} details`"
-                                    @click.prevent="toggleDetails(row)"
-                                    @keydown.prevent.enter="toggleDetails(row)"
-                                    @keydown.prevent.space="
-                                        toggleDetails(row)
-                                    " />
+                                    both
+                                    @click.prevent="toggleDetails(row)" />
                             </td>
 
                             <!-- checkable column left -->

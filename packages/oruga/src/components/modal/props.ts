@@ -46,6 +46,8 @@ export type ModalProps<C extends Component = Component> = {
      * @values small, medium, large
      */
     closeIconSize?: string;
+    /** Accessibility label for the close button */
+    ariaCloseLabel?: string;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**

@@ -127,11 +127,9 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
             <button
                 v-if="closable"
                 :class="closeClasses"
-                type="button"
                 :aria-label="ariaCloseLabel"
                 @click="close({ action: 'close', method: 'x' })">
                 <o-icon
-                    clickable
                     :pack="iconPack"
                     :icon="closeIcon"
                     :size="closeIconSize"
@@ -152,7 +150,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                     :class="iconClasses"
                     :size="iconSize"
                     both
-                    aria-hidden />
+                    aria-hidden="true" />
                 <div :class="contentClasses">
                     <!--
                         @slot Notification default content, default is message prop

@@ -101,8 +101,8 @@ function sort(event: Event): void {
                     :icon="sortIcon"
                     :pack="iconPack"
                     :size="sortIconSize"
-                    both
-                    :rotation="!isAsc ? 180 : 0" />
+                    :rotation="!isAsc ? 180 : 0"
+                    both />
             </o-button>
         </o-field>
     </div>
