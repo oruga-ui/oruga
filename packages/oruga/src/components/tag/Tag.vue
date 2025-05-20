@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<TagProps>(), {
     size: () => getDefault("tag.size"),
     rounded: () => getDefault("tag.rounded", false),
     hoverable: () => getDefault("tag.hoverable", false),
-    closable: false,
+    closeable: false,
     icon: undefined,
     iconPack: () => getDefault("tag.iconPack"),
     closeIcon: () => getDefault("tag.closeIcon"),
@@ -84,7 +84,7 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
 </script>
 
 <template>
-    <div data-oruga="tag" :class="rootClasses">
+    <span data-oruga="tag" :class="rootClasses">
         <o-icon
             v-if="icon"
             :class="iconClasses"
@@ -106,7 +106,7 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
         -->
         <slot name="close" :close="close">
             <o-icon
-                v-if="closable"
+                v-if="closeable"
                 :class="closeClasses"
                 :pack="closeIconPack"
                 :icon="closeIcon"
@@ -120,5 +120,5 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
                 @keyup.space="close"
                 @click="close" />
         </slot>
-    </div>
+    </span>
 </template>
