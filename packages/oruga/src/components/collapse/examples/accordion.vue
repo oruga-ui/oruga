@@ -32,15 +32,14 @@ const collapses = ref([
             expanded
             :open="isOpen == index"
             @update:open="isOpen = index">
-            <template #trigger="props">
+            <template #trigger="{ open }">
                 <div class="card-header">
                     <span class="card-header-title">
                         {{ collapse.title }}
                     </span>
 
                     <span class="card-header-icon">
-                        <o-icon
-                            :icon="props.open ? 'caret-up' : 'caret-down'" />
+                        <o-icon :icon="open ? 'caret-up' : 'caret-down'" />
                     </span>
                 </div>
             </template>
