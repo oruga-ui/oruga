@@ -8,7 +8,7 @@ const isActive = ref(false);
 <template>
     <section class="odocs-spaced">
         <o-button
-            label="Open modal"
+            label="Open component modal"
             size="medium"
             variant="primary"
             @click="isActive = true" />
