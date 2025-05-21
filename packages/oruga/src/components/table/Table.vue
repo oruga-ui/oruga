@@ -1542,15 +1542,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :icon="detailIcon"
                                     :pack="iconPack"
                                     :rotation="isDetailRowVisible(row) ? 90 : 0"
-                                    role="button"
-                                    tabindex="0"
                                     clickable
                                     :aria-label="`Open ${row.label} details`"
-                                    @click.prevent="toggleDetails(row)"
-                                    @keydown.prevent.enter="toggleDetails(row)"
-                                    @keydown.prevent.space="
-                                        toggleDetails(row)
-                                    " />
+                                    @click.prevent="toggleDetails(row)" />
                             </td>
 
                             <!-- checkable column left -->

@@ -32,6 +32,14 @@ const props = withDefaults(defineProps<IconProps>(), {
     rotation: undefined,
 });
 
+const emits = defineEmits<{
+    /**
+     * on item click event
+     * @param event {event} native event
+     */
+    click: [event: Event];
+}>();
+
 const environment = getOption("environment");
 
 const rootStyle = computed(() => {
@@ -79,6 +87,12 @@ function getEquivalentIconOf(value: string): string {
     return value;
 }
 
+function onClick(event: Event): void {
+    if (!props.clickable) return;
+    event.preventDefault();
+    emits("click", event);
+}
+
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -106,7 +120,15 @@ const rootClasses = defineClasses(
 </script>
 
 <template>
-    <span data-oruga="icon" :class="rootClasses" :style="rootStyle">
+    <span
+        data-oruga="icon"
+        :class="rootClasses"
+        :style="rootStyle"
+        :tabindex="clickable ? 0 : undefined"
+        :role="clickable ? 'button' : undefined"
+        @click="onClick"
+        @keydown.enter="onClick"
+        @keydown.space="onClick">
         <!-- custom icon component -->
         <component
             :is="component"

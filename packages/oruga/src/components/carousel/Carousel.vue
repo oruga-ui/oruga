@@ -498,16 +498,13 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                                 : iconAutoplayResume
                         "
                         :size="iconSize"
-                        role="button"
-                        tabindex="0"
+                        clickable
                         :aria-label="
                             !isAutoplayPaused
                                 ? ariaAutoplayPauseLabel
                                 : ariaAutoplayResumeLabel
                         "
-                        @click="onToggleAutoplay"
-                        @keydown.enter.prevent="onToggleAutoplay"
-                        @keydown.space.prevent="onToggleAutoplay" />
+                        @click="onToggleAutoplay" />
                 </template>
             </slot>
 
@@ -531,24 +528,18 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         :pack="iconPack"
                         :icon="iconPrev"
                         :size="iconSize"
-                        role="button"
-                        tabindex="0"
+                        clickable
                         :aria-label="ariaPreviousLabel"
-                        @click="onPrev"
-                        @keydown.enter.prevent="onPrev"
-                        @keydown.space.prevent="onPrev" />
+                        @click="onPrev" />
                     <o-icon
                         v-show="hasArrows && hasNext"
                         :class="nextIconClasses"
                         :pack="iconPack"
                         :icon="iconNext"
                         :size="iconSize"
-                        role="button"
-                        tabindex="0"
+                        clickable
                         :aria-label="ariaNextLabel"
-                        @click="onNext"
-                        @keydown.enter.prevent="onNext"
-                        @keydown.space.prevent="onNext" />
+                        @click="onNext" />
                 </template>
             </slot>
 

@@ -780,6 +780,8 @@ Alert modals interrupt the user's workflow to communicate an important messages 
                 closeIcon: string;
                 /** Size of close icon */
                 closeIconSize: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.

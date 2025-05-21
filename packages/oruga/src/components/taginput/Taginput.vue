@@ -351,11 +351,8 @@ defineExpose({ focus: setFocus, value: selectedItems });
                         :pack="iconPack"
                         :icon="closeIcon"
                         clickable
-                        tabindex="0"
-                        role="button"
                         :aria-label="ariaCloseLabel"
-                        @click="removeItem(index, $event)"
-                        @keydown.enter="removeItem(index, $event)" />
+                        @click="removeItem(index, $event)" />
                 </span>
             </slot>
 

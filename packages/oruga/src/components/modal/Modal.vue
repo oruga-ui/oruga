@@ -53,6 +53,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     autoFocus: () => getDefault("modal.autoFocus", true),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
+    ariaCloseLabel: () => getDefault("modal.ariaCloseLabel", "Close"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
     clipScroll: () => getDefault("modal.clipScroll", false),
@@ -254,6 +255,7 @@ defineExpose({ close });
                         :icon="closeIcon"
                         :size="closeIconSize"
                         clickable
+                        :aria-label="ariaCloseLabel"
                         @click="cancel('x')" />
                 </div>
             </div>
