@@ -425,8 +425,14 @@ const isScrollable = computed(() => {
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 // recompute table rows visibility on page change or data change
-watch([tableCurrentPage, () => props.perPage, () => props.data], () =>
-    filterTableRows(),
+watch(
+    [
+        tableCurrentPage,
+        () => props.perPage,
+        () => props.data,
+        () => props.paginated,
+    ],
+    () => filterTableRows(),
 );
 
 // create a unique id sequence
@@ -467,7 +473,7 @@ function filterTableRows(): void {
     // update hidden state for each row
     filterOptionsItems(tableRows, (row, idx) => {
         // if paginated not backend paginated, paginate row
-        if (props.paginated || !props.backendPagination) {
+        if (props.paginated && !props.backendPagination) {
             // if not only one page and not on active page
             if (
                 tableRows.value.length > perPage &&
