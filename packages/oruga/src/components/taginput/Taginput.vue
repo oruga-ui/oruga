@@ -354,9 +354,8 @@ defineExpose({ focus: setFocus, value: selectedItems });
                         tabindex="0"
                         role="button"
                         :aria-label="ariaCloseLabel"
-                        both
-                        @keydown.enter="removeItem(index, $event)"
-                        @click="removeItem(index, $event)" />
+                        @click="removeItem(index, $event)"
+                        @keydown.enter="removeItem(index, $event)" />
                 </span>
             </slot>
 

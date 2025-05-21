@@ -134,8 +134,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                     clickable
                     :pack="iconPack"
                     :icon="closeIcon"
-                    :size="closeIconSize"
-                    both />
+                    :size="closeIconSize" />
             </button>
 
             <!--
@@ -151,7 +150,6 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                     :pack="iconPack"
                     :class="iconClasses"
                     :size="iconSize"
-                    both
                     aria-hidden />
                 <div :class="contentClasses">
                     <!--

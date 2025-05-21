@@ -35,7 +35,6 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     iconPack: () => getDefault("button.iconPack"),
     iconLeft: undefined,
     iconRight: undefined,
-    iconBoth: false,
 });
 
 defineEmits<{
@@ -144,7 +143,6 @@ const iconRightClasses = defineClasses([
                 :pack="iconPack"
                 :icon="iconLeft"
                 :size="size"
-                :both="iconBoth"
                 :class="[...iconClasses, ...iconLeftClasses]" />
 
             <span v-if="label || $slots.default" :class="labelClasses">
@@ -159,7 +157,6 @@ const iconRightClasses = defineClasses([
                 :pack="iconPack"
                 :icon="iconRight"
                 :size="size"
-                :both="iconBoth"
                 :class="[...iconClasses, ...iconRightClasses]" />
         </span>
     </component>
