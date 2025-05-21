@@ -1354,8 +1354,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             :icon="sortIcon"
                                             :pack="iconPack"
                                             :size="sortIconSize"
-                                            :rotation="!isAsc ? 180 : 0"
-                                            both />
+                                            :rotation="!isAsc ? 180 : 0" />
                                     </span>
                                 </span>
                             </th>
@@ -1545,7 +1544,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :rotation="isDetailRowVisible(row) ? 90 : 0"
                                     clickable
                                     :aria-label="`Open ${row.label} details`"
-                                    both
                                     @click.prevent="toggleDetails(row)" />
                             </td>
 
