@@ -222,7 +222,7 @@ describe("ODropdown tests", () => {
             expect(menu.isVisible()).toBeTruthy();
         });
 
-        test("react accordingly when clicking outside with closable false", async () => {
+        test("react accordingly when clicking outside with closeable false", async () => {
             const wrapper = mount(ODropdown, {
                 props: { active: true, closeOnOutside: false },
                 attachTo: document.body,
@@ -309,7 +309,7 @@ describe("ODropdown tests", () => {
             expect(menu.isVisible()).toBeFalsy();
         });
 
-        test("react accordingly when pressing escape with closable", async () => {
+        test("react accordingly when pressing escape with closeable", async () => {
             const wrapper = mount(ODropdown, {
                 props: { active: true, closeable: false },
             });

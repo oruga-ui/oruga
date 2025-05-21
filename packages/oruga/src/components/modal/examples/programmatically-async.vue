@@ -22,7 +22,7 @@ const promptModal = async (): Promise<void> => {
         message: "Modal dialog returned " + JSON.stringify(result),
         variant: "info",
         position: "top",
-        closable: true,
+        closeable: true,
     });
 };
 
@@ -47,7 +47,7 @@ const promptModalCloseAll = async (): Promise<void> => {
         message: "Modal dialog returned " + JSON.stringify(result),
         variant: "info",
         position: "top",
-        closable: true,
+        closeable: true,
     });
 };
 </script>

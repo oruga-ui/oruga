@@ -46,7 +46,7 @@ describe("OTag tests", () => {
 
     test("emit close event", async () => {
         const wrapper = mount(OTag, {
-            props: { label: "My Tag", closable: true },
+            props: { label: "My Tag", closeable: true },
         });
 
         expect(wrapper.text()).toEqual("My Tag");

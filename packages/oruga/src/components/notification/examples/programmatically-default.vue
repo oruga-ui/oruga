@@ -12,7 +12,7 @@ function success(): void {
     oruga.notification.open({
         message: "Something happened correctly!",
         variant: "success",
-        closable: true,
+        closeable: true,
     });
 }
 
@@ -27,7 +27,7 @@ function danger(): void {
         position: "bottom",
         variant: "danger",
         type: "danger",
-        closable: true,
+        closeable: true,
         onClose: () => {
             oruga.notification.open("Custom notification closed!");
         },
