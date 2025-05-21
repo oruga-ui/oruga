@@ -20,9 +20,7 @@
 
         <p>
             <o-icon pack="fas" icon="user" size="large" variant="success" />
-
             <o-icon pack="fas" icon="home" size="large" variant="info" />
-
             <o-icon
                 pack="fas"
                 icon="tachometer-alt"

@@ -143,8 +143,7 @@ defineExpose({ close });
                     :icon="icon"
                     :spin="iconSpin"
                     :size="iconSize"
-                    :class="iconClasses"
-                    both />
+                    :class="iconClasses" />
                 <span v-if="label" :class="labelClasses">
                     {{ label }}
                 </span>

@@ -498,7 +498,6 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                                 : iconAutoplayResume
                         "
                         :size="iconSize"
-                        both
                         clickable
                         :aria-label="
                             !isAutoplayPaused
@@ -529,7 +528,6 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         :pack="iconPack"
                         :icon="iconPrev"
                         :size="iconSize"
-                        both
                         clickable
                         :aria-label="ariaPreviousLabel"
                         @click="onPrev" />
@@ -539,7 +537,6 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         :pack="iconPack"
                         :icon="iconNext"
                         :size="iconSize"
-                        both
                         clickable
                         :aria-label="ariaNextLabel"
                         @click="onNext" />

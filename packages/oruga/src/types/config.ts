@@ -91,6 +91,11 @@ export type GlobalConfig = Partial<{
      * you can specify the override behaviour here globaly.
      */
     override: boolean;
+    /**
+     * @private
+     * @ignore
+     */
+    environment: "docs" | "examples";
 }>;
 
 export interface OrugaOptions extends GlobalConfig {}

@@ -1664,8 +1664,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     v-if="emptyIcon"
                                     :icon="emptyIcon"
                                     :size="emptyIconSize"
-                                    :pack="iconPack"
-                                    both />
+                                    :pack="iconPack" />
                                 {{ emptyLabel }}
                             </slot>
                         </td>

@@ -256,7 +256,6 @@ defineExpose({ close });
                         :size="closeIconSize"
                         clickable
                         :aria-label="ariaCloseLabel"
-                        both
                         @click="cancel('x')" />
                 </div>
             </div>

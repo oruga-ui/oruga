@@ -90,8 +90,7 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
             :class="iconClasses"
             :pack="iconPack"
             :icon="icon"
-            :size="size"
-            both />
+            :size="size" />
 
         <span :class="labelClasses">
             <!--
@@ -113,7 +112,6 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
                 :size="size"
                 clickable
                 :aria-label="ariaCloseLabel"
-                both
                 @click="close" />
         </slot>
     </div>

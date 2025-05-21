@@ -350,7 +350,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             :size="size"
             :variant="rightIconVariant"
             :clickable="iconRightClickable"
-            both
             @click="rightIconClick" />
     </div>
 </template>

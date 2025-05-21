@@ -402,7 +402,6 @@ defineExpose({ focus: setFocus, value: vmodel });
             :size="size"
             :variant="computedIconRightVariant"
             :clickable="passwordReveal || clearable || iconRightClickable"
-            both
             @click="rightIconClick" />
 
         <small

@@ -17,7 +17,7 @@ const mdiIcons = {
     iconPrefix: "mdi-",
 };
 
-const faIcons = () => {
+const faIcons = (): IconConfig => {
     const iconComponent = getOption("iconComponent");
     const faIconPrefix = iconComponent ? "" : "fa-";
     return {

@@ -38,11 +38,6 @@ export type IconProps = {
     spin?: boolean;
     /** Rotation 0-360 */
     rotation?: number | string;
-    /**
-     * This is used internally
-     * @ignore
-     */
-    both?: boolean;
 } & IconClasses;
 
 // class props (will not be displayed in the docs)
