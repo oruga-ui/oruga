@@ -127,6 +127,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
             <button
                 v-if="closable"
                 :class="closeClasses"
+                type="button"
                 :aria-label="ariaCloseLabel"
                 @click="close({ action: 'close', method: 'x' })">
                 <o-icon
