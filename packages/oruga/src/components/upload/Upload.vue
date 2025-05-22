@@ -231,7 +231,7 @@ const draggableClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>

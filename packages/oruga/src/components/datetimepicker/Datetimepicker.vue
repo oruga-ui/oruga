@@ -145,7 +145,7 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
+const { checkHtml5Validity, setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
     elementRef,
     emits,
     props,
@@ -336,7 +336,7 @@ const timepickerWrapperClasses = defineClasses([
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
