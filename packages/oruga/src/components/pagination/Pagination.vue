@@ -274,11 +274,7 @@ defineExpose({ last, first, prev, next });
                 :root-class="buttonPrevClasses"
                 :button-class="buttonClasses"
                 :button-current-class="buttonCurrentClasses">
-                <o-icon
-                    :icon="iconPrev"
-                    :pack="iconPack"
-                    both
-                    aria-hidden="true" />
+                <o-icon :icon="iconPrev" :pack="iconPack" aria-hidden="true" />
             </o-pagination-button>
         </slot>
 
@@ -296,11 +292,7 @@ defineExpose({ last, first, prev, next });
                 :root-class="buttonNextClasses"
                 :button-class="buttonClasses"
                 :button-current-class="buttonCurrentClasses">
-                <o-icon
-                    :icon="iconNext"
-                    :pack="iconPack"
-                    both
-                    aria-hidden="true" />
+                <o-icon :icon="iconNext" :pack="iconPack" aria-hidden="true" />
             </o-pagination-button>
         </slot>
 

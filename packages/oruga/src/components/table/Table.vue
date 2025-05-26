@@ -120,6 +120,8 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     paginationRounded: () => getDefault("table.paginationRounded", false),
     paginationSimple: () => getDefault("table.paginationSimple", false),
     paginationOrder: () => getDefault("table.paginationOrder"),
+    paginationRangeBefore: undefined,
+    paginationRangeAfter: undefined,
     backendFiltering: () => getDefault("table.backendFiltering", false),
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
@@ -425,8 +427,14 @@ const isScrollable = computed(() => {
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 // recompute table rows visibility on page change or data change
-watch([tableCurrentPage, () => props.perPage, () => props.data], () =>
-    filterTableRows(),
+watch(
+    [
+        tableCurrentPage,
+        () => props.perPage,
+        () => props.data,
+        () => props.paginated,
+    ],
+    () => filterTableRows(),
 );
 
 // create a unique id sequence
@@ -467,7 +475,7 @@ function filterTableRows(): void {
     // update hidden state for each row
     filterOptionsItems(tableRows, (row, idx) => {
         // if paginated not backend paginated, paginate row
-        if (props.paginated || !props.backendPagination) {
+        if (props.paginated && !props.backendPagination) {
             // if not only one page and not on active page
             if (
                 tableRows.value.length > perPage &&
@@ -1225,6 +1233,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :size="paginationSize"
                     :order="paginationOrder"
                     :simple="paginationSimple"
+                    :range-before="paginationRangeBefore"
+                    :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
@@ -1353,7 +1363,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         <o-icon
                                             :icon="sortIcon"
                                             :pack="iconPack"
-                                            both
                                             :size="sortIconSize"
                                             :rotation="!isAsc ? 180 : 0" />
                                     </span>
@@ -1543,16 +1552,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :icon="detailIcon"
                                     :pack="iconPack"
                                     :rotation="isDetailRowVisible(row) ? 90 : 0"
-                                    role="button"
-                                    tabindex="0"
                                     clickable
-                                    both
                                     :aria-label="`Open ${row.label} details`"
-                                    @click.prevent="toggleDetails(row)"
-                                    @keydown.prevent.enter="toggleDetails(row)"
-                                    @keydown.prevent.space="
-                                        toggleDetails(row)
-                                    " />
+                                    @click.prevent="toggleDetails(row)" />
                             </td>
 
                             <!-- checkable column left -->
@@ -1670,8 +1672,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     v-if="emptyIcon"
                                     :icon="emptyIcon"
                                     :size="emptyIconSize"
-                                    :pack="iconPack"
-                                    both />
+                                    :pack="iconPack" />
                                 {{ emptyLabel }}
                             </slot>
                         </td>
@@ -1748,6 +1749,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :size="paginationSize"
                     :order="paginationOrder"
                     :simple="paginationSimple"
+                    :range-before="paginationRangeBefore"
+                    :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
