@@ -8,7 +8,15 @@ import {
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-vue";
 
-import { defineComponent, h, ref, type PropType, type VNode } from "vue";
+import {
+    defineComponent,
+    h,
+    ref,
+    useTemplateRef,
+    type PropType,
+    type VNode
+} from "vue";
+import type { ComponentExposed } from 'vue-component-type-helpers'
 
 import OButton from "@/components/button/Button.vue";
 import OInput from "@/components/input/Input.vue";
@@ -171,6 +179,27 @@ describe("useInputHandler", () => {
         await expect
             .poll(() => visibleWithin(form, input.element()))
             .toBeTruthy();
+    });
+
+    test("shows validation message when explicitly triggered", async () => {
+        const TriggerField = defineComponent({
+            name: "TriggerField",
+            setup: (props) => {
+                const input = useTemplateRef<ComponentExposed<typeof OInput>>("my-input");
+                return (): VNode[] => [
+                    h(OField, { "data-testid": "field" }, () =>
+                        h(OInput, { ref: "my-input", required: true }),
+                    ),
+                    h(OButton, { type: "button", onClick: () => input.value?.checkHtml5Validity() }, () => "Trigger Validation"),
+                ];
+            },
+        });
+        const screen = render(TriggerField);
+        const button = screen.getByRole("button");
+        const message = findMessage(screen);
+        await expect.element(message).not.toBeInTheDocument();
+        await button.click();
+        await expect.element(message).toBeInTheDocument();
     });
 
     test("hides validation message on input change", async () => {

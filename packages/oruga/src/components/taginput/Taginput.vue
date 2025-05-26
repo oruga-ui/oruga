@@ -136,7 +136,7 @@ const emits = defineEmits<{
 const autocompleteRef = useTemplateRef<Component>("autocompleteComponent");
 
 // use form input functionalities
-const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
+const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
     autocompleteRef,
     emits,
     props,
@@ -322,7 +322,7 @@ const autocompleteBind = computed(() => ({
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: selectedItems });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
 </script>
 
 <template>
