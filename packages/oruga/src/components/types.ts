@@ -1537,8 +1537,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 containerClass: ClassDefinition;
                 /** Class of the tag item element */
                 itemClass: ClassDefinition;
-                /** Class of the tag item close button element */
-                closeClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
                 /** Class configuration for the underlying autocomplete component */
