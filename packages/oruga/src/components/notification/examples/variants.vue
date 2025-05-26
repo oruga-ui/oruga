@@ -1,7 +1,7 @@
 <template>
     <section class="odocs-spaced">
         <o-notification
-            closable
+            closeable
             variant="primary"
             aria-close-label="Close notification">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
@@ -10,7 +10,7 @@
         </o-notification>
 
         <o-notification
-            closable
+            closeable
             variant="secondary"
             aria-close-label="Close notification">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
@@ -19,7 +19,7 @@
         </o-notification>
 
         <o-notification
-            closable
+            closeable
             variant="success"
             aria-close-label="Close notification">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
@@ -28,7 +28,7 @@
         </o-notification>
 
         <o-notification
-            closable
+            closeable
             variant="info"
             aria-close-label="Close notification">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
@@ -37,7 +37,7 @@
         </o-notification>
 
         <o-notification
-            closable
+            closeable
             variant="warning"
             aria-close-label="Close notification"
             role="alert">
@@ -47,7 +47,7 @@
         </o-notification>
 
         <o-notification
-            closable
+            closeable
             variant="danger"
             aria-close-label="Close notification"
             role="alert">

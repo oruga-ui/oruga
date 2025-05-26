@@ -248,9 +248,9 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
     closeClass: {
         class: "closeClass",
         description: "Class of the tag item close button element.",
-        properties: ["closable"],
+        properties: ["closeable"],
         action: (data): void => {
-            data.closable = true;
+            data.closeable = true;
         },
     },
     counterClass: {

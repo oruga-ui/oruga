@@ -1,7 +1,7 @@
 <template>
     <section>
         <o-notification
-            closable
+            closeable
             type="success"
             variant="success"
             aria-close-label="Close notification">
@@ -11,7 +11,7 @@
         </o-notification>
 
         <o-notification
-            closable
+            closeable
             type="info"
             variant="info"
             aria-close-label="Close notification">
@@ -21,7 +21,7 @@
         </o-notification>
 
         <o-notification
-            closable
+            closeable
             type="warning"
             variant="warning"
             aria-close-label="Close notification">
@@ -31,7 +31,7 @@
         </o-notification>
 
         <o-notification
-            closable
+            closeable
             type="danger"
             variant="danger"
             aria-close-label="Close notification">
