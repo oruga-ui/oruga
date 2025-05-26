@@ -5,4 +5,4 @@ export const isSSR = typeof window === "undefined";
 
 export const HTMLElement = isClient ? window.HTMLElement : Object;
 export const HTMLInputElement = isClient ? window.HTMLInputElement : Object;
-export const File = isSSR ? window.File : Object;
+export const File = isClient ? window.File : Object;
