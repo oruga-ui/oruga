@@ -9,9 +9,9 @@ export type PaginationProps = {
     perPage?: number | string;
     /** Current page number, use v-model:current to make it two-way binding */
     current?: number;
-    /** Number of pagination items to show before current page. */
+    /** Number of pagination items to show before current page */
     rangeBefore?: number;
-    /** Number of pagination items to show after current page. */
+    /** Number of pagination items to show after current page */
     rangeAfter?: number;
     /**
      * Pagination size

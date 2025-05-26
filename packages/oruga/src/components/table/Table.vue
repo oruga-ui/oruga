@@ -120,6 +120,8 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     paginationRounded: () => getDefault("table.paginationRounded", false),
     paginationSimple: () => getDefault("table.paginationSimple", false),
     paginationOrder: () => getDefault("table.paginationOrder"),
+    paginationRangeBefore: undefined,
+    paginationRangeAfter: undefined,
     backendFiltering: () => getDefault("table.backendFiltering", false),
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
@@ -1225,6 +1227,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :size="paginationSize"
                     :order="paginationOrder"
                     :simple="paginationSimple"
+                    :range-before="paginationRangeBefore"
+                    :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
@@ -1739,6 +1743,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :size="paginationSize"
                     :order="paginationOrder"
                     :simple="paginationSimple"
+                    :range-before="paginationRangeBefore"
+                    :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
