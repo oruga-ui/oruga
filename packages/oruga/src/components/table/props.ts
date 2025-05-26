@@ -135,6 +135,10 @@ export type TableProps<T> = {
     paginationRounded?: boolean;
     /** Enable simple style pagination (if paginated) */
     paginationSimple?: boolean;
+    /** Number of pagination items to show before current page */
+    paginationRangeBefore?: number;
+    /** Number of pagination items to show after current page */
+    paginationRangeAfter?: number;
     /**
      * Pagination buttons order (if paginated)
      * @values centered, right, left
