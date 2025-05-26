@@ -9,8 +9,8 @@ import {
     type Component,
 } from "vue";
 
-import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
+import OTag from "../tag/Tag.vue";
 
 import { getDefault } from "@/utils/config";
 import {
@@ -170,7 +170,7 @@ const selectedOptions = computed(() => {
         const option = findOption<T>(groupedOptions, value);
         // return the found option or create a new option object
         if (option) return option;
-        else return { label: value, value, key: useId() };
+        else return { label: String(value), value, key: useId() };
     });
 });
 
@@ -294,8 +294,6 @@ const itemClasses = defineClasses(
     ],
 );
 
-const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
-
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
 const autocompleteRootClasses = defineClasses([
@@ -339,21 +337,16 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 :items="selectedItems"
                 :options="selectedOptions"
                 :remove-item="removeItem">
-                <span
+                <o-tag
                     v-for="(option, index) in selectedOptions"
                     :key="option.key"
-                    :class="itemClasses">
-                    <span> {{ option.label }}</span>
-
-                    <o-icon
-                        v-if="closable && !disabled"
-                        :class="closeClasses"
-                        :pack="iconPack"
-                        :icon="closeIcon"
-                        clickable
-                        :aria-label="ariaCloseLabel"
-                        @click="removeItem(index, $event)" />
-                </span>
+                    :label="option.label"
+                    :class="itemClasses"
+                    :closeable="closable && !disabled"
+                    :close-icon="closeIcon"
+                    :close-icon-pack="iconPack"
+                    :aria-close-label="ariaCloseLabel"
+                    @close="removeItem(index, $event)" />
             </slot>
 
             <o-autocomplete

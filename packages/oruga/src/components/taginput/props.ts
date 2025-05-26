@@ -98,8 +98,6 @@ export type TaginputClasses = Partial<{
     containerClass: ComponentClass;
     /** Class of the tag item element */
     itemClass: ComponentClass;
-    /** Class of the tag item close button element */
-    closeClass: ComponentClass;
     /** Class of the counter element */
     counterClass: ComponentClass;
     /**
