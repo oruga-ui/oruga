@@ -12,13 +12,14 @@ import {
 import { injectField } from "@/components/field/fieldInjection";
 import { unrefElement } from "./unrefElement";
 import { getOption } from "@/utils/config";
-import { isClient } from "@/utils/ssr";
+import { isSSR } from "@/utils/ssr";
 import { isDefined } from "@/utils/helpers";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.
-const validatableFormElementTypes = isClient
-    ? [
+const validatableFormElementTypes = isSSR
+    ? []
+    : [
           HTMLButtonElement,
           HTMLFieldSetElement,
           HTMLInputElement,
@@ -26,8 +27,7 @@ const validatableFormElementTypes = isClient
           HTMLOutputElement,
           HTMLSelectElement,
           HTMLTextAreaElement,
-      ]
-    : [];
+      ];
 
 export type ValidatableFormElement = InstanceType<
     (typeof validatableFormElementTypes)[number]
