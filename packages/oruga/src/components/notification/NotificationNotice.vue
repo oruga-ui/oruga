@@ -46,7 +46,7 @@ const emits = defineEmits<{
      * on component close event
      * @param value {string} - close event method
      */
-    close: [...args: [string] | CloseEventArgs<C>];
+    close: [...args: [] | [string] | CloseEventArgs<C>];
 }>();
 
 const notificationRef = useTemplateRef("notificationComponent");
@@ -189,7 +189,7 @@ function onMouseLeave(): void {
 }
 
 /** set active to false and emit close event */
-function close(...args: [string] | CloseEventArgs<C>): void {
+function close(...args: [] | [string] | CloseEventArgs<C>): void {
     isActive.value = false;
     if (timer) clearTimeout(timer);
     emits("close", ...args);

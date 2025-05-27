@@ -73,7 +73,7 @@ const emits = defineEmits<{
      * on component close event
      * @param value {string} - close event method
      */
-    close: [...args: [string] | CloseEventArgs<C>];
+    close: [...args: [] | [string] | CloseEventArgs<C>];
 }>();
 
 const { vTrapFocus } = useTrapFocus();
@@ -159,7 +159,7 @@ function cancel(method: string): void {
 }
 
 /** set active to false and emit close event */
-function close(...args: [string] | CloseEventArgs<C>): void {
+function close(...args: [] | [string] | CloseEventArgs<C>): void {
     isActive.value = false;
     emits("close", ...args);
 }

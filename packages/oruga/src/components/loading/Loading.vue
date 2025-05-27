@@ -53,7 +53,7 @@ const emits = defineEmits<{
      * on component close event
      * @param value {string} - close event method
      */
-    close: [...args: [string]];
+    close: [...args: [] | [string]];
 }>();
 
 const rootRef = useTemplateRef("rootElement");
@@ -97,7 +97,7 @@ function cancel(method: string): void {
 }
 
 /** set active to false and emit close event */
-function close(...args: [string]): void {
+function close(...args: [] | [string]): void {
     isActive.value = false;
     emits("close", ...args);
 }
