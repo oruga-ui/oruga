@@ -54,7 +54,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 | Event name    | Properties                                | Description                 |
 | ------------- | ----------------------------------------- | --------------------------- |
 | update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         | **value** `unknown` - close event data    | on component close event    |
+| close         | **value** `string` - close event method   | on component close event    |
 
 ### Slots
 
@@ -92,9 +92,9 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ### Events
 
-| Event name | Properties                             | Description              |
-| ---------- | -------------------------------------- | ------------------------ |
-| close      | **value** `unknown` - close event data | on component close event |
+| Event name | Properties                              | Description              |
+| ---------- | --------------------------------------- | ------------------------ |
+| close      | **value** `string` - close event method | on component close event |
 
 ### Slots
 

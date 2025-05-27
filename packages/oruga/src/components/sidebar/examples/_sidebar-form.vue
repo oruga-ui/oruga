@@ -4,7 +4,7 @@ defineProps({
     password: { type: String, default: "" },
 });
 
-defineEmits(["close"]);
+defineEmits<{ close: [] }>();
 </script>
 
 <template>

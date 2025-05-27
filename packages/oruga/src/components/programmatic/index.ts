@@ -11,6 +11,7 @@ export type {
     ProgrammaticExpose,
     ProgrammaticComponentOptions,
 } from "./useProgrammatic";
+export type { CloseEventArgs } from "./ProgrammaticComponent";
 export { InstanceRegistry };
 
 /** export programmatic plugin */

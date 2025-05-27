@@ -26,9 +26,10 @@ const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useNotificationProgrammatic composable options */
 export type NotificationProgrammaticOptions<C extends Component> = Readonly<
-    Omit<NotificationNoticeProps<C> & NotificationProps, "container">
+    Omit<NotificationNoticeProps<C>, "container">
 > &
-    ProgrammaticComponentOptions;
+    Readonly<NotificationProps> &
+    ProgrammaticComponentOptions<typeof NotificationNotice<C>>;
 
 const NotificationProgrammatic = {
     /** Returns the number of registered active instances. */
@@ -42,7 +43,7 @@ const NotificationProgrammatic = {
     open<C extends Component>(
         options: string | NotificationProgrammaticOptions<C>,
         target?: MaybeRefOrGetter<string | HTMLElement | null>,
-    ): ProgrammaticExpose {
+    ): ProgrammaticExpose<typeof NotificationNotice<C>> {
         const _options: NotificationProgrammaticOptions<C> =
             typeof options === "string" ? { message: options } : options;
 
