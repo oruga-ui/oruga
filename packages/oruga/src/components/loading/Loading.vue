@@ -51,9 +51,9 @@ const emits = defineEmits<{
     "update:fullPage": [value: boolean];
     /**
      * on component close event
-     * @param value {unknown} - close event data
+     * @param value {string} - close event method
      */
-    close: [...args: unknown[]];
+    close: [...args: [string]];
 }>();
 
 const rootRef = useTemplateRef("rootElement");
@@ -93,11 +93,11 @@ function cancel(method: string): void {
         (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
     )
         return;
-    close({ action: "cancel", method });
+    close(method);
 }
 
 /** set active to false and emit close event */
-function close(...args: unknown[]): void {
+function close(...args: [string]): void {
     isActive.value = false;
     emits("close", ...args);
 }
