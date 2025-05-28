@@ -268,7 +268,7 @@ const iconRightClasses = defineClasses([
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
@@ -345,12 +345,11 @@ defineExpose({ focus: setFocus, value: vmodel });
         <o-icon
             v-if="hasIconRight"
             :class="iconRightClasses"
-            :clickable="iconRightClickable"
             :icon="rightIcon"
             :pack="iconPack"
             :size="size"
             :variant="rightIconVariant"
-            both
+            :clickable="iconRightClickable"
             @click="rightIconClick" />
     </div>
 </template>

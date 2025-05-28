@@ -63,6 +63,22 @@ describe("OField tests", () => {
             expect(messageDiv.exists()).toBeTruthy();
             expect(messageDiv.text()).toEqual(message);
         });
+
+        test('react accordingly when "message" is array', async () => {
+            const message = ["Selected option is wrong", "Option is required"];
+            const wrapper = mount(OField, {
+                props: { message },
+                slots: { default: [OInput] },
+            });
+
+            const messageDiv = wrapper.find(".o-field__message");
+            expect(messageDiv.exists()).toBeTruthy();
+            const messages = messageDiv.findAll("div");
+            expect(message).toHaveLength(2);
+            message.forEach((m, idx) => {
+                expect(messages[idx].text()).toEqual(m);
+            });
+        });
     });
 
     describe("managing group prop", () => {

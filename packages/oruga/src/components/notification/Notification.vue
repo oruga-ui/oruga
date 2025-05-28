@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<NotificationProps>(), {
     active: true,
     type: undefined,
     variant: () => getDefault("notification.variant"),
+    rounded: () => getDefault("notification.rounded"),
     position: () => getDefault("notification.position", "top"),
     animation: () => getDefault("notification.animation", "fade"),
     icon: undefined,
@@ -88,6 +89,12 @@ const rootClasses = defineClasses(
         computed(() => !!props.variant),
     ],
     [
+        "roundedClass",
+        "o-notification--rounded",
+        null,
+        computed(() => props.rounded),
+    ],
+    [
         "positionClass",
         "o-notification--",
         computed(() => props.position),
@@ -124,11 +131,9 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 :aria-label="ariaCloseLabel"
                 @click="close({ action: 'close', method: 'x' })">
                 <o-icon
-                    clickable
                     :pack="iconPack"
                     :icon="closeIcon"
-                    :size="closeIconSize"
-                    both />
+                    :size="closeIconSize" />
             </button>
 
             <!--
@@ -144,8 +149,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                     :pack="iconPack"
                     :class="iconClasses"
                     :size="iconSize"
-                    both
-                    aria-hidden />
+                    aria-hidden="true" />
                 <div :class="contentClasses">
                     <!--
                         @slot Notification default content, default is message prop

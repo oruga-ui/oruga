@@ -231,7 +231,7 @@ const draggableClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
@@ -239,7 +239,7 @@ defineExpose({ focus: setFocus, value: vmodel });
         <template v-if="!dragDrop">
             <!--
                 @slot Default content
-                @binding {(event:Event): void} onclick - click handler, only needed if a button is used
+                @binding {(event: Event): void} onclick - click handler, only needed if a button is used
             -->
             <slot :onclick="onClick" />
         </template>
@@ -257,7 +257,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             @drop.prevent="onFileChange">
             <!--
                 @slot Default content     
-                @binding {(event:Event): void} onclick - click handler, only needed if a button is used
+                @binding {(event: Event): void} onclick - click handler, only needed if a button is used
             -->
             <slot :onclick="onClick" />
         </div>

@@ -31,10 +31,10 @@ export type ModalProps<C extends Component = Component> = {
     /** Trap focus inside the modal */
     trapFocus?: boolean;
     /**
-     * Role attribute to be passed to the div wrapper for better accessibility.
-     * @values dialog, alertdialog
+     * This enables the `alertdialog` role, allowing assistive technologies and browsers to distinguish alert modals from other modals.
+     * Alert modals interrupt the user's workflow to communicate an important messages and acquire an explicit response.
      */
-    role?: "dialog" | "alertdialog";
+    alert?: boolean;
     /** Accessibility aria-label to be passed to the div wrapper element */
     ariaLabel?: string;
     /** Automatically focus modal when active */
@@ -46,6 +46,8 @@ export type ModalProps<C extends Component = Component> = {
      * @values small, medium, large
      */
     closeIconSize?: string;
+    /** Accessibility label for the close button */
+    ariaCloseLabel?: string;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint?: string;
     /**

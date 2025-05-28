@@ -43,7 +43,7 @@ These are two great articles about it: https://medium.com/outsystems-experts/how
 And here is one about the FLIP technique (which ``<transition-group>`` uses internally): https://aerotwist.com/blog/flip-your-animations/.
 
 
-## Oruga Javascript styleguide
+## Oruga JavaScript styleguide
 
 Add comments if method is too complex and/or whenever you judge necessary.
 

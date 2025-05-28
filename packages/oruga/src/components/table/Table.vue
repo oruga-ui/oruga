@@ -120,6 +120,8 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     paginationRounded: () => getDefault("table.paginationRounded", false),
     paginationSimple: () => getDefault("table.paginationSimple", false),
     paginationOrder: () => getDefault("table.paginationOrder"),
+    paginationRangeBefore: undefined,
+    paginationRangeAfter: undefined,
     backendFiltering: () => getDefault("table.backendFiltering", false),
     filtersIcon: () => getDefault("table.filterIcon"),
     filtersPlaceholder: () => getDefault("table.filterPlaceholder"),
@@ -425,8 +427,14 @@ const isScrollable = computed(() => {
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
 // recompute table rows visibility on page change or data change
-watch([tableCurrentPage, () => props.perPage, () => props.data], () =>
-    filterTableRows(),
+watch(
+    [
+        tableCurrentPage,
+        () => props.perPage,
+        () => props.data,
+        () => props.paginated,
+    ],
+    () => filterTableRows(),
 );
 
 // create a unique id sequence
@@ -465,13 +473,13 @@ function filterTableRows(): void {
     const pageEnd = pageStart + perPage;
 
     // update hidden state for each row
-    filterOptionsItems(tableRows, (row) => {
+    filterOptionsItems(tableRows, (row, idx) => {
         // if paginated not backend paginated, paginate row
-        if (props.paginated || !props.backendPagination) {
+        if (props.paginated && !props.backendPagination) {
             // if not only one page and not on active page
             if (
                 tableRows.value.length > perPage &&
-                (row.index < pageStart || row.index >= pageEnd)
+                (idx < pageStart || idx >= pageEnd)
             )
                 // return row is invisible (filtered out)
                 return true;
@@ -724,6 +732,16 @@ function initSort(): void {
     sortByField(sortField, sortDirection);
 }
 
+function sortByField(field: string, direction: "asc" | "desc"): void {
+    const sortColumn = tableColumns.value.find(
+        (column) => column.field === field,
+    );
+    if (sortColumn) {
+        isAsc.value = direction.toLowerCase() === "asc";
+        sort(sortColumn);
+    }
+}
+
 /**
  * Sort the column.
  * Toggle current direction on column if it's sortable
@@ -752,17 +770,13 @@ function sort(
 
     currentSortColumn.value = column;
 
-    // if not backend sorted, sort rows by mutating the tableRows array
-    if (!props.backendSorting) sortByColumn(tableRows.value);
-}
+    // if not backend sorted
+    if (!props.backendSorting) {
+        // sort rows by mutating the tableRows array
+        sortByColumn(tableRows.value);
 
-function sortByField(field: string, direction: "asc" | "desc"): void {
-    const sortColumn = tableColumns.value.find(
-        (column) => column.field === field,
-    );
-    if (sortColumn) {
-        isAsc.value = direction.toLowerCase() === "asc";
-        sort(sortColumn);
+        // recalculate the page filter
+        filterTableRows();
     }
 }
 
@@ -1219,6 +1233,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :size="paginationSize"
                     :order="paginationOrder"
                     :simple="paginationSimple"
+                    :range-before="paginationRangeBefore"
+                    :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
@@ -1347,7 +1363,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         <o-icon
                                             :icon="sortIcon"
                                             :pack="iconPack"
-                                            both
                                             :size="sortIconSize"
                                             :rotation="!isAsc ? 180 : 0" />
                                     </span>
@@ -1537,16 +1552,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :icon="detailIcon"
                                     :pack="iconPack"
                                     :rotation="isDetailRowVisible(row) ? 90 : 0"
-                                    role="button"
-                                    tabindex="0"
                                     clickable
-                                    both
                                     :aria-label="`Open ${row.label} details`"
-                                    @click.prevent="toggleDetails(row)"
-                                    @keydown.prevent.enter="toggleDetails(row)"
-                                    @keydown.prevent.space="
-                                        toggleDetails(row)
-                                    " />
+                                    @click.prevent="toggleDetails(row)" />
                             </td>
 
                             <!-- checkable column left -->
@@ -1580,6 +1588,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         ...tdBaseClasses,
                                         ...column.tdClasses,
                                     ]"
+                                    :data-label="column.label"
                                     :style="isMobileActive ? {} : column.style"
                                     :props="{
                                         row: row.value,
@@ -1663,8 +1672,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     v-if="emptyIcon"
                                     :icon="emptyIcon"
                                     :size="emptyIconSize"
-                                    :pack="iconPack"
-                                    both />
+                                    :pack="iconPack" />
                                 {{ emptyLabel }}
                             </slot>
                         </td>
@@ -1741,6 +1749,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                     :size="paginationSize"
                     :order="paginationOrder"
                     :simple="paginationSimple"
+                    :range-before="paginationRangeBefore"
+                    :range-after="paginationRangeAfter"
                     :icon-pack="iconPack"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"

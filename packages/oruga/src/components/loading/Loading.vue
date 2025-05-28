@@ -99,7 +99,7 @@ function cancel(method: string): void {
 /** set active to false and emit close event */
 function close(...args: unknown[]): void {
     isActive.value = false;
-    emits("close", args);
+    emits("close", ...args);
 }
 
 // --- Computed Component Classes ---
@@ -143,8 +143,7 @@ defineExpose({ close });
                     :icon="icon"
                     :spin="iconSpin"
                     :size="iconSize"
-                    :class="iconClasses"
-                    both />
+                    :class="iconClasses" />
                 <span v-if="label" :class="labelClasses">
                     {{ label }}
                 </span>

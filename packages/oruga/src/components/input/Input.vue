@@ -345,7 +345,7 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
@@ -397,12 +397,11 @@ defineExpose({ focus: setFocus, value: vmodel });
         <o-icon
             v-if="hasIconRight"
             :class="iconRightClasses"
-            :clickable="passwordReveal || clearable || iconRightClickable"
             :icon="computedIconRight"
             :pack="iconPack"
             :size="size"
             :variant="computedIconRightVariant"
-            both
+            :clickable="passwordReveal || clearable || iconRightClickable"
             @click="rightIconClick" />
 
         <small

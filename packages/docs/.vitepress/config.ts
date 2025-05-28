@@ -27,8 +27,8 @@ const getStartedItems = [
         link: "/documentation/#introduction",
     },
     {
-        text: "Customisation",
-        link: "/documentation/customisation",
+        text: "Configuration",
+        link: "/documentation/configuration",
     },
     {
         text: "Themes",
@@ -121,7 +121,7 @@ export default defineConfig({
         },
         footer: {
             message: "Released under the MIT License.",
-            copyright: `Copyright © 2020-${new Date().getFullYear()} Walter Tommasi`,
+            copyright: `Copyright © 2020-${new Date().getFullYear()} Oruga Ui`,
         },
         /*
         carbonAds: {

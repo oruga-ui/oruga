@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
     position: () => getDefault("notification.position", "top"),
     duration: () => getDefault("notification.duration", 2000),
     infinite: false,
+    pauseOnHover: false,
     queue: () => getDefault("notification.queue"),
     component: undefined,
     props: undefined,
@@ -53,8 +54,6 @@ const isActive = ref(true);
 
 const parentTop = ref<Element | null>(null);
 const parentBottom = ref<Element | null>(null);
-
-const timer = ref();
 
 /** Create or inject notice dom container elements. */
 onBeforeMount(() => {
@@ -156,23 +155,43 @@ function showNotice(): void {
     );
 }
 
+// --- Auto Close Feature  ---
+
+let timer: ReturnType<typeof setTimeout> | undefined;
+
 /** Set timer to auto close message */
 function setAutoClose(): void {
     if (!props.infinite) {
         // clear old timer
-        if (timer.value) clearTimeout(timer.value);
+        if (timer) clearTimeout(timer);
         // set new timer
-        timer.value = setTimeout(() => {
+        timer = setTimeout(() => {
             if (isActive.value) close({ action: "close", method: "timeout" });
         }, props.duration);
     }
 }
 
+let isPaused = false;
+
+function onMouseOver(): void {
+    if (props.pauseOnHover && !props.infinite) {
+        isPaused = true;
+        // stop auto close timeout
+        clearInterval(timer);
+    }
+}
+
+function onMouseLeave(): void {
+    if (isPaused)
+        // close when mouse leave and is paused before
+        close();
+}
+
 /** set active to false and emit close event */
 function close(...args: unknown[]): void {
     isActive.value = false;
-    if (timer.value) clearTimeout(timer.value);
-    emits("close", args);
+    if (timer) clearTimeout(timer);
+    emits("close", ...args);
 }
 
 // --- Computed Component Classes ---
@@ -208,9 +227,12 @@ defineExpose({ close });
         v-model:active="isActive"
         :override="override"
         :position="position"
+        :variant="variant"
         :role="isAlert ? 'alert' : 'status'"
         :aria-atomic="true"
-        @close="close">
+        @close="close"
+        @mouseover="onMouseOver"
+        @mouseleave="onMouseLeave">
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->
             <component

@@ -245,8 +245,8 @@ const submenuClasses = defineClasses([
                 tabindex="-1"
                 role="group">
                 <!--
-                        @slot Place menu items here 
-                    -->
+                    @slot Place menu items here 
+                -->
                 <slot>
                     <OMenuItem
                         v-for="option in normalizedOptions"

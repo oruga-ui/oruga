@@ -319,7 +319,7 @@ const dropdownBind = computed(() => ({
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus });
+defineExpose({ checkHtml5Validity, focus: setFocus });
 </script>
 
 <template>

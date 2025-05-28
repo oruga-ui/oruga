@@ -222,13 +222,25 @@ watch(
     (value) => {
         // on active set event handler if not open as modal
         if (value) {
-            // keep first option always pre-selected
+            // keep first option always pre-focused
             if (!props.inline && props.keepFirst && !focusedItem.value)
                 moveFocus(1);
         }
         if (isModal.value) toggleScroll(value);
     },
     { flush: "post" },
+);
+
+watch(
+    childItems,
+    () => {
+        // change pre-focused element when items change and keepFirst
+        if (isActive.value && !props.inline && props.keepFirst) {
+            focusedItem.value = undefined;
+            moveFocus(1);
+        }
+    },
+    { deep: true, flush: "post" },
 );
 
 // #region --- Trigger Handler ---
@@ -285,7 +297,7 @@ function toggle(method: string, event: Event): void {
     else close(method, event);
 }
 
-let timer: NodeJS.Timeout | undefined;
+let timer: ReturnType<typeof setTimeout> | undefined;
 
 function open(method: string, event: Event): void {
     if (props.disabled) return;
@@ -576,7 +588,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
                 @binding {T | T[]} value - the selected value
-                @binding {() => void} toggle - toggle dropdown active state
+                @binding {(): void} toggle - toggle dropdown active state
             -->
             <slot
                 name="trigger"
@@ -630,7 +642,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {number} focusedIndex - index of the focused element
-                        @binding {() => void} toggle - toggle dropdown active state
+                        @binding {(): void} toggle - toggle dropdown active state
                     -->
                     <slot
                         :active="isActive"

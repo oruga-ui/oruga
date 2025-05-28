@@ -2,6 +2,9 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Alert from "./alert.vue";
+import AlertCode from "./alert.vue?raw";
+
 import Component from "./component.vue";
 import ComponentCode from "./component.vue?raw";
 
@@ -17,9 +20,27 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
 
 <template>
     <h3 id="base">Base</h3>
+    <p>
+        Setting the <code>clipScroll</code> prop removes the body scrollbar. By
+        default, the body retains a non scrollable scrollbar to prevent the
+        background from shifting. However, this will set the body to
+        <code>position="fixed"</code>, which may cause some layouts to break.
+    </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3 id="base">Teleport</h3>
+    <h3 id="alert">Alert</h3>
+    <p>
+        An alert modal interrupt the user's workflow to communicate an important
+        messages and acquire an explicit response, for example confirmation
+        prompts and error message confirmations. By setting
+        <code>alert</code> prop the <code>alertdialog</code> aria role enables
+        assistive technologies and browsers to distinguish alert dialogs from
+        other dialogs so they have the option of giving alert dialogs special
+        treatment, such as playing a system alert sound.
+    </p>
+    <ExampleViewer :component="Alert" :code="AlertCode" />
+
+    <h3 id="teleport">Teleport</h3>
     <p>
         The <code>teleport</code> prop allows the modal to be "teleported" into
         any DOM node outside the DOM hierarchy of that component. By default, if
@@ -49,11 +70,20 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
         <a href="/documentation/composables.html">
             <code>useOruga()</code>
         </a>
-        composable.
+        composable. The composable can be used from outside the Vue instance.
+        For example, it can be used in Pinia or Vue Router with this syntax:
     </p>
-    <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 
-    <h3 id="async">Programmatically (with promises and async/await)</h3>
+    <div class="language-js">
+        <pre>
+    import { useOruga } from "@oruga-ui/oruga-next";
+    const oruga = useOruga(); 
+    oruga.modal.open({...});</pre
+        >
+    </div>
+    <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
+    <br />
+
     <p>
         A programmatic instance returns a promise to await for. The promise gets
         resolved when the modal gets closed.

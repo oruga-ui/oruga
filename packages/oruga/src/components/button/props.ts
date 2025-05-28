@@ -46,11 +46,6 @@ export type ButtonProps = {
      * @values button, submit, reset
      */
     type?: "button" | "submit" | "reset";
-    /**
-     * This is used internally
-     * @ignore
-     */
-    iconBoth?: boolean;
 } & ButtonClasses;
 
 // class props (will not be displayed in the docs)

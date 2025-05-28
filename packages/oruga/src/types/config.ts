@@ -2,6 +2,7 @@
 import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
 import type { DynamicComponent } from "./utils";
+import type { MaybeRefOrGetter } from "vue";
 
 /** export option types */
 export type {
@@ -10,6 +11,7 @@ export type {
     OptionsGroupItem,
     OptionsGroupPropItem,
     OptionsProp,
+    SimpleOptionsProp,
     OptionsGroupProp,
     OptionsPropWithGroups,
 } from "@/composables";
@@ -53,7 +55,10 @@ export type GlobalConfig = Partial<{
     customIconPacks: Record<string, IconConfig>;
     /** Define a specific icon component */
     iconComponent: DynamicComponent;
-    /** Show input status icon using field and variant prop */
+    /**
+     * Show input status icon using field and variant prop
+     * @default true
+     */
     statusIcon: boolean;
     /** Default mapping of variant and icon name */
     statusVariantIcon: {
@@ -62,20 +67,35 @@ export type GlobalConfig = Partial<{
         info: string;
         warning: string;
     };
-    /** Enable default form components HTML5 validation attribute */
+    /**
+     * Teleport and programmatic default target
+     * @default document.body
+     */
+    teleportTarget: MaybeRefOrGetter<string | HTMLElement>;
+    /**
+     * Enable default form components HTML5 validation attribute
+     * @default true
+     */
     useHtml5Validation: boolean;
     /** Custom HTML5 validation invalid handler */
     invalidHandler: (
         validatable: ValidatableFormElement,
-        fieldElement: Element,
+        fieldElement?: Element | undefined,
     ) => void;
     /** You can use transformClasses globally if you need to transform classes for any component. */
     transformClasses: TransformFunction;
+    /** Mobile breakpoint as `max-width` value */
+    mobileBreakpoint: string;
     /**
      * In case you want to override existing Oruga default classes all components completely,
      * you can specify the override behaviour here globaly.
      */
     override: boolean;
+    /**
+     * @private
+     * @ignore
+     */
+    environment: "docs" | "examples";
 }>;
 
 export interface OrugaOptions extends GlobalConfig {}

@@ -2,6 +2,8 @@
 declare module "vue" {
     export interface GlobalComponents {
         OAutocomplete: (typeof import("@oruga-ui/oruga-next"))["OAutocomplete"];
+        OBreadcrumb: (typeof import("@oruga-ui/oruga-next"))["OBreadcrumb"];
+        OBreadcrumbItem: (typeof import("@oruga-ui/oruga-next"))["OBreadcrumbItem"];
         OButton: (typeof import("@oruga-ui/oruga-next"))["OButton"];
         OCarousel: (typeof import("@oruga-ui/oruga-next"))["OCarousel"];
         OCarouselItem: (typeof import("@oruga-ui/oruga-next"))["OCarouselItem"];
@@ -34,6 +36,7 @@ declare module "vue" {
         OTableColumn: (typeof import("@oruga-ui/oruga-next"))["OTableColumn"];
         OTabItem: (typeof import("@oruga-ui/oruga-next"))["OTabItem"];
         OTabs: (typeof import("@oruga-ui/oruga-next"))["OTabs"];
+        OTag: (typeof import("@oruga-ui/oruga-next"))["OTag"];
         OTaginput: (typeof import("@oruga-ui/oruga-next"))["OTaginput"];
         OTimepicker: (typeof import("@oruga-ui/oruga-next"))["OTimepicker"];
         OTooltip: (typeof import("@oruga-ui/oruga-next"))["OTooltip"];

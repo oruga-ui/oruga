@@ -48,7 +48,7 @@ export type TaginputProps<T> = {
     validateItem?: (value: T | string) => boolean;
     /** Function to create a new item to push into v-model (items) */
     createItem?: (value: T | string) => T;
-    /** Makes the component check if list reached scroll start or end and emit scroll events. */
+    /** Makes the component check if list reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /** Add close/delete button to the item */
     closable?: boolean;
@@ -88,6 +88,8 @@ export type TaginputClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
     /** Class of the root element with size */
     sizeClass: ComponentClass;
     /** Class of the root element with variant */
@@ -96,8 +98,6 @@ export type TaginputClasses = Partial<{
     containerClass: ComponentClass;
     /** Class of the tag item element */
     itemClass: ComponentClass;
-    /** Class of the tag item close button element */
-    closeClass: ComponentClass;
     /** Class of the counter element */
     counterClass: ComponentClass;
     /**

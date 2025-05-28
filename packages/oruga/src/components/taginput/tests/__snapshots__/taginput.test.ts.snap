@@ -7,6 +7,7 @@ exports[`OTaginput tests > render correctly 1`] = `
                 @slot Override selected items
                 @binding {(string, object)[]} items - selected items
                 @binding {object[]} options - selected options
+                @binding {(index, event): void} removeItem - remove item function
             -->
     <div data-oruga="autocomplete" class="o-dropdown o-dropdown--expanded o-dropdown--position-auto o-autocomplete o-taginput__autocomplete">
       <div class="o-dropdown__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false" aria-controls="v-0">
@@ -14,7 +15,7 @@ exports[`OTaginput tests > render correctly 1`] = `
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
                 @binding {T | T[]} value - the selected value
-                @binding {() => void} toggle - toggle dropdown active state
+                @binding {(): void} toggle - toggle dropdown active state
             -->
         <div data-oruga="input" class="o-input o-input--expanded">
           <!--v-if--><input has-counter="false" aria-autocomplete="list" aria-controls="v-0" enterkeyhint="enter" id="v-1" type="text" data-oruga-input="text" class="o-input__input o-taginput__input o-input__input--placeholder" autocomplete="off">
@@ -30,7 +31,7 @@ exports[`OTaginput tests > render correctly 1`] = `
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {number} focusedIndex - index of the focused element
-                        @binding {() => void} toggle - toggle dropdown active state
+                        @binding {(): void} toggle - toggle dropdown active state
                     -->
           <!--
                             @slot Place extra \`o-dropdown-item\` components here, even if you have some options defined by prop

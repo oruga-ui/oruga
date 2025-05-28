@@ -41,6 +41,14 @@ const inspectData: InspectData<
             data.variant = "warning";
         },
     },
+    roundedClass: {
+        class: "roundedClass",
+        description: "Class of the root element when rounded.",
+        properties: ["rounded"],
+        action: (data): void => {
+            data.rounded = true;
+        },
+    },
     wrapperClass: {
         class: "wrapperClass",
         description: "Class of the wrapper element.",

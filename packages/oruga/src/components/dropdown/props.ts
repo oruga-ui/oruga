@@ -14,7 +14,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     options?: OptionsPropWithGroups<T>;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Trigger label, unnecessary when trgger slot is used */
+    /** Trigger label, unnecessary when trigger slot is used */
     label?: string;
     /** Dropdown is disabled */
     disabled?: boolean;
@@ -24,7 +24,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     selectable?: boolean;
     /** Dropdown content will be scrollable */
     scrollable?: boolean;
-    /** Makes the component check if menu reached scroll start or end and emit scroll events. */
+    /** Makes the component check if menu reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /** Max height of dropdown content */
     maxHeight?: string | number;

@@ -11,16 +11,16 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { vTrapFocus } from "@/directives/trapFocus";
 import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
     useClickOutside,
-    useEventListener,
     useMatchMedia,
     usePreventScrolling,
+    useTeleportDefault,
+    useTrapFocus,
 } from "@/composables";
 
 import type { ModalProps } from "./props";
@@ -48,11 +48,12 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     cancelable: () =>
         getDefault("modal.cancelable", ["escape", "x", "outside"]),
     trapFocus: () => getDefault("modal.trapFocus", true),
-    role: () => getDefault("modal.role", "dialog"),
+    alert: () => getDefault("modal.alert", false),
     ariaLabel: () => getDefault("modal.ariaLabel"),
     autoFocus: () => getDefault("modal.autoFocus", true),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
+    ariaCloseLabel: () => getDefault("modal.ariaCloseLabel", "Close"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
     clipScroll: () => getDefault("modal.clipScroll", false),
@@ -74,6 +75,8 @@ const emits = defineEmits<{
     close: [...args: unknown[]];
 }>();
 
+const { vTrapFocus } = useTrapFocus();
+
 const rootRef = useTemplateRef("rootElement");
 const contentRef = useTemplateRef("contentElement");
 
@@ -83,7 +86,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
-        ? { to: "body", disabled: !props.teleport }
+        ? { to: useTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
 
@@ -114,22 +117,12 @@ onMounted(() => {
 
 // --- Events Feature ---
 
-if (isClient) {
-    // register onKeyPress event listener when is active
-    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
-
+if (isClient)
     if (!props.overlay)
         // register outside click event listener when is active
         useClickOutside(contentRef, onClickedOutside, {
             trigger: isActive,
         });
-}
-
-/** Keypress event that is bound to the document. */
-function onKeyPress(event: KeyboardEvent): void {
-    if (!isActive.value) return;
-    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
-}
 
 /** Close fixed sidebar if clicked outside. */
 function onClickedOutside(event: Event): void {
@@ -140,6 +133,12 @@ function onClickedOutside(event: Event): void {
     )
         event.preventDefault();
     cancel("outside");
+}
+
+/** Escape key press event bound to the component root. */
+function onEscapePress(): void {
+    if (!isActive.value) return;
+    cancel("escape");
 }
 
 /**
@@ -161,7 +160,7 @@ function cancel(method: string): void {
 /** set active to false and emit close event */
 function close(...args: unknown[]): void {
     isActive.value = false;
-    emits("close", args);
+    emits("close", ...args);
 }
 
 // --- Animation Feature ---
@@ -216,13 +215,14 @@ defineExpose({ close });
                 v-show="isActive"
                 ref="rootElement"
                 v-bind="$attrs"
-                v-trap-focus="trapFocus"
+                v-trap-focus="isActive && trapFocus"
                 data-oruga="modal"
                 :class="rootClasses"
                 :tabindex="-1"
-                :role="role"
+                :role="alert ? 'alertdialog' : 'dialog'"
                 :aria-label="ariaLabel"
-                :aria-modal="isActive">
+                :aria-modal="isActive"
+                @keyup.escape="onEscapePress">
                 <div
                     v-if="overlay"
                     :class="overlayClasses"
@@ -251,11 +251,11 @@ defineExpose({ close });
                     <o-icon
                         v-if="showX"
                         v-show="!isAnimating"
-                        clickable
-                        both
                         :class="closeClasses"
                         :icon="closeIcon"
                         :size="closeIconSize"
+                        clickable
+                        :aria-label="ariaCloseLabel"
                         @click="cancel('x')" />
                 </div>
             </div>

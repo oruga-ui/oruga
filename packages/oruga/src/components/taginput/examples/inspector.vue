@@ -229,6 +229,14 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
             data.expanded = true;
         },
     },
+    disabledClass: {
+        class: "disabledClass",
+        description: "Class of the root element when disabled.",
+        properties: ["disabled"],
+        action: (data): void => {
+            data.disabled = true;
+        },
+    },
     containerClass: {
         class: "containerClass",
         description: "Class of the inner container element.",
@@ -236,14 +244,6 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
     itemClass: {
         class: "itemClass",
         description: "Class of the tag item element.",
-    },
-    closeClass: {
-        class: "closeClass",
-        description: "Class of the tag item close button element.",
-        properties: ["closable"],
-        action: (data): void => {
-            data.closable = true;
-        },
     },
     counterClass: {
         class: "counterClass",

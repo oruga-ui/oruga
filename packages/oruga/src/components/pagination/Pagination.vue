@@ -262,7 +262,7 @@ defineExpose({ last, first, prev, next });
             @slot Previous button slot
             @binding {number} number - page number 
             @binding {boolean} isCurrent - if page is current
-            @binding {(event:Event): void} onClick - click handler
+            @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         -->
         <slot
@@ -274,11 +274,7 @@ defineExpose({ last, first, prev, next });
                 :root-class="buttonPrevClasses"
                 :button-class="buttonClasses"
                 :button-current-class="buttonCurrentClasses">
-                <o-icon
-                    :icon="iconPrev"
-                    :pack="iconPack"
-                    both
-                    aria-hidden="true" />
+                <o-icon :icon="iconPrev" :pack="iconPack" aria-hidden="true" />
             </o-pagination-button>
         </slot>
 
@@ -286,7 +282,7 @@ defineExpose({ last, first, prev, next });
             @slot Next button slot
             @binding {number} number - page number 
             @binding {boolean} isCurrent - if page is current
-            @binding {(event:Event): void} onClick - click handler
+            @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         -->
         <slot name="next" v-bind="getPage(currentPage + 1, ariaNextLabel)">
@@ -296,11 +292,7 @@ defineExpose({ last, first, prev, next });
                 :root-class="buttonNextClasses"
                 :button-class="buttonClasses"
                 :button-current-class="buttonCurrentClasses">
-                <o-icon
-                    :icon="iconNext"
-                    :pack="iconPack"
-                    both
-                    aria-hidden="true" />
+                <o-icon :icon="iconNext" :pack="iconPack" aria-hidden="true" />
             </o-pagination-button>
         </slot>
 
@@ -355,7 +347,7 @@ defineExpose({ last, first, prev, next });
                     @slot Pagination button slot
                     @binding {number} number - page number 
                     @binding {boolean} isCurrent - if page is current
-                    @binding {(event:Event): void} onClick - click handler
+                    @binding {(event: Event): void} onClick - click handler
                     @binding {string} ariaLabel - aria-label attribute
                 -->
                 <slot v-bind="getPage(pageCount)">

@@ -1,11 +1,8 @@
-
-
-
 # Themes
 
-Because Oruga doesn't come with any CSS by default, we would like to provide you with a variety of ready-to-use <b>Themes</b>.
-A theme provide the <b>CSS styling for the components</b>. They can build on existing CSS frameworks/libraries or be completely lightweight and dependency free.
-A theme comes as a <b>separate package</b>, which you can install and change completely at will. 
+Because Oruga doesn't come with any CSS by default, we would like to provide you with a variety of ready-to-use **themes**.
+A theme provide the **CSS styling for the components**. They can build on existing CSS frameworks/libraries or be completely lightweight and dependency free.
+A theme comes as a **separate package**, which you can install and change completely at will. 
 Themes that build on top of an existing CSS framework usually come with a theme-specific global Oruga Config object.
 
 These themes are currently available:
@@ -17,10 +14,10 @@ These themes are currently available:
 You can change the active theme for this documentation site using the dropdown menu in the navigation bar.
 :::
 
-
+<!-- 
 <video class="oruga-doc-video" controls autoplay muted loop>
   <source src="/defaultswitch.mp4" type="video/mp4">
-</video>
+</video> -->
 
 
 
@@ -63,6 +60,7 @@ or a specific component variable, such as button icon width
   --oruga-button-icon-width: 2.5em;
 }
 ```
+
 
 ## Oruga Theme
 
@@ -111,124 +109,9 @@ For example to style a dropdown using override mode with _oruga_ default stylesh
 }
 ```
 
-
 Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
 
 
-### Deal with specificity
-
-Oruga CSS comes with the lowest possible [specifity](https://www.w3schools.com/css/css_specificity.asp), so you can easily override existing classes by defining new ones in the global configuration or using attributes. However, there are some cases where the specificity is higher than you might expect, for example in the [Steps](/components/Steps.html) component the `nav item` contains a `marker` and a `divider` whose colors change whether the nav item is active or not.
-
-```scss
-.o-steps {
-    ...
-    &__nav-item-active {
-        .o-steps__link {
-            cursor: default;
-        }
-
-        .o-steps__marker {
-            @include avariable('background-color', 'steps-maker-default-color', $steps-maker-default-color);
-            @include avariable('border-color', 'steps-active-color', $steps-active-color);
-            @include avariable('color', 'steps-active-color', $steps-active-color);
-        }
-
-        .o-steps__divider {
-            background-position: left bottom;
-        }
-    }
-
-    &__nav-item-previous {
-        .o-steps__marker {
-            @include avariable('color', 'steps-maker-default-color', $steps-maker-default-color);
-            @include avariable('background-color', 'steps-previous-color', $steps-previous-color);
-        }
-
-        .o-steps__divider {
-            background-position: left bottom;
-        }
-    }
-    ...
-}
-```
-
-If you want to change the color you can use `!important` or change the values of the variables. Otherwise, you can easily increase the specificity in your stylesheet
-
-```css
-.steps-nav-item-active .step-marker {
-  color: blue;
-  border-color: blue;
-}
-
-.steps-nav-item-active .step-divider {
-  background-color: blue;
-}
-
-.steps-nav-item-previous .step-marker {
-  background-color: blue;
-}
-
-.steps-nav-item-previous .step-divider {
-  background-color: blue;
-}
-```
-
-and then configure Oruga to use your custom classes
-
-```js
-createApp(...)
-    .use(Oruga, {
-        steps: {
-            itemActiveClass: 'steps-nav-item-active',
-            itemPreviousClass: 'steps-nav-item-previous',
-            stepMarkerClass: 'step-marker',
-            stepDividerClass: 'step-divider',
-        }
-    });
-```
-
-You can see this code in action in [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind) (code [here](https://github.com/oruga-ui/demo-multiframework/blob/master/src/assets/oruga-tailwindcss.css#L64))
-
-Sometimes components change the way elements are positioned (horizontally, vertically...), this is another case of higher specificity. In the [Steps](/components/Steps.html) component the `vertical` attribute disposes the steps vertically changing the `height` of the steps `divider`.
-
-```scss
-.o-steps {
-    &__wrapper-vertical {
-        display: flex;
-        flex-direction: row;
-
-        .o-steps__divider {
-            height: 100%;
-            @include avariable('width', 'steps-divider-height', $steps-divider-height);
-            top: -50%;
-            left: calc(50% - #{$steps-divider-height / 2});
-        }
-
-        ...
-    }
-    ...
-}
-```
-
-If you want to set the height to 50% while keeping the other attributes unchanged, you can't just define a new class (unless you want to use `!important`), because of the higher specificity. In this case, we suggest you define your new class like this:
-
-```css
-.steps-vertical .step-divider {
-  height: 50%;
-}
-```
-
-and in your configuration
-
-```js
-createApp(...)
-    .use(Oruga, {
-        steps: {
-            verticalClass: 'steps-vertical',
-            stepDividerClass: 'step-divider'
-        }
-    });
-```
 
 ## Bulma Theme
 
@@ -267,6 +150,8 @@ createApp(...)
 
 See the [theme repository](https://github.com/oruga-ui/theme-bulma) and the [Bulma documenation](https://bulma.io/documentation/) for a detailed documentation.
 
+
+
 ## Bootstrap Theme
 
 The [Bootstrap Theme](https://github.com/oruga-ui/theme-bootstrap) provides a customisation of the Oruga components with [Bootstrap](https://getbootstrap.com/).
@@ -287,7 +172,6 @@ yarn add @oruga-ui/theme-bootstrap
 
 :::
 
-
 The theme comes with its own Bootstrap-based class mapping configuration and some additional component styling that you have to import:
 
 ```js
@@ -305,6 +189,8 @@ createApp(...)
 ```
 
 See the [theme repository](https://github.com/oruga-ui/theme-bootstrap) and the [Bootstrap documentation](https://getbootstrap.com/docs/) for a detailed documentation.
+
+
 
 ## Global Theme Variables
 

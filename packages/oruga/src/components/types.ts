@@ -9,6 +9,8 @@ declare module "../index" {
     interface OrugaOptions {
         autocomplete?: ComponentConfigBase &
             Partial<{
+                /** Options won't be filtered based on the input value on clientside */
+                backendFiltering: boolean;
                 /** Menu tag name */
                 menuTag: DynamicComponent;
                 /** Menu item tag name */
@@ -29,7 +31,7 @@ declare module "../index" {
                 openOnFocus: boolean;
                 /** Max height of dropdown content */
                 maxHeight: number | string;
-                /** Makes the component check if list reached scroll start or end and emit scroll events. */
+                /** Makes the component check if list reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Icon pack to use */
                 iconPack: string;
@@ -67,6 +69,51 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemFooterClass: ClassDefinition;
                 /** Class configuration for the internal input component */
                 inputClasses: Record<string, any>;
+            }>;
+        breadcrumb?: ComponentConfigBase &
+            Partial<{
+                /** Size of the breadcrumb */
+                size: string;
+                /** Color variant of the breadcrumb */
+                variant: string;
+                /** Position of the breadcrumb */
+                position: "centered" | "left" | "right";
+                /** The separator between breadcrumb items */
+                separator: string;
+                /** Accessibility aria-label to be passed to the nav wrapper element */
+                ariaLabel: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element with alignment */
+                positionClass: ClassDefinition;
+                /** Class of the list element */
+                listClass: ClassDefinition;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Icon size */
+                iconSize: string;
+                /** Item tag name */
+                tag: DynamicComponent;
+                /** Class of the item element */
+                itemClass: ClassDefinition;
+                /** Class of the item element when disabled */
+                disabledClass: ClassDefinition;
+                /** Class of the item element when active */
+                activeClass: ClassDefinition;
+                /** Class of the item seperator element */
+                seperatorClass: ClassDefinition;
+                /** Class of the item link element */
+                linkClass: ClassDefinition;
+                /** Class of the item icon element */
+                iconClass: ClassDefinition;
+                /** Class of the item left icon element */
+                iconLeftClass: ClassDefinition;
+                /** Class of the item right icon element */
+                iconRightClass: ClassDefinition;
             }>;
         button?: ComponentConfigBase &
             Partial<{
@@ -436,7 +483,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
-                /** Makes the component check if menu reached scroll start or end and emit scroll events. */
+                /** Makes the component check if menu reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Max height of dropdown content */
                 maxHeight: number | string;
@@ -722,8 +769,9 @@ but will set the body to a fixed position, which may break some layouts. */
                 clipScroll: boolean;
                 /** Trap focus inside the modal */
                 trapFocus: boolean;
-                /** Role attribute to be passed to the div wrapper for better accessibility. */
-                role: "alertdialog" | "dialog";
+                /** This enables the `alertdialog` role, allowing assistive technologies and browsers to distinguish alert modals from other modals.
+Alert modals interrupt the user's workflow to communicate an important messages and acquire an explicit response. */
+                alert: boolean;
                 /** Accessibility aria-label to be passed to the div wrapper element */
                 ariaLabel: string;
                 /** Automatically focus modal when active */
@@ -732,6 +780,8 @@ but will set the body to a fixed position, which may break some layouts. */
                 closeIcon: string;
                 /** Size of close icon */
                 closeIconSize: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -761,6 +811,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Color of the control */
                 variant: string;
+                /** Enable rounded style */
+                rounded: boolean;
                 /** Which position the notification will appear when programmatically */
                 position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
                 /** Custom animation (transition name) */
@@ -781,6 +833,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 positionClass: ClassDefinition;
                 /** Class of the root element with variant */
                 variantClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
                 /** Class of the close button element */
                 closeClass: ClassDefinition;
                 /** Class of the content element */
@@ -791,7 +845,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 wrapperClass: ClassDefinition;
                 /** Hide notification after duration (in miliseconds) */
                 duration: number;
-                /** If notice should queue with others notices (snackbar/toast/notification). */
+                /** If notice should queue with others notices. */
                 queue: boolean;
                 /** Class of the notice wrapper element */
                 noticeClass: ClassDefinition;
@@ -953,6 +1007,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts. */
                 clipScroll: boolean;
+                /** Trap focus inside the sidebar */
+                trapFocus: boolean;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -1196,7 +1252,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
                 isRowCheckable: ((row: unknown) => boolean);
-                /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
+                /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
                 backendSorting: boolean;
                 /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
                 defaultSort: string | [string, "desc" | "asc"];
@@ -1230,7 +1286,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 paginationSimple: boolean;
                 /** Pagination buttons order (if paginated) */
                 paginationOrder: "centered" | "left" | "right";
-                /** Columns won't be filtered with Javascript, use with `searchable` prop to the columns to filter in your backend */
+                /** Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend */
                 backendFiltering: boolean;
                 /** Icon of the column search input */
                 filterIcon: string;
@@ -1394,6 +1450,43 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the panel container element when transitioning */
                 transitioningClass: ClassDefinition;
             }>;
+        tag?: ComponentConfigBase &
+            Partial<{
+                /** Color variant of the breadcrumb */
+                variant: string;
+                /** Size of the control */
+                size: string;
+                /** Enable rounded style */
+                rounded: boolean;
+                /** The tag element will react to the hover states */
+                hoverable: boolean;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Close icon name */
+                closeIcon: string;
+                /** Icon pack to use for the close icon */
+                closeIconPack: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the root element with size */
+                sizeClass: ClassDefinition;
+                /** Class of the root element with variant */
+                variantClass: ClassDefinition;
+                /** Class of the root element when badge style */
+                badgeClass: ClassDefinition;
+                /** Class of the root element when rounded */
+                roundedClass: ClassDefinition;
+                /** Class of the root element when hoverable */
+                hoverableClass: ClassDefinition;
+                /** Class of the label element */
+                labelClass: ClassDefinition;
+                /** Class of the icon element to the left of the tag */
+                iconClass: ClassDefinition;
+                /** Class of the tag item close button element */
+                closeClass: ClassDefinition;
+            }>;
         taginput?: ComponentConfigBase &
             Partial<{
                 /** Vertical size of the input control */
@@ -1412,7 +1505,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 allowNew: boolean;
                 /** Allows adding the same item multiple time */
                 allowDuplicates: boolean;
-                /** Makes the component check if list reached scroll start or end and emit scroll events. */
+                /** Makes the component check if list reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Add close/delete button to the item */
                 closable: boolean;
@@ -1434,6 +1527,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
                 /** Class of the root element with size */
                 sizeClass: ClassDefinition;
                 /** Class of the root element with variant */
@@ -1442,8 +1537,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 containerClass: ClassDefinition;
                 /** Class of the tag item element */
                 itemClass: ClassDefinition;
-                /** Class of the tag item close button element */
-                closeClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
                 /** Class configuration for the underlying autocomplete component */

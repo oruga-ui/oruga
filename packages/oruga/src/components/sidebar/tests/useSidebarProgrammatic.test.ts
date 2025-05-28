@@ -40,7 +40,7 @@ describe("useSidebarProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         sidebar = document.body.querySelector('[data-oruga="sidebar"]');
         expect(sidebar).toBeNull();
 
@@ -76,7 +76,7 @@ describe("useSidebarProgrammatic tests", () => {
         close();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         sidebar = document.body.querySelector('[data-oruga="sidebar"]');
         expect(sidebar).toBeNull();
 
@@ -109,14 +109,14 @@ describe("useSidebarProgrammatic tests", () => {
         button?.click();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         sidebar = document.body.querySelector('[data-oruga="sidebar"]');
         expect(sidebar).toBeNull();
     });
 
     test("test close event working correctly", async () => {
         const component = createVNode({
-            template: `<button @click="$emit('close', 'abc')">Fancy Label</button>`,
+            template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
         });
         const onClose = vi.fn();
 
@@ -131,10 +131,10 @@ describe("useSidebarProgrammatic tests", () => {
         el?.click();
         vi.runAllTimers();
 
-        // check element does not edist
+        // check element does not exist
         el = document.body.querySelector("button");
         expect(el).toBeNull();
 
-        expect(onClose).toHaveBeenCalledOnce();
+        expect(onClose).toHaveBeenCalledWith({ action: "ok" });
     });
 });

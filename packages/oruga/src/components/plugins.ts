@@ -1,4 +1,5 @@
 import Autocomplete from "./autocomplete";
+import Breadcrumb from "./breadcrumb";
 import Button from "./button";
 import Carousel from "./carousel";
 import Checkbox from "./checkbox";
@@ -24,6 +25,7 @@ import Steps from "./steps";
 import Switch from "./switch";
 import Table from "./table";
 import Tabs from "./tabs";
+import Tag from "./tag";
 import Taginput from "./taginput";
 import Timepicker from "./timepicker";
 import Tooltip from "./tooltip";
@@ -31,6 +33,7 @@ import Upload from "./upload";
 
 export {
     Autocomplete,
+    Breadcrumb,
     Button,
     Carousel,
     Checkbox,
@@ -56,6 +59,7 @@ export {
     Switch,
     Table,
     Tabs,
+    Tag,
     Taginput,
     Timepicker,
     Tooltip,

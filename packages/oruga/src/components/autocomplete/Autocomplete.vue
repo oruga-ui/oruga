@@ -62,6 +62,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     active: false,
     options: undefined,
     filter: undefined,
+    backendFiltering: () => getDefault("autocomplete.backendFiltering", false),
     type: "text",
     menuTag: () => getDefault("autocomplete.menuTag", "div"),
     itemTag: () => getDefault("autocomplete.itemTag", "div"),
@@ -201,16 +202,20 @@ const groupedOptions = computed<OptionsGroupItem<T>[]>(() => {
     return groupedOptions;
 });
 
-/**
- * Applies an reactive filter for the options based on the input value.
- * Options are filtered by setting the hidden attribute.
- */
-watchEffect(() => {
-    // filter options by input value
-    filterOptionsItems<T>(groupedOptions, (o) => filterItems(o, inputValue));
-    // trigger reactive update of groupedOptions
-    triggerRef(groupedOptions);
-});
+// if not backend filtered
+if (!props.backendFiltering)
+    /**
+     * Applies an reactive filter for the options based on the input value.
+     * Options are filtered by setting the hidden attribute.
+     */
+    watchEffect(() => {
+        // filter options by input value
+        filterOptionsItems<T>(groupedOptions, (o) =>
+            filterItems(o, inputValue),
+        );
+        // trigger reactive update of groupedOptions
+        triggerRef(groupedOptions);
+    });
 
 function filterItems(
     option: OptionsItem<T>,
@@ -222,12 +227,6 @@ function filterItems(
         return !String(option.label)
             .toLowerCase()
             .includes(toValue(value)?.toLowerCase());
-}
-
-// set initial inputValue if selected is given
-if (selectedValue.value) {
-    const selectedOption = findOption(groupedOptions, selectedValue);
-    if (selectedOption) inputValue.value = selectedOption.label;
 }
 
 /** is no option visible */
@@ -243,7 +242,7 @@ const dropdownValue = ref();
 
 /**
  * When updating input's value:
- * 1. If value isn't the same as selected, set null
+ * 1. If value isn't the same as selected, set undefined
  * 2. Close dropdown if value is clear or else open it
  */
 watch(
@@ -266,6 +265,29 @@ watch(
     { flush: "post" },
 );
 
+/**
+ * When updating selected value:
+ * 1. Set selected option label as input value
+ * 2. Set the selected option value as dropdown value
+ */
+watch(
+    selectedValue,
+    (value) => {
+        if (!value) return;
+        const option = findOption(groupedOptions, value);
+        if (!option) return;
+
+        // set selected option label as input value
+        inputValue.value = props.clearOnSelect ? "" : option.label;
+        checkHtml5Validity();
+
+        // set the selected option value as dropdown value
+        dropdownValue.value = option.value;
+    },
+    // set initial values if selected is given
+    { immediate: true },
+);
+
 function setSelected(item: T | SpecialOption | undefined): void {
     let option: OptionsItem<T> | undefined = undefined;
 
@@ -282,16 +304,9 @@ function setSelected(item: T | SpecialOption | undefined): void {
         option = options.find((o) => o.value === item);
     }
 
-    // set the selected dropdown value
-    dropdownValue.value = option;
-
-    // Set which option is currently selected, update v-model,
+    // set which option is currently selected, update v-model,
     selectedValue.value = option?.value;
     emits("select", option?.value);
-
-    // update input value
-    inputValue.value = props.clearOnSelect ? "" : option?.label || "";
-    checkHtml5Validity();
 
     if (props.keepOpen) setFocus();
     else isActive.value = false;
@@ -395,7 +410,7 @@ const itemFooterClasses = defineClasses([
 // #endregion --- Computed Component Classes ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: inputValue });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
 </script>
 
 <template>

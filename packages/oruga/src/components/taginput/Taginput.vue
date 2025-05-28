@@ -9,8 +9,8 @@ import {
     type Component,
 } from "vue";
 
-import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
+import OTag from "../tag/Tag.vue";
 
 import { getDefault } from "@/utils/config";
 import {
@@ -136,7 +136,7 @@ const emits = defineEmits<{
 const autocompleteRef = useTemplateRef<Component>("autocompleteComponent");
 
 // use form input functionalities
-const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
+const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
     autocompleteRef,
     emits,
     props,
@@ -170,7 +170,7 @@ const selectedOptions = computed(() => {
         const option = findOption<T>(groupedOptions, value);
         // return the found option or create a new option object
         if (option) return option;
-        else return { label: value, value, key: useId() };
+        else return { label: String(value), value, key: useId() };
     });
 });
 
@@ -271,6 +271,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    [
+        "disabledClass",
+        "o-taginput--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
 );
 
 const containerClasses = defineClasses([
@@ -287,8 +293,6 @@ const itemClasses = defineClasses(
         computed(() => !!props.variant),
     ],
 );
-
-const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
@@ -316,7 +320,7 @@ const autocompleteBind = computed(() => ({
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: selectedItems });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
 </script>
 
 <template>
@@ -326,31 +330,23 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 @slot Override selected items
                 @binding {(string, object)[]} items - selected items
                 @binding {object[]} options - selected options
+                @binding {(index, event): void} removeItem - remove item function
             -->
             <slot
                 name="selected"
                 :items="selectedItems"
                 :options="selectedOptions"
                 :remove-item="removeItem">
-                <span
+                <o-tag
                     v-for="(option, index) in selectedOptions"
                     :key="option.key"
-                    :class="itemClasses">
-                    <span> {{ option.label }}</span>
-
-                    <o-icon
-                        v-if="closable && !disabled"
-                        :class="closeClasses"
-                        :pack="iconPack"
-                        :icon="closeIcon"
-                        clickable
-                        tabindex="0"
-                        role="button"
-                        :aria-label="ariaCloseLabel"
-                        both
-                        @keydown.enter="removeItem(index, $event)"
-                        @click="removeItem(index, $event)" />
-                </span>
+                    :label="option.label"
+                    :class="itemClasses"
+                    :closeable="closable && !disabled"
+                    :close-icon="closeIcon"
+                    :close-icon-pack="iconPack"
+                    :aria-close-label="ariaCloseLabel"
+                    @close="removeItem(index, $event)" />
             </slot>
 
             <o-autocomplete

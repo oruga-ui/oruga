@@ -1,3 +1,68 @@
+## [0.10.6](https://github.com/oruga-ui/oruga/compare/v0.10.5...v0.10.6) (2025-05-26)
+
+
+### Bug Fixes
+
+* **icon:** add icon to tab order when `clickable` ([#1309](https://github.com/oruga-ui/oruga/issues/1309)) ([645354c](https://github.com/oruga-ui/oruga/commit/645354c16c462f6c76100fc1de7ddb555f8b7ef7))
+* **programmatic:** resolve inconsistent `close` event args ([#1306](https://github.com/oruga-ui/oruga/issues/1306)) ([3e7b90a](https://github.com/oruga-ui/oruga/commit/3e7b90a2e4415c63fab9baf80936e1c61b4346c8))
+* **table:** refilter rows when `paginated` prop change ([#1316](https://github.com/oruga-ui/oruga/issues/1316)) ([3882aab](https://github.com/oruga-ui/oruga/commit/3882aab5c42efbbef5d1f93cd76bed9e950da9dd))
+
+
+### Features
+
+* **breadcrumb:** add new Breadcrumb component ([#861](https://github.com/oruga-ui/oruga/issues/861)) ([18abd0f](https://github.com/oruga-ui/oruga/commit/18abd0f572b54abceb23a0a70f9a4459386773c3))
+* **field:** allow multiple field messages ([#1292](https://github.com/oruga-ui/oruga/issues/1292)) ([3520dc3](https://github.com/oruga-ui/oruga/commit/3520dc3bb7d91ee77f2bba0ecf632fa270e7a1fb))
+* **input:** expose `checkHtml5Validity` method ([#1318](https://github.com/oruga-ui/oruga/issues/1318)) ([6a49a8e](https://github.com/oruga-ui/oruga/commit/6a49a8e3e1065910ed3dad10b8bdc62f0455f18b))
+* **modal:** add a11y alert dialog pattern support ([#1310](https://github.com/oruga-ui/oruga/issues/1310)) ([91dbc94](https://github.com/oruga-ui/oruga/commit/91dbc94e5cb04f227ffbd7285c6e53b4cb718740))
+* **notification:** add `pauseOnHover` prop ([#1299](https://github.com/oruga-ui/oruga/issues/1299)) ([122b24a](https://github.com/oruga-ui/oruga/commit/122b24a94fc3019c31e1f8d044299b12aa9b959e))
+* **notification:** add `rounded` prop and class ([#1296](https://github.com/oruga-ui/oruga/issues/1296)) ([82efcbd](https://github.com/oruga-ui/oruga/commit/82efcbd3ee998fc3beb930d5c7c811a9e8b7fe8a))
+* **table:** add `paginationRangeBefore` and `paginationRangeAfter` prop ([#1320](https://github.com/oruga-ui/oruga/issues/1320)) ([01177a0](https://github.com/oruga-ui/oruga/commit/01177a0b05e9a64166dcd5469f1f30cd2fa8c2e8))
+* **tag:** add new Tag component ([#1301](https://github.com/oruga-ui/oruga/issues/1301)) ([18aed6b](https://github.com/oruga-ui/oruga/commit/18aed6b7f3511c13431bdc41664d322b2eafea37))
+* **taginput:** add `disabled` root class ([#1300](https://github.com/oruga-ui/oruga/issues/1300)) ([2ed25bb](https://github.com/oruga-ui/oruga/commit/2ed25bbc3675434dac5759861d1a676755a3deee))
+* **taginput:** use Tag component internally ([#1312](https://github.com/oruga-ui/oruga/issues/1312)) ([2e475c1](https://github.com/oruga-ui/oruga/commit/2e475c1094974a0b5426d08270fa4446297310e0))
+
+
+
+## [0.10.5](https://github.com/oruga-ui/oruga/compare/v0.10.4...v0.10.5) (2025-05-05)
+
+
+### Bug Fixes
+
+* **autocomplete:** keep first does not auto focus filtered options ([#1284](https://github.com/oruga-ui/oruga/issues/1284)) ([ab30f50](https://github.com/oruga-ui/oruga/commit/ab30f50f7222f1eb807c0b7bb33b84cb5fe9c4f5))
+* **notification:** solve programmatic does not pass `variant` prop to notification ([#1279](https://github.com/oruga-ui/oruga/issues/1279)) ([659e3e2](https://github.com/oruga-ui/oruga/commit/659e3e2e5ee1b3405ebef3631ee1d3ad94327fe3))
+* **slider:** solve non-range slider is not clickable ([#1274](https://github.com/oruga-ui/oruga/issues/1274)) ([6bf6de0](https://github.com/oruga-ui/oruga/commit/6bf6de0f97338dc761be60b2147ff1bc2fe6e4c0))
+* **table:** solve column labels are lost on mobile cards ([#1283](https://github.com/oruga-ui/oruga/issues/1283)) ([00aa60e](https://github.com/oruga-ui/oruga/commit/00aa60e45a8e097a52bc132549600d40d0fe2ad8))
+* **trapFocus:** add preventScroll for trapFocus first focus ([#1287](https://github.com/oruga-ui/oruga/issues/1287)) ([e5740a5](https://github.com/oruga-ui/oruga/commit/e5740a5caa6bc31d7b142be66425ee7319b4a1f5))
+
+
+
+## [0.10.4](https://github.com/oruga-ui/oruga/compare/v0.10.3...v0.10.4) (2025-03-26)
+
+
+### Bug Fixes
+
+* **1263:** solve autocomplete two-way-binding selection issues ([#1264](https://github.com/oruga-ui/oruga/issues/1264)) ([b587aef](https://github.com/oruga-ui/oruga/commit/b587aef55e7f11971f19bd09ff9979e98af21b14))
+* extend `trapFocus` elements query ([#1266](https://github.com/oruga-ui/oruga/issues/1266)) ([f7762dc](https://github.com/oruga-ui/oruga/commit/f7762dcff85474e5636dc4cd50c2856b43b93fbb))
+
+
+
+## [0.10.3](https://github.com/oruga-ui/oruga/compare/v0.10.2...v0.10.3) (2025-03-21)
+
+
+### Bug Fixes
+
+* **modal:** solve `tapFocus` not working correctly ([#1256](https://github.com/oruga-ui/oruga/issues/1256)) ([db02046](https://github.com/oruga-ui/oruga/commit/db020469ce51a3ffa75009ce54dbb4290877f9be))
+* **table:** solve sort ordering when paginated ([#1255](https://github.com/oruga-ui/oruga/issues/1255)) ([71b2e56](https://github.com/oruga-ui/oruga/commit/71b2e560448c411773a9eb5711b2ca6799995c1a))
+
+
+### Features
+
+* **autocomplate:** add prop `backend-filtering` to disable option filtering ([#1260](https://github.com/oruga-ui/oruga/issues/1260)) ([bae9fe6](https://github.com/oruga-ui/oruga/commit/bae9fe6e10e0d0b686ceae734a353f1b1e964ce6))
+* **config:** add `teleportTarget` root config ([#1257](https://github.com/oruga-ui/oruga/issues/1257)) ([18c8f90](https://github.com/oruga-ui/oruga/commit/18c8f903afc19526f9810312d23973256059e875))
+* **sidebar:** add `trapFocus` functionality ([#1259](https://github.com/oruga-ui/oruga/issues/1259)) ([459338b](https://github.com/oruga-ui/oruga/commit/459338b61e71a87823c0f18667a412cc84596f19))
+
+
+
 ## [0.10.2](https://github.com/oruga-ui/oruga/compare/v0.10.1...v0.10.2) (2025-03-17)
 
 

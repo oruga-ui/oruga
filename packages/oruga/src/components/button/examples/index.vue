@@ -63,7 +63,10 @@ import TagsCode from "./tags.vue?raw";
     <h3 id="tags">Tags</h3>
     <p>
         Instead of using the HTML <code>button</code> tag, the HTML tag can be
-        customised using the <code>tag</code> prop.
+        customised using the <code>tag</code> prop, for example to define links
+        using
+        <a href="https://router.vuejs.org/" target="_blank">vue-router</a> and
+        <code>router-link</code> tag.
     </p>
     <ExampleViewer :component="Tags" :code="TagsCode" />
 </template>

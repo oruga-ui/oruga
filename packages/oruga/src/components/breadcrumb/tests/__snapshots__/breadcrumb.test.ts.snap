@@ -1,0 +1,52 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OBreadcrumb tests > render correctly 1`] = `
+"<nav data-oruga="breadcrumb" class="o-breadcrumb o-breadcrumb--small o-breadcrumb--primary o-breadcrumb--left" aria-label="breadcrumb">
+  <ol class="o-breadcrumb__list">
+    <!--
+                @slot Place breadcrumb items here 
+            -->
+    <li data-oruga="breadcrumb-item" data-id="breadcrumb-1" class="o-breadcrumb__item o-breadcrumb__item--active">
+      <!-- 
+            @slot Item seperator
+            @binding {string} seperator - seperator string
+        -->
+      <!--v-if-->
+      <router-link to="/" class="o-breadcrumb__item__link" disabled="false" active="true" aria-current="page">
+        <!--v-if-->
+        <!-- 
+                @slot Override label
+            --><span>Home</span>
+        <!--v-if-->
+      </router-link>
+    </li>
+    <li data-oruga="breadcrumb-item" data-id="breadcrumb-2" class="o-breadcrumb__item o-breadcrumb__item--disabled">
+      <!-- 
+            @slot Item seperator
+            @binding {string} seperator - seperator string
+        -->
+      <!--v-if--><a href="/documentation/" class="o-breadcrumb__item__link" disabled="true" active="false">
+        <!--v-if-->
+        <!-- 
+                @slot Override label
+            --><span>Docs</span>
+        <!--v-if-->
+      </a>
+    </li>
+    <li data-oruga="breadcrumb-item" data-id="breadcrumb-3" class="o-breadcrumb__item">
+      <!-- 
+            @slot Item seperator
+            @binding {string} seperator - seperator string
+        -->
+      <!--v-if-->
+      <router-link to="/components/Breadcrumb" class="o-breadcrumb__item__link" disabled="false" active="false">
+        <!--v-if-->
+        <!-- 
+                @slot Override label
+            --><span>Breadcrumb</span>
+        <!--v-if-->
+      </router-link>
+    </li>
+  </ol>
+</nav>"
+`;

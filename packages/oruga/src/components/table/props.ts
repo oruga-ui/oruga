@@ -69,7 +69,7 @@ export type TableProps<T> = {
     isRowChecked?: (row: T) => boolean;
     /** Custom method to verify if a row is checkable (if checkable) */
     isRowCheckable?: (row: T) => boolean;
-    /** Columns won't be sorted with Javascript, use with `sort` event to sort in your backend */
+    /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
     backendSorting?: boolean;
     /**
      * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc']
@@ -113,7 +113,7 @@ export type TableProps<T> = {
     detailTransition?: string;
     /** Adds pagination to the table */
     paginated?: boolean;
-    /** Rows won't be paginated with Javascript, use with `page-change` event to paginate in your backend */
+    /** Rows won't be paginated on clientside, use with `page-change` event to paginate in your backend */
     backendPagination?: boolean;
     /** Total number of table data if backend-pagination is enabled */
     total?: number;
@@ -135,12 +135,16 @@ export type TableProps<T> = {
     paginationRounded?: boolean;
     /** Enable simple style pagination (if paginated) */
     paginationSimple?: boolean;
+    /** Number of pagination items to show before current page */
+    paginationRangeBefore?: number;
+    /** Number of pagination items to show after current page */
+    paginationRangeAfter?: number;
     /**
      * Pagination buttons order (if paginated)
      * @values centered, right, left
      */
     paginationOrder?: "centered" | "right" | "left";
-    /** Columns won't be filtered with Javascript, use with `searchable` prop to the columns to filter in your backend */
+    /** Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend */
     backendFiltering?: boolean;
     /** Icon of the column search input */
     filtersIcon?: string;

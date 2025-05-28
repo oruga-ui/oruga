@@ -19,7 +19,7 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     <h3 id="base">Base</h3>
     <p>
         The sidebar can be positioned go appear from each side of the viewport
-        using the <code>position</code> prop. Using <code>fullwidht</code> or
+        using the <code>position</code> prop. Using <code>fullwidth</code> or
         <code>fullheight</code>, the sidebar overlaps the entire viewport width
         or height.
     </p>
@@ -62,7 +62,17 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
         This component provides a programmatic interface that can be accessed by
         the
         <a href="/documentation/composables.html"><code>useOruga()</code> </a>
-        composable.
+        composable. composable. The composable can be used from outside the Vue
+        instance. For example, it can be used in Pinia or Vue Router with this
+        syntax:
     </p>
+
+    <div class="language-js">
+        <pre>
+    import { useOruga } from "@oruga-ui/oruga-next";
+    const oruga = useOruga(); 
+    oruga.sidebar.open({...});</pre
+        >
+    </div>
     <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 </template>
