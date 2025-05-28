@@ -4,6 +4,7 @@ import { computed, watch, nextTick } from "vue";
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
 
+import PlainButton from "@/components/utils/PlainButton";
 import { getDefault } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
@@ -33,7 +34,7 @@ const props = withDefaults(defineProps<PaginationProps>(), {
     simple: () => getDefault("pagination.simple", false),
     rounded: () => getDefault("pagination.rounded", false),
     order: () => getDefault("pagination.order", "right"),
-    buttonTag: () => getDefault("pagination.buttonTag", "button"),
+    buttonTag: () => getDefault("pagination.buttonTag", PlainButton),
     iconPack: () => getDefault("pagination.iconPack"),
     iconPrev: () => getDefault("pagination.iconPrev", "chevron-left"),
     iconNext: () => getDefault("pagination.iconNext", "chevron-right"),
