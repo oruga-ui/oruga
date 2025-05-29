@@ -1,6 +1,6 @@
 import type { ComponentPublicInstance, Slots, StyleValue } from "vue";
 import type { OptionsItem, ProviderItem } from "@/composables";
-import type { ClassBind } from "@/types";
+import type { ClassBind, DeepKeys } from "@/types";
 
 import type { TableColumnProps } from "./props";
 
@@ -9,10 +9,10 @@ export type TableRow<V = unknown> = OptionsItem<V> & {
     index: number;
 };
 
-export type TableColumn<
-    T = unknown,
-    K extends keyof T | string = string,
-> = TableColumnProps<T, K>;
+export type TableColumn<T = unknown> = TableColumnProps<
+    T,
+    DeepKeys<T> | (string & {})
+>;
 
 export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $el: ComponentPublicInstance;
