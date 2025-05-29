@@ -49,7 +49,7 @@ export type ComponentConfigBase = Partial<{
 }>;
 
 export type GlobalConfig = Partial<{
-    /** Date format locale */
+    /** Define the Date format locale */
     locale: string;
     /** Define the icon pack be used */
     iconPack: string;

@@ -221,7 +221,7 @@ function computeClass(
         const props = getProps(vm);
         localClass = localClass(suffix, props);
     } else {
-        localClass = suffixProcessor(localClass || "", suffix);
+        localClass = suffixProcessor(localClass ?? "", suffix);
     }
 
     // process global config class
@@ -232,7 +232,7 @@ function computeClass(
         const props = getProps(vm);
         globalClass = globalClass(suffix, props);
     } else {
-        globalClass = suffixProcessor(globalClass || "", suffix);
+        globalClass = suffixProcessor(globalClass ?? "", suffix);
     }
 
     // process component instance default value
