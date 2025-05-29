@@ -260,11 +260,11 @@ export type TableClasses = Partial<{
     loadingClasses: object;
 }>;
 
-export type TableColumnProps<T, K extends DeepKeys<T>> = {
+export type TableColumnProps<T, K extends DeepKeys<T> | (string & {})> = {
     /** Define the column label */
     label?: string;
     /** Define an object property key if data is an object */
-    field?: K | string;
+    field?: K;
     /** Provide a formatter function to edit the output */
     formatter?: (value: DeepType<T, K>, row: T) => string;
     /** Define a column sub heading  */

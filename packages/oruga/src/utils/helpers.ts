@@ -180,31 +180,6 @@ export function isElement(el: any): el is Element {
 }
 
 /**
- * Return display text for an option.
- * If option is an object, get the property from path based on given field, or else just the property.
- * Apply a formatter function to the property if given.
- * Return the display label.
- *
- * @param obj Object to get the label for
- * @param field  Property path of the object to use as display text
- * @param formatter Function to format the property to a string
- */
-export function getPropertyValue<
-    O,
-    K extends DeepKeys<O>,
-    D extends DeepType<O, K>,
->(obj: O, field?: K, formatter?: (value: D, option: O) => string): string {
-    if (!obj) return "";
-
-    const property = (field ? getValueByPath<O, K, D>(obj, field) : obj) as D;
-
-    const label =
-        typeof formatter === "function" ? formatter(property, obj) : property;
-
-    return String(label || "");
-}
-
-/**
  * Merge function to replace Object.assign with deep merging possibility
  */
 export function merge(target: any, source: any, deep = false): any {
@@ -239,6 +214,31 @@ export function mergeDeep(target: any, source: any): any {
     });
 
     return target;
+}
+
+/**
+ * Return display text for an option.
+ * If option is an object, get the property from path based on given field, or else just the property.
+ * Apply a formatter function to the property if given.
+ * Return the display label.
+ *
+ * @param obj Object to get the label for
+ * @param field  Property path of the object to use as display text
+ * @param formatter Function to format the property to a string
+ */
+export function getPropertyValue<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, field?: K, formatter?: (value: D, option: O) => string): string {
+    if (!obj) return "";
+
+    const property = (field ? getValueByPath<O, K, D>(obj, field) : obj) as D;
+
+    const label =
+        typeof formatter === "function" ? formatter(property, obj) : property;
+
+    return String(label || "");
 }
 
 /**

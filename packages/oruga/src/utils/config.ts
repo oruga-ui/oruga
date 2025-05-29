@@ -15,6 +15,7 @@ const globalOptions = ref<OrugaOptions>({
     useHtml5Validation: true,
     statusIcon: true,
     transformClasses: undefined,
+    mobileBreakpoint: "1023px",
     teleportTarget: () => (isClient ? document.body : "body"),
 });
 
@@ -30,15 +31,15 @@ export const getOptions = (): OrugaOptions => {
 export function getOption<
     K extends DeepKeys<OrugaOptions>,
     D extends DeepType<OrugaOptions, K>,
->(path: K, defaultValue: D): D;
+>(path: K | (string & {}), defaultValue: D): D;
 export function getOption<
     K extends DeepKeys<OrugaOptions>,
     D extends DeepType<OrugaOptions, K>,
->(path: K, defaultValue?: D): D | undefined;
+>(path: K | (string & {}), defaultValue?: D): D | undefined;
 export function getOption<
     K extends DeepKeys<OrugaOptions>,
     D extends DeepType<OrugaOptions, K>,
->(path: K, defaultValue?: D): D | undefined {
+>(path: K | (string & {}), defaultValue?: D): D | undefined {
     return getValueByPath<OrugaOptions, K, D>(
         globalOptions.value,
         path,
