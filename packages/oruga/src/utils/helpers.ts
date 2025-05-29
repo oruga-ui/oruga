@@ -84,7 +84,7 @@ export const toCssDimension = (
  * Sort an array by key without mutating original data.
  * Call the user sort function if it was passed.
  */
-export function sortBy<T>(
+export function sortBy<T extends object>(
     array: T[],
     key: DeepKeys<T>,
     fn?: (a: T, b: T, asc: boolean) => number,
@@ -189,16 +189,14 @@ export function isElement(el: any): el is Element {
  * @param field  Property path of the object to use as display text
  * @param formatter Function to format the property to a string
  */
-export function getPropertyValue<O, K extends DeepKeys<O>>(
-    obj: O,
-    field?: K,
-    formatter?: (value: DeepType<O, K>, option: O) => string,
-): string {
+export function getPropertyValue<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, field?: K, formatter?: (value: D, option: O) => string): string {
     if (!obj) return "";
 
-    const property = (
-        field ? getValueByPath<O, K>(obj, field) : obj
-    ) as DeepType<O, K>;
+    const property = (field ? getValueByPath<O, K, D>(obj, field) : obj) as D;
 
     const label =
         typeof formatter === "function" ? formatter(property, obj) : property;
@@ -246,11 +244,26 @@ export function mergeDeep(target: any, source: any): any {
 /**
  * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<O, K extends DeepKeys<O>>(
-    obj: O,
-    path: K,
-    defaultValue?: DeepType<O, K>,
-): DeepType<O, K> | undefined {
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {})): D | undefined;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue: D): D;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue?: D): D | undefined;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue?: D): D | undefined {
     if (!obj || typeof obj !== "object" || typeof path !== "string")
         return defaultValue;
 
@@ -269,6 +282,8 @@ export function setValueByPath<O, K extends DeepKeys<O>>(
     path: K,
     value: DeepType<O, K>,
 ): void {
+    if (typeof path !== "string") return;
+
     const p = path.split(".");
     if (p.length === 1) {
         obj[p[0]] = value;

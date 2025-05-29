@@ -26,12 +26,25 @@ export const getOptions = (): OrugaOptions => {
     return Object.assign({}, toRaw(globalOptions.value));
 };
 
-export const getOption = <K extends DeepKeys<OrugaOptions>>(
-    path: K,
-    defaultValue?: DeepType<OrugaOptions, K>,
-): DeepType<OrugaOptions, K> | undefined => {
-    return getValueByPath(globalOptions.value, path, defaultValue);
-};
+/** get an option by option path with an optional default if not set */
+export function getOption<
+    K extends DeepKeys<OrugaOptions>,
+    D extends DeepType<OrugaOptions, K>,
+>(path: K, defaultValue: D): D;
+export function getOption<
+    K extends DeepKeys<OrugaOptions>,
+    D extends DeepType<OrugaOptions, K>,
+>(path: K, defaultValue?: D): D | undefined;
+export function getOption<
+    K extends DeepKeys<OrugaOptions>,
+    D extends DeepType<OrugaOptions, K>,
+>(path: K, defaultValue?: D): D | undefined {
+    return getValueByPath<OrugaOptions, K, D>(
+        globalOptions.value,
+        path,
+        defaultValue,
+    );
+}
 
 /** less type strict version of getOption for component props defaults */
 export const getDefault = <T>(

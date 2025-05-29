@@ -18,7 +18,6 @@ import { isDefined, blankIfUndefined, getValueByPath } from "@/utils/helpers";
 
 import type {
     ClassBind,
-    ClassDefinition,
     ComponentClass,
     ComponentProps,
     TransformFunction,
@@ -207,24 +206,12 @@ function computeClass(
     // --- Classes Definition ---
 
     // get component config class definition
-    let globalClass: ClassDefinition | undefined =
-        (getValueByPath(
-            config,
-            `${componentKey}.${field}.class`,
-            "",
-        ) as ClassDefinition) ||
-        (getValueByPath(
-            config,
-            `${componentKey}.${field}`,
-            "",
-        ) as ClassDefinition);
+    let globalClass: ComponentClass | undefined =
+        getValueByPath(config, `${componentKey}.${field}.class`) ||
+        getValueByPath(config, `${componentKey}.${field}`);
 
     // get instance class definition
-    let localClass: ComponentClass | undefined = getValueByPath(
-        props,
-        field,
-        "",
-    );
+    let localClass: ComponentClass | undefined = getValueByPath(props, field);
 
     // procsess local instance class
     if (Array.isArray(localClass)) {
@@ -234,7 +221,7 @@ function computeClass(
         const props = getProps(vm);
         localClass = localClass(suffix, props);
     } else {
-        localClass = suffixProcessor(localClass as string, suffix);
+        localClass = suffixProcessor(localClass || "", suffix);
     }
 
     // process global config class
@@ -245,7 +232,7 @@ function computeClass(
         const props = getProps(vm);
         globalClass = globalClass(suffix, props);
     } else {
-        globalClass = suffixProcessor(globalClass as string, suffix);
+        globalClass = suffixProcessor(globalClass || "", suffix);
     }
 
     // process component instance default value
@@ -292,17 +279,13 @@ function computeClass(
     // --- Tranform Classes ---
 
     // get global config tranform class
-    const globalTransformClasses = getValueByPath(
-        config,
-        "transformClasses",
-        undefined,
-    ) as TransformFunction;
+    const globalTransformClasses: TransformFunction | undefined =
+        getValueByPath(config, "transformClasses");
     // get component config tranform class
-    const localTransformClasses = getValueByPath(
+    const localTransformClasses: TransformFunction | undefined = getValueByPath(
         config,
         `${componentKey}.transformClasses`,
-        undefined,
-    ) as TransformFunction;
+    );
 
     // apply component local transformclass if available
     if (localTransformClasses) {

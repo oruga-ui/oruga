@@ -1,9 +1,4 @@
-import type {
-    Component,
-    // ComponentPublicInstance,
-    DefineComponent,
-    EmitsToProps,
-} from "vue";
+import type { Component, EmitsToProps } from "vue";
 import type { ComponentEmit } from "vue-component-type-helpers";
 
 export type ClassBind = {
@@ -57,26 +52,14 @@ export type DeepType<T, K> = T extends object
 
 /**
  * Defines a list of property paths for each property and deep property of an object `T`.
- * @source https://stackoverflow.com/questions/58434389/typescript-deep-keyof-of-a-nested-object
+ * @source https://dev.to/pffigueiredo/typescript-utility-keyof-nested-object-2pa3
  */
 export type DeepKeys<T> = T extends object
     ? {
-          [K in keyof T]: `${Exclude<K, symbol>}${DeepKeys<T[K]> extends never
-              ? ""
-              : T[K] extends Component
-                ? "abc"
-                : `.${DeepKeys<T[K]>}`}`;
-      }[keyof T]
+          [K in keyof T]-?: K extends string | number
+              ? Required<T>[K] extends object
+                  ? K | `${K}.${DeepKeys<T[K]>}`
+                  : K
+              : never;
+      }[keyof T & (string | number)]
     : never;
-
-// type Paths<T> = T extends object
-//     ? {
-//           [K in keyof T]: `${Exclude<K, symbol>}${"" | `.${Paths<T[K]>}`}`;
-//       }[keyof T]
-//     : never;
-
-// type Leaves<T> = T extends object
-//     ? {
-//           [K in keyof T]: `${Exclude<K, symbol>}${Leaves<T[K]> extends never ? "" : `.${Leaves<T[K]>}`}`;
-//       }[keyof T]
-//     : never;
