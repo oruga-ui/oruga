@@ -1660,6 +1660,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Color of the control */
                 variant: string;
+                /** Upload will be expanded (full-width) */
+                expanded: boolean;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element when expanded */

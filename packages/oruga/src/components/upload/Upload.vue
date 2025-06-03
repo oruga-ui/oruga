@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     disabled: false,
     accept: undefined,
     dragDrop: false,
-    expanded: false,
+    expanded: () => getDefault("upload.expanded", false),
     native: true,
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
