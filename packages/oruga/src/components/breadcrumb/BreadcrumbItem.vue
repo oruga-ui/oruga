@@ -61,17 +61,15 @@ const separatorClasses = defineClasses([
 
 const linkClasses = defineClasses(["linkClass", "o-breadcrumb__item__link"]);
 
-const iconClasses = defineClasses(["iconClass", "o-breadcrumb__item__icon"]);
+const iconLeftClasses = defineClasses(
+    ["iconClass", "o-breadcrumb__item__icon"],
+    ["iconLeftClass", "o-breadcrumb__item__icon--left"],
+);
 
-const iconLeftClasses = defineClasses([
-    "iconLeftClass",
-    "o-breadcrumb__item__icon-left",
-]);
-
-const iconRightClasses = defineClasses([
-    "iconRightClass",
-    "o-breadcrumb__item__icon-right",
-]);
+const iconRightClasses = defineClasses(
+    ["iconClass", "o-breadcrumb__item__icon"],
+    ["iconRightClass", "o-breadcrumb__item__icon--right"],
+);
 
 // #endregion --- Computed Component Classes ---
 </script>
@@ -107,7 +105,7 @@ const iconRightClasses = defineClasses([
                 :icon="iconLeft"
                 :pack="iconPack"
                 :size="iconSize"
-                :class="[...iconClasses, ...iconLeftClasses]" />
+                :class="iconLeftClasses" />
 
             <!-- 
                 @slot Override label
@@ -121,7 +119,7 @@ const iconRightClasses = defineClasses([
                 :icon="iconRight"
                 :pack="iconPack"
                 :size="iconSize"
-                :class="[...iconClasses, ...iconRightClasses]" />
+                :class="iconRightClasses" />
         </component>
     </li>
 </template>

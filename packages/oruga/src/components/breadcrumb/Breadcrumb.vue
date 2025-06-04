@@ -27,10 +27,10 @@ defineOptions({
 const props = withDefaults(defineProps<BreadcrumbProps>(), {
     override: undefined,
     options: undefined,
-    size: () => getDefault("breadcrumb.size", "small"),
-    variant: () => getDefault("breadcrumb.variant", "primary"),
-    position: () => getDefault("breadcrumb.position", "left"),
-    separator: () => getDefault("breadcrumb.separator"),
+    size: () => getDefault("breadcrumb.size"),
+    variant: () => getDefault("breadcrumb.variant"),
+    position: () => getDefault("breadcrumb.position"),
+    separator: () => getDefault("breadcrumb.separator", "/"),
     ariaLabel: () => getDefault("modal.ariaLabel", "breadcrumb"),
 });
 
