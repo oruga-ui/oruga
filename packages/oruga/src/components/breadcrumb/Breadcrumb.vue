@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
     variant: () => getDefault("breadcrumb.variant"),
     position: () => getDefault("breadcrumb.position"),
     separator: () => getDefault("breadcrumb.separator", "/"),
-    ariaLabel: () => getDefault("modal.ariaLabel", "breadcrumb"),
+    ariaLabel: () => getDefault("modal.ariaLabel", "Breadcrumb"),
 });
 
 const rootRef = useTemplateRef("rootElement");
