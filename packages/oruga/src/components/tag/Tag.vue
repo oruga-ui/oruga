@@ -85,7 +85,7 @@ const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
             :icon="icon"
             :size="size" />
 
-        <span :class="labelClasses">
+        <span v-if="$slots.default || label" :class="labelClasses">
             <!--
                 @slot Override the tag label
             -->
