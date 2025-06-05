@@ -136,11 +136,8 @@ const emits = defineEmits<{
 const autocompleteRef = useTemplateRef<Component>("autocompleteComponent");
 
 // use form input functionalities
-const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
-    autocompleteRef,
-    emits,
-    props,
-);
+const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } =
+    useInputHandler(autocompleteRef, emits, props);
 
 const isDropdownActive = ref(false);
 

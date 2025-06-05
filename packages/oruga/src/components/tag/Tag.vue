@@ -25,7 +25,6 @@ const props = withDefaults(defineProps<TagProps>(), {
     variant: () => getDefault("tag.variant"),
     size: () => getDefault("tag.size"),
     rounded: () => getDefault("tag.rounded", false),
-    hoverable: () => getDefault("tag.hoverable", false),
     closeable: false,
     icon: undefined,
     iconPack: () => getDefault("tag.iconPack"),
@@ -67,12 +66,6 @@ const rootClasses = defineClasses(
         computed(() => !!props.size),
     ],
     ["roundedClass", "o-tag--rounded", null, computed(() => !!props.rounded)],
-    [
-        "hoverableClass",
-        "o-tag--hoverable",
-        null,
-        computed(() => !!props.hoverable),
-    ],
     ["badgeClass", "o-tag--badge", null, computed(() => !!props.badge)],
 );
 
@@ -80,7 +73,7 @@ const iconClasses = defineClasses(["iconClass", "o-tag__icon"]);
 
 const labelClasses = defineClasses(["labelClass", "o-tag__label"]);
 
-const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
+const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
 </script>
 
 <template>
