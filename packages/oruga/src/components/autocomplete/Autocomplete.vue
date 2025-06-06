@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     size: () => getDefault("autocomplete.size"),
     position: () => getDefault("autocomplete.position", "auto"),
     placeholder: undefined,
-    expanded: false,
+    expanded: () => getDefault("autocomplete.expanded", false),
     rounded: false,
     disabled: false,
     maxlength: undefined,

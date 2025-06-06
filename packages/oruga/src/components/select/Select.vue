@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
     placeholder: undefined,
     disabled: false,
     required: false,
-    expanded: false,
+    expanded: () => getDefault("select.expanded", false),
     rounded: false,
     nativeSize: undefined,
     iconPack: () => getDefault("select.iconPack"),
