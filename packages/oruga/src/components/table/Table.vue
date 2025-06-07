@@ -44,7 +44,7 @@ import {
     useSequentialId,
 } from "@/composables";
 
-import type { ClassBind, DeepType } from "@/types";
+import type { ClassBind, DeepKeys } from "@/types";
 import type {
     TableColumn,
     TableRow,
@@ -449,13 +449,7 @@ const tableRows = computed<TableRow<T>[]>(() => {
         index: idx, // row index
         key:
             // if no key is given and data is object, create unique row id for each row
-            String(
-                getValueByPath(
-                    value,
-                    props.rowKey,
-                    nextSequence() as DeepType<T, string>,
-                ),
-            ),
+            String(getValueByPath(value, props.rowKey) || nextSequence()),
     }));
 });
 
@@ -535,7 +529,7 @@ function hasCustomFooterSlot(): boolean {
 
 /** get the formated row value for a column */
 function getColumnValue(row: T, column: TableColumn<T>): string {
-    return getPropertyValue(row, column.field, column.formatter);
+    return getPropertyValue(row, column.field as DeepKeys<T>, column.formatter);
 }
 
 /** check if two rows are equal by a custom compare function or the rowKey attribute */
