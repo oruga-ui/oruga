@@ -27,43 +27,36 @@ const size = ref<string>("");
             </o-field>
         </o-field>
 
-        <o-breadcrumb>
+        <o-breadcrumb :size="size">
             <o-breadcrumb-item
                 label="Home"
-                :size="size"
                 icon-left="home"
-                :icon-size="iconSize"
-                active />
+                :icon-size="iconSize" />
             <o-breadcrumb-item
                 label="Docs"
-                :size="size"
                 icon-left="plus"
-                :icon-size="iconSize"
-                disabled />
+                :icon-size="iconSize" />
             <o-breadcrumb-item
                 label="Breadcrumb"
                 icon-left="location"
-                :icon-size="iconSize" />
-        </o-breadcrumb>
-
-        <o-breadcrumb>
-            <o-breadcrumb-item
-                label="Home"
-                :size="size"
-                icon-right="home"
                 :icon-size="iconSize"
                 active />
+        </o-breadcrumb>
+
+        <o-breadcrumb :size="size">
+            <o-breadcrumb-item
+                label="Home"
+                icon-right="home"
+                :icon-size="iconSize" />
             <o-breadcrumb-item
                 label="Docs"
-                :size="size"
                 icon-right="plus"
-                :icon-size="iconSize"
-                disabled />
+                :icon-size="iconSize" />
             <o-breadcrumb-item
                 label="Breadcrumb"
-                :size="size"
                 icon-right="location"
-                :icon-size="iconSize" />
+                :icon-size="iconSize"
+                active />
         </o-breadcrumb>
     </section>
 </template>

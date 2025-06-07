@@ -27,8 +27,14 @@ import TagsCode from "./tags.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <p>
-        To determine the current page, set the <code>active</code> prop.
-        Individual items can be disabled using the <code>disabled</code> prop.
+        Since breadcrumbs provide a navigation, it's a good idea to add a
+        meaningful label such as <code>aria-label="breadcrumb"</code> to
+        describe the type of navigation provided in the
+        <code>nav</code> element. To determine the current page, set the
+        <code>active</code> prop. This applies an
+        <code>aria-current="page"</code> to the item to indicate that it
+        represents the current page. Individual items can also be disabled using
+        the <code>disabled</code> prop.
     </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
