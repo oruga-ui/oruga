@@ -215,7 +215,7 @@ defineExpose({ close });
                 v-show="isActive"
                 ref="rootElement"
                 v-bind="$attrs"
-                v-trap-focus="isActive && trapFocus"
+                v-trap-focus="trapFocus && isActive"
                 data-oruga="modal"
                 :class="rootClasses"
                 :tabindex="-1"
