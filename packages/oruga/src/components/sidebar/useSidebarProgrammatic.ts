@@ -27,7 +27,7 @@ const registry = new InstanceRegistry<ComponentInternalInstance>();
 export type SidebarProgrammaticOptions<C extends Component> = Readonly<
     SidebarProps<C>
 > &
-    ProgrammaticComponentOptions;
+    ProgrammaticComponentOptions<typeof Sidebar<C>>;
 
 const SidebarProgrammatic = {
     /** Returns the number of registered active instances. */
@@ -41,7 +41,7 @@ const SidebarProgrammatic = {
     open<C extends Component>(
         options: SidebarProgrammaticOptions<C>,
         target?: MaybeRefOrGetter<string | HTMLElement | null>,
-    ): ProgrammaticExpose {
+    ): ProgrammaticExpose<typeof Sidebar<C>> {
         const componentProps: SidebarProps<C> = {
             active: true, // set the active default state to true
             ...options,

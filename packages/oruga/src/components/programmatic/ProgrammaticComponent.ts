@@ -31,12 +31,17 @@ export type ProgrammaticComponentProps<C extends VNodeTypes> = {
     registry?: InstanceRegistry<ComponentInternalInstance>;
 };
 
-export type ProgrammaticComponentEmits = {
+export type CloseEventArgs<T extends VNodeTypes> =
+    Parameters<ComponentProps<T>["onClose"]> extends never
+        ? unknown[]
+        : Parameters<ComponentProps<T>["onClose"]>;
+
+export type ProgrammaticComponentEmits<C extends VNodeTypes> = {
     /**
      * On component close event.
      * This get called when the component emits `close` or the exposed `close` function get called.
      */
-    close?: (...args: unknown[]) => void;
+    close?: (...args: CloseEventArgs<C>) => void;
     /** On component destroy event which get called when the component should be destroyed. */
     destroy?: () => void;
 };
@@ -46,16 +51,16 @@ export type ProgrammaticComponentEmits = {
 //     typeof ProgrammaticComponent
 // >;
 
-export type ProgrammaticComponentExpose = {
+export type ProgrammaticComponentExpose<C extends VNodeTypes> = {
     /** Call the close event of the component. */
-    close: (...args: unknown[]) => void;
+    close: (...args: CloseEventArgs<C>) => void;
     /** Promise which get resolved on the close event. */
-    promise: Promise<unknown>;
+    promise: Promise<CloseEventArgs<C>>;
 };
 
 export const ProgrammaticComponent = defineComponent<
-    ProgrammaticComponentProps<any>,
-    ProgrammaticComponentEmits
+    ProgrammaticComponentProps<VNodeTypes>,
+    ProgrammaticComponentEmits<VNodeTypes>
 >(
     <C extends VNodeTypes>(
         props: ProgrammaticComponentProps<C>,
@@ -67,8 +72,8 @@ export const ProgrammaticComponent = defineComponent<
             throw new Error("ProgrammaticComponent initialisation failed.");
 
         // create response promise
-        let resolve: (value?: unknown) => void;
-        const promise = new Promise<unknown>((p1) => (resolve = p1));
+        let resolve: (args: CloseEventArgs<C>) => void;
+        const promise = new Promise<CloseEventArgs<C>>((p1) => (resolve = p1));
 
         // add component instance to instance register
         onMounted(() => props.registry?.add(vm));
@@ -76,12 +81,12 @@ export const ProgrammaticComponent = defineComponent<
         // remove component instance from instance register
         onUnmounted(() => props.registry?.remove(vm));
 
-        function close(...args: unknown[]): void {
+        function close(...args: CloseEventArgs<C>): void {
             // emit `onClose` event
             emit("close", ...args);
 
             // call promise resolve
-            resolve(...args);
+            resolve(args);
 
             // emit `destory` event after animation is finished
             setTimeout(() => {
@@ -92,7 +97,7 @@ export const ProgrammaticComponent = defineComponent<
         }
 
         /** expose public functionalities for programmatic usage */
-        expose({ close, promise } satisfies ProgrammaticComponentExpose);
+        expose({ close, promise } satisfies ProgrammaticComponentExpose<C>);
 
         // return render function which renders given component
         return (): VNode =>

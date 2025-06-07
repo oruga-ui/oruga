@@ -27,7 +27,7 @@ const registry = new InstanceRegistry<ComponentInternalInstance>();
 export type ModalProgrammaticOptions<C extends Component> = Readonly<
     ModalProps<C>
 > &
-    ProgrammaticComponentOptions;
+    ProgrammaticComponentOptions<typeof Modal<C>>;
 
 const ModalProgrammatic = {
     /** Returns the number of registered active instances. */
@@ -41,7 +41,7 @@ const ModalProgrammatic = {
     open<C extends Component>(
         options: string | ModalProgrammaticOptions<C>,
         target?: MaybeRefOrGetter<string | HTMLElement | null>,
-    ): ProgrammaticExpose {
+    ): ProgrammaticExpose<typeof Modal<C>> {
         const _options: ModalProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
 
