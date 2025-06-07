@@ -7,7 +7,6 @@ import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { BreadcrumbItemProps } from "./props";
-import type { BreadcrumbComponent } from "./types";
 
 /**
  * The classic breadrcumb item, in different colors, sizes, and states
@@ -34,7 +33,7 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
 });
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<BreadcrumbComponent>();
+const { item } = useProviderChild();
 
 // #region --- Computed Component Classes ---
 
@@ -53,11 +52,6 @@ const rootClasses = defineClasses(
         computed(() => props.active),
     ],
 );
-
-const separatorClasses = defineClasses([
-    "seperatorClass",
-    "o-breadcrumb__item__seperator",
-]);
 
 const linkClasses = defineClasses(["linkClass", "o-breadcrumb__item__link"]);
 
@@ -82,16 +76,8 @@ const iconRightClasses = defineClasses(
         :class="rootClasses">
         <!-- 
             @slot Item seperator
-            @binding {string} seperator - seperator string
         -->
-        <slot
-            v-if="item.index > 0"
-            name="seperator"
-            :seperator="parent.separator">
-            <span v-if="!!parent.separator" :class="separatorClasses">
-                {{ parent.separator }}
-            </span>
-        </slot>
+        <slot name="seperator"> </slot>
 
         <component
             :is="tag"

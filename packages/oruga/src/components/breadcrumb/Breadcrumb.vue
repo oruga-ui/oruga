@@ -10,7 +10,6 @@ import {
 } from "@/composables";
 
 import type { BreadcrumbProps } from "./props";
-import type { BreadcrumbComponent } from "./types";
 
 /**
  * The classic breadcrumb, in different colors, sizes, and states
@@ -36,13 +35,8 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
 
 const rootRef = useTemplateRef("rootElement");
 
-// provided data is a computed ref to ensure reactivity
-const provideData = computed<BreadcrumbComponent>(() => ({
-    separator: props.separator,
-}));
-
 /** provide functionalities and data to child item components */
-useProviderParent({ rootRef, data: provideData });
+useProviderParent({ rootRef });
 
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
@@ -51,6 +45,8 @@ const { nextSequence } = useSequentialId();
 const normalizedOptions = computed(() =>
     normalizeOptions(props.options, nextSequence),
 );
+
+const customStyle = computed(() => ({ "--seperator": `'${props.separator}'` }));
 
 // #region --- Computed Component Classes ---
 
@@ -86,6 +82,7 @@ const listClasses = defineClasses(["listClass", "o-breadcrumb__list"]);
         ref="rootElement"
         data-oruga="breadcrumb"
         :class="rootClasses"
+        :style="customStyle"
         :aria-label="ariaLabel">
         <ol :class="listClasses">
             <!--

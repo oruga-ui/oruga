@@ -3,7 +3,7 @@
         <!-- remove links -->
         <o-breadcrumb separator="->">
             <o-breadcrumb-item label="Home" tag="a" href="/" disabled />
-            <o-breadcrumb-item tag="a" label="Docs" href="/documentation/" />
+            <o-breadcrumb-item label="Docs" tag="a" href="/documentation/" />
             <o-breadcrumb-item
                 label="Breadcrumb"
                 tag="a"
