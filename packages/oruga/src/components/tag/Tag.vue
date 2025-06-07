@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<TagProps>(), {
     iconPack: () => getDefault("tag.iconPack"),
     closeIcon: () => getDefault("tag.closeIcon"),
     closeIconPack: () => getDefault("tag.closeIconPack"),
-    ariaCloseLabel: () => getDefault("tag.ariaCloseLabel", "close"),
+    ariaCloseLabel: () => getDefault("tag.ariaCloseLabel", "Close"),
 });
 
 const emits = defineEmits<{
