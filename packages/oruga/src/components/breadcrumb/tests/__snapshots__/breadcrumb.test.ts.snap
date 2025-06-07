@@ -6,7 +6,7 @@ exports[`OBreadcrumb tests > render correctly 1`] = `
     <!--
                 @slot Place breadcrumb items here 
             -->
-    <li data-oruga="breadcrumb-item" data-id="breadcrumb-1" class="o-breadcrumb__item o-breadcrumb__item--active">
+    <li data-oruga="breadcrumb-item" data-id="breadcrumb-1" class="o-breadcrumb__item o-breadcrumb__item--active" aria-current="page">
       <!-- 
             @slot Item seperator
         -->
