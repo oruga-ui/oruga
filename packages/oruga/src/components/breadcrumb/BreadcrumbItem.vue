@@ -73,7 +73,8 @@ const iconRightClasses = defineClasses(
         v-show="!hidden"
         data-oruga="breadcrumb-item"
         :data-id="`breadcrumb-${item.identifier}`"
-        :class="rootClasses">
+        :class="rootClasses"
+        :aria-current="active ? 'page' : undefined">
         <!-- 
             @slot Item seperator
         -->
