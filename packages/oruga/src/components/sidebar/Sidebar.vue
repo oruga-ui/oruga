@@ -263,7 +263,7 @@ defineExpose({ close });
             v-show="!hideOnMobile"
             ref="rootElement"
             v-bind="$attrs"
-            v-trap-focus="isActive && !inline && trapFocus"
+            v-trap-focus="trapFocus && isActive && !inline"
             data-oruga="sidebar"
             :class="rootClasses">
             <div
