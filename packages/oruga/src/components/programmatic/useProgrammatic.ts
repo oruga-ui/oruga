@@ -5,6 +5,7 @@ import {
     type ComponentInternalInstance,
     type EmitsToProps,
     type MaybeRefOrGetter,
+    type VNode,
     type VNodeTypes,
 } from "vue";
 
@@ -41,17 +42,18 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
      */
     appId?: string;
 } & Omit<ProgrammaticComponentProps<C>, "component"> & // component props
-    EmitsToProps<Omit<ProgrammaticComponentEmits, "destroy">>; // component emit props
+    EmitsToProps<Omit<ProgrammaticComponentEmits<C>, "destroy">>; // component emit props
 
 /** public options interface for programmatically called components */
-export type ProgrammaticComponentOptions = EmitsToProps<
-    Pick<ProgrammaticComponentEmits, "close">
+export type ProgrammaticComponentOptions<C extends VNodeTypes> = EmitsToProps<
+    Pick<ProgrammaticComponentEmits<C>, "close">
 > &
     // make the type extendable
     Record<string, any>;
 
 /** useProgrammatic composable `open` function return value */
-export type ProgrammaticExpose = ProgrammaticComponentExpose;
+export type ProgrammaticExpose<C extends VNodeTypes = VNode> =
+    ProgrammaticComponentExpose<C>;
 
 export const ComponentProgrammatic = {
     /** Returns the number of registered active instances. */
@@ -64,7 +66,7 @@ export const ComponentProgrammatic = {
     open<C extends VNodeTypes>(
         component: C,
         options?: ProgrammaticOptions<C>,
-    ): ProgrammaticExpose {
+    ): ProgrammaticExpose<C> {
         options = { registry, ...options };
 
         const targetQuery = toValue(options.target);
@@ -116,7 +118,7 @@ export const ComponentProgrammatic = {
         const instance = app.mount(container);
 
         // return exposed programmatic functionalities from the mounted component instance
-        return instance as unknown as ProgrammaticExpose;
+        return instance as unknown as ProgrammaticExpose<C>;
     },
     /** close the last registred instance in the global programmatic instance registry */
     close(...args: unknown[]): void {

@@ -13,7 +13,7 @@
                     label="Cancel"
                     variant="primary"
                     size="small"
-                    @click="close" />
+                    @click="close()" />
             </div>
         </o-notification>
     </section>
