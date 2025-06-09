@@ -4,7 +4,9 @@ defineProps({
     message: { type: String, default: "" },
 });
 
-defineEmits(["close"]);
+defineEmits<{
+    close: [value: { action: string; method?: string }];
+}>();
 </script>
 
 <template>
