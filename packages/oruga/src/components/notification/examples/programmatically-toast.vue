@@ -71,7 +71,7 @@ function infinite(): void {
         variant: "warning",
         type: "warning",
         infinite: true,
-        closable: true,
+        closeable: true,
         rounded: true,
     });
 

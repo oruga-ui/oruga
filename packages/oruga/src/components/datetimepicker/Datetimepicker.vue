@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     minDatetime: undefined,
     maxDatetime: undefined,
     size: () => getDefault("datetimepicker.size"),
-    expanded: false,
+    expanded: () => getDefault("datetimepicker.expanded", false),
     rounded: false,
     placeholder: undefined,
     readonly: false,

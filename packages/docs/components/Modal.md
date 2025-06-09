@@ -58,7 +58,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 | Event name    | Properties                                | Description                 |
 | ------------- | ----------------------------------------- | --------------------------- |
 | update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         | **value** `unknown` - close event data    | on component close event    |
+| close         | **value** `string` - close event method   | on component close event    |
 
 ### Slots
 

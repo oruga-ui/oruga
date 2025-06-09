@@ -41,7 +41,7 @@ export function useTrapFocus(): {
         }
     }
 
-    const bind: DirectiveHook<HTMLElement> = (el, { value }) => {
+    const onMounted: DirectiveHook<HTMLElement> = (el, { value }) => {
         // create onKeyDown event listener
         onKeyDown = (event: KeyboardEvent): void => {
             const target = event.target as HTMLElement;
@@ -77,26 +77,29 @@ export function useTrapFocus(): {
             }
         };
 
-        applyHandler(el, value);
+        // apply handler when binding value is already true
+        if (value) applyHandler(el, value);
     };
 
-    /** cleanup on unbind */
-    const unbind: DirectiveHook = (el) => {
+    /** cleanup on beforeUnmount */
+    const onBeforeUnmount: DirectiveHook<HTMLElement> = (el) => {
         // remove handler
         applyHandler(el, false);
         onKeyDown = null;
     };
 
-    const update: DirectiveHook<HTMLElement> = (el, { value }) => {
-        // update handlers based on binding
-        applyHandler(el, value);
+    const onUpdate: DirectiveHook<HTMLElement> = (el, { value, oldValue }) => {
+        // check if binding value has changed
+        if (value !== oldValue)
+            // update handler based on binding value
+            applyHandler(el, value);
     };
 
     return {
         vTrapFocus: {
-            mounted: bind,
-            beforeUnmount: unbind,
-            updated: update,
+            mounted: onMounted,
+            beforeUnmount: onBeforeUnmount,
+            updated: onUpdate,
         },
     };
 }

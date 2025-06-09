@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<NotificationProps>(), {
     icon: undefined,
     iconPack: () => getDefault("notification.iconPack"),
     iconSize: () => getDefault("notification.iconSize", "large"),
-    closable: false,
+    closeable: false,
     closeIcon: () => getDefault("notification.closeIcon", "close"),
     closeIconSize: () => getDefault("notification.closeIconSize"),
     ariaCloseLabel: () => getDefault("notification.ariaCloseLabel", "Close"),
@@ -47,9 +47,9 @@ const emits = defineEmits<{
     "update:active": [value: boolean];
     /**
      * on component close event
-     * @param value {unknown} - close event data
+     * @param value {string} - close event method
      */
-    close: [...args: unknown[]];
+    close: [...args: [] | [string]];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: true });
@@ -73,7 +73,7 @@ const computedIcon = computed(() => {
 });
 
 /** set active to false and emit close event */
-function close(...args: unknown[]): void {
+function close(...args: [] | [string]): void {
     isActive.value = false;
     emits("close", ...args);
 }
@@ -125,11 +125,11 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
             data-oruga="notification"
             :class="rootClasses">
             <button
-                v-if="closable"
+                v-if="closeable"
                 :class="closeClasses"
                 type="button"
                 :aria-label="ariaCloseLabel"
-                @click="close({ action: 'close', method: 'x' })">
+                @click="close('x')">
                 <o-icon
                     :pack="iconPack"
                     :icon="closeIcon"
