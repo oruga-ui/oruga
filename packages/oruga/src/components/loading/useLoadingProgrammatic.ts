@@ -21,7 +21,7 @@ const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useLoadingProgrammatic composable options */
 export type LoadingProgrammaticOptions = Readonly<LoadingProps> &
-    ProgrammaticComponentOptions;
+    ProgrammaticComponentOptions<typeof Loading>;
 
 const LoadingProgrammatic = {
     /** Returns the number of registered active instances. */
@@ -35,7 +35,7 @@ const LoadingProgrammatic = {
     open(
         options: string | LoadingProgrammaticOptions,
         target?: MaybeRefOrGetter<string | HTMLElement | null>,
-    ): ProgrammaticExpose {
+    ): ProgrammaticExpose<typeof Loading> {
         const _options: LoadingProgrammaticOptions =
             typeof options === "string" ? { label: options } : options;
 

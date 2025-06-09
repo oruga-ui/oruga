@@ -20,7 +20,7 @@ async function component(): Promise<void> {
         message: "Modal dialog returned " + JSON.stringify(result),
         variant: "info",
         position: "top",
-        closable: true,
+        closeable: true,
     });
 }
 </script>
