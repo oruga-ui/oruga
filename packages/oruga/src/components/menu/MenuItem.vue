@@ -2,8 +2,8 @@
 import { computed, ref, useId } from "vue";
 
 import OIcon from "../icon/Icon.vue";
+import PlainButton from "../utils/PlainButton";
 
-import PlainButton from "@/components/utils/PlainButton";
 import { getDefault } from "@/utils/config";
 import {
     defineClasses,

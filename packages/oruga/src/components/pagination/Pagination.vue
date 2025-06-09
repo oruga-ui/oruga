@@ -3,8 +3,8 @@ import { computed, watch, nextTick } from "vue";
 
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
+import PlainButton from "../utils/PlainButton";
 
-import PlainButton from "@/components/utils/PlainButton";
 import { getDefault } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
