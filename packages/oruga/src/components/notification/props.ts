@@ -117,7 +117,7 @@ export type NotificationNoticeProps<C extends Component> = {
      * Component to be injected.
      * Close the component by emitting a 'close' event — `$emit('close')`
      */
-    component?: Component;
+    component?: C;
     /** Props to be binded to the injected component */
     props?: ComponentProps<C>;
     /** Events to be binded to the injected component */

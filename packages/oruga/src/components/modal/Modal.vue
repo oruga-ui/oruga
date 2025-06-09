@@ -22,6 +22,7 @@ import {
     useTeleportDefault,
     useTrapFocus,
 } from "@/composables";
+import type { CloseEventArgs } from "../programmatic";
 
 import type { ModalProps } from "./props";
 
@@ -53,6 +54,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     autoFocus: () => getDefault("modal.autoFocus", true),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
+    ariaCloseLabel: () => getDefault("modal.ariaCloseLabel", "Close"),
     mobileBreakpoint: () => getDefault("modal.mobileBreakpoint"),
     teleport: () => getDefault("modal.teleport", false),
     clipScroll: () => getDefault("modal.clipScroll", false),
@@ -69,9 +71,9 @@ const emits = defineEmits<{
     "update:active": [value: boolean];
     /**
      * on component close event
-     * @param value {unknown} - close event data
+     * @param value {string} - close event method
      */
-    close: [...args: unknown[]];
+    close: [...args: [] | [string] | CloseEventArgs<C>];
 }>();
 
 const { vTrapFocus } = useTrapFocus();
@@ -153,11 +155,11 @@ function cancel(method: string): void {
         (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
     )
         return;
-    close({ action: "cancel", method });
+    close(method);
 }
 
 /** set active to false and emit close event */
-function close(...args: unknown[]): void {
+function close(...args: [] | [string] | CloseEventArgs<C>): void {
     isActive.value = false;
     emits("close", ...args);
 }
@@ -254,7 +256,7 @@ defineExpose({ close });
                         :icon="closeIcon"
                         :size="closeIconSize"
                         clickable
-                        both
+                        :aria-label="ariaCloseLabel"
                         @click="cancel('x')" />
                 </div>
             </div>

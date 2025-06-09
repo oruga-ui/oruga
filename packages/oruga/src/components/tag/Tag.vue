@@ -84,14 +84,13 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
 </script>
 
 <template>
-    <div data-oruga="tag" :class="rootClasses">
+    <span data-oruga="tag" :class="rootClasses">
         <o-icon
             v-if="icon"
             :class="iconClasses"
             :pack="iconPack"
             :icon="icon"
-            :size="size"
-            both />
+            :size="size" />
 
         <span :class="labelClasses">
             <!--
@@ -112,13 +111,8 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
                 :icon="closeIcon"
                 :size="size"
                 clickable
-                tabindex="0"
-                role="button"
                 :aria-label="ariaCloseLabel"
-                both
-                @keyup.enter="close"
-                @keyup.space="close"
                 @click="close" />
         </slot>
-    </div>
+    </span>
 </template>

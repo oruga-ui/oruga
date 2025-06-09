@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     disabled: false,
     accept: undefined,
     dragDrop: false,
-    expanded: false,
+    expanded: () => getDefault("upload.expanded", false),
     native: true,
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
@@ -231,7 +231,7 @@ const draggableClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>
@@ -256,7 +256,7 @@ defineExpose({ focus: setFocus, value: vmodel });
             @dragenter.prevent="updateDragDropFocus(true)"
             @drop.prevent="onFileChange">
             <!--
-                @slot Default content     
+                @slot Default content
                 @binding {(event: Event): void} onclick - click handler, only needed if a button is used
             -->
             <slot :onclick="onClick" />

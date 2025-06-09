@@ -19,6 +19,8 @@ declare module "../index" {
                 size: string;
                 /** Position of the dropdown */
                 position: "auto" | "bottom" | "top";
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Number of milliseconds to delay before to emit input event */
                 debounce: number;
                 /** The first option will always be focused (easier to just hit enter or tab) */
@@ -281,6 +283,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 monthNames: string[];
                 /** Size of the control input */
                 size: string;
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Open dropdown on focus */
                 openOnFocus: boolean;
                 /** Close dropdown on click */
@@ -452,6 +456,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Size of the input control */
                 size: string;
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Open dropdown on focus */
                 openOnFocus: boolean;
                 /** Custom function to format a date into a string */
@@ -637,6 +643,8 @@ See icon library documentation for custom classes. */
                 size: string;
                 /** Color of the control */
                 variant: string;
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Show character counter when maxlength prop is passed */
                 counter: boolean;
                 /** Icon pack to use */
@@ -780,6 +788,8 @@ Alert modals interrupt the user's workflow to communicate an important messages 
                 closeIcon: string;
                 /** Size of close icon */
                 closeIconSize: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -942,6 +952,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 size: string;
                 /** Color of the control */
                 variant: string;
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -1535,8 +1547,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 containerClass: ClassDefinition;
                 /** Class of the tag item element */
                 itemClass: ClassDefinition;
-                /** Class of the tag item close button element */
-                closeClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
                 /** Class configuration for the underlying autocomplete component */
@@ -1544,6 +1554,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         timepicker?: ComponentConfigBase &
             Partial<{
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Size of the button */
                 size: string;
                 /** Open dropdown on focus */
@@ -1648,6 +1660,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Color of the control */
                 variant: string;
+                /** Upload will be expanded (full-width) */
+                expanded: boolean;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element when expanded */

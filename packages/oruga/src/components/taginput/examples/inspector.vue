@@ -245,14 +245,6 @@ const inspectData: InspectData<TaginputClasses, TaginputProps<unknown>> = {
         class: "itemClass",
         description: "Class of the tag item element.",
     },
-    closeClass: {
-        class: "closeClass",
-        description: "Class of the tag item close button element.",
-        properties: ["closeable"],
-        action: (data): void => {
-            data.closeable = true;
-        },
-    },
     counterClass: {
         class: "counterClass",
         description: "Class of the counter element.",

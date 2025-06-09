@@ -188,13 +188,13 @@ const labelClasses = defineClasses(
     ["labelClass", "o-field__label"],
     [
         "labelSizeClass",
-        "o-field__label-",
+        "o-field__label--",
         computed(() => props.labelSize),
         computed(() => !!props.labelSize),
     ],
     [
         "labelVariantClass",
-        "o-field__label-",
+        "o-field__label--",
         fieldVariant,
         computed(() => !!fieldVariant.value),
     ],
@@ -233,7 +233,7 @@ const messageClasses = defineClasses(
     ["messageClass", "o-field__message"],
     [
         "messageVariantClass",
-        "o-field__message-",
+        "o-field__message--",
         fieldVariant,
         computed(() => !!fieldVariant.value),
     ],
