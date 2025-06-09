@@ -146,7 +146,8 @@ const inputAttrs = computed(() => ({
     "aria-labelledby": props.labelId,
     ...(fieldVariant.value === "error"
         ? { "aria-errormessage": props.messageId }
-        : { "aria-describedby": props.messageId }),
+        : {}),
+    ...(!!fieldMessage.value ? { "aria-describedby": props.messageId } : {}),
 }));
 
 // Provided data is a computed ref to ensure reactivity.
