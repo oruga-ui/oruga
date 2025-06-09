@@ -4,19 +4,14 @@
             :options="[
                 {
                     label: 'Home',
-                    attrs: { href: '/' },
+                    attrs: { href: '/', disabled: true },
                 },
                 {
                     label: 'Docs',
-                    attrs: {
-                        disabled: true,
-                    },
                 },
                 {
                     label: 'Breadcrumb',
-                    attrs: {
-                        active: true,
-                    },
+                    attrs: { active: true },
                 },
             ]" />
     </section>
