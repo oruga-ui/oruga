@@ -2,7 +2,7 @@ import { ref, toRaw, type App } from "vue";
 import { getValueByPath, merge, setValueByPath } from "./helpers";
 import { setVueInstance } from "./plugins";
 import { isClient } from "./ssr";
-import type { DeepType, OrugaOptions } from "@/types";
+import type { DeepKeys, DeepType, OrugaOptions } from "@/types";
 
 declare module "../index" {
     interface OrugaProgrammatic {
@@ -15,6 +15,7 @@ const globalOptions = ref<OrugaOptions>({
     useHtml5Validation: true,
     statusIcon: true,
     transformClasses: undefined,
+    mobileBreakpoint: "1023px",
     teleportTarget: () => (isClient ? document.body : "body"),
 });
 
@@ -26,19 +27,38 @@ export const getOptions = (): OrugaOptions => {
     return Object.assign({}, toRaw(globalOptions.value));
 };
 
-export const getOption = <K extends keyof OrugaOptions | string>(
-    path: K,
-    defaultValue?: DeepType<OrugaOptions, K>,
-): DeepType<OrugaOptions, K> | undefined => {
-    return getValueByPath(globalOptions.value, path, defaultValue);
-};
+/** get an option by option path with an optional default if not set */
+export function getOption<
+    K extends DeepKeys<OrugaOptions>,
+    D extends DeepType<OrugaOptions, K>,
+>(path: K | (string & {}), defaultValue: D): D;
+export function getOption<
+    K extends DeepKeys<OrugaOptions>,
+    D extends DeepType<OrugaOptions, K>,
+>(path: K | (string & {}), defaultValue?: D): D | undefined;
+export function getOption<
+    K extends DeepKeys<OrugaOptions>,
+    D extends DeepType<OrugaOptions, K>,
+>(path: K | (string & {}), defaultValue?: D): D | undefined {
+    return getValueByPath<OrugaOptions, K, D>(
+        globalOptions.value,
+        path,
+        defaultValue,
+    );
+}
 
 /** less type strict version of getOption for component props defaults */
-export const getDefault = <T>(path: string, defaultValue?: T): T => {
+export const getDefault = <T>(
+    path: DeepKeys<OrugaOptions>,
+    defaultValue?: T,
+): T => {
     return getValueByPath(globalOptions.value, path, defaultValue) as T & {};
 };
 
-export const setOption = <T>(path: string, value: T): void => {
+export const setOption = <K extends DeepKeys<OrugaOptions>>(
+    path: K,
+    value: DeepType<OrugaOptions, K>,
+): void => {
     setValueByPath(globalOptions.value, path, value);
 };
 
