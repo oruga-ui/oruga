@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="T, C extends Component">
 import { computed, ref, useSlots, useId, type Component } from "vue";
 
+import PlainButton from "../utils/PlainButton";
+
 import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
@@ -26,7 +28,7 @@ const props = withDefaults(defineProps<TabItemProps<T, C>>(), {
     visible: true,
     icon: () => getDefault("tabs.icon"),
     iconPack: () => getDefault("tabs.iconPack"),
-    tag: () => getDefault("tabs.itemTag", "button"),
+    tag: () => getDefault("tabs.itemTag", PlainButton),
     content: undefined,
     component: undefined,
     props: undefined,

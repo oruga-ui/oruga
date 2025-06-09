@@ -20,7 +20,7 @@ exports[`OMenu tests > menu integration tests > render correctly 1`] = `
                 @binding {T} selected - the selected item value
                 @binding {number} selectedIndex - index of the selected item
             -->
-    <li id="v-0-1" data-oruga="menu-item" data-id="menu-1" class="o-menu__item" role="none"><button class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span>
+    <li id="v-0-1" data-oruga="menu-item" data-id="menu-1" class="o-menu__item" role="none"><button type="button" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-user mdi-24px"></i></span>
         <!-- 
                 @slot Override label
                 @binding {boolean} expanded - item expanded state
@@ -29,7 +29,7 @@ exports[`OMenu tests > menu integration tests > render correctly 1`] = `
       </button><!-- sub menu items -->
       <!--v-if-->
     </li>
-    <li id="v-0-2" data-oruga="menu-item" data-id="menu-2" class="o-menu__item" role="none"><button class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span>
+    <li id="v-0-2" data-oruga="menu-item" data-id="menu-2" class="o-menu__item" role="none"><button type="button" class="o-menu__item__button o-menu__item__button--icon" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="false"><span data-oruga="icon" class="o-icon"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-mobile mdi-24px"></i></span>
         <!-- 
                 @slot Override label
                 @binding {boolean} expanded - item expanded state
