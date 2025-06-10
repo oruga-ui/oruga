@@ -5,7 +5,7 @@
                 Colored closable tag label
             </o-tag>
 
-            <o-tag closeable aria-close-label="Close tag">
+            <o-tag closable aria-close-label="Close tag">
                 <template #default>
                     Attached tag label with custom and colored icon
                 </template>
