@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
     checkScroll: () => getDefault("taginput.checkScroll", false),
-    closable: () => getDefault("taginput.closable", true),
+    closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
     closeIcon: () => getDefault("taginput.closeIcon", "close"),
@@ -339,7 +339,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                     :key="option.key"
                     :label="option.label"
                     :class="itemClasses"
-                    :closeable="closable && !disabled"
+                    :closeable="closeable && !disabled"
                     :close-icon="closeIcon"
                     :close-icon-pack="iconPack"
                     :aria-close-label="ariaCloseLabel"

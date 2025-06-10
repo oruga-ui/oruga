@@ -12,6 +12,7 @@ import ONotification from "./Notification.vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses, getActiveClasses } from "@/composables";
+import type { CloseEventArgs } from "../programmatic";
 
 import type { NotificationNoticeProps } from "./props";
 
@@ -43,9 +44,9 @@ const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
 const emits = defineEmits<{
     /**
      * on component close event
-     * @param value {unknown} - close event data
+     * @param value {string} - close event method
      */
-    close: [...args: unknown[]];
+    close: [...args: [] | [string] | CloseEventArgs<C>];
 }>();
 
 const notificationRef = useTemplateRef("notificationComponent");
@@ -166,7 +167,7 @@ function setAutoClose(): void {
         if (timer) clearTimeout(timer);
         // set new timer
         timer = setTimeout(() => {
-            if (isActive.value) close({ action: "close", method: "timeout" });
+            if (isActive.value) close("timeout");
         }, props.duration);
     }
 }
@@ -184,11 +185,11 @@ function onMouseOver(): void {
 function onMouseLeave(): void {
     if (isPaused)
         // close when mouse leave and is paused before
-        close();
+        close("mouseleave");
 }
 
 /** set active to false and emit close event */
-function close(...args: unknown[]): void {
+function close(...args: [] | [string] | CloseEventArgs<C>): void {
     isActive.value = false;
     if (timer) clearTimeout(timer);
     emits("close", ...args);

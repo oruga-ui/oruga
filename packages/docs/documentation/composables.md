@@ -132,7 +132,7 @@ NotificationProgrammatic.open({
     message: "You did a greate job!",
     variant: "info",
     position: "top",
-    closable: true,
+    closeable: true,
 });
 ```
 

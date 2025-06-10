@@ -1,5 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
-import type { DeepType } from "@/types";
+import type { DeepKeys, DeepType } from "@/types";
 
 /**
  * +/- function to native math sign
@@ -84,9 +84,9 @@ export const toCssDimension = (
  * Sort an array by key without mutating original data.
  * Call the user sort function if it was passed.
  */
-export function sortBy<T>(
+export function sortBy<T extends object>(
     array: T[],
-    key: string,
+    key: DeepKeys<T>,
     fn?: (a: T, b: T, asc: boolean) => number,
     isAsc: boolean = false,
     mutate: boolean = false,
@@ -180,33 +180,6 @@ export function isElement(el: any): el is Element {
 }
 
 /**
- * Return display text for an option.
- * If option is an object, get the property from path based on given field, or else just the property.
- * Apply a formatter function to the property if given.
- * Return the display label.
- *
- * @param obj Object to get the label for
- * @param field  Property path of the object to use as display text
- * @param formatter Function to format the property to a string
- */
-export function getPropertyValue<O, K extends keyof O | string>(
-    obj: O,
-    field?: K,
-    formatter?: (value: DeepType<O, K>, option: O) => string,
-): string {
-    if (!obj) return "";
-
-    const property = (
-        field ? getValueByPath<O, K>(obj, field) : obj
-    ) as DeepType<O, K>;
-
-    const label =
-        typeof formatter === "function" ? formatter(property, obj) : property;
-
-    return String(label || "");
-}
-
-/**
  * Merge function to replace Object.assign with deep merging possibility
  */
 export function merge(target: any, source: any, deep = false): any {
@@ -244,13 +217,53 @@ export function mergeDeep(target: any, source: any): any {
 }
 
 /**
+ * Return display text for an option.
+ * If option is an object, get the property from path based on given field, or else just the property.
+ * Apply a formatter function to the property if given.
+ * Return the display label.
+ *
+ * @param obj Object to get the label for
+ * @param field  Property path of the object to use as display text
+ * @param formatter Function to format the property to a string
+ */
+export function getPropertyValue<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, field?: K, formatter?: (value: D, option: O) => string): string {
+    if (!obj) return "";
+
+    const property = (field ? getValueByPath<O, K, D>(obj, field) : obj) as D;
+
+    const label =
+        typeof formatter === "function" ? formatter(property, obj) : property;
+
+    return String(label || "");
+}
+
+/**
  * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<O, K extends keyof O | string>(
-    obj: O,
-    path: K,
-    defaultValue?: DeepType<O, K>,
-): DeepType<O, K> | undefined {
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {})): D | undefined;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue: D): D;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue?: D): D | undefined;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue?: D): D | undefined {
     if (!obj || typeof obj !== "object" || typeof path !== "string")
         return defaultValue;
 
@@ -264,14 +277,16 @@ export function getValueByPath<O, K extends keyof O | string>(
 /**
  * Set a value of an object property/path even if it's nested
  */
-export function setValueByPath(
-    obj: Record<string, any>,
-    path: string,
-    value: any,
+export function setValueByPath<O, K extends DeepKeys<O>>(
+    obj: O,
+    path: K,
+    value: DeepType<O, K>,
 ): void {
+    if (typeof path !== "string") return;
+
     const p = path.split(".");
     if (p.length === 1) {
-        obj[path] = value;
+        obj[p[0]] = value;
         return;
     }
     const field = p[0];

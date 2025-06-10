@@ -1,3 +1,23 @@
+# [0.11.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.10.6...v0.11.0-pre.1) (2025-06-09)
+
+
+### Bug Fixes
+
+* add `type="button"` where the default tag is a `button` element to prevent form submission ([#1324](https://github.com/oruga-ui/oruga/issues/1324)) ([c46fe95](https://github.com/oruga-ui/oruga/commit/c46fe95ccb57f9d2f1897d50bf67471be4b41372)), closes [#1323](https://github.com/oruga-ui/oruga/issues/1323)
+* **field:** correct default classes to fit BEM convention ([#1329](https://github.com/oruga-ui/oruga/issues/1329)) ([b36b38e](https://github.com/oruga-ui/oruga/commit/b36b38e8b4b71d2edcb97a4462efa607ff6c5efc))
+* **field:** prevent setting `aria-describedby` when no message is displayed ([#1332](https://github.com/oruga-ui/oruga/issues/1332)) ([ad06f00](https://github.com/oruga-ui/oruga/commit/ad06f00be9cb01a823b014aead1d8fce094ec6a2))
+* **trapFocus:** prevent duplicate event handler binding on component update ([#1330](https://github.com/oruga-ui/oruga/issues/1330)) ([09bf251](https://github.com/oruga-ui/oruga/commit/09bf2514ee04a26e03621653fee33675f33a461f))
+
+
+### Features
+
+* allow configuration of `expanded` prop on form components ([#1326](https://github.com/oruga-ui/oruga/issues/1326)) ([df001fb](https://github.com/oruga-ui/oruga/commit/df001fb135e0d28dda9fdf6a1b478caeb08088ea))
+* **types:** increase programmatic type strictness ([#1322](https://github.com/oruga-ui/oruga/issues/1322)) ([5947965](https://github.com/oruga-ui/oruga/commit/59479653e8594e18af820d6698f811467c767f9c))
+* **types:** rename `closable` to `closeable` to ensure consistent spelling ([#1313](https://github.com/oruga-ui/oruga/issues/1313)) ([06fa959](https://github.com/oruga-ui/oruga/commit/06fa959b122d432eecbaccf53b6a75ce901762e8))
+* **types:** add utility `DeepKeys` type ([#1325](https://github.com/oruga-ui/oruga/issues/1325)) ([de74d59](https://github.com/oruga-ui/oruga/commit/de74d59d283b78a4246bb33412ed4135bee6ca8e))
+
+
+
 ## [0.10.6](https://github.com/oruga-ui/oruga/compare/v0.10.5...v0.10.6) (2025-05-26)
 
 

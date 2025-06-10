@@ -2,6 +2,7 @@
 import { computed, ref, useId } from "vue";
 
 import OIcon from "../icon/Icon.vue";
+import PlainButton from "../utils/PlainButton";
 
 import { getDefault } from "@/utils/config";
 import {
@@ -43,7 +44,7 @@ const props = withDefaults(defineProps<MenuItemProps<T>>(), {
     iconPack: () => getDefault("menu.iconPack"),
     iconSize: () => getDefault("menu.iconSize"),
     animation: () => getDefault("menu.animation", "slide"),
-    tag: () => getDefault("menu.itemTag", "button"),
+    tag: () => getDefault("menu.itemTag", PlainButton),
 });
 
 const emits = defineEmits<{

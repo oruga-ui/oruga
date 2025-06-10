@@ -83,7 +83,7 @@ const columns: TableColumn[] = [
 
 const inspectData: InspectData<
     TableClasses,
-    TableProps<unknown> & TableColumnProps<unknown>
+    TableProps<unknown> & TableColumnProps<unknown, string>
 > = {
     rootClass: {
         class: "rootClass",

@@ -36,9 +36,9 @@ It is designed to mimic the push notifications that have been popularized by mob
 | active         | Whether modal is active or not, use v-model:active to make it two-way binding | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                      |
 | animation      | Custom animation (transition name)                                            | string                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>        |
 | ariaCloseLabel | Accessibility label for the close button                                      | string                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;ariaCloseLabel: "Close"<br>}</code>  |
-| closable       | Add close button to the item that closes the notification                     | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                     |
 | closeIcon      | Close icon name                                                               | string                                                                            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
 | closeIconSize  | Size of close icon                                                            | string                                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;closeIconSize: undefined<br>}</code> |
+| closeable      | Add close button to the item that closes the notification                     | boolean                                                                           | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                     |
 | icon           | Icon name to use                                                              | string                                                                            | -                                                                               |                                                                                                                                                                 |
 | iconPack       | Icon pack to use                                                              | string                                                                            | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
 | iconSize       | Icon size                                                                     | string                                                                            | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>notification: {<br>&nbsp;&nbsp;iconSize: "large"<br>}</code>        |
@@ -54,7 +54,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 | Event name    | Properties                                | Description                 |
 | ------------- | ----------------------------------------- | --------------------------- |
 | update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         | **value** `unknown` - close event data    | on component close event    |
+| close         | **value** `string` - close event method   | on component close event    |
 
 ### Slots
 
@@ -92,9 +92,9 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ### Events
 
-| Event name | Properties                             | Description              |
-| ---------- | -------------------------------------- | ------------------------ |
-| close      | **value** `unknown` - close event data | on component close event |
+| Event name | Properties                              | Description              |
+| ---------- | --------------------------------------- | ------------------------ |
+| close      | **value** `string` - close event method | on component close event |
 
 ### Slots
 

@@ -2,8 +2,8 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
-import Closable from "./closable.vue";
-import ClosableCode from "./closable.vue?raw";
+import Closeable from "./closeable.vue";
+import CloseableCode from "./closeable.vue?raw";
 
 import Badge from "./badge.vue";
 import BadgeCode from "./badge.vue?raw";
@@ -19,13 +19,13 @@ import SizesCode from "./sizes.vue?raw";
     <h3 id="base">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3 id="closable">Closable</h3>
+    <h3 id="closeable">Closeable</h3>
     <p>
-        Closable tags have a button that can be focused, it emits a
+        Closeable tags have a button that can be focused, it emits a
         <code>close</code> event when clicked. The button can be overriden by
         the <code>close</code> slot.
     </p>
-    <ExampleViewer :component="Closable" :code="ClosableCode" />
+    <ExampleViewer :component="Closeable" :code="CloseableCode" />
 
     <h3 id="badge">Badge</h3>
     <p>

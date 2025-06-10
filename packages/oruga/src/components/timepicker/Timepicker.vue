@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<TimepickerProps>(), {
     maxTime: undefined,
     inline: false,
     placeholder: undefined,
-    expanded: false,
+    expanded: () => getDefault("timepicker.expanded", false),
     rounded: false,
     readonly: false,
     disabled: false,

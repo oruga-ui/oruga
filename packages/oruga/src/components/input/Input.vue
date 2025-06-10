@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
     size: () => getDefault("input.size"),
     variant: () => getDefault("input.variant"),
     placeholder: undefined,
-    expanded: false,
+    expanded: () => getDefault("input.expanded", false),
     rounded: false,
     disabled: false,
     passwordReveal: false,

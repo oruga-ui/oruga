@@ -134,7 +134,7 @@ describe("OBreadcrumb tests", () => {
 
         expect(items).toHaveLength(3);
         expect(items[0].classes("o-breadcrumb__item__icon")).toBeTruthy();
-        expect(items[0].classes("o-breadcrumb__item__icon-left")).toBeTruthy();
+        expect(items[0].classes("o-breadcrumb__item__icon--left")).toBeTruthy();
     });
 
     describe("handle options correctly", () => {

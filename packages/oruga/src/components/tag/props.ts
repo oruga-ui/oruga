@@ -19,8 +19,6 @@ export type TagProps = {
     badge?: boolean;
     /** Enable rounded style */
     rounded?: boolean;
-    /** The tag element will react to the hover states */
-    hoverable?: boolean;
     /** Adds an icon to the left of the tag. */
     icon?: string;
     /**
@@ -53,8 +51,6 @@ export type TagClasses = Partial<{
     badgeClass: ComponentClass;
     /** Class of the root element when rounded */
     roundedClass: ComponentClass;
-    /** Class of the root element when hoverable */
-    hoverableClass: ComponentClass;
     /** Class of the label element */
     labelClass: ComponentClass;
     /** Class of the icon element to the left of the tag */

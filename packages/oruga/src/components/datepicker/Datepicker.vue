@@ -54,7 +54,7 @@ const props = withDefaults(
         indicators: "dots",
         minDate: undefined,
         maxDate: undefined,
-        expanded: false,
+        expanded: () => getDefault("datepicker.expanded", false),
         rounded: false,
         inline: false,
         placeholder: undefined,
