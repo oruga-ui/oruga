@@ -1,4 +1,4 @@
-# [0.11.0](https://github.com/oruga-ui/oruga/compare/v0.11.0-pre.1...v0.11.0) (2025-06-16)
+# [0.11.0](https://github.com/oruga-ui/oruga/compare/v0.10.6...v0.11.0) (2025-06-16)
 
 
 ### Bug Fixes
