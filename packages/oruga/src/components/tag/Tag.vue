@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<TagProps>(), {
     closeable: false,
     icon: undefined,
     iconPack: () => getDefault("tag.iconPack"),
-    closeIcon: () => getDefault("tag.closeIcon"),
+    closeIcon: () => getDefault("tag.closeIcon", "close"),
     closeIconPack: () => getDefault("tag.closeIconPack"),
     ariaCloseLabel: () => getDefault("tag.ariaCloseLabel", "Close"),
 });
