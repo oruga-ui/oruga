@@ -221,7 +221,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | SASS Variable                          | Default                                                                                     |
 | -------------------------------------- | ------------------------------------------------------------------------------------------- |
 | $table-background-color                | #fff                                                                                        |
-| $table-background                      | #f5f5f5                                                                                     |
+| $table-background                      | $control-brackground-color                                                                  |
 | $table-boder                           | 1px solid transparent                                                                       |
 | $table-border-radius                   | var(--#{$prefix}base-border-radius)                                                         |
 | $table-card-box-shadow                 | 0 2px 3px rgba(var(--#{$prefix}black), 0.1),    0 0 0 1px rgba(var(--#{$prefix}black), 0.1) |

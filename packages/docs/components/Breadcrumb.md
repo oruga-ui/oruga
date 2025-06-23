@@ -99,19 +99,46 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                            | Default                             |
+| ---------------------------------------- | ----------------------------------- |
+| $breadcrumb-list-line-height             | 1.25em                              |
+| $breadcrumb-item-spacer                  | 0.25em                              |
+| $breadcrumb-item-font-size               | $base-font-size                     |
+| $breadcrumb-item-padding                 | 0.3em                               |
+| $breadcrumb-list-border-radius           | var(--#{$prefix}base-border-radius) |
+| $breadcrumb-item-color                   | var(--#{$prefix}grey-dark)          |
+| $breadcrumb-item-background-color        | transparent                         |
+| $breadcrumb-item-active-color            | var(--#{$prefix}primary)            |
+| $breadcrumb-item-active-background-color | transparent                         |
+| $breadcrumb-item-disabled-color          | var(--#{$prefix}grey-light)         |
+| $breadcrumb-item-hover-color             | var(--#{$prefix}white)              |
+| $breadcrumb-item-hover-background-color  | var(--#{$prefix}secondary)          |
+| $breadcrumb-seperator-color              | inherit                             |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
 </div>
 <div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable      | Default    |
+| ------------------ | ---------- |
+| $breadcrumb-colors | dv.$colors |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
 </div>
 <div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable     | Default                  |
+| ----------------- | ------------------------ |
+| $breadcrumb-color | var(--#{$prefix}primary) |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
 </div>
 
 </section>

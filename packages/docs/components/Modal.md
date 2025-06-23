@@ -94,7 +94,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 | $modal-close-top                           | 20px                                         |
 | $modal-close-size                          | 32px                                         |
 | $modal-close-color                         | var(--#{$prefix}white)                       |
-| $modal-content-fullscreen-background-color | #f5f5f5                                      |
+| $modal-content-fullscreen-background-color | $control-brackground-color                   |
 | $modal-content-max-height                  | calc(100vh - 160px)                          |
 | $modal-content-margin                      | 0 auto                                       |
 | $modal-zindex                              | 40                                           |

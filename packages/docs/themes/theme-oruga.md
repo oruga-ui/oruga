@@ -41,6 +41,7 @@ $base-border-radius-rounded: 9999px !default;
 $base-line-height: 1.5 !default;
 $base-disabled-opacity: 0.5 !default;
 
+$control-brackground-color: #f5f5f5 !default;
 $control-border-width: 1px !default;
 $control-height: 2.25em !default;
 $control-padding-vertical: calc(0.25em - #{$control-border-width});
