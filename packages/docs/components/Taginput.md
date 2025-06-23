@@ -107,16 +107,11 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                   | Default                             |
-| ------------------------------- | ----------------------------------- |
-| $taginput-counter-font-size     | 0.75em                              |
-| $taginput-counter-margin        | 0.25rem 0 0 0.5rem                  |
-| $taginput-item-background-color | var(--#{$prefix}primary)            |
-| $taginput-item-color            | var(--#{$prefix}primary-invert)     |
-| $taginput-item-border-radius    | var(--#{$prefix}base-border-radius) |
-| $taginput-item-margin           | 0.275em                             |
-| $taginput-item-padding          | 0 0.75em 0 0.75em                   |
-| $taginput-item-icon-margin      | 0.5em                               |
+| SASS Variable               | Default            |
+| --------------------------- | ------------------ |
+| $taginput-counter-font-size | 0.75em             |
+| $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
+| $taginput-item-margin       | 0.275em            |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
 
@@ -139,11 +134,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 
 | SASS Variable               | Default            |
 | --------------------------- | ------------------ |
-| $taginput-badge-bg          | $light             |
-| $taginput-badge-color       | $dark              |
-| $taginput-badge-font-size   | 0.9em              |
 | $taginput-badge-margin      | 0.25em             |
-| $taginput-badge-icon-space  | 0.25em             |
 | $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
 | $taginput-counter-font-size | 0.75rem            |
 
