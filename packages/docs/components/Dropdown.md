@@ -153,7 +153,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 | $dropdown-item-color                   | #000000                                                                      |
 | $dropdown-item-disabled-opacity        | var( --#{$prefix}base-disabled-opacity)                                      |
 | $dropdown-item-font-size               | var(--#{$prefix}base-font-size)                                              |
-| $dropdown-item-hover-background-color  | #f5f5f5                                                                      |
+| $dropdown-item-hover-background-color  | $control-brackground-color                                                   |
 | $dropdown-item-hover-color             | #000000                                                                      |
 | $dropdown-item-line-height             | var(--#{$prefix}base-line-height)                                            |
 | $dropdown-item-padding                 | 0.375rem 1rem                                                                |
