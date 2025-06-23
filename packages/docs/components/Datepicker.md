@@ -152,7 +152,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | $datepicker-item-selected-within-background-color | rgb( from $datepicker-item-selected-background-color r g b / 50%) |
 | $datepicker-item-hovered-background-color         | var(--#{$prefix}grey)                                             |
 | $datepicker-item-hovered-color                    | var(--#{$prefix}grey-lighter)                                     |
-| $datepicker-item-hovered-background-color         | #f5f5f5                                                           |
+| $datepicker-item-hovered-background-color         | $control-brackground-color                                        |
 | $datepicker-item-hovered-within-background-color  | rgb( from $datepicker-item-hovered-background-color r g b / 50%)  |
 | $datepicker-item-nearby-color                     | var(--#{$prefix}grey-light)                                       |
 | $datepicker-events-item-padding                   | 0.3rem 0.75rem 0.75rem                                            |

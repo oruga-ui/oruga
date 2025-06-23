@@ -126,8 +126,8 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 | ---------------------------------- | ----------------------------------- |
 | $menu-item-color                   | var(--#{$prefix}grey-dark)          |
 | $menu-item-background-color        | transparent                         |
-| $menu-item-hover-color             | var(--#{$prefix}black)              |
-| $menu-item-hover-background-color  | var(--#{$prefix}grey-light)         |
+| $menu-item-hover-color             | var(--#{$prefix}white)              |
+| $menu-item-hover-background-color  | var(--#{$prefix}secondary)          |
 | $menu-item-active-color            | var(--#{$prefix}primary-invert)     |
 | $menu-item-active-background-color | var(--#{$prefix}primary)            |
 | $menu-item-disabled-color          | var(--#{$prefix}grey-light)         |

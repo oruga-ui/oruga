@@ -90,7 +90,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $switch-width                 | 2.75em                                                    |
 | $switch-height                | 1.5em                                                     |
 | $switch-background            | var(--#{$prefix}grey-light)                               |
-| $switch-toggle-background     | #f5f5f5                                                   |
+| $switch-toggle-background     | $control-brackground-color                                |
 | $switch-border                | $control-border-width solid var(--#{$prefix}grey-lighter) |
 | $switch-border-radius         | var(--#{$prefix}base-border-radius)                       |
 | $switch-border-radius-rounded | var( --#{$prefix}base-border-radius-rounded)              |
