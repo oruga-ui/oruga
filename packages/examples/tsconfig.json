@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "dist",
     "importHelpers": true,
-    "moduleResolution": "Node",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

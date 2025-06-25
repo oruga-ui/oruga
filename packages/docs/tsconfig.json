@@ -2,7 +2,6 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowJs": true,
@@ -17,7 +16,7 @@
   "include": [
     ".vitepress/**/*",
     "src/**/*",
-    "src/**/*.ts", 
+    "src/**/*.ts",
   ],
   "exclude": [
     "node_modules"
