@@ -3,7 +3,6 @@ import {
     computed,
     ref,
     watch,
-    onMounted,
     nextTick,
     useSlots,
     toValue,
@@ -426,17 +425,6 @@ const isScrollable = computed(() => {
 
 const tableCurrentPage = defineModel<number>("currentPage", { default: 1 });
 
-// recompute table rows visibility on page change or data change
-watch(
-    [
-        tableCurrentPage,
-        () => props.perPage,
-        () => props.data,
-        () => props.paginated,
-    ],
-    () => filterTableRows(),
-);
-
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
 
@@ -458,36 +446,13 @@ const availableRows = computed<TableRow<T>[]>(() =>
     tableRows.value.filter(isOptionViable),
 );
 
-/** applies visability filter of reactive tableRows */
-function filterTableRows(): void {
-    // calculate pagination information
-    const currentPage = tableCurrentPage.value;
-    const perPage = Number(props.perPage);
-    const pageStart = (currentPage - 1) * perPage;
-    const pageEnd = pageStart + perPage;
-
-    // update hidden state for each row
-    filterOptionsItems(tableRows, (row, idx) => {
-        // if paginated not backend paginated, paginate row
-        if (props.paginated && !props.backendPagination) {
-            // if not only one page and not on active page
-            if (
-                tableRows.value.length > perPage &&
-                (idx < pageStart || idx >= pageEnd)
-            )
-                // return row is invisible (filtered out)
-                return true;
-        }
-
-        // if not backend filtered, filter row
-        if (!props.backendFiltering)
-            // return row is visible based on filters
-            return !isRowFiltered(row.value);
-
-        // return row is visible (not filtered out)
-        return false;
-    });
-}
+// recompute table rows visibility on row data change
+watch(tableRows, () => {
+    // sort rows
+    sortTableRows();
+    // recalculate visible rows by page filter
+    filterTableRows();
+});
 
 /*
  * Total data count.
@@ -658,6 +623,44 @@ function onFiltersEvent(event: Event): void {
     emits("filters-event", props.filtersEvent, filters.value, event);
 }
 
+// compute table rows visibility on pagination values change and on initial load
+watch(
+    [tableCurrentPage, () => props.perPage, () => props.paginated],
+    () => filterTableRows(),
+    { immediate: true },
+);
+
+/** applies visability filter of reactive tableRows */
+function filterTableRows(): void {
+    // calculate pagination information
+    const currentPage = tableCurrentPage.value;
+    const perPage = Number(props.perPage);
+    const pageStart = (currentPage - 1) * perPage;
+    const pageEnd = pageStart + perPage;
+
+    // update hidden state for each row
+    filterOptionsItems(tableRows, (row, idx) => {
+        // if paginated not backend paginated, paginate row
+        if (props.paginated && !props.backendPagination) {
+            // if not only one page and not on active page
+            if (
+                tableRows.value.length > perPage &&
+                (idx < pageStart || idx >= pageEnd)
+            )
+                // return row is invisible (filtered out)
+                return true;
+        }
+
+        // if not backend filtered, filter row
+        if (!props.backendFiltering)
+            // return row is visible based on filters
+            return !isRowFiltered(row.value);
+
+        // return row is visible (not filtered out)
+        return false;
+    });
+}
+
 /**
  * check whether a row is filtered by active filters or not
  * @param row - row element
@@ -707,15 +710,15 @@ function isColumnSorted(column: TableColumnItem<T>): boolean {
     return currentSortColumn.value?.identifier === column.identifier;
 }
 
-// call initSort only first time (for example async data)
-// initSort must be called after async TableColumns got initialised first time
-onMounted(() => nextTick(() => initSort()));
+// calculate default sort on columns change and on initial load
+watch(tableColumns, defaultSort, { immediate: true });
 
-/** initial sorted column based on the default-sort prop */
-function initSort(): void {
+/** sort column based on the default-sort prop if not already sorted */
+function defaultSort(): void {
+    // prevent sort when not columns or already sorted (for example async data)
     if (!tableColumns.value.length || currentSortColumn.value) return;
     if (!props.defaultSort) return;
-    let sortField = "";
+    let sortField = props.defaultSort;
     let sortDirection = props.defaultSortDirection;
     if (Array.isArray(props.defaultSort)) {
         sortField = props.defaultSort[0];
@@ -767,11 +770,17 @@ function sort(
     // if not backend sorted
     if (!props.backendSorting) {
         // sort rows by mutating the tableRows array
-        sortByColumn(tableRows.value);
-
+        sortTableRows();
         // recalculate the page filter
         filterTableRows();
     }
+}
+
+/** sort rows by mutating the tableRows array */
+function sortTableRows(): void {
+    if (!props.backendSorting)
+        // sort rows by mutating the tableRows array
+        sortByColumn(tableRows.value);
 }
 
 function sortByColumn(rows: TableRow<T>[]): TableRow<T>[] {
@@ -1147,9 +1156,6 @@ function rowClasses(row: TableRow<T>): ClassBind[] {
 }
 
 // #endregion --- Computed Component Classes ---
-
-// compute initial row visibility
-filterTableRows();
 
 // #region --- Expose Public Functionalities ---
 
