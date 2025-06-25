@@ -145,11 +145,8 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { checkHtml5Validity, setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
-    elementRef,
-    emits,
-    props,
-);
+const { checkHtml5Validity, setFocus, onBlur, onFocus, onInvalid } =
+    useInputHandler(elementRef, emits, props);
 
 const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 

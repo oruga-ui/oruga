@@ -3,37 +3,37 @@
 
 // Custom Scrollbar mixin
 @mixin scrollbar {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 
-  &::-webkit-scrollbar {
-    width: 16px;
-  }
+    &::-webkit-scrollbar {
+        width: 16px;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    height: 56px;
-    border-radius: 8px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-    background-color: var(--vp-c-bg-soft-down);
-  }
+    &::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+        background-color: var(--vp-c-bg-soft-down);
+    }
 }
 
 html,
 body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body,
 body .Layout > * {
-  @include scrollbar;
+    @include scrollbar;
 }
 
-// Introduction 
+// Introduction
 
 .oruga-doc-video {
-  width: 100%;
-  max-width: 640px;
-  height: auto;
-  margin: auto;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    margin: auto;
 }

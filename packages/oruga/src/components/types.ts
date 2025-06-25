@@ -290,11 +290,15 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Close dropdown on click */
                 closeOnClick: boolean;
                 /** Custom function to format a date into a string */
-                formatter: ((date: Date | [] | Date[] | [Date, Date]) => string) | undefined;
+                formatter:
+                    | ((date: Date | [] | Date[] | [Date, Date]) => string)
+                    | undefined;
                 /** Custom function to parse a string into a date */
-                parser: ((date: string) => Date | [] | Date[] | [Date, Date]) | undefined;
+                parser:
+                    | ((date: string) => Date | [] | Date[] | [Date, Date])
+                    | undefined;
                 /** Date creator function, default is `new Date()` */
-                creator: (() => Date);
+                creator: () => Date;
                 /** Define a list of weeks which can not be selected */
                 unselectableDaysOfWeek: number[];
                 /** Show nearby month days */
@@ -465,7 +469,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to parse a string into a date */
                 dateParser: ((date: string) => Date) | undefined;
                 /** Date creator function, default is `new Date()` */
-                datetimeCreator: (() => Date);
+                datetimeCreator: () => Date;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -494,7 +498,16 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Max height of dropdown content */
                 maxHeight: number | string;
                 /** Position of the dropdown relative to the trigger */
-                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
+                position:
+                    | "auto"
+                    | "bottom-left"
+                    | "bottom-right"
+                    | "bottom"
+                    | "left"
+                    | "right"
+                    | "top-left"
+                    | "top-right"
+                    | "top";
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Dropdown menu tag name */
@@ -502,7 +515,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Dropdown trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Dropdown will be triggered by any events */
-                triggers: ("click" | "contextmenu" | "focus" | "keydown" | "hover")[];
+                triggers: (
+                    | "click"
+                    | "contextmenu"
+                    | "focus"
+                    | "keydown"
+                    | "hover"
+                )[];
                 /** Keep dropdown list open when item get selected */
                 keepOpen: boolean;
                 /** The first option will always be pre-selected (easier to just hit enter or tab) */
@@ -822,7 +841,13 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Enable rounded style */
                 rounded: boolean;
                 /** Which position the notification will appear when programmatically */
-                position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
+                position:
+                    | "bottom-left"
+                    | "bottom-right"
+                    | "bottom"
+                    | "top-left"
+                    | "top-right"
+                    | "top";
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Icon pack to use */
@@ -1243,7 +1268,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
                 rowKey: undefined;
                 /** Define individual class for a row */
-                rowClass: ((row: unknown, index: number) => string);
+                rowClass: (row: unknown, index: number) => string;
                 /** Border to all cells */
                 bordered: boolean;
                 /** Whether table is striped */
@@ -1261,7 +1286,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Color of the checkbox when checkable (if checkable) */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
-                isRowCheckable: ((row: unknown) => boolean);
+                isRowCheckable: (row: unknown) => boolean;
                 /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
                 backendSorting: boolean;
                 /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
@@ -1275,7 +1300,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Icon pack to use */
                 iconPack: string;
                 /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
-                isDetailedVisible: ((row: unknown) => boolean);
+                isDetailedVisible: (row: unknown) => boolean;
                 /** Allow detail icon and column to be visible (if detailed) */
                 showDetailIcon: boolean;
                 /** Icon name of detail action (if detailed) */
@@ -1563,7 +1588,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Custom function to parse a string into a date */
                 parser: ((date: string) => Date) | undefined;
                 /** time creator function, default is `new Date()` */
-                creator: (() => Date);
+                creator: () => Date;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -1616,7 +1641,16 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Color of the tooltip */
                 variant: string;
                 /** Position of the Tooltip relative to the trigger */
-                position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
+                position:
+                    | "auto"
+                    | "bottom-left"
+                    | "bottom-right"
+                    | "bottom"
+                    | "left"
+                    | "right"
+                    | "top-left"
+                    | "top-right"
+                    | "top";
                 /** Tooltip default animation */
                 animation: string;
                 /** Tooltip trigger tag name */

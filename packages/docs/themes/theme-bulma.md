@@ -5,7 +5,6 @@
 ```scss
 // This file is home to defaulted variables which DO reference bulma but are not part of a particular component
 
-
 $sizes-map: (
     "small": dv.$size-small,
     "normal": dv.$size-normal,
@@ -13,7 +12,6 @@ $sizes-map: (
     "large": dv.$size-large,
 ) !default;
 // This file is home to defaulted variables which need to be passed to Bulma, or to general defaulted variables which are not part of a particular component
-
 
 $speed-slow: 150ms !default;
 $speed-slower: 250ms !default;
@@ -40,4 +38,5 @@ $theme-bulma-variables-host: ":root, :host" !default;
 ```
 
 See ➜ 📄 [SCSS files](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/)
+
 </div>

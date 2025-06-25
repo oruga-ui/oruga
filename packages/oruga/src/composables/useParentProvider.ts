@@ -73,7 +73,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
             const ids = items
                 .map((item) => `[data-id="${key}-${item.identifier}"]`)
                 .join(",");
-            
+
             if (!ids) return;
 
             // query all child items in the order of the DOM appearance

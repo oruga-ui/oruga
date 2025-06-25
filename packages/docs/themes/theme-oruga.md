@@ -106,4 +106,5 @@ $colors: (
 ```
 
 See ➜ 📄 [SCSS files](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/)
+
 </div>

@@ -35,4 +35,5 @@ $colors: map.merge($colors, $custom-colors);
 ```
 
 See ➜ 📄 [SCSS files](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/)
+
 </div>

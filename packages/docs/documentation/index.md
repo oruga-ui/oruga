@@ -1,10 +1,10 @@
 # Introduction
 
 Oruga is a lightweight UI component library for [Vue.js](https://vuejs.org/) **without any dependency** and doesn't depend on any specific style or CSS framework (such as Bootstrap, Bulma, Tailwind, etc).
-Therefore, it **doesn't provide a grid system or CSS utilities**; however, you can easily integrate any CSS framework you like (see the [demo](#examples)). 
+Therefore, it **doesn't provide a grid system or CSS utilities**; however, you can easily integrate any CSS framework you like (see the [demo](#examples)).
 
 Oruga provides you with a set of functional and easily customisable components, where you can define classes globally and override them locally when necessary. So you can **focus only on the UI/UX aspects** of your application
-and can be entirely flexible for future changes without having to touch a line of JavaScript. 
+and can be entirely flexible for future changes without having to touch a line of JavaScript.
 
 If you need a component library and want to easily apply your [custom styles](/documentation/configuration), Oruga is the library for you! 🐛  
 In addition, if you don't want to style everything yourself, we've created several [themes](/documentation/themes) to provide you with a variety of ready-to-use styles. 🦋
@@ -19,12 +19,10 @@ In addition, if you don't want to style everything yourself, we've created sever
 
 🕹 To see Oruga in action, go to [examples](#examples).
 
-
 ::: warning _Oruga for Vue 2.x deprecated_  
-Due to [EOL for Vue 2.x](https://v2.vuejs.org/lts/) at the end of the year 2023, from now on Oruga for Vue 2 ([`@oruga-ui/oruga`](https://www.npmjs.com/package/@oruga-ui/oruga)) is deprecated. 
+Due to [EOL for Vue 2.x](https://v2.vuejs.org/lts/) at the end of the year 2023, from now on Oruga for Vue 2 ([`@oruga-ui/oruga`](https://www.npmjs.com/package/@oruga-ui/oruga)) is deprecated.
 Further enhancements will only be developed for [`@oruga-ui/oruga-next`](https://www.npmjs.com/package/@oruga-ui/oruga-next).
 :::
-
 
 ## Setup
 
@@ -46,7 +44,6 @@ yarn add @oruga-ui/oruga-next
 
 :::
 
-
 ### Oruga Plugin
 
 To import all Oruga components you can use the default `Oruga` export in your main entry point.
@@ -54,13 +51,13 @@ To specify some global configuration, a configuration object can be passed as se
 See [configuration](/documentation/configuration) for details of the available configuration options.
 
 ```js
-import { createApp } from 'vue';
-import Oruga from '@oruga-ui/oruga-next';
+import { createApp } from "vue";
+import Oruga from "@oruga-ui/oruga-next";
 
 const app = createApp(App);
 
 app.use(Oruga, {
-  // here goes the global config
+    // here goes the global config
 });
 ```
 
@@ -68,10 +65,9 @@ After the installation, you can use all the components in an [SFC](https://vuejs
 
 ```html
 <template>
-  <o-button>oruga-ui</o-button>
+    <o-button>oruga-ui</o-button>
 </template>
 ```
-
 
 ### Individual Components (tree shaking)
 
@@ -109,7 +105,6 @@ createApp(...)
   .component(OSidebar);
 ```
 
-
 ### Styling
 
 Oruga comes without any styling by default, but you can easily add your own custom styles or an additional theme package.
@@ -128,16 +123,19 @@ yarn add @oruga-ui/theme-oruga
 ```
 
 ```html [Cdn]
-<link rel="stylesheet" href="https://unpkg.com/@oruga-ui/theme-oruga/dist/oruga.min.css" />
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/@oruga-ui/theme-oruga/dist/oruga.min.css" />
 ```
+
 :::
 
 ```scss
-@import '@oruga-ui/theme-oruga/dist/scss/oruga.scss';
+@import "@oruga-ui/theme-oruga/dist/scss/oruga.scss";
 ```
 
-
 ### Volar support
+
 If you are using Volar, you can specify global component types by configuring `compilerOptions.types` in `tsconfig.json`.
 
 ```js
@@ -150,7 +148,6 @@ If you are using Volar, you can specify global component types by configuring `c
 }
 ```
 
-
 ### Nuxt module
 
 Oruga doesn't provide a [Nuxt.js](https://nuxtjs.org) module at the moment.
@@ -158,21 +155,20 @@ Oruga doesn't provide a [Nuxt.js](https://nuxtjs.org) module at the moment.
 But you can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing:
 
 ```js
-import Oruga from '@oruga-ui/oruga-next';
+import Oruga from "@oruga-ui/oruga-next";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(Oruga);
+    nuxtApp.vueApp.use(Oruga);
 });
 ```
 
 To make this plugin available in your app, add this file to the `plugins` array in your `nuxt.config.js`:
 
 ```js
-plugins: [{ src: '~plugins/oruga.js' }]
+plugins: [{ src: "~plugins/oruga.js" }];
 ```
 
 To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://v3.nuxtjs.org/guide/directory-structure/plugins/).
-
 
 ## Community
 
@@ -192,7 +188,6 @@ Feature requests are always welcome. If you have an idea for improvements, let u
 **Create a theme to share** -
 We have created some [themes](themes) for you.
 However, if you have created a nice theme for Oruga? Let us know! We will be happy to include links to and share high quality content in our docs.
-
 
 ## Examples
 

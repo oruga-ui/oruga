@@ -26,7 +26,7 @@
 // Global theme overrides
 
 .theme-bootstrap {
-    a.VPButton, 
+    a.VPButton,
     a.VPLink,
     a.outline-link,
     a.pager-link {
@@ -36,11 +36,11 @@
     .VPSidebarItem p {
         margin: 0;
     }
-    
+
     .VPDocAside ul:not(.nested) {
         padding: 0;
     }
-    
+
     .main a {
         text-decoration: none;
         &:hover {
@@ -70,11 +70,10 @@
     }
 }
 
-
 // define gloval scroll classes
 .o-scroll-clip,
 .scroll-hidden {
- overflow: hidden;
+    overflow: hidden;
 }
 
 .o-scroll-keep {

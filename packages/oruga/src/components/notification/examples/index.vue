@@ -58,9 +58,9 @@ import ProgrammaticallyCustomCode from "./programmatically-custom.vue?raw";
     <div class="language-js">
         <pre>
     import { useOruga } from "@oruga-ui/oruga-next";
-    const oruga = useOruga(); 
-    oruga.notification.open('Notify!');</pre
-        >
+    const oruga = useOruga();
+    oruga.notification.open('Notify!');
+        </pre>
     </div>
     <ExampleViewer
         :component="ProgrammaticallyDefault"
