@@ -65,7 +65,7 @@
     "test:ts": "vue-tsc --noEmit --skipLibCheck --project tsconfig.app.json",
     "test:lint": "run-s test:eslint test:prettier",
     "test:eslint": "eslint .",
-    "test:prettier": "prettier .",
+    "test:prettier": "prettier --check .",
     "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
     "publish:lib:pre": "cp ../../README.md . && npm run build:lib && npm publish --tag pre"
   },

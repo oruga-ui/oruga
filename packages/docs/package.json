@@ -19,7 +19,7 @@
     "lint:prettier": "prettier --write .",
     "test:lint": "run-s test:eslint test:prettier",
     "test:eslint": "eslint .",
-    "test:prettier": "prettier ."
+    "test:prettier": "prettier --check ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
