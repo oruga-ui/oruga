@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, useTemplateRef, nextTick } from "vue";
+import { ref, computed, onMounted, useTemplateRef, nextTick, watch } from "vue";
 import MarkdownIt from "markdown-it";
 import MarkdownItHighlightjs from "markdown-it-highlightjs";
+// @ts-expect-error types not found
+import { useData } from "vitepress/dist/client/theme-default/composables/data";
 
 const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
 
@@ -75,9 +77,34 @@ const tab = ref(
 
 const showcaseElement = useTemplateRef<HTMLElement>("showcaseRef");
 
+const { isDark } = useData();
+
+// change appearance on theme change
+watch(isDark, () => applyAppearance());
+
+function applyAppearance(): void {
+    // get example-showcase root
+    const shadowRoot = showcaseElement.value?.shadowRoot;
+    if (!shadowRoot) return;
+
+    // get only sections in child nodes
+    const sections = Array.from(shadowRoot.children).filter(
+        (node) => node.tagName === "SECTION",
+    );
+
+    // set theme specific attributes to example sections
+    sections.forEach((child) => {
+        child.setAttribute("data-theme", isDark.value ? "dark" : "light");
+        child.setAttribute("data-bs-theme", isDark.value ? "dark" : "light");
+    });
+}
+
 onMounted(() => {
     // await component got rendered
     nextTick(() => {
+        // set default appearance style
+        applyAppearance();
+
         if (!styleCode.value || !props.component) return;
 
         // get example-showcase root
