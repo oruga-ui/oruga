@@ -1,3 +1,18 @@
+## [0.11.1](https://github.com/oruga-ui/oruga/compare/v0.11.0...v0.11.1) (2025-06-26)
+
+
+### Bug Fixes
+
+* **table:** correct filter/paginate/sort issues ([#1343](https://github.com/oruga-ui/oruga/issues/1343)) ([1c89035](https://github.com/oruga-ui/oruga/commit/1c89035e29e02d77795a78cd42cf1f7ac4a5481b))
+* **taginput:** pass `variant` prop to internal Tag component ([#1340](https://github.com/oruga-ui/oruga/issues/1340)) ([c9d9752](https://github.com/oruga-ui/oruga/commit/c9d9752b99611defc6d271ebb36ae523a7f527f6))
+
+
+### Features
+
+* **notification:** add NotificationNotice component export ([#1345](https://github.com/oruga-ui/oruga/issues/1345)) ([9c05d4c](https://github.com/oruga-ui/oruga/commit/9c05d4c663e91d50bba6a0e78c340c8be036fc55))
+
+
+
 # [0.11.0](https://github.com/oruga-ui/oruga/compare/v0.10.6...v0.11.0) (2025-06-16)
 
 
