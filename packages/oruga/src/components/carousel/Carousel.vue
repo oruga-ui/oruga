@@ -345,7 +345,7 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
 
     delta.value = 0;
     // get dragging start x value
-    dragX.value = !!(event as TouchEvent).touches
+    dragX.value = (event as TouchEvent).touches
         ? (event as TouchEvent).touches[0].clientX
         : (event as MouseEvent).clientX;
 
@@ -356,7 +356,7 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
 function onDragOver(event: TouchEvent | MouseEvent): void {
     if (!isDragging.value) return;
 
-    const dragEndX = !!(event as TouchEvent).touches
+    const dragEndX = (event as TouchEvent).touches
         ? (
               (event as TouchEvent).changedTouches[0] ||
               (event as TouchEvent).touches[0]

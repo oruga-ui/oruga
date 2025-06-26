@@ -1,14 +1,12 @@
-name: Build Oruga
+name: Lint Check
 on:
   push:
     branches: [develop]
   pull_request:
     branches: [develop]
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 24
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -19,5 +17,5 @@ jobs:
           cache: "npm"
       - name: Install dependencies 📦
         run: npm ci
-      - name: Build lib 🛠️
-        run: npm run build:lib
+      - name: Run lint check 🧐
+        run: npm run test:lint

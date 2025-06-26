@@ -13,8 +13,7 @@
     "docs:dev": "run-p docs:gen:watch dev",
     "docs:build": "npm run build",
     "docs:gen": "tsx src/docgen.ts",
-    "docs:gen:watch": "tsx src/docgen.ts --watch",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
+    "docs:gen:watch": "tsx src/docgen.ts --watch"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -29,15 +28,10 @@
     "markdown-it-highlightjs": "^4.2.0"
   },
   "devDependencies": {
-    "@types/node": "^22.15.17",
-    "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.5.0",
+    "@types/node": "^24.0.4",
     "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.26.0",
-    "eslint-plugin-vue": "^10.1.0",
-    "prettier": "^3.5.3",
-    "sass": "^1.88.0",
-    "tsx": "^4.19.4",
+    "sass": "^1.89.2",
+    "tsx": "^4.20.3",
     "typescript": "5.8.3",
     "vitepress": "^1.6.3",
     "vue": "^3.5.13",

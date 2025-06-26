@@ -41,14 +41,16 @@ header .VPNavBar button {
     }
 }
 
-
 .main {
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
         position: relative;
         margin: 0;
         line-height: 1.5em;
         font-weight: 600;
-        letter-spacing: -.02em;
+        letter-spacing: -0.02em;
     }
     h1 {
         line-height: 2.5em;
@@ -78,19 +80,22 @@ header .VPNavBar button {
         padding-right: 0.23em;
         font-weight: 500;
         opacity: 0;
-        transition: color .25s, opacity .25s;
+        transition:
+            color 0.25s,
+            opacity 0.25s;
     }
 
-    h1:hover .header-anchor, h1 .header-anchor:focus,
-    h2:hover .header-anchor, h2 .header-anchor:focus {
+    h1:hover .header-anchor,
+    h1 .header-anchor:focus,
+    h2:hover .header-anchor,
+    h2 .header-anchor:focus {
         opacity: 1;
     }
 
-        
-    .header-anchor{
+    .header-anchor {
         color: var(--vp-c-brand);
         text-decoration: none;
-        
+
         &:before {
             content: var(--vp-header-anchor-symbol);
         }

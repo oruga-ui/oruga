@@ -67,11 +67,8 @@ const emits = defineEmits<{
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
-    inputRef,
-    emits,
-    props,
-);
+const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
+    useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();

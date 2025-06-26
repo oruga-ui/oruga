@@ -18,7 +18,7 @@ if (!shadowRoot)
 onMounted(() => {
     // The slot content must be moved to the shadow root
     // for the scoped style above to be applied.
-    if (host?.childNodes) shadowRoot.append(...host?.childNodes);
+    if (host?.childNodes) shadowRoot.append(...(host?.childNodes ?? []));
 });
 
 // create an HTML link element for the current theme cdn

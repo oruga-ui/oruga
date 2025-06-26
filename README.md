@@ -20,16 +20,15 @@
 (🐛) => 🦋
 </p>
 
-
 ## Features
 
 Oruga is a lightweight UI components library for [Vue.js](https://vuejs.org/) without any dependency.
 It offers a set of easily customisable components and doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, TailwindCSS, etc...). Therefore, it doesn't provide a grid system or CSS utilities, but you can integrate any CSS framework you like.
 Oruga provides you with a set of functional components, so you can focus only on the UI/UX aspects of your application and can be entirely flexible for future changes without having to touch a line of JavaScript.
 
-* **CSS framework agnostic**: No dependency on a specific CSS framework/library but you can easily integrate the components with one of them because they are fully customizable in different ways
-* **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
-* **Lightweight**: no other internal dependency and import only components that you need
+- **CSS framework agnostic**: No dependency on a specific CSS framework/library but you can easily integrate the components with one of them because they are fully customizable in different ways
+- **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
+- **Lightweight**: no other internal dependency and import only components that you need
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
 
@@ -47,7 +46,7 @@ Browse [online documentation here](https://oruga-ui.com/documentation/).
 
 ## Quick start
 
-🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x** 
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x**
 
 ### Setup Oruga
 
@@ -64,22 +63,22 @@ npm install @oruga-ui/oruga-next
     ```js
     import { createApp } from 'vue'
     import Oruga from '@oruga-ui/oruga-next';
-    
+
     createApp(...).use(Oruga);
     ```
 
- - To use tree shaking, either register component manually:
+- To use tree shaking, either register component manually:
 
     ```js
     import { createApp } from 'vue'
     import { OField, OInput } from '@oruga-ui/oruga'
-    
+
     createApp(...)
       .use(OField)
       .use(OInput)
     ```
-    
- - or [import them in your SFC](https://vuejs.org/guide/components/registration.html#local-registration).
+
+- or [import them in your SFC](https://vuejs.org/guide/components/registration.html#local-registration).
 
 ### Customization
 
@@ -97,31 +96,28 @@ Oruga doesn't provide a [Nuxt.js](https://nuxtjs.org) module at the moment.
 You can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing:
 
 ```js
-import Oruga from '@oruga-ui/oruga-next';
+import Oruga from "@oruga-ui/oruga-next";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(Oruga);
+    nuxtApp.vueApp.use(Oruga);
 });
 ```
 
 To make this plugin available in your app, add this file to the `plugins` array in your `nuxt.config.js`
 
 ```js
-plugins: [{ src: '~plugins/oruga.js' }]
+plugins: [{ src: "~plugins/oruga.js" }];
 ```
 
 To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
-
 
 ## Contributing
 
 Please see the [contributing guidelines](./.github/CONTRIBUTING.md).
 
-
 ### Contact us 👾
 
 ➜ Join the [Oruga Discord server](https://discord.gg/RuKuBYN).
-
 
 ## Versioning
 
@@ -129,8 +125,8 @@ Oruga uses [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) for 
 
 While it's still in beta, versions will follow this pattern: **v0.Y.Z**, where:
 
-* **Y**: Major (breaking changes)
-* **Z**: Minor or patch
+- **Y**: Major (breaking changes)
+- **Z**: Minor or patch
 
 ## Core Team
 
@@ -143,6 +139,7 @@ While it's still in beta, versions will follow this pattern: **v0.Y.Z**, where:
 </table>
 
 ## Contributors
+
 Thank you to everyone involved for improving this project, day by day 💚
 
 <a href="https://github.com/oruga-ui/oruga">
