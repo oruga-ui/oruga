@@ -464,7 +464,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe.only("test sorting", () => {
+    describe("test sorting", () => {
         const random_words = [
             "Apfel", // A
             "Ball", // B
