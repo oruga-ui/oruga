@@ -11,6 +11,7 @@ import prettierConfig from "@vue/eslint-config-prettier";
 
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const gitignorePath = path.resolve(__dirname, ".gitignore");

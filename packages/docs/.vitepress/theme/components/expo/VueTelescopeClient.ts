@@ -6,7 +6,7 @@ export default class {
         sortDirection = "asc",
         limit = 12,
         start = 0,
-    ) {
+    ): Promise<any> {
         const endpoint = new URL(`${this.API_ENDPOINT}/showcases/`);
         for (const property in slugs) {
             if (Array.isArray(slugs[property])) {
@@ -25,7 +25,11 @@ export default class {
         endpoint.searchParams.append("_sort", `${sortField}:${sortDirection}`);
         return fetch(endpoint.href).then((response) => response.json());
     }
-    getItemsCount(slugs: any, sortField = "rank", sortDirection = "asc") {
+    getItemsCount(
+        slugs: any,
+        sortField = "rank",
+        sortDirection = "asc",
+    ): Promise<any> {
         const endpoint = new URL(`${this.API_ENDPOINT}/showcases/count/`);
         for (const property in slugs) {
             if (Array.isArray(slugs[property])) {
