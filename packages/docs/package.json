@@ -30,7 +30,6 @@
   "devDependencies": {
     "@types/node": "^24.0.4",
     "@vue/tsconfig": "^0.7.0",
-    "eslint-plugin-vue": "^10.2.0",
     "sass": "^1.89.2",
     "tsx": "^4.20.3",
     "typescript": "5.8.3",

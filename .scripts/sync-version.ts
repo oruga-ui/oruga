@@ -13,13 +13,13 @@ const configJsonOptions = [
     {
         files: jsonPaths,
         from: /"name": "@oruga-ui\/(.*)",([^"]*)"version": .+/gi,
-        to: (match) =>
+        to: (match): string =>
             match.replace(/"version": .+/i, `"version": "${version}",`),
     },
     {
         files: jsonPaths,
         from: /"@oruga-ui\/oruga-next": "(.*)",/gi,
-        to: (match) =>
+        to: (match): string =>
             match.replace(
                 /oruga-next": "(.*)",/i,
                 `oruga-next": "${version}",`,
@@ -27,7 +27,7 @@ const configJsonOptions = [
     },
 ];
 
-const replaceInFile = (config) =>
+const replaceInFile = (config): string[] =>
     replaceInFileSync(config).map((el) => el.file);
 
 try {

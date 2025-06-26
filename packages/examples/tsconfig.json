@@ -11,6 +11,7 @@
     "strictNullChecks": false,
     "resolveJsonModule": true,
     "allowJs": true,
+
     "baseUrl": ".",
     "types": ["node", "vite/client"],
     "paths": {
@@ -23,7 +24,8 @@
     "src/**/*.ts",
     "src/**/*.vue",
     "../oruga/src/**/*.ts",
-    "../oruga/src/**/*.vue"
+    "../oruga/src/**/*.vue",
+    "vite.config.*"
   ],
   "exclude": [
     "../oruga/src/__tests__/**",

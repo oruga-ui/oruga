@@ -3,8 +3,7 @@
 Oruga is a lightweight UI component library for [Vue.js](https://vuejs.org/) **without any dependency** and doesn't depend on any specific style or CSS framework (such as Bootstrap, Bulma, Tailwind, etc).
 Therefore, it **doesn't provide a grid system or CSS utilities**; however, you can easily integrate any CSS framework you like (see the [demo](#examples)).
 
-Oruga provides you with a set of functional and easily customisable components, where you can define classes globally and override them locally when necessary. So you can **focus only on the UI/UX aspects** of your application
-and can be entirely flexible for future changes without having to touch a line of JavaScript.
+Oruga provides you with a set of functional and easily customisable components, where you can define classes globally and override them locally when necessary. So you can **focus only on the UI/UX aspects** of your application and can be entirely flexible for future changes without having to touch a line of JavaScript.
 
 If you need a component library and want to easily apply your [custom styles](/documentation/configuration), Oruga is the library for you! 🐛  
 In addition, if you don't want to style everything yourself, we've created several [themes](/documentation/themes) to provide you with a variety of ready-to-use styles. 🦋
