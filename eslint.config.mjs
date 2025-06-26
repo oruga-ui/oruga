@@ -17,7 +17,13 @@ const gitignorePath = path.resolve(__dirname, ".gitignore");
 
 export default [
   // define specific ignore patterns
-  globalIgnores(["*.d.ts"]),
+  globalIgnores([
+    "*.d.ts",
+    // prevent lint for generated files
+    "CHANGELOG.md",
+    "**/packages/oruga/src/components/types.ts",
+    "**/theme-*.md",
+  ]),
 
   // include .gitignore ignore patterns
   includeIgnoreFile(gitignorePath),

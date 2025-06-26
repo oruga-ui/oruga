@@ -15,20 +15,15 @@
     "types": ["node", "vite/client"],
     "paths": {
       "@/*": ["../oruga/src/*"],
-      "@oruga-ui/oruga-next": ["../oruga/src/index"],
+      "@oruga-ui/oruga-next": ["../oruga/src/index"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.vue",
     "../oruga/src/**/*.ts",
-    "../oruga/src/**/*.vue",
+    "../oruga/src/**/*.vue"
   ],
   "exclude": [
     "../oruga/src/__tests__/**",

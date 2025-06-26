@@ -9,7 +9,7 @@ import { peerDependencies, version } from "./package.json";
 
 import fs from "fs";
 import path, { resolve } from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, URL } from "url";
 
 const bannerTxt = `/*! Oruga v${version} | MIT License | github.com/oruga-ui/oruga */`;
 

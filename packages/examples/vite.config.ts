@@ -4,7 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 
 import { resolve } from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, URL } from "url";
 
 import { peerDependencies } from "./package.json";
 
@@ -12,11 +12,7 @@ import { peerDependencies } from "./package.json";
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
     root: __dirname,
-    plugins: [
-        vue(),
-        tsconfigPaths(), 
-        dts({ outDir: "./dist/types" }),
-    ],
+    plugins: [vue(), tsconfigPaths(), dts({ outDir: "./dist/types" })],
     resolve: {
         alias: {
             // add '@oruga-ui/oruga-next' alias to sry entry point

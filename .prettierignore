@@ -1,0 +1,4 @@
+# prevent formatting for generated files
+CHANGELOG.md
+packages/oruga/src/components/types.ts
+**/theme-*.md
