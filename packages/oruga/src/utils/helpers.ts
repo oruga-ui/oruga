@@ -309,6 +309,7 @@ export function removeElement(el: Element): void {
 export function escapeRegExpChars(value: string): string {
     if (!value) return value;
 
+    // eslint-disable-next-line no-useless-escape
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 

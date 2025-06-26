@@ -40,4 +40,5 @@ $theme-bulma-variables-host: ":root, :host" !default;
 ```
 
 See ➜ 📄 [SCSS files](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/)
+
 </div>

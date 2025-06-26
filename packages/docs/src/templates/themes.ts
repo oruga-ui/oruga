@@ -90,6 +90,7 @@ ${lines.join("\n")}
 \`\`\`
 
 See ➜ 📄 [SCSS files](${theme.src}/scss/)
+
 </div>
 `;
         // write markdown doc file for the theme

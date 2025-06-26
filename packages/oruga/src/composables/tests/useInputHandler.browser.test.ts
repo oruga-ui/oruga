@@ -14,9 +14,9 @@ import {
     ref,
     useTemplateRef,
     type PropType,
-    type VNode
+    type VNode,
 } from "vue";
-import type { ComponentExposed } from 'vue-component-type-helpers'
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 import OButton from "@/components/button/Button.vue";
 import OInput from "@/components/input/Input.vue";
@@ -184,13 +184,21 @@ describe("useInputHandler", () => {
     test("shows validation message when explicitly triggered", async () => {
         const TriggerField = defineComponent({
             name: "TriggerField",
-            setup: (props) => {
-                const input = useTemplateRef<ComponentExposed<typeof OInput>>("my-input");
+            setup: () => {
+                const input =
+                    useTemplateRef<ComponentExposed<typeof OInput>>("my-input");
                 return (): VNode[] => [
                     h(OField, { "data-testid": "field" }, () =>
                         h(OInput, { ref: "my-input", required: true }),
                     ),
-                    h(OButton, { type: "button", onClick: () => input.value?.checkHtml5Validity() }, () => "Trigger Validation"),
+                    h(
+                        OButton,
+                        {
+                            type: "button",
+                            onClick: () => input.value?.checkHtml5Validity(),
+                        },
+                        () => "Trigger Validation",
+                    ),
                 ];
             },
         });

@@ -1,7 +1,7 @@
-name: 'Check if generated files are up to date'
+name: "Check if generated files are up to date"
 on:
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -11,8 +11,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
       - name: Install dependencies 📦
         run: npm ci
       - name: Generate files 🧐

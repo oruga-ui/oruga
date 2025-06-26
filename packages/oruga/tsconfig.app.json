@@ -1,7 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
-    "composite": true, 
+    "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "importHelpers": true,
     "moduleResolution": "Node",
@@ -11,36 +11,23 @@
     "sourceMap": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
-    
+
     "baseUrl": ".",
-    "types": [
-      "vite/client",
-      "./components.d.ts",
-   ], 
-   "paths": {
+    "types": ["vite/client", "./components.d.ts"],
+    "paths": {
       "@/*": ["src/*"],
       "@docs": ["../docs/src/types"],
-      "@oruga-ui/oruga-next": ["src/index"],
+      "@oruga-ui/oruga-next": ["src/index"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "../docs/src/types.ts",
-    "src/**/*", 
-    "src/**/*.ts", 
-    "src/**/*.d.ts", 
-    "src/**/*.tsx", 
+    "src/**/*",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
     "src/**/*.vue"
   ],
-  "exclude": [
-    "src/**/__tests__/*",
-    "src/**/*.test.ts",
-    "node_modules",
-    "dist"
-  ],
+  "exclude": ["src/**/__tests__/*", "src/**/*.test.ts", "node_modules", "dist"]
 }

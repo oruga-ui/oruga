@@ -281,15 +281,7 @@ const containerClasses = defineClasses([
     "o-taginput__container",
 ]);
 
-const itemClasses = defineClasses(
-    ["itemClass", "o-taginput__item"],
-    [
-        "variantClass",
-        "o-taginput__item--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
-);
+const itemClasses = defineClasses(["itemClass", "o-taginput__item"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
@@ -338,6 +330,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                     v-for="(option, index) in selectedOptions"
                     :key="option.key"
                     :label="option.label"
+                    :variant="variant"
                     :class="itemClasses"
                     :closeable="closeable && !disabled"
                     :close-icon="closeIcon"
