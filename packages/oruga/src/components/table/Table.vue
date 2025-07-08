@@ -43,7 +43,7 @@ import {
     useSequentialId,
 } from "@/composables";
 
-import type { ClassBind, DeepKeys } from "@/types";
+import type { ClassBind } from "@/types";
 import type {
     TableColumn,
     TableRow,
@@ -494,7 +494,8 @@ function hasCustomFooterSlot(): boolean {
 
 /** get the formated row value for a column */
 function getColumnValue(row: T, column: TableColumn<T>): string {
-    return getPropertyValue(row, column.field as DeepKeys<T>, column.formatter);
+    // @ts-expect-error getPropertyValue arguments does not patch perfect to TableColumn<T> attributes
+    return getPropertyValue(row, column.field, column.formatter);
 }
 
 /** check if two rows are equal by a custom compare function or the rowKey attribute */

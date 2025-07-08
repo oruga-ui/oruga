@@ -134,7 +134,7 @@ defineExpose({ close });
                 :class="overlayClasses"
                 :tabindex="-1"
                 @click="cancel('outside')" />
-            <!-- 
+            <!--
                 @slot Override icon and label
                 @binding {close} close - function to close the component
             -->
