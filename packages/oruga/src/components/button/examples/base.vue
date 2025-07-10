@@ -12,6 +12,7 @@ const settings = reactive({
     outlined: false,
     inverted: false,
     disabled: false,
+    loading: false,
 });
 </script>
 
@@ -49,6 +50,9 @@ const settings = reactive({
             <o-field label="Disabled">
                 <o-switch v-model="settings.disabled" />
             </o-field>
+            <o-field label="Loading">
+                <o-switch v-model="settings.loading" />
+            </o-field>
         </o-field>
 
         <o-button
@@ -58,6 +62,7 @@ const settings = reactive({
             :inverted="settings.inverted"
             :outlined="settings.outlined"
             :disabled="settings.disabled"
+            :loading="settings.loading"
             @click="clickMe">
             Click Me
         </o-button>
