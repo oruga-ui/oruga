@@ -1,3 +1,13 @@
+## [0.11.2](https://github.com/oruga-ui/oruga/compare/v0.11.1...v0.11.2) (2025-07-12)
+
+
+### Bug Fixes
+
+* **table:** `keyof T` is now a possible column `field` value ([#1349](https://github.com/oruga-ui/oruga/issues/1349)) ([ecc9102](https://github.com/oruga-ui/oruga/commit/ecc9102c28756c7caabb91ff4508065b1f108660))
+* **table:** hide detail row when parent row got hidden ([#1354](https://github.com/oruga-ui/oruga/issues/1354)) ([6158228](https://github.com/oruga-ui/oruga/commit/61582280639aeb7b5436781d1de634d68c939891))
+
+
+
 ## [0.11.1](https://github.com/oruga-ui/oruga/compare/v0.11.0...v0.11.1) (2025-06-26)
 
 
