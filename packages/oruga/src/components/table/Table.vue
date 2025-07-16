@@ -599,7 +599,7 @@ let debouncedFilter: ReturnType<
     typeof useDebounce<Parameters<typeof handleFiltersChange>>
 >;
 
-// initialise and update debounces filter function
+// initialise and update debounces filter function based on `filterDebounce` prop
 watch(
     () => props.filterDebounce,
     (debounce) =>
@@ -607,7 +607,7 @@ watch(
     { immediate: true },
 );
 
-// react on filters got changed
+// react on filter got changed
 watch(filters, (value) => debouncedFilter(value), { deep: true });
 
 function handleFiltersChange(value: Record<string, string>): void {
@@ -1635,7 +1635,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         </tr>
 
                         <transition-group
-                            v-if="props.detailed"
+                            v-if="!row.hidden && props.detailed"
                             :name="detailTransition">
                             <template v-if="isDetailRowVisible(row)">
                                 <!--
