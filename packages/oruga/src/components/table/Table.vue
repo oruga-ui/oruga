@@ -1086,6 +1086,8 @@ const thSubheadingClasses = defineClasses([
     "o-table__th-subheading",
 ]);
 
+const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
+
 const thSortIconClasses = defineClasses([
     "thSortIconClass",
     "o-table__th__sort-icon",
@@ -1349,13 +1351,16 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :component="column.$el"
                                     name="header"
                                     tag="span"
+                                    :class="thLabelClasses"
                                     :props="{
                                         column: column.value,
                                         index: column.index,
                                     }" />
 
-                                <span v-else>
-                                    {{ column.label }}
+                                <template v-else>
+                                    <span :class="thLabelClasses">
+                                        {{ column.label }}
+                                    </span>
                                     <span
                                         v-if="column.sortable"
                                         v-show="isColumnSorted(column)"
@@ -1367,7 +1372,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             :size="sortIconSize"
                                             :rotation="!isAsc ? 180 : 0" />
                                     </span>
-                                </span>
+                                </template>
                             </th>
                         </template>
 

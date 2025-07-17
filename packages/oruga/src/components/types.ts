@@ -1364,14 +1364,16 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 thDetailedClass: ClassDefinition;
                 /** Class of the table `th` element when sortable */
                 thSortableClass: ClassDefinition;
-                /** Class of the table header sort icon element */
-                thSortIconClass: ClassDefinition;
                 /** Class of the table `th` element that is currently sorted */
                 thCurrentSortClass: ClassDefinition;
                 /** Class of the table `th` element that is unsortable */
                 thUnselectableClass: ClassDefinition;
                 /** Class of the table `th` subheading element */
                 thSubheadingClass: ClassDefinition;
+                /** Class of the table header label element */
+                thLabelClass: ClassDefinition;
+                /** Class of the table header sort icon element */
+                thSortIconClass: ClassDefinition;
                 /** Class of the table `tr` element when selected */
                 trSelectedClass: ClassDefinition;
                 /** Class of the table `tr` element when checkable and checked */
