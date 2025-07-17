@@ -55,7 +55,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 | update:current | **value** `number` - updated current prop                                         | current prop two-way binding |
 | change         | **value** `number` - current value                                                | on current change event      |
 | next           | **event** `Event` - native click event<br/>**value** `number` - new current value | on next button event click   |
-| previus        | **event** `Event` - native click event<br/>**value** `number` - new current value | on previus button event      |
+| previous       | **event** `Event` - native click event<br/>**value** `number` - new current value | on previous button event     |
 
 ### Slots
 

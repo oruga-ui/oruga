@@ -65,11 +65,11 @@ const emits = defineEmits<{
      */
     next: [event: Event, value: number];
     /**
-     * on previus button event
+     * on previous button event
      * @param event {Event} native click event
      * @param value {number} new current value
      */
-    previus: [event: Event, value: number];
+    previous: [event: Event, value: number];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -141,9 +141,9 @@ const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
     return pages;
 });
 
-const previusButtonBind = computed(() =>
+const previousButtonBind = computed(() =>
     getPage(currentPage.value - 1, props.ariaPreviousLabel, (e, v) =>
-        emits("previus", e, v),
+        emits("previous", e, v),
     ),
 );
 
@@ -294,9 +294,9 @@ defineExpose({ last, first, prev, next });
             @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         -->
-        <slot name="previous" v-bind="previusButtonBind">
+        <slot name="previous" v-bind="previousButtonBind">
             <o-pagination-button
-                v-bind="previusButtonBind"
+                v-bind="previousButtonBind"
                 :disabled="isFirst"
                 :root-class="buttonPrevClasses"
                 :button-class="buttonClasses"
