@@ -73,37 +73,39 @@ const pageCount = computed(() =>
 watch(
     () => pageCount.value,
     (value) => {
-        if (props.current > value) last(new Event("change"));
+        if (currentPage.value > value) last(new Event("change"));
     },
 );
 
 /** First item of the page (count). */
 const firstItem = computed(() => {
     const perPage = Number(props.perPage);
-    const firstItem = props.current * perPage - perPage + 1;
+    const firstItem = currentPage.value * perPage - perPage + 1;
     return firstItem >= 0 ? firstItem : 0;
 });
 
 /** Check if this is the first page. */
-const isFirst = computed(() => props.current <= 1);
+const isFirst = computed(() => currentPage.value <= 1);
 
 /** Check if first page button should be visible. */
-const hasFirst = computed(() => props.current >= props.rangeBefore + 2);
+const hasFirst = computed(() => currentPage.value >= props.rangeBefore + 2);
 
 /** Check if first ellipsis should be visible. */
-const hasFirstEllipsis = computed(() => props.current >= props.rangeBefore + 4);
+const hasFirstEllipsis = computed(
+    () => currentPage.value >= props.rangeBefore + 4,
+);
 
 /** Check if this is the last page. */
-const isLast = computed(() => props.current >= pageCount.value);
+const isLast = computed(() => currentPage.value >= pageCount.value);
 
 /** Check if last page button should be visible. */
 const hasLast = computed(
-    () => props.current <= pageCount.value - (1 + props.rangeAfter),
+    () => currentPage.value <= pageCount.value - (1 + props.rangeAfter),
 );
 
 /** Check if last ellipsis should be visible. */
 const hasLastEllipsis = computed(
-    () => props.current < pageCount.value - (2 + props.rangeAfter),
+    () => currentPage.value < pageCount.value - (2 + props.rangeAfter),
 );
 
 /**
@@ -113,11 +115,11 @@ const hasLastEllipsis = computed(
 const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
     if (props.simple) return [];
 
-    let left = Math.max(1, props.current - props.rangeBefore);
+    let left = Math.max(1, currentPage.value - props.rangeBefore);
     if (left - 1 === 2) {
         left--; // Do not show the ellipsis if there is only one to hide
     }
-    let right = Math.min(props.current + props.rangeAfter, pageCount.value);
+    let right = Math.min(currentPage.value + props.rangeAfter, pageCount.value);
     if (pageCount.value - right === 2) {
         right++; // Do not show the ellipsis if there is only one to hide
     }
@@ -142,9 +144,10 @@ function getPage(
 } {
     return {
         number: num,
-        isCurrent: props.current === num,
+        isCurrent: currentPage.value === num,
         onClick: (event: Event): void => changePage(num, event),
-        ariaLabel: ariaLabel || getAriaPageLabel(num, props.current === num),
+        ariaLabel:
+            ariaLabel || getAriaPageLabel(num, currentPage.value === num),
         tag: props.buttonTag,
     };
 }
@@ -167,12 +170,12 @@ function getAriaPageLabel(pageNumber: number, isCurrent: boolean): string {
 
 /** Previous button click listener. */
 function prev(event: Event): void {
-    changePage(props.current - 1, event);
+    changePage(currentPage.value - 1, event);
 }
 
 /** Next button click listener. */
 function next(event: Event): void {
-    changePage(props.current + 1, event);
+    changePage(currentPage.value + 1, event);
 }
 
 /** First button click listener. */
@@ -186,7 +189,8 @@ function last(event: Event): void {
 }
 
 function changePage(page: number, event: Event): void {
-    if (props.current === page || page < 1 || page > pageCount.value) return;
+    if (currentPage.value === page || page < 1 || page > pageCount.value)
+        return;
     emits("change", page);
     currentPage.value = page;
 
