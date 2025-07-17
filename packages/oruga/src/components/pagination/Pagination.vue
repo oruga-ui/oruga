@@ -25,9 +25,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<PaginationProps>(), {
     override: undefined,
+    current: 1,
     total: undefined,
     perPage: () => getDefault("pagination.perPage", 20),
-    current: 1,
     rangeBefore: 1,
     rangeAfter: 1,
     size: () => getDefault("pagination.size"),
@@ -57,7 +57,19 @@ const emits = defineEmits<{
      * on current change event
      * @param value {number} current value
      */
-    change: [event: number];
+    change: [value: number];
+    /**
+     * on next button event click
+     * @param event {Event} native click event
+     * @param value {number} new current value
+     */
+    next: [event: Event, value: number];
+    /**
+     * on previus button event
+     * @param event {Event} native click event
+     * @param value {number} new current value
+     */
+    previus: [event: Event, value: number];
 }>();
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
@@ -129,10 +141,23 @@ const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
     return pages;
 });
 
+const previusButtonBind = computed(() =>
+    getPage(currentPage.value - 1, props.ariaPreviousLabel, (e, v) =>
+        emits("previus", e, v),
+    ),
+);
+
+const nextButtonBind = computed(() =>
+    getPage(currentPage.value + 1, props.ariaNextLabel, (e, v) =>
+        emits("next", e, v),
+    ),
+);
+
 /** Get properties for a page */
 function getPage(
     num: number,
     ariaLabel?: string,
+    onClick?: (event: Event, value: number) => void,
 ): {
     number: number;
     isCurrent: boolean;
@@ -143,7 +168,10 @@ function getPage(
     return {
         number: num,
         isCurrent: props.current === num,
-        onClick: (event: Event): void => changePage(num, event),
+        onClick: (event: Event): void => {
+            changePage(num, event);
+            if (onClick) onClick(event, num);
+        },
         ariaLabel: ariaLabel || getAriaPageLabel(num, props.current === num),
         tag: props.buttonTag,
     };
@@ -259,18 +287,16 @@ defineExpose({ last, first, prev, next });
 
 <template>
     <nav data-oruga="pagination" :class="rootClasses">
-        <!-- 
+        <!--
             @slot Previous button slot
-            @binding {number} number - page number 
+            @binding {number} number - page number
             @binding {boolean} isCurrent - if page is current
             @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         -->
-        <slot
-            name="previous"
-            v-bind="getPage(currentPage - 1, ariaPreviousLabel)">
+        <slot name="previous" v-bind="previusButtonBind">
             <o-pagination-button
-                v-bind="getPage(currentPage - 1, ariaPreviousLabel)"
+                v-bind="previusButtonBind"
                 :disabled="isFirst"
                 :root-class="buttonPrevClasses"
                 :button-class="buttonClasses"
@@ -279,16 +305,16 @@ defineExpose({ last, first, prev, next });
             </o-pagination-button>
         </slot>
 
-        <!-- 
+        <!--
             @slot Next button slot
-            @binding {number} number - page number 
+            @binding {number} number - page number
             @binding {boolean} isCurrent - if page is current
             @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         -->
-        <slot name="next" v-bind="getPage(currentPage + 1, ariaNextLabel)">
+        <slot name="next" v-bind="nextButtonBind">
             <o-pagination-button
-                v-bind="getPage(currentPage + 1, ariaNextLabel)"
+                v-bind="nextButtonBind"
                 :disabled="isLast"
                 :root-class="buttonNextClasses"
                 :button-class="buttonClasses"
@@ -344,9 +370,9 @@ defineExpose({ last, first, prev, next });
             </li>
 
             <li v-if="hasLast" :class="listItemClasses">
-                <!-- 
+                <!--
                     @slot Pagination button slot
-                    @binding {number} number - page number 
+                    @binding {number} number - page number
                     @binding {boolean} isCurrent - if page is current
                     @binding {(event: Event): void} onClick - click handler
                     @binding {string} ariaLabel - aria-label attribute
