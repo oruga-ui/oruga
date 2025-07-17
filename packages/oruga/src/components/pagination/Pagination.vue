@@ -172,7 +172,7 @@ function getPage(
             changePage(num, event);
             if (onClick) onClick(event, num);
         },
-        ariaLabel: ariaLabel || getAriaPageLabel(num, props.current === num),
+        ariaLabel: ariaLabel ?? getAriaPageLabel(num, props.current === num),
         tag: props.buttonTag,
     };
 }

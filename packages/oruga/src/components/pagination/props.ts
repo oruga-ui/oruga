@@ -3,7 +3,10 @@ import type { ComponentClass, DynamicComponent } from "@/types";
 export type PaginationProps = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Current page number, use v-model:current to make it two-way binding */
+    /**
+     * Current page number, use v-model:current to make it two-way binding
+     * @deprecated will be renamed to `modelValue`
+     */
     current?: number;
     /** Total count of items */
     total?: number;
@@ -25,6 +28,7 @@ export type PaginationProps = {
     /**
      * Buttons order
      * @values centered, right, left
+     * @deprecated will be renamed to `position`
      */
     order?: "centered" | "right" | "left";
     /** Pagination button tag name */
