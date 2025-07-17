@@ -25,9 +25,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<PaginationProps>(), {
     override: undefined,
+    current: 1,
     total: undefined,
     perPage: () => getDefault("pagination.perPage", 20),
-    current: 1,
     rangeBefore: 1,
     rangeAfter: 1,
     size: () => getDefault("pagination.size"),
@@ -259,9 +259,9 @@ defineExpose({ last, first, prev, next });
 
 <template>
     <nav data-oruga="pagination" :class="rootClasses">
-        <!-- 
+        <!--
             @slot Previous button slot
-            @binding {number} number - page number 
+            @binding {number} number - page number
             @binding {boolean} isCurrent - if page is current
             @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
@@ -279,9 +279,9 @@ defineExpose({ last, first, prev, next });
             </o-pagination-button>
         </slot>
 
-        <!-- 
+        <!--
             @slot Next button slot
-            @binding {number} number - page number 
+            @binding {number} number - page number
             @binding {boolean} isCurrent - if page is current
             @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
@@ -344,9 +344,9 @@ defineExpose({ last, first, prev, next });
             </li>
 
             <li v-if="hasLast" :class="listItemClasses">
-                <!-- 
+                <!--
                     @slot Pagination button slot
-                    @binding {number} number - page number 
+                    @binding {number} number - page number
                     @binding {boolean} isCurrent - if page is current
                     @binding {(event: Event): void} onClick - click handler
                     @binding {string} ariaLabel - aria-label attribute
