@@ -114,11 +114,19 @@ const hasMobileCards = ref(true);
                 {{ new Date(row.date).toLocaleDateString() }}
             </o-table-column>
 
-            <o-table-column v-slot="{ row }" label="Gender" sortable>
-                <o-icon
-                    pack="fas"
-                    :icon="row.gender === 'Male' ? 'mars' : 'venus'" />
-                {{ row.gender }}
+            <o-table-column label="Gender" sortable>
+                <template #default="{ row }">
+                    <o-icon
+                        pack="fas"
+                        :icon="row.gender === 'Male' ? 'mars' : 'venus'" />
+                    {{ row.gender }}
+                </template>
+
+                <template #header="{ column }">
+                    {{ column.label }}
+                    <o-icon pack="fas" icon="mars" />
+                    <o-icon pack="fas" icon="venus" />
+                </template>
             </o-table-column>
 
             <template #footer>

@@ -223,14 +223,16 @@ export type TableClasses = Partial<{
     thDetailedClass: ComponentClass;
     /** Class of the table `th` element when sortable */
     thSortableClass: ComponentClass;
-    /** Class of the table header sort icon element */
-    thSortIconClass: ComponentClass;
     /** Class of the table `th` element that is currently sorted */
     thCurrentSortClass: ComponentClass;
     /** Class of the table `th` element that is unsortable */
     thUnselectableClass: ComponentClass;
     /** Class of the table `th` subheading element */
     thSubheadingClass: ComponentClass;
+    /** Class of the table header label element */
+    thLabelClass: ComponentClass;
+    /** Class of the table header sort icon element */
+    thSortIconClass: ComponentClass;
     /** Class of the table `tr` element when selected */
     trSelectedClass: ComponentClass;
     /** Class of the table `tr` element when checkable and checked */
