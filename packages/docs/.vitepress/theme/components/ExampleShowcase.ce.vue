@@ -16,12 +16,6 @@ if (!shadowRoot)
     throw new Error("ExampleShowcase must be used as web component.");
 
 onMounted(() => {
-    if (host?.children)
-        // add bulma light theme attribute to the slot content
-        host.childNodes.forEach((child) =>
-            child.setAttribute("data-theme", "light"),
-        );
-
     // The slot content must be moved to the shadow root
     // for the scoped style above to be applied.
     if (host?.childNodes) shadowRoot.append(...(host.childNodes ?? []));
