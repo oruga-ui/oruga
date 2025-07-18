@@ -47,21 +47,24 @@ export type TableProps<T> = {
     stickyHeader?: boolean;
     /** Table fixed height */
     height?: number | string;
-    /** Rows can be checked (multiple) */
+    /** Allow each row to be checked by a checkbox */
     checkable?: boolean;
-    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
-    checkableHeader?: boolean;
-    /** Make the checkbox column sticky (if checkable) */
-    stickyCheckbox?: boolean;
     /** Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable) */
     checkedRows?: T[];
+    /** Show check/uncheck all checkbox in table header (if checkable) */
+    checkableHeader?: boolean;
     /**
-     * Position of the checkbox when checkable (if checkable)
+     * Make the checkbox column sticky (if checkable)
+     * @deprecated will be renamed to `checkboxSticky`
+     */
+    stickyCheckbox?: boolean;
+    /**
+     * Position of the checkbox (if checkable)
      * @values left, right
      */
     checkboxPosition?: "left" | "right";
     /**
-     * Color of the checkbox when checkable (if checkable)
+     * Color of the checkbox (if checkable)
      * @values primary, info, success, warning, danger, and any other custom color
      */
     checkboxVariant?: string;

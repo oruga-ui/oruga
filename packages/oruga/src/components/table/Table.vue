@@ -89,9 +89,9 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     stickyHeader: false,
     height: undefined,
     checkable: false,
-    stickyCheckbox: false,
-    checkableHeader: true,
     checkedRows: () => [],
+    checkableHeader: true,
+    stickyCheckbox: false,
     checkboxPosition: () => getDefault("table.checkboxPosition", "left"),
     checkboxVariant: () => getDefault("table.checkboxVariant"),
     isRowChecked: undefined,
@@ -1116,7 +1116,7 @@ const tdCheckboxClasses = defineClasses(
     ["tdCheckboxClass", "o-table__td-checkbox"],
     [
         "thStickyClass",
-        "o-table__th--sticky",
+        "o-table__td--sticky",
         null,
         computed(() => props.stickyCheckbox),
     ],
@@ -1567,7 +1567,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             <td
                                 v-if="checkable && checkboxPosition === 'left'"
                                 :class="[
-                                    ...thBaseClasses,
+                                    ...tdBaseClasses,
                                     ...tdCheckboxClasses,
                                 ]">
                                 <o-checkbox
@@ -1621,7 +1621,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             <td
                                 v-if="checkable && checkboxPosition === 'right'"
                                 :class="[
-                                    ...thBaseClasses,
+                                    ...tdBaseClasses,
                                     ...tdCheckboxClasses,
                                 ]">
                                 <o-checkbox
