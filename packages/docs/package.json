@@ -20,9 +20,9 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@highlightjs/vue-plugin": "2.1.2",
-    "@oruga-ui/theme-bootstrap": "0.9.2",
-    "@oruga-ui/theme-bulma": "0.7.0",
-    "@oruga-ui/theme-oruga": "0.7.0",
+    "@oruga-ui/theme-bootstrap": "0.9.3",
+    "@oruga-ui/theme-bulma": "0.7.2",
+    "@oruga-ui/theme-oruga": "0.7.1",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.1.0",
     "markdown-it-highlightjs": "^4.2.0"
@@ -35,8 +35,8 @@
     "typescript": "5.8.3",
     "vitepress": "^1.6.3",
     "vue": "^3.5.17",
-    "vue-component-meta": "^3.0.2",
+    "vue-component-meta": "^3.0.3",
     "vue-docgen-cli": "4.79.0",
-    "vue-tsc": "^3.0.2"
+    "vue-tsc": "^3.0.3"
   }
 }
