@@ -462,6 +462,38 @@ describe("OTable tests", () => {
             const bodyRows = wrapper.findAll("tbody tr");
             expect(bodyRows).toHaveLength(5); // Filtering after debounce
         });
+
+        test("hide detail row when data is filtered out", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name", searchable: true },
+                    ],
+                    data,
+                    detailed: true,
+                    // open detail for first data row
+                    detailedRows: [data[0]],
+                },
+                slots: { detail: "DETAIL" },
+            });
+            await nextTick();
+
+            const input = wrapper.find("thead input");
+            expect(input.exists()).toBeTruthy();
+
+            let bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(data.length + 1); // data rows + detail for row 1
+            expect(bodyRows[1].text()).toBe("DETAIL"); // check second row is detal row
+
+            await input.setValue("T");
+            await input.trigger("input");
+            vi.runAllTimers(); // run debounce timer
+            await flushPromises();
+
+            bodyRows = wrapper.findAll("tbody tr");
+            expect(bodyRows).toHaveLength(1); // Tina
+        });
     });
 
     describe("test sorting", () => {

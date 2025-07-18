@@ -1256,9 +1256,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 selectable: boolean;
                 /** Show header */
                 showHeader: boolean;
-                /** Position of the checkbox when checkable (if checkable) */
+                /** Position of the checkbox (if checkable) */
                 checkboxPosition: "left" | "right";
-                /** Color of the checkbox when checkable (if checkable) */
+                /** Color of the checkbox (if checkable) */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
                 isRowCheckable: ((row: unknown) => boolean);
@@ -1364,14 +1364,16 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 thDetailedClass: ClassDefinition;
                 /** Class of the table `th` element when sortable */
                 thSortableClass: ClassDefinition;
-                /** Class of the table header sort icon element */
-                thSortIconClass: ClassDefinition;
                 /** Class of the table `th` element that is currently sorted */
                 thCurrentSortClass: ClassDefinition;
                 /** Class of the table `th` element that is unsortable */
                 thUnselectableClass: ClassDefinition;
                 /** Class of the table `th` subheading element */
                 thSubheadingClass: ClassDefinition;
+                /** Class of the table header label element */
+                thLabelClass: ClassDefinition;
+                /** Class of the table header sort icon element */
+                thSortIconClass: ClassDefinition;
                 /** Class of the table `tr` element when selected */
                 trSelectedClass: ClassDefinition;
                 /** Class of the table `tr` element when checkable and checked */

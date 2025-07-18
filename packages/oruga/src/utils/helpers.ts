@@ -140,12 +140,7 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
         for (const key of keys1) {
             const val1 = valueA[key];
             const val2 = valueB[key];
-            const areObjects = isObject(val1) && isObject(val2);
-            if (
-                (areObjects && !isEqual(val1, val2)) ||
-                (!areObjects && val1 !== val2)
-            )
-                return false;
+            if (!isEqual(val1, val2)) return false;
         }
         // If all checks pass, the objects are deep equal.
         return true;
@@ -156,7 +151,8 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
         // Check if the number of keys is the same.
         if (valueA.length !== valueB.length) return false;
         // Check if each value of the array is the same.
-        if (!valueA.every((val, index) => val === valueB[index])) return false;
+        if (!valueA.every((val, index) => isEqual(val, valueB[index])))
+            return false;
         // If all checks pass, the arrays are deep equal.
         return true;
     }

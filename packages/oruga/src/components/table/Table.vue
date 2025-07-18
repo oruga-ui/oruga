@@ -43,7 +43,7 @@ import {
     useSequentialId,
 } from "@/composables";
 
-import type { ClassBind, DeepKeys } from "@/types";
+import type { ClassBind } from "@/types";
 import type {
     TableColumn,
     TableRow,
@@ -89,9 +89,9 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
     stickyHeader: false,
     height: undefined,
     checkable: false,
-    stickyCheckbox: false,
-    checkableHeader: true,
     checkedRows: () => [],
+    checkableHeader: true,
+    stickyCheckbox: false,
     checkboxPosition: () => getDefault("table.checkboxPosition", "left"),
     checkboxVariant: () => getDefault("table.checkboxVariant"),
     isRowChecked: undefined,
@@ -494,7 +494,8 @@ function hasCustomFooterSlot(): boolean {
 
 /** get the formated row value for a column */
 function getColumnValue(row: T, column: TableColumn<T>): string {
-    return getPropertyValue(row, column.field as DeepKeys<T>, column.formatter);
+    // @ts-expect-error getPropertyValue arguments does not patch perfect to TableColumn<T> attributes
+    return getPropertyValue(row, column.field, column.formatter);
 }
 
 /** check if two rows are equal by a custom compare function or the rowKey attribute */
@@ -598,7 +599,7 @@ let debouncedFilter: ReturnType<
     typeof useDebounce<Parameters<typeof handleFiltersChange>>
 >;
 
-// initialise and update debounces filter function
+// initialise and update debounces filter function based on `filterDebounce` prop
 watch(
     () => props.filterDebounce,
     (debounce) =>
@@ -606,7 +607,7 @@ watch(
     { immediate: true },
 );
 
-// react on filters got changed
+// react on filter got changed
 watch(filters, (value) => debouncedFilter(value), { deep: true });
 
 function handleFiltersChange(value: Record<string, string>): void {
@@ -1085,6 +1086,8 @@ const thSubheadingClasses = defineClasses([
     "o-table__th-subheading",
 ]);
 
+const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
+
 const thSortIconClasses = defineClasses([
     "thSortIconClass",
     "o-table__th__sort-icon",
@@ -1113,7 +1116,7 @@ const tdCheckboxClasses = defineClasses(
     ["tdCheckboxClass", "o-table__td-checkbox"],
     [
         "thStickyClass",
-        "o-table__th--sticky",
+        "o-table__td--sticky",
         null,
         computed(() => props.stickyCheckbox),
     ],
@@ -1348,13 +1351,16 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :component="column.$el"
                                     name="header"
                                     tag="span"
+                                    :class="thLabelClasses"
                                     :props="{
                                         column: column.value,
                                         index: column.index,
                                     }" />
 
-                                <span v-else>
-                                    {{ column.label }}
+                                <template v-else>
+                                    <span :class="thLabelClasses">
+                                        {{ column.label }}
+                                    </span>
                                     <span
                                         v-if="column.sortable"
                                         v-show="isColumnSorted(column)"
@@ -1366,7 +1372,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             :size="sortIconSize"
                                             :rotation="!isAsc ? 180 : 0" />
                                     </span>
-                                </span>
+                                </template>
                             </th>
                         </template>
 
@@ -1561,7 +1567,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             <td
                                 v-if="checkable && checkboxPosition === 'left'"
                                 :class="[
-                                    ...thBaseClasses,
+                                    ...tdBaseClasses,
                                     ...tdCheckboxClasses,
                                 ]">
                                 <o-checkbox
@@ -1615,7 +1621,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             <td
                                 v-if="checkable && checkboxPosition === 'right'"
                                 :class="[
-                                    ...thBaseClasses,
+                                    ...tdBaseClasses,
                                     ...tdCheckboxClasses,
                                 ]">
                                 <o-checkbox
@@ -1629,7 +1635,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         </tr>
 
                         <transition-group
-                            v-if="props.detailed"
+                            v-if="!row.hidden && props.detailed"
                             :name="detailTransition">
                             <template v-if="isDetailRowVisible(row)">
                                 <!--

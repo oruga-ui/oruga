@@ -135,11 +135,11 @@ const filters = {} as Record<string, string>;
         <template v-if="false">
             <!--
                 @slot Default Slot
-                @binding {T} row - row data 
-                @binding {TableColumn} column - column definition 
-                @binding {number} index - row index 
-                @binding {number} colindex - column index 
-                @binding {(): void} toggle-details - toggle details function 
+                @binding {T} row - row data
+                @binding {TableColumn} column - column definition
+                @binding {number} index - row index
+                @binding {number} colindex - column index
+                @binding {(): void} toggle-details - toggle details function
             -->
             <slot
                 :row="row"
@@ -148,22 +148,22 @@ const filters = {} as Record<string, string>;
                 :colindex="index"
                 :toggle-details="toggle" />
             <!--
-                @slot Override header label 
-                @binding {TableColumn} column - column definition 
-                @binding {number} index - column index 
+                @slot Override header label
+                @binding {TableColumn} column - column definition
+                @binding {number} index - column index
             -->
             <slot name="header" :column="column" :index="index" />
             <!--
-                @slot Override subheading label 
-                @binding {TableColumn} column - column definition 
-                @binding {number} index - column index 
+                @slot Override subheading label
+                @binding {TableColumn} column - column definition
+                @binding {number} index - column index
             -->
             <slot name="subheading" :column="column" :index="index" />
 
             <!--
-                @slot Override searchable input 
-                @binding {TableColumn} column - column definition 
-                @binding {number} index - column index 
+                @slot Override searchable input
+                @binding {TableColumn} column - column definition
+                @binding {number} index - column index
                 @binding {object} filters - active filters object
             -->
             <slot

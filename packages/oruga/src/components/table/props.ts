@@ -47,21 +47,24 @@ export type TableProps<T> = {
     stickyHeader?: boolean;
     /** Table fixed height */
     height?: number | string;
-    /** Rows can be checked (multiple) */
+    /** Allow each row to be checked by a checkbox */
     checkable?: boolean;
-    /** Show check/uncheck all checkbox in table header when checkable (if checkable) */
-    checkableHeader?: boolean;
-    /** Make the checkbox column sticky (if checkable) */
-    stickyCheckbox?: boolean;
     /** Set which rows are checked, use `v-model:checkedRows` to make it two-way binding (if checkable) */
     checkedRows?: T[];
+    /** Show check/uncheck all checkbox in table header (if checkable) */
+    checkableHeader?: boolean;
     /**
-     * Position of the checkbox when checkable (if checkable)
+     * Make the checkbox column sticky (if checkable)
+     * @deprecated will be renamed to `checkboxSticky`
+     */
+    stickyCheckbox?: boolean;
+    /**
+     * Position of the checkbox (if checkable)
      * @values left, right
      */
     checkboxPosition?: "left" | "right";
     /**
-     * Color of the checkbox when checkable (if checkable)
+     * Color of the checkbox (if checkable)
      * @values primary, info, success, warning, danger, and any other custom color
      */
     checkboxVariant?: string;
@@ -223,14 +226,16 @@ export type TableClasses = Partial<{
     thDetailedClass: ComponentClass;
     /** Class of the table `th` element when sortable */
     thSortableClass: ComponentClass;
-    /** Class of the table header sort icon element */
-    thSortIconClass: ComponentClass;
     /** Class of the table `th` element that is currently sorted */
     thCurrentSortClass: ComponentClass;
     /** Class of the table `th` element that is unsortable */
     thUnselectableClass: ComponentClass;
     /** Class of the table `th` subheading element */
     thSubheadingClass: ComponentClass;
+    /** Class of the table header label element */
+    thLabelClass: ComponentClass;
+    /** Class of the table header sort icon element */
+    thSortIconClass: ComponentClass;
     /** Class of the table `tr` element when selected */
     trSelectedClass: ComponentClass;
     /** Class of the table `tr` element when checkable and checked */
@@ -260,7 +265,10 @@ export type TableClasses = Partial<{
     loadingClasses: object;
 }>;
 
-export type TableColumnProps<T, K extends DeepKeys<T> | (string & {})> = {
+export type TableColumnProps<
+    T,
+    K extends string = T extends never | unknown ? string : DeepKeys<T>,
+> = {
     /** Define the column label */
     label?: string;
     /** Define an object property key if data is an object */
