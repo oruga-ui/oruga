@@ -71,13 +71,13 @@ const size = ref("");
         <o-pagination
             v-model:current="current"
             :total="total"
+            :per-page="perPage"
             :range-before="rangeBefore || 0"
             :range-after="rangeAfter || 0"
             :order="order"
             :size="size"
             :simple="isSimple"
             :rounded="isRounded"
-            :per-page="perPage"
             :icon-prev="prevIcon"
             :icon-next="nextIcon" />
 
