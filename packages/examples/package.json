@@ -63,9 +63,9 @@
     "markdown-it-highlightjs": "^4.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitejs/plugin-vue": "^6.0.0",
     "sass": "^1.89.2",
-    "vite": "^6.3.5",
+    "vite": "^7.0.5",
     "vite-plugin-dts": "^4.5.4",
     "vite-tsconfig-paths": "^5.1.4",
     "vitepress": "^1.6.3"
