@@ -654,8 +654,8 @@ function filterTableRows(): void {
 
         // if not backend filtered, filter row
         if (!props.backendFiltering)
-            // return row is visible based on filters
-            return !isRowFiltered(row.value);
+            // return row is hidden (filtered out) based on filters
+            return isRowFiltered(row.value);
 
         // return row is visible (not filtered out)
         return false;
@@ -663,33 +663,36 @@ function filterTableRows(): void {
 }
 
 /**
- * check whether a row is filtered by active filters or not
- * @param row - row element
- *
- * @returns is row filtered in
- * */
+ * check if a row is filtered out by not matching any active filter expresssions
+ * @param {T} row - row element to check
+ * @returns {boolean} - true if row is filtered out, false if row is visible
+ */
 function isRowFiltered(row: T): boolean {
-    if (!Object.values(filters.value).filter(Boolean).length) return true;
-    return Object.entries(filters.value).some(([key, filter]) => {
+    // check if any filter is applied
+    if (!Object.values(filters.value).filter(Boolean).length) return false;
+
+    // check each column filter if any filter applies to the row column value
+    return !Object.entries(filters.value).some(([columnKey, filter]) => {
         if (!filter) return false;
-        // get column for filter
-        const column = tableColumns.value.find((c) => c.field === key);
-        // if column has onSearch return result
-        if (typeof column?.customSearch === "function")
+        // get column for the filter
+        const column = tableColumns.value.find((c) => c.field === columnKey);
+        if (!column) return false;
+
+        // if column has custom search funtion return result
+        if (typeof column.customSearch === "function")
             return column.customSearch(row, filter);
 
-        const value =
-            typeof row === "object" && !!row ? getValueByPath(row, key) : row;
-        if (value == null) return false;
-        // if number compare values
-        if (Number.isInteger(value)) return value === Number(filter);
+        // get the visible column value for the row
+        const value = getColumnValue(row, column);
+
+        // check if value is defined
+        if (!isDefined(value)) return false;
+
+        // check if value is onything else than string
+        if (typeof value !== "string") return value === filter;
+
+        // check if the value matches the filter string by regex comparison
         const re = new RegExp(escapeRegExpChars(filter), "i");
-        if (Array.isArray(value))
-            return value.some(
-                (val) =>
-                    re.test(removeDiacriticsFromString(val)) || re.test(val),
-            );
-        if (typeof value !== "string") return !!value;
         return re.test(removeDiacriticsFromString(value)) || re.test(value);
     });
 }
