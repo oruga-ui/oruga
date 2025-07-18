@@ -93,6 +93,11 @@ export async function vueComponentMeta(
                     },
                 );
 
+                const props = meta.props
+                    // filter duplicate event prop entries with "on" prefix (e.g. onClick) from props
+                    // because they area already included in meta.events
+                    .filter((p) => !p.name.startsWith("on"));
+
                 const exposed = meta.exposed
                     // the meta also includes duplicated entries in the "exposed" array with "on"
                     // prefix (e.g. onClick instead of click), so we need to filter them out here
@@ -133,6 +138,8 @@ export async function vueComponentMeta(
                             : exportName,
                     // add meta properties
                     ...meta,
+                    // override meta props
+                    props,
                     // override meta exposed
                     exposed,
                 };
