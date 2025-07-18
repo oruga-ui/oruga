@@ -1,3 +1,20 @@
+## [0.11.3](https://github.com/oruga-ui/oruga/compare/v0.11.2...v0.11.3) (2025-07-18)
+
+
+### Bug Fixes
+
+* **pagination:** solve pagination not working when `current` prop is not reactive ([#1358](https://github.com/oruga-ui/oruga/issues/1358)) ([db0ae09](https://github.com/oruga-ui/oruga/commit/db0ae098a9b6e721b25bdaa06c377d76f2bbd06a))
+* **table:** match active filters against string formatted value instead pure value ([#1363](https://github.com/oruga-ui/oruga/issues/1363)) ([af41aec](https://github.com/oruga-ui/oruga/commit/af41aec2024de5d713277cc07f7dbcd0bf76879f))
+* **table:** use correct class for td elements ([#1360](https://github.com/oruga-ui/oruga/issues/1360)) ([73b2fcd](https://github.com/oruga-ui/oruga/commit/73b2fcd33c03086b0756306ba3e6f074036c10d0))
+
+
+### Features
+
+* **pagination:** add `next` & `previous` events ([#1357](https://github.com/oruga-ui/oruga/issues/1357)) ([5fc214c](https://github.com/oruga-ui/oruga/commit/5fc214c7ef9b293c48544c34dab422a3d048b8a4))
+* **table:** add `thLabelClass` prop ([#1356](https://github.com/oruga-ui/oruga/issues/1356)) ([f191326](https://github.com/oruga-ui/oruga/commit/f1913260933d1e746595be25c7bbcbb3c81627b5))
+
+
+
 ## [0.11.2](https://github.com/oruga-ui/oruga/compare/v0.11.1...v0.11.2) (2025-07-12)
 
 
