@@ -1256,9 +1256,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 selectable: boolean;
                 /** Show header */
                 showHeader: boolean;
-                /** Position of the checkbox when checkable (if checkable) */
+                /** Position of the checkbox (if checkable) */
                 checkboxPosition: "left" | "right";
-                /** Color of the checkbox when checkable (if checkable) */
+                /** Color of the checkbox (if checkable) */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
                 isRowCheckable: ((row: unknown) => boolean);
