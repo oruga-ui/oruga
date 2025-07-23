@@ -1,6 +1,64 @@
-import type { MaybeRefOrGetter } from "vue";
-import { unrefElement } from "./unrefElement";
+import { getCurrentScope, type MaybeRefOrGetter } from "vue";
 import { isDefined } from "@/utils/helpers";
+import { isClient } from "@/utils/ssr";
+import { unrefElement } from "./unrefElement";
+import { useDebounce } from "./useDebounce";
+import { useEventListener, type EventTarget } from "./useEventListener";
+
+/** Call a function when the scoll reaches the end or the start of an element.
+ * This is useful for infinite scroll lists.
+ * @param element - The element to listen for scroll events.
+ * @param options - Options for the infinite scroll.
+ * @param options.onScroll - Function to call on every scroll event.
+ * @param options.onEnd - Function to call when the scroll reaches the end.
+ * @param options.onStart - Function to call when the scroll reaches the start.
+ * @param options.debounce - Debounce time in milliseconds for the function call on scroll events.
+ * @returns A function to call to to manually check the scroll position.
+ */
+export function useScrollEvents(
+    element: MaybeRefOrGetter<EventTarget>,
+    options: {
+        onScroll?: () => void;
+        onScrollEnd?: () => void;
+        onScrollStart?: () => void;
+        debounce?: number;
+    },
+): () => void {
+    if (!getCurrentScope())
+        throw new Error(
+            "The 'useScrollEvents' composable should be used inside a current EffectScope.",
+        );
+
+    const debouncedCheckScroll = useDebounce(
+        checkScroll,
+        options.debounce ?? 100,
+    );
+    if (isClient)
+        useEventListener(element, "scroll", debouncedCheckScroll, {
+            passive: true,
+        });
+
+    /** Check if the scroll list inside the dropdown reached the top or it's end. */
+    function checkScroll(): void {
+        const el = unrefElement(element);
+        if (!el) return;
+        if (options.onScroll) options.onScroll();
+
+        const trashhold = el.offsetTop;
+        if (el.clientHeight !== el.scrollHeight) {
+            if (
+                Math.ceil(el.scrollTop + el.clientHeight + trashhold) >=
+                el.scrollHeight
+            ) {
+                if (options.onScrollEnd) options.onScrollEnd();
+            } else if (el.scrollTop <= trashhold) {
+                if (options.onScrollStart) options.onScrollStart();
+            }
+        }
+    }
+
+    return debouncedCheckScroll;
+}
 
 /**
  * Given an element, returns the element who scrolls it.
@@ -34,7 +92,7 @@ export function getScrollingParent(target: HTMLElement): HTMLElement | null {
 
 /**
  * Check if an element is visible in the browser viewport.
- * @deprecated unused
+ * @deprecated currently unused - can be deleted
  */
 export function isElementInView(
     elementRef: MaybeRefOrGetter<HTMLElement>,
@@ -54,7 +112,7 @@ export function isElementInView(
 
 /**
  * Check if an element is currently scrollable by comparing its clientHeight and scrollHeight.
- * @deprecated unused
+ * @deprecated currently unused - can be deleted
  */
 export function isScrollable(
     elementRef: MaybeRefOrGetter<HTMLElement>,
@@ -67,12 +125,12 @@ export function isScrollable(
  * Ensure a given child element is within the parent's visible scroll area.
  * If the child is not visible, scroll the parent to the child's position.
  */
-export function maintainScrollVisibility(
-    activeElement: MaybeRefOrGetter<HTMLElement>,
-    scrollParent: MaybeRefOrGetter<HTMLElement>,
+export function scrollElementInView(
+    childElement: MaybeRefOrGetter<HTMLElement>,
+    scrollableParent: MaybeRefOrGetter<HTMLElement>,
 ): void {
-    const parent = unrefElement(scrollParent);
-    const element = unrefElement(activeElement);
+    const parent = unrefElement(scrollableParent);
+    const element = unrefElement(childElement);
 
     const { offsetHeight, offsetTop } = element;
     const { offsetHeight: parentOffsetHeight, scrollTop } = parent;

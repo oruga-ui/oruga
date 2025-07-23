@@ -3,7 +3,6 @@ export * from "./defineClasses";
 export * from "./useEventListener";
 export * from "./useMatchMedia";
 export * from "./useInputHandler";
-export * from "./useInfiniteScroll";
 export * from "./useDebounce";
 export * from "./useParentProvider";
 export * from "./useClickOutside";

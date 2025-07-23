@@ -18,8 +18,8 @@ import {
     usePreventScrolling,
     useSequentialId,
     useEventListener,
-    maintainScrollVisibility,
-    useInfiniteScroll,
+    useScrollEvents,
+    scrollElementInView,
     type OptionsGroupItem,
 } from "@/composables";
 
@@ -200,11 +200,10 @@ const toggleScroll = usePreventScrolling(props.clipScroll);
 
 // set infinite scroll handler
 if (isClient && props.scrollable && props.checkScroll)
-    useInfiniteScroll(
-        menuRef,
-        () => emits("scroll-end"),
-        () => emits("scroll-start"),
-    );
+    useScrollEvents(menuRef, {
+        onScrollEnd: () => emits("scroll-end"),
+        onScrollStart: () => emits("scroll-start"),
+    });
 
 // set click outside handler
 if (isClient && props.closeOnOutside)
@@ -408,7 +407,7 @@ function setFocus(item: DropdownChildItem<T>): void {
     focusedItem.value = item;
 
     // scroll item into view
-    maintainScrollVisibility(element, dropdownMenu);
+    scrollElementInView(element, dropdownMenu);
 }
 
 function onUpPressed(event: Event): void {
