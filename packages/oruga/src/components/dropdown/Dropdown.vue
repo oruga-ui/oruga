@@ -407,7 +407,7 @@ function setFocus(item: DropdownChildItem<T>): void {
     focusedItem.value = item;
 
     // scroll item into view
-    scrollElementInView(element, dropdownMenu);
+    scrollElementInView(dropdownMenu, element);
 }
 
 function onUpPressed(event: Event): void {
