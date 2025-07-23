@@ -84,12 +84,12 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable      | Default                                                                                                     |
-| ------------------ | ----------------------------------------------------------------------------------------------------------- |
-| $skeleton-bg-color | $dark-bg-subtle                                                                                             |
-| $skeleton-bg       | linear-gradient( 90deg, $skeleton-bg-color 25%,  rgba($skeleton-bg-color, 0.5) 50%, $skeleton-bg-color 75%) |
-| $skeleton-duration | 1.5s                                                                                                        |
-| $skeleton-margin   | 0.5rem 0 0 0                                                                                                |
+| SASS Variable      | Default                                                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------------------------- |
+| $skeleton-bg-color | $dark-bg-subtle                                                                                               |
+| $skeleton-bg       | linear-gradient( 90deg, $skeleton-bg-color 25%,    rgba($skeleton-bg-color, 0.5) 50%, $skeleton-bg-color 75%) |
+| $skeleton-duration | 1.5s                                                                                                          |
+| $skeleton-margin   | 0.5rem 0 0 0                                                                                                  |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_skeleton.scss)
 
