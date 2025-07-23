@@ -10,7 +10,7 @@ import {
 } from "vue";
 import { isClient } from "@/utils/ssr";
 import {
-    useTeleportDefault,
+    getTeleportDefault,
     getScrollingParent,
     unrefElement,
 } from "@/composables";
@@ -76,7 +76,7 @@ const emits = defineEmits<{
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
-        ? { to: useTeleportDefault(), disabled: !props.teleport }
+        ? { to: getTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
 

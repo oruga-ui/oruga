@@ -19,7 +19,7 @@ import {
     useClickOutside,
     useMatchMedia,
     usePreventScrolling,
-    useTeleportDefault,
+    getTeleportDefault,
     useTrapFocus,
 } from "@/composables";
 import type { CloseEventArgs } from "../programmatic";
@@ -87,7 +87,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
-        ? { to: useTeleportDefault(), disabled: !props.teleport }
+        ? { to: getTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
 

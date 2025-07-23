@@ -1,7 +1,7 @@
 import { getCurrentInstance, ref, type Ref } from "vue";
 import { getOption } from "@/utils/config";
-import { useEventListener } from "./useEventListener";
 import { isClient } from "@/utils/ssr";
+import { useEventListener } from "./useEventListener";
 
 /**
  * Checks if the match media is mobile.

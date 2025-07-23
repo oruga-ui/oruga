@@ -1,5 +1,5 @@
-import { isClient } from "@/utils/ssr";
 import type { MaybeRefOrGetter } from "vue";
+import { isClient } from "@/utils/ssr";
 import { useEventListener, type EventTarget } from "./useEventListener";
 import { unrefElement } from "./unrefElement";
 

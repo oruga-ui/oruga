@@ -18,6 +18,8 @@ import {
     usePreventScrolling,
     useSequentialId,
     useEventListener,
+    maintainScrollVisibility,
+    useInfiniteScroll,
     type OptionsGroupItem,
 } from "@/composables";
 
@@ -28,8 +30,6 @@ import type {
 } from "./types";
 import type { DropdownProps } from "./props";
 import { injectField } from "../field/fieldInjection";
-import { maintainScrollVisibility } from "@/composables/useScrollHelper";
-import { useInfiniteScroll } from "@/composables/useInfiniteScroll";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content.

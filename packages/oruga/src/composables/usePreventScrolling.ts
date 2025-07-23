@@ -5,7 +5,6 @@ import {
     toValue,
     type MaybeRefOrGetter,
 } from "vue";
-
 import { isClient } from "@/utils/ssr";
 import { defineClasses, getActiveClasses } from "./defineClasses";
 

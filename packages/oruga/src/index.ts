@@ -13,6 +13,15 @@ export * from "./components/types";
 // export all helper functions
 export * from "./utils/helpers";
 
+// export some composables
+export {
+    useTrapFocus,
+    useEventListener,
+    useClickOutside,
+    unrefElement,
+    useDebounce,
+} from "./composables";
+
 // export all vue components
 export * from "./components";
 // export all components as vue plugin
