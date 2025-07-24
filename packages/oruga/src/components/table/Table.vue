@@ -847,10 +847,14 @@ function removeCheckedRow(row: TableRow<T>): void {
 }
 
 /**
- * Header checkbox click listener.
- * Add or remove all rows in current page.
+ * Update checked rows list.
+ * If all rows are checked, uncheck all.
+ * If not all rows are checked, check all visible rows.
+ * Emits "check-all" event with the updated checked rows list.
  */
-function checkAll(): void {
+function updateCheckedRows(): void {
+    if (!props.checkable) return;
+
     if (isAllChecked.value)
         // if all rows are already checked, check nothing
         tableCheckedRows.value = [];
@@ -1307,7 +1311,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 name="check-all"
                                 :is-all-checked="isAllChecked"
                                 :is-all-uncheckable="isAllUncheckable"
-                                :check-all="checkAll">
+                                :check-all="updateCheckedRows">
                                 <o-checkbox
                                     :model-value="isAllChecked"
                                     autocomplete="off"
@@ -1315,7 +1319,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
                                     aria-label="Check all"
-                                    @update:model-value="checkAll" />
+                                    @update:model-value="updateCheckedRows" />
                             </slot>
                         </th>
 
@@ -1397,7 +1401,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 name="check-all"
                                 :is-all-checked="isAllChecked"
                                 :is-all-uncheckable="isAllUncheckable"
-                                :check-all="checkAll">
+                                :check-all="updateCheckedRows">
                                 <o-checkbox
                                     :model-value="isAllChecked"
                                     autocomplete="off"
@@ -1405,7 +1409,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
                                     aria-label="Check all"
-                                    @update:model-value="checkAll" />
+                                    @update:model-value="updateCheckedRows" />
                             </slot>
                         </th>
                     </tr>
