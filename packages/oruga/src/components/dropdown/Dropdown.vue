@@ -628,7 +628,11 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     :role="selectable ? 'listbox' : 'menu'"
                     :aria-labelledby="labelId"
                     :aria-label="ariaLabel"
-                    :aria-hidden="!inline && (disabled || !isActive)"
+                    :aria-hidden="
+                        !selectable && !inline
+                            ? disabled || !isActive
+                            : undefined
+                    "
                     :aria-multiselectable="
                         selectable ? isTrueish(multiple) : undefined
                     "
