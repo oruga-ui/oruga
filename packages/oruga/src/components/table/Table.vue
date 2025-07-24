@@ -837,8 +837,10 @@ function isChecked(row: TableRow<T>): boolean {
 }
 
 /**
- * Header checkbox click listener.
- * Add or remove all rows in current page.
+ * Update checked rows list.
+ * If all rows are checked, uncheck all.
+ * If not all rows are checked, check all visible rows.
+ * Emits "check-all" event with the updated checked rows list.
  */
 function updateCheckedRows(checkAll?: boolean): void {
     if (checkAll ?? isAllChecked.value)
