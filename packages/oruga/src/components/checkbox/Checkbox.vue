@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T">
+<script setup lang="ts" generic="T, IsMultiple extends boolean = false">
 import { computed, useAttrs, useId, useSlots, useTemplateRef } from "vue";
 
 import { getDefault } from "@/utils/config";
@@ -7,6 +7,7 @@ import { defineClasses, useInputHandler } from "@/composables";
 import { injectField } from "../field/fieldInjection";
 
 import type { CheckboxProps } from "./props";
+import { isTrueish } from "@/utils/helpers";
 
 /**
  * Select a single or grouped options.
@@ -20,9 +21,12 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<CheckboxProps<T>>(), {
+type ModelValue = CheckboxProps<T, IsMultiple>["modelValue"];
+
+const props = withDefaults(defineProps<CheckboxProps<T, IsMultiple>>(), {
     override: undefined,
     modelValue: undefined,
+    // multiple: false,
     id: () => useId(),
     variant: () => getDefault("checkbox.variant"),
     size: () => getDefault("checkbox.size"),
@@ -44,13 +48,13 @@ const emits = defineEmits<{
      * modelValue prop two-way binding
      * @param value {T | T[]} updated modelValue prop
      */
-    "update:model-value": [value: T | T[]];
+    "update:model-value": [value: ModelValue];
     /**
      * on input change event
      * @param value {T | T[]} input value
      * @param event {Event} native event
      */
-    input: [value: T | T[], event: Event];
+    input: [value: ModelValue, event: Event];
     /**
      * on input focus event
      * @param event {Event} native event
@@ -86,13 +90,14 @@ const labelId =
 // if no `label` is given and `id` is given set as `for` property on o-field wrapper
 if (!props.label && props.id) parentField.value?.setInputId(props.id);
 
-const vmodel = defineModel<T | T[]>({ default: undefined });
+const vmodel = defineModel<ModelValue>({ default: undefined });
 
 const isChecked = computed(
     () =>
-        vmodel.value === (props.trueValue ?? true) ||
-        (Array.isArray(vmodel.value) &&
-            vmodel.value.includes(props.nativeValue as T)),
+        isTrueish(props.multiple) &&
+        (Array.isArray(vmodel.value)
+            ? vmodel.value.includes(props.nativeValue as T)
+            : vmodel.value === (props.trueValue ?? true)),
 );
 
 function onInput(event: Event): void {

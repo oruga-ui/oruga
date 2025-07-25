@@ -9,21 +9,25 @@ const checkboxGroup = ref(["Flint"]);
         <o-field>
             <o-checkbox
                 v-model="checkboxGroup"
+                multiple
                 native-value="Silver"
                 label="Silver" />
 
             <o-checkbox
                 v-model="checkboxGroup"
+                multiple
                 native-value="Flint"
                 label="Flint" />
 
             <o-checkbox
                 v-model="checkboxGroup"
+                multiple
                 native-value="Vane"
                 label="Vane" />
 
             <o-checkbox
                 v-model="checkboxGroup"
+                multiple
                 native-value="Billy"
                 label="Billy"
                 disabled />

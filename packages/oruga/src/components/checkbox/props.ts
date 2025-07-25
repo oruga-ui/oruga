@@ -1,10 +1,12 @@
 import type { ComponentClass } from "@/types";
 
-export type CheckboxProps<T> = {
+export type CheckboxProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
-    modelValue?: T | T[];
+    modelValue?: IsMultiple extends true ? T[] : T;
+    /** Defines the v-model as array of values */
+    multiple?: IsMultiple;
     /**
      * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
@@ -41,7 +43,10 @@ export type CheckboxProps<T> = {
     customValidity?:
         | string
         | ((
-              currentValue: T | T[] | null | undefined,
+              currentValue:
+                  | (IsMultiple extends true ? T[] : T)
+                  | null
+                  | undefined,
               state: ValidityState,
           ) => string);
 } & CheckboxClasses;
