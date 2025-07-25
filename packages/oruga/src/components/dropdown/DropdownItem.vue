@@ -109,6 +109,7 @@ const rootClasses = defineClasses(
         :data-id="`dropdown-${item.identifier}`"
         :class="rootClasses"
         :role="parent.selectable ? 'option' : 'menuitem'"
+        tabindex="-1"
         :aria-selected="parent.selectable ? isSelected : undefined"
         :aria-disabled="disabled"
         @click="selectItem"
@@ -116,7 +117,7 @@ const rootClasses = defineClasses(
         @keydown.enter="selectItem"
         @keydown.space="selectItem">
         <!--
-            @slot Override the label, default is label prop 
+            @slot Override the label, default is label prop
         -->
         <slot>{{ label }}</slot>
     </component>
