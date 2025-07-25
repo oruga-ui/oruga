@@ -1,12 +1,17 @@
-/*****************************
- * vue v-trap-focus directive
- *****************************/
+import {
+    toValue,
+    type DirectiveHook,
+    type MaybeRefOrGetter,
+    type ObjectDirective,
+} from "vue";
 
-import type { DirectiveHook, ObjectDirective } from "vue";
-
-function findFocusable(element: HTMLElement): NodeListOf<HTMLElement> | null {
-    if (!element) return null;
-    return element.querySelectorAll(`a[href]:not([tabindex="-1"]),
+/**
+ * Returns all focusable elements inside the given element
+ */
+export function findFocusable(
+    element: MaybeRefOrGetter<HTMLElement>,
+): NodeListOf<HTMLElement> {
+    return toValue(element).querySelectorAll(`a[href]:not([tabindex="-1"]),
                                  area[href],
                                  input:not([disabled]):not([type="hidden"]),
                                  select:not([disabled]),
@@ -19,6 +24,10 @@ function findFocusable(element: HTMLElement): NodeListOf<HTMLElement> | null {
                                  *[contenteditable]`);
 }
 
+/**
+ * Creates a vue v-trap-focus directive which sets the focus on the given element when mounted
+ * and traps the focus inside the element.
+ */
 export function useTrapFocus(): {
     /** vue directive - trap focus on the current element */
     vTrapFocus: ObjectDirective<HTMLElement>;

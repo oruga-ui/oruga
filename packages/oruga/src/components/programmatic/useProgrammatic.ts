@@ -11,7 +11,7 @@ import {
 
 import InstanceRegistry from "@/components/programmatic/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
-import { useTeleportDefault, resolveElement } from "@/composables";
+import { getTeleportDefault, resolveElement } from "@/composables";
 
 import {
     ProgrammaticComponent,
@@ -75,7 +75,7 @@ export const ComponentProgrammatic = {
             // either by a given query selector / element
             (targetQuery && resolveElement(targetQuery)) ||
             // or by the default teleport target config
-            resolveElement(useTeleportDefault());
+            resolveElement(getTeleportDefault());
         if (!target)
             throw new Error("ComponentProgrammatic - no target is defined.");
 

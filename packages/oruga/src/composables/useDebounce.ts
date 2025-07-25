@@ -1,8 +1,8 @@
 /**
- * Debounce a function
+ * Debounce a function call to limit the rate at which it will be invoked.
  * @param func function to debounce
  * @param wait debounce time to wait
- * @param immediate call immediate
+ * @param immediate call immediate once
  * @returns function to call
  */
 export function useDebounce<A extends Array<unknown>>(

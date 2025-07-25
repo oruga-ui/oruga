@@ -18,6 +18,8 @@ import {
     usePreventScrolling,
     useSequentialId,
     useEventListener,
+    useScrollEvents,
+    scrollElementInView,
     type OptionsGroupItem,
 } from "@/composables";
 
@@ -28,8 +30,6 @@ import type {
 } from "./types";
 import type { DropdownProps } from "./props";
 import { injectField } from "../field/fieldInjection";
-import { maintainScrollVisibility } from "@/composables/useScrollHelper";
-import { useInfiniteScroll } from "@/composables/useInfiniteScroll";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content.
@@ -200,11 +200,10 @@ const toggleScroll = usePreventScrolling(props.clipScroll);
 
 // set infinite scroll handler
 if (isClient && props.scrollable && props.checkScroll)
-    useInfiniteScroll(
-        menuRef,
-        () => emits("scroll-end"),
-        () => emits("scroll-start"),
-    );
+    useScrollEvents(menuRef, {
+        onScrollEnd: () => emits("scroll-end"),
+        onScrollStart: () => emits("scroll-start"),
+    });
 
 // set click outside handler
 if (isClient && props.closeOnOutside)
@@ -408,7 +407,7 @@ function setFocus(item: DropdownChildItem<T>): void {
     focusedItem.value = item;
 
     // scroll item into view
-    maintainScrollVisibility(element, dropdownMenu);
+    scrollElementInView(dropdownMenu, element);
 }
 
 function onUpPressed(event: Event): void {
