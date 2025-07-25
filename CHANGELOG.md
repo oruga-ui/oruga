@@ -1,3 +1,18 @@
+## [0.11.4](https://github.com/oruga-ui/oruga/compare/v0.11.3...v0.11.4) (2025-07-25)
+
+
+### Bug Fixes
+
+* **dropdown:** update a11y attributes ([#1369](https://github.com/oruga-ui/oruga/issues/1369)) ([ff06e43](https://github.com/oruga-ui/oruga/commit/ff06e43e8f56f341326aef4c41562f5264e2a094))
+* **table:** clear `checkedRows` when `currentPage` or `perPage` prop changes ([#1368](https://github.com/oruga-ui/oruga/issues/1368)) ([ba73578](https://github.com/oruga-ui/oruga/commit/ba735781c1c4db8744802744ff5ec881a556e2fd))
+
+
+### Features
+
+* **composables:** export some usefull composables ([#1367](https://github.com/oruga-ui/oruga/issues/1367)) ([624222a](https://github.com/oruga-ui/oruga/commit/624222a977c2f509c68b9af9d63515d19b93eb58))
+
+
+
 ## [0.11.3](https://github.com/oruga-ui/oruga/compare/v0.11.2...v0.11.3) (2025-07-18)
 
 
