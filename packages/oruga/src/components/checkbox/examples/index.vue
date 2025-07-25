@@ -11,8 +11,8 @@ import InterminateCode from "./interminate.vue?raw";
 import Sizes from "./sizes.vue";
 import SizesCode from "./sizes.vue?raw";
 
-import Array from "./array.vue";
-import ArrayCode from "./array.vue?raw";
+import Multiple from "./multiple.vue";
+import MultipleCode from "./array.vue?raw";
 </script>
 
 <template>
@@ -30,11 +30,12 @@ import ArrayCode from "./array.vue?raw";
 
     <h3 id="multiple">Multiple</h3>
     <p>
-        When passing an array as <code>modelValue</code> prop, the value of the
-        <code>native-value</code> property is added to the array if the box is
-        checked.
+        To enable multiple checkboxes, set the <code>multiple</code> prop to
+        <code>true</code>. This allows the component to accept an array for the
+        <code>modelValue</code> prop. Then, if the box is checked, the value of
+        the <code>native-value</code> property is added to the array.
     </p>
-    <ExampleViewer :component="Array" :code="ArrayCode" />
+    <ExampleViewer :component="Multiple" :code="MultipleCode" />
 
     <h3 id="variants">Variants</h3>
     <p>Different styles can be achieved with the <code>variant</code> prop.</p>
