@@ -23,7 +23,7 @@ import {
 
 import { injectField } from "../field/fieldInjection";
 
-import type { ClassBind, ComponentClass } from "@/types";
+import type { ClassBinding, ComponentClass } from "@/types";
 
 /**
  * This is a internal used component.
@@ -66,8 +66,8 @@ const props = defineProps({
     stayOpen: { type: Boolean, default: false },
     /** the DateTimeFormat object to watch for to update the parsed input value */
     dtf: { type: Object, default: undefined },
-    rootClasses: { type: Array as PropType<ClassBind[]>, required: true },
-    dropdownClasses: { type: Array as PropType<ClassBind[]>, required: true },
+    rootClasses: { type: Array as PropType<ClassBinding[]>, required: true },
+    dropdownClasses: { type: Array as PropType<ClassBinding[]>, required: true },
     boxClass: { type: Array as PropType<ComponentClass>, required: true },
 });
 

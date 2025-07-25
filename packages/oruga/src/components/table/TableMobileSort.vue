@@ -7,7 +7,7 @@ import OIcon from "@/components/icon/Icon.vue";
 import OField from "@/components/field/Field.vue";
 
 import type { TableColumnItem } from "./types";
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 
 defineOptions({
     isOruga: true,
@@ -29,7 +29,7 @@ const props = defineProps({
     sortIcon: { type: String, default: "arrow-up" },
     sortIconSize: { type: String, default: "small" },
     isAsc: { type: Boolean, default: false },
-    mobileSortClasses: { type: Array as PropType<ClassBind[]>, required: true },
+    mobileSortClasses: { type: Array as PropType<ClassBinding[]>, required: true },
 });
 
 const emits = defineEmits<{

@@ -1,12 +1,25 @@
 import type { Component, EmitsToProps } from "vue";
 import type { ComponentEmit } from "vue-component-type-helpers";
 
-export type ClassBind = {
-    [x: string]: boolean;
-};
+/**
+ * Function to define a class binding.
+ * @param suffix - a component class suffix
+ * @param props - the component props
+ * @returns a class binding or undefined if no class should be applied
+ */
+export type ClassFunction = (
+    suffix: string,
+    props: Record<string, any>,
+) => ClassBinding | undefined;
 
-/** Vue native type which a v-bind prop must have */
-export type PropBind =
+/** Vue native type which a class prop must have */
+export type ClassBinding = string | { [x: string]: boolean };
+
+/**
+ * Vue native type which a v-bind prop must have
+ * @deprecated currently unused - can be deleted
+ */
+export type PropBinding =
     | string
     | {
           [x: string]: string;

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
-import type { DynamicComponent } from "./utils";
+import type { ClassBinding, ClassFunction, DynamicComponent } from "./utils";
 import type { MaybeRefOrGetter } from "vue";
 
 /** export option types */
@@ -16,13 +16,10 @@ export type {
     OptionsPropWithGroups,
 } from "@/composables";
 
-export type ComponentProps = Record<string, any>;
+/** The class definition for a component class property. */
+export type ComponentClass = ClassBinding | ClassBinding[] | ClassFunction;
 
-export type ClassFunction = (
-    suffix: string,
-    props: ComponentProps,
-) => string | undefined;
-
+/** The class object definiton a class in the global config object. */
 export type ClassObject = {
     class: ComponentClass;
     /**
@@ -32,11 +29,15 @@ export type ClassObject = {
     override?: boolean;
 };
 
-export type TransformFunction = (classes: string) => string;
-
-export type ComponentClass = string | Array<string> | ClassFunction;
-
+/** The class definition for a class in the global config object. */
 export type ClassDefinition = ComponentClass | ClassObject;
+
+/**
+ * Global config transform classes function
+ * @param classes - the compiled class string to transform
+ * @returns transformed class string
+ */
+export type TransformFunction = (classes: string) => string;
 
 export type ComponentConfigBase = Partial<{
     /**

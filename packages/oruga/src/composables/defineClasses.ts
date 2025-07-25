@@ -16,12 +16,7 @@ import {
 import { getOptions } from "@/utils/config";
 import { isDefined, blankIfUndefined, getValueByPath } from "@/utils/helpers";
 
-import type {
-    ClassBind,
-    ComponentClass,
-    ComponentProps,
-    TransformFunction,
-} from "@/types";
+import type { ClassBinding, ComponentClass, TransformFunction } from "@/types";
 
 // named tuple as prop definition
 type ComputedClass = readonly [
@@ -33,7 +28,7 @@ type ComputedClass = readonly [
 
 /** Helper function to get all active classes from a class binding list */
 export const getActiveClasses = (
-    classes: MaybeRefOrGetter<ClassBind[]>,
+    classes: MaybeRefOrGetter<ClassBinding[]>,
 ): string[] => {
     const values = toValue(classes);
     if (!values) return [];
@@ -62,16 +57,18 @@ type DefineClassesOptions = {
 
 export function defineClasses(
     ...args: [...ComputedClass[], DefineClassesOptions]
-): Ref<ClassBind[]>;
+): Ref<ClassBinding[]>;
 
-export function defineClasses(...args: [...ComputedClass[]]): Ref<ClassBind[]>;
+export function defineClasses(
+    ...args: [...ComputedClass[]]
+): Ref<ClassBinding[]>;
 
 /**
  * Calculate dynamic classes based on class definitions
  */
 export function defineClasses(
     ...args: ComputedClass[] | [...ComputedClass[], DefineClassesOptions]
-): Ref<ClassBind[]> {
+): Ref<ClassBinding[]> {
     // extract last argument if its the option object
     const options = Array.isArray(args.at(-1))
         ? undefined
@@ -107,7 +104,7 @@ export function defineClasses(
         });
 
     // reactive classes container
-    const classes = ref<ClassBind[]>([]);
+    const classes = ref<ClassBinding[]>([]);
 
     classes.value = classDefinitions.map((defintion, index) => {
         const className = defintion[0];
@@ -115,7 +112,7 @@ export function defineClasses(
         const suffix = defintion[2];
         const apply = defintion[3];
 
-        function getClassBind(): ClassBind {
+        function getClassBind(): ClassBinding {
             // compute class based on definition parameter
             const computedClass = computeClass(
                 vm!,
@@ -203,65 +200,47 @@ function computeClass(
     // get component instance override property
     const config = props.override === true ? {} : getOptions();
 
-    // --- Classes Definition ---
+    // --- Override Definition ---
 
-    // get component config class definition
-    let globalClass: ComponentClass | undefined =
-        getValueByPath(config, `${componentKey}.${field}.class`) ||
-        getValueByPath(config, `${componentKey}.${field}`);
+    // get local instance override property
+    const localOverride: boolean = props.override;
+    // get global config override property
+    const globalOverride =
+        // check component field config override property
+        getValueByPath(config, `${componentKey}.${field}.override`) ||
+        // check component config override property
+        getValueByPath(config, `${componentKey}.override`) ||
+        // check global config override property
+        getValueByPath(config, "override");
 
-    // get instance class definition
-    let localClass: ComponentClass | undefined = getValueByPath(props, field);
+    const overrideClass = (localOverride || globalOverride) ?? false;
 
-    // procsess local instance class
-    if (Array.isArray(localClass)) {
-        localClass = localClass.join(" ");
-    }
-    if (typeof localClass === "function") {
-        const props = getProps(vm);
-        localClass = localClass(suffix, props);
-    } else {
-        localClass = suffixProcessor(localClass ?? "", suffix);
-    }
+    // --- Class Definition ---
 
-    // process global config class
-    if (Array.isArray(globalClass)) {
-        globalClass = globalClass.join(" ");
-    }
-    if (typeof globalClass === "function") {
-        const props = getProps(vm);
-        globalClass = globalClass(suffix, props);
-    } else {
-        globalClass = suffixProcessor(globalClass ?? "", suffix);
-    }
-
-    // process component instance default value
+    // process component default class definition
+    let defaultClassString: string;
     if (defaultValue.includes("{*}")) {
-        defaultValue = defaultValue.replace(
+        defaultClassString = defaultValue.replace(
             /\{\*\}/g,
             blankIfUndefined(suffix),
         );
     } else {
-        defaultValue = defaultValue + blankIfUndefined(suffix);
+        defaultClassString = defaultValue + blankIfUndefined(suffix);
     }
 
-    // --- Override Definition ---
+    // get local instance class definition
+    const localClass: ComponentClass | undefined = getValueByPath(props, field);
 
-    // get instance or global config override property
-    const globalOverride =
-        props.override || getValueByPath(config, "override", false);
-    // get component config override property
-    const localOverride = getValueByPath(
-        config,
-        `${componentKey}.override`,
-        globalOverride,
-    );
-    // get component field config override property
-    const overrideClass = getValueByPath(
-        config,
-        `${componentKey}.${field}.override`,
-        localOverride,
-    );
+    // procsess local instance class definition
+    const localClassString = compileClass(localClass ?? "", props, suffix);
+
+    // get global config class definition
+    const globalClass: ComponentClass | undefined =
+        getValueByPath(config, `${componentKey}.${field}.class`) ||
+        getValueByPath(config, `${componentKey}.${field}`);
+
+    // process global config class definition
+    const globalClassString = compileClass(globalClass ?? "", props, suffix);
 
     // --- Define Applied Classes ---
 
@@ -269,36 +248,72 @@ function computeClass(
     // add global config classes
     // add instance classes
     let appliedClasses = (
-        `${!overrideClass ? defaultValue : ""} ` +
-        `${blankIfUndefined(globalClass)} ` +
-        `${blankIfUndefined(localClass)}`
+        `${!overrideClass ? defaultClassString : ""} ` +
+        `${globalClassString} ` +
+        `${localClassString}`
     )
         .trim()
         .replace(/\s\s+/g, " ");
 
     // --- Tranform Classes ---
 
-    // get global config tranform class
-    const globalTransformClasses: TransformFunction | undefined =
-        getValueByPath(config, "transformClasses");
-    // get component config tranform class
-    const localTransformClasses: TransformFunction | undefined = getValueByPath(
+    // get component config transform function
+    let transformClasses: TransformFunction | undefined = getValueByPath(
         config,
         `${componentKey}.transformClasses`,
     );
+    if (!transformClasses)
+        // get global config transform function
+        transformClasses = getValueByPath(config, "transformClasses");
 
-    // apply component local transformclass if available
-    if (localTransformClasses) {
-        appliedClasses = localTransformClasses(appliedClasses);
-    }
-    // else apply global transformclass if available
-    else if (globalTransformClasses) {
-        appliedClasses = globalTransformClasses(appliedClasses);
+    // apply transform function if available
+    if (typeof transformClasses === "function") {
+        appliedClasses = transformClasses(appliedClasses);
     }
 
     return appliedClasses;
 }
 
+/** Compile a component class definition into a string. */
+function compileClass(
+    classDefinition: ComponentClass,
+    props: ReturnType<typeof getProps>,
+    suffix: string,
+): string {
+    let classBinding: ClassBinding | ClassBinding[];
+
+    if (typeof classDefinition === "function")
+        classBinding = classDefinition(suffix, props) ?? "";
+    else classBinding = classDefinition;
+
+    if (Array.isArray(classBinding)) {
+        return classBinding
+            .map((cb) => processClassBinding(cb, suffix))
+            .join(" ");
+    } else if (classBinding) {
+        return processClassBinding(classBinding, suffix);
+    }
+
+    return "";
+}
+
+/** Transform a classBinding object into a string. */
+function processClassBinding(
+    classBinding: ClassBinding,
+    suffix: string,
+): string {
+    if (typeof classBinding === "string") {
+        return suffixProcessor(classBinding ?? "", suffix);
+    } else if (typeof classBinding === "object") {
+        return Object.keys(classBinding)
+            .filter((key) => classBinding[key])
+            .map((classString) => suffixProcessor(classString ?? "", suffix))
+            .join(" ");
+    }
+    return "";
+}
+
+/** Add a suffix to an input string. */
 function suffixProcessor(input: string, suffix: string): string {
     return blankIfUndefined(input)
         .split(" ")
@@ -307,7 +322,7 @@ function suffixProcessor(input: string, suffix: string): string {
         .join(" ");
 }
 
-const getProps = (vm: ComponentInternalInstance): ComponentProps => {
+function getProps(vm: ComponentInternalInstance): Record<string, any> {
     let props = vm.proxy?.$props || {};
 
     // get all props which ends with "Props", these are compressed parent props
@@ -318,4 +333,4 @@ const getProps = (vm: ComponentInternalInstance): ComponentProps => {
         .reduce((a, b) => ({ ...a, ...b }), props);
 
     return props;
-};
+}

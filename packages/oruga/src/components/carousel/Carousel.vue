@@ -24,7 +24,7 @@ import {
 } from "@/composables";
 
 import type { CarouselComponent } from "./types";
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 import type { CarouselProps } from "./props";
 
 /**
@@ -453,7 +453,7 @@ const indicatorItemActiveClasses = defineClasses([
     "o-carousel__indicator__item--active",
 ]);
 
-function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
+function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
     const activeClasses =
         activeIndex.value === item.index
             ? indicatorItemActiveClasses.value
@@ -510,8 +510,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
 
             <!--
                 @slot Override the arrows
-                @binding {boolean} has-prev has prev arrow button 
-                @binding {boolean} has-next has next arrow button 
+                @binding {boolean} has-prev has prev arrow button
+                @binding {boolean} has-next has next arrow button
                 @binding {(): void} prev switch to prev item function
                 @binding {(): void} next switch to next item function
             -->
@@ -562,7 +562,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
 
         <!--
             @slot Override the indicators
-            @binding {number} active active index 
+            @binding {number} active active index
             @binding {(idx: number): void} switch-to switch to item function
         -->
         <slot name="indicators" :active="activeIndex" :switch-to="switchTo">
@@ -586,7 +586,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                     @keydown.space="onChange(item)">
                     <!--
                             @slot Override the indicator elements
-                            @binding {index} index indicator index 
+                            @binding {index} index indicator index
                         -->
                     <slot :index="item.index" name="indicator">
                         <span :class="indicatorItemAppliedClasses(item)" />
