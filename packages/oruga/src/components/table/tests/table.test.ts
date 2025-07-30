@@ -733,6 +733,26 @@ describe("OTable tests", () => {
     });
 
     describe("test checkable", () => {
+        test("tests header has checkAll checkbox", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name" },
+                    ],
+                    checkable: true,
+                    paginated: false,
+                    data: data,
+                },
+            });
+            await nextTick();
+
+            const head = wrapper.find("thead");
+            expect(head.exists()).toBeTruthy();
+            const checkboxes = head.findAll("input");
+            expect(checkboxes).toHaveLength(1);
+        });
+
         test("tests isAllUncheckable method", async () => {
             const isRowCheckable = vi.fn(() => false);
 
@@ -762,6 +782,50 @@ describe("OTable tests", () => {
             const checkboxes = body.findAll("input");
             expect(checkboxes).toHaveLength(1);
             expect(checkboxes[0].attributes("disabled")).toBe("");
+        });
+
+        test("tests checkAll working correctly", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name" },
+                    ],
+                    checkable: true,
+                    paginated: false,
+                    data: data,
+                },
+            });
+            await nextTick();
+
+            const head = wrapper.find("thead");
+            expect(head.exists()).toBeTruthy();
+            const headerCheckboxes = head.findAll("input");
+            expect(headerCheckboxes).toHaveLength(1);
+            const checkAllCheckbox = headerCheckboxes[0];
+
+            const body = wrapper.find("tbody");
+            expect(body.exists()).toBeTruthy();
+            const checkboxes = body.findAll("input");
+            expect(checkboxes).toHaveLength(data.length);
+            // assert no row is checked
+            checkboxes.forEach((checkbox) =>
+                expect(checkbox.element.checked).toBeFalsy(),
+            );
+
+            // check checkAll checkbox
+            await checkAllCheckbox.setValue(true);
+            // assert all rows area are checked
+            checkboxes.forEach((checkbox) =>
+                expect(checkbox.element.checked).toBeTruthy(),
+            );
+
+            // decheck checkAll checkbox again
+            await checkAllCheckbox.setValue(false);
+            // assert no row is checked
+            checkboxes.forEach((checkbox) =>
+                expect(checkbox.element.checked).toBeFalsy(),
+            );
         });
     });
 
