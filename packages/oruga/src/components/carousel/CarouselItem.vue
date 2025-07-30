@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, useTemplateRef } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
 
@@ -21,8 +21,10 @@ const props = withDefaults(defineProps<CarouselItemProps>(), {
     clickable: false,
 });
 
+const rootRef = useTemplateRef("rootElement");
+
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<CarouselComponent>();
+const { parent, item } = useProviderChild<CarouselComponent>(rootRef);
 
 const isActive = computed(() => parent.value.activeIndex === item.value.index);
 
@@ -33,7 +35,7 @@ function onClick(event: Event): void {
     if (props.clickable) parent.value.setActive(item.value.index);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const itemClasses = defineClasses(
     ["itemClass", "o-carousel__item"],
@@ -45,11 +47,14 @@ const itemClasses = defineClasses(
         computed(() => props.clickable),
     ],
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
     <div
         :id="`carouselpanel-${item.identifier}`"
+        ref="rootElement"
         data-oruga="carousel-item"
         :data-id="`carousel-${item.identifier}`"
         :class="itemClasses"

@@ -15,6 +15,7 @@ export * from "./utils/helpers";
 
 // export some useful composables
 export {
+    findFocusable,
     useTrapFocus,
     useEventListener,
     useClickOutside,
