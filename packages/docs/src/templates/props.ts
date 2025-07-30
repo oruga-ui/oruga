@@ -34,7 +34,7 @@ export function renderer(
 
         const name = pr.name === "modelValue" ? "v-model" : pr.name;
         if (name.endsWith("Class") || name.endsWith("Classes")) {
-            if (!IGNORE_CLASSES[tag]?.includes(name.toLowerCase())) return;
+            if (!IGNORE_CLASSES[tag]?.includes(name)) return;
         }
 
         let type = pr.tags?.type
