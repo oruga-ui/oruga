@@ -668,17 +668,17 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :clickable="false">
                                 <!--
                                     @slot Override the option group
-                                    @binding {object} group - options group
+                                    @binding {object} group - options group item
                                     @binding {number} index - option index
                                 -->
                                 <slot
-                                    v-if="$slots.group"
                                     name="group"
                                     :group="group.label"
-                                    :index="groupIndex" />
-                                <span v-else>
-                                    {{ group.label }}
-                                </span>
+                                    :index="groupIndex">
+                                    <span>
+                                        {{ group.label }}
+                                    </span>
+                                </slot>
                             </o-dropdown-item>
 
                             <o-dropdown-item
@@ -688,7 +688,13 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :key="option.key"
                                 :value="option.value"
                                 :hidden="option.hidden">
-                                {{ option.label }}
+                                <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                -->
+                                <slot name="option" :option="option">
+                                    <span> {{ option.label }} </span>
+                                </slot>
                             </o-dropdown-item>
                         </template>
 

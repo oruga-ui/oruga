@@ -33,6 +33,7 @@ const IGNORE_COMPONENTS = [
     "*/DropdownItem.vue",
     "*/BreadcrumbItem.vue",
     "*/CarouselItem.vue",
+    "*/ListboxItem.vue",
     "*/SliderThumb.vue",
     "*/SliderTick.vue",
     "*/TableMobileSort.vue",

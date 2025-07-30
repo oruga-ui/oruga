@@ -126,11 +126,13 @@ export function isScrollable(
  * If the child is not visible, scroll the parent to the child's position.
  */
 export function scrollElementInView(
-    scrollableParent: MaybeRefOrGetter<HTMLElement>,
-    childElement: MaybeRefOrGetter<HTMLElement>,
+    scrollableParent: MaybeRefOrGetter<HTMLElement | null>,
+    childElement: MaybeRefOrGetter<HTMLElement | null>,
 ): void {
     const parent = unrefElement(scrollableParent);
     const element = unrefElement(childElement);
+
+    if (!parent || !element) return;
 
     const { offsetHeight, offsetTop } = element;
     const { offsetHeight: parentOffsetHeight, scrollTop } = parent;

@@ -186,6 +186,11 @@ export function isGroupOption(
     );
 }
 
+/**
+ * Group all options in a new group with the given key.
+ * @param options - options or group options list
+ * @param key - key for the new group
+ */
 export function toOptionsGroup<V>(
     options: OptionsItem<V>[] | OptionsGroupItem<V>[],
     key: string,
@@ -201,6 +206,10 @@ export function toOptionsGroup<V>(
     return [{ options, key }] as OptionsGroupItem<V>[];
 }
 
+/**
+ * Reduce a list of groups to an option list.
+ * @param options - options list
+ */
 export function toOptionsList<V>(
     options: MaybeRefOrGetter<OptionsGroupItem<V>[]>,
 ): OptionsItem<V>[] {

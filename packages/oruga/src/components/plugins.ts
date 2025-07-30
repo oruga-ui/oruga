@@ -10,6 +10,7 @@ import Dropdown from "./dropdown";
 import Field from "./field";
 import Icon from "./icon";
 import Input from "./input";
+import Listbox from "./listbox";
 import Loading from "./loading";
 import Menu from "./menu";
 import Modal from "./modal";
@@ -44,6 +45,7 @@ export {
     Field,
     Icon,
     Input,
+    Listbox,
     Loading,
     Menu,
     Modal,
