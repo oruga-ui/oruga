@@ -108,6 +108,7 @@ const { childItems } = useProviderParent<StepItemComponent<T>>({
 const items = computed<StepItem<T>[]>(() => {
     if (!childItems.value) return [];
     return childItems.value.map((column) => ({
+        el: column.el,
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),

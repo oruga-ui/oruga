@@ -13,7 +13,6 @@ export type DropdownComponent<T> = {
 };
 
 export type DropdownItemComponent<T> = DropdownItemProps<T> & {
-    $el: Element | null;
     selectItem: (event: Event) => void;
 };
 

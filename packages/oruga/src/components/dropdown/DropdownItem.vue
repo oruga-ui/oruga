@@ -39,12 +39,11 @@ const emits = defineEmits<{
 
 const itemValue = props.value ?? useId();
 
-const rootRef = useTemplateRef<Element>("rootElement");
+const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
     ...props,
-    $el: rootRef.value,
     value: itemValue,
     selectItem,
 }));
@@ -53,7 +52,7 @@ const providedData = computed<DropdownItemComponent<T>>(() => ({
 const { parent, item } = useProviderChild<
     DropdownComponent<T>,
     DropdownItemComponent<T>
->({ data: providedData });
+>(rootRef, { data: providedData });
 
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
@@ -84,7 +83,7 @@ function focusItem(): void {
     parent.value.focusItem(item.value);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["itemClass", "o-dropdown__item"],
@@ -98,6 +97,8 @@ const rootClasses = defineClasses(
     ["itemClickableClass", "o-dropdown__item--clickable", null, isClickable],
     ["itemFocusedClass", "o-dropdown__item--focused", null, isFocused],
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
