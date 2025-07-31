@@ -1,5 +1,5 @@
 import type { ProviderItem } from "@/composables";
-import type { ListboxItemProps } from "./props";
+import type { ListItemProps } from "./props";
 
 export type ListboxComponent<T> = {
     id: string;
@@ -8,12 +8,12 @@ export type ListboxComponent<T> = {
     selectable: boolean;
     selected: T | T[] | undefined;
     focsuedIdentifier: string | undefined;
-    selectItem: (value: ListboxChildItem<T>, event: Event) => void;
-    focusItem: (value: ListboxChildItem<T>) => void;
+    selectItem: (value: ListItem<T>, event: Event) => void;
+    focusItem: (value: ListItem<T>) => void;
 };
 
-export type ListboxItemComponent<T> = ListboxItemProps<T> & {
+export type ListItemComponent<T> = ListItemProps<T> & {
     selectItem: (event: Event) => void;
 };
 
-export type ListboxChildItem<T> = ProviderItem<ListboxItemComponent<T>>;
+export type ListItem<T> = ProviderItem<ListItemComponent<T>>;

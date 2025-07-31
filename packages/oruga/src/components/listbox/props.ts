@@ -71,7 +71,7 @@ export type ListboxClasses = Partial<{
     itemEmptyClass: ComponentClass;
 }>;
 
-export type ListboxItemProps<T> = {
+export type ListItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
@@ -87,10 +87,10 @@ export type ListboxItemProps<T> = {
     hidden?: boolean;
     /** Item tag name */
     tag?: DynamicComponent;
-} & ListboxItemClasses;
+} & ListItemClasses;
 
 // class props (will not be displayed in the docs)
-export type ListboxItemClasses = Partial<{
+export type ListItemClasses = Partial<{
     /** Class of the item element. */
     itemClass: ComponentClass;
     /** Class of the item element when selected */

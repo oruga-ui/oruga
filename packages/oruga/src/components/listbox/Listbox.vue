@@ -10,7 +10,7 @@ import {
     type MaybeRefOrGetter,
 } from "vue";
 
-import OListboxItem from "../listbox/ListboxItem.vue";
+import OListboxItem from "./ListItem.vue";
 import OInput from "@/components/input/Input.vue";
 
 import { getDefault } from "@/utils/config";
@@ -31,11 +31,7 @@ import {
 } from "@/composables";
 
 import type { ListboxProps } from "./props";
-import type {
-    ListboxChildItem,
-    ListboxComponent,
-    ListboxItemComponent,
-} from "./types";
+import type { ListItem, ListboxComponent, ListItemComponent } from "./types";
 import { isTrueish, mod, toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 
@@ -118,7 +114,7 @@ const provideData = computed<ListboxComponent<T>>(() => ({
 
 /** provide functionalities and data to child item components */
 const { childItems } = useProviderParent<
-    ListboxItemComponent<T>,
+    ListItemComponent<T>,
     ListboxComponent<T>
 >({
     rootRef: containerRef,
@@ -204,7 +200,7 @@ function onFilterChange(_: string, event: Event): void {
 // #region --- Select Feature ---
 
 /** Click listener for the item component. */
-function selectItem(item: ListboxChildItem<T>): void {
+function selectItem(item: ListItem<T>): void {
     const value = item.data!.value!;
     emits("select", value);
 
@@ -239,7 +235,7 @@ function selectItem(item: ListboxChildItem<T>): void {
 // #region --- Focus Feature ---
 
 const isFocused = ref(false);
-const focusedItem = ref<ListboxChildItem<T>>();
+const focusedItem = ref<ListItem<T>>();
 
 /** Select the current focused item. */
 function selectFocusedItem(event: Event): void {
@@ -249,12 +245,12 @@ function selectFocusedItem(event: Event): void {
 }
 
 /** Hover listener for the item component. */
-function focusItem(value: ListboxChildItem<T>): void {
+function focusItem(value: ListItem<T>): void {
     focusedItem.value = value;
 }
 
 /** Set focus on an item. */
-function setFocus(item: ListboxChildItem<T>): void {
+function setFocus(item: ListItem<T>): void {
     if (props.selectOnFocus && item.data?.value) selectItem(item);
 
     // set item as focused
@@ -314,10 +310,7 @@ function onBlur(event: Event): void {
  * startingIndex, and if it is not visible or it is disabled, then go to the index in the
  * specified direction until either returning to startIndex or finding a viable child item.
  */
-function getFirstViableItem(
-    startingIndex: number,
-    delta: 1 | -1,
-): ListboxChildItem<T> {
+function getFirstViableItem(startingIndex: number, delta: 1 | -1): ListItem<T> {
     let newIndex = mod(
         focusedItem.value?.index == startingIndex
             ? startingIndex + delta

@@ -5,8 +5,8 @@ import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { ListboxComponent, ListboxItemComponent } from "./types";
-import type { ListboxItemProps } from "./props";
+import type { ListboxComponent, ListItemComponent } from "./types";
+import type { ListItemProps } from "./props";
 
 /**
  * An option item used by the listbox component.
@@ -18,7 +18,7 @@ defineOptions({
     configField: "listbox",
 });
 
-const props = withDefaults(defineProps<ListboxItemProps<T>>(), {
+const props = withDefaults(defineProps<ListItemProps<T>>(), {
     override: undefined,
     value: undefined,
     label: undefined,
@@ -41,7 +41,7 @@ const itemValue = props.value ?? useId();
 const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
-const providedData = computed<ListboxItemComponent<T>>(() => ({
+const providedData = computed<ListItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
     selectItem,
@@ -50,7 +50,7 @@ const providedData = computed<ListboxItemComponent<T>>(() => ({
 /** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<
     ListboxComponent<T>,
-    ListboxItemComponent<T>
+    ListItemComponent<T>
 >(rootRef, { data: providedData });
 
 const isDisabled = computed(() => parent.value.disabled && props.disabled);
