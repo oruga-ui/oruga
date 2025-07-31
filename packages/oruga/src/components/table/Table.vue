@@ -383,6 +383,7 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
         return {
             ...column,
             value: column,
+            el: columnItem.el,
             index: columnItem.index,
             identifier: columnItem.identifier,
             thAttrsData: thAttrsData,
@@ -1359,7 +1360,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 ">
                                 <o-slot-component
                                     v-if="column.$slots?.header"
-                                    :component="column.$el"
+                                    :component="column.$instance"
                                     name="header"
                                     tag="span"
                                     :class="thLabelClasses"
@@ -1442,7 +1443,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 <template v-if="column.searchable">
                                     <template v-if="column.$slots?.searchable">
                                         <o-slot-component
-                                            :component="column.$el"
+                                            :component="column.$instance"
                                             name="searchable"
                                             tag="span"
                                             :props="{
@@ -1496,7 +1497,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 ]">
                                 <o-slot-component
                                     v-if="column.$slots?.subheading"
-                                    :component="column.$el"
+                                    :component="column.$instance"
                                     name="subheading"
                                     tag="span"
                                     :props="{
@@ -1600,7 +1601,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 <o-slot-component
                                     v-if="!column.hidden"
                                     v-bind="column.tdAttrsData[row.index]"
-                                    :component="column.$el"
+                                    :component="column.$instance"
                                     name="default"
                                     tag="td"
                                     :class="[

@@ -1,5 +1,12 @@
 <script setup lang="ts" generic="T, C extends Component">
-import { computed, ref, useSlots, useId, type Component } from "vue";
+import {
+    computed,
+    ref,
+    useSlots,
+    useId,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
@@ -44,6 +51,8 @@ const emits = defineEmits<{
 
 const itemValue = props.value ?? useId();
 
+const rootRef = useTemplateRef("rootElement");
+
 const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
@@ -62,6 +71,7 @@ const providedData = computed<StepItemComponent<T>>(() => ({
 
 /** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<StepsComponent, StepItemComponent<T>>(
+    rootRef,
     { data: providedData },
 );
 
@@ -114,7 +124,7 @@ function beforeLeave(): void {
     isTransitioning.value = true;
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const stepClasses = defineClasses(
     ["stepClass", "o-steps__step"],
@@ -160,6 +170,8 @@ const stepLabelClasses = defineClasses([
 const stepIconClasses = defineClasses(["stepIconClass", "o-steps__step-icon"]);
 
 const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -174,6 +186,7 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             v-show="isActive && visible"
             v-bind="$attrs"
             :id="`tabpanel-${item.identifier}`"
+            ref="rootElement"
             data-oruga="steps-item"
             :data-id="`steps-${item.identifier}`"
             :class="panelClasses"

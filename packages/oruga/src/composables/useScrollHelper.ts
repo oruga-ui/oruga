@@ -1,4 +1,4 @@
-import { getCurrentScope, type MaybeRefOrGetter } from "vue";
+import { getCurrentScope, type Component, type MaybeRefOrGetter } from "vue";
 import { isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import { unrefElement } from "./unrefElement";
@@ -126,8 +126,8 @@ export function isScrollable(
  * If the child is not visible, scroll the parent to the child's position.
  */
 export function scrollElementInView(
-    scrollableParent: MaybeRefOrGetter<HTMLElement | null>,
-    childElement: MaybeRefOrGetter<HTMLElement | null>,
+    scrollableParent: MaybeRefOrGetter<HTMLElement | Component | null>,
+    childElement: MaybeRefOrGetter<HTMLElement | Component | null>,
 ): void {
     const parent = unrefElement(scrollableParent);
     const element = unrefElement(childElement);

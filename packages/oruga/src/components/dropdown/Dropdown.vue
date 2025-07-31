@@ -8,7 +8,6 @@ import { getDefault } from "@/utils/config";
 import { toCssDimension, isMobileAgent, isTrueish, mod } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
-    unrefElement,
     defineClasses,
     toOptionsGroup,
     normalizeOptions,
@@ -120,7 +119,7 @@ const emits = defineEmits<{
 }>();
 
 const triggerRef = ref<HTMLElement>();
-const menuRef = ref<HTMLElement | Component>();
+const menuRef = ref<HTMLElement | Component | null>(null);
 
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
@@ -399,15 +398,11 @@ function setFocus(item: DropdownChildItem<T>): void {
     if (props.selectOnFocus && item.data?.value)
         selectItem(item, new Event("focus"));
 
-    const dropdownMenu = unrefElement(menuRef);
-    const element = unrefElement(item.data?.$el);
-    if (!dropdownMenu || !element) return;
-
     // set item as focused
     focusedItem.value = item;
 
     // scroll item into view
-    scrollElementInView(dropdownMenu, element);
+    scrollElementInView(menuRef, item.el);
 }
 
 function onUpPressed(event: Event): void {

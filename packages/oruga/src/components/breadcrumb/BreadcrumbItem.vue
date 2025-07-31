@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -32,8 +32,10 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
     tag: () => getDefault("breadcrumb.tag", "a"),
 });
 
+const rootRef = useTemplateRef("rootElement");
+
 /** inject functionalities and data from the parent component */
-const { item } = useProviderChild();
+const { item } = useProviderChild(rootRef);
 
 // #region --- Computed Component Classes ---
 
@@ -71,6 +73,7 @@ const iconRightClasses = defineClasses(
 <template>
     <li
         v-show="!hidden"
+        ref="rootElement"
         data-oruga="breadcrumb-item"
         :data-id="`breadcrumb-${item.identifier}`"
         :class="rootClasses"

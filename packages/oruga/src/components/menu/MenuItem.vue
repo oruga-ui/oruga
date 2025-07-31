@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, ref, useId } from "vue";
+import { computed, ref, useId, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 import PlainButton from "../utils/PlainButton";
@@ -63,6 +63,8 @@ const emits = defineEmits<{
 
 const itemValue = props.value ?? useId();
 
+const rootRef = useTemplateRef("rootElement");
+
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<MenuItemProvider<T>>(() => ({
     expanded: isExpanded.value,
@@ -77,7 +79,7 @@ const { childItems } = useProviderParent({
 });
 
 /** inject functionalities and data from the parent menu-item component */
-const menuItem = useProviderChild<MenuItemProvider<T>>({
+const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
     key: "menu-item",
     needParent: false,
 });
@@ -98,7 +100,7 @@ const providedData = computed<MenuItemComponent<T>>(() => ({
 const { parent, item } = useProviderChild<
     MenuComponent<T>,
     MenuItemComponent<T>
->({ data: providedData });
+>(rootRef, { data: providedData });
 
 const nextSequence = parent.value.nextSequence;
 
@@ -204,6 +206,7 @@ const submenuClasses = defineClasses([
     <li
         v-show="!hidden"
         :id="`${parent.menuId}-${item.identifier}`"
+        ref="rootElement"
         data-oruga="menu-item"
         :data-id="`menu-${item.identifier}`"
         :class="itemClasses"
