@@ -32,7 +32,7 @@ declare module "../index" {
                 /** Open dropdown list on focus */
                 openOnFocus: boolean;
                 /** Max height of dropdown content */
-                maxHeight: number | string;
+                maxHeight: Numberish;
                 /** Makes the component check if list reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Icon pack to use */
@@ -492,7 +492,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Makes the component check if menu reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Max height of dropdown content */
-                maxHeight: number | string;
+                maxHeight: Numberish;
                 /** Position of the dropdown relative to the trigger */
                 position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
                 /** Custom animation (transition name) */
@@ -764,7 +764,7 @@ Use menu only in situations where your dropdown is related to a navigation menu.
         modal?: ComponentConfigBase &
             Partial<{
                 /** Width of the Modal */
-                width: number | string;
+                width: Numberish;
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Show an overlay */
