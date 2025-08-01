@@ -1,9 +1,9 @@
-import type { Booleanish, ComponentClass, Numberish } from "@/types";
+import type { ComponentClass, Numberish } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
 export type TaginputProps<T> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The selected items, use v-model to make it two-way binding binding */
     modelValue?: T[];
     /** The value of the inner input, use v-model:input to make it two-way binding */

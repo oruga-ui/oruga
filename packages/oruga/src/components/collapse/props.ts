@@ -1,8 +1,8 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 export type CollapseProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** Whether collapse is open or not, use v-model:open to make it two-way binding */
     open?: boolean;
     /** Custom animation (transition name) */

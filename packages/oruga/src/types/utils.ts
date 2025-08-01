@@ -1,7 +1,6 @@
 import type { Component, EmitsToProps } from "vue";
 import type { ComponentEmit } from "vue-component-type-helpers";
 
-export type Booleanish = boolean | "true" | "false";
 export type Numberish = number | string;
 
 export type ClassBind = {

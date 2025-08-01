@@ -1,8 +1,8 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 export type SkeletonProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** Show or hide loader	 */
     active?: boolean;
     /** Show a loading animation */

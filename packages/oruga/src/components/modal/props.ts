@@ -1,15 +1,10 @@
 import type { Component } from "vue";
-import type {
-    Booleanish,
-    ComponentClass,
-    ComponentEmits,
-    Numberish,
-} from "@/types";
+import type { ComponentClass, ComponentEmits, Numberish } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type ModalProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Display modal as full screen */

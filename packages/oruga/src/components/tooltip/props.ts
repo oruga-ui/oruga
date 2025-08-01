@@ -1,8 +1,8 @@
-import type { Booleanish, ComponentClass, DynamicComponent } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 export type TooltipProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Tooltip text, unnecessary when content slot is used */

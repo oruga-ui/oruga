@@ -1,8 +1,8 @@
-import type { Booleanish, ComponentClass, DynamicComponent } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 export type PaginationProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /**
      * Current page number, use v-model:current to make it two-way binding
      * @deprecated will be renamed to `modelValue`

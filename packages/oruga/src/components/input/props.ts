@@ -1,4 +1,4 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 export type InputType<IsNumber extends boolean> = IsNumber extends true
     ? number
@@ -6,7 +6,7 @@ export type InputType<IsNumber extends boolean> = IsNumber extends true
 
 export type InputProps<IsNumber extends boolean = false> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /**
      * The input value state
      * @type string | number

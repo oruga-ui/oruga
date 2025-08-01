@@ -1,11 +1,11 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 import type { DropdownProps } from "../dropdown/props";
 import type { SelectProps } from "../select/props";
 import type { InputProps } from "../input/props";
 
 export type TimepickerProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The input value state */
     modelValue?: Date;
     /** The active state of the dropdown */

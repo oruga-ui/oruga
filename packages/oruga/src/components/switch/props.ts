@@ -1,8 +1,8 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 export type SwitchProps<T> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
     modelValue?: T;
     /**

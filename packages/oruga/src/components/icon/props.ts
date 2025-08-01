@@ -1,8 +1,8 @@
-import type { Booleanish, ComponentClass, DynamicComponent } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 export type IconProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** Icon name */
     icon?: string;
     /** Icon component name */

@@ -1,4 +1,4 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 type UploadType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -7,7 +7,7 @@ export type UploadProps<
     IsMultiple extends boolean = false,
 > = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /**
      * The input value state
      * @type object | File

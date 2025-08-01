@@ -1,8 +1,8 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 export type CarouselProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The index of the current active element */
     modelValue?: number;
     /** Enable drag mode */
@@ -101,7 +101,7 @@ export type CarouselClasses = Partial<{
 
 export type CarouselItemProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** Make item clickable */
     clickable?: boolean;
 } & CarouselItemClasses;

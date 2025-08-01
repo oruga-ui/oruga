@@ -1,5 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
-import type { Booleanish, DeepKeys, DeepType, Numberish } from "@/types";
+import type { DeepKeys, DeepType, Numberish } from "@/types";
 
 /**
  * +/- function to native math sign

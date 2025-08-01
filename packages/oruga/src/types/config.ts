@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
-import type { Booleanish, DynamicComponent } from "./utils";
+import type { DynamicComponent } from "./utils";
 import type { MaybeRefOrGetter } from "vue";
 
 /** export option types */
@@ -29,7 +29,7 @@ export type ClassObject = {
      * In case you want to override existing Oruga default classes for this class,
      * you can set the field override to true.
      */
-    override?: Booleanish;
+    override?: boolean;
 };
 
 export type TransformFunction = (classes: string) => string;

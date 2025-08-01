@@ -1,16 +1,11 @@
-import type {
-    Booleanish,
-    ComponentClass,
-    DynamicComponent,
-    Numberish,
-} from "@/types";
+import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The selected option value */
     modelValue?: ValueType<T, IsMultiple>;
     /** Allows multiple selections - converts the `modelValue` into an array */
@@ -140,7 +135,7 @@ export type DropdownClasses = Partial<{
 
 export type DropdownItemProps<T> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /**
      * Item value (it will be used as v-model of wrapper component) - default is an uuid
      * @type string|number|object

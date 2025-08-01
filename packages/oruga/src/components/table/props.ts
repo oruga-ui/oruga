@@ -1,9 +1,9 @@
-import type { Booleanish, ComponentClass, DeepKeys, DeepType } from "@/types";
+import type { ComponentClass, DeepKeys, DeepType } from "@/types";
 import type { TableColumn } from "./types";
 
 export type TableProps<T> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** Table data */
     data?: T[];
     /** Table columns */

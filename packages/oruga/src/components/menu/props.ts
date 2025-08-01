@@ -1,9 +1,9 @@
-import type { Booleanish, ComponentClass, DynamicComponent } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 import type { OptionsProp, OptionsPropWithGroups } from "@/composables";
 
 export type MenuProps<T> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The selected item value, use v-model to make it two-way binding */
     modelValue?: T;
     /** Menu items, unnecessary when default slot is used */
@@ -50,7 +50,7 @@ export type MenuClasses = Partial<{
 
 export type MenuItemProps<T> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** Item value (it will be used as v-model of wrapper component) - default is an uuid */
     value?: T;
     /** The active state of the menu item, use v-model:active to make it two-way binding */

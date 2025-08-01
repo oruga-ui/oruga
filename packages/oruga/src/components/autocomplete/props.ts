@@ -1,15 +1,10 @@
-import type {
-    Booleanish,
-    ComponentClass,
-    DynamicComponent,
-    Numberish,
-} from "@/types";
+import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 import type { InputProps } from "../input/props";
 
 export type AutocompleteProps<T> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /**
      * The selected option value, use v-model to make it two-way binding
      * @type string|number|object

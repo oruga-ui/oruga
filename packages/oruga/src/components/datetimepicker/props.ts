@@ -1,10 +1,10 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 import type { DatepickerProps } from "../datepicker/props";
 import type { TimepickerProps } from "../timepicker/props";
 
 export type DatetimepickerProps = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The input value state */
     modelValue?: Date;
     /** The active state of the dropdown, use v-model:active to make it two-way binding */

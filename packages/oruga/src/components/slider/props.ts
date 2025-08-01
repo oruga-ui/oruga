@@ -1,8 +1,8 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 
 export type SliderProps<IsRange extends boolean = false> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The input value state */
     modelValue?: IsRange extends true ? [number, number] : number;
     /** Enable range slider */

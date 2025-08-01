@@ -1,6 +1,5 @@
 import type { Component } from "vue";
 import type {
-    Booleanish,
     ComponentClass,
     ComponentEmits,
     Numberish,
@@ -10,7 +9,7 @@ import type { ComponentProps } from "vue-component-type-helpers";
 
 export type StepsProps<T> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /**
      * The selected item value, use v-model to make it two-way binding
      * @type string|number|object
@@ -110,7 +109,7 @@ export type StepsClasses = Partial<{
 
 export type StepItemProps<T, C extends Component = Component> = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /**
      * Item value (it will be used as v-model of wrapper component) - default is an uuid
      * @type string|number|object

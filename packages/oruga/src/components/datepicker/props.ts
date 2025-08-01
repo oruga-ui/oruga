@@ -1,4 +1,4 @@
-import type { Booleanish, ComponentClass } from "@/types";
+import type { ComponentClass } from "@/types";
 import type { DatepickerEvent } from "./types";
 import type { DropdownProps } from "../dropdown/props";
 import type { SelectProps } from "../select/props";
@@ -15,7 +15,7 @@ export type DatepickerProps<
     IsMultiple extends boolean = false,
 > = {
     /** Override existing theme classes completely */
-    override?: Booleanish;
+    override?: boolean;
     /** The input value state, use v-model to make it two-way binding */
     modelValue?: DatepickerType<IsRange, IsMultiple>;
     /** Enable date range selection */
