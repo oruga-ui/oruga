@@ -844,7 +844,7 @@ function isChecked(row: TableRow<T>): boolean {
  * Emits "check-all" event with the updated checked rows list.
  */
 function updateCheckedRows(checkAll?: boolean): void {
-    if (checkAll ?? isAllChecked.value)
+    if (typeof checkAll === "undefined" ? isAllChecked.value : !checkAll)
         // if all rows are already checked, check nothing
         tableCheckedRows.value = [];
     else {
