@@ -14,7 +14,12 @@ import {
 } from "vue";
 
 import { getOptions } from "@/utils/config";
-import { isDefined, blankIfUndefined, getValueByPath } from "@/utils/helpers";
+import {
+    isDefined,
+    blankIfUndefined,
+    getValueByPath,
+    isTrueish,
+} from "@/utils/helpers";
 
 import type { ClassBinding, ComponentClass, TransformFunction } from "@/types";
 
@@ -190,20 +195,20 @@ function computeClass(
     defaultValue: string,
     suffix = "",
 ): string {
-    // get component props
+    // get component instance props
     const props = getProps(vm);
 
     const componentKey: string = vm.proxy?.$options.configField;
     if (!componentKey)
         throw new Error("component must define the 'configField' option.");
 
-    // get component instance override property
-    const config = props.override === true ? {} : getOptions();
+    // get the component global config if it's not locally overridden
+    const config = isTrueish(props.override) ? {} : getOptions();
 
     // --- Override Definition ---
 
     // get local instance override property
-    const localOverride: boolean = props.override;
+    const localOverride: boolean = isTrueish(props.override);
     // get global config override property
     const globalOverride =
         // check component field config override property
@@ -213,7 +218,7 @@ function computeClass(
         // check global config override property
         getValueByPath(config, "override");
 
-    const overrideClass = (localOverride || globalOverride) ?? false;
+    const overrideClass = localOverride || globalOverride;
 
     // --- Class Definition ---
 
@@ -232,7 +237,7 @@ function computeClass(
     const localClass: ComponentClass | undefined = getValueByPath(props, field);
 
     // procsess local instance class definition
-    const localClassString = compileClass(localClass ?? "", props, suffix);
+    const localClassString = compileClass(localClass, props, suffix);
 
     // get global config class definition
     const globalClass: ComponentClass | undefined =
@@ -240,7 +245,7 @@ function computeClass(
         getValueByPath(config, `${componentKey}.${field}`);
 
     // process global config class definition
-    const globalClassString = compileClass(globalClass ?? "", props, suffix);
+    const globalClassString = compileClass(globalClass, props, suffix);
 
     // --- Define Applied Classes ---
 
@@ -267,19 +272,20 @@ function computeClass(
         transformClasses = getValueByPath(config, "transformClasses");
 
     // apply transform function if available
-    if (typeof transformClasses === "function") {
+    if (typeof transformClasses === "function")
         appliedClasses = transformClasses(appliedClasses);
-    }
 
     return appliedClasses;
 }
 
 /** Compile a component class definition into a string. */
 function compileClass(
-    classDefinition: ComponentClass,
+    classDefinition: ComponentClass | undefined,
     props: ReturnType<typeof getProps>,
     suffix: string,
 ): string {
+    if (typeof classDefinition === "undefined") return "";
+
     let classBinding: ClassBinding | ClassBinding[];
 
     if (typeof classDefinition === "function")
@@ -313,7 +319,7 @@ function processClassBinding(
     return "";
 }
 
-/** Add a suffix to an input string. */
+/** Add a suffix to each word of an input string. */
 function suffixProcessor(input: string, suffix: string): string {
     return blankIfUndefined(input)
         .split(" ")
@@ -322,6 +328,7 @@ function suffixProcessor(input: string, suffix: string): string {
         .join(" ");
 }
 
+/** Get all props form an component instance. */
 function getProps(vm: ComponentInternalInstance): Record<string, any> {
     let props = vm.proxy?.$props || {};
 
