@@ -59,7 +59,7 @@ export const isDefined = <T>(value: T | undefined | null): value is T =>
  * @param value - Value to check for undefined.
  * @returns boolean
  */
-export const isTrueish = (value: Booleanish): boolean =>
+export const isTrueish = (value: unknown): boolean =>
     isDefined(value) && value !== "false" && value !== false;
 
 export const blankIfUndefined = (value: string | null | undefined): string =>
