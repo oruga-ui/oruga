@@ -12,7 +12,7 @@ export type TableRow<V = unknown> = OptionsItem<V> & {
 export type TableColumn<T = unknown> = TableColumnProps<T>;
 
 export type TableColumnComponent<T = unknown> = TableColumn<T> & {
-    $el: ComponentPublicInstance;
+    $instance: ComponentPublicInstance;
     $slots: Slots;
     style: StyleValue;
     thClasses: ClassBinding[];

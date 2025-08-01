@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type PropType } from "vue";
+import { computed, useTemplateRef, type PropType } from "vue";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { SliderComponent } from "./types";
@@ -37,8 +37,12 @@ const props = defineProps({
     },
 });
 
+const rootRef = useTemplateRef("rootElement");
+
 /** inject functionalities and data from the parent component */
-const { parent } = useProviderChild<SliderComponent>({ register: false });
+const { parent } = useProviderChild<SliderComponent>(rootRef, {
+    register: false,
+});
 
 const position = computed(() => {
     const pos =
@@ -54,7 +58,7 @@ const hidden = computed(
 
 const tickStyle = computed(() => ({ left: position.value + "%" }));
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["tickClass", "o-slider__tick"],
@@ -65,10 +69,16 @@ const tickLabelClasses = defineClasses([
     "tickLabelClass",
     "o-slider__tick-label",
 ]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
-    <div data-oruga="slider-tick" :class="rootClasses" :style="tickStyle">
+    <div
+        ref="rootElement"
+        data-oruga="slider-tick"
+        :class="rootClasses"
+        :style="tickStyle">
         <span v-if="$slots.default || label" :class="tickLabelClasses">
             <!-- 
                 @slot Override tick content, default is label prop

@@ -383,6 +383,7 @@ const tableColumns = computed<TableColumnItem<T>[]>(() => {
         return {
             ...column,
             value: column,
+            el: columnItem.el,
             index: columnItem.index,
             identifier: columnItem.identifier,
             thAttrsData: thAttrsData,
@@ -809,15 +810,19 @@ const tableCheckedRows = defineModel<T[]>("checkedRows", {
     default: [],
 });
 
+/** reset checkedRows whem page props changes */
+watch(
+    [tableCurrentPage, () => props.perPage],
+    () => (tableCheckedRows.value = []),
+);
+
 /** check if all rows in the page are checked */
 const isAllChecked = computed(() => {
     const validVisibleData = availableRows.value.filter((row) =>
         props.isRowCheckable(row.value),
     );
     if (validVisibleData.length === 0) return false;
-    return validVisibleData.every((currentVisibleRow) =>
-        isChecked(currentVisibleRow),
-    );
+    return validVisibleData.every(isChecked);
 });
 
 /** check if all rows in the page are checkable */
@@ -832,33 +837,21 @@ function isChecked(row: TableRow<T>): boolean {
     else return tableCheckedRows.value.some((r) => isRowEqual(r, row.value));
 }
 
-/** add a checked row to the the array */
-function addCheckedRow(row: TableRow<T>): void {
-    tableCheckedRows.value = [...tableCheckedRows.value, row.value];
-}
-
-/** remove a checked row from the array */
-function removeCheckedRow(row: TableRow<T>): void {
-    const idx = tableCheckedRows.value.findIndex((r) =>
-        isRowEqual(r, row.value),
-    );
-    if (idx >= 0)
-        tableCheckedRows.value = tableCheckedRows.value.toSpliced(idx, 1);
-}
-
 /**
- * Header checkbox click listener.
- * Add or remove all rows in current page.
+ * Update checked rows list.
+ * If all rows are checked, uncheck all.
+ * If not all rows are checked, check all visible rows.
+ * Emits "check-all" event with the updated checked rows list.
  */
-function checkAll(): void {
-    if (isAllChecked.value)
+function updateCheckedRows(checkAll?: boolean): void {
+    if (checkAll ?? isAllChecked.value)
         // if all rows are already checked, check nothing
         tableCheckedRows.value = [];
     else {
         // else set all visible rows as checked
         tableCheckedRows.value = availableRows.value
-            .filter((row) => props.isRowCheckable(row.value))
-            .map((row) => row.value);
+            .map((row) => row.value)
+            .filter((value) => props.isRowCheckable(value));
     }
 
     // emit event after the reactive checked rows list got updated
@@ -874,6 +867,20 @@ function checkRow(row: TableRow<T>): void {
 
     // emit event after the reactive checked rows list got updated
     nextTick(() => emits("check", tableCheckedRows.value, row.value));
+}
+
+/** add a checked row to the the array */
+function addCheckedRow(row: TableRow<T>): void {
+    tableCheckedRows.value = [...tableCheckedRows.value, row.value];
+}
+
+/** remove a checked row from the array */
+function removeCheckedRow(row: TableRow<T>): void {
+    const idx = tableCheckedRows.value.findIndex((r) =>
+        isRowEqual(r, row.value),
+    );
+    if (idx >= 0)
+        tableCheckedRows.value = tableCheckedRows.value.toSpliced(idx, 1);
 }
 
 // #endregion --- Checkable Feature ---
@@ -1307,7 +1314,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 name="check-all"
                                 :is-all-checked="isAllChecked"
                                 :is-all-uncheckable="isAllUncheckable"
-                                :check-all="checkAll">
+                                :check-all="updateCheckedRows">
                                 <o-checkbox
                                     :model-value="isAllChecked"
                                     autocomplete="off"
@@ -1315,7 +1322,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
                                     aria-label="Check all"
-                                    @update:model-value="checkAll" />
+                                    @update:model-value="
+                                        updateCheckedRows(!!$event)
+                                    " />
                             </slot>
                         </th>
 
@@ -1351,7 +1360,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 ">
                                 <o-slot-component
                                     v-if="column.$slots?.header"
-                                    :component="column.$el"
+                                    :component="column.$instance"
                                     name="header"
                                     tag="span"
                                     :class="thLabelClasses"
@@ -1397,7 +1406,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 name="check-all"
                                 :is-all-checked="isAllChecked"
                                 :is-all-uncheckable="isAllUncheckable"
-                                :check-all="checkAll">
+                                :check-all="updateCheckedRows">
                                 <o-checkbox
                                     :model-value="isAllChecked"
                                     autocomplete="off"
@@ -1405,7 +1414,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
                                     aria-label="Check all"
-                                    @update:model-value="checkAll" />
+                                    @update:model-value="
+                                        updateCheckedRows(!!$event)
+                                    " />
                             </slot>
                         </th>
                     </tr>
@@ -1432,7 +1443,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 <template v-if="column.searchable">
                                     <template v-if="column.$slots?.searchable">
                                         <o-slot-component
-                                            :component="column.$el"
+                                            :component="column.$instance"
                                             name="searchable"
                                             tag="span"
                                             :props="{
@@ -1486,7 +1497,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 ]">
                                 <o-slot-component
                                     v-if="column.$slots?.subheading"
-                                    :component="column.$el"
+                                    :component="column.$instance"
                                     name="subheading"
                                     tag="span"
                                     :props="{
@@ -1590,7 +1601,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 <o-slot-component
                                     v-if="!column.hidden"
                                     v-bind="column.tdAttrsData[row.index]"
-                                    :component="column.$el"
+                                    :component="column.$instance"
                                     name="default"
                                     tag="td"
                                     :class="[

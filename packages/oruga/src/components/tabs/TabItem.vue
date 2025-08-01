@@ -1,5 +1,12 @@
 <script setup lang="ts" generic="T, C extends Component">
-import { computed, ref, useSlots, useId, type Component } from "vue";
+import {
+    computed,
+    ref,
+    useSlots,
+    useId,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import PlainButton from "../utils/PlainButton";
 
@@ -44,6 +51,8 @@ const emits = defineEmits<{
 
 const itemValue = props.value ?? useId();
 
+const rootRef = useTemplateRef("rootElement");
+
 const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
@@ -60,9 +69,10 @@ const providedData = computed<TabItemComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<TabsComponent, TabItemComponent<T>>({
-    data: providedData,
-});
+const { parent, item } = useProviderChild<TabsComponent, TabItemComponent<T>>(
+    rootRef,
+    { data: providedData },
+);
 
 const transitionName = ref();
 
@@ -110,7 +120,7 @@ function beforeLeave(): void {
     isTransitioning.value = true;
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const tabClasses = defineClasses(
     ["tabClass", "o-tabs__tab"],
@@ -140,6 +150,8 @@ const tabIconClasses = defineClasses(["tabIconClass", "o-tabs__tab-icon"]);
 const tabLabelClasses = defineClasses(["tabLabelClass", "o-tabs__tab-label"]);
 
 const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -154,6 +166,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             v-show="isActive && visible"
             v-bind="$attrs"
             :id="`tabpanel-${item.identifier}`"
+            ref="rootElement"
             data-oruga="tabs-item"
             :data-id="`tabs-${item.identifier}`"
             :class="panelClasses"

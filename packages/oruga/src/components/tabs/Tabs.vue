@@ -100,6 +100,7 @@ const { childItems } = useProviderParent<TabItemComponent<T>>({
 const items = computed<TabItem<T>[]>(() => {
     if (!childItems.value) return [];
     return childItems.value.map((column) => ({
+        el: column.el,
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
