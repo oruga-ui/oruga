@@ -182,8 +182,8 @@ const emits = defineEmits<{
     /**
      * on column sort change event
      * @param column {TableColumn} column data
-     * @param direction {string}  'asc' or 'desc'
-     * @param event {Event} native  event
+     * @param direction {string} 'asc' or 'desc'
+     * @param event {Event} native event
      */
     sort: [column: TableColumn<T>, direction: "asc" | "desc", event: Event];
     /**
@@ -192,10 +192,18 @@ const emits = defineEmits<{
      */
     "filters-change": [value: Record<string, string>];
     /**
+     * on native filter event
+     * @param column {TableColumn} column data
+     * @param value {string} filter input value
+     * @param event {Event} native event
+     */
+    filter: [column: TableColumn<T>, value: string, event: Event];
+    /**
      * on native filter event based on props filtersEvent
+     * @deprecated use `filter` event instead
      * @param filtersEvent {string} props filtersEvent value
      * @param filters {object} filter object
-     * @param event {Event} native  event
+     * @param event {Event} native event
      */
     "filters-event": [
         filtersEvent: string,
@@ -468,10 +476,10 @@ const rowCount = computed(() => {
     return tableTotal.value + ariaRowIndexStart.value;
 });
 
-/** aria-rowindex start value for tds based if it's Searchable or has subheadings */
+/** aria-rowindex start value for tds based if any column is filterable or has subheading */
 const ariaRowIndexStart = computed(() => {
     let i = 1;
-    if (hasSearchableColumns.value) i++;
+    if (hasFilterColumns.value) i++;
     if (hasSubheadings.value) i++;
     return i;
 });
@@ -588,11 +596,11 @@ function selectRow(row: TableRow<T>, event: Event): void {
 
 // #region --- Filter Feature ---
 
-/** search filter record alias { fieldKey: filterValue } */
+/** filter record alias { fieldKey: filterValue } */
 const filters = ref<Record<string, string>>({});
 
-/** check if has any searchable column */
-const hasSearchableColumns = computed(() =>
+/** check if any column has filterable active */
+const hasFilterColumns = computed(() =>
     tableColumns.value.some((column) => column.searchable),
 );
 
@@ -682,6 +690,10 @@ function isRowFiltered(row: T): boolean {
         // if column has custom search funtion return result
         if (typeof column.customSearch === "function")
             return column.customSearch(row, filter);
+
+        // if column has custom filter funtion return result
+        if (typeof column.customFilter === "function")
+            return column.customFilter(row, filter);
 
         // get the visible column value for the row
         const value = getColumnValue(row, column);
@@ -1421,7 +1433,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         </th>
                     </tr>
 
-                    <tr v-if="hasSearchableColumns" :aria-rowindex="2">
+                    <tr v-if="hasFilterColumns" :aria-rowindex="2">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
@@ -1440,18 +1452,30 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style">
-                                <template v-if="column.searchable">
-                                    <template v-if="column.$slots?.searchable">
-                                        <o-slot-component
-                                            :component="column.$instance"
-                                            name="searchable"
-                                            tag="span"
-                                            :props="{
-                                                column: column.value,
-                                                index: column.index,
-                                                filters,
-                                            }" />
-                                    </template>
+                                <template
+                                    v-if="
+                                        column.searchable || column.filterable
+                                    ">
+                                    <o-slot-component
+                                        v-if="column.$slots?.searchable"
+                                        :component="column.$instance"
+                                        name="searchable"
+                                        tag="span"
+                                        :props="{
+                                            column: column.value,
+                                            index: column.index,
+                                            filters,
+                                        }" />
+                                    <o-slot-component
+                                        v-else-if="column.$slots?.filter"
+                                        :component="column.$instance"
+                                        name="filter"
+                                        tag="span"
+                                        :props="{
+                                            column: column.value,
+                                            index: column.index,
+                                            filters,
+                                        }" />
                                     <o-input
                                         v-else-if="column.field"
                                         v-model="filters[column.field]"
@@ -1459,12 +1483,17 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         :type="
                                             column.numeric ? 'number' : 'search'
                                         "
+                                        role="searchbox"
                                         :placeholder="filtersPlaceholder"
                                         :icon="filtersIcon"
                                         :pack="iconPack"
                                         size="small"
-                                        :aria-label="`${column.label} search`"
-                                        @[filtersEvent]="onFiltersEvent" />
+                                        :aria-label="`${column.label} filter`"
+                                        @[filtersEvent]="onFiltersEvent"
+                                        @input="
+                                            (v, e) =>
+                                                $emit('filter', column, v, e)
+                                        " />
                                 </template>
                             </th>
                         </template>
@@ -1475,7 +1504,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
 
                     <tr
                         v-if="hasSubheadings"
-                        :aria-rowindex="hasSearchableColumns ? 3 : 2">
+                        :aria-rowindex="hasFilterColumns ? 3 : 2">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
