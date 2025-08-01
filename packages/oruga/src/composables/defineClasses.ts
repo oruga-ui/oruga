@@ -284,38 +284,48 @@ function compileClass(
     props: ReturnType<typeof getProps>,
     suffix: string,
 ): string {
+    // if definiton is undefined return empty class string
     if (typeof classDefinition === "undefined") return "";
 
     let classBinding: ClassBinding | ClassBinding[];
 
     if (typeof classDefinition === "function")
+        // call definition function
         classBinding = classDefinition(suffix, props) ?? "";
     else classBinding = classDefinition;
 
+    let classString = "";
     if (Array.isArray(classBinding)) {
-        return classBinding
-            .map((cb) => processClassBinding(cb, suffix))
+        classString = classBinding
+            // transform the classBinding into a string
+            .map(processClassBinding)
+            // join all classes into one string
             .join(" ");
     } else if (classBinding) {
-        return processClassBinding(classBinding, suffix);
+        // transform the classBinding into a string
+        classString = processClassBinding(classBinding);
     }
 
-    return "";
+    // if suffix is not already applied by the classFunction
+    if (typeof classDefinition !== "function")
+        classString = suffixProcessor(classString, suffix);
+
+    return classString;
 }
 
 /** Transform a classBinding object into a string. */
-function processClassBinding(
-    classBinding: ClassBinding,
-    suffix: string,
-): string {
-    if (typeof classBinding === "string") {
-        return suffixProcessor(classBinding ?? "", suffix);
-    } else if (typeof classBinding === "object") {
-        return Object.keys(classBinding)
-            .filter((key) => classBinding[key])
-            .map((classString) => suffixProcessor(classString ?? "", suffix))
-            .join(" ");
-    }
+function processClassBinding(classBinding: ClassBinding): string {
+    if (typeof classBinding === "string") return classBinding;
+
+    if (typeof classBinding === "object")
+        return (
+            Object.keys(classBinding)
+                // filter by the truthiness of the data property
+                .filter((key) => classBinding[key])
+                // join all classes into one string
+                .join(" ")
+        );
+
     return "";
 }
 
@@ -323,7 +333,6 @@ function processClassBinding(
 function suffixProcessor(input: string, suffix: string): string {
     return blankIfUndefined(input)
         .split(" ")
-        .filter((cls) => cls.length > 0)
         .map((cls) => cls + blankIfUndefined(suffix))
         .join(" ");
 }
