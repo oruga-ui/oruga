@@ -131,6 +131,7 @@ const code = `import type {
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
+    Numberish,
 } from "@/types";
 
 // Auto generated component theme config definition

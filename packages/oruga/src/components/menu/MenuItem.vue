@@ -55,8 +55,8 @@ const emits = defineEmits<{
     "update:active": [value: boolean];
     /**
      * onclick event
-     * @param value {string | number | object} value prop data
-     * @param event {event} Native Event
+     * @param value {unknown} value prop data
+     * @param event {event} native event
      */
     click: [value: T, event: Event];
 }>();

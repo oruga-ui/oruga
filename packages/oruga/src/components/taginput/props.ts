@@ -1,4 +1,4 @@
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, Numberish } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
 export type TaginputProps<T> = {
@@ -23,9 +23,9 @@ export type TaginputProps<T> = {
      */
     variant?: string;
     /** Limits the number of items, plus item counter */
-    maxitems?: string | number;
+    maxitems?: Numberish;
     /** Same as native maxlength, plus character counter */
-    maxlength?: string | number;
+    maxlength?: Numberish;
     /** Show counter when maxlength or maxtags props are passed */
     counter?: boolean;
     /** Opens a dropdown with choices when the input field is focused */

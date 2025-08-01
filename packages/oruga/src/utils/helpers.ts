@@ -1,5 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
-import type { DeepKeys, DeepType } from "@/types";
+import type { DeepKeys, DeepType, Numberish } from "@/types";
 
 /**
  * +/- function to native math sign
@@ -71,7 +71,7 @@ export const defaultIfUndefined = <T>(
 ): T => (isDefined(value) ? value : defaultValue);
 
 export const toCssDimension = (
-    width: string | number | undefined,
+    width: Numberish | undefined,
     dimension: string = "px",
 ): string | undefined =>
     !isDefined(width)

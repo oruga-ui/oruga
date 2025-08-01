@@ -92,10 +92,10 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Events
 
-| Event name    | Properties                                                                                    | Description                 |
-| ------------- | --------------------------------------------------------------------------------------------- | --------------------------- |
-| update:active | **value** `boolean` - updated active prop                                                     | active prop two-way binding |
-| click         | **value** `string \| number \| object` - value prop data<br/>**event** `event` - Native Event | onclick event               |
+| Event name    | Properties                                                                 | Description                 |
+| ------------- | -------------------------------------------------------------------------- | --------------------------- |
+| update:active | **value** `boolean` - updated active prop                                  | active prop two-way binding |
+| click         | **value** `unknown` - value prop data<br/>**event** `event` - native event | onclick event               |
 
 ### Slots
 

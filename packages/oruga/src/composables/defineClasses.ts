@@ -14,7 +14,12 @@ import {
 } from "vue";
 
 import { getOptions } from "@/utils/config";
-import { isDefined, blankIfUndefined, getValueByPath } from "@/utils/helpers";
+import {
+    isDefined,
+    blankIfUndefined,
+    getValueByPath,
+    isTrueish,
+} from "@/utils/helpers";
 
 import type {
     ClassBind,
@@ -201,7 +206,7 @@ function computeClass(
         throw new Error("component must define the 'configField' option.");
 
     // get component instance override property
-    const config = props.override === true ? {} : getOptions();
+    const config = isTrueish(props.override) ? {} : getOptions();
 
     // --- Classes Definition ---
 
@@ -269,7 +274,7 @@ function computeClass(
     // add global config classes
     // add instance classes
     let appliedClasses = (
-        `${!overrideClass ? defaultValue : ""} ` +
+        `${!isTrueish(overrideClass) ? defaultValue : ""} ` +
         `${blankIfUndefined(globalClass)} ` +
         `${blankIfUndefined(localClass)}`
     )
