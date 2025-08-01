@@ -1,6 +1,6 @@
 import type { Component, Slots } from "vue";
 import type { ProviderItem } from "@/composables";
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 
 import type { StepItemProps } from "./props";
 
@@ -16,9 +16,9 @@ export type StepsComponent = {
 
 export type StepItemComponent<T> = StepItemProps<T, Component> & {
     $slots: Slots;
-    stepClasses: ClassBind[];
-    iconClasses: ClassBind[];
-    labelClasses: ClassBind[];
+    stepClasses: ClassBinding[];
+    iconClasses: ClassBinding[];
+    labelClasses: ClassBinding[];
     isClickable: boolean;
     isTransitioning: boolean;
     activate: (index: number) => void;
