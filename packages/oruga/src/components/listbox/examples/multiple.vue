@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import type { OptionsProp } from "@/composables";
 
-const selectedValue = ref();
+const selectedValue = ref([]);
 
 const options: OptionsProp = [
     { label: "New York", value: "NY" },
@@ -15,7 +15,7 @@ const options: OptionsProp = [
 
 <template>
     <section class="odocs-spaced">
-        <o-listbox v-model="selectedValue" :options="options" />
+        <o-listbox v-model="selectedValue" :options="options" multiple />
 
         <p><b>Selected:</b> {{ selectedValue }}</p>
     </section>

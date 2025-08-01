@@ -14,7 +14,7 @@ import type { ListItemProps } from "./props";
  */
 defineOptions({
     isOruga: true,
-    name: "OListboxItem",
+    name: "OListItem",
     configField: "listbox",
 });
 
@@ -24,41 +24,46 @@ const props = withDefaults(defineProps<ListItemProps<T>>(), {
     label: undefined,
     disabled: false,
     hidden: false,
+    ariaLabel: undefined,
+    ariaLabelledby: undefined,
+    parentKey: undefined,
     tag: () => getDefault("listbox.itemTag", "li"),
 });
 
 const emits = defineEmits<{
     /**
      * onclick event
-     * @param value {string | number | object} value prop data
-     * @param event {event} Native Event
+     * @param value {unknown} value prop data
+     * @param event {event} native event
      */
     click: [value: T, event: Event];
 }>();
 
+const key = props.parentKey ?? "listbox";
+
 const itemValue = props.value ?? useId();
 
-const rootRef = useTemplateRef("rootElement");
+const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
-    selectItem,
+    clickItem,
 }));
 
 /** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<
     ListboxComponent<T>,
     ListItemComponent<T>
->(rootRef, { data: providedData });
+>(rootRef, { key, data: providedData });
 
 const isDisabled = computed(() => parent.value.disabled && props.disabled);
 
 const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
     if (parent.value.multiple && Array.isArray(parent.value.selected))
-        return parent.value.selected.some((selected: T) =>
+        return parent.value.selected.some((selected) =>
             isEqual(itemValue, selected),
         );
     return isEqual(itemValue, parent.value.selected);
@@ -68,26 +73,28 @@ const isFocused = computed(
     () => item.value.identifier === parent.value.focsuedIdentifier,
 );
 
-/** Click listener, select the item. */
-function selectItem(event: Event): void {
+/** Click listener, toggle the selection of the item. */
+function clickItem(event: Event): void {
     if (isDisabled.value) return;
-    parent.value.selectItem(item.value, event);
+    parent.value.selectItem(item.value, !isSelected.value);
     emits("click", itemValue as T, event);
 }
 
-/** Hover listener, focus the item. */
+/** Set the item as focused element. */
 function focusItem(): void {
     parent.value.focusItem(item.value);
 }
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["itemClass", "o-listbox__item"],
     ["itemDisabledClass", "o-listbox__item--disabled", null, isDisabled],
-    ["itemSelectedClass", "o-listbox__item--active", null, isSelected],
+    ["itemSelectedClass", "o-listbox__item--selected", null, isSelected],
     ["itemFocusedClass", "o-listbox__item--focused", null, isFocused],
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -95,19 +102,23 @@ const rootClasses = defineClasses(
         :is="tag"
         :id="`${parent.id}-${item.identifier}`"
         ref="rootElement"
-        data-oruga="listbox-item"
-        :data-id="`listbox-${item.identifier}`"
+        :data-oruga="`${key}-item`"
+        :data-id="`${key}-${item.identifier}`"
         :class="rootClasses"
         role="option"
         tabindex="-1"
-        :aria-selected="parent.selectable ? isSelected : undefined"
+        :aria-selected="
+            parent.selectable && !parent.multiple ? isSelected : undefined
+        "
+        :aria-checked="
+            parent.selectable && parent.multiple ? isSelected : undefined
+        "
         :aria-hidden="hidden"
         :aria-disabled="disabled"
-        :aria-label="label"
-        @click="selectItem"
-        @mouseenter="focusItem"
-        @keydown.enter="selectItem"
-        @keydown.space="selectItem">
+        :aria-label="ariaLabel ?? label"
+        :aria-labelledby="ariaLabelledby"
+        @click.prevent="clickItem"
+        @mouseenter="focusItem">
         <!--
             @slot Override the label, default is label prop
             @binding {boolean} selected - item is selected

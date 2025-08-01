@@ -15,7 +15,7 @@ const options: OptionsProp = [
 
 <template>
     <section class="odocs-spaced">
-        <o-listbox v-model="selectedValue" :options="options" />
+        <o-listbox v-model="selectedValue" :options="options" filterable />
 
         <p><b>Selected:</b> {{ selectedValue }}</p>
     </section>

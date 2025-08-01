@@ -8,12 +8,12 @@ export type ListboxComponent<T> = {
     selectable: boolean;
     selected: T | T[] | undefined;
     focsuedIdentifier: string | undefined;
-    selectItem: (value: ListItem<T>, event: Event) => void;
+    selectItem: (value: ListItem<T>, selection: boolean) => void;
     focusItem: (value: ListItem<T>) => void;
 };
 
 export type ListItemComponent<T> = ListItemProps<T> & {
-    selectItem: (event: Event) => void;
+    clickItem: (event: Event) => void;
 };
 
 export type ListItem<T> = ProviderItem<ListItemComponent<T>>;

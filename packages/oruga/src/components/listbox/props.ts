@@ -20,22 +20,24 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     options?: OptionsPropWithGroups<T>;
     /** Interaction is disabled */
     disabled?: boolean;
-    /** Enables item selection */
-    selectable?: boolean;
+    /** Enables overflow when moving the focus by keyboard */
+    // focusOverflow?: boolean;
     /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
     scrollHeight?: string | number;
+    /** Enables item selection */
+    selectable?: boolean;
     /** Select current focused item when focused */
     selectOnFocus?: boolean;
     /** Enable an additional searchbar below the header */
     filterable?: boolean;
-    /** Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend */
+    /** Items won't be filtered on clientside, use the `filter` event to filter in your backend */
     backendFiltering?: boolean;
+    /** Function to filter the option based on the input value - default is label string comparison */
+    filter?: (option: T, value: string) => boolean;
     /** Icon of the column search input */
     filtersIcon?: string;
     /** Placeholder of the column search input */
     filtersPlaceholder?: string;
-    /** Function to filter the option based on the input value - default is label string comparison */
-    filter?: (option: T, value: string) => boolean;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -85,8 +87,17 @@ export type ListItemProps<T> = {
     disabled?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
+    /** Defines a string value that labels an interactive element. */
+    ariaLabel?: string;
+    /** Identifier of the underlying input element. */
+    ariaLabelledby?: string;
     /** Item tag name */
     tag?: DynamicComponent;
+    /**
+     * Internal parent provider key override
+     * @ignore
+     */
+    parentKey?: string;
 } & ListItemClasses;
 
 // class props (will not be displayed in the docs)

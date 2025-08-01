@@ -173,10 +173,14 @@ export function normalizeOptions<
 }
 
 /**
- * A helper to determine if an option is a group or an option.
- * @param option - An option
+ * Determines whether a given option is a group of options.
  *
- * @returns option is OptionsGroupItem
+ * A group option is identified by being an object that contains an `options` array attribute.
+ *
+ * @param {Partial<OptionsItem | OptionsGroupItem>} option
+ *   The option to check.
+ * @returns {option is OptionsGroupItem}
+ *   Returns true if the option is a group option; otherwise, false.
  */
 export function isGroupOption(
     option: Partial<OptionsItem | OptionsGroupItem>,
@@ -187,9 +191,18 @@ export function isGroupOption(
 }
 
 /**
- * Group all options in a new group with the given key.
- * @param options - options or group options list
- * @param key - key for the new group
+ * Converts a flat list of options into a grouped options structure.
+ *
+ * If the input already contains grouped options, it returns a shallow copy.
+ * Otherwise, it wraps the flat list in a single group using the provided key.
+ *
+ * @template V
+ * @param {OptionsItem<V>[] | OptionsGroupItem<V>[]} options
+ *   The list of options, which may be flat or already grouped.
+ * @param {string} key
+ *   The key to assign to the group if grouping is needed.
+ * @returns {OptionsGroupItem<V>[]}
+ *   A grouped options array.
  */
 export function toOptionsGroup<V>(
     options: OptionsItem<V>[] | OptionsGroupItem<V>[],
@@ -207,8 +220,15 @@ export function toOptionsGroup<V>(
 }
 
 /**
- * Reduce a list of groups to an option list.
- * @param options - options list
+ * Flattens a list of grouped options into a single list of options.
+ *
+ * This function extracts all `OptionsItem` entries from an array of `OptionsGroupItem` objects,
+ * effectively removing the grouping structure.
+ *
+ * @param {MaybeRefOrGetter<OptionsGroupItem<V>[]>} options
+ *   The grouped options to flatten.
+ * @returns {OptionsItem<V>[]}
+ *   A flat array containing all options from all groups.
  */
 export function toOptionsList<V>(
     options: MaybeRefOrGetter<OptionsGroupItem<V>[]>,
@@ -222,11 +242,16 @@ export function toOptionsList<V>(
 }
 
 /**
- * Applies an filter function for a list of options {@link OptionsItem | OptionsGroupItem}.
- * Options are filtered by setting the hidden attribute.
- * The options reactivity is not triggered by this.
- * @param options - Options to filter
- * @param filter - filter function
+ * Applies a filter function to a list of options or grouped options, updating their visibility.
+ *
+ * The function recursively traverses the options and sets the `hidden` property based on the filter result.
+ * For grouped options, the group is hidden if all its child options are hidden.
+ *
+ * @param {MaybeRefOrGetter<OptionsItem<V>[] | OptionsGroupItem<V>[]>} options
+ *   The list of options to filter, which may include grouped options.
+ * @param {(option: OptionsItem<V>, index: number) => boolean} filter
+ *   A predicate function that determines whether an option should be hidden.
+ * @returns {void}
  */
 export function filterOptionsItems<V>(
     options: MaybeRefOrGetter<OptionsItem<V>[] | OptionsGroupItem<V>[]>,
@@ -247,10 +272,15 @@ export function filterOptionsItems<V>(
 }
 
 /**
- * Checks if no options are given or every existing options are hidden.
- * @param options - A list of {@link OptionsItem | OptionsGroupItem} to check for a given value
+ * Determines whether a list of options or grouped options is effectively empty.
  *
- * @returns boolean
+ * An options list is considered empty if all options are either hidden or disabled.
+ * The function supports both flat and grouped option structures and performs a recursive check.
+ *
+ * @param {MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>} options
+ *   The list of options to evaluate.
+ * @returns {boolean}
+ *   Returns true if all options are non-viable (hidden or disabled); otherwise, false.
  */
 export function checkOptionsEmpty(
     options: MaybeRefOrGetter<OptionsItem[] | OptionsGroupItem[]>,
@@ -268,12 +298,16 @@ export function checkOptionsEmpty(
 }
 
 /**
- * Given an list of {@link OptionsItem | OptionsGroupItem}, find the option item with the given value.
+ * Recursively searches for an option with a specific value in a list of options or grouped options.
  *
- * @param options - A list of {@link OptionsItem | OptionsGroupItem} to check for a given value
- * @param value - The value to check
+ * The function supports both flat and grouped option structures. It compares values using deep equality.
  *
- * @returns {@link OptionsItem}
+ * @param {MaybeRefOrGetter<OptionsItem<V>[]> | MaybeRefOrGetter<OptionsGroupItem<V>[]>} options
+ *   The list of options, which may include grouped options.
+ * @param {MaybeRefOrGetter<V>} value
+ *   The value to search for within the options.
+ * @returns {OptionsItem<V> | undefined}
+ *   The matching option if found; otherwise, undefined.
  */
 export function findOption<V>(
     options:
@@ -298,8 +332,14 @@ export function findOption<V>(
 }
 
 /**
- * Given an options list, find the first value.
- * @param options - An options list (with groups)
+ * Recursively finds the first viable option from a list of options or grouped options.
+ *
+ * A viable option is one that is not hidden and not disabled. The function supports both flat and grouped option structures.
+ *
+ * @param {MaybeRefOrGetter<OptionsItem<V>[]> | MaybeRefOrGetter<OptionsGroupItem<V>[]>} options
+ *   The list of options, which may include grouped options.
+ * @returns {OptionsItem<V> | undefined}
+ *   The first viable option found, or undefined if none are viable.
  */
 export function firstViableOption<V>(
     options:
@@ -322,6 +362,110 @@ export function firstViableOption<V>(
     return undefined;
 }
 
+/**
+ * Determines whether an option is viable for selection or display.
+ *
+ * An option is considered viable if it is not marked as hidden and is not disabled via its attributes.
+ *
+ * @param {MaybeRefOrGetter<OptionsItem>} option
+ *   The option to evaluate.
+ * @returns {boolean}
+ *   Returns true if the option is not hidden and not disabled; otherwise, false.
+ */
 export function isOptionViable(option: MaybeRefOrGetter<OptionsItem>): boolean {
     return !toValue(option).hidden && !toValue(option).attrs?.disabled;
+}
+
+/**
+ * Determines whether a given option matches a search value.
+ *
+ * The match is case-insensitive and checks if the option's label starts with the provided value.
+ * Only viable options are considered for matching.
+ *
+ * @param {MaybeRefOrGetter<OptionsItem>} option
+ *   The option to check against the search value.
+ * @param {MaybeRefOrGetter<string>} value
+ *   The search value to match against the option's label.
+ * @returns {boolean}
+ *   Returns true if the option is viable and its label starts with the search value; otherwise, false.
+ */
+export function isOptionMatched(
+    option: MaybeRefOrGetter<OptionsItem>,
+    value: MaybeRefOrGetter<string>,
+): boolean {
+    return (
+        isOptionViable(option) &&
+        toValue(option)
+            .label?.toLowerCase()
+            .startsWith(toValue(value).toLowerCase())
+    );
+}
+
+/**
+ * Recursively finds the index of a specific option within a flat or grouped options array.
+ *
+ * This function supports both flat arrays of options and arrays of grouped options.
+ * It traverses the structure and returns the index of the target option as if all options were flattened.
+ *
+ * @param {MaybeRefOrGetter<OptionsItem[]> | MaybeRefOrGetter<OptionsGroupItem[]>} options
+ *   The list of options, which may be a flat array or an array of grouped options.
+ * @param {MaybeRefOrGetter<OptionsItem>} option
+ *   The option to find within the options list.
+ * @returns {number}
+ *   The index of the option if found; otherwise, -1.
+ */
+export function findOptionIndex(
+    options:
+        | MaybeRefOrGetter<OptionsItem[]>
+        | MaybeRefOrGetter<OptionsGroupItem[]>,
+    option: MaybeRefOrGetter<OptionsItem>,
+): number {
+    if (!Array.isArray(toValue(options))) return -1;
+
+    let idx = 0;
+    for (const item of toValue(options)) {
+        if (typeof item !== "object" && item) continue;
+        if (isGroupOption(item)) {
+            // check options in group options
+            const groupIdx = findOptionIndex(item.options, option);
+            // increase full group options length when not found
+            if (groupIdx === -1) idx += item.options.length;
+            else {
+                // increase found index of group options
+                idx += groupIdx;
+                return idx;
+            }
+        }
+        // check if option is searched option
+        else if (isEqual(item.value, toValue(option).value)) return idx;
+        // else increase search indx
+        else idx += 1;
+    }
+
+    // not matching option found
+    return -1;
+}
+
+/**
+ * Recursively calculates the total number of options from a list of options or grouped options.
+ *
+ * @param {MaybeRefOrGetter<OptionsItem[]> | MaybeRefOrGetter<OptionsGroupItem[]>} options
+ *   A reactive reference or getter that returns an array of individual options or grouped options.
+ * @returns {number}
+ *   The total count of individual options, including those nested within groups.
+ */
+export function getOptionsLength(
+    options:
+        | MaybeRefOrGetter<OptionsItem[]>
+        | MaybeRefOrGetter<OptionsGroupItem[]>,
+): number {
+    if (!Array.isArray(toValue(options))) return 0;
+
+    return toValue(options).reduce((length, item) => {
+        if (typeof item !== "object" && item) return length;
+        if (isGroupOption(item)) {
+            return length + getOptionsLength(item.options);
+        }
+        return length + 1;
+    }, 0);
 }

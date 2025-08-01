@@ -80,6 +80,49 @@ export const toCssDimension = (
           ? String(width)
           : String(width) + dimension;
 
+export function isEmpty(value: any): boolean {
+    return (
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        (Array.isArray(value) && value.length === 0) ||
+        (!(value instanceof Date) &&
+            typeof value === "object" &&
+            Object.keys(value).length === 0)
+    );
+}
+
+export function isPrintableCharacter(char: string = ""): boolean {
+    return !isEmpty(char) && char.length === 1 && !!char.match(/\S| /);
+}
+
+/**
+ * Reorders an array starting from a given index, alternating between
+ * the next and previous elements in a zigzag pattern.
+ *
+ * For example, given [10, 20, 30, 40, 50, 60] and startIndex = 2,
+ * the result will be: [30, 40, 20, 50, 10, 60]
+ *
+ * @param {Array} arr - The input array to reorder.
+ * @param {number} startIndex - The index to start the reordering from.
+ * @returns {Array} A new array reordered around the start index.
+ */
+export function alternateArray<T>(arr: T[], startIndex: number): T[] {
+    const result: T[] = [];
+    const len = arr.length;
+
+    for (let offset = 0; offset < len; offset++) {
+        const index =
+            offset % 2 === 0
+                ? startIndex + Math.floor(offset / 2)
+                : startIndex - Math.ceil(offset / 2);
+
+        if (index >= 0 && index < len) result.push(arr[index]);
+    }
+
+    return result;
+}
+
 /**
  * Sort an array by key without mutating original data.
  * Call the user sort function if it was passed.

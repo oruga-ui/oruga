@@ -4,6 +4,9 @@
 
 The **Listbox** component presents a list of options and allows a user to select one or more of them.
 The component implements the W3C ARIA APG [Listbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/).
+When assistive technologies present a listbox, the name of an option is calculated by the browser as a flat string.
+Therefore, the content of an option should not contain any semantic information, such as a heading.
+In addition, assistive technologies does not provide an accessible way to present a list of interactive elements for the listbox role, such as links, buttons, or checkboxes.
 
 </section>
 
@@ -35,7 +38,7 @@ The component implements the W3C ARIA APG [Listbox Pattern](https://www.w3.org/W
 | backendFiltering   | Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
 | disabled           | Interaction is disabled                                                                                      | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
 | filter             | Function to filter the option based on the input value - default is label string comparison                  | ((option: unknown, value: string) =&gt; boolean) | -                                                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
-| filterable         | Enable an additional searchbar below the header                                                              | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
+| filterable         | Enable an additional searchbar below the header                                                              | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | filtersIcon        | Icon of the column search input                                                                              | string                                           | -                                                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
 | filtersPlaceholder | Placeholder of the column search input                                                                       | string                                           | -                                                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
 | iconPack           | Icon pack to use                                                                                             | string                                           | `mdi`, `fa`, `fas and any other custom icon pack` | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
@@ -47,7 +50,7 @@ The component implements the W3C ARIA APG [Listbox Pattern](https://www.w3.org/W
 | override           | Override existing theme classes completely                                                                   | boolean                                          | -                                                 |                                                                                                                                                       |
 | scrollHeight       | Height of the listbox, a scrollbar is defined if height of list exceeds this value                           | number \| string                                 | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>listbox: {<br>&nbsp;&nbsp;scrollHeight: "225"<br>}</code> |
 | selectOnFocus      | Select current focused item when focused                                                                     | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
-| selectable         | Enables item selection                                                                                       | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| selectable         | Enables item selection                                                                                       | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                            |
 
 ### Events
 
@@ -63,15 +66,15 @@ The component implements the W3C ARIA APG [Listbox Pattern](https://www.w3.org/W
 
 ### Slots
 
-| Name       | Description                               | Bindings                                                                                                                      |
-| ---------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| header     | Define an additional header               |                                                                                                                               |
-| searchable |                                           |                                                                                                                               |
-| default    | Place items here                          |                                                                                                                               |
-| group      | Override the option group                 | **group** `object` - options group item<br/>**index** `number` - option index                                                 |
-| option     | Override the label, default is label prop | **option** `object` - option item<br/>**selected** `boolean` - item is selected<br/>**disabled** `boolean` - item is disabled |
-| empty      | Define content for empty state            |                                                                                                                               |
-| footer     | Define an additional footer               |                                                                                                                               |
+| Name        | Description                               | Bindings                                                                                                                          |
+| ----------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| header      | Define an additi onal header              |                                                                                                                                   |
+| searchable  |                                           |                                                                                                                                   |
+| default     | Place items here                          |                                                                                                                                   |
+| optiongroup | Override the option group                 | **group** `object` - options group item<br/>**index** `number` - option index                                                     |
+| option      | Override the label, default is label prop | **option** `object` - option item<br/>**selected** `boolean` - option is selected<br/>**disabled** `boolean` - option is disabled |
+| empty       | Define content for empty state            |                                                                                                                                   |
+| footer      | Define an additional footer               |                                                                                                                                   |
 
 </section>
 
