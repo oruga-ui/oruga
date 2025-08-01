@@ -136,6 +136,26 @@ export default {
             }
         }
 
+        orugaConfig.listbox = {};
+
+        orugaConfig.listbox.containertClass = orugaConfig.dropdown?.menuClass;
+
+        orugaConfig.listbox.itemClass = orugaConfig.dropdown?.itemClass;
+        orugaConfig.listbox.itemDisabledClass =
+            orugaConfig.dropdown?.itemDisabledClass;
+        orugaConfig.listbox.itemSelectedClass =
+            orugaConfig.dropdown?.itemSelectedClass;
+        orugaConfig.listbox.itemFocusedClass =
+            orugaConfig.dropdown?.itemFocusedClass;
+
+        orugaConfig.listbox.emptyClass =
+            orugaConfig.autocomplete?.itemEmptyClass;
+
+        orugaConfig.listbox.headerClass =
+            orugaConfig.autocomplete?.itemHeaderClass;
+        orugaConfig.listbox.footerClass =
+            orugaConfig.autocomplete?.itemFooterClass;
+
         // import oruga component with theme config
         app.use(Oruga, orugaConfig);
     },
