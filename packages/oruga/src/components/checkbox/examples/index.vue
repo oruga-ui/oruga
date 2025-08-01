@@ -12,7 +12,7 @@ import Sizes from "./sizes.vue";
 import SizesCode from "./sizes.vue?raw";
 
 import Multiple from "./multiple.vue";
-import MultipleCode from "./array.vue?raw";
+import MultipleCode from "./multiple.vue?raw";
 </script>
 
 <template>
