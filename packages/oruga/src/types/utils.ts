@@ -10,23 +10,10 @@ import type { ComponentEmit } from "vue-component-type-helpers";
 export type ClassFunction = (
     suffix: string,
     props: Record<string, any>,
-) => ClassBinding | undefined;
+) => ClassBinding | ClassBinding[] | undefined;
 
-/** Vue native type which a class prop must have */
+/** Vue native type for a class attribute */
 export type ClassBinding = string | { [x: string]: boolean };
-
-/**
- * Vue native type which a v-bind prop must have
- * @deprecated currently unused - can be deleted
- */
-export type PropBinding =
-    | string
-    | {
-          [x: string]: string;
-      }
-    | {
-          [x: string]: boolean;
-      };
 
 /** Vue native dynamic component 'is' property value type */
 export type DynamicComponent = string | object | CallableFunction | Component;
