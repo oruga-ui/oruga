@@ -153,7 +153,10 @@ export type TableProps<T> = {
     filtersIcon?: string;
     /** Placeholder of the column search input */
     filtersPlaceholder?: string;
-    /** Add a native event to filter */
+    /**
+     * Add a native event to filter
+     * @deprecated use `filter` event instead
+     */
     filtersEvent?: string;
     /** Filtering debounce time (in milliseconds) */
     filterDebounce?: number;
@@ -286,8 +289,13 @@ export type TableColumnProps<
      * @values left, centered, right
      */
     position?: "left" | "centered" | "right";
-    /** Enable an additional searchbar below the column header */
+    /**
+     * Enable an additional searchbar below the column header
+     * @deprecated use `filterable` instead
+     */
     searchable?: boolean;
+    /** Enable an additional filterbar below the column header */
+    filterable?: boolean;
     /** Enable column sortability */
     sortable?: boolean;
     /** Define whether the column is visible or not */
@@ -298,8 +306,13 @@ export type TableColumnProps<
     headerSelectable?: boolean;
     /** Define a custom sort function */
     customSort?: (a: T, b: T, isAsc: boolean) => number;
-    /** Define a custom filter funtion for the search */
+    /**
+     * Define a custom filter funtion for the search
+     * @deprecated use `customFilter` instead
+     */
     customSearch?: (row: T, filter: string) => boolean;
+    /** Define a custom filter funtion when filterable */
+    customFilter?: (row: T, filter: string) => boolean;
     /** Adds native attributes to th */
     thAttrs?: object;
     /** Adds native attributes to td */

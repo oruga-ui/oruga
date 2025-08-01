@@ -111,6 +111,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | Event name          | Properties                                                                                                                                                                               | Description                                        |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
 | page-change         | **page** `number` - updated page                                                                                                                                                         | on pagination page change event                    |
+| filter              | **column** `TableColumn` - column data<br/>**value** `string` - filter input value<br/>**event** `Event` - native event                                                                  | on native filter event                             |
 | dblclick            | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native click event                                                                          | on row double click event                          |
 | mouseenter          | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native mouseenter event                                                                     | on row mouseenter event                            |
 | mouseleave          | **row** `T` - row data<br/>**index** `number` - index of clicked row<br/>**event** `Event` - native mouseleave event                                                                     | on row mouseleave event                            |
@@ -175,9 +176,11 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 | Prop name        | Description                                            | Type                                                    | Values                      | Default                                                     |
 | ---------------- | ------------------------------------------------------ | ------------------------------------------------------- | --------------------------- | ----------------------------------------------------------- |
+| customFilter     | Define a custom filter funtion when filterable         | ((row: unknown, filter: string) =&gt; boolean)          | -                           |                                                             |
 | customSearch     | Define a custom filter funtion for the search          | ((row: unknown, filter: string) =&gt; boolean)          | -                           |                                                             |
 | customSort       | Define a custom sort function                          | ((a: unknown, b: unknown, isAsc: boolean) =&gt; number) | -                           |                                                             |
 | field            | Define an object property key if data is an object     | string                                                  | -                           |                                                             |
+| filterable       | Enable an additional filterbar below the column header | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
 | formatter        | Provide a formatter function to edit the output        | ((value: unknown, row: unknown) =&gt; string)           | -                           |                                                             |
 | headerSelectable | Make header selectable                                 | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
 | hidden           | Define whether the column is visible or not            | boolean                                                 | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
@@ -200,6 +203,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | header     | Override header label     | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | subheading | Override subheading label | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
+| filter     | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
 
 </section>
 
