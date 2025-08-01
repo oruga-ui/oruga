@@ -63,7 +63,6 @@ export default defineConfig({
         ['meta', { name: 'twitter:description', content: "Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly." }],
         ['meta', { name: 'twitter:image', content: 'https://oruga-ui.com/logo-banner.png?v=3' }],
     ],
-    appearance: false,
     themeConfig: {
         logo: "/logo.png",
         outline: [2, 4],
