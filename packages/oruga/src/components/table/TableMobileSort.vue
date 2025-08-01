@@ -29,7 +29,10 @@ const props = defineProps({
     sortIcon: { type: String, default: "arrow-up" },
     sortIconSize: { type: String, default: "small" },
     isAsc: { type: Boolean, default: false },
-    mobileSortClasses: { type: Array as PropType<ClassBinding[]>, required: true },
+    mobileSortClasses: {
+        type: Array as PropType<ClassBinding[]>,
+        required: true,
+    },
 });
 
 const emits = defineEmits<{
