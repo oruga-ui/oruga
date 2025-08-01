@@ -1,10 +1,16 @@
 import type { Component } from "vue";
-import type { ComponentClass, ComponentEmits, OptionsProp } from "@/types";
+import type {
+    Booleanish,
+    ComponentClass,
+    ComponentEmits,
+    Numberish,
+    OptionsProp,
+} from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type StepsProps<T> = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /**
      * The selected item value, use v-model to make it two-way binding
      * @type string|number|object
@@ -104,7 +110,7 @@ export type StepsClasses = Partial<{
 
 export type StepItemProps<T, C extends Component = Component> = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /**
      * Item value (it will be used as v-model of wrapper component) - default is an uuid
      * @type string|number|object
@@ -113,7 +119,7 @@ export type StepItemProps<T, C extends Component = Component> = {
     /** Item label */
     label?: string;
     /** Step marker content (when there is no icon) */
-    step?: string | number;
+    step?: Numberish;
     /**
      * Default style for the step.
      * This will override parent type.

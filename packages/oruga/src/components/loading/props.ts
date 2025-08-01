@@ -1,8 +1,8 @@
-import type { ComponentClass } from "@/types";
+import type { Booleanish, ComponentClass } from "@/types";
 
 export type LoadingProps = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /** Whether loading is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Loader will overlay the full page. */

@@ -1,5 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
-import type { DeepKeys, DeepType } from "@/types";
+import type { Booleanish, DeepKeys, DeepType, Numberish } from "@/types";
 
 /**
  * +/- function to native math sign
@@ -59,7 +59,7 @@ export const isDefined = <T>(value: T | undefined | null): value is T =>
  * @param value - Value to check for undefined.
  * @returns boolean
  */
-export const isTrueish = (value: unknown): boolean =>
+export const isTrueish = (value: Booleanish): boolean =>
     isDefined(value) && value !== "false" && value !== false;
 
 export const blankIfUndefined = (value: string | null | undefined): string =>
@@ -71,7 +71,7 @@ export const defaultIfUndefined = <T>(
 ): T => (isDefined(value) ? value : defaultValue);
 
 export const toCssDimension = (
-    width: string | number | undefined,
+    width: Numberish | undefined,
     dimension: string = "px",
 ): string | undefined =>
     !isDefined(width)

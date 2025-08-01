@@ -1,10 +1,15 @@
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type {
+    Booleanish,
+    ComponentClass,
+    DynamicComponent,
+    Numberish,
+} from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 import type { InputProps } from "../input/props";
 
 export type AutocompleteProps<T> = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /**
      * The selected option value, use v-model to make it two-way binding
      * @type string|number|object
@@ -45,7 +50,7 @@ export type AutocompleteProps<T> = {
     /** Same as native input disabled */
     disabled?: boolean;
     /** Same as native maxlength, plus character counter */
-    maxlength?: string | number;
+    maxlength?: Numberish;
     /** Number of milliseconds to delay before to emit input event */
     debounce?: number;
     /** The first option will always be focused (easier to just hit enter or tab) */
@@ -63,7 +68,7 @@ export type AutocompleteProps<T> = {
     /** Allows the footer in the autocomplete to be selectable */
     selectableFooter?: boolean;
     /** Max height of dropdown content */
-    maxHeight?: string | number;
+    maxHeight?: Numberish;
     /** Makes the component check if list reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /**

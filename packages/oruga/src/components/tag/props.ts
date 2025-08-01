@@ -1,8 +1,8 @@
-import type { ComponentClass } from "@/types";
+import type { Booleanish, ComponentClass } from "@/types";
 
 export type TagProps = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /** Tag label, unnecessary when default slot is used */
     label?: string;
     /**

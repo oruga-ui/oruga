@@ -1,8 +1,8 @@
-import type { ComponentClass } from "@/types";
+import type { Booleanish, ComponentClass } from "@/types";
 
 export type CheckboxProps<T> = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /** The input value state, use v-model to make it two-way binding */
     modelValue?: T | T[];
     /**

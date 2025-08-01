@@ -1,8 +1,8 @@
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { Booleanish, ComponentClass, DynamicComponent } from "@/types";
 
 export type FieldProps = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /**
      * Color of the field and help message, also adds a matching icon.
      * Used by Input, Select and Autocomplete.

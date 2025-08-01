@@ -1,10 +1,15 @@
 import type { Component } from "vue";
-import type { ComponentClass, ComponentEmits } from "@/types";
+import type {
+    Booleanish,
+    ComponentClass,
+    ComponentEmits,
+    Numberish,
+} from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type ModalProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
     /** Display modal as full screen */
@@ -12,7 +17,7 @@ export type ModalProps<C extends Component = Component> = {
     /** Text content, unnecessary when default slot is used */
     content?: string;
     /** Width of the Modal */
-    width?: string | number;
+    width?: Numberish;
     /** Custom animation (transition name) */
     animation?: string;
     /** Show an overlay  */

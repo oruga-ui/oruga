@@ -1,8 +1,8 @@
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { Booleanish, ComponentClass, DynamicComponent } from "@/types";
 
 export type ButtonProps = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /**
      * Button tag name
      * @values button, a, input, router-link, nuxt-link (or other nuxt alias)

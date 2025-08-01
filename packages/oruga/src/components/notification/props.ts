@@ -1,10 +1,10 @@
 import type { Component } from "vue";
-import type { ComponentClass, ComponentEmits } from "@/types";
+import type { Booleanish, ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type NotificationProps = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /** Message text, unnecessary when default slot is used */
     message?: string;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
@@ -81,7 +81,7 @@ export type NotificationClasses = Partial<{
 
 export type NotificationNoticeProps<C extends Component> = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /**
      * DOM element the toast will be created on (for programmatic usage).
      * Note that this also changes the position of the toast from fixed to absolute.

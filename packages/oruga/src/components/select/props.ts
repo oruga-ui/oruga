@@ -1,11 +1,11 @@
-import type { ComponentClass } from "@/types";
+import type { Booleanish, ComponentClass, Numberish } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
 export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /** The input value state */
     modelValue?: ValueType<T, IsMultiple>;
     /** Allow multiple selection - converts the `modelValue` into an array */
@@ -33,7 +33,7 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Makes the element rounded */
     rounded?: boolean;
     /** Same as native size */
-    nativeSize?: string | number;
+    nativeSize?: Numberish;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack

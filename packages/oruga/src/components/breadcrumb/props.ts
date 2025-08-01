@@ -1,4 +1,5 @@
 import type {
+    Booleanish,
     ComponentClass,
     DynamicComponent,
     SimpleOptionsProp,
@@ -6,7 +7,7 @@ import type {
 
 export type BreadcrumbProps = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /** breadcrumb items, unnecessary when default slot is used */
     options?: SimpleOptionsProp;
     /**
@@ -46,7 +47,7 @@ export type BreadcrumbClasses = Partial<{
 
 export type BreadcrumbItemProps = {
     /** Override existing theme classes completely */
-    override?: boolean;
+    override?: Booleanish;
     /** Item label, unnecessary when default slot is used */
     label?: string;
     /** Whether item is active or not */
