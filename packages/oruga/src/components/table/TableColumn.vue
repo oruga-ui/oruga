@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="T, K extends string">
 import { computed, getCurrentInstance, useTemplateRef } from "vue";
 
+import OInput from "@/components/input/Input.vue";
+
 import { defineClasses, useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
 
@@ -53,14 +55,25 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
 }));
 
 /** inject functionalities and data from the parent component */
-const { item } = useProviderChild<TableColumnComponent<T>>(rootRef, {
+const { parent, item } = useProviderChild<TableColumnComponent<T>>(rootRef, {
     data: providedData,
 });
+
+const p = parent as any;
 
 const style = computed(() => ({
     width: toCssDimension(props.width),
     "min-width": toCssDimension(props.width),
 }));
+
+/** check if the column is the current sort column */
+const isColumnSorted = computed(
+    () => p.currentSortColumn.value?.identifier === item.value.identifier,
+);
+
+function onFilterChange(value: string, event: Event): void {
+    // emits("filters-event", props.filtersEvent, filters.value, event);
+}
 
 // #region --- Computed Component Classes ---
 
@@ -117,6 +130,13 @@ const thSubheadingClasses = defineClasses(
     ],
 );
 
+const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
+
+const thSortIconClasses = defineClasses([
+    "thSortIconClass",
+    "o-table__th__sort-icon",
+]);
+
 // #endregion --- Computed Component Classes ---
 
 // --- SLOTS TYPED OBJECTS ---
@@ -135,43 +155,70 @@ const filters = {} as Record<string, string>;
         ref="rootElement"
         data-oruga="table-column"
         :data-id="`table-${item.identifier}`">
-        {{ label }}
+        <!-- {{ label }} -->
 
         <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
         -->
-        <template v-if="false">
-            <!--
-                @slot Default Slot
-                @binding {T} row - row data
-                @binding {TableColumn} column - column definition
-                @binding {number} index - row index
-                @binding {number} colindex - column index
-                @binding {(): void} toggle-details - toggle details function
-            -->
-            <slot
-                :row="row"
-                :column="column"
-                :index="index"
-                :colindex="index"
-                :toggle-details="toggle" />
+        <!-- <template v-if="false"> -->
 
-            <!--
-                @slot Override header label
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-            -->
-            <slot name="header" :column="column" :index="index" />
+        <!--
+            @slot Default Slot
+            @binding {T} row - row data
+            @binding {TableColumn} column - column definition
+            @binding {number} index - row index
+            @binding {number} colindex - column index
+            @binding {(): void} toggle-details - toggle details function
+        -->
+        <slot
+            :row="row"
+            :column="column"
+            :index="index"
+            :colindex="index"
+            :toggle-details="toggle" />
 
-            <!--
-                @slot Override subheading label
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-            -->
-            <slot name="subheading" :column="column" :index="index" />
+        <!--
+            @slot Override header label
+            @binding {TableColumn} column - column definition
+            @binding {number} index - column index
+        -->
+        <slot name="header" :column="column" :index="index">
+            <span :class="thLabelClasses">
+                {{ column.label }}
+            </span>
+            <span
+                v-if="column.sortable"
+                v-show="isColumnSorted"
+                :class="thSortIconClasses"
+                :aria-hidden="!isColumnSorted">
+                <o-icon
+                    :icon="p.sortIcon"
+                    :pack="p.iconPack"
+                    :size="p.sortIconSize"
+                    :rotation="!p.isAsc ? 180 : 0" />
+            </span>
+        </slot>
 
+        <!--
+            @slot Override subheading label
+            @binding {TableColumn} column - column definition
+            @binding {number} index - column index
+        -->
+        <slot name="subheading" :column="column" :index="index">
+            <span :class="thLabelClasses">
+                {{ column.subheading }}
+            </span>
+        </slot>
+
+        <!--
+            @slot Override searchable input
+            @binding {TableColumn} column - column definition
+            @binding {number} index - column index
+            @binding {object} filters - active filters object
+        -->
+        <slot name="filter" :column="column" :index="index" :filters="filters">
             <!--
                 @slot Override searchable input
                 @deprecated use `filter` instead
@@ -183,18 +230,19 @@ const filters = {} as Record<string, string>;
                 name="searchable"
                 :column="column"
                 :index="index"
-                :filters="filters" />
-            <!--
-                @slot Override searchable input
-                @binding {TableColumn} column - column definition
-                @binding {number} index - column index
-                @binding {object} filters - active filters object
-            -->
-            <slot
-                name="filter"
-                :column="column"
-                :index="index"
-                :filters="filters" />
-        </template>
+                :filters="filters">
+                <o-input
+                    :name="`column_${column.field}_filter`"
+                    :type="column.numeric ? 'number' : 'search'"
+                    role="searchbox"
+                    :placeholder="p.filtersPlaceholder"
+                    :icon="p.filtersIcon"
+                    :pack="p.iconPack"
+                    size="small"
+                    :aria-label="`${column.label} filter`"
+                    @input="onFilterChange" />
+            </slot>
+        </slot>
+        <!-- </template> -->
     </span>
 </template>

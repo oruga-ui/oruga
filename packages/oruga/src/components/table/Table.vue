@@ -14,7 +14,7 @@ import {
 
 import OCheckbox from "@/components/checkbox/Checkbox.vue";
 import OIcon from "@/components/icon/Icon.vue";
-import OInput from "@/components/input/Input.vue";
+// import OInput from "@/components/input/Input.vue";
 import OLoading from "@/components/loading/Loading.vue";
 import OSlotComponent from "@/components/utils/SlotComponent";
 
@@ -349,6 +349,7 @@ const slotsRef = useTemplateRef("slotsWrapper");
 /** provide functionalities and data to child item components */
 const { childItems } = useProviderParent<TableColumnComponent<T>>({
     rootRef: slotsRef,
+    data: computed(() => ({})),
 });
 
 // #region --- TABLE COLUMNS ---
@@ -612,10 +613,6 @@ function handleFiltersChange(value: Record<string, string>): void {
         // force tableRows reactivity to update
         triggerRef(tableRows);
     }
-}
-
-function onFiltersEvent(event: Event): void {
-    emits("filters-event", props.filtersEvent, filters.value, event);
 }
 
 // compute table rows visibility on pagination values change and on initial load
@@ -1096,11 +1093,6 @@ const thDetailedClasses = defineClasses([
 
 const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
 
-const thSortIconClasses = defineClasses([
-    "thSortIconClass",
-    "o-table__th__sort-icon",
-]);
-
 const trBaseClasses = defineClasses(["trClass", "o-table__tr"]);
 
 const trSelectedClasses = defineClasses([
@@ -1373,7 +1365,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     handleColumnDragLeave(column, $event)
                                 ">
                                 <o-slot-component
-                                    v-if="column.$slots?.header"
                                     :component="column.$instance"
                                     name="header"
                                     tag="span"
@@ -1383,7 +1374,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         index: column.index,
                                     }" />
 
-                                <template v-else>
+                                <!-- <template v-else>
                                     <span :class="thLabelClasses">
                                         {{ column.label }}
                                     </span>
@@ -1398,7 +1389,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             :size="sortIconSize"
                                             :rotation="!isAsc ? 180 : 0" />
                                     </span>
-                                </template>
+                                </template> -->
                             </th>
                         </template>
 
@@ -1461,17 +1452,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         column.searchable || column.filterable
                                     ">
                                     <o-slot-component
-                                        v-if="column.$slots?.searchable"
-                                        :component="column.$instance"
-                                        name="searchable"
-                                        tag="span"
-                                        :props="{
-                                            column: column.value,
-                                            index: column.index,
-                                            filters,
-                                        }" />
-                                    <o-slot-component
-                                        v-else-if="column.$slots?.filter"
                                         :component="column.$instance"
                                         name="filter"
                                         tag="span"
@@ -1481,7 +1461,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             filters,
                                         }" />
 
-                                    <o-input
+                                    <!-- <o-input
                                         v-else-if="column.field"
                                         v-model="filters[column.field]"
                                         :name="`column_${column.field}_filter`"
@@ -1494,7 +1474,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         :pack="iconPack"
                                         size="small"
                                         :aria-label="`${column.label} filter`"
-                                        @[filtersEvent]="onFiltersEvent" />
+                                        @[filtersEvent]="onFiltersEvent" /> -->
                                 </template>
                             </th>
                         </template>
@@ -1530,8 +1510,8 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     ...column.thSubClasses,
                                 ]"
                                 :style="isMobileActive ? {} : column.style">
+                                <!-- v-if="column.$slots?.subheading" -->
                                 <o-slot-component
-                                    v-if="column.$slots?.subheading"
                                     :component="column.$instance"
                                     name="subheading"
                                     tag="span"
@@ -1539,11 +1519,11 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         column: column.value,
                                         index: column.index,
                                     }" />
-                                <slot v-else name="subheading">
+                                <!-- <slot v-else name="subheading">
                                     <span :class="thLabelClasses">
                                         {{ column.subheading }}
                                     </span>
-                                </slot>
+                                </slot> -->
                             </th>
                         </template>
 
