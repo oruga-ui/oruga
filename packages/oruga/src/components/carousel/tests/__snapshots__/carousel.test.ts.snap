@@ -11,8 +11,8 @@ exports[`OCarousel tests > render correctly 1`] = `
     <!--v-if-->
     <!--
                 @slot Override the arrows
-                @binding {boolean} has-prev has prev arrow button 
-                @binding {boolean} has-next has next arrow button 
+                @binding {boolean} has-prev has prev arrow button
+                @binding {boolean} has-next has next arrow button
                 @binding {(): void} prev switch to prev item function
                 @binding {(): void} next switch to next item function
             --><span data-oruga="icon" class="o-icon o-icon--clickable o-carousel__icon o-carousel__icon-prev" tabindex="0" role="button" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span data-oruga="icon" class="o-icon o-icon--clickable o-carousel__icon o-carousel__icon-next" tabindex="0" role="button" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
@@ -24,7 +24,7 @@ exports[`OCarousel tests > render correctly 1`] = `
   </div>
   <!--
             @slot Override the indicators
-            @binding {number} active active index 
+            @binding {number} active active index
             @binding {(idx: number): void} switch-to switch to item function
         -->
   <div class="o-carousel__indicators o-carousel__indicators--bottom" role="tablist" aria-label="Slides"></div>
@@ -43,8 +43,8 @@ exports[`OCarousel tests > render integration correctly 1`] = `
     <!--v-if-->
     <!--
                 @slot Override the arrows
-                @binding {boolean} has-prev has prev arrow button 
-                @binding {boolean} has-next has next arrow button 
+                @binding {boolean} has-prev has prev arrow button
+                @binding {boolean} has-next has next arrow button
                 @binding {(): void} prev switch to prev item function
                 @binding {(): void} next switch to next item function
             --><span data-oruga="icon" class="o-icon o-icon--clickable o-carousel__icon o-carousel__icon-prev" tabindex="0" role="button" aria-label="Previous Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-left mdi-24px"></i></span><span data-oruga="icon" class="o-icon o-icon--clickable o-carousel__icon o-carousel__icon-next" tabindex="0" role="button" aria-label="Next Slide" style="display: none;"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-chevron-right mdi-24px"></i></span>
@@ -96,38 +96,38 @@ exports[`OCarousel tests > render integration correctly 1`] = `
   </div>
   <!--
             @slot Override the indicators
-            @binding {number} active active index 
+            @binding {number} active active index
             @binding {(idx: number): void} switch-to switch to item function
         -->
   <div class="o-carousel__indicators o-carousel__indicators--inside o-carousel__indicators--bottom" role="tablist" aria-label="Slides">
     <div id="carousel-1" class="o-carousel__indicator" role="tab" tabindex="0" aria-label="Slide 1" aria-controls="carouselpanel-1" aria-selected="true">
       <!--
                             @slot Override the indicator elements
-                            @binding {index} index indicator index 
+                            @binding {index} index indicator index
                         --><span class="o-carousel__indicator__item o-carousel__indicator__item--dots o-carousel__indicator__item--active"></span>
     </div>
     <div id="carousel-2" class="o-carousel__indicator" role="tab" tabindex="-1" aria-label="Slide 2" aria-controls="carouselpanel-2" aria-selected="false">
       <!--
                             @slot Override the indicator elements
-                            @binding {index} index indicator index 
+                            @binding {index} index indicator index
                         --><span class="o-carousel__indicator__item o-carousel__indicator__item--dots"></span>
     </div>
     <div id="carousel-3" class="o-carousel__indicator" role="tab" tabindex="-1" aria-label="Slide 3" aria-controls="carouselpanel-3" aria-selected="false">
       <!--
                             @slot Override the indicator elements
-                            @binding {index} index indicator index 
+                            @binding {index} index indicator index
                         --><span class="o-carousel__indicator__item o-carousel__indicator__item--dots"></span>
     </div>
     <div id="carousel-4" class="o-carousel__indicator" role="tab" tabindex="-1" aria-label="Slide 4" aria-controls="carouselpanel-4" aria-selected="false">
       <!--
                             @slot Override the indicator elements
-                            @binding {index} index indicator index 
+                            @binding {index} index indicator index
                         --><span class="o-carousel__indicator__item o-carousel__indicator__item--dots"></span>
     </div>
     <div id="carousel-5" class="o-carousel__indicator" role="tab" tabindex="-1" aria-label="Slide 5" aria-controls="carouselpanel-5" aria-selected="false">
       <!--
                             @slot Override the indicator elements
-                            @binding {index} index indicator index 
+                            @binding {index} index indicator index
                         --><span class="o-carousel__indicator__item o-carousel__indicator__item--dots"></span>
     </div>
   </div>
