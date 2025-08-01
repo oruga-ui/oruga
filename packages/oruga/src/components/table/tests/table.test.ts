@@ -181,7 +181,8 @@ describe("OTable tests", () => {
                     width: "40",
                     numeric: true,
                     sortable: true,
-                    formatter: (a, b) => {
+                    thAttrs: { style: { "min-width": "40px" } },
+                    formatter: (a, b): string => {
                         expect(a).toBe(b);
                         return "abc";
                     },

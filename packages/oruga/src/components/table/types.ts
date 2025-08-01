@@ -16,11 +16,8 @@ export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $slots: Slots;
     style: StyleValue;
     thClasses: ClassBind[];
+    thSubClasses: ClassBind[];
     tdClasses: ClassBind[];
-};
-
-export type TableComponent = {
-    isColumnSorted(column: ProviderItem): boolean;
 };
 
 export type TableColumnItem<T = unknown> = Omit<ProviderItem, "data"> &

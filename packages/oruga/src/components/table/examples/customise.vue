@@ -79,15 +79,18 @@ const hasMobileCards = ref(true);
             :mobile-cards="hasMobileCards"
             empty-label="Table is empty"
             empty-icon="frown">
-            <o-table-column
-                v-slot="{ row }"
-                field="id"
-                label="ID"
-                width="40"
-                numeric
-                sortable>
-                {{ row.id }}
-            </o-table-column>
+            <template #before>
+                <o-table-column
+                    v-slot="{ row }"
+                    field="id"
+                    label="ID"
+                    width="40"
+                    numeric
+                    sortable
+                    :th-attrs="{ style: { color: 'red' } }">
+                    {{ row.id }}
+                </o-table-column>
+            </template>
 
             <o-table-column
                 v-slot="{ row }"
@@ -101,7 +104,9 @@ const hasMobileCards = ref(true);
                 v-slot="{ row }"
                 field="last_name"
                 label="Last Name"
-                sortable>
+                sortable
+                :th-attrs="{ style: { 'min-width': '120px' } }"
+                :td-attrs="{ class: '...' }">
                 {{ row.last_name }}
             </o-table-column>
 
@@ -109,8 +114,10 @@ const hasMobileCards = ref(true);
                 v-slot="{ row }"
                 field="date"
                 label="Date"
+                subheading="local formatted"
                 position="centered"
-                sortable>
+                sortable
+                :th-attrs="{ style: { 'font-style': 'italic' } }">
                 {{ new Date(row.date).toLocaleDateString() }}
             </o-table-column>
 
@@ -127,6 +134,8 @@ const hasMobileCards = ref(true);
                     <o-icon pack="fas" icon="mars" />
                     <o-icon pack="fas" icon="venus" />
                 </template>
+
+                <template #subheading> Male/Female </template>
             </o-table-column>
 
             <template #footer>

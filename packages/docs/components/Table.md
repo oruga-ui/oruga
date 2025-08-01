@@ -144,8 +144,8 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 | Name        | Description                                                                                 | Bindings                                                                                                                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| default     | Place o-table-column here                                                                   |                                                                                                                                                                                       |
 | before      | Place extra `o-table-column` components here, even if you have some columns defined by prop |                                                                                                                                                                                       |
+| default     | Place `o-table-column` here                                                                 |                                                                                                                                                                                       |
 | after       | Place extra `o-table-column` components here, even if you have some columns defined by prop |                                                                                                                                                                                       |
 | pagination  | Override pagination label                                                                   | **current** `number` - current page<br/>**per-page** `number` - rows per page<br/>**total** `number` - total rows count<br/>**change** `(page: number): void ` - on page change event |
 | top-left    | Additional slot if table is paginated                                                       |                                                                                                                                                                                       |
@@ -200,6 +200,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | header     | Override header label     | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | subheading | Override subheading label | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                              |
 | searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
+| filter     | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                             |
 
 </section>
 

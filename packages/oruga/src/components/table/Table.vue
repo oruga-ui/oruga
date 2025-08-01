@@ -49,7 +49,6 @@ import type {
     TableRow,
     TableColumnItem,
     TableColumnComponent,
-    TableComponent,
 } from "./types";
 import type { TableProps } from "./props";
 
@@ -347,15 +346,9 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
 const slotsRef = useTemplateRef("slotsWrapper");
 
-// provided data is a computed ref to ensure reactivity
-const provideData = computed<TableComponent>(() => ({
-    isColumnSorted,
-}));
-
 /** provide functionalities and data to child item components */
 const { childItems } = useProviderParent<TableColumnComponent<T>>({
     rootRef: slotsRef,
-    data: provideData,
 });
 
 // #region --- TABLE COLUMNS ---
@@ -468,10 +461,10 @@ const rowCount = computed(() => {
     return tableTotal.value + ariaRowIndexStart.value;
 });
 
-/** aria-rowindex start value for tds based if it's Searchable or has subheadings */
+/** aria-rowindex start value for tds based if any column is filterable or has subheading */
 const ariaRowIndexStart = computed(() => {
     let i = 1;
-    if (hasSearchableColumns.value) i++;
+    if (hasFilterColumns.value) i++;
     if (hasSubheadings.value) i++;
     return i;
 });
@@ -588,12 +581,12 @@ function selectRow(row: TableRow<T>, event: Event): void {
 
 // #region --- Filter Feature ---
 
-/** search filter record alias { fieldKey: filterValue } */
+/** filter record alias { fieldKey: filterValue } */
 const filters = ref<Record<string, string>>({});
 
-/** check if has any searchable column */
-const hasSearchableColumns = computed(() =>
-    tableColumns.value.some((column) => column.searchable),
+/** check if any column has filterable active */
+const hasFilterColumns = computed(() =>
+    tableColumns.value.some((column) => column.searchable || column.filterable),
 );
 
 let debouncedFilter: ReturnType<
@@ -682,6 +675,10 @@ function isRowFiltered(row: T): boolean {
         // if column has custom search funtion return result
         if (typeof column.customSearch === "function")
             return column.customSearch(row, filter);
+
+        // if column has custom filter funtion return result
+        if (typeof column.customFilter === "function")
+            return column.customFilter(row, filter);
 
         // get the visible column value for the row
         const value = getColumnValue(row, column);
@@ -1086,14 +1083,15 @@ const thCheckboxClasses = defineClasses(
     ],
 );
 
+const thSortedClasses = defineClasses(
+    /** @deprecated use `thSortedClass` instead */
+    ["thCurrentSortClass", "o-table__th-current-sort"],
+    ["thSortedClass", "o-table__th-sorted"],
+);
+
 const thDetailedClasses = defineClasses([
     "thDetailedClass",
     "o-table__th-detailed",
-]);
-
-const thSubheadingClasses = defineClasses([
-    "thSubheadingClass",
-    "o-table__th-subheading",
 ]);
 
 const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
@@ -1102,6 +1100,8 @@ const thSortIconClasses = defineClasses([
     "thSortIconClass",
     "o-table__th__sort-icon",
 ]);
+
+const trBaseClasses = defineClasses(["trClass", "o-table__tr"]);
 
 const trSelectedClasses = defineClasses([
     "trSelectedClass",
@@ -1132,10 +1132,11 @@ const tdCheckboxClasses = defineClasses(
     ],
 );
 
-const tdDetailedChevronClasses = defineClasses([
-    "tdDetailedChevronClass",
-    "o-table__td-chevron",
-]);
+const tdDetailedClasses = defineClasses(
+    /** @deprecated use `tdDetailedClass` instead */
+    ["tdDetailedChevronClass", "o-table__td-chevron"],
+    ["tdDetailedClass", "o-table__td-detail"],
+);
 
 const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
@@ -1153,6 +1154,10 @@ const paginationWrapperRootClasses = computed(() =>
     getActiveClasses(paginationWrapperClasses),
 );
 
+function columnClasses(column: TableColumnItem<T>): ClassBind[] {
+    return isColumnSorted(column) ? thSortedClasses.value : [];
+}
+
 function rowClasses(row: TableRow<T>): ClassBind[] {
     const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
         ? trSelectedClasses.value
@@ -1165,7 +1170,12 @@ function rowClasses(row: TableRow<T>): ClassBind[] {
             ? props.rowClass(row.value, row.index) || ""
             : "";
 
-    return [...selectedClasses, ...checkedClasses, { [rowClass]: true }];
+    return [
+        ...trBaseClasses.value,
+        ...selectedClasses,
+        ...checkedClasses,
+        { [rowClass]: true },
+    ];
 }
 
 // #endregion --- Computed Component Classes ---
@@ -1182,14 +1192,14 @@ defineExpose({ rows: tableRows, sort: sortByField });
     <div data-oruga="table" :class="rootClasses">
         <div ref="slotsWrapper" style="display: none">
             <!--
-                @slot Place o-table-column here
+                @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
+            -->
+            <slot name="before" />
+
+            <!--
+                @slot Place `o-table-column` here
             -->
             <slot>
-                <!--
-                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
-                -->
-                <slot name="before" />
-
                 <template v-if="columns?.length">
                     <o-table-column
                         v-for="(column, idx) in columns"
@@ -1199,12 +1209,12 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         {{ getColumnValue(row, column) }}
                     </o-table-column>
                 </template>
-
-                <!--
-                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
-                -->
-                <slot name="after" />
             </slot>
+
+            <!--
+                @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
+            -->
+            <slot name="after" />
         </div>
 
         <o-table-mobile-sort
@@ -1328,14 +1338,18 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             </slot>
                         </th>
 
-                        <!-- row data columns -->
+                        <!-- row header columns -->
                         <template
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
                                 v-if="!column.hidden"
                                 v-bind="column.thAttrsData"
-                                :class="[...thBaseClasses, ...column.thClasses]"
+                                :class="[
+                                    ...thBaseClasses,
+                                    ...column.thClasses,
+                                    ...columnClasses(column),
+                                ]"
                                 :style="isMobileActive ? {} : column.style"
                                 :draggable="canDragColumn"
                                 :aria-sort="
@@ -1421,7 +1435,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         </th>
                     </tr>
 
-                    <tr v-if="hasSearchableColumns" :aria-rowindex="2">
+                    <tr v-if="hasFilterColumns" :aria-rowindex="2">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
@@ -1429,9 +1443,11 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             aria-hidden="true" />
 
                         <!-- checkable column left -->
-                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'left'"
+                            :class="thBaseClasses" />
 
-                        <!-- row data columns -->
+                        <!-- row filter columns -->
                         <template
                             v-for="column in tableColumns"
                             :key="column.identifier">
@@ -1440,18 +1456,31 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 v-bind="column.thAttrsData"
                                 :class="[...thBaseClasses, ...column.thClasses]"
                                 :style="isMobileActive ? {} : column.style">
-                                <template v-if="column.searchable">
-                                    <template v-if="column.$slots?.searchable">
-                                        <o-slot-component
-                                            :component="column.$instance"
-                                            name="searchable"
-                                            tag="span"
-                                            :props="{
-                                                column: column.value,
-                                                index: column.index,
-                                                filters,
-                                            }" />
-                                    </template>
+                                <template
+                                    v-if="
+                                        column.searchable || column.filterable
+                                    ">
+                                    <o-slot-component
+                                        v-if="column.$slots?.searchable"
+                                        :component="column.$instance"
+                                        name="searchable"
+                                        tag="span"
+                                        :props="{
+                                            column: column.value,
+                                            index: column.index,
+                                            filters,
+                                        }" />
+                                    <o-slot-component
+                                        v-else-if="column.$slots?.filter"
+                                        :component="column.$instance"
+                                        name="filter"
+                                        tag="span"
+                                        :props="{
+                                            column: column.value,
+                                            index: column.index,
+                                            filters,
+                                        }" />
+
                                     <o-input
                                         v-else-if="column.field"
                                         v-model="filters[column.field]"
@@ -1459,30 +1488,35 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         :type="
                                             column.numeric ? 'number' : 'search'
                                         "
+                                        role="searchbox"
                                         :placeholder="filtersPlaceholder"
                                         :icon="filtersIcon"
                                         :pack="iconPack"
                                         size="small"
-                                        :aria-label="`${column.label} search`"
+                                        :aria-label="`${column.label} filter`"
                                         @[filtersEvent]="onFiltersEvent" />
                                 </template>
                             </th>
                         </template>
 
                         <!-- checkable column right -->
-                        <th v-if="checkable && checkboxPosition === 'right'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'right'"
+                            :class="thBaseClasses" />
                     </tr>
 
                     <tr
                         v-if="hasSubheadings"
-                        :aria-rowindex="hasSearchableColumns ? 3 : 2">
+                        :aria-rowindex="hasFilterColumns ? 3 : 2">
                         <!-- detailed toggle column -->
                         <th
                             v-if="showDetailRowIcon"
                             :class="[...thBaseClasses, ...thDetailedClasses]" />
 
                         <!-- checkable column left -->
-                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'left'"
+                            :class="thBaseClasses" />
 
                         <!-- row data columns -->
                         <template
@@ -1490,11 +1524,12 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :key="column.identifier">
                             <th
                                 v-if="!column.hidden"
-                                :style="isMobileActive ? {} : column.style"
+                                v-bind="column.thAttrsData"
                                 :class="[
                                     ...thBaseClasses,
-                                    ...thSubheadingClasses,
-                                ]">
+                                    ...column.thSubClasses,
+                                ]"
+                                :style="isMobileActive ? {} : column.style">
                                 <o-slot-component
                                     v-if="column.$slots?.subheading"
                                     :component="column.$instance"
@@ -1504,16 +1539,18 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         column: column.value,
                                         index: column.index,
                                     }" />
-                                <span v-else>
-                                    <slot name="subheading">
+                                <slot v-else name="subheading">
+                                    <span :class="thLabelClasses">
                                         {{ column.subheading }}
-                                    </slot>
-                                </span>
+                                    </span>
+                                </slot>
                             </th>
                         </template>
 
                         <!-- checkable column right -->
-                        <th v-if="checkable && checkboxPosition === 'right'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'right'"
+                            :class="thBaseClasses" />
                     </tr>
                 </thead>
 
@@ -1565,7 +1602,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 v-if="showDetailRowIcon"
                                 :class="[
                                     ...tdBaseClasses,
-                                    ...tdDetailedChevronClasses,
+                                    ...tdDetailedClasses,
                                 ]">
                                 <o-icon
                                     v-if="isDetailedVisible(row.value)"

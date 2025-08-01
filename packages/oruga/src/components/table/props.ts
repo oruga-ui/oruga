@@ -226,9 +226,17 @@ export type TableClasses = Partial<{
     thDetailedClass: ComponentClass;
     /** Class of the table `th` element when sortable */
     thSortableClass: ComponentClass;
-    /** Class of the table `th` element that is currently sorted */
+    /**
+     * Class of the table `th` element that is currently sorted
+     *  @deprecated use `thSortedClass` instead
+     */
     thCurrentSortClass: ComponentClass;
-    /** Class of the table `th` element that is unsortable */
+    /** Class of the table `th` element when sorted */
+    thSortedClass: ComponentClass;
+    /**
+     * Class of the table `th` element that is unsortable
+     * @deprecated will be removed
+     */
     thUnselectableClass: ComponentClass;
     /** Class of the table `th` subheading element */
     thSubheadingClass: ComponentClass;
@@ -236,6 +244,8 @@ export type TableClasses = Partial<{
     thLabelClass: ComponentClass;
     /** Class of the table header sort icon element */
     thSortIconClass: ComponentClass;
+    /** Class of the table `tr` element */
+    trClass: ComponentClass;
     /** Class of the table `tr` element when selected */
     trSelectedClass: ComponentClass;
     /** Class of the table `tr` element when checkable and checked */
@@ -252,8 +262,13 @@ export type TableClasses = Partial<{
     tdStickyClass: ComponentClass;
     /** Class of the table `td` element when row is checkable */
     tdCheckboxClass: ComponentClass;
-    /** Class of the table `td` element that contains the chevron to trigger details */
+    /**
+     * Class of the table `td` element that contains the chevron to trigger details
+     * @deprecated use `tdDetailedClass` instead
+     */
     tdDetailedChevronClass: ComponentClass;
+    /** Class of the table `td` element that contains the detail trigger */
+    tdDetailedClass: ComponentClass;
     /** Class of the Table pagination wrapper element */
     paginationWrapperClass: ComponentClass;
     /** Class of the table footer element */
@@ -286,20 +301,33 @@ export type TableColumnProps<
      * @values left, centered, right
      */
     position?: "left" | "centered" | "right";
-    /** Enable an additional searchbar below the column header */
+    /**
+     * Enable an additional searchbar below the column header
+     * @deprecated use `filterable` instead
+     */
     searchable?: boolean;
+    /** Enable an additional filterbar below the column header */
+    filterable?: boolean;
     /** Enable column sortability */
     sortable?: boolean;
     /** Define whether the column is visible or not */
     hidden?: boolean;
     /** Whether the column is sticky or not */
     sticky?: boolean;
-    /** Make header selectable */
+    /**
+     * Make header selectable
+     * @deprecated will be removed
+     */
     headerSelectable?: boolean;
     /** Define a custom sort function */
     customSort?: (a: T, b: T, isAsc: boolean) => number;
-    /** Define a custom filter funtion for the search */
+    /**
+     * Define a custom filter funtion for the search
+     * @deprecated use `customFilter` instead
+     */
     customSearch?: (row: T, filter: string) => boolean;
+    /** Define a custom filter funtion when filterable */
+    customFilter?: (row: T, filter: string) => boolean;
     /** Adds native attributes to th */
     thAttrs?: object;
     /** Adds native attributes to td */
