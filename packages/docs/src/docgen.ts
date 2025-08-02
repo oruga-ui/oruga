@@ -42,6 +42,7 @@ const IGNORE_COMPONENTS = [
     "*/TabItem.vue",
     "*/StepItem.vue",
     "*/MenuItem.vue",
+    "*/ListItem.vue",
     "*/DatepickerTable.vue",
     "*/DatepickerTableRow.vue",
     "*/DatepickerMonth.vue",

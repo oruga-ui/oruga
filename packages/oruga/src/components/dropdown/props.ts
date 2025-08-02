@@ -6,7 +6,7 @@ type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** The selected option value */
+    /** The selected option value, use v-model to make it two-way binding */
     modelValue?: ValueType<T, IsMultiple>;
     /** Allows multiple selections - converts the `modelValue` into an array */
     multiple?: IsMultiple;
@@ -16,18 +16,20 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     active?: boolean;
     /** Trigger label, unnecessary when trigger slot is used */
     label?: string;
-    /** Dropdown is disabled */
+    /** Interaction is disabled */
     disabled?: boolean;
-    /** Dropdown content (items) are shown inline, trigger is removed */
+    /** Menu content (items) are shown inline, trigger is removed */
     inline?: boolean;
     /** Enables item selection */
     selectable?: boolean;
-    /** Dropdown content will be scrollable */
+    /** Menu content will be scrollable */
     scrollable?: boolean;
     /** Makes the component check if menu reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /** Max height of dropdown content */
     maxHeight?: string | number;
+    /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
+    // scrollHeight?: string;
     /**
      * Position of the dropdown relative to the trigger
      * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
