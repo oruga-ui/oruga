@@ -272,7 +272,7 @@ function selectItemRange(start: number, end: number): void {
         // get the items by the rande
         .slice(rangeStart, rangeEnd + 1)
         // remove not viable items
-        .filter(isItemViable);
+        .filter((item) => item.data?.isViable());
 
     // select all items in the range
     updateSelectedItems(items);
@@ -290,7 +290,7 @@ function findFirstSelectedItem(index: number = 0): ListItem<T> | undefined {
         // reorders array by alternating between the next and previous elements
         const items = alternateArray(childItems.value, index)
             // filter only viable items
-            .filter(isItemViable);
+            .filter((item) => item.data?.isViable());
 
         // find first option which is in the selection list
         return items.find(isItemSelected);
@@ -448,9 +448,10 @@ const filterValue = ref<string>("");
 if (!props.backendFiltering) {
     // Updated the hidden state for every item based on filter value.
     watchEffect(() => {
-        if (!filterValue.value) return;
         childItems.value.forEach((item) => {
-            item.data?.setHidden(!filterItem(item, filterValue));
+            item.data?.setHidden(
+                !!filterValue.value && !filterItem(item, filterValue),
+            );
         });
     });
 
@@ -463,9 +464,7 @@ if (!props.backendFiltering) {
         if (typeof props.filter === "function")
             return props.filter(item.data.value!, toValue(value));
 
-        return String(item.data.label)
-            .toLowerCase()
-            .includes(toValue(value)?.toLowerCase());
+        return item.data?.matches(toValue(value));
     }
 }
 
@@ -485,7 +484,7 @@ watch(typeAheadValue, (value) => {
     if (!isEmpty(value)) {
         // find first item that starts with the search value
         const matchedItem = viableItems.value.find((item) =>
-            item.data?.label?.toLowerCase().startsWith(value.toLowerCase()),
+            item.data?.matches(value),
         );
 
         if (matchedItem)
@@ -696,17 +695,17 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                         <template v-for="(group, groupIndex) in groupedOptions">
                             <o-listbox-item
                                 v-if="group.label"
-                                v-show="!group.hidden"
                                 v-bind="group.attrs"
                                 :key="group.key"
                                 :value="group.value"
+                                :label="group.label"
                                 :hidden="group.hidden"
                                 disabled
                                 role="presentation">
                                 <!--
                                     @slot Override the option group
                                     @binding {object} group - options group item
-                                    @binding {number} index - option index
+                                    @binding {number} index - group option index
                                 -->
                                 <slot
                                     name="optiongroup"
@@ -717,12 +716,12 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                             </o-listbox-item>
 
                             <o-listbox-item
-                                v-for="option in group.options"
-                                v-show="!option.hidden"
+                                v-for="(option, optionIndex) in group.options"
+                                v-slot="{ selected, disabled }"
                                 v-bind="option.attrs"
                                 :key="option.key"
-                                v-slot="{ selected, disabled }"
                                 :value="option.value"
+                                :label="option.label"
                                 :hidden="option.hidden"
                                 :aria-setsize="getOptionsLength(groupedOptions)"
                                 :aria-posinset="
@@ -731,12 +730,14 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                                 <!--
                                     @slot Override the label, default is label prop
                                     @binding {object} option - option item
+                                    @binding {number} index - option index
                                     @binding {boolean} selected - option is selected
                                     @binding {boolean} disabled - option is disabled
                                 -->
                                 <slot
                                     name="option"
                                     :option="option"
+                                    :index="optionIndex"
                                     :selected="selected"
                                     :disabled="disabled">
                                     <span> {{ option.label }} </span>

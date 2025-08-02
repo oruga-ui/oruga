@@ -16,6 +16,7 @@ export type ListItemComponent<T> = ListItemProps<T> & {
     clickItem: (event: Event) => void;
     setHidden: (hidden: boolean) => void;
     isViable: () => boolean;
+    matches: (value: string) => boolean;
 };
 
 export type ListItem<T> = ProviderItem<ListItemComponent<T>>;

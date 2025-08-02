@@ -53,6 +53,7 @@ const providedData = computed<ListItemComponent<T>>(() => ({
     clickItem,
     setHidden,
     isViable,
+    matches,
 }));
 
 /** inject functionalities and data from the parent component */
@@ -100,6 +101,11 @@ function isViable(): boolean {
     return !isHidden.value && !props.disabled;
 }
 
+/** Check if a value matches the label (startsWith). */
+function matches(value: string): boolean {
+    return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
+}
+
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -115,6 +121,7 @@ const rootClasses = defineClasses(
 <template>
     <component
         :is="tag"
+        v-show="!isHidden"
         :id="`${parent.id}-${item.identifier}`"
         ref="rootElement"
         :data-oruga="`${key}-item`"
@@ -128,8 +135,8 @@ const rootClasses = defineClasses(
         :aria-checked="
             parent.selectable && parent.multiple ? isSelected : undefined
         "
-        :aria-hidden="hidden"
-        :aria-disabled="disabled"
+        :aria-hidden="isHidden"
+        :aria-disabled="isDisabled"
         :aria-label="ariaLabel ?? label"
         :aria-labelledby="ariaLabelledby"
         @click.prevent="clickItem"
