@@ -7,7 +7,6 @@ import {
     useTemplateRef,
     watch,
     watchEffect,
-    type MaybeRefOrGetter,
 } from "vue";
 
 import OListboxItem from "./ListItem.vue";
@@ -446,26 +445,24 @@ const filterValue = ref<string>("");
 
 // if not backend filtered
 if (!props.backendFiltering) {
-    // Updated the hidden state for every item based on filter value.
+    // update the hidden state for every item based on filter value
     watchEffect(() => {
         childItems.value.forEach((item) => {
-            item.data?.setHidden(
-                !!filterValue.value && !filterItem(item, filterValue),
-            );
+            if (!item.data) return;
+            // no filter means not hidden
+            if (!filterValue.value) item.data.setHidden(false);
+
+            const hidden =
+                typeof props.filter === "function"
+                    ? // call filter function if available
+                      props.filter(item.data.value!, toValue(filterValue))
+                    : // else check filter value matches item value
+                      item.data.matches(toValue(filterValue));
+
+            // update hidden state
+            item.data.setHidden(hidden);
         });
     });
-
-    function filterItem(
-        item: ListItem<T>,
-        value: MaybeRefOrGetter<string>,
-    ): boolean {
-        if (!item.data) return false;
-
-        if (typeof props.filter === "function")
-            return props.filter(item.data.value!, toValue(value));
-
-        return item.data?.matches(toValue(value));
-    }
 }
 
 // #endregion --- Filter Handler ---
