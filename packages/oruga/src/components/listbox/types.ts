@@ -9,11 +9,13 @@ export type ListboxComponent<T> = {
     selected: T | T[] | undefined;
     focsuedIdentifier: string | undefined;
     selectItem: (value: ListItem<T>, selection: boolean) => void;
-    focusItem: (value: ListItem<T>) => void;
+    setFocus: (value: ListItem<T>) => void;
 };
 
 export type ListItemComponent<T> = ListItemProps<T> & {
     clickItem: (event: Event) => void;
+    setHidden: (hidden: boolean) => void;
+    isViable: () => boolean;
 };
 
 export type ListItem<T> = ProviderItem<ListItemComponent<T>>;

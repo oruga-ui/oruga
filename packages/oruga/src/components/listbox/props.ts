@@ -3,6 +3,7 @@ import type {
     DynamicComponent,
     OptionsPropWithGroups,
 } from "@/types";
+import type { InputProps } from "../input/props";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
 
@@ -32,12 +33,14 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     filterable?: boolean;
     /** Items won't be filtered on clientside, use the `filter` event to filter in your backend */
     backendFiltering?: boolean;
-    /** Function to filter the option based on the input value - default is label string comparison */
+    /** Custom filter function to filter the items based on the input value - default is label string comparison */
     filter?: (option: T, value: string) => boolean;
     /** Icon of the column search input */
     filtersIcon?: string;
     /** Placeholder of the column search input */
     filtersPlaceholder?: string;
+    /** Number of milliseconds to delay the filter event */
+    filterDebounce?: number;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -71,6 +74,11 @@ export type ListboxClasses = Partial<{
     listClass: ComponentClass;
     /** Class of the list item element when empty */
     itemEmptyClass: ComponentClass;
+    /**
+     * Class configuration for the internal input component
+     * @ignore
+     */
+    inputClasses: InputProps<false>;
 }>;
 
 export type ListItemProps<T> = {
