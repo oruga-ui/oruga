@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { useId, computed, useTemplateRef } from "vue";
+import { useId, computed, useTemplateRef, ref } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { isDefined, isEqual } from "@/utils/helpers";
@@ -49,7 +49,11 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 const providedData = computed<ListItemComponent<T>>(() => ({
     ...props,
     value: itemValue,
+    hidden: isHidden,
     clickItem,
+    setHidden,
+    isViable,
+    matches,
 }));
 
 /** inject functionalities and data from the parent component */
@@ -57,6 +61,13 @@ const { parent, item } = useProviderChild<
     ListboxComponent<T>,
     ListItemComponent<T>
 >(rootRef, { key, data: providedData });
+
+const localHidden = ref(false);
+const isHidden = computed(() => props.hidden || localHidden.value);
+
+function setHidden(hidden: boolean): void {
+    localHidden.value = hidden;
+}
 
 const isDisabled = computed(() => parent.value.disabled && props.disabled);
 
@@ -82,7 +93,17 @@ function clickItem(event: Event): void {
 
 /** Set the item as focused element. */
 function focusItem(): void {
-    parent.value.focusItem(item.value);
+    parent.value.setFocus(item.value);
+}
+
+/** Checks if the item is viable (not disabled or hidden). */
+function isViable(): boolean {
+    return !isHidden.value && !props.disabled;
+}
+
+/** Check if a value matches the label (startsWith). */
+function matches(value: string): boolean {
+    return !!props.label?.toLowerCase().startsWith(value.toLowerCase());
 }
 
 // #region --- Computed Component Classes ---
@@ -100,6 +121,7 @@ const rootClasses = defineClasses(
 <template>
     <component
         :is="tag"
+        v-show="!isHidden"
         :id="`${parent.id}-${item.identifier}`"
         ref="rootElement"
         :data-oruga="`${key}-item`"
@@ -113,8 +135,8 @@ const rootClasses = defineClasses(
         :aria-checked="
             parent.selectable && parent.multiple ? isSelected : undefined
         "
-        :aria-hidden="hidden"
-        :aria-disabled="disabled"
+        :aria-hidden="isHidden"
+        :aria-disabled="isDisabled"
         :aria-label="ariaLabel ?? label"
         :aria-labelledby="ariaLabelledby"
         @click.prevent="clickItem"

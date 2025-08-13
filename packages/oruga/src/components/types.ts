@@ -696,6 +696,14 @@ See icon library documentation for custom classes. */
             Partial<{
                 /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
                 scrollHeight: number | string;
+                /** Icon of the column search input */
+                filtersIcon: string;
+                /** Placeholder of the column search input */
+                filtersPlaceholder: string;
+                /** Number of milliseconds to delay the filter event */
+                filterDebounce: number;
+                /** Icon pack to use */
+                iconPack: string;
                 /** Custom animation (transition name) */
                 animation: string;
                 /** List tag name */
@@ -716,6 +724,8 @@ See icon library documentation for custom classes. */
                 listClass: ClassDefinition;
                 /** Class of the list item element when empty */
                 itemEmptyClass: ClassDefinition;
+                /** Class configuration for the internal input component */
+                inputClasses: Record<string, any>;
                 /** Class of the item element. */
                 itemClass: ClassDefinition;
                 /** Class of the item element when selected */

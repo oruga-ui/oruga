@@ -3,35 +3,15 @@ import {
     computed,
     ref,
     toValue,
-    triggerRef,
     useId,
     useTemplateRef,
     watch,
     watchEffect,
-    type MaybeRefOrGetter,
 } from "vue";
 
 import OListboxItem from "./ListItem.vue";
 import OInput from "@/components/input/Input.vue";
 
-import { getDefault } from "@/utils/config";
-import {
-    defineClasses,
-    filterOptionsItems,
-    findOptionIndex,
-    getOptionsLength,
-    normalizeOptions,
-    scrollElementInView,
-    toOptionsGroup,
-    useProviderParent,
-    useScrollEvents,
-    useSequentialId,
-    type OptionsGroupItem,
-    type OptionsItem,
-} from "@/composables";
-
-import type { ListboxProps } from "./props";
-import type { ListItem, ListboxComponent, ListItemComponent } from "./types";
 import {
     alternateArray,
     isDefined,
@@ -43,7 +23,24 @@ import {
     toCssDimension,
 } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import { injectField } from "../field/fieldInjection";
+import { getDefault } from "@/utils/config";
+import {
+    defineClasses,
+    findOptionIndex,
+    getOptionsLength,
+    normalizeOptions,
+    scrollElementInView,
+    toOptionsGroup,
+    useProviderParent,
+    useScrollEvents,
+    useSequentialId,
+    type OptionsGroupItem,
+} from "@/composables";
+
+import { injectField } from "@/components/field/fieldInjection";
+
+import type { ListboxProps } from "./props";
+import type { ListItem, ListboxComponent, ListItemComponent } from "./types";
 
 /**
  * Listbox is used to select one or more values from a list of items.
@@ -71,6 +68,7 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     backendFiltering: false,
     filter: undefined,
     filtersIcon: () => getDefault("listbox.filtersIcon"),
+    filterDebounce: () => getDefault("listbox.filterDebounce", 400),
     filtersPlaceholder: () => getDefault("listbox.filtersPlaceholder"),
     iconPack: () => getDefault("listbox.iconPack"),
     animation: () => getDefault("listbox.animation", "fade"),
@@ -78,6 +76,7 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     ariaLabelledby: undefined,
     listTag: () => getDefault("listbox.listTag", "ul"),
     itemTag: () => getDefault("listbox.itemTag", "li"),
+    inputClasses: () => getDefault("listbox.inputClasses"),
 });
 
 const emits = defineEmits<{
@@ -93,9 +92,10 @@ const emits = defineEmits<{
     select: [value: T];
     /**
      * on filter change event
+     * @param value {string} filter value
      * @param event {Event} native event
      */
-    filter: [event: Event];
+    filter: [value: string, event: Event];
     /**
      * on list focus event
      * @param event {Event} native event
@@ -147,7 +147,7 @@ const provideData = computed<ListboxComponent<T>>(() => ({
     selected: vmodel.value,
     focsuedIdentifier: focusedItem.value?.identifier,
     selectItem,
-    focusItem,
+    setFocus,
 }));
 
 /** provide functionalities and data to child item components */
@@ -167,13 +167,8 @@ const hasItems = computed(() => !!childItems.value.length);
  */
 const viableItems = computed(() => {
     if (!props.selectable || props.disabled) return [];
-    return childItems.value.filter(isItemViable);
+    return childItems.value.filter((item) => item.data?.isViable());
 });
-
-/** Checks if the item is viable (not disabled or hidden). */
-function isItemViable(item: ListItem<T>): boolean {
-    return !item.data?.disabled && !item.data?.hidden;
-}
 
 /**
  * Get the first 'viable' child, starting at startingIndex and in the direction specified
@@ -195,7 +190,7 @@ function getFirstViableItem(startingIndex: number, delta: 1 | -1): ListItem<T> {
         newIndex = mod(newIndex + delta, childItems.value.length)
     ) {
         // Break if the item at this index is viable (not disabled or hidden)
-        if (isItemViable(childItems.value[newIndex])) break;
+        if (childItems.value[newIndex].data?.isViable()) break;
     }
 
     return childItems.value[newIndex];
@@ -276,7 +271,7 @@ function selectItemRange(start: number, end: number): void {
         // get the items by the rande
         .slice(rangeStart, rangeEnd + 1)
         // remove not viable items
-        .filter(isItemViable);
+        .filter((item) => item.data?.isViable());
 
     // select all items in the range
     updateSelectedItems(items);
@@ -294,7 +289,7 @@ function findFirstSelectedItem(index: number = 0): ListItem<T> | undefined {
         // reorders array by alternating between the next and previous elements
         const items = alternateArray(childItems.value, index)
             // filter only viable items
-            .filter(isItemViable);
+            .filter((item) => item.data?.isViable());
 
         // find first option which is in the selection list
         return items.find(isItemSelected);
@@ -313,16 +308,6 @@ const isFocused = ref(false);
 const focusedItem = ref<ListItem<T>>();
 const startRangeIndex = ref(-1);
 
-/** Set the given item as focused element. */
-function focusItem(item: ListItem<T>): void {
-    isFocused.value = true;
-    focusedItem.value = item;
-
-    // set the list as focused element
-    const listElement = containerRef.value?.children[0] as HTMLElement;
-    listElement.focus();
-}
-
 /** Sets the beginn index for an multiselection. */
 function startFocusRange(): void {
     if (isTrueish(props.multiple))
@@ -331,6 +316,7 @@ function startFocusRange(): void {
 
 /** Set focus on an item. */
 function setFocus(item: ListItem<T>): void {
+    isFocused.value = true;
     if (props.selectOnFocus && item.data?.value) selectItem(item, true);
 
     // set item as focused
@@ -338,6 +324,10 @@ function setFocus(item: ListItem<T>): void {
 
     // scroll item into view
     scrollElementInView(containerRef, item.el);
+
+    // ensure that the list is the real focused element
+    const listElement = containerRef.value?.children[0] as HTMLElement;
+    listElement.focus();
 }
 
 /** Select the current focused item. */
@@ -445,8 +435,8 @@ function onFocusout(event: FocusEvent): void {
 
 // #region --- Filter Feature ---
 
-function onFilterChange(_: string, event: Event): void {
-    emits("filter", event);
+function onFilterChange(value: string, event: Event): void {
+    emits("filter", value, event);
     focusedItem.value = undefined;
     startRangeIndex.value = -1;
 }
@@ -454,31 +444,25 @@ function onFilterChange(_: string, event: Event): void {
 const filterValue = ref<string>("");
 
 // if not backend filtered
-if (!props.backendFiltering)
-    // TODO: Refactor to use childItems
-    /**
-     * Applies an reactive filter for the options based on the input value.
-     * Options are filtered by setting the hidden attribute.
-     */
+if (!props.backendFiltering) {
+    // update the hidden state for every item based on filter value
     watchEffect(() => {
-        // filter options by input value
-        filterOptionsItems<T>(groupedOptions, (o) =>
-            filterItems(o, filterValue),
-        );
-        // trigger reactive update of groupedOptions
-        triggerRef(groupedOptions);
-    });
+        childItems.value.forEach((item) => {
+            if (!item.data) return;
+            // no filter means not hidden
+            if (!filterValue.value) item.data.setHidden(false);
 
-function filterItems(
-    option: OptionsItem<T>,
-    value: MaybeRefOrGetter<string>,
-): boolean {
-    if (typeof props.filter === "function")
-        return props.filter(option.value, toValue(value));
-    else
-        return !String(option.label)
-            .toLowerCase()
-            .includes(toValue(value)?.toLowerCase());
+            const hidden =
+                typeof props.filter === "function"
+                    ? // call filter function if available
+                      props.filter(item.data.value!, toValue(filterValue))
+                    : // else check filter value matches item value
+                      item.data.matches(toValue(filterValue));
+
+            // update hidden state
+            item.data.setHidden(hidden);
+        });
+    });
 }
 
 // #endregion --- Filter Handler ---
@@ -497,7 +481,7 @@ watch(typeAheadValue, (value) => {
     if (!isEmpty(value)) {
         // find first item that starts with the search value
         const matchedItem = viableItems.value.find((item) =>
-            item.data?.label?.toLowerCase().startsWith(value.toLowerCase()),
+            item.data?.matches(value),
         );
 
         if (matchedItem)
@@ -643,32 +627,36 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         @mouseleave="isFocused && onFocusout($event)">
         <div v-if="$slots.header" :class="headerClasses">
             <!--
-                @slot Define an additi      onal header
+                @slot Define an additional header
             -->
             <slot name="header" />
         </div>
 
         <div v-if="filterable" :class="filterClasses">
-            <slot name="searchable" :value="filterValue">
+            <slot name="filterable" :value="filterValue">
                 <o-input
                     v-model="filterValue"
-                    name="search"
+                    v-bind="inputClasses"
+                    name="filter"
                     type="search"
                     role="searchbox"
-                    autocomplete="off"
+                    :tabindex="!disabled && !isFocused ? 0 : -1"
+                    :debounce="filterDebounce"
                     :placeholder="filtersPlaceholder"
-                    :disabled="disabled"
                     :icon="filtersIcon"
                     :pack="iconPack"
+                    :disabled="disabled"
+                    expanded
                     size="small"
-                    aria-label="listbox search input"
+                    aria-label="listbox filter input"
                     :aria-owns="$id + '_list'"
                     :aria-activedescendant="
                         focusedItem
                             ? `${$id}-${focusedItem.identifier}`
                             : undefined
                     "
-                    :tabindex="!disabled && !isFocused ? 0 : -1"
+                    autocomplete="off"
+                    :use-html5-validation="false"
                     @input="onFilterChange"
                     @blur="onBlur"
                     @keydown="onFilterKeyDown" />
@@ -679,7 +667,6 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
             ref="containerElement"
             :class="containerClasses"
             :style="containerStyle">
-            {{ isFocused }}
             <component
                 :is="listTag"
                 :id="$id + '_list'"
@@ -705,17 +692,17 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                         <template v-for="(group, groupIndex) in groupedOptions">
                             <o-listbox-item
                                 v-if="group.label"
-                                v-show="!group.hidden"
                                 v-bind="group.attrs"
                                 :key="group.key"
                                 :value="group.value"
+                                :label="group.label"
                                 :hidden="group.hidden"
                                 disabled
                                 role="presentation">
                                 <!--
                                     @slot Override the option group
                                     @binding {object} group - options group item
-                                    @binding {number} index - option index
+                                    @binding {number} index - group option index
                                 -->
                                 <slot
                                     name="optiongroup"
@@ -726,12 +713,12 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                             </o-listbox-item>
 
                             <o-listbox-item
-                                v-for="option in group.options"
-                                v-show="!option.hidden"
+                                v-for="(option, optionIndex) in group.options"
+                                v-slot="{ selected, disabled }"
                                 v-bind="option.attrs"
                                 :key="option.key"
-                                v-slot="{ selected, disabled }"
                                 :value="option.value"
+                                :label="option.label"
                                 :hidden="option.hidden"
                                 :aria-setsize="getOptionsLength(groupedOptions)"
                                 :aria-posinset="
@@ -740,12 +727,14 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                                 <!--
                                     @slot Override the label, default is label prop
                                     @binding {object} option - option item
+                                    @binding {number} index - option index
                                     @binding {boolean} selected - option is selected
                                     @binding {boolean} disabled - option is disabled
                                 -->
                                 <slot
                                     name="option"
                                     :option="option"
+                                    :index="optionIndex"
                                     :selected="selected"
                                     :disabled="disabled">
                                     <span> {{ option.label }} </span>
