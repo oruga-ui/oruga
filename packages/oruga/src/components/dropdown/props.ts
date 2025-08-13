@@ -1,4 +1,4 @@
-import type { ComponentClass, DynamicComponent } from "@/types";
+import type { ComponentClass, DynamicComponent, Numberish } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
@@ -27,7 +27,7 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     /** Makes the component check if menu reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /** Max height of dropdown content */
-    maxHeight?: string | number;
+    maxHeight?: Numberish;
     /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
     // scrollHeight?: string;
     /**

@@ -1,3 +1,12 @@
+## [0.11.5](https://github.com/oruga-ui/oruga/compare/v0.11.4...v0.11.5) (2025-08-12)
+
+
+### Bug Fixes
+
+* **table:** solve check-all requires 2 clicks to select all ([#1375](https://github.com/oruga-ui/oruga/issues/1375)) ([72985d9](https://github.com/oruga-ui/oruga/commit/72985d94210a35c673a7611588071107f9726b8f))
+
+
+
 ## [0.11.4](https://github.com/oruga-ui/oruga/compare/v0.11.3...v0.11.4) (2025-07-25)
 
 
