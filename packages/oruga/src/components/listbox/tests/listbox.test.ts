@@ -1,10 +1,13 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 
 import OListbox from "@/components/listbox/Listbox.vue";
-import type { OptionsProp } from "@/composables";
+import OListItem from "@/components/listbox/ListItem.vue";
 
-describe("OListbox tests", () => {
+import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
+
+describe.only("OListbox tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: OptionsProp = [
@@ -15,7 +18,7 @@ describe("OListbox tests", () => {
         { label: "Paris", value: "PRS" },
     ];
 
-    test("render correctly", () => {
+    test("render correctly with options", () => {
         const wrapper = mount(OListbox, {
             props: { options },
         });
@@ -23,529 +26,127 @@ describe("OListbox tests", () => {
         expect(wrapper.exists()).toBeTruthy();
         expect(wrapper.attributes("data-oruga")).toBe("listbox");
         expect(wrapper.html()).toMatchSnapshot();
-    });
+        expect(wrapper.classes("o-listbox")).toBeTruthy();
 
-    test("should exist", () => {
-        const wrapper = mount(OListbox, {
-            props: { options },
-        });
-        expect(wrapper.find(".p-listbox.p-component").exists()).toBe(true);
-        expect(wrapper.findAll("li.p-listbox-option").length).toBe(5);
-        expect(
-            wrapper.findAll("li.p-listbox-option")[0].attributes()[
-                "aria-label"
-            ],
-        ).toBe("New York");
-    });
+        const items = wrapper.findAll('[data-oruga="listbox-item"]');
+        expect(items).toHaveLength(options.length);
 
-    test("should select a list item", async () => {
-        const wrapper = mount(OListbox, {
-            props: { options },
-        });
-        await wrapper.vm.onOptionSelect({}, wrapper.vm.options[0]);
-
-        expect(wrapper.emitted()["update:modelValue"][0]).toEqual([
-            wrapper.vm.options[0],
-        ]);
-
-        await wrapper.setProps({ modelValue: wrapper.vm.options[0] });
-
-        expect(wrapper.findAll("li.p-listbox-option")[0].classes()).toContain(
-            "p-listbox-option-selected",
-        );
-    });
-
-    describe("filter", () => {
-        test("should have correct custom icon", async () => {
-            const wrapper = mount(OListbox, {
-                props: { options },
-            });
-            await wrapper.setProps({
-                filter: true,
-                filterIcon: "pi pi-discord",
-            });
-
-            const icon = wrapper.find(
-                '.p-inputicon [data-pc-section="filtericon"]',
-            );
-
-            expect(icon.classes()).toContain("pi-discord");
-        });
-
-        test("should correctly filter", async () => {
-            const wrapper = mount(OListbox, {
-                props: { options },
-            });
-            await wrapper.setProps({
-                filter: true,
-            });
-
-            const filterInput = wrapper.find("input.p-listbox-filter");
-
-            expect(filterInput.exists()).toBe(true);
-
-            await filterInput.setValue("is");
-
-            const options = wrapper.findAll(".p-listbox-option");
-
-            expect(options.length).toBe(2);
-            expect(options[0].text()).toBe("Istanbul");
-        });
-
-        test("should correctly filter groups", async () => {
-            const wrapper = mount(OListbox, {
-                props: { options },
-            });
-            await wrapper.setProps({
-                filter: true,
-                optionGroupLabel: "label",
-                optionLabel: "label",
-                optionGroupChildren: "items",
-                options: [
-                    {
-                        label: "Germany",
-                        code: "DE",
-                        items: [
-                            { label: "Berlin", value: "Berlin" },
-                            { label: "Frankfurt", value: "Frankfurt" },
-                            { label: "Hamburg", value: "Hamburg" },
-                            { label: "Munich", value: "Munich" },
-                        ],
-                    },
-                    {
-                        label: "USA",
-                        code: "US",
-                        items: [
-                            { label: "Chicago", value: "Chicago" },
-                            { label: "Los Angeles", value: "Los Angeles" },
-                            { label: "New York", value: "New York" },
-                            { label: "San Francisco", value: "San Francisco" },
-                        ],
-                    },
-                ],
-            });
-
-            const filterInput = wrapper.find("input.p-listbox-filter");
-
-            expect(filterInput.exists()).toBe(true);
-
-            await filterInput.setValue("ch");
-
-            const optionGroups = wrapper.findAll(".p-listbox-option-group");
-            const options = wrapper.findAll(".p-listbox-option");
-
-            expect(optionGroups.length).toBe(2);
-            expect(optionGroups[0].text()).toBe("Germany");
-            expect(optionGroups[1].text()).toBe("USA");
-
-            expect(options.length).toBe(2);
-            expect(options[0].text()).toBe("Munich");
-            expect(options[1].text()).toBe("Chicago");
-        });
-    });
-
-    test("set values correct when two-way-binded", async () => {
-        const wrapper = mount(OAutocomplete, {
-            props: {
-                options: OPTIONS,
-                modelValue: OPTIONS[2],
-                "onUpdate:modelValue": (modelValue) => {
-                    wrapper.setProps({ modelValue });
-                },
-            },
-        });
-        await nextTick();
-
-        const input = wrapper.find("input");
-        expect(input.exists()).toBeTruthy();
-
-        const dropdown = wrapper.find(".o-dropdown__menu");
-        expect(dropdown.exists()).toBeTruthy();
-        expect(dropdown.isVisible()).toBeFalsy();
-
-        const optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
-        expect(optionElements).toHaveLength(OPTIONS.length);
-
-        // check default selected value
-        expect(input.element.value).toBe(OPTIONS[2]);
-        expect(optionElements[2].classes("itemSelectedClass"));
-        expect(optionElements[2].attributes("aria-selected")).toBeTruthy();
-
-        // chenge selection
-        wrapper.setProps({ modelValue: OPTIONS[0] });
-        await nextTick();
-
-        // check new selected value
-        expect(input.element.value).toBe(OPTIONS[0]);
-        expect(optionElements[0].classes("itemSelectedClass"));
-        expect(optionElements[0].attributes("aria-selected")).toBeTruthy();
-    });
-
-    test("render correctly with options", async () => {
-        const wrapper = mount(ODropdown, {
-            props: { options, label: "Some Trigger Label" },
-        });
-        await nextTick(); // await dropdown items rendered
-
-        expect(!!wrapper.vm).toBeTruthy();
-        expect(wrapper.exists()).toBeTruthy();
-        expect(wrapper.attributes("data-oruga")).toBe("dropdown");
-        expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-dropdown")).toBeTruthy();
-
-        const items = wrapper.findAllComponents(ODropdownItem);
-        expect(items.length).toBe(options.length);
-        options.forEach((option, idx) => {
-            expect(items.at(idx)!.attributes("data-oruga")).toBe(
-                "dropdown-item",
-            );
-            expect(items.at(idx)!.classes("o-dropdown__item")).toBeTruthy();
-            expect(items.at(idx)!.text()).toBe(option.label);
+        items.forEach((item, idx) => {
+            expect(item.attributes("data-oruga")).toBe("listbox-item");
+            expect(item.classes("o-listbox__item")).toBeTruthy();
+            expect(item.text()).toBe(options[idx].label);
         });
     });
 
     test("render correctly with items", async () => {
         const component = {
-            components: { ODropdown, ODropdownItem },
+            components: { OListbox, OListItem },
             props: ["options"],
-            template: `<o-dropdown>
+            template: `<o-listbox>
                     <template #trigger="{ active }">
                         <button :class="{ active }">Component Trigger Label</button>
                     </template>
     
-                    <o-dropdown-item
+                    <o-list-item
                         v-for="el in options"
                         :key=" el"
-                        :value="el">
-                        {{ el }}
-                    </o-dropdown-item>
-                </o-dropdown>`,
+                        :value="el.value">
+                        {{ el.label }}
+                    </o-list-item>
+                </o-listbox>`,
         };
 
         const wrapper = mount(component, {
-            props: { options: simpleOptions, selectable: true },
+            props: { options: options },
         });
-        await nextTick(); // await dropdown items rendered
+        await nextTick(); // wait for next tick to ensure all components are rendered
 
         expect(!!wrapper.vm).toBeTruthy();
         expect(wrapper.exists()).toBeTruthy();
-        expect(wrapper.attributes("data-oruga")).toBe("dropdown");
+        expect(wrapper.attributes("data-oruga")).toBe("listbox");
         expect(wrapper.html()).toMatchSnapshot();
-        expect(wrapper.classes("o-dropdown")).toBeTruthy();
+        expect(wrapper.classes("o-listbox")).toBeTruthy();
 
-        const items = wrapper.findAllComponents(ODropdownItem);
+        const items = wrapper.findAll('[data-oruga="listbox-item"]');
         expect(items.length).toBe(options.length);
-        simpleOptions.forEach((option, idx) => {
-            expect(items.at(idx)!.attributes("data-oruga")).toBe(
-                "dropdown-item",
-            );
-            expect(items.at(idx)!.classes("o-dropdown__item")).toBeTruthy();
-            expect(items.at(idx)!.text()).toBe(option);
+
+        items.forEach((item, idx) => {
+            expect(item.attributes("data-oruga")).toBe("listbox-item");
+            expect(item.classes("o-listbox__item")).toBeTruthy();
+            expect(item.text()).toBe(options[idx].label);
         });
     });
 
-    test("has configurable menu tag", () => {
-        const wrapper = mount(ODropdown, { props: { menuTag: "ul" } });
-        expect(wrapper.find("ul.o-dropdown__menu").exists()).toBeTruthy();
+    test("set value correct when two-way-binded", async () => {
+        const wrapper = mount(OListbox, {
+            props: {
+                options,
+                modelValue: options[2].value,
+                "onUpdate:modelValue": (modelValue) => {
+                    wrapper.setProps({ modelValue });
+                },
+            },
+        });
+
+        const optionElements = wrapper.findAll('[data-oruga="listbox-item"]');
+        expect(optionElements).toHaveLength(options.length);
+
+        // check default selected value
+        expect(optionElements[2].attributes("aria-selected")).toBeTruthy();
+
+        // chenge selection
+        await wrapper.setProps({ modelValue: options[0].value });
+
+        // check new selected value
+        expect(optionElements[0].attributes("aria-selected")).toBeTruthy();
     });
 
-    describe("test selectable", () => {
-        test("react accordingly when new item is selected", async () => {
-            const wrapper = mount(ODropdown, {
-                props: {
-                    active: true,
-                    options,
-                    modelValue: options[0].value,
-                    selectable: true,
-                },
-            });
-            await nextTick(); // await dropdown item rendered
-
-            const items = wrapper.findAll(".o-dropdown__item");
-            expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-
-            await items[2].trigger("click");
-
-            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeTruthy();
-
-            const dropdown = wrapper.findComponent<ComponentPublicInstance>(
-                '[data-oruga="dropdown"]',
-            );
-            expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0][0]).toBe(options[2].value);
-            expect(dropdown.emitted("close")).toHaveLength(1);
-        });
-
-        test("react accordingly when same item is selected", async () => {
-            const wrapper = mount(ODropdown, {
-                props: {
-                    active: true,
-                    options,
-                    modelValue: options[0].value,
-                    selectable: true,
-                },
-            });
-            await nextTick(); // await dropdown item rendered
-
-            const items = wrapper.findAll(".o-dropdown__item");
-            expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-
-            await items[0].trigger("click");
-
-            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-
-            const dropdown = wrapper.findComponent<ComponentPublicInstance>(
-                '[data-oruga="dropdown"]',
-            );
-            expect(dropdown.emitted("update:modelValue")).toBeUndefined();
-            expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0][0]).toBe(options[0].value);
-            expect(dropdown.emitted("close")).toHaveLength(1);
-        });
-
-        test("react accordingly when an item is selected with multiple prop", async () => {
-            const wrapper = mount(ODropdown, {
-                props: {
-                    active: true,
-                    options,
-                    selectable: true,
-                    multiple: true,
-                    keepOpen: true,
-                },
-                attachTo: document.body,
-            });
-            await nextTick(); // await dropdown item rendered
-
-            expect(wrapper.classes("o-dropdown--active")).toBeTruthy();
-
-            const menu = wrapper.find(".o-dropdown__menu");
-            expect(menu.exists()).toBeTruthy();
-            expect(menu.isVisible()).toBeTruthy();
-
-            const items = wrapper.findAll(".o-dropdown__item");
-            expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-
-            await items[0].trigger("click");
-
-            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(menu.isVisible()).toBeTruthy();
-
-            const dropdown = wrapper.findComponent<ComponentPublicInstance>(
-                '[data-oruga="dropdown"]',
-            );
-            expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0]).toContain(options[0].value);
-            expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("update:modelValue")![0][0]).toHaveLength(
-                1,
-            );
-            expect(dropdown.emitted("update:modelValue")![0][0]).toContain(
-                options[0].value,
-            );
-            expect(dropdown.emitted("close")).toBeUndefined();
-
-            await items[2].trigger("click");
-
-            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeTruthy();
-            expect(menu.isVisible()).toBeTruthy();
-
-            expect(dropdown.emitted("select")).toHaveLength(2);
-            expect(dropdown.emitted("select")![1]).toContain(options[2].value);
-            expect(dropdown.emitted("update:modelValue")).toHaveLength(2);
-            expect(dropdown.emitted("update:modelValue")![1][0]).toHaveLength(
-                2,
-            );
-            expect(dropdown.emitted("update:modelValue")![1][0]).toContain(
-                options[0].value,
-            );
-            expect(dropdown.emitted("update:modelValue")![1][0]).toContain(
-                options[2].value,
-            );
-            expect(dropdown.emitted("close")).toBeUndefined();
-
-            await items[0].trigger("click");
-            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeTruthy();
-
-            expect(dropdown.emitted("select")).toHaveLength(3);
-            expect(dropdown.emitted("select")![2]).toContain(options[0].value);
-            expect(dropdown.emitted("update:modelValue")).toHaveLength(3);
-            expect(dropdown.emitted("update:modelValue")![2][0]).toHaveLength(
-                1,
-            );
-            expect(dropdown.emitted("update:modelValue")![2][0]).toContain(
-                options[2].value,
-            );
-            expect(dropdown.emitted("close")).toBeUndefined();
-        });
-
-        test("react accordingly when item is selected with keepOpen", async () => {
-            const wrapper = mount(ODropdown, {
-                props: {
-                    active: true,
-                    options,
-                    keepOpen: true,
-                    selectable: true,
-                },
-            });
-            await nextTick(); // await dropdown item rendered
-
-            const items = wrapper.findAll(".o-dropdown__item");
-            expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-
-            await items[0].trigger("click");
-
-            expect(items[0].classes("o-dropdown__item--active")).toBeTruthy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-
-            const dropdown = wrapper.findComponent<ComponentPublicInstance>(
-                '[data-oruga="dropdown"]',
-            );
-            expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("close")).toBeUndefined();
-        });
-
-        test("react accordingly when is disabled", async () => {
-            const wrapper = mount(ODropdown, {
-                props: { options: simpleOptions, disabled: true, active: true },
-                attachTo: document.body,
-            });
-            await nextTick(); // await dropdown item rendered
-
-            expect(wrapper.classes("o-dropdown--disabled")).toBeTruthy();
-            expect(wrapper.find(".o-dropdown__menu").isVisible()).toBeFalsy();
-
-            const items = wrapper.findAll(".o-dropdown__item");
-            expect(items.length).toBe(simpleOptions.length);
-            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-
-            await items[0].trigger("click");
-
-            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
-
-            const dropdown = wrapper.findComponent<ComponentPublicInstance>(
-                '[data-oruga="dropdown"]',
-            );
-            expect(dropdown.classes("o-dropdown--disabled")).toBeTruthy();
-            expect(dropdown.emitted("update:modelValue")).toBeUndefined();
-            expect(dropdown.emitted("select")).toBeUndefined();
-            expect(dropdown.emitted("close")).toBeUndefined();
-        });
-
-        test("react accordingly when selected with keydown", async () => {
-            const wrapper = mount(ODropdown, {
-                props: {
-                    options,
-                    selectable: true,
-                },
-                attachTo: document.body,
-            });
-
-            const trigger = wrapper.find(".o-dropdown__trigger");
-            expect(trigger.exists()).toBeTruthy();
-
-            // open menu with trigger click
-            await trigger.trigger("click");
-
-            let dropdown = wrapper.find(".o-dropdown__menu");
-
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeTruthy();
-
-            await trigger.trigger("keydown", { key: "Down" });
-            await trigger.trigger("keydown", { key: "Enter" });
-
-            expect(wrapper.emitted("select")).toStrictEqual([
-                [options[0].value],
-            ]);
-            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
-                [options[0].value],
-            ]);
-
-            dropdown = wrapper.find(".o-dropdown__menu");
-
-            expect(dropdown.exists()).toBeTruthy();
-            expect(dropdown.isVisible()).toBeFalsy();
-        });
+    test("has configurable list tag", () => {
+        const wrapper = mount(OListbox, { props: { listTag: "ul" } });
+        expect(wrapper.find("ul.o-listbox__list").exists()).toBeTruthy();
     });
 
     describe("handle options props correctly", () => {
         test("react accordingly when is using objects values", async () => {
-            const wrapper = mount(ODropdown, {
-                props: { active: true, options, selectable: true },
-                attachTo: document.body,
+            const wrapper = mount(OListbox, {
+                props: { options, selectable: true },
             });
-            await nextTick(); // await dropdown item rendered
 
-            const items = wrapper.findAll(".o-dropdown__item");
-            expect(items.length).toBe(3);
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            expect(items.length).toBe(options.length);
 
             items.forEach((item, index) =>
                 expect(item.text()).toEqual(options[index].label),
             );
 
-            const item = items[1];
-            await item.trigger("click");
-            expect(items[0].classes("o-dropdown__item--active")).toBeFalsy();
-            expect(items[1].classes("o-dropdown__item--active")).toBeTruthy();
-            expect(items[2].classes("o-dropdown__item--active")).toBeFalsy();
+            await items[1].trigger("click");
+            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
 
-            const dropdown = wrapper.findComponent<ComponentPublicInstance>(
-                '[data-oruga="dropdown"]',
-            );
-            expect(dropdown.emitted("update:modelValue")).toHaveLength(1);
-            expect(dropdown.emitted("update:modelValue")![0][0]).toStrictEqual(
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")![0][0]).toStrictEqual(
                 options[1].value,
             );
-            expect(dropdown.emitted("select")).toHaveLength(1);
-            expect(dropdown.emitted("select")![0][0]).toStrictEqual(
+            expect(wrapper.emitted("select")).toHaveLength(1);
+            expect(wrapper.emitted("select")![0][0]).toStrictEqual(
                 options[1].value,
             );
-            expect(dropdown.emitted("close")).toHaveLength(1);
         });
 
         test("handle options as primitves correctly", async () => {
             const options: OptionsProp = ["Flint", "Silver", "Vane", 0, 1, 2];
 
-            const wrapper = mount(ODropdown, { props: { options } });
-            await nextTick(); // await dropdown item rendered
+            const wrapper = mount(OListbox, { props: { options } });
 
-            const optionElements = wrapper.findAll(
-                '[data-oruga="dropdown-item"]',
-            );
-            expect(optionElements).toHaveLength(options.length);
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            expect(items).toHaveLength(options.length);
 
-            optionElements.forEach((el, idx) => {
+            items.forEach((el, idx) => {
                 expect(el.text()).toBe(String(options[idx]));
                 expect(el.attributes("aria-disabled")).toBe("false");
+                expect(el.attributes("aria-hidden")).toBe("false");
+                expect(el.attributes("aria-selected")).toBe("false");
             });
         });
 
@@ -559,17 +160,16 @@ describe("OListbox tests", () => {
                 2: "Two",
             };
 
-            const wrapper = mount(ODropdown, { props: { options } });
-            await nextTick(); // await dropdown item rendered
+            const wrapper = mount(OListbox, { props: { options } });
 
-            const optionElements = wrapper.findAll(
-                '[data-oruga="dropdown-item"]',
-            );
-            expect(optionElements).toHaveLength(Object.keys(options).length);
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            expect(items).toHaveLength(Object.keys(options).length);
 
-            optionElements.forEach((el, idx) => {
+            items.forEach((el, idx) => {
                 expect(el.text()).toBe(Object.entries(options)[idx][1]);
                 expect(el.attributes("aria-disabled")).toBe("false");
+                expect(el.attributes("aria-hidden")).toBe("false");
+                expect(el.attributes("aria-selected")).toBe("false");
             });
         });
 
@@ -583,19 +183,18 @@ describe("OListbox tests", () => {
                 { label: "Two", value: 2, attrs: { disabled: true } },
             ];
 
-            const wrapper = mount(ODropdown, { props: { options } });
-            await nextTick(); // await dropdown item rendered
+            const wrapper = mount(OListbox, { props: { options } });
 
-            const optionElements = wrapper.findAll(
-                '[data-oruga="dropdown-item"]',
-            );
-            expect(optionElements).toHaveLength(options.length);
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            expect(items).toHaveLength(options.length);
 
-            optionElements.forEach((el, idx) => {
+            items.forEach((el, idx) => {
                 expect(el.text()).toBe(options[idx].label);
                 expect(el.attributes("aria-disabled")).toBe(
                     options[idx].attrs?.disabled ? "true" : "false",
                 );
+                expect(el.attributes("aria-hidden")).toBe("false");
+                expect(el.attributes("aria-selected")).toBe("false");
             });
         });
 
@@ -631,31 +230,31 @@ describe("OListbox tests", () => {
                 },
             ];
 
-            const wrapper = mount(ODropdown, { props: { options } });
-            await nextTick(); // await dropdown item rendered
+            const wrapper = mount(OListbox, { props: { options } });
 
-            const optionElements = wrapper.findAll(
-                '[data-oruga="dropdown-item"]',
-            );
-            expect(optionElements).toHaveLength(15);
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            expect(items).toHaveLength(15);
 
-            optionElements.forEach((el, idx) => {
+            items.forEach((el, idx) => {
                 const isGroup = idx % 5 == 0;
                 const g_idx = Math.floor(idx / 5);
                 const o_idx = (idx % 5) - 1;
 
+                const option = options[g_idx];
+
                 if (isGroup) {
-                    const option = options[g_idx];
                     expect(el.text()).toBe(option.label);
-                    expect(el.attributes("aria-disabled")).toBe(
-                        option.attrs?.disabled ? "true" : "false",
-                    );
+                    expect(el.attributes("aria-disabled")).toBe("true");
+                    expect(el.attributes("aria-hidden")).toBe("false");
+                    expect(el.attributes("aria-selected")).toBe("false");
                 } else {
-                    const g_options = options[g_idx].options;
+                    const g_options = option.options;
 
                     let optionLabel;
                     if (idx < 5) {
-                        optionLabel = (g_options[o_idx] as OptionsItem).label;
+                        optionLabel =
+                            (g_options[o_idx] as OptionsItem).label ||
+                            g_options[o_idx];
                     } else if (idx < 10) {
                         optionLabel = Object.entries(g_options)[o_idx][1];
                     } else {
@@ -663,49 +262,299 @@ describe("OListbox tests", () => {
                     }
 
                     expect(el.text()).toBe(optionLabel);
+                    expect(el.attributes("aria-disabled")).toBe("false");
+                    expect(el.attributes("aria-hidden")).toBe("false");
+                    expect(el.attributes("aria-selected")).toBe("false");
                 }
             });
         });
     });
 
-    describe("filtering", () => {
-        test("do not sort when `backend-filtering` is given", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: { options: OPTIONS, backendFiltering: true },
+    describe.only("test selectable", () => {
+        test.only("react accordingly when new item is selected", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    selectable: true,
+                    modelValue: options[0].value,
+                },
             });
-            await nextTick();
 
-            const input = wrapper.find("input");
+            expect(wrapper.classes("o-listbox--selectable")).toBeTruthy();
+
+            const items = wrapper.findAll(".o-listbox__item");
+            expect(items.length).toBe(options.length);
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+
+            await items[2].trigger("click");
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeTruthy();
+
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")![0][0]).toBe(
+                options[2].value,
+            );
+            expect(wrapper.emitted("select")).toHaveLength(1);
+            expect(wrapper.emitted("select")![0][0]).toBe(options[2].value);
+        });
+
+        test("react accordingly when same item is deselected", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    modelValue: options[0].value,
+                    selectable: true,
+                },
+            });
+
+            const items = wrapper.findAll(".o-listbox__item");
+            expect(items.length).toBe(options.length);
+            expect(items[0].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")![0][0]).toBe(undefined);
+            expect(wrapper.emitted("select")).toBeUndefined();
+        });
+
+        test("react accordingly when an item is selected with multiple prop", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    selectable: true,
+                    multiple: true,
+                },
+            });
+
+            expect(wrapper.classes("o-listbox--multiple")).toBeTruthy();
+
+            const items = wrapper.findAll(".o-listbox__item");
+            expect(items.length).toBe(options.length);
+            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+
+            expect(wrapper.emitted("select")).toHaveLength(1);
+            expect(wrapper.emitted("select")![0]).toContain(options[0].value);
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")![0][0]).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")![0][0]).toContain(
+                options[0].value,
+            );
+
+            await items[2].trigger("click");
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeTruthy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeTruthy();
+
+            expect(wrapper.emitted("select")).toHaveLength(2);
+            expect(wrapper.emitted("select")![1]).toContain(options[2].value);
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(2);
+            expect(wrapper.emitted("update:modelValue")![1][0]).toHaveLength(2);
+            expect(wrapper.emitted("update:modelValue")![1][0]).toContain(
+                options[0].value,
+            );
+            expect(wrapper.emitted("update:modelValue")![1][0]).toContain(
+                options[2].value,
+            );
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeTruthy();
+
+            expect(wrapper.emitted("select")).toHaveLength(2);
+            expect(wrapper.emitted("update:modelValue")).toHaveLength(3);
+            expect(wrapper.emitted("update:modelValue")![2][0]).toHaveLength(1);
+            expect(wrapper.emitted("update:modelValue")![2][0]).not.toContain(
+                options[0].value,
+            );
+            expect(wrapper.emitted("update:modelValue")![2][0]).toContain(
+                options[2].value,
+            );
+        });
+
+        test("react accordingly when is disabled", async () => {
+            const wrapper = mount(OListbox, {
+                props: { options: options, disabled: true },
+            });
+
+            expect(wrapper.classes("o-listbox--disabled")).toBeTruthy();
+
+            const items = wrapper.findAll(".o-listbox__item");
+            expect(items.length).toBe(options.length);
+            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+
+            await items[0].trigger("click");
+
+            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
+            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+
+            expect(wrapper.classes("o-listbox--disabled")).toBeTruthy();
+            expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+            expect(wrapper.emitted("select")).toBeUndefined();
+        });
+
+        test("react accordingly when selected with keydown", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    selectable: true,
+                },
+                attachTo: document.body,
+            });
+
+            const list = wrapper.find<HTMLElement>(".o-listbox__list");
+            expect(list.exists()).toBeTruthy();
+
+            list.element.focus();
+            await nextTick(); // wait for focus to be applied
+
+            await wrapper.trigger("keydown", { key: "Down" });
+            await wrapper.trigger("keydown", { key: "Enter" });
+
+            expect(wrapper.emitted("select")).toStrictEqual([
+                [options[0].value],
+            ]);
+            expect(wrapper.emitted("update:modelValue")).toStrictEqual([
+                [options[0].value],
+            ]);
+        });
+    });
+
+    describe("test filterable", () => {
+        test("should have correct custom icon", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    options,
+                    filterable: true,
+                    filterIcon: "pi pi-discord",
+                },
+            });
+
+            const input = wrapper.find('[data-oruga="input"]');
             expect(input.exists()).toBeTruthy();
+            const icon = input.find('[data-oruga="icon"] i');
 
-            let optionElements = wrapper.findAll(
-                '[data-oruga="dropdown-item"]',
-            );
-            expect(optionElements).toHaveLength(OPTIONS.length);
-            optionElements.forEach((option) =>
-                expect(option.attributes("disabled")).toBeUndefined(),
+            expect(icon.classes()).toContain("pi-discord");
+        });
+
+        test("should correctly filter", async () => {
+            const wrapper = mount(OListbox, {
+                props: { options, filterable: true },
+            });
+
+            const filterInput = wrapper.find('[data-oruga="input"] input');
+            expect(filterInput.exists()).toBeTruthy();
+
+            await filterInput.setValue("is");
+
+            const items = wrapper.findAll(".o-listbox__item");
+
+            expect(items.length).toBe(2);
+            expect(items[0].text()).toBe("Istanbul");
+        });
+
+        test("should correctly filter groups", async () => {
+            const wrapper = mount(OListbox, {
+                props: {
+                    filterable: true,
+                    options: [
+                        {
+                            label: "Germany",
+                            value: "DE",
+                            options: [
+                                { label: "Berlin", value: "Berlin" },
+                                { label: "Frankfurt", value: "Frankfurt" },
+                                { label: "Hamburg", value: "Hamburg" },
+                                { label: "Munich", value: "Munich" },
+                            ],
+                        },
+                        {
+                            label: "USA",
+                            value: "US",
+                            options: [
+                                { label: "Chicago", value: "Chicago" },
+                                { label: "Los Angeles", value: "Los Angeles" },
+                                { label: "New York", value: "New York" },
+                                {
+                                    label: "San Francisco",
+                                    value: "San Francisco",
+                                },
+                            ],
+                        },
+                    ],
+                },
+            });
+
+            const filterInput = wrapper.find('[data-oruga="input"] input');
+            expect(filterInput.exists()).toBeTruthy();
+
+            await filterInput.setValue("ch");
+
+            const items = wrapper.findAll(".o-listbox__item");
+            const optionGroups = wrapper.findAll(".p-listbox-option-group");
+            const options = wrapper.findAll(".p-listbox-option");
+
+            expect(optionGroups.length).toBe(2);
+            expect(optionGroups[0].text()).toBe("Germany");
+            expect(optionGroups[1].text()).toBe("USA");
+
+            expect(options.length).toBe(2);
+            expect(options[0].text()).toBe("Munich");
+            expect(options[1].text()).toBe("Chicago");
+        });
+
+        test("do not sort when `backend-filtering` is given", async () => {
+            const wrapper = mount(OListbox, {
+                props: { options, backendFiltering: true },
+            });
+
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            expect(items).toHaveLength(options.length);
+            items.forEach((item) =>
+                expect(item.attributes("disabled")).toBeFalsy(),
             );
 
-            await input.setValue(OPTIONS[2]);
+            const filterInput = wrapper.find('[data-oruga="input"] input');
+            expect(filterInput.exists()).toBeTruthy();
+
+            await filterInput.setValue(options[2].value);
 
             // check that there are no out filtered elements
-            optionElements = wrapper.findAll('[data-oruga="dropdown-item"]');
-            expect(optionElements).toHaveLength(OPTIONS.length);
-            optionElements.forEach((option) =>
-                expect(option.attributes("disabled")).toBeUndefined(),
+            expect(items).toHaveLength(options.length);
+            items.forEach((item) =>
+                expect(item.attributes("disabled")).toBeFalsy(),
             );
         });
     });
 
     describe("header & footer", () => {
         test("can emit select-header by keyboard and click", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: {
-                    openOnFocus: true,
-                    keepOpen: true,
-                    selectableHeader: true,
-                    selectableFooter: true,
-                },
+            const wrapper = mount(OListbox, {
                 slots: {
                     header: "<h1>SLOT HEADER</h1>",
                     footer: "<h1>SLOT FOOTER</h1>",
@@ -732,13 +581,7 @@ describe("OListbox tests", () => {
         });
 
         test("can emit select-footer by keyboard and click", async () => {
-            const wrapper = mount(OAutocomplete, {
-                props: {
-                    openOnFocus: true,
-                    keepOpen: true,
-                    selectableHeader: true,
-                    selectableFooter: true,
-                },
+            const wrapper = mount(OListbox, {
                 slots: {
                     header: "<h1>SLOT HEADER</h1>",
                     footer: "<h1>SLOT FOOTER</h1>",

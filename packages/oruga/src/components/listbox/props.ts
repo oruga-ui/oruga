@@ -62,6 +62,14 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
 export type ListboxClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
+    /** Clas of the root element when disabled */
+    disabledClass: ComponentClass;
+    /** Clas of the root element when selectable */
+    selectableClass: ComponentClass;
+    /** Clas of the root element when filterable */
+    filterableClass: ComponentClass;
+    /** Clas of the root element when multiple */
+    multipleClass: ComponentClass;
     /** Class of the header slot wrapper element */
     headerClass: ComponentClass;
     /** Class of the footer slot wrapper element */

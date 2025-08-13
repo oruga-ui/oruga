@@ -599,7 +599,33 @@ function onFilterKeyDown(event: KeyboardEvent): void {
 
 // #region --- Computed Component Classes ---
 
-const rootClasses = defineClasses(["rootClass", "o-listbox"]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-listbox"],
+    [
+        "disabledClass",
+        "o-listbox--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "selectableClass",
+        "o-listbox--selectable",
+        null,
+        computed(() => props.selectable),
+    ],
+    [
+        "filterableClass",
+        "o-listbox--filterable",
+        null,
+        computed(() => props.filterable),
+    ],
+    [
+        "multipleClass",
+        "o-listbox--multiple",
+        null,
+        computed(() => !!props.multiple),
+    ],
+);
 
 const headerClasses = defineClasses(["headerClass", "o-listbox__header"]);
 

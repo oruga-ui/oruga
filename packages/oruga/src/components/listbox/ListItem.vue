@@ -69,7 +69,7 @@ function setHidden(hidden: boolean): void {
     localHidden.value = hidden;
 }
 
-const isDisabled = computed(() => parent.value.disabled && props.disabled);
+const isDisabled = computed(() => parent.value.disabled || props.disabled);
 
 const isSelected = computed(() => {
     if (!isDefined(parent.value.selected)) return false;
