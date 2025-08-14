@@ -7,7 +7,7 @@ export type LoadingProps = {
     active?: boolean;
     /** Loader will overlay the full page. */
     fullPage?: boolean;
-    /** Notification label, unnecessary when default slot is used. */
+    /** Show label beside the icon, unnecessary when default slot is used. */
     label?: string;
     /** Custom animation (transition name) */
     animation?: string;
@@ -15,6 +15,11 @@ export type LoadingProps = {
     cancelable?: boolean;
     /** Icon name to show, unnecessary when default slot is used. */
     icon?: string;
+    /**
+     * Icon pack to use for the close icon
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack?: string;
     /** Enable spin effect on icon */
     iconSpin?: boolean;
     /**
@@ -23,7 +28,7 @@ export type LoadingProps = {
      */
     iconSize?: string;
     /**
-     * Set `true` to remove the body scrollbar.
+     * Set `true` to remove the body scrollbar when `fullPage`.
      * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
      * but will set the body to a fixed position, which may break some layouts.
      */

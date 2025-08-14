@@ -159,6 +159,33 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the label element */
                 labelClass: ClassDefinition;
             }>;
+        card?: ComponentConfigBase &
+            Partial<{
+                /** Adds close button to the header */
+                closeable: boolean;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
+                /** Icon pack to use for the close icon */
+                iconPack: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the header element */
+                headerClass: ClassDefinition;
+                /** Class of the header title element */
+                titleClass: ClassDefinition;
+                /** Class of the header close element */
+                closeClass: ClassDefinition;
+                /** Class of the image container */
+                imageClass: ClassDefinition;
+                /** Class of the image figure element */
+                figureClass: ClassDefinition;
+                /** Class of the body element */
+                bodyClass: ClassDefinition;
+                /** Class of the body content element */
+                contentClass: ClassDefinition;
+                /** Class of the footer element */
+                footerClass: ClassDefinition;
+            }>;
         carousel?: ComponentConfigBase &
             Partial<{
                 /** Timer interval for `autoplay` */
@@ -699,11 +726,13 @@ See icon library documentation for custom classes. */
                 animation: string;
                 /** Icon name to show, unnecessary when default slot is used. */
                 icon: string;
+                /** Icon pack to use for the close icon */
+                iconPack: string;
                 /** Enable spin effect on icon */
                 iconSpin: boolean;
                 /** Icon size */
                 iconSize: string;
-                /** Set `true` to remove the body scrollbar.
+                /** Set `true` to remove the body scrollbar when `fullPage`.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts. */
                 clipScroll: boolean;

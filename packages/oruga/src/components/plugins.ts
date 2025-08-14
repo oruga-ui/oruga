@@ -1,6 +1,7 @@
 import Autocomplete from "./autocomplete";
 import Breadcrumb from "./breadcrumb";
 import Button from "./button";
+import Card from "./card";
 import Carousel from "./carousel";
 import Checkbox from "./checkbox";
 import Collapse from "./collapse";
@@ -35,6 +36,7 @@ export {
     Autocomplete,
     Breadcrumb,
     Button,
+    Card,
     Carousel,
     Checkbox,
     Collapse,
