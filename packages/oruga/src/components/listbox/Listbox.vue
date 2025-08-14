@@ -159,7 +159,10 @@ const { childItems } = useProviderParent<
     data: provideData,
 });
 
-const hasItems = computed(() => !!childItems.value.length);
+const hasVisableItems = computed(
+    () =>
+        !!childItems.value.map((item) => item.data && !item.data.hidden).length,
+);
 
 /**
  * List of child items without disabled or hidden items.
@@ -352,7 +355,7 @@ function selectFocusedItem(event: KeyboardEvent): void {
 
 /** Move the focus one element up the list. */
 function moveFocusUp(event: KeyboardEvent): void {
-    if (!hasItems.value) return;
+    if (!hasVisableItems.value) return;
     // get the previous item
     const delta = -1;
     const item = getFirstViableItem(focusedItem.value?.index || 0, delta);
@@ -367,7 +370,7 @@ function moveFocusUp(event: KeyboardEvent): void {
 
 /** Move the focus one element down the list. */
 function moveFocusDown(event: KeyboardEvent): void {
-    if (!hasItems.value) return;
+    if (!hasVisableItems.value) return;
     // get the next item
     const delta = 1;
     const item = getFirstViableItem(focusedItem.value?.index || 0, delta);
@@ -382,7 +385,7 @@ function moveFocusDown(event: KeyboardEvent): void {
 
 /** Go to the first viable item. */
 function focusFirstItem(): void {
-    if (!hasItems.value) return;
+    if (!hasVisableItems.value) return;
     // get the first item
     const item = getFirstViableItem(0, 1);
     setFocus(item);
@@ -390,7 +393,7 @@ function focusFirstItem(): void {
 
 /** Go to the last viable item. */
 function focusLastItem(): void {
-    if (!hasItems.value) return;
+    if (!hasVisableItems.value) return;
     // get the last item
     const item = getFirstViableItem(childItems.value.length - 1, -1);
     setFocus(item);
@@ -783,7 +786,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         </div>
 
         <transition :name="animation">
-            <div v-if="!hasItems && $slots.empty" :class="emptyClasses">
+            <div v-if="!hasVisableItems && $slots.empty" :class="emptyClasses">
                 <!--
                     @slot Define content for empty state
                 -->
