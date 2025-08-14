@@ -1,7 +1,8 @@
 <script setup lang="ts" generic="T">
-import { computed, ref, useId } from "vue";
+import { computed, ref, useId, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
+import PlainButton from "../utils/PlainButton";
 
 import { getDefault } from "@/utils/config";
 import {
@@ -43,7 +44,7 @@ const props = withDefaults(defineProps<MenuItemProps<T>>(), {
     iconPack: () => getDefault("menu.iconPack"),
     iconSize: () => getDefault("menu.iconSize"),
     animation: () => getDefault("menu.animation", "slide"),
-    tag: () => getDefault("menu.itemTag", "button"),
+    tag: () => getDefault("menu.itemTag", PlainButton),
 });
 
 const emits = defineEmits<{
@@ -54,13 +55,15 @@ const emits = defineEmits<{
     "update:active": [value: boolean];
     /**
      * onclick event
-     * @param value {string | number | object} value prop data
-     * @param event {event} Native Event
+     * @param value {unknown} value prop data
+     * @param event {event} native event
      */
     click: [value: T, event: Event];
 }>();
 
 const itemValue = props.value ?? useId();
+
+const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<MenuItemProvider<T>>(() => ({
@@ -76,7 +79,7 @@ const { childItems } = useProviderParent({
 });
 
 /** inject functionalities and data from the parent menu-item component */
-const menuItem = useProviderChild<MenuItemProvider<T>>({
+const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
     key: "menu-item",
     needParent: false,
 });
@@ -97,7 +100,7 @@ const providedData = computed<MenuItemComponent<T>>(() => ({
 const { parent, item } = useProviderChild<
     MenuComponent<T>,
     MenuItemComponent<T>
->({ data: providedData });
+>(rootRef, { data: providedData });
 
 const nextSequence = parent.value.nextSequence;
 
@@ -203,6 +206,7 @@ const submenuClasses = defineClasses([
     <li
         v-show="!hidden"
         :id="`${parent.menuId}-${item.identifier}`"
+        ref="rootElement"
         data-oruga="menu-item"
         :data-id="`menu-${item.identifier}`"
         :class="itemClasses"

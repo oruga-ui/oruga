@@ -8,7 +8,6 @@ import { getDefault } from "@/utils/config";
 import { toCssDimension, isMobileAgent, isTrueish, mod } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
-    unrefElement,
     defineClasses,
     toOptionsGroup,
     normalizeOptions,
@@ -18,6 +17,8 @@ import {
     usePreventScrolling,
     useSequentialId,
     useEventListener,
+    useScrollEvents,
+    scrollElementInView,
     type OptionsGroupItem,
 } from "@/composables";
 
@@ -28,8 +29,6 @@ import type {
 } from "./types";
 import type { DropdownProps } from "./props";
 import { injectField } from "../field/fieldInjection";
-import { maintainScrollVisibility } from "@/composables/useScrollHelper";
-import { useInfiniteScroll } from "@/composables/useInfiniteScroll";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content.
@@ -120,7 +119,7 @@ const emits = defineEmits<{
 }>();
 
 const triggerRef = ref<HTMLElement>();
-const menuRef = ref<HTMLElement | Component>();
+const menuRef = ref<HTMLElement | Component | null>(null);
 
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({
@@ -200,11 +199,10 @@ const toggleScroll = usePreventScrolling(props.clipScroll);
 
 // set infinite scroll handler
 if (isClient && props.scrollable && props.checkScroll)
-    useInfiniteScroll(
-        menuRef,
-        () => emits("scroll-end"),
-        () => emits("scroll-start"),
-    );
+    useScrollEvents(menuRef, {
+        onScrollEnd: () => emits("scroll-end"),
+        onScrollStart: () => emits("scroll-start"),
+    });
 
 // set click outside handler
 if (isClient && props.closeOnOutside)
@@ -400,15 +398,11 @@ function setFocus(item: DropdownChildItem<T>): void {
     if (props.selectOnFocus && item.data?.value)
         selectItem(item, new Event("focus"));
 
-    const dropdownMenu = unrefElement(menuRef);
-    const element = unrefElement(item.data?.$el);
-    if (!dropdownMenu || !element) return;
-
     // set item as focused
     focusedItem.value = item;
 
     // scroll item into view
-    maintainScrollVisibility(element, dropdownMenu);
+    scrollElementInView(menuRef, item.el);
 }
 
 function onUpPressed(event: Event): void {
@@ -628,7 +622,11 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     :role="selectable ? 'listbox' : 'menu'"
                     :aria-labelledby="labelId"
                     :aria-label="ariaLabel"
-                    :aria-hidden="!inline && (disabled || !isActive)"
+                    :aria-hidden="
+                        !selectable && !inline
+                            ? disabled || !isActive
+                            : undefined
+                    "
                     :aria-multiselectable="
                         selectable ? isTrueish(multiple) : undefined
                     "

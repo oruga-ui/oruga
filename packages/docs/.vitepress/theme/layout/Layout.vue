@@ -26,7 +26,7 @@ watch(
 </script>
 
 <template>
-    <Layout :class="theme?.key" data-theme="light">
+    <Layout :class="theme?.key">
         <template #nav-bar-content-before>
             <ThemeSelector v-if="hasSidebar" v-model:theme="theme" />
         </template>

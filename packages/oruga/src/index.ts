@@ -13,6 +13,18 @@ export * from "./components/types";
 // export all helper functions
 export * from "./utils/helpers";
 
+// export some useful composables
+export {
+    findFocusable,
+    useTrapFocus,
+    useEventListener,
+    useClickOutside,
+    useDebounce,
+    useScrollEvents,
+    unrefElement,
+    getScrollingParent,
+} from "./composables";
+
 // export all vue components
 export * from "./components";
 // export all components as vue plugin

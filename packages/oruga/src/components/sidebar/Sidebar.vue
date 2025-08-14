@@ -17,8 +17,9 @@ import {
     useMatchMedia,
     usePreventScrolling,
     useTrapFocus,
-    useTeleportDefault,
+    getTeleportDefault,
 } from "@/composables";
+import type { CloseEventArgs } from "../programmatic";
 
 import type { SidebarProps } from "./props";
 
@@ -64,9 +65,9 @@ const emits = defineEmits<{
     "update:active": [value: boolean];
     /**
      * on component close event
-     * @param value {unknown} - close event data
+     * @param value {string} - close event method
      */
-    close: [...args: unknown[]];
+    close: [...args: [] | [string] | CloseEventArgs<C>];
 }>();
 
 const { vTrapFocus } = useTrapFocus();
@@ -80,7 +81,7 @@ const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"
-        ? { to: useTeleportDefault(), disabled: !props.teleport }
+        ? { to: getTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
 );
 
@@ -159,11 +160,11 @@ function cancel(method: string): void {
         (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
     )
         return;
-    close({ action: "cancel", method });
+    close(method);
 }
 
 /** set active to false and emit close event */
-function close(...args: unknown[]): void {
+function close(...args: [] | [string] | CloseEventArgs<C>): void {
     isActive.value = false;
     emits("close", ...args);
 }
@@ -262,7 +263,7 @@ defineExpose({ close });
             v-show="!hideOnMobile"
             ref="rootElement"
             v-bind="$attrs"
-            v-trap-focus="isActive && !inline && trapFocus"
+            v-trap-focus="trapFocus && isActive && !inline"
             data-oruga="sidebar"
             :class="rootClasses">
             <div

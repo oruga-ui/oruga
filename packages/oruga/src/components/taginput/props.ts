@@ -1,4 +1,4 @@
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, Numberish } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
 export type TaginputProps<T> = {
@@ -23,9 +23,9 @@ export type TaginputProps<T> = {
      */
     variant?: string;
     /** Limits the number of items, plus item counter */
-    maxitems?: string | number;
+    maxitems?: Numberish;
     /** Same as native maxlength, plus character counter */
-    maxlength?: string | number;
+    maxlength?: Numberish;
     /** Show counter when maxlength or maxtags props are passed */
     counter?: boolean;
     /** Opens a dropdown with choices when the input field is focused */
@@ -51,7 +51,7 @@ export type TaginputProps<T> = {
     /** Makes the component check if list reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
     /** Add close/delete button to the item */
-    closable?: boolean;
+    closeable?: boolean;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
@@ -98,8 +98,6 @@ export type TaginputClasses = Partial<{
     containerClass: ComponentClass;
     /** Class of the tag item element */
     itemClass: ComponentClass;
-    /** Class of the tag item close button element */
-    closeClass: ComponentClass;
     /** Class of the counter element */
     counterClass: ComponentClass;
     /**

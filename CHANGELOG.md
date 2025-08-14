@@ -1,3 +1,114 @@
+## [0.11.5](https://github.com/oruga-ui/oruga/compare/v0.11.4...v0.11.5) (2025-08-12)
+
+
+### Bug Fixes
+
+* **table:** solve check-all requires 2 clicks to select all ([#1375](https://github.com/oruga-ui/oruga/issues/1375)) ([72985d9](https://github.com/oruga-ui/oruga/commit/72985d94210a35c673a7611588071107f9726b8f))
+
+
+
+## [0.11.4](https://github.com/oruga-ui/oruga/compare/v0.11.3...v0.11.4) (2025-07-25)
+
+
+### Bug Fixes
+
+* **dropdown:** update a11y attributes ([#1369](https://github.com/oruga-ui/oruga/issues/1369)) ([ff06e43](https://github.com/oruga-ui/oruga/commit/ff06e43e8f56f341326aef4c41562f5264e2a094))
+* **table:** clear `checkedRows` when `currentPage` or `perPage` prop changes ([#1368](https://github.com/oruga-ui/oruga/issues/1368)) ([ba73578](https://github.com/oruga-ui/oruga/commit/ba735781c1c4db8744802744ff5ec881a556e2fd))
+
+
+### Features
+
+* **composables:** export some usefull composables ([#1367](https://github.com/oruga-ui/oruga/issues/1367)) ([624222a](https://github.com/oruga-ui/oruga/commit/624222a977c2f509c68b9af9d63515d19b93eb58))
+
+
+
+## [0.11.3](https://github.com/oruga-ui/oruga/compare/v0.11.2...v0.11.3) (2025-07-18)
+
+
+### Bug Fixes
+
+* **pagination:** solve pagination not working when `current` prop is not reactive ([#1358](https://github.com/oruga-ui/oruga/issues/1358)) ([db0ae09](https://github.com/oruga-ui/oruga/commit/db0ae098a9b6e721b25bdaa06c377d76f2bbd06a))
+* **table:** match active filters against string formatted value instead pure value ([#1363](https://github.com/oruga-ui/oruga/issues/1363)) ([af41aec](https://github.com/oruga-ui/oruga/commit/af41aec2024de5d713277cc07f7dbcd0bf76879f))
+* **table:** use correct class for td elements ([#1360](https://github.com/oruga-ui/oruga/issues/1360)) ([73b2fcd](https://github.com/oruga-ui/oruga/commit/73b2fcd33c03086b0756306ba3e6f074036c10d0))
+
+
+### Features
+
+* **pagination:** add `next` & `previous` events ([#1357](https://github.com/oruga-ui/oruga/issues/1357)) ([5fc214c](https://github.com/oruga-ui/oruga/commit/5fc214c7ef9b293c48544c34dab422a3d048b8a4))
+* **table:** add `thLabelClass` prop ([#1356](https://github.com/oruga-ui/oruga/issues/1356)) ([f191326](https://github.com/oruga-ui/oruga/commit/f1913260933d1e746595be25c7bbcbb3c81627b5))
+
+
+
+## [0.11.2](https://github.com/oruga-ui/oruga/compare/v0.11.1...v0.11.2) (2025-07-12)
+
+
+### Bug Fixes
+
+* **table:** `keyof T` is now a possible column `field` value ([#1349](https://github.com/oruga-ui/oruga/issues/1349)) ([ecc9102](https://github.com/oruga-ui/oruga/commit/ecc9102c28756c7caabb91ff4508065b1f108660))
+* **table:** hide detail row when parent row got hidden ([#1354](https://github.com/oruga-ui/oruga/issues/1354)) ([6158228](https://github.com/oruga-ui/oruga/commit/61582280639aeb7b5436781d1de634d68c939891))
+
+
+
+## [0.11.1](https://github.com/oruga-ui/oruga/compare/v0.11.0...v0.11.1) (2025-06-26)
+
+
+### Bug Fixes
+
+* **table:** correct filter/paginate/sort issues ([#1343](https://github.com/oruga-ui/oruga/issues/1343)) ([1c89035](https://github.com/oruga-ui/oruga/commit/1c89035e29e02d77795a78cd42cf1f7ac4a5481b))
+* **taginput:** pass `variant` prop to internal Tag component ([#1340](https://github.com/oruga-ui/oruga/issues/1340)) ([c9d9752](https://github.com/oruga-ui/oruga/commit/c9d9752b99611defc6d271ebb36ae523a7f527f6))
+
+
+### Features
+
+* **notification:** add NotificationNotice component export ([#1345](https://github.com/oruga-ui/oruga/issues/1345)) ([9c05d4c](https://github.com/oruga-ui/oruga/commit/9c05d4c663e91d50bba6a0e78c340c8be036fc55))
+
+
+
+# [0.11.0](https://github.com/oruga-ui/oruga/compare/v0.10.6...v0.11.0) (2025-06-16)
+
+
+### Bug Fixes
+
+* add `type="button"` where the default tag is a `button` element to prevent form submission ([#1324](https://github.com/oruga-ui/oruga/issues/1324)) ([c46fe95](https://github.com/oruga-ui/oruga/commit/c46fe95ccb57f9d2f1897d50bf67471be4b41372)), closes [#1323](https://github.com/oruga-ui/oruga/issues/1323)
+* **field:** correct default classes to fit BEM convention ([#1329](https://github.com/oruga-ui/oruga/issues/1329)) ([b36b38e](https://github.com/oruga-ui/oruga/commit/b36b38e8b4b71d2edcb97a4462efa607ff6c5efc))
+* **field:** prevent setting `aria-describedby` when no message is displayed ([#1332](https://github.com/oruga-ui/oruga/issues/1332)) ([ad06f00](https://github.com/oruga-ui/oruga/commit/ad06f00be9cb01a823b014aead1d8fce094ec6a2))
+* **trapFocus:** prevent duplicate event handler binding on component update ([#1330](https://github.com/oruga-ui/oruga/issues/1330)) ([09bf251](https://github.com/oruga-ui/oruga/commit/09bf2514ee04a26e03621653fee33675f33a461f))
+
+
+### Features
+
+* allow configuration of `expanded` prop on form components ([#1326](https://github.com/oruga-ui/oruga/issues/1326)) ([df001fb](https://github.com/oruga-ui/oruga/commit/df001fb135e0d28dda9fdf6a1b478caeb08088ea))
+* **types:** increase programmatic type strictness ([#1322](https://github.com/oruga-ui/oruga/issues/1322)) ([5947965](https://github.com/oruga-ui/oruga/commit/59479653e8594e18af820d6698f811467c767f9c))
+* **types:** rename `closable` to `closeable` to ensure consistent spelling ([#1313](https://github.com/oruga-ui/oruga/issues/1313)) ([06fa959](https://github.com/oruga-ui/oruga/commit/06fa959b122d432eecbaccf53b6a75ce901762e8))
+* **types:** add utility `DeepKeys` type ([#1325](https://github.com/oruga-ui/oruga/issues/1325)) ([de74d59](https://github.com/oruga-ui/oruga/commit/de74d59d283b78a4246bb33412ed4135bee6ca8e))
+
+
+
+## [0.10.6](https://github.com/oruga-ui/oruga/compare/v0.10.5...v0.10.6) (2025-05-26)
+
+
+### Bug Fixes
+
+* **icon:** add icon to tab order when `clickable` ([#1309](https://github.com/oruga-ui/oruga/issues/1309)) ([645354c](https://github.com/oruga-ui/oruga/commit/645354c16c462f6c76100fc1de7ddb555f8b7ef7))
+* **programmatic:** resolve inconsistent `close` event args ([#1306](https://github.com/oruga-ui/oruga/issues/1306)) ([3e7b90a](https://github.com/oruga-ui/oruga/commit/3e7b90a2e4415c63fab9baf80936e1c61b4346c8))
+* **table:** refilter rows when `paginated` prop change ([#1316](https://github.com/oruga-ui/oruga/issues/1316)) ([3882aab](https://github.com/oruga-ui/oruga/commit/3882aab5c42efbbef5d1f93cd76bed9e950da9dd))
+
+
+### Features
+
+* **breadcrumb:** add new Breadcrumb component ([#861](https://github.com/oruga-ui/oruga/issues/861)) ([18abd0f](https://github.com/oruga-ui/oruga/commit/18abd0f572b54abceb23a0a70f9a4459386773c3))
+* **field:** allow multiple field messages ([#1292](https://github.com/oruga-ui/oruga/issues/1292)) ([3520dc3](https://github.com/oruga-ui/oruga/commit/3520dc3bb7d91ee77f2bba0ecf632fa270e7a1fb))
+* **input:** expose `checkHtml5Validity` method ([#1318](https://github.com/oruga-ui/oruga/issues/1318)) ([6a49a8e](https://github.com/oruga-ui/oruga/commit/6a49a8e3e1065910ed3dad10b8bdc62f0455f18b))
+* **modal:** add a11y alert dialog pattern support ([#1310](https://github.com/oruga-ui/oruga/issues/1310)) ([91dbc94](https://github.com/oruga-ui/oruga/commit/91dbc94e5cb04f227ffbd7285c6e53b4cb718740))
+* **notification:** add `pauseOnHover` prop ([#1299](https://github.com/oruga-ui/oruga/issues/1299)) ([122b24a](https://github.com/oruga-ui/oruga/commit/122b24a94fc3019c31e1f8d044299b12aa9b959e))
+* **notification:** add `rounded` prop and class ([#1296](https://github.com/oruga-ui/oruga/issues/1296)) ([82efcbd](https://github.com/oruga-ui/oruga/commit/82efcbd3ee998fc3beb930d5c7c811a9e8b7fe8a))
+* **table:** add `paginationRangeBefore` and `paginationRangeAfter` prop ([#1320](https://github.com/oruga-ui/oruga/issues/1320)) ([01177a0](https://github.com/oruga-ui/oruga/commit/01177a0b05e9a64166dcd5469f1f30cd2fa8c2e8))
+* **tag:** add new Tag component ([#1301](https://github.com/oruga-ui/oruga/issues/1301)) ([18aed6b](https://github.com/oruga-ui/oruga/commit/18aed6b7f3511c13431bdc41664d322b2eafea37))
+* **taginput:** add `disabled` root class ([#1300](https://github.com/oruga-ui/oruga/issues/1300)) ([2ed25bb](https://github.com/oruga-ui/oruga/commit/2ed25bbc3675434dac5759861d1a676755a3deee))
+* **taginput:** use Tag component internally ([#1312](https://github.com/oruga-ui/oruga/issues/1312)) ([2e475c1](https://github.com/oruga-ui/oruga/commit/2e475c1094974a0b5426d08270fa4446297310e0))
+
+
+
 ## [0.10.5](https://github.com/oruga-ui/oruga/compare/v0.10.4...v0.10.5) (2025-05-05)
 
 

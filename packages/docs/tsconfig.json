@@ -2,7 +2,6 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowJs": true,
@@ -11,15 +10,9 @@
     "paths": {
       "@docs": ["./src"],
       "@docs/*": ["./src/*"],
-      "@oruga-ui/oruga-next": ["../oruga/src"],
-    },
+      "@oruga-ui/oruga-next": ["../oruga/src"]
+    }
   },
-  "include": [
-    ".vitepress/**/*",
-    "src/**/*",
-    "src/**/*.ts", 
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": [".vitepress/**/*", "src/**/*", "src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

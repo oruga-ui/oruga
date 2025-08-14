@@ -71,11 +71,8 @@ const emits = defineEmits<{
 const inputRef = useTemplateRef("inputElement");
 
 // use form input functionalities
-const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
-    inputRef,
-    emits,
-    props,
-);
+const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
+    useInputHandler(inputRef, emits, props);
 
 // inject parent field component if used inside one
 const { parentField } = injectField();
@@ -147,7 +144,7 @@ const labelClasses = defineClasses(["labelClass", "o-checkbox__label"]);
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>

@@ -26,9 +26,9 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                         @binding {number} focusedIndex - index of the focused element
                         @binding {(): void} toggle - toggle dropdown active state
                     -->
-        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-datepicker__box" role="menuitem" aria-disabled="false">
+        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-datepicker__box" role="menuitem" tabindex="-1" aria-disabled="false">
           <!--
-            @slot Override the label, default is label prop 
+            @slot Override the label, default is label prop
         -->
           <header class="o-datepicker__header">
             <!--
@@ -330,16 +330,16 @@ exports[`ODatetimepicker tests > render correctly 1`] = `
                   <!--teleport start-->
                   <!--v-if-->
                   <transition-stub name="fade" appear="false" persisted="true" css="true">
-                    <div id="v-5" tabindex="0" class="o-dropdown__menu o-dropdown__menu--bottom-left o-dropdown__menu--active" role="menu" aria-hidden="false">
+                    <div id="v-5" tabindex="0" class="o-dropdown__menu o-dropdown__menu--bottom-left o-dropdown__menu--active" role="menu">
                       <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {number} focusedIndex - index of the focused element
                         @binding {(): void} toggle - toggle dropdown active state
                     -->
-                      <div id="v-5-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-timepicker__box" role="menuitem" aria-disabled="false">
+                      <div id="v-5-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-timepicker__box" role="menuitem" tabindex="-1" aria-disabled="false">
                         <!--
-            @slot Override the label, default is label prop 
+            @slot Override the label, default is label prop
         -->
                         <div data-oruga="select" class="">
                           <!--v-if--><select aria-label="Select Hour" id="v-7" data-oruga-input="select" class="o-timepicker__select" autocomplete="off">

@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/docs-next",
-  "version": "0.10.5",
+  "version": "0.11.5",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -13,36 +13,30 @@
     "docs:dev": "run-p docs:gen:watch dev",
     "docs:build": "npm run build",
     "docs:gen": "tsx src/docgen.ts",
-    "docs:gen:watch": "tsx src/docgen.ts --watch",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
+    "docs:gen:watch": "tsx src/docgen.ts --watch"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@fortawesome/fontawesome-svg-core": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/vue-fontawesome": "^3.1.1",
     "@highlightjs/vue-plugin": "2.1.2",
-    "@oruga-ui/theme-bootstrap": "0.8.2",
-    "@oruga-ui/theme-bulma": "0.6.2",
-    "@oruga-ui/theme-oruga": "0.6.0",
+    "@oruga-ui/theme-bootstrap": "0.9.4",
+    "@oruga-ui/theme-bulma": "0.7.3",
+    "@oruga-ui/theme-oruga": "0.7.1",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.1.0",
     "markdown-it-highlightjs": "^4.2.0"
   },
   "devDependencies": {
-    "@types/node": "^22.15.17",
-    "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.5.0",
+    "@types/node": "^24.2.1",
     "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.26.0",
-    "eslint-plugin-vue": "^10.1.0",
-    "prettier": "^3.5.3",
-    "sass": "^1.88.0",
-    "tsx": "^4.19.4",
-    "typescript": "5.8.3",
-    "vitepress": "^1.6.3",
-    "vue": "^3.5.13",
-    "vue-component-meta": "^2.2.10",
+    "sass": "^1.90.0",
+    "tsx": "^4.20.4",
+    "typescript": "5.9.2",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.18",
+    "vue-component-meta": "^3.0.5",
     "vue-docgen-cli": "4.79.0",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^3.0.5"
   }
 }

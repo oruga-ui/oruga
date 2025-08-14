@@ -34,7 +34,7 @@ export function renderer(
 
         const name = pr.name === "modelValue" ? "v-model" : pr.name;
         if (name.endsWith("Class") || name.endsWith("Classes")) {
-            if (!IGNORE_CLASSES[tag]?.includes(name.toLowerCase())) return;
+            if (!IGNORE_CLASSES[tag]?.includes(name)) return;
         }
 
         let type = pr.tags?.type
@@ -65,7 +65,7 @@ export function renderer(
         ) {
             let configParts: string[] | null = null;
 
-            const clear = (s: string) => s.replace(/'|"/g, "");
+            const clear = (s: string): string => s.replace(/'|"/g, "");
             // get default params
             value = value.replace(/\r\n/g, "").replaceAll("\n", "");
             let f = "";

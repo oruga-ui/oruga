@@ -93,6 +93,11 @@ export async function vueComponentMeta(
                     },
                 );
 
+                const props = meta.props
+                    // filter duplicate event prop entries with "on" prefix (e.g. onClick)
+                    // because they area already included in meta.events
+                    .filter((p) => !p.name.startsWith("on"));
+
                 const exposed = meta.exposed
                     // the meta also includes duplicated entries in the "exposed" array with "on"
                     // prefix (e.g. onClick instead of click), so we need to filter them out here
@@ -133,6 +138,8 @@ export async function vueComponentMeta(
                             : exportName,
                     // add meta properties
                     ...meta,
+                    // override meta props
+                    props,
                     // override meta exposed
                     exposed,
                 };
@@ -179,6 +186,10 @@ export function mapProps(
             // remove undefined because we wrap the object with partial
             if (prop.type.includes("| undefined"))
                 prop.type = prop.type.replace("| undefined", "");
+            // remove duplicate object type
+            if (prop.type.includes("{} | {}"))
+                prop.type = prop.type.replace("{} | {}", "{}");
+
             // trim leading and trailing white space
             prop.type = prop.type.trim();
 

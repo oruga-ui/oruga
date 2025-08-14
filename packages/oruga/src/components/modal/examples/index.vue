@@ -77,9 +77,9 @@ import ProgrammaticallyAsyncCode from "./programmatically-async.vue?raw";
     <div class="language-js">
         <pre>
     import { useOruga } from "@oruga-ui/oruga-next";
-    const oruga = useOruga(); 
-    oruga.modal.open({...});</pre
-        >
+    const oruga = useOruga();
+    oruga.modal.open({...});
+        </pre>
     </div>
     <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
     <br />

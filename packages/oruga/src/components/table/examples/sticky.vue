@@ -33,6 +33,36 @@ const data = ref([
         date: "2016/12/06 14:38:38",
         gender: "Female",
     },
+    {
+        id: 6,
+        user: { first_name: "Sara", last_name: "Armstrong" },
+        date: "2016/09/23 18:50:04",
+        gender: "Female",
+    },
+    {
+        id: 7,
+        user: { first_name: "Anthony", last_name: "Webb" },
+        date: "2016/08/30 23:49:38",
+        gender: "Male",
+    },
+    {
+        id: 8,
+        user: { first_name: "Andrew", last_name: "Greene" },
+        date: "2016/11/20 14:57:47",
+        gender: "Male",
+    },
+    {
+        id: 9,
+        user: { first_name: "Russell", last_name: "White" },
+        date: "2016/07/13 09:29:49",
+        gender: "Male",
+    },
+    {
+        id: 10,
+        user: { first_name: "Lori", last_name: "Hunter" },
+        date: "2016/12/09 01:44:05",
+        gender: "Female",
+    },
 ]);
 
 const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
@@ -41,17 +71,21 @@ const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
         label: "ID",
         width: "40",
         numeric: true,
+    },
+    {
+        field: "user.first_name",
+        label: "First Name",
         sticky: true,
         thAttrs: { class: "is-sticky-column-one" },
         tdAttrs: { class: "is-sticky-column-one" },
     },
     {
-        field: "user.first_name",
-        label: "First Name",
-    },
-    {
         field: "user.last_name",
         label: "Last Name",
+    },
+    {
+        field: "gender",
+        label: "Gender",
     },
     {
         field: "date",
@@ -61,10 +95,6 @@ const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
         formatter: (v): string => new Date(String(v)).toLocaleDateString(),
         thAttrs: { class: "is-sticky-column-two" },
         tdAttrs: { class: "is-sticky-column-two" },
-    },
-    {
-        field: "gender",
-        label: "Gender",
     },
     {
         field: "id",
@@ -121,18 +151,24 @@ const columns = ref<TableColumn<(typeof data.value)[number]>[]>([
 ]);
 
 const stickyHeaders = ref(true);
+const checkable = ref(true);
 </script>
 
 <template>
     <section>
         <o-field grouped>
             <o-switch v-model="stickyHeaders" label="Sticky Headers" />
+            <o-switch v-model="checkable" label="Checkable" />
         </o-field>
 
         <o-table
             :data="data"
             :columns="columns"
-            :sticky-header="stickyHeaders" />
+            :sticky-header="stickyHeaders"
+            scrollable
+            :checkable="checkable"
+            :checkable-header="checkable"
+            sticky-checkbox />
     </section>
 </template>
 

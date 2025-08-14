@@ -1,6 +1,8 @@
 import type { Component, EmitsToProps } from "vue";
 import type { ComponentEmit } from "vue-component-type-helpers";
 
+export type Numberish = number | string;
+
 export type ClassBind = {
     [x: string]: boolean;
 };
@@ -49,3 +51,19 @@ export type DeepType<T, K> = T extends object
             : TypeOfKey<T, K>
         : T
     : T;
+
+/**
+ * Defines a list of property paths for each property and deep property of an object `T`.
+ * @source https://dev.to/pffigueiredo/typescript-utility-keyof-nested-object-2pa3
+ */
+export type DeepKeys<T> =
+    | (T extends object
+          ? {
+                [K in keyof T]-?: K extends string | number
+                    ? Required<T>[K] extends object
+                        ? `${K}` | `${K}.${DeepKeys<T[K]>}`
+                        : `${K}`
+                    : never;
+            }[keyof T & string]
+          : never)
+    | (keyof T & string);

@@ -70,9 +70,9 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     <div class="language-js">
         <pre>
     import { useOruga } from "@oruga-ui/oruga-next";
-    const oruga = useOruga(); 
-    oruga.sidebar.open({...});</pre
-        >
+    const oruga = useOruga();
+    oruga.sidebar.open({...});
+        </pre>
     </div>
     <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 </template>

@@ -26,9 +26,9 @@ exports[`ODatepicker > render correctly 1`] = `
                         @binding {number} focusedIndex - index of the focused element
                         @binding {(): void} toggle - toggle dropdown active state
                     -->
-        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-datepicker__box" role="menuitem" aria-disabled="false">
+        <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-datepicker__box" role="menuitem" tabindex="-1" aria-disabled="false">
           <!--
-            @slot Override the label, default is label prop 
+            @slot Override the label, default is label prop
         -->
           <header class="o-datepicker__header">
             <!--

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, useTemplateRef } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -7,7 +7,6 @@ import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { BreadcrumbItemProps } from "./props";
-import type { BreadcrumbComponent } from "./types";
 
 /**
  * The classic breadrcumb item, in different colors, sizes, and states
@@ -33,8 +32,10 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
     tag: () => getDefault("breadcrumb.tag", "a"),
 });
 
+const rootRef = useTemplateRef("rootElement");
+
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<BreadcrumbComponent>();
+const { item } = useProviderChild(rootRef);
 
 // #region --- Computed Component Classes ---
 
@@ -54,24 +55,17 @@ const rootClasses = defineClasses(
     ],
 );
 
-const separatorClasses = defineClasses([
-    "seperatorClass",
-    "o-breadcrumb__item__seperator",
-]);
-
 const linkClasses = defineClasses(["linkClass", "o-breadcrumb__item__link"]);
 
-const iconClasses = defineClasses(["iconClass", "o-breadcrumb__item__icon"]);
+const iconLeftClasses = defineClasses(
+    ["iconClass", "o-breadcrumb__item__icon"],
+    ["iconLeftClass", "o-breadcrumb__item__icon--left"],
+);
 
-const iconLeftClasses = defineClasses([
-    "iconLeftClass",
-    "o-breadcrumb__item__icon-left",
-]);
-
-const iconRightClasses = defineClasses([
-    "iconRightClass",
-    "o-breadcrumb__item__icon-right",
-]);
+const iconRightClasses = defineClasses(
+    ["iconClass", "o-breadcrumb__item__icon"],
+    ["iconRightClass", "o-breadcrumb__item__icon--right"],
+);
 
 // #endregion --- Computed Component Classes ---
 </script>
@@ -79,21 +73,15 @@ const iconRightClasses = defineClasses([
 <template>
     <li
         v-show="!hidden"
+        ref="rootElement"
         data-oruga="breadcrumb-item"
         :data-id="`breadcrumb-${item.identifier}`"
-        :class="rootClasses">
+        :class="rootClasses"
+        :aria-current="active ? 'page' : undefined">
         <!-- 
             @slot Item seperator
-            @binding {string} seperator - seperator string
         -->
-        <slot
-            v-if="item.index > 0"
-            name="seperator"
-            :seperator="parent.separator">
-            <span v-if="!!parent.separator" :class="separatorClasses">
-                {{ parent.separator }}
-            </span>
-        </slot>
+        <slot name="seperator"> </slot>
 
         <component
             :is="tag"
@@ -107,7 +95,7 @@ const iconRightClasses = defineClasses([
                 :icon="iconLeft"
                 :pack="iconPack"
                 :size="iconSize"
-                :class="[...iconClasses, ...iconLeftClasses]" />
+                :class="iconLeftClasses" />
 
             <!-- 
                 @slot Override label
@@ -121,7 +109,7 @@ const iconRightClasses = defineClasses([
                 :icon="iconRight"
                 :pack="iconPack"
                 :size="iconSize"
-                :class="[...iconClasses, ...iconRightClasses]" />
+                :class="iconRightClasses" />
         </component>
     </li>
 </template>

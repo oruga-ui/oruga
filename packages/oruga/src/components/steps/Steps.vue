@@ -108,6 +108,7 @@ const { childItems } = useProviderParent<StepItemComponent<T>>({
 const items = computed<StepItem<T>[]>(() => {
     if (!childItems.value) return [];
     return childItems.value.map((column) => ({
+        el: column.el,
         index: column.index,
         identifier: column.identifier,
         ...toValue(column.data!),
@@ -403,7 +404,6 @@ const navigationClasses = defineClasses([
                     role="button"
                     :icon-left="iconPrev"
                     :icon-pack="iconPack"
-                    icon-both
                     :disabled="!hasPrev"
                     :aria-label="ariaPreviousLabel"
                     @click.prevent="activateItem(-1)" />
@@ -412,7 +412,6 @@ const navigationClasses = defineClasses([
                     role="button"
                     :icon-left="iconNext"
                     :icon-pack="iconPack"
-                    icon-both
                     :disabled="!hasNext"
                     :aria-label="ariaNextLabel"
                     @click.prevent="activateItem(1)" />

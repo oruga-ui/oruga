@@ -2,6 +2,7 @@ import type {
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
+    Numberish,
 } from "@/types";
 
 // Auto generated component theme config definition
@@ -19,6 +20,8 @@ declare module "../index" {
                 size: string;
                 /** Position of the dropdown */
                 position: "auto" | "bottom" | "top";
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Number of milliseconds to delay before to emit input event */
                 debounce: number;
                 /** The first option will always be focused (easier to just hit enter or tab) */
@@ -30,7 +33,7 @@ declare module "../index" {
                 /** Open dropdown list on focus */
                 openOnFocus: boolean;
                 /** Max height of dropdown content */
-                maxHeight: number | string;
+                maxHeight: Numberish;
                 /** Makes the component check if list reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Icon pack to use */
@@ -281,6 +284,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 monthNames: string[];
                 /** Size of the control input */
                 size: string;
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Open dropdown on focus */
                 openOnFocus: boolean;
                 /** Close dropdown on click */
@@ -452,6 +457,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Size of the input control */
                 size: string;
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Open dropdown on focus */
                 openOnFocus: boolean;
                 /** Custom function to format a date into a string */
@@ -486,7 +493,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Makes the component check if menu reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Max height of dropdown content */
-                maxHeight: number | string;
+                maxHeight: Numberish;
                 /** Position of the dropdown relative to the trigger */
                 position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
                 /** Custom animation (transition name) */
@@ -637,6 +644,8 @@ See icon library documentation for custom classes. */
                 size: string;
                 /** Color of the control */
                 variant: string;
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Show character counter when maxlength prop is passed */
                 counter: boolean;
                 /** Icon pack to use */
@@ -756,7 +765,7 @@ Use menu only in situations where your dropdown is related to a navigation menu.
         modal?: ComponentConfigBase &
             Partial<{
                 /** Width of the Modal */
-                width: number | string;
+                width: Numberish;
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Show an overlay */
@@ -780,6 +789,8 @@ Alert modals interrupt the user's workflow to communicate an important messages 
                 closeIcon: string;
                 /** Size of close icon */
                 closeIconSize: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
                 /** Mobile breakpoint as `max-width` value */
                 mobileBreakpoint: string;
                 /** Append the component to another part of the DOM.
@@ -942,6 +953,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 size: string;
                 /** Color of the control */
                 variant: string;
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -1229,7 +1242,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
         table?: ComponentConfigBase &
             Partial<{
                 /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
-                rowKey: string;
+                rowKey: undefined;
                 /** Define individual class for a row */
                 rowClass: ((row: unknown, index: number) => string);
                 /** Border to all cells */
@@ -1244,9 +1257,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 selectable: boolean;
                 /** Show header */
                 showHeader: boolean;
-                /** Position of the checkbox when checkable (if checkable) */
+                /** Position of the checkbox (if checkable) */
                 checkboxPosition: "left" | "right";
-                /** Color of the checkbox when checkable (if checkable) */
+                /** Color of the checkbox (if checkable) */
                 checkboxVariant: string;
                 /** Custom method to verify if a row is checkable (if checkable) */
                 isRowCheckable: ((row: unknown) => boolean);
@@ -1352,14 +1365,16 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 thDetailedClass: ClassDefinition;
                 /** Class of the table `th` element when sortable */
                 thSortableClass: ClassDefinition;
-                /** Class of the table header sort icon element */
-                thSortIconClass: ClassDefinition;
                 /** Class of the table `th` element that is currently sorted */
                 thCurrentSortClass: ClassDefinition;
                 /** Class of the table `th` element that is unsortable */
                 thUnselectableClass: ClassDefinition;
                 /** Class of the table `th` subheading element */
                 thSubheadingClass: ClassDefinition;
+                /** Class of the table header label element */
+                thLabelClass: ClassDefinition;
+                /** Class of the table header sort icon element */
+                thSortIconClass: ClassDefinition;
                 /** Class of the table `tr` element when selected */
                 trSelectedClass: ClassDefinition;
                 /** Class of the table `tr` element when checkable and checked */
@@ -1456,8 +1471,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 size: string;
                 /** Enable rounded style */
                 rounded: boolean;
-                /** The tag element will react to the hover states */
-                hoverable: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Close icon name */
@@ -1476,8 +1489,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 badgeClass: ClassDefinition;
                 /** Class of the root element when rounded */
                 roundedClass: ClassDefinition;
-                /** Class of the root element when hoverable */
-                hoverableClass: ClassDefinition;
                 /** Class of the label element */
                 labelClass: ClassDefinition;
                 /** Class of the icon element to the left of the tag */
@@ -1506,7 +1517,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Makes the component check if list reached scroll start or end and emit scroll events */
                 checkScroll: boolean;
                 /** Add close/delete button to the item */
-                closable: boolean;
+                closeable: boolean;
                 /** Icon pack to use */
                 iconPack: string;
                 /** Icon to be shown */
@@ -1535,8 +1546,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 containerClass: ClassDefinition;
                 /** Class of the tag item element */
                 itemClass: ClassDefinition;
-                /** Class of the tag item close button element */
-                closeClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
                 /** Class configuration for the underlying autocomplete component */
@@ -1544,6 +1553,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         timepicker?: ComponentConfigBase &
             Partial<{
+                /** Makes input full width when inside a grouped or addon field */
+                expanded: boolean;
                 /** Size of the button */
                 size: string;
                 /** Open dropdown on focus */
@@ -1648,6 +1659,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Color of the control */
                 variant: string;
+                /** Upload will be expanded (full-width) */
+                expanded: boolean;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element when expanded */

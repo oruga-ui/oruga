@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     size: () => getDefault("autocomplete.size"),
     position: () => getDefault("autocomplete.position", "auto"),
     placeholder: undefined,
-    expanded: false,
+    expanded: () => getDefault("autocomplete.expanded", false),
     rounded: false,
     disabled: false,
     maxlength: undefined,
@@ -410,7 +410,7 @@ const itemFooterClasses = defineClasses([
 // #endregion --- Computed Component Classes ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: inputValue });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
 </script>
 
 <template>

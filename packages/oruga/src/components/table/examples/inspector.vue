@@ -83,7 +83,7 @@ const columns: TableColumn[] = [
 
 const inspectData: InspectData<
     TableClasses,
-    TableProps<unknown> & TableColumnProps<unknown>
+    TableProps<unknown> & TableColumnProps<unknown, string>
 > = {
     rootClass: {
         class: "rootClass",
@@ -205,11 +205,6 @@ const inspectData: InspectData<
         description: "Class of the table `th` element when sortable.",
         properties: ["sortable"],
     },
-    thSortIconClass: {
-        class: "thSortIconClass",
-        description: "Class of the table header sort icon element.",
-        info: "Click on 'First Name' header to sort elements and see it in action!",
-    },
     thCurrentSortClass: {
         class: "thCurrentSortClass",
         description:
@@ -225,6 +220,15 @@ const inspectData: InspectData<
         class: "thSubheadingClass",
         description: "Class of the table `th` subheading element",
         properties: ["subheading"],
+    },
+    thLabelClass: {
+        class: "thLabelClass",
+        description: "Class of the table header label element.",
+    },
+    thSortIconClass: {
+        class: "thSortIconClass",
+        description: "Class of the table header sort icon element.",
+        info: "Click on 'First Name' header to sort elements and see it in action!",
     },
     trSelectedClass: {
         class: "trSelectedClass",

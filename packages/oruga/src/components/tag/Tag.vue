@@ -25,11 +25,10 @@ const props = withDefaults(defineProps<TagProps>(), {
     variant: () => getDefault("tag.variant"),
     size: () => getDefault("tag.size"),
     rounded: () => getDefault("tag.rounded", false),
-    hoverable: () => getDefault("tag.hoverable", false),
-    closable: false,
+    closeable: false,
     icon: undefined,
     iconPack: () => getDefault("tag.iconPack"),
-    closeIcon: () => getDefault("tag.closeIcon"),
+    closeIcon: () => getDefault("tag.closeIcon", "close"),
     closeIconPack: () => getDefault("tag.closeIconPack"),
     ariaCloseLabel: () => getDefault("tag.ariaCloseLabel", "Close"),
 });
@@ -67,12 +66,6 @@ const rootClasses = defineClasses(
         computed(() => !!props.size),
     ],
     ["roundedClass", "o-tag--rounded", null, computed(() => !!props.rounded)],
-    [
-        "hoverableClass",
-        "o-tag--hoverable",
-        null,
-        computed(() => !!props.hoverable),
-    ],
     ["badgeClass", "o-tag--badge", null, computed(() => !!props.badge)],
 );
 
@@ -80,20 +73,19 @@ const iconClasses = defineClasses(["iconClass", "o-tag__icon"]);
 
 const labelClasses = defineClasses(["labelClass", "o-tag__label"]);
 
-const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
+const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
 </script>
 
 <template>
-    <div data-oruga="tag" :class="rootClasses">
+    <span data-oruga="tag" :class="rootClasses">
         <o-icon
             v-if="icon"
             :class="iconClasses"
             :pack="iconPack"
             :icon="icon"
-            :size="size"
-            both />
+            :size="size" />
 
-        <span :class="labelClasses">
+        <span v-if="$slots.default || label" :class="labelClasses">
             <!--
                 @slot Override the tag label
             -->
@@ -106,19 +98,14 @@ const closeClasses = defineClasses(["closeClass", "o-tag_close_icon"]);
         -->
         <slot name="close" :close="close">
             <o-icon
-                v-if="closable"
+                v-if="closeable"
                 :class="closeClasses"
                 :pack="closeIconPack"
                 :icon="closeIcon"
                 :size="size"
                 clickable
-                tabindex="0"
-                role="button"
                 :aria-label="ariaCloseLabel"
-                both
-                @keyup.enter="close"
-                @keyup.space="close"
                 @click="close" />
         </slot>
-    </div>
+    </span>
 </template>

@@ -9,8 +9,8 @@ import {
     type Component,
 } from "vue";
 
-import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
+import OTag from "../tag/Tag.vue";
 
 import { getDefault } from "@/utils/config";
 import {
@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
     checkScroll: () => getDefault("taginput.checkScroll", false),
-    closable: () => getDefault("taginput.closable", true),
+    closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
     closeIcon: () => getDefault("taginput.closeIcon", "close"),
@@ -77,7 +77,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string[] | number[] | object[]} updated modelValue prop
+     * @param value {unknown[]} updated modelValue prop
      */
     "update:model-value": [value: ModelValue[]];
     /**
@@ -93,12 +93,12 @@ const emits = defineEmits<{
     input: [value: string, event: Event];
     /**
      * new item got added
-     * @param value {string | number | object} added item
+     * @param value {unknown} added item
      */
     add: [value: T];
     /**
      * item got removed
-     * @param value {string | number | object} removed item
+     * @param value {unknown} removed item
      */
     remove: [value: T];
     /**
@@ -136,11 +136,8 @@ const emits = defineEmits<{
 const autocompleteRef = useTemplateRef<Component>("autocompleteComponent");
 
 // use form input functionalities
-const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
-    autocompleteRef,
-    emits,
-    props,
-);
+const { checkHtml5Validity, setFocus, onFocus, onBlur, onInvalid } =
+    useInputHandler(autocompleteRef, emits, props);
 
 const isDropdownActive = ref(false);
 
@@ -170,7 +167,7 @@ const selectedOptions = computed(() => {
         const option = findOption<T>(groupedOptions, value);
         // return the found option or create a new option object
         if (option) return option;
-        else return { label: value, value, key: useId() };
+        else return { label: String(value), value, key: useId() };
     });
 });
 
@@ -284,17 +281,7 @@ const containerClasses = defineClasses([
     "o-taginput__container",
 ]);
 
-const itemClasses = defineClasses(
-    ["itemClass", "o-taginput__item"],
-    [
-        "variantClass",
-        "o-taginput__item--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
-    ],
-);
-
-const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
+const itemClasses = defineClasses(["itemClass", "o-taginput__item"]);
 
 const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 
@@ -322,7 +309,7 @@ const autocompleteBind = computed(() => ({
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: selectedItems });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
 </script>
 
 <template>
@@ -339,25 +326,17 @@ defineExpose({ focus: setFocus, value: selectedItems });
                 :items="selectedItems"
                 :options="selectedOptions"
                 :remove-item="removeItem">
-                <span
+                <o-tag
                     v-for="(option, index) in selectedOptions"
                     :key="option.key"
-                    :class="itemClasses">
-                    <span> {{ option.label }}</span>
-
-                    <o-icon
-                        v-if="closable && !disabled"
-                        :class="closeClasses"
-                        :pack="iconPack"
-                        :icon="closeIcon"
-                        clickable
-                        tabindex="0"
-                        role="button"
-                        :aria-label="ariaCloseLabel"
-                        both
-                        @keydown.enter="removeItem(index, $event)"
-                        @click="removeItem(index, $event)" />
-                </span>
+                    :label="option.label"
+                    :variant="variant"
+                    :class="itemClasses"
+                    :closeable="closeable && !disabled"
+                    :close-icon="closeIcon"
+                    :close-icon-pack="iconPack"
+                    :aria-close-label="ariaCloseLabel"
+                    @close="removeItem(index, $event)" />
             </slot>
 
             <o-autocomplete

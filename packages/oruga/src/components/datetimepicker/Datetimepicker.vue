@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<DatetimepickerProps>(), {
     minDatetime: undefined,
     maxDatetime: undefined,
     size: () => getDefault("datetimepicker.size"),
-    expanded: false,
+    expanded: () => getDefault("datetimepicker.expanded", false),
     rounded: false,
     placeholder: undefined,
     readonly: false,
@@ -145,11 +145,8 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { setFocus, onBlur, onFocus, onInvalid } = useInputHandler(
-    elementRef,
-    emits,
-    props,
-);
+const { checkHtml5Validity, setFocus, onBlur, onFocus, onInvalid } =
+    useInputHandler(elementRef, emits, props);
 
 const { datetimeFormatter, datetimeParser } = useDateimepickerMixins(props);
 
@@ -336,7 +333,7 @@ const timepickerWrapperClasses = defineClasses([
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ focus: setFocus, value: vmodel });
+defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
 </script>
 
 <template>

@@ -30,10 +30,9 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 | -------------- | ------------------------------------------------ | ------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | ariaCloseLabel | Accessibility label for the close button         | string  | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;ariaCloseLabel: "Close"<br>}</code>  |
 | badge          | Enable badge style                               | boolean | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                 |
-| closable       | Add close/delete button to the item              | boolean | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
-| closeIcon      | Close icon name                                  | string  | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;closeIcon: undefined<br>}</code>     |
+| closeIcon      | Close icon name                                  | string  | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
 | closeIconPack  | Icon pack to use for the close icon              | string  | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;closeIconPack: undefined<br>}</code> |
-| hoverable      | The tag element will react to the hover states   | boolean | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;hoverable: false<br>}</code>         |
+| closeable      | Add close/delete button to the item              | boolean | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
 | icon           | Adds an icon to the left of the tag.             | string  | -                                                                               |                                                                                                                                                        |
 | iconPack       | Icon pack to use                                 | string  | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
 | label          | Tag label, unnecessary when default slot is used | string  | -                                                                               |                                                                                                                                                        |
@@ -73,7 +72,17 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable              | Default                                      |
+| -------------------------- | -------------------------------------------- |
+| $tag-color                 | var(--#{$prefix}grey-dark)                   |
+| $tag-background-color      | $control-brackground-color                   |
+| $tag-border-radius         | var(--#{$prefix}base-border-radius)          |
+| $tag-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded) |
+| $tag-padding               | 0 0.75em                                     |
+| $tag-icon-margin           | 0.5em                                        |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tag.scss)
+
 </div>
 <div class="theme-bulma">
 
@@ -85,7 +94,15 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable       | Default     |
+| ------------------- | ----------- |
+| $badge-bg           | $light      |
+| $badge-color        | $dark       |
+| $badge-icon-space   | 0.25em      |
+| $badge-border-color | transparent |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tag.scss)
+
 </div>
 
 </section>

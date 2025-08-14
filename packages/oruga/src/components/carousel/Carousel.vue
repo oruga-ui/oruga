@@ -345,7 +345,7 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
 
     delta.value = 0;
     // get dragging start x value
-    dragX.value = !!(event as TouchEvent).touches
+    dragX.value = (event as TouchEvent).touches
         ? (event as TouchEvent).touches[0].clientX
         : (event as MouseEvent).clientX;
 
@@ -356,7 +356,7 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
 function onDragOver(event: TouchEvent | MouseEvent): void {
     if (!isDragging.value) return;
 
-    const dragEndX = !!(event as TouchEvent).touches
+    const dragEndX = (event as TouchEvent).touches
         ? (
               (event as TouchEvent).changedTouches[0] ||
               (event as TouchEvent).touches[0]
@@ -498,17 +498,13 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                                 : iconAutoplayResume
                         "
                         :size="iconSize"
-                        both
-                        role="button"
-                        tabindex="0"
+                        clickable
                         :aria-label="
                             !isAutoplayPaused
                                 ? ariaAutoplayPauseLabel
                                 : ariaAutoplayResumeLabel
                         "
-                        @click="onToggleAutoplay"
-                        @keydown.enter.prevent="onToggleAutoplay"
-                        @keydown.space.prevent="onToggleAutoplay" />
+                        @click="onToggleAutoplay" />
                 </template>
             </slot>
 
@@ -532,26 +528,18 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBind[] {
                         :pack="iconPack"
                         :icon="iconPrev"
                         :size="iconSize"
-                        both
-                        role="button"
-                        tabindex="0"
+                        clickable
                         :aria-label="ariaPreviousLabel"
-                        @click="onPrev"
-                        @keydown.enter.prevent="onPrev"
-                        @keydown.space.prevent="onPrev" />
+                        @click="onPrev" />
                     <o-icon
                         v-show="hasArrows && hasNext"
                         :class="nextIconClasses"
                         :pack="iconPack"
                         :icon="iconNext"
                         :size="iconSize"
-                        both
-                        role="button"
-                        tabindex="0"
+                        clickable
                         :aria-label="ariaNextLabel"
-                        @click="onNext"
-                        @keydown.enter.prevent="onNext"
-                        @keydown.space.prevent="onNext" />
+                        @click="onNext" />
                 </template>
             </slot>
 

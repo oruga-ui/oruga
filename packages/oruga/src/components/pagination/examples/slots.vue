@@ -40,7 +40,7 @@ const basicRomanNumeral = ref([
 
 const current = ref(10);
 
-function convertToRoman(num) {
+function convertToRoman(num: number): string {
     const numArray = num.toString().split("");
     const base = numArray.length;
     let count = base - 1;
@@ -63,6 +63,7 @@ function convertToRoman(num) {
                     :aria-label="props.ariaLabel"
                     @click="props.onClick" />
             </template>
+
             <template #previous="props">
                 <o-button
                     label="Previous"
@@ -70,6 +71,7 @@ function convertToRoman(num) {
                     :aria-label="props.ariaLabel"
                     @click="props.onClick" />
             </template>
+
             <template #next="props">
                 <o-button
                     label="Next"

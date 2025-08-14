@@ -35,8 +35,8 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | ariaCloseLabel     | Accessibility label for the close button                                                                                                                                         | string                                                                                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;ariaCloseLabel: "Remove"<br>}</code> |
 | autocomplete       | Native options to use in HTML5 validation                                                                                                                                        | string                                                                                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;autocomplete: "off"<br>}</code>      |
 | checkScroll        | Makes the component check if list reached scroll start or end and emit scroll events                                                                                             | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;checkScroll: false<br>}</code>       |
-| closable           | Add close/delete button to the item                                                                                                                                              | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;closable: true<br>}</code>           |
 | closeIcon          | Icon name of close icon on selected item                                                                                                                                         | string                                                                                         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
+| closeable          | Add close/delete button to the item                                                                                                                                              | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;closeable: true<br>}</code>          |
 | counter            | Show counter when maxlength or maxtags props are passed                                                                                                                          | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;counter: true<br>}</code>            |
 | createItem         | Function to create a new item to push into v-model (items)                                                                                                                       | ((value: unknown) =&gt; unknown)                                                               | -                                                                               | <code style='white-space: nowrap; padding: 0;'>item as T</code>                                                                                             |
 | customValidity     | Custom HTML 5 validation error to set on the form control                                                                                                                        | string \| ((currentValue: unknown[] \| null , state: ValidityState) =&gt; string) \| undefined | -                                                                               |                                                                                                                                                             |
@@ -48,8 +48,8 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | input              | The value of the inner input, use v-model:input to make it two-way binding                                                                                                       | string                                                                                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>""</code>                                                                                                    |
 | keepFirst          | The first option will always be pre-selected (easier to just hit enter or tab)                                                                                                   | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;keepFirst: false<br>}</code>         |
 | keepOpen           | Keep open dropdown list after select                                                                                                                                             | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;keepOpen: false<br>}</code>          |
-| maxitems           | Limits the number of items, plus item counter                                                                                                                                    | number \| string                                                                               | -                                                                               |                                                                                                                                                             |
-| maxlength          | Same as native maxlength, plus character counter                                                                                                                                 | number \| string                                                                               | -                                                                               |                                                                                                                                                             |
+| maxitems           | Limits the number of items, plus item counter                                                                                                                                    | Numberish                                                                                      | -                                                                               |                                                                                                                                                             |
+| maxlength          | Same as native maxlength, plus character counter                                                                                                                                 | Numberish                                                                                      | -                                                                               |                                                                                                                                                             |
 | v-model            | The selected items, use v-model to make it two-way binding binding                                                                                                               | unknown[]                                                                                      | -                                                                               |                                                                                                                                                             |
 | openOnFocus        | Opens a dropdown with choices when the input field is focused                                                                                                                    | boolean                                                                                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>taginput: {<br>&nbsp;&nbsp;openOnFocus: true<br>}</code>        |
 | options            | Taginput options                                                                                                                                                                 | OptionsPropWithGroups&lt;unknown&gt;                                                           | -                                                                               |                                                                                                                                                             |
@@ -63,20 +63,20 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 ### Events
 
-| Event name         | Properties                                                             | Description                                    |
-| ------------------ | ---------------------------------------------------------------------- | ---------------------------------------------- |
-| scroll-start       |                                                                        | the list inside the dropdown reached the start |
-| scroll-end         |                                                                        | the list inside the dropdown reached it's end  |
-| icon-click         | **event** `Event` - native event                                       | on icon click event                            |
-| icon-right-click   | **event** `Event` - native event                                       | on icon right click event                      |
-| update:model-value | **value** `string[] \| number[] \| object[]` - updated modelValue prop | modelValue prop two-way binding                |
-| update:input       | **value** `string` - updated input prop                                | input prop two-way binding                     |
-| input              | **value** `string` - input value<br/>**event** `Event` - native event  | on input change event                          |
-| add                | **value** `string \| number \| object` - added item                    | new item got added                             |
-| remove             | **value** `string \| number \| object` - removed item                  | item got removed                               |
-| focus              | **event** `Event` - native event                                       | on input focus event                           |
-| blur               | **event** `Event` - native event                                       | on input blur event                            |
-| invalid            | **event** `Event` - native event                                       | on input invalid event                         |
+| Event name         | Properties                                                            | Description                                    |
+| ------------------ | --------------------------------------------------------------------- | ---------------------------------------------- |
+| scroll-start       |                                                                       | the list inside the dropdown reached the start |
+| scroll-end         |                                                                       | the list inside the dropdown reached it's end  |
+| icon-click         | **event** `Event` - native event                                      | on icon click event                            |
+| icon-right-click   | **event** `Event` - native event                                      | on icon right click event                      |
+| update:model-value | **value** `unknown[]` - updated modelValue prop                       | modelValue prop two-way binding                |
+| update:input       | **value** `string` - updated input prop                               | input prop two-way binding                     |
+| input              | **value** `string` - input value<br/>**event** `Event` - native event | on input change event                          |
+| add                | **value** `unknown` - added item                                      | new item got added                             |
+| remove             | **value** `unknown` - removed item                                    | item got removed                               |
+| focus              | **event** `Event` - native event                                      | on input focus event                           |
+| blur               | **event** `Event` - native event                                      | on input blur event                            |
+| invalid            | **event** `Event` - native event                                      | on input invalid event                         |
 
 ### Slots
 
@@ -107,16 +107,11 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                   | Default                             |
-| ------------------------------- | ----------------------------------- |
-| $taginput-counter-font-size     | 0.75em                              |
-| $taginput-counter-margin        | 0.25rem 0 0 0.5rem                  |
-| $taginput-item-background-color | var(--#{$prefix}primary)            |
-| $taginput-item-color            | var(--#{$prefix}primary-invert)     |
-| $taginput-item-border-radius    | var(--#{$prefix}base-border-radius) |
-| $taginput-item-margin           | 0.275em                             |
-| $taginput-item-padding          | 0 0.75em 0 0.75em                   |
-| $taginput-item-icon-margin      | 0.5em                               |
+| SASS Variable               | Default            |
+| --------------------------- | ------------------ |
+| $taginput-counter-font-size | 0.75em             |
+| $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
+| $taginput-item-margin       | 0.275em            |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
 
@@ -139,11 +134,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 
 | SASS Variable               | Default            |
 | --------------------------- | ------------------ |
-| $taginput-badge-bg          | $light             |
-| $taginput-badge-color       | $dark              |
-| $taginput-badge-font-size   | 0.9em              |
 | $taginput-badge-margin      | 0.25em             |
-| $taginput-badge-icon-space  | 0.25em             |
 | $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
 | $taginput-counter-font-size | 0.75rem            |
 

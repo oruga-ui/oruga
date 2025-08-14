@@ -3,10 +3,11 @@ import {
     defineComponent,
     type DefineComponent,
     type VNode,
+    type VNodeChild,
     type VNodeTypes,
 } from "vue";
 import type { ComponentProps } from "vue-component-type-helpers";
-import type { DynamicComponent } from "@/types";
+import type { ClassBind, DynamicComponent } from "@/types";
 
 type SlotComponentProps<C extends VNodeTypes> = {
     /** Component to be get the slot from */
@@ -23,6 +24,8 @@ type SlotComponentProps<C extends VNodeTypes> = {
      * @default "div"
      */
     tag?: DynamicComponent;
+    /** Class for the slot wrapper element */
+    class?: ClassBind | ClassBind[];
 };
 
 /** This components renders a specific slot and only the slot of another component */
@@ -31,13 +34,23 @@ export default defineComponent<SlotComponentProps<any>>(
         const _props = { tag: "div", name: "default", ...props };
 
         return (): VNode => {
-            const slot = props.component.$slots[_props.name]
-                ? props.component.$slots[_props.name](props.props)
-                : slots.default
-                  ? slots.default()
-                  : {};
+            let slot: VNodeChild | (() => VNodeChild) = (): VNodeChild =>
+                props.component.$slots[_props.name]
+                    ? props.component.$slots[_props.name](props.props)
+                    : slots.default
+                      ? slots.default()
+                      : undefined;
+            if (typeof _props.tag === "string") {
+                // Vue prefers components' children to be passed as functions,
+                // but native elements' children can't be passed that way.
+                slot = slot();
+            }
 
-            return createVNode(_props.tag as VNode, {}, slot);
+            return createVNode(
+                _props.tag as VNode,
+                { class: _props.class },
+                slot,
+            );
         };
     },
     {

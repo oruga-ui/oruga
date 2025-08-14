@@ -41,14 +41,6 @@ const inspectData: InspectData<TagClasses, TagProps> = {
             data.rounded = true;
         },
     },
-    hoverableClass: {
-        class: "hoverableClass",
-        description: "Class of the root element when hoverable.",
-        properties: ["hoverable"],
-        action: (data): void => {
-            data.hoverable = true;
-        },
-    },
     labelClass: {
         class: "labelClass",
         description: "Class of the label element.",
@@ -64,9 +56,9 @@ const inspectData: InspectData<TagClasses, TagProps> = {
     closeClass: {
         class: "closeClass",
         description: "Class of the tag item close button element.",
-        properties: ["closable"],
+        properties: ["closeable"],
         action: (data): void => {
-            data.closable = true;
+            data.closeable = true;
         },
     },
 };

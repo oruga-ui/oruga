@@ -15,13 +15,21 @@ import { useDebounce } from "./useDebounce";
 import { useSequentialId } from "./useSequentialId";
 
 export type ProviderItem<T = unknown> = {
+    /** The root element of the item component */
+    el: MaybeRefOrGetter<HTMLElement | null>;
+    /** The index of the item component in the parent */
     index: number;
-    data?: T;
+    /** A unique identifier for the item component */
     identifier: string;
+    /** Item component data */
+    data?: T;
 };
 
 type PovidedData<P, I = unknown> = {
-    registerItem: (data?: I) => ProviderItem<I>;
+    registerItem: (
+        el: MaybeRefOrGetter<HTMLElement | null>,
+        data?: I,
+    ) => ProviderItem<I>;
     unregisterItem: (item: ProviderItem) => void;
     data?: ComputedRef<P>;
 };
@@ -74,6 +82,8 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
                 .map((item) => `[data-id="${key}-${item.identifier}"]`)
                 .join(",");
 
+            if (!ids) return;
+
             // query all child items in the order of the DOM appearance
             const children = parent.querySelectorAll(ids);
 
@@ -99,10 +109,13 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
 
     const { nextSequence } = useSequentialId(1);
 
-    function registerItem(data?: ItemData): ProviderItem<ItemData> {
+    function registerItem(
+        el: MaybeRefOrGetter<HTMLElement | null>,
+        data?: ItemData,
+    ): ProviderItem<ItemData> {
         const index = childItems.value.length;
         const identifier = nextSequence();
-        const item = { index, data, identifier };
+        const item: ProviderItem<ItemData> = { el, index, identifier, data };
         // add new item to the child list
         childItems.value = [
             ...childItems.value,
@@ -150,6 +163,7 @@ type ProviderChildOptions<T = unknown> = {
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
+    el: MaybeRefOrGetter<HTMLElement | null>,
     options: Omit<ProviderChildOptions<ItemData>, "needParent"> & {
         needParent: true;
     },
@@ -159,6 +173,7 @@ export function useProviderChild<ParentData, ItemData = unknown>(
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
+    el: MaybeRefOrGetter<HTMLElement | null>,
     options: Omit<ProviderChildOptions<ItemData>, "needParent"> & {
         needParent: false;
     },
@@ -168,6 +183,7 @@ export function useProviderChild<ParentData, ItemData = unknown>(
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
+    el: MaybeRefOrGetter<HTMLElement | null>,
     options: Omit<ProviderChildOptions<ItemData>, "needParent"> & {
         register: false;
     },
@@ -177,6 +193,7 @@ export function useProviderChild<ParentData, ItemData = unknown>(
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
+    el: MaybeRefOrGetter<HTMLElement | null>,
     options: Omit<ProviderChildOptions<ItemData>, "needParent" | "register"> & {
         needParent: true;
         register: true;
@@ -187,6 +204,7 @@ export function useProviderChild<ParentData, ItemData = unknown>(
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
+    el: MaybeRefOrGetter<HTMLElement | null>,
     options?: Omit<ProviderChildOptions<ItemData>, "needParent" | "register">,
 ): {
     parent: Readonly<Ref<ParentData>>;
@@ -198,6 +216,7 @@ export function useProviderChild<ParentData, ItemData = unknown>(
  * @param options additional options
  */
 export function useProviderChild<ParentData, ItemData = unknown>(
+    el: MaybeRefOrGetter<HTMLElement | null>,
     options?: ProviderChildOptions<ItemData>,
 ): {
     parent: Readonly<Ref<ParentData | undefined>>;
@@ -229,6 +248,7 @@ export function useProviderChild<ParentData, ItemData = unknown>(
 
     if (parent && options.register)
         item.value = parent.registerItem(
+            el,
             options?.data,
         ) as ProviderItem<ItemData>;
 

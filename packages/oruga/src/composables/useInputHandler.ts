@@ -10,10 +10,10 @@ import {
     type Component,
 } from "vue";
 import { injectField } from "@/components/field/fieldInjection";
-import { unrefElement } from "./unrefElement";
 import { getOption } from "@/utils/config";
 import { isSSR } from "@/utils/ssr";
 import { isDefined } from "@/utils/helpers";
+import { unrefElement } from "./unrefElement";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.

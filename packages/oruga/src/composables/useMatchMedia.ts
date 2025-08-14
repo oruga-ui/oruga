@@ -1,7 +1,7 @@
 import { getCurrentInstance, ref, type Ref } from "vue";
 import { getOption } from "@/utils/config";
-import { useEventListener } from "./useEventListener";
 import { isClient } from "@/utils/ssr";
+import { useEventListener } from "./useEventListener";
 
 /**
  * Checks if the match media is mobile.
@@ -22,20 +22,17 @@ export function useMatchMedia(mobileBreakpoint?: string): {
     // get component props
     const props = vm.props;
 
-    const configField = vm.proxy?.$options.configField;
-    if (!configField)
+    const componentKey = vm.proxy?.$options.configField;
+    if (!componentKey)
         throw new Error("component must define the 'configField' option.");
 
     // get mobileBreakpoint width value
     let width = props.mobileBreakpoint;
     if (!width) {
-        const defaultWidth = getOption(
-            `mobileBreakpoint`,
-            mobileBreakpoint || "1023px",
-        );
-
-        width = getOption(`${configField}.mobileBreakpoint`, defaultWidth);
+        const defaultWidth = getOption(`mobileBreakpoint`, mobileBreakpoint);
+        width = getOption(`${componentKey}.mobileBreakpoint`, defaultWidth);
     }
+    if (!width) return { isMobile };
 
     // define match media query ref
     mediaQuery.value = isClient

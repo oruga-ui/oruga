@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T, K extends string">
-import { computed, getCurrentInstance } from "vue";
+import { computed, getCurrentInstance, useTemplateRef } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
@@ -36,6 +36,8 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     tdAttrs: undefined,
 });
 
+const rootRef = useTemplateRef("rootElement");
+
 const style = computed(() => ({
     width: toCssDimension(props.width),
 }));
@@ -49,7 +51,7 @@ const vm = getCurrentInstance();
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TableColumnComponent<T>>(() => ({
     ...props,
-    $el: vm!.proxy!,
+    $instance: vm!.proxy!,
     $slots: vm!.slots,
     style: style.value,
     thClasses: thClasses.value,
@@ -60,9 +62,9 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
 const { parent, item } = useProviderChild<
     TableComponent,
     TableColumnComponent<T>
->({ data: providedData });
+>(rootRef, { data: providedData });
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const thClasses = defineClasses(
     [
@@ -112,6 +114,8 @@ const tdClasses = defineClasses(
     ],
 );
 
+// #endregion --- Computed Component Classes ---
+
 // --- SLOTS TYPED OBJECTS ---
 
 // these properties are just for type addings
@@ -124,7 +128,10 @@ const filters = {} as Record<string, string>;
 </script>
 
 <template>
-    <span data-oruga="table-column" :data-id="`table-${item.identifier}`">
+    <span
+        ref="rootElement"
+        data-oruga="table-column"
+        :data-id="`table-${item.identifier}`">
         {{ label }}
 
         <!--
@@ -135,11 +142,11 @@ const filters = {} as Record<string, string>;
         <template v-if="false">
             <!--
                 @slot Default Slot
-                @binding {T} row - row data 
-                @binding {TableColumn} column - column definition 
-                @binding {number} index - row index 
-                @binding {number} colindex - column index 
-                @binding {(): void} toggle-details - toggle details function 
+                @binding {T} row - row data
+                @binding {TableColumn} column - column definition
+                @binding {number} index - row index
+                @binding {number} colindex - column index
+                @binding {(): void} toggle-details - toggle details function
             -->
             <slot
                 :row="row"
@@ -148,22 +155,22 @@ const filters = {} as Record<string, string>;
                 :colindex="index"
                 :toggle-details="toggle" />
             <!--
-                @slot Override header label 
-                @binding {TableColumn} column - column definition 
-                @binding {number} index - column index 
+                @slot Override header label
+                @binding {TableColumn} column - column definition
+                @binding {number} index - column index
             -->
             <slot name="header" :column="column" :index="index" />
             <!--
-                @slot Override subheading label 
-                @binding {TableColumn} column - column definition 
-                @binding {number} index - column index 
+                @slot Override subheading label
+                @binding {TableColumn} column - column definition
+                @binding {number} index - column index
             -->
             <slot name="subheading" :column="column" :index="index" />
 
             <!--
-                @slot Override searchable input 
-                @binding {TableColumn} column - column definition 
-                @binding {number} index - column index 
+                @slot Override searchable input
+                @binding {TableColumn} column - column definition
+                @binding {number} index - column index
                 @binding {object} filters - active filters object
             -->
             <slot

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { getDefault } from "@/utils/config";
+import { getDefault, getOption } from "@/utils/config";
 import getIcons from "@/utils/icons";
 import { defineClasses } from "@/composables";
 
@@ -30,33 +30,41 @@ const props = withDefaults(defineProps<IconProps>(), {
     clickable: false,
     spin: false,
     rotation: undefined,
-    both: false,
 });
+
+const emits = defineEmits<{
+    /**
+     * on item click event
+     * @param event {event} native event
+     */
+    click: [event: Event];
+}>();
+
+const environment = getOption("environment");
 
 const rootStyle = computed(() => {
     const style = {};
-    if (props.rotation) {
-        style["transform"] = `rotate(${props.rotation}deg)`;
-    }
+    if (props.rotation) style["transform"] = `rotate(${props.rotation}deg)`;
     return style;
 });
 
-const iconConfig = computed(() => getIcons()[props.pack]);
+const icons = getIcons();
 
-const iconPrefix = computed(() =>
-    iconConfig.value?.iconPrefix ? iconConfig.value.iconPrefix : "",
-);
+const iconConfig = computed(() => icons[props.pack]);
+
+const iconPrefix = computed(() => iconConfig.value?.iconPrefix ?? "");
 
 const customSizeByPack = computed(() => {
     if (iconConfig.value?.sizes) {
-        if (props.size && iconConfig.value.sizes[props.size] !== undefined) {
+        if (props.size && iconConfig.value.sizes[props.size] !== undefined)
             return iconConfig.value.sizes[props.size];
-        } else if (iconConfig.value.sizes.default) {
+        else if (iconConfig.value.sizes.default)
             return iconConfig.value.sizes.default;
-        }
     }
     return null;
 });
+
+const computedSize = computed(() => props.customSize || customSizeByPack.value);
 
 /**
  * Internal icon name based on the pack.
@@ -64,34 +72,25 @@ const customSizeByPack = computed(() => {
  * internal icons are always MDI.
  */
 const computedIcon = computed(
-    () => `${iconPrefix.value}${getEquivalentIconOf(props.icon)}`,
+    () => `${iconPrefix.value}${getEquivalentIconOf(props.icon ?? "")}`,
 );
 
-const computedSize = computed(() => props.customSize || customSizeByPack.value);
-
-const computedVariant = computed(() => {
-    if (!props.variant) return;
-    let newVariant = "";
-    if (typeof props.variant === "string") {
-        newVariant = props.variant;
-    } else {
-        newVariant = Object.keys(props.variant).filter(
-            (key) => props.variant[key],
-        )[0];
-    }
-    return newVariant;
-});
-
 /** Equivalent icon name of the MDI. */
-function getEquivalentIconOf(value): string {
-    // Only transform the class if the both prop is set to true
-    if (!props.both) return value;
+function getEquivalentIconOf(value: string): string {
+    // Only transform the class if the env is docs prop is set to true
+    if (environment != "docs") return value;
     if (
         iconConfig.value?.internalIcons &&
         iconConfig.value?.internalIcons[value]
     )
         return iconConfig.value.internalIcons[value];
     return value;
+}
+
+function onClick(event: Event): void {
+    if (!props.clickable) return;
+    event.preventDefault();
+    emits("click", event);
 }
 
 // --- Computed Component Classes ---
@@ -114,14 +113,22 @@ const rootClasses = defineClasses(
     [
         "variantClass",
         "o-icon--",
-        computedVariant,
-        computed(() => !!computedVariant.value),
+        computed(() => props.variant),
+        computed(() => !!props.variant),
     ],
 );
 </script>
 
 <template>
-    <span data-oruga="icon" :class="rootClasses" :style="rootStyle">
+    <span
+        data-oruga="icon"
+        :class="rootClasses"
+        :style="rootStyle"
+        :tabindex="clickable ? 0 : undefined"
+        :role="clickable ? 'button' : undefined"
+        @click="onClick"
+        @keydown.enter="onClick"
+        @keydown.space="onClick">
         <!-- custom icon component -->
         <component
             :is="component"

@@ -31,15 +31,15 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 ### Props
 
-| Prop name | Description                                                      | Type                            | Values                                                                          | Default                                                                                                                                                   |
-| --------- | ---------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaLabel | Accessibility aria-label to be passed to the nav wrapper element | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaLabel: "breadcrumb"<br>}</code>   |
-| options   | breadcrumb items, unnecessary when default slot is used          | SimpleOptionsProp               | -                                                                               |                                                                                                                                                           |
-| override  | Override existing theme classes completely                       | boolean                         | -                                                                               |                                                                                                                                                           |
-| position  | Position of the breadcrumb                                       | "centered" \| "left" \| "right" | `left`, `centered`, `right`                                                     | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;position: "left"<br>}</code>     |
-| separator | The separator between breadcrumb items                           | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: undefined<br>}</code> |
-| size      | Size of the breadcrumb                                           | string                          | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;size: "small"<br>}</code>        |
-| variant   | Color variant of the breadcrumb                                  | string                          | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;variant: "primary"<br>}</code>   |
+| Prop name | Description                                                      | Type                            | Values                                                                          | Default                                                                                                                                                  |
+| --------- | ---------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaLabel | Accessibility aria-label to be passed to the nav wrapper element | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;ariaLabel: "Breadcrumb"<br>}</code>  |
+| options   | breadcrumb items, unnecessary when default slot is used          | SimpleOptionsProp               | -                                                                               |                                                                                                                                                          |
+| override  | Override existing theme classes completely                       | boolean                         | -                                                                               |                                                                                                                                                          |
+| position  | Position of the breadcrumb                                       | "centered" \| "left" \| "right" | `left`, `centered`, `right`                                                     | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;position: undefined<br>}</code> |
+| separator | The separator between breadcrumb items                           | string                          | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;separator: "/"<br>}</code>      |
+| size      | Size of the breadcrumb                                           | string                          | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;size: undefined<br>}</code>     |
+| variant   | Color variant of the breadcrumb                                  | string                          | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>breadcrumb: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
 
 ### Slots
 
@@ -76,10 +76,10 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 ### Slots
 
-| Name      | Description    | Bindings                                  |
-| --------- | -------------- | ----------------------------------------- |
-| seperator | Item seperator | **seperator** `string` - seperator string |
-| default   | Override label |                                           |
+| Name      | Description    | Bindings |
+| --------- | -------------- | -------- |
+| seperator | Item seperator |          |
+| default   | Override label |          |
 
 </section>
 
@@ -99,19 +99,46 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable                            | Default                             |
+| ---------------------------------------- | ----------------------------------- |
+| $breadcrumb-list-line-height             | 1.25em                              |
+| $breadcrumb-item-spacer                  | 0.25em                              |
+| $breadcrumb-item-font-size               | $base-font-size                     |
+| $breadcrumb-item-padding                 | 0.3em                               |
+| $breadcrumb-list-border-radius           | var(--#{$prefix}base-border-radius) |
+| $breadcrumb-item-color                   | var(--#{$prefix}grey-dark)          |
+| $breadcrumb-item-background-color        | transparent                         |
+| $breadcrumb-item-active-color            | var(--#{$prefix}primary)            |
+| $breadcrumb-item-active-background-color | transparent                         |
+| $breadcrumb-item-disabled-color          | var(--#{$prefix}grey-light)         |
+| $breadcrumb-item-hover-color             | var(--#{$prefix}white)              |
+| $breadcrumb-item-hover-background-color  | var(--#{$prefix}secondary)          |
+| $breadcrumb-seperator-color              | inherit                             |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
 </div>
 <div class="theme-bulma">
 
 > Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable      | Default    |
+| ------------------ | ---------- |
+| $breadcrumb-colors | dv.$colors |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
 </div>
 <div class="theme-bootstrap">
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable     | Default                  |
+| ----------------- | ------------------------ |
+| $breadcrumb-color | var(--#{$prefix}primary) |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_breadcrumb.scss)
+
 </div>
 
 </section>

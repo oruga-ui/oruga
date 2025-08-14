@@ -1,5 +1,5 @@
 import { Comment, Fragment, Text } from "vue";
-import type { DeepType } from "@/types";
+import type { DeepKeys, DeepType, Numberish } from "@/types";
 
 /**
  * +/- function to native math sign
@@ -71,7 +71,7 @@ export const defaultIfUndefined = <T>(
 ): T => (isDefined(value) ? value : defaultValue);
 
 export const toCssDimension = (
-    width: string | number | undefined,
+    width: Numberish | undefined,
     dimension: string = "px",
 ): string | undefined =>
     !isDefined(width)
@@ -84,9 +84,9 @@ export const toCssDimension = (
  * Sort an array by key without mutating original data.
  * Call the user sort function if it was passed.
  */
-export function sortBy<T>(
+export function sortBy<T extends object>(
     array: T[],
-    key: string,
+    key: DeepKeys<T>,
     fn?: (a: T, b: T, asc: boolean) => number,
     isAsc: boolean = false,
     mutate: boolean = false,
@@ -140,12 +140,7 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
         for (const key of keys1) {
             const val1 = valueA[key];
             const val2 = valueB[key];
-            const areObjects = isObject(val1) && isObject(val2);
-            if (
-                (areObjects && !isEqual(val1, val2)) ||
-                (!areObjects && val1 !== val2)
-            )
-                return false;
+            if (!isEqual(val1, val2)) return false;
         }
         // If all checks pass, the objects are deep equal.
         return true;
@@ -156,7 +151,8 @@ export function isEqual(valueA: unknown, valueB: unknown): boolean {
         // Check if the number of keys is the same.
         if (valueA.length !== valueB.length) return false;
         // Check if each value of the array is the same.
-        if (!valueA.every((val, index) => val === valueB[index])) return false;
+        if (!valueA.every((val, index) => isEqual(val, valueB[index])))
+            return false;
         // If all checks pass, the arrays are deep equal.
         return true;
     }
@@ -177,33 +173,6 @@ export function isElement(el: any): el is Element {
               el !== null &&
               el.nodeType === 1 &&
               typeof el.nodeName === "string";
-}
-
-/**
- * Return display text for an option.
- * If option is an object, get the property from path based on given field, or else just the property.
- * Apply a formatter function to the property if given.
- * Return the display label.
- *
- * @param obj Object to get the label for
- * @param field  Property path of the object to use as display text
- * @param formatter Function to format the property to a string
- */
-export function getPropertyValue<O, K extends keyof O | string>(
-    obj: O,
-    field?: K,
-    formatter?: (value: DeepType<O, K>, option: O) => string,
-): string {
-    if (!obj) return "";
-
-    const property = (
-        field ? getValueByPath<O, K>(obj, field) : obj
-    ) as DeepType<O, K>;
-
-    const label =
-        typeof formatter === "function" ? formatter(property, obj) : property;
-
-    return String(label || "");
 }
 
 /**
@@ -244,13 +213,53 @@ export function mergeDeep(target: any, source: any): any {
 }
 
 /**
+ * Return display text for an option.
+ * If option is an object, get the property from path based on given field, or else just the property.
+ * Apply a formatter function to the property if given.
+ * Return the display label.
+ *
+ * @param obj Object to get the label for
+ * @param field  Property path of the object to use as display text
+ * @param formatter Function to format the property to a string
+ */
+export function getPropertyValue<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, field?: K, formatter?: (value: D, option: O) => string): string {
+    if (!obj) return "";
+
+    const property = (field ? getValueByPath<O, K, D>(obj, field) : obj) as D;
+
+    const label =
+        typeof formatter === "function" ? formatter(property, obj) : property;
+
+    return String(label || "");
+}
+
+/**
  * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<O, K extends keyof O | string>(
-    obj: O,
-    path: K,
-    defaultValue?: DeepType<O, K>,
-): DeepType<O, K> | undefined {
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {})): D | undefined;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue: D): D;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue?: D): D | undefined;
+export function getValueByPath<
+    O,
+    K extends DeepKeys<O>,
+    D extends DeepType<O, K>,
+>(obj: O, path: K | (string & {}), defaultValue?: D): D | undefined {
     if (!obj || typeof obj !== "object" || typeof path !== "string")
         return defaultValue;
 
@@ -264,14 +273,16 @@ export function getValueByPath<O, K extends keyof O | string>(
 /**
  * Set a value of an object property/path even if it's nested
  */
-export function setValueByPath(
-    obj: Record<string, any>,
-    path: string,
-    value: any,
+export function setValueByPath<O, K extends DeepKeys<O>>(
+    obj: O,
+    path: K,
+    value: DeepType<O, K>,
 ): void {
+    if (typeof path !== "string") return;
+
     const p = path.split(".");
     if (p.length === 1) {
-        obj[path] = value;
+        obj[p[0]] = value;
         return;
     }
     const field = p[0];
@@ -294,6 +305,7 @@ export function removeElement(el: Element): void {
 export function escapeRegExpChars(value: string): string {
     if (!value) return value;
 
+    // eslint-disable-next-line no-useless-escape
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
