@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed } from "vue";
-
 import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ButtonProps } from "./props";
+import OLoading from "@/components/loading/Loading.vue";
+
+import type { CardProps } from "./props";
 
 /**
- * An all-around flexible and composable content container.
+ * An flexible and extensible content container.
  * @displayName Card
  * @style _card.scss
  */
@@ -17,72 +17,146 @@ defineOptions({
     configField: "card",
 });
 
-const props = withDefaults(defineProps<ButtonProps>(), {
+withDefaults(defineProps<CardProps>(), {
     override: undefined,
+    title: undefined,
+    subtitle: undefined,
+    content: undefined,
+    imageSrc: undefined,
+    imageAlt: undefined,
+    closeable: () => getDefault("card.closeable", false),
+    ariaCloseLabel: () => getDefault("card.ariaCloseLabel"),
+    iconPack: () => getDefault("card.iconPack"),
+    closeIcon: undefined,
+    closeIconSize: undefined,
 });
 
-// --- Computed Component Classes ---
+defineEmits<{
+    /**
+     * close button click event
+     * @param event {Event} native event
+     */
+    close: [event: Event];
+}>();
 
-const rootClasses = defineClasses(["rootClass", "o-button"]);
+// #region --- Computed Component Classes ---
+
+const rootClasses = defineClasses(["rootClass", "o-card"]);
+
+const headerClasses = defineClasses(["headerClass", "o-card__header"]);
+
+const titleClasses = defineClasses(["titleClass", "o-card__header_title"]);
+
+const subtitleClasses = defineClasses([
+    "subtitleClass",
+    "o-card__header_subtitle",
+]);
+
+const closeClasses = defineClasses(["closeClass", "o-card__close"]);
+
+const imageClasses = defineClasses(["imageClass", "o-card__image"]);
+
+const figureClasses = defineClasses(["figureClass", "o-card__image__figure"]);
+
+const bodyClasses = defineClasses(["bodyClass", "o-card__body"]);
+
+const contentClasses = defineClasses(["contentClass", "o-card__body__content"]);
+
+const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
     <div data-oruga="card" :class="rootClasses">
-        <header class="card-header">
-            <slot name="header">
-                <p class="card-header-title">Card header</p>
+        <!-- Header -->
+        <header
+            v-if="
+                $slots.header ||
+                $slots.title ||
+                $slots.subtitle ||
+                title ||
+                subtitle ||
+                closeable
+            "
+            :class="headerClasses">
+            <!--
+                @slot Override the header 
+                @binding {(event: Event): void} close - function to emit a `close` event
+
+            -->
+            <slot name="header" :close="($event) => $emit('close', $event)">
+                <p :class="titleClasses">
+                    <!--
+                        @slot Override the header title, default is title prop
+                    -->
+                    <slot name="title"> {{ title }} </slot>
+                </p>
+
+                <p :class="subtitleClasses">
+                    <!--
+                        @slot Override the header subtitle, default is subtitle prop
+                    -->
+                    <slot name="subtitle"> {{ subtitle }} </slot>
+                </p>
             </slot>
 
-            <button class="card-header-icon" aria-label="more options">
-                <span class="icon">
-                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
-            </button>
-
             <button
-                v-if="closable"
+                v-if="closeable"
+                type="button"
                 :class="closeClasses"
                 :aria-label="ariaCloseLabel"
-                @click="$emits('close', $event)">
+                @click.stop="$emit('close', $event)">
                 <o-icon
                     clickable
                     :pack="iconPack"
                     :icon="closeIcon"
-                    :size="closeIconSize"
-                    both />
+                    :size="closeIconSize" />
             </button>
         </header>
 
-        <div class="card-image">
+        <!-- Image -->
+        <div v-if="$slots.image || imageSrc" :class="imageClasses">
+            <!--
+                @slot Override the image
+            -->
             <slot name="image">
-                <figure class="image is-4by3">
-                    <img
-                        src="https://bulma.io/assets/images/placeholders/1280x960.png"
-                        alt="Placeholder image" />
+                <figure :class="figureClasses">
+                    <img :src="imageSrc" :alt="imageAlt" />
                 </figure>
             </slot>
         </div>
 
-        <div class="card-body">
-            <slot name="body">
-                <h5 class="card-title">
-                    <slot name="title">Card title</slot>
-                </h5>
-
-                <h6 class="card-subtitle">
-                    <slot name="subtitle">Card subtitle </slot>
-                </h6>
-
-                <p class="card-text">
+        <!-- Body -->
+        <div
+            v-if="$slots.body || $slots.content || content"
+            :class="bodyClasses">
+            <!--
+                @slot Override the default card body
+            -->
+            <slot>
+                <p :class="contentClasses">
+                    <!--
+                        @slot Override the body content, default is content prop
+                    -->
                     <slot name="content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Phasellus nec iaculis mauris.
+                        {{ content }}
                     </slot>
                 </p>
             </slot>
         </div>
 
-        <footer class="card-footer">
+        <!-- Loading  -->
+        <o-loading
+            :active="loading"
+            :label="loadingLabel"
+            :icon-pack="iconPack" />
+
+        <!-- Footer -->
+        <footer v-if="$slots.footer" :clas="footerClasses">
+            <!--
+                @slot Override the footer
+            -->
             <slot name="footer" />
         </footer>
     </div>

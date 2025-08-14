@@ -5,6 +5,7 @@ declare module "vue" {
         OBreadcrumb: (typeof import("../oruga/src/components"))["OBreadcrumb"];
         OBreadcrumbItem: (typeof import("../oruga/src/components"))["OBreadcrumbItem"];
         OButton: (typeof import("../oruga/src/components"))["OButton"];
+        OCard: (typeof import("../oruga/src/components"))["OCard"];
         OCarousel: (typeof import("../oruga/src/components"))["OCarousel"];
         OCarouselItem: (typeof import("../oruga/src/components"))["OCarouselItem"];
         OCheckbox: (typeof import("../oruga/src/components"))["OCheckbox"];

@@ -147,7 +147,7 @@ const iconRightClasses = defineClasses([
 
             <span v-if="label || $slots.default" :class="labelClasses">
                 <!--
-                    @slot Override the label, default is label prop 
+                    @slot Override the label, default is label prop
                 -->
                 <slot>{{ label }}</slot>
             </span>

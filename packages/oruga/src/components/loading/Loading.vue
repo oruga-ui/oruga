@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     animation: () => getDefault("loading.animation", "fade"),
     cancelable: false,
     icon: () => getDefault("loading.icon", "loading"),
+    iconPack: () => getDefault("loading.iconPack"),
     iconSpin: () => getDefault("loading.iconSpin", true),
     iconSize: () => getDefault("loading.iconSize", "medium"),
     clipScroll: () => getDefault("loading.clipScroll", false),
@@ -143,6 +144,7 @@ defineExpose({ close });
                     :icon="icon"
                     :spin="iconSpin"
                     :size="iconSize"
+                    :pack="iconPack"
                     :class="iconClasses" />
                 <span v-if="label" :class="labelClasses">
                     {{ label }}
