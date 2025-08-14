@@ -16,27 +16,27 @@
     "docs:gen:watch": "tsx src/docgen.ts --watch"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@fortawesome/fontawesome-svg-core": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/vue-fontawesome": "^3.1.1",
     "@highlightjs/vue-plugin": "2.1.2",
-    "@oruga-ui/theme-bootstrap": "0.9.3",
-    "@oruga-ui/theme-bulma": "0.7.2",
+    "@oruga-ui/theme-bootstrap": "0.9.4",
+    "@oruga-ui/theme-bulma": "0.7.3",
     "@oruga-ui/theme-oruga": "0.7.1",
     "highlight.js": "11.11.1",
     "markdown-it": "^14.1.0",
     "markdown-it-highlightjs": "^4.2.0"
   },
   "devDependencies": {
-    "@types/node": "^24.0.14",
+    "@types/node": "^24.2.1",
     "@vue/tsconfig": "^0.7.0",
-    "sass": "^1.89.2",
-    "tsx": "^4.20.3",
-    "typescript": "5.8.3",
-    "vitepress": "^1.6.3",
-    "vue": "^3.5.17",
-    "vue-component-meta": "^3.0.2",
+    "sass": "^1.90.0",
+    "tsx": "^4.20.4",
+    "typescript": "5.9.2",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.18",
+    "vue-component-meta": "^3.0.5",
     "vue-docgen-cli": "4.79.0",
-    "vue-tsc": "^3.0.2"
+    "vue-tsc": "^3.0.5"
   }
 }
