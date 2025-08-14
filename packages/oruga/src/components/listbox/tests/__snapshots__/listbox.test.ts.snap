@@ -1,0 +1,149 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OListbox tests > render correctly with items 1`] = `
+"<div data-oruga="listbox" class="o-listbox o-listbox--selectable">
+  <!--v-if-->
+  <!--v-if-->
+  <div class="o-listbox__container" style="max-height: 225px;">
+    <ul id="v-0_list" role="listbox" tabindex="0" class="o-listbox__list" aria-disabled="false">
+      <transition-group-stub name="fade" appear="false" persisted="false" css="true">
+        <!--
+                        @slot Place items here
+                        @binding {number} focusedIndex - index of the focused element
+                    -->
+        <li id="v-0-1" data-oruga="listbox-item" data-id="listbox-1" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->New York
+        </li>
+        <li id="v-0-2" data-oruga="listbox-item" data-id="listbox-2" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->Rome
+        </li>
+        <li id="v-0-3" data-oruga="listbox-item" data-id="listbox-3" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->London
+        </li>
+        <li id="v-0-4" data-oruga="listbox-item" data-id="listbox-4" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->Istanbul
+        </li>
+        <li id="v-0-5" data-oruga="listbox-item" data-id="listbox-5" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->Paris
+        </li>
+      </transition-group-stub>
+    </ul>
+  </div>
+  <transition-stub name="fade" appear="false" persisted="false" css="true">
+    <!--v-if-->
+  </transition-stub>
+  <!--v-if-->
+</div>"
+`;
+
+exports[`OListbox tests > render correctly with options 1`] = `
+"<div data-oruga="listbox" class="o-listbox o-listbox--selectable">
+  <!--v-if-->
+  <!--v-if-->
+  <div class="o-listbox__container" style="max-height: 225px;">
+    <ul id="v-0_list" role="listbox" tabindex="0" class="o-listbox__list" aria-disabled="false">
+      <transition-group-stub name="fade" appear="false" persisted="false" css="true">
+        <!--
+                        @slot Place items here
+                        @binding {number} focusedIndex - index of the focused element
+                    -->
+        <!--v-if-->
+        <li id="v-0-1" data-oruga="listbox-item" data-id="listbox-1" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="New York" aria-setsize="5" aria-posinset="1">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->
+          <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                    @binding {number} index - option index
+                                    @binding {boolean} selected - option is selected
+                                    @binding {boolean} disabled - option is disabled
+                                --><span>New York</span>
+        </li>
+        <li id="v-0-2" data-oruga="listbox-item" data-id="listbox-2" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Rome" aria-setsize="5" aria-posinset="2">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->
+          <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                    @binding {number} index - option index
+                                    @binding {boolean} selected - option is selected
+                                    @binding {boolean} disabled - option is disabled
+                                --><span>Rome</span>
+        </li>
+        <li id="v-0-3" data-oruga="listbox-item" data-id="listbox-3" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="London" aria-setsize="5" aria-posinset="3">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->
+          <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                    @binding {number} index - option index
+                                    @binding {boolean} selected - option is selected
+                                    @binding {boolean} disabled - option is disabled
+                                --><span>London</span>
+        </li>
+        <li id="v-0-4" data-oruga="listbox-item" data-id="listbox-4" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Istanbul" aria-setsize="5" aria-posinset="4">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->
+          <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                    @binding {number} index - option index
+                                    @binding {boolean} selected - option is selected
+                                    @binding {boolean} disabled - option is disabled
+                                --><span>Istanbul</span>
+        </li>
+        <li id="v-0-5" data-oruga="listbox-item" data-id="listbox-5" class="o-listbox__item" role="option" tabindex="-1" aria-selected="false" aria-hidden="false" aria-disabled="false" aria-label="Paris" aria-setsize="5" aria-posinset="5">
+          <!--
+            @slot Override the label, default is label prop
+            @binding {boolean} selected - item is selected
+            @binding {boolean} disabled - item is disabled
+        -->
+          <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                    @binding {number} index - option index
+                                    @binding {boolean} selected - option is selected
+                                    @binding {boolean} disabled - option is disabled
+                                --><span>Paris</span>
+        </li>
+      </transition-group-stub>
+    </ul>
+  </div>
+  <transition-stub name="fade" appear="false" persisted="false" css="true">
+    <!--v-if-->
+  </transition-stub>
+  <!--v-if-->
+</div>"
+`;

@@ -138,7 +138,7 @@ export default defineConfig(({ mode }) => ({
         coverage: {
             provider: "istanbul",
         },
-        workspace: [
+        projects: [
             {
                 extends: true,
                 test: {
