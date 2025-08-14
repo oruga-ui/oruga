@@ -698,9 +698,9 @@ See icon library documentation for custom classes. */
                 /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
                 scrollHeight: number | string;
                 /** Icon of the column search input */
-                filtersIcon: string;
+                filterIcon: string;
                 /** Placeholder of the column search input */
-                filtersPlaceholder: string;
+                filterPlaceholder: string;
                 /** Number of milliseconds to delay the filter event */
                 filterDebounce: number;
                 /** Icon pack to use */
@@ -713,6 +713,14 @@ See icon library documentation for custom classes. */
                 itemTag: DynamicComponent;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
+                /** Clas of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Clas of the root element when selectable */
+                selectableClass: ClassDefinition;
+                /** Clas of the root element when filterable */
+                filterableClass: ClassDefinition;
+                /** Clas of the root element when multiple */
+                multipleClass: ClassDefinition;
                 /** Class of the header slot wrapper element */
                 headerClass: ClassDefinition;
                 /** Class of the footer slot wrapper element */

@@ -67,9 +67,9 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     filterable: false,
     backendFiltering: false,
     filter: undefined,
-    filtersIcon: () => getDefault("listbox.filtersIcon"),
+    filterIcon: () => getDefault("listbox.filterIcon"),
     filterDebounce: () => getDefault("listbox.filterDebounce", 400),
-    filtersPlaceholder: () => getDefault("listbox.filtersPlaceholder"),
+    filterPlaceholder: () => getDefault("listbox.filterPlaceholder"),
     iconPack: () => getDefault("listbox.iconPack"),
     animation: () => getDefault("listbox.animation", "fade"),
     ariaLabel: undefined,
@@ -437,6 +437,7 @@ function onFocusout(event: FocusEvent): void {
 
 function onFilterChange(value: string, event: Event): void {
     emits("filter", value, event);
+
     focusedItem.value = undefined;
     startRangeIndex.value = -1;
 }
@@ -447,12 +448,21 @@ const filterValue = ref<string>("");
 if (!props.backendFiltering) {
     // update the hidden state for every item based on filter value
     watchEffect(() => {
+        if (!props.filterable) return;
+
         childItems.value.forEach((item) => {
             if (!item.data) return;
-            // no filter means not hidden
-            if (!filterValue.value) item.data.setHidden(false);
 
-            const hidden =
+            // prevent filtering for presentation items
+            if ((item.data as any).role === "presentation") return;
+
+            // no filter means not hidden
+            if (!filterValue.value) {
+                item.data.setHidden(false);
+                return;
+            }
+
+            const isVisible =
                 typeof props.filter === "function"
                     ? // call filter function if available
                       props.filter(item.data.value!, toValue(filterValue))
@@ -460,7 +470,7 @@ if (!props.backendFiltering) {
                       item.data.matches(toValue(filterValue));
 
             // update hidden state
-            item.data.setHidden(hidden);
+            item.data.setHidden(!isVisible);
         });
     });
 }
@@ -668,8 +678,8 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                     role="searchbox"
                     :tabindex="!disabled && !isFocused ? 0 : -1"
                     :debounce="filterDebounce"
-                    :placeholder="filtersPlaceholder"
-                    :icon="filtersIcon"
+                    :placeholder="filterPlaceholder"
+                    :icon="filterIcon"
                     :pack="iconPack"
                     :disabled="disabled"
                     expanded

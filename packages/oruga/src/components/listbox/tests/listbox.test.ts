@@ -1,13 +1,14 @@
 import { afterEach, describe, expect, test } from "vitest";
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
+import { setTimeout } from "timers/promises";
 
 import OListbox from "@/components/listbox/Listbox.vue";
 import OListItem from "@/components/listbox/ListItem.vue";
 
 import type { OptionsGroupProp, OptionsItem, OptionsProp } from "@/composables";
 
-describe.only("OListbox tests", () => {
+describe("OListbox tests", () => {
     enableAutoUnmount(afterEach);
 
     const options: OptionsProp = [
@@ -46,7 +47,7 @@ describe.only("OListbox tests", () => {
                     <template #trigger="{ active }">
                         <button :class="{ active }">Component Trigger Label</button>
                     </template>
-    
+
                     <o-list-item
                         v-for="el in options"
                         :key=" el"
@@ -77,6 +78,21 @@ describe.only("OListbox tests", () => {
         });
     });
 
+    test("render header and footer correctly", async () => {
+        const wrapper = mount(OListbox, {
+            slots: {
+                header: "<h1 class='header'>SLOT HEADER</h1>",
+                footer: "<h1 class='footer'>SLOT FOOTER</h1>",
+            },
+        });
+
+        const header = wrapper.find(".header");
+        const footer = wrapper.find(".footer");
+
+        expect(header.exists()).toBeTruthy();
+        expect(footer.exists()).toBeTruthy();
+    });
+
     test("set value correct when two-way-binded", async () => {
         const wrapper = mount(OListbox, {
             props: {
@@ -88,17 +104,17 @@ describe.only("OListbox tests", () => {
             },
         });
 
-        const optionElements = wrapper.findAll('[data-oruga="listbox-item"]');
-        expect(optionElements).toHaveLength(options.length);
+        const items = wrapper.findAll('[data-oruga="listbox-item"]');
+        expect(items).toHaveLength(options.length);
 
         // check default selected value
-        expect(optionElements[2].attributes("aria-selected")).toBeTruthy();
+        expect(items[2].attributes("aria-selected")).toBeTruthy();
 
         // chenge selection
         await wrapper.setProps({ modelValue: options[0].value });
 
         // check new selected value
-        expect(optionElements[0].attributes("aria-selected")).toBeTruthy();
+        expect(items[0].attributes("aria-selected")).toBeTruthy();
     });
 
     test("has configurable list tag", () => {
@@ -270,8 +286,8 @@ describe.only("OListbox tests", () => {
         });
     });
 
-    describe.only("test selectable", () => {
-        test.only("react accordingly when new item is selected", async () => {
+    describe("test selectable", () => {
+        test("react accordingly when new item is selected", async () => {
             const wrapper = mount(OListbox, {
                 props: {
                     options,
@@ -314,6 +330,7 @@ describe.only("OListbox tests", () => {
 
             const items = wrapper.findAll(".o-listbox__item");
             expect(items.length).toBe(options.length);
+
             expect(items[0].classes("o-listbox__item--selected")).toBeTruthy();
             expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
             expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
@@ -342,6 +359,7 @@ describe.only("OListbox tests", () => {
 
             const items = wrapper.findAll(".o-listbox__item");
             expect(items.length).toBe(options.length);
+
             expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
             expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
             expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
@@ -403,38 +421,33 @@ describe.only("OListbox tests", () => {
 
             const items = wrapper.findAll(".o-listbox__item");
             expect(items.length).toBe(options.length);
-            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
-            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
-            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+
+            items.forEach((item) =>
+                expect(item.classes("o-listbox__item--selected")).toBeFalsy(),
+            );
 
             await items[0].trigger("click");
 
-            expect(items[0].classes("o-listbox__item--selected")).toBeFalsy();
-            expect(items[1].classes("o-listbox__item--selected")).toBeFalsy();
-            expect(items[2].classes("o-listbox__item--selected")).toBeFalsy();
+            items.forEach((item) =>
+                expect(item.classes("o-listbox__item--selected")).toBeFalsy(),
+            );
 
-            expect(wrapper.classes("o-listbox--disabled")).toBeTruthy();
             expect(wrapper.emitted("update:modelValue")).toBeUndefined();
             expect(wrapper.emitted("select")).toBeUndefined();
+
+            expect(wrapper.classes("o-listbox--disabled")).toBeTruthy();
         });
 
         test("react accordingly when selected with keydown", async () => {
             const wrapper = mount(OListbox, {
-                props: {
-                    options,
-                    selectable: true,
-                },
-                attachTo: document.body,
+                props: { options, selectable: true },
             });
 
-            const list = wrapper.find<HTMLElement>(".o-listbox__list");
+            const list = wrapper.find("ul");
             expect(list.exists()).toBeTruthy();
 
-            list.element.focus();
-            await nextTick(); // wait for focus to be applied
-
-            await wrapper.trigger("keydown", { key: "Down" });
-            await wrapper.trigger("keydown", { key: "Enter" });
+            await list.trigger("keydown", { code: "ArrowDown", key: "Down" });
+            await list.trigger("keydown", { code: "Enter", key: "Enter" });
 
             expect(wrapper.emitted("select")).toStrictEqual([
                 [options[0].value],
@@ -458,6 +471,7 @@ describe.only("OListbox tests", () => {
             const input = wrapper.find('[data-oruga="input"]');
             expect(input.exists()).toBeTruthy();
             const icon = input.find('[data-oruga="icon"] i');
+            expect(icon.exists()).toBeTruthy();
 
             expect(icon.classes()).toContain("pi-discord");
         });
@@ -471,11 +485,21 @@ describe.only("OListbox tests", () => {
             expect(filterInput.exists()).toBeTruthy();
 
             await filterInput.setValue("is");
+            await filterInput.trigger("input");
+            await setTimeout(500); // await event debounce
 
-            const items = wrapper.findAll(".o-listbox__item");
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
 
-            expect(items.length).toBe(2);
-            expect(items[0].text()).toBe("Istanbul");
+            expect(items.length).toBe(options.length);
+            // check the hidden states
+            expect(items[0].attributes("aria-hidden")).toBe("true");
+            expect(items[1].attributes("aria-hidden")).toBe("true");
+            expect(items[2].attributes("aria-hidden")).toBe("true");
+            expect(items[3].attributes("aria-hidden")).toBe("false");
+            expect(items[4].attributes("aria-hidden")).toBe("true");
+
+            expect(wrapper.emitted("filter")).toBeDefined();
+            expect(wrapper.emitted("filter")![0][0]).contain("is");
         });
 
         test("should correctly filter groups", async () => {
@@ -510,27 +534,40 @@ describe.only("OListbox tests", () => {
                 },
             });
 
+            const items = wrapper.findAll('[data-oruga="listbox-item"]');
+            expect(items).toHaveLength(10);
+
+            items.forEach((item) =>
+                expect(item.attributes("aria-hidden")).toBe("false"),
+            );
+
+            expect(items[0].attributes("aria-disabled")).toBe("true");
+            expect(items[5].attributes("aria-disabled")).toBe("true");
+
             const filterInput = wrapper.find('[data-oruga="input"] input');
             expect(filterInput.exists()).toBeTruthy();
 
             await filterInput.setValue("ch");
+            await filterInput.trigger("input");
+            await setTimeout(500); // await event debounce
 
-            const items = wrapper.findAll(".o-listbox__item");
-            const optionGroups = wrapper.findAll(".p-listbox-option-group");
-            const options = wrapper.findAll(".p-listbox-option");
+            expect(items[0].attributes("aria-disabled")).toBe("true");
+            expect(items[5].attributes("aria-disabled")).toBe("true");
 
-            expect(optionGroups.length).toBe(2);
-            expect(optionGroups[0].text()).toBe("Germany");
-            expect(optionGroups[1].text()).toBe("USA");
+            items.forEach((item, idx) => {
+                // check only "Chicago" is shown
+                if (idx === 6)
+                    expect(item.attributes("aria-hidden")).toBe("false");
+                else expect(item.attributes("aria-hidden")).toBe("true");
+            });
 
-            expect(options.length).toBe(2);
-            expect(options[0].text()).toBe("Munich");
-            expect(options[1].text()).toBe("Chicago");
+            expect(wrapper.emitted("filter")).toBeDefined();
+            expect(wrapper.emitted("filter")![0][0]).contain("ch");
         });
 
         test("do not sort when `backend-filtering` is given", async () => {
             const wrapper = mount(OListbox, {
-                props: { options, backendFiltering: true },
+                props: { options, filterable: true, backendFiltering: true },
             });
 
             const items = wrapper.findAll('[data-oruga="listbox-item"]');
@@ -543,67 +580,17 @@ describe.only("OListbox tests", () => {
             expect(filterInput.exists()).toBeTruthy();
 
             await filterInput.setValue(options[2].value);
+            await filterInput.trigger("input");
+            await setTimeout(500); // await event debounce
 
-            // check that there are no out filtered elements
+            // check that there are no items hidden
             expect(items).toHaveLength(options.length);
             items.forEach((item) =>
                 expect(item.attributes("disabled")).toBeFalsy(),
             );
-        });
-    });
 
-    describe("header & footer", () => {
-        test("can emit select-header by keyboard and click", async () => {
-            const wrapper = mount(OListbox, {
-                slots: {
-                    header: "<h1>SLOT HEADER</h1>",
-                    footer: "<h1>SLOT FOOTER</h1>",
-                },
-            });
-
-            const input = wrapper.find("input");
-            expect(input.exists()).toBeTruthy();
-
-            // open menu
-            await input.trigger("focus");
-
-            // move to header and select by enter
-            await input.trigger("keydown", { key: "Down" });
-            await input.trigger("keydown", { key: "Enter" });
-
-            expect(wrapper.emitted("select-header")).toHaveLength(1);
-
-            const header = wrapper.find(".o-autocomplete__item-header");
-            expect(header.exists()).toBeTruthy();
-            await header.trigger("click");
-
-            expect(wrapper.emitted("select-header")).toHaveLength(2);
-        });
-
-        test("can emit select-footer by keyboard and click", async () => {
-            const wrapper = mount(OListbox, {
-                slots: {
-                    header: "<h1>SLOT HEADER</h1>",
-                    footer: "<h1>SLOT FOOTER</h1>",
-                },
-            });
-            const input = wrapper.find("input");
-
-            // open menu
-            await input.trigger("focus");
-
-            // move to footer and select by enter
-            await input.trigger("keydown", { key: "Down" });
-            await input.trigger("keydown", { key: "Down" });
-            await input.trigger("keydown", { key: "Enter" });
-
-            expect(wrapper.emitted("select-footer")).toHaveLength(1);
-
-            const footer = wrapper.find(".o-autocomplete__item-footer");
-            expect(footer.exists()).toBeTruthy();
-            await footer.trigger("click");
-
-            expect(wrapper.emitted("select-footer")).toHaveLength(2);
+            expect(wrapper.emitted("filter")).toBeDefined();
+            expect(wrapper.emitted("filter")![0][0]).contain(options[2].value);
         });
     });
 });

@@ -36,9 +36,9 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     /** Custom filter function to filter the items based on the input value - default is label string comparison */
     filter?: (option: T, value: string) => boolean;
     /** Icon of the column search input */
-    filtersIcon?: string;
+    filterIcon?: string;
     /** Placeholder of the column search input */
-    filtersPlaceholder?: string;
+    filterPlaceholder?: string;
     /** Number of milliseconds to delay the filter event */
     filterDebounce?: number;
     /**
