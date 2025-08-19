@@ -26,12 +26,14 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     numeric: false,
     position: undefined,
     searchable: false,
+    filterable: false,
     sortable: false,
     hidden: false,
     sticky: false,
     headerSelectable: false,
     customSort: undefined,
     customSearch: undefined,
+    customFilter: undefined,
     thAttrs: undefined,
     tdAttrs: undefined,
 });
@@ -169,12 +171,25 @@ const filters = {} as Record<string, string>;
 
             <!--
                 @slot Override searchable input
+                @deprecated use `filter` instead
                 @binding {TableColumn} column - column definition
                 @binding {number} index - column index
                 @binding {object} filters - active filters object
             -->
             <slot
                 name="searchable"
+                :column="column"
+                :index="index"
+                :filters="filters" />
+
+            <!--
+                @slot Override searchable input
+                @binding {TableColumn} column - column definition
+                @binding {number} index - column index
+                @binding {object} filters - active filters object
+            -->
+            <slot
+                name="filter"
                 :column="column"
                 :index="index"
                 :filters="filters" />
