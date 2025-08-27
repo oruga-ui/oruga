@@ -232,7 +232,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         emits("invalid", event);
     }
 
-    if (!isClient) {
+    if (isClient) {
         /**
          * Provides a way to force the watcher on `updateCustomValidationMessage` to re-run
          *
