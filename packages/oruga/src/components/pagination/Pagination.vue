@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, watch, nextTick } from "vue";
 
-// import OPaginationButton from "./PaginationButton.vue";
 import OButton from "../button/Button.vue";
 import PlainButton from "../utils/PlainButton";
 
@@ -394,7 +393,7 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
             <!--Pages-->
             <li
                 v-for="page in pagesInRange"
-                :key="page.label"
+                :key="page.number"
                 :class="listItemClasses">
                 <!--
                     @slot Pagination button slot
