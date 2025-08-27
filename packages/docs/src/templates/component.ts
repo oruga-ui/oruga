@@ -54,7 +54,7 @@ ${renderExamples(component)}
 }
 <section class="odocs-specs">
 
-## ${component} component
+## ${component} Component
 
 ${description ? "> " + description : ""}
 

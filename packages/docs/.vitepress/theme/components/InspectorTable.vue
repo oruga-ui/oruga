@@ -43,7 +43,7 @@ function inspectClass(
     <div class="vp-doc">
         <o-collapse class="inspector__summary" :open="false">
             <template #trigger="{ open }">
-                <div class="inspector__summary-trigger" role="button">
+                <div class="inspector__summary-trigger">
                     <div>How does the <i>Class props inspector</i> work?</div>
                     <a>
                         <o-icon :icon="open ? 'caret-up' : 'caret-down'" />
@@ -181,6 +181,7 @@ function inspectClass(
 }
 
 .inspector__summary-trigger {
+    cursor: pointer;
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;

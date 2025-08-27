@@ -71,12 +71,12 @@ ${variables
     .join("\n")}
 
 
-See ➜ 📄 [Full scss file](${theme.src}/scss/components/${name})
+See ➜ 📄 [SCSS file](${theme.src}/scss/components/${name})
 `;
     };
 
     return `
-## Sass variables
+## Sass Variables
 
 ${Themes.map(
     (theme) =>
