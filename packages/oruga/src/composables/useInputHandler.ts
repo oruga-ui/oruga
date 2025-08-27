@@ -11,15 +11,14 @@ import {
 } from "vue";
 import { injectField } from "@/components/field/fieldInjection";
 import { getOption } from "@/utils/config";
-import { isSSR } from "@/utils/ssr";
+import { isClient } from "@/utils/ssr";
 import { isDefined } from "@/utils/helpers";
 import { unrefElement } from "./unrefElement";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.
-const validatableFormElementTypes = isSSR
-    ? []
-    : [
+const validatableFormElementTypes = isClient
+    ? [
           HTMLButtonElement,
           HTMLFieldSetElement,
           HTMLInputElement,
@@ -27,7 +26,8 @@ const validatableFormElementTypes = isSSR
           HTMLOutputElement,
           HTMLSelectElement,
           HTMLTextAreaElement,
-      ];
+      ]
+    : [];
 
 export type ValidatableFormElement = InstanceType<
     (typeof validatableFormElementTypes)[number]
@@ -232,7 +232,7 @@ export function useInputHandler<T extends ValidatableFormElement>(
         emits("invalid", event);
     }
 
-    if (!isSSR) {
+    if (isClient) {
         /**
          * Provides a way to force the watcher on `updateCustomValidationMessage` to re-run
          *
