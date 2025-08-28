@@ -7,7 +7,7 @@ import OLoading from "@/components/loading/Loading.vue";
 import type { CardProps } from "./props";
 
 /**
- * An flexible and extensible content container.
+ * A flexible and extensible content container.
  * @displayName Card
  * @style _card.scss
  */
@@ -24,11 +24,13 @@ withDefaults(defineProps<CardProps>(), {
     content: undefined,
     imageSrc: undefined,
     imageAlt: undefined,
+    loading: undefined,
+    loadingLabel: undefined,
     closeable: () => getDefault("card.closeable", false),
-    ariaCloseLabel: () => getDefault("card.ariaCloseLabel"),
-    iconPack: () => getDefault("card.iconPack"),
     closeIcon: undefined,
     closeIconSize: undefined,
+    ariaCloseLabel: () => getDefault("card.ariaCloseLabel"),
+    iconPack: () => getDefault("card.iconPack"),
 });
 
 defineEmits<{
@@ -146,7 +148,7 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
             </slot>
         </div>
 
-        <!-- Loading  -->
+        <!-- Loading -->
         <o-loading
             :active="loading"
             :label="loadingLabel"

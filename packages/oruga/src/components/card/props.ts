@@ -13,6 +13,10 @@ export type CardProps = {
     imageSrc?: string;
     /** Card image alt, unnecessary when image slot is used */
     imageAlt?: string;
+    /** Show a loading spinner in the card */
+    loading?: boolean;
+    /**  Show label beside the loading icon */
+    loadingLabel?: string;
     /** Adds close button to the header */
     closeable?: boolean;
     /** Accessibility label for the close button */
@@ -26,10 +30,6 @@ export type CardProps = {
     closeIcon?: string;
     /** Close icon size */
     closeIconSize?: string;
-    /** Show a loading spinner in the card */
-    loading?: boolean;
-    /**  Show label beside the loading icon */
-    loadingLabel?: string;
 } & CardClasses;
 
 // class props (will not be displayed in the docs)
