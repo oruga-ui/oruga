@@ -22,4 +22,18 @@ describe("OButton test", () => {
         expect(wrapper.attributes("data-oruga")).toBe("card");
         expect(wrapper.html()).toMatchSnapshot();
     });
+
+    test("emit close event", async () => {
+        const wrapper = mount(OCard, {
+            props: {
+                closeable: true,
+            },
+        });
+
+        const closeButton = wrapper.find("header button");
+        expect(closeButton.exists()).toBeTruthy();
+
+        await closeButton.trigger("click");
+        expect(wrapper.emitted()).toHaveProperty("close");
+    });
 });

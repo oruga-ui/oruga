@@ -108,9 +108,8 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
                 type="button"
                 :class="closeClasses"
                 :aria-label="ariaCloseLabel"
-                @click.stop="$emit('close', $event)">
+                @click="$emit('close', $event)">
                 <o-icon
-                    clickable
                     :pack="iconPack"
                     :icon="closeIcon"
                     :size="closeIconSize" />
