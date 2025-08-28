@@ -30,11 +30,6 @@ export type TagProps = {
     closeable?: boolean;
     /** Close icon name */
     closeIcon?: string;
-    /**
-     * Icon pack to use for the close icon
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    closeIconPack?: string;
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
 } & TagClasses;

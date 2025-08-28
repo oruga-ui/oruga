@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 import OIcon from "../icon/Icon.vue";
+import CloseButton from "../utils/CloseButton.vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
@@ -78,6 +79,20 @@ function close(...args: [] | [string]): void {
     emits("close", ...args);
 }
 
+// --- Animation Feature ---
+
+const isAnimating = ref(!props.active);
+
+/** Transition after-enter hook */
+function afterEnter(): void {
+    isAnimating.value = false;
+}
+
+/** Transition before-leave hook */
+function beforeLeave(): void {
+    isAnimating.value = true;
+}
+
 // --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
@@ -118,23 +133,24 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
 </script>
 
 <template>
-    <transition :name="animation">
+    <transition
+        :name="animation"
+        @after-enter="afterEnter"
+        @before-leave="beforeLeave">
         <article
             v-show="isActive"
             v-bind="$attrs"
             data-oruga="notification"
             :class="rootClasses">
-            <button
+            <CloseButton
                 v-if="closeable"
-                :class="closeClasses"
-                type="button"
-                :aria-label="ariaCloseLabel"
-                @click="close('x')">
-                <o-icon
-                    :pack="iconPack"
-                    :icon="closeIcon"
-                    :size="closeIconSize" />
-            </button>
+                v-show="!isAnimating"
+                :pack="iconPack"
+                :icon="closeIcon"
+                :size="closeIconSize"
+                :label="ariaCloseLabel"
+                :classes="closeClasses"
+                @click="close('x')" />
 
             <!--
                 @slot Notification inner content, outside of the message container

@@ -9,7 +9,7 @@ import {
     type Component,
 } from "vue";
 
-import OIcon from "../icon/Icon.vue";
+import CloseButton from "../utils/CloseButton.vue";
 
 import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
@@ -52,6 +52,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     alert: () => getDefault("modal.alert", false),
     ariaLabel: () => getDefault("modal.ariaLabel"),
     autoFocus: () => getDefault("modal.autoFocus", true),
+    iconPack: () => getDefault("modal.iconPack"),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
     ariaCloseLabel: () => getDefault("modal.ariaCloseLabel", "Close"),
@@ -249,14 +250,14 @@ defineExpose({ close });
                         <div v-if="content">{{ content }}</div>
                     </slot>
 
-                    <o-icon
+                    <CloseButton
                         v-if="showX"
                         v-show="!isAnimating"
-                        :class="closeClasses"
+                        :pack="iconPack"
                         :icon="closeIcon"
                         :size="closeIconSize"
-                        clickable
-                        :aria-label="ariaCloseLabel"
+                        :label="ariaCloseLabel"
+                        :classes="closeClasses"
                         @click="cancel('x')" />
                 </div>
             </div>
