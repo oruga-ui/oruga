@@ -12,4 +12,4 @@ export default {
 } as Plugin;
 
 /** export card components */
-export { Card as OButton };
+export { Card as OCard };
