@@ -178,7 +178,7 @@ const hasInput = computed(
 
 watchEffect(() => {
     // blur if input is empty
-    if (!hasInput.value) onBlur(new Event("blur"));
+    if (!hasInput.value) onBlur();
 });
 
 function addItem(item?: T | string): void {
@@ -210,7 +210,7 @@ function addItem(item?: T | string): void {
     // after autocomplete events
     requestAnimationFrame(() => {
         inputValue.value = "";
-        emits("input", "", new Event("input"));
+        emits("input", "", new InputEvent("input"));
     });
 }
 
