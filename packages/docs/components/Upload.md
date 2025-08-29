@@ -17,7 +17,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## Upload component
+## Upload Component
 
 > Upload one or more files.
 
@@ -68,7 +68,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -82,7 +82,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $upload-draggable-hover-border-color | var(--#{$prefix}grey)                   |
 | $upload-draggable-padding            | 2em                                     |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_upload.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_upload.scss)
 
 </div>
 <div class="theme-bulma">
@@ -96,7 +96,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $upload-colors            | file.$file-colors        |
 | $upload-border-color      | css.getVar("grey-light") |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_upload.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_upload.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -114,7 +114,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $upload-draggable-padding            | 2em                             |
 | $upload-disabled-opacity             | 0.5                             |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_upload.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_upload.scss)
 
 </div>
 

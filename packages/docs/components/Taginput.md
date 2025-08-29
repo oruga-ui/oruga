@@ -18,7 +18,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 <section class="odocs-specs">
 
-## Taginput component
+## Taginput Component
 
 > A simple tag input field that can have autocomplete functionality.
 
@@ -101,7 +101,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -113,7 +113,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
 | $taginput-item-margin       | 0.275em            |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
 
 </div>
 <div class="theme-bulma">
@@ -125,7 +125,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $taginput-height   | 100%    |
 | $taginput-tag-size | 0.9em   |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_taginput.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_taginput.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -138,7 +138,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
 | $taginput-counter-font-size | 0.75rem            |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_taginput.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_taginput.scss)
 
 </div>
 

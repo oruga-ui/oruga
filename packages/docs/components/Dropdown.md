@@ -22,7 +22,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 <section class="odocs-specs">
 
-## Dropdown component
+## Dropdown Component
 
 > Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content.
 
@@ -95,7 +95,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 <section class="odocs-specs">
 
-## DropdownItem component
+## DropdownItem Component
 
 > An option item used by the dropdown component.
 
@@ -139,7 +139,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -173,7 +173,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 | $dropdown-mobile-width                 | calc(100vw - 40px)                                                           |
 | $dropdown-mobile-zindex                | 60                                                                           |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 
 </div>
 <div class="theme-bulma">
@@ -192,7 +192,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $dropdown-modal-min-width             | 25%                                                                                                 |
 | $dropdown-modal-max-width             | calc(100vw - 40px)                                                                                  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_dropdown.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_dropdown.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -207,7 +207,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $dropdown-modal-min-width       | 25%                    |
 | $dropdown-modal-max-width       | calc(100vw - 40px)     |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
 
 </div>
 

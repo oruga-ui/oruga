@@ -16,7 +16,7 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 <section class="odocs-specs">
 
-## Field component
+## Field Component
 
 > Fields are used to add functionality to controls and to attach/group components and elements together.
 
@@ -63,7 +63,7 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -79,7 +79,7 @@ The **Field** component is used to add functionality to controls and to attach/g
 | $field-spacer             | 0.5rem       |
 | $field-horizontal-spacer  | 0 1.5rem 0 0 |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
 
 </div>
 <div class="theme-bulma">
@@ -90,7 +90,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------- | ------- |
 | $floating-in-height | 3.25em  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_field.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_field.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -102,7 +102,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $input-field-margin-bottom  | $spacer           |
 | $input-field-grouped-spacer | calc($spacer / 2) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
 
 </div>
 
