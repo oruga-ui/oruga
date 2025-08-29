@@ -194,9 +194,7 @@ describe("OBreadcrumb tests", () => {
                 expect(items[idx]!.attributes("data-oruga")).toBe(
                     "breadcrumb-item",
                 );
-                expect(
-                    items[idx]!.classes("o-breadcrumb__item"),
-                ).toBeTruthy();
+                expect(items[idx]!.classes("o-breadcrumb__item")).toBeTruthy();
                 expect(items[idx]!.text()).toBe(option.label);
             });
         });
