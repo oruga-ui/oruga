@@ -253,7 +253,7 @@ function computeClass(
     // add global config classes
     // add instance classes
     let appliedClasses = (
-        `${!overrideClass ? defaultClassString : ""} ` +
+        `${!isTrueish(overrideClass) ? defaultClassString : ""} ` +
         `${globalClassString} ` +
         `${localClassString}`
     )

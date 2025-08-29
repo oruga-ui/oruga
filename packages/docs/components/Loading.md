@@ -16,7 +16,7 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 <section class="odocs-specs">
 
-## Loading component
+## Loading Component
 
 > A simple loading overlay.
 
@@ -65,7 +65,7 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -78,7 +78,7 @@ The **Loading** component allows you to display a loading state for use on a glo
 | $loading-zindex          | 29                       |
 | $loading-fullpage-zindex | 999                      |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_loading.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_loading.scss)
 
 </div>
 <div class="theme-bulma">
@@ -92,7 +92,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $loading-icon-size-full-page | 5em                      |
 | $loading-z                   | 29                       |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_loading.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_loading.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -105,7 +105,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $loading-zindex-fullpage | $zindex-fixed            |
 | $loading-overlay         | rgba(255, 255, 255, 0.5) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_loading.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_loading.scss)
 
 </div>
 

@@ -1,6 +1,8 @@
 import type { Component, EmitsToProps } from "vue";
 import type { ComponentEmit } from "vue-component-type-helpers";
 
+export type Numberish = number | string;
+
 /**
  * Function to define a class binding.
  * @param suffix - a component class suffix

@@ -19,7 +19,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 <section class="odocs-specs">
 
-## Autocomplete component
+## Autocomplete Component
 
 > Extended input that provide suggestions while the user types.
 
@@ -55,8 +55,8 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | itemTag            | Menu item tag name                                                                                                                                                               | DynamicComponent                                                       | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;itemTag: "div"<br>}</code>            |
 | keepFirst          | The first option will always be focused (easier to just hit enter or tab)                                                                                                        | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;keepFirst: false<br>}</code>          |
 | keepOpen           | Keep open dropdown list after select                                                                                                                                             | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;keepOpen: false<br>}</code>           |
-| maxHeight          | Max height of dropdown content                                                                                                                                                   | number \| string                                                       | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;maxHeight: undefined<br>}</code>      |
-| maxlength          | Same as native maxlength, plus character counter                                                                                                                                 | number \| string                                                       | -                                                 |                                                                                                                                                                  |
+| maxHeight          | Max height of dropdown content                                                                                                                                                   | Numberish                                                              | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;maxHeight: undefined<br>}</code>      |
+| maxlength          | Same as native maxlength, plus character counter                                                                                                                                 | Numberish                                                              | -                                                 |                                                                                                                                                                  |
 | menuTag            | Menu tag name                                                                                                                                                                    | DynamicComponent                                                       | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;menuTag: "div"<br>}</code>            |
 | mobileModal        | Dropdown content (items) are shown into a modal on mobile                                                                                                                        | boolean                                                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;mobileModal: false<br>}</code>        |
 | v-model            | The selected option value, use v-model to make it two-way binding                                                                                                                | string\|number\|object                                                 | -                                                 |                                                                                                                                                                  |
@@ -116,7 +116,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -126,7 +126,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | ----------------------------------------- | -------------------------- |
 | $autocomplete-item-hover-background-color | $control-brackground-color |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 
 </div>
 <div class="theme-bulma">
@@ -143,7 +143,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ----------------------------- | ------- |
 | $autocomplete-menu-max-height | 200px   |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_autocomplete.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_autocomplete.scss)
 
 </div>
 

@@ -16,7 +16,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 
 <section class="odocs-specs">
 
-## Pagination component
+## Pagination Component
 
 > A responsive and flexible pagination.
 
@@ -77,7 +77,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -105,7 +105,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 | $pagination-margin                          | -0.25rem                                     |
 | $pagination-rounded-border-radius           | var( --#{$prefix}base-border-radius-rounded) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
 
 </div>
 <div class="theme-bulma">
@@ -122,7 +122,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------------ | ------- |
 | $pagination-items-spacer | 0.5rem  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_pagination.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_pagination.scss)
 
 </div>
 

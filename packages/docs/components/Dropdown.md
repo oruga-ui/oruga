@@ -22,7 +22,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 <section class="odocs-specs">
 
-## Dropdown component
+## Dropdown Component
 
 > Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content.
 
@@ -50,7 +50,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 | keepOpen         | Keep dropdown list open when item get selected                                                                                                                                                                  | boolean                                                                                                          | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;keepOpen: false<br>}</code>             |
 | label            | Trigger label, unnecessary when trigger slot is used                                                                                                                                                            | string                                                                                                           | -                                                                                                |                                                                                                                                                                |
 | labelledby       | Ensures that each input has an accessible name.                                                                                                                                                                 | string                                                                                                           | -                                                                                                | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
-| maxHeight        | Max height of dropdown content                                                                                                                                                                                  | number \| string                                                                                                 | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;maxHeight: 200<br>}</code>              |
+| maxHeight        | Max height of dropdown content                                                                                                                                                                                  | Numberish                                                                                                        | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;maxHeight: 200<br>}</code>              |
 | menuId           | HTML element Id of the dropdown menu element                                                                                                                                                                    | string                                                                                                           | -                                                                                                | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                                  |
 | menuTag          | Dropdown menu tag name                                                                                                                                                                                          | DynamicComponent                                                                                                 | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;menuTag: "div"<br>}</code>              |
 | mobileBreakpoint | Mobile breakpoint as `max-width` value                                                                                                                                                                          | string                                                                                                           | -                                                                                                | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;mobileBreakpoint: undefined<br>}</code> |
@@ -95,7 +95,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 <section class="odocs-specs">
 
-## DropdownItem component
+## DropdownItem Component
 
 > An option item used by the dropdown component.
 
@@ -117,9 +117,9 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 ### Events
 
-| Event name | Properties                                                                                    | Description   |
-| ---------- | --------------------------------------------------------------------------------------------- | ------------- |
-| click      | **value** `string \| number \| object` - value prop data<br/>**event** `event` - Native Event | onclick event |
+| Event name | Properties                                                                 | Description   |
+| ---------- | -------------------------------------------------------------------------- | ------------- |
+| click      | **value** `unknown` - value prop data<br/>**event** `event` - native event | onclick event |
 
 ### Slots
 
@@ -139,7 +139,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -173,7 +173,7 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 | $dropdown-mobile-width                 | calc(100vw - 40px)                                                           |
 | $dropdown-mobile-zindex                | 60                                                                           |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 
 </div>
 <div class="theme-bulma">
@@ -192,7 +192,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $dropdown-modal-min-width             | 25%                                                                                                 |
 | $dropdown-modal-max-width             | calc(100vw - 40px)                                                                                  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_dropdown.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_dropdown.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -207,7 +207,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $dropdown-modal-min-width       | 25%                    |
 | $dropdown-modal-max-width       | calc(100vw - 40px)     |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
 
 </div>
 

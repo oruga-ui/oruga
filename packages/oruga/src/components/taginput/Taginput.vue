@@ -77,7 +77,7 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string[] | number[] | object[]} updated modelValue prop
+     * @param value {unknown[]} updated modelValue prop
      */
     "update:model-value": [value: ModelValue[]];
     /**
@@ -93,12 +93,12 @@ const emits = defineEmits<{
     input: [value: string, event: Event];
     /**
      * new item got added
-     * @param value {string | number | object} added item
+     * @param value {unknown} added item
      */
     add: [value: T];
     /**
      * item got removed
-     * @param value {string | number | object} removed item
+     * @param value {unknown} removed item
      */
     remove: [value: T];
     /**
