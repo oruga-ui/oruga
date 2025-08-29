@@ -87,11 +87,11 @@ describe("OMenu tests", () => {
             const itemComps = wrapper.findAllComponents(OMenuItem);
             expect(itemComps.length).toBe(items.length);
             items.forEach((value, idx) => {
-                expect(itemComps.at(idx)!.attributes("data-oruga")).toBe(
+                expect(itemComps[idx]!.attributes("data-oruga")).toBe(
                     "menu-item",
                 );
-                expect(itemComps.at(idx)!.text()).toBe(value.label);
-                expect(itemComps.at(idx)!.classes()).toContain("o-menu__item");
+                expect(itemComps[idx]!.text()).toBe(value.label);
+                expect(itemComps[idx]!.classes()).toContain("o-menu__item");
             });
         });
 
@@ -104,8 +104,8 @@ describe("OMenu tests", () => {
                 );
             expect(itemComps.length).toBe(items.length);
 
-            const itemOne = itemComps.at(0)!;
-            const itemTwo = itemComps.at(1)!;
+            const itemOne = itemComps[0]!;
+            const itemTwo = itemComps[1]!;
             const itemButtonOne = itemOne.find("button");
             const itemButtonTwo = itemTwo.find("button");
             expect(itemButtonOne.exists()).toBeTruthy();
@@ -131,8 +131,8 @@ describe("OMenu tests", () => {
                 wrapper.findAllComponents<ComponentPublicInstance>(OMenuItem);
             expect(itemComps.length).toBe(items.length);
 
-            const itemOne = itemComps.at(0)!;
-            const itemTwo = itemComps.at(1)!;
+            const itemOne = itemComps[0]!;
+            const itemTwo = itemComps[1]!;
             const itemButtonOne = itemOne.find("button");
             const itemButtonTwo = itemTwo.find("button");
 
@@ -201,8 +201,8 @@ describe("OMenu tests", () => {
                 wrapper.findAllComponents<ComponentPublicInstance>(OMenuItem);
             expect(itemComps.length).toBe(items.length);
 
-            const itemOne = itemComps.at(0)!;
-            const itemTwo = itemComps.at(1)!;
+            const itemOne = itemComps[0]!;
+            const itemTwo = itemComps[1]!;
             const itemButtonOne = itemOne.find("button");
             const itemButtonTwo = itemTwo.find("button");
 
@@ -232,8 +232,8 @@ describe("OMenu tests", () => {
                 wrapper.findAllComponents<ComponentPublicInstance>(OMenuItem);
             expect(itemComps.length).toBe(items.length);
 
-            const itemOne = itemComps.at(0)!;
-            const itemTwo = itemComps.at(1)!;
+            const itemOne = itemComps[0]!;
+            const itemTwo = itemComps[1]!;
             const itemButtonOne = itemOne.find("button");
             const itemButtonTwo = itemTwo.find("button");
 
