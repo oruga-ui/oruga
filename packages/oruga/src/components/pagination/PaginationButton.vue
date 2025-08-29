@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
 
-import type { ClassBind, DynamicComponent } from "@/types";
+import type { ClassBinding, DynamicComponent } from "@/types";
 
 defineOptions({
     isOruga: true,
@@ -18,13 +18,13 @@ const props = defineProps({
         type: [String, Object, Function] as PropType<DynamicComponent>,
         default: "button" as DynamicComponent,
     },
-    rootClass: { type: Array as PropType<ClassBind[]>, default: () => [] },
+    rootClass: { type: Array as PropType<ClassBinding[]>, default: () => [] },
     buttonClass: {
-        type: Array as PropType<ClassBind[]>,
+        type: Array as PropType<ClassBinding[]>,
         required: true,
     },
     buttonCurrentClass: {
-        type: Array as PropType<ClassBind[]>,
+        type: Array as PropType<ClassBinding[]>,
         required: true,
     },
 });
