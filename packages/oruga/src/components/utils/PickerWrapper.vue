@@ -223,8 +223,8 @@ function onInputClick(event): void {
 
 /** Emit 'blur' event on dropdown is not active (closed) */
 function onActiveChange(value: boolean): void {
-    if (value) onFocus(new FocusEvent("focus"));
-    else if (!value) onBlur(new FocusEvent("blur"));
+    if (value) onFocus();
+    else if (!value) onBlur();
 }
 
 // --- NATIVE EVENT HANDLER ---

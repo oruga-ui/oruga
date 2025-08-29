@@ -178,7 +178,7 @@ const hasInput = computed(
 
 watchEffect(() => {
     // blur if input is empty
-    if (!hasInput.value) onBlur(new FocusEvent("blur"));
+    if (!hasInput.value) onBlur();
 });
 
 function addItem(item?: T | string): void {

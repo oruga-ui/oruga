@@ -1,5 +1,13 @@
 <script setup lang="ts" generic="T, IsMultiple extends boolean = false">
-import { computed, nextTick, ref, watch, useId, type Component } from "vue";
+import {
+    computed,
+    nextTick,
+    ref,
+    watch,
+    useId,
+    toValue,
+    type Component,
+} from "vue";
 
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import PositionWrapper from "../utils/PositionWrapper.vue";
@@ -396,7 +404,10 @@ function moveFocus(delta: 1 | -1): void {
 /** Set focus on a dropdown item. */
 function setFocus(item: DropdownChildItem<T>): void {
     if (props.selectOnFocus && item.data?.value)
-        selectItem(item, new FocusEvent("focus"));
+        selectItem(
+            item,
+            new FocusEvent("focus", { relatedTarget: toValue(item.el) }),
+        );
 
     // set item as focused
     focusedItem.value = item;
