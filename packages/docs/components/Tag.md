@@ -16,7 +16,7 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 <section class="odocs-specs">
 
-## Tag component
+## Tag Component
 
 > Small tag labels to insert anywhere.
 
@@ -66,7 +66,7 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -81,7 +81,7 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 | $tag-padding               | 0 0.75em                                     |
 | $tag-icon-margin           | 0.5em                                        |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tag.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tag.scss)
 
 </div>
 <div class="theme-bulma">
@@ -101,7 +101,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $badge-icon-space   | 0.25em      |
 | $badge-border-color | transparent |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tag.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tag.scss)
 
 </div>
 

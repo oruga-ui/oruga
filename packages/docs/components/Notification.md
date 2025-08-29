@@ -21,7 +21,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 <section class="odocs-specs">
 
-## Notification component
+## Notification Component
 
 > Bold notification blocks to alert your users of something.
 
@@ -67,7 +67,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 <section class="odocs-specs">
 
-## NotificationNotice component
+## NotificationNotice Component
 
 > Notification Notice is an extension of the Notification component and is used for the programmatic usage.
 
@@ -114,7 +114,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -138,7 +138,7 @@ It is designed to mimic the push notifications that have been popularized by mob
 | $notification-notices-padding        | 2em                                          |
 | $notification-notices-zindex         | 1000                                         |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
 
 </div>
 <div class="theme-bulma">
@@ -151,7 +151,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $notification-notices-padding | 2em     |
 | $notification-notices-z       | 1000    |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_notification.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_notification.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -167,7 +167,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $notification-notices-space      | 1.5rem        |
 | $notification-icon-margin-right  | 0.5rem        |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_notification.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_notification.scss)
 
 </div>
 
