@@ -20,7 +20,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## Checkbox component
+## Checkbox Component
 
 > Select a single or grouped options.
 
@@ -77,7 +77,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -101,7 +101,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $checkbox-size                       | 1rem                                   |
 | $checkbox-line-height                | 1.5                                    |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
 
 </div>
 <div class="theme-bulma">
@@ -122,7 +122,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $checkbox-active-background-color | css.getVar("primary")                                                 |
 | $checkbox-shadow                  | css.getVar("shadow")                                                  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_checkbox.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_checkbox.scss)
 
 </div>
 <div class="theme-bootstrap">

@@ -18,7 +18,7 @@ The component implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https
 
 <section class="odocs-specs">
 
-## Collapse component
+## Collapse Component
 
 > An easy way to toggle what you want.
 
@@ -65,7 +65,7 @@ The component implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -74,7 +74,7 @@ The component implements the W3C ARIA APG [Disclosure (Show/Hide) Pattern](https
 | SASS Variable | Default |
 | ------------- | ------- |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_collapse.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_collapse.scss)
 
 </div>
 <div class="theme-bulma">

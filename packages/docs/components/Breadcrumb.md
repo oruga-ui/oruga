@@ -21,7 +21,7 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 <section class="odocs-specs">
 
-## Breadcrumb component
+## Breadcrumb Component
 
 > The classic breadcrumb, in different colors, sizes, and states
 
@@ -51,7 +51,7 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 <section class="odocs-specs">
 
-## BreadcrumbItem component
+## BreadcrumbItem Component
 
 > The classic breadrcumb item, in different colors, sizes, and states
 
@@ -93,7 +93,7 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -115,7 +115,7 @@ The component implements the W3C ARIA APG [Breadcrumb Pattern](https://www.w3.or
 | $breadcrumb-item-hover-background-color  | var(--#{$prefix}secondary)          |
 | $breadcrumb-seperator-color              | inherit                             |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_breadcrumb.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_breadcrumb.scss)
 
 </div>
 <div class="theme-bulma">
@@ -126,7 +126,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------ | ---------- |
 | $breadcrumb-colors | dv.$colors |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_breadcrumb.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_breadcrumb.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -137,7 +137,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | ----------------- | ------------------------ |
 | $breadcrumb-color | var(--#{$prefix}primary) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_breadcrumb.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_breadcrumb.scss)
 
 </div>
 

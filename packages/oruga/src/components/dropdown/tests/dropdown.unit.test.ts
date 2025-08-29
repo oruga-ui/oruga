@@ -33,11 +33,9 @@ describe("ODropdown tests", () => {
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
         options.forEach((option, idx) => {
-            expect(items.at(idx)!.attributes("data-oruga")).toBe(
-                "dropdown-item",
-            );
-            expect(items.at(idx)!.classes("o-dropdown__item")).toBeTruthy();
-            expect(items.at(idx)!.text()).toBe(option.label);
+            expect(items[idx]!.attributes("data-oruga")).toBe("dropdown-item");
+            expect(items[idx]!.classes("o-dropdown__item")).toBeTruthy();
+            expect(items[idx]!.text()).toBe(option.label);
         });
     });
 
@@ -73,11 +71,9 @@ describe("ODropdown tests", () => {
         const items = wrapper.findAllComponents(ODropdownItem);
         expect(items.length).toBe(options.length);
         simpleOptions.forEach((option, idx) => {
-            expect(items.at(idx)!.attributes("data-oruga")).toBe(
-                "dropdown-item",
-            );
-            expect(items.at(idx)!.classes("o-dropdown__item")).toBeTruthy();
-            expect(items.at(idx)!.text()).toBe(option);
+            expect(items[idx]!.attributes("data-oruga")).toBe("dropdown-item");
+            expect(items[idx]!.classes("o-dropdown__item")).toBeTruthy();
+            expect(items[idx]!.text()).toBe(option);
         });
     });
 

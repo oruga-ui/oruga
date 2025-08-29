@@ -17,7 +17,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 
 <section class="odocs-specs">
 
-## Datepicker component
+## Datepicker Component
 
 > An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile.
 
@@ -121,7 +121,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -172,7 +172,7 @@ The input opens a simple dropdown/modal for selecting a date, and uses the nativ
 | $datepicker-btn-min-width                         | 2.25em                                                            |
 | $datepicker-btn-padding                           | 0.5em 0.5em                                                       |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datepicker.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datepicker.scss)
 
 </div>
 <div class="theme-bulma">
@@ -193,7 +193,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $datepicker-item-selected-background-color | css.getVar("primary")                      |
 | $datepicker-event-background-color         | css.getVar("grey-light")                   |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_datepicker.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_datepicker.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -222,7 +222,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $datepicker-month-cell-spacer   | calc($spacer \* 0.5)                    |
 | $datepicker-month-cell-height   | 2.5rem                                  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_datepicker.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_datepicker.scss)
 
 </div>
 

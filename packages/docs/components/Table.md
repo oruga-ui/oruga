@@ -21,7 +21,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 <section class="odocs-specs">
 
-## Table component
+## Table Component
 
 > Tabulated data are sometimes needed, it's even better when it's responsive.
 
@@ -163,7 +163,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 <section class="odocs-specs">
 
-## TableColumn component
+## TableColumn Component
 
 > Define a column used by the table component.
 
@@ -213,7 +213,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -259,7 +259,7 @@ It allows tabular data to be displayed in a responsive way with special case cel
 | $table-th-padding                      | 0.5em 0.75em                                                                                |
 | $table-pagination-padding              | 0.5em 0                                                                                     |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_table.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_table.scss)
 
 </div>
 <div class="theme-bulma">
@@ -270,7 +270,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | --------------------------- | ------- |
 | $table-sticky-header-height | 300px   |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_table.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_table.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -293,7 +293,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $table-current-sort-bg             | var(--#{$prefix}gray-light)   |
 | $table-card-spacer                 | $spacer                       |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_table.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_table.scss)
 
 </div>
 

@@ -18,7 +18,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 <section class="odocs-specs">
 
-## Input component
+## Input Component
 
 > Get user Input. Use with Field to access all functionalities.
 
@@ -84,7 +84,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -111,7 +111,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 | $input-textarea-min-height   | 120px                                                 |
 | $input-textarea-padding      | 0.625em                                               |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_input.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_input.scss)
 
 </div>
 <div class="theme-bulma">
@@ -122,7 +122,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------- | ---------- |
 | $input-colors | dv.$colors |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_input.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_input.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -137,7 +137,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $input-icon-padding    | 2.5rem       |
 | $input-icon-padding-lg | 3rem         |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_input.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_input.scss)
 
 </div>
 

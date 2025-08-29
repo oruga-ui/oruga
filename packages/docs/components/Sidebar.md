@@ -17,7 +17,7 @@ The component can be used to show an overlay for navigation, shopping carts, and
 
 <section class="odocs-specs">
 
-## Sidebar component
+## Sidebar Component
 
 > A sidebar to use as overlay.
 
@@ -74,7 +74,7 @@ The component can be used to show an overlay for navigation, shopping carts, and
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -92,7 +92,7 @@ The component can be used to show an overlay for navigation, shopping carts, and
 | $sidebar-width                    | 260px                                              |
 | $sidebar-zindex                   | 100                                                |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_sidebar.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_sidebar.scss)
 
 </div>
 <div class="theme-bulma">
@@ -109,7 +109,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $sidebar-background-background-color | hsla( #{css.getVar("scheme-h")}, #{css.getVar("scheme-s")}, #{css.getVar("scheme-invert-l")}, 0.86) |
 | $sidebar-shadow                      | css.getVar("shadow")                                                                                |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_sidebar.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_sidebar.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -121,7 +121,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $sidebar-reduced-width  | 10rem   |
 | $sidebar-reduced-height | 10vh    |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_sidebar.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_sidebar.scss)
 
 </div>
 

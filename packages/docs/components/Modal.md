@@ -19,7 +19,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 
 <section class="odocs-specs">
 
-## Modal component
+## Modal Component
 
 > Classic modal overlay to include any content you may need.
 
@@ -79,7 +79,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -100,7 +100,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 | $modal-content-margin                      | 0 auto                                       |
 | $modal-zindex                              | 40                                           |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_modal.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_modal.scss)
 
 </div>
 <div class="theme-bulma">
