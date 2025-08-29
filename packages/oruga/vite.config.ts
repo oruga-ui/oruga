@@ -140,18 +140,19 @@ export default defineConfig(({ mode }) => ({
         },
         projects: [
             {
-                name: "unit",
                 extends: true,
                 test: {
+                    name: "unit",
+                    // exclude browser tests
                     exclude: [browserTestPattern],
                 },
             },
             {
-                name: "browser",
                 extends: true,
                 test: {
+                    name: "browser",
+                    // only run browser tests
                     include: [browserTestPattern],
-                    name: "oruga-browser",
                     browser: {
                         enabled: true,
                         provider: "playwright",
