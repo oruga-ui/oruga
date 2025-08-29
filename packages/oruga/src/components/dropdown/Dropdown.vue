@@ -396,7 +396,7 @@ function moveFocus(delta: 1 | -1): void {
 /** Set focus on a dropdown item. */
 function setFocus(item: DropdownChildItem<T>): void {
     if (props.selectOnFocus && item.data?.value)
-        selectItem(item, new Event("focus"));
+        selectItem(item, new FocusEvent("focus"));
 
     // set item as focused
     focusedItem.value = item;
