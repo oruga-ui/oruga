@@ -184,7 +184,7 @@ describe("ODropdown tests", () => {
             expect(menu.isVisible()).toBeTruthy();
 
             // click outside
-            window.dispatchEvent(new PointerEvent("click"));
+            window.dispatchEvent(new Event("click"));
             await nextTick(); // await dom update
 
             // check dropdown closed
@@ -208,7 +208,7 @@ describe("ODropdown tests", () => {
             expect(menu.isVisible()).toBeTruthy();
 
             // click outside
-            window.dispatchEvent(new PointerEvent("click"));
+            window.dispatchEvent(new Event("click"));
             await nextTick(); // await dom update
 
             // check dropdown closed
@@ -231,7 +231,7 @@ describe("ODropdown tests", () => {
             expect(menu.isVisible()).toBeTruthy();
 
             // click outside
-            window.dispatchEvent(new PointerEvent("click"));
+            window.dispatchEvent(new Event("click"));
             await nextTick(); // await dom update
 
             // check dropdown closed

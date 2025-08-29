@@ -182,7 +182,7 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.isVisible()).toBeTruthy();
 
         // click outside
-        window.dispatchEvent(new PointerEvent("click"));
+        window.dispatchEvent(new Event("click"));
         await nextTick(); // await dom update
 
         expect(dropdown.isVisible()).toBeFalsy();
