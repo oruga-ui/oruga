@@ -211,12 +211,12 @@ function computeClass(
     const localOverride: boolean = isTrueish(props.override);
     // get global config override property
     const globalOverride =
+        // check global config override property
+        getValueByPath(config, "override") ||
         // check component field config override property
         getValueByPath(config, `${componentKey}.${field}.override`) ||
         // check component config override property
-        getValueByPath(config, `${componentKey}.override`) ||
-        // check global config override property
-        getValueByPath(config, "override");
+        getValueByPath(config, `${componentKey}.override`);
 
     const overrideClass = localOverride || globalOverride;
 
@@ -290,7 +290,7 @@ function compileClass(
     let classBinding: ClassBinding | ClassBinding[];
 
     if (typeof classDefinition === "function")
-        // call definition function
+        // call class definition function
         classBinding = classDefinition(suffix, props) ?? "";
     else classBinding = classDefinition;
 
@@ -308,6 +308,7 @@ function compileClass(
 
     // if suffix is not already applied by the classFunction
     if (typeof classDefinition !== "function")
+        // apply suffix to the class string
         classString = suffixProcessor(classString, suffix);
 
     return classString;
