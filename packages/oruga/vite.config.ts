@@ -138,14 +138,16 @@ export default defineConfig(({ mode }) => ({
         coverage: {
             provider: "istanbul",
         },
-        workspace: [
+        projects: [
             {
+                name: "unit",
                 extends: true,
                 test: {
                     exclude: [browserTestPattern],
                 },
             },
             {
+                name: "browser",
                 extends: true,
                 test: {
                     include: [browserTestPattern],
@@ -153,11 +155,7 @@ export default defineConfig(({ mode }) => ({
                     browser: {
                         enabled: true,
                         provider: "playwright",
-                        instances: [
-                            {
-                                browser: "chromium",
-                            },
-                        ],
+                        instances: [{ browser: "chromium" }],
                     },
                 },
             },
