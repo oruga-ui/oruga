@@ -210,6 +210,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.disabled),
     ],
+    [
+        "variantClass",
+        "o-upload--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
 );
 
 const draggableClasses = defineClasses(
