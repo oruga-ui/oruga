@@ -18,7 +18,7 @@ if (!shadowRoot)
 onMounted(() => {
     if (host?.children)
         // add bulma light theme attribute to the slot content
-        host.childNodes.forEach((child) =>
+        Array.from(host.children).forEach((child) =>
             child.setAttribute("data-theme", "light"),
         );
 
