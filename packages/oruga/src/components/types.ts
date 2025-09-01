@@ -875,6 +875,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rounded: boolean;
                 /** Buttons order */
                 order: "centered" | "left" | "right";
+                /** Buttons position order */
+                position: "centered" | "left" | "right";
                 /** Pagination button tag name */
                 buttonTag: DynamicComponent;
                 /** Icon pack to use */
@@ -899,6 +901,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobileClass: ClassDefinition;
                 /** Class of the root element with order */
                 orderClass: ClassDefinition;
+                /** Class of the root element with position */
+                positionClass: ClassDefinition;
                 /** Class of the root element with size */
                 sizeClass: ClassDefinition;
                 /** Class of the root element when in `simple` mode */
