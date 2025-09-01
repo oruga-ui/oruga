@@ -596,16 +596,10 @@ const hasSearchableColumns = computed(() =>
     tableColumns.value.some((column) => column.searchable),
 );
 
-let debouncedFilter: ReturnType<
-    typeof useDebounce<Parameters<typeof handleFiltersChange>>
->;
-
-// initialise and update debounces filter function based on `filterDebounce` prop
-watch(
-    () => props.filterDebounce,
-    (debounce) =>
-        (debouncedFilter = useDebounce(handleFiltersChange, debounce || 0)),
-    { immediate: true },
+/** debounced filters change handler based on `filterDebounce` prop */
+const debouncedFilter = useDebounce(
+    handleFiltersChange,
+    props.filterDebounce ?? 0,
 );
 
 // react on filter got changed

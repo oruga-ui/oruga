@@ -72,7 +72,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     const childItems = ref<ProviderItem<ItemData>[]>([]);
 
     if (options?.rootRef) {
-        // debounced sort function
+        /** debounced sort function */
         const sortHandler = useDebounce((items: typeof childItems.value) => {
             const parent = unrefElement(options.rootRef);
             if (!parent) return;
