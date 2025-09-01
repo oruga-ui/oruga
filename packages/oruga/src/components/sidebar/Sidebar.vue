@@ -40,6 +40,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     active: false,
     overlay: () => getDefault("sidebar.overlay", false),
     inline: false,
+    width: undefined,
     position: () => getDefault("sidebar.position", "left"),
     fullheight: () => getDefault("sidebar.fullheight", false),
     fullwidth: () => getDefault("sidebar.fullwidth", false),
@@ -104,6 +105,9 @@ const transitionName = computed(() => {
 const hideOnMobile = computed(
     () => props.mobile === "hidden" && isMobile.value,
 );
+
+
+const dynamicStyle = computed(() => vertical ?! props.width)
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 
@@ -243,14 +247,8 @@ const contentClasses = defineClasses(
                 (!isMobile.value || props.mobile !== "expanded"),
         ),
     ],
-    ["visibleClass", "o-sidebar__content--visible", null, isActive],
-    [
-        "hiddenClass",
-        "o-sidebar__content--hidden",
-        null,
-        computed(() => !isActive.value),
-    ],
 );
+
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
@@ -259,29 +257,26 @@ defineExpose({ close });
 
 <template>
     <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
-        <div
-            v-show="!hideOnMobile"
-            ref="rootElement"
-            v-bind="$attrs"
-            v-trap-focus="trapFocus && isActive && !inline"
-            data-oruga="sidebar"
-            :class="rootClasses">
+        <transition
+            :name="transitionName"
+            @after-enter="afterEnter"
+            @before-leave="beforeLeave">
             <div
-                v-if="overlay && isActive"
-                :class="overlayClasses"
-                :tabindex="-1"
-                @click="clickedOutside" />
-
-            <transition
-                :name="transitionName"
-                @after-enter="afterEnter"
-                @before-leave="beforeLeave">
+                v-show="isActive && !hideOnMobile"
+                ref="rootElement"
+                v-bind="$attrs"
+                v-trap-focus="trapFocus && isActive && !inline"
+                data-oruga="sidebar"
+                :class="rootClasses">
                 <div
-                    v-show="isActive"
-                    ref="contentElement"
-                    :class="contentClasses">
+                    v-if="overlay && isActive"
+                    :class="overlayClasses"
+                    :tabindex="-1"
+                    @click="clickedOutside" />
+
+                <div ref="contentElement" :class="contentClasses">
                     <!--
-                        @slot Sidebar default content, default is component prop
+                        @slot Sidebar default content, default is content prop
                         @binding {(...args): void} close - function to close the component
                     -->
                     <slot :close="close">
@@ -292,9 +287,21 @@ defineExpose({ close });
                             v-bind="$props.props"
                             v-on="$props.events || {}"
                             @close="close" />
+
+                        <div v-else-if="content">{{ content }}</div>
                     </slot>
+
+                    <o-icon
+                        v-if="showX"
+                        v-show="!isAnimating"
+                        :class="closeClasses"
+                        :icon="closeIcon"
+                        :size="closeIconSize"
+                        clickable
+                        :aria-label="ariaCloseLabel"
+                        @click="cancel('x')" />
                 </div>
-            </transition>
-        </div>
+            </div>
+        </transition>
     </Teleport>
 </template>
