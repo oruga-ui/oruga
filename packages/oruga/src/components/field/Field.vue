@@ -183,6 +183,12 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-field--mobile", null, isMobile],
     ["focusedClass", "o-field--focused", null, isFocused],
     ["filledClass", "o-field--filled", null, isFilled],
+    [
+        "variantClass",
+        "o-field--",
+        fieldVariant,
+        computed(() => !!fieldVariant.value),
+    ],
 );
 
 const labelClasses = defineClasses(
