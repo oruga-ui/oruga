@@ -19,7 +19,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 <section class="odocs-specs">
 
-## Autocomplete component
+## Autocomplete Component
 
 > Extended input that provide suggestions while the user types.
 
@@ -116,7 +116,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -126,7 +126,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | ----------------------------------------- | -------------------------- |
 | $autocomplete-item-hover-background-color | $control-brackground-color |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 
 </div>
 <div class="theme-bulma">
@@ -143,7 +143,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ----------------------------- | ------- |
 | $autocomplete-menu-max-height | 200px   |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_autocomplete.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_autocomplete.scss)
 
 </div>
 

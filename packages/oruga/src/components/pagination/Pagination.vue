@@ -87,7 +87,7 @@ const pageCount = computed(() =>
 watch(
     () => pageCount.value,
     (value) => {
-        if (currentPage.value > value) onLast(new Event("change"));
+        if (currentPage.value > value) onLast();
     },
 );
 
@@ -206,26 +206,26 @@ function getAriaPageLabel(pageNumber: number, isCurrent: boolean): string {
 }
 
 /** Previous button click listener. */
-function onPrev(event: Event): void {
-    changePage(currentPage.value - 1, event);
+function onPrev(): void {
+    changePage(currentPage.value - 1);
 }
 
 /** Next button click listener. */
-function onNext(event: Event): void {
-    changePage(currentPage.value + 1, event);
+function onNext(): void {
+    changePage(currentPage.value + 1);
 }
 
 /** First button click listener. */
-function onFirst(event: Event): void {
-    changePage(1, event);
+function onFirst(): void {
+    changePage(1);
 }
 
 /** Last button click listener. */
-function onLast(event: Event): void {
-    changePage(pageCount.value, event);
+function onLast(): void {
+    changePage(pageCount.value);
 }
 
-function changePage(page: number, event: Event): void {
+function changePage(page: number, event?: Event): void {
     if (currentPage.value === page || page < 1 || page > pageCount.value)
         return;
     emits("change", page);

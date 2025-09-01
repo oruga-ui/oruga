@@ -138,26 +138,25 @@ export default defineConfig(({ mode }) => ({
         coverage: {
             provider: "istanbul",
         },
-        workspace: [
+        projects: [
             {
                 extends: true,
                 test: {
+                    name: "unit",
+                    // exclude browser tests
                     exclude: [browserTestPattern],
                 },
             },
             {
                 extends: true,
                 test: {
+                    name: "browser",
+                    // only run browser tests
                     include: [browserTestPattern],
-                    name: "oruga-browser",
                     browser: {
                         enabled: true,
                         provider: "playwright",
-                        instances: [
-                            {
-                                browser: "chromium",
-                            },
-                        ],
+                        instances: [{ browser: "chromium" }],
                     },
                 },
             },
