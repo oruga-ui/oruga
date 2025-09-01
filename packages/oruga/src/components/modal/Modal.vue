@@ -184,6 +184,12 @@ const rootClasses = defineClasses(
     ["rootClass", "o-modal"],
     ["mobileClass", "o-modal--mobile", null, isMobile],
     ["activeClass", "o-modal--active", null, isActive],
+    [
+        "teleportClass",
+        "o-modal--teleport",
+        null,
+        computed(() => !!props.teleport),
+    ],
 );
 
 const overlayClasses = defineClasses(["overlayClass", "o-modal__overlay"]);
@@ -195,6 +201,22 @@ const contentClasses = defineClasses(
         "o-modal__content--full-screen",
         null,
         computed(() => props.fullScreen),
+    ],
+    [
+        "fullheightClass",
+        "o-sidebar__content--fullheight",
+        null,
+        computed(() => props.fullheight),
+    ],
+    [
+        "fullwidthClass",
+        "o-sidebar__content--fullwidth",
+        null,
+        computed(
+            () =>
+                props.fullwidth ||
+                (isMobile.value && props.mobile === "expanded"),
+        ),
     ],
 );
 
@@ -234,19 +256,20 @@ defineExpose({ close });
                     ref="contentElement"
                     :class="contentClasses"
                     :style="customStyle">
-                    <!-- injected component for programmatic usage -->
-                    <component
-                        :is="component"
-                        v-if="component"
-                        v-bind="$props.props"
-                        v-on="$props.events || {}"
-                        @close="close" />
                     <!--
                         @slot Modal default content, default is content prop
                         @binding {(...args): void} close - function to close the component
                     -->
-                    <slot v-else :close="close">
-                        <div v-if="content">{{ content }}</div>
+                    <slot :close="close">
+                        <!-- injected component for programmatic usage -->
+                        <component
+                            :is="component"
+                            v-if="component"
+                            v-bind="$props.props"
+                            v-on="$props.events || {}"
+                            @close="close" />
+
+                        <div v-else-if="content">{{ content }}</div>
                     </slot>
 
                     <o-icon
