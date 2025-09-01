@@ -601,7 +601,7 @@ const filters = ref<Record<string, string>>({});
 
 /** check if any column has filterable active */
 const hasFilterColumns = computed(() =>
-    tableColumns.value.some((column) => column.searchable),
+    tableColumns.value.some((column) => column.searchable || column.filterable),
 );
 
 let debouncedFilter: ReturnType<
