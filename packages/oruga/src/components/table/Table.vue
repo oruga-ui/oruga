@@ -43,7 +43,7 @@ import {
     useSequentialId,
 } from "@/composables";
 
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 import type {
     TableColumn,
     TableRow,
@@ -1165,7 +1165,7 @@ const paginationWrapperRootClasses = computed(() =>
     getActiveClasses(paginationWrapperClasses),
 );
 
-function rowClasses(row: TableRow<T>): ClassBind[] {
+function rowClasses(row: TableRow<T>): ClassBinding[] {
     const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
         ? trSelectedClasses.value
         : [];

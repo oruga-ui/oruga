@@ -31,8 +31,8 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
 const emits = defineEmits<{
     /**
      * onclick event
-     * @param value {string | number | object} value prop data
-     * @param event {event} Native Event
+     * @param value {unknown} value prop data
+     * @param event {event} native event
      */
     click: [value: T, event: Event];
 }>();

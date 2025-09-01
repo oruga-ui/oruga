@@ -4,7 +4,7 @@ import { axe } from "jest-axe";
 import { nextTick } from "vue";
 import type { ComponentProps } from "vue-component-type-helpers";
 
-import StepsExample from "./StepsExample.vue";
+import StepsExample from "./StepsAxeExample.vue";
 import type { StepsProps } from "../props";
 
 type ExampleProps = ComponentProps<typeof StepsExample>;

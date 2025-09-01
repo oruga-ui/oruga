@@ -18,7 +18,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## Timepicker component
+## Timepicker Component
 
 > An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile.
 
@@ -104,7 +104,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -124,7 +124,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $timepicker-select-placeholder-opacity | var( --#{$prefix}base-disabled-opacity)               |
 | $timepicker-separator-font-weight      | 600                                                   |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_timepicker.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_timepicker.scss)
 
 </div>
 <div class="theme-bulma">
@@ -141,7 +141,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------------ | ------- |
 | $timepicker-select-width | 4em     |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_timepicker.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_timepicker.scss)
 
 </div>
 

@@ -34,6 +34,7 @@ const props = withDefaults(defineProps<PaginationProps>(), {
     simple: () => getDefault("pagination.simple", false),
     rounded: () => getDefault("pagination.rounded", false),
     order: () => getDefault("pagination.order", "right"),
+    position: () => getDefault("pagination.position", "right"),
     buttonTag: () => getDefault("pagination.buttonTag", PlainButton),
     iconPack: () => getDefault("pagination.iconPack"),
     iconPrev: () => getDefault("pagination.iconPrev", "chevron-left"),
@@ -85,7 +86,7 @@ const pageCount = computed(() =>
 watch(
     () => pageCount.value,
     (value) => {
-        if (currentPage.value > value) last(new Event("change"));
+        if (currentPage.value > value) last();
     },
 );
 
@@ -197,26 +198,26 @@ function getAriaPageLabel(pageNumber: number, isCurrent: boolean): string {
 }
 
 /** Previous button click listener. */
-function prev(event: Event): void {
-    changePage(currentPage.value - 1, event);
+function prev(): void {
+    changePage(currentPage.value - 1);
 }
 
 /** Next button click listener. */
-function next(event: Event): void {
-    changePage(currentPage.value + 1, event);
+function next(): void {
+    changePage(currentPage.value + 1);
 }
 
 /** First button click listener. */
-function first(event: Event): void {
-    changePage(1, event);
+function first(): void {
+    changePage(1);
 }
 
 /** Last button click listener. */
-function last(event: Event): void {
-    changePage(pageCount.value, event);
+function last(): void {
+    changePage(pageCount.value);
 }
 
-function changePage(page: number, event: Event): void {
+function changePage(page: number, event?: Event): void {
     if (currentPage.value === page || page < 1 || page > pageCount.value)
         return;
     emits("change", page);
@@ -231,11 +232,18 @@ function changePage(page: number, event: Event): void {
 
 const rootClasses = defineClasses(
     ["rootClass", "o-pagination"],
+    // @deprecated `order` will be removed later
     [
         "orderClass",
         "o-pagination--",
         computed(() => props.order),
         computed(() => !!props.order),
+    ],
+    [
+        "positionClass",
+        "o-pagination--",
+        computed(() => props.position),
+        computed(() => !!props.position),
     ],
     [
         "sizeClass",

@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`OPagination tests > render correctly 1`] = `
-"<nav data-oruga="pagination" class="o-pagination o-pagination--right">
+"<nav data-oruga="pagination" class="o-pagination o-pagination--right o-pagination--right">
   <!--
             @slot Previous button slot
             @binding {number} number - page number
