@@ -7,7 +7,7 @@ import {
     type VNodeTypes,
 } from "vue";
 import type { ComponentProps } from "vue-component-type-helpers";
-import type { ClassBind, DynamicComponent } from "@/types";
+import type { ClassBinding, DynamicComponent } from "@/types";
 
 type SlotComponentProps<C extends VNodeTypes> = {
     /** Component to be get the slot from */
@@ -25,7 +25,7 @@ type SlotComponentProps<C extends VNodeTypes> = {
      */
     tag?: DynamicComponent;
     /** Class for the slot wrapper element */
-    class?: ClassBind | ClassBind[];
+    class?: ClassBinding | ClassBinding[];
 };
 
 /** This components renders a specific slot and only the slot of another component */

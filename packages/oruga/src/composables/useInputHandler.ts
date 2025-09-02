@@ -132,7 +132,12 @@ export function useInputHandler<T extends ValidatableFormElement>(
     function onBlur(event?: Event): void {
         isFocused.value = false;
         if (parentField?.value) parentField.value.setFocus(false);
-        emits("blur", event ? event : new Event("blur"));
+        emits(
+            "blur",
+            event
+                ? event
+                : new FocusEvent("blur", { relatedTarget: element.value }),
+        );
         checkHtml5Validity();
     }
 
@@ -140,7 +145,12 @@ export function useInputHandler<T extends ValidatableFormElement>(
     function onFocus(event?: Event): void {
         isFocused.value = true;
         if (parentField?.value) parentField.value.setFocus(true);
-        emits("focus", event ? event : new Event("focus"));
+        emits(
+            "focus",
+            event
+                ? event
+                : new FocusEvent("focus", { relatedTarget: element.value }),
+        );
     }
 
     // --- Validation Feature ---

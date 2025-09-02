@@ -3,19 +3,19 @@ import type { ComponentEmit } from "vue-component-type-helpers";
 
 export type Numberish = number | string;
 
-export type ClassBind = {
-    [x: string]: boolean;
-};
+/**
+ * Function to define a class binding.
+ * @param suffix - a component class suffix
+ * @param props - the component props
+ * @returns a class binding or undefined if no class should be applied
+ */
+export type ClassFunction = (
+    suffix: string,
+    props: Record<string, any>,
+) => ClassBinding | ClassBinding[] | undefined;
 
-/** Vue native type which a v-bind prop must have */
-export type PropBind =
-    | string
-    | {
-          [x: string]: string;
-      }
-    | {
-          [x: string]: boolean;
-      };
+/** Vue native type for a class attribute */
+export type ClassBinding = string | { [x: string]: boolean };
 
 /** Vue native dynamic component 'is' property value type */
 export type DynamicComponent = string | object | CallableFunction | Component;

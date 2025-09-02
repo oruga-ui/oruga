@@ -186,13 +186,8 @@ const computedStyles = computed<StyleValue>(() =>
         : {},
 );
 
-let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
-
-watch(
-    () => props.debounce,
-    (debounce) => (debouncedInput = useDebounce(onInput, debounce || 0)),
-    { immediate: true },
-);
+/** debounced input event handler based on debounce prop */
+const debouncedInput = useDebounce(onInput, props.debounce ?? 0);
 
 function onInput(event: Event): void {
     emits("input", vmodel.value, event);
