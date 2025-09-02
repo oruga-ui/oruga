@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 
 import OIcon from "@/components/icon/Icon.vue";
 
@@ -9,7 +9,7 @@ defineProps({
     icon: { type: String, required: true },
     size: { type: String, default: undefined },
     pack: { type: String, default: undefined },
-    classes: { type: Array as PropType<ClassBind[]>, required: true },
+    classes: { type: Array as PropType<ClassBinding[]>, required: true },
 });
 </script>
 
