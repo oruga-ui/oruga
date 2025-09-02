@@ -15,8 +15,8 @@ import FormCode from "./form.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <p>
-        A simple Card is created with a title property along with the content as
-        children.
+        A simple Card is created with a <code>title</code> and
+        <code>content</code> property.
     </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
@@ -24,18 +24,18 @@ import FormCode from "./form.vue?raw";
     <p>
         The component provides <code>header</code>, <code>title</code>,
         <code>subtitle</code>, <code>content</code> and <code>footer</code> as
-        the named templates to place content.
+        the named slot templates to place content.
     </p>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 
     <h3 id="image">Image</h3>
-    <p>Cards can have an image<i>below</i> the header.</p>
+    <p>Cards can have an image <i>below</i> the header.</p>
     <ExampleViewer :component="Image" :code="ImageCode" />
 
     <h3 id="form">Form</h3>
     <p>
-        Cards can be used to display a user form. They are ideal for use with
-        the modal component.
+        Cards can be used to display user forms. They are particularly
+        well-suited to use with the modal component.
     </p>
     <ExampleViewer :component="Form" :code="FormCode" />
 </template>

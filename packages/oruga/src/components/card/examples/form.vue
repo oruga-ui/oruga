@@ -8,9 +8,9 @@ function onLogin(): void {
 </script>
 
 <template>
-    <form action="">
-        <o-card title="Login" closeable @close="onClose">
-            <template #content>
+    <o-card title="Login" closeable @close="onClose">
+        <template #content>
+            <form action="">
                 <o-field label="Email">
                     <o-input type="email" placeholder="Your email" required />
                 </o-field>
@@ -26,9 +26,6 @@ function onLogin(): void {
                 <o-field>
                     <o-checkbox label="Remember me" />
                 </o-field>
-            </template>
-
-            <template #footer>
                 <div class="card-footer">
                     <o-button
                         label="Close"
@@ -39,14 +36,15 @@ function onLogin(): void {
                         variant="primary"
                         @click.prevent="onLogin" />
                 </div>
-            </template>
-        </o-card>
-    </form>
+            </form>
+        </template>
+    </o-card>
 </template>
 
 <style scoped>
 .card-footer {
     display: flex;
     align-items: center;
+    gap: 5px;
 }
 </style>
