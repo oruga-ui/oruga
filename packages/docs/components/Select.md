@@ -18,7 +18,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## Select component
+## Select Component
 
 > Select an item in a list. Use with Field to access all functionalities.
 
@@ -84,7 +84,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -109,7 +109,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $select-arrow-size            | 1rem                                                  |
 | $select-placeholder-opacity   | var(--#{$prefix}base-disabled-opacity)                |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
 
 </div>
 <div class="theme-bulma">

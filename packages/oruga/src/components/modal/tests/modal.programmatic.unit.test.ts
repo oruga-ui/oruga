@@ -113,7 +113,9 @@ describe("useModalProgrammatic tests", () => {
         ModalProgrammatic.open({ content, onClose });
 
         // check element exist
-        let el = document.body.querySelector<HTMLElement>(".o-icon");
+        let el = document.body.querySelector<HTMLElement>(
+            '[data-oruga="close"]',
+        );
         expect(el).not.toBeNull();
 
         // close element on 'x' button click
@@ -121,7 +123,7 @@ describe("useModalProgrammatic tests", () => {
         vi.runAllTimers();
 
         // check element does not exist
-        el = document.body.querySelector("button");
+        el = document.body.querySelector('[data-oruga="close"]');
         expect(el).toBeNull();
 
         expect(onClose).toHaveBeenCalledOnce();

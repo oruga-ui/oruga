@@ -22,7 +22,7 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 <section class="odocs-specs">
 
-## Carousel component
+## Carousel Component
 
 > A Slideshow for cycling images in confined spaces.
 
@@ -85,7 +85,7 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 <section class="odocs-specs">
 
-## CarouselItem component
+## CarouselItem Component
 
 > A Slideshow item used by the carousel.
 
@@ -118,7 +118,7 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -156,7 +156,7 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 | $carousel-overlay-background           | hsla(0, 0%, 4%, 0.86)                                                             |
 | $carousel-overlay-zindex               | 40                                                                                |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)
 
 </div>
 <div class="theme-bulma">
@@ -176,7 +176,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $carousel-indicator-color      | css.getVar("primary")                                                                |
 | $carousel-overlay-background   | hsla( css.getVar(scheme-h), css.getVar(scheme-s), css.getVar(scheme-invert-l), 0.86) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_carousel.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_carousel.scss)
 
 </div>
 <div class="theme-bootstrap">

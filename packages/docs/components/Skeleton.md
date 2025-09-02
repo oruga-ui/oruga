@@ -16,7 +16,7 @@ The **Skeleton** component can be used as a loading animations or space-fillers 
 
 <section class="odocs-specs">
 
-## Skeleton component
+## Skeleton Component
 
 > A placeholder for content to load.
 
@@ -51,7 +51,7 @@ The **Skeleton** component can be used as a loading animations or space-fillers 
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -64,7 +64,7 @@ The **Skeleton** component can be used as a loading animations or space-fillers 
 | $skeleton-duration      | 1.5s                                                                                           |
 | $skeleton-margin        | 0.5rem 0 0 0                                                                                   |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_skeleton.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_skeleton.scss)
 
 </div>
 <div class="theme-bulma">
@@ -77,7 +77,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $skeleton-margin-top    | 0.5rem               |
 | $skeleton-border-radius | css.getVar("radius") |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_skeleton.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_skeleton.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -91,7 +91,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $skeleton-duration | 1.5s                                                                                                          |
 | $skeleton-margin   | 0.5rem 0 0 0                                                                                                  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_skeleton.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_skeleton.scss)
 
 </div>
 

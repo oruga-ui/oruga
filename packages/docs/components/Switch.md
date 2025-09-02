@@ -19,7 +19,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## Switch component
+## Switch Component
 
 > Switch between two opposing states.
 
@@ -78,7 +78,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -97,7 +97,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $switch-checked-background    | var(--#{$prefix}primary)                                  |
 | $switch-disabled-opacity      | var(--#{$prefix}base-disabled-opacity)                    |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_switch.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_switch.scss)
 
 </div>
 <div class="theme-bulma">
@@ -113,7 +113,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $switch-active-background-color | css.getVar("primary")    |
 | $switch-shadow                  | css.getVar("shadow")     |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_switch.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_switch.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -126,7 +126,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $switch-width  | 2.75em  |
 | $switch-height | 1.5em   |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_switch.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_switch.scss)
 
 </div>
 

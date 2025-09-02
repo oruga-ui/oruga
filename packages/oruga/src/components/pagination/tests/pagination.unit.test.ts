@@ -33,12 +33,12 @@ describe("OPagination tests", () => {
 
     test("should emit change with value of 1 when calling first", async () => {
         let wrapper = mount(OPagination, { props: { current: 1, total: 100 } });
-        wrapper.vm.first(new Event(""));
+        wrapper.vm.first();
         expect(wrapper.emitted()["change"]).toBeUndefined();
         expect(wrapper.emitted()["update:current"]).toBeUndefined();
 
         wrapper = mount(OPagination, { props: { current: 5, total: 100 } });
-        wrapper.vm.first(new Event(""));
+        wrapper.vm.first();
         expect(wrapper.emitted()["change"][0]).toContainEqual(1);
         expect(wrapper.emitted()["update:current"][0]).toContainEqual(1);
     });
@@ -48,12 +48,12 @@ describe("OPagination tests", () => {
             props: { current: 5, total: 100 },
         });
 
-        wrapper.vm.last(new Event(""));
+        wrapper.vm.last();
         expect(wrapper.emitted()["change"]).toBeUndefined();
         expect(wrapper.emitted()["update:current"]).toBeUndefined();
 
         wrapper = mount(OPagination, { props: { current: 3, total: 100 } });
-        wrapper.vm.last(new Event(""));
+        wrapper.vm.last();
         expect(wrapper.emitted()["change"][0]).toContainEqual(5);
         expect(wrapper.emitted()["update:current"][0]).toContainEqual(5);
     });
@@ -63,7 +63,7 @@ describe("OPagination tests", () => {
             props: { current: 5, total: 100 },
         });
 
-        wrapper.vm.prev(new Event(""));
+        wrapper.vm.prev();
         expect(wrapper.emitted()["change"][0]).toContainEqual(4);
         expect(wrapper.emitted()["update:current"][0]).toContainEqual(4);
     });
@@ -73,7 +73,7 @@ describe("OPagination tests", () => {
             props: { current: 2, total: 100 },
         });
 
-        wrapper.vm.next(new Event(""));
+        wrapper.vm.next();
         expect(wrapper.emitted()["change"][0]).toContainEqual(3);
         expect(wrapper.emitted()["update:current"][0]).toContainEqual(3);
     });

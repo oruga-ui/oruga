@@ -19,7 +19,7 @@ The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/
 
 <section class="odocs-specs">
 
-## Button component
+## Button Component
 
 > The classic button, in different colors, sizes, and states.
 
@@ -71,7 +71,7 @@ The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -97,7 +97,7 @@ The component supports the W3C ARIA APG [Button Pattern](https://www.w3.org/WAI/
 | $button-outlined-background-color | transparent                                     |
 | $button-outlined-border-color     | var(--#{$prefix}grey-light)                     |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
 
 </div>
 <div class="theme-bulma">
@@ -118,7 +118,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $btn-hover-border-color | var(--#{$prefix}border-color) |
 | $btn-hover-box-shadow   | $box-shadow-sm                |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_button.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_button.scss)
 
 </div>
 
