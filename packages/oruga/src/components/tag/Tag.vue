@@ -2,6 +2,7 @@
 import { computed } from "vue";
 
 import OIcon from "../icon/Icon.vue";
+import CloseButton from "../utils/CloseButton.vue";
 
 import { getDefault } from "@/utils/config";
 
@@ -29,7 +30,7 @@ const props = withDefaults(defineProps<TagProps>(), {
     icon: undefined,
     iconPack: () => getDefault("tag.iconPack"),
     closeIcon: () => getDefault("tag.closeIcon", "close"),
-    closeIconPack: () => getDefault("tag.closeIconPack"),
+    closeIconSize: () => getDefault("tag.closeIconSize"),
     ariaCloseLabel: () => getDefault("tag.ariaCloseLabel", "Close"),
 });
 
@@ -45,7 +46,7 @@ const emits = defineEmits<{
  * Emit close event when delete button is clicked
  * or delete key is pressed.
  */
-function close(event: Event): void {
+function onClose(event: Event): void {
     emits("close", event);
 }
 
@@ -92,20 +93,18 @@ const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
             <slot>{{ label }}</slot>
         </span>
 
-        <!--
-            @slot Override the close icon
-            @binding {close()} close - close function
-        -->
-        <slot name="close" :close="close">
-            <o-icon
-                v-if="closeable"
-                :class="closeClasses"
-                :pack="closeIconPack"
-                :icon="closeIcon"
-                :size="size"
-                clickable
-                :aria-label="ariaCloseLabel"
-                @click="close" />
-        </slot>
+        <CloseButton
+            v-if="closeable"
+            :pack="iconPack"
+            :icon="closeIcon"
+            :size="closeIconSize"
+            :label="ariaCloseLabel"
+            :classes="closeClasses"
+            @click="onClose">
+            <!--
+                @slot Override the close icon
+            -->
+            <slot v-if="$slots['close']" name="close" />
+        </CloseButton>
     </span>
 </template>

@@ -785,6 +785,8 @@ Alert modals interrupt the user's workflow to communicate an important messages 
                 ariaLabel: string;
                 /** Automatically focus modal when active */
                 autoFocus: boolean;
+                /** Icon pack to use */
+                iconPack: string;
                 /** Close icon name */
                 closeIcon: string;
                 /** Size of close icon */
@@ -1479,8 +1481,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPack: string;
                 /** Close icon name */
                 closeIcon: string;
-                /** Icon pack to use for the close icon */
-                closeIconPack: string;
+                /** Size of close icon */
+                closeIconSize: string;
                 /** Accessibility label for the close button */
                 ariaCloseLabel: string;
                 /** Class of the root element */

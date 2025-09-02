@@ -9,7 +9,7 @@ import {
     type Component,
 } from "vue";
 
-import OIcon from "../icon/Icon.vue";
+import CloseButton from "../utils/CloseButton.vue";
 
 import { getDefault } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
@@ -52,6 +52,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     alert: () => getDefault("modal.alert", false),
     ariaLabel: () => getDefault("modal.ariaLabel"),
     autoFocus: () => getDefault("modal.autoFocus", true),
+    iconPack: () => getDefault("modal.iconPack"),
     closeIcon: () => getDefault("modal.closeIcon", "close"),
     closeIconSize: () => getDefault("modal.closeIconSize", "medium"),
     ariaCloseLabel: () => getDefault("modal.ariaCloseLabel", "Close"),
@@ -127,7 +128,7 @@ if (isClient)
 
 /** Close fixed sidebar if clicked outside. */
 function onClickedOutside(event: Event): void {
-    if (!isActive.value || isAnimating.value) return;
+    if (!isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
         (contentRef.value && !event.composedPath().includes(contentRef.value))
@@ -166,16 +167,16 @@ function close(...args: [] | [string] | CloseEventArgs<C>): void {
 
 // --- Animation Feature ---
 
-const isAnimating = ref(!props.active);
+const isAnimated = ref(props.active);
 
 /** Transition after-enter hook */
 function afterEnter(): void {
-    isAnimating.value = false;
+    isAnimated.value = true;
 }
 
 /** Transition before-leave hook */
 function beforeLeave(): void {
-    isAnimating.value = true;
+    isAnimated.value = false;
 }
 
 // --- Computed Component Classes ---
@@ -241,6 +242,7 @@ defineExpose({ close });
                         v-bind="$props.props"
                         v-on="$props.events || {}"
                         @close="close" />
+
                     <!--
                         @slot Modal default content, default is content prop
                         @binding {(...args): void} close - function to close the component
@@ -249,15 +251,20 @@ defineExpose({ close });
                         <div v-if="content">{{ content }}</div>
                     </slot>
 
-                    <o-icon
+                    <CloseButton
                         v-if="showX"
-                        v-show="!isAnimating"
-                        :class="closeClasses"
+                        v-show="isAnimated"
+                        :pack="iconPack"
                         :icon="closeIcon"
                         :size="closeIconSize"
-                        clickable
-                        :aria-label="ariaCloseLabel"
-                        @click="cancel('x')" />
+                        :label="ariaCloseLabel"
+                        :classes="closeClasses"
+                        @click="cancel('x')">
+                        <!--
+                            @slot Override the close icon
+                        -->
+                        <slot v-if="$slots['close']" name="close" />
+                    </CloseButton>
                 </div>
             </div>
         </transition>
