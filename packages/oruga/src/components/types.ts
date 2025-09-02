@@ -163,14 +163,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Adds close button to the header */
                 closeable: boolean;
-                /** Accessibility label for the close button */
-                ariaCloseLabel: string;
                 /** Icon pack to use for the close icon */
                 iconPack: string;
                 /** Close icon name */
                 closeIcon: string;
                 /** Close icon size */
                 closeIconSize: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the header element */

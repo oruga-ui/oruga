@@ -7,7 +7,7 @@ export type LoadingProps = {
     active?: boolean;
     /** Loader will overlay the full page. */
     fullPage?: boolean;
-    /** Show label beside the icon, unnecessary when default slot is used. */
+    /** Show a label beside the icon, unnecessary when default slot is used. */
     label?: string;
     /** Custom animation (transition name) */
     animation?: string;
