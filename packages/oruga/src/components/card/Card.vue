@@ -154,6 +154,7 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
         <!-- Loading -->
         <o-loading
             :active="loading"
+            :full-page="false"
             :label="loadingLabel"
             :icon-pack="iconPack" />
 
