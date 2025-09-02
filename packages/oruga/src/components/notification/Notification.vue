@@ -81,16 +81,16 @@ function close(...args: [] | [string]): void {
 
 // --- Animation Feature ---
 
-const isAnimating = ref(!props.active);
+const isAnimated = ref(props.active);
 
 /** Transition after-enter hook */
 function afterEnter(): void {
-    isAnimating.value = false;
+    isAnimated.value = true;
 }
 
 /** Transition before-leave hook */
 function beforeLeave(): void {
-    isAnimating.value = true;
+    isAnimated.value = false;
 }
 
 // --- Computed Component Classes ---
@@ -142,21 +142,20 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
             v-bind="$attrs"
             data-oruga="notification"
             :class="rootClasses">
-            <!--
-                @slot Override the close icon
-                @binding {(): void} close - function to close the component
-            -->
-            <slot name="close" :close="() => close('x')">
-                <CloseButton
-                    v-if="closeable"
-                    v-show="!isAnimating"
-                    :pack="iconPack"
-                    :icon="closeIcon"
-                    :size="closeIconSize"
-                    :label="ariaCloseLabel"
-                    :classes="closeClasses"
-                    @click="close('x')" />
-            </slot>
+            <CloseButton
+                v-if="closeable"
+                v-show="isAnimated"
+                :pack="iconPack"
+                :icon="closeIcon"
+                :size="closeIconSize"
+                :label="ariaCloseLabel"
+                :classes="closeClasses"
+                @click="close('x')">
+                <!--
+                    @slot Override the close icon
+                -->
+                <slot v-if="$slots['close']" name="close" />
+            </CloseButton>
 
             <!--
                 @slot Notification inner content, outside of the message container

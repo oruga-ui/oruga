@@ -19,6 +19,8 @@ defineProps({
         :class="classes"
         :aria-label="label"
         data-oruga="close">
-        <o-icon :pack="pack" :icon="icon" :size="size" />
+        <slot>
+            <o-icon :pack="pack" :icon="icon" :size="size" />
+        </slot>
     </button>
 </template>

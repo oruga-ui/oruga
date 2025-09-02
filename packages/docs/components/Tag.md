@@ -49,10 +49,10 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 ### Slots
 
-| Name    | Description             | Bindings                                               |
-| ------- | ----------------------- | ------------------------------------------------------ |
-| default | Override the tag label  |                                                        |
-| close   | Override the close icon | **close** `(): void` - function to close the component |
+| Name    | Description             | Bindings |
+| ------- | ----------------------- | -------- |
+| default | Override the tag label  |          |
+| close   | Override the close icon |          |
 
 </section>
 

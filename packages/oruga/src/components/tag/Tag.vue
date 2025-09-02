@@ -93,19 +93,18 @@ const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
             <slot>{{ label }}</slot>
         </span>
 
-        <!--
-            @slot Override the close icon
-            @binding {(): void} close - function to close the component
-        -->
-        <slot name="close" :close="onClose">
-            <CloseButton
-                v-if="closeable"
-                :pack="iconPack"
-                :icon="closeIcon"
-                :size="closeIconSize"
-                :label="ariaCloseLabel"
-                :classes="closeClasses"
-                @click="onClose" />
-        </slot>
+        <CloseButton
+            v-if="closeable"
+            :pack="iconPack"
+            :icon="closeIcon"
+            :size="closeIconSize"
+            :label="ariaCloseLabel"
+            :classes="closeClasses"
+            @click="onClose">
+            <!--
+                @slot Override the close icon
+            -->
+            <slot v-if="$slots['close']" name="close" />
+        </CloseButton>
     </span>
 </template>

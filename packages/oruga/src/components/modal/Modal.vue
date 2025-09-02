@@ -128,7 +128,7 @@ if (isClient)
 
 /** Close fixed sidebar if clicked outside. */
 function onClickedOutside(event: Event): void {
-    if (!isActive.value || isAnimating.value) return;
+    if (!isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
         (contentRef.value && !event.composedPath().includes(contentRef.value))
@@ -167,16 +167,16 @@ function close(...args: [] | [string] | CloseEventArgs<C>): void {
 
 // --- Animation Feature ---
 
-const isAnimating = ref(!props.active);
+const isAnimated = ref(props.active);
 
 /** Transition after-enter hook */
 function afterEnter(): void {
-    isAnimating.value = false;
+    isAnimated.value = true;
 }
 
 /** Transition before-leave hook */
 function beforeLeave(): void {
-    isAnimating.value = true;
+    isAnimated.value = false;
 }
 
 // --- Computed Component Classes ---
@@ -251,21 +251,20 @@ defineExpose({ close });
                         <div v-if="content">{{ content }}</div>
                     </slot>
 
-                    <!--
-                        @slot Override the close icon
-                        @binding {(): void} close - function to close the component
-                    -->
-                    <slot name="close" :close="() => cancel('x')">
-                        <CloseButton
-                            v-if="showX"
-                            v-show="!isAnimating"
-                            :pack="iconPack"
-                            :icon="closeIcon"
-                            :size="closeIconSize"
-                            :label="ariaCloseLabel"
-                            :classes="closeClasses"
-                            @click="cancel('x')" />
-                    </slot>
+                    <CloseButton
+                        v-if="showX"
+                        v-show="isAnimated"
+                        :pack="iconPack"
+                        :icon="closeIcon"
+                        :size="closeIconSize"
+                        :label="ariaCloseLabel"
+                        :classes="closeClasses"
+                        @click="cancel('x')">
+                        <!--
+                            @slot Override the close icon
+                        -->
+                        <slot v-if="$slots['close']" name="close" />
+                    </CloseButton>
                 </div>
             </div>
         </transition>
