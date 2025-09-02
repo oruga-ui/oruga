@@ -19,8 +19,6 @@ export type CardProps = {
     loadingLabel?: string;
     /** Adds close button to the header */
     closeable?: boolean;
-    /** Accessibility label for the close button */
-    ariaCloseLabel?: string;
     /**
      * Icon pack to use for the close icon
      * @values mdi, fa, fas and any other custom icon pack
@@ -30,6 +28,8 @@ export type CardProps = {
     closeIcon?: string;
     /** Close icon size */
     closeIconSize?: string;
+    /** Accessibility label for the close button */
+    ariaCloseLabel?: string;
 } & CardClasses;
 
 // class props (will not be displayed in the docs)

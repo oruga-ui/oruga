@@ -167,6 +167,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 ariaCloseLabel: string;
                 /** Icon pack to use for the close icon */
                 iconPack: string;
+                /** Close icon name */
+                closeIcon: string;
+                /** Close icon size */
+                closeIconSize: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the header element */

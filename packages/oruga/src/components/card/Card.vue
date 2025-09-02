@@ -3,6 +3,7 @@ import { getDefault } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
 import OLoading from "@/components/loading/Loading.vue";
+import CloseButton from "@/components/utils/CloseButton.vue";
 
 import type { CardProps } from "./props";
 
@@ -104,17 +105,19 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
                 </p>
             </slot>
 
-            <button
+            <CloseButton
                 v-if="closeable"
-                type="button"
-                :class="closeClasses"
-                :aria-label="ariaCloseLabel"
+                :pack="iconPack"
+                :icon="closeIcon"
+                :size="closeIconSize"
+                :label="ariaCloseLabel"
+                :classes="closeClasses"
                 @click="$emit('close', $event)">
-                <o-icon
-                    :pack="iconPack"
-                    :icon="closeIcon"
-                    :size="closeIconSize" />
-            </button>
+                <!--
+                    @slot Override the close icon
+                -->
+                <slot v-if="$slots['close']" name="close" />
+            </CloseButton>
         </header>
 
         <!-- Image -->
