@@ -30,6 +30,11 @@ export type TagProps = {
     closeable?: boolean;
     /** Close icon name */
     closeIcon?: string;
+    /**
+     * Size of close icon
+     * @values small, medium, large
+     */
+    closeIconSize?: string;
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
 } & TagClasses;

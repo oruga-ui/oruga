@@ -30,6 +30,7 @@ const props = withDefaults(defineProps<TagProps>(), {
     icon: undefined,
     iconPack: () => getDefault("tag.iconPack"),
     closeIcon: () => getDefault("tag.closeIcon", "close"),
+    closeIconSize: () => getDefault("tag.closeIconSize"),
     ariaCloseLabel: () => getDefault("tag.ariaCloseLabel", "Close"),
 });
 
@@ -94,14 +95,14 @@ const closeClasses = defineClasses(["closeClass", "o-tag__close"]);
 
         <!--
             @slot Override the close icon
-            @binding {close()} close - close function
+            @binding {(): void} close - function to close the component
         -->
         <slot name="close" :close="onClose">
             <CloseButton
                 v-if="closeable"
                 :pack="iconPack"
                 :icon="closeIcon"
-                :size="size"
+                :size="closeIconSize"
                 :label="ariaCloseLabel"
                 :classes="closeClasses"
                 @click="onClose" />

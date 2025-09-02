@@ -242,6 +242,7 @@ defineExpose({ close });
                         v-bind="$props.props"
                         v-on="$props.events || {}"
                         @close="close" />
+
                     <!--
                         @slot Modal default content, default is content prop
                         @binding {(...args): void} close - function to close the component
@@ -250,15 +251,21 @@ defineExpose({ close });
                         <div v-if="content">{{ content }}</div>
                     </slot>
 
-                    <CloseButton
-                        v-if="showX"
-                        v-show="!isAnimating"
-                        :pack="iconPack"
-                        :icon="closeIcon"
-                        :size="closeIconSize"
-                        :label="ariaCloseLabel"
-                        :classes="closeClasses"
-                        @click="cancel('x')" />
+                    <!--
+                        @slot Override the close icon
+                        @binding {(): void} close - function to close the component
+                    -->
+                    <slot name="close" :close="() => cancel('x')">
+                        <CloseButton
+                            v-if="showX"
+                            v-show="!isAnimating"
+                            :pack="iconPack"
+                            :icon="closeIcon"
+                            :size="closeIconSize"
+                            :label="ariaCloseLabel"
+                            :classes="closeClasses"
+                            @click="cancel('x')" />
+                    </slot>
                 </div>
             </div>
         </transition>

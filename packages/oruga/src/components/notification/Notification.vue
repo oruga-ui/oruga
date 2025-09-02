@@ -142,15 +142,21 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
             v-bind="$attrs"
             data-oruga="notification"
             :class="rootClasses">
-            <CloseButton
-                v-if="closeable"
-                v-show="!isAnimating"
-                :pack="iconPack"
-                :icon="closeIcon"
-                :size="closeIconSize"
-                :label="ariaCloseLabel"
-                :classes="closeClasses"
-                @click="close('x')" />
+            <!--
+                @slot Override the close icon
+                @binding {(): void} close - function to close the component
+            -->
+            <slot name="close" :close="() => close('x')">
+                <CloseButton
+                    v-if="closeable"
+                    v-show="!isAnimating"
+                    :pack="iconPack"
+                    :icon="closeIcon"
+                    :size="closeIconSize"
+                    :label="ariaCloseLabel"
+                    :classes="closeClasses"
+                    @click="close('x')" />
+            </slot>
 
             <!--
                 @slot Notification inner content, outside of the message container
