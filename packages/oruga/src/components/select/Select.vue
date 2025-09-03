@@ -67,32 +67,32 @@ const props = withDefaults(defineProps<SelectProps<T, IsMultiple>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T | T[]} updated modelValue prop
+     * @param value {unknown | unknown[]} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * on input focus event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     blur: [event: Event];
     /**
      * on input invalid event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     invalid: [event: Event];
     /**
      * on icon click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     "icon-click": [event: Event];
     /**
      * on icon right click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     "icon-right-click": [event: Event];
 }>();

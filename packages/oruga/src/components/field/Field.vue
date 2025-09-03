@@ -32,10 +32,11 @@ const props = withDefaults(defineProps<FieldProps>(), {
     override: undefined,
     variant: undefined,
     label: undefined,
-    labelSize: () => getDefault("field.labelsize"),
+    labelSize: () => getDefault("field.labelSize"),
     labelFor: undefined,
     labelId: () => useId(),
     message: undefined,
+    messageSize: () => getDefault("field.messageSize"),
     messageTag: () => getDefault("field.messageTag", "p"),
     messageId: () => useId(),
     grouped: false,
@@ -183,6 +184,12 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-field--mobile", null, isMobile],
     ["focusedClass", "o-field--focused", null, isFocused],
     ["filledClass", "o-field--filled", null, isFilled],
+    [
+        "variantClass",
+        "o-field--",
+        fieldVariant,
+        computed(() => !!fieldVariant.value),
+    ],
 );
 
 const labelClasses = defineClasses(
@@ -232,6 +239,12 @@ const innerBodyClasses = defineClasses(
 
 const messageClasses = defineClasses(
     ["messageClass", "o-field__message"],
+    [
+        "messageSizeClass",
+        "o-field__message--",
+        computed(() => props.messageSize),
+        computed(() => !!props.messageSize),
+    ],
     [
         "messageVariantClass",
         "o-field__message--",

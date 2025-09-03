@@ -1,24 +1,27 @@
+import { toValue, type MaybeRefOrGetter } from "vue";
+
 /**
- * Debounce a function call to limit the rate at which it will be invoked.
- * @param func function to debounce
- * @param wait debounce time to wait
- * @param immediate call immediate once
- * @returns function to call
+ * Debounce execution of a function to limit the rate at which it will be invoked.
+ * @param fn A function to be executed after delay milliseconds debounced.
+ * @param ms A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ * @returns A new, debounce, function to call.
  */
 export function useDebounce<A extends Array<unknown>>(
-    func: (...args: A) => void,
-    wait: number,
-    immediate?: boolean,
+    fn: (...args: A) => void,
+    ms: MaybeRefOrGetter<number>,
 ): (...args: A) => void {
     let timeout: ReturnType<typeof setTimeout> | undefined;
+
     return (...args: A) => {
-        const later = (): void => {
+        const debouncedFunc = (): void => {
             timeout = undefined;
-            if (!immediate) func.apply(this, args);
+            fn.apply(this, args);
         };
-        const callNow = immediate && !timeout;
+
+        // clear old timeout
         if (timeout) clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(this, args);
+
+        // create new timeout to call debounced function
+        timeout = setTimeout(debouncedFunc, toValue(ms));
     };
 }

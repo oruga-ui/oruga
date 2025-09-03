@@ -48,16 +48,16 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Events
 
-| Event name         | Properties                              | Description                     |
-| ------------------ | --------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T` - updated modelValue prop | modelValue prop two-way binding |
+| Event name         | Properties                                    | Description                     |
+| ------------------ | --------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown` - updated modelValue prop | modelValue prop two-way binding |
 
 ### Slots
 
-| Name    | Description             | Bindings                                                                                          |
-| ------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
-| label   | Override icon and label | **focused** `T` - the focused item value<br/><br/>**selected** `T` - the selected item value<br/> |
-| default | Place menu items here   | **focused** `T` - the focused item value<br/><br/>**selected** `T` - the selected item value<br/> |
+| Name    | Description             | Bindings                                                                                                      |
+| ------- | ----------------------- | ------------------------------------------------------------------------------------------------------------- |
+| label   | Override icon and label | **focused** `unknown` - the focused item value<br/><br/>**selected** `unknown` - the selected item value<br/> |
+| default | Place menu items here   | **focused** `unknown` - the focused item value<br/><br/>**selected** `unknown` - the selected item value<br/> |
 
 </section>
 

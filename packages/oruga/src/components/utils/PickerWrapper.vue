@@ -77,12 +77,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {Date, Date[]} updated active prop
+     * @param value {Date, Date[]} - updated active prop
      */
     "update:value": [value: Date | Date[] | undefined];
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     "update:active": [value: boolean];
     /** on input focus event */
