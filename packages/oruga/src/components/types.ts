@@ -579,8 +579,10 @@ but will set the body to a fixed position, which may break some layouts. */
             }>;
         field?: ComponentConfigBase &
             Partial<{
-                /** Vertical size of input */
-                labelsize: string;
+                /** Size of the field label */
+                labelSize: string;
+                /** Size of the field message */
+                messageSize: string;
                 /** Message element tag name */
                 messageTag: DynamicComponent;
                 /** Mobile breakpoint as `max-width` value */
@@ -593,6 +595,8 @@ but will set the body to a fixed position, which may break some layouts. */
                 focusedClass: ClassDefinition;
                 /** Class of the root element when the form element is filled */
                 filledClass: ClassDefinition;
+                /** Class for the root element with variant */
+                variantClass: ClassDefinition;
                 /** Class for the body wrapper element */
                 bodyClass: ClassDefinition;
                 /** Class for inner wrapper element when grouped */
@@ -615,6 +619,8 @@ but will set the body to a fixed position, which may break some layouts. */
                 labelVariantClass: ClassDefinition;
                 /** Class for the message element */
                 messageClass: ClassDefinition;
+                /** Class for the message element with size */
+                messageSizeClass: ClassDefinition;
                 /** Class for the message element with variant */
                 messageVariantClass: ClassDefinition;
             }>;
