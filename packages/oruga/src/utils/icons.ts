@@ -8,26 +8,26 @@ export type IconConfig = {
 };
 
 const mdiIcons = {
+    iconPrefix: "mdi-",
     sizes: {
         default: "mdi-24px",
         small: "",
         medium: "mdi-36px",
         large: "mdi-48px",
     },
-    iconPrefix: "mdi-",
-};
+} as const;
 
-const faIcons = (): IconConfig => {
+function getFaIcons(): IconConfig {
     const iconComponent = getOption("iconComponent");
     const faIconPrefix = iconComponent ? "" : "fa-";
     return {
+        iconPrefix: faIconPrefix,
         sizes: {
             default: "",
             small: "sm",
             medium: "lg",
             large: "xl",
         },
-        iconPrefix: faIconPrefix,
         internalIcons: {
             check: "check",
             information: "info-circle",
@@ -47,24 +47,25 @@ const faIcons = (): IconConfig => {
             loading: "circle-notch",
             "emoticon-sad": "frown",
         },
-    };
-};
+    } as const;
+}
 
-const getIcons = (): Record<string, IconConfig> => {
+function getIcons(): Record<string, IconConfig> {
+    const faIcons = getFaIcons();
     let icons: Record<string, IconConfig> = {
         mdi: mdiIcons,
-        fa: faIcons(),
-        fas: faIcons(),
-        far: faIcons(),
-        fad: faIcons(),
-        fab: faIcons(),
-        fal: faIcons(),
+        fa: faIcons,
+        fas: faIcons,
+        far: faIcons,
+        fad: faIcons,
+        fab: faIcons,
+        fal: faIcons,
     };
 
     const customIconPacks = getOption("customIconPacks");
     if (customIconPacks) icons = merge(icons, customIconPacks, true);
 
     return icons;
-};
+}
 
 export default getIcons;
