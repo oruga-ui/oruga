@@ -176,6 +176,8 @@ The [ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/) pro
 Where possible, our components implement or support these W3C ARIA APG patterns.
 The patterns supported by each component can be seen at the top of its documentation page.
 
+If you notice any accessibility issues regarding Oruga components, we encourage you to raise awareness and open an issue!
+
 ## Community
 
 Community involvement and contribution is one of the most important aspects of an open source project.
