@@ -10,7 +10,7 @@ import { defineClasses, useMatchMedia } from "@/composables";
 import type { PaginationProps } from "./props";
 
 /**
- * A responsive and flexible pagination.
+ * A responsive and flexible paginator navigation.
  * @displayName Pagination
  * @style _pagination.scss
  */
@@ -346,17 +346,16 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 :class="[...buttonBaseClasses, ...buttonNextClasses]" />
         </slot>
 
-        <small v-if="simple" :class="infoClasses">
+        <small v-if="simple" :class="infoClasses" aria-live="polite">
             <template v-if="perPage == 1">
-                {{ firstItem }} / {{ total }}
+                {{ firstItem }}
             </template>
             <template v-else>
                 {{ firstItem }}-{{
                     Math.min(currentPage * Number(perPage), total)
                 }}
-                /
-                {{ total }}
             </template>
+            / {{ total }}
         </small>
 
         <ul v-else :class="listClasses">
