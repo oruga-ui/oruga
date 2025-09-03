@@ -23,6 +23,17 @@ const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
             data.disabled = true;
         },
     },
+    variantClass: {
+        class: "variantClass",
+        description: "Class of the root element with variant.",
+        info: "Drag & drop a file to see it in action!",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (data): void => {
+            data.variant = "warning";
+            data.dragDrop = true;
+        },
+    },
     draggableClass: {
         class: "draggableClass",
         description: "Class of the dragable container element.",
@@ -31,23 +42,12 @@ const inspectData: InspectData<UploadClasses, UploadProps<File>> = {
             data.dragDrop = true;
         },
     },
-    hoveredClass: {
-        class: "hoveredClass",
+    draggableHoveredClass: {
+        class: "draggableHoveredClass",
         description: "Class of the dragable container element when hovered.",
         info: "Drag & drop a file to see it in action!",
         properties: ["dragDrop"],
         action: (data): void => {
-            data.dragDrop = true;
-        },
-    },
-    variantClass: {
-        class: "variantClass",
-        description: "Class of the dragable container element with variant.",
-        info: "Drag & drop a file to see it in action!",
-        properties: ["variant", "dragDrop"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (data): void => {
-            data.variant = "warning";
             data.dragDrop = true;
         },
     },

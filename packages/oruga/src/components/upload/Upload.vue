@@ -36,9 +36,9 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     // multiple: false,
     variant: () => getDefault("upload.variant"),
     disabled: false,
+    expanded: () => getDefault("upload.expanded", false),
     accept: undefined,
     dragDrop: false,
-    expanded: () => getDefault("upload.expanded", false),
     native: true,
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
@@ -221,16 +221,10 @@ const rootClasses = defineClasses(
 const draggableClasses = defineClasses(
     ["draggableClass", "o-upload__draggable"],
     [
-        "hoveredClass",
+        "draggableHoveredClass",
         "o-upload__draggable--hovered",
         null,
-        computed(() => !props.variant && dragDropFocus.value),
-    ],
-    [
-        "variantClass",
-        "o-upload__draggable--hovered-",
-        computed(() => props.variant),
-        computed(() => !!props.variant && dragDropFocus.value),
+        computed(() => dragDropFocus.value),
     ],
 );
 

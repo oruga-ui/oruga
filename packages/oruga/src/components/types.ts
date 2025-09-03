@@ -1669,14 +1669,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
                 /** Class of the root element with variant */
                 variantClass: ClassDefinition;
                 /** Class of the dragable container element */
                 draggableClass: ClassDefinition;
-                /** Class of the dragable container element when disabled */
-                disabledClass: ClassDefinition;
                 /** Class of the dragable container element when hovered */
-                hoveredClass: ClassDefinition;
+                draggableHoveredClass: ClassDefinition;
             }>;
     }
 }
