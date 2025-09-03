@@ -8,7 +8,6 @@ import { getDefault } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import type { PaginationProps } from "./props";
-import type { ButtonProps } from "../button/props";
 
 /**
  * A responsive and flexible pagination.
@@ -166,7 +165,8 @@ function getPage(
     num: number,
     ariaLabel?: string,
     onClick?: (event: Event, value: number) => void,
-): ButtonProps & {
+): {
+    label: string;
     number: number;
     isCurrent: boolean;
     onClick: (event: Event) => void;
@@ -178,7 +178,6 @@ function getPage(
         ...props.buttonClasses,
         isCurrent: isCurrent,
         number: num,
-        variant: isCurrent ? "primary" : undefined,
         label: String(num),
         onClick: (event: Event): void => {
             changePage(num, event);
@@ -274,7 +273,7 @@ const listClasses = defineClasses(["listClass", "o-pagination__list"]);
 
 const listItemClasses = defineClasses(["listItemClass", "o-pagination__item"]);
 
-const buttonClasses = defineClasses(
+const buttonBaseClasses = defineClasses(
     ["buttonClass", "o-pagination__button"],
     [
         "roundedClass",
@@ -317,14 +316,14 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
         <slot name="previous" v-bind="prevButton">
             <o-button
                 :tag="buttonTag"
-                v-bind="prevButton"
+                v-bind="{ ...prevButton, ...buttonClasses }"
                 :label="undefined"
                 :disabled="isFirst || disabled"
                 :icon-left="iconPrev"
                 :pack="iconPack"
                 :rounded="rounded"
                 :size="size"
-                :class="[...buttonClasses, ...buttonPrevClasses]" />
+                :class="[...buttonBaseClasses, ...buttonPrevClasses]" />
         </slot>
 
         <!--
@@ -337,14 +336,14 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
         <slot name="next" v-bind="nextButton">
             <o-button
                 :tag="buttonTag"
-                v-bind="nextButton"
+                v-bind="{ ...nextButton, ...buttonClasses }"
                 :label="undefined"
                 :disabled="isLast || disabled"
                 :icon-left="iconNext"
                 :pack="iconPack"
                 :rounded="rounded"
                 :size="size"
-                :class="[...buttonClasses, ...buttonNextClasses]" />
+                :class="[...buttonBaseClasses, ...buttonNextClasses]" />
         </slot>
 
         <small v-if="simple" :class="infoClasses">
@@ -373,12 +372,13 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="firstButton">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="firstButton"
+                        v-bind="{ ...firstButton, ...buttonClasses }"
+                        :variant="firstButton.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
                         :size="size"
                         :class="[
-                            ...buttonClasses,
+                            ...buttonBaseClasses,
                             ...(firstButton.isCurrent
                                 ? buttonCurrentClasses
                                 : []),
@@ -405,12 +405,13 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="page">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="page"
+                        v-bind="{ ...page, ...buttonClasses }"
+                        :variant="page.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
                         :size="size"
                         :class="[
-                            ...buttonClasses,
+                            ...buttonBaseClasses,
                             ...(page.isCurrent ? buttonCurrentClasses : []),
                         ]" />
                 </slot>
@@ -432,12 +433,13 @@ defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
                 <slot v-bind="lastButton">
                     <o-button
                         :tag="buttonTag"
-                        v-bind="lastButton"
+                        v-bind="{ ...lastButton, ...buttonClasses }"
+                        :variant="lastButton.isCurrent ? 'primary' : undefined"
                         :disabled="disabled"
                         :rounded="rounded"
                         :size="size"
                         :class="[
-                            ...buttonClasses,
+                            ...buttonBaseClasses,
                             ...(lastButton.isCurrent
                                 ? buttonCurrentClasses
                                 : []),
