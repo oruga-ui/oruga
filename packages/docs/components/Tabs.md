@@ -54,10 +54,10 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ### Events
 
-| Event name         | Properties                                                      | Description                     |
-| ------------------ | --------------------------------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T` - updated modelValue prop                         | modelValue prop two-way binding |
-| change             | **value** `T` - new tab value<br/>**value** `T` - old tab value | on tab change event             |
+| Event name         | Properties                                                                  | Description                     |
+| ------------------ | --------------------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown` - updated modelValue prop                               | modelValue prop two-way binding |
+| change             | **value** `unknown` - new tab value<br/>**value** `unknown` - old tab value | on tab change event             |
 
 ### Slots
 

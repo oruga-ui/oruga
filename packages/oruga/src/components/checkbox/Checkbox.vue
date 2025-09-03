@@ -42,28 +42,28 @@ const props = withDefaults(defineProps<CheckboxProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T | T[]} updated modelValue prop
+     * @param value {unknown | unknown[]} - updated modelValue prop
      */
     "update:model-value": [value: T | T[]];
     /**
      * on input change event
-     * @param value {T | T[]} input value
-     * @param event {Event} native event
+     * @param value {unknown | unknown[]} input value
+     * @param event {Event} - native event
      */
     input: [value: T | T[], event: Event];
     /**
      * on input focus event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     blur: [event: Event];
     /**
      * on input invalid event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     invalid: [event: Event];
 }>();

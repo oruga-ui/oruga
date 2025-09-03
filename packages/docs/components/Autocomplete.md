@@ -79,11 +79,11 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 | Event name         | Properties                                                            | Description                                    |
 | ------------------ | --------------------------------------------------------------------- | ---------------------------------------------- |
-| update:model-value | **value** `T` - updated modelValue prop                               | modelValue prop two-way binding                |
+| update:model-value | **value** `unknown` - updated modelValue prop                         | modelValue prop two-way binding                |
 | update:input       | **value** `string` - updated input prop                               | input prop two-way binding                     |
 | update:active      | **value** `boolean` - updated active prop                             | active prop two-way binding                    |
 | input              | **value** `string` - input value<br/>**event** `Event` - native event | on input change event                          |
-| select             | **value** `T` - selected value                                        | selected element changed event                 |
+| select             | **value** `unknown` - selected value                                  | selected element changed event                 |
 | select-header      |                                                                       | header is selected                             |
 | select-footer      |                                                                       | footer is selected                             |
 | focus              | **event** `Event` - native event                                      | on input focus event                           |

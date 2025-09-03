@@ -47,22 +47,22 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {object | object[] | File | File[]} updated modelValue prop
+     * @param value {object | object[] | File | File[]} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * on input focus event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     blur: [event: Event];
     /**
      * on input invalid event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     invalid: [event: Event];
 }>();

@@ -57,10 +57,10 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 ### Events
 
-| Event name         | Properties                                                        | Description                     |
-| ------------------ | ----------------------------------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T` - updated modelValue prop                           | modelValue prop two-way binding |
-| change             | **value** `T` - new step value<br/>**value** `T` - old step value | on step change event            |
+| Event name         | Properties                                                                    | Description                     |
+| ------------------ | ----------------------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown` - updated modelValue prop                                 | modelValue prop two-way binding |
+| change             | **value** `unknown` - new step value<br/>**value** `unknown` - old step value | on step change event            |
 
 ### Slots
 

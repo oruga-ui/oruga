@@ -52,13 +52,13 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Events
 
-| Event name         | Properties                                                       | Description                     |
-| ------------------ | ---------------------------------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T` - updated modelValue prop                          | modelValue prop two-way binding |
-| input              | **value** `T` - input value<br/>**event** `Event` - native event | on input change event           |
-| focus              | **event** `Event` - native event                                 | on input focus event            |
-| blur               | **event** `Event` - native event                                 | on input blur event             |
-| invalid            | **event** `Event` - native event                                 | on input invalid event          |
+| Event name         | Properties                                                             | Description                     |
+| ------------------ | ---------------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown` - updated modelValue prop                          | modelValue prop two-way binding |
+| input              | **value** `unknown` - input value<br/>**event** `Event` - native event | on input change event           |
+| focus              | **event** `Event` - native event                                       | on input focus event            |
+| blur               | **event** `Event` - native event                                       | on input blur event             |
+| invalid            | **event** `Event` - native event                                       | on input invalid event          |
 
 ### Slots
 

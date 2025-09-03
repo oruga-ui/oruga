@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<TagProps>(), {
 const emits = defineEmits<{
     /**
      * on close icon click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     close: [event: Event];
 }>();

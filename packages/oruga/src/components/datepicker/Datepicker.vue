@@ -110,57 +110,57 @@ const props = withDefaults(
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {Date | Date[]} updated modelValue prop
+     * @param value {Date | Date[]} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     "update:active": [value: boolean];
     /**
      * on range start is selected event
-     * @param value {Date} range start date
+     * @param value {Date} - range start date
      */
     "range-start": [value: Date];
     /**
      * on range end is selected event
-     * @param value {Date} range end date
+     * @param value {Date} - range end date
      */
     "range-end": [value: Date];
     /**
      * on month change event
-     * @param value {number} month number
+     * @param value {number} - month number
      */
     "change-month": [value: number];
     /**
      * on year change event
-     * @param value {number} year number
+     * @param value {number} - year number
      */
     "change-year": [value: number];
     /**
      * on input focus event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     blur: [event: Event];
     /**
      * on input invalid event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     invalid: [event: Event];
     /**
      * on icon click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     "icon-click": [event: Event];
     /**
      * on icon right click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     "icon-right-click": [event: Event];
 }>();
