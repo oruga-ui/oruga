@@ -12,7 +12,7 @@ export type FieldProps = {
     /** Field label */
     label?: string;
     /**
-     * Vertical size of input
+     * Size of the field label
      * @values small, medium, large
      */
     labelSize?: string;
@@ -22,6 +22,11 @@ export type FieldProps = {
     labelId?: string;
     /** Help message text */
     message?: string | string[];
+    /**
+     * Size of the field message
+     * @values small, medium, large
+     */
+    messageSize?: string;
     /** Message element tag name */
     messageTag?: DynamicComponent;
     /** A unique HTML id for the field message to associate an input with */
@@ -51,6 +56,8 @@ export type FieldClasses = Partial<{
     focusedClass: ComponentClass;
     /** Class of the root element when the form element is filled */
     filledClass: ComponentClass;
+    /** Class for the root element with variant */
+    variantClass: ComponentClass;
     /** Class for the body wrapper element*/
     bodyClass: ComponentClass;
     /** Class for inner wrapper element when grouped */
@@ -73,6 +80,8 @@ export type FieldClasses = Partial<{
     labelVariantClass: ComponentClass;
     /** Class for the message element */
     messageClass: ComponentClass;
+    /** Class for the message element with size */
+    messageSizeClass: ComponentClass;
     /** Class for the message element with variant */
     messageVariantClass: ComponentClass;
 }>;

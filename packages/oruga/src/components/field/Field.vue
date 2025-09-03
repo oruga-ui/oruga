@@ -32,10 +32,11 @@ const props = withDefaults(defineProps<FieldProps>(), {
     override: undefined,
     variant: undefined,
     label: undefined,
-    labelSize: () => getDefault("field.labelsize"),
+    labelSize: () => getDefault("field.labelSize"),
     labelFor: undefined,
     labelId: () => useId(),
     message: undefined,
+    messageSize: () => getDefault("field.messageSize"),
     messageTag: () => getDefault("field.messageTag", "p"),
     messageId: () => useId(),
     grouped: false,
@@ -238,6 +239,12 @@ const innerBodyClasses = defineClasses(
 
 const messageClasses = defineClasses(
     ["messageClass", "o-field__message"],
+    [
+        "messageSizeClass",
+        "o-field__message--",
+        computed(() => props.messageSize),
+        computed(() => !!props.messageSize),
+    ],
     [
         "messageVariantClass",
         "o-field__message--",
