@@ -53,9 +53,9 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "7.0.0",
-    "@fortawesome/fontawesome-svg-core": "^7.0.0",
-    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/fontawesome-free": "7.0.1",
+    "@fortawesome/fontawesome-svg-core": "^7.0.1",
+    "@fortawesome/free-solid-svg-icons": "^7.0.1",
     "@fortawesome/vue-fontawesome": "^3.1.1",
     "@highlightjs/vue-plugin": "2.1.2",
     "highlight.js": "11.11.1",
