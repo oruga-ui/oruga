@@ -48,9 +48,9 @@ function getFaIcons(): IconConfig {
             "emoticon-sad": "frown",
         },
     } as const;
-};
+}
 
-function getIcons (): Record<string, IconConfig> {
+function getIcons(): Record<string, IconConfig> {
     const faIcons = getFaIcons();
     let icons: Record<string, IconConfig> = {
         mdi: mdiIcons,
@@ -66,6 +66,6 @@ function getIcons (): Record<string, IconConfig> {
     if (customIconPacks) icons = merge(icons, customIconPacks, true);
 
     return icons;
-};
+}
 
 export default getIcons;

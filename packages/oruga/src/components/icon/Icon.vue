@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { getDefault, getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import getIcons from "@/utils/icons";
 import { defineClasses } from "@/composables";
 
@@ -57,7 +57,7 @@ const iconPrefix = computed(() => iconConfig.value?.iconPrefix ?? "");
 
 /** icon size defined by the icon configuration or custom */
 const iconSize = computed(() => {
-    if(props.customSize) return props.customSize;
+    if (props.customSize) return props.customSize;
 
     if (iconConfig.value?.sizes) {
         if (props.size && iconConfig.value.sizes[props.size] !== undefined)
@@ -79,7 +79,7 @@ const computedIcon = computed(
 
 /** Equivalent icon name of the MDI. */
 function getEquivalentIconOf(value: string): string {
-    // only transform the class if 
+    // only transform the class if
     if (
         // the pack is part of fontawesome icons
         props.pack.toLocaleLowerCase().startsWith("fa") &&
@@ -139,7 +139,7 @@ const rootClasses = defineClasses(
             v-if="component"
             :icon="[pack, computedIcon]"
             :size="iconSize"
-            :class="customClass"/>
+            :class="customClass" />
 
         <!-- native css icon -->
         <i v-else :class="[pack, computedIcon, iconSize, customClass]" />
