@@ -144,7 +144,7 @@ const filters = {} as Record<string, string>;
         <template v-if="false">
             <!--
                 @slot Default Slot
-                @binding {T} row - row data
+                @binding {unknown} row - row data
                 @binding {TableColumn} column - column definition
                 @binding {number} index - row index
                 @binding {number} colindex - column index

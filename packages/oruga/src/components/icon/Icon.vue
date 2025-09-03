@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<IconProps>(), {
 const emits = defineEmits<{
     /**
      * on item click event
-     * @param event {event} native event
+     * @param event {event} - native event
      */
     click: [event: Event];
 }>();

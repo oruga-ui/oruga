@@ -81,17 +81,17 @@ const props = withDefaults(defineProps<CarouselProps>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {number} updated modelValue prop
+     * @param value {number} - updated modelValue prop
      */
     "update:model-value": [value: number];
     /**
      * on carousel slide change event
-     * @param value {number} active index
+     * @param value {number} - active index
      */
     change: [value: number];
     /**
      * on item click event
-     * @param event {event} native event
+     * @param event {event} - native event
      */
     click: [event: Event];
 }>();

@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 defineEmits<{
     /**
      * button click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     click: [event: Event];
 }>();
