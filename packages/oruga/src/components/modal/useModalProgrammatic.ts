@@ -37,7 +37,7 @@ export class ModalProgrammaticFactory extends ProgrammaticFactory {
 
         const componentProps: ModalProps<C> = {
             active: true, // set the active default state to true
-            ...(_options as ModalProps<C>),
+            ..._options,
         };
 
         // create programmatic component

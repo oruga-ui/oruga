@@ -2,9 +2,12 @@ import { createVNode } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import SidebarProgrammatic from "../useSidebarProgrammatic";
+import useSidebarProgrammatic from "../useSidebarProgrammatic";
 
 describe("useSidebarProgrammatic tests", () => {
+    // create a new factory
+    const factory = useSidebarProgrammatic();
+
     beforeEach(() => {
         vi.useFakeTimers();
     });
@@ -13,6 +16,9 @@ describe("useSidebarProgrammatic tests", () => {
         // clear body after each test
         document.body.innerHTML = "";
         vi.useRealTimers();
+
+        // clear factory items
+        factory.closeAll();
     });
 
     enableAutoUnmount(afterEach);
@@ -23,7 +29,7 @@ describe("useSidebarProgrammatic tests", () => {
         });
 
         // open element
-        const { close, promise } = SidebarProgrammatic.open({ component });
+        const { close, promise } = factory.open({ component });
 
         // check promise get called
         const handler = vi.fn();
@@ -58,10 +64,7 @@ describe("useSidebarProgrammatic tests", () => {
         });
 
         // open element
-        const { close } = SidebarProgrammatic.open(
-            { component },
-            "#my-cool-container",
-        );
+        const { close } = factory.open({ component }, "#my-cool-container");
 
         // check element exist
         let sidebar = document.body.querySelector('[data-oruga="sidebar"]');
@@ -91,7 +94,7 @@ describe("useSidebarProgrammatic tests", () => {
         });
 
         // open element
-        SidebarProgrammatic.open({
+        factory.open({
             component,
             props: { "data-oruga": "programmatic" },
         });
@@ -121,7 +124,9 @@ describe("useSidebarProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        SidebarProgrammatic.open({ component, onClose });
+        factory.open({ component, onClose });
+
+        expect(factory.count()).toBe(1);
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>("button");
@@ -130,6 +135,8 @@ describe("useSidebarProgrammatic tests", () => {
         // close element on 'x' button click
         el?.click();
         vi.runAllTimers();
+
+        expect(factory.count()).toBe(0);
 
         // check element does not exist
         el = document.body.querySelector("button");

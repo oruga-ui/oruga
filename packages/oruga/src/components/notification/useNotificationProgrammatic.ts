@@ -39,9 +39,8 @@ export class NotificationProgrammaticFactory extends ProgrammaticFactory {
         const _options: NotificationProgrammaticOptions<C> =
             typeof options === "string" ? { message: options } : options;
 
-        const componentProps: NotificationNoticeProps<C> = {
+        const componentProps: NotificationProgrammaticOptions<C> = {
             position: getOption("notification.position", "top-right"),
-            container: document.body,
             ..._options, // pass all props to the internal notification component
         };
 
@@ -49,7 +48,7 @@ export class NotificationProgrammaticFactory extends ProgrammaticFactory {
         return this._create(
             NotificationNotice,
             {
-                props: componentProps, // component specific props
+                props: componentProps as NotificationNoticeProps<C>, // component specific props
                 onClose: _options.onClose, // on close event handler
             },
             target, // target the component get rendered into

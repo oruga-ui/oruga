@@ -2,9 +2,12 @@ import { createVNode } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import ModalProgrammatic from "../useModalProgrammatic";
+import useModalProgrammatic from "../useModalProgrammatic";
 
 describe("useModalProgrammatic tests", () => {
+    // create a new factory
+    const factory = useModalProgrammatic();
+
     beforeEach(() => {
         vi.useFakeTimers();
     });
@@ -13,6 +16,9 @@ describe("useModalProgrammatic tests", () => {
         // clear body after each test
         document.body.innerHTML = "";
         vi.useRealTimers();
+
+        // clear factory items
+        factory.closeAll();
     });
 
     enableAutoUnmount(afterEach);
@@ -21,7 +27,7 @@ describe("useModalProgrammatic tests", () => {
         const content = "My Modal Content";
 
         // open element
-        const { close, promise } = ModalProgrammatic.open(content);
+        const { close, promise } = factory.open(content);
 
         // check promise get called
         const handler = vi.fn();
@@ -54,7 +60,7 @@ describe("useModalProgrammatic tests", () => {
         const content = "My Modal Content";
 
         // open element
-        const { close } = ModalProgrammatic.open(content, "#my-cool-container");
+        const { close } = factory.open(content, "#my-cool-container");
 
         // check element exist
         let modal = document.body.querySelector('[data-oruga="modal"]');
@@ -82,7 +88,7 @@ describe("useModalProgrammatic tests", () => {
         });
 
         // open element
-        ModalProgrammatic.open({
+        factory.open({
             component,
             props: { "data-oruga": "programmatic" },
         });
@@ -110,7 +116,7 @@ describe("useModalProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        ModalProgrammatic.open({ content, onClose });
+        factory.open({ content, onClose });
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>(".o-icon");
@@ -134,7 +140,9 @@ describe("useModalProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        ModalProgrammatic.open({ component, onClose });
+        factory.open({ component, onClose });
+
+        expect(factory.count()).toBe(1);
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>("button");
@@ -143,6 +151,8 @@ describe("useModalProgrammatic tests", () => {
         // close element on 'x' button click
         el?.click();
         vi.runAllTimers();
+
+        expect(factory.count()).toBe(0);
 
         // check element does not exist
         el = document.body.querySelector("button");

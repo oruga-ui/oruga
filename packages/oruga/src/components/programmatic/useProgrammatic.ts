@@ -54,7 +54,9 @@ export abstract class ProgrammaticFactory {
     private _registry = new InstanceRegistry<ComponentInternalInstance>();
 
     /** Returns the number of registered active instances. */
-    public count: () => number = this._registry.count;
+    public count(): number {
+        return this._registry.count();
+    }
 
     /** Close the last registred instance in the global programmatic instance registry. */
     public close(...args: unknown[]): void {
@@ -77,7 +79,7 @@ export abstract class ProgrammaticFactory {
      */
     protected _create<C extends VNodeTypes>(
         component: C,
-        options?: ProgrammaticOptions<C>,
+        options: ProgrammaticOptions<C>,
         target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose<C> {
         options = { registry: this._registry, ...options };
@@ -116,9 +118,9 @@ export abstract class ProgrammaticFactory {
 
         // create a new vue app instance with the ProgrammaticComponent as root
         let app: App | undefined = createApp(ProgrammaticComponent, {
-            registry: options.registry, // programmatic registry instance - can be overriden by given in options
+            registry: options.registry, // programmatic registry instance
             component, // the component which should be rendered
-            props: { ...options.props, container: target }, // component props including the target as `container`
+            props: { ...options.props, container: targetElement }, // component props including the target as `container`
             onClose: options.onClose, // custom onClose handler
             onDestroy, // node destory cleanup handler
         });
@@ -148,7 +150,7 @@ export class ProgrammaticComponentFactory extends ProgrammaticFactory {
         options?: ProgrammaticOptions<C>,
         target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose<C> {
-        return this._create(component, options, target);
+        return this._create(component, options ?? {}, target);
     }
 }
 
