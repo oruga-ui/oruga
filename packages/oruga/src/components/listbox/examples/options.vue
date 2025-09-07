@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { OptionsPropWithGroups } from "@/composables";
+import type { OptionsProp, OptionsPropWithGroups } from "@oruga-ui/oruga-next";
 
-const selectedValue = ref();
-const options: OptionsPropWithGroups = [
+const options: OptionsProp<string> = [
+    { label: "Flint", value: "flint" },
+    { label: "Silver", value: "silver" },
+    { label: "Vane", value: "vane" },
+    { label: "Billy", value: "billy" },
+];
+
+const selected = ref<string>();
+
+const groupOptions: OptionsPropWithGroups<string> = [
     {
         label: "Germany",
         value: "DE",
@@ -35,23 +43,28 @@ const options: OptionsPropWithGroups = [
         ],
     },
 ];
+
+const groupSelected = ref<string>();
 </script>
 
 <template>
     <section class="odocs-spaced">
-        <Listbox v-model="selectedValue" :options="options">
-            <template #group="{ option }">
-                <div class="flex items-center">
-                    <img
-                        :alt="option.label"
-                        src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                        :class="`flag flag-${option.value.toLowerCase()} mr-2`"
-                        style="width: 18px" />
-                    <div>{{ option.label }}</div>
-                </div>
-            </template>
-        </Listbox>
+        <o-field grouped>
+            <o-field label="Options">
+                <o-listbox
+                    v-model="selected"
+                    :options="options" />
 
-        <p><b>Selected:</b> {{ selectedValue }}</p>
+                <p><b>Selected:</b> {{ selected }}</p>
+            </o-field>
+
+            <o-field label="Grouped Options">
+                <o-listbox
+                    v-model="groupSelected"
+                    :options="groupOptions" />
+
+                <p><b>Selected:</b> {{ groupSelected }}</p>
+            </o-field>
+        </o-field>
     </section>
 </template>
