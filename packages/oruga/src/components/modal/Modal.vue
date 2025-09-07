@@ -237,8 +237,8 @@ defineExpose({ close });
                     :style="customStyle">
                     <!-- injected component for programmatic usage -->
                     <component
-                        :is="component"
-                        v-if="component"
+                        :is="$props.component"
+                        v-if="$props.component"
                         v-bind="$props.props"
                         v-on="$props.events || {}"
                         @close="close" />

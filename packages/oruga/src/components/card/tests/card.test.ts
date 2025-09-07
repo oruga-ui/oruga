@@ -3,7 +3,7 @@ import { enableAutoUnmount, mount } from "@vue/test-utils";
 
 import OCard from "@/components/card/Card.vue";
 
-describe("OButton test", () => {
+describe("OCard test", () => {
     enableAutoUnmount(afterEach);
 
     test("render correctly", () => {

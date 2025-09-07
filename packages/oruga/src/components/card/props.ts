@@ -1,6 +1,8 @@
-import type { ComponentClass } from "@/types";
+import type { Component } from "vue";
+import type { ComponentClass, ComponentEmits } from "@/types";
+import type { ComponentProps } from "vue-component-type-helpers";
 
-export type CardProps = {
+export type CardProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** Card header title, unnecessary when title slot is used */
@@ -30,6 +32,15 @@ export type CardProps = {
     closeIconSize?: string;
     /** Accessibility label for the close button */
     ariaCloseLabel?: string;
+    /**
+     * Component to be injected.
+     * Close the component by emitting a 'close' event — `$emit('close')`
+     */
+    component?: C;
+    /** Props to be binded to the injected component */
+    props?: ComponentProps<C>;
+    /** Events to be binded to the injected component */
+    events?: ComponentEmits<C>;
 } & CardClasses;
 
 // class props (will not be displayed in the docs)
