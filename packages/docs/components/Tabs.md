@@ -105,10 +105,10 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ### Slots
 
-| Name    | Description                | Bindings                                |
-| ------- | -------------------------- | --------------------------------------- |
-| default | Override tab panel content | **active** `boolean` - if item is shown |
-| header  | Override tab header label  | **active** `boolean` - if item is shown |
+| Name    | Description                | Bindings |
+| ------- | -------------------------- | -------- |
+| default | Override tab panel content |          |
+| header  | Override tab header label  |          |
 
 </section>
 

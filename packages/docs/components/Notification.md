@@ -58,11 +58,11 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 ### Slots
 
-| Name    | Description                                                  | Bindings                                                         |
-| ------- | ------------------------------------------------------------ | ---------------------------------------------------------------- |
-| close   | Override the close icon                                      |                                                                  |
-| inner   | Notification inner content, outside of the message container | **close** `(...args): void` - function to close the notification |
-| default | Notification default content, default is message prop        | **close** `(...args): void` - function to close the notification |
+| Name    | Description                                                  | Bindings |
+| ------- | ------------------------------------------------------------ | -------- |
+| close   | Override the close icon                                      |          |
+| inner   | Notification inner content, outside of the message container |          |
+| default | Notification default content, default is message prop        |          |
 
 </section>
 

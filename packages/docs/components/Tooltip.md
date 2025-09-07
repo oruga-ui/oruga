@@ -54,10 +54,10 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 
 ### Slots
 
-| Name    | Description                            | Bindings                                    |
-| ------- | -------------------------------------- | ------------------------------------------- |
-| default | Tooltip trigger slot                   | **active** `boolean` - tooltip active state |
-| content | Tooltip content, default is label prop |                                             |
+| Name    | Description                            | Bindings |
+| ------- | -------------------------------------- | -------- |
+| default | Tooltip trigger slot                   |          |
+| content | Tooltip content, default is label prop |          |
 
 </section>
 

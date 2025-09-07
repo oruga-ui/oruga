@@ -4,7 +4,6 @@ import {
     ref,
     watch,
     useAttrs,
-    useSlots,
     useId,
     triggerRef,
     watchEffect,
@@ -168,7 +167,27 @@ const emits = defineEmits<{
     "scroll-end": [];
 }>();
 
-const slots = useSlots();
+const slots = defineSlots<{
+    /**
+     * Override the select option
+     * @param option {object} - option object
+     * @param index {number} - option index
+     * @param value {unknown} - option value
+     */
+    default?(props: { option: OptionsItem<T>; index: number; value: T }): void;
+    /**
+     * Override the option group
+     * @param group {object} - options group
+     * @param index {number} - option index
+     */
+    group?(props: { group: OptionsGroupItem<T>; index: number }): void;
+    /** Define an additional header */
+    header?(): void;
+    /** Define an additional footer */
+    footer?(): void;
+    /** Define content for empty state */
+    empty?(): void;
+}>();
 
 // define as Component to prevent docs memmory overload
 const inputRef = useTemplateRef<Component>("inputComponent");
@@ -476,9 +495,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
             :value="SpecialOption.Header"
             :clickable="selectableHeader"
             :class="[...itemClasses, ...itemHeaderClasses]">
-            <!--
-                @slot Define an additional header
-            -->
             <slot name="header" />
         </o-dropdown-item>
 
@@ -494,19 +510,12 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
                 role="presentation"
                 :clickable="false"
                 :class="[...itemClasses, ...itemGroupClasses]">
-                <!--
-                    @slot Override the option group
-                    @binding {object} group - options group
-                    @binding {number} index - option index
-                -->
                 <slot
-                    v-if="$slots.group"
                     name="group"
-                    :group="group.label"
-                    :index="groupIndex" />
-                <span v-else>
-                    {{ group.label }}
-                </span>
+                    :group="group"
+                    :index="groupIndex">
+                    <span> {{ group.label }} </span>
+                </slot>
             </o-dropdown-item>
 
             <o-dropdown-item
@@ -518,20 +527,12 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
                 :hidden="option.hidden"
                 :tag="itemTag"
                 :class="itemClasses">
-                <!--
-                    @slot Override the select option
-                    @binding {object} option - option object
-                    @binding {number} index - option index
-                    @binding {unknown} value - option value
-                -->
                 <slot
-                    v-if="$slots.default"
                     :option="option"
                     :value="option.value"
-                    :index="optionIndex" />
-                <span v-else>
-                    {{ option.label }}
-                </span>
+                    :index="optionIndex">
+                    <span> {{ option.label }} </span>
+                </slot>
             </o-dropdown-item>
         </template>
 
@@ -539,9 +540,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
             v-if="isEmpty && $slots.empty"
             :tag="itemTag"
             :class="[...itemClasses, ...itemEmptyClasses]">
-            <!--
-                @slot Define content for empty state
-            -->
             <slot name="empty" />
         </o-dropdown-item>
 
@@ -551,9 +549,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
             :value="SpecialOption.Footer"
             :clickable="selectableFooter"
             :class="[...itemClasses, ...itemFooterClasses]">
-            <!--
-                @slot Define an additional footer
-            -->
             <slot name="footer" />
         </o-dropdown-item>
     </o-dropdown>

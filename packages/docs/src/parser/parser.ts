@@ -43,7 +43,7 @@ export async function parser(
         // map meta data into api structure
         doc["props"] = mapProps(meta.props, META_PROP_IGNORE);
         // doc["events"] = mapEvents(meta.events); // vue-docgen-api has better information than vue-component-meta
-        // doc["slots"] = mapSlots(meta.slots); // TODO: can be enabled when defineSlots is used
+        // doc["slots"] = mapSlots(meta.slots); // vue-docgen-api has better information than vue-component-meta
 
         return doc;
     });

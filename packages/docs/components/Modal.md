@@ -63,10 +63,10 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 
 ### Slots
 
-| Name    | Description                                    | Bindings                                                      |
-| ------- | ---------------------------------------------- | ------------------------------------------------------------- |
-| default | Modal default content, default is content prop | **close** `(...args): void` - function to close the component |
-| close   | Override the close icon                        |                                                               |
+| Name    | Description                                    | Bindings |
+| ------- | ---------------------------------------------- | -------- |
+| default | Modal default content, default is content prop |          |
+| close   | Override the close icon                        |          |
 
 </section>
 

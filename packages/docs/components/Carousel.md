@@ -72,14 +72,14 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ### Slots
 
-| Name       | Description                      | Bindings                                                                                                                                                                                                        |
-| ---------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| pause      | Override the pause/resume button | **autoplay** `boolean` - if autoplay is active<br/>**toggle** `(): void` - toggle autoplay                                                                                                                      |
-| arrow      | Override the arrows              | **has-prev** `boolean` - has prev arrow button<br/>**prev** `(): void` - switch to prev item function<br/>**has-next** `boolean` - has next arrow button<br/>**next** `(): void` - switch to next item function |
-| default    | Display carousel item            |                                                                                                                                                                                                                 |
-| indicators | Override the indicators          | **active** `number` - active index<br/>**switch-to** `(idx: number): void` - switch to item function                                                                                                            |
-| indicator  | Override the indicator elements  | **index** `index` - indicator index                                                                                                                                                                             |
-| overlay    | Overlay element                  |                                                                                                                                                                                                                 |
+| Name       | Description                      | Bindings |
+| ---------- | -------------------------------- | -------- |
+| pause      | Override the pause/resume button |          |
+| arrow      | Override the arrows              |          |
+| default    | Display carousel item            |          |
+| indicators | Override the indicators          |          |
+| indicator  | Override the indicator elements  |          |
+| overlay    | Overlay element                  |          |
 
 </section>
 
