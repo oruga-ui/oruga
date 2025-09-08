@@ -22,12 +22,12 @@ export type UploadProps<
     variant?: string;
     /** Same as native disabled */
     disabled?: boolean;
+    /** Upload will be expanded (full-width) */
+    expanded?: boolean;
     /** Same as native accept */
     accept?: string;
     /** Accepts drag & drop and change its style */
     dragDrop?: boolean;
-    /** Upload will be expanded (full-width) */
-    expanded?: boolean;
     /** Replace last chosen files every time (like native file input element) */
     native?: boolean;
     /** Enable HTML 5 native validation */
@@ -47,12 +47,12 @@ export type UploadClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when expanded */
     expandedClass: ComponentClass;
+    /** Class of the root element when disabled */
+    disabledClass: ComponentClass;
     /** Class of the root element with variant */
     variantClass: ComponentClass;
     /** Class of the dragable container element */
     draggableClass: ComponentClass;
-    /** Class of the dragable container element when disabled */
-    disabledClass: ComponentClass;
     /** Class of the dragable container element when hovered */
-    hoveredClass: ComponentClass;
+    draggableHoveredClass: ComponentClass;
 }>;
