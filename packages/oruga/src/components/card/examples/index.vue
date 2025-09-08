@@ -24,18 +24,15 @@ import FormCode from "./form.vue?raw";
     <p>
         The component provides <code>header</code>, <code>title</code>,
         <code>subtitle</code>, <code>content</code> and <code>footer</code> as
-        the named slot templates to place content.
+        named slot templates to customise content.
     </p>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 
     <h3 id="image">Image</h3>
-    <p>Cards can have an image <i>below</i> the header.</p>
+    <p>You can place an image <i>below</i> the header.</p>
     <ExampleViewer :component="Image" :code="ImageCode" />
 
     <h3 id="form">Form</h3>
-    <p>
-        Cards can be used to display user forms. They are particularly
-        well-suited to use with the modal component.
-    </p>
+    <p>A useful purpose for a card is to display forms in it.</p>
     <ExampleViewer :component="Form" :code="FormCode" />
 </template>

@@ -45,7 +45,6 @@ const emits = defineEmits<{
     close: [event: Event];
 }>();
 
-
 function onClose(event: Event): void {
     emits("close", event);
 }
@@ -151,8 +150,8 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
             <slot :close="onClose">
                 <!-- injected component for programmatic usage -->
                 <component
-                    v-if="$props.component"
                     :is="$props.component"
+                    v-if="$props.component"
                     v-bind="$props.props"
                     v-on="$props.events || {}"
                     @close="onClose" />
