@@ -4,6 +4,7 @@
 
 The **Card** component is a flexible and extensible content container.
 Cards are built with as little markup and styles as possible, but still manage to deliver a ton of control and customization.
+They are particularly well-suited to use with the [Modal](/components/Modal) component.
 
 </section>
 
@@ -33,13 +34,16 @@ Cards are built with as little markup and styles as possible, but still manage t
 | closeIcon      | Close icon name                                                                                       | string                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>card: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
 | closeIconSize  | Close icon size                                                                                       | string                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>card: {<br>&nbsp;&nbsp;closeIconSize: undefined<br>}</code> |
 | closeable      | Adds close button to the header                                                                       | boolean                   | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>card: {<br>&nbsp;&nbsp;closeable: false<br>}</code>         |
+| component      | Component to be injected.<br/>Close the component by emitting a 'close' event — `$emit('close')`      | Component                 | -                                                 |                                                                                                                                                         |
 | content        | Card body content, unnecessary when content slot is used                                              | string                    | -                                                 |                                                                                                                                                         |
+| events         | Events to be binded to the injected component                                                         | {}                        | -                                                 |                                                                                                                                                         |
 | iconPack       | Icon pack to use for the close icon                                                                   | string                    | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>card: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
 | imageAlt       | Card image alt, unnecessary when image slot is used                                                   | string                    | -                                                 |                                                                                                                                                         |
 | imageSrc       | Card image src, unnecessary when image slot is used                                                   | string                    | -                                                 |                                                                                                                                                         |
 | loading        | Show a loading spinner in the card                                                                    | boolean                   | -                                                 |                                                                                                                                                         |
 | loadingLabel   | Show label beside the loading icon                                                                    | string                    | -                                                 |                                                                                                                                                         |
 | override       | Override existing theme classes completely                                                            | boolean                   | -                                                 |                                                                                                                                                         |
+| props          | Props to be binded to the injected component                                                          | any                       | -                                                 |                                                                                                                                                         |
 | subtitle       | Card header subtitle, unnecessary when subtitle slot is used<br/>Class of the header subtitle element | (string & ComponentClass) | -                                                 |                                                                                                                                                         |
 | title          | Card header title, unnecessary when title slot is used                                                | string                    | -                                                 |                                                                                                                                                         |
 
@@ -58,8 +62,8 @@ Cards are built with as little markup and styles as possible, but still manage t
 | subtitle | Override the header subtitle, default is subtitle prop |                                                                     |
 | close    | Override the close icon                                |                                                                     |
 | image    | Override the image                                     |                                                                     |
-| default  | Override the default card body                         |                                                                     |
-| content  | Override the body content, default is content prop     |                                                                     |
+| default  | Override the default card body                         | **close** `(event: Event): void` - function to emit a `close` event |
+| content  | Override the body content, default is content prop     | **close** `(event: Event): void` - function to emit a `close` event |
 | footer   | Override the footer                                    | **close** `(event: Event): void` - function to emit a `close` event |
 
 </section>
