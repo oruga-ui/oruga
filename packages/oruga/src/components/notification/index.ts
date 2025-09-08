@@ -2,12 +2,11 @@ import type { App, Plugin } from "vue";
 
 import Notification from "./Notification.vue";
 import NotificationNotice from "./NotificationNotice.vue";
-import NotificationProgrammatic from "./useNotificationProgrammatic";
+import useNotificationProgrammatic, {
+    NotificationProgrammaticFactory,
+} from "./useNotificationProgrammatic";
 
-import {
-    registerComponent,
-    registerComponentProgrammatic,
-} from "@/utils/plugins";
+import { registerComponent, registerComponentInterface } from "@/utils/plugins";
 
 /** export notification specific types */
 export type { NotificationProgrammaticOptions } from "./useNotificationProgrammatic";
@@ -16,10 +15,10 @@ export type { NotificationProgrammaticOptions } from "./useNotificationProgramma
 export default {
     install(app: App) {
         registerComponent(app, Notification);
-        registerComponentProgrammatic(
+        registerComponentInterface(
             app,
             "notification",
-            NotificationProgrammatic,
+            NotificationProgrammaticFactory,
         );
     },
 } as Plugin;
@@ -28,5 +27,5 @@ export default {
 export {
     Notification as ONotification,
     NotificationNotice as ONotificationNotice,
-    NotificationProgrammatic,
+    useNotificationProgrammatic,
 };

@@ -54,7 +54,7 @@ const emits = defineEmits<{
      * on component close event
      * @param value {string} - close event method
      */
-    close: [...args: [] | [string]];
+    close: [...args: [] | [string] | unknown[]];
 }>();
 
 const rootRef = useTemplateRef("rootElement");

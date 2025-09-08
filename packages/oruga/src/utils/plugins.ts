@@ -1,5 +1,7 @@
-import type { App, Component, Plugin, defineComponent } from "vue";
-import { useOruga, addProgrammatic } from "./programmatic";
+import type { App, Plugin, defineComponent } from "vue";
+import { addProgrammatic } from "./programmatic";
+import { provideOruga } from "./config";
+import type { ProgrammaticFactory } from "@/components/programmatic/useProgrammatic";
 
 export let VueInstance: App | undefined;
 
@@ -9,8 +11,12 @@ export const setVueInstance = (Vue: App): void => {
 };
 
 /** register a plugin to the vue app instance */
-export const registerPlugin = (app: App, plugin: Plugin): void => {
-    app.use(plugin);
+export const registerPlugin = (
+    app: App,
+    plugin: Plugin,
+    options?: unknown,
+): void => {
+    app.use(plugin, options);
 };
 
 /** register a component to the vue app instance */
@@ -21,22 +27,16 @@ export const registerComponent = (
     app.component(component.name, component);
 };
 
-/** register a global programmatic component to the oruga object */
-export const registerComponentProgrammatic = (
+/** register a global programmatic component factory interface to the oruga object */
+export const registerComponentInterface = (
     app: App,
-    property: string,
-    component: Component,
+    component: string,
+    Factory: new () => ProgrammaticFactory,
 ): void => {
-    // set global vue instance
+    // set global vue instance for programmatic usage
     setVueInstance(app);
-    // use composable for unified access to programmatic oruga object
-    const oruga = useOruga();
-    // add component (manipulates the programmatic oruga object)
-    addProgrammatic(property, component);
-
-    // add provide and $oruga (only needed once)
-    if (!(app._context.provides && app._context.provides.oruga))
-        app.provide("oruga", oruga);
-    if (!app.config.globalProperties.$oruga)
-        app.config.globalProperties.$oruga = oruga;
+    // add new programmatic component factory to the programmatic oruga object
+    addProgrammatic(component, new Factory());
+    // add `$oruga` as global property
+    provideOruga(app);
 };

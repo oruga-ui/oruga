@@ -22,20 +22,14 @@ import {
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        programmatic: typeof ComponentProgrammatic;
+        programmatic: Required<
+            InstanceType<typeof ProgrammaticComponentFactory>
+        >;
     }
 }
 
-/** programmatic global instance registry if no custom is defined */
-const registry = new InstanceRegistry<ComponentInternalInstance>();
-
 /** useProgrammatic composable `open` function options */
 export type ProgrammaticOptions<C extends VNodeTypes> = {
-    /**
-     * Specify a target the component get rendered into.
-     * @default `document.body`
-     */
-    target?: MaybeRefOrGetter<string | HTMLElement | null>;
     /**
      * Specify the template `id` for the programmatic container element.
      * @default `programmatic-app`
@@ -51,32 +45,53 @@ export type ProgrammaticComponentOptions<C extends VNodeTypes> = EmitsToProps<
     // make the type extendable
     Record<string, any>;
 
-/** useProgrammatic composable `open` function return value */
+/** useProgrammatic composable `_create` function return value */
 export type ProgrammaticExpose<C extends VNodeTypes = VNode> =
     ProgrammaticComponentExpose<C>;
 
-export const ComponentProgrammatic = {
+export abstract class ProgrammaticFactory {
+    /** programmatic instance registry for the factory instance */
+    private _registry = new InstanceRegistry<ComponentInternalInstance>();
+
     /** Returns the number of registered active instances. */
-    count: registry.count,
+    public count(): number {
+        return this._registry.count();
+    }
+
+    /** Close the last registred instance in the global programmatic instance registry. */
+    public close(...args: unknown[]): void {
+        this._registry.last()?.exposed?.close(...args);
+    }
+
+    /** Close all instances in the global programmatic instance registry. */
+    public closeAll(...args: unknown[]): void {
+        this._registry.walk((entry) => entry.exposed?.close(...args));
+    }
+
+    abstract open(...args: any[]): ProgrammaticExpose;
+
     /**
      * Create a new programmatic component instance.
-     * @param component component to render
-     * @param options render options
+     * @param component - The component to render.
+     * @param options - Programmatic component render options.
+     * @param target - A target container the component get rendered into - default is `document.body`.
+     * @returns ProgrammaticExpose - programmatic component expose interface
      */
-    open<C extends VNodeTypes>(
+    protected _create<C extends VNodeTypes>(
         component: C,
-        options?: ProgrammaticOptions<C>,
+        options: ProgrammaticOptions<C>,
+        target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose<C> {
-        options = { registry, ...options };
+        options = { registry: this._registry, ...options };
 
-        const targetQuery = toValue(options.target);
+        const targetQuery = toValue(target);
         // define the target container
-        const target: HTMLElement | null =
+        const targetElement: HTMLElement | null =
             // either by a given query selector / element
             (targetQuery && resolveElement(targetQuery)) ||
             // or by the default teleport target config
             resolveElement(getTeleportDefault());
-        if (!target)
+        if (!targetElement)
             throw new Error("ComponentProgrammatic - no target is defined.");
 
         // create app container
@@ -85,7 +100,7 @@ export const ComponentProgrammatic = {
         container.id = options.appId || "programmatic-app";
 
         // place the app container into the target element
-        target.appendChild(container);
+        targetElement.appendChild(container);
 
         // clear instance handler
         function onDestroy(): void {
@@ -95,17 +110,17 @@ export const ComponentProgrammatic = {
                 app = undefined;
             }
             // clear container
-            if (container && target) {
-                target.removeChild(container);
+            if (container && targetElement) {
+                targetElement.removeChild(container);
                 container = undefined;
             }
         }
 
         // create a new vue app instance with the ProgrammaticComponent as root
         let app: App | undefined = createApp(ProgrammaticComponent, {
-            registry: options.registry, // programmatic registry instance - can be overriden by given in options
+            registry: options.registry, // programmatic registry instance
             component, // the component which should be rendered
-            props: { ...options.props, container: target }, // component props including the target as `container`
+            props: { ...options.props, container: targetElement }, // component props including the target as `container`
             onClose: options.onClose, // custom onClose handler
             onDestroy, // node destory cleanup handler
         });
@@ -119,15 +134,26 @@ export const ComponentProgrammatic = {
 
         // return exposed programmatic functionalities from the mounted component instance
         return instance as unknown as ProgrammaticExpose<C>;
-    },
-    /** close the last registred instance in the global programmatic instance registry */
-    close(...args: unknown[]): void {
-        registry.last()?.exposed?.close(...args);
-    },
-    /** close all instances in the global programmatic instance registry */
-    closeAll(...args: unknown[]): void {
-        registry.walk((entry) => entry.exposed?.close(...args));
-    },
-};
+    }
+}
 
-export default ComponentProgrammatic;
+export class ProgrammaticComponentFactory extends ProgrammaticFactory {
+    /**
+     * Create a new programmatic component instance.
+     * @param component - The component to render.
+     * @param options - Programmatic component render options.
+     * @param target - A target container the component get rendered into - default is `document.body`.
+     * @returns ProgrammaticExpose - programmatic component expose interface
+     */
+    public open<C extends VNodeTypes>(
+        component: C,
+        options?: ProgrammaticOptions<C>,
+        target?: MaybeRefOrGetter<string | HTMLElement | null>,
+    ): ProgrammaticExpose<C> {
+        return this._create(component, options ?? {}, target);
+    }
+}
+
+export default function useProgrammaticComponent(): ProgrammaticComponentFactory {
+    return new ProgrammaticComponentFactory();
+}

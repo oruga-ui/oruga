@@ -2,9 +2,12 @@ import { createVNode, nextTick } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import NotificationProgrammatic from "../useNotificationProgrammatic";
+import useNotificationProgrammatic from "../useNotificationProgrammatic";
 
 describe("useNotificationProgrammatic tests", () => {
+    // create a new factory
+    const factory = useNotificationProgrammatic();
+
     beforeEach(() => {
         vi.useFakeTimers();
     });
@@ -13,6 +16,9 @@ describe("useNotificationProgrammatic tests", () => {
         // clear body after each test
         document.body.innerHTML = "";
         vi.useRealTimers();
+
+        // clear factory items
+        factory.closeAll();
     });
 
     enableAutoUnmount(afterEach);
@@ -21,7 +27,7 @@ describe("useNotificationProgrammatic tests", () => {
         const message = "My Fany Message";
 
         // open element
-        const { close, promise } = NotificationProgrammatic.open(message);
+        const { close, promise } = factory.open(message);
 
         // check promise get called
         const handler = vi.fn();
@@ -60,7 +66,7 @@ describe("useNotificationProgrammatic tests", () => {
         });
 
         // open element
-        const { close } = NotificationProgrammatic.open(
+        const { close } = factory.open(
             {
                 component,
                 variant: "success",
@@ -106,7 +112,7 @@ describe("useNotificationProgrammatic tests", () => {
         });
 
         // open element
-        NotificationProgrammatic.open({
+        factory.open({
             component,
             props: { "data-oruga": "programmatic" },
         });
@@ -140,7 +146,9 @@ describe("useNotificationProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        NotificationProgrammatic.open({ component, onClose });
+        factory.open({ component, onClose });
+
+        expect(factory.count()).toBe(1);
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>("button");
@@ -149,6 +157,8 @@ describe("useNotificationProgrammatic tests", () => {
         // close element on 'x' button click
         el?.click();
         vi.runAllTimers();
+
+        expect(factory.count()).toBe(0);
 
         // check element does not exist
         el = document.body.querySelector("button");
