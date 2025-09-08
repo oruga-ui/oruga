@@ -470,7 +470,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         :class="rootClasses"
         role="region"
         aria-roledescription="carousel"
-        @mouseover="onMouseEnter"
+        @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave"
         @focusin="onMouseEnter"
         @focusout="onMouseLeave"
