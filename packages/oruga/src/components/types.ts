@@ -908,12 +908,12 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Items count for each page */
                 perPage: number | string;
+                /** Enable rounded button style */
+                rounded: boolean;
                 /** Pagination size */
                 size: string;
                 /** Enable simple style */
                 simple: boolean;
-                /** Enable rounded button style */
-                rounded: boolean;
                 /** Buttons order */
                 order: "centered" | "left" | "right";
                 /** Buttons position order */
@@ -968,6 +968,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 buttonNextClass: ClassDefinition;
                 /** Class of the prev or next button when disabled */
                 buttonDisabledClass: ClassDefinition;
+                /** Class configuration for the internal button components */
+                buttonClasses: Record<string, any>;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
