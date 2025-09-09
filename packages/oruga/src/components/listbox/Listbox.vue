@@ -64,6 +64,7 @@ const props = withDefaults(defineProps<ListboxProps<T, IsMultiple>>(), {
     scrollHeight: () => getDefault("listbox.scrollHeight", "225"),
     selectable: true,
     selectOnFocus: false,
+    emptyLabel: () => getDefault("listbox.emptyLabel"),
     filterable: false,
     backendFiltering: false,
     filter: undefined,
@@ -790,7 +791,9 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
                 <!--
                     @slot Define content for empty state
                 -->
-                <slot name="empty" />
+                <slot name="empty">
+                    {{ emptyLabel }}
+                </slot>
             </div>
         </transition>
 

@@ -21,24 +21,26 @@ import ScrollCode from "./scroll.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <p>
-        Listboxes are a great and accessible select menus for your app, 
-        complete with robust support for keyboard navigation.
+        Listboxes are a great and accessible select menus for your app, complete
+        with robust support for keyboard navigation.
     </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="multiple">Multiple</h3>
     <p>
-         Listbox is used with the <code>v-model</code> prop for two-way value and can be used to select one or more values from a list of items.
-        </p>
+        The <code>v-model</code> can be used to bind the selected value. When
+        the <code>multiple</code> prop is used, more than one value can be
+        selected.
+    </p>
     <ExampleViewer :component="Multiple" :code="MultipleCode" />
 
     <h3 id="options">Options</h3>
     <p>
-        Instead of using the <code>&lt;o-list-item&gt;</code> component
-        directly inside the default slot, an <code>options</code> prop can be
-        defined, which can be used to define the options programmatically. It
-        accepts several different formats of values:
-  </p>
+        Instead of using the <code>&lt;o-list-item&gt;</code> component directly
+        inside the default slot, an <code>options</code> prop can be defined,
+        which can be used to define the options programmatically. It accepts
+        several different formats of values:
+    </p>
     <ul>
         <li>An array of primitives <code>['A', 'B', 'C']</code></li>
         <li>
@@ -68,23 +70,32 @@ import ScrollCode from "./scroll.vue?raw";
 
     <h3 id="filterable">Filterable</h3>
     <p>
-        Listbox provides built-in filtering that is enabled by adding the
-        <code>filterable</code> property.
+        The component provides a built-in filtering feature, which can be
+        enabled by adding the <code>filterable</code> property. A custom filter
+        function can be defined using the <code>filter</code> prop. By default,
+        a label string comparison is performed.
     </p>
     <ExampleViewer :component="Filterable" :code="FilterableCode" />
-    
+
     <h3 id="scroll">Slots</h3>
     <p>
-        A header and a footer can be added before and after the options list by using the
-        <code>header</code> and <code>footer</code> slots.
-        You can also display some content, when no options are visible, ether by not having any optins or by not showing them through filtering using the <code>emty</code> slot.
+        A custom header and footer can be added before and after the options
+        list by using the <code>header</code> and <code>footer</code> slots. You
+        can also display content, when no options are visible, either because
+        there are no options or because they are hidden through filtering, using
+        the <code>emty</code> slot.
     </p>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 
-    <h3 id="scroll">Scroll</h3>
+    <h3 id="scroll">Infinite Scroll & Async Data</h3>
     <p>
-        The list box is capped on a <code>max-height</code> with the <code>scrollHeight</code> prop. 
-        A long list of options will be rendere with a scrollbar. 
+        The list box is capped on a <code>max-height</code> with the
+        <code>scrollHeight</code> prop. A long list of options will be rendere
+        with a scrollbar. The component will emit a <code>scroll-start</code> or
+        <code>scroll-end</code> event, when the top or bottom of the list is
+        reached. These events can be used to load more options as needed.
+        Consider adding <code>backend-filtering</code> when manually updating
+        options on filter value changes.
     </p>
     <ExampleViewer :component="Scroll" :code="ScrollCode" />
 </template>

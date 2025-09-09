@@ -6,8 +6,7 @@ const selectedValue = ref([]);
 
 <template>
     <section class="odocs-spaced">
-        <o-listbox v-model="selectedValue" multiple >
-            
+        <o-listbox v-model="selectedValue" multiple>
             <o-list-item label="New York" value="NY" />
             <o-list-item label="Rome" value="RM" />
             <o-list-item label="London" value="LDN" />

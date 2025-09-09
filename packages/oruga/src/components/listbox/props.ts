@@ -29,6 +29,8 @@ export type ListboxProps<T, IsMultiple extends boolean = false> = {
     selectable?: boolean;
     /** Select current focused item when focused */
     selectOnFocus?: boolean;
+    /** A label which is displayed when no options is visible */
+    emptyLabel?: string;
     /** Enable an additional searchbar below the header */
     filterable?: boolean;
     /** Items won't be filtered on clientside, use the `filter` event to filter in your backend */
@@ -74,14 +76,14 @@ export type ListboxClasses = Partial<{
     headerClass: ComponentClass;
     /** Class of the footer slot wrapper element */
     footerClass: ComponentClass;
+    /** Class of the empty slot wrapper element */
+    emptyClass: ComponentClass;
     /** Class of the filter wrapper element */
     filterClass: ComponentClass;
     /** Class of the list container element */
     containerClass: ComponentClass;
     /** Class of the list element */
     listClass: ComponentClass;
-    /** Class of the list item element when empty */
-    itemEmptyClass: ComponentClass;
     /**
      * Class configuration for the internal input component
      * @ignore

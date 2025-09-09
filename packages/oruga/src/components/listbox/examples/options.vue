@@ -51,17 +51,13 @@ const groupSelected = ref<string>();
     <section class="odocs-spaced">
         <o-field grouped>
             <o-field label="Options">
-                <o-listbox
-                    v-model="selected"
-                    :options="options" />
+                <o-listbox v-model="selected" :options="options" />
 
                 <p><b>Selected:</b> {{ selected }}</p>
             </o-field>
 
             <o-field label="Grouped Options">
-                <o-listbox
-                    v-model="groupSelected"
-                    :options="groupOptions" />
+                <o-listbox v-model="groupSelected" :options="groupOptions" />
 
                 <p><b>Selected:</b> {{ groupSelected }}</p>
             </o-field>
