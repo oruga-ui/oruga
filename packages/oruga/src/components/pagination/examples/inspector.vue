@@ -14,11 +14,20 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
     },
     orderClass: {
         class: "orderClass",
-        description: "Class of the root element with order",
+        description: "Class of the root element with order.",
         properties: ["order"],
         suffixes: ["centered", "right", "left"],
         action: (data): void => {
             data.order = "centered";
+        },
+    },
+    positionClass: {
+        class: "positionClass",
+        description: "Class of the root element with position.",
+        properties: ["position"],
+        suffixes: ["centered", "right", "left"],
+        action: (data): void => {
+            data.position = "centered";
         },
     },
     sizeClass: {
@@ -88,6 +97,11 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
         action: (data): void => {
             data.current = 20;
         },
+    },
+    buttonClasses: {
+        class: "buttonClasses",
+        description: "Classes to apply on the internal button component.",
+        relatedComponent: "Button",
     },
 };
 </script>

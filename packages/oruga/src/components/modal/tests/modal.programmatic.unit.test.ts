@@ -2,9 +2,12 @@ import { createVNode } from "vue";
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import SidebarProgrammatic from "../useSidebarProgrammatic";
+import useModalProgrammatic from "../useModalProgrammatic";
 
-describe("useSidebarProgrammatic tests", () => {
+describe("useModalProgrammatic tests", () => {
+    // create a new factory
+    const factory = useModalProgrammatic();
+
     beforeEach(() => {
         vi.useFakeTimers();
     });
@@ -13,17 +16,18 @@ describe("useSidebarProgrammatic tests", () => {
         // clear body after each test
         document.body.innerHTML = "";
         vi.useRealTimers();
+
+        // clear factory items
+        factory.closeAll();
     });
 
     enableAutoUnmount(afterEach);
 
     test("test mounting component correctly", async () => {
-        const component = createVNode({
-            template: `<button @click="$emit('close', 'abc')">Fancy Label</button>`,
-        });
+        const content = "My Modal Content";
 
         // open element
-        const { close, promise } = SidebarProgrammatic.open({ component });
+        const { close, promise } = factory.open(content);
 
         // check promise get called
         const handler = vi.fn();
@@ -31,18 +35,18 @@ describe("useSidebarProgrammatic tests", () => {
         expect(handler).not.toHaveBeenCalled();
 
         // check element exist
-        let sidebar = document.body.querySelector('[data-oruga="sidebar"]');
-        expect(sidebar).not.toBeNull();
+        let modal = document.body.querySelector('[data-oruga="modal"]');
+        expect(modal).not.toBeNull();
 
-        expect(sidebar?.innerHTML).toContain("Fancy Label");
+        expect(modal?.innerHTML).toContain(content);
 
         // close element through handler
         close();
         vi.runAllTimers();
 
         // check element does not exist
-        sidebar = document.body.querySelector('[data-oruga="sidebar"]');
-        expect(sidebar).toBeNull();
+        modal = document.body.querySelector('[data-oruga="modal"]');
+        expect(modal).toBeNull();
 
         await flushPromises(); // await promise finished
         expect(handler).toHaveBeenCalledOnce();
@@ -53,21 +57,14 @@ describe("useSidebarProgrammatic tests", () => {
         container.id = "my-cool-container";
         document.body.appendChild(container);
 
-        const component = createVNode({
-            template: `<button @click="$emit('close', 'abc')">Fancy Label</button>`,
-        });
+        const content = "My Modal Content";
 
         // open element
-        const { close } = SidebarProgrammatic.open(
-            { component },
-            "#my-cool-container",
-        );
+        const { close } = factory.open(content, "#my-cool-container");
 
         // check element exist
-        let sidebar = document.body.querySelector('[data-oruga="sidebar"]');
-        expect(sidebar).not.toBeNull();
-
-        expect(sidebar?.innerHTML).toContain("Fancy Label");
+        let modal = document.body.querySelector('[data-oruga="modal"]');
+        expect(modal).not.toBeNull();
 
         let bodyElements = document.body.querySelectorAll("body > *");
         expect(bodyElements).toHaveLength(1);
@@ -77,8 +74,8 @@ describe("useSidebarProgrammatic tests", () => {
         vi.runAllTimers();
 
         // check element does not exist
-        sidebar = document.body.querySelector('[data-oruga="sidebar"]');
-        expect(sidebar).toBeNull();
+        modal = document.body.querySelector('[data-oruga="modal"]');
+        expect(modal).toBeNull();
 
         // check container still exists
         bodyElements = document.body.querySelectorAll("body > *");
@@ -91,16 +88,16 @@ describe("useSidebarProgrammatic tests", () => {
         });
 
         // open element
-        SidebarProgrammatic.open({
+        factory.open({
             component,
             props: { "data-oruga": "programmatic" },
         });
 
         // check element exist
-        let sidebar = document.body.querySelector('[data-oruga="sidebar"]');
-        expect(sidebar).not.toBeNull();
+        let modal = document.body.querySelector('[data-oruga="modal"]');
+        expect(modal).not.toBeNull();
 
-        const button = sidebar?.querySelector<HTMLElement>(
+        const button = modal?.querySelector<HTMLElement>(
             '[data-oruga="programmatic"]',
         );
         expect(button).not.toBeNull();
@@ -110,18 +107,44 @@ describe("useSidebarProgrammatic tests", () => {
         vi.runAllTimers();
 
         // check element does not exist
-        sidebar = document.body.querySelector('[data-oruga="sidebar"]');
-        expect(sidebar).toBeNull();
+        modal = document.body.querySelector('[data-oruga="modal"]');
+        expect(modal).toBeNull();
     });
 
-    test("test close event working correctly", async () => {
+    test("test internal close (x) event working correctly", async () => {
+        const content = "My Modal Content";
+        const onClose = vi.fn();
+
+        // open element
+        factory.open({ content, onClose });
+
+        // check element exist
+        let el = document.body.querySelector<HTMLElement>(
+            '[data-oruga="close"]',
+        );
+        expect(el).not.toBeNull();
+
+        // close element on 'x' button click
+        el?.click();
+        vi.runAllTimers();
+
+        // check element does not exist
+        el = document.body.querySelector('[data-oruga="close"]');
+        expect(el).toBeNull();
+
+        expect(onClose).toHaveBeenCalledOnce();
+    });
+
+    test("test external close event working correctly", async () => {
         const component = createVNode({
             template: `<button @click="$emit('close', {action: 'ok'})">Fancy Label</button>`,
         });
         const onClose = vi.fn();
 
         // open element
-        SidebarProgrammatic.open({ component, onClose });
+        factory.open({ component, onClose });
+
+        expect(factory.count()).toBe(1);
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>("button");
@@ -130,6 +153,8 @@ describe("useSidebarProgrammatic tests", () => {
         // close element on 'x' button click
         el?.click();
         vi.runAllTimers();
+
+        expect(factory.count()).toBe(0);
 
         // check element does not exist
         el = document.body.querySelector("button");

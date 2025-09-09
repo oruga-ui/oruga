@@ -159,6 +159,37 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the label element */
                 labelClass: ClassDefinition;
             }>;
+        card?: ComponentConfigBase &
+            Partial<{
+                /** Adds close button to the header */
+                closeable: boolean;
+                /** Icon pack to use for the close icon */
+                iconPack: string;
+                /** Close icon name */
+                closeIcon: string;
+                /** Close icon size */
+                closeIconSize: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the header element */
+                headerClass: ClassDefinition;
+                /** Class of the header title element */
+                titleClass: ClassDefinition;
+                /** Class of the header close element */
+                closeClass: ClassDefinition;
+                /** Class of the image container */
+                imageClass: ClassDefinition;
+                /** Class of the image figure element */
+                figureClass: ClassDefinition;
+                /** Class of the body element */
+                bodyClass: ClassDefinition;
+                /** Class of the body content element */
+                contentClass: ClassDefinition;
+                /** Class of the footer element */
+                footerClass: ClassDefinition;
+            }>;
         carousel?: ComponentConfigBase &
             Partial<{
                 /** Timer interval for `autoplay` */
@@ -579,8 +610,10 @@ but will set the body to a fixed position, which may break some layouts. */
             }>;
         field?: ComponentConfigBase &
             Partial<{
-                /** Vertical size of input */
-                labelsize: string;
+                /** Size of the field label */
+                labelSize: string;
+                /** Size of the field message */
+                messageSize: string;
                 /** Message element tag name */
                 messageTag: DynamicComponent;
                 /** Mobile breakpoint as `max-width` value */
@@ -593,6 +626,8 @@ but will set the body to a fixed position, which may break some layouts. */
                 focusedClass: ClassDefinition;
                 /** Class of the root element when the form element is filled */
                 filledClass: ClassDefinition;
+                /** Class for the root element with variant */
+                variantClass: ClassDefinition;
                 /** Class for the body wrapper element */
                 bodyClass: ClassDefinition;
                 /** Class for inner wrapper element when grouped */
@@ -615,6 +650,8 @@ but will set the body to a fixed position, which may break some layouts. */
                 labelVariantClass: ClassDefinition;
                 /** Class for the message element */
                 messageClass: ClassDefinition;
+                /** Class for the message element with size */
+                messageSizeClass: ClassDefinition;
                 /** Class for the message element with variant */
                 messageVariantClass: ClassDefinition;
             }>;
@@ -754,11 +791,13 @@ See icon library documentation for custom classes. */
                 animation: string;
                 /** Icon name to show, unnecessary when default slot is used. */
                 icon: string;
+                /** Icon pack to use for the close icon */
+                iconPack: string;
                 /** Enable spin effect on icon */
                 iconSpin: boolean;
                 /** Icon size */
                 iconSize: string;
-                /** Set `true` to remove the body scrollbar.
+                /** Set `true` to remove the body scrollbar when `fullPage`.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
 but will set the body to a fixed position, which may break some layouts. */
                 clipScroll: boolean;
@@ -840,6 +879,8 @@ Alert modals interrupt the user's workflow to communicate an important messages 
                 ariaLabel: string;
                 /** Automatically focus modal when active */
                 autoFocus: boolean;
+                /** Icon pack to use */
+                iconPack: string;
                 /** Close icon name */
                 closeIcon: string;
                 /** Size of close icon */
@@ -922,14 +963,16 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Items count for each page */
                 perPage: number | string;
+                /** Enable rounded button style */
+                rounded: boolean;
                 /** Pagination size */
                 size: string;
                 /** Enable simple style */
                 simple: boolean;
-                /** Enable rounded button style */
-                rounded: boolean;
                 /** Buttons order */
                 order: "centered" | "left" | "right";
+                /** Buttons position order */
+                position: "centered" | "left" | "right";
                 /** Pagination button tag name */
                 buttonTag: DynamicComponent;
                 /** Icon pack to use */
@@ -954,6 +997,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobileClass: ClassDefinition;
                 /** Class of the root element with order */
                 orderClass: ClassDefinition;
+                /** Class of the root element with position */
+                positionClass: ClassDefinition;
                 /** Class of the root element with size */
                 sizeClass: ClassDefinition;
                 /** Class of the root element when in `simple` mode */
@@ -978,6 +1023,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 buttonNextClass: ClassDefinition;
                 /** Class of the prev or next button when disabled */
                 buttonDisabledClass: ClassDefinition;
+                /** Class configuration for the internal button components */
+                buttonClasses: Record<string, any>;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
@@ -1530,8 +1577,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 iconPack: string;
                 /** Close icon name */
                 closeIcon: string;
-                /** Icon pack to use for the close icon */
-                closeIconPack: string;
+                /** Size of close icon */
+                closeIconSize: string;
                 /** Accessibility label for the close button */
                 ariaCloseLabel: string;
                 /** Class of the root element */
@@ -1720,14 +1767,14 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the root element when expanded */
                 expandedClass: ClassDefinition;
+                /** Class of the root element when disabled */
+                disabledClass: ClassDefinition;
                 /** Class of the root element with variant */
                 variantClass: ClassDefinition;
                 /** Class of the dragable container element */
                 draggableClass: ClassDefinition;
-                /** Class of the dragable container element when disabled */
-                disabledClass: ClassDefinition;
                 /** Class of the dragable container element when hovered */
-                hoveredClass: ClassDefinition;
+                draggableHoveredClass: ClassDefinition;
             }>;
     }
 }

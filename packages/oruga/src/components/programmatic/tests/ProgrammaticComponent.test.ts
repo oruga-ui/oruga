@@ -1,4 +1,4 @@
-import { createVNode, markRaw } from "vue";
+import { createVNode, markRaw, type VNode } from "vue";
 import { describe, test, expect, afterEach, vi } from "vitest";
 import { enableAutoUnmount, flushPromises, mount } from "@vue/test-utils";
 
@@ -102,7 +102,8 @@ describe("ProgrammaticComponent tests", () => {
             },
         });
 
-        const component = wrapper.vm as unknown as ProgrammaticComponentExpose;
+        const component =
+            wrapper.vm as unknown as ProgrammaticComponentExpose<VNode>;
         expect(component.promise).not.toBeUndefined();
 
         // check promise get called

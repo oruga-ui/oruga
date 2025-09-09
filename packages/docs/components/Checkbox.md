@@ -20,7 +20,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## Checkbox component
+## Checkbox Component
 
 > Select a single or grouped options.
 
@@ -40,6 +40,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | indeterminate      | Same as native indeterminate                                                        | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
 | label              | Input label, unnecessary when default slot is used                                  | string                                                                 | -                                                                               |                                                                                                                                                        |
 | v-model            | The input value state, use v-model to make it two-way binding                       | unknown                                                                | -                                                                               |                                                                                                                                                        |
+| multiple           | Defines the v-model as array of values                                              | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                 |
 | name               | Same as native name                                                                 | string                                                                 | -                                                                               |                                                                                                                                                        |
 | nativeValue        | Same as native value                                                                | unknown                                                                | -                                                                               |                                                                                                                                                        |
 | override           | Override existing theme classes completely                                          | boolean                                                                | -                                                                               |                                                                                                                                                        |
@@ -51,13 +52,13 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Events
 
-| Event name         | Properties                                                              | Description                     |
-| ------------------ | ----------------------------------------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T \| T[]` - updated modelValue prop                          | modelValue prop two-way binding |
-| input              | **value** `T \| T[]` - input value<br/>**event** `Event` - native event | on input change event           |
-| focus              | **event** `Event` - native event                                        | on input focus event            |
-| blur               | **event** `Event` - native event                                        | on input blur event             |
-| invalid            | **event** `Event` - native event                                        | on input invalid event          |
+| Event name         | Properties                                                                          | Description                     |
+| ------------------ | ----------------------------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown \| unknown[]` - updated modelValue prop                          | modelValue prop two-way binding |
+| input              | **value** `unknown \| unknown[]` - input value<br/>**event** `Event` - native event | on input change event           |
+| focus              | **event** `Event` - native event                                                    | on input focus event            |
+| blur               | **event** `Event` - native event                                                    | on input blur event             |
+| invalid            | **event** `Event` - native event                                                    | on input invalid event          |
 
 ### Slots
 
@@ -77,7 +78,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -101,7 +102,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $checkbox-size                       | 1rem                                   |
 | $checkbox-line-height                | 1.5                                    |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
 
 </div>
 <div class="theme-bulma">
@@ -122,7 +123,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $checkbox-active-background-color | css.getVar("primary")                                                 |
 | $checkbox-shadow                  | css.getVar("shadow")                                                  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_checkbox.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_checkbox.scss)
 
 </div>
 <div class="theme-bootstrap">

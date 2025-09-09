@@ -17,7 +17,7 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 
 <section class="odocs-specs">
 
-## Tooltip component
+## Tooltip Component
 
 > Display a brief helper text to your user.
 
@@ -71,7 +71,7 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -92,7 +92,7 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 | $tooltip-content-weight-normal   | 400                                |
 | $tooltip-content-zindex          | 38                                 |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tooltip.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tooltip.scss)
 
 </div>
 <div class="theme-bulma">
@@ -111,7 +111,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $tooltip-bg                      | css.getVar("scheme-main-bis")    |
 | $tooltip-color                   | css.getVar("text-body")          |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tooltip.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tooltip.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -125,7 +125,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $tooltip-shadow                  | $box-shadow-sm  |
 | $tooltip-zindex                  | $zindex-tooltip |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tooltip.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tooltip.scss)
 
 </div>
 

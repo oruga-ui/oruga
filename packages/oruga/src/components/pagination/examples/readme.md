@@ -1,1 +1,2 @@
-The **Pagination** component is responsive and flexible way to indicate a series of related content exists across multiple pages.
+The **Pagination** component is responsive and flexible way to indicate a series of related content exists across multiple pages. It can be used to displays data in paged format and provides navigation between pages. The root element is a [HTML native nav element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/nav) to indicate a navigation section.
+The component uses the [Button](/components/Button) component for the navigation elements.

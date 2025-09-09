@@ -16,7 +16,7 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 <section class="odocs-specs">
 
-## Loading component
+## Loading Component
 
 > A simple loading overlay.
 
@@ -26,18 +26,19 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 ### Props
 
-| Prop name  | Description                                                                                                                                                                                                     | Type    | Values                     | Default                                                                                                                                              |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active     | Whether loading is active or not, use v-model:active to make it two-way binding                                                                                                                                 | boolean | -                          | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
-| animation  | Custom animation (transition name)                                                                                                                                                                              | string  | -                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>  |
-| cancelable | Is Loading cancable by pressing escape or clicking outside.                                                                                                                                                     | boolean | -                          | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                          |
-| clipScroll | Set `true` to remove the body scrollbar.<br/>When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,<br/>but will set the body to a fixed position, which may break some layouts. | boolean | -                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;clipScroll: false<br>}</code>  |
-| fullPage   | Loader will overlay the full page.                                                                                                                                                                              | boolean | -                          | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                           |
-| icon       | Icon name to show, unnecessary when default slot is used.                                                                                                                                                       | string  | -                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;icon: "loading"<br>}</code>    |
-| iconSize   | Icon size                                                                                                                                                                                                       | string  | `small`, `medium`, `large` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconSize: "medium"<br>}</code> |
-| iconSpin   | Enable spin effect on icon                                                                                                                                                                                      | boolean | -                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconSpin: true<br>}</code>     |
-| label      | Notification label, unnecessary when default slot is used.                                                                                                                                                      | string  | -                          |                                                                                                                                                      |
-| override   | Override existing theme classes completely                                                                                                                                                                      | boolean | -                          |                                                                                                                                                      |
+| Prop name  | Description                                                                                                                                                                                                                     | Type    | Values                                            | Default                                                                                                                                               |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active     | Whether loading is active or not, use v-model:active to make it two-way binding                                                                                                                                                 | boolean | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| animation  | Custom animation (transition name)                                                                                                                                                                                              | string  | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>   |
+| cancelable | Is Loading cancable by pressing escape or clicking outside.                                                                                                                                                                     | boolean | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| clipScroll | Set `true` to remove the body scrollbar when `fullPage`.<br/>When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,<br/>but will set the body to a fixed position, which may break some layouts. | boolean | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;clipScroll: false<br>}</code>   |
+| fullPage   | Loader will overlay the full page.                                                                                                                                                                                              | boolean | -                                                 | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                            |
+| icon       | Icon name to show, unnecessary when default slot is used.                                                                                                                                                                       | string  | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;icon: "loading"<br>}</code>     |
+| iconPack   | Icon pack to use for the close icon                                                                                                                                                                                             | string  | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| iconSize   | Icon size                                                                                                                                                                                                                       | string  | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconSize: "medium"<br>}</code>  |
+| iconSpin   | Enable spin effect on icon                                                                                                                                                                                                      | boolean | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>loading: {<br>&nbsp;&nbsp;iconSpin: true<br>}</code>      |
+| label      | Show a label beside the icon, unnecessary when default slot is used.                                                                                                                                                            | string  | -                                                 |                                                                                                                                                       |
+| override   | Override existing theme classes completely                                                                                                                                                                                      | boolean | -                                                 |                                                                                                                                                       |
 
 ### Events
 
@@ -65,7 +66,7 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -78,7 +79,7 @@ The **Loading** component allows you to display a loading state for use on a glo
 | $loading-zindex          | 29                       |
 | $loading-fullpage-zindex | 999                      |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_loading.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_loading.scss)
 
 </div>
 <div class="theme-bulma">
@@ -92,7 +93,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $loading-icon-size-full-page | 5em                      |
 | $loading-z                   | 29                       |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_loading.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_loading.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -105,7 +106,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $loading-zindex-fullpage | $zindex-fixed            |
 | $loading-overlay         | rgba(255, 255, 255, 0.5) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_loading.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_loading.scss)
 
 </div>
 

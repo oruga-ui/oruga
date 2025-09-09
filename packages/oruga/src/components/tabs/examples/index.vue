@@ -17,8 +17,8 @@ import ExpandedCode from "./expanded.vue?raw";
 import Types from "./types.vue";
 import TypesCode from "./types.vue?raw";
 
-import Position from "./position.vue";
-import PositionCode from "./position.vue?raw";
+import Positions from "./positions.vue";
+import PositionsCode from "./positions.vue?raw";
 
 import Sizes from "./sizes.vue";
 import SizesCode from "./sizes.vue?raw";
@@ -40,9 +40,9 @@ import SizesCode from "./sizes.vue?raw";
     </p>
     <ExampleViewer :component="Types" :code="TypesCode" />
 
-    <h3 id="position">Position</h3>
+    <h3 id="positions">Positions</h3>
     <p>The tabs header can be positioned by the <code>position</code> prop.</p>
-    <ExampleViewer :component="Position" :code="PositionCode" />
+    <ExampleViewer :component="Positions" :code="PositionsCode" />
 
     <h3 id="expanded">Expanded</h3>
     <p>

@@ -1,6 +1,7 @@
 import { ref, toRaw, type App } from "vue";
 import { getValueByPath, merge, setValueByPath } from "./helpers";
 import { setVueInstance } from "./plugins";
+import { addProgrammatic, useOruga } from "./programmatic";
 import { isClient } from "./ssr";
 import type { DeepKeys, DeepType, OrugaOptions } from "@/types";
 
@@ -71,11 +72,33 @@ export const ConfigProgrammatic = {
     },
 };
 
+export function useProgrammaticConfig(): typeof ConfigProgrammatic {
+    return ConfigProgrammatic;
+}
+
 export const OrugaConfig = {
     install(app: App, options?: OrugaOptions): void {
-        // set global vue instance
+        // set global vue instance for programmatic usage
         setVueInstance(app);
-        // set options
+        // set additional options
         setOptions(merge(getOptions(), options, true));
+        // add programmatic config interface to the programmatic oruga object
+        addProgrammatic("config", ConfigProgrammatic);
+        // add `$oruga` as global property
+        provideOruga(app);
     },
 };
+
+/**
+ * Adds the programmatic Oruga interface as a global property
+ * and provides it on the Vue instance.
+ */
+export function provideOruga(app: App): void {
+    // use composable for unified access to programmatic oruga object
+    const oruga = useOruga();
+    // add provide and $oruga (only needed once)
+    if (!(app._context.provides && app._context.provides.oruga))
+        app.provide("oruga", oruga);
+    if (!app.config.globalProperties.$oruga)
+        app.config.globalProperties.$oruga = oruga;
+}

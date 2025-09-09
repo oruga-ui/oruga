@@ -21,7 +21,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 <section class="odocs-specs">
 
-## Listbox component
+## Listbox Component
 
 > Listbox is used to select one or more values from a list of items.
 
@@ -91,7 +91,7 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 

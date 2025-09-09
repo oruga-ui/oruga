@@ -73,13 +73,13 @@ const props = withDefaults(defineProps<StepsProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T} updated modelValue prop
+     * @param value {unknown} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * on step change event
-     * @param value {T} new step value
-     * @param value {T} old step value
+     * @param value {unknown} - new step value
+     * @param value {unknown} - old step value
      */
     change: [newValue: ModelValue, oldValue: ModelValue];
 }>();

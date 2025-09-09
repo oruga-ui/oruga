@@ -6,7 +6,7 @@ exports[`ODropdown tests > render correctly with items 1`] = `
     <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
-                @binding {T | T[]} value - the selected value
+                @binding {unknown | unknown[]} value - the selected value
                 @binding {(): void} toggle - toggle dropdown active state
             --><button class="">Component Trigger Label</button>
   </div>
@@ -47,7 +47,7 @@ exports[`ODropdown tests > render correctly with options 1`] = `
     <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
-                @binding {T | T[]} value - the selected value
+                @binding {unknown | unknown[]} value - the selected value
                 @binding {(): void} toggle - toggle dropdown active state
             -->Some Trigger Label
   </div>

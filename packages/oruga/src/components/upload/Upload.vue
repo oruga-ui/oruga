@@ -36,9 +36,9 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
     // multiple: false,
     variant: () => getDefault("upload.variant"),
     disabled: false,
+    expanded: () => getDefault("upload.expanded", false),
     accept: undefined,
     dragDrop: false,
-    expanded: () => getDefault("upload.expanded", false),
     native: true,
     useHtml5Validation: () => getDefault("useHtml5Validation", true),
     customValidity: "",
@@ -47,22 +47,22 @@ const props = withDefaults(defineProps<UploadProps<T, IsMultiple>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {object | object[] | File | File[]} updated modelValue prop
+     * @param value {object | object[] | File | File[]} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * on input focus event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     blur: [event: Event];
     /**
      * on input invalid event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     invalid: [event: Event];
 }>();
@@ -210,21 +210,21 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.disabled),
     ],
+    [
+        "variantClass",
+        "o-upload--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
 );
 
 const draggableClasses = defineClasses(
     ["draggableClass", "o-upload__draggable"],
     [
-        "hoveredClass",
+        "draggableHoveredClass",
         "o-upload__draggable--hovered",
         null,
-        computed(() => !props.variant && dragDropFocus.value),
-    ],
-    [
-        "variantClass",
-        "o-upload__draggable--hovered-",
-        computed(() => props.variant),
-        computed(() => !!props.variant && dragDropFocus.value),
+        computed(() => dragDropFocus.value),
     ],
 );
 

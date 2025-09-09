@@ -23,7 +23,7 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 <section class="odocs-specs">
 
-## Tabs component
+## Tabs Component
 
 > Responsive horizontal navigation tabs, switch between contents with ease.
 
@@ -54,10 +54,10 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 ### Events
 
-| Event name         | Properties                                                      | Description                     |
-| ------------------ | --------------------------------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T` - updated modelValue prop                         | modelValue prop two-way binding |
-| change             | **value** `T` - new tab value<br/>**value** `T` - old tab value | on tab change event             |
+| Event name         | Properties                                                                  | Description                     |
+| ------------------ | --------------------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown` - updated modelValue prop                               | modelValue prop two-way binding |
+| change             | **value** `unknown` - new tab value<br/>**value** `unknown` - old tab value | on tab change event             |
 
 ### Slots
 
@@ -71,7 +71,7 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 <section class="odocs-specs">
 
-## TabItem component
+## TabItem Component
 
 > An tab item used by the tabs component.
 
@@ -122,7 +122,7 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -157,7 +157,7 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 | $tabs-toggle-tab-active-border-color       | var(--#{$prefix}primary)               |
 | $tabs-toggle-tab-active-color              | var(--#{$prefix}primary-invert)        |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tabs.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tabs.scss)
 
 </div>
 <div class="theme-bulma">
@@ -178,7 +178,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $tabs-toggle-link-focus-active-border-color       | css.getVar( "tabs-toggle-link-active-border-color")       |
 | $tabs-toggle-link-focus-border-color              | css.getVar( "tabs-toggle-link-hover-border-color")        |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tabs.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_tabs.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -193,7 +193,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $nav-underline-link-active-bg           | $nav-tabs-link-active-bg    |
 | $nav-underline-link-active-border-color | currentcolor                |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tabs.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tabs.scss)
 
 </div>
 

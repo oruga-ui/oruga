@@ -21,7 +21,7 @@ import { weeksInYear, firstWeekOffset } from "./utils";
 
 import type { DatepickerEvent } from "./types";
 import type { DatepickerProps } from "./props";
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 
 defineOptions({
     name: "ODatepickerTableRow",
@@ -234,7 +234,7 @@ const scope = effectScope();
 onUnmounted(() => scope.stop());
 
 /** Build cellClasses for cell using validations */
-function cellClasses(day: Date): ClassBind[] {
+function cellClasses(day: Date): ClassBinding[] {
     const classes = defineClasses(
         [
             "tableCellSelectedClass",
@@ -354,7 +354,7 @@ function cellClasses(day: Date): ClassBind[] {
     ];
 }
 
-function eventClasses(event: DatepickerEvent): ClassBind[] {
+function eventClasses(event: DatepickerEvent): ClassBinding[] {
     const classes = defineClasses(
         ["tableEventClass", "o-datepicker__table__event"],
         [

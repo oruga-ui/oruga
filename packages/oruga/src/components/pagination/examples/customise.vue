@@ -5,12 +5,13 @@ const rangeBefore = ref(3);
 const rangeAfter = ref(1);
 const isSimple = ref(false);
 const isRounded = ref(false);
+const isDisabled = ref(false);
 const prevIcon = ref("chevron-left");
 const nextIcon = ref("chevron-right");
 const total = ref(200);
 const current = ref(10);
 const perPage = ref(10);
-const order = ref<"left" | "centered" | "right">("left");
+const position = ref<"left" | "centered" | "right">("left");
 const size = ref("");
 </script>
 
@@ -33,8 +34,8 @@ const size = ref("");
             </o-field>
         </o-field>
         <o-field grouped multiline>
-            <o-field label="Order">
-                <o-select v-model="order">
+            <o-field label="Position">
+                <o-select v-model="position">
                     <option value="left">left</option>
                     <option value="centered">centered</option>
                     <option value="right">right</option>
@@ -64,6 +65,7 @@ const size = ref("");
         <o-field grouped>
             <o-switch v-model="isSimple" label="Simple" />
             <o-switch v-model="isRounded" label="Rounded" />
+            <o-switch v-model="isDisabled" label="Disabled" />
         </o-field>
 
         <hr />
@@ -74,8 +76,9 @@ const size = ref("");
             :per-page="perPage"
             :range-before="rangeBefore || 0"
             :range-after="rangeAfter || 0"
-            :order="order"
+            :position="position"
             :size="size"
+            :disabled="isDisabled"
             :simple="isSimple"
             :rounded="isRounded"
             :icon-prev="prevIcon"
