@@ -19,7 +19,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 
 <section class="odocs-specs">
 
-## Modal component
+## Modal Component
 
 > Classic modal overlay to include any content you may need.
 
@@ -45,13 +45,14 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 | content          | Text content, unnecessary when default slot is used                                                                                                                                                                                                    | string                      | -                                                   |                                                                                                                                                                      |
 | events           | Events to be binded to the injected component                                                                                                                                                                                                          | {}                          | -                                                   |                                                                                                                                                                      |
 | fullScreen       | Display modal as full screen                                                                                                                                                                                                                           | boolean                     | -                                                   | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                          |
+| iconPack         | Icon pack to use                                                                                                                                                                                                                                       | string                      | `mdi`, `fa`, `fas and any other custom icon pack`   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>                  |
 | mobileBreakpoint | Mobile breakpoint as `max-width` value                                                                                                                                                                                                                 | string                      | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;mobileBreakpoint: undefined<br>}</code>          |
 | overlay          | Show an overlay                                                                                                                                                                                                                                        | boolean                     | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;overlay: true<br>}</code>                        |
 | override         | Override existing theme classes completely                                                                                                                                                                                                             | boolean                     | -                                                   |                                                                                                                                                                      |
 | props            | Props to be binded to the injected component                                                                                                                                                                                                           | any                         | -                                                   |                                                                                                                                                                      |
 | teleport         | Append the component to another part of the DOM.<br/>Set `true` to append the component to the body.<br/>In addition, any CSS selector string or an actual DOM node can be used.                                                                       | boolean \| object \| string | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;teleport: false<br>}</code>                      |
 | trapFocus        | Trap focus inside the modal                                                                                                                                                                                                                            | boolean                     | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>                      |
-| width            | Width of the Modal                                                                                                                                                                                                                                     | number \| string            | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;width: 960<br>}</code>                           |
+| width            | Width of the Modal                                                                                                                                                                                                                                     | Numberish                   | -                                                   | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;width: 960<br>}</code>                           |
 
 ### Events
 
@@ -65,6 +66,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 | Name    | Description                                    | Bindings                                                      |
 | ------- | ---------------------------------------------- | ------------------------------------------------------------- |
 | default | Modal default content, default is content prop | **close** `(...args): void` - function to close the component |
+| close   | Override the close icon                        |                                                               |
 
 </section>
 
@@ -78,7 +80,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -99,7 +101,7 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 | $modal-content-margin                      | 0 auto                                       |
 | $modal-zindex                              | 40                                           |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_modal.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_modal.scss)
 
 </div>
 <div class="theme-bulma">

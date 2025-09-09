@@ -38,28 +38,28 @@ const props = withDefaults(defineProps<RadioProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T} updated modelValue prop
+     * @param value {unknown} - updated modelValue prop
      */
     "update:model-value": [value: T];
     /**
      * on input change event
-     * @param value {T} input value
-     * @param event {Event} native event
+     * @param value {unknown} - input value
+     * @param event {Event} - native event
      */
     input: [value: T, event: Event];
     /**
      * on input focus event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     blur: [event: Event];
     /**
      * on input invalid event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     invalid: [event: Event];
 }>();

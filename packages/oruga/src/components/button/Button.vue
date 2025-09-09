@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 defineEmits<{
     /**
      * button click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     click: [event: Event];
 }>();
@@ -69,31 +69,19 @@ const rootClasses = defineClasses(
         "variantClass",
         "o-button--",
         computed(() => props.variant),
-        computed(() => !!props.variant && !props.outlined && !props.inverted),
+        computed(() => !!props.variant),
     ],
     [
         "outlinedClass",
         "o-button--outlined",
         null,
-        computed(() => props.outlined && !props.variant),
+        computed(() => props.outlined),
     ],
     [
         "invertedClass",
         "o-button--inverted",
         null,
-        computed(() => props.inverted && !props.variant),
-    ],
-    [
-        "outlinedClass",
-        "o-button--outlined-",
-        computed(() => props.variant),
-        computed(() => props.outlined && !!props.variant),
-    ],
-    [
-        "invertedClass",
-        "o-button--inverted-",
-        computed(() => props.variant),
-        computed(() => props.inverted && !!props.variant),
+        computed(() => props.inverted),
     ],
     [
         "expandedClass",
@@ -147,7 +135,7 @@ const iconRightClasses = defineClasses([
 
             <span v-if="label || $slots.default" :class="labelClasses">
                 <!--
-                    @slot Override the label, default is label prop 
+                    @slot Override the label, default is label prop
                 -->
                 <slot>{{ label }}</slot>
             </span>

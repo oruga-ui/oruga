@@ -22,7 +22,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## Slider component
+## Slider Component
 
 > A slider to select a value or range from a given range.
 
@@ -76,7 +76,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## SliderTick component
+## SliderTick Component
 
 ```html
 <o-slider-tick></o-slider-tick>
@@ -108,7 +108,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -139,7 +139,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $slider-track-radius          | var(--#{$prefix}base-border-radius)          |
 | $slider-track-shadow          | 0px 0px 0px var(--#{$prefix}grey)            |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
 
 </div>
 <div class="theme-bulma">
@@ -165,7 +165,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $slider-tick-radius          | css.getVar("radius")               |
 | $slider-tick-background      | css.getVar("grey-light")           |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_slider.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_slider.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -179,7 +179,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $slider-tick-radius | 50%                   |
 | $slider-tick-bg     | var(--#{$prefix}gray) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_slider.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_slider.scss)
 
 </div>
 

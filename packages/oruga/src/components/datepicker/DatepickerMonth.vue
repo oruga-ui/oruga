@@ -20,7 +20,7 @@ import { useDatepickerMixins } from "./useDatepickerMixins";
 
 import type { DatepickerEvent, FocusedDate } from "./types";
 import type { DatepickerProps } from "./props";
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 
 defineOptions({
     name: "ODatepickerMonth",
@@ -375,7 +375,7 @@ onUnmounted(() => scope.stop());
 /**
  * Build classes for cell using validations
  */
-function cellClasses(day: Date): ClassBind[] {
+function cellClasses(day: Date): ClassBinding[] {
     const classes = defineClasses(
         [
             "monthCellSelectedClass",
@@ -497,7 +497,7 @@ const monthEventsClasses = defineClasses(
 /**
  * Build classes for event
  */
-function eventClasses(event: DatepickerEvent): ClassBind[] {
+function eventClasses(event: DatepickerEvent): ClassBinding[] {
     const classes = defineClasses(
         ["monthEventClass", "o-datepicker__month__event"],
         [

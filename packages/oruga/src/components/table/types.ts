@@ -1,6 +1,6 @@
 import type { ComponentPublicInstance, Slots, StyleValue } from "vue";
 import type { OptionsItem, ProviderItem } from "@/composables";
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 
 import type { TableColumnProps } from "./props";
 
@@ -15,9 +15,9 @@ export type TableColumnComponent<T = unknown> = TableColumn<T> & {
     $instance: ComponentPublicInstance;
     $slots: Slots;
     style: StyleValue;
-    thClasses: ClassBind[];
-    thSubClasses: ClassBind[];
-    tdClasses: ClassBind[];
+    thClasses: ClassBinding[];
+    thSubClasses: ClassBinding[];
+    tdClasses: ClassBinding[];
 };
 
 export type TableColumnItem<T = unknown> = Omit<ProviderItem, "data"> &

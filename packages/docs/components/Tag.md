@@ -16,7 +16,7 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 <section class="odocs-specs">
 
-## Tag component
+## Tag Component
 
 > Small tag labels to insert anywhere.
 
@@ -31,7 +31,7 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 | ariaCloseLabel | Accessibility label for the close button         | string  | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;ariaCloseLabel: "Close"<br>}</code>  |
 | badge          | Enable badge style                               | boolean | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                 |
 | closeIcon      | Close icon name                                  | string  | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;closeIcon: "close"<br>}</code>       |
-| closeIconPack  | Icon pack to use for the close icon              | string  | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;closeIconPack: undefined<br>}</code> |
+| closeIconSize  | Size of close icon                               | string  | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;closeIconSize: undefined<br>}</code> |
 | closeable      | Add close/delete button to the item              | boolean | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                            |
 | icon           | Adds an icon to the left of the tag.             | string  | -                                                                               |                                                                                                                                                        |
 | iconPack       | Icon pack to use                                 | string  | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tag: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>      |
@@ -49,10 +49,10 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 ### Slots
 
-| Name    | Description             | Bindings                             |
-| ------- | ----------------------- | ------------------------------------ |
-| default | Override the tag label  |                                      |
-| close   | Override the close icon | **close** `close()` - close function |
+| Name    | Description             | Bindings |
+| ------- | ----------------------- | -------- |
+| default | Override the tag label  |          |
+| close   | Override the close icon |          |
 
 </section>
 
@@ -66,7 +66,7 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -81,7 +81,7 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 | $tag-padding               | 0 0.75em                                     |
 | $tag-icon-margin           | 0.5em                                        |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tag.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tag.scss)
 
 </div>
 <div class="theme-bulma">
@@ -101,7 +101,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $badge-icon-space   | 0.25em      |
 | $badge-border-color | transparent |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tag.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tag.scss)
 
 </div>
 

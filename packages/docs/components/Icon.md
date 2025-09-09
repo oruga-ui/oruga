@@ -17,7 +17,7 @@ Oruga is compatible with both [Material Design Icons](https://materialdesignicon
 
 <section class="odocs-specs">
 
-## Icon component
+## Icon Component
 
 > Icons take an important role of any application.
 
@@ -59,7 +59,7 @@ Oruga is compatible with both [Material Design Icons](https://materialdesignicon
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -69,7 +69,7 @@ Oruga is compatible with both [Material Design Icons](https://materialdesignicon
 | ------------------- | ------- |
 | $icon-spin-duration | 2s      |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_icon.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_icon.scss)
 
 </div>
 <div class="theme-bulma">
@@ -80,7 +80,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------- | ------- |
 | $icon-spin-duration | 2s      |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_icon.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_icon.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -91,7 +91,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | ----------------------------- | ------- |
 | $icon-spin-animation-duration | 1.5s    |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_icon.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_icon.scss)
 
 </div>
 

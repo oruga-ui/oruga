@@ -46,7 +46,7 @@ export function useMatchMedia(mobileBreakpoint?: string): {
         isMobile.value = false;
     }
 
-    function onMatchMedia(event: any): void {
+    function onMatchMedia(event: MediaQueryListEvent): void {
         isMobile.value = event.matches;
     }
 

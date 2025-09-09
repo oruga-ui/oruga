@@ -21,7 +21,7 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 <section class="odocs-specs">
 
-## Menu component
+## Menu Component
 
 > A simple menu, for any type of vertical navigation.
 
@@ -48,22 +48,22 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Events
 
-| Event name         | Properties                              | Description                     |
-| ------------------ | --------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T` - updated modelValue prop | modelValue prop two-way binding |
+| Event name         | Properties                                    | Description                     |
+| ------------------ | --------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown` - updated modelValue prop | modelValue prop two-way binding |
 
 ### Slots
 
-| Name    | Description             | Bindings                                                                                          |
-| ------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
-| label   | Override icon and label | **focused** `T` - the focused item value<br/><br/>**selected** `T` - the selected item value<br/> |
-| default | Place menu items here   | **focused** `T` - the focused item value<br/><br/>**selected** `T` - the selected item value<br/> |
+| Name    | Description             | Bindings                                                                                                      |
+| ------- | ----------------------- | ------------------------------------------------------------------------------------------------------------- |
+| label   | Override icon and label | **focused** `unknown` - the focused item value<br/><br/>**selected** `unknown` - the selected item value<br/> |
+| default | Place menu items here   | **focused** `unknown` - the focused item value<br/><br/>**selected** `unknown` - the selected item value<br/> |
 
 </section>
 
 <section class="odocs-specs">
 
-## MenuItem component
+## MenuItem Component
 
 > A menu list item.
 
@@ -92,10 +92,10 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 ### Events
 
-| Event name    | Properties                                                                                    | Description                 |
-| ------------- | --------------------------------------------------------------------------------------------- | --------------------------- |
-| update:active | **value** `boolean` - updated active prop                                                     | active prop two-way binding |
-| click         | **value** `string \| number \| object` - value prop data<br/>**event** `event` - Native Event | onclick event               |
+| Event name    | Properties                                                                 | Description                 |
+| ------------- | -------------------------------------------------------------------------- | --------------------------- |
+| update:active | **value** `boolean` - updated active prop                                  | active prop two-way binding |
+| click         | **value** `unknown` - value prop data<br/>**event** `event` - native event | onclick event               |
 
 ### Slots
 
@@ -116,7 +116,7 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -142,7 +142,7 @@ The component implements the W3C ARIA APG [Tree View Pattern](https://www.w3.org
 | $menu-label-spacing                | 1em                                 |
 | $menu-icon-spacer                  | 0.5rem                              |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_menu.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_menu.scss)
 
 </div>
 <div class="theme-bulma">
@@ -176,7 +176,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $menu-submenu-padding     | 0 0.75em                       |
 | $menu-submenu-margin      | 0.75em 1.25em                  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_menu.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_menu.scss)
 
 </div>
 

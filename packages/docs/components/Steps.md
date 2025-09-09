@@ -21,7 +21,7 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 <section class="odocs-specs">
 
-## Steps component
+## Steps Component
 
 > Responsive horizontal process steps.
 
@@ -57,10 +57,10 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 ### Events
 
-| Event name         | Properties                                                        | Description                     |
-| ------------------ | ----------------------------------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T` - updated modelValue prop                           | modelValue prop two-way binding |
-| change             | **value** `T` - new step value<br/>**value** `T` - old step value | on step change event            |
+| Event name         | Properties                                                                    | Description                     |
+| ------------------ | ----------------------------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown` - updated modelValue prop                                 | modelValue prop two-way binding |
+| change             | **value** `unknown` - new step value<br/>**value** `unknown` - old step value | on step change event            |
 
 ### Slots
 
@@ -73,7 +73,7 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 <section class="odocs-specs">
 
-## StepItem component
+## StepItem Component
 
 > An step item used by the steps component.
 
@@ -95,7 +95,7 @@ Breaking things down into multiple steps can improve the user experience by keep
 | label     | Item label                                                                                                                         | string                 | -      |                                                                                                                                                     |
 | override  | Override existing theme classes completely                                                                                         | boolean                | -      |                                                                                                                                                     |
 | props     | Props to be binded to the injected component                                                                                       | any                    | -      |                                                                                                                                                     |
-| step      | Step marker content (when there is no icon)                                                                                        | number \| string       | -      |                                                                                                                                                     |
+| step      | Step marker content (when there is no icon)                                                                                        | Numberish              | -      |                                                                                                                                                     |
 | value     | Item value (it will be used as v-model of wrapper component) - default is an uuid                                                  | string\|number\|object | -      |                                                                                                                                                     |
 | variant   | Default style for the step.<br/>This will override parent type.<br/>Could be used to set a completed step to "success" for example | string                 | -      |                                                                                                                                                     |
 | visible   | Show/hide item                                                                                                                     | boolean                | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                          |
@@ -125,7 +125,7 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -152,7 +152,7 @@ Breaking things down into multiple steps can improve the user experience by keep
 | $steps-content-padding              | 1rem                                         |
 | $steps-font-size                    | var(--#{$prefix}base-font-size)              |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_steps.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_steps.scss)
 
 </div>
 <div class="theme-bulma">
@@ -175,7 +175,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $steps-active-background        | css.getVar("scheme-main")           |
 | $steps-details-background-color | css.getVar("body-background-color") |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_steps.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_steps.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -196,7 +196,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $steps-content-padding   | 1rem                        |
 | $steps-vertical-padding  | 1em 0                       |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_steps.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_steps.scss)
 
 </div>
 

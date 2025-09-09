@@ -1,5 +1,5 @@
 import type { Component } from "vue";
-import type { ComponentClass, ComponentEmits } from "@/types";
+import type { ComponentClass, ComponentEmits, Numberish } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
 export type ModalProps<C extends Component = Component> = {
@@ -12,7 +12,7 @@ export type ModalProps<C extends Component = Component> = {
     /** Text content, unnecessary when default slot is used */
     content?: string;
     /** Width of the Modal */
-    width?: string | number;
+    width?: Numberish;
     /** Custom animation (transition name) */
     animation?: string;
     /** Show an overlay  */
@@ -39,6 +39,11 @@ export type ModalProps<C extends Component = Component> = {
     ariaLabel?: string;
     /** Automatically focus modal when active */
     autoFocus?: boolean;
+    /**
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack?: string;
     /** Close icon name */
     closeIcon?: string;
     /**

@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     numeric: false,
     position: undefined,
     searchable: false,
+    filterable: false,
     sortable: false,
     hidden: false,
     sticky: false,
@@ -33,6 +34,7 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     headerSelectable: false,
     customSort: undefined,
     customSearch: undefined,
+    customFilter: undefined,
     thAttrs: undefined,
     tdAttrs: undefined,
 });
@@ -145,7 +147,7 @@ const filters = {} as Record<string, string>;
         <template v-if="false">
             <!--
                 @slot Default Slot
-                @binding {T} row - row data
+                @binding {unknown} row - row data
                 @binding {TableColumn} column - column definition
                 @binding {number} index - row index
                 @binding {number} colindex - column index

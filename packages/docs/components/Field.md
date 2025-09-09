@@ -16,7 +16,7 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 <section class="odocs-specs">
 
-## Field component
+## Field Component
 
 > Fields are used to add functionality to controls and to attach/group components and elements together.
 
@@ -34,9 +34,10 @@ The **Field** component is used to add functionality to controls and to attach/g
 | label            | Field label                                                                                                         | string             | -                                                                               |                                                                                                                                                             |
 | labelFor         | Same as native `for` set on the label                                                                               | string             | -                                                                               |                                                                                                                                                             |
 | labelId          | A unique HTML id for the field label to associate an input with                                                     | string             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                               |
-| labelSize        | Vertical size of input                                                                                              | string             | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;labelsize: undefined<br>}</code>        |
+| labelSize        | Size of the field label                                                                                             | string             | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;labelSize: undefined<br>}</code>        |
 | message          | Help message text                                                                                                   | string \| string[] | -                                                                               |                                                                                                                                                             |
 | messageId        | A unique HTML id for the field message to associate an input with                                                   | string             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                               |
+| messageSize      | Size of the field message                                                                                           | string             | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;messageSize: undefined<br>}</code>      |
 | messageTag       | Message element tag name                                                                                            | DynamicComponent   | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;messageTag: "p"<br>}</code>             |
 | mobileBreakpoint | Mobile breakpoint as `max-width` value                                                                              | string             | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>field: {<br>&nbsp;&nbsp;mobileBreakpoint: undefined<br>}</code> |
 | multiline        | Allow controls to fill up multiple lines, making it responsive                                                      | boolean            | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                 |
@@ -63,7 +64,7 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -79,7 +80,7 @@ The **Field** component is used to add functionality to controls and to attach/g
 | $field-spacer             | 0.5rem       |
 | $field-horizontal-spacer  | 0 1.5rem 0 0 |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
 
 </div>
 <div class="theme-bulma">
@@ -90,7 +91,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------- | ------- |
 | $floating-in-height | 3.25em  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_field.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_field.scss)
 
 </div>
 <div class="theme-bootstrap">
@@ -102,7 +103,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/
 | $input-field-margin-bottom  | $spacer           |
 | $input-field-grouped-spacer | calc($spacer / 2) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
 
 </div>
 

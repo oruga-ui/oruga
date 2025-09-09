@@ -1,4 +1,4 @@
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, Numberish } from "@/types";
 import type { OptionsPropWithGroups } from "@/composables";
 
 type ValueType<T, IsMultiple> = IsMultiple extends true ? T[] : T;
@@ -33,7 +33,7 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
     /** Makes the element rounded */
     rounded?: boolean;
     /** Same as native size */
-    nativeSize?: string | number;
+    nativeSize?: Numberish;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack

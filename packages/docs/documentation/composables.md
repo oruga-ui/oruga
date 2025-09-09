@@ -1,6 +1,6 @@
 # Composable
 
-Besides the main Vue plugin and the components, Oruga provides a programmatic composable `useOruga()`, which can be used to access the config as well as any registered programmatic component interfaces. A programmatic component interface will be registered when using the main plugin or the individual component plugin.
+Besides the main Vue plugin and the components, Oruga provides a programmatic composable `useOruga()`, which can be used to access the config as well as any registered programmatic component interfaces. A programmatic component interface will be registered when using the main plugin or the individual component plugin for a component with a programmatic interface.
 
 The composable can be imported by:
 
@@ -8,7 +8,7 @@ The composable can be imported by:
 import { useOruga } from "@oruga-ui/oruga-next";
 ```
 
-## Programmatic config {#config}
+## Programmatic Config {#config}
 
 The `config` interface can be used to customise the Oruga [global configuration](/documentation/configuration) by overriding the `Config` object programmatically:
 
@@ -34,13 +34,13 @@ const myThemeConfig: OrugaOptions = {
 oruga.config.setOptions(myThemeConfig);
 ```
 
-However, you can also customise each component by using the dedicated `ConfigProgrammatic` object, which is the same as the one added to the object provided by the main `useOruga()` composable:
+However, you can also customise each component by using the dedicated `useProgrammaticConfig` composable, which provides the same functionality as the interface provided by the main `useOruga()` composable:
 
 ```typescript
-import { ConfigProgrammatic, type OrugaOptions } from '@oruga-ui/oruga-next';
+import { useProgrammaticConfig, type OrugaOptions } from '@oruga-ui/oruga-next';
 
 // get the current config
-const config = ConfigProgrammatic.getOptions();
+const config = useProgrammaticConfig().getOptions();
 
 // modify the config object
 const myThemeConfig: OrugaOptions = {
@@ -53,13 +53,13 @@ const myThemeConfig: OrugaOptions = {
 }
 
 // update the config
-ConfigProgrammatic.setOptions(myThemeConfig);
+useProgrammaticConfig().setOptions(myThemeConfig);
 ```
 
-### Individual config plugin {#configplugin}
+### Config Plugin {#configplugin}
 
-If you use individual component plugins instead of the default main Oruga plugin, the programmatic config will **not** be registered to the `useOruga()` composable by default.
-Therefore, you can make the config interface available by adding the special `OrugaConfig` plugin. As a second parameter you can pass an optional config object like the main Oruga plugin.
+If you use individual component plugins instead of the default main Oruga plugin, the programmatic config interface will **not** be registered to the `useOruga()` composable by default.
+Therefore, you can make the config interface available by adding the special `OrugaConfig` plugin. As a second parameter you can also pass an optional config object like the main Oruga plugin.
 
 ```typescript
 import { createApp } from 'vue';
@@ -88,9 +88,9 @@ config.setOption("autocomplete", {
 config.setOption("sidebar", { ... });
 ```
 
-## Programmatic components {#components}
+## Programmatic Components {#components}
 
-Some components come with their own programmatic interface. These interfaces will be registered and added to the main `useOruga()` composable when using the default main Oruga plugin or the individual plugin for the component.
+Some components come with their own programmatic interface. These interfaces are implemented using a factory pattern and are registered and added to the main `useOruga()` composable when using the default main Oruga plugin or the individual component plugin.
 
 > **_Note:_** The programmatic interfaces will not be added if you only use the component itself and not its dedicated plugin.
 
@@ -101,8 +101,8 @@ List of components with an programmatic interface:
 - [`Notification`](/components/Notification.html#programmatically)
 - [`Sidebar`](/components/Sidebar.html#programmatically)
 
-You can access each component's programmatic interface using the `useOruga()` composable.
-To create a new instance of the component, you need to call the `open()` function. The open function takes two arguments. First, an object with the props of the individual component, and second, a target where the component should be mounted.
+You can access each component's programmatic interface using the main `useOruga()` composable.
+To create a new instance of the component, you need to call the `open()` function from the component factory registered in the `useOruga()` composable. The open function takes two arguments. First, an object with the props of the individual component, and second, a target where the component should be mounted into.
 
 ```typescript
 import { useOruga } from "@oruga-ui/oruga-next";
@@ -112,21 +112,26 @@ const oruga = useOruga();
 const target = document.body;
 
 oruga.sidebar.open(
+    // component props and events
     {
         component: MyCoolComponent,
         fullheight: true,
         overlay: true,
     },
+    // target container the programmatic component get rendered into
     target,
 );
 ```
 
-You can also access the programmatic interface of a component by using the dedicated object, which is the same as the one added to the object provided by the main `useOruga()` composable. For example:
+You can also create a new programmatic component factory for a component with a programmatic interface, by using the components composable directly. This creates a new programmatic component factory with its own component registry, similar to the one added to the object provided by the main `useOruga()` composable.
+For example:
 
 ```typescript
-import { NotificationProgrammatic } from "@oruga-ui/oruga-next";
+import { useNotificationProgrammatic } from "@oruga-ui/oruga-next";
 
-NotificationProgrammatic.open({
+// create a new porgrammatic component factory
+// and open a new notification component
+useNotificationProgrammatic().open({
     duration: 5000,
     message: "You did a greate job!",
     variant: "info",
@@ -135,9 +140,9 @@ NotificationProgrammatic.open({
 });
 ```
 
-### Programmatic interface {#interface}
+### Programmatic Interface {#interface}
 
-The object for each programmatic interface of a component looks like this:
+The factory type for each component with an programmatic interface looks like this:
 
 ```typescript
 type ProgrammaticInterface = {
@@ -185,7 +190,7 @@ Closing the instance of the wrapper component, for example by calling `oruga.pro
 
 > **_Note:_** For performance reasons, be careful not to open too many programmatic components at once, each of which will create a separate Vue instance.
 
-By adding this component using the main Oruga plugin or the dedicated `ComponentProgrammatic` plugin, the component adds an interface `programmatic` to the `useOruga()` composable and provides the `ComponentProgrammatic` object export, but it does not have a Oruga component.
+By adding this component using the main Oruga plugin or the dedicated `Programmatic` component plugin, the component adds an interface `programmatic` to the `useOruga()` composable and provides the programmatic component factory. A sperate programmatic component factory can also be created by useing the `useProgrammaticComponent` composable.
 
 ```typescript
 import { useOruga } from "@oruga-ui/oruga-next";
@@ -198,10 +203,14 @@ const slot = "My default slot content";
 oruga.programmatic.open(
     MyComponent,
     {
-        target: document.body, // target container the programmatic component get rendered into
-        appId: "programmatic-app", // HTML #id of the app div rendered into the target container
-        props: { ... }, // component specific props
-        onClose: (...args: unknown[]) => { ... }, // on close event handler
+        // target container the programmatic component get rendered into
+        target: document.body,
+        // HTML #id of the app div rendered into the target container
+        appId: "programmatic-app",
+         // component specific props
+        props: { ... },
+        // on close event handler
+        onClose: (...args: unknown[]) => { ... },
     }
 );
 ```
@@ -210,18 +219,18 @@ The programmatic interface of this component looks much like the other programma
 
 ```typescript
 type open = <C extends VNodeTypes>(
-    /** component to render **/
+    /** the component to render **/
     component: C,
-    /** render options */
+    /** programmatic component render options */
     options?: ProgrammaticOptions<C>,
+    /**
+     * target container the component get rendered into
+     * @default `document.body`
+     */
+    target?: MaybeRefOrGetter<string | HTMLElement | null>,
 ) => ProgrammaticExpose;
 
 type ProgrammaticOptions<C extends VNodeTypes> = {
-    /**
-     * The target specifies the element the component get rendered into.
-     * @default `document.body`.
-     */
-    target?: MaybeRefOrGetter<string | HTMLElement | null>;
     /**
      * Specify the template `id` for the programmatic container element.
      * @default `programmatic-app`

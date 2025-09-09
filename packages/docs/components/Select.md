@@ -18,7 +18,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-specs">
 
-## Select component
+## Select Component
 
 > Select an item in a list. Use with Field to access all functionalities.
 
@@ -43,7 +43,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | id                 | Same as native id. Also set the `for` label for o-field wrapper - default is an uuid. | string                                                                 | -                                                                               | <code style='white-space: nowrap; padding: 0;'>useId()</code>                                                                                         |
 | v-model            | The input value state                                                                 | unknown                                                                | -                                                                               |                                                                                                                                                       |
 | multiple           | Allow multiple selection - converts the `modelValue` into an array                    | boolean                                                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                |
-| nativeSize         | Same as native size                                                                   | number \| string                                                       | -                                                                               |                                                                                                                                                       |
+| nativeSize         | Same as native size                                                                   | Numberish                                                              | -                                                                               |                                                                                                                                                       |
 | options            | Select options, unnecessary when default slot is used                                 | OptionsPropWithGroups&lt;unknown&gt;                                   | -                                                                               |                                                                                                                                                       |
 | override           | Override existing theme classes completely                                            | boolean                                                                | -                                                                               |                                                                                                                                                       |
 | placeholder        | Text when nothing is selected                                                         | string                                                                 | -                                                                               |                                                                                                                                                       |
@@ -56,14 +56,14 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Events
 
-| Event name         | Properties                                     | Description                     |
-| ------------------ | ---------------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T \| T[]` - updated modelValue prop | modelValue prop two-way binding |
-| focus              | **event** `Event` - native event               | on input focus event            |
-| blur               | **event** `Event` - native event               | on input blur event             |
-| invalid            | **event** `Event` - native event               | on input invalid event          |
-| icon-click         | **event** `Event` - native event               | on icon click event             |
-| icon-right-click   | **event** `Event` - native event               | on icon right click event       |
+| Event name         | Properties                                                 | Description                     |
+| ------------------ | ---------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown \| unknown[]` - updated modelValue prop | modelValue prop two-way binding |
+| focus              | **event** `Event` - native event                           | on input focus event            |
+| blur               | **event** `Event` - native event                           | on input blur event             |
+| invalid            | **event** `Event` - native event                           | on input invalid event          |
+| icon-click         | **event** `Event` - native event                           | on icon click event             |
+| icon-right-click   | **event** `Event` - native event                           | on icon right click event       |
 
 ### Slots
 
@@ -84,7 +84,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -109,7 +109,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | $select-arrow-size            | 1rem                                                  |
 | $select-placeholder-opacity   | var(--#{$prefix}base-disabled-opacity)                |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
 
 </div>
 <div class="theme-bulma">

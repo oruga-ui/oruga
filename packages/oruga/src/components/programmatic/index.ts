@@ -1,9 +1,12 @@
 import type { App, Plugin } from "vue";
 
-import ComponentProgrammatic from "./useProgrammatic";
-
-import { registerComponentProgrammatic } from "@/utils/plugins";
+import { registerComponentInterface } from "@/utils/plugins";
 import InstanceRegistry from "./InstanceRegistry";
+
+import useProgrammaticComponent, {
+    ProgrammaticFactory,
+    ProgrammaticComponentFactory,
+} from "./useProgrammatic";
 
 /** export programmatic specific types */
 export type {
@@ -12,18 +15,22 @@ export type {
     ProgrammaticComponentOptions,
 } from "./useProgrammatic";
 export type { CloseEventArgs } from "./ProgrammaticComponent";
-export { InstanceRegistry };
 
 /** export programmatic plugin */
 export default {
     install(app: App) {
-        registerComponentProgrammatic(
+        registerComponentInterface(
             app,
             "programmatic",
-            ComponentProgrammatic,
+            ProgrammaticComponentFactory,
         );
     },
 } as Plugin;
 
-/** export composables here */
-export { ComponentProgrammatic } from "./useProgrammatic";
+/** export programmatic classes & composables here */
+export {
+    InstanceRegistry,
+    ProgrammaticComponentFactory,
+    ProgrammaticFactory,
+    useProgrammaticComponent,
+};

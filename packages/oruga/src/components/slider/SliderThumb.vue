@@ -8,7 +8,7 @@ import { isClient } from "@/utils/ssr";
 import { injectField } from "../field/fieldInjection";
 
 import type { SliderProps } from "./props";
-import type { ClassBind, WithRequired } from "@/types";
+import type { ClassBinding, WithRequired } from "@/types";
 
 /**
  * @displayName Slider Thumb
@@ -25,14 +25,14 @@ const props = defineProps<{
     sliderProps: WithRequired<SliderProps<IsRange>, "min" | "max" | "step">;
     modelValue: number;
     sliderSize: () => number;
-    thumbWrapperClasses: ClassBind[];
-    thumbClasses: ClassBind[];
+    thumbWrapperClasses: ClassBinding[];
+    thumbClasses: ClassBinding[];
 }>();
 
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {number | number[]} updated modelValue prop
+     * @param value {number | number[]} - updated modelValue prop
      */
     "update:model-value": [value: number | number[]];
     /** on value change event */

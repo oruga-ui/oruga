@@ -1,5 +1,13 @@
 <script setup lang="ts" generic="T, IsMultiple extends boolean = false">
-import { computed, nextTick, ref, watch, useId, type Component } from "vue";
+import {
+    computed,
+    nextTick,
+    ref,
+    watch,
+    useId,
+    toValue,
+    type Component,
+} from "vue";
 
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import PositionWrapper from "../utils/PositionWrapper.vue";
@@ -81,35 +89,35 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T | T[]} updated modelValue prop
+     * @param value {unknown | unknown[]} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     "update:active": [value: boolean];
     /**
      * on select event - fired before update:modelValue
-     * @param value {T} selected value
+     * @param value {unknown} - selected value
      */
     select: [value: T];
     /**
      * @deprecated use update:model-value instead
      * on change event - fired after update:modelValue
-     * @param value {T | T[]} selected value
+     * @param value {unknown | unknown[]} - selected value
      */
     change: [value: ModelValue];
     /**
      * on open event
      * @param method {string} open method
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     open: [method: string, event: Event];
     /**
      * on close event
      * @param method {string} close method
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     close: [method: string, event: Event];
     /** the list inside the dropdown reached the start */
@@ -396,7 +404,10 @@ function moveFocus(delta: 1 | -1): void {
 /** Set focus on a dropdown item. */
 function setFocus(item: DropdownChildItem<T>): void {
     if (props.selectOnFocus && item.data?.value)
-        selectItem(item, new Event("focus"));
+        selectItem(
+            item,
+            new FocusEvent("focus", { relatedTarget: toValue(item.el) }),
+        );
 
     // set item as focused
     focusedItem.value = item;
@@ -581,7 +592,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
             <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
-                @binding {T | T[]} value - the selected value
+                @binding {unknown | unknown[]} value - the selected value
                 @binding {(): void} toggle - toggle dropdown active state
             -->
             <slot

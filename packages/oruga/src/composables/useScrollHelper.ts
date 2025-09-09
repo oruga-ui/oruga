@@ -29,10 +29,12 @@ export function useScrollEvents(
             "The 'useScrollEvents' composable should be used inside a current EffectScope.",
         );
 
+    /** debounced checkScroll funciton */
     const debouncedCheckScroll = useDebounce(
         checkScroll,
         options.debounce ?? 100,
     );
+
     if (isClient)
         useEventListener(element, "scroll", debouncedCheckScroll, {
             passive: true,

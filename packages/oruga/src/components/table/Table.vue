@@ -43,7 +43,7 @@ import {
     useSequentialId,
 } from "@/composables";
 
-import type { ClassBind } from "@/types";
+import type { ClassBinding } from "@/types";
 import type {
     TableColumn,
     TableRow,
@@ -143,58 +143,66 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
 const emits = defineEmits<{
     /**
      * currentPage prop two-way binding
-     * @param value {number} updated currentPage prop
+     * @param value {number} - updated currentPage prop
      */
     "update:currentPage": [value: number];
     /**
      * on pagination page change event
-     * @param page {number} updated page
+     * @param page {number} - updated page
      */
     "page-change": [page: number];
     /**
      * select prop two-way binding
-     * @param value {T} updated select prop
+     * @param value {unknown} - updated select prop
      */
     "update:selected": [value: T];
     /**
      * on row select event
-     * @param newRow {T} new select value
-     * @param oldRow {T} old select value
+     * @param newRow {unknown} - new select value
+     * @param oldRow {unknown} - old select value
      */
     select: [newRow: T, oldRow: T];
     /**
      * on row checked event
-     * @param value {T[]} all checked rows
-     * @param row {T} row data
+     * @param value {unknown[]} - all checked rows
+     * @param row {unknown} - row data
      */
     check: [value: T[], row: T];
     /**
      * on all rows checked event
-     * @param value {T[]} all checked rows
+     * @param value {unknown[]} - all checked rows
      */
     "check-all": [value: T[]];
     /**
      * checkedRows prop two-way binding
-     * @param value {T[]} updated checkedRows prop
+     * @param value {unknown[]} - updated checkedRows prop
      */
     "update:checkedRows": [value: T[]];
     /**
      * on column sort change event
-     * @param column {TableColumn} column data
-     * @param direction {string}  'asc' or 'desc'
-     * @param event {Event} native  event
+     * @param column {TableColumn} - column data
+     * @param direction {string} - 'asc' or 'desc'
+     * @param event {Event} - native event
      */
     sort: [column: TableColumn<T>, direction: "asc" | "desc", event: Event];
     /**
      * on filter change event
-     * @param filters {object} filter object
+     * @param filters {object} - filter object
      */
     "filters-change": [value: Record<string, string>];
     /**
+     * on native filter event
+     * @param column {TableColumn} - column data
+     * @param value {string} - filter input value
+     * @param event {Event} - native event
+     */
+    filter: [column: TableColumn<T>, value: string, event: Event];
+    /**
      * on native filter event based on props filtersEvent
-     * @param filtersEvent {string} props filtersEvent value
-     * @param filters {object} filter object
-     * @param event {Event} native  event
+     * @deprecated use `filter` event instead
+     * @param filtersEvent {string} - props filtersEvent value
+     * @param filters {object} - filter object
+     * @param event {Event} - native event
      */
     "filters-event": [
         filtersEvent: string,
@@ -203,61 +211,61 @@ const emits = defineEmits<{
     ];
     /**
      * detailedRows prop two-way binding
-     * @param value {T[]} updated detailedRows prop
+     * @param value {unknown[]} - updated detailedRows prop
      */
     "update:detailedRows": [value: T[]];
     /**
      * on details open event
-     * @param row {T} row data
+     * @param row {unknown} - row data
      */
     "details-open": [row: T];
     /**
      * on details close event
-     * @param row {T} row data
+     * @param row {unknown} - row data
      */
     "details-close": [row: T];
     /**
      * on row click event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native click event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native click event
      */
     click: [row: T, index: number, event: Event];
     /**
      * on row double click event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native click event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native click event
      */
     dblclick: [row: T, index: number, event: Event];
     /**
      * on row right click event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native contextmenu event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native contextmenu event
      */
     contextmenu: [row: T, index: number, event: Event];
     /**
      * on row mouseenter event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native mouseenter event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native mouseenter event
      */
     mouseenter: [row: T, index: number, event: Event];
     /**
      * on row mouseleave event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native mouseleave event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native mouseleave event
      */
     mouseleave: [row: T, index: number, event: Event];
     /**
      * on cell click event
-     * @param row {T} row data
-     * @param column {TableColumn} column data
-     * @param index {number} row index
-     * @param colindex {number} column index
-     * @param event {Event} native click event
+     * @param row {unknown} - row data
+     * @param column {TableColumn} - column data
+     * @param index {number} - row index
+     * @param colindex {number} - column index
+     * @param event {Event} - native click event
      */
     "cell-click": [
         row: T,
@@ -268,72 +276,72 @@ const emits = defineEmits<{
     ];
     /**
      * on row dragstart event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native dragstart event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native dragstart event
      */
     dragstart: [row: T, index: number, event: DragEvent];
     /**
      * on row dragend event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native dragend event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native dragend event
      */
     dragend: [row: T, index: number, event: DragEvent];
     /**
      * on row drop event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native drop event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native drop event
      */
     drop: [row: T, index: number, event: DragEvent];
     /**
      * on row dragleave event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native dragleave event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native dragleave event
      */
     dragleave: [row: T, index: number, event: DragEvent];
     /**
      * on row dragover event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native dragover event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native dragover event
      */
     dragover: [row: T, index: number, event: DragEvent];
     /**
      * on column columndragstart event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndragstart event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndragstart event
      */
     columndragstart: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragend event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndragend event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndragend event
      */
     columndragend: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndrop event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndrop event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndrop event
      */
     columndrop: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragleave event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndragleave event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndragleave event
      */
     columndragleave: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragover event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndragover event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndragover event
      */
     columndragover: [column: TableColumn<T>, index: number, event: DragEvent];
 }>();
@@ -589,16 +597,10 @@ const hasFilterColumns = computed(() =>
     tableColumns.value.some((column) => column.searchable || column.filterable),
 );
 
-let debouncedFilter: ReturnType<
-    typeof useDebounce<Parameters<typeof handleFiltersChange>>
->;
-
-// initialise and update debounces filter function based on `filterDebounce` prop
-watch(
-    () => props.filterDebounce,
-    (debounce) =>
-        (debouncedFilter = useDebounce(handleFiltersChange, debounce || 0)),
-    { immediate: true },
+/** debounced filters change handler based on `filterDebounce` prop */
+const debouncedFilter = useDebounce(
+    handleFiltersChange,
+    props.filterDebounce ?? 0,
 );
 
 // react on filter got changed
@@ -658,7 +660,7 @@ function filterTableRows(): void {
 
 /**
  * check if a row is filtered out by not matching any active filter expresssions
- * @param {T} row - row element to check
+ * @param {unknown} row - row element to check
  * @returns {boolean} - true if row is filtered out, false if row is visible
  */
 function isRowFiltered(row: T): boolean {
@@ -841,7 +843,7 @@ function isChecked(row: TableRow<T>): boolean {
  * Emits "check-all" event with the updated checked rows list.
  */
 function updateCheckedRows(checkAll?: boolean): void {
-    if (checkAll ?? isAllChecked.value)
+    if (typeof checkAll === "undefined" ? isAllChecked.value : !checkAll)
         // if all rows are already checked, check nothing
         tableCheckedRows.value = [];
     else {
@@ -1154,11 +1156,11 @@ const paginationWrapperRootClasses = computed(() =>
     getActiveClasses(paginationWrapperClasses),
 );
 
-function columnClasses(column: TableColumnItem<T>): ClassBind[] {
+function columnClasses(column: TableColumnItem<T>): ClassBinding[] {
     return isColumnSorted(column) ? thSortedClasses.value : [];
 }
 
-function rowClasses(row: TableRow<T>): ClassBind[] {
+function rowClasses(row: TableRow<T>): ClassBinding[] {
     const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
         ? trSelectedClasses.value
         : [];
@@ -1480,7 +1482,6 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                             index: column.index,
                                             filters,
                                         }" />
-
                                     <o-input
                                         v-else-if="column.field"
                                         v-model="filters[column.field]"
@@ -1494,7 +1495,11 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         :pack="iconPack"
                                         size="small"
                                         :aria-label="`${column.label} filter`"
-                                        @[filtersEvent]="onFiltersEvent" />
+                                        @[filtersEvent]="onFiltersEvent"
+                                        @input="
+                                            (v, e) =>
+                                                $emit('filter', column, v, e)
+                                        " />
                                 </template>
                             </th>
                         </template>
@@ -1691,7 +1696,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             <template v-if="isDetailRowVisible(row)">
                                 <!--
                                     @slot Place row detail content here
-                                    @binding {T} row - row content
+                                    @binding {unknown} row - row content
                                     @binding {number} index - row index
                                 -->
                                 <slot
@@ -1706,7 +1711,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     <td :colspan="columnCount">
                                         <!--
                                             @slot Place row detail content here
-                                            @binding {T} row - row content
+                                            @binding {unknown} row - row content
                                             @binding {number} index - row index
                                         -->
                                         <slot

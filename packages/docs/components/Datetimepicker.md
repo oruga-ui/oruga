@@ -18,7 +18,7 @@ The component is based on the [Datepicker](/components/Datepicker) component.
 
 <section class="odocs-specs">
 
-## Datetimepicker component
+## Datetimepicker Component
 
 > An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile.
 
@@ -95,7 +95,7 @@ The component is based on the [Datepicker](/components/Datepicker) component.
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -104,7 +104,7 @@ The component is based on the [Datepicker](/components/Datepicker) component.
 | SASS Variable | Default |
 | ------------- | ------- |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datetimepicker.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datetimepicker.scss)
 
 </div>
 <div class="theme-bulma">

@@ -1,11 +1,6 @@
+import { type Component, type MaybeRefOrGetter } from "vue";
 import {
-    type Component,
-    type ComponentInternalInstance,
-    type MaybeRefOrGetter,
-} from "vue";
-import {
-    InstanceRegistry,
-    ComponentProgrammatic,
+    ProgrammaticFactory,
     type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
@@ -16,12 +11,9 @@ import type { SidebarProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        sidebar: typeof SidebarProgrammatic;
+        sidebar: Required<InstanceType<typeof SidebarProgrammaticFactory>>;
     }
 }
-
-/** sidebar component programmatic instance registry */
-const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useSidebarProgrammatic composable options */
 export type SidebarProgrammaticOptions<C extends Component> = Readonly<
@@ -29,13 +21,11 @@ export type SidebarProgrammaticOptions<C extends Component> = Readonly<
 > &
     ProgrammaticComponentOptions<typeof Sidebar<C>>;
 
-const SidebarProgrammatic = {
-    /** Returns the number of registered active instances. */
-    count: registry.count,
+export class SidebarProgrammaticFactory extends ProgrammaticFactory {
     /**
      * Create a new programmatic sidebar component instance.
-     * @param options sidebar component props object
-     * @param target specify a target the component get rendered into - default is `document.body`
+     * @param options - Sidebar component props object.
+     * @param target - A target container the component get rendered into - default is `document.body`.
      * @returns ProgrammaticExpose
      */
     open<C extends Component>(
@@ -48,21 +38,17 @@ const SidebarProgrammatic = {
         };
 
         // create programmatic component
-        return ComponentProgrammatic.open(Sidebar, {
-            registry, // custom programmatic instance registry
+        return this._create(
+            Sidebar,
+            {
+                props: componentProps, // component specific props
+                onClose: options.onClose, // on close event handler
+            },
             target, // target the component get rendered into
-            props: componentProps, // component specific props
-            onClose: options.onClose, // on close event handler
-        });
-    },
-    /** Close the last registred instance in the sidebar programmatic instance registry. */
-    close(...args: unknown[]): void {
-        registry.last()?.exposed?.close(...args);
-    },
-    /** Close all instances in the programmatic sidebar instance registry. */
-    closeAll(...args: unknown[]): void {
-        registry.walk((entry) => entry.exposed?.close(...args));
-    },
-};
+        );
+    }
+}
 
-export default SidebarProgrammatic;
+export default function useSidebarProgrammatic(): SidebarProgrammaticFactory {
+    return new SidebarProgrammaticFactory();
+}

@@ -77,53 +77,53 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string[] | number[] | object[]} updated modelValue prop
+     * @param value {unknown[]} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue[]];
     /**
      * input prop two-way binding
-     * @param value {string} updated input prop
+     * @param value {string} - updated input prop
      */
     "update:input": [value: string];
     /**
      * on input change event
-     * @param value {string} input value
-     * @param event {Event} native event
+     * @param value {string} - input value
+     * @param event {Event} - native event
      */
     input: [value: string, event: Event];
     /**
      * new item got added
-     * @param value {string | number | object} added item
+     * @param value {unknown} - added item
      */
     add: [value: T];
     /**
      * item got removed
-     * @param value {string | number | object} removed item
+     * @param value {unknown} - removed item
      */
     remove: [value: T];
     /**
      * on input focus event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     blur: [event: Event];
     /**
      * on input invalid event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     invalid: [event: Event];
     /**
      * on icon click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     "icon-click": [event: Event];
     /**
      * on icon right click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     "icon-right-click": [event: Event];
     /** the list inside the dropdown reached the start */
@@ -178,7 +178,7 @@ const hasInput = computed(
 
 watchEffect(() => {
     // blur if input is empty
-    if (!hasInput.value) onBlur(new Event("blur"));
+    if (!hasInput.value) onBlur();
 });
 
 function addItem(item?: T | string): void {
@@ -210,7 +210,7 @@ function addItem(item?: T | string): void {
     // after autocomplete events
     requestAnimationFrame(() => {
         inputValue.value = "";
-        emits("input", "", new Event("input"));
+        emits("input", "", new InputEvent("input"));
     });
 }
 

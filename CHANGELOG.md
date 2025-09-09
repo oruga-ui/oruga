@@ -1,3 +1,29 @@
+## [0.11.6](https://github.com/oruga-ui/oruga/compare/v0.11.5...v0.11.6) (2025-09-03)
+
+
+### Bug Fixes
+
+* **icon:** transform internal icons based on the icon pack ([#1403](https://github.com/oruga-ui/oruga/issues/1403)) ([4b55cd0](https://github.com/oruga-ui/oruga/commit/4b55cd0cfd634a9f1fd6c63cac169dfd33aae8ab))
+
+
+### Features
+
+* **field:** add root `variantClass` and message `messageSizeClass` ([#1397](https://github.com/oruga-ui/oruga/issues/1397)) ([7b18096](https://github.com/oruga-ui/oruga/commit/7b18096adf3ebdbb830e985ec52d4953469edf1f))
+* **pagination:** add `position` prop to repleace `order` prop ([#1393](https://github.com/oruga-ui/oruga/issues/1393)) ([606bc27](https://github.com/oruga-ui/oruga/commit/606bc2786c77b6a4ec93d5679103163ad849a7a8))
+* **table:** add `filterable` prop to replace `searchable` prop ([#1379](https://github.com/oruga-ui/oruga/issues/1379)) ([63795a1](https://github.com/oruga-ui/oruga/commit/63795a1db23c40527bbfed27da0d2bb91aa0ef13))
+* **types:** extend `ComponentClass` to accept an array with mixed string and object values ([#1378](https://github.com/oruga-ui/oruga/issues/1378)) ([14fccc0](https://github.com/oruga-ui/oruga/commit/14fccc0678a583b1f734d8616b6c18b54b675320))
+
+
+
+## [0.11.5](https://github.com/oruga-ui/oruga/compare/v0.11.4...v0.11.5) (2025-08-12)
+
+
+### Bug Fixes
+
+* **table:** solve check-all requires 2 clicks to select all ([#1375](https://github.com/oruga-ui/oruga/issues/1375)) ([72985d9](https://github.com/oruga-ui/oruga/commit/72985d94210a35c673a7611588071107f9726b8f))
+
+
+
 ## [0.11.4](https://github.com/oruga-ui/oruga/compare/v0.11.3...v0.11.4) (2025-07-25)
 
 

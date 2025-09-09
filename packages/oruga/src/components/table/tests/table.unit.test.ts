@@ -121,7 +121,7 @@ describe("OTable tests", () => {
             props: {
                 columns: [
                     { label: "ID", field: "id", numeric: true },
-                    { label: "Name", field: "name", searchable: true },
+                    { label: "Name", field: "name", filterable: true },
                 ],
                 data,
             },
@@ -264,7 +264,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test searchable", () => {
+    describe("test filterable", () => {
         const data = [
             { id: 1, name: "Jesse" },
             { id: 2, name: "João" },
@@ -282,12 +282,12 @@ describe("OTable tests", () => {
             vi.restoreAllMocks();
         });
 
-        test("displays filter row when at least one column is searchable", async () => {
+        test("displays filter row when at least one column is filterable", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -304,12 +304,12 @@ describe("OTable tests", () => {
             expect(inputs).toHaveLength(1);
         });
 
-        test("displays filter input only on searchable columns", async () => {
+        test("displays filter input only on filterable columns", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -320,8 +320,8 @@ describe("OTable tests", () => {
             expect(headRows).toHaveLength(2);
             const filterCells = headRows[1].findAll("th");
 
-            expect(filterCells[0].find("input").exists()).toBeFalsy(); // ID column is not searchable
-            expect(filterCells[1].find("input").exists()).toBeTruthy(); // Name column is searchable
+            expect(filterCells[0].find("input").exists()).toBeFalsy(); // ID column is not filterable
+            expect(filterCells[1].find("input").exists()).toBeTruthy(); // Name column is filterable
         });
 
         test("displays filtered data when searching", async () => {
@@ -329,7 +329,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -359,7 +359,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -391,7 +391,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -415,7 +415,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -439,7 +439,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                     filterDebounce: 1000,
@@ -469,7 +469,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                     detailed: true,
@@ -734,6 +734,26 @@ describe("OTable tests", () => {
     });
 
     describe("test checkable", () => {
+        test("tests header has checkAll checkbox", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name" },
+                    ],
+                    checkable: true,
+                    paginated: false,
+                    data: data,
+                },
+            });
+            await nextTick();
+
+            const head = wrapper.find("thead");
+            expect(head.exists()).toBeTruthy();
+            const checkboxes = head.findAll("input");
+            expect(checkboxes).toHaveLength(1);
+        });
+
         test("tests isAllUncheckable method", async () => {
             const isRowCheckable = vi.fn(() => false);
 
@@ -741,7 +761,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     checkable: true,
                     isRowCheckable: isRowCheckable,
@@ -764,6 +784,50 @@ describe("OTable tests", () => {
             expect(checkboxes).toHaveLength(1);
             expect(checkboxes[0].attributes("disabled")).toBe("");
         });
+
+        test("tests checkAll working correctly", async () => {
+            const wrapper = mount(OTable, {
+                props: {
+                    columns: [
+                        { label: "ID", field: "id", numeric: true },
+                        { label: "Name", field: "name" },
+                    ],
+                    checkable: true,
+                    paginated: false,
+                    data: data,
+                },
+            });
+            await nextTick();
+
+            const head = wrapper.find("thead");
+            expect(head.exists()).toBeTruthy();
+            const headerCheckboxes = head.findAll("input");
+            expect(headerCheckboxes).toHaveLength(1);
+            const checkAllCheckbox = headerCheckboxes[0];
+
+            const body = wrapper.find("tbody");
+            expect(body.exists()).toBeTruthy();
+            const checkboxes = body.findAll("input");
+            expect(checkboxes).toHaveLength(data.length);
+            // assert no row is checked
+            checkboxes.forEach((checkbox) =>
+                expect(checkbox.element.checked).toBeFalsy(),
+            );
+
+            // check checkAll checkbox
+            await checkAllCheckbox.setValue(true);
+            // assert all rows area are checked
+            checkboxes.forEach((checkbox) =>
+                expect(checkbox.element.checked).toBeTruthy(),
+            );
+
+            // decheck checkAll checkbox again
+            await checkAllCheckbox.setValue(false);
+            // assert no row is checked
+            checkboxes.forEach((checkbox) =>
+                expect(checkbox.element.checked).toBeFalsy(),
+            );
+        });
     });
 
     describe("test pageable", () => {
@@ -774,7 +838,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     paginated: true,
                     data: data,
@@ -793,7 +857,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     paginated: true,
                     data: data,

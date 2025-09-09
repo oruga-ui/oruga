@@ -2,7 +2,8 @@
 
 <section class="odocs-head">
 
-The **Pagination** component is responsive and flexible way to indicate a series of related content exists across multiple pages.
+The **Pagination** component is responsive and flexible way to indicate a series of related content exists across multiple pages. It can be used to displays data in paged format and provides navigation between pages. The root element is a [HTML native nav element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/nav) to indicate a navigation section.
+The component uses the [Button](/components/Button) component for the navigation elements.
 
 </section>
 
@@ -16,9 +17,9 @@ The **Pagination** component is responsive and flexible way to indicate a series
 
 <section class="odocs-specs">
 
-## Pagination component
+## Pagination Component
 
-> A responsive and flexible pagination.
+> A responsive and flexible paginator navigation.
 
 ```html
 <o-pagination></o-pagination>
@@ -34,6 +35,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 | ariaPreviousLabel | Accessibility label for the previous page button.                   | string                          | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;ariaPreviousLabel: "Previous page"<br>}</code> |
 | buttonTag         | Pagination button tag name                                          | DynamicComponent                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;buttonTag: PlainButton<br>}</code>             |
 | current           | Current page number, use v-model:current to make it two-way binding | number                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                                 |
+| disabled          | Buttons will be disabled                                            | boolean                         | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                             |
 | iconNext          | Icon to use for next button                                         | string                          | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;iconNext: "chevron-right"<br>}</code>          |
 | iconPack          | Icon pack to use                                                    | string                          | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>                |
 | iconPrev          | Icon to use for previous button                                     | string                          | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;iconPrev: "chevron-left"<br>}</code>           |
@@ -41,6 +43,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 | order             | Buttons order                                                       | "centered" \| "left" \| "right" | `centered`, `right`, `left`                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;order: "right"<br>}</code>                     |
 | override          | Override existing theme classes completely                          | boolean                         | -                                                 |                                                                                                                                                                         |
 | perPage           | Items count for each page                                           | number \| string                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;perPage: 20<br>}</code>                        |
+| position          | Buttons position order                                              | "centered" \| "left" \| "right" | `centered`, `right`, `left`                       | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;position: "right"<br>}</code>                  |
 | rangeAfter        | Number of pagination items to show after current page               | number                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                                 |
 | rangeBefore       | Number of pagination items to show before current page              | number                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                                 |
 | rounded           | Enable rounded button style                                         | boolean                         | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>pagination: {<br>&nbsp;&nbsp;rounded: false<br>}</code>                     |
@@ -77,7 +80,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 
 <section class="odocs-style">
 
-## Sass variables
+## Sass Variables
 
 <div class="theme-oruga">
 
@@ -105,7 +108,7 @@ The **Pagination** component is responsive and flexible way to indicate a series
 | $pagination-margin                          | -0.25rem                                     |
 | $pagination-rounded-border-radius           | var( --#{$prefix}base-border-radius-rounded) |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
 
 </div>
 <div class="theme-bulma">
@@ -122,7 +125,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------------ | ------- |
 | $pagination-items-spacer | 0.5rem  |
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_pagination.scss)
+See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_pagination.scss)
 
 </div>
 

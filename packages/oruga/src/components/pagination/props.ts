@@ -1,4 +1,5 @@
 import type { ComponentClass, DynamicComponent } from "@/types";
+import type { ButtonProps } from "../button/props";
 
 export type PaginationProps = {
     /** Override existing theme classes completely */
@@ -16,6 +17,10 @@ export type PaginationProps = {
     rangeBefore?: number;
     /** Number of pagination items to show after current page */
     rangeAfter?: number;
+    /** Buttons will be disabled */
+    disabled?: boolean;
+    /** Enable rounded button style */
+    rounded?: boolean;
     /**
      * Pagination size
      * @values small, medium, large
@@ -23,14 +28,17 @@ export type PaginationProps = {
     size?: string;
     /** Enable simple style */
     simple?: boolean;
-    /** Enable rounded button style */
-    rounded?: boolean;
     /**
      * Buttons order
      * @values centered, right, left
      * @deprecated will be renamed to `position`
      */
     order?: "centered" | "right" | "left";
+    /**
+     * Buttons position order
+     * @values centered, right, left
+     */
+    position?: "centered" | "right" | "left";
     /** Pagination button tag name */
     buttonTag?: DynamicComponent;
     /**
@@ -60,8 +68,13 @@ export type PaginationClasses = Partial<{
     rootClass: ComponentClass;
     /** Class of the root element when on mobile */
     mobileClass: ComponentClass;
-    /** Class of the root element with order */
+    /**
+     * Class of the root element with order
+     * @deprecated use `positionClass` instead
+     */
     orderClass: ComponentClass;
+    /** Class of the root element with position */
+    positionClass: ComponentClass;
     /** Class of the root element with size */
     sizeClass: ComponentClass;
     /** Class of the root element when in `simple` mode */
@@ -86,4 +99,9 @@ export type PaginationClasses = Partial<{
     buttonNextClass: ComponentClass;
     /** Class of the prev or next button when disabled */
     buttonDisabledClass: ComponentClass;
+    /**
+     * Class configuration for the internal button components
+     * @ignore
+     */
+    buttonClasses: ButtonProps;
 }>;
