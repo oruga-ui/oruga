@@ -1,22 +1,23 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Sidebar from "./Sidebar.vue";
 import useSidebarProgrammatic, {
     SidebarProgrammaticFactory,
 } from "./useSidebarProgrammatic";
 
-import { registerComponent, registerComponentInterface } from "@/utils/plugins";
+import { registerComponent, registerProgrammatic } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export sidebar specific types */
 export type { SidebarProgrammaticOptions } from "./useSidebarProgrammatic";
 
 /** export sidebar plugin */
 export default {
-    install(app: App) {
+    install(app: App, { oruga }) {
         registerComponent(app, Sidebar);
-        registerComponentInterface(app, "sidebar", SidebarProgrammaticFactory);
+        registerProgrammatic(oruga, "sidebar", SidebarProgrammaticFactory);
     },
-} as Plugin;
+} as OrugaComponentPlugin;
 
 /** export sidebar components & composables */
 export { Sidebar as OSidebar, useSidebarProgrammatic };
