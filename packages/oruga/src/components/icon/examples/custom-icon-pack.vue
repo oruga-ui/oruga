@@ -33,21 +33,21 @@ const customIconPacks = {
 
 // all code is only for example purpose
 
-const orugaOptions = ref();
+const orugaConfig = ref();
 
 const oruga = useOruga();
 
 onBeforeMount(() => {
-    // save old settings
-    orugaOptions.value = oruga.config.getOptions();
-    // override custom settings
+    // save old config settings
+    orugaConfig.value = oruga.config.getConfig();
+    // override custom config settings
     oruga.config.setOption("iconComponent", undefined);
     oruga.config.setOption("customIconPacks", customIconPacks);
 });
 
 onBeforeUnmount(() => {
     // restore old settings
-    oruga.config.setOptions(orugaOptions.value);
+    oruga.config.setConfig(orugaConfig.value);
 });
 </script>
 

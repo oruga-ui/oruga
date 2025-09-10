@@ -13,7 +13,7 @@ import {
     type EffectScope,
 } from "vue";
 
-import { getOptions } from "@/utils/config";
+import { getConfig } from "@/utils/config";
 import {
     isDefined,
     blankIfUndefined,
@@ -203,7 +203,7 @@ function computeClass(
         throw new Error("component must define the 'configField' option.");
 
     // get the component global config if it's not locally overridden
-    const config = isTrueish(props.override) ? {} : getOptions();
+    const config = isTrueish(props.override) ? {} : getConfig();
 
     // --- Override Definition ---
 

@@ -163,15 +163,15 @@ export function useOruga(): OrugaProgrammatic {
 /**
  * Get the config of the current active oruga instance if there is any.
  */
-function getConfig(): OrugaConfig {
+export function getConfig(): OrugaConfig {
     return getActiveOruga()?._config ?? {};
 }
 
 /** Override the current config the Oruga instance. */
-function setConfig(options: OrugaConfig): void {
+function setConfig(config: OrugaConfig): void {
     const oruga = getOruga();
-    const config = merge(oruga._config, options, true);
-    oruga._config = config;
+    const _config = merge(oruga._config, config, true);
+    oruga._config = _config;
 }
 
 /**
