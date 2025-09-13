@@ -673,7 +673,17 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
         </div>
 
         <div v-if="filterable" :class="filterClasses">
-            <slot name="filterable" :value="filterValue">
+            <!--
+                @slot Overridet the filter input
+                @binding {string} value - filter input value
+                @binding {(input: string, event: Event): void} onChange - on filter input change event
+                @binding {(event: Event): void} onKeydown - on filter input keydown event
+            -->
+            <slot
+                name="filter"
+                :value="filterValue"
+                :on-change="onFilterChange"
+                :on-keydown="onFilterKeyDown">
                 <o-input
                     v-model="filterValue"
                     v-bind="inputClasses"
