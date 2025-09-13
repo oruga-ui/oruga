@@ -206,8 +206,8 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             <slot :active="isActive && visible">
                 <!-- injected component -->
                 <component
-                    :is="component"
-                    v-if="component"
+                    :is="$props.component"
+                    v-if="$props.component"
                     v-bind="$props.props"
                     v-on="$props.events || {}" />
 
