@@ -1,7 +1,7 @@
 import {
     createVNode,
     defineComponent,
-    type DefineComponent,
+    type Slots,
     type VNode,
     type VNodeChild,
     type VNodeTypes,
@@ -28,16 +28,18 @@ type SlotComponentProps<C extends VNodeTypes> = {
     class?: ClassBinding | ClassBinding[];
 };
 
-/** This components renders a specific slot and only the slot of another component */
-export default defineComponent<SlotComponentProps<any>>(
-    <C extends DefineComponent>(props: SlotComponentProps<C>, { slots }) => {
+/** This components renders only a specific slot of another component */
+export default defineComponent<SlotComponentProps<{ $slots: Slots }>>(
+    <C extends { $slots: Slots }>(props: SlotComponentProps<C>, { slots }) => {
         const _props = { tag: "div", name: "default", ...props };
 
         return (): VNode => {
             let slot: VNodeChild | (() => VNodeChild) = (): VNodeChild =>
-                props.component.$slots[_props.name]
-                    ? props.component.$slots[_props.name](props.props)
-                    : slots.default
+                // render the component slot if available
+                typeof props.component.$slots[_props.name] === "function"
+                    ? props.component.$slots[_props.name]!(props.props)
+                    : // render the default if no component slot override is available
+                      typeof slots.default === "function"
                       ? slots.default()
                       : undefined;
             if (typeof _props.tag === "string") {

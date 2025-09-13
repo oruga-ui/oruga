@@ -1,9 +1,16 @@
 <script setup lang="ts" generic="T, K extends string">
-import { computed, getCurrentInstance, useTemplateRef } from "vue";
+import {
+    computed,
+    useSlots,
+    useTemplateRef,
+    type Ref,
+    type StyleValue,
+} from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
 
+import type { ClassBinding } from "@/types";
 import type { TableColumnComponent, TableComponent } from "./types";
 import type { TableColumnProps } from "./props";
 
@@ -40,21 +47,12 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
 
 const rootRef = useTemplateRef("rootElement");
 
-const style = computed(() => ({
-    width: toCssDimension(props.width),
-}));
-
-const isHeaderUnselectable = computed(
-    () => !props.headerSelectable && props.sortable,
-);
-
-const vm = getCurrentInstance();
+const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
-const providedData = computed<TableColumnComponent<T>>(() => ({
+const providedData = computed<TableColumnComponent<T, K>>(() => ({
     ...props,
-    $instance: vm!.proxy!,
-    $slots: vm!.slots,
+    $slots: slots,
     style: style.value,
     thClasses: thClasses.value,
     tdClasses: tdClasses.value,
@@ -63,12 +61,23 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
 /** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<
     TableComponent,
-    TableColumnComponent<T>
+    TableColumnComponent<T, K>
 >(rootRef, { data: providedData });
+
+const style = computed<StyleValue>(() => ({
+    width: toCssDimension(props.width),
+}));
+
+const isHeaderUnselectable = computed(
+    () => !props.headerSelectable && props.sortable,
+);
 
 // #region --- Computed Component Classes ---
 
-const thClasses = defineClasses(
+// strongly type this variable to prevent circular type dependency
+// because `parent` is used in the definition of any class
+// and the variable is used by the parent
+const thClasses: Ref<ClassBinding[]> = defineClasses(
     [
         "thCurrentSortClass",
         "o-table__th-current-sort",
