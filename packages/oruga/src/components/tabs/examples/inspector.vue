@@ -84,6 +84,15 @@ const inspectData: InspectData<
         subitem: "tabitem",
         description: "Class of the tab item element.",
     },
+    tabVariantClass: {
+        class: "tabVariantClass",
+        description: "Class of the tab item element with variant.",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (data): void => {
+            data.variant = "warning";
+        },
+    },
     tabActiveClass: {
         class: "tabActiveClass",
         subitem: "tabitem",
