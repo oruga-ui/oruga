@@ -139,6 +139,12 @@ const stepClasses: Ref<ClassBinding[]> = defineClasses(
         itemVariant,
         computed(() => !!itemVariant.value),
     ],
+    [
+        "stepPositionClass",
+        "o-steps__step--",
+        computed(() => parent.value?.labelPosition),
+        computed(() => !!parent.value?.labelPosition),
+    ],
     ["stepClickableClass", "o-steps__step--clickable", null, isClickable],
     ["stepActiveClass", "o-steps__step--active", null, isActive],
     [
@@ -158,12 +164,6 @@ const stepClasses: Ref<ClassBinding[]> = defineClasses(
         "o-steps__step--next",
         null,
         computed(() => item.value.index > parent.value?.activeIndex),
-    ],
-    [
-        "stepPositionClass",
-        "o-steps__step--",
-        computed(() => parent.value?.labelPosition),
-        computed(() => !!parent.value?.labelPosition),
     ],
 );
 

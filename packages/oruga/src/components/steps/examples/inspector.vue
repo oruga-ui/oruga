@@ -94,11 +94,6 @@ const inspectData: InspectData<
         subitem: "stepitem",
         description: "Class of the step item element.",
     },
-    stepActiveClass: {
-        class: "stepActiveClass",
-        subitem: "stepitem",
-        description: "Class of the step item element when active.",
-    },
     stepVariantClass: {
         class: "stepVariantClass",
         subitem: "stepitem",
@@ -125,6 +120,11 @@ const inspectData: InspectData<
         subitem: "stepitem",
         description: "Class of the step item element when clickable.",
         properties: ["clickable"],
+    },
+    stepActiveClass: {
+        class: "stepActiveClass",
+        subitem: "stepitem",
+        description: "Class of the step item element when active.",
     },
     stepDisabledClass: {
         class: "stepDisabledClass",
