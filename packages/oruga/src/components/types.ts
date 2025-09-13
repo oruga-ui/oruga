@@ -1228,8 +1228,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobileClass: ClassDefinition;
                 /** Size of the root element with size */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
-                variantClass: ClassDefinition;
                 /** Class of the root element when is vertical */
                 verticalClass: ClassDefinition;
                 /** Class of the root element when is vertical and has position */
