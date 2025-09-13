@@ -86,7 +86,9 @@ const inspectData: InspectData<
     },
     tabVariantClass: {
         class: "tabVariantClass",
-        description: "Class of the tab item element with variant.",
+        subitem: "stepitem",
+        description:
+            "Class of the step item element with variant (default value by parent steps component).",
         properties: ["variant"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (data): void => {
@@ -101,6 +103,15 @@ const inspectData: InspectData<
             data.modelValue = 1;
         },
     },
+    tabDisabledClass: {
+        class: "tabDisabledClass",
+        subitem: "tabitem",
+        description: "Class of the tab item element when disabled.",
+        properties: ["disabled"],
+        action: (data): void => {
+            data.disabled = true;
+        },
+    },
     tabPreviousClass: {
         class: "tabPreviousClass",
         subitem: "tabitem",
@@ -110,15 +121,6 @@ const inspectData: InspectData<
         class: "tabNextClass",
         subitem: "tabitem",
         description: "Class of the tab item element after the active one.",
-    },
-    tabDisabledClass: {
-        class: "tabDisabledClass",
-        subitem: "tabitem",
-        description: "Class of the tab item element when disabled.",
-        properties: ["disabled"],
-        action: (data): void => {
-            data.disabled = true;
-        },
     },
     tabIconClass: {
         class: "tabIconClass",

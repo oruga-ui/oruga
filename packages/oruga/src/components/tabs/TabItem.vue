@@ -101,7 +101,6 @@ const itemVariant = computed(() => props.variant ?? parent.value.variant);
 function activate(oldIndex: number): void {
     transitionName.value =
         item.value.index < oldIndex ? nextAnimation.value : prevAnimation.value;
-
     emits("activate");
 }
 
@@ -109,7 +108,6 @@ function activate(oldIndex: number): void {
 function deactivate(newIndex: number): void {
     transitionName.value =
         newIndex < item.value.index ? nextAnimation.value : prevAnimation.value;
-
     emits("deactivate");
 }
 
