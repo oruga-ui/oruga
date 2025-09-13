@@ -83,8 +83,6 @@ export type StepsClasses = Partial<{
     mobileClass: ComponentClass;
     /** Size of the root element with size */
     sizeClass: ComponentClass;
-    /** Class of the root element with variant */
-    variantClass: ComponentClass;
     /** Class of the root element when is vertical */
     verticalClass: ComponentClass;
     /** Class of the root element when is vertical and has position */

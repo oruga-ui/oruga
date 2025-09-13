@@ -6,11 +6,13 @@ import {
     useId,
     useTemplateRef,
     type Component,
+    type Ref,
 } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
+import type { ClassBinding } from "@/types";
 import type { StepsComponent, StepItemComponent } from "./types";
 import type { StepItemProps } from "./props";
 
@@ -93,6 +95,8 @@ const prevAnimation = computed(() => {
     return parent.value.animation[idx];
 });
 
+const itemVariant = computed(() => parent.value.variant ?? props.variant);
+
 /** shows if the step is clickable or not */
 const isClickable = computed(
     () => props.clickable || item.value.index < parent.value.activeIndex,
@@ -102,7 +106,6 @@ const isClickable = computed(
 function activate(oldIndex: number): void {
     transitionName.value =
         item.value.index < oldIndex ? nextAnimation.value : prevAnimation.value;
-    // emit event
     emits("activate");
 }
 
@@ -110,7 +113,6 @@ function activate(oldIndex: number): void {
 function deactivate(newIndex: number): void {
     transitionName.value =
         newIndex < item.value.index ? nextAnimation.value : prevAnimation.value;
-    // emit event
     emits("deactivate");
 }
 
@@ -126,16 +128,19 @@ function beforeLeave(): void {
 
 // #region --- Computed Component Classes ---
 
-const stepClasses = defineClasses(
+// strongly type this variable to prevent circular type dependency
+// because `parent` is used in the definition of any class
+// and the variable is used by the parent
+const stepClasses: Ref<ClassBinding[]> = defineClasses(
     ["stepClass", "o-steps__step"],
     [
         "stepVariantClass",
         "o-steps__step--",
-        computed(() => parent.value?.variant || props.variant),
-        computed(() => !!parent.value?.variant || !!props.variant),
+        itemVariant,
+        computed(() => !!itemVariant.value),
     ],
-    ["stepActiveClass", "o-steps__step--active", null, isActive],
     ["stepClickableClass", "o-steps__step--clickable", null, isClickable],
+    ["stepActiveClass", "o-steps__step--active", null, isActive],
     [
         "stepDisabledClass",
         "o-steps__step--disabled",

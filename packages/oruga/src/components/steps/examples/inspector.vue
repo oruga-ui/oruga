@@ -29,15 +29,6 @@ const inspectData: InspectData<
             data.size = "large";
         },
     },
-    variantClass: {
-        class: "variantClass",
-        description: "Class of the root element with variant.",
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (data): void => {
-            data.variant = "warning";
-        },
-    },
     positionClass: {
         class: "positionClass",
         description:
