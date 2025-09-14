@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const position = ref<"left" | "right">("left");
 const expanded = ref(false);
-const size = ref();
+const size = ref(undefined);
 const type = ref("default");
 </script>
 
