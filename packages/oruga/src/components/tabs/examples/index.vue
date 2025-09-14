@@ -57,9 +57,8 @@ import VerticalCode from "./vertical.vue?raw";
     <h3 id="variants">Variants</h3>
     <p>
         Different styles can be achieved with the <code>variant</code> prop. The
-        <code>variant</code> prop can be set for the whole component on the
-        <code>Tabs</code> component or for each item as
-        <code>TabItem</code> property.
+        <code>variant</code> prop can be set for the whole
+        <code>Tabs</code> component as well as for each <code>TabItem</code>.
     </p>
     <ExampleViewer :component="Variants" :code="VariantsCode" />
 
