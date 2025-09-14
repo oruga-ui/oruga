@@ -55,7 +55,12 @@ import VerticalCode from "./vertical.vue?raw";
     <ExampleViewer :component="Expanded" :code="ExpandedCode" />
 
     <h3 id="variants">Variants</h3>
-    <p>Different styles can be achieved with the <code>variant</code> prop.</p>
+    <p>
+        Different styles can be achieved with the <code>variant</code> prop. The
+        <code>variant</code> prop can be set for the whole component on the
+        <code>Tabs</code> component or for each item as
+        <code>TabItem</code> property.
+    </p>
     <ExampleViewer :component="Variants" :code="VariantsCode" />
 
     <h3 id="sizes">Sizes</h3>
