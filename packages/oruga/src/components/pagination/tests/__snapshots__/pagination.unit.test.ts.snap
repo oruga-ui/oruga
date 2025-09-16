@@ -35,7 +35,7 @@ exports[`OPagination tests > render correctly 1`] = `
                     @binding {(event: Event): void} onClick - click handler
                     @binding {string} ariaLabel - aria-label attribute
                 --><button data-oruga="button" role="button" tabindex="0" class="o-button o-button--primary o-pagination__button o-pagination__button--current" iscurrent="true" number="1" aria-label="Current page, Page 1." aria-current="true"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
-                    @slot Override the label, default is label prop 
+                    @slot Override the label, default is label prop
                 -->1</span>
         <!--v-if--></span>
       </button>
@@ -48,7 +48,7 @@ exports[`OPagination tests > render correctly 1`] = `
                     @binding {(event: Event): void} onClick - click handler
                     @binding {string} ariaLabel - aria-label attribute
                 --><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button" iscurrent="false" number="2" aria-label="Page 2." aria-current="false"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
-                    @slot Override the label, default is label prop 
+                    @slot Override the label, default is label prop
                 -->2</span>
         <!--v-if--></span>
       </button>
@@ -63,7 +63,7 @@ exports[`OPagination tests > render correctly 1`] = `
                     @binding {(event: Event): void} onClick - click handler
                     @binding {string} ariaLabel - aria-label attribute
                 --><button data-oruga="button" role="button" tabindex="0" class="o-button o-pagination__button" iscurrent="false" number="5" aria-label="Page 5." aria-current="false"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
-                    @slot Override the label, default is label prop 
+                    @slot Override the label, default is label prop
                 -->5</span>
         <!--v-if--></span>
       </button>

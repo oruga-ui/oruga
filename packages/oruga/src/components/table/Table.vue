@@ -1088,7 +1088,7 @@ const thCheckboxClasses = defineClasses(
 const thSortedClasses = defineClasses(
     /** @deprecated use `thSortedClass` instead */
     ["thCurrentSortClass", "o-table__th-current-sort"],
-    ["thSortedClass", "o-table__th-sorted"],
+    ["thSortedClass", "o-table__th--sorted"],
 );
 
 const thDetailedClasses = defineClasses([
@@ -1135,9 +1135,9 @@ const tdCheckboxClasses = defineClasses(
 );
 
 const tdDetailedClasses = defineClasses(
-    /** @deprecated use `tdDetailedClass` instead */
+    /** @deprecated use `tdDetailClass` instead */
     ["tdDetailedChevronClass", "o-table__td-chevron"],
-    ["tdDetailedClass", "o-table__td-detail"],
+    ["tdDetailClass", "o-table__td-detail"],
 );
 
 const footerClasses = defineClasses(["footerClass", "o-table__footer"]);

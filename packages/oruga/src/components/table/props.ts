@@ -267,11 +267,11 @@ export type TableClasses = Partial<{
     tdCheckboxClass: ComponentClass;
     /**
      * Class of the table `td` element that contains the chevron to trigger details
-     * @deprecated use `tdDetailedClass` instead
+     * @deprecated use `tdDetailClass` instead
      */
     tdDetailedChevronClass: ComponentClass;
     /** Class of the table `td` element that contains the detail trigger */
-    tdDetailedClass: ComponentClass;
+    tdDetailClass: ComponentClass;
     /** Class of the Table pagination wrapper element */
     paginationWrapperClass: ComponentClass;
     /** Class of the table footer element */

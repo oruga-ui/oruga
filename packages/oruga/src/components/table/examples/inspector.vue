@@ -299,6 +299,15 @@ const inspectData: InspectData<
             data.detailed = true;
         },
     },
+    tdDetailClass: {
+        class: "tdDetailClass",
+        description:
+            "Class of the table `td` element of the detail column of triggers.",
+        properties: ["detailed"],
+        action: (data): void => {
+            data.detailed = true;
+        },
+    },
     paginationWrapperClass: {
         class: "paginationWrapperClass",
         description: "Class of the table pagination wrapper element.",
