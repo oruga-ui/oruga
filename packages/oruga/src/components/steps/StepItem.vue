@@ -99,7 +99,9 @@ const itemVariant = computed(() => parent.value.variant ?? props.variant);
 
 /** shows if the step is clickable or not */
 const isClickable = computed(
-    () => props.clickable || item.value.index < parent.value.activeIndex,
+    () =>
+        !props.disabled &&
+        (props.clickable || item.value.index < parent.value.activeIndex),
 );
 
 /** Activate element, alter animation name based on the index. */

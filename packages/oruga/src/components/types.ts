@@ -1172,7 +1172,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         steps?: ComponentConfigBase &
             Partial<{
-                /** Icon on the left */
+                /** Step marker icon */
                 icon: string;
                 /** Icon pack */
                 iconPack: string;
@@ -1198,7 +1198,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 stepIconClass: ClassDefinition;
                 /** Class of the step panel element */
                 stepPanelClass: ClassDefinition;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Step size */
                 size: string;
@@ -1447,7 +1447,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         tabs?: ComponentConfigBase &
             Partial<{
-                /** Icon on the left */
+                /** Icon shown to the left of the label */
                 icon: string;
                 /** Icon pack */
                 iconPack: string;
@@ -1471,7 +1471,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tabLabelClass: ClassDefinition;
                 /** Class of the tab panel element */
                 tabPanelClass: ClassDefinition;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Tab size */
                 size: string;

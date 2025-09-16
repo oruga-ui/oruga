@@ -2,6 +2,9 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Customise from "./customise.vue";
+import CustomiseCode from "./customise.vue?raw";
+
 import Variants from "./variants.vue";
 import VariantsCode from "./variants.vue?raw";
 
@@ -30,6 +33,9 @@ import VerticalCode from "./vertical.vue?raw";
         <code>size</code> prop.
     </p>
     <ExampleViewer :component="Sizes" :code="SizesCode" />
+
+    <h3 id="customise">Customise</h3>
+    <ExampleViewer :component="Customise" :code="CustomiseCode" />
 
     <h3 id="vertical">Vertical</h3>
     <p>
