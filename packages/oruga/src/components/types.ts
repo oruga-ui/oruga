@@ -1455,6 +1455,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemTag: DynamicComponent;
                 /** Class of the tab item element */
                 tabClass: ClassDefinition;
+                /** Class of the tab item element with variant */
+                tabVariantClass: ClassDefinition;
                 /** Class of the tab item element when active */
                 tabActiveClass: ClassDefinition;
                 /** Class of the tab item element before the active one */
