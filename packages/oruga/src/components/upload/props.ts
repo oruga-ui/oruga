@@ -16,7 +16,7 @@ export type UploadProps<
     /** Same as native, also push new item to v-model instead of replacing */
     multiple?: IsMultiple;
     /**
-     * Color of the control
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;

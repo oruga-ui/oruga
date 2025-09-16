@@ -137,7 +137,7 @@ export type DropdownItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
-     * Item value (it will be used as v-model of wrapper component) - default is an uuid
+     * Item value (it will be used as the v-model of the wrapper component) - default is an uuid
      * @type string|number|object
      */
     value?: T;
