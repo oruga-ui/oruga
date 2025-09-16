@@ -71,7 +71,7 @@ const { parent, item } = useProviderChild<
 const thClasses = defineClasses(
     [
         "thCurrentSortClass",
-        "o-table__th-current-sort",
+        "o-table__th--current-sort",
         null,
         computed(() => parent.value?.isColumnSorted(item.value)),
     ],
