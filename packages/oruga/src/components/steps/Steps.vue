@@ -290,15 +290,7 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-steps--mobile", null, isMobile],
 );
 
-const tablistClasses = defineClasses(
-    ["listClass", "o-steps__list"],
-    [
-        "animatedClass",
-        "o-steps__list--animated",
-        null,
-        computed(() => props.animated),
-    ],
-);
+const tablistClasses = defineClasses(["listClass", "o-steps__list"]);
 
 const dividerClasses = defineClasses(["dividerClass", "o-steps__divider"]);
 
