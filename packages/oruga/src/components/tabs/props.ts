@@ -18,7 +18,7 @@ export type TabsProps<T> = {
     /** Tabs options, unnecessary when default slot is used */
     options?: OptionsProp<T>;
     /**
-     * Color of the control
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
@@ -94,11 +94,17 @@ export type TabItemProps<T, C extends Component = Component> = {
     value?: T;
     /** Item label */
     label?: string;
+    /**
+     * Color variant of the control
+     * This will override parent variant.
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    variant?: string;
     /** Item will be disabled */
     disabled?: boolean;
     /** Show/hide item */
     visible?: boolean;
-    /** Icon on the left */
+    /** Icon shown to the left of the label */
     icon?: string;
     /** Icon pack */
     iconPack?: string;
@@ -106,7 +112,7 @@ export type TabItemProps<T, C extends Component = Component> = {
     tag?: DynamicComponent;
     /** Text content, unnecessary when default slot is used */
     content?: string;
-    /** Component to be injected. */
+    /** Component to be injected */
     component?: C;
     /** Props to be binded to the injected component */
     props?: ComponentProps<C>;
@@ -118,6 +124,8 @@ export type TabItemProps<T, C extends Component = Component> = {
 export type TabItemClasses = Partial<{
     /** Class of the tab item element */
     tabClass: ComponentClass;
+    /** Class of the tab item element with variant */
+    tabVariantClass: ComponentClass;
     /** Class of the tab item element when active */
     tabActiveClass: ComponentClass;
     /** Class of the tab item element before the active one */

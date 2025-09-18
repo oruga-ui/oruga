@@ -93,10 +93,10 @@ const provideData = computed<StepsComponent>(() => ({
     activeIndex: activeItem.value?.index ?? 0,
     labelPosition: props.labelPosition,
     vertical: props.vertical,
+    variant: props.variant,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,
-    variant: props.variant,
 }));
 
 /** provide functionalities and data to child item components */
@@ -268,12 +268,6 @@ const rootClasses = defineClasses(
         "o-steps--",
         computed(() => props.size),
         computed(() => !!props.size),
-    ],
-    [
-        "variantClass",
-        "o-steps--",
-        computed(() => props.variant),
-        computed(() => !!props.variant),
     ],
     [
         "verticalClass",

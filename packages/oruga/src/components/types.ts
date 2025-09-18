@@ -1227,7 +1227,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         steps?: ComponentConfigBase &
             Partial<{
-                /** Icon on the left */
+                /** Step marker icon */
                 icon: string;
                 /** Icon pack */
                 iconPack: string;
@@ -1253,7 +1253,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 stepIconClass: ClassDefinition;
                 /** Class of the step panel element */
                 stepPanelClass: ClassDefinition;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Step size */
                 size: string;
@@ -1283,8 +1283,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobileClass: ClassDefinition;
                 /** Size of the root element with size */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
-                variantClass: ClassDefinition;
                 /** Class of the root element when is vertical */
                 verticalClass: ClassDefinition;
                 /** Class of the root element when is vertical and has position */
@@ -1504,7 +1502,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         tabs?: ComponentConfigBase &
             Partial<{
-                /** Icon on the left */
+                /** Icon shown to the left of the label */
                 icon: string;
                 /** Icon pack */
                 iconPack: string;
@@ -1512,6 +1510,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemTag: DynamicComponent;
                 /** Class of the tab item element */
                 tabClass: ClassDefinition;
+                /** Class of the tab item element with variant */
+                tabVariantClass: ClassDefinition;
                 /** Class of the tab item element when active */
                 tabActiveClass: ClassDefinition;
                 /** Class of the tab item element before the active one */
@@ -1526,7 +1526,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tabLabelClass: ClassDefinition;
                 /** Class of the tab panel element */
                 tabPanelClass: ClassDefinition;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Tab size */
                 size: string;
