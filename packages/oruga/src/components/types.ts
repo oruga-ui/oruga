@@ -730,6 +730,61 @@ See icon library documentation for custom classes. */
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
             }>;
+        listbox?: ComponentConfigBase &
+            Partial<{
+                /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
+                scrollHeight: number | string;
+                /** A label which is displayed when no options is visible */
+                emptyLabel: string;
+                /** Icon of the column search input */
+                filterIcon: string;
+                /** Placeholder of the column search input */
+                filterPlaceholder: string;
+                /** Number of milliseconds to delay the filter event */
+                filterDebounce: number;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Custom animation (transition name) */
+                animation: string;
+                /** List tag name */
+                listTag: DynamicComponent;
+                /** List item tag name */
+                itemTag: DynamicComponent;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Clas of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Clas of the root element when selectable */
+                selectableClass: ClassDefinition;
+                /** Clas of the root element when filterable */
+                filterableClass: ClassDefinition;
+                /** Clas of the root element when multiple */
+                multipleClass: ClassDefinition;
+                /** Class of the header slot wrapper element */
+                headerClass: ClassDefinition;
+                /** Class of the footer slot wrapper element */
+                footerClass: ClassDefinition;
+                /** Class of the empty slot wrapper element */
+                emptyClass: ClassDefinition;
+                /** Class of the filter wrapper element */
+                filterClass: ClassDefinition;
+                /** Class of the list container element */
+                containerClass: ClassDefinition;
+                /** Class of the list element */
+                listClass: ClassDefinition;
+                /** Class configuration for the internal input component */
+                inputClasses: Record<string, any>;
+                /** Class of the item element. */
+                itemClass: ClassDefinition;
+                /** Class of the item element when selected */
+                itemSelectedClass: ClassDefinition;
+                /** Class of the item element when focused */
+                itemFocusedClass: ClassDefinition;
+                /** Class of the item element when clickable */
+                itemClickableClass: ClassDefinition;
+                /** Class of the item element when disabled */
+                itemDisabledClass: ClassDefinition;
+            }>;
         loading?: ComponentConfigBase &
             Partial<{
                 /** Custom animation (transition name) */

@@ -68,17 +68,29 @@ exports[`ODropdown tests > render correctly with options 1`] = `
       <div id="v-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop
-        -->Item 1
+        -->
+        <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                --><span>Item 1</span>
       </div>
       <div id="v-0-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop
-        -->Item 2
+        -->
+        <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                --><span>Item 2</span>
       </div>
       <div id="v-0-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false">
         <!--
             @slot Override the label, default is label prop
-        -->Item 3
+        -->
+        <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                --><span>Item 3</span>
       </div>
       <!--
                             @slot Place extra \`o-dropdown-item\` components here, even if you have some options defined by prop

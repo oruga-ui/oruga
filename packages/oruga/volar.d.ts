@@ -17,6 +17,8 @@ declare module "vue" {
         OField: (typeof import("@oruga-ui/oruga-next"))["OField"];
         OIcon: (typeof import("@oruga-ui/oruga-next"))["OIcon"];
         OInput: (typeof import("@oruga-ui/oruga-next"))["OInput"];
+        OListbox: (typeof import("@oruga-ui/oruga-next"))["OListbox"];
+        OListItem: (typeof import("@oruga-ui/oruga-next"))["OListItem"];
         OLoading: (typeof import("@oruga-ui/oruga-next"))["OLoading"];
         OMenu: (typeof import("@oruga-ui/oruga-next"))["OMenu"];
         OMenuItem: (typeof import("@oruga-ui/oruga-next"))["OMenuItem"];
