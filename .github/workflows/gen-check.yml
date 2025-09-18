@@ -17,7 +17,7 @@ jobs:
         run: npm ci
       - name: Generate files 🧐
         run: npm run gen
-      - name: Stage files
+      - name: Stage generated files
         run: git add .
       - name: Check for changes
         run: |
