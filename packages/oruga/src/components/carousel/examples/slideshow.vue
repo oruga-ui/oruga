@@ -45,7 +45,7 @@ const slides = [
     },
 ];
 
-function switchGallery(value): void {
+function switchGallery(value: boolean): void {
     gallery.value = value;
 
     if (value) document.documentElement.classList.add("o-clipped");
@@ -59,7 +59,8 @@ function switchGallery(value): void {
             :autoplay="false"
             :overlay="gallery"
             :arrows="false"
-            @click="switchGallery(true)">
+            @click="switchGallery(true)"
+            @keydown.esc="gallery && switchGallery(false)">
             <o-carousel-item
                 v-for="slide in slides"
                 :key="slide.title"
