@@ -258,12 +258,18 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 indicatorItemActiveClass: ClassDefinition;
                 /** Class of indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
-                /** Class of item element */
+                /** Class of the item element */
                 itemClass: ClassDefinition;
-                /** Class of item element when active */
+                /** Class of the item element when active */
                 itemActiveClass: ClassDefinition;
-                /** Class of item element when clickable */
+                /** Class of the item element when clickable */
                 itemClickableClass: ClassDefinition;
+                /** Class of the item title element */
+                itemTitleClass: ClassDefinition;
+                /** Class of the item subtitle element */
+                itemSubtitleClass: ClassDefinition;
+                /** Class of the item image wrapper element */
+                itemImageClass: ClassDefinition;
             }>;
         checkbox?: ComponentConfigBase &
             Partial<{
