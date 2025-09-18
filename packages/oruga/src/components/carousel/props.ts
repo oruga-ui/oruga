@@ -104,14 +104,28 @@ export type CarouselItemProps = {
     override?: boolean;
     /** Make item clickable */
     clickable?: boolean;
+    /** Title of the slide, unnecessary when default slot is used */
+    title?: string;
+    /** Subtitle of the slide, unnecessary when default slot is used */
+    subtitle?: string;
+    /** Background image of the item */
+    image?: string;
+    /** Image alt tag of the background image */
+    imageAlt?: string;
 } & CarouselItemClasses;
 
 // class props (will not be displayed in the docs)
 export type CarouselItemClasses = Partial<{
-    /** Class of item element */
+    /** Class of the item element */
     itemClass: ComponentClass;
-    /** Class of item element when active */
+    /** Class of the item element when active */
     itemActiveClass: ComponentClass;
-    /** Class of item element when clickable */
+    /** Class of the item element when clickable */
     itemClickableClass: ComponentClass;
+    /** Class of the item title element */
+    itemTitleClass: ComponentClass;
+    /** Class of the item subtitle element */
+    itemSubtitleClass: ComponentClass;
+    /** Class of the item image wrapper element */
+    itemImageClass: ComponentClass;
 }>;
