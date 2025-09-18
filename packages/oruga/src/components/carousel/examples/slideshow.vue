@@ -59,8 +59,7 @@ function switchGallery(value: boolean): void {
             :autoplay="false"
             :overlay="gallery"
             :arrows="false"
-            @click="switchGallery(true)"
-            @keydown.esc="gallery && switchGallery(false)">
+            @click="switchGallery(true)">
             <o-carousel-item
                 v-for="slide in slides"
                 :key="slide.title"
