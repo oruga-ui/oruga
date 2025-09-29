@@ -43,11 +43,7 @@ declare module "vue" {
 export {};
 `;
 
-    fs.writeFileSync(
-        path.resolve(__dirname, file),
-        code.replace(/\n/g, "\r\n"),
-        { encoding: "utf8" },
-    );
+    fs.writeFileSync(path.resolve(__dirname, file), code, { encoding: "utf8" });
 
     console.log(`File '${file}' generated.`);
 }

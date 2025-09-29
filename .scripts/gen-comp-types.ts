@@ -155,6 +155,6 @@ declare module "../index" {
 `;
 
 const file = path.resolve(__dirname, componentDirectory, "types.ts");
-fs.writeFileSync(file, code, "utf-8");
+fs.writeFileSync(file, code, { encoding: "utf8" });
 
 console.log(`File '${file}' generated.`);
