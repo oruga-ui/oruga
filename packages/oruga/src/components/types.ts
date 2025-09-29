@@ -1774,7 +1774,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the dragable container element */
                 draggableClass: ClassDefinition;
                 /** Class of the dragable container element when hovered */
-                draggableHoveredClass: ClassDefinition;
             }>;
     }
 }
