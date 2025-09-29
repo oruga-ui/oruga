@@ -14,7 +14,7 @@ const breakpoints = ref({
     },
 });
 
-const items = [
+const slides = [
     {
         title: "Slide 1",
         image: "https://picsum.photos/id/1/1230/500",
@@ -45,7 +45,7 @@ const items = [
     },
 ];
 
-function switchGallery(value): void {
+function switchGallery(value: boolean): void {
     gallery.value = value;
 
     if (value) document.documentElement.classList.add("o-clipped");
@@ -60,9 +60,12 @@ function switchGallery(value): void {
             :overlay="gallery"
             :arrows="false"
             @click="switchGallery(true)">
-            <o-carousel-item v-for="(item, i) in items" :key="i" clickable>
+            <o-carousel-item
+                v-for="slide in slides"
+                :key="slide.title"
+                clickable>
                 <div class="image">
-                    <img :src="item.image" :alt="item.title" />
+                    <img :src="slide.image" :alt="slide.title" />
                 </div>
             </o-carousel-item>
 
@@ -74,12 +77,12 @@ function switchGallery(value): void {
                     :breakpoints="breakpoints"
                     @update:model-value="switchTo($event)">
                     <o-carousel-item
-                        v-for="(item, i) in items"
-                        :key="i"
+                        v-for="slide in slides"
+                        :key="slide.title"
                         clickable
                         item-class="img-indicator"
                         item-active-class="img-indicator-active">
-                        <img :src="item.image" :alt="item.title" />
+                        <img :src="slide.image" :alt="slide.title" />
                     </o-carousel-item>
                 </o-carousel>
             </template>

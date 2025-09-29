@@ -8,8 +8,8 @@ import ListCode from "./list.vue?raw";
 import Indicators from "./indicators.vue";
 import IndicatorsCode from "./indicators.vue?raw";
 
-import Custom from "./custom.vue";
-import CustomCode from "./custom.vue?raw";
+import Slideshow from "./slideshow.vue";
+import SlideshowCode from "./slideshow.vue?raw";
 
 import Autoplay from "./autoplay.vue";
 import AutoplayCode from "./autoplay.vue?raw";
@@ -48,7 +48,7 @@ import AutoplayCode from "./autoplay.vue?raw";
         customised to create a custom style like a picture gallery slideshow.
         Click on the slide to open the gallery mode.
     </p>
-    <ExampleViewer :component="Custom" :code="CustomCode" />
+    <ExampleViewer :component="Slideshow" :code="SlideshowCode" />
 
     <h3 id="autoplay">Autoplay</h3>
     <p>

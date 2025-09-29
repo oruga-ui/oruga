@@ -69,23 +69,19 @@ const repeat = ref(false);
             :interval="interval"
             :repeat="repeat"
             :arrows-hover="false">
-            <o-carousel-item v-for="(slide, i) in carousels" :key="i">
-                <section
-                    class="example-slide"
-                    :style="{ 'background-color': slide.color }">
+            <o-carousel-item v-for="slide in carousels" :key="slide.text">
+                <article
+                    :style="{
+                        'background-color': slide.color,
+                        padding: '9rem 4.5rem',
+                        color: '#ffffff',
+                        'text-align': 'center',
+                    }">
                     <h1>{{ slide.text }}</h1>
                     <o-input :placeholder="slide.text" />
                     <p>A link that <a href="#arrow">goes to arrow</a></p>
-                </section>
+                </article>
             </o-carousel-item>
         </o-carousel>
     </section>
 </template>
-
-<style>
-.example-slide {
-    padding: 9rem 4.5rem;
-    color: #ffffff;
-    text-align: center;
-}
-</style>
