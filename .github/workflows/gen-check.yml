@@ -18,8 +18,7 @@ jobs:
       - name: Generate files 🧐
         run: npm run gen
       - name: Stage generated files
-        run: git add .
-        run: git config core.eol lf
+        run: git config core.eol lf && git add . 
       - name: Check for changes
         run: |
           changes=$(git status --porcelain)
