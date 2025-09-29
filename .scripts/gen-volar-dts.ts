@@ -15,7 +15,7 @@ function generateComponentsType(module: string, file: string): void {
 
     const globalComponents = getComponents(componentDirectory);
 
-    const components = {};
+    const components: Record<string, string> = {};
     globalComponents
         // add global "O" prefix
         .map((dir) => "O" + dir)
@@ -43,7 +43,7 @@ declare module "vue" {
 export {};
 `;
 
-    fs.writeFileSync(path.resolve(__dirname, file), code, "utf-8");
+    fs.writeFileSync(path.resolve(__dirname, file), code, { encoding: "utf8" });
 
     console.log(`File '${file}' generated.`);
 }
