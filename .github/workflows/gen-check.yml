@@ -19,7 +19,7 @@ jobs:
         run: npm run gen
       - name: Check for changes 🧐
         run: |
-          changes=$(git status --porcelain --verbose)
+          changes=$(git status -v)
           # Check for changes in regenerated files
           if ! test -z "$changes"
           then
