@@ -9,6 +9,7 @@ import Sidebar from "./Sidebar.vue";
 
 import type { SidebarProps } from "./props";
 
+// extend the OrugaProgrammatic type with the `sidebar` programmatic interface
 declare module "../../index" {
     interface OrugaProgrammatic {
         sidebar: Required<InstanceType<typeof SidebarProgrammaticFactory>>;

@@ -1,22 +1,23 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Loading from "./Loading.vue";
 import useLoadingProgrammatic, {
     LoadingProgrammaticFactory,
 } from "./useLoadingProgrammatic";
 
-import { registerComponent, registerComponentInterface } from "@/utils/plugins";
+import { registerComponent, registerProgrammatic } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export loading specific types */
 export type { LoadingProgrammaticOptions } from "./useLoadingProgrammatic";
 
 /** export loading plugin */
 export default {
-    install(app: App) {
+    install(app: App, { oruga }) {
         registerComponent(app, Loading);
-        registerComponentInterface(app, "loading", LoadingProgrammaticFactory);
+        registerProgrammatic(oruga, "loading", LoadingProgrammaticFactory);
     },
-} as Plugin;
+} as OrugaComponentPlugin;
 
 /** export loading components & composables */
 export { Loading as OLoading, useLoadingProgrammatic };

@@ -7,7 +7,7 @@ import type {
 
 // Auto generated component theme config definition
 declare module "../index" {
-    interface OrugaOptions {
+    interface OrugaConfig {
         autocomplete?: ComponentConfigBase &
             Partial<{
                 /** Options won't be filtered based on the input value on clientside */

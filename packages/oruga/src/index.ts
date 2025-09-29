@@ -1,10 +1,4 @@
-import type { App, Plugin } from "vue";
-import type { OrugaOptions } from "./types";
-
-import * as plugins from "./components/plugins";
-
-import { useProgrammaticConfig, OrugaConfig } from "./utils/config";
-import { registerPlugin } from "./utils/plugins";
+import { createOruga } from "./utils/config";
 
 // export all types
 export * from "./types";
@@ -27,27 +21,17 @@ export {
 
 // export all vue components
 export * from "./components";
-// export all components as vue plugin
+// export all components as vue plugins
 export * from "./components/plugins";
 
-// export programmatic config
-export { OrugaConfig, useProgrammaticConfig };
+// export main oruga composables
+export { createOruga, useOruga } from "./utils/config";
 
 // export programmatic composable
-export { useOruga, type OrugaProgrammatic } from "./utils/programmatic";
+export { useProgrammaticConfig, type OrugaProgrammatic } from "./utils/config";
 
 // main oruga vue plugin
-const plugin: Plugin = {
-    install(app: App, options: OrugaOptions = {}) {
-        // initialise config with options
-        registerPlugin(app, OrugaConfig, options);
-
-        // add all oruga vue components
-        for (const componentKey in plugins) {
-            registerPlugin(app, plugins[componentKey]);
-        }
-    },
-};
+const plugin = createOruga();
 
 // export default oruga vue plugin
 export { plugin as Oruga };

@@ -10,7 +10,7 @@ import {
 } from "vue";
 
 import InstanceRegistry from "@/components/programmatic/InstanceRegistry";
-import { VueInstance } from "@/utils/plugins";
+import { getActiveOruga } from "@/utils/config";
 import { getTeleportDefault, resolveElement } from "@/composables";
 
 import {
@@ -126,8 +126,12 @@ export abstract class ProgrammaticFactory {
         });
 
         // share the current context to the new app instance if running inside a nother app
-        if (VueInstance)
-            app._context = Object.assign(app._context, VueInstance._context);
+        const orugaConfig = getActiveOruga();
+        if (orugaConfig?._vue)
+            app._context = Object.assign(
+                app._context,
+                orugaConfig._vue._context,
+            );
 
         // render the new vue instance into the container
         const instance = app.mount(container);

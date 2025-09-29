@@ -1,9 +1,10 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Slider from "./Slider.vue";
 import SliderTick from "./SliderTick.vue";
 
 import { registerComponent } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export slider specific types */
 export type * from "./types";
@@ -14,7 +15,7 @@ export default {
         registerComponent(app, Slider);
         registerComponent(app, SliderTick);
     },
-} as Plugin;
+} as OrugaComponentPlugin;
 
 /** export slider components */
 export { Slider as OSlider, SliderTick as OSliderTick };

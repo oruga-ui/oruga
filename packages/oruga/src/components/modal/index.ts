@@ -1,22 +1,23 @@
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 import Modal from "./Modal.vue";
 import useModalProgrammatic, {
     ModalProgrammaticFactory,
 } from "./useModalProgrammatic";
 
-import { registerComponent, registerComponentInterface } from "@/utils/plugins";
+import { registerComponent, registerProgrammatic } from "@/utils/plugins";
+import type { OrugaComponentPlugin } from "@/utils/config";
 
 /** export modal specific types */
 export type { ModalProgrammaticOptions } from "./useModalProgrammatic";
 
 /** export modal plugin */
 export default {
-    install(app: App) {
+    install(app: App, { oruga }) {
         registerComponent(app, Modal);
-        registerComponentInterface(app, "modal", ModalProgrammaticFactory);
+        registerProgrammatic(oruga, "modal", ModalProgrammaticFactory);
     },
-} as Plugin;
+} as OrugaComponentPlugin;
 
 /** export modal components & composables */
 export { Modal as OModal, useModalProgrammatic };

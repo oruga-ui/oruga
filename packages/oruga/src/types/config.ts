@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
+import type { MaybeRefOrGetter } from "vue";
 import type { ValidatableFormElement } from "@/composables";
 import type { IconConfig } from "@/utils/icons";
 import type { ClassBinding, ClassFunction, DynamicComponent } from "./utils";
-import type { MaybeRefOrGetter } from "vue";
 
 /** export option types */
 export type {
@@ -50,6 +49,16 @@ export type ComponentConfigBase = Partial<{
 }>;
 
 export type GlobalConfig = Partial<{
+    /**
+     * In case you want to override existing Oruga default classes all components completely,
+     * you can specify the override behaviour here globaly.
+     */
+    override: boolean;
+    /**
+     * Define if all components should be registered globaly.
+     * By default, no component will be registered globaly.
+     */
+    globalComponents: boolean;
     /** Define the Date format locale */
     locale: string;
     /** Define the icon pack be used */
@@ -89,11 +98,7 @@ export type GlobalConfig = Partial<{
     transformClasses: TransformFunction;
     /** Mobile breakpoint as `max-width` value */
     mobileBreakpoint: string;
-    /**
-     * In case you want to override existing Oruga default classes all components completely,
-     * you can specify the override behaviour here globaly.
-     */
-    override: boolean;
 }>;
 
-export interface OrugaOptions extends GlobalConfig {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface OrugaConfig extends GlobalConfig {}
