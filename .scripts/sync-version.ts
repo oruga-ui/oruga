@@ -1,4 +1,4 @@
-import { replaceInFileSync } from "replace-in-file";
+import { ReplaceInFileConfig, replaceInFileSync } from "replace-in-file";
 
 const jsonPaths = [
     "package-lock.json",
@@ -13,13 +13,13 @@ const configJsonOptions = [
     {
         files: jsonPaths,
         from: /"name": "@oruga-ui\/(.*)",([^"]*)"version": .+/gi,
-        to: (match): string =>
+        to: (match: string): string =>
             match.replace(/"version": .+/i, `"version": "${version}",`),
     },
     {
         files: jsonPaths,
         from: /"@oruga-ui\/oruga-next": "(.*)",/gi,
-        to: (match): string =>
+        to: (match: string): string =>
             match.replace(
                 /oruga-next": "(.*)",/i,
                 `oruga-next": "${version}",`,
@@ -27,7 +27,7 @@ const configJsonOptions = [
     },
 ];
 
-const replaceInFile = (config): string[] =>
+const replaceInFile = (config: ReplaceInFileConfig): string[] =>
     replaceInFileSync(config).map((el) => el.file);
 
 try {

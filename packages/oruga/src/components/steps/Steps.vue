@@ -310,7 +310,7 @@ const contentClasses = defineClasses(
     ["contentClass", "o-steps__content"],
     [
         "transitioningClass",
-        "o-steps__content-transitioning",
+        "o-steps__content--transitioning",
         null,
         isTransitioning,
     ],

@@ -273,7 +273,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         checkbox?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Size of the control */
                 size: string;
@@ -685,7 +685,7 @@ See icon library documentation for custom classes. */
             Partial<{
                 /** Size of the control */
                 size: string;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Makes input full width when inside a grouped or addon field */
                 expanded: boolean;
@@ -920,7 +920,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         notification?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Enable rounded style */
                 rounded: boolean;
@@ -1034,7 +1034,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         radio?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Size of the control */
                 size: string;
@@ -1059,7 +1059,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Vertical size of input */
                 size: string;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Makes input full width when inside a grouped or addon field */
                 expanded: boolean;
@@ -1312,7 +1312,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         switch?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Color of the switch when is passive */
                 passiveVariant: string;
@@ -1765,7 +1765,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         upload?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Upload will be expanded (full-width) */
                 expanded: boolean;

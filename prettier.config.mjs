@@ -4,6 +4,6 @@
  */
 export default {
   trailingComma: "all",
-  endOfLine: "auto",
+  endOfLine: "lf",
   bracketSameLine: true,
 };
