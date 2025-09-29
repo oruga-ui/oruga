@@ -273,7 +273,7 @@ function onTriggerClick(event: Event): void {
     toggle("click", event);
 }
 
-function onTriggerContextMenu(event: MouseEvent): void {
+function onTriggerContextMenu(event: Event): void {
     if (!props.triggers.includes("contextmenu")) return;
     event.preventDefault();
     open("contextmenu", event);
@@ -392,6 +392,11 @@ const focusedItem = ref<DropdownChildItem<T>>();
 /** Hover listener from DropdownItem. */
 function focusItem(value: DropdownChildItem<T>): void {
     focusedItem.value = value;
+}
+
+/** Menu hover leave event handler. */
+function onMenuHoverLeave(): void {
+    focusedItem.value = undefined;
 }
 
 /** Set focus on a tab item. */
@@ -641,6 +646,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     :aria-multiselectable="
                         selectable ? isTrueish(multiple) : undefined
                     "
+                    @mouseleave="onMenuHoverLeave"
                     @keydown.enter.prevent="inline && onEnter($event)"
                     @keydown.space.prevent="inline && onEnter($event)"
                     @keydown.up.prevent="inline && onUpPressed($event)"
