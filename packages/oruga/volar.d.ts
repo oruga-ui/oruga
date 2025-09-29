@@ -35,9 +35,9 @@ declare module "vue" {
         OStepItem: (typeof import("@oruga-ui/oruga-next"))["OStepItem"];
         OSteps: (typeof import("@oruga-ui/oruga-next"))["OSteps"];
         OSwitch: (typeof import("@oruga-ui/oruga-next"))["OSwitch"];
+        OTabItem: (typeof import("@oruga-ui/oruga-next"))["OTabItem"];
         OTable: (typeof import("@oruga-ui/oruga-next"))["OTable"];
         OTableColumn: (typeof import("@oruga-ui/oruga-next"))["OTableColumn"];
-        OTabItem: (typeof import("@oruga-ui/oruga-next"))["OTabItem"];
         OTabs: (typeof import("@oruga-ui/oruga-next"))["OTabs"];
         OTag: (typeof import("@oruga-ui/oruga-next"))["OTag"];
         OTaginput: (typeof import("@oruga-ui/oruga-next"))["OTaginput"];
