@@ -49,7 +49,7 @@ shadowRoot.appendChild(link);
 <!-- eslint-disable-next-line vue/valid-template-root -->
 <template></template>
 
-<style>
+<style lang="scss">
 /** class of the inpected element in the Class Inpector */
 .odocs-inspected-element {
     border: 2px solid var(--vp-c-caution-1) !important;

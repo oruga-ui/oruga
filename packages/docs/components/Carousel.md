@@ -95,10 +95,14 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ### Props
 
-| Prop name | Description                                | Type    | Values | Default                                                     |
-| --------- | ------------------------------------------ | ------- | ------ | ----------------------------------------------------------- |
-| clickable | Make item clickable                        | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code> |
-| override  | Override existing theme classes completely | boolean | -      |                                                             |
+| Prop name | Description                                                  | Type    | Values | Default                                                     |
+| --------- | ------------------------------------------------------------ | ------- | ------ | ----------------------------------------------------------- |
+| clickable | Make item clickable                                          | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| image     | Background image of the item                                 | string  | -      |                                                             |
+| imageAlt  | Image alt tag of the background image                        | string  | -      |                                                             |
+| override  | Override existing theme classes completely                   | boolean | -      |                                                             |
+| subtitle  | Subtitle of the slide, unnecessary when default slot is used | string  | -      |                                                             |
+| title     | Title of the slide, unnecessary when default slot is used    | string  | -      |                                                             |
 
 ### Slots
 

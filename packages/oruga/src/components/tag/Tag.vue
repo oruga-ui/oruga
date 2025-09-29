@@ -5,9 +5,9 @@ import OIcon from "../icon/Icon.vue";
 import CloseButton from "../utils/CloseButton.vue";
 
 import { getDefault } from "@/utils/config";
+import { defineClasses } from "@/composables";
 
 import type { TagProps } from "./props";
-import { defineClasses } from "@/composables";
 
 /**
  * Small tag labels to insert anywhere.

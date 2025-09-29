@@ -86,6 +86,7 @@ const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index ?? 0,
     type: props.type,
     vertical: props.vertical,
+    variant: props.variant,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,

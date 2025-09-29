@@ -6,7 +6,7 @@ export type SwitchProps<T> = {
     /** The input value state, use v-model to make it two-way binding */
     modelValue?: T;
     /**
-     * Color of the control
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;

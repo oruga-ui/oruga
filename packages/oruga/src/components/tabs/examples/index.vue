@@ -2,6 +2,21 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Types from "./types.vue";
+import TypesCode from "./types.vue?raw";
+
+import Positions from "./positions.vue";
+import PositionsCode from "./positions.vue?raw";
+
+import Expanded from "./expanded.vue";
+import ExpandedCode from "./expanded.vue?raw";
+
+import Variants from "./variants.vue";
+import VariantsCode from "./variants.vue?raw";
+
+import Sizes from "./sizes.vue";
+import SizesCode from "./sizes.vue?raw";
+
 import CustomHeader from "./custom-header.vue";
 import CustomHeaderCode from "./custom-header.vue?raw";
 
@@ -10,18 +25,6 @@ import LongHeaderCode from "./long-header.vue?raw";
 
 import Vertical from "./vertical.vue";
 import VerticalCode from "./vertical.vue?raw";
-
-import Expanded from "./expanded.vue";
-import ExpandedCode from "./expanded.vue?raw";
-
-import Types from "./types.vue";
-import TypesCode from "./types.vue?raw";
-
-import Positions from "./positions.vue";
-import PositionsCode from "./positions.vue?raw";
-
-import Sizes from "./sizes.vue";
-import SizesCode from "./sizes.vue?raw";
 </script>
 
 <template>
@@ -50,6 +53,14 @@ import SizesCode from "./sizes.vue?raw";
         occupy the full with it can have.
     </p>
     <ExampleViewer :component="Expanded" :code="ExpandedCode" />
+
+    <h3 id="variants">Variants</h3>
+    <p>
+        Different styles can be achieved with the <code>variant</code> prop. The
+        <code>variant</code> prop can be set for the whole
+        <code>Tabs</code> component as well as for each <code>TabItem</code>.
+    </p>
+    <ExampleViewer :component="Variants" :code="VariantsCode" />
 
     <h3 id="sizes">Sizes</h3>
     <p>

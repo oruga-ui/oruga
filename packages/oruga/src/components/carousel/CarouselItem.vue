@@ -19,6 +19,10 @@ defineOptions({
 const props = withDefaults(defineProps<CarouselItemProps>(), {
     override: undefined,
     clickable: false,
+    title: undefined,
+    subtitle: undefined,
+    image: undefined,
+    imageAlt: undefined,
 });
 
 const rootRef = useTemplateRef("rootElement");
@@ -48,6 +52,20 @@ const itemClasses = defineClasses(
     ],
 );
 
+const titleClasses = defineClasses([
+    "itemTitleClass",
+    "o-carousel__item-title",
+]);
+
+const subtitleClasses = defineClasses([
+    "itemSubtitleClass",
+    "o-carousel__item-subtitle",
+]);
+const imageClasses = defineClasses([
+    "itemImageClass",
+    "o-carousel__item-image",
+]);
+
 // #endregion --- Computed Component Classes ---
 </script>
 
@@ -72,6 +90,16 @@ const itemClasses = defineClasses(
         <!--
             @slot Default content
         -->
-        <slot />
+        <slot>
+            <div :class="imageClasses">
+                <img :src="image" :alt="imageAlt" />
+            </div>
+            <div v-if="title" :class="titleClasses">
+                {{ title }}
+            </div>
+            <div v-if="subtitle" :class="subtitleClasses">
+                {{ subtitle }}
+            </div>
+        </slot>
     </div>
 </template>

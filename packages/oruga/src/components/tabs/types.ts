@@ -8,6 +8,7 @@ export type TabsComponent = {
     activeIndex: number;
     type: string;
     vertical: boolean;
+    variant: string;
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
