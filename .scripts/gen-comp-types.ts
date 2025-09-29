@@ -117,15 +117,12 @@ const components = component_folders
                     idx === self.findIndex((p) => p.name === item.name),
             );
 
-        console.log(
-            `Processed '${name}' component with ${props.length} global props.`,
-        );
         return { name, props };
     })
     // sort components by name
     .sort((a, b) => a.name.localeCompare(b.name));
 
-console.log(`Processed ${components.length} components.`);
+console.log(`${components.length} components processed.`);
 
 const code = `import type {
     ClassDefinition,
