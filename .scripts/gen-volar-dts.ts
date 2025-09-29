@@ -18,10 +18,8 @@ function generateComponentsType(module: string, file: string): void {
     const lines = globalComponents
         // add global "O" prefix
         .map((dir) => "O" + dir)
-        // add type declaration
-        .map((key) => `${key}: (typeof import("${module}"))["${key}"];`)
-        // stay consistent order
-        .sort((a, b) => a.localeCompare(b));
+        // convert to type declaration format
+        .map((key) => `${key}: (typeof import("${module}"))["${key}"];`);
 
     const code = `// Auto generated component declarations
 declare module "vue" {
