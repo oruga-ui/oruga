@@ -17,8 +17,6 @@ jobs:
         run: npm ci
       - name: Generate files
         run: npm run gen
-      - name: Generate files
-        run: git add .
       - name: Check for changes 🧐
         run: |
           changes=$(git status -v)
