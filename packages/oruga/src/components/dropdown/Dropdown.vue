@@ -436,6 +436,11 @@ function onEnter(event: Event): void {
 
 /** Go to the first viable item */
 function onHomePressed(event: Event): void {
+    const target = event.target as HTMLElement;
+    // do not prevent default for HTMLElements with native keyboard "End" key event behavior
+    if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
+        event.preventDefault();
+
     open("keydown", event);
     if (!isNotEmpty.value) return;
     const item = getFirstViableItem(0, 1);
@@ -444,6 +449,11 @@ function onHomePressed(event: Event): void {
 
 /** Go to the last viable item */
 function onEndPressed(event: Event): void {
+    const target = event.target as HTMLElement;
+    // do not prevent default for HTMLElements with native keyboard "End" key event behavior
+    if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
+        event.preventDefault();
+
     open("keydown", event);
     if (!isNotEmpty.value) return;
     const item = getFirstViableItem(childItems.value.length - 1, -1);
@@ -587,8 +597,8 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
             @keydown.space="onEnter"
             @keydown.up.prevent="onUpPressed"
             @keydown.down.prevent="onDownPressed"
-            @keydown.home.prevent="onHomePressed"
-            @keydown.end.prevent="onEndPressed">
+            @keydown.home="onHomePressed"
+            @keydown.end="onEndPressed">
             <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
@@ -645,8 +655,8 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     @keydown.space.prevent="inline && onEnter($event)"
                     @keydown.up.prevent="inline && onUpPressed($event)"
                     @keydown.down.prevent="inline && onDownPressed($event)"
-                    @keydown.home.prevent="inline && onHomePressed($event)"
-                    @keydown.end.prevent="inline && onEndPressed($event)">
+                    @keydown.home="inline && onHomePressed($event)"
+                    @keydown.end="inline && onEndPressed($event)">
                     <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
