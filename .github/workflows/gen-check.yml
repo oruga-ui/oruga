@@ -15,11 +15,11 @@ jobs:
           cache: "npm"
       - name: Install dependencies 📦
         run: npm ci
-      - name: Generate files 🧐
+      - name: Generate files 
         run: npm run gen
       - name: Stage generated files
-        run: git config core.eol lf && git add . 
-      - name: Check for changes
+        run: git config core.eol lf && git add .
+      - name: Check for changes 🧐
         run: |
           changes=$(git status --porcelain)
           # Check for changes in regenerated files
