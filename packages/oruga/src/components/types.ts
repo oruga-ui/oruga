@@ -328,9 +328,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Close dropdown on click */
                 closeOnClick: boolean;
                 /** Custom function to format a date into a string */
-                formatter: ((date: Date | [] | Date[] | [Date, Date]) => string) | undefined;
+                formatter: ((date: [] | Date | Date[] | [Date, Date]) => string) | undefined;
                 /** Custom function to parse a string into a date */
-                parser: ((date: string) => Date | [] | Date[] | [Date, Date]) | undefined;
+                parser: ((date: string) => [] | Date | Date[] | [Date, Date]) | undefined;
                 /** Date creator function, default is `new Date()` */
                 creator: (() => Date);
                 /** Define a list of weeks which can not be selected */
@@ -540,7 +540,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Dropdown trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Dropdown will be triggered by any events */
-                triggers: ("click" | "contextmenu" | "focus" | "keydown" | "hover")[];
+                triggers: ("focus" | "click" | "contextmenu" | "keydown" | "hover")[];
                 /** Keep dropdown list open when item get selected */
                 keepOpen: boolean;
                 /** The first option will always be pre-selected (easier to just hit enter or tab) */
@@ -1733,7 +1733,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tooltip trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Tooltip trigger events */
-                triggers: ("click" | "contextmenu" | "focus" | "hover")[];
+                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
                 closeable: boolean | ("content" | "escape" | "outside")[];
                 /** Append the component to another part of the DOM.
