@@ -437,7 +437,7 @@ function onEnter(event: Event): void {
 /** Go to the first viable item */
 function onHomePressed(event: Event): void {
     const target = event.target as HTMLElement;
-    // do not prevent default for HTMLElements with native keyboard "End" key event behavior
+    // do not prevent default for HTMLElements with native keyboard "Home" key event behavior
     if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
         event.preventDefault();
 
