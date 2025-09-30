@@ -18,7 +18,7 @@ export type StepsProps<T> = {
     /** Steps options, unnecessary when default slot is used */
     options?: OptionsProp<T>;
     /**
-     * Color of the control
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
@@ -43,9 +43,7 @@ export type StepsProps<T> = {
     iconPrev?: string;
     /** Icon to use for navigation button */
     iconNext?: string;
-    /**
-     * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
-     */
+    /** Show next and previous buttons below the component */
     hasNavigation?: boolean;
     /** Set the step active on navigation focus */
     activateOnFocus?: boolean;
@@ -83,8 +81,6 @@ export type StepsClasses = Partial<{
     mobileClass: ComponentClass;
     /** Size of the root element with size */
     sizeClass: ComponentClass;
-    /** Class of the root element with variant */
-    variantClass: ComponentClass;
     /** Class of the root element when is vertical */
     verticalClass: ComponentClass;
     /** Class of the root element when is vertical and has position */
@@ -111,7 +107,7 @@ export type StepItemProps<T, C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /**
-     * Item value (it will be used as v-model of wrapper component) - default is an uuid
+     * Item value (it will be used as the v-model of the wrapper component) - default is an uuid
      * @type string|number|object
      */
     value?: T;
@@ -120,27 +116,28 @@ export type StepItemProps<T, C extends Component = Component> = {
     /** Step marker content (when there is no icon) */
     step?: Numberish;
     /**
-     * Default style for the step.
-     * This will override parent type.
-     * Could be used to set a completed step to "success" for example
+     * Color variant of the control.
+     * This will override parent variant.
+     * Could be used to set a completed step to "success" for example.
+     * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
     /** Item will be disabled */
     disabled?: boolean;
     /**
      * Item can be used directly to navigate.
-     * If undefined, previous steps are clickable while the others are not
+     * By default, previous steps are clickable while the others are not.
      */
     clickable?: boolean;
     /** Show/hide item */
     visible?: boolean;
-    /** Icon on the left */
+    /** Step marker icon */
     icon?: string;
     /** Icon pack */
     iconPack?: string;
     /** Text content, unnecessary when default slot is used */
     content?: string;
-    /** Component to be injected. */
+    /** Component to be injected */
     component?: C;
     /** Props to be binded to the injected component */
     props?: ComponentProps<C>;

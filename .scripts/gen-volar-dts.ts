@@ -15,23 +15,11 @@ function generateComponentsType(module: string, file: string): void {
 
     const globalComponents = getComponents(componentDirectory);
 
-    const components = {};
-    globalComponents
+    const lines = globalComponents
         // add global "O" prefix
         .map((dir) => "O" + dir)
-        // add type declaration
-        .forEach((key) => {
-            components[key] = `(typeof import("${module}"))["${key}"];`;
-        });
-
-    const lines = Object.entries(components)
-        .filter(([name]) => components[name])
-        .map(([name, v]) => {
-            if (!/^\w+$/.test(name)) {
-                name = `'${name}'`;
-            }
-            return `${name}: ${v}`;
-        });
+        // convert to type declaration format
+        .map((key) => `${key}: (typeof import("${module}"))["${key}"];`);
 
     const code = `// Auto generated component declarations
 declare module "vue" {
@@ -43,7 +31,7 @@ declare module "vue" {
 export {};
 `;
 
-    fs.writeFileSync(path.resolve(__dirname, file), code, "utf-8");
+    fs.writeFileSync(path.resolve(__dirname, file), code, { encoding: "utf8" });
 
     console.log(`File '${file}' generated.`);
 }

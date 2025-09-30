@@ -258,16 +258,22 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 indicatorItemActiveClass: ClassDefinition;
                 /** Class of indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
-                /** Class of item element */
+                /** Class of the item element */
                 itemClass: ClassDefinition;
-                /** Class of item element when active */
+                /** Class of the item element when active */
                 itemActiveClass: ClassDefinition;
-                /** Class of item element when clickable */
+                /** Class of the item element when clickable */
                 itemClickableClass: ClassDefinition;
+                /** Class of the item title element */
+                itemTitleClass: ClassDefinition;
+                /** Class of the item subtitle element */
+                itemSubtitleClass: ClassDefinition;
+                /** Class of the item image wrapper element */
+                itemImageClass: ClassDefinition;
             }>;
         checkbox?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Size of the control */
                 size: string;
@@ -322,9 +328,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Close dropdown on click */
                 closeOnClick: boolean;
                 /** Custom function to format a date into a string */
-                formatter: ((date: Date | [] | Date[] | [Date, Date]) => string) | undefined;
+                formatter: ((date: [] | Date | Date[] | [Date, Date]) => string) | undefined;
                 /** Custom function to parse a string into a date */
-                parser: ((date: string) => Date | [] | Date[] | [Date, Date]) | undefined;
+                parser: ((date: string) => [] | Date | Date[] | [Date, Date]) | undefined;
                 /** Date creator function, default is `new Date()` */
                 creator: (() => Date);
                 /** Define a list of weeks which can not be selected */
@@ -534,7 +540,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Dropdown trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Dropdown will be triggered by any events */
-                triggers: ("click" | "contextmenu" | "focus" | "keydown" | "hover")[];
+                triggers: ("focus" | "click" | "contextmenu" | "keydown" | "hover")[];
                 /** Keep dropdown list open when item get selected */
                 keepOpen: boolean;
                 /** The first option will always be pre-selected (easier to just hit enter or tab) */
@@ -679,7 +685,7 @@ See icon library documentation for custom classes. */
             Partial<{
                 /** Size of the control */
                 size: string;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Makes input full width when inside a grouped or addon field */
                 expanded: boolean;
@@ -729,6 +735,61 @@ See icon library documentation for custom classes. */
                 iconRightClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
+            }>;
+        listbox?: ComponentConfigBase &
+            Partial<{
+                /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
+                scrollHeight: number | string;
+                /** A label which is displayed when no options is visible */
+                emptyLabel: string;
+                /** Icon of the column search input */
+                filterIcon: string;
+                /** Placeholder of the column search input */
+                filterPlaceholder: string;
+                /** Number of milliseconds to delay the filter event */
+                filterDebounce: number;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Custom animation (transition name) */
+                animation: string;
+                /** List tag name */
+                listTag: DynamicComponent;
+                /** List item tag name */
+                itemTag: DynamicComponent;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Clas of the root element when disabled */
+                disabledClass: ClassDefinition;
+                /** Clas of the root element when selectable */
+                selectableClass: ClassDefinition;
+                /** Clas of the root element when filterable */
+                filterableClass: ClassDefinition;
+                /** Clas of the root element when multiple */
+                multipleClass: ClassDefinition;
+                /** Class of the header slot wrapper element */
+                headerClass: ClassDefinition;
+                /** Class of the footer slot wrapper element */
+                footerClass: ClassDefinition;
+                /** Class of the empty slot wrapper element */
+                emptyClass: ClassDefinition;
+                /** Class of the filter wrapper element */
+                filterClass: ClassDefinition;
+                /** Class of the list container element */
+                containerClass: ClassDefinition;
+                /** Class of the list element */
+                listClass: ClassDefinition;
+                /** Class configuration for the internal input component */
+                inputClasses: Record<string, any>;
+                /** Class of the item element. */
+                itemClass: ClassDefinition;
+                /** Class of the item element when selected */
+                itemSelectedClass: ClassDefinition;
+                /** Class of the item element when focused */
+                itemFocusedClass: ClassDefinition;
+                /** Class of the item element when clickable */
+                itemClickableClass: ClassDefinition;
+                /** Class of the item element when disabled */
+                itemDisabledClass: ClassDefinition;
             }>;
         loading?: ComponentConfigBase &
             Partial<{
@@ -859,7 +920,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         notification?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Enable rounded style */
                 rounded: boolean;
@@ -973,7 +1034,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         radio?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Size of the control */
                 size: string;
@@ -998,7 +1059,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             Partial<{
                 /** Vertical size of input */
                 size: string;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Makes input full width when inside a grouped or addon field */
                 expanded: boolean;
@@ -1172,7 +1233,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         steps?: ComponentConfigBase &
             Partial<{
-                /** Icon on the left */
+                /** Step marker icon */
                 icon: string;
                 /** Icon pack */
                 iconPack: string;
@@ -1198,7 +1259,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 stepIconClass: ClassDefinition;
                 /** Class of the step panel element */
                 stepPanelClass: ClassDefinition;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Step size */
                 size: string;
@@ -1228,8 +1289,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 mobileClass: ClassDefinition;
                 /** Size of the root element with size */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
-                variantClass: ClassDefinition;
                 /** Class of the root element when is vertical */
                 verticalClass: ClassDefinition;
                 /** Class of the root element when is vertical and has position */
@@ -1253,7 +1312,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         switch?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Color of the switch when is passive */
                 passiveVariant: string;
@@ -1449,7 +1508,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         tabs?: ComponentConfigBase &
             Partial<{
-                /** Icon on the left */
+                /** Icon shown to the left of the label */
                 icon: string;
                 /** Icon pack */
                 iconPack: string;
@@ -1457,6 +1516,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 itemTag: DynamicComponent;
                 /** Class of the tab item element */
                 tabClass: ClassDefinition;
+                /** Class of the tab item element with variant */
+                tabVariantClass: ClassDefinition;
                 /** Class of the tab item element when active */
                 tabActiveClass: ClassDefinition;
                 /** Class of the tab item element before the active one */
@@ -1471,7 +1532,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tabLabelClass: ClassDefinition;
                 /** Class of the tab panel element */
                 tabPanelClass: ClassDefinition;
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Tab size */
                 size: string;
@@ -1672,7 +1733,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tooltip trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Tooltip trigger events */
-                triggers: ("click" | "contextmenu" | "focus" | "hover")[];
+                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
                 closeable: boolean | ("content" | "escape" | "outside")[];
                 /** Append the component to another part of the DOM.
@@ -1704,7 +1765,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
             }>;
         upload?: ComponentConfigBase &
             Partial<{
-                /** Color of the control */
+                /** Color variant of the control */
                 variant: string;
                 /** Upload will be expanded (full-width) */
                 expanded: boolean;

@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T, K extends string">
-import { computed, getCurrentInstance, useTemplateRef } from "vue";
+import { computed, useSlots, useTemplateRef } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
@@ -41,13 +41,12 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
 
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
-const vm = getCurrentInstance();
+const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TableColumnComponent<T>>(() => ({
     ...(props as TableColumn<T>),
-    $instance: vm!.proxy!,
-    $slots: vm!.slots,
+    $slots: slots,
     style: style.value,
     thClasses: thClasses.value,
     tdClasses: tdClasses.value,
@@ -58,7 +57,6 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
 const { item } = useProviderChild<TableColumnComponent<T>>(rootRef, {
     data: providedData,
 });
-
 const style = computed(() => ({
     width: toCssDimension(props.width),
     "min-width": toCssDimension(props.width),

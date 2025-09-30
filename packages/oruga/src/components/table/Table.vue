@@ -1376,7 +1376,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 ">
                                 <o-slot-component
                                     v-if="column.$slots?.header"
-                                    :component="column.$instance"
+                                    :component="column"
                                     name="header"
                                     tag="span"
                                     :class="thLabelClasses"
@@ -1464,7 +1464,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     ">
                                     <o-slot-component
                                         v-if="column.$slots?.searchable"
-                                        :component="column.$instance"
+                                        :component="column"
                                         name="searchable"
                                         tag="span"
                                         :props="{
@@ -1474,7 +1474,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         }" />
                                     <o-slot-component
                                         v-else-if="column.$slots?.filter"
-                                        :component="column.$instance"
+                                        :component="column"
                                         name="filter"
                                         tag="span"
                                         :props="{
@@ -1537,7 +1537,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 :style="isMobileActive ? {} : column.style">
                                 <o-slot-component
                                     v-if="column.$slots?.subheading"
-                                    :component="column.$instance"
+                                    :component="column"
                                     name="subheading"
                                     tag="span"
                                     :props="{
@@ -1643,7 +1643,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 <o-slot-component
                                     v-if="!column.hidden"
                                     v-bind="column.tdAttrsData[row.index]"
-                                    :component="column.$instance"
+                                    :component="column"
                                     name="default"
                                     tag="td"
                                     :class="[

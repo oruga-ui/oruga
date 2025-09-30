@@ -4,6 +4,7 @@ import { ref } from "vue";
 const labelPosition = ref<"bottom" | "right" | "left">("bottom");
 const position = ref<"left" | "centered" | "right">("left");
 const size = ref<string>();
+const variant = ref<string>();
 </script>
 
 <template>
@@ -25,6 +26,15 @@ const size = ref<string>();
                     <option value="large">Large</option>
                 </o-select>
             </o-field>
+            <o-field label="Variant">
+                <o-select v-model="variant">
+                    <option :value="undefined">Default</option>
+                    <option value="success">Success</option>
+                    <option value="info">Info</option>
+                    <option value="warning">Warning</option>
+                    <option value="danger">Danger</option>
+                </o-select>
+            </o-field>
             <o-field label="Label position" label-position="on-border">
                 <o-select v-model="labelPosition">
                     <option value="bottom">Bottom</option>
@@ -38,6 +48,7 @@ const size = ref<string>();
             :position="position"
             :label-position="labelPosition"
             :size="size"
+            :variant="variant"
             vertical>
             <o-step-item label="Account" icon="user-lock">
                 Account: Lorem ipsum dolor sit amet. <br />

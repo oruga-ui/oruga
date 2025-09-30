@@ -383,7 +383,7 @@ function onDragEnd(): void {
 
 // #endregion --- Drag & Drop Feature ---
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-carousel"],
@@ -461,6 +461,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
 
     return [...indicatorItemClasses.value, ...activeClasses];
 }
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
