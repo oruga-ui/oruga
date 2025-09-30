@@ -395,7 +395,6 @@ const itemEmptyClasses = defineClasses([
 const itemGroupClasses = defineClasses([
     "itemGroupTitleClass",
     "o-autocomplete__item-group-title",
-    // TODO: refactor to o-autocomplete__item-group
 ]);
 
 const itemHeaderClasses = defineClasses([
