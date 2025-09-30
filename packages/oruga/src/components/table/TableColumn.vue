@@ -57,6 +57,7 @@ const providedData = computed<TableColumnComponent<T>>(() => ({
 const { item } = useProviderChild<TableColumnComponent<T>>(rootRef, {
     data: providedData,
 });
+
 const style = computed(() => ({
     width: toCssDimension(props.width),
     "min-width": toCssDimension(props.width),
@@ -184,6 +185,7 @@ const filters = {} as Record<string, string>;
                 :column="column"
                 :index="index"
                 :filters="filters" />
+
             <!--
                 @slot Override searchable input
                 @binding {TableColumn} column - column definition

@@ -211,6 +211,11 @@ const inspectData: InspectData<
             "Class of the table `th` element that is currently sorted.",
         info: "Click on 'First Name' header to sort elements and see it in action!",
     },
+    thSortedClass: {
+        class: "thSortedClass",
+        description: "Class of the table `th` element when sorted.",
+        info: "Click on 'First Name' header to sort elements and see it in action!",
+    },
     thUnselectableClass: {
         class: "thUnselectableClass",
         description: "Class of the Table `th` element that is unsortable.",
@@ -229,6 +234,10 @@ const inspectData: InspectData<
         class: "thSortIconClass",
         description: "Class of the table header sort icon element.",
         info: "Click on 'First Name' header to sort elements and see it in action!",
+    },
+    trClass: {
+        class: "trClass",
+        description: "Class of the table `tr` element.",
     },
     trSelectedClass: {
         class: "trSelectedClass",
