@@ -327,7 +327,7 @@ function close(method: string, event: Event): void {
     emits("close", method, event);
 
     // select item when dropdown closed
-    if (props.selectOnClose && focusedItem.value?.data?.value)
+    if (props.selectOnClose && focusedItem.value?.data.value)
         selectItem(focusedItem.value);
 
     isActive.value = false;
@@ -408,7 +408,7 @@ function moveFocus(delta: 1 | -1): void {
 
 /** Set focus on a dropdown item. */
 function setFocus(item: DropdownChildItem<T>): void {
-    if (props.selectOnFocus && item.data?.value)
+    if (props.selectOnFocus && item.data.value)
         selectItem(
             item,
             new FocusEvent("focus", { relatedTarget: toValue(item.el) }),
@@ -435,7 +435,7 @@ function onEnter(event: Event): void {
     if (!isActive.value) return;
     if (focusedItem.value) {
         setFocus(focusedItem.value);
-        focusedItem.value.data?.selectItem(event);
+        focusedItem.value.data.selectItem(event);
     }
 }
 
@@ -498,7 +498,7 @@ function getFirstViableItem(
 }
 
 function isItemViable(item: DropdownChildItem<T>): boolean {
-    return !item.data?.disabled && !item.data?.hidden && !!item.data?.clickable;
+    return !item.data.disabled && !item.data.hidden && !!item.data.clickable;
 }
 
 // #endregion --- Focus Feature ---

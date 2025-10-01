@@ -146,7 +146,7 @@ function activateItem(newValue: ModelValue): void {
         childItems.value.find((item) => item.data.value === newValue) ||
         childItems.value[0];
 
-    if (oldItem?.data && newItem?.data) {
+    if (oldItem && newItem) {
         oldItem.data.deactivate(newItem.index);
         newItem.data.activate(oldItem.index);
     }

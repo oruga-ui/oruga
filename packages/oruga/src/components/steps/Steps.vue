@@ -120,7 +120,7 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 
 onMounted(() => {
     // set first step as default if not defined
-    if (!vmodel.value) vmodel.value = childItems.value[0]?.data?.value;
+    if (!vmodel.value) vmodel.value = childItems.value[0].data.value;
 });
 
 /** When v-model is changed set the new active step. */
@@ -137,24 +137,24 @@ const activeItem = ref<StepItem<T>>();
 // set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
-        ? childItems.value.find((item) => item.data?.value === vmodel.value) ||
+        ? childItems.value.find((item) => item.data.value === vmodel.value) ||
           childItems.value[0]
         : childItems.value[0];
 });
 
 const isTransitioning = computed(() =>
-    childItems.value.some((item) => item.data?.isTransitioning),
+    childItems.value.some((item) => item.data.isTransitioning),
 );
 
 /** Activate a specific child item by value and deactivate the previous child item. */
 function activateItem(newValue: ModelValue): void {
-    const oldValue = activeItem.value?.data?.value;
+    const oldValue = activeItem.value?.data.value;
     const oldItem = activeItem.value;
     const newItem =
-        childItems.value.find((item) => item.data?.value === newValue) ||
+        childItems.value.find((item) => item.data.value === newValue) ||
         childItems.value[0];
 
-    if (oldItem?.data && newItem?.data) {
+    if (oldItem && newItem) {
         oldItem.data.deactivate(newItem.index);
         newItem.data.activate(oldItem.index);
     }
@@ -180,7 +180,7 @@ function moveActiveItem(fowardIndex: 1 | -1): void {
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem<T>): void {
     if (!item.data || vmodel.value === item.data.value) return;
-    if (!item.data?.isClickable) return;
+    if (!item.data.isClickable) return;
     activateItem(item.data.value);
 }
 
