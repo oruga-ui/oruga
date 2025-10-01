@@ -18,11 +18,8 @@ export type TableColumnComponent<
     $slots: Slots;
     style: StyleValue;
     thClasses: ClassBinding[];
+    thSubClasses: ClassBinding[];
     tdClasses: ClassBinding[];
-};
-
-export type TableComponent = {
-    isColumnSorted(column: ProviderItem): boolean;
 };
 
 export type TableColumnItem<T, K extends string = FieldKey<T>> = Omit<

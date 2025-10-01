@@ -49,7 +49,6 @@ import type {
     TableRow,
     TableColumnItem,
     TableColumnComponent,
-    TableComponent,
 } from "./types";
 import type { TableProps } from "./props";
 
@@ -355,15 +354,9 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
 const slotsRef = useTemplateRef("slotsWrapper");
 
-// provided data is a computed ref to ensure reactivity
-const provideData = computed<TableComponent>(() => ({
-    isColumnSorted,
-}));
-
 /** provide functionalities and data to child item components */
 const { childItems } = useProviderParent<TableColumnComponent<T>>({
     rootRef: slotsRef,
-    data: provideData,
 });
 
 // #region --- TABLE COLUMNS ---
@@ -1092,14 +1085,15 @@ const thCheckboxClasses = defineClasses(
     ],
 );
 
+const thSortedClasses = defineClasses(
+    /** @deprecated use `thSortedClass` instead */
+    ["thCurrentSortClass", "o-table__th-current-sort"],
+    ["thSortedClass", "o-table__th--sorted"],
+);
+
 const thDetailedClasses = defineClasses([
     "thDetailedClass",
     "o-table__th-detailed",
-]);
-
-const thSubheadingClasses = defineClasses([
-    "thSubheadingClass",
-    "o-table__th-subheading",
 ]);
 
 const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
@@ -1108,6 +1102,8 @@ const thSortIconClasses = defineClasses([
     "thSortIconClass",
     "o-table__th__sort-icon",
 ]);
+
+const trBaseClasses = defineClasses(["trClass", "o-table__tr"]);
 
 const trSelectedClasses = defineClasses([
     "trSelectedClass",
@@ -1138,10 +1134,11 @@ const tdCheckboxClasses = defineClasses(
     ],
 );
 
-const tdDetailedChevronClasses = defineClasses([
-    "tdDetailedChevronClass",
-    "o-table__td-chevron",
-]);
+const tdDetailedClasses = defineClasses(
+    /** @deprecated use `tdDetailClass` instead */
+    ["tdDetailedChevronClass", "o-table__td-chevron"],
+    ["tdDetailClass", "o-table__td-detail"],
+);
 
 const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
@@ -1159,6 +1156,10 @@ const paginationWrapperRootClasses = computed(() =>
     getActiveClasses(paginationWrapperClasses),
 );
 
+function columnClasses(column: TableColumnItem<T>): ClassBinding[] {
+    return isColumnSorted(column) ? thSortedClasses.value : [];
+}
+
 function rowClasses(row: TableRow<T>): ClassBinding[] {
     const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
         ? trSelectedClasses.value
@@ -1171,7 +1172,12 @@ function rowClasses(row: TableRow<T>): ClassBinding[] {
             ? props.rowClass(row.value, row.index) || ""
             : "";
 
-    return [...selectedClasses, ...checkedClasses, { [rowClass]: true }];
+    return [
+        ...trBaseClasses.value,
+        ...selectedClasses,
+        ...checkedClasses,
+        { [rowClass]: true },
+    ];
 }
 
 // #endregion --- Computed Component Classes ---
@@ -1193,7 +1199,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
             <slot name="before" />
 
             <!--
-                @slot Place o-table-column here
+                @slot Place `o-table-column` here
             -->
             <slot>
                 <template v-if="columns?.length">
@@ -1334,14 +1340,18 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             </slot>
                         </th>
 
-                        <!-- row data columns -->
+                        <!-- row header columns -->
                         <template
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
                                 v-if="!column.hidden"
                                 v-bind="column.thAttrsData"
-                                :class="[...thBaseClasses, ...column.thClasses]"
+                                :class="[
+                                    ...thBaseClasses,
+                                    ...column.thClasses,
+                                    ...columnClasses(column),
+                                ]"
                                 :style="isMobileActive ? {} : column.style"
                                 :draggable="canDragColumn"
                                 :aria-sort="
@@ -1435,9 +1445,11 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             aria-hidden="true" />
 
                         <!-- checkable column left -->
-                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'left'"
+                            :class="thBaseClasses" />
 
-                        <!-- row data columns -->
+                        <!-- row filter columns -->
                         <template
                             v-for="column in tableColumns"
                             :key="column.identifier">
@@ -1493,7 +1505,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         </template>
 
                         <!-- checkable column right -->
-                        <th v-if="checkable && checkboxPosition === 'right'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'right'"
+                            :class="thBaseClasses" />
                     </tr>
 
                     <tr
@@ -1505,7 +1519,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :class="[...thBaseClasses, ...thDetailedClasses]" />
 
                         <!-- checkable column left -->
-                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'left'"
+                            :class="thBaseClasses" />
 
                         <!-- row data columns -->
                         <template
@@ -1513,11 +1529,12 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :key="column.identifier">
                             <th
                                 v-if="!column.hidden"
-                                :style="isMobileActive ? {} : column.style"
+                                v-bind="column.thAttrsData"
                                 :class="[
                                     ...thBaseClasses,
-                                    ...thSubheadingClasses,
-                                ]">
+                                    ...column.thSubClasses,
+                                ]"
+                                :style="isMobileActive ? {} : column.style">
                                 <o-slot-component
                                     v-if="column.$slots?.subheading"
                                     :component="column"
@@ -1527,16 +1544,18 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         column: column.value,
                                         index: column.index,
                                     }" />
-                                <span v-else>
-                                    <slot name="subheading">
+                                <slot v-else name="subheading">
+                                    <span :class="thLabelClasses">
                                         {{ column.subheading }}
-                                    </slot>
-                                </span>
+                                    </span>
+                                </slot>
                             </th>
                         </template>
 
                         <!-- checkable column right -->
-                        <th v-if="checkable && checkboxPosition === 'right'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'right'"
+                            :class="thBaseClasses" />
                     </tr>
                 </thead>
 
@@ -1588,7 +1607,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 v-if="showDetailRowIcon"
                                 :class="[
                                     ...tdBaseClasses,
-                                    ...tdDetailedChevronClasses,
+                                    ...tdDetailedClasses,
                                 ]">
                                 <o-icon
                                     v-if="isDetailedVisible(row.value)"

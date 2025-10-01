@@ -1473,6 +1473,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 thSortableClass: ClassDefinition;
                 /** Class of the table `th` element that is currently sorted */
                 thCurrentSortClass: ClassDefinition;
+                /** Class of the table `th` element when sorted */
+                thSortedClass: ClassDefinition;
                 /** Class of the table `th` element that is unsortable */
                 thUnselectableClass: ClassDefinition;
                 /** Class of the table `th` subheading element */
@@ -1481,6 +1483,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 thLabelClass: ClassDefinition;
                 /** Class of the table header sort icon element */
                 thSortIconClass: ClassDefinition;
+                /** Class of the table `tr` element */
+                trClass: ClassDefinition;
                 /** Class of the table `tr` element when selected */
                 trSelectedClass: ClassDefinition;
                 /** Class of the table `tr` element when checkable and checked */
@@ -1499,6 +1503,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 tdCheckboxClass: ClassDefinition;
                 /** Class of the table `td` element that contains the chevron to trigger details */
                 tdDetailedChevronClass: ClassDefinition;
+                /** Class of the table `td` element that contains the detail trigger */
+                tdDetailClass: ClassDefinition;
                 /** Class of the Table pagination wrapper element */
                 paginationWrapperClass: ClassDefinition;
                 /** Class of the table footer element */

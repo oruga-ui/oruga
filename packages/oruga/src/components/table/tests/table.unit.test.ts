@@ -110,10 +110,16 @@ describe("OTable tests", () => {
         const cols = headers.filter((th) => th.find("span"));
         expect(cols).toHaveLength(4);
 
-        expect(cols[0].attributes("style")).toBe("width: 100px;");
-        expect(cols[1].attributes("style")).toBe("width: 50%;");
-        expect(cols[2].attributes("style")).toBe("width: 100px;");
-        expect(cols[3].attributes("style")).toBe("width: 100px;");
+        expect(cols[0].attributes("style")).toBe(
+            "width: 100px; min-width: 100px;",
+        );
+        expect(cols[1].attributes("style")).toBe("width: 50%; min-width: 50%;");
+        expect(cols[2].attributes("style")).toBe(
+            "width: 100px; min-width: 100px;",
+        );
+        expect(cols[3].attributes("style")).toBe(
+            "width: 100px; min-width: 100px;",
+        );
     });
 
     test("displays all data", async () => {
@@ -181,7 +187,8 @@ describe("OTable tests", () => {
                     width: "40",
                     numeric: true,
                     sortable: true,
-                    formatter: (a, b) => {
+                    thAttrs: { style: { "min-width": "40px" } },
+                    formatter: (a, b): string => {
                         expect(a).toBe(b);
                         return "abc";
                     },
