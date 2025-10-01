@@ -4,11 +4,11 @@ exports[`OTable tests > render correctly 1`] = `
 "<div data-oruga="table" class="o-table__root">
   <div style="display: none;">
     <!--
-                @slot Place o-table-column here
+                @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
             -->
     <!--
-                    @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-                --><span data-oruga="table-column" data-id="table-1">ID <!--
+                @slot Place o-table-column here
+            --><span data-oruga="table-column" data-id="table-1">ID <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
@@ -30,8 +30,8 @@ exports[`OTable tests > render correctly 1`] = `
             Slots are defined in table component.
         --><!--v-if--></span>
     <!--
-                    @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-                -->
+                @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
+            -->
   </div>
   <!--v-if-->
   <!--v-if-->
