@@ -65,6 +65,8 @@ export function getComponents(dir: string): string[] {
             .map(getFilenameWithoutExtension)
             // filter blacklist
             .filter((key) => !IGNORE.includes(key))
+            // stay consistent order
+            .sort((a, b) => a.localeCompare(b))
     );
 }
 

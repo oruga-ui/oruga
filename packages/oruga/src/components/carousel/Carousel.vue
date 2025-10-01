@@ -81,17 +81,17 @@ const props = withDefaults(defineProps<CarouselProps>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {number} updated modelValue prop
+     * @param value {number} - updated modelValue prop
      */
     "update:model-value": [value: number];
     /**
      * on carousel slide change event
-     * @param value {number} active index
+     * @param value {number} - active index
      */
     change: [value: number];
     /**
      * on item click event
-     * @param event {event} native event
+     * @param event {event} - native event
      */
     click: [event: Event];
 }>();
@@ -383,7 +383,7 @@ function onDragEnd(): void {
 
 // #endregion --- Drag & Drop Feature ---
 
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-carousel"],
@@ -461,6 +461,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
 
     return [...indicatorItemClasses.value, ...activeClasses];
 }
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -470,7 +472,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         :class="rootClasses"
         role="region"
         aria-roledescription="carousel"
-        @mouseover="onMouseEnter"
+        @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave"
         @focusin="onMouseEnter"
         @focusout="onMouseLeave"

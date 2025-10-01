@@ -39,6 +39,11 @@ export type ModalProps<C extends Component = Component> = {
     ariaLabel?: string;
     /** Automatically focus modal when active */
     autoFocus?: boolean;
+    /**
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack?: string;
     /** Close icon name */
     closeIcon?: string;
     /**

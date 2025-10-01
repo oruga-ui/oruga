@@ -32,4 +32,4 @@ jobs:
         if: ${{ steps.cache-playwright.outputs.cache-hit != 'true' }}
         run: npx playwright install chromium
       - name: Run unit tests 🧪
-        run: npm run test --browser chromium --browser.headless=true
+        run: npm run test:coverage --browser chromium --browser.headless=true

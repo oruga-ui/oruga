@@ -5,7 +5,7 @@ const gallery = ref(false);
 
 const breakpoints = {
     0: {
-        itemsToShow: 2
+        itemsToShow: 2,
     },
     768: {
         itemsToShow: 4,
@@ -13,9 +13,9 @@ const breakpoints = {
     960: {
         itemsToShow: 6,
     },
-}
+};
 
-const items = [
+const slides = [
     {
         title: "Slide 1",
         image: "https://picsum.photos/id/1/1230/500",
@@ -71,9 +71,12 @@ function switchGalleryOff(event: KeyboardEvent): void {
             :arrows="false"
             @click="switchGallery(true)"
             @keydown.esc="gallery && switchGallery(false)">
-            <o-carousel-item v-for="(item, i) in items" :key="i" clickable>
+            <o-carousel-item
+                v-for="slide in slides"
+                :key="slide.title"
+                clickable>
                 <div class="image">
-                    <img :src="item.image" :alt="item.title" />
+                    <img :src="slide.image" :alt="slide.title" />
                 </div>
             </o-carousel-item>
 
@@ -84,12 +87,12 @@ function switchGalleryOff(event: KeyboardEvent): void {
                     :breakpoints="breakpoints"
                     @update:model-value="switchTo($event)">
                     <o-carousel-item
-                        v-for="(item, i) in items"
-                        :key="i"
+                        v-for="slide in slides"
+                        :key="slide.title"
                         clickable
                         item-class="img-indicator"
                         item-active-class="img-indicator-active">
-                        <img :src="item.image" :alt="item.title" />
+                        <img :src="slide.image" :alt="slide.title" />
                     </o-carousel-item>
                 </o-carousel>
             </template>

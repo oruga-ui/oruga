@@ -69,38 +69,38 @@ const props = withDefaults(defineProps<InputProps<IsNumber>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value {string | number} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * on input change event
-     * @param value {string} input value
-     * @param event {Event} native event
+     * @param value {string} - input value
+     * @param event {Event} - native event
      */
     input: [value: string, event: Event];
     /**
      * on input focus event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     focus: [event: Event];
     /**
      * on input blur event
-     * @param event {Event} native event
+     * @param event {Event} -  native event
      */
     blur: [event: Event];
     /**
      * on input invalid event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     invalid: [event: Event];
     /**
      * on icon click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     "icon-click": [event: Event];
     /**
      * on icon right click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     "icon-right-click": [event: Event];
 }>();
@@ -186,13 +186,8 @@ const computedStyles = computed<StyleValue>(() =>
         : {},
 );
 
-let debouncedInput: ReturnType<typeof useDebounce<Parameters<typeof onInput>>>;
-
-watch(
-    () => props.debounce,
-    (debounce) => (debouncedInput = useDebounce(onInput, debounce || 0)),
-    { immediate: true },
-);
+/** debounced input event handler based on debounce prop */
+const debouncedInput = useDebounce(onInput, props.debounce ?? 0);
 
 function onInput(event: Event): void {
     emits("input", vmodel.value, event);

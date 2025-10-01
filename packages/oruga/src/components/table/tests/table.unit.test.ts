@@ -110,10 +110,16 @@ describe("OTable tests", () => {
         const cols = headers.filter((th) => th.find("span"));
         expect(cols).toHaveLength(4);
 
-        expect(cols[0].attributes("style")).toBe("width: 100px;");
-        expect(cols[1].attributes("style")).toBe("width: 50%;");
-        expect(cols[2].attributes("style")).toBe("width: 100px;");
-        expect(cols[3].attributes("style")).toBe("width: 100px;");
+        expect(cols[0].attributes("style")).toBe(
+            "width: 100px; min-width: 100px;",
+        );
+        expect(cols[1].attributes("style")).toBe("width: 50%; min-width: 50%;");
+        expect(cols[2].attributes("style")).toBe(
+            "width: 100px; min-width: 100px;",
+        );
+        expect(cols[3].attributes("style")).toBe(
+            "width: 100px; min-width: 100px;",
+        );
     });
 
     test("displays all data", async () => {
@@ -121,7 +127,7 @@ describe("OTable tests", () => {
             props: {
                 columns: [
                     { label: "ID", field: "id", numeric: true },
-                    { label: "Name", field: "name", searchable: true },
+                    { label: "Name", field: "name", filterable: true },
                 ],
                 data,
             },
@@ -181,7 +187,8 @@ describe("OTable tests", () => {
                     width: "40",
                     numeric: true,
                     sortable: true,
-                    formatter: (a, b) => {
+                    thAttrs: { style: { "min-width": "40px" } },
+                    formatter: (a, b): string => {
                         expect(a).toBe(b);
                         return "abc";
                     },
@@ -263,7 +270,7 @@ describe("OTable tests", () => {
         });
     });
 
-    describe("test searchable", () => {
+    describe("test filterable", () => {
         const data = [
             { id: 1, name: "Jesse" },
             { id: 2, name: "João" },
@@ -281,12 +288,12 @@ describe("OTable tests", () => {
             vi.restoreAllMocks();
         });
 
-        test("displays filter row when at least one column is searchable", async () => {
+        test("displays filter row when at least one column is filterable", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -303,12 +310,12 @@ describe("OTable tests", () => {
             expect(inputs).toHaveLength(1);
         });
 
-        test("displays filter input only on searchable columns", async () => {
+        test("displays filter input only on filterable columns", async () => {
             const wrapper = mount(OTable, {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -319,8 +326,8 @@ describe("OTable tests", () => {
             expect(headRows).toHaveLength(2);
             const filterCells = headRows[1].findAll("th");
 
-            expect(filterCells[0].find("input").exists()).toBeFalsy(); // ID column is not searchable
-            expect(filterCells[1].find("input").exists()).toBeTruthy(); // Name column is searchable
+            expect(filterCells[0].find("input").exists()).toBeFalsy(); // ID column is not filterable
+            expect(filterCells[1].find("input").exists()).toBeTruthy(); // Name column is filterable
         });
 
         test("displays filtered data when searching", async () => {
@@ -328,7 +335,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -358,7 +365,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -390,7 +397,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -414,7 +421,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                 },
@@ -438,7 +445,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                     filterDebounce: 1000,
@@ -468,7 +475,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     data,
                     detailed: true,
@@ -760,7 +767,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     checkable: true,
                     isRowCheckable: isRowCheckable,
@@ -837,7 +844,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     paginated: true,
                     data: data,
@@ -856,7 +863,7 @@ describe("OTable tests", () => {
                 props: {
                     columns: [
                         { label: "ID", field: "id", numeric: true },
-                        { label: "Name", field: "name", searchable: true },
+                        { label: "Name", field: "name", filterable: true },
                     ],
                     paginated: true,
                     data: data,

@@ -4,7 +4,7 @@ import { ref } from "vue";
 const isLoading = ref(false);
 const isFullPage = ref(true);
 
-function openLoading() {
+function openLoading(): void {
     isLoading.value = true;
     setTimeout(() => (isLoading.value = false), 10 * 1000);
 }
@@ -24,6 +24,7 @@ function openLoading() {
                 v-model="isFullPage"
                 label="Display loader over full page" />
         </o-field>
+
         <p style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit

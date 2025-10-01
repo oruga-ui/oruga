@@ -52,17 +52,17 @@ const props = withDefaults(defineProps<SliderProps<IsRange>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {number | number[]} updated modelValue prop
+     * @param value {number | number[]} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * on value change event
-     * @param value {number | number[]} updated modelValue prop
+     * @param value {number | number[]} - updated modelValue prop
      */
     change: [value: ModelValue];
     /**
      * on dragging event
-     * @param value {number | number[]} updated modelValue prop
+     * @param value {number | number[]} - updated modelValue prop
      * */
     dragging: [value: ModelValue];
     /** on drag start event */

@@ -14,7 +14,7 @@ exports[`OTaginput tests > render correctly 1`] = `
         <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
-                @binding {T | T[]} value - the selected value
+                @binding {unknown | unknown[]} value - the selected value
                 @binding {(): void} toggle - toggle dropdown active state
             -->
         <div data-oruga="input" class="o-input o-input--expanded">

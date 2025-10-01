@@ -113,7 +113,6 @@ export default {
 
         // basic docs config
         let orugaConfig: OrugaOptions = {
-            environment: "docs",
             iconPack: "fas",
             iconComponent: "vue-fontawesome",
         };

@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import { computed, watch, nextTick } from "vue";
 
-import OPaginationButton from "./PaginationButton.vue";
-import OIcon from "../icon/Icon.vue";
+import OButton from "../button/Button.vue";
 import PlainButton from "../utils/PlainButton";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
 import type { PaginationProps } from "./props";
-import type { DynamicComponent } from "@/types";
 
 /**
- * A responsive and flexible pagination.
+ * A responsive and flexible paginator navigation.
  * @displayName Pagination
  * @style _pagination.scss
  */
@@ -30,10 +28,12 @@ const props = withDefaults(defineProps<PaginationProps>(), {
     perPage: () => getDefault("pagination.perPage", 20),
     rangeBefore: 1,
     rangeAfter: 1,
+    disabled: false,
     size: () => getDefault("pagination.size"),
     simple: () => getDefault("pagination.simple", false),
     rounded: () => getDefault("pagination.rounded", false),
     order: () => getDefault("pagination.order", "right"),
+    position: () => getDefault("pagination.position", "right"),
     buttonTag: () => getDefault("pagination.buttonTag", PlainButton),
     iconPack: () => getDefault("pagination.iconPack"),
     iconPrev: () => getDefault("pagination.iconPrev", "chevron-left"),
@@ -45,29 +45,30 @@ const props = withDefaults(defineProps<PaginationProps>(), {
     ariaPageLabel: () => getDefault("pagination.ariaPageLabel", "Page"),
     ariaCurrentLabel: () =>
         getDefault("pagination.ariaCurrentLabel", "Current page"),
+    buttonClasses: () => getDefault("pagination.buttonClasses", {}),
 });
 
 const emits = defineEmits<{
     /**
      * current prop two-way binding
-     * @param value {number} updated current prop
+     * @param value {number} - updated current prop
      */
     "update:current": [value: number];
     /**
      * on current change event
-     * @param value {number} current value
+     * @param value {number} - current value
      */
     change: [value: number];
     /**
      * on next button event click
-     * @param event {Event} native click event
-     * @param value {number} new current value
+     * @param event {Event} - native click event
+     * @param value {number} - new current value
      */
     next: [event: Event, value: number];
     /**
      * on previous button event
-     * @param event {Event} native click event
-     * @param value {number} new current value
+     * @param event {Event} - native click event
+     * @param value {number} - new current value
      */
     previous: [event: Event, value: number];
 }>();
@@ -85,7 +86,7 @@ const pageCount = computed(() =>
 watch(
     () => pageCount.value,
     (value) => {
-        if (currentPage.value > value) last();
+        if (currentPage.value > value) onLast();
     },
 );
 
@@ -143,17 +144,21 @@ const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
     return pages;
 });
 
-const previousButtonBind = computed(() =>
+const prevButton = computed(() =>
     getPage(currentPage.value - 1, props.ariaPreviousLabel, (e, v) =>
         emits("previous", e, v),
     ),
 );
 
-const nextButtonBind = computed(() =>
+const nextButton = computed(() =>
     getPage(currentPage.value + 1, props.ariaNextLabel, (e, v) =>
         emits("next", e, v),
     ),
 );
+
+const firstButton = computed(() => getPage(1));
+
+const lastButton = computed(() => getPage(pageCount.value));
 
 /** Get properties for a page */
 function getPage(
@@ -161,22 +166,25 @@ function getPage(
     ariaLabel?: string,
     onClick?: (event: Event, value: number) => void,
 ): {
+    label: string;
     number: number;
     isCurrent: boolean;
     onClick: (event: Event) => void;
     ariaLabel: string;
-    tag: DynamicComponent;
+    ariaCurrent: boolean;
 } {
+    const isCurrent = currentPage.value === num;
     return {
+        ...props.buttonClasses,
+        isCurrent: isCurrent,
         number: num,
-        isCurrent: currentPage.value === num,
+        label: String(num),
         onClick: (event: Event): void => {
             changePage(num, event);
             if (onClick) onClick(event, num);
         },
-        ariaLabel:
-            ariaLabel ?? getAriaPageLabel(num, currentPage.value === num),
-        tag: props.buttonTag,
+        ariaLabel: ariaLabel ?? getAriaPageLabel(num, isCurrent),
+        ariaCurrent: isCurrent,
     };
 }
 
@@ -197,22 +205,22 @@ function getAriaPageLabel(pageNumber: number, isCurrent: boolean): string {
 }
 
 /** Previous button click listener. */
-function prev(): void {
+function onPrev(): void {
     changePage(currentPage.value - 1);
 }
 
 /** Next button click listener. */
-function next(): void {
+function onNext(): void {
     changePage(currentPage.value + 1);
 }
 
 /** First button click listener. */
-function first(): void {
+function onFirst(): void {
     changePage(1);
 }
 
 /** Last button click listener. */
-function last(): void {
+function onLast(): void {
     changePage(pageCount.value);
 }
 
@@ -231,11 +239,18 @@ function changePage(page: number, event?: Event): void {
 
 const rootClasses = defineClasses(
     ["rootClass", "o-pagination"],
+    // @deprecated `order` will be removed later
     [
         "orderClass",
         "o-pagination--",
         computed(() => props.order),
         computed(() => !!props.order),
+    ],
+    [
+        "positionClass",
+        "o-pagination--",
+        computed(() => props.position),
+        computed(() => !!props.position),
     ],
     [
         "sizeClass",
@@ -258,7 +273,7 @@ const listClasses = defineClasses(["listClass", "o-pagination__list"]);
 
 const listItemClasses = defineClasses(["listItemClass", "o-pagination__item"]);
 
-const buttonClasses = defineClasses(
+const buttonBaseClasses = defineClasses(
     ["buttonClass", "o-pagination__button"],
     [
         "roundedClass",
@@ -286,7 +301,7 @@ const buttonNextClasses = defineClasses(
 // --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
-defineExpose({ last, first, prev, next });
+defineExpose({ last: onLast, first: onFirst, prev: onPrev, next: onNext });
 </script>
 
 <template>
@@ -298,15 +313,17 @@ defineExpose({ last, first, prev, next });
             @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         -->
-        <slot name="previous" v-bind="previousButtonBind">
-            <o-pagination-button
-                v-bind="previousButtonBind"
-                :disabled="isFirst"
-                :root-class="buttonPrevClasses"
-                :button-class="buttonClasses"
-                :button-current-class="buttonCurrentClasses">
-                <o-icon :icon="iconPrev" :pack="iconPack" aria-hidden="true" />
-            </o-pagination-button>
+        <slot name="previous" v-bind="prevButton">
+            <o-button
+                :tag="buttonTag"
+                v-bind="{ ...prevButton, ...buttonClasses }"
+                :label="undefined"
+                :disabled="isFirst || disabled"
+                :icon-left="iconPrev"
+                :pack="iconPack"
+                :rounded="rounded"
+                :size="size"
+                :class="[...buttonBaseClasses, ...buttonPrevClasses]" />
         </slot>
 
         <!--
@@ -316,38 +333,55 @@ defineExpose({ last, first, prev, next });
             @binding {(event: Event): void} onClick - click handler
             @binding {string} ariaLabel - aria-label attribute
         -->
-        <slot name="next" v-bind="nextButtonBind">
-            <o-pagination-button
-                v-bind="nextButtonBind"
-                :disabled="isLast"
-                :root-class="buttonNextClasses"
-                :button-class="buttonClasses"
-                :button-current-class="buttonCurrentClasses">
-                <o-icon :icon="iconNext" :pack="iconPack" aria-hidden="true" />
-            </o-pagination-button>
+        <slot name="next" v-bind="nextButton">
+            <o-button
+                :tag="buttonTag"
+                v-bind="{ ...nextButton, ...buttonClasses }"
+                :label="undefined"
+                :disabled="isLast || disabled"
+                :icon-left="iconNext"
+                :pack="iconPack"
+                :rounded="rounded"
+                :size="size"
+                :class="[...buttonBaseClasses, ...buttonNextClasses]" />
         </slot>
 
-        <small v-if="simple" :class="infoClasses">
+        <small v-if="simple" :class="infoClasses" aria-live="polite">
             <template v-if="perPage == 1">
-                {{ firstItem }} / {{ total }}
+                {{ firstItem }}
             </template>
             <template v-else>
                 {{ firstItem }}-{{
                     Math.min(currentPage * Number(perPage), total)
                 }}
-                /
-                {{ total }}
             </template>
+            / {{ total }}
         </small>
 
         <ul v-else :class="listClasses">
             <!--First-->
             <li v-if="hasFirst" :class="listItemClasses">
-                <slot v-bind="getPage(1)">
-                    <o-pagination-button
-                        v-bind="getPage(1)"
-                        :button-class="buttonClasses"
-                        :button-current-class="buttonCurrentClasses" />
+                <!--
+                    @slot Pagination button slot
+                    @binding {number} number - page number
+                    @binding {boolean} isCurrent - if page is current
+                    @binding {(event: Event): void} onClick - click handler
+                    @binding {string} ariaLabel - aria-label attribute
+                -->
+                <slot v-bind="firstButton">
+                    <o-button
+                        :tag="buttonTag"
+                        v-bind="{ ...firstButton, ...buttonClasses }"
+                        :variant="firstButton.isCurrent ? 'primary' : undefined"
+                        :disabled="disabled"
+                        :rounded="rounded"
+                        :size="size"
+                        :class="[
+                            ...buttonBaseClasses,
+                            ...(firstButton.isCurrent
+                                ? buttonCurrentClasses
+                                : []),
+                        ]" />
                 </slot>
             </li>
 
@@ -360,11 +394,25 @@ defineExpose({ last, first, prev, next });
                 v-for="page in pagesInRange"
                 :key="page.number"
                 :class="listItemClasses">
+                <!--
+                    @slot Pagination button slot
+                    @binding {number} number - page number
+                    @binding {boolean} isCurrent - if page is current
+                    @binding {(event: Event): void} onClick - click handler
+                    @binding {string} ariaLabel - aria-label attribute
+                -->
                 <slot v-bind="page">
-                    <o-pagination-button
-                        v-bind="page"
-                        :button-class="buttonClasses"
-                        :button-current-class="buttonCurrentClasses" />
+                    <o-button
+                        :tag="buttonTag"
+                        v-bind="{ ...page, ...buttonClasses }"
+                        :variant="page.isCurrent ? 'primary' : undefined"
+                        :disabled="disabled"
+                        :rounded="rounded"
+                        :size="size"
+                        :class="[
+                            ...buttonBaseClasses,
+                            ...(page.isCurrent ? buttonCurrentClasses : []),
+                        ]" />
                 </slot>
             </li>
 
@@ -381,11 +429,20 @@ defineExpose({ last, first, prev, next });
                     @binding {(event: Event): void} onClick - click handler
                     @binding {string} ariaLabel - aria-label attribute
                 -->
-                <slot v-bind="getPage(pageCount)">
-                    <o-pagination-button
-                        v-bind="getPage(pageCount)"
-                        :button-class="buttonClasses"
-                        :button-current-class="buttonCurrentClasses" />
+                <slot v-bind="lastButton">
+                    <o-button
+                        :tag="buttonTag"
+                        v-bind="{ ...lastButton, ...buttonClasses }"
+                        :variant="lastButton.isCurrent ? 'primary' : undefined"
+                        :disabled="disabled"
+                        :rounded="rounded"
+                        :size="size"
+                        :class="[
+                            ...buttonBaseClasses,
+                            ...(lastButton.isCurrent
+                                ? buttonCurrentClasses
+                                : []),
+                        ]" />
                 </slot>
             </li>
         </ul>

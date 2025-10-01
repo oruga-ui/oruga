@@ -24,12 +24,12 @@ defineProps({
 const emits = defineEmits<{
     /**
      * current prop two-way binding
-     * @param value {number} updated current prop
+     * @param value {number} - updated current prop
      */
     "update:current": [value: number];
     /**
      * on current change event
-     * @param value {number} current value
+     * @param value {number} - current value
      */
     change: [event: number];
 }>();

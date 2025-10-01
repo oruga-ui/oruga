@@ -8,10 +8,10 @@ export type StepsComponent = {
     activeIndex: number;
     labelPosition: string;
     vertical: boolean;
+    variant: string;
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
-    variant: string;
 };
 
 export type StepItemComponent<T> = StepItemProps<T, Component> & {

@@ -3,9 +3,12 @@ import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
 import InstanceRegistry from "../InstanceRegistry";
-import ComponentProgrammatic from "../useProgrammatic";
+import useProgrammaticComponent from "../useProgrammatic";
 
 describe("useProgrammatic tests", () => {
+    // create a new factory
+    const factory = useProgrammaticComponent();
+
     beforeEach(() => {
         vi.useFakeTimers();
     });
@@ -14,6 +17,10 @@ describe("useProgrammatic tests", () => {
         // clear body after each test
         document.body.innerHTML = "";
         vi.useRealTimers();
+
+        // clear factory items
+        factory.closeAll();
+        flushPromises(); // await promise finished
     });
 
     enableAutoUnmount(afterEach);
@@ -24,7 +31,7 @@ describe("useProgrammatic tests", () => {
         });
 
         // open element
-        const { close, promise } = ComponentProgrammatic.open(component);
+        const { close, promise } = factory.open(component);
 
         // check promise get called
         const handler = vi.fn();
@@ -57,9 +64,7 @@ describe("useProgrammatic tests", () => {
         });
 
         // open element
-        const { close } = ComponentProgrammatic.open(component, {
-            target: "#my-cool-container",
-        });
+        const { close } = factory.open(component, {}, "#my-cool-container");
 
         // check element exist
         let el = document.body.querySelector("#mycomp");
@@ -89,7 +94,7 @@ describe("useProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        ComponentProgrammatic.open(component, { onClose });
+        factory.open(component, { onClose });
 
         // check element exist
         let el = document.body.querySelector("button");
@@ -112,7 +117,7 @@ describe("useProgrammatic tests", () => {
         });
 
         // open element
-        const { close } = ComponentProgrammatic.open(component, {
+        const { close } = factory.open(component, {
             props: { "data-oruga": "programmatic" },
         });
 
@@ -139,7 +144,7 @@ describe("useProgrammatic tests", () => {
 
         expect(instanceRegistry.entries).toHaveLength(0);
 
-        const { close } = ComponentProgrammatic.open("div", {
+        const { close } = factory.open("div", {
             registry: instanceRegistry,
         });
 
@@ -155,15 +160,19 @@ describe("useProgrammatic tests", () => {
         const root = document.createElement("div");
 
         // open elements
-        ComponentProgrammatic.open("div", { target: root });
-        ComponentProgrammatic.open("div", { target: root });
+        factory.open("div", {}, root);
+        factory.open("div", {}, root);
+
+        expect(factory.count()).toBe(2);
 
         let apps = root.querySelectorAll("#programmatic-app");
         expect(apps).toHaveLength(2);
 
         // close all elements
-        ComponentProgrammatic.closeAll();
+        factory.closeAll();
         vi.runAllTimers();
+
+        expect(factory.count()).toBe(0);
 
         // check elements are removed
         apps = root.querySelectorAll("#programmatic-app");
@@ -172,22 +181,28 @@ describe("useProgrammatic tests", () => {
 
     test("test close last is working correctly", async () => {
         // open elements
-        ComponentProgrammatic.open("div");
-        ComponentProgrammatic.open("div");
+        factory.open("div");
+        factory.open("div");
+
+        expect(factory.count()).toBe(2);
 
         let bodyElements = document.body.querySelectorAll("#programmatic-app");
         expect(bodyElements).toHaveLength(2);
 
         // close last element
-        ComponentProgrammatic.close();
+        factory.close();
         vi.runAllTimers();
+
+        expect(factory.count()).toBe(1);
 
         bodyElements = document.body.querySelectorAll("#programmatic-app");
         expect(bodyElements).toHaveLength(1);
 
         // close last element
-        ComponentProgrammatic.close();
+        factory.close();
         vi.runAllTimers();
+
+        expect(factory.count()).toBe(0);
 
         bodyElements = document.body.querySelectorAll("#programmatic-app");
         expect(bodyElements).toHaveLength(0);
@@ -204,7 +219,7 @@ describe("useProgrammatic tests", () => {
         );
 
         // open elements
-        const { close } = ComponentProgrammatic.open(component);
+        const { close } = factory.open(component);
 
         // check element exist
         const button = document.body.querySelector("button");

@@ -138,7 +138,7 @@ function onKeyPress(event: KeyboardEvent): void {
 
 /** Close fixed sidebar if clicked outside. */
 function clickedOutside(event: Event): void {
-    if (props.inline || !isActive.value || isAnimating.value) return;
+    if (props.inline || !isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
         (contentRef.value && !event.composedPath().includes(contentRef.value))
@@ -171,16 +171,16 @@ function close(...args: [] | [string] | CloseEventArgs<C>): void {
 
 // --- Animation Feature ---
 
-const isAnimating = ref(!props.active);
+const isAnimated = ref(props.active);
 
 /** Transition after-enter hook */
 function afterEnter(): void {
-    isAnimating.value = false;
+    isAnimated.value = true;
 }
 
 /** Transition before-leave hook */
 function beforeLeave(): void {
-    isAnimating.value = true;
+    isAnimated.value = false;
 }
 
 // --- Computed Component Classes ---

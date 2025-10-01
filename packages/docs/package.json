@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/docs-next",
-  "version": "0.11.5",
+  "version": "0.11.6",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -16,8 +16,8 @@
     "docs:gen:watch": "tsx src/docgen.ts --watch"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.0.0",
-    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/fontawesome-svg-core": "^7.0.1",
+    "@fortawesome/free-solid-svg-icons": "^7.0.1",
     "@fortawesome/vue-fontawesome": "^3.1.1",
     "@highlightjs/vue-plugin": "2.1.2",
     "@oruga-ui/theme-bootstrap": "0.9.4",
@@ -31,12 +31,12 @@
     "@types/node": "^24.2.1",
     "@vue/tsconfig": "^0.7.0",
     "sass": "^1.90.0",
-    "tsx": "^4.20.4",
+    "tsx": "^4.20.6",
     "typescript": "5.9.2",
     "vitepress": "^1.6.4",
-    "vue": "^3.5.18",
-    "vue-component-meta": "^3.0.5",
+    "vue": "^3.5.22",
+    "vue-component-meta": "^3.1.0",
     "vue-docgen-cli": "4.79.0",
-    "vue-tsc": "^3.0.5"
+    "vue-tsc": "^3.1.0"
   }
 }

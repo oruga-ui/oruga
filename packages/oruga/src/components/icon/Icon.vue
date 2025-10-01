@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { getDefault, getOption } from "@/utils/config";
+import { getDefault } from "@/utils/config";
 import getIcons from "@/utils/icons";
 import { defineClasses } from "@/composables";
 
@@ -35,12 +35,10 @@ const props = withDefaults(defineProps<IconProps>(), {
 const emits = defineEmits<{
     /**
      * on item click event
-     * @param event {event} native event
+     * @param event {event} - native event
      */
     click: [event: Event];
 }>();
-
-const environment = getOption("environment");
 
 const rootStyle = computed(() => {
     const style = {};
@@ -48,13 +46,19 @@ const rootStyle = computed(() => {
     return style;
 });
 
+/** get the compiled icon packs */
 const icons = getIcons();
 
+/** icon configuration defined by the corresponding icon pack */
 const iconConfig = computed(() => icons[props.pack]);
 
+/** icon prefix defined by the icon configuration */
 const iconPrefix = computed(() => iconConfig.value?.iconPrefix ?? "");
 
-const customSizeByPack = computed(() => {
+/** icon size defined by the icon configuration or custom */
+const iconSize = computed(() => {
+    if (props.customSize) return props.customSize;
+
     if (iconConfig.value?.sizes) {
         if (props.size && iconConfig.value.sizes[props.size] !== undefined)
             return iconConfig.value.sizes[props.size];
@@ -63,8 +67,6 @@ const customSizeByPack = computed(() => {
     }
     return null;
 });
-
-const computedSize = computed(() => props.customSize || customSizeByPack.value);
 
 /**
  * Internal icon name based on the pack.
@@ -77,9 +79,11 @@ const computedIcon = computed(
 
 /** Equivalent icon name of the MDI. */
 function getEquivalentIconOf(value: string): string {
-    // Only transform the class if the env is docs prop is set to true
-    if (environment != "docs") return value;
+    // only transform the class if
     if (
+        // the pack is part of fontawesome icons
+        props.pack.toLocaleLowerCase().startsWith("fa") &&
+        // and an internal icon quivalent is available
         iconConfig.value?.internalIcons &&
         iconConfig.value?.internalIcons[value]
     )
@@ -134,10 +138,10 @@ const rootClasses = defineClasses(
             :is="component"
             v-if="component"
             :icon="[pack, computedIcon]"
-            :size="computedSize"
-            :class="[customClass]" />
+            :size="iconSize"
+            :class="customClass" />
 
         <!-- native css icon -->
-        <i v-else :class="[pack, computedIcon, computedSize, customClass]" />
+        <i v-else :class="[pack, computedIcon, iconSize, customClass]" />
     </span>
 </template>

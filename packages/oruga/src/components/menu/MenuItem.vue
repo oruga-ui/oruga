@@ -50,13 +50,13 @@ const props = withDefaults(defineProps<MenuItemProps<T>>(), {
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     "update:active": [value: boolean];
     /**
      * onclick event
-     * @param value {unknown} value prop data
-     * @param event {event} native event
+     * @param value {unknown} - value prop data
+     * @param event {event} - native event
      */
     click: [value: T, event: Event];
 }>();

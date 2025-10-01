@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<MenuProps<T>>(), {
 defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T} updated modelValue prop
+     * @param value {unknown} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
 }>();
@@ -243,9 +243,9 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
         <div v-if="label || $slots.label" :id="labelId" :class="labelClasses">
             <!-- 
                 @slot Override icon and label
-                @binding {T} focused - the focused item value
+                @binding {unknown} focused - the focused item value
                 @binding {number} focusedIndex - index of the focused item
-                @binding {T} selected - the selected item value
+                @binding {unknown} selected - the selected item value
                 @binding {number} selectedIndex - index of the selected item
             -->
             <slot
@@ -279,9 +279,9 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
             @keydown.end.prevent="onEndPressed">
             <!--
                 @slot Place menu items here 
-                @binding {T} focused - the focused item value
+                @binding {unknown} focused - the focused item value
                 @binding {number} focusedIndex - index of the focused item
-                @binding {T} selected - the selected item value
+                @binding {unknown} selected - the selected item value
                 @binding {number} selectedIndex - index of the selected item
             -->
             <slot

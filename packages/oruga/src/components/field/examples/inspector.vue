@@ -30,6 +30,15 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
             name.value = "Oruga";
         },
     },
+    variantClass: {
+        class: "variantClass",
+        description: "Class of the root element with variant.",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (data): void => {
+            data.variant = "info";
+        },
+    },
     bodyClass: {
         class: "bodyClass",
         description: "Class for the body wrapper element.",
@@ -111,6 +120,16 @@ const inspectData: InspectData<FieldClasses, FieldProps> = {
         description: "Class of the the message element.",
         properties: ["message"],
         action: (data): void => {
+            data.message = "This is a message for the field";
+        },
+    },
+    messageSizeClass: {
+        class: "messageSizeClass",
+        description: "Class for the message element with size.",
+        properties: ["message", "messageSize"],
+        suffixes: ["small", "medium", "large"],
+        action: (data): void => {
+            data.messageSize = "large";
             data.message = "This is a message for the field";
         },
     },

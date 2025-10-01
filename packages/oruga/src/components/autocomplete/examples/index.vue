@@ -67,7 +67,7 @@ import ScrollCode from "./scroll.vue?raw";
     <ExampleViewer :component="Options" :code="OptionsCode" />
     <ExampleViewer :component="OptionsGrouped" :code="OptionsGroupedCode" />
 
-    <h3 id="scroll">Slots</h3>
+    <h3 id="slots">Slots</h3>
     <p>
         A header and a footer can be added to the options list by using the
         <code>header</code> and <code>footer</code> slots. The header and footer

@@ -68,13 +68,13 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T} updated modelValue prop
+     * @param value {unknown} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * on tab change event
-     * @param value {T} new tab value
-     * @param value {T} old tab value
+     * @param value {unknown} - new tab value
+     * @param value {unknown} - old tab value
      */
     change: [newValue: ModelValue, oldValue: ModelValue];
 }>();
@@ -86,6 +86,7 @@ const provideData = computed<TabsComponent>(() => ({
     activeIndex: activeItem.value?.index ?? 0,
     type: props.type,
     vertical: props.vertical,
+    variant: props.variant,
     animated: props.animated,
     animation: props.animation,
     animateInitially: props.animateInitially,

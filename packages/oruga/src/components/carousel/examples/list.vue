@@ -10,7 +10,7 @@ const itemsToShow = ref(4);
 const itemsToList = ref(1);
 const repeat = ref(false);
 
-const items = [
+const slides = [
     {
         title: "Slide 1",
         image: "https://picsum.photos/id/1/1230/500",
@@ -68,7 +68,7 @@ const items = [
                     type="number"
                     number
                     min="1"
-                    :max="items.length" />
+                    :max="slides.length" />
             </o-field>
             <o-field label="Items to List">
                 <o-input
@@ -76,7 +76,7 @@ const items = [
                     type="number"
                     number
                     min="1"
-                    :max="items.length - 1" />
+                    :max="slides.length - 1" />
             </o-field>
         </o-field>
 
@@ -89,9 +89,11 @@ const items = [
             :items-to-show="itemsToShow"
             :items-to-list="itemsToList"
             :repeat="repeat">
-            <o-carousel-item v-for="(item, i) in items" :key="i">
-                <img :src="item.image" :alt="item.title" />
-            </o-carousel-item>
+            <o-carousel-item
+                v-for="slide in slides"
+                :key="slide.title"
+                :image="slide.image"
+                :image-alt="slide.title" />
         </o-carousel>
 
         <p><b>Current slide index:</b> {{ carousel }}</p>
