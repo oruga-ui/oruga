@@ -26,9 +26,9 @@ const inspectData: InspectData<
             data.active = true;
         },
     },
-    itemGroupTitleClass: {
-        class: "itemGroupTitleClass",
-        description: "Class of the menu items group title.",
+    itemGroupClass: {
+        class: "itemGroupClass",
+        description: "Class of the menu group item.",
         action: (data): void => {
             data.input = "Q";
             data.active = true;

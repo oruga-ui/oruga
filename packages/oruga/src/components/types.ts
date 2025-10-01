@@ -62,8 +62,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 rootClass: ClassDefinition;
                 /** Class of the menu items */
                 itemClass: ClassDefinition;
-                /** Class of the menu items group title */
-                itemGroupTitleClass: ClassDefinition;
+                /** Class of the menu group item */
+                itemGroupClass: ClassDefinition;
                 /** Class of the empty menu placeholder item */
                 itemEmptyClass: ClassDefinition;
                 /** Class of the menu header item */
