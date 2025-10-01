@@ -86,8 +86,9 @@ const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<MenuItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: itemValue as T,
+    disabled: props.disabled,
+    hidden: props.hidden,
     parent: menuItem.parent.value,
     hasChildren: hasChildren.value,
     expanded: isExpanded.value,
@@ -114,7 +115,7 @@ const isActive = defineModel<boolean>("active", { default: false });
 const hasChildren = computed(() => !!childItems.value.length);
 
 const isFocused = computed(
-    () => item.value.identifier === parent.value.focsuedIdentifier,
+    () => item.identifier === parent.value.focsuedIdentifier,
 );
 
 function selectItem(event: Event): void {
@@ -122,7 +123,7 @@ function selectItem(event: Event): void {
     triggerReset();
     isActive.value = !isActive.value;
     if (parent.value.accordion) isExpanded.value = isActive.value;
-    parent.value.selectItem(isActive.value ? item.value : undefined);
+    parent.value.selectItem(isActive.value ? item : undefined);
     emits("click", itemValue as T, event);
 }
 
@@ -130,13 +131,11 @@ function triggerReset(childs?: ProviderItem<MenuItemComponent<T>>[]): void {
     // The point of this method is to collect references to the clicked item and any parent,
     // this way we can skip resetting those elements.
     if (typeof menuItem.parent.value?.triggerReset === "function") {
-        menuItem.parent.value.triggerReset(
-            childs ? [item.value, ...childs] : [item.value],
-        );
+        menuItem.parent.value.triggerReset(childs ? [item, ...childs] : [item]);
     }
     // else if not a sub item reset parent menu
     else if (typeof parent.value.resetMenu === "function") {
-        parent.value.resetMenu(childs ? [item.value, ...childs] : [item.value]);
+        parent.value.resetMenu(childs ? [item, ...childs] : [item]);
     }
 }
 

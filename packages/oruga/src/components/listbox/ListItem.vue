@@ -47,9 +47,8 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
-    hidden: isHidden,
+    value: itemValue as T,
+    hidden: isHidden.value,
     clickItem,
     setHidden,
     isViable,
@@ -81,19 +80,19 @@ const isSelected = computed(() => {
 });
 
 const isFocused = computed(
-    () => item.value.identifier === parent.value.focsuedIdentifier,
+    () => item.identifier === parent.value.focsuedIdentifier,
 );
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
     if (isDisabled.value) return;
-    parent.value.selectItem(item.value, !isSelected.value);
+    parent.value.selectItem(item, !isSelected.value);
     emits("click", itemValue as T, event);
 }
 
 /** Set the item as focused element. */
 function focusItem(): void {
-    parent.value.setFocus(item.value);
+    parent.value.setFocus(item);
 }
 
 /** Checks if the item is viable (not disabled or hidden). */

@@ -1,12 +1,12 @@
 <script setup lang="ts" generic="T">
 import {
     computed,
-    toValue,
     nextTick,
     ref,
     watch,
     watchEffect,
     useTemplateRef,
+    onMounted,
 } from "vue";
 
 import OStepItem from "../steps/StepItem.vue";
@@ -100,37 +100,34 @@ const provideData = computed<StepsComponent>(() => ({
 }));
 
 /** provide functionalities and data to child item components */
-const { childItems } = useProviderParent<StepItemComponent<T>>({
+const { childItems, itemsCount } = useProviderParent<StepItemComponent<T>>({
     rootRef,
     data: provideData,
-});
-
-const items = computed<StepItem<T>[]>(() => {
-    if (!childItems.value) return [];
-    return childItems.value.map((column) => ({
-        el: column.el,
-        index: column.index,
-        identifier: column.identifier,
-        ...toValue(column.data!),
-    }));
 });
 
 // create a unique id sequence
 const { nextSequence } = useSequentialId();
 
 /** normalized programamtic options */
-const groupedOptions = computed(() =>
+const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
+// #region --- Selected Item Feature ---
+
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
+
+onMounted(() => {
+    // set first step as default if not defined
+    if (!vmodel.value) vmodel.value = childItems.value[0]?.data?.value;
+});
 
 /** When v-model is changed set the new active step. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (vmodel.value !== value) performAction(value);
+        if (vmodel.value !== value) activateItem(value);
     },
 );
 
@@ -140,30 +137,51 @@ const activeItem = ref<StepItem<T>>();
 // set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
-        ? items.value.find((item) => item.value === vmodel.value) ||
-          items.value[0]
-        : items.value[0];
+        ? childItems.value.find((item) => item.data?.value === vmodel.value) ||
+          childItems.value[0]
+        : childItems.value[0];
 });
 
 const isTransitioning = computed(() =>
-    items.value.some((item) => item.isTransitioning),
+    childItems.value.some((item) => item.data?.isTransitioning),
 );
 
-// --- EVENT HANDLER ---
+/** Activate a specific child item by value and deactivate the previous child item. */
+function activateItem(newValue: ModelValue): void {
+    const oldValue = activeItem.value?.data?.value;
+    const oldItem = activeItem.value;
+    const newItem =
+        childItems.value.find((item) => item.data?.value === newValue) ||
+        childItems.value[0];
+
+    if (oldItem?.data && newItem?.data) {
+        oldItem.data.deactivate(newItem.index);
+        newItem.data.activate(oldItem.index);
+    }
+
+    nextTick(() => {
+        vmodel.value = newValue;
+        emits("change", newValue, oldValue);
+    });
+}
+
+// #endregion --- Active Item Feature ---
+
+// #region --- Event Handler ---
 
 /** Activate the item after or before the current active item. */
-function activateItem(fowardIndex: 1 | -1): void {
+function moveActiveItem(fowardIndex: 1 | -1): void {
     const index = (activeItem.value?.index ?? 0) + fowardIndex;
-    if (index < 0 || index >= items.value.length) return;
-    const item = items.value[index];
-    if (vmodel.value !== item.value) performAction(item.value);
+    if (index < 0 || index >= itemsCount.value) return;
+    const item = childItems.value[index];
+    if (vmodel.value !== item.data.value) activateItem(item.data.value);
 }
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: StepItem<T>): void {
-    // determines if the step is clickable or not
-    if (!item.isClickable) return;
-    if (vmodel.value !== item.value) performAction(item.value);
+    if (!item.data || vmodel.value === item.data.value) return;
+    if (!item.data?.isClickable) return;
+    activateItem(item.data.value);
 }
 
 /** Check if previous button is available. */
@@ -178,33 +196,32 @@ const hasNext = computed(() =>
 
 /** Focus the next item if possible. */
 function onNext(index: number): void {
-    const viableIndex = getFirstViableIndex(index + 1, true);
-    if (isDefined(viableIndex)) moveFocus(viableIndex);
+    const item = getFirstViableIndex(index + 1, true);
+    if (isDefined(item)) moveFocus(item);
 }
 
 /** Focus the previous item if possible. */
 function onPrev(index: number): void {
-    const viableIndex = getFirstViableIndex(index - 1, false);
-    if (isDefined(viableIndex)) moveFocus(viableIndex);
+    const item = getFirstViableIndex(index - 1, false);
+    if (isDefined(item)) moveFocus(item);
 }
 
 /** Focus the first viable item. */
 function onHomePressed(): void {
-    const viableIndex = getFirstViableIndex(0, true);
-    if (isDefined(viableIndex)) moveFocus(viableIndex);
+    if (itemsCount.value < 1) return;
+    const item = getFirstViableIndex(0, true);
+    if (isDefined(item)) moveFocus(item);
 }
 
 /** Focus the last viable item. */
 function onEndPressed(): void {
-    const viableIndex = getFirstViableIndex(items.value.length - 1, false);
-    if (isDefined(viableIndex)) moveFocus(viableIndex);
+    if (itemsCount.value < 1) return;
+    const item = getFirstViableIndex(itemsCount.value - 1, false);
+    if (isDefined(item)) moveFocus(item);
 }
 
 /** Set focus on a step item or click it if `activateOnFocus`. */
-function moveFocus(index: number): void {
-    if (index < 0 || index >= items.value.length) return;
-    const item = items.value[index];
-
+function moveFocus(item: StepItem<T>): void {
     if (props.activateOnFocus) {
         itemClick(item);
     } else {
@@ -224,42 +241,20 @@ function moveFocus(index: number): void {
 function getFirstViableIndex(
     startingIndex: number,
     forward: boolean,
-): number | undefined {
+): StepItem<T> | undefined {
     const direction = forward ? 1 : -1;
     let newIndex = startingIndex;
-    for (
-        ;
-        newIndex > 0 && newIndex < items.value.length;
-        newIndex += direction
-    ) {
-        const item = items.value[newIndex];
+    for (; newIndex > 0 && newIndex < itemsCount.value; newIndex += direction) {
+        const item = childItems.value[newIndex];
         // Break if the item at this index is viable (not disabled and is visible)
-        if (item.visible && !item.disabled) break;
+        if (item.data.visible && !item.data.disabled) break;
     }
 
-    if (newIndex < 0 || newIndex >= items.value.length) return undefined;
-    return newIndex;
+    if (newIndex < 0 || newIndex >= itemsCount.value) return undefined;
+    return childItems.value[newIndex];
 }
 
-/** Activate next child and deactivate prev child */
-function performAction(newValue: ModelValue): void {
-    const oldValue = activeItem.value?.value;
-    const oldItem = activeItem.value;
-    const newItem =
-        items.value.find((item) => item.value === newValue) || items.value[0];
-
-    if (oldItem && newItem) {
-        oldItem.deactivate(newItem.index);
-        newItem.activate(oldItem.index);
-    }
-
-    nextTick(() => {
-        vmodel.value = newValue;
-        emits("change", newValue, oldValue);
-    });
-}
-
-// --- Computed Component Classes ---
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-steps"],
@@ -320,6 +315,8 @@ const navigationClasses = defineClasses([
     "navigationClass",
     "o-steps__navigation",
 ]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -330,41 +327,43 @@ const navigationClasses = defineClasses([
             :aria-label="ariaLabel"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
             <li
-                v-for="(childItem, index) in items"
-                v-show="childItem.visible"
-                :id="`tab-${childItem.identifier}`"
-                :key="childItem.identifier"
-                :class="childItem.stepClasses"
+                v-for="(item, index) in childItems"
+                v-show="item.data.visible"
+                :id="`tab-${item.identifier}`"
+                :key="item.identifier"
+                :class="item.data.stepClasses"
                 role="tab"
-                :tabindex="childItem.value === activeItem?.value ? 0 : -1"
+                :tabindex="item.data.value === activeItem?.data.value ? 0 : -1"
                 :aria-current="
-                    childItem.value === activeItem?.value ? 'step' : undefined
+                    item.data.value === activeItem?.data.value
+                        ? 'step'
+                        : undefined
                 "
-                :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="childItem.value === activeItem?.value"
-                @click="itemClick(childItem)"
-                @keydown.enter.prevent="itemClick(childItem)"
-                @keydown.space.prevent="itemClick(childItem)"
-                @keydown.left.prevent="onPrev(childItem.index)"
-                @keydown.right.prevent="onNext(childItem.index)"
+                :aria-controls="`tabpanel-${item.identifier}`"
+                :aria-selected="item.data.value === activeItem?.data.value"
+                @click="itemClick(item)"
+                @keydown.enter.prevent="itemClick(item)"
+                @keydown.space.prevent="itemClick(item)"
+                @keydown.left.prevent="onPrev(item.index)"
+                @keydown.right.prevent="onNext(item.index)"
                 @keydown.home.prevent="onHomePressed"
                 @keydown.end.prevent="onEndPressed">
                 <span v-if="index > 0" :class="dividerClasses" />
 
                 <div :class="markerClasses">
                     <o-icon
-                        v-if="childItem.icon"
-                        :class="childItem.iconClasses"
-                        :icon="childItem.icon"
-                        :pack="childItem.iconPack"
+                        v-if="item.data.icon"
+                        :class="item.data.iconClasses"
+                        :icon="item.data.icon"
+                        :pack="item.data.iconPack"
                         :size="size" />
-                    <span v-else-if="childItem.step">
-                        {{ childItem.step }}
+                    <span v-else-if="item.data.step">
+                        {{ item.data.step }}
                     </span>
                 </div>
 
-                <div :class="childItem.labelClasses">
-                    {{ childItem.label }}
+                <div :class="item.data.labelClasses">
+                    {{ item.data.label }}
                 </div>
             </li>
         </ol>
@@ -375,7 +374,7 @@ const navigationClasses = defineClasses([
             -->
             <slot>
                 <o-step-item
-                    v-for="option in groupedOptions"
+                    v-for="option in normalizedOptions"
                     v-show="!option.hidden"
                     v-bind="option.attrs"
                     :key="option.key"
@@ -391,8 +390,11 @@ const navigationClasses = defineClasses([
         -->
         <slot
             name="navigation"
-            :previous="{ disabled: !hasPrev, action: () => activateItem(-1) }"
-            :next="{ disabled: !hasNext, action: () => activateItem(1) }">
+            :previous="{
+                disabled: !hasPrev,
+                action: () => moveActiveItem(-1),
+            }"
+            :next="{ disabled: !hasNext, action: () => moveActiveItem(1) }">
             <nav v-if="hasNavigation" :class="navigationClasses">
                 <o-button
                     role="button"
@@ -400,7 +402,7 @@ const navigationClasses = defineClasses([
                     :icon-pack="iconPack"
                     :disabled="!hasPrev"
                     :aria-label="ariaPreviousLabel"
-                    @click.prevent="activateItem(-1)" />
+                    @click.prevent="moveActiveItem(-1)" />
 
                 <o-button
                     role="button"
@@ -408,7 +410,7 @@ const navigationClasses = defineClasses([
                     :icon-pack="iconPack"
                     :disabled="!hasNext"
                     :aria-label="ariaNextLabel"
-                    @click.prevent="activateItem(1)" />
+                    @click.prevent="moveActiveItem(1)" />
             </nav>
         </slot>
     </div>

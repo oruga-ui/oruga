@@ -43,8 +43,10 @@ const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: itemValue as T,
+    disabled: props.disabled,
+    hidden: props.hidden,
+    clickable: props.clickable,
     selectItem,
 }));
 
@@ -54,6 +56,7 @@ const { parent, item } = useProviderChild<
     DropdownItemComponent<T>
 >(rootRef, { data: providedData });
 
+/** Shows if the item is clickable or not. */
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
 );
@@ -68,19 +71,19 @@ const isSelected = computed(() => {
 });
 
 const isFocused = computed(
-    () => item.value.identifier === parent.value.focsuedIdentifier,
+    () => item.identifier === parent.value.focsuedIdentifier,
 );
 
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(item.value, event);
+    parent.value.selectItem(item, event);
     emits("click", itemValue as T, event);
 }
 
 /** Hover listener, focus the item. */
 function focusItem(): void {
-    parent.value.focusItem(item.value);
+    parent.value.focusItem(item);
 }
 
 // #region --- Computed Component Classes ---

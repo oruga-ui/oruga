@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const activeTab = ref(0);
+const activeTab = ref<string>();
 const showBooks = ref(false);
 </script>
 
@@ -10,20 +10,20 @@ const showBooks = ref(false);
         <o-field grouped>
             <o-switch v-model="showBooks" label="Show Books item" />
 
-            <o-button label="Set Music" @click="activeTab = 2" />
+            <o-button label="Set Music" @click="activeTab = 'music'" />
         </o-field>
 
         <o-tabs v-model="activeTab">
-            <o-tab-item :value="0" label="Pictures" icon="image">
+            <o-tab-item value="pictures" label="Pictures" icon="image">
                 what light is light, if Silvia be not seen? <br />
                 What joy is joy.
             </o-tab-item>
 
-            <o-tab-item :value="1" label="Articles" icon="pen">
+            <o-tab-item value="articles" label="Articles" icon="pen">
                 Lorem ipsum dolor sit amet.
             </o-tab-item>
 
-            <o-tab-item :value="2" label="Music" icon="music">
+            <o-tab-item value="music" label="Music" icon="music">
                 Lorem <br />
                 ipsum <br />
                 dolor <br />
@@ -32,7 +32,7 @@ const showBooks = ref(false);
             </o-tab-item>
 
             <o-tab-item
-                :value="3"
+                value="books"
                 :visible="showBooks"
                 label="Books"
                 icon="book">
@@ -44,7 +44,7 @@ const showBooks = ref(false);
                 There is no music in the nightingale.
             </o-tab-item>
 
-            <o-tab-item :value="4" label="Words">
+            <o-tab-item value="words" label="Words">
                 This text is much longer than the other examples. The most
                 merciful thing in the world, I think, is the inability of the
                 human mind to correlate all its contents. We live on a placid
@@ -58,7 +58,7 @@ const showBooks = ref(false);
                 safety of a new dark age.
             </o-tab-item>
 
-            <o-tab-item :value="5" label="Videos" icon="video" disabled>
+            <o-tab-item value="videos" label="Videos" icon="video" disabled>
                 Nunc nec velit nec libero vestibulum eleifend. Curabitur
                 pulvinar congue luctus. Nullam hendrerit iaculis augue vitae
                 ornare. Maecenas vehicula pulvinar tellus, id sodales felis

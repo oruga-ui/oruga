@@ -60,8 +60,13 @@ const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: itemValue as T,
+    label: props.label,
+    disabled: props.disabled,
+    visible: props.visible,
+    tag: props.tag,
+    icon: props.icon,
+    iconPack: props.iconPack,
     $slots: slots,
     tabClasses: tabClasses.value,
     iconClasses: tabIconClasses.value,
@@ -77,10 +82,9 @@ const { parent, item } = useProviderChild<TabsComponent, TabItemComponent<T>>(
     { data: providedData },
 );
 
-const transitionName = ref();
+const isActive = computed(() => item.index === parent.value.activeIndex);
 
-const isActive = computed(() => item.value.index === parent.value.activeIndex);
-
+const transitionName = ref<string>();
 const isTransitioning = ref(false);
 
 const nextAnimation = computed(() => {
@@ -100,23 +104,23 @@ const itemVariant = computed(() => props.variant ?? parent.value.variant);
 /** Activate element, alter animation name based on the index. */
 function activate(oldIndex: number): void {
     transitionName.value =
-        item.value.index < oldIndex ? nextAnimation.value : prevAnimation.value;
+        item.index < oldIndex ? nextAnimation.value : prevAnimation.value;
     emits("activate");
 }
 
 /** Deactivate element, alter animation name based on the index. */
 function deactivate(newIndex: number): void {
     transitionName.value =
-        newIndex < item.value.index ? nextAnimation.value : prevAnimation.value;
+        newIndex < item.index ? nextAnimation.value : prevAnimation.value;
     emits("deactivate");
 }
 
-/** Transition after-enter hook */
+/** Transition after-enter hook. */
 function afterEnter(): void {
     isTransitioning.value = true;
 }
 
-/** Transition before-leave hook */
+/** Transition before-leave hook. */
 function beforeLeave(): void {
     isTransitioning.value = true;
 }
@@ -145,13 +149,13 @@ const tabClasses: Ref<ClassBinding[]> = defineClasses(
         "tabPreviousClass",
         "o-tabs__tab--previous",
         null,
-        computed(() => item.value.index < parent.value?.activeIndex),
+        computed(() => item.index < parent.value?.activeIndex),
     ],
     [
         "tabNextClass",
         "o-tabs__tab--next",
         null,
-        computed(() => item.value.index > parent.value?.activeIndex),
+        computed(() => item.index > parent.value?.activeIndex),
     ],
 );
 

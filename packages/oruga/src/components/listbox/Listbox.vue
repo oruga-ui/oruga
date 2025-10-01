@@ -155,10 +155,7 @@ const provideData = computed<ListboxComponent<T>>(() => ({
 const { childItems } = useProviderParent<
     ListItemComponent<T>,
     ListboxComponent<T>
->({
-    rootRef: containerRef,
-    data: provideData,
-});
+>({ rootRef: containerRef, data: provideData });
 
 const hasVisableItems = computed(
     () =>
