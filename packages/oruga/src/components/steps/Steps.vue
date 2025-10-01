@@ -105,6 +105,7 @@ const { childItems } = useProviderParent<StepItemComponent<T>>({
     data: provideData,
 });
 
+// TODO: refactor to remove this wrapper
 const items = computed<StepItem<T>[]>(() => {
     if (!childItems.value) return [];
     return childItems.value.map((column) => ({

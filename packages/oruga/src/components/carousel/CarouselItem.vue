@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T = number">
 import { computed, useTemplateRef } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { CarouselComponent } from "./types";
+import type { CarouselComponent, CarouselItemComponent } from "./types";
 import type { CarouselItemProps } from "./props";
 
 /**
@@ -16,8 +16,9 @@ defineOptions({
     configField: "carousel",
 });
 
-const props = withDefaults(defineProps<CarouselItemProps>(), {
+const props = withDefaults(defineProps<CarouselItemProps<T>>(), {
     override: undefined,
+    value: undefined,
     clickable: false,
     title: undefined,
     subtitle: undefined,
@@ -25,18 +26,53 @@ const props = withDefaults(defineProps<CarouselItemProps>(), {
     imageAlt: undefined,
 });
 
+const emits = defineEmits<{
+    /**
+     * onclick event
+     * @param value {unknown} - value prop data
+     * @param event {event} - native event
+     */
+    click: [value: T, event: Event];
+    /** on tab item activate event */
+    activate: [];
+    /** on tab item deactivate event */
+    deactivate: [];
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
-/** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<CarouselComponent>(rootRef);
+// provided data is a computed ref to ensure reactivity
+const providedData = computed<CarouselItemComponent<T>>(() => ({
+    value: props.value,
+    activate,
+    deactivate,
+}));
 
-const isActive = computed(() => parent.value.activeIndex === item.value.index);
+/** inject functionalities and data from the parent component */
+const { parent, item, total } = useProviderChild<
+    CarouselComponent<T>,
+    CarouselItemComponent<T>
+>(rootRef, { data: providedData });
+
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const itemStyle = computed(() => ({ width: `${parent.value.itemWidth}px` }));
 
 function onClick(event: Event): void {
     if (isActive.value) parent.value.onClick(event);
-    if (props.clickable) parent.value.setActive(item.value.index);
+    const value = (props.value ?? item.value.index) as T;
+    if (props.clickable) parent.value.setActive(value);
+    emits("click", value, event);
+}
+
+/** Activate element. */
+function activate(): void {
+    emits("activate");
+}
+
+/** Deactivate element. */
+function deactivate(): void {
+    emits("deactivate");
 }
 
 // #region --- Computed Component Classes ---
@@ -70,6 +106,7 @@ const imageClasses = defineClasses([
 </script>
 
 <template>
+    <!-- TODO: Add native vue transition animation like steps/tabs -->
     <div
         :id="`carouselpanel-${item.identifier}`"
         ref="rootElement"
@@ -80,7 +117,7 @@ const imageClasses = defineClasses([
         :role="parent.indicators ? 'tabpanel' : 'group'"
         :aria-labelledby="`carousel-${item.identifier}`"
         aria-roledescription="slide"
-        :aria-label="`${item.index + 1} of ${parent.total}`"
+        :aria-label="`${item.index + 1} of ${total}`"
         draggable="true"
         @click="onClick"
         @keydown.enter="onClick"

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import {
     computed,
     watch,
@@ -10,6 +10,7 @@ import {
     toRaw,
     useTemplateRef,
     triggerRef,
+    watchEffect,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -19,12 +20,18 @@ import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
+    normalizeOptions,
     useProviderParent,
+    useSequentialId,
     type ProviderItem,
 } from "@/composables";
 
-import type { CarouselComponent } from "./types";
 import type { ClassBinding } from "@/types";
+import type {
+    CarouselItemComponent,
+    CarouselComponent,
+    CarouselItem,
+} from "./types";
 import type { CarouselProps } from "./props";
 
 /**
@@ -39,9 +46,12 @@ defineOptions({
     configField: "carousel",
 });
 
-const props = withDefaults(defineProps<CarouselProps>(), {
+type ModelValue = CarouselProps<T>["modelValue"];
+
+const props = withDefaults(defineProps<CarouselProps<T>>(), {
     override: undefined,
-    modelValue: 0,
+    modelValue: undefined,
+    options: undefined,
     dragable: true,
     autoplay: false,
     interval: () => getDefault("carousel.interval", 3500),
@@ -62,7 +72,7 @@ const props = withDefaults(defineProps<CarouselProps>(), {
     iconNext: () => getDefault("carousel.iconNext", "chevron-right"),
     iconAutoplayPause: () => getDefault("carousel.iconAutoplayPause", "pause"),
     iconAutoplayResume: () => getDefault("carousel.iconAutoplayResume", "play"),
-    breakpoints: () => ({}),
+    breakpoints: undefined,
     ariaAutoplayPauseLabel: () =>
         getDefault(
             "carousel.ariaAutoplayPauseLabel",
@@ -86,9 +96,10 @@ const emits = defineEmits<{
     "update:model-value": [value: number];
     /**
      * on carousel slide change event
-     * @param value {number} - active index
+     * @param value {unknown} - new tab value
+     * @param value {unknown} - old tab value
      */
-    change: [value: number];
+    change: [newValue: ModelValue, oldValue: ModelValue];
     /**
      * on item click event
      * @param event {event} - native event
@@ -99,21 +110,28 @@ const emits = defineEmits<{
 const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
-const provideData = computed<CarouselComponent>(() => ({
-    activeIndex: activeIndex.value,
+const provideData = computed<CarouselComponent<T>>(() => ({
+    activeIndex: activeItem.value?.index ?? 0,
     indicators: props.indicators,
-    total: total.value,
     itemWidth: itemWidth.value,
     onDrag: onDragStart,
     onClick: (event: Event): void => emits("click", event),
-    setActive: (index: number): void => switchTo(index),
+    setActive,
 }));
 
 /** provide functionalities and data to child item components */
-const { childItems } = useProviderParent({ rootRef, data: provideData });
+const { childItems } = useProviderParent<CarouselItemComponent<T>>({
+    rootRef,
+    data: provideData,
+});
 
-// the real index of the active item, use v-model to make it two-way binding
-const activeIndex = defineModel<number>({ default: 0 });
+// create a unique id sequence
+const { nextSequence } = useSequentialId();
+
+/** normalized programamtic options */
+const normalizedOptions = computed(() =>
+    normalizeOptions<T>(props.options, nextSequence),
+);
 
 const total = computed(() => childItems.value.length);
 
@@ -123,70 +141,59 @@ const indicatorItems = computed(() =>
     ),
 );
 
-let resizeObserver: ResizeObserver | undefined;
-if (isClient && window.ResizeObserver) {
-    resizeObserver = new window.ResizeObserver(onRefresh);
-}
-
-/** watch specific props which need to refresh the component */
-watch(
-    [
-        () => props.itemsToList,
-        () => props.itemsToShow,
-        () => props.arrowsHover,
-        () => props.repeat,
-    ],
-    () => onRefresh(),
-);
+const resizeObserver =
+    isClient && window.ResizeObserver
+        ? new window.ResizeObserver(onRefresh)
+        : undefined;
 
 const windowWidth = ref(0);
 
-function onRefresh(): void {
-    activeIndex.value = 0;
+onMounted(() => {
+    if (!isClient) return;
+    // start resize observing
+    if (window.ResizeObserver && resizeObserver && rootRef.value)
+        resizeObserver.observe(rootRef.value);
+
     // set HTML element with
     windowWidth.value = window.innerWidth;
-    // trigger re creation of settings based on props
-    nextTick(() => triggerRef(settings));
-}
 
-onMounted(() => {
-    if (isClient) {
-        if (window.ResizeObserver && resizeObserver && rootRef.value)
-            resizeObserver.observe(rootRef.value);
+    // a prefers-reduced-motion user setting must always override autoplay
+    const hasReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    );
 
-        // set HTML element with
-        windowWidth.value = window.innerWidth;
-
-        // a prefers-reduced-motion user setting must always override autoplay
-        const hasReducedMotion = window.matchMedia(
-            "(prefers-reduced-motion: reduce)",
-        );
-        if (!hasReducedMotion?.matches) startTimer();
-    }
+    // start timer when autoplay is enabled
+    if (!hasReducedMotion?.matches) startTimer();
 });
 
 onBeforeUnmount(() => {
-    if (isClient) {
-        if (window.ResizeObserver && resizeObserver)
-            resizeObserver.disconnect();
+    if (!isClient) return;
+    // cleanup resize observer
+    if (window.ResizeObserver && resizeObserver) resizeObserver.disconnect();
 
-        onDragEnd();
-        pauseTimer();
-    }
+    // cleanup drag event
+    onDragEnd();
+    // cleanup timer
+    pauseTimer();
 });
 
 const settings = computed<typeof props>(() => {
-    const breakpoints = Object.keys(props.breakpoints)
-        .map(Number)
-        .sort((a, b) => b - a);
+    let settings;
 
-    const breakpoint = breakpoints.find(
-        (breakpoint) => windowWidth.value >= breakpoint,
-    );
+    if (!props.breakpoints) settings = toRaw(props);
+    else {
+        const breakpoints = Object.keys(props.breakpoints)
+            .map(Number)
+            .sort((a, b) => b - a);
 
-    const settings = toRaw(
-        breakpoint ? { ...props, ...props.breakpoints[breakpoint] } : props,
-    );
+        const breakpoint = breakpoints.find(
+            (breakpoint) => windowWidth.value >= breakpoint,
+        );
+
+        settings = toRaw(
+            breakpoint ? { ...props, ...props.breakpoints[breakpoint] } : props,
+        );
+    }
 
     // prevent empty values
     if (!settings.itemsToList) settings.itemsToList = 1;
@@ -202,7 +209,82 @@ const itemWidth = computed(() => {
     return rect.width / settings.value.itemsToShow;
 });
 
+// #region --- Active Feature ---
+
+/** The selected item value or index, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
+
+const activeItem = ref<CarouselItem<T>>();
+
+// set the active item immediate and every time the vmodel changes
+watchEffect(() => {
+    activeItem.value = isDefined(vmodel.value)
+        ? childItems.value.find((item) => item.data?.value === vmodel.value) ||
+          childItems.value[0]
+        : childItems.value[0];
+});
+
+onMounted(() => {
+    // set first tab as default if not defined
+    if (!vmodel.value) vmodel.value = childItems.value[0]?.data?.value;
+});
+
+function setActive(value: T): void {
+    if (vmodel.value === value) return;
+    performAction(value);
+}
+
+/** watch specific props which need to refresh the component */
+watch(
+    [
+        () => props.itemsToList,
+        () => props.itemsToShow,
+        () => props.arrowsHover,
+        () => props.repeat,
+    ],
+    () => onRefresh(),
+);
+
+function onRefresh(): void {
+    vmodel.value = childItems.value[0]?.data?.value;
+    // set HTML element with
+    windowWidth.value = window.innerWidth;
+    // trigger re creation of settings based on props
+    nextTick(() => triggerRef(settings));
+}
+
+/** Activate next child and deactivate prev child. */
+function performAction(newValue: ModelValue): void {
+    const oldValue = vmodel.value;
+    const oldItem = activeItem.value;
+    const newItem =
+        childItems.value.find((item) => item.data?.value === newValue) ||
+        childItems.value[0];
+
+    if (oldItem?.data && newItem?.data) {
+        oldItem.data.deactivate(newItem.index);
+        newItem.data.activate(oldItem.index);
+    }
+
+    nextTick(() => {
+        vmodel.value = newValue;
+        emits("change", newValue, oldValue);
+    });
+}
+
 // #region --- Switch Events ---
+
+/**
+ * Show the slide by index
+ * @param index the real index of the slide
+ */
+function switchTo(index: number = 0): void {
+    if (settings.value.repeat) index = mod(index, total.value);
+    index = bound(index, 0, total.value - 1);
+
+    const item = childItems.value.at(index);
+    performAction(item?.data?.value);
+}
 
 const hasArrows = computed(
     () =>
@@ -210,20 +292,23 @@ const hasArrows = computed(
         !settings.value.arrowsHover,
 );
 
-const hasPrev = computed(() => settings.value.repeat || activeIndex.value > 0);
+const hasPrev = computed(
+    () => settings.value.repeat || (activeItem.value?.index ?? 0) > 0,
+);
 
 function onPrev(): void {
-    switchTo(activeIndex.value - settings.value.itemsToList);
+    switchTo((activeItem.value?.index ?? 0) - settings.value.itemsToList);
 }
 
 const hasNext = computed(
     () =>
         settings.value.repeat ||
-        activeIndex.value < total.value - settings.value.itemsToList,
+        (activeItem.value?.index ?? 0) <
+            total.value - settings.value.itemsToList,
 );
 
 function onNext(): void {
-    switchTo(activeIndex.value + settings.value.itemsToList);
+    switchTo((activeItem.value?.index ?? 0) + settings.value.itemsToList);
 }
 
 /** Go to the first viable item */
@@ -234,18 +319,6 @@ function onHomePressed(): void {
 /** Go to the last viable item */
 function onEndPressed(): void {
     switchTo(total.value - settings.value.itemsToList);
-}
-
-/**
- * Show the slide by index
- * @param index the real index of the slide
- */
-function switchTo(index: number = 0): void {
-    if (settings.value.repeat) index = mod(index, total.value);
-    index = bound(index, 0, total.value - 1);
-
-    activeIndex.value = index;
-    emits("change", index);
 }
 
 /** Set focus on a tab item. */
@@ -319,15 +392,15 @@ function pauseTimer(): void {
 
 // #region --- Drag & Drop Feature ---
 
-const dragX = ref();
-const delta = ref(0);
+const dragX = ref<number>();
+const delta = ref<number>(0);
 
 const isDragging = computed(() => isDefined(dragX.value));
 
 const translation = computed(
     () =>
         -bound(
-            delta.value + activeIndex.value * itemWidth.value,
+            delta.value + (activeItem.value?.index ?? 0) * itemWidth.value,
             0,
             (childItems.value.length - settings.value.itemsToShow) *
                 itemWidth.value,
@@ -363,7 +436,7 @@ function onDragOver(event: TouchEvent | MouseEvent): void {
           ).clientX
         : (event as MouseEvent).clientX;
     // calc transition delta value
-    delta.value = dragX.value - dragEndX;
+    delta.value = (dragX.value ?? 0) - dragEndX;
 }
 
 function onDragEnd(): void {
@@ -371,7 +444,7 @@ function onDragEnd(): void {
     // switch slide
     const signCheck = sign(delta.value);
     const results = Math.round(Math.abs(delta.value / itemWidth.value) + 0.15); // Hack
-    switchTo(activeIndex.value + signCheck * results);
+    switchTo((activeItem.value?.index ?? 0) + signCheck * results);
 
     // cleanup
     delta.value = 0;
@@ -455,9 +528,7 @@ const indicatorItemActiveClasses = defineClasses([
 
 function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
     const activeClasses =
-        activeIndex.value === item.index
-            ? indicatorItemActiveClasses.value
-            : [];
+        vmodel.value === item.index ? indicatorItemActiveClasses.value : [];
 
     return [...indicatorItemClasses.value, ...activeClasses];
 }
@@ -558,7 +629,12 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                 <!--
                     @slot Display carousel item
                 -->
-                <slot />
+                <slot>
+                    <OCarouselItem
+                        v-for="option in normalizedOptions"
+                        :key="option.key"
+                        v-bind="option.attrs" />
+                </slot>
             </div>
         </div>
 
@@ -567,7 +643,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
             @binding {number} active active index
             @binding {(idx: number): void} switch-to switch to item function
         -->
-        <slot name="indicators" :active="activeIndex" :switch-to="switchTo">
+        <slot name="indicators" :active="vmodel" :switch-to="switchTo">
             <div
                 v-if="indicators"
                 :class="indicatorsClasses"

@@ -34,6 +34,7 @@ defineOptions({
 const props = withDefaults(defineProps<MenuItemProps<T>>(), {
     override: undefined,
     active: false,
+    value: undefined,
     options: undefined,
     label: undefined,
     expanded: false,

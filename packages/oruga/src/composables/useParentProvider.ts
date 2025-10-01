@@ -1,4 +1,5 @@
 import {
+    computed,
     getCurrentInstance,
     inject,
     onUnmounted,
@@ -31,6 +32,7 @@ type PovidedData<P, I = unknown> = {
         data?: I,
     ) => ProviderItem<I>;
     unregisterItem: (item: ProviderItem) => void;
+    total: ComputedRef<number>;
     data?: ComputedRef<P>;
 };
 
@@ -70,6 +72,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     const key = options?.key || configField;
 
     const childItems = ref<ProviderItem<ItemData>[]>([]);
+    const total = computed<number>(() => childItems.value.length);
 
     if (options?.rootRef) {
         /** debounced sort function */
@@ -132,6 +135,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     provide<PovidedData<ParentData, ItemData>>("$o-" + key, {
         registerItem,
         unregisterItem,
+        total: total,
         data: options?.data,
     });
 
@@ -168,8 +172,9 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         needParent: true;
     },
 ): {
-    parent: Readonly<Ref<ParentData>>;
+    parent: ComputedRef<ParentData>;
     item: Readonly<Ref<ProviderItem<ItemData> | undefined>>;
+    total: ComputedRef<number>;
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
@@ -178,8 +183,9 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         needParent: false;
     },
 ): {
-    parent: Readonly<Ref<ParentData | undefined>>;
+    parent: ComputedRef<ParentData | undefined>;
     item: Readonly<Ref<ProviderItem<ItemData> | undefined>>;
+    total: ComputedRef<number>;
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
@@ -188,8 +194,9 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         register: false;
     },
 ): {
-    parent: Readonly<Ref<ParentData>>;
+    parent: ComputedRef<ParentData>;
     item: Readonly<Ref<undefined>>;
+    total: ComputedRef<number>;
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
@@ -199,16 +206,18 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         register: true;
     },
 ): {
-    parent: Readonly<Ref<ParentData>>;
+    parent: ComputedRef<ParentData>;
     item: Readonly<Ref<ProviderItem<ItemData>>>;
+    total: ComputedRef<number>;
 };
 
 export function useProviderChild<ParentData, ItemData = unknown>(
     el: MaybeRefOrGetter<HTMLElement | null>,
     options?: Omit<ProviderChildOptions<ItemData>, "needParent" | "register">,
 ): {
-    parent: Readonly<Ref<ParentData>>;
+    parent: ComputedRef<ParentData>;
     item: Readonly<Ref<ProviderItem<ItemData>>>;
+    total: ComputedRef<number>;
 };
 
 /**
@@ -219,8 +228,9 @@ export function useProviderChild<ParentData, ItemData = unknown>(
     el: MaybeRefOrGetter<HTMLElement | null>,
     options?: ProviderChildOptions<ItemData>,
 ): {
-    parent: Readonly<Ref<ParentData | undefined>>;
+    parent: ComputedRef<ParentData | undefined>;
     item: Readonly<Ref<ProviderItem<ItemData> | undefined>>;
+    total: ComputedRef<number>;
 } {
     options = Object.assign({ needParent: true, register: true }, options);
 
@@ -256,7 +266,8 @@ export function useProviderChild<ParentData, ItemData = unknown>(
         if (parent && item.value) parent.unregisterItem(item.value);
     });
 
-    const data = parent?.data || ref();
+    const data = parent?.data || computed(() => undefined);
+    const total = parent?.total || computed(() => 0);
 
-    return { parent: data, item: item };
+    return { parent: data, item: item, total: total };
 }

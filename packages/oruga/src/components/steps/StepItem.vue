@@ -59,6 +59,7 @@ const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<StepItemComponent<T>>(() => ({
+    // TODO: check if really props is needed!?!
     ...props,
     value: itemValue,
     $slots: slots,
@@ -77,10 +78,9 @@ const { parent, item } = useProviderChild<StepsComponent, StepItemComponent<T>>(
     { data: providedData },
 );
 
-const transitionName = ref();
-
 const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
+const transitionName = ref<string>();
 const isTransitioning = ref(false);
 
 const nextAnimation = computed(() => {

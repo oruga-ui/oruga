@@ -98,6 +98,7 @@ const { childItems } = useProviderParent<TabItemComponent<T>>({
     data: provideData,
 });
 
+// TODO: refactor to remove this wrapper
 const items = computed<TabItem<T>[]>(() => {
     if (!childItems.value) return [];
     return childItems.value.map((column) => ({
@@ -130,6 +131,7 @@ watch(
 /** the active item */
 const activeItem = ref<TabItem<T>>();
 
+// TODO: refactor to an composable to unify all this child/parent/slide behavior for Steps/Tabs/Carousel
 // set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
@@ -147,11 +149,12 @@ onMounted(() => {
     if (!vmodel.value) vmodel.value = items.value[0]?.value;
 });
 
-// --- EVENT HANDLER ---
+// #region --- Event Handler ---
 
 /** Tab item click listener, emit input event and change active child. */
 function itemClick(item: TabItem<T>): void {
-    if (vmodel.value !== item.value) performAction(item.value);
+    if (vmodel.value === item.value) return;
+    performAction(item.value);
 }
 
 /** Focus the next item or wrap around. */
@@ -247,7 +250,9 @@ function performAction(newValue: ModelValue): void {
     });
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Event Handler ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-tabs"],
@@ -290,6 +295,8 @@ const contentClasses = defineClasses(
         isTransitioning,
     ],
 );
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>

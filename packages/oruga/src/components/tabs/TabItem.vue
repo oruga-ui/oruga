@@ -77,10 +77,9 @@ const { parent, item } = useProviderChild<TabsComponent, TabItemComponent<T>>(
     { data: providedData },
 );
 
-const transitionName = ref();
-
 const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
+const transitionName = ref<string>();
 const isTransitioning = ref(false);
 
 const nextAnimation = computed(() => {
