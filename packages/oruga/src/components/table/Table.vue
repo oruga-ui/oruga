@@ -1188,14 +1188,14 @@ defineExpose({ rows: tableRows, sort: sortByField });
     <div data-oruga="table" :class="rootClasses">
         <div ref="slotsWrapper" style="display: none">
             <!--
+                @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
+            -->
+            <slot name="before" />
+
+            <!--
                 @slot Place o-table-column here
             -->
             <slot>
-                <!--
-                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
-                -->
-                <slot name="before" />
-
                 <template v-if="columns?.length">
                     <o-table-column
                         v-for="(column, idx) in columns"
@@ -1205,12 +1205,12 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         {{ getColumnValue(row, column) }}
                     </o-table-column>
                 </template>
-
-                <!--
-                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
-                -->
-                <slot name="after" />
             </slot>
+
+            <!--
+                @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
+            -->
+            <slot name="after" />
         </div>
 
         <o-table-mobile-sort
