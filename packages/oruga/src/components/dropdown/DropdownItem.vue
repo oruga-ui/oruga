@@ -71,7 +71,7 @@ const isSelected = computed(() => {
 });
 
 const isFocused = computed(
-    () => item.identifier === parent.value.focsuedIdentifier,
+    () => item.value.identifier === parent.value.focsuedIdentifier,
 );
 
 /** Click listener, select the item. */

@@ -30,13 +30,13 @@ const rootRef = useTemplateRef("rootElement");
 /** inject functionalities and data from the parent component */
 const { parent, item } = useProviderChild<CarouselComponent>(rootRef);
 
-const isActive = computed(() => parent.value.activeIndex === item.index);
+const isActive = computed(() => parent.value.activeIndex === item.value.index);
 
 const itemStyle = computed(() => ({ width: `${parent.value.itemWidth}px` }));
 
 function onClick(event: Event): void {
     if (isActive.value) parent.value.onClick(event);
-    if (props.clickable) parent.value.setActive(item.index);
+    if (props.clickable) parent.value.setActive(item.value.index);
 }
 
 // #region --- Computed Component Classes ---

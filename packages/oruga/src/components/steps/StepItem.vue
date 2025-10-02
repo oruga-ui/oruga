@@ -83,7 +83,7 @@ const { parent, item } = useProviderChild<StepsComponent, StepItemComponent<T>>(
     { data: providedData },
 );
 
-const isActive = computed(() => item.index === parent.value.activeIndex);
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const transitionName = ref<string>();
 const isTransitioning = ref(false);
@@ -108,20 +108,20 @@ const itemVariant = computed(() => parent.value.variant ?? props.variant);
 const isClickable: ComputedRef<boolean> = computed(
     () =>
         !props.disabled &&
-        (props.clickable || item.index < parent.value.activeIndex),
+        (props.clickable || item.value.index < parent.value.activeIndex),
 );
 
 /** Activate element, alter animation name based on the index. */
 function activate(oldIndex: number): void {
     transitionName.value =
-        item.index < oldIndex ? nextAnimation.value : prevAnimation.value;
+        item.value.index < oldIndex ? nextAnimation.value : prevAnimation.value;
     emits("activate");
 }
 
 /** Deactivate element, alter animation name based on the index. */
 function deactivate(newIndex: number): void {
     transitionName.value =
-        newIndex < item.index ? nextAnimation.value : prevAnimation.value;
+        newIndex < item.value.index ? nextAnimation.value : prevAnimation.value;
     emits("deactivate");
 }
 
@@ -166,13 +166,13 @@ const stepClasses: Ref<ClassBinding[]> = defineClasses(
         "stepPreviousClass",
         "o-steps__step--previous",
         null,
-        computed(() => item.index < parent.value?.activeIndex),
+        computed(() => item.value.index < parent.value?.activeIndex),
     ],
     [
         "stepNextClass",
         "o-steps__step--next",
         null,
-        computed(() => item.index > parent.value?.activeIndex),
+        computed(() => item.value.index > parent.value?.activeIndex),
     ],
 );
 

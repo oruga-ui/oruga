@@ -120,7 +120,7 @@ const vmodel = defineModel<ModelValue>({ default: undefined });
 
 onMounted(() => {
     // set first step as default if not defined
-    if (!vmodel.value) vmodel.value = childItems.value[0].data.value;
+    if (!vmodel.value) vmodel.value = childItems.value[0]?.data.value;
 });
 
 /** When v-model is changed set the new active step. */

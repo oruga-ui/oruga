@@ -130,7 +130,9 @@ export function useProviderParent<ItemData = undefined, ParentData = unknown>(
     }
 
     function unregisterItem(item: ProviderItem): void {
-        childItems.value = childItems.value.filter((i) => i !== item);
+        childItems.value = childItems.value.filter(
+            (i) => i.identifier !== item.identifier,
+        );
     }
 
     /** Provide functionality for child components via dependency injection. */
@@ -176,7 +178,7 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
     },
 ): {
     parent: ComputedRef<ParentData>;
-    item: Readonly<ProviderItem<ItemData> | undefined>;
+    item: Readonly<Ref<ProviderItem<ItemData> | undefined>>;
     itemsCount: ComputedRef<number>;
 };
 
@@ -187,7 +189,7 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
     },
 ): {
     parent: ComputedRef<ParentData | undefined>;
-    item: Readonly<ProviderItem<ItemData> | undefined>;
+    item: Readonly<Ref<ProviderItem<ItemData> | undefined>>;
     itemsCount: ComputedRef<number>;
 };
 
@@ -198,7 +200,7 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
     },
 ): {
     parent: ComputedRef<ParentData>;
-    item: Readonly<undefined>;
+    item: Readonly<Ref<undefined>>;
     itemsCount: ComputedRef<number>;
 };
 
@@ -210,7 +212,7 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
     },
 ): {
     parent: ComputedRef<ParentData>;
-    item: Readonly<ProviderItem<ItemData>>;
+    item: Readonly<Ref<ProviderItem<ItemData>>>;
     itemsCount: ComputedRef<number>;
 };
 
@@ -219,7 +221,7 @@ export function useProviderChild<ParentData = undefined, ItemData = undefined>(
     options?: Omit<ProviderChildOptions<ItemData>, "needParent" | "register">,
 ): {
     parent: ComputedRef<ParentData>;
-    item: Readonly<ProviderItem<ItemData>>;
+    item: Readonly<Ref<ProviderItem<ItemData>>>;
     itemsCount: ComputedRef<number>;
 };
 
@@ -232,7 +234,7 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
     options?: ProviderChildOptions<ItemData>,
 ): {
     parent: ComputedRef<ParentData | undefined>;
-    item: Readonly<ProviderItem<ItemData> | undefined>;
+    item: Readonly<Ref<ProviderItem | undefined>>;
     itemsCount: ComputedRef<number>;
 } {
     options = Object.assign({ needParent: true, register: true }, options);
@@ -262,14 +264,14 @@ export function useProviderChild<ParentData = undefined, ItemData = unknown>(
     const parentData = parent?.data ?? computed(() => undefined);
     const total = parent?.total ?? computed(() => 0);
 
-    let item: ProviderItem<ItemData> | undefined = undefined;
+    const item = ref<ProviderItem<ItemData>>();
 
     // register item at parent
-    if (parent && options.register) item = parent.registerItem(el, data);
+    if (parent && options.register) item.value = parent.registerItem(el, data);
 
     onUnmounted(() => {
         // unregister item at parent on item unmount
-        if (parent && item) parent.unregisterItem(item);
+        if (parent && item.value) parent.unregisterItem(item.value);
     });
 
     return { parent: parentData, item: item, itemsCount: total };

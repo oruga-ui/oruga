@@ -489,20 +489,17 @@ describe("OTabs tests", () => {
 
         test("unregisters when destroyed", async () => {
             const wrapper = mount({
+                components: { OTabs, OTabItem },
                 template: `
-        <OTabs>
-            <OTabItem ref="item1"/>
-            <OTabItem v-if="item2" ref="item2"/>
-        </OTabs>`,
+                    <OTabs>
+                        <OTabItem ref="item1"/>
+                        <OTabItem v-if="item2" ref="item2"/>
+                    </OTabs>`,
                 props: {
                     item2: {
                         type: Boolean,
                         default: true,
                     },
-                },
-                components: {
-                    OTabs,
-                    OTabItem,
                 },
             });
             await nextTick();

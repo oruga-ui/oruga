@@ -80,19 +80,19 @@ const isSelected = computed(() => {
 });
 
 const isFocused = computed(
-    () => item.identifier === parent.value.focsuedIdentifier,
+    () => item.value.identifier === parent.value.focsuedIdentifier,
 );
 
 /** Click listener, toggle the selection of the item. */
 function clickItem(event: Event): void {
     if (isDisabled.value) return;
-    parent.value.selectItem(item, !isSelected.value);
+    parent.value.selectItem(item.value, !isSelected.value);
     emits("click", itemValue as T, event);
 }
 
 /** Set the item as focused element. */
 function focusItem(): void {
-    parent.value.setFocus(item);
+    parent.value.setFocus(item.value);
 }
 
 /** Checks if the item is viable (not disabled or hidden). */
