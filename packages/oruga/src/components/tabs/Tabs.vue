@@ -159,7 +159,7 @@ function activateItem(newValue: ModelValue): void {
 
 // #endregion --- Active Item Feature ---
 
-// #region --- Switch Events ---
+// #region --- Switch Item Events ---
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: TabItem<T>): void {
@@ -242,7 +242,7 @@ function getFirstViableItem(
     return childItems.value[newIndex];
 }
 
-// #endregion --- Switch Events ---
+// #endregion --- Switch Item Events ---
 
 // #region --- Computed Component Classes ---
 

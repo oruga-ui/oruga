@@ -288,7 +288,7 @@ function activateItem(newValue: ModelValue): void {
 
 // #endregion --- Active Item Feature ---
 
-// #region --- Switch Events ---
+// #region --- Switch Item Events ---
 
 /**
  * Show the slide by index.
@@ -342,7 +342,7 @@ function onChange(item: ProviderItem): void {
     switchTo(item.index);
 }
 
-// #endregion --- Switch Events ---
+// #endregion --- Switch Item Events ---
 
 // #region --- Autoplay Feature ---
 

@@ -167,7 +167,7 @@ function activateItem(newValue: ModelValue): void {
 
 // #endregion --- Active Item Feature ---
 
-// #region --- Switch Events ---
+// #region --- Switch Item Events ---
 
 /** Activate the item after or before the current active item. */
 function moveActiveItem(fowardIndex: 1 | -1): void {
@@ -254,7 +254,7 @@ function getFirstViableItem(
     return childItems.value[newIndex];
 }
 
-// #endregion --- Switch Events ---
+// #endregion --- Switch Item Events ---
 
 // #region --- Computed Component Classes ---
 
