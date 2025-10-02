@@ -7,6 +7,7 @@ import {
     useTemplateRef,
     type Component,
     type Ref,
+    type ComputedRef,
 } from "vue";
 
 import { getDefault } from "@/utils/config";
@@ -59,8 +60,13 @@ const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<StepItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: itemValue as T,
+    label: props.label,
+    step: props.step,
+    disabled: props.disabled,
+    visible: props.visible,
+    icon: props.icon,
+    iconPack: props.iconPack,
     $slots: slots,
     stepClasses: stepClasses.value,
     iconClasses: stepIconClasses.value,
@@ -77,10 +83,9 @@ const { parent, item } = useProviderChild<StepsComponent, StepItemComponent<T>>(
     { data: providedData },
 );
 
-const transitionName = ref();
-
 const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
+const transitionName = ref<string>();
 const isTransitioning = ref(false);
 
 const nextAnimation = computed(() => {
@@ -97,8 +102,10 @@ const prevAnimation = computed(() => {
 
 const itemVariant = computed(() => parent.value.variant ?? props.variant);
 
-/** shows if the step is clickable or not */
-const isClickable = computed(
+/** Shows if the item is clickable or not. */
+// strongly type this variable to prevent circular type dependency
+// because `parent` is used inside and the variable is used by the parent
+const isClickable: ComputedRef<boolean> = computed(
     () =>
         !props.disabled &&
         (props.clickable || item.value.index < parent.value.activeIndex),
@@ -118,12 +125,12 @@ function deactivate(newIndex: number): void {
     emits("deactivate");
 }
 
-/** Transition after-enter hook */
+/** Transition after-enter hook. */
 function afterEnter(): void {
     isTransitioning.value = true;
 }
 
-/** Transition before-leave hook */
+/** Transition before-leave hook. */
 function beforeLeave(): void {
     isTransitioning.value = true;
 }

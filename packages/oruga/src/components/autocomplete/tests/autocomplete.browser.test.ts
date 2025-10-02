@@ -61,5 +61,6 @@ describe("<Autocomplete>", () => {
         await expect.element(dropdown).toBeVisible();
         await userEvent.keyboard("{ArrowDown}{ArrowDown}{Enter}");
         await expect.element(input).toHaveValue("Node.js");
+        screen.unmount();
     });
 });

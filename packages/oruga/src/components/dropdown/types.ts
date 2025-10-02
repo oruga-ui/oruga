@@ -12,7 +12,10 @@ export type DropdownComponent<T> = {
     focusItem: (value: DropdownChildItem<T>) => void;
 };
 
-export type DropdownItemComponent<T> = DropdownItemProps<T> & {
+export type DropdownItemComponent<T> = Pick<
+    DropdownItemProps<T>,
+    "value" | "disabled" | "hidden" | "clickable"
+> & {
     selectItem: (event: Event) => void;
 };
 
