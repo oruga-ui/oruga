@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T = number">
+<script setup lang="ts" generic="T">
 import { computed, useTemplateRef } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
