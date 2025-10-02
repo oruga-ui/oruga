@@ -4,7 +4,6 @@ import {
     ref,
     watch,
     watchEffect,
-    toValue,
     nextTick,
     onMounted,
     useTemplateRef,
@@ -93,20 +92,9 @@ const provideData = computed<TabsComponent>(() => ({
 }));
 
 /** provide functionalities and data to child item components */
-const { childItems } = useProviderParent<TabItemComponent<T>>({
+const { childItems, itemsCount } = useProviderParent<TabItemComponent<T>>({
     rootRef,
     data: provideData,
-});
-
-// TODO: refactor to remove this wrapper
-const items = computed<TabItem<T>[]>(() => {
-    if (!childItems.value) return [];
-    return childItems.value.map((column) => ({
-        el: column.el,
-        index: column.index,
-        identifier: column.identifier,
-        ...toValue(column.data!),
-    }));
 });
 
 // create a unique id sequence
@@ -117,14 +105,21 @@ const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
 
+// #region --- Active Item Feature ---
+
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
-/**  When v-model is changed set the new active tab. */
+onMounted(() => {
+    // set first tab as default if not defined
+    if (!vmodel.value) vmodel.value = childItems.value[0]?.data.value;
+});
+
+/** When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (vmodel.value !== value) performAction(value as T);
+        if (vmodel.value !== value) activateItem(value);
     },
 );
 
@@ -135,26 +130,42 @@ const activeItem = ref<TabItem<T>>();
 // set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
-        ? items.value.find((item) => item.value === vmodel.value) ||
-          items.value[0]
-        : items.value[0];
+        ? childItems.value.find((item) => item.data.value === vmodel.value) ||
+          childItems.value[0]
+        : childItems.value[0];
 });
 
 const isTransitioning = computed(() =>
-    items.value.some((item) => item.isTransitioning),
+    childItems.value.some((item) => item.data.isTransitioning),
 );
 
-onMounted(() => {
-    // set first tab as default if not defined
-    if (!vmodel.value) vmodel.value = items.value[0]?.value;
-});
+/** Activate a specific child item by value and deactivate the previous child item. */
+function activateItem(newValue: ModelValue): void {
+    const oldValue = activeItem.value?.data.value;
+    const oldItem = activeItem.value;
+    const newItem =
+        childItems.value.find((item) => item.data.value === newValue) ||
+        childItems.value[0];
+
+    if (oldItem && newItem) {
+        oldItem.data.deactivate(newItem.index);
+        newItem.data.activate(oldItem.index);
+    }
+
+    nextTick(() => {
+        vmodel.value = newValue;
+        emits("change", newValue, oldValue);
+    });
+}
+
+// #endregion --- Active Item Feature ---
 
 // #region --- Event Handler ---
 
-/** Tab item click listener, emit input event and change active child. */
+/** Item click listener, emit input event and change active child. */
 function itemClick(item: TabItem<T>): void {
-    if (vmodel.value === item.value) return;
-    performAction(item.value);
+    if (!item.data || vmodel.value === item.data.value) return;
+    activateItem(item.data.value);
 }
 
 /** Focus the next item or wrap around. */
@@ -163,9 +174,9 @@ function onNext(event: KeyboardEvent, index: number): void {
         (props.vertical && event.key == "ArrowDown") ||
         (!props.vertical && event.key == "ArrowRight")
     ) {
-        const newIndex = mod(index + 1, items.value.length);
+        const newIndex = mod(index + 1, itemsCount.value);
         const item = getFirstViableItem(newIndex, true);
-        moveFocus(item);
+        if (isDefined(item)) moveFocus(item);
     }
 }
 
@@ -175,24 +186,24 @@ function onPrev(event: KeyboardEvent, index: number): void {
         (props.vertical && event.key == "ArrowUp") ||
         (!props.vertical && event.key == "ArrowLeft")
     ) {
-        const newIndex = mod(index - 1, items.value.length);
+        const newIndex = mod(index - 1, itemsCount.value);
         const item = getFirstViableItem(newIndex, false);
-        moveFocus(item);
+        if (isDefined(item)) moveFocus(item);
     }
 }
 
 /** Focus to the first viable item. */
 function onHomePressed(): void {
-    if (items.value.length < 1) return;
+    if (itemsCount.value < 1) return;
     const item = getFirstViableItem(0, true);
-    moveFocus(item);
+    if (isDefined(item)) moveFocus(item);
 }
 
 /** Focus to the last viable item. */
 function onEndPressed(): void {
-    if (items.value.length < 1) return;
-    const item = getFirstViableItem(items.value.length - 1, false);
-    moveFocus(item);
+    if (itemsCount.value < 1) return;
+    const item = getFirstViableItem(itemsCount.value - 1, false);
+    if (isDefined(item)) moveFocus(item);
 }
 
 /** Set focus on a tab item or click it if `activateOnFocus`. */
@@ -222,32 +233,14 @@ function getFirstViableItem(
     for (
         ;
         newIndex !== activeItem.value?.index;
-        newIndex = mod(newIndex + direction, items.value.length)
+        newIndex = mod(newIndex + direction, itemsCount.value)
     ) {
+        const item = childItems.value[newIndex];
         // Break if the item at this index is viable (not disabled and is visible)
-        if (items.value[newIndex].visible && !items.value[newIndex].disabled)
-            break;
+        if (item.data.visible && !item.data.disabled) break;
     }
 
-    return items.value[newIndex];
-}
-
-/** Activate next child and deactivate prev child. */
-function performAction(newValue: ModelValue): void {
-    const oldValue = vmodel.value;
-    const oldItem = activeItem.value;
-    const newItem =
-        items.value.find((item) => item.value === newValue) || items.value[0];
-
-    if (oldItem && newItem) {
-        oldItem.deactivate(newItem.index);
-        newItem.activate(oldItem.index);
-    }
-
-    nextTick(() => {
-        vmodel.value = newValue;
-        emits("change", newValue, oldValue);
-    });
+    return childItems.value[newIndex];
 }
 
 // #endregion --- Event Handler ---
@@ -313,38 +306,40 @@ const contentClasses = defineClasses(
             <slot name="before" />
 
             <o-slot-component
-                v-for="childItem in items"
-                v-show="childItem.visible"
-                :id="`tab-${childItem.identifier}`"
-                :key="childItem.identifier"
-                :component="childItem"
-                :tag="childItem.tag"
+                v-for="item in childItems"
+                v-show="item.data.visible"
+                :id="`tab-${item.identifier}`"
+                :key="item.identifier"
+                :component="item.data"
+                :tag="item.data.tag"
                 name="header"
-                :class="childItem.tabClasses"
+                :class="item.data.tabClasses"
                 role="tab"
-                :tabindex="childItem.value === activeItem?.value ? 0 : -1"
+                :tabindex="item.data.value === activeItem?.data.value ? 0 : -1"
                 :aria-current="
-                    childItem.value === activeItem?.value ? 'true' : undefined
+                    item.data.value === activeItem?.data.value
+                        ? 'true'
+                        : undefined
                 "
-                :aria-controls="`tabpanel-${childItem.identifier}`"
-                :aria-selected="childItem.value === activeItem?.value"
-                @click="itemClick(childItem)"
-                @keydown.enter.prevent="itemClick(childItem)"
-                @keydown.space.prevent="itemClick(childItem)"
-                @keydown.left.prevent="onPrev($event, childItem.index)"
-                @keydown.right.prevent="onNext($event, childItem.index)"
-                @keydown.up.prevent="onPrev($event, childItem.index)"
-                @keydown.down.prevent="onNext($event, childItem.index)"
+                :aria-controls="`tabpanel-${item.identifier}`"
+                :aria-selected="item.data.value === activeItem?.data.value"
+                @click="itemClick(item)"
+                @keydown.enter.prevent="itemClick(item)"
+                @keydown.space.prevent="itemClick(item)"
+                @keydown.left.prevent="onPrev($event, item.index)"
+                @keydown.right.prevent="onNext($event, item.index)"
+                @keydown.up.prevent="onPrev($event, item.index)"
+                @keydown.down.prevent="onNext($event, item.index)"
                 @keydown.home.prevent="onHomePressed"
                 @keydown.end.prevent="onEndPressed">
                 <o-icon
-                    v-if="childItem.icon"
-                    :class="childItem.iconClasses"
-                    :icon="childItem.icon"
-                    :pack="childItem.iconPack"
+                    v-if="item.data.icon"
+                    :class="item.data.iconClasses"
+                    :icon="item.data.icon"
+                    :pack="item.data.iconPack"
                     :size="size" />
-                <span :class="childItem.labelClasses">
-                    {{ childItem.label }}
+                <span :class="item.data.labelClasses">
+                    {{ item.data.label }}
                 </span>
             </o-slot-component>
 

@@ -155,10 +155,7 @@ const provideData = computed<ListboxComponent<T>>(() => ({
 const { childItems } = useProviderParent<
     ListItemComponent<T>,
     ListboxComponent<T>
->({
-    rootRef: containerRef,
-    data: provideData,
-});
+>({ rootRef: containerRef, data: provideData });
 
 const hasVisableItems = computed(
     () =>
@@ -171,7 +168,7 @@ const hasVisableItems = computed(
  */
 const viableItems = computed(() => {
     if (!props.selectable || props.disabled) return [];
-    return childItems.value.filter((item) => item.data?.isViable());
+    return childItems.value.filter((item) => item.data.isViable());
 });
 
 /**
@@ -194,7 +191,7 @@ function getFirstViableItem(startingIndex: number, delta: 1 | -1): ListItem<T> {
         newIndex = mod(newIndex + delta, childItems.value.length)
     ) {
         // Break if the item at this index is viable (not disabled or hidden)
-        if (childItems.value[newIndex].data?.isViable()) break;
+        if (childItems.value[newIndex].data.isViable()) break;
     }
 
     return childItems.value[newIndex];
@@ -220,16 +217,16 @@ function isItemSelected(item: ListItem<T>): boolean {
     if (isTrueish(props.multiple)) {
         if (Array.isArray(vmodel.value))
             return vmodel.value.some((value) =>
-                isEqual(item.data?.value, value),
+                isEqual(item.data.value, value),
             );
         else return false;
-    } else return isEqual(item.data?.value, vmodel.value);
+    } else return isEqual(item.data.value, vmodel.value);
 }
 
 /** Replaces the modelValue when selectable and multiple. */
 function updateSelectedItems(items: ListItem<T>[]): void {
     if (!props.selectable || !isTrueish(props.multiple)) return;
-    const values = items.map((item) => item.data?.value).filter(isDefined);
+    const values = items.map((item) => item.data.value).filter(isDefined);
     vmodel.value = values as ModelValue;
 }
 
@@ -275,7 +272,7 @@ function selectItemRange(start: number, end: number): void {
         // get the items by the rande
         .slice(rangeStart, rangeEnd + 1)
         // remove not viable items
-        .filter((item) => item.data?.isViable());
+        .filter((item) => item.data.isViable());
 
     // select all items in the range
     updateSelectedItems(items);
@@ -293,7 +290,7 @@ function findFirstSelectedItem(index: number = 0): ListItem<T> | undefined {
         // reorders array by alternating between the next and previous elements
         const items = alternateArray(childItems.value, index)
             // filter only viable items
-            .filter((item) => item.data?.isViable());
+            .filter((item) => item.data.isViable());
 
         // find first option which is in the selection list
         return items.find(isItemSelected);
@@ -321,7 +318,7 @@ function startFocusRange(): void {
 /** Set focus on an item. */
 function setFocus(item: ListItem<T>): void {
     isFocused.value = true;
-    if (props.selectOnFocus && item.data?.value) selectItem(item, true);
+    if (props.selectOnFocus && item.data.value) selectItem(item, true);
 
     // set item as focused
     focusedItem.value = item;
@@ -495,7 +492,7 @@ watch(typeAheadValue, (value) => {
     if (!isEmpty(value)) {
         // find first item that starts with the search value
         const matchedItem = viableItems.value.find((item) =>
-            item.data?.matches(value),
+            item.data.matches(value),
         );
 
         if (matchedItem)

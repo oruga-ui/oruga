@@ -47,9 +47,8 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<ListItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
-    hidden: isHidden,
+    value: itemValue as T,
+    hidden: isHidden.value,
     clickItem,
     setHidden,
     isViable,

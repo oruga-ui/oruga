@@ -60,8 +60,13 @@ const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TabItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: itemValue as T,
+    label: props.label,
+    disabled: props.disabled,
+    visible: props.visible,
+    tag: props.tag,
+    icon: props.icon,
+    iconPack: props.iconPack,
     $slots: slots,
     tabClasses: tabClasses.value,
     iconClasses: tabIconClasses.value,
@@ -110,12 +115,12 @@ function deactivate(newIndex: number): void {
     emits("deactivate");
 }
 
-/** Transition after-enter hook */
+/** Transition after-enter hook. */
 function afterEnter(): void {
     isTransitioning.value = true;
 }
 
-/** Transition before-leave hook */
+/** Transition before-leave hook. */
 function beforeLeave(): void {
     isTransitioning.value = true;
 }
