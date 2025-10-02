@@ -406,13 +406,14 @@ function pauseTimer(): void {
 
 // #endregion --- Autoplay Feature ---
 
-// #region --- Drag & Drop Feature ---
+// #region --- Drag & Drop | Slide Feature ---
 
 const dragX = ref<number>();
 const delta = ref<number>(0);
 
 const isDragging = computed(() => isDefined(dragX.value));
 
+/** slide transform:translateX translation */
 const translation = computed(
     () =>
         -bound(
@@ -470,7 +471,7 @@ function onDragEnd(): void {
     startTimer();
 }
 
-// #endregion --- Drag & Drop Feature ---
+// #endregion --- Drag & Drop | Slide Feature ---
 
 // #region --- Computed Component Classes ---
 
