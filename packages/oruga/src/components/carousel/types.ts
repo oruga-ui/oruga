@@ -10,7 +10,7 @@ export type CarouselComponent<T> = {
 };
 
 export type CarouselItemComponent<T> = {
-    value?: T;
+    getValue: () => T;
     activate: (index: number) => void;
     deactivate: (index: number) => void;
 };

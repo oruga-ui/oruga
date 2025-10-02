@@ -80,9 +80,9 @@ function switchGalleryOff(event: KeyboardEvent): void {
                 </div>
             </o-carousel-item>
 
-            <template #indicators="{ active, switchTo }">
+            <template #indicators="{ index, switchTo }">
                 <o-carousel
-                    :model-value="active"
+                    :model-value="index"
                     :indicators="false"
                     :breakpoints="breakpoints"
                     @update:model-value="switchTo($event)">

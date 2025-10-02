@@ -17,7 +17,7 @@ const slides = [
 
 const inspectData: InspectData<
     CarouselClasses & CarouselItemClasses,
-    CarouselProps & CarouselItemProps
+    CarouselProps<unknown> & CarouselItemProps<unknown>
 > = {
     rootClass: {
         class: "rootClass",

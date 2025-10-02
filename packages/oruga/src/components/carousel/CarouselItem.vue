@@ -43,13 +43,13 @@ const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<CarouselItemComponent<T>>(() => ({
-    value: props.value,
+    getValue,
     activate,
     deactivate,
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item, total } = useProviderChild<
+const { parent, item, itemsCount } = useProviderChild<
     CarouselComponent<T>,
     CarouselItemComponent<T>
 >(rootRef, { data: providedData });
@@ -58,10 +58,17 @@ const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const itemStyle = computed(() => ({ width: `${parent.value.itemWidth}px` }));
 
+/** Return the item value or the item index if no value is set. */
+function getValue(): T {
+    return (props.value ?? item.value.index) as T;
+}
+
+/** Click listener, select the item. */
 function onClick(event: Event): void {
+    if (!props.clickable) return;
     if (isActive.value) parent.value.onClick(event);
-    const value = (props.value ?? item.value.index) as T;
-    if (props.clickable) parent.value.setActive(value);
+    const value = getValue();
+    parent.value.setActive(value);
     emits("click", value, event);
 }
 
@@ -117,7 +124,7 @@ const imageClasses = defineClasses([
         :role="parent.indicators ? 'tabpanel' : 'group'"
         :aria-labelledby="`carousel-${item.identifier}`"
         aria-roledescription="slide"
-        :aria-label="`${item.index + 1} of ${total}`"
+        :aria-label="`${item.index + 1} of ${itemsCount}`"
         draggable="true"
         @click="onClick"
         @keydown.enter="onClick"

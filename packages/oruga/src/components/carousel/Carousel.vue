@@ -48,6 +48,13 @@ defineOptions({
 
 type ModelValue = CarouselProps<T>["modelValue"];
 
+/**
+ *
+ * TODO: add options example
+ * TODO: add options tests
+ *
+ */
+
 const props = withDefaults(defineProps<CarouselProps<T>>(), {
     override: undefined,
     modelValue: undefined,
@@ -120,7 +127,7 @@ const provideData = computed<CarouselComponent<T>>(() => ({
 }));
 
 /** provide functionalities and data to child item components */
-const { childItems } = useProviderParent<CarouselItemComponent<T>>({
+const { childItems, itemsCount } = useProviderParent<CarouselItemComponent<T>>({
     rootRef,
     data: provideData,
 });
@@ -132,8 +139,6 @@ const { nextSequence } = useSequentialId();
 const normalizedOptions = computed(() =>
     normalizeOptions<T>(props.options, nextSequence),
 );
-
-const total = computed(() => childItems.value.length);
 
 const indicatorItems = computed(() =>
     childItems.value.filter(
@@ -209,31 +214,6 @@ const itemWidth = computed(() => {
     return rect.width / settings.value.itemsToShow;
 });
 
-// #region --- Active Feature ---
-
-/** The selected item value or index, use v-model to make it two-way binding */
-const vmodel = defineModel<ModelValue>({ default: undefined });
-
-const activeItem = ref<CarouselItem<T>>();
-
-// set the active item immediate and every time the vmodel changes
-watchEffect(() => {
-    activeItem.value = isDefined(vmodel.value)
-        ? childItems.value.find((item) => item.data?.value === vmodel.value) ||
-          childItems.value[0]
-        : childItems.value[0];
-});
-
-onMounted(() => {
-    // set first tab as default if not defined
-    if (!vmodel.value) vmodel.value = childItems.value[0]?.data?.value;
-});
-
-function setActive(value: T): void {
-    if (vmodel.value === value) return;
-    performAction(value);
-}
-
 /** watch specific props which need to refresh the component */
 watch(
     [
@@ -246,22 +226,56 @@ watch(
 );
 
 function onRefresh(): void {
-    vmodel.value = childItems.value[0]?.data?.value;
+    vmodel.value = childItems.value[0]?.data.getValue();
     // set HTML element with
     windowWidth.value = window.innerWidth;
     // trigger re creation of settings based on props
     nextTick(() => triggerRef(settings));
 }
 
-/** Activate next child and deactivate prev child. */
-function performAction(newValue: ModelValue): void {
-    const oldValue = vmodel.value;
+// #region --- Active Item Feature ---
+
+/** The selected item value or index, use v-model to make it two-way binding */
+const vmodel = defineModel<ModelValue>({ default: undefined });
+
+const activeItem = ref<CarouselItem<T>>();
+
+onMounted(() => {
+    // set first tab as default if not defined
+    if (!vmodel.value) vmodel.value = childItems.value[0]?.data.getValue();
+});
+
+/** When v-model is changed set the new active tab. */
+watch(
+    () => props.modelValue,
+    (value) => {
+        if (vmodel.value !== value) activateItem(value);
+    },
+);
+
+// set the active item immediate and every time the vmodel changes
+watchEffect(() => {
+    activeItem.value = isDefined(vmodel.value)
+        ? childItems.value.find(
+              (item) => vmodel.value === item.data.getValue(),
+          ) || childItems.value[0]
+        : childItems.value[0];
+});
+
+function setActive(value: T): void {
+    if (vmodel.value === value) return;
+    activateItem(value);
+}
+
+/** Activate a specific child item by value and deactivate the previous child item. */
+function activateItem(newValue: ModelValue): void {
+    const oldValue = activeItem.value?.data.getValue();
     const oldItem = activeItem.value;
     const newItem =
-        childItems.value.find((item) => item.data?.value === newValue) ||
+        childItems.value.find((item) => newValue === item.data.getValue()) ||
         childItems.value[0];
 
-    if (oldItem?.data && newItem?.data) {
+    if (oldItem && newItem) {
         oldItem.data.deactivate(newItem.index);
         newItem.data.activate(oldItem.index);
     }
@@ -272,18 +286,20 @@ function performAction(newValue: ModelValue): void {
     });
 }
 
+// #endregion --- Active Item Feature ---
+
 // #region --- Switch Events ---
 
 /**
- * Show the slide by index
+ * Show the slide by index.
  * @param index the real index of the slide
  */
 function switchTo(index: number = 0): void {
-    if (settings.value.repeat) index = mod(index, total.value);
-    index = bound(index, 0, total.value - 1);
+    if (settings.value.repeat) index = mod(index, itemsCount.value);
+    index = bound(index, 0, itemsCount.value - 1);
 
     const item = childItems.value.at(index);
-    performAction(item?.data?.value);
+    activateItem(item?.data.getValue());
 }
 
 const hasArrows = computed(
@@ -304,7 +320,7 @@ const hasNext = computed(
     () =>
         settings.value.repeat ||
         (activeItem.value?.index ?? 0) <
-            total.value - settings.value.itemsToList,
+            itemsCount.value - settings.value.itemsToList,
 );
 
 function onNext(): void {
@@ -318,7 +334,7 @@ function onHomePressed(): void {
 
 /** Go to the last viable item */
 function onEndPressed(): void {
-    switchTo(total.value - settings.value.itemsToList);
+    switchTo(itemsCount.value - settings.value.itemsToList);
 }
 
 /** Set focus on a tab item. */
@@ -554,8 +570,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         <div :class="wrapperClasses">
             <!--
                 @slot Override the pause/resume button
-                @binding {boolean} autoplay if autoplay is active
-                @binding {(): void} toggle toggle autoplay
+                @binding {boolean} - autoplay if autoplay is active
+                @binding {(): void} - toggle toggle autoplay
             -->
             <slot
                 name="pause"
@@ -583,10 +599,10 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
 
             <!--
                 @slot Override the arrows
-                @binding {boolean} has-prev has prev arrow button
-                @binding {boolean} has-next has next arrow button
-                @binding {(): void} prev switch to prev item function
-                @binding {(): void} next switch to next item function
+                @binding {boolean} - has-prev has prev arrow button
+                @binding {boolean} - has-next has next arrow button
+                @binding {(): void} - prev switch to prev item function
+                @binding {(): void} - next switch to next item function
             -->
             <slot
                 name="arrow"
@@ -640,10 +656,15 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
 
         <!--
             @slot Override the indicators
-            @binding {number} active active index
-            @binding {(idx: number): void} switch-to switch to item function
+            @binding {unkown} value - active item value
+            @binding {number} index - active item index
+            @binding {(idx: number): void} - switch-to switch to item function
         -->
-        <slot name="indicators" :active="vmodel" :switch-to="switchTo">
+        <slot
+            name="indicators"
+            :value="vmodel"
+            :index="activeItem?.index ?? 0"
+            :switch-to="switchTo">
             <div
                 v-if="indicators"
                 :class="indicatorsClasses"
@@ -664,7 +685,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                     @keydown.space="onChange(item)">
                     <!--
                             @slot Override the indicator elements
-                            @binding {index} index indicator index
+                            @binding {index} - index indicator index
                         -->
                     <slot :index="item.index" name="indicator">
                         <span :class="indicatorItemAppliedClasses(item)" />

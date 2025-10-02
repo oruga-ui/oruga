@@ -110,6 +110,9 @@ const normalizedOptions = computed(() =>
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
+/** the active item */
+const activeItem = ref<TabItem<T>>();
+
 onMounted(() => {
     // set first tab as default if not defined
     if (!vmodel.value) vmodel.value = childItems.value[0]?.data.value;
@@ -123,10 +126,6 @@ watch(
     },
 );
 
-/** the active item */
-const activeItem = ref<TabItem<T>>();
-
-// TODO: refactor to an composable to unify all this child/parent/slide behavior for Steps/Tabs/Carousel
 // set the active item immediate and every time the vmodel changes
 watchEffect(() => {
     activeItem.value = isDefined(vmodel.value)
@@ -160,7 +159,7 @@ function activateItem(newValue: ModelValue): void {
 
 // #endregion --- Active Item Feature ---
 
-// #region --- Event Handler ---
+// #region --- Switch Events ---
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: TabItem<T>): void {
@@ -243,7 +242,7 @@ function getFirstViableItem(
     return childItems.value[newIndex];
 }
 
-// #endregion --- Event Handler ---
+// #endregion --- Switch Events ---
 
 // #region --- Computed Component Classes ---
 

@@ -118,6 +118,9 @@ const normalizedOptions = computed(() =>
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
+/** the active item */
+const activeItem = ref<StepItem<T>>();
+
 onMounted(() => {
     // set first step as default if not defined
     if (!vmodel.value) vmodel.value = childItems.value[0]?.data.value;
@@ -130,9 +133,6 @@ watch(
         if (vmodel.value !== value) activateItem(value);
     },
 );
-
-/** the active item */
-const activeItem = ref<StepItem<T>>();
 
 // set the active item immediate and every time the vmodel changes
 watchEffect(() => {
@@ -167,7 +167,7 @@ function activateItem(newValue: ModelValue): void {
 
 // #endregion --- Active Item Feature ---
 
-// #region --- Event Handler ---
+// #region --- Switch Events ---
 
 /** Activate the item after or before the current active item. */
 function moveActiveItem(fowardIndex: 1 | -1): void {
@@ -254,7 +254,7 @@ function getFirstViableItem(
     return childItems.value[newIndex];
 }
 
-// #endregion --- Event Handler ---
+// #endregion --- Switch Events ---
 
 // #region --- Computed Component Classes ---
 
