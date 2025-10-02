@@ -186,37 +186,37 @@ function itemClick(item: StepItem<T>): void {
 
 /** Check if previous button is available. */
 const hasPrev = computed(() =>
-    isDefined(getFirstViableIndex((activeItem.value?.index ?? 0) - 1, false)),
+    isDefined(getFirstViableItem((activeItem.value?.index ?? 0) - 1, false)),
 );
 
 /** Check if next button is available. */
 const hasNext = computed(() =>
-    isDefined(getFirstViableIndex((activeItem.value?.index ?? 0) + 1, true)),
+    isDefined(getFirstViableItem((activeItem.value?.index ?? 0) + 1, true)),
 );
 
 /** Focus the next item if possible. */
 function onNext(index: number): void {
-    const item = getFirstViableIndex(index + 1, true);
+    const item = getFirstViableItem(index + 1, true);
     if (isDefined(item)) moveFocus(item);
 }
 
 /** Focus the previous item if possible. */
 function onPrev(index: number): void {
-    const item = getFirstViableIndex(index - 1, false);
+    const item = getFirstViableItem(index - 1, false);
     if (isDefined(item)) moveFocus(item);
 }
 
 /** Focus the first viable item. */
 function onHomePressed(): void {
     if (itemsCount.value < 1) return;
-    const item = getFirstViableIndex(0, true);
+    const item = getFirstViableItem(0, true);
     if (isDefined(item)) moveFocus(item);
 }
 
 /** Focus the last viable item. */
 function onEndPressed(): void {
     if (itemsCount.value < 1) return;
-    const item = getFirstViableIndex(itemsCount.value - 1, false);
+    const item = getFirstViableItem(itemsCount.value - 1, false);
     if (isDefined(item)) moveFocus(item);
 }
 
@@ -238,7 +238,7 @@ function moveFocus(item: StepItem<T>): void {
  * startingIndex, and if it is not visible or it is disabled, then go to the index in the
  * specified direction until either returning to startIndex or finding a viable child item.
  */
-function getFirstViableIndex(
+function getFirstViableItem(
     startingIndex: number,
     forward: boolean,
 ): StepItem<T> | undefined {
