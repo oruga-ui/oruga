@@ -242,6 +242,8 @@ function getFirstViableItem(
     return childItems.value[newIndex];
 }
 
+// #endregion --- Event Handler ---
+
 // #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(

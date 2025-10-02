@@ -39,7 +39,7 @@ const emits = defineEmits<{
 
 const itemValue = props.value ?? useId();
 
-const rootRef = useTemplateRef("rootElement");
+const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
@@ -47,7 +47,7 @@ const providedData = computed<DropdownItemComponent<T>>(() => ({
     disabled: props.disabled,
     hidden: props.hidden,
     clickable: props.clickable,
-    selectItem,
+    selectItem: (): void => rootRef.value?.click(),
 }));
 
 /** inject functionalities and data from the parent component */
@@ -75,15 +75,15 @@ const isFocused = computed(
 );
 
 /** Click listener, select the item. */
-function selectItem(event: Event): void {
+function onClick(event: Event): void {
     if (!isClickable.value) return;
-    parent.value.selectItem(item, event);
+    parent.value.selectItem(item.value, event);
     emits("click", itemValue as T, event);
 }
 
 /** Hover listener, focus the item. */
 function focusItem(): void {
-    parent.value.focusItem(item);
+    parent.value.focusItem(item.value);
 }
 
 // #region --- Computed Component Classes ---
@@ -116,10 +116,10 @@ const rootClasses = defineClasses(
         tabindex="-1"
         :aria-selected="parent.selectable ? isSelected : undefined"
         :aria-disabled="disabled"
-        @click="selectItem"
+        @click="onClick"
         @mouseenter="focusItem"
-        @keydown.enter="selectItem"
-        @keydown.space="selectItem">
+        @keydown.enter="onClick"
+        @keydown.space="onClick">
         <!--
             @slot Override the label, default is label prop
         -->
