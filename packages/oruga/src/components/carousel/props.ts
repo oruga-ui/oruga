@@ -1,4 +1,4 @@
-import type { ComponentClass, OptionsProp } from "@/types";
+import type { ComponentClass } from "@/types";
 
 export type CarouselProps<T> = {
     /** Override existing theme classes completely */
@@ -6,7 +6,7 @@ export type CarouselProps<T> = {
     /** The index of the current active element */
     modelValue?: T;
     /** Menu items, unnecessary when default slot is used */
-    options?: OptionsProp<T>;
+    options?: CarouselItemProps<T>[];
     /** Enable drag mode */
     dragable?: boolean;
     /** Move item automaticalls after `interval` */

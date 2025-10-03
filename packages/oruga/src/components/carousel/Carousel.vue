@@ -20,9 +20,8 @@ import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
-    normalizeOptions,
+    useKeyedOptions,
     useProviderParent,
-    useSequentialId,
     type ProviderItem,
 } from "@/composables";
 
@@ -132,13 +131,8 @@ const { childItems, itemsCount } = useProviderParent<CarouselItemComponent<T>>({
     data: provideData,
 });
 
-// create a unique id sequence
-const { nextSequence } = useSequentialId();
-
-/** normalized programamtic options */
-const normalizedOptions = computed(() =>
-    normalizeOptions<T>(props.options, nextSequence),
-);
+/** keyed programamtic options */
+const keyedOptions = useKeyedOptions(props.options);
 
 const indicatorItems = computed(() =>
     childItems.value.filter(
@@ -545,7 +539,9 @@ const indicatorItemActiveClasses = defineClasses([
 
 function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
     const activeClasses =
-        vmodel.value === item.index ? indicatorItemActiveClasses.value : [];
+        item.identifier === activeItem.value?.identifier
+            ? indicatorItemActiveClasses.value
+            : [];
 
     return [...indicatorItemClasses.value, ...activeClasses];
 }
@@ -648,9 +644,9 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                 -->
                 <slot>
                     <OCarouselItem
-                        v-for="option in normalizedOptions"
+                        v-for="option in keyedOptions"
                         :key="option.key"
-                        v-bind="option.attrs" />
+                        v-bind="option.value" />
                 </slot>
             </div>
         </div>
@@ -677,10 +673,12 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                     :key="item.index"
                     :class="indicatorClasses"
                     role="tab"
-                    :tabindex="modelValue === item.index ? '0' : '-1'"
+                    :tabindex="
+                        item.identifier === activeItem?.identifier ? '0' : '-1'
+                    "
                     :aria-label="`Slide ${item.identifier}`"
                     :aria-controls="`carouselpanel-${item.identifier}`"
-                    :aria-selected="modelValue === item.index"
+                    :aria-selected="item.identifier === activeItem?.identifier"
                     @click="onChange(item)"
                     @keydown.enter="onChange(item)"
                     @keydown.space="onChange(item)">

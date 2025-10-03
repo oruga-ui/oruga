@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
+const currentSlide = ref<number>();
+
 const slides = [
     { title: "Slide 1", color: "#445e00" },
     { title: "Slide 2", color: "#006724" },
@@ -10,7 +14,7 @@ const slides = [
 
 <template>
     <section>
-        <o-carousel indicator-inside>
+        <o-carousel v-model="currentSlide" indicator-inside>
             <o-carousel-item v-for="slide in slides" :key="slide.title">
                 <article
                     :style="{
@@ -23,5 +27,7 @@ const slides = [
                 </article>
             </o-carousel-item>
         </o-carousel>
+
+        <p><b>Current slide index:</b> {{ currentSlide }}</p>
     </section>
 </template>

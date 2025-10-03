@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const carousel = ref(1);
+const currentSlide = ref(1);
 
 const arrows = ref(true);
 const arrowsHover = ref(true);
@@ -82,7 +82,7 @@ const slides = [
 
         <o-carousel
             :key="itemsToList + itemsToShow"
-            v-model="carousel"
+            v-model="currentSlide"
             :arrows="arrows"
             :arrows-hover="arrowsHover"
             :dragable="dragable"
@@ -96,6 +96,6 @@ const slides = [
                 :image-alt="slide.title" />
         </o-carousel>
 
-        <p><b>Current slide index:</b> {{ carousel }}</p>
+        <p><b>Current slide index:</b> {{ currentSlide }}</p>
     </section>
 </template>
