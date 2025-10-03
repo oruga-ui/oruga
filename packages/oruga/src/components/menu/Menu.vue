@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<MenuProps<T>>(), {
 defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T} updated modelValue prop
+     * @param value {unknown} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
 }>();
@@ -89,7 +89,7 @@ function resetMenu(
 ): void {
     childItems.value.forEach((item) => {
         if (!excludedItems.map((i) => i?.identifier).includes(item.identifier))
-            item.data?.reset();
+            item.data.reset();
     });
 }
 
@@ -103,7 +103,7 @@ const selectedItem = ref<MenuChildItem<T>>();
 function selectItem(
     item: ProviderItem<MenuItemComponent<T>> | undefined,
 ): void {
-    const value = item?.data?.value;
+    const value = item?.data.value;
     if (vmodel.value == value) return;
     vmodel.value = value;
     selectedItem.value = item;
@@ -122,8 +122,8 @@ function onCollapse(): void {
     if (!focusedItem.value) return;
 
     // collapse the item if already expanded
-    if (focusedItem.value.data?.expanded)
-        focusedItem.value.data?.setExpand(false);
+    if (focusedItem.value.data.expanded)
+        focusedItem.value.data.setExpand(false);
     // else move focus to the previus item
     else moveFocus(-1);
 }
@@ -132,11 +132,8 @@ function onExpend(): void {
     if (!focusedItem.value) return;
 
     // expand the item if not already expanded
-    if (
-        focusedItem.value.data?.hasChildren &&
-        !focusedItem.value.data?.expanded
-    )
-        focusedItem.value.data?.setExpand(true);
+    if (focusedItem.value.data.hasChildren && !focusedItem.value.data.expanded)
+        focusedItem.value.data.setExpand(true);
     // else move focus to the next item
     else moveFocus(1);
 }
@@ -164,7 +161,7 @@ function onDownPressed(): void {
 function onEnter(event: Event): void {
     if (!focusedItem.value) return;
     setFocus(focusedItem.value);
-    focusedItem.value.data?.selectItem(event);
+    focusedItem.value.data.selectItem(event);
 }
 
 /** Go to the first viable item */
@@ -211,9 +208,9 @@ function getFirstViableItem(
 
 function isItemViable(item: MenuChildItem<T>): boolean {
     return (
-        !item.data?.disabled &&
-        !item.data?.hidden &&
-        (item.data?.parent?.expanded ?? true)
+        !item.data.disabled &&
+        !item.data.hidden &&
+        (item.data.parent?.expanded ?? true)
     );
 }
 
@@ -243,9 +240,9 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
         <div v-if="label || $slots.label" :id="labelId" :class="labelClasses">
             <!-- 
                 @slot Override icon and label
-                @binding {T} focused - the focused item value
+                @binding {unknown} focused - the focused item value
                 @binding {number} focusedIndex - index of the focused item
-                @binding {T} selected - the selected item value
+                @binding {unknown} selected - the selected item value
                 @binding {number} selectedIndex - index of the selected item
             -->
             <slot
@@ -279,9 +276,9 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
             @keydown.end.prevent="onEndPressed">
             <!--
                 @slot Place menu items here 
-                @binding {T} focused - the focused item value
+                @binding {unknown} focused - the focused item value
                 @binding {number} focusedIndex - index of the focused item
-                @binding {T} selected - the selected item value
+                @binding {unknown} selected - the selected item value
                 @binding {number} selectedIndex - index of the selected item
             -->
             <slot

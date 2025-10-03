@@ -22,7 +22,7 @@ describe("OCarousel axe tests", () => {
         components: { OCarousel, OCarouselItem },
         data: () => ({ carousels }),
         template: `<o-carousel>
-                <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
+                <o-carousel-item v-for="carousel in carousels" :key="carousel.text">
                     <article :style="{ 'background-color': carousel.color }">
                         <h1>{{ carousel.text }}</h1>
                     </article>
@@ -30,7 +30,7 @@ describe("OCarousel axe tests", () => {
             </o-carousel>`,
     });
 
-    const a11yCases: { title: string; props?: CarouselProps }[] = [
+    const a11yCases: { title: string; props?: CarouselProps<unknown> }[] = [
         {
             title: "axe carousel - base case",
         },

@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const carousels = [
-    { text: "Slide 1", color: "#445e00" },
-    { text: "Slide 2", color: "#006724" },
-    { text: "Slide 3", color: "#b60000" },
-    { text: "Slide 4", color: "#f4c300" },
-    { text: "Slide 5", color: "#005c98" },
-];
-
-const carousel = ref(0);
+const currentSlide = ref(0);
 
 const dragable = ref(false);
 const autoplay = ref(false);
 const pauseHover = ref(false);
 const interval = ref(3000);
 const repeat = ref(false);
+
+const slides = [
+    { text: "Slide 1", color: "#445e00" },
+    { text: "Slide 2", color: "#006724" },
+    { text: "Slide 3", color: "#b60000" },
+    { text: "Slide 4", color: "#f4c300" },
+    { text: "Slide 5", color: "#005c98" },
+];
 </script>
 
 <template>
@@ -44,11 +44,11 @@ const repeat = ref(false);
         <o-field grouped>
             <o-field label="Value">
                 <o-input
-                    v-model="carousel"
+                    v-model="currentSlide"
                     type="number"
                     number
                     min="0"
-                    :max="carousels.length - 1" />
+                    :max="slides.length - 1" />
             </o-field>
             <o-field label="Interval">
                 <o-input
@@ -62,30 +62,26 @@ const repeat = ref(false);
         </o-field>
 
         <o-carousel
-            v-model="carousel"
+            v-model="currentSlide"
             :dragable="dragable"
             :autoplay="autoplay"
             :pause-hover="pauseHover"
             :interval="interval"
             :repeat="repeat"
             :arrows-hover="false">
-            <o-carousel-item v-for="(slide, i) in carousels" :key="i">
-                <section
-                    class="example-slide"
-                    :style="{ 'background-color': slide.color }">
+            <o-carousel-item v-for="slide in slides" :key="slide.text">
+                <article
+                    :style="{
+                        'background-color': slide.color,
+                        padding: '9rem 4.5rem',
+                        color: '#ffffff',
+                        'text-align': 'center',
+                    }">
                     <h1>{{ slide.text }}</h1>
                     <o-input :placeholder="slide.text" />
                     <p>A link that <a href="#arrow">goes to arrow</a></p>
-                </section>
+                </article>
             </o-carousel-item>
         </o-carousel>
     </section>
 </template>
-
-<style>
-.example-slide {
-    padding: 9rem 4.5rem;
-    color: #ffffff;
-    text-align: center;
-}
-</style>

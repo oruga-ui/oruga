@@ -6,11 +6,14 @@ import {
     useId,
     useTemplateRef,
     type Component,
+    type Ref,
+    type ComputedRef,
 } from "vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
+import type { ClassBinding } from "@/types";
 import type { StepsComponent, StepItemComponent } from "./types";
 import type { StepItemProps } from "./props";
 
@@ -57,8 +60,13 @@ const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<StepItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: itemValue as T,
+    label: props.label,
+    step: props.step,
+    disabled: props.disabled,
+    visible: props.visible,
+    icon: props.icon,
+    iconPack: props.iconPack,
     $slots: slots,
     stepClasses: stepClasses.value,
     iconClasses: stepIconClasses.value,
@@ -75,10 +83,9 @@ const { parent, item } = useProviderChild<StepsComponent, StepItemComponent<T>>(
     { data: providedData },
 );
 
-const transitionName = ref();
-
 const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
+const transitionName = ref<string>();
 const isTransitioning = ref(false);
 
 const nextAnimation = computed(() => {
@@ -93,16 +100,21 @@ const prevAnimation = computed(() => {
     return parent.value.animation[idx];
 });
 
-/** shows if the step is clickable or not */
-const isClickable = computed(
-    () => props.clickable || item.value.index < parent.value.activeIndex,
+const itemVariant = computed(() => parent.value.variant ?? props.variant);
+
+/** Shows if the item is clickable or not. */
+// strongly type this variable to prevent circular type dependency
+// because `parent` is used inside and the variable is used by the parent
+const isClickable: ComputedRef<boolean> = computed(
+    () =>
+        !props.disabled &&
+        (props.clickable || item.value.index < parent.value.activeIndex),
 );
 
 /** Activate element, alter animation name based on the index. */
 function activate(oldIndex: number): void {
     transitionName.value =
         item.value.index < oldIndex ? nextAnimation.value : prevAnimation.value;
-    // emit event
     emits("activate");
 }
 
@@ -110,32 +122,40 @@ function activate(oldIndex: number): void {
 function deactivate(newIndex: number): void {
     transitionName.value =
         newIndex < item.value.index ? nextAnimation.value : prevAnimation.value;
-    // emit event
     emits("deactivate");
 }
 
-/** Transition after-enter hook */
+/** Transition after-enter hook. */
 function afterEnter(): void {
     isTransitioning.value = true;
 }
 
-/** Transition before-leave hook */
+/** Transition before-leave hook. */
 function beforeLeave(): void {
     isTransitioning.value = true;
 }
 
 // #region --- Computed Component Classes ---
 
-const stepClasses = defineClasses(
+// strongly type this variable to prevent circular type dependency
+// because `parent` is used in the definition of any class
+// and the variable is used by the parent
+const stepClasses: Ref<ClassBinding[]> = defineClasses(
     ["stepClass", "o-steps__step"],
     [
         "stepVariantClass",
         "o-steps__step--",
-        computed(() => parent.value?.variant || props.variant),
-        computed(() => !!parent.value?.variant || !!props.variant),
+        itemVariant,
+        computed(() => !!itemVariant.value),
     ],
-    ["stepActiveClass", "o-steps__step--active", null, isActive],
+    [
+        "stepPositionClass",
+        "o-steps__step--",
+        computed(() => parent.value?.labelPosition),
+        computed(() => !!parent.value?.labelPosition),
+    ],
     ["stepClickableClass", "o-steps__step--clickable", null, isClickable],
+    ["stepActiveClass", "o-steps__step--active", null, isActive],
     [
         "stepDisabledClass",
         "o-steps__step--disabled",
@@ -153,12 +173,6 @@ const stepClasses = defineClasses(
         "o-steps__step--next",
         null,
         computed(() => item.value.index > parent.value?.activeIndex),
-    ],
-    [
-        "stepPositionClass",
-        "o-steps__step--",
-        computed(() => parent.value?.labelPosition),
-        computed(() => !!parent.value?.labelPosition),
     ],
 );
 
@@ -201,8 +215,8 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             <slot :active="isActive && visible">
                 <!-- injected component -->
                 <component
-                    :is="component"
-                    v-if="component"
+                    :is="$props.component"
+                    v-if="$props.component"
                     v-bind="$props.props"
                     v-on="$props.events || {}" />
 

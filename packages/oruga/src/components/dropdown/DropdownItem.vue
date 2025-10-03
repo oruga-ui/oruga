@@ -31,21 +31,23 @@ const props = withDefaults(defineProps<DropdownItemProps<T>>(), {
 const emits = defineEmits<{
     /**
      * onclick event
-     * @param value {unknown} value prop data
-     * @param event {event} native event
+     * @param value {unknown} - value prop data
+     * @param event {event} - native event
      */
     click: [value: T, event: Event];
 }>();
 
 const itemValue = props.value ?? useId();
 
-const rootRef = useTemplateRef("rootElement");
+const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<DropdownItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
-    selectItem,
+    value: itemValue as T,
+    disabled: props.disabled,
+    hidden: props.hidden,
+    clickable: props.clickable,
+    selectItem: (): void => rootRef.value?.click(),
 }));
 
 /** inject functionalities and data from the parent component */
@@ -54,6 +56,7 @@ const { parent, item } = useProviderChild<
     DropdownItemComponent<T>
 >(rootRef, { data: providedData });
 
+/** Shows if the item is clickable or not. */
 const isClickable = computed(
     () => !parent.value.disabled && !props.disabled && props.clickable,
 );
@@ -72,7 +75,7 @@ const isFocused = computed(
 );
 
 /** Click listener, select the item. */
-function selectItem(event: Event): void {
+function onClick(event: Event): void {
     if (!isClickable.value) return;
     parent.value.selectItem(item.value, event);
     emits("click", itemValue as T, event);
@@ -113,10 +116,10 @@ const rootClasses = defineClasses(
         tabindex="-1"
         :aria-selected="parent.selectable ? isSelected : undefined"
         :aria-disabled="disabled"
-        @click="selectItem"
+        @click="onClick"
         @mouseenter="focusItem"
-        @keydown.enter="selectItem"
-        @keydown.space="selectItem">
+        @keydown.enter="onClick"
+        @keydown.space="onClick">
         <!--
             @slot Override the label, default is label prop
         -->

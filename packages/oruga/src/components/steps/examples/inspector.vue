@@ -29,15 +29,6 @@ const inspectData: InspectData<
             data.size = "large";
         },
     },
-    variantClass: {
-        class: "variantClass",
-        description: "Class of the root element with variant.",
-        properties: ["variant"],
-        suffixes: ["primary", "info", "warning", "danger"],
-        action: (data): void => {
-            data.variant = "warning";
-        },
-    },
     positionClass: {
         class: "positionClass",
         description:
@@ -103,11 +94,6 @@ const inspectData: InspectData<
         subitem: "stepitem",
         description: "Class of the step item element.",
     },
-    stepActiveClass: {
-        class: "stepActiveClass",
-        subitem: "stepitem",
-        description: "Class of the step item element when active.",
-    },
     stepVariantClass: {
         class: "stepVariantClass",
         subitem: "stepitem",
@@ -134,6 +120,11 @@ const inspectData: InspectData<
         subitem: "stepitem",
         description: "Class of the step item element when clickable.",
         properties: ["clickable"],
+    },
+    stepActiveClass: {
+        class: "stepActiveClass",
+        subitem: "stepitem",
+        description: "Class of the step item element when active.",
     },
     stepDisabledClass: {
         class: "stepDisabledClass",

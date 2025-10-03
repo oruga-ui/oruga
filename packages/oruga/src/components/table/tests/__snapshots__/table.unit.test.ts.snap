@@ -4,11 +4,11 @@ exports[`OTable tests > render correctly 1`] = `
 "<div data-oruga="table" class="o-table__root">
   <div style="display: none;">
     <!--
-                @slot Place o-table-column here
+                @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
             -->
     <!--
-                    @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-                --><span data-oruga="table-column" data-id="table-1">ID <!--
+                @slot Place \`o-table-column\` here
+            --><span data-oruga="table-column" data-id="table-1">ID <!--
             Do not render these slots here.
             These are only for documentation purposes.
             Slots are defined in table component.
@@ -30,8 +30,8 @@ exports[`OTable tests > render correctly 1`] = `
             Slots are defined in table component.
         --><!--v-if--></span>
     <!--
-                    @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
-                -->
+                @slot Place extra \`o-table-column\` components here, even if you have some columns defined by prop
+            -->
   </div>
   <!--v-if-->
   <!--v-if-->
@@ -47,8 +47,8 @@ exports[`OTable tests > render correctly 1`] = `
           <!--v-if-->
           <!-- checkable column left -->
           <!--v-if-->
-          <!-- row data columns -->
-          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;" draggable="false" aria-colindex="1"><span class="o-table__th__label">ID</span><span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></th>
+          <!-- row header columns -->
+          <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px; min-width: 40px;" draggable="false" aria-colindex="1"><span class="o-table__th__label">ID</span><span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></th>
           <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="2"><span class="o-table__th__label">First Name</span><span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></th>
           <th class="o-table__th o-table__th--sortable o-table__th--unselectable" draggable="false" aria-colindex="3"><span class="o-table__th__label">Last Name</span><span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></th>
           <th class="o-table__th o-table__th--sortable o-table__th--unselectable o-table__th--centered" draggable="false" aria-colindex="4"><span class="o-table__th__label">Date</span><span class="o-table__th__sort-icon" aria-hidden="true" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--small"><!-- custom icon component --><!-- native css icon --><i class="mdi mdi-arrow-up"></i></span></span></th>
@@ -60,13 +60,13 @@ exports[`OTable tests > render correctly 1`] = `
       </thead>
       <tbody>
         <!-- table rows -->
-        <tr class="" draggable="false" aria-rowindex="2">
+        <tr class="o-table__tr" draggable="false" aria-rowindex="2">
           <!-- detailed toggle column -->
           <!--v-if-->
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" data-label="ID" style="width: 40px;">1</td>
+          <td class="o-table__td" data-label="ID" style="width: 40px; min-width: 40px;">1</td>
           <td class="o-table__td" data-label="First Name">Jesse</td>
           <td class="o-table__td" data-label="Last Name">Simmons</td>
           <td class="o-table__td o-table__td--centered" data-label="Date">2016-10-15 13:43:27</td>
@@ -74,13 +74,13 @@ exports[`OTable tests > render correctly 1`] = `
           <!--v-if-->
         </tr>
         <!--v-if-->
-        <tr class="" draggable="false" aria-rowindex="3">
+        <tr class="o-table__tr" draggable="false" aria-rowindex="3">
           <!-- detailed toggle column -->
           <!--v-if-->
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" data-label="ID" style="width: 40px;">2</td>
+          <td class="o-table__td" data-label="ID" style="width: 40px; min-width: 40px;">2</td>
           <td class="o-table__td" data-label="First Name">John</td>
           <td class="o-table__td" data-label="Last Name">Jacobs</td>
           <td class="o-table__td o-table__td--centered" data-label="Date">2016-12-15 06:00:53</td>
@@ -88,13 +88,13 @@ exports[`OTable tests > render correctly 1`] = `
           <!--v-if-->
         </tr>
         <!--v-if-->
-        <tr class="" draggable="false" aria-rowindex="4">
+        <tr class="o-table__tr" draggable="false" aria-rowindex="4">
           <!-- detailed toggle column -->
           <!--v-if-->
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" data-label="ID" style="width: 40px;">3</td>
+          <td class="o-table__td" data-label="ID" style="width: 40px; min-width: 40px;">3</td>
           <td class="o-table__td" data-label="First Name">Tina</td>
           <td class="o-table__td" data-label="Last Name">Gilbert</td>
           <td class="o-table__td o-table__td--centered" data-label="Date">2016-04-26 06:26:28</td>
@@ -102,13 +102,13 @@ exports[`OTable tests > render correctly 1`] = `
           <!--v-if-->
         </tr>
         <!--v-if-->
-        <tr class="" draggable="false" aria-rowindex="5">
+        <tr class="o-table__tr" draggable="false" aria-rowindex="5">
           <!-- detailed toggle column -->
           <!--v-if-->
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" data-label="ID" style="width: 40px;">4</td>
+          <td class="o-table__td" data-label="ID" style="width: 40px; min-width: 40px;">4</td>
           <td class="o-table__td" data-label="First Name">Clarence</td>
           <td class="o-table__td" data-label="Last Name">Flores</td>
           <td class="o-table__td o-table__td--centered" data-label="Date">2016-04-10 10:28:46</td>
@@ -116,13 +116,13 @@ exports[`OTable tests > render correctly 1`] = `
           <!--v-if-->
         </tr>
         <!--v-if-->
-        <tr class="" draggable="false" aria-rowindex="6">
+        <tr class="o-table__tr" draggable="false" aria-rowindex="6">
           <!-- detailed toggle column -->
           <!--v-if-->
           <!-- checkable column left -->
           <!--v-if-->
           <!-- row data columns -->
-          <td class="o-table__td" data-label="ID" style="width: 40px;">5</td>
+          <td class="o-table__td" data-label="ID" style="width: 40px; min-width: 40px;">5</td>
           <td class="o-table__td" data-label="First Name">Anne</td>
           <td class="o-table__td" data-label="Last Name">Lee</td>
           <td class="o-table__td o-table__td--centered" data-label="Date">2016-12-06 14:38:38</td>

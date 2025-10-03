@@ -98,6 +98,11 @@ const inspectData: InspectData<PaginationClasses, PaginationProps> = {
             data.current = 20;
         },
     },
+    buttonClasses: {
+        class: "buttonClasses",
+        description: "Classes to apply on the internal button component.",
+        relatedComponent: "Button",
+    },
 };
 </script>
 

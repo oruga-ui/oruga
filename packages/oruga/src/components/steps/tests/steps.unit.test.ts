@@ -20,13 +20,6 @@ describe("OSteps tests", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    test("render accordingly when has variant prop", () => {
-        const variant = "success";
-        const wrapper = mount(OSteps, { props: { variant } });
-
-        expect(wrapper.classes("o-steps--" + variant)).toBeTruthy();
-    });
-
     test("render accordingly when has size prop", () => {
         const size = "large";
         const wrapper = mount(OSteps, { props: { size } });
@@ -103,6 +96,17 @@ describe("OSteps tests", () => {
             const button = step.find('[data-oruga="button"]');
             expect(button.exists()).toBeTruthy();
             expect(button.text()).toBe("MyButton");
+        });
+
+        test("render accordingly when has variant prop", () => {
+            const variant = "success";
+            const wrapper = mount(OSteps, { props: { variant } });
+
+            const steps = wrapper.findAll('[data-oruga="steps-item"]');
+
+            steps.forEach((step) => {
+                expect(step.classes("o-steps--" + variant)).toBeTruthy();
+            });
         });
 
         describe("handle navigation correctly", () => {

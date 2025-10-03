@@ -1,10 +1,12 @@
 import type { ComponentClass } from "@/types";
 
-export type CarouselProps = {
+export type CarouselProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The index of the current active element */
-    modelValue?: number;
+    modelValue?: T;
+    /** Menu items, unnecessary when default slot is used */
+    options?: CarouselItemProps<T>[];
     /** Enable drag mode */
     dragable?: boolean;
     /** Move item automaticalls after `interval` */
@@ -99,19 +101,35 @@ export type CarouselClasses = Partial<{
     indicatorItemStyleClass: ComponentClass;
 }>;
 
-export type CarouselItemProps = {
+export type CarouselItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
+    /** Item value (it will be used as the v-model of the wrapper component) - default is the item index */
+    value?: T;
     /** Make item clickable */
     clickable?: boolean;
+    /** Title of the slide, unnecessary when default slot is used */
+    title?: string;
+    /** Subtitle of the slide, unnecessary when default slot is used */
+    subtitle?: string;
+    /** Background image of the item */
+    image?: string;
+    /** Image alt tag of the background image */
+    imageAlt?: string;
 } & CarouselItemClasses;
 
 // class props (will not be displayed in the docs)
 export type CarouselItemClasses = Partial<{
-    /** Class of item element */
+    /** Class of the item element */
     itemClass: ComponentClass;
-    /** Class of item element when active */
+    /** Class of the item element when active */
     itemActiveClass: ComponentClass;
-    /** Class of item element when clickable */
+    /** Class of the item element when clickable */
     itemClickableClass: ComponentClass;
+    /** Class of the item title element */
+    itemTitleClass: ComponentClass;
+    /** Class of the item subtitle element */
+    itemSubtitleClass: ComponentClass;
+    /** Class of the item image wrapper element */
+    itemImageClass: ComponentClass;
 }>;

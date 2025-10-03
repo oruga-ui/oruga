@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<CollapseProps>(), {
 const emits = defineEmits<{
     /**
      * open prop two-way binding
-     * @param value {boolean} updated open prop
+     * @param value {boolean} - updated open prop
      */
     "update:open": [value: boolean];
     /** on collapse opened */

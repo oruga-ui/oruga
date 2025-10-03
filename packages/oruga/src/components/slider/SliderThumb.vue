@@ -32,7 +32,7 @@ const props = defineProps<{
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {number | number[]} updated modelValue prop
+     * @param value {number | number[]} - updated modelValue prop
      */
     "update:model-value": [value: number | number[]];
     /** on value change event */

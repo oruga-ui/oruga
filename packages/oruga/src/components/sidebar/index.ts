@@ -1,12 +1,11 @@
 import type { App, Plugin } from "vue";
 
 import Sidebar from "./Sidebar.vue";
-import SidebarProgrammatic from "./useSidebarProgrammatic";
+import useSidebarProgrammatic, {
+    SidebarProgrammaticFactory,
+} from "./useSidebarProgrammatic";
 
-import {
-    registerComponent,
-    registerComponentProgrammatic,
-} from "@/utils/plugins";
+import { registerComponent, registerComponentInterface } from "@/utils/plugins";
 
 /** export sidebar specific types */
 export type { SidebarProgrammaticOptions } from "./useSidebarProgrammatic";
@@ -15,9 +14,9 @@ export type { SidebarProgrammaticOptions } from "./useSidebarProgrammatic";
 export default {
     install(app: App) {
         registerComponent(app, Sidebar);
-        registerComponentProgrammatic(app, "sidebar", SidebarProgrammatic);
+        registerComponentInterface(app, "sidebar", SidebarProgrammaticFactory);
     },
 } as Plugin;
 
 /** export sidebar components & composables */
-export { Sidebar as OSidebar, SidebarProgrammatic };
+export { Sidebar as OSidebar, useSidebarProgrammatic };

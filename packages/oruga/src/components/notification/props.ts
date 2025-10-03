@@ -15,7 +15,7 @@ export type NotificationProps = {
      */
     type?: string;
     /**
-     * Color of the control
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;
@@ -101,7 +101,7 @@ export type NotificationNoticeProps<C extends Component> = {
         | "bottom"
         | "bottom-left";
     /**
-     * Color of the control
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;

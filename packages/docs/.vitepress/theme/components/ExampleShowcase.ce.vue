@@ -18,7 +18,7 @@ if (!shadowRoot)
 onMounted(() => {
     if (host?.children)
         // add bulma light theme attribute to the slot content
-        host.childNodes.forEach((child) =>
+        Array.from(host.children).forEach((child) =>
             child.setAttribute("data-theme", "light"),
         );
 
@@ -49,7 +49,7 @@ shadowRoot.appendChild(link);
 <!-- eslint-disable-next-line vue/valid-template-root -->
 <template></template>
 
-<style>
+<style lang="scss">
 /** class of the inpected element in the Class Inpector */
 .odocs-inspected-element {
     border: 2px solid var(--vp-c-caution-1) !important;

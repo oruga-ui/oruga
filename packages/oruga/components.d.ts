@@ -5,6 +5,7 @@ declare module "vue" {
         OBreadcrumb: (typeof import("../oruga/src/components"))["OBreadcrumb"];
         OBreadcrumbItem: (typeof import("../oruga/src/components"))["OBreadcrumbItem"];
         OButton: (typeof import("../oruga/src/components"))["OButton"];
+        OCard: (typeof import("../oruga/src/components"))["OCard"];
         OCarousel: (typeof import("../oruga/src/components"))["OCarousel"];
         OCarouselItem: (typeof import("../oruga/src/components"))["OCarouselItem"];
         OCheckbox: (typeof import("../oruga/src/components"))["OCheckbox"];
@@ -16,6 +17,8 @@ declare module "vue" {
         OField: (typeof import("../oruga/src/components"))["OField"];
         OIcon: (typeof import("../oruga/src/components"))["OIcon"];
         OInput: (typeof import("../oruga/src/components"))["OInput"];
+        OListbox: (typeof import("../oruga/src/components"))["OListbox"];
+        OListItem: (typeof import("../oruga/src/components"))["OListItem"];
         OLoading: (typeof import("../oruga/src/components"))["OLoading"];
         OMenu: (typeof import("../oruga/src/components"))["OMenu"];
         OMenuItem: (typeof import("../oruga/src/components"))["OMenuItem"];
@@ -32,9 +35,9 @@ declare module "vue" {
         OStepItem: (typeof import("../oruga/src/components"))["OStepItem"];
         OSteps: (typeof import("../oruga/src/components"))["OSteps"];
         OSwitch: (typeof import("../oruga/src/components"))["OSwitch"];
+        OTabItem: (typeof import("../oruga/src/components"))["OTabItem"];
         OTable: (typeof import("../oruga/src/components"))["OTable"];
         OTableColumn: (typeof import("../oruga/src/components"))["OTableColumn"];
-        OTabItem: (typeof import("../oruga/src/components"))["OTabItem"];
         OTabs: (typeof import("../oruga/src/components"))["OTabs"];
         OTag: (typeof import("../oruga/src/components"))["OTag"];
         OTaginput: (typeof import("../oruga/src/components"))["OTaginput"];

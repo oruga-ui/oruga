@@ -52,18 +52,18 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | size               | Vertical size of input                                                                | string                                                                 | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;size: undefined<br>}</code>      |
 | statusIcon         | Show status icon using field and variant prop                                         | boolean                                                                | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;statusIcon: true<br>}</code>             |
 | useHtml5Validation | Enable HTML 5 native validation                                                       | boolean                                                                | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;useHtml5Validation: true<br>}</code>     |
-| variant            | Color of the control                                                                  | string                                                                 | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>   |
+| variant            | Color variant of the control                                                          | string                                                                 | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>   |
 
 ### Events
 
-| Event name         | Properties                                     | Description                     |
-| ------------------ | ---------------------------------------------- | ------------------------------- |
-| update:model-value | **value** `T \| T[]` - updated modelValue prop | modelValue prop two-way binding |
-| focus              | **event** `Event` - native event               | on input focus event            |
-| blur               | **event** `Event` - native event               | on input blur event             |
-| invalid            | **event** `Event` - native event               | on input invalid event          |
-| icon-click         | **event** `Event` - native event               | on icon click event             |
-| icon-right-click   | **event** `Event` - native event               | on icon right click event       |
+| Event name         | Properties                                                 | Description                     |
+| ------------------ | ---------------------------------------------------------- | ------------------------------- |
+| update:model-value | **value** `unknown \| unknown[]` - updated modelValue prop | modelValue prop two-way binding |
+| focus              | **event** `Event` - native event                           | on input focus event            |
+| blur               | **event** `Event` - native event                           | on input blur event             |
+| invalid            | **event** `Event` - native event                           | on input invalid event          |
+| icon-click         | **event** `Event` - native event                           | on icon click event             |
+| icon-right-click   | **event** `Event` - native event                           | on icon right click event       |
 
 ### Slots
 

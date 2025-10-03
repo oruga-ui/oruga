@@ -264,15 +264,15 @@ describe("OAutocomplete tests", () => {
 
         expect(dropdown.isVisible()).toBeTruthy();
 
-        const focusedItem = wrapper.findAll(".o-dropdown__item--focused")[0];
-        expect(focusedItem.html()).toContain(OPTIONS[0]);
+        const focusedItem = wrapper.find(".o-dropdown__item--focused");
+        expect(focusedItem.exists()).toBeTruthy();
+        expect(focusedItem.text()).toContain(OPTIONS[0]);
 
         await input.setValue("v");
 
-        const updatedFocusedItem = wrapper.findAll(
-            ".o-dropdown__item--focused",
-        )[0];
-        expect(updatedFocusedItem.html()).toContain("Vue.js");
+        const updatedFocusedItem = wrapper.find(".o-dropdown__item--focused");
+        expect(updatedFocusedItem.exists()).toBeTruthy();
+        expect(updatedFocusedItem.text()).toContain("Vue.js");
     });
 
     test("do not open when openOnFocus and empty options", async () => {

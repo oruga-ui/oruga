@@ -49,7 +49,6 @@ import type {
     TableRow,
     TableColumnItem,
     TableColumnComponent,
-    TableComponent,
 } from "./types";
 import type { TableProps } from "./props";
 
@@ -144,66 +143,66 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
 const emits = defineEmits<{
     /**
      * currentPage prop two-way binding
-     * @param value {number} updated currentPage prop
+     * @param value {number} - updated currentPage prop
      */
     "update:currentPage": [value: number];
     /**
      * on pagination page change event
-     * @param page {number} updated page
+     * @param page {number} - updated page
      */
     "page-change": [page: number];
     /**
      * select prop two-way binding
-     * @param value {T} updated select prop
+     * @param value {unknown} - updated select prop
      */
     "update:selected": [value: T];
     /**
      * on row select event
-     * @param newRow {T} new select value
-     * @param oldRow {T} old select value
+     * @param newRow {unknown} - new select value
+     * @param oldRow {unknown} - old select value
      */
     select: [newRow: T, oldRow: T];
     /**
      * on row checked event
-     * @param value {T[]} all checked rows
-     * @param row {T} row data
+     * @param value {unknown[]} - all checked rows
+     * @param row {unknown} - row data
      */
     check: [value: T[], row: T];
     /**
      * on all rows checked event
-     * @param value {T[]} all checked rows
+     * @param value {unknown[]} - all checked rows
      */
     "check-all": [value: T[]];
     /**
      * checkedRows prop two-way binding
-     * @param value {T[]} updated checkedRows prop
+     * @param value {unknown[]} - updated checkedRows prop
      */
     "update:checkedRows": [value: T[]];
     /**
      * on column sort change event
-     * @param column {TableColumn} column data
-     * @param direction {string} 'asc' or 'desc'
-     * @param event {Event} native event
+     * @param column {TableColumn} - column data
+     * @param direction {string} - 'asc' or 'desc'
+     * @param event {Event} - native event
      */
     sort: [column: TableColumn<T>, direction: "asc" | "desc", event: Event];
     /**
      * on filter change event
-     * @param filters {object} filter object
+     * @param filters {object} - filter object
      */
     "filters-change": [value: Record<string, string>];
     /**
      * on native filter event
-     * @param column {TableColumn} column data
-     * @param value {string} filter input value
-     * @param event {Event} native event
+     * @param column {TableColumn} - column data
+     * @param value {string} - filter input value
+     * @param event {Event} - native event
      */
     filter: [column: TableColumn<T>, value: string, event: Event];
     /**
      * on native filter event based on props filtersEvent
      * @deprecated use `filter` event instead
-     * @param filtersEvent {string} props filtersEvent value
-     * @param filters {object} filter object
-     * @param event {Event} native event
+     * @param filtersEvent {string} - props filtersEvent value
+     * @param filters {object} - filter object
+     * @param event {Event} - native event
      */
     "filters-event": [
         filtersEvent: string,
@@ -212,61 +211,61 @@ const emits = defineEmits<{
     ];
     /**
      * detailedRows prop two-way binding
-     * @param value {T[]} updated detailedRows prop
+     * @param value {unknown[]} - updated detailedRows prop
      */
     "update:detailedRows": [value: T[]];
     /**
      * on details open event
-     * @param row {T} row data
+     * @param row {unknown} - row data
      */
     "details-open": [row: T];
     /**
      * on details close event
-     * @param row {T} row data
+     * @param row {unknown} - row data
      */
     "details-close": [row: T];
     /**
      * on row click event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native click event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native click event
      */
     click: [row: T, index: number, event: Event];
     /**
      * on row double click event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native click event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native click event
      */
     dblclick: [row: T, index: number, event: Event];
     /**
      * on row right click event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native contextmenu event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native contextmenu event
      */
     contextmenu: [row: T, index: number, event: Event];
     /**
      * on row mouseenter event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native mouseenter event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native mouseenter event
      */
     mouseenter: [row: T, index: number, event: Event];
     /**
      * on row mouseleave event
-     * @param row {T} row data
-     * @param index {number} index of clicked row
-     * @param event {Event} native mouseleave event
+     * @param row {unknown} - row data
+     * @param index {number} - index of clicked row
+     * @param event {Event} - native mouseleave event
      */
     mouseleave: [row: T, index: number, event: Event];
     /**
      * on cell click event
-     * @param row {T} row data
-     * @param column {TableColumn} column data
-     * @param index {number} row index
-     * @param colindex {number} column index
-     * @param event {Event} native click event
+     * @param row {unknown} - row data
+     * @param column {TableColumn} - column data
+     * @param index {number} - row index
+     * @param colindex {number} - column index
+     * @param event {Event} - native click event
      */
     "cell-click": [
         row: T,
@@ -277,72 +276,72 @@ const emits = defineEmits<{
     ];
     /**
      * on row dragstart event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native dragstart event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native dragstart event
      */
     dragstart: [row: T, index: number, event: DragEvent];
     /**
      * on row dragend event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native dragend event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native dragend event
      */
     dragend: [row: T, index: number, event: DragEvent];
     /**
      * on row drop event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native drop event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native drop event
      */
     drop: [row: T, index: number, event: DragEvent];
     /**
      * on row dragleave event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native dragleave event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native dragleave event
      */
     dragleave: [row: T, index: number, event: DragEvent];
     /**
      * on row dragover event
-     * @param row {T} row data
-     * @param index {number} index of draged row
-     * @param event {DragEvent} native dragover event
+     * @param row {unknown} - row data
+     * @param index {number} - index of draged row
+     * @param event {DragEvent} - native dragover event
      */
     dragover: [row: T, index: number, event: DragEvent];
     /**
      * on column columndragstart event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndragstart event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndragstart event
      */
     columndragstart: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragend event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndragend event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndragend event
      */
     columndragend: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndrop event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndrop event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndrop event
      */
     columndrop: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragleave event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndragleave event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndragleave event
      */
     columndragleave: [column: TableColumn<T>, index: number, event: DragEvent];
     /**
      * on column columndragover event
-     * @param column {TableColumn} column data
-     * @param index {number} index of draged column
-     * @param event {DragEvent} native columndragover event
+     * @param column {TableColumn} - column data
+     * @param index {number} - index of draged column
+     * @param event {DragEvent} - native columndragover event
      */
     columndragover: [column: TableColumn<T>, index: number, event: DragEvent];
 }>();
@@ -355,15 +354,9 @@ const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 
 const slotsRef = useTemplateRef("slotsWrapper");
 
-// provided data is a computed ref to ensure reactivity
-const provideData = computed<TableComponent>(() => ({
-    isColumnSorted,
-}));
-
 /** provide functionalities and data to child item components */
 const { childItems } = useProviderParent<TableColumnComponent<T>>({
     rootRef: slotsRef,
-    data: provideData,
 });
 
 // #region --- TABLE COLUMNS ---
@@ -667,7 +660,7 @@ function filterTableRows(): void {
 
 /**
  * check if a row is filtered out by not matching any active filter expresssions
- * @param {T} row - row element to check
+ * @param {unknown} row - row element to check
  * @returns {boolean} - true if row is filtered out, false if row is visible
  */
 function isRowFiltered(row: T): boolean {
@@ -1092,14 +1085,15 @@ const thCheckboxClasses = defineClasses(
     ],
 );
 
+const thSortedClasses = defineClasses(
+    /** @deprecated use `thSortedClass` instead */
+    ["thCurrentSortClass", "o-table__th-current-sort"],
+    ["thSortedClass", "o-table__th--sorted"],
+);
+
 const thDetailedClasses = defineClasses([
     "thDetailedClass",
     "o-table__th-detailed",
-]);
-
-const thSubheadingClasses = defineClasses([
-    "thSubheadingClass",
-    "o-table__th-subheading",
 ]);
 
 const thLabelClasses = defineClasses(["thLabelClass", "o-table__th__label"]);
@@ -1108,6 +1102,8 @@ const thSortIconClasses = defineClasses([
     "thSortIconClass",
     "o-table__th__sort-icon",
 ]);
+
+const trBaseClasses = defineClasses(["trClass", "o-table__tr"]);
 
 const trSelectedClasses = defineClasses([
     "trSelectedClass",
@@ -1138,10 +1134,11 @@ const tdCheckboxClasses = defineClasses(
     ],
 );
 
-const tdDetailedChevronClasses = defineClasses([
-    "tdDetailedChevronClass",
-    "o-table__td-chevron",
-]);
+const tdDetailedClasses = defineClasses(
+    /** @deprecated use `tdDetailClass` instead */
+    ["tdDetailedChevronClass", "o-table__td-chevron"],
+    ["tdDetailClass", "o-table__td-detail"],
+);
 
 const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
 
@@ -1159,6 +1156,10 @@ const paginationWrapperRootClasses = computed(() =>
     getActiveClasses(paginationWrapperClasses),
 );
 
+function columnClasses(column: TableColumnItem<T>): ClassBinding[] {
+    return isColumnSorted(column) ? thSortedClasses.value : [];
+}
+
 function rowClasses(row: TableRow<T>): ClassBinding[] {
     const selectedClasses = isRowEqual(row.value, tableSelectedRow.value)
         ? trSelectedClasses.value
@@ -1171,7 +1172,12 @@ function rowClasses(row: TableRow<T>): ClassBinding[] {
             ? props.rowClass(row.value, row.index) || ""
             : "";
 
-    return [...selectedClasses, ...checkedClasses, { [rowClass]: true }];
+    return [
+        ...trBaseClasses.value,
+        ...selectedClasses,
+        ...checkedClasses,
+        { [rowClass]: true },
+    ];
 }
 
 // #endregion --- Computed Component Classes ---
@@ -1188,14 +1194,14 @@ defineExpose({ rows: tableRows, sort: sortByField });
     <div data-oruga="table" :class="rootClasses">
         <div ref="slotsWrapper" style="display: none">
             <!--
-                @slot Place o-table-column here
+                @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
+            -->
+            <slot name="before" />
+
+            <!--
+                @slot Place `o-table-column` here
             -->
             <slot>
-                <!--
-                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
-                -->
-                <slot name="before" />
-
                 <template v-if="columns?.length">
                     <o-table-column
                         v-for="(column, idx) in columns"
@@ -1205,12 +1211,12 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         {{ getColumnValue(row, column) }}
                     </o-table-column>
                 </template>
-
-                <!--
-                    @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
-                -->
-                <slot name="after" />
             </slot>
+
+            <!--
+                @slot Place extra `o-table-column` components here, even if you have some columns defined by prop
+            -->
+            <slot name="after" />
         </div>
 
         <o-table-mobile-sort
@@ -1334,14 +1340,18 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             </slot>
                         </th>
 
-                        <!-- row data columns -->
+                        <!-- row header columns -->
                         <template
                             v-for="column in tableColumns"
                             :key="column.identifier">
                             <th
                                 v-if="!column.hidden"
                                 v-bind="column.thAttrsData"
-                                :class="[...thBaseClasses, ...column.thClasses]"
+                                :class="[
+                                    ...thBaseClasses,
+                                    ...column.thClasses,
+                                    ...columnClasses(column),
+                                ]"
                                 :style="isMobileActive ? {} : column.style"
                                 :draggable="canDragColumn"
                                 :aria-sort="
@@ -1366,7 +1376,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 ">
                                 <o-slot-component
                                     v-if="column.$slots?.header"
-                                    :component="column.$instance"
+                                    :component="column"
                                     name="header"
                                     tag="span"
                                     :class="thLabelClasses"
@@ -1435,9 +1445,11 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             aria-hidden="true" />
 
                         <!-- checkable column left -->
-                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'left'"
+                            :class="thBaseClasses" />
 
-                        <!-- row data columns -->
+                        <!-- row filter columns -->
                         <template
                             v-for="column in tableColumns"
                             :key="column.identifier">
@@ -1452,7 +1464,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     ">
                                     <o-slot-component
                                         v-if="column.$slots?.searchable"
-                                        :component="column.$instance"
+                                        :component="column"
                                         name="searchable"
                                         tag="span"
                                         :props="{
@@ -1462,7 +1474,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                         }" />
                                     <o-slot-component
                                         v-else-if="column.$slots?.filter"
-                                        :component="column.$instance"
+                                        :component="column"
                                         name="filter"
                                         tag="span"
                                         :props="{
@@ -1493,7 +1505,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                         </template>
 
                         <!-- checkable column right -->
-                        <th v-if="checkable && checkboxPosition === 'right'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'right'"
+                            :class="thBaseClasses" />
                     </tr>
 
                     <tr
@@ -1505,7 +1519,9 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :class="[...thBaseClasses, ...thDetailedClasses]" />
 
                         <!-- checkable column left -->
-                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'left'"
+                            :class="thBaseClasses" />
 
                         <!-- row data columns -->
                         <template
@@ -1513,30 +1529,33 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             :key="column.identifier">
                             <th
                                 v-if="!column.hidden"
-                                :style="isMobileActive ? {} : column.style"
+                                v-bind="column.thAttrsData"
                                 :class="[
                                     ...thBaseClasses,
-                                    ...thSubheadingClasses,
-                                ]">
+                                    ...column.thSubClasses,
+                                ]"
+                                :style="isMobileActive ? {} : column.style">
                                 <o-slot-component
                                     v-if="column.$slots?.subheading"
-                                    :component="column.$instance"
+                                    :component="column"
                                     name="subheading"
                                     tag="span"
                                     :props="{
                                         column: column.value,
                                         index: column.index,
                                     }" />
-                                <span v-else>
-                                    <slot name="subheading">
+                                <slot v-else name="subheading">
+                                    <span :class="thLabelClasses">
                                         {{ column.subheading }}
-                                    </slot>
-                                </span>
+                                    </span>
+                                </slot>
                             </th>
                         </template>
 
                         <!-- checkable column right -->
-                        <th v-if="checkable && checkboxPosition === 'right'" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'right'"
+                            :class="thBaseClasses" />
                     </tr>
                 </thead>
 
@@ -1588,7 +1607,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 v-if="showDetailRowIcon"
                                 :class="[
                                     ...tdBaseClasses,
-                                    ...tdDetailedChevronClasses,
+                                    ...tdDetailedClasses,
                                 ]">
                                 <o-icon
                                     v-if="isDetailedVisible(row.value)"
@@ -1624,7 +1643,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                 <o-slot-component
                                     v-if="!column.hidden"
                                     v-bind="column.tdAttrsData[row.index]"
-                                    :component="column.$instance"
+                                    :component="column"
                                     name="default"
                                     tag="td"
                                     :class="[
@@ -1677,7 +1696,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                             <template v-if="isDetailRowVisible(row)">
                                 <!--
                                     @slot Place row detail content here
-                                    @binding {T} row - row content
+                                    @binding {unknown} row - row content
                                     @binding {number} index - row index
                                 -->
                                 <slot
@@ -1692,7 +1711,7 @@ defineExpose({ rows: tableRows, sort: sortByField });
                                     <td :colspan="columnCount">
                                         <!--
                                             @slot Place row detail content here
-                                            @binding {T} row - row content
+                                            @binding {unknown} row - row content
                                             @binding {number} index - row index
                                         -->
                                         <slot

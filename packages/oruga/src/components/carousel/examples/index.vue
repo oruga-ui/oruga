@@ -8,8 +8,11 @@ import ListCode from "./list.vue?raw";
 import Indicators from "./indicators.vue";
 import IndicatorsCode from "./indicators.vue?raw";
 
-import Custom from "./custom.vue";
-import CustomCode from "./custom.vue?raw";
+import Options from "./options.vue";
+import OptionsCode from "./options.vue?raw";
+
+import Slideshow from "./slideshow.vue";
+import SlideshowCode from "./slideshow.vue?raw";
 
 import Autoplay from "./autoplay.vue";
 import AutoplayCode from "./autoplay.vue?raw";
@@ -17,7 +20,11 @@ import AutoplayCode from "./autoplay.vue?raw";
 
 <template>
     <h3 id="base">Base</h3>
-    <p>Here is a basic example of a carousel with some slides.</p>
+    <p>
+        Here is a basic example of a carousel with some slides. When no
+        <code>value</code> is set for an item, the index of the slide is used to
+        as <code>v-model</code> value.
+    </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="indicatios">Indicators</h3>
@@ -32,6 +39,16 @@ import AutoplayCode from "./autoplay.vue?raw";
         <code>indicatorStyle</code> prop.
     </p>
     <ExampleViewer :component="Indicators" :code="IndicatorsCode" />
+
+    <h3 id="options">Options</h3>
+    <p>
+        Instead of using the <code>&lt;o-carousel-item&gt;</code> component
+        directly inside the default slot, an <code>options</code> prop can be
+        set, which allows the options to be set programmatically. All
+        <code>&lt;o-carousel-item&gt;</code> component props can be used as
+        attributes of the item object in the options list.
+    </p>
+    <ExampleViewer :component="Options" :code="OptionsCode" />
 
     <h3 id="list">Carousel List</h3>
     <p>
@@ -48,7 +65,7 @@ import AutoplayCode from "./autoplay.vue?raw";
         customised to create a custom style like a picture gallery slideshow.
         Click on the slide to open the gallery mode.
     </p>
-    <ExampleViewer :component="Custom" :code="CustomCode" />
+    <ExampleViewer :component="Slideshow" :code="SlideshowCode" />
 
     <h3 id="autoplay">Autoplay</h3>
     <p>

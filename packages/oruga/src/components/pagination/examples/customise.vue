@@ -5,6 +5,7 @@ const rangeBefore = ref(3);
 const rangeAfter = ref(1);
 const isSimple = ref(false);
 const isRounded = ref(false);
+const isDisabled = ref(false);
 const prevIcon = ref("chevron-left");
 const nextIcon = ref("chevron-right");
 const total = ref(200);
@@ -64,6 +65,7 @@ const size = ref("");
         <o-field grouped>
             <o-switch v-model="isSimple" label="Simple" />
             <o-switch v-model="isRounded" label="Rounded" />
+            <o-switch v-model="isDisabled" label="Disabled" />
         </o-field>
 
         <hr />
@@ -76,6 +78,7 @@ const size = ref("");
             :range-after="rangeAfter || 0"
             :position="position"
             :size="size"
+            :disabled="isDisabled"
             :simple="isSimple"
             :rounded="isRounded"
             :icon-prev="prevIcon"

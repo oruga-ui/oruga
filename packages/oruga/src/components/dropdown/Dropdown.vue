@@ -89,35 +89,35 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {T | T[]} updated modelValue prop
+     * @param value {unknown | unknown[]} - updated modelValue prop
      */
     "update:model-value": [value: ModelValue];
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     "update:active": [value: boolean];
     /**
      * on select event - fired before update:modelValue
-     * @param value {T} selected value
+     * @param value {unknown} - selected value
      */
     select: [value: T];
     /**
      * @deprecated use update:model-value instead
      * on change event - fired after update:modelValue
-     * @param value {T | T[]} selected value
+     * @param value {unknown | unknown[]} - selected value
      */
     change: [value: ModelValue];
     /**
      * on open event
      * @param method {string} open method
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     open: [method: string, event: Event];
     /**
      * on close event
      * @param method {string} close method
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     close: [method: string, event: Event];
     /** the list inside the dropdown reached the start */
@@ -273,7 +273,7 @@ function onTriggerClick(event: Event): void {
     toggle("click", event);
 }
 
-function onTriggerContextMenu(event: MouseEvent): void {
+function onTriggerContextMenu(event: Event): void {
     if (!props.triggers.includes("contextmenu")) return;
     event.preventDefault();
     open("contextmenu", event);
@@ -327,7 +327,7 @@ function close(method: string, event: Event): void {
     emits("close", method, event);
 
     // select item when dropdown closed
-    if (props.selectOnClose && focusedItem.value?.data?.value)
+    if (props.selectOnClose && focusedItem.value?.data.value)
         selectItem(focusedItem.value);
 
     isActive.value = false;
@@ -394,6 +394,11 @@ function focusItem(value: DropdownChildItem<T>): void {
     focusedItem.value = value;
 }
 
+/** Menu hover leave event handler. */
+function onMenuHoverLeave(): void {
+    focusedItem.value = undefined;
+}
+
 /** Set focus on a tab item. */
 function moveFocus(delta: 1 | -1): void {
     if (!isNotEmpty.value) return;
@@ -403,7 +408,7 @@ function moveFocus(delta: 1 | -1): void {
 
 /** Set focus on a dropdown item. */
 function setFocus(item: DropdownChildItem<T>): void {
-    if (props.selectOnFocus && item.data?.value)
+    if (props.selectOnFocus && item.data.value)
         selectItem(
             item,
             new FocusEvent("focus", { relatedTarget: toValue(item.el) }),
@@ -430,12 +435,17 @@ function onEnter(event: Event): void {
     if (!isActive.value) return;
     if (focusedItem.value) {
         setFocus(focusedItem.value);
-        focusedItem.value.data?.selectItem(event);
+        focusedItem.value.data.selectItem(event);
     }
 }
 
 /** Go to the first viable item */
 function onHomePressed(event: Event): void {
+    const target = event.target as HTMLElement;
+    // do not prevent default for HTMLElements with native keyboard "Home" key event behavior
+    if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
+        event.preventDefault();
+
     open("keydown", event);
     if (!isNotEmpty.value) return;
     const item = getFirstViableItem(0, 1);
@@ -444,6 +454,11 @@ function onHomePressed(event: Event): void {
 
 /** Go to the last viable item */
 function onEndPressed(event: Event): void {
+    const target = event.target as HTMLElement;
+    // do not prevent default for HTMLElements with native keyboard "End" key event behavior
+    if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
+        event.preventDefault();
+
     open("keydown", event);
     if (!isNotEmpty.value) return;
     const item = getFirstViableItem(childItems.value.length - 1, -1);
@@ -483,7 +498,7 @@ function getFirstViableItem(
 }
 
 function isItemViable(item: DropdownChildItem<T>): boolean {
-    return !item.data?.disabled && !item.data?.hidden && !!item.data?.clickable;
+    return !item.data.disabled && !item.data.hidden && !!item.data.clickable;
 }
 
 // #endregion --- Focus Feature ---
@@ -587,12 +602,12 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
             @keydown.space="onEnter"
             @keydown.up.prevent="onUpPressed"
             @keydown.down.prevent="onDownPressed"
-            @keydown.home.prevent="onHomePressed"
-            @keydown.end.prevent="onEndPressed">
+            @keydown.home="onHomePressed"
+            @keydown.end="onEndPressed">
             <!--
                 @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
-                @binding {T | T[]} value - the selected value
+                @binding {unknown | unknown[]} value - the selected value
                 @binding {(): void} toggle - toggle dropdown active state
             -->
             <slot
@@ -641,12 +656,13 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     :aria-multiselectable="
                         selectable ? isTrueish(multiple) : undefined
                     "
+                    @mouseleave="onMenuHoverLeave"
                     @keydown.enter.prevent="inline && onEnter($event)"
                     @keydown.space.prevent="inline && onEnter($event)"
                     @keydown.up.prevent="inline && onUpPressed($event)"
                     @keydown.down.prevent="inline && onDownPressed($event)"
-                    @keydown.home.prevent="inline && onHomePressed($event)"
-                    @keydown.end.prevent="inline && onEndPressed($event)">
+                    @keydown.home="inline && onHomePressed($event)"
+                    @keydown.end="inline && onEndPressed($event)">
                     <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
@@ -674,17 +690,17 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :clickable="false">
                                 <!--
                                     @slot Override the option group
-                                    @binding {object} group - options group
+                                    @binding {object} group - options group item
                                     @binding {number} index - option index
                                 -->
                                 <slot
-                                    v-if="$slots.group"
                                     name="group"
                                     :group="group.label"
-                                    :index="groupIndex" />
-                                <span v-else>
-                                    {{ group.label }}
-                                </span>
+                                    :index="groupIndex">
+                                    <span>
+                                        {{ group.label }}
+                                    </span>
+                                </slot>
                             </o-dropdown-item>
 
                             <o-dropdown-item
@@ -694,7 +710,13 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                                 :key="option.key"
                                 :value="option.value"
                                 :hidden="option.hidden">
-                                {{ option.label }}
+                                <!--
+                                    @slot Override the label, default is label prop
+                                    @binding {object} option - option item
+                                -->
+                                <slot name="option" :option="option">
+                                    <span> {{ option.label }} </span>
+                                </slot>
                             </o-dropdown-item>
                         </template>
 

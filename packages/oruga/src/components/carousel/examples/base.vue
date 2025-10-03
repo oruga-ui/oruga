@@ -1,31 +1,33 @@
 <script setup lang="ts">
-const carousels = [
-    { text: "Slide 1", color: "#445e00" },
-    { text: "Slide 2", color: "#006724" },
-    { text: "Slide 3", color: "#b60000" },
-    { text: "Slide 4", color: "#f4c300" },
-    { text: "Slide 5", color: "#005c98" },
+import { ref } from "vue";
+
+const currentSlide = ref<number>();
+
+const slides = [
+    { title: "Slide 1", color: "#445e00" },
+    { title: "Slide 2", color: "#006724" },
+    { title: "Slide 3", color: "#b60000" },
+    { title: "Slide 4", color: "#f4c300" },
+    { title: "Slide 5", color: "#005c98" },
 ];
 </script>
 
 <template>
     <section>
-        <o-carousel indicator-inside>
-            <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
+        <o-carousel v-model="currentSlide" indicator-inside>
+            <o-carousel-item v-for="slide in slides" :key="slide.title">
                 <article
-                    class="example-slide"
-                    :style="{ 'background-color': carousel.color }">
-                    <h1>{{ carousel.text }}</h1>
+                    :style="{
+                        'background-color': slide.color,
+                        padding: '9rem 4.5rem',
+                        color: '#ffffff',
+                        'text-align': 'center',
+                    }">
+                    <h1>{{ slide.title }}</h1>
                 </article>
             </o-carousel-item>
         </o-carousel>
+
+        <p><b>Current slide index:</b> {{ currentSlide }}</p>
     </section>
 </template>
-
-<style>
-.example-slide {
-    padding: 9rem 4.5rem;
-    color: #ffffff;
-    text-align: center;
-}
-</style>

@@ -8,12 +8,16 @@ export type TabsComponent = {
     activeIndex: number;
     type: string;
     vertical: boolean;
+    variant: string;
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
 };
 
-export type TabItemComponent<T> = TabItemProps<T, Component> & {
+export type TabItemComponent<T> = Pick<
+    TabItemProps<T, Component>,
+    "value" | "label" | "disabled" | "visible" | "tag" | "icon" | "iconPack"
+> & {
     $slots: Slots;
     tabClasses: ClassBinding[];
     iconClasses: ClassBinding[];
@@ -23,4 +27,4 @@ export type TabItemComponent<T> = TabItemProps<T, Component> & {
     deactivate: (index: number) => void;
 };
 
-export type TabItem<T> = Omit<ProviderItem<T>, "data"> & TabItemComponent<T>;
+export type TabItem<T> = ProviderItem<TabItemComponent<T>>;

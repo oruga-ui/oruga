@@ -10,13 +10,7 @@
                     Attached tag label with custom and colored icon
                 </template>
 
-                <template #close="{ close }">
-                    <o-button
-                        label="Cancel"
-                        variant="secondary"
-                        size="small"
-                        @click="close" />
-                </template>
+                <template #close> Cancel </template>
             </o-tag>
         </p>
     </section>

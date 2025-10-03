@@ -34,6 +34,7 @@ defineOptions({
 const props = withDefaults(defineProps<MenuItemProps<T>>(), {
     override: undefined,
     active: false,
+    value: undefined,
     options: undefined,
     label: undefined,
     expanded: false,
@@ -50,13 +51,13 @@ const props = withDefaults(defineProps<MenuItemProps<T>>(), {
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     "update:active": [value: boolean];
     /**
      * onclick event
-     * @param value {unknown} value prop data
-     * @param event {event} native event
+     * @param value {unknown} - value prop data
+     * @param event {event} - native event
      */
     click: [value: T, event: Event];
 }>();
@@ -86,8 +87,9 @@ const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<MenuItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: itemValue as T,
+    disabled: props.disabled,
+    hidden: props.hidden,
     parent: menuItem.parent.value,
     hasChildren: hasChildren.value,
     expanded: isExpanded.value,
