@@ -14,6 +14,7 @@ import {
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
+import OCarouselItem from "./CarouselItem.vue";
 
 import { getDefault } from "@/utils/config";
 import { sign, mod, bound, isDefined } from "@/utils/helpers";
