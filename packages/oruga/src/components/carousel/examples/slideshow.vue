@@ -3,16 +3,17 @@ import { ref } from "vue";
 
 const gallery = ref(false);
 
-const indicators = ref(false);
-const itemsToShow = ref(2);
-const breakpoints = ref({
+const breakpoints = {
+    0: {
+        itemsToShow: 2,
+    },
     768: {
         itemsToShow: 4,
     },
     960: {
         itemsToShow: 6,
     },
-});
+};
 
 const slides = [
     {
@@ -48,8 +49,17 @@ const slides = [
 function switchGallery(value: boolean): void {
     gallery.value = value;
 
+    // this removes the scrollbar
     if (value) document.documentElement.classList.add("o-clipped");
     else document.documentElement.classList.remove("o-clipped");
+
+    // this adds gallery close event for esc key
+    if (value) document.addEventListener("keydown", switchGalleryOff);
+    else document.removeEventListener("keydown", switchGalleryOff);
+}
+
+function switchGalleryOff(event: KeyboardEvent): void {
+    if (event.key === "Escape") switchGallery(false);
 }
 </script>
 
@@ -59,7 +69,8 @@ function switchGallery(value: boolean): void {
             :autoplay="false"
             :overlay="gallery"
             :arrows="false"
-            @click="switchGallery(true)">
+            @click="switchGallery(true)"
+            @keydown.esc="gallery && switchGallery(false)">
             <o-carousel-item
                 v-for="slide in slides"
                 :key="slide.title"
@@ -69,11 +80,10 @@ function switchGallery(value: boolean): void {
                 </div>
             </o-carousel-item>
 
-            <template #indicators="{ active, switchTo }">
+            <template #indicators="{ activeIndex, switchTo }">
                 <o-carousel
-                    :model-value="active"
-                    :indicators="indicators"
-                    :items-to-show="itemsToShow"
+                    :model-value="activeIndex"
+                    :indicators="false"
                     :breakpoints="breakpoints"
                     @update:model-value="switchTo($event)">
                     <o-carousel-item
@@ -108,12 +118,15 @@ function switchGallery(value: boolean): void {
     height: auto;
     width: 100%;
 }
+
 .img-indicator {
     filter: grayscale(100%);
 }
+
 .img-indicator-active {
     filter: grayscale(0%);
 }
+
 .ex-close-icon {
     position: absolute;
     top: 10px;

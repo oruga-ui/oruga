@@ -110,6 +110,9 @@ const normalizedOptions = computed(() =>
 /** The selected item value, use v-model to make it two-way binding */
 const vmodel = defineModel<ModelValue>({ default: undefined });
 
+/** the active item */
+const activeItem = ref<TabItem<T>>();
+
 onMounted(() => {
     // set first tab as default if not defined
     if (!vmodel.value) vmodel.value = childItems.value[0]?.data.value;
@@ -122,9 +125,6 @@ watch(
         if (vmodel.value !== value) activateItem(value);
     },
 );
-
-/** the active item */
-const activeItem = ref<TabItem<T>>();
 
 // set the active item immediate and every time the vmodel changes
 watchEffect(() => {
@@ -159,7 +159,7 @@ function activateItem(newValue: ModelValue): void {
 
 // #endregion --- Active Item Feature ---
 
-// #region --- Event Handler ---
+// #region --- Switch Item Events ---
 
 /** Item click listener, emit input event and change active child. */
 function itemClick(item: TabItem<T>): void {
@@ -242,7 +242,7 @@ function getFirstViableItem(
     return childItems.value[newIndex];
 }
 
-// #endregion --- Event Handler ---
+// #endregion --- Switch Item Events ---
 
 // #region --- Computed Component Classes ---
 

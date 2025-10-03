@@ -1,10 +1,12 @@
 import type { ComponentClass } from "@/types";
 
-export type CarouselProps = {
+export type CarouselProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
     /** The index of the current active element */
-    modelValue?: number;
+    modelValue?: T;
+    /** Menu items, unnecessary when default slot is used */
+    options?: CarouselItemProps<T>[];
     /** Enable drag mode */
     dragable?: boolean;
     /** Move item automaticalls after `interval` */
@@ -99,9 +101,11 @@ export type CarouselClasses = Partial<{
     indicatorItemStyleClass: ComponentClass;
 }>;
 
-export type CarouselItemProps = {
+export type CarouselItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
+    /** Item value (it will be used as the v-model of the wrapper component) - default is the item index */
+    value?: T;
     /** Make item clickable */
     clickable?: boolean;
     /** Title of the slide, unnecessary when default slot is used */
