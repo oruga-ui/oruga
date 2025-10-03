@@ -104,7 +104,7 @@ export type CarouselClasses = Partial<{
 export type CarouselItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Item value (it will be used as the v-model of the wrapper component) - default is an uuid */
+    /** Item value (it will be used as the v-model of the wrapper component) - default is the item index */
     value?: T;
     /** Make item clickable */
     clickable?: boolean;

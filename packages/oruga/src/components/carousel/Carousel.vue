@@ -653,14 +653,12 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
 
         <!--
             @slot Override the indicators
-            @binding {unkown} value - active item value
-            @binding {number} index - active item index
+            @binding {number} activeIndex - active item index
             @binding {(idx: number): void} - switch-to switch to item function
         -->
         <slot
             name="indicators"
-            :value="vmodel"
-            :index="activeItem?.index ?? 0"
+            :active-index="activeItem?.index ?? 0"
             :switch-to="switchTo">
             <div
                 v-if="indicators"

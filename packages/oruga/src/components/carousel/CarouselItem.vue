@@ -113,7 +113,6 @@ const imageClasses = defineClasses([
 </script>
 
 <template>
-    <!-- TODO: Add native vue transition animation like steps/tabs -->
     <div
         :id="`carouselpanel-${item.identifier}`"
         ref="rootElement"
@@ -138,9 +137,11 @@ const imageClasses = defineClasses([
             <div :class="imageClasses">
                 <img :src="image" :alt="imageAlt" />
             </div>
+
             <div v-if="title" :class="titleClasses">
                 {{ title }}
             </div>
+
             <div v-if="subtitle" :class="subtitleClasses">
                 {{ subtitle }}
             </div>

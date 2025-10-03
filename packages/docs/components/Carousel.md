@@ -73,14 +73,14 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ### Slots
 
-| Name       | Description                      | Bindings                                                                               |
-| ---------- | -------------------------------- | -------------------------------------------------------------------------------------- |
-| pause      | Override the pause/resume button | <br/>                                                                                  |
-| arrow      | Override the arrows              | <br/><br/><br/>                                                                        |
-| default    | Display carousel item            |                                                                                        |
-| indicators | Override the indicators          | **value** `unkown` - active item value<br/>**index** `number` - active item index<br/> |
-| indicator  | Override the indicator elements  |                                                                                        |
-| overlay    | Overlay element                  |                                                                                        |
+| Name       | Description                      | Bindings        |
+| ---------- | -------------------------------- | --------------- |
+| pause      | Override the pause/resume button | <br/>           |
+| arrow      | Override the arrows              | <br/><br/><br/> |
+| default    | Display carousel item            |                 |
+| indicators | Override the indicators          | <br/>           |
+| indicator  | Override the indicator elements  |                 |
+| overlay    | Overlay element                  |                 |
 
 </section>
 
