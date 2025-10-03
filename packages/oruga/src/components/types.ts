@@ -864,12 +864,14 @@ Use menu only in situations where your dropdown is related to a navigation menu.
             }>;
         modal?: ComponentConfigBase &
             Partial<{
-                /** Width of the Modal */
-                width: Numberish;
                 /** Custom animation (transition name) */
                 animation: string;
                 /** Show an overlay */
                 overlay: boolean;
+                /** Width of the modal */
+                width: Numberish;
+                /** Height of the modal */
+                height: Numberish;
                 /** Is Modal cancleable by clicking 'X', pressing escape or clicking outside */
                 cancelable: boolean | string[];
                 /** Set `true` to remove the body scrollbar.
@@ -909,8 +911,10 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 overlayClass: ClassDefinition;
                 /** Class of the content element */
                 contentClass: ClassDefinition;
-                /** Class of the content element when fullscreen */
-                fullScreenClass: ClassDefinition;
+                /** Class of the content element when fullheght */
+                fullheightClass: ClassDefinition;
+                /** Class of the content element when fullwidth */
+                fullwidthClass: ClassDefinition;
                 /** Class of the close button element */
                 closeClass: ClassDefinition;
                 /** Class of the body when modal is open and scroll is clipped */

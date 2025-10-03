@@ -40,13 +40,22 @@ const inspectData: InspectData<ModalClasses, ModalProps> = {
             data.active = true;
         },
     },
-    fullScreenClass: {
-        class: "fullScreenClass",
-        description: "Class of the content element when fullscreen.",
-        properties: ["fullScreen"],
+    fullheightClass: {
+        class: "fullheightClass",
+        description: "Class of the content element when fullheight.",
+        properties: ["fullheight"],
         action: (data): void => {
             data.active = true;
-            data.fullScreen = true;
+            data.fullheight = true;
+        },
+    },
+    fullwidthClass: {
+        class: "fullwidthClass",
+        description: "Class of the content element when fullwidth.",
+        properties: ["fullwidth"],
+        action: (data): void => {
+            data.active = true;
+            data.fullwidth = true;
         },
     },
     closeClass: {

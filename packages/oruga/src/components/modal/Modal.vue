@@ -41,11 +41,14 @@ defineOptions({
 const props = withDefaults(defineProps<ModalProps<C>>(), {
     override: undefined,
     active: false,
-    fullScreen: false,
     content: undefined,
-    width: () => getDefault("modal.width", 960),
     animation: () => getDefault("modal.animation", "zoom-out"),
     overlay: () => getDefault("modal.overlay", true),
+    width: () => getDefault("modal.width"),
+    hieght: () => getDefault("modal.height"),
+    fullscreen: false,
+    fullheight: false,
+    fullwidth: false,
     cancelable: () =>
         getDefault("modal.cancelable", ["escape", "x", "outside"]),
     trapFocus: () => getDefault("modal.trapFocus", true),
@@ -98,9 +101,17 @@ const showX = computed(() =>
         : props.cancelable,
 );
 
-const customStyle = computed(() =>
-    !props.fullScreen ? { maxWidth: toCssDimension(props.width) } : null,
-);
+// TODO: Maybe remove?!
+const customStyle = computed(() => ({
+    width:
+        !props.fullscreen && !props.fullwidth
+            ? toCssDimension(props.width)
+            : undefined,
+    height:
+        !props.fullscreen && !props.fullheight
+            ? toCssDimension(props.hieght)
+            : undefined,
+}));
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 
@@ -117,7 +128,7 @@ onMounted(() => {
     if (isActive.value && props.overlay) toggleScroll(isActive.value);
 });
 
-// --- Events Feature ---
+// #region --- Close Events Feature ---
 
 if (isClient)
     if (!props.overlay)
@@ -165,7 +176,9 @@ function close(...args: [] | [string] | CloseEventArgs<C>): void {
     emits("close", ...args);
 }
 
-// --- Animation Feature ---
+// #endregion --- Close Events Feature ---
+
+// #region --- Animation Feature ---
 
 const isAnimated = ref(props.active);
 
@@ -179,7 +192,9 @@ function beforeLeave(): void {
     isAnimated.value = false;
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Animation Feature ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-modal"],
@@ -201,32 +216,32 @@ const contentClasses = defineClasses(
         "fullScreenClass",
         "o-modal__content--full-screen",
         null,
-        computed(() => props.fullScreen),
+        computed(() => props.fullscreen),
     ],
     [
         "fullheightClass",
-        "o-sidebar__content--fullheight",
+        "o-modal__content--fullheight",
         null,
-        computed(() => props.fullheight),
+        computed(() => props.fullheight || props.fullscreen),
     ],
     [
         "fullwidthClass",
-        "o-sidebar__content--fullwidth",
+        "o-modal__content--fullwidth",
         null,
-        computed(
-            () =>
-                props.fullwidth ||
-                (isMobile.value && props.mobile === "expanded"),
-        ),
+        computed(() => props.fullwidth || props.fullscreen),
     ],
 );
 
 const closeClasses = defineClasses(["closeClass", "o-modal__close"]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>

@@ -7,16 +7,22 @@ export type ModalProps<C extends Component = Component> = {
     override?: boolean;
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Display modal as full screen */
-    fullScreen?: boolean;
     /** Text content, unnecessary when default slot is used */
     content?: string;
-    /** Width of the Modal */
-    width?: Numberish;
     /** Custom animation (transition name) */
     animation?: string;
     /** Show an overlay  */
     overlay?: boolean;
+    /** Width of the modal */
+    width?: Numberish;
+    /** Height of the modal */
+    hieght?: Numberish;
+    /** Display modal in fullwidth and fullheight */
+    fullscreen?: boolean;
+    /** Display modal in fullheight */
+    fullheight?: boolean;
+    /** Display modal in fullwidth */
+    fullwidth?: boolean;
     /**
      * Is Modal cancleable by clicking 'X', pressing escape or clicking outside
      * @values escape, x, outside, button, true, false
@@ -89,8 +95,10 @@ export type ModalClasses = Partial<{
     overlayClass: ComponentClass;
     /** Class of the content element */
     contentClass: ComponentClass;
-    /** Class of the content element when fullscreen */
-    fullScreenClass: ComponentClass;
+    /** Class of the content element when fullheght */
+    fullheightClass: ComponentClass;
+    /** Class of the content element when fullwidth */
+    fullwidthClass: ComponentClass;
     /** Class of the close button element */
     closeClass: ComponentClass;
     /** Class of the body when modal is open and scroll is clipped */
