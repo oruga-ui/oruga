@@ -149,7 +149,6 @@ const inspectData: InspectData<
                 v-for="slide in slides"
                 :key="slide.text"
                 :title="slide.text"
-                class="example-slide"
                 :style="{
                     'background-color': slide.color,
                     padding: '9rem 4.5rem',
