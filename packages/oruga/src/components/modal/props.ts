@@ -16,7 +16,7 @@ export type ModalProps<C extends Component = Component> = {
     /** Width of the modal */
     width?: Numberish;
     /** Height of the modal */
-    hieght?: Numberish;
+    height?: Numberish;
     /** Display modal in fullwidth and fullheight */
     fullscreen?: boolean;
     /** Display modal in fullheight */

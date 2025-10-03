@@ -45,7 +45,7 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     animation: () => getDefault("modal.animation", "zoom-out"),
     overlay: () => getDefault("modal.overlay", true),
     width: () => getDefault("modal.width"),
-    hieght: () => getDefault("modal.height"),
+    height: () => getDefault("modal.height"),
     fullscreen: false,
     fullheight: false,
     fullwidth: false,
@@ -109,7 +109,7 @@ const customStyle = computed(() => ({
             : undefined,
     height:
         !props.fullscreen && !props.fullheight
-            ? toCssDimension(props.hieght)
+            ? toCssDimension(props.height)
             : undefined,
 }));
 
