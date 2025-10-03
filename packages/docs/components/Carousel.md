@@ -96,15 +96,15 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ### Props
 
-| Prop name | Description                                                                               | Type    | Values | Default                                                     |
-| --------- | ----------------------------------------------------------------------------------------- | ------- | ------ | ----------------------------------------------------------- |
-| clickable | Make item clickable                                                                       | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code> |
-| image     | Background image of the item                                                              | string  | -      |                                                             |
-| imageAlt  | Image alt tag of the background image                                                     | string  | -      |                                                             |
-| override  | Override existing theme classes completely                                                | boolean | -      |                                                             |
-| subtitle  | Subtitle of the slide, unnecessary when default slot is used                              | string  | -      |                                                             |
-| title     | Title of the slide, unnecessary when default slot is used                                 | string  | -      |                                                             |
-| value     | Item value (it will be used as the v-model of the wrapper component) - default is an uuid | unknown | -      |                                                             |
+| Prop name | Description                                                                                      | Type    | Values | Default                                                     |
+| --------- | ------------------------------------------------------------------------------------------------ | ------- | ------ | ----------------------------------------------------------- |
+| clickable | Make item clickable                                                                              | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| image     | Background image of the item                                                                     | string  | -      |                                                             |
+| imageAlt  | Image alt tag of the background image                                                            | string  | -      |                                                             |
+| override  | Override existing theme classes completely                                                       | boolean | -      |                                                             |
+| subtitle  | Subtitle of the slide, unnecessary when default slot is used                                     | string  | -      |                                                             |
+| title     | Title of the slide, unnecessary when default slot is used                                        | string  | -      |                                                             |
+| value     | Item value (it will be used as the v-model of the wrapper component) - default is the item index | unknown | -      |                                                             |
 
 ### Events
 
