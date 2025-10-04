@@ -85,7 +85,9 @@ function switchGalleryOff(event: KeyboardEvent): void {
                     :model-value="activeIndex"
                     :indicators="false"
                     :breakpoints="breakpoints"
-                    @update:model-value="switchTo($event)">
+                    @update:model-value="switchTo($event)"
+                    @keydown.left.stop
+                    @keydown.right.stop>
                     <o-carousel-item
                         v-for="slide in slides"
                         :key="slide.title"

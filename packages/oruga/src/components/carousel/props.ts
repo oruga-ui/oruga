@@ -73,31 +73,31 @@ export type CarouselClasses = Partial<{
     overlayClass: ComponentClass;
     /** Class of the inner wrapper element */
     wrapperClass: ComponentClass;
-    /** Class of items container element */
+    /** Class of the items container element */
     itemsClass: ComponentClass;
-    /* Class of items container element when dragging */
+    /** Class of the items container element when dragging */
     itemsDraggingClass: ComponentClass;
-    /** Class of icon button elements */
+    /** Class of the icon button elements */
     iconClass: ComponentClass;
-    /** Class of prev icon button element */
+    /** Class of the prev icon button element */
     iconPrevClass: ComponentClass;
-    /** Class of next icon button element */
+    /** Class of the next icon button element */
     iconNextClass: ComponentClass;
-    /** Class of autoplay icon button element */
+    /** Class of the autoplay icon button element */
     iconAutoplayClass: ComponentClass;
-    /** Class of indicators tablist element */
+    /** Class of the indicators tablist element */
     indicatorsClass: ComponentClass;
-    /** Class of indicators tablist element when inside */
+    /** Class of the indicators tablist element when inside */
     indicatorsInsideClass: ComponentClass;
-    /** Class of indicators tablist element with position */
+    /** Class of the indicators tablist element with position */
     indicatorsPositionClass: ComponentClass;
-    /** Class of indicator tab element */
+    /** Class of the indicator tab element */
     indicatorClass: ComponentClass;
-    /** Class of indicator item element */
+    /** Class of the indicator item element */
     indicatorItemClass: ComponentClass;
-    /** Class of indicator element when active */
+    /** Class of the indicator element when active */
     indicatorItemActiveClass: ComponentClass;
-    /** Class of indicator element to separate different styles */
+    /** Class of the indicator element to separate different styles */
     indicatorItemStyleClass: ComponentClass;
 }>;
 
