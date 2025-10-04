@@ -510,10 +510,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
                 role="presentation"
                 :clickable="false"
                 :class="[...itemClasses, ...itemGroupClasses]">
-                <slot
-                    name="group"
-                    :group="group"
-                    :index="groupIndex">
+                <slot name="group" :group="group" :index="groupIndex">
                     <span> {{ group.label }} </span>
                 </slot>
             </o-dropdown-item>
