@@ -1,3 +1,37 @@
+# [0.12.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.11.6...v0.12.0-pre.1) (2025-10-04)
+
+
+### BREAKING CHANGES
+
+* **autocomplete:** rename class `itemGroupTitleClass` to `itemGroupClass`
+* **steps:** `variantClass` got removed from the Steps component
+* **pagination:** the pagination button template has changed
+* **uploard:** rename `hoveredClass` to `draggableHoveredClass`
+
+### Bug Fixes
+
+* **carousel:** solve tab navigation issues when has no indicators ([#1432](https://github.com/oruga-ui/oruga/issues/1432)) ([28d9823](https://github.com/oruga-ui/oruga/commit/28d982363eff36536f753b2c30e4d8aff2e85b6a))
+* **drodown:** don't prevent home/end keys for elements with native key behavior ([#1419](https://github.com/oruga-ui/oruga/issues/1419)) ([b7b9324](https://github.com/oruga-ui/oruga/commit/b7b93248e1c4140e3a884f48808c5399e3adc5cd))
+* **dropdown:** clear focused item on hover out ([#1418](https://github.com/oruga-ui/oruga/issues/1418)) ([9e31b94](https://github.com/oruga-ui/oruga/commit/9e31b944370c2c25190886bd1d4e17f8237f2c78))
+
+
+### Features
+
+* **autocomplete:** rename class `itemGroupTitleClass` to `itemGroupClass` ([#1426](https://github.com/oruga-ui/oruga/issues/1426)) ([c9bf162](https://github.com/oruga-ui/oruga/commit/c9bf1621490aa85d9a6464d252bbbeaaa6923e0f))
+* **card:** add OCard component ([#1384](https://github.com/oruga-ui/oruga/issues/1384)) ([2222bee](https://github.com/oruga-ui/oruga/commit/2222beef91ee33ca57d2cb69ea05038b3738f851))
+* **carousel:** add `options` prop ([#1429](https://github.com/oruga-ui/oruga/issues/1429)) ([d57fb7d](https://github.com/oruga-ui/oruga/commit/d57fb7db6d04a60ba0aab1af79ffee1b6a396585))
+* **carousel:** add default slide template with `title`, `subtitle` and `image` ([#1416](https://github.com/oruga-ui/oruga/issues/1416)) ([d96f555](https://github.com/oruga-ui/oruga/commit/d96f55516bcaef6b6dea037ef913c207c03d0abd))
+* **listbox:** add OListbox component ([#1380](https://github.com/oruga-ui/oruga/issues/1380)) ([0ded5de](https://github.com/oruga-ui/oruga/commit/0ded5de90fbe54bee1173141750a1262925290f6))
+* **pagination:** use OButton component instead of custom button ([#1386](https://github.com/oruga-ui/oruga/issues/1386)) ([a7f22f3](https://github.com/oruga-ui/oruga/commit/a7f22f30c615b87abae8ca5eb20b666132c1d074))
+* **programmatic:** use factory pattern for programmatic interfaces ([#1395](https://github.com/oruga-ui/oruga/issues/1395)) ([1017e08](https://github.com/oruga-ui/oruga/commit/1017e081c07372d60e033c218d87a24a8b5a9b96))
+* **steps:** remove root variantClass ([#1410](https://github.com/oruga-ui/oruga/issues/1410)) ([0d77beb](https://github.com/oruga-ui/oruga/commit/0d77bebb03e42b434bedcf13f0aa743d2e759315))
+* **table:** move slots `before` and `after` out of `default` slot ([#1428](https://github.com/oruga-ui/oruga/issues/1428)) ([6661827](https://github.com/oruga-ui/oruga/commit/6661827be3077fe2895d8ff497042948f1d7272b))
+* **table:** unify class names ([#1406](https://github.com/oruga-ui/oruga/issues/1406)) ([cfd21d5](https://github.com/oruga-ui/oruga/commit/cfd21d5781184dc3b37439104c65abf0b4ff9584))
+* **tabs:** add TabItem `variant` class ([#1409](https://github.com/oruga-ui/oruga/issues/1409)) ([a0b9f82](https://github.com/oruga-ui/oruga/commit/a0b9f82ae1c1413a8df5c3d05ca4e1df3aa303a7))
+* **upload:** adjust classes ([#1398](https://github.com/oruga-ui/oruga/issues/1398)) ([324616c](https://github.com/oruga-ui/oruga/commit/324616c83b8d9a757b6b943d743d56586eb19ad4)), closes [#1398](https://github.com/oruga-ui/oruga/issues/1398)
+
+
+
 ## [0.11.6](https://github.com/oruga-ui/oruga/compare/v0.11.5...v0.11.6) (2025-09-03)
 
 
