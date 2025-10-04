@@ -673,8 +673,8 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
             <!--
                 @slot Overridet the filter input
                 @binding {string} value - filter input value
-                @binding {(input: string, event: Event): void} onChange - on filter input change event
-                @binding {(event: Event): void} onKeydown - on filter input keydown event
+                @binding {(input: string, event: Event): void} on-change - on filter input change event
+                @binding {(event: Event): void} on-keydown - on filter input keydown event
             -->
             <slot
                 name="filter"
