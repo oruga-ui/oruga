@@ -666,7 +666,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
                     <!--
                         @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
-                        @binding {number} focusedIndex - index of the focused element
+                        @binding {number} focused-index - index of the focused element
                         @binding {(): void} toggle - toggle dropdown active state
                     -->
                     <slot

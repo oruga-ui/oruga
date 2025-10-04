@@ -574,8 +574,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         <div :class="wrapperClasses">
             <!--
                 @slot Override the pause/resume button
-                @binding {boolean} - autoplay if autoplay is active
-                @binding {(): void} - toggle toggle autoplay
+                @binding {boolean} autoplay - if autoplay is active
+                @binding {(): void} toggle - toggle autoplay
             -->
             <slot
                 name="pause"
@@ -603,10 +603,10 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
 
             <!--
                 @slot Override the arrows
-                @binding {boolean} - has-prev has prev arrow button
-                @binding {boolean} - has-next has next arrow button
-                @binding {(): void} - prev switch to prev item function
-                @binding {(): void} - next switch to next item function
+                @binding {boolean} has-prev - has prev arrow button
+                @binding {boolean} has-next - has next arrow button
+                @binding {(): void} prev - switch to prev item function
+                @binding {(): void} next - switch to next item function
             -->
             <slot
                 name="arrow"
@@ -662,7 +662,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         <!--
             @slot Override the indicators
             @binding {number} activeIndex - active item index
-            @binding {(idx: number): void} - switch-to switch to item function
+            @binding {(idx: number): void} switch-to - switch to item function
         -->
         <slot
             name="indicators"
@@ -690,7 +690,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                     @keydown.space="onChange(item)">
                     <!--
                             @slot Override the indicator elements
-                            @binding {index} - index indicator index
+                            @binding {index} index - indicator index
                         -->
                     <slot :index="item.index" name="indicator">
                         <span :class="indicatorItemAppliedClasses(item)" />

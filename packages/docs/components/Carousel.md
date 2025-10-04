@@ -73,14 +73,14 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ### Slots
 
-| Name       | Description                      | Bindings                                                                                                |
-| ---------- | -------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| pause      | Override the pause/resume button | **autoplay** - undefined<br/>**toggle** - undefined                                                     |
-| arrow      | Override the arrows              | **has-prev** - undefined<br/>**prev** - undefined<br/>**has-next** - undefined<br/>**next** - undefined |
-| default    | Display carousel item            |                                                                                                         |
-| indicators | Override the indicators          | **active-index** - undefined<br/>**switch-to** - undefined                                              |
-| indicator  | Override the indicator elements  | **index** - undefined                                                                                   |
-| overlay    | Overlay element                  |                                                                                                         |
+| Name       | Description                      | Bindings                                                                                                                                                                                                        |
+| ---------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| pause      | Override the pause/resume button | **autoplay** `boolean` - if autoplay is active<br/>**toggle** `(): void` - toggle autoplay                                                                                                                      |
+| arrow      | Override the arrows              | **has-prev** `boolean` - has prev arrow button<br/>**prev** `(): void` - switch to prev item function<br/>**has-next** `boolean` - has next arrow button<br/>**next** `(): void` - switch to next item function |
+| default    | Display carousel item            |                                                                                                                                                                                                                 |
+| indicators | Override the indicators          | **active-index** - undefined<br/>**switch-to** `(idx: number): void` - switch to item function                                                                                                                  |
+| indicator  | Override the indicator elements  | **index** `index` - indicator index                                                                                                                                                                             |
+| overlay    | Overlay element                  |                                                                                                                                                                                                                 |
 
 </section>
 
