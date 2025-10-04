@@ -1,9 +1,8 @@
-import type { ParamTag, SlotDescriptor } from "vue-docgen-api";
+import type { SlotDescriptor } from "vue-docgen-api";
 import { mdclean } from "vue-docgen-cli/lib/compileTemplates";
 
-function formatParams(tags: SlotDescriptor["tags"]): string {
-    if (!tags || (!tags["params"] && !tags["bindings"])) return "";
-    const params = (tags["params"] ?? tags["bindings"]) as ParamTag[];
+function formatParams(params: SlotDescriptor["bindings"]): string {
+    if (!params) return "";
 
     return params
         .map((tag) => {
@@ -25,13 +24,16 @@ export function renderer(descriptor: SlotDescriptor[]): string {
 | ------------- | ------------ | -------- |
 `;
     slots.map((slot) => {
-        const { description, tags, name } = slot;
-        const readableBindings = tags ? `${formatParams(tags)}` : "";
+        const { description, tags, name, bindings } = slot;
+
+        // use `defineSlots` params tags when available; else use default template binding syntax
+        const params = tags && tags["params"] ? tags["params"] : bindings;
+
+        const readableBindings = bindings ? `${formatParams(params)}` : "";
 
         ret +=
             `| ${mdclean(name)} | ${mdclean(description || "")} | ${mdclean(readableBindings)} |` +
             "\n";
-        // replace returns by <br> to allow them in a table cell
     });
 
     return ret;

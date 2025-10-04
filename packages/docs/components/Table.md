@@ -143,22 +143,22 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 ### Slots
 
-| Name        | Description                                                                                 | Bindings |
-| ----------- | ------------------------------------------------------------------------------------------- | -------- |
-| before      | Place extra `o-table-column` components here, even if you have some columns defined by prop |          |
-| default     | Place `o-table-column` here                                                                 |          |
-| after       | Place extra `o-table-column` components here, even if you have some columns defined by prop |          |
-| pagination  | Override pagination label                                                                   |          |
-| top-left    | Additional slot if table is paginated                                                       |          |
-| caption     | Define a table caption here                                                                 |          |
-| preheader   | Define preheader content here                                                               |          |
-| check-all   | Override check all checkbox                                                                 |          |
-| subheading  |                                                                                             |          |
-| detail      | Place row detail content here                                                               |          |
-| empty       | Define content if table is empty                                                            |          |
-| footer      | Define a custom footer                                                                      |          |
-| loading     | Override loading component                                                                  |          |
-| bottom-left | Additional slot if table is paginated                                                       |          |
+| Name        | Description                                                                                 | Bindings                                                                                                                                                                              |
+| ----------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| before      | Place extra `o-table-column` components here, even if you have some columns defined by prop |                                                                                                                                                                                       |
+| default     | Place `o-table-column` here                                                                 |                                                                                                                                                                                       |
+| after       | Place extra `o-table-column` components here, even if you have some columns defined by prop |                                                                                                                                                                                       |
+| pagination  | Override pagination label                                                                   | **current** `number` - current page<br/>**per-page** `number` - rows per page<br/>**total** `number` - total rows count<br/>**change** `(page: number): void ` - on page change event |
+| top-left    | Additional slot if table is paginated                                                       |                                                                                                                                                                                       |
+| caption     | Define a table caption here                                                                 |                                                                                                                                                                                       |
+| preheader   | Define preheader content here                                                               |                                                                                                                                                                                       |
+| check-all   | Override check all checkbox                                                                 | **is-all-checked** `boolean` - if all rows are checked<br/>**is-all-uncheckable** `boolean` - if check all is uncheckable<br/>**check-all** `(): void` - check all function           |
+| subheading  |                                                                                             |                                                                                                                                                                                       |
+| detail      | Place row detail content here                                                               | **row** `unknown` - row content<br/>**index** `number` - row index                                                                                                                    |
+| empty       | Define content if table is empty                                                            |                                                                                                                                                                                       |
+| footer      | Define a custom footer                                                                      | **column-count** `number` - counts of visible columns<br/>**row-count** `number` - counts of visible rows                                                                             |
+| loading     | Override loading component                                                                  | **loading** `boolean` - is loading state enabled                                                                                                                                      |
+| bottom-left | Additional slot if table is paginated                                                       |                                                                                                                                                                                       |
 
 </section>
 
@@ -197,13 +197,13 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 ### Slots
 
-| Name       | Description               | Bindings |
-| ---------- | ------------------------- | -------- |
-| default    | Default Slot              |          |
-| header     | Override header label     |          |
-| subheading | Override subheading label |          |
-| searchable | Override searchable input |          |
-| filter     | Override searchable input |          |
+| Name       | Description               | Bindings                                                                                                                                                                                                              |
+| ---------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| default    | Default Slot              | **row** `unknown` - row data<br/>**column** `TableColumn` - column definition<br/>**index** `number` - row index<br/>**colindex** `number` - column index<br/>**toggle-details** `(): void` - toggle details function |
+| header     | Override header label     | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                                    |
+| subheading | Override subheading label | **column** `TableColumn` - column definition<br/>**index** `number` - column index                                                                                                                                    |
+| searchable | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                                   |
+| filter     | Override searchable input | **column** `TableColumn` - column definition<br/>**index** `number` - column index<br/>**filters** `object` - active filters object                                                                                   |
 
 </section>
 

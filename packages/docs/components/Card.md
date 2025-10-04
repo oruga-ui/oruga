@@ -55,16 +55,16 @@ They are particularly well-suited to use with the [Modal](/components/Modal) com
 
 ### Slots
 
-| Name     | Description                                            | Bindings |
-| -------- | ------------------------------------------------------ | -------- |
-| header   | Override the header                                    |          |
-| title    | Override the header title, default is title prop       |          |
-| subtitle | Override the header subtitle, default is subtitle prop |          |
-| close    | Override the close icon                                |          |
-| image    | Override the image                                     |          |
-| default  | Override the default card body                         |          |
-| content  | Override the body content, default is content prop     |          |
-| footer   | Override the footer                                    |          |
+| Name     | Description                                            | Bindings                                                            |
+| -------- | ------------------------------------------------------ | ------------------------------------------------------------------- |
+| header   | Override the header                                    | **close** `(event: Event): void` - function to emit a `close` event |
+| title    | Override the header title, default is title prop       |                                                                     |
+| subtitle | Override the header subtitle, default is subtitle prop |                                                                     |
+| close    | Override the close icon                                |                                                                     |
+| image    | Override the image                                     |                                                                     |
+| default  | Override the default card body                         | **close** `(event: Event): void` - function to emit a `close` event |
+| content  | Override the body content, default is content prop     | **close** `(event: Event): void` - function to emit a `close` event |
+| footer   | Override the footer                                    | **close** `(event: Event): void` - function to emit a `close` event |
 
 </section>
 

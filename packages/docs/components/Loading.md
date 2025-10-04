@@ -50,9 +50,9 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 ### Slots
 
-| Name    | Description             | Bindings |
-| ------- | ----------------------- | -------- |
-| default | Override icon and label |          |
+| Name    | Description             | Bindings                                            |
+| ------- | ----------------------- | --------------------------------------------------- |
+| default | Override icon and label | **close** `close` - function to close the component |
 
 </section>
 
