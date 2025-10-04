@@ -102,7 +102,7 @@ const showX = computed(() =>
 );
 
 // TODO: Maybe remove?!
-const customStyle = computed(() => ({
+const contentStyle = computed(() => ({
     width:
         !props.fullscreen && !props.fullwidth
             ? toCssDimension(props.width)
@@ -271,7 +271,7 @@ defineExpose({ close });
                 <div
                     ref="contentElement"
                     :class="contentClasses"
-                    :style="customStyle">
+                    :style="contentStyle">
                     <!--
                         @slot Modal default content, default is content prop
                         @binding {(...args): void} close - function to close the component
