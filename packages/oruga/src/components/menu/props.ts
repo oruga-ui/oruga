@@ -51,7 +51,7 @@ export type MenuClasses = Partial<{
 export type MenuItemProps<T> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Item value (it will be used as v-model of wrapper component) - default is an uuid */
+    /** Item value (it will be used as the v-model of the wrapper component) - default is an uuid */
     value?: T;
     /** The active state of the menu item, use v-model:active to make it two-way binding */
     active?: boolean;

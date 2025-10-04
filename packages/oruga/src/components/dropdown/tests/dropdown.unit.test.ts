@@ -665,8 +665,8 @@ describe("ODropdown tests", () => {
             });
             await nextTick(); // await dropdown item rendered
 
-            const items = wrapper.findAll(".o-dropdown__item");
-            expect(items.length).toBe(3);
+            const items = wrapper.findAll('[data-oruga="dropdown-item"]');
+            expect(items.length).toBe(options.length);
 
             items.forEach((item, index) =>
                 expect(item.text()).toEqual(options[index].label),

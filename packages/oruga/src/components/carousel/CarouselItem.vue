@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { computed, useTemplateRef } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { CarouselComponent } from "./types";
+import type { CarouselComponent, CarouselItemComponent } from "./types";
 import type { CarouselItemProps } from "./props";
 
 /**
@@ -16,23 +16,70 @@ defineOptions({
     configField: "carousel",
 });
 
-const props = withDefaults(defineProps<CarouselItemProps>(), {
+const props = withDefaults(defineProps<CarouselItemProps<T>>(), {
     override: undefined,
+    value: undefined,
     clickable: false,
+    title: undefined,
+    subtitle: undefined,
+    image: undefined,
+    imageAlt: undefined,
 });
+
+const emits = defineEmits<{
+    /**
+     * onclick event
+     * @param value {unknown} - value prop data
+     * @param event {event} - native event
+     */
+    click: [value: T, event: Event];
+    /** on tab item activate event */
+    activate: [];
+    /** on tab item deactivate event */
+    deactivate: [];
+}>();
 
 const rootRef = useTemplateRef("rootElement");
 
-/** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<CarouselComponent>(rootRef);
+// provided data is a computed ref to ensure reactivity
+const providedData = computed<CarouselItemComponent<T>>(() => ({
+    getValue,
+    activate,
+    deactivate,
+}));
 
-const isActive = computed(() => parent.value.activeIndex === item.value.index);
+/** inject functionalities and data from the parent component */
+const { parent, item, itemsCount } = useProviderChild<
+    CarouselComponent<T>,
+    CarouselItemComponent<T>
+>(rootRef, { data: providedData });
+
+const isActive = computed(() => item.value.index === parent.value.activeIndex);
 
 const itemStyle = computed(() => ({ width: `${parent.value.itemWidth}px` }));
 
+/** Return the item value or the item index if no value is set. */
+function getValue(): T {
+    return (props.value ?? item.value.index) as T;
+}
+
+/** Click listener, select the item. */
 function onClick(event: Event): void {
+    if (!props.clickable) return;
     if (isActive.value) parent.value.onClick(event);
-    if (props.clickable) parent.value.setActive(item.value.index);
+    const value = getValue();
+    parent.value.setActive(value);
+    emits("click", value, event);
+}
+
+/** Activate element. */
+function activate(): void {
+    emits("activate");
+}
+
+/** Deactivate element. */
+function deactivate(): void {
+    emits("deactivate");
 }
 
 // #region --- Computed Component Classes ---
@@ -48,6 +95,20 @@ const itemClasses = defineClasses(
     ],
 );
 
+const titleClasses = defineClasses([
+    "itemTitleClass",
+    "o-carousel__item-title",
+]);
+
+const subtitleClasses = defineClasses([
+    "itemSubtitleClass",
+    "o-carousel__item-subtitle",
+]);
+const imageClasses = defineClasses([
+    "itemImageClass",
+    "o-carousel__item-image",
+]);
+
 // #endregion --- Computed Component Classes ---
 </script>
 
@@ -62,7 +123,7 @@ const itemClasses = defineClasses(
         :role="parent.indicators ? 'tabpanel' : 'group'"
         :aria-labelledby="`carousel-${item.identifier}`"
         aria-roledescription="slide"
-        :aria-label="`${item.index + 1} of ${parent.total}`"
+        :aria-label="`${item.index + 1} of ${itemsCount}`"
         draggable="true"
         @click="onClick"
         @keydown.enter="onClick"
@@ -72,6 +133,18 @@ const itemClasses = defineClasses(
         <!--
             @slot Default content
         -->
-        <slot />
+        <slot>
+            <div :class="imageClasses">
+                <img :src="image" :alt="imageAlt" />
+            </div>
+
+            <div v-if="title" :class="titleClasses">
+                {{ title }}
+            </div>
+
+            <div v-if="subtitle" :class="subtitleClasses">
+                {{ subtitle }}
+            </div>
+        </slot>
     </div>
 </template>

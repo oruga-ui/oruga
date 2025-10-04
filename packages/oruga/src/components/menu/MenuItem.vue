@@ -34,6 +34,7 @@ defineOptions({
 const props = withDefaults(defineProps<MenuItemProps<T>>(), {
     override: undefined,
     active: false,
+    value: undefined,
     options: undefined,
     label: undefined,
     expanded: false,
@@ -86,8 +87,9 @@ const menuItem = useProviderChild<MenuItemProvider<T>>(rootRef, {
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<MenuItemComponent<T>>(() => ({
-    ...props,
-    value: itemValue,
+    value: itemValue as T,
+    disabled: props.disabled,
+    hidden: props.hidden,
     parent: menuItem.parent.value,
     hasChildren: hasChildren.value,
     expanded: isExpanded.value,

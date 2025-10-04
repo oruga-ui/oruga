@@ -1,7 +1,6 @@
-import { type ComponentInternalInstance, type MaybeRefOrGetter } from "vue";
+import { type MaybeRefOrGetter } from "vue";
 import {
-    InstanceRegistry,
-    ComponentProgrammatic,
+    ProgrammaticFactory,
     type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
 } from "../programmatic";
@@ -12,27 +11,22 @@ import type { LoadingProps } from "./props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
-        loading: typeof LoadingProgrammatic;
+        loading: Required<InstanceType<typeof LoadingProgrammaticFactory>>;
     }
 }
-
-/** loading component programmatic instance registry **/
-const registry = new InstanceRegistry<ComponentInternalInstance>();
 
 /** useLoadingProgrammatic composable options */
 export type LoadingProgrammaticOptions = Readonly<LoadingProps> &
     ProgrammaticComponentOptions<typeof Loading>;
 
-const LoadingProgrammatic = {
-    /** Returns the number of registered active instances. */
-    count: registry.count,
+export class LoadingProgrammaticFactory extends ProgrammaticFactory {
     /**
      * Create a new programmatic loading component instance.
-     * @param options loading label string or loading component props object
-     * @param target specify a target the component get rendered into
-     * @returns ProgrammaticExpose
+     * @param options - Loading label string or loading component props object.
+     * @param target - A target container the component get rendered into - default is `document.body`.
+     * @returns ProgrammaticExpose - programmatic component expose interface
      */
-    open(
+    public open(
         options: string | LoadingProgrammaticOptions,
         target?: MaybeRefOrGetter<string | HTMLElement | null>,
     ): ProgrammaticExpose<typeof Loading> {
@@ -42,25 +36,21 @@ const LoadingProgrammatic = {
         const componentProps: LoadingProps = {
             active: true, // set the active default state to true
             fullPage: false, // set the full page default state to false
-            ...(_options as LoadingProps),
+            ..._options,
         };
 
         // create programmatic component
-        return ComponentProgrammatic.open(Loading, {
-            registry, // custom programmatic instance registry
+        return this._create(
+            Loading,
+            {
+                props: componentProps, // component specific props
+                onClose: _options.onClose, // on close event handler
+            },
             target, // target the component get rendered into
-            props: componentProps, // component specific props
-            onClose: _options.onClose, // on close event handler
-        });
-    },
-    /** Close the last registred instance in the loading programmatic instance registry. */
-    close(...args: unknown[]): void {
-        registry.last()?.exposed?.close(...args);
-    },
-    /** Close all instances in the programmatic loading instance registry. */
-    closeAll(...args: unknown[]): void {
-        registry.walk((entry) => entry.exposed?.close(...args));
-    },
-};
+        );
+    }
+}
 
-export default LoadingProgrammatic;
+export default function useLoadingProgrammatic(): LoadingProgrammaticFactory {
+    return new LoadingProgrammaticFactory();
+}

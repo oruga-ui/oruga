@@ -1,10 +1,10 @@
 <script setup lang="ts" generic="T, K extends string">
-import { computed, getCurrentInstance, useTemplateRef } from "vue";
+import { computed, useSlots, useTemplateRef } from "vue";
 
 import { defineClasses, useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
 
-import type { TableColumnComponent, TableComponent } from "./types";
+import type { TableColumn, TableColumnComponent } from "./types";
 import type { TableColumnProps } from "./props";
 
 /**
@@ -30,6 +30,7 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     sortable: false,
     hidden: false,
     sticky: false,
+    /** @deprecated remove */
     headerSelectable: false,
     customSort: undefined,
     customSearch: undefined,
@@ -38,54 +39,45 @@ const props = withDefaults(defineProps<TableColumnProps<T, K>>(), {
     tdAttrs: undefined,
 });
 
-const rootRef = useTemplateRef("rootElement");
+const rootRef = useTemplateRef<HTMLElement>("rootElement");
 
-const style = computed(() => ({
-    width: toCssDimension(props.width),
-}));
-
-const isHeaderUnselectable = computed(
-    () => !props.headerSelectable && props.sortable,
-);
-
-const vm = getCurrentInstance();
+const slots = useSlots();
 
 // provided data is a computed ref to ensure reactivity
 const providedData = computed<TableColumnComponent<T>>(() => ({
-    ...props,
-    $instance: vm!.proxy!,
-    $slots: vm!.slots,
+    ...(props as TableColumn<T>),
+    $slots: slots,
     style: style.value,
     thClasses: thClasses.value,
     tdClasses: tdClasses.value,
+    thSubClasses: thSubheadingClasses.value,
 }));
 
 /** inject functionalities and data from the parent component */
-const { parent, item } = useProviderChild<
-    TableComponent,
-    TableColumnComponent<T>
->(rootRef, { data: providedData });
+const { item } = useProviderChild<unknown, TableColumnComponent<T>>(rootRef, {
+    data: providedData,
+});
+
+const style = computed(() => ({
+    width: toCssDimension(props.width),
+    "min-width": toCssDimension(props.width),
+}));
 
 // #region --- Computed Component Classes ---
 
 const thClasses = defineClasses(
-    [
-        "thCurrentSortClass",
-        "o-table__th-current-sort",
-        null,
-        computed(() => parent.value?.isColumnSorted(item.value)),
-    ],
     [
         "thSortableClass",
         "o-table__th--sortable",
         null,
         computed(() => props.sortable),
     ],
+    /** @deprecated will be removed*/
     [
         "thUnselectableClass",
         "o-table__th--unselectable",
         null,
-        isHeaderUnselectable,
+        computed(() => props.sortable && !props.headerSelectable),
     ],
     [
         "thPositionClass",
@@ -113,6 +105,16 @@ const tdClasses = defineClasses(
         "o-table__td--sticky",
         null,
         computed(() => props.sticky),
+    ],
+);
+
+const thSubheadingClasses = defineClasses(
+    ["thSubheadingClass", "o-table__th-subheading"],
+    [
+        "thPositionClass",
+        "o-table__th--",
+        computed(() => props.position),
+        computed(() => !!props.position),
     ],
 );
 
@@ -156,12 +158,14 @@ const filters = {} as Record<string, string>;
                 :index="index"
                 :colindex="index"
                 :toggle-details="toggle" />
+
             <!--
                 @slot Override header label
                 @binding {TableColumn} column - column definition
                 @binding {number} index - column index
             -->
             <slot name="header" :column="column" :index="index" />
+
             <!--
                 @slot Override subheading label
                 @binding {TableColumn} column - column definition

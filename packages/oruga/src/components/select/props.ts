@@ -18,7 +18,7 @@ export type SelectProps<T, IsMultiple extends boolean = false> = {
      */
     size?: string;
     /**
-     * Color of the control
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant?: string;

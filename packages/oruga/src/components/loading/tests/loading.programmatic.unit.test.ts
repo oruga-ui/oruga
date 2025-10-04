@@ -1,9 +1,12 @@
 import { describe, test, expect, afterEach, vi, beforeEach } from "vitest";
 import { enableAutoUnmount, flushPromises } from "@vue/test-utils";
 
-import LoadingProgrammatic from "../useLoadingProgrammatic";
+import useLoadingProgrammatic from "../useLoadingProgrammatic";
 
 describe("useLoadingProgrammatic tests", () => {
+    // create a new factory
+    const factory = useLoadingProgrammatic();
+
     beforeEach(() => {
         vi.useFakeTimers();
     });
@@ -12,6 +15,9 @@ describe("useLoadingProgrammatic tests", () => {
         // clear body after each test
         document.body.innerHTML = "";
         vi.useRealTimers();
+
+        // clear factory items
+        factory.closeAll();
     });
 
     enableAutoUnmount(afterEach);
@@ -20,7 +26,7 @@ describe("useLoadingProgrammatic tests", () => {
         const label = "My Label";
 
         // open element
-        const { close, promise } = LoadingProgrammatic.open(label);
+        const { close, promise } = factory.open(label);
 
         // check promise get called
         const handler = vi.fn();
@@ -51,7 +57,7 @@ describe("useLoadingProgrammatic tests", () => {
         const label = "My loading Content";
 
         // open element
-        const { close } = LoadingProgrammatic.open(label, "#my-cool-container");
+        const { close } = factory.open(label, "#my-cool-container");
 
         // check element exist
         let loading = document.body.querySelector('[data-oruga="loading"]');
@@ -77,7 +83,7 @@ describe("useLoadingProgrammatic tests", () => {
         const label = "My loading Content";
 
         // open element
-        const { close } = LoadingProgrammatic.open({
+        const { close } = factory.open({
             label,
             active: false,
         });
@@ -100,7 +106,9 @@ describe("useLoadingProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        const { close } = LoadingProgrammatic.open({ label, onClose });
+        const { close } = factory.open({ label, onClose });
+
+        expect(factory.count()).toBe(1);
 
         // check element exist
         let loading = document.body.querySelector<HTMLElement>(
@@ -113,6 +121,8 @@ describe("useLoadingProgrammatic tests", () => {
         // close element on 'x' button click
         close();
         vi.runAllTimers();
+
+        expect(factory.count()).toBe(0);
 
         // check element does not exist
         loading = document.body.querySelector('[data-oruga="loading"]');

@@ -3,18 +3,19 @@ import { ref } from "vue";
 
 const gallery = ref(false);
 
-const indicators = ref(false);
-const itemsToShow = ref(2);
-const breakpoints = ref({
+const breakpoints = {
+    0: {
+        itemsToShow: 2,
+    },
     768: {
         itemsToShow: 4,
     },
     960: {
         itemsToShow: 6,
     },
-});
+};
 
-const items = [
+const slides = [
     {
         title: "Slide 1",
         image: "https://picsum.photos/id/1/1230/500",
@@ -45,11 +46,20 @@ const items = [
     },
 ];
 
-function switchGallery(value): void {
+function switchGallery(value: boolean): void {
     gallery.value = value;
 
+    // this removes the scrollbar
     if (value) document.documentElement.classList.add("o-clipped");
     else document.documentElement.classList.remove("o-clipped");
+
+    // this adds gallery close event for esc key
+    if (value) document.addEventListener("keydown", switchGalleryOff);
+    else document.removeEventListener("keydown", switchGalleryOff);
+}
+
+function switchGalleryOff(event: KeyboardEvent): void {
+    if (event.key === "Escape") switchGallery(false);
 }
 </script>
 
@@ -59,27 +69,32 @@ function switchGallery(value): void {
             :autoplay="false"
             :overlay="gallery"
             :arrows="false"
-            @click="switchGallery(true)">
-            <o-carousel-item v-for="(item, i) in items" :key="i" clickable>
+            @click="switchGallery(true)"
+            @keydown.esc="gallery && switchGallery(false)">
+            <o-carousel-item
+                v-for="slide in slides"
+                :key="slide.title"
+                clickable>
                 <div class="image">
-                    <img :src="item.image" :alt="item.title" />
+                    <img :src="slide.image" :alt="slide.title" />
                 </div>
             </o-carousel-item>
 
-            <template #indicators="{ active, switchTo }">
+            <template #indicators="{ activeIndex, switchTo }">
                 <o-carousel
-                    :model-value="active"
-                    :indicators="indicators"
-                    :items-to-show="itemsToShow"
+                    :model-value="activeIndex"
+                    :indicators="false"
                     :breakpoints="breakpoints"
-                    @update:model-value="switchTo($event)">
+                    @update:model-value="switchTo($event)"
+                    @keydown.left.stop
+                    @keydown.right.stop>
                     <o-carousel-item
-                        v-for="(item, i) in items"
-                        :key="i"
+                        v-for="slide in slides"
+                        :key="slide.title"
                         clickable
                         item-class="img-indicator"
                         item-active-class="img-indicator-active">
-                        <img :src="item.image" :alt="item.title" />
+                        <img :src="slide.image" :alt="slide.title" />
                     </o-carousel-item>
                 </o-carousel>
             </template>
@@ -105,12 +120,15 @@ function switchGallery(value): void {
     height: auto;
     width: 100%;
 }
+
 .img-indicator {
     filter: grayscale(100%);
 }
+
 .img-indicator-active {
     filter: grayscale(0%);
 }
+
 .ex-close-icon {
     position: absolute;
     top: 10px;

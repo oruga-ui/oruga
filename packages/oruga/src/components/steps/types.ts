@@ -8,13 +8,16 @@ export type StepsComponent = {
     activeIndex: number;
     labelPosition: string;
     vertical: boolean;
+    variant: string;
     animated: boolean;
     animation: string[];
     animateInitially: boolean;
-    variant: string;
 };
 
-export type StepItemComponent<T> = StepItemProps<T, Component> & {
+export type StepItemComponent<T> = Pick<
+    StepItemProps<T, Component>,
+    "value" | "label" | "step" | "disabled" | "visible" | "icon" | "iconPack"
+> & {
     $slots: Slots;
     stepClasses: ClassBinding[];
     iconClasses: ClassBinding[];
@@ -25,4 +28,4 @@ export type StepItemComponent<T> = StepItemProps<T, Component> & {
     deactivate: (index: number) => void;
 };
 
-export type StepItem<T> = Omit<ProviderItem, "data"> & StepItemComponent<T>;
+export type StepItem<T> = ProviderItem<StepItemComponent<T>>;

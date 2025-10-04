@@ -28,13 +28,13 @@ describe("OCarousel tests", () => {
         const TestComponent = defineComponent({
             components: { OCarousel, OCarouselItem },
             data: () => ({ carousels }),
-            template: `<o-carousel indicator-inside>
-            <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
-                <article :style="{ 'background-color': carousel.color }">
-                    <h1>{{ carousel.text }}</h1>
-                </article>
-            </o-carousel-item>
-        </o-carousel>`,
+            template: `<OCarousel indicator-inside>
+                    <OCarouselItem v-for="carousel in carousels" :key="carousel.text">
+                        <article :style="{ 'background-color': carousel.color }">
+                            <h1>{{ carousel.text }}</h1>
+                        </article>
+                    </OCarouselItem>
+                </OCarousel>`,
         });
 
         const wrapper = mount(TestComponent);
@@ -46,5 +46,50 @@ describe("OCarousel tests", () => {
         expect(items).toHaveLength(carousels.length);
 
         expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    test("handle options props correctly", async () => {
+        const slides = [
+            {
+                title: "Slide 1",
+                image: "https://picsum.photos/id/1/1230/500",
+            },
+            {
+                title: "Slide 2",
+                image: "https://picsum.photos/id/2/1230/500",
+            },
+            {
+                title: "Slide 3",
+                image: "https://picsum.photos/id/3/1230/500",
+            },
+            {
+                title: "Slide 4",
+                image: "https://picsum.photos/id/4/1230/500",
+            },
+            {
+                title: "Slide 5",
+                image: "https://picsum.photos/id/5/1230/500",
+            },
+            {
+                title: "Slide 6",
+                image: "https://picsum.photos/id/6/1230/500",
+            },
+            {
+                title: "Slide 7",
+                image: "https://picsum.photos/id/7/1230/500",
+            },
+        ];
+
+        const wrapper = mount(OCarousel, {
+            props: { options: slides },
+        });
+        await nextTick(); // await dropdown item rendered
+
+        const items = wrapper.findAll('[data-oruga="carousel-item"]');
+        expect(items.length).toBe(slides.length);
+
+        items.forEach((item, index) =>
+            expect(item.text()).toEqual(slides[index].title),
+        );
     });
 });

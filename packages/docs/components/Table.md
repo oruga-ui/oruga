@@ -145,8 +145,8 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 | Name        | Description                                                                                 | Bindings |
 | ----------- | ------------------------------------------------------------------------------------------- | -------- |
-| default     | Place o-table-column here                                                                   |          |
 | before      | Place extra `o-table-column` components here, even if you have some columns defined by prop |          |
+| default     | Place `o-table-column` here                                                                 |          |
 | after       | Place extra `o-table-column` components here, even if you have some columns defined by prop |          |
 | pagination  | Override pagination label                                                                   |          |
 | top-left    | Additional slot if table is paginated                                                       |          |
