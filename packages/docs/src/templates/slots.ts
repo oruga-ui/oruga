@@ -8,7 +8,13 @@ function formatParams(params: SlotDescriptor["bindings"]): string {
         .map((tag) => {
             const { name, description, type } = tag;
             if (!type) return `**${name}** - ${description}`;
-            return `**${name}** \`${type.name}\` - ${description}`;
+            return `**${name}** \`${
+                type.name === "union" && type.elements
+                    ? type.elements
+                          .map(({ name: insideName }) => insideName)
+                          .join(", ")
+                    : type.name
+            }\` - ${description}`;
         })
         .join("\n");
 }
