@@ -232,31 +232,31 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 overlayClass: ClassDefinition;
                 /** Class of the inner wrapper element */
                 wrapperClass: ClassDefinition;
-                /** Class of items container element */
+                /** Class of the items container element */
                 itemsClass: ClassDefinition;
-                /**  */
+                /** Class of the items container element when dragging */
                 itemsDraggingClass: ClassDefinition;
-                /** Class of icon button elements */
+                /** Class of the icon button elements */
                 iconClass: ClassDefinition;
-                /** Class of prev icon button element */
+                /** Class of the prev icon button element */
                 iconPrevClass: ClassDefinition;
-                /** Class of next icon button element */
+                /** Class of the next icon button element */
                 iconNextClass: ClassDefinition;
-                /** Class of autoplay icon button element */
+                /** Class of the autoplay icon button element */
                 iconAutoplayClass: ClassDefinition;
-                /** Class of indicators tablist element */
+                /** Class of the indicators tablist element */
                 indicatorsClass: ClassDefinition;
-                /** Class of indicators tablist element when inside */
+                /** Class of the indicators tablist element when inside */
                 indicatorsInsideClass: ClassDefinition;
-                /** Class of indicators tablist element with position */
+                /** Class of the indicators tablist element with position */
                 indicatorsPositionClass: ClassDefinition;
-                /** Class of indicator tab element */
+                /** Class of the indicator tab element */
                 indicatorClass: ClassDefinition;
-                /** Class of indicator item element */
+                /** Class of the indicator item element */
                 indicatorItemClass: ClassDefinition;
-                /** Class of indicator element when active */
+                /** Class of the indicator element when active */
                 indicatorItemActiveClass: ClassDefinition;
-                /** Class of indicator element to separate different styles */
+                /** Class of the indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
                 /** Class of the item element */
                 itemClass: ClassDefinition;

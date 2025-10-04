@@ -339,68 +339,6 @@ function onChange(item: ProviderItem): void {
 
 // #endregion --- Switch Item Events ---
 
-// #region --- Autoplay Feature ---
-
-const isHovered = ref(false);
-let timer: ReturnType<typeof setTimeout> | undefined;
-/** deactive autoplay feature */
-const isAutoplayPaused = ref(false);
-
-function onMouseEnter(): void {
-    isHovered.value = true;
-    if (props.autoplay && props.pauseHover) pauseTimer();
-}
-
-function onMouseLeave(): void {
-    isHovered.value = false;
-    if (props.autoplay && props.pauseHover) startTimer();
-}
-
-/** When autoplay is changed, start or pause timer accordingly */
-watch(
-    () => props.autoplay,
-    (status) => {
-        if (status) startTimer();
-        else pauseTimer();
-    },
-);
-
-/** Since the timer can get paused at the end, if repeat is changed we need to restart it */
-watch(
-    () => props.repeat,
-    (status) => {
-        if (status) startTimer();
-    },
-);
-
-function onToggleAutoplay(): void {
-    if (!isAutoplayPaused.value) {
-        isAutoplayPaused.value = true;
-        pauseTimer();
-    } else {
-        isAutoplayPaused.value = false;
-        startTimer();
-    }
-}
-
-function startTimer(): void {
-    if (!props.autoplay || timer) return;
-    if (isAutoplayPaused.value) return;
-    timer = setInterval(() => {
-        if (!props.repeat && !hasNext.value) pauseTimer();
-        else onNext();
-    }, props.interval);
-}
-
-function pauseTimer(): void {
-    if (timer) {
-        clearInterval(timer);
-        timer = undefined;
-    }
-}
-
-// #endregion --- Autoplay Feature ---
-
 // #region --- Drag & Drop | Slide Feature ---
 
 const dragX = ref<number>();
@@ -467,6 +405,74 @@ function onDragEnd(): void {
 }
 
 // #endregion --- Drag & Drop | Slide Feature ---
+
+// #region --- Autoplay Feature ---
+
+let timer: ReturnType<typeof setTimeout> | undefined;
+/** deactive autoplay feature */
+const isAutoplayPaused = ref(false);
+
+const isHovered = ref(false);
+
+function onHoverEnter(): void {
+    isHovered.value = true;
+}
+
+function onHoverLeave(): void {
+    isHovered.value = false;
+}
+
+/** Start/Stop timer when carousel get hovered */
+watch(isHovered, (value) => {
+    if (!props.autoplay || !props.pauseHover) return;
+    if (value) pauseTimer();
+    else startTimer();
+});
+
+/** When autoplay is changed, start or pause timer accordingly */
+watch(
+    () => props.autoplay,
+    (status) => {
+        if (status) startTimer();
+        else pauseTimer();
+    },
+);
+
+/** Since the timer can get paused at the end, if repeat is changed we need to restart it */
+watch(
+    () => props.repeat,
+    (status) => {
+        if (status) startTimer();
+    },
+);
+
+function onToggleAutoplay(): void {
+    if (!isAutoplayPaused.value) {
+        isAutoplayPaused.value = true;
+        pauseTimer();
+    } else {
+        isAutoplayPaused.value = false;
+        startTimer();
+    }
+}
+
+function startTimer(): void {
+    if (!props.autoplay || timer) return;
+    if (isAutoplayPaused.value) return;
+    timer = setInterval(() => {
+        if (!props.repeat && !hasNext.value) pauseTimer();
+        else onNext();
+    }, props.interval);
+}
+
+function pauseTimer(): void {
+    if (timer) {
+        clearInterval(timer);
+        timer = undefined;
+    }
+}
+
+// #endregion --- Autoplay Feature ---
 
 // #region --- Computed Component Classes ---
 
@@ -557,12 +563,12 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         :class="rootClasses"
         role="region"
         aria-roledescription="carousel"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave"
-        @focusin="onMouseEnter"
-        @focusout="onMouseLeave"
-        @keydown.left="onPrev"
-        @keydown.right="onNext"
+        @mouseenter="onHoverEnter"
+        @mouseleave="onHoverLeave"
+        @focusin="onHoverEnter"
+        @focusout="onHoverLeave"
+        @keydown.left.prevent="onPrev"
+        @keydown.right.prevent="onNext"
         @keydown.home.prevent="onHomePressed"
         @keydown.end.prevent="onEndPressed">
         <div :class="wrapperClasses">
@@ -635,6 +641,7 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                 :style="'transform:translateX(' + translation + 'px)'"
                 aria-roledescription="carousel-slide"
                 aria-atomic="false"
+                :tabindex="indicators ? undefined : 0"
                 :aria-live="autoplay ? 'off' : 'polite'"
                 @dragend="onDragEnd"
                 @dragover="onDragOver"
