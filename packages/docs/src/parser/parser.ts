@@ -47,6 +47,8 @@ export async function parser(
 
         return doc;
     });
+    if (filePath.toLowerCase().includes("autocomplete"))
+        console.log(docs[0].slots?.map((s) => JSON.stringify(s)));
 
     return docs;
 }

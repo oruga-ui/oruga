@@ -108,7 +108,7 @@ export function renderer(
             `| ${mdclean(name)} | ${mdclean(description)} | ${mdclean(type)} | ${mdclean(values)} | ${value} |` +
             "\n";
     });
-    
+
     return ret;
 }
 
