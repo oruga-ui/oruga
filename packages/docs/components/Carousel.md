@@ -73,14 +73,14 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 ### Slots
 
-| Name       | Description                      | Bindings        |
-| ---------- | -------------------------------- | --------------- |
-| pause      | Override the pause/resume button | <br/>           |
-| arrow      | Override the arrows              | <br/><br/><br/> |
-| default    | Display carousel item            |                 |
-| indicators | Override the indicators          | <br/>           |
-| indicator  | Override the indicator elements  |                 |
-| overlay    | Overlay element                  |                 |
+| Name       | Description                      | Bindings                                                                                                                                                                                                      |
+| ---------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| pause      | Override the pause/resume button | **autoplay** `boolean` - if autoplay is active<br/>**toggle** `(): void` - toggle autoplay                                                                                                                    |
+| arrows     | Override the arrows              | **hasPrev** `boolean` - has prev arrow button<br/>**hasNext** `boolean` - has next arrow button<br/>**prev** `(): void` - switch to prev item function<br/>**next** `(): void` - switch to next item function |
+| default    | Display carousel item            |                                                                                                                                                                                                               |
+| indicators | Override the indicators          | **activeIndex** `number` - active item index<br/>**switchTo** `(idx: number): void` - switch to item function                                                                                                 |
+| indicator  | Override the indicator elements  | **index** `index` - indicator index                                                                                                                                                                           |
+| overlay    | Overlay element                  |                                                                                                                                                                                                               |
 
 </section>
 

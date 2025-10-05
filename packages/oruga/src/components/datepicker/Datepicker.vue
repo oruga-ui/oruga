@@ -165,6 +165,17 @@ const emits = defineEmits<{
     "icon-right-click": [event: Event];
 }>();
 
+defineSlots<{
+    /** Override the trigger */
+    trigger?(): void;
+    /** Override the header */
+    header?(): void;
+    /** Override the body */
+    body?(): void;
+    /** Define an additional footer */
+    footer(): void;
+}>();
+
 const { dtf, dateCreator, dateFormatter, dateParser } =
     useDatepickerMixins(props);
 
@@ -391,7 +402,7 @@ function next(): void {
     }
 }
 
-// --- Formatter / Parser ---
+// #region --- Formatter / Parser ---
 
 /** Format date into string */
 function format(value: Date | Date[] | undefined, isNative: boolean): string {
@@ -451,7 +462,9 @@ function parseNative(value: string): Date | undefined {
     return new Date(year, month, day);
 }
 
-// --- Event Handler ---
+// #endregion --- Formatter / Parser ---
+
+// #region --- Event Handler ---
 
 /** move to the previous focused date */
 function prevDate(): void {
@@ -497,7 +510,9 @@ function nextDate(): void {
     }
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Event Handler ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-datepicker"],
@@ -543,10 +558,14 @@ const pickerDropdownClasses = defineClasses([
     "o-datepicker__dropdown",
 ]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -574,16 +593,10 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         @icon-click="$emit('icon-click', $event)"
         @icon-right-click="$emit('icon-right-click', $event)">
         <template v-if="$slots.trigger" #trigger>
-            <!--
-                @slot Override the trigger
-            -->
             <slot name="trigger" />
         </template>
 
         <header :class="headerClasses">
-            <!--
-                @slot Override the header
-            -->
             <slot name="header">
                 <OButton
                     v-if="!disabled"
@@ -640,9 +653,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
             </slot>
         </header>
 
-        <!--
-            @slot Override the body
-        -->
         <slot name="body">
             <o-datepicker-month
                 v-if="isTypeMonth"
@@ -665,9 +675,6 @@ defineExpose({ focus: () => pickerRef.value?.focus(), value: vmodel });
         </slot>
 
         <footer v-if="$slots.footer" :class="footerClasses">
-            <!--
-                @slot Define an additional footer
-            -->
             <slot name="footer" />
         </footer>
     </OPickerWrapper>

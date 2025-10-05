@@ -62,9 +62,9 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Slots
 
-| Name    | Description                         | Bindings |
-| ------- | ----------------------------------- | -------- |
-| default | Content slot, default is label prop |          |
+| Name    | Description                               | Bindings |
+| ------- | ----------------------------------------- | -------- |
+| default | Override the label, default is label prop |          |
 
 </section>
 

@@ -100,7 +100,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 | ------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
 | header  | Define an additional header    |                                                                                                                  |
 | group   | Override the option group      | **group** `object` - options group<br/>**index** `number` - option index                                         |
-| default | Override the select option     | **option** `object` - option object<br/>**value** `unknown` - option value<br/>**index** `number` - option index |
+| default | Override the select option     | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value |
 | empty   | Define content for empty state |                                                                                                                  |
 | footer  | Define an additional footer    |                                                                                                                  |
 

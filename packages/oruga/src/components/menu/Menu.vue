@@ -241,9 +241,9 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
             <!-- 
                 @slot Override icon and label
                 @binding {unknown} focused - the focused item value
-                @binding {number} focusedIndex - index of the focused item
+                @binding {number} focused-index - index of the focused item
                 @binding {unknown} selected - the selected item value
-                @binding {number} selectedIndex - index of the selected item
+                @binding {number} selected-index - index of the selected item
             -->
             <slot
                 name="label"
@@ -277,9 +277,9 @@ const labelClasses = defineClasses(["labelClass", "o-menu__label"]);
             <!--
                 @slot Place menu items here 
                 @binding {unknown} focused - the focused item value
-                @binding {number} focusedIndex - index of the focused item
+                @binding {number} focused-index - index of the focused item
                 @binding {unknown} selected - the selected item value
-                @binding {number} selectedIndex - index of the selected item
+                @binding {number} selected-index - index of the selected item
             -->
             <slot
                 :focused="focusedItem?.data"
