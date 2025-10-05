@@ -32,6 +32,13 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
     tag: () => getDefault("breadcrumb.tag", "a"),
 });
 
+defineSlots<{
+    /** Item seperator */
+    seperator?(): void;
+    /** Override the label, default is label prop */
+    default?(): void;
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 /** inject functionalities and data from the parent component */
@@ -78,10 +85,7 @@ const iconRightClasses = defineClasses(
         :data-id="`breadcrumb-${item.identifier}`"
         :class="rootClasses"
         :aria-current="active ? 'page' : undefined">
-        <!-- 
-            @slot Item seperator
-        -->
-        <slot name="seperator"> </slot>
+        <slot name="seperator" />
 
         <component
             :is="tag"
@@ -97,9 +101,6 @@ const iconRightClasses = defineClasses(
                 :size="iconSize"
                 :class="iconLeftClasses" />
 
-            <!-- 
-                @slot Override label
-            -->
             <slot>
                 <span>{{ label }}</span>
             </slot>

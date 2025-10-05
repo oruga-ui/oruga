@@ -114,6 +114,38 @@ const emits = defineEmits<{
     click: [event: Event];
 }>();
 
+defineSlots<{
+    /** Display carousel item */
+    default?(): void;
+    /**
+     * Override the pause/resume button
+     * @param autoplay {boolean} - if autoplay is active
+     * @param toggle {(): void} - toggle autoplay
+     */
+    pause?(): void;
+    /**
+     * Override the arrows
+     * @param hasPrev {boolean} - has prev arrow button
+     * @param hasNext {boolean} - has next arrow button
+     * @param prev {(): void} - switch to prev item function
+     * @param next {(): void} - switch to next item function
+     */
+    arrows?(): void;
+    /**
+     * Override the indicators
+     * @param activeIndex {number} - active item index
+     * @param switchTo {(idx: number): void} - switch to item function
+     */
+    indicators?(): void;
+    /**
+     * Override the indicator elements
+     * @param index {index} - indicator index
+     */
+    indicator?(): void;
+    /** Overlay element */
+    overlay?(): void;
+}>();
+
 const rootRef = useTemplateRef("rootElement");
 
 // provided data is a computed ref to ensure reactivity
@@ -572,11 +604,6 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         @keydown.home.prevent="onHomePressed"
         @keydown.end.prevent="onEndPressed">
         <div :class="wrapperClasses">
-            <!--
-                @slot Override the pause/resume button
-                @binding {boolean} autoplay - if autoplay is active
-                @binding {(): void} toggle - toggle autoplay
-            -->
             <slot
                 name="pause"
                 :autoplay="!isAutoplayPaused"
@@ -601,15 +628,8 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                 </template>
             </slot>
 
-            <!--
-                @slot Override the arrows
-                @binding {boolean} has-prev - has prev arrow button
-                @binding {boolean} has-next - has next arrow button
-                @binding {(): void} prev - switch to prev item function
-                @binding {(): void} next - switch to next item function
-            -->
             <slot
-                name="arrow"
+                name="arrows"
                 :has-prev="hasPrev"
                 :prev="onPrev"
                 :has-next="hasNext"
@@ -647,9 +667,6 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                 @dragover="onDragOver"
                 @touchmove="onDragOver"
                 @touchend="onDragEnd">
-                <!--
-                    @slot Display carousel item
-                -->
                 <slot>
                     <OCarouselItem
                         v-for="option in keyedOptions"
@@ -659,11 +676,6 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
             </div>
         </div>
 
-        <!--
-            @slot Override the indicators
-            @binding {number} activeIndex - active item index
-            @binding {(idx: number): void} switch-to - switch to item function
-        -->
         <slot
             name="indicators"
             :active-index="activeItem?.index ?? 0"
@@ -688,10 +700,6 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
                     @click="onChange(item)"
                     @keydown.enter="onChange(item)"
                     @keydown.space="onChange(item)">
-                    <!--
-                            @slot Override the indicator elements
-                            @binding {index} index - indicator index
-                        -->
                     <slot :index="item.index" name="indicator">
                         <span :class="indicatorItemAppliedClasses(item)" />
                     </slot>
@@ -700,7 +708,6 @@ function indicatorItemAppliedClasses(item: ProviderItem): ClassBinding[] {
         </slot>
 
         <template v-if="overlay">
-            <!-- @slot Overlay element -->
             <slot name="overlay" />
         </template>
     </div>

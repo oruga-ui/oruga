@@ -40,9 +40,40 @@ withDefaults(defineProps<CardProps>(), {
 const emits = defineEmits<{
     /**
      * close button click event
-     * @param event {Event} native event
+     * @param event {Event} - native event
      */
     close: [event: Event];
+}>();
+
+defineSlots<{
+    /**
+     * Override the header
+     * @param close {(event: Event): void} - function to emit a `close` event
+     */
+    header?(): void;
+    /** Override the header title, default is title prop */
+    title?(): void;
+    /** Override the header subtitle, default is subtitle prop */
+    subtitle?(): void;
+    /** Override the close icon */
+    close?(): void;
+    /** Override the image */
+    image?(): void;
+    /**
+     * Override the default card body
+     * @param close {(event: Event): void} - function to emit a `close` event
+     */
+    default?(): void;
+    /**
+     * Override the body content, default is content prop
+     * @param close {(event: Event): void} - function to emit a `close` event
+     */
+    content?(): void;
+    /**
+     * Override the footer
+     * @param close {(event: Event): void} - function to emit a `close` event
+     */
+    footer?(): void;
 }>();
 
 function onClose(event: Event): void {
@@ -90,24 +121,14 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
                 closeable
             "
             :class="headerClasses">
-            <!--
-                @slot Override the header 
-                @binding {(event: Event): void} close - function to emit a `close` event
-            -->
             <slot name="header" :close="onClose">
                 <p v-if="$slots['title'] || title" :class="titleClasses">
-                    <!--
-                        @slot Override the header title, default is title prop
-                    -->
                     <slot name="title"> {{ title }} </slot>
                 </p>
 
                 <p
                     v-if="$slots['subtitle'] || subtitle"
                     :class="subtitleClasses">
-                    <!--
-                        @slot Override the header subtitle, default is subtitle prop
-                    -->
                     <slot name="subtitle"> {{ subtitle }} </slot>
                 </p>
             </slot>
@@ -120,18 +141,12 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
                 :label="ariaCloseLabel"
                 :classes="closeClasses"
                 @click="onClose">
-                <!--
-                    @slot Override the close icon
-                -->
                 <slot v-if="$slots['close']" name="close" />
             </CloseButton>
         </header>
 
         <!-- Image -->
         <div v-if="$slots['image'] || imageSrc" :class="imageClasses">
-            <!--
-                @slot Override the image
-            -->
             <slot name="image">
                 <figure :class="figureClasses">
                     <img :src="imageSrc" :alt="imageAlt" />
@@ -143,10 +158,6 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
         <div
             v-if="$slots['body'] || $slots['content'] || content"
             :class="bodyClasses">
-            <!--
-                @slot Override the default card body
-                @binding {(event: Event): void} close - function to emit a `close` event
-            -->
             <slot :close="onClose">
                 <!-- injected component for programmatic usage -->
                 <component
@@ -157,10 +168,6 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
                     @close="onClose" />
 
                 <p v-else :class="contentClasses">
-                    <!--
-                        @slot Override the body content, default is content prop
-                        @binding {(event: Event): void} close - function to emit a `close` event
-                    -->
                     <slot name="content" :close="onClose">
                         {{ content }}
                     </slot>
@@ -177,10 +184,6 @@ const footerClasses = defineClasses(["footerClass", "o-card__footer"]);
 
         <!-- Footer -->
         <footer v-if="$slots['footer']" :class="footerClasses">
-            <!--
-                @slot Override the footer
-                @binding {(event: Event): void} close - function to emit a `close` event
-            -->
             <slot name="footer" :close="onClose" />
         </footer>
     </div>

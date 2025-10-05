@@ -120,6 +120,11 @@ const emits = defineEmits<{
     "icon-right-click": [event: Event];
 }>();
 
+defineSlots<{
+    /** Define an additional footer */
+    footer?(): void;
+}>();
+
 const datepickerRef = useTemplateRef("datepickerComponent");
 const nativeInputRef = useTemplateRef("nativeInputComponent");
 
@@ -258,7 +263,7 @@ const timepickerDisabled = computed(
     () => timepickerProps.value?.disabled || props.disabled,
 );
 
-// --- Formatter / Parser ---
+// #region --- Formatter / Parser ---
 
 /** Format date into string */
 function format(value: Date): string {
@@ -298,7 +303,9 @@ function formatNative(value: ModelValue): string {
     return "";
 }
 
-// --- Event Handler ---
+// #endregion --- Formatter / Parser ---
+
+// #region --- Event Handler ---
 
 /** Parse date from string */
 function onChangeNativePicker(event: Event): void {
@@ -318,7 +325,9 @@ function onChangeNativePicker(event: Event): void {
     }
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Event Handler ---
+
+// #region --- Computed Component Classes ---
 
 const datepickerWrapperClasses = defineClasses([
     "datepickerWrapperClass",
@@ -330,10 +339,14 @@ const timepickerWrapperClasses = defineClasses([
     "o-datetimepicker__time",
 ]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>
@@ -395,9 +408,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: vmodel });
             </div>
 
             <template v-if="$slots.footer">
-                <!--
-                    @slot Define an additional footer
-                -->
                 <slot name="footer" />
             </template>
         </template>
