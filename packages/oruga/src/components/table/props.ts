@@ -112,7 +112,7 @@ export type TableProps<T> = {
     detailIcon?: string;
     /** Enable custom style on details (if detailed) */
     customDetailRow?: boolean;
-    /* Transition name to use when toggling row details (if detailed) */
+    /** Transition name to use when toggling row details (if detailed) */
     detailTransition?: string;
     /** Adds pagination to the table */
     paginated?: boolean;
