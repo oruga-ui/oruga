@@ -1,5 +1,11 @@
-<script setup lang="ts">
-import { computed, nextTick, onMounted, useTemplateRef } from "vue";
+<script setup lang="ts" generic="C extends Component">
+import {
+    computed,
+    nextTick,
+    onMounted,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import OLoading from "@/components/loading/Loading.vue";
 import OButton from "@/components/button/Button.vue";
@@ -9,6 +15,7 @@ import { getDefault } from "@/utils/config";
 import { defineClasses, findFocusable, unrefElement } from "@/composables";
 
 import type { DialogProps } from "./props";
+import type { CloseEventArgs } from "../programmatic";
 
 /**
  * A flexible and extensible content container.
@@ -21,7 +28,7 @@ defineOptions({
     configField: "dialog",
 });
 
-const props = withDefaults(defineProps<DialogProps>(), {
+const props = withDefaults(defineProps<DialogProps<C>>(), {
     override: undefined,
     title: undefined,
     subtitle: undefined,
@@ -51,7 +58,7 @@ const emits = defineEmits<{
      * close button click event
      * @param event {Event} native event
      */
-    close: [event: Event];
+    close: [...args: [] | [string] | CloseEventArgs<C>];
     /**
      * confirm button click event
      * @param event {Event} native event

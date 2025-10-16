@@ -22,9 +22,9 @@ import {
     getTeleportDefault,
     useTrapFocus,
 } from "@/composables";
-import type { CloseEventArgs } from "../programmatic";
 
 import type { ModalProps } from "./props";
+import type { CloseEventArgs } from "../programmatic";
 
 /**
  * Classic modal overlay to include any content you may need.
