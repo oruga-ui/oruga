@@ -15,7 +15,7 @@ import FormCode from "./form.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <p>
-        A simple Card is created with a <code>title</code> and
+        A simple dialog is created with a <code>title</code> and
         <code>content</code> property.
     </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
@@ -33,6 +33,6 @@ import FormCode from "./form.vue?raw";
     <ExampleViewer :component="Image" :code="ImageCode" />
 
     <h3 id="form">Form</h3>
-    <p>A useful purpose for a card is to display forms in it.</p>
+    <p>A useful purpose for a dialog is to display forms in it.</p>
     <ExampleViewer :component="Form" :code="FormCode" />
 </template>

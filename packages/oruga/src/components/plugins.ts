@@ -1,12 +1,12 @@
 import Autocomplete from "./autocomplete";
 import Breadcrumb from "./breadcrumb";
 import Button from "./button";
-import Card from "./card";
 import Carousel from "./carousel";
 import Checkbox from "./checkbox";
 import Collapse from "./collapse";
 import Datepicker from "./datepicker";
 import Datetimepicker from "./datetimepicker";
+import Dialog from "./dialog";
 import Dropdown from "./dropdown";
 import Field from "./field";
 import Icon from "./icon";
@@ -37,12 +37,12 @@ export {
     Autocomplete,
     Breadcrumb,
     Button,
-    Card,
     Carousel,
     Checkbox,
     Collapse,
     Datepicker,
     Datetimepicker,
+    Dialog,
     Dropdown,
     Field,
     Icon,

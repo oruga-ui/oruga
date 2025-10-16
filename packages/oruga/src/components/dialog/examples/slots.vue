@@ -1,7 +1,7 @@
 <template>
-    <o-card>
-        <template #title>Advanced Card</template>
-        <template #subtitle>Card subtitle</template>
+    <o-dialog>
+        <template #title>Advanced Dialog</template>
+        <template #subtitle>Dialog subtitle</template>
         <template #image>
             <img
                 alt="Oruga Logo"
@@ -15,9 +15,11 @@
                 ratione quam perferendis esse, cupiditate neque quas!
             </p>
         </template>
-        <template #footer>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+        <template #cancelButton>
+            <a href="#" class="dialog-link">A link</a>
         </template>
-    </o-card>
+        <template #confirmButton>
+            <a href="#" class="dialog-link">Another link</a>
+        </template>
+    </o-dialog>
 </template>

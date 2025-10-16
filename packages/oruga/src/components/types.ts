@@ -159,37 +159,6 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the label element */
                 labelClass: ClassDefinition;
             }>;
-        card?: ComponentConfigBase &
-            Partial<{
-                /** Adds close button to the header */
-                closeable: boolean;
-                /** Icon pack to use for the close icon */
-                iconPack: string;
-                /** Close icon name */
-                closeIcon: string;
-                /** Close icon size */
-                closeIconSize: string;
-                /** Accessibility label for the close button */
-                ariaCloseLabel: string;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the header element */
-                headerClass: ClassDefinition;
-                /** Class of the header title element */
-                titleClass: ClassDefinition;
-                /** Class of the header close element */
-                closeClass: ClassDefinition;
-                /** Class of the image container */
-                imageClass: ClassDefinition;
-                /** Class of the image figure element */
-                figureClass: ClassDefinition;
-                /** Class of the body element */
-                bodyClass: ClassDefinition;
-                /** Class of the body content element */
-                contentClass: ClassDefinition;
-                /** Class of the footer element */
-                footerClass: ClassDefinition;
-            }>;
         carousel?: ComponentConfigBase &
             Partial<{
                 /** Timer interval for `autoplay` */
@@ -328,9 +297,9 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Close dropdown on click */
                 closeOnClick: boolean;
                 /** Custom function to format a date into a string */
-                formatter: ((date: [] | Date | Date[] | [Date, Date]) => string) | undefined;
+                formatter: ((date: Date | [] | Date[] | [Date, Date]) => string) | undefined;
                 /** Custom function to parse a string into a date */
-                parser: ((date: string) => [] | Date | Date[] | [Date, Date]) | undefined;
+                parser: ((date: string) => Date | [] | Date[] | [Date, Date]) | undefined;
                 /** Date creator function, default is `new Date()` */
                 creator: (() => Date);
                 /** Define a list of weeks which can not be selected */
@@ -525,6 +494,43 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Class of the Timepicker component wrapper element */
                 timepickerWrapperClass: ClassDefinition;
             }>;
+        dialog?: ComponentConfigBase &
+            Partial<{
+                /** Adds close button to the header */
+                closeable: boolean;
+                /** Icon pack to use for the close icon */
+                iconPack: string;
+                /** Close icon name */
+                closeIcon: string;
+                /** Close icon size */
+                closeIconSize: string;
+                /** Accessibility label for the close button */
+                ariaCloseLabel: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the header element */
+                headerClass: ClassDefinition;
+                /** Class of the header title element */
+                titleClass: ClassDefinition;
+                /** Class of the header close element */
+                closeClass: ClassDefinition;
+                /** Class of the image container */
+                imageClass: ClassDefinition;
+                /** Class of the image figure element */
+                figureClass: ClassDefinition;
+                /** Class of the body element */
+                bodyClass: ClassDefinition;
+                /** Class of the body content element */
+                contentClass: ClassDefinition;
+                /** Class of the footer element */
+                footerClass: ClassDefinition;
+                /** Class of the footer element with position */
+                footerPositionClass: ClassDefinition;
+                /** Class of the confirm button element */
+                confirmButtunClass: ClassDefinition;
+                /** Class of the cancel button element */
+                cancelButtonClass: ClassDefinition;
+            }>;
         dropdown?: ComponentConfigBase &
             Partial<{
                 /** Makes the component check if menu reached scroll start or end and emit scroll events */
@@ -540,7 +546,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Dropdown trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Dropdown will be triggered by any events */
-                triggers: ("focus" | "click" | "contextmenu" | "keydown" | "hover")[];
+                triggers: ("click" | "contextmenu" | "focus" | "keydown" | "hover")[];
                 /** Keep dropdown list open when item get selected */
                 keepOpen: boolean;
                 /** The first option will always be pre-selected (easier to just hit enter or tab) */
@@ -1739,7 +1745,7 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 /** Tooltip trigger tag name */
                 triggerTag: DynamicComponent;
                 /** Tooltip trigger events */
-                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
+                triggers: ("click" | "contextmenu" | "focus" | "hover")[];
                 /** Tooltip auto close options (pressing escape, clicking the content or outside) */
                 closeable: boolean | ("content" | "escape" | "outside")[];
                 /** Append the component to another part of the DOM.

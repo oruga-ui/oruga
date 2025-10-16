@@ -5,13 +5,13 @@ declare module "vue" {
         OBreadcrumb: (typeof import("@oruga-ui/oruga-next"))["OBreadcrumb"];
         OBreadcrumbItem: (typeof import("@oruga-ui/oruga-next"))["OBreadcrumbItem"];
         OButton: (typeof import("@oruga-ui/oruga-next"))["OButton"];
-        OCard: (typeof import("@oruga-ui/oruga-next"))["OCard"];
         OCarousel: (typeof import("@oruga-ui/oruga-next"))["OCarousel"];
         OCarouselItem: (typeof import("@oruga-ui/oruga-next"))["OCarouselItem"];
         OCheckbox: (typeof import("@oruga-ui/oruga-next"))["OCheckbox"];
         OCollapse: (typeof import("@oruga-ui/oruga-next"))["OCollapse"];
         ODatepicker: (typeof import("@oruga-ui/oruga-next"))["ODatepicker"];
         ODatetimepicker: (typeof import("@oruga-ui/oruga-next"))["ODatetimepicker"];
+        ODialog: (typeof import("@oruga-ui/oruga-next"))["ODialog"];
         ODropdown: (typeof import("@oruga-ui/oruga-next"))["ODropdown"];
         ODropdownItem: (typeof import("@oruga-ui/oruga-next"))["ODropdownItem"];
         OField: (typeof import("@oruga-ui/oruga-next"))["OField"];
