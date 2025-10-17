@@ -27,7 +27,7 @@ export type ProgrammaticComponentProps<C extends VNodeTypes> = {
      * @see https://vuejs.org/api/render-function.html#h
      */
     props?: ComponentProps<C> | { container?: HTMLElement };
-    /** Programmatic component registry instance */
+    /** Programmatic component registry instance. */
     registry?: InstanceRegistry<ComponentInternalInstance>;
 };
 

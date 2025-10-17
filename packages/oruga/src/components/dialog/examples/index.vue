@@ -10,6 +10,9 @@ import SlotsCode from "./slots.vue?raw";
 
 import Form from "./form.vue";
 import FormCode from "./form.vue?raw";
+
+import Programmatically from "./programmatically.vue";
+import ProgrammaticallyCode from "./programmatically.vue?raw";
 </script>
 
 <template>
@@ -35,4 +38,25 @@ import FormCode from "./form.vue?raw";
     <h3 id="form">Form</h3>
     <p>A useful purpose for a dialog is to display forms in it.</p>
     <ExampleViewer :component="Form" :code="FormCode" />
+
+    <h3 id="programmatically">Programmatically</h3>
+    <p>
+        This component provides a programmatic interface that can be accessed by
+        the
+        <a href="/documentation/composables.html">
+            <code>useOruga()</code>
+        </a>
+        composable. The composable can be used from outside of the Vue instance.
+        For example, it can be used in Pinia or Vue Router with this syntax:
+    </p>
+
+    <div class="language-js">
+        <pre>
+    import { useOruga } from "@oruga-ui/oruga-next";
+    const oruga = useOruga();
+    oruga.dialog.open({...});
+        </pre>
+    </div>
+    <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
+    <br />
 </template>

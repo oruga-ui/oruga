@@ -201,17 +201,18 @@ const oruga = useOruga();
 const slot = "My default slot content";
 
 oruga.programmatic.open(
+    // component to render
     MyComponent,
     {
-        // target container the programmatic component get rendered into
-        target: document.body,
         // HTML #id of the app div rendered into the target container
         appId: "programmatic-app",
          // component specific props
         props: { ... },
         // on close event handler
         onClose: (...args: unknown[]) => { ... },
-    }
+    },
+    // target container the programmatic component get rendered into
+    target: document.body,
 );
 ```
 

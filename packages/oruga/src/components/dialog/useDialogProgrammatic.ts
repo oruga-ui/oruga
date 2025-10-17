@@ -1,14 +1,17 @@
-import { type Component, type MaybeRefOrGetter } from "vue";
+import { type Component } from "vue";
 import {
     ProgrammaticFactory,
     type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
+    type ProgrammaticTarget,
 } from "../programmatic";
+import type { ComponentProps } from "vue-component-type-helpers";
 
 import Dialog from "./Dialog.vue";
 import Modal from "@/components/modal/Modal.vue";
 
 import type { DialogProps } from "./props";
+import type { ModalProps } from "../modal/props";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -16,62 +19,35 @@ declare module "../../index" {
     }
 }
 
-/** useDialogProgrammatic composable options */
 export type DialogProgrammaticOptions<C extends Component> = Readonly<
     DialogProps<C>
 > &
-    ProgrammaticComponentOptions<typeof Dialog<C>>;
+    Pick<ComponentProps<typeof Dialog<C>>, "onConfirm" | "onClose">;
 
-
-// type ComponentDialogOptions<T extends Component> = {
-//   component: T;
-// } & ComponentProps<typeof GenericDialog> &
-//   ComponentProps<T>;
-
-type ComponentDialogOptionsEvent<T extends Component> = Parameters<
-  NonNullable<ComponentDialogOptions<T>["onConfirm"]>
->[0];
-
+type DialogModalProgrammaticOptions = Readonly<ModalProps<never>> &
+    ProgrammaticComponentOptions<typeof Dialog<never>>;
 
 export class DialogProgrammaticFactory extends ProgrammaticFactory {
-
-
- function useComponentDialog<C extends Component>(
-  options: DialogProgrammaticOptions<C>,
-  confirm?: ConfirmFunc<ComponentDialogOptionsEvent<C>>,
-): Promise<void>;
- function useComponentDialog<C extends Component>(
-  options: DialogProgrammaticOptions<C>,
-  modalOptions: ModalOptions,
-  confirm?: ConfirmFunc<ComponentDialogOptionsEvent<C>>,
-  target?:  MaybeRefOrGetter<string | HTMLElement | null>,
-): Promise<void>;
-/** opens a given component wrapped in a modal component */
- function useComponentDialog<C extends Component>(
-  options: DialogProgrammaticOptions<C>,
-  arg1?: ModalOptions | ConfirmFunc<ComponentDialogOptionsEvent<C>>,
-  arg2?: ConfirmFunc<ComponentDialogOptionsEvent<C>>,
-  target?:  MaybeRefOrGetter<string | HTMLElement | null>,
-): Promise<void> {
-
     /**
      * Create a new programmatic dialog component instance.
-     * @param options - Modal content string or modal component props object.
+     * @param options - Dialog content string or dialog component props object.
+     * @param modalOptions - Modal component props object.
      * @param target - A target container the component get rendered into - default is `document.body`.
      * @returns ProgrammaticExpose - programmatic component expose interface
      */
     open<C extends Component>(
         options: string | DialogProgrammaticOptions<C>,
-        target?: MaybeRefOrGetter<string | HTMLElement | null>,
+        modalOptions?: DialogModalProgrammaticOptions,
+        target?: ProgrammaticTarget,
     ): ProgrammaticExpose<typeof Modal<C>> {
-        const _options: ModalProgrammaticOptions<C> =
+        const dialogOptions: DialogProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
 
-        const componentProps: ModalProps<C> = {
+        const componentProps: ModalProps<typeof Dialog<C>> = {
             active: true, // set the active default state to true
-            ..._options,
+            ...(modalOptions ?? {}),
             component: Dialog,
-
+            props: dialogOptions,
         };
 
         // create programmatic component
@@ -79,7 +55,7 @@ export class DialogProgrammaticFactory extends ProgrammaticFactory {
             Modal,
             {
                 props: componentProps, // component specific props
-                onClose: _options.onClose, // on close event handler
+                onClose: dialogOptions.onClose, // on close event handler
             },
             target, // target the component get rendered into
         );

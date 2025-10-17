@@ -15,7 +15,6 @@ import { getDefault } from "@/utils/config";
 import { defineClasses, findFocusable, unrefElement } from "@/composables";
 
 import type { DialogProps } from "./props";
-import type { CloseEventArgs } from "../programmatic";
 
 /**
  * A flexible and extensible content container.
@@ -55,15 +54,15 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
 
 const emits = defineEmits<{
     /**
-     * close button click event
-     * @param event {Event} native event
-     */
-    close: [...args: [] | [string] | CloseEventArgs<C>];
-    /**
      * confirm button click event
      * @param event {Event} native event
      */
     confirm: [event: Event];
+    /**
+     * close button click event
+     * @param event {Event} native event
+     */
+    close: [event: Event];
 }>();
 
 const rootRef = useTemplateRef("rootElement");

@@ -11,6 +11,7 @@ import useProgrammaticComponent, {
 /** export programmatic specific types */
 export type {
     ProgrammaticOptions,
+    ProgrammaticTarget,
     ProgrammaticExpose,
     ProgrammaticComponentOptions,
 } from "./useProgrammatic";
