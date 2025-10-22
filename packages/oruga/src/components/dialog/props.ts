@@ -2,20 +2,20 @@ import type { Component } from "vue";
 import type { ComponentClass, ComponentEmits } from "@/types";
 import type { ComponentProps } from "vue-component-type-helpers";
 
-export type CardProps<C extends Component = Component> = {
+export type DialogProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
-    /** Card header title, unnecessary when title slot is used */
+    /** Dialog header title, unnecessary when title slot is used */
     title?: string;
-    /** Card header subtitle, unnecessary when subtitle slot is used */
+    /** Dialog header subtitle, unnecessary when subtitle slot is used */
     subtitle?: string;
-    /** Card body content, unnecessary when content slot is used */
+    /** Dialog body content, unnecessary when content slot is used */
     content?: string;
-    /** Card image src, unnecessary when image slot is used */
+    /** Dialog image src, unnecessary when image slot is used */
     imageSrc?: string;
-    /** Card image alt, unnecessary when image slot is used */
+    /** Dialog image alt, unnecessary when image slot is used */
     imageAlt?: string;
-    /** Show a loading spinner in the card */
+    /** Show a loading spinner in the dialog */
     loading?: boolean;
     /**  Show label beside the loading icon */
     loadingLabel?: string;
@@ -41,10 +41,30 @@ export type CardProps<C extends Component = Component> = {
     props?: ComponentProps<C>;
     /** Events to be binded to the injected component */
     events?: ComponentEmits<C>;
-} & CardClasses;
+    /** Render a confirm button and set text as label */
+    confirmButton?: string;
+    /** Disable the confirm button */
+    disableConfirm?: boolean;
+    /**
+     * Color variant of the confirm button
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    confirmVariant?: string;
+    /** Render a cancel button and set text text as label */
+    cancelButton?: string;
+    /** Disable the cancel button */
+    disableCancel?: boolean;
+    /**
+     * Color variant of the cancel button
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    cancelVariant?: string;
+    /** Position of the footer buttons */
+    buttonPosition?: "centered" | "left" | "right";
+} & DialogClasses;
 
 // class props (will not be displayed in the docs)
-export type CardClasses = Partial<{
+export type DialogClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
     /** Class of the header element */
@@ -65,4 +85,10 @@ export type CardClasses = Partial<{
     contentClass: ComponentClass;
     /** Class of the footer element */
     footerClass: ComponentClass;
+    /** Class of the footer element with position */
+    footerPositionClass: ComponentClass;
+    /** Class of the confirm button element */
+    confirmButtunClass: ComponentClass;
+    /** Class of the cancel button element */
+    cancelButtonClass: ComponentClass;
 }>;
