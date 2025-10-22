@@ -125,12 +125,12 @@ function deactivate(newIndex: number): void {
     emits("deactivate");
 }
 
-/** Transition after-enter hook. */
+/** Transition start hook. */
 function onTransitionStart(): void {
     isTransitioning.value = true;
 }
 
-/** Transition before-leave hook. */
+/** Transition end hook. */
 function onTransitionEnd(): void {
     isTransitioning.value = false;
 }
