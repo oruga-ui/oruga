@@ -122,7 +122,7 @@ function afterEnter(): void {
 
 /** Transition before-leave hook. */
 function beforeLeave(): void {
-    isTransitioning.value = true;
+    isTransitioning.value = false;
 }
 
 // #region --- Computed Component Classes ---
@@ -188,9 +188,9 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <!-- 
+            <!--
                 @slot Override tab panel content
-                @binding {boolean} active - if item is shown 
+                @binding {boolean} active - if item is shown
             -->
             <slot :active="isActive && visible">
                 <!-- injected component -->
@@ -212,7 +212,7 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
             <template v-if="false">
                 <!--
                     @slot Override tab header label
-                    @binding {boolean} active - if item is shown 
+                    @binding {boolean} active - if item is shown
                 -->
                 <slot name="header" :active="isActive && visible" />
             </template>
