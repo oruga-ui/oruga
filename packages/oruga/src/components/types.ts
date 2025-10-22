@@ -10,1788 +10,3451 @@ declare module "../index" {
     interface OrugaOptions {
         autocomplete?: ComponentConfigBase &
             Partial<{
-                /** Options won't be filtered based on the input value on clientside */
+                /**
+                 * Options won't be filtered based on the input value on clientside
+                 */
                 backendFiltering: boolean;
-                /** Menu tag name */
+                /**
+                 * Menu tag name
+                 */
                 menuTag: DynamicComponent;
-                /** Menu item tag name */
+                /**
+                 * Menu item tag name
+                 */
                 itemTag: DynamicComponent;
-                /** Size of the input control */
+                /**
+                 * Size of the input control
+                 */
                 size: string;
-                /** Position of the dropdown */
+                /**
+                 * Position of the dropdown
+                 */
                 position: "auto" | "bottom" | "top";
-                /** Makes input full width when inside a grouped or addon field */
+                /**
+                 * Makes input full width when inside a grouped or addon field
+                 */
                 expanded: boolean;
-                /** Number of milliseconds to delay before to emit input event */
+                /**
+                 * Number of milliseconds to delay before to emit input event
+                 */
                 debounce: number;
-                /** The first option will always be focused (easier to just hit enter or tab) */
+                /**
+                 * The first option will always be focused (easier to just hit enter or tab)
+                 */
                 keepFirst: boolean;
-                /** Keep open dropdown list after select */
+                /**
+                 * Keep open dropdown list after select
+                 */
                 keepOpen: boolean;
-                /** Clear input text on select */
+                /**
+                 * Clear input text on select
+                 */
                 clearOnSelect: boolean;
-                /** Open dropdown list on focus */
+                /**
+                 * Open dropdown list on focus
+                 */
                 openOnFocus: boolean;
-                /** Max height of dropdown content */
+                /**
+                 * Max height of dropdown content
+                 */
                 maxHeight: Numberish;
-                /** Makes the component check if list reached scroll start or end and emit scroll events */
+                /**
+                 * Makes the component check if list reached scroll start or end and emit scroll events
+                 */
                 checkScroll: boolean;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon to be shown */
+                /**
+                 * Icon to be shown
+                 */
                 icon: string;
-                /** Icon to be added on the right side */
+                /**
+                 * Icon to be added on the right side
+                 */
                 iconRight: string;
-                /** Add a button/icon to clear the inputed text */
+                /**
+                 * Add a button/icon to clear the inputed text
+                 */
                 clearable: boolean;
-                /** Icon name to be added on the clear button */
+                /**
+                 * Icon name to be added on the clear button
+                 */
                 clearIcon: string;
-                /** Dropdown content (items) are shown into a modal on mobile */
+                /**
+                 * Dropdown content (items) are shown into a modal on mobile
+                 */
                 mobileModal: boolean;
-                /** Dropdown content (items) are shown into a modal on desktop */
+                /**
+                 * Dropdown content (items) are shown into a modal on desktop
+                 */
                 desktopModal: boolean;
-                /** Transition name to apply on dropdown list */
+                /**
+                 * Transition name to apply on dropdown list
+                 */
                 animation: string;
-                /** Native options to use in HTML5 validation */
+                /**
+                 * Native options to use in HTML5 validation
+                 */
                 autocomplete: string;
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the menu items */
+                /**
+                 * Class of the menu items
+                 */
                 itemClass: ClassDefinition;
-                /** Class of the menu group item */
+                /**
+                 * Class of the menu group item
+                 */
                 itemGroupClass: ClassDefinition;
-                /** Class of the empty menu placeholder item */
+                /**
+                 * Class of the empty menu placeholder item
+                 */
                 itemEmptyClass: ClassDefinition;
-                /** Class of the menu header item */
+                /**
+                 * Class of the menu header item
+                 */
                 itemHeaderClass: ClassDefinition;
-                /** Class of the menu footer item */
+                /**
+                 * Class of the menu footer item
+                 */
                 itemFooterClass: ClassDefinition;
-                /** Class configuration for the internal input component */
+                /**
+                 * Class configuration for the internal input component
+                 */
                 inputClasses: Record<string, any>;
             }>;
         breadcrumb?: ComponentConfigBase &
             Partial<{
-                /** Size of the breadcrumb */
+                /**
+                 * Size of the breadcrumb
+                 */
                 size: string;
-                /** Color variant of the breadcrumb */
+                /**
+                 * Color variant of the breadcrumb
+                 */
                 variant: string;
-                /** Position of the breadcrumb */
+                /**
+                 * Position of the breadcrumb
+                 */
                 position: "centered" | "left" | "right";
-                /** The separator between breadcrumb items */
+                /**
+                 * The separator between breadcrumb items
+                 */
                 separator: string;
-                /** Accessibility aria-label to be passed to the nav wrapper element */
+                /**
+                 * Accessibility aria-label to be passed to the nav wrapper element
+                 */
                 ariaLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element with alignment */
+                /**
+                 * Class of the root element with alignment
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the list element */
+                /**
+                 * Class of the list element
+                 */
                 listClass: ClassDefinition;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon size */
+                /**
+                 * Icon size
+                 */
                 iconSize: string;
-                /** Item tag name */
+                /**
+                 * Item tag name
+                 */
                 tag: DynamicComponent;
-                /** Class of the item element */
+                /**
+                 * Class of the item element
+                 */
                 itemClass: ClassDefinition;
-                /** Class of the item element when disabled */
+                /**
+                 * Class of the item element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the item element when active */
+                /**
+                 * Class of the item element when active
+                 */
                 activeClass: ClassDefinition;
-                /** Class of the item seperator element */
+                /**
+                 * Class of the item seperator element
+                 */
                 seperatorClass: ClassDefinition;
-                /** Class of the item link element */
+                /**
+                 * Class of the item link element
+                 */
                 linkClass: ClassDefinition;
-                /** Class of the item icon element */
+                /**
+                 * Class of the item icon element
+                 */
                 iconClass: ClassDefinition;
-                /** Class of the item left icon element */
+                /**
+                 * Class of the item left icon element
+                 */
                 iconLeftClass: ClassDefinition;
-                /** Class of the item right icon element */
+                /**
+                 * Class of the item right icon element
+                 */
                 iconRightClass: ClassDefinition;
             }>;
         button?: ComponentConfigBase &
             Partial<{
-                /** Button tag name */
+                /**
+                 * Button tag name
+                 */
                 tag: DynamicComponent;
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Size of the control */
+                /**
+                 * Size of the control
+                 */
                 size: string;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Enable rounded style */
+                /**
+                 * Enable rounded style
+                 */
                 rounded: boolean;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element when outlined */
+                /**
+                 * Class of the root element when outlined
+                 */
                 outlinedClass: ClassDefinition;
-                /** Class of the root element when inverted */
+                /**
+                 * Class of the root element when inverted
+                 */
                 invertedClass: ClassDefinition;
-                /** Class of the root element when loading */
+                /**
+                 * Class of the root element when loading
+                 */
                 loadingClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Class of the root element when rounded */
+                /**
+                 * Class of the root element when rounded
+                 */
                 roundedClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the inner wrapper element */
+                /**
+                 * Class of the inner wrapper element
+                 */
                 wrapperClass: ClassDefinition;
-                /** Class of the icon element */
+                /**
+                 * Class of the icon element
+                 */
                 iconClass: ClassDefinition;
-                /** Class of the icon element on the left */
+                /**
+                 * Class of the icon element on the left
+                 */
                 iconLeftClass: ClassDefinition;
-                /** Class of the icon element on the right */
+                /**
+                 * Class of the icon element on the right
+                 */
                 iconRightClass: ClassDefinition;
-                /** Class of the label element */
+                /**
+                 * Class of the label element
+                 */
                 labelClass: ClassDefinition;
             }>;
         carousel?: ComponentConfigBase &
             Partial<{
-                /** Timer interval for `autoplay` */
+                /**
+                 * Timer interval for `autoplay`
+                 */
                 interval: number;
-                /** Position of the indicator - depends on used theme */
+                /**
+                 * Position of the indicator - depends on used theme
+                 */
                 indicatorPosition: string;
-                /** Style of the indicator - depends on used theme */
+                /**
+                 * Style of the indicator - depends on used theme
+                 */
                 indicatorStyle: string;
-                /** Number of items to show at once */
+                /**
+                 * Number of items to show at once
+                 */
                 itemsToShow: number;
-                /** Number of items to switch at once */
+                /**
+                 * Number of items to switch at once
+                 */
                 itemsToList: number;
-                /** Show next / prev arrows */
+                /**
+                 * Show next / prev arrows
+                 */
                 arrows: boolean;
-                /** Show next / prev arrows only on hover */
+                /**
+                 * Show next / prev arrows only on hover
+                 */
                 arrowsHover: boolean;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon size */
+                /**
+                 * Icon size
+                 */
                 iconSize: string;
-                /** Icon name for previous button */
+                /**
+                 * Icon name for previous button
+                 */
                 iconPrev: string;
-                /** Icon name for next button */
+                /**
+                 * Icon name for next button
+                 */
                 iconNext: string;
-                /** Icon name for autoplay pause button */
+                /**
+                 * Icon name for autoplay pause button
+                 */
                 iconAutoplayPause: string;
-                /** Icon name for autoplay resume button */
+                /**
+                 * Icon name for autoplay resume button
+                 */
                 iconAutoplayResume: string;
-                /** Accessibility autoplay pause button aria label */
+                /**
+                 * Accessibility autoplay pause button aria label
+                 */
                 ariaAutoplayPauseLabel: string;
-                /** Accessibility autoplay resume button aria label */
+                /**
+                 * Accessibility autoplay resume button aria label
+                 */
                 ariaAutoplayResumeLabel: string;
-                /** Accessibility next button aria label */
+                /**
+                 * Accessibility next button aria label
+                 */
                 ariaNextLabel: string;
-                /** Accessibility previous button aria label */
+                /**
+                 * Accessibility previous button aria label
+                 */
                 ariaPreviousLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element in overlay */
+                /**
+                 * Class of the root element in overlay
+                 */
                 overlayClass: ClassDefinition;
-                /** Class of the inner wrapper element */
+                /**
+                 * Class of the inner wrapper element
+                 */
                 wrapperClass: ClassDefinition;
-                /** Class of the items container element */
+                /**
+                 * Class of the items container element
+                 */
                 itemsClass: ClassDefinition;
-                /** Class of the items container element when dragging */
+                /**
+                 * Class of the items container element when dragging
+                 */
                 itemsDraggingClass: ClassDefinition;
-                /** Class of the icon button elements */
+                /**
+                 * Class of the icon button elements
+                 */
                 iconClass: ClassDefinition;
-                /** Class of the prev icon button element */
+                /**
+                 * Class of the prev icon button element
+                 */
                 iconPrevClass: ClassDefinition;
-                /** Class of the next icon button element */
+                /**
+                 * Class of the next icon button element
+                 */
                 iconNextClass: ClassDefinition;
-                /** Class of the autoplay icon button element */
+                /**
+                 * Class of the autoplay icon button element
+                 */
                 iconAutoplayClass: ClassDefinition;
-                /** Class of the indicators tablist element */
+                /**
+                 * Class of the indicators tablist element
+                 */
                 indicatorsClass: ClassDefinition;
-                /** Class of the indicators tablist element when inside */
+                /**
+                 * Class of the indicators tablist element when inside
+                 */
                 indicatorsInsideClass: ClassDefinition;
-                /** Class of the indicators tablist element with position */
+                /**
+                 * Class of the indicators tablist element with position
+                 */
                 indicatorsPositionClass: ClassDefinition;
-                /** Class of the indicator tab element */
+                /**
+                 * Class of the indicator tab element
+                 */
                 indicatorClass: ClassDefinition;
-                /** Class of the indicator item element */
+                /**
+                 * Class of the indicator item element
+                 */
                 indicatorItemClass: ClassDefinition;
-                /** Class of the indicator element when active */
+                /**
+                 * Class of the indicator element when active
+                 */
                 indicatorItemActiveClass: ClassDefinition;
-                /** Class of the indicator element to separate different styles */
+                /**
+                 * Class of the indicator element to separate different styles
+                 */
                 indicatorItemStyleClass: ClassDefinition;
-                /** Class of the item element */
+                /**
+                 * Class of the item element
+                 */
                 itemClass: ClassDefinition;
-                /** Class of the item element when active */
+                /**
+                 * Class of the item element when active
+                 */
                 itemActiveClass: ClassDefinition;
-                /** Class of the item element when clickable */
+                /**
+                 * Class of the item element when clickable
+                 */
                 itemClickableClass: ClassDefinition;
-                /** Class of the item title element */
+                /**
+                 * Class of the item title element
+                 */
                 itemTitleClass: ClassDefinition;
-                /** Class of the item subtitle element */
+                /**
+                 * Class of the item subtitle element
+                 */
                 itemSubtitleClass: ClassDefinition;
-                /** Class of the item image wrapper element */
+                /**
+                 * Class of the item image wrapper element
+                 */
                 itemImageClass: ClassDefinition;
             }>;
         checkbox?: ComponentConfigBase &
             Partial<{
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Size of the control */
+                /**
+                 * Size of the control
+                 */
                 size: string;
-                /** Same as native autocomplete options to use in HTML5 validation */
+                /**
+                 * Same as native autocomplete options to use in HTML5 validation
+                 */
                 autocomplete: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the root element when checked */
+                /**
+                 * Class of the root element when checked
+                 */
                 checkedClass: ClassDefinition;
-                /** Class of the the root element when indeterminate */
+                /**
+                 * Class of the the root element when indeterminate
+                 */
                 indeterminateClass: ClassDefinition;
-                /** Class of the native input element */
+                /**
+                 * Class of the native input element
+                 */
                 inputClass: ClassDefinition;
-                /** Class of the label element */
+                /**
+                 * Class of the label element
+                 */
                 labelClass: ClassDefinition;
             }>;
         collapse?: ComponentConfigBase &
             Partial<{
-                /** Custom animation (transition name) */
+                /**
+                 * Custom animation (transition name)
+                 */
                 animation: string;
-                /** Trigger position */
+                /**
+                 * Trigger position
+                 */
                 position: "bottom" | "top";
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Clas of the root element with position */
+                /**
+                 * Clas of the root element with position
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the trigger element */
+                /**
+                 * Class of the trigger element
+                 */
                 triggerClass: ClassDefinition;
-                /** Class of the content */
+                /**
+                 * Class of the content
+                 */
                 contentClass: ClassDefinition;
             }>;
         datepicker?: ComponentConfigBase &
             Partial<{
-                /** Set custom day names, else use names based on locale */
+                /**
+                 * Set custom day names, else use names based on locale
+                 */
                 dayNames: string[];
-                /** Set custom month names, else use names based on locale */
+                /**
+                 * Set custom month names, else use names based on locale
+                 */
                 monthNames: string[];
-                /** Size of the control input */
+                /**
+                 * Size of the control input
+                 */
                 size: string;
-                /** Makes input full width when inside a grouped or addon field */
+                /**
+                 * Makes input full width when inside a grouped or addon field
+                 */
                 expanded: boolean;
-                /** Open dropdown on focus */
+                /**
+                 * Open dropdown on focus
+                 */
                 openOnFocus: boolean;
-                /** Close dropdown on click */
+                /**
+                 * Close dropdown on click
+                 */
                 closeOnClick: boolean;
-                /** Custom function to format a date into a string */
+                /**
+                 * Custom function to format a date into a string
+                 */
                 formatter: ((date: [] | Date | Date[] | [Date, Date]) => string) | undefined;
-                /** Custom function to parse a string into a date */
+                /**
+                 * Custom function to parse a string into a date
+                 */
                 parser: ((date: string) => [] | Date | Date[] | [Date, Date]) | undefined;
-                /** Date creator function, default is `new Date()` */
+                /**
+                 * Date creator function, default is `new Date()`
+                 */
                 creator: (() => Date);
-                /** Define a list of weeks which can not be selected */
+                /**
+                 * Define a list of weeks which can not be selected
+                 */
                 unselectableDaysOfWeek: number[];
-                /** Show nearby month days */
+                /**
+                 * Show nearby month days
+                 */
                 nearbyMonthDays: boolean;
-                /** Define if nearby month days can be selected */
+                /**
+                 * Define if nearby month days can be selected
+                 */
                 nearbySelectableMonthDays: boolean;
-                /** Show week numbers */
+                /**
+                 * Show week numbers
+                 */
                 showWeekNumber: boolean;
-                /** Define if week numbers are clickable */
+                /**
+                 * Define if week numbers are clickable
+                 */
                 weekNumberClickable: boolean;
-                /** Set the first day of a week */
+                /**
+                 * Set the first day of a week
+                 */
                 firstDayOfWeek: number;
-                /** Define the range of years to show */
+                /**
+                 * Define the range of years to show
+                 */
                 yearsRange: number[];
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon to be shown */
+                /**
+                 * Icon to be shown
+                 */
                 icon: string;
-                /** Icon to be added on the right side */
+                /**
+                 * Icon to be added on the right side
+                 */
                 iconRight: string;
-                /** Icon name for previous icon */
+                /**
+                 * Icon name for previous icon
+                 */
                 iconPrev: string;
-                /** Icon name for next icon */
+                /**
+                 * Icon name for next icon
+                 */
                 iconNext: string;
-                /** Dropdown content is shown into a modal on mobile */
+                /**
+                 * Dropdown content is shown into a modal on mobile
+                 */
                 mobileModal: boolean;
-                /** Dropdown content is shown into a modal on desktop */
+                /**
+                 * Dropdown content is shown into a modal on desktop
+                 */
                 desktopModal: boolean;
-                /** Enable mobile native input if mobile agent */
+                /**
+                 * Enable mobile native input if mobile agent
+                 */
                 mobileNative: boolean;
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Accessibility next button aria label */
+                /**
+                 * Accessibility next button aria label
+                 */
                 ariaNextLabel: string;
-                /** Accessibility month select aria label */
+                /**
+                 * Accessibility month select aria label
+                 */
                 ariaSelectMonthLabel: string;
-                /** Accessibility year select aria label */
+                /**
+                 * Accessibility year select aria label
+                 */
                 ariaSelectYearLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Class of the box container element where you choose the date */
+                /**
+                 * Class of the box container element where you choose the date
+                 */
                 boxClass: ClassDefinition;
-                /** Class of the header element inside the box */
+                /**
+                 * Class of the header element inside the box
+                 */
                 headerClass: ClassDefinition;
-                /** Class of the prev button element inside the box */
+                /**
+                 * Class of the prev button element inside the box
+                 */
                 prevButtonClass: ClassDefinition;
-                /** Class of the next button element inside the box */
+                /**
+                 * Class of the next button element inside the box
+                 */
                 nextButtonClass: ClassDefinition;
-                /** Class of the month and year selects container inside the box */
+                /**
+                 * Class of the month and year selects container inside the box
+                 */
                 listsClass: ClassDefinition;
-                /** Class of the footer element */
+                /**
+                 * Class of the footer element
+                 */
                 footerClass: ClassDefinition;
-                /** Class of the dates table element inside the box */
+                /**
+                 * Class of the dates table element inside the box
+                 */
                 tableClass: ClassDefinition;
-                /** Class of dates table header element with days of the week */
+                /**
+                 * Class of dates table header element with days of the week
+                 */
                 tableHeadClass: ClassDefinition;
-                /** Class of the cell element inside the table header */
+                /**
+                 * Class of the cell element inside the table header
+                 */
                 tableHeadCellClass: ClassDefinition;
-                /** Class of the table body element inside the box */
+                /**
+                 * Class of the table body element inside the box
+                 */
                 tableBodyClass: ClassDefinition;
-                /** Class of the table row element */
+                /**
+                 * Class of the table row element
+                 */
                 tableRowClass: ClassDefinition;
-                /** Class of the table cell element */
+                /**
+                 * Class of the table cell element
+                 */
                 tableCellClass: ClassDefinition;
-                /** Class of the table cell element when nearby month days are hidden */
+                /**
+                 * Class of the table cell element when nearby month days are hidden
+                 */
                 tableCellInvisibleClass: ClassDefinition;
-                /** Class of table cell element when selected */
+                /**
+                 * Class of table cell element when selected
+                 */
                 tableCellSelectedClass: ClassDefinition;
-                /** Class of the first selected table cell element when in range */
+                /**
+                 * Class of the first selected table cell element when in range
+                 */
                 tableCellFirstSelectedClass: ClassDefinition;
-                /** Class of the table cell elements within the range when the range is selected */
+                /**
+                 * Class of the table cell elements within the range when the range is selected
+                 */
                 tableCellWithinSelectedClass: ClassDefinition;
-                /** Class of the last selected table cell element during range selection */
+                /**
+                 * Class of the last selected table cell element during range selection
+                 */
                 tableCellLastSelectedClass: ClassDefinition;
-                /** Class of the first hovered table cell element during range selection */
+                /**
+                 * Class of the first hovered table cell element during range selection
+                 */
                 tableCellFirstHoveredClass: ClassDefinition;
-                /** Class of the table cell element when hovered during range selection */
+                /**
+                 * Class of the table cell element when hovered during range selection
+                 */
                 tableCellWithinHoveredClass: ClassDefinition;
-                /** Class of the last table cell element hovered during range selection */
+                /**
+                 * Class of the last table cell element hovered during range selection
+                 */
                 tableCellLastHoveredClass: ClassDefinition;
-                /** Class of the table cell element of the current day */
+                /**
+                 * Class of the table cell element of the current day
+                 */
                 tableCellTodayClass: ClassDefinition;
-                /** Class of the table cell element when selectable */
+                /**
+                 * Class of the table cell element when selectable
+                 */
                 tableCellSelectableClass: ClassDefinition;
-                /** Class of the table cell element when unselectable */
+                /**
+                 * Class of the table cell element when unselectable
+                 */
                 tableCellUnselectableClass: ClassDefinition;
-                /** Class of the table cell element when nearby days (prev/next month) are selectable */
+                /**
+                 * Class of the table cell element when nearby days (prev/next month) are selectable
+                 */
                 tableCellNearbyClass: ClassDefinition;
-                /** Class of the cell element of a row when at least one event is present */
+                /**
+                 * Class of the cell element of a row when at least one event is present
+                 */
                 tableCellEventsClass: ClassDefinition;
-                /** Class of the events container element */
+                /**
+                 * Class of the events container element
+                 */
                 tableEventsClass: ClassDefinition;
-                /** Class of the event element */
+                /**
+                 * Class of the event element
+                 */
                 tableEventClass: ClassDefinition;
-                /** Class of the event element with variant */
+                /**
+                 * Class of the event element with variant
+                 */
                 tableEventVariantClass: ClassDefinition;
-                /** Class of the event element with indicator */
+                /**
+                 * Class of the event element with indicator
+                 */
                 tableEventIndicatorClass: ClassDefinition;
-                /** Class of the month table element inside the box when type is `month` */
+                /**
+                 * Class of the month table element inside the box when type is `month`
+                 */
                 monthClass: ClassDefinition;
-                /** Class of the table container when type is `month` */
+                /**
+                 * Class of the table container when type is `month`
+                 */
                 monthTableClass: ClassDefinition;
-                /** Class of the table cell element when type is `month` */
+                /**
+                 * Class of the table cell element when type is `month`
+                 */
                 monthCellClass: ClassDefinition;
-                /** Class of table cell element when selected when type is `month` */
+                /**
+                 * Class of table cell element when selected when type is `month`
+                 */
                 monthCellSelectedClass: ClassDefinition;
-                /** Class of the first selected table cell element when in range when type is `month` */
+                /**
+                 * Class of the first selected table cell element when in range when type is `month`
+                 */
                 monthCellFirstSelectedClass: ClassDefinition;
-                /** Class of the table cell elements within the range when the range is selected when type is `month` */
+                /**
+                 * Class of the table cell elements within the range when the range is selected when type is `month`
+                 */
                 monthCellWithinSelectedClass: ClassDefinition;
-                /** Class of the last selected table cell element during range selection when type is `month` */
+                /**
+                 * Class of the last selected table cell element during range selection when type is `month`
+                 */
                 monthCellLastSelectedClass: ClassDefinition;
-                /** Class of the first hovered table cell element during range selection when type is `month` */
+                /**
+                 * Class of the first hovered table cell element during range selection when type is `month`
+                 */
                 monthCellWithinHoveredRangeClass: ClassDefinition;
-                /** Class of the table cell element when hovered during range selection when type is `month` */
+                /**
+                 * Class of the table cell element when hovered during range selection when type is `month`
+                 */
                 monthCellFirstHoveredClass: ClassDefinition;
-                /** Class of the table cell element when hovered during range selection and cell is in range when type is `month` */
+                /**
+                 * Class of the table cell element when hovered during range selection and cell is in range when type is `month`
+                 */
                 monthCellWithinHoveredClass: ClassDefinition;
-                /** Class of the last table cell element when hovered during range selection when type is `month` */
+                /**
+                 * Class of the last table cell element when hovered during range selection when type is `month`
+                 */
                 monthCellLastHoveredClass: ClassDefinition;
-                /** Class of the table cell element of the current day when type is `month` */
+                /**
+                 * Class of the table cell element of the current day when type is `month`
+                 */
                 monthCellTodayClass: ClassDefinition;
-                /** Class of the table cell element whis is selectable when type is `month` */
+                /**
+                 * Class of the table cell element whis is selectable when type is `month`
+                 */
                 monthCellSelectableClass: ClassDefinition;
-                /** Class of the table cell element whis is unselectable when type is `month` */
+                /**
+                 * Class of the table cell element whis is unselectable when type is `month`
+                 */
                 monthCellUnselectableClass: ClassDefinition;
-                /** Class of the events container when type is `month` */
+                /**
+                 * Class of the events container when type is `month`
+                 */
                 monthCellEventsClass: ClassDefinition;
-                /** Class of the events container element when type is `month` */
+                /**
+                 * Class of the events container element when type is `month`
+                 */
                 monthEventsClass: ClassDefinition;
-                /** Class of the event element when type is `month` */
+                /**
+                 * Class of the event element when type is `month`
+                 */
                 monthEventClass: ClassDefinition;
-                /** Class of the event element with variant when type is `month` */
+                /**
+                 * Class of the event element with variant when type is `month`
+                 */
                 monthEventVariantClass: ClassDefinition;
-                /** Class of the event element with indicator when type is `month` */
+                /**
+                 * Class of the event element with indicator when type is `month`
+                 */
                 monthEventIndicatorClass: ClassDefinition;
-                /** Class for the underlaying dropdown component */
+                /**
+                 * Class for the underlaying dropdown component
+                 */
                 dropdownClass: ClassDefinition;
-                /** Class for the HTML input element */
+                /**
+                 * Class for the HTML input element
+                 */
                 inputClass: ClassDefinition;
-                /** Class configuration for the internal input component */
+                /**
+                 * Class configuration for the internal input component
+                 */
                 inputClasses: Record<string, any>;
-                /** Class configuration for the internal dropdown component */
+                /**
+                 * Class configuration for the internal dropdown component
+                 */
                 dropdownClasses: Record<string, any>;
-                /** Class configuration for the internal select component */
+                /**
+                 * Class configuration for the internal select component
+                 */
                 selectClasses: Record<string, any>;
             }>;
         datetimepicker?: ComponentConfigBase &
             Partial<{
-                /** Size of the input control */
+                /**
+                 * Size of the input control
+                 */
                 size: string;
-                /** Makes input full width when inside a grouped or addon field */
+                /**
+                 * Makes input full width when inside a grouped or addon field
+                 */
                 expanded: boolean;
-                /** Open dropdown on focus */
+                /**
+                 * Open dropdown on focus
+                 */
                 openOnFocus: boolean;
-                /** Custom function to format a date into a string */
+                /**
+                 * Custom function to format a date into a string
+                 */
                 dateFormatter: ((date: Date) => string) | undefined;
-                /** Custom function to parse a string into a date */
+                /**
+                 * Custom function to parse a string into a date
+                 */
                 dateParser: ((date: string) => Date) | undefined;
-                /** Date creator function, default is `new Date()` */
+                /**
+                 * Date creator function, default is `new Date()`
+                 */
                 datetimeCreator: (() => Date);
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon to be shown */
+                /**
+                 * Icon to be shown
+                 */
                 icon: string;
-                /** Icon to be added on the right side */
+                /**
+                 * Icon to be added on the right side
+                 */
                 iconRight: string;
-                /** Dropdown content is shown into a modal on mobile */
+                /**
+                 * Dropdown content is shown into a modal on mobile
+                 */
                 mobileModal: boolean;
-                /** Dropdown content is shown into a modal on desktop */
+                /**
+                 * Dropdown content is shown into a modal on desktop
+                 */
                 desktopModal: boolean;
-                /** Enable mobile native input if mobile agent */
+                /**
+                 * Enable mobile native input if mobile agent
+                 */
                 mobileNative: boolean;
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Class of the Datepicker component wrapper element */
+                /**
+                 * Class of the Datepicker component wrapper element
+                 */
                 datepickerWrapperClass: ClassDefinition;
-                /** Class of the Timepicker component wrapper element */
+                /**
+                 * Class of the Timepicker component wrapper element
+                 */
                 timepickerWrapperClass: ClassDefinition;
             }>;
         dialog?: ComponentConfigBase &
             Partial<{
-                /** Adds close button to the header */
+                /**
+                 * Adds close button to the header
+                 */
                 closeable: boolean;
-                /** Icon pack to use for the close icon */
+                /**
+                 * Icon pack to use for the close icon
+                 */
                 iconPack: string;
-                /** Close icon name */
+                /**
+                 * Close icon name
+                 */
                 closeIcon: string;
-                /** Close icon size */
+                /**
+                 * Close icon size
+                 */
                 closeIconSize: string;
-                /** Accessibility label for the close button */
+                /**
+                 * Accessibility label for the close button
+                 */
                 ariaCloseLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the header element */
+                /**
+                 * Class of the header element
+                 */
                 headerClass: ClassDefinition;
-                /** Class of the header title element */
+                /**
+                 * Class of the header title element
+                 */
                 titleClass: ClassDefinition;
-                /** Class of the header close element */
+                /**
+                 * Class of the header close element
+                 */
                 closeClass: ClassDefinition;
-                /** Class of the image container */
+                /**
+                 * Class of the image container
+                 */
                 imageClass: ClassDefinition;
-                /** Class of the image figure element */
+                /**
+                 * Class of the image figure element
+                 */
                 figureClass: ClassDefinition;
-                /** Class of the body element */
+                /**
+                 * Class of the body element
+                 */
                 bodyClass: ClassDefinition;
-                /** Class of the body content element */
+                /**
+                 * Class of the body content element
+                 */
                 contentClass: ClassDefinition;
-                /** Class of the footer element */
+                /**
+                 * Class of the footer element
+                 */
                 footerClass: ClassDefinition;
-                /** Class of the footer element with position */
+                /**
+                 * Class of the footer element with position
+                 */
                 footerPositionClass: ClassDefinition;
-                /** Class of the confirm button element */
+                /**
+                 * Class of the confirm button element
+                 */
                 confirmButtunClass: ClassDefinition;
-                /** Class of the cancel button element */
+                /**
+                 * Class of the cancel button element
+                 */
                 cancelButtonClass: ClassDefinition;
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
-                /** Makes the component check if menu reached scroll start or end and emit scroll events */
+                /**
+                 * Makes the component check if menu reached scroll start or end and emit scroll events
+                 */
                 checkScroll: boolean;
-                /** Max height of dropdown content */
+                /**
+                 * Max height of dropdown content
+                 */
                 maxHeight: Numberish;
-                /** Position of the dropdown relative to the trigger */
+                /**
+                 * Position of the dropdown relative to the trigger
+                 */
                 position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
-                /** Custom animation (transition name) */
+                /**
+                 * Custom animation (transition name)
+                 */
                 animation: string;
-                /** Dropdown menu tag name */
+                /**
+                 * Dropdown menu tag name
+                 */
                 menuTag: DynamicComponent;
-                /** Dropdown trigger tag name */
+                /**
+                 * Dropdown trigger tag name
+                 */
                 triggerTag: DynamicComponent;
-                /** Dropdown will be triggered by any events */
+                /**
+                 * Dropdown will be triggered by any events
+                 */
                 triggers: ("focus" | "click" | "contextmenu" | "keydown" | "hover")[];
-                /** Keep dropdown list open when item get selected */
+                /**
+                 * Keep dropdown list open when item get selected
+                 */
                 keepOpen: boolean;
-                /** The first option will always be pre-selected (easier to just hit enter or tab) */
+                /**
+                 * The first option will always be pre-selected (easier to just hit enter or tab)
+                 */
                 keepFirst: boolean;
-                /** Close Dropdown when clicked outside */
+                /**
+                 * Close Dropdown when clicked outside
+                 */
                 closeOnOutside: boolean;
-                /** Close Dropdown when page get scrolled */
+                /**
+                 * Close Dropdown when page get scrolled
+                 */
                 closeOnScroll: boolean;
-                /** Select current focused item when focused */
+                /**
+                 * Select current focused item when focused
+                 */
                 selectOnFocus: boolean;
-                /** Select current focused item when closed */
+                /**
+                 * Select current focused item when closed
+                 */
                 selectOnClose: boolean;
-                /** Dropdown content (items) are shown into a modal on mobile */
+                /**
+                 * Dropdown content (items) are shown into a modal on mobile
+                 */
                 mobileModal: boolean;
-                /** Dropdown content (items) are shown into a modal on desktop */
+                /**
+                 * Dropdown content (items) are shown into a modal on desktop
+                 */
                 desktopModal: boolean;
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Set `true` to remove the body scrollbar.
+                /**
+                 * Set `true` to remove the body scrollbar.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts. */
+but will set the body to a fixed position, which may break some layouts.
+                 */
                 clipScroll: boolean;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Class of the root element when shown as modal */
+                /**
+                 * Class of the root element when shown as modal
+                 */
                 modalClass: ClassDefinition;
-                /** Class of the root element when teleported */
+                /**
+                 * Class of the root element when teleported
+                 */
                 teleportClass: ClassDefinition;
-                /** Class of the root element when inlined */
+                /**
+                 * Class of the root element when inlined
+                 */
                 inlineClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Class for the root element with position */
+                /**
+                 * Class for the root element with position
+                 */
                 positionClass: ClassDefinition;
-                /** Class for the root element when active or inline */
+                /**
+                 * Class for the root element when active or inline
+                 */
                 activeClass: ClassDefinition;
-                /** Class for the root element when trigger is hoverable */
+                /**
+                 * Class for the root element when trigger is hoverable
+                 */
                 hoverableClass: ClassDefinition;
-                /** Class of the trigger element */
+                /**
+                 * Class of the trigger element
+                 */
                 triggerClass: ClassDefinition;
-                /** Class of the menu element */
+                /**
+                 * Class of the menu element
+                 */
                 menuClass: ClassDefinition;
-                /** Class of the menu element with position */
+                /**
+                 * Class of the menu element with position
+                 */
                 menuPositionClass: ClassDefinition;
-                /** Class of the menu element when active or inline */
+                /**
+                 * Class of the menu element when active or inline
+                 */
                 menuActiveClass: ClassDefinition;
-                /** Class of the overlay when is shown as modal */
+                /**
+                 * Class of the overlay when is shown as modal
+                 */
                 overlayClass: ClassDefinition;
-                /** Class of the body when dropdown is open and scroll is clipped */
+                /**
+                 * Class of the body when dropdown is open and scroll is clipped
+                 */
                 scrollClipClass: ClassDefinition;
-                /** Class of the body when dropdown is open and scroll is keeped */
+                /**
+                 * Class of the body when dropdown is open and scroll is keeped
+                 */
                 scrollKeepClass: ClassDefinition;
-                /** Dropdown item tag name */
+                /**
+                 * Dropdown item tag name
+                 */
                 itemTag: DynamicComponent;
-                /** Class of the item element. */
+                /**
+                 * Class of the item element.
+                 */
                 itemClass: ClassDefinition;
-                /** Class of the item element when selected */
+                /**
+                 * Class of the item element when selected
+                 */
                 itemSelectedClass: ClassDefinition;
-                /** Class of the item element when focused */
+                /**
+                 * Class of the item element when focused
+                 */
                 itemFocusedClass: ClassDefinition;
-                /** Class of the item element when clickable */
+                /**
+                 * Class of the item element when clickable
+                 */
                 itemClickableClass: ClassDefinition;
-                /** Class of the item element when disabled */
+                /**
+                 * Class of the item element when disabled
+                 */
                 itemDisabledClass: ClassDefinition;
             }>;
         field?: ComponentConfigBase &
             Partial<{
-                /** Size of the field label */
+                /**
+                 * Size of the field label
+                 */
                 labelSize: string;
-                /** Size of the field message */
+                /**
+                 * Size of the field message
+                 */
                 messageSize: string;
-                /** Message element tag name */
+                /**
+                 * Message element tag name
+                 */
                 messageTag: DynamicComponent;
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Class of the root element when the form element is focused */
+                /**
+                 * Class of the root element when the form element is focused
+                 */
                 focusedClass: ClassDefinition;
-                /** Class of the root element when the form element is filled */
+                /**
+                 * Class of the root element when the form element is filled
+                 */
                 filledClass: ClassDefinition;
-                /** Class for the root element with variant */
+                /**
+                 * Class for the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class for the body wrapper element */
+                /**
+                 * Class for the body wrapper element
+                 */
                 bodyClass: ClassDefinition;
-                /** Class for inner wrapper element when grouped */
+                /**
+                 * Class for inner wrapper element when grouped
+                 */
                 groupedClass: ClassDefinition;
-                /** Class of the inner wrapper element when element get automatically attached together inside a field */
+                /**
+                 * Class of the inner wrapper element when element get automatically attached together inside a field
+                 */
                 addonsClass: ClassDefinition;
-                /** Class for inner body wrapper element to fill up multiple lines */
+                /**
+                 * Class for inner body wrapper element to fill up multiple lines
+                 */
                 multilineClass: ClassDefinition;
-                /** Class to align label and control in horizontal forms */
+                /**
+                 * Class to align label and control in horizontal forms
+                 */
                 horizontalClass: ClassDefinition;
-                /** Class for the label element when horizontal */
+                /**
+                 * Class for the label element when horizontal
+                 */
                 horizontalLabelClass: ClassDefinition;
-                /** Class for the body element when horizontal */
+                /**
+                 * Class for the body element when horizontal
+                 */
                 horizontalBodyClass: ClassDefinition;
-                /** Class for the label element */
+                /**
+                 * Class for the label element
+                 */
                 labelClass: ClassDefinition;
-                /** Class for the label element with size */
+                /**
+                 * Class for the label element with size
+                 */
                 labelSizeClass: ClassDefinition;
-                /** Class for the label element with variant */
+                /**
+                 * Class for the label element with variant
+                 */
                 labelVariantClass: ClassDefinition;
-                /** Class for the message element */
+                /**
+                 * Class for the message element
+                 */
                 messageClass: ClassDefinition;
-                /** Class for the message element with size */
+                /**
+                 * Class for the message element with size
+                 */
                 messageSizeClass: ClassDefinition;
-                /** Class for the message element with variant */
+                /**
+                 * Class for the message element with variant
+                 */
                 messageVariantClass: ClassDefinition;
             }>;
         icon?: ComponentConfigBase &
             Partial<{
-                /** Color of the icon */
+                /**
+                 * Color of the icon
+                 */
                 variant: string;
-                /** Icon size */
+                /**
+                 * Icon size
+                 */
                 size: string;
-                /** Add class to icon font.
-See icon library documentation for custom classes. */
+                /**
+                 * Add class to icon font.
+See icon library documentation for custom classes.
+                 */
                 customClass: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element when clickable */
+                /**
+                 * Class of the root element when clickable
+                 */
                 clickableClass: ClassDefinition;
-                /** Class of the root element when spin */
+                /**
+                 * Class of the root element when spin
+                 */
                 spinClass: ClassDefinition;
             }>;
         input?: ComponentConfigBase &
             Partial<{
-                /** Size of the control */
+                /**
+                 * Size of the control
+                 */
                 size: string;
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Makes input full width when inside a grouped or addon field */
+                /**
+                 * Makes input full width when inside a grouped or addon field
+                 */
                 expanded: boolean;
-                /** Show character counter when maxlength prop is passed */
+                /**
+                 * Show character counter when maxlength prop is passed
+                 */
                 counter: boolean;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon to be shown */
+                /**
+                 * Icon to be shown
+                 */
                 icon: string;
-                /** Icon to be added on the right side */
+                /**
+                 * Icon to be added on the right side
+                 */
                 iconRight: string;
-                /** Add a button/icon to clear the inputed text */
+                /**
+                 * Add a button/icon to clear the inputed text
+                 */
                 clearable: boolean;
-                /** Icon name to be added on the clear button */
+                /**
+                 * Icon name to be added on the clear button
+                 */
                 clearIcon: string;
-                /** Number of milliseconds to delay before to emit input event */
+                /**
+                 * Number of milliseconds to delay before to emit input event
+                 */
                 debounce: number;
-                /** Native options to use in HTML5 validation */
+                /**
+                 * Native options to use in HTML5 validation
+                 */
                 autocomplete: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Class of the root element when rounded */
+                /**
+                 * Class of the root element when rounded
+                 */
                 roundedClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the root element when type `textarea` */
+                /**
+                 * Class of the root element when type `textarea`
+                 */
                 textareaClass: ClassDefinition;
-                /** Class to the root element when has a right icon */
+                /**
+                 * Class to the root element when has a right icon
+                 */
                 hasIconRightClass: ClassDefinition;
-                /** Class of the native input element */
+                /**
+                 * Class of the native input element
+                 */
                 inputClass: ClassDefinition;
-                /** Class of the native input element with left icon space */
+                /**
+                 * Class of the native input element with left icon space
+                 */
                 iconLeftSpaceClass: ClassDefinition;
-                /** Class of the native input element with right icon space */
+                /**
+                 * Class of the native input element with right icon space
+                 */
                 iconRightSpaceClass: ClassDefinition;
-                /** Class of the native input element with placeholder */
+                /**
+                 * Class of the native input element with placeholder
+                 */
                 placeholderClass: ClassDefinition;
-                /** Class of the left icon element */
+                /**
+                 * Class of the left icon element
+                 */
                 iconLeftClass: ClassDefinition;
-                /** Class of the right icon element */
+                /**
+                 * Class of the right icon element
+                 */
                 iconRightClass: ClassDefinition;
-                /** Class of the counter element */
+                /**
+                 * Class of the counter element
+                 */
                 counterClass: ClassDefinition;
             }>;
         listbox?: ComponentConfigBase &
             Partial<{
-                /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
+                /**
+                 * Height of the listbox, a scrollbar is defined if height of list exceeds this value
+                 */
                 scrollHeight: number | string;
-                /** A label which is displayed when no options is visible */
+                /**
+                 * A label which is displayed when no options is visible
+                 */
                 emptyLabel: string;
-                /** Icon of the column search input */
+                /**
+                 * Icon of the column search input
+                 */
                 filterIcon: string;
-                /** Placeholder of the column search input */
+                /**
+                 * Placeholder of the column search input
+                 */
                 filterPlaceholder: string;
-                /** Number of milliseconds to delay the filter event */
+                /**
+                 * Number of milliseconds to delay the filter event
+                 */
                 filterDebounce: number;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Custom animation (transition name) */
+                /**
+                 * Custom animation (transition name)
+                 */
                 animation: string;
-                /** List tag name */
+                /**
+                 * List tag name
+                 */
                 listTag: DynamicComponent;
-                /** List item tag name */
+                /**
+                 * List item tag name
+                 */
                 itemTag: DynamicComponent;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Clas of the root element when disabled */
+                /**
+                 * Clas of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Clas of the root element when selectable */
+                /**
+                 * Clas of the root element when selectable
+                 */
                 selectableClass: ClassDefinition;
-                /** Clas of the root element when filterable */
+                /**
+                 * Clas of the root element when filterable
+                 */
                 filterableClass: ClassDefinition;
-                /** Clas of the root element when multiple */
+                /**
+                 * Clas of the root element when multiple
+                 */
                 multipleClass: ClassDefinition;
-                /** Class of the header slot wrapper element */
+                /**
+                 * Class of the header slot wrapper element
+                 */
                 headerClass: ClassDefinition;
-                /** Class of the footer slot wrapper element */
+                /**
+                 * Class of the footer slot wrapper element
+                 */
                 footerClass: ClassDefinition;
-                /** Class of the empty slot wrapper element */
+                /**
+                 * Class of the empty slot wrapper element
+                 */
                 emptyClass: ClassDefinition;
-                /** Class of the filter wrapper element */
+                /**
+                 * Class of the filter wrapper element
+                 */
                 filterClass: ClassDefinition;
-                /** Class of the list container element */
+                /**
+                 * Class of the list container element
+                 */
                 containerClass: ClassDefinition;
-                /** Class of the list element */
+                /**
+                 * Class of the list element
+                 */
                 listClass: ClassDefinition;
-                /** Class configuration for the internal input component */
+                /**
+                 * Class configuration for the internal input component
+                 */
                 inputClasses: Record<string, any>;
-                /** Class of the item element. */
+                /**
+                 * Class of the item element.
+                 */
                 itemClass: ClassDefinition;
-                /** Class of the item element when selected */
+                /**
+                 * Class of the item element when selected
+                 */
                 itemSelectedClass: ClassDefinition;
-                /** Class of the item element when focused */
+                /**
+                 * Class of the item element when focused
+                 */
                 itemFocusedClass: ClassDefinition;
-                /** Class of the item element when clickable */
+                /**
+                 * Class of the item element when clickable
+                 */
                 itemClickableClass: ClassDefinition;
-                /** Class of the item element when disabled */
+                /**
+                 * Class of the item element when disabled
+                 */
                 itemDisabledClass: ClassDefinition;
             }>;
         loading?: ComponentConfigBase &
             Partial<{
-                /** Custom animation (transition name) */
+                /**
+                 * Custom animation (transition name)
+                 */
                 animation: string;
-                /** Icon name to show, unnecessary when default slot is used. */
+                /**
+                 * Icon name to show, unnecessary when default slot is used.
+                 */
                 icon: string;
-                /** Icon pack to use for the close icon */
+                /**
+                 * Icon pack to use for the close icon
+                 */
                 iconPack: string;
-                /** Enable spin effect on icon */
+                /**
+                 * Enable spin effect on icon
+                 */
                 iconSpin: boolean;
-                /** Icon size */
+                /**
+                 * Icon size
+                 */
                 iconSize: string;
-                /** Set `true` to remove the body scrollbar when `fullPage`.
+                /**
+                 * Set `true` to remove the body scrollbar when `fullPage`.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts. */
+but will set the body to a fixed position, which may break some layouts.
+                 */
                 clipScroll: boolean;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class for the root element when fullpage */
+                /**
+                 * Class for the root element when fullpage
+                 */
                 fullPageClass: ClassDefinition;
-                /** Class of the overlay element */
+                /**
+                 * Class of the overlay element
+                 */
                 overlayClass: ClassDefinition;
-                /** Class for the icon element */
+                /**
+                 * Class for the icon element
+                 */
                 iconClass: ClassDefinition;
-                /** Class for the label element */
+                /**
+                 * Class for the label element
+                 */
                 labelClass: ClassDefinition;
-                /** Class of the body when fullpage and scroll is clipped */
+                /**
+                 * Class of the body when fullpage and scroll is clipped
+                 */
                 scrollClipClass: ClassDefinition;
-                /** Class of the body when fullpage and scroll is keeped */
+                /**
+                 * Class of the body when fullpage and scroll is keeped
+                 */
                 scrollKeepClass: ClassDefinition;
             }>;
         menu?: ComponentConfigBase &
             Partial<{
-                /** Role attribute to be passed to the list container for better accessibility.
-Use menu only in situations where your dropdown is related to a navigation menu. */
+                /**
+                 * Role attribute to be passed to the list container for better accessibility.
+Use menu only in situations where your dropdown is related to a navigation menu.
+                 */
                 role: "menu" | "tree";
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon size */
+                /**
+                 * Icon size
+                 */
                 iconSize: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the menu list element */
+                /**
+                 * Class of the menu list element
+                 */
                 listClass: ClassDefinition;
-                /** Class of the menu label element */
+                /**
+                 * Class of the menu label element
+                 */
                 labelClass: ClassDefinition;
-                /** Transition name to apply on menu list */
+                /**
+                 * Transition name to apply on menu list
+                 */
                 animation: string;
-                /** Menu item tag name */
+                /**
+                 * Menu item tag name
+                 */
                 itemTag: DynamicComponent;
-                /** Class of the menu item root element */
+                /**
+                 * Class of the menu item root element
+                 */
                 itemClass: ClassDefinition;
-                /** Class of the menu item root element when active */
+                /**
+                 * Class of the menu item root element when active
+                 */
                 itemActiveClass: ClassDefinition;
-                /** Class of the menu item root element when focused */
+                /**
+                 * Class of the menu item root element when focused
+                 */
                 itemFocusedClass: ClassDefinition;
-                /** Class of the menu item root element when disabled */
+                /**
+                 * Class of the menu item root element when disabled
+                 */
                 itemDisabledClass: ClassDefinition;
-                /** Class of the menu button element */
+                /**
+                 * Class of the menu button element
+                 */
                 itemButtonClass: ClassDefinition;
-                /** Class of the menu button element when active */
+                /**
+                 * Class of the menu button element when active
+                 */
                 itemButtonActiveClass: ClassDefinition;
-                /** Class of the menu button element when focused */
+                /**
+                 * Class of the menu button element when focused
+                 */
                 itemButtonFocusedClass: ClassDefinition;
-                /** Class of the menu button element when disabled */
+                /**
+                 * Class of the menu button element when disabled
+                 */
                 itemButtonDisabledClass: ClassDefinition;
-                /** Class of the menu button element with icon */
+                /**
+                 * Class of the menu button element with icon
+                 */
                 itemButtonIconClass: ClassDefinition;
-                /** Class of the menu item submenu element */
+                /**
+                 * Class of the menu item submenu element
+                 */
                 itemSubmenuClass: ClassDefinition;
             }>;
         modal?: ComponentConfigBase &
             Partial<{
-                /** Width of the Modal */
+                /**
+                 * Width of the Modal
+                 */
                 width: Numberish;
-                /** Custom animation (transition name) */
+                /**
+                 * Custom animation (transition name)
+                 */
                 animation: string;
-                /** Show an overlay */
+                /**
+                 * Show an overlay
+                 */
                 overlay: boolean;
-                /** Is Modal cancleable by clicking 'X', pressing escape or clicking outside */
+                /**
+                 * Is Modal cancleable by clicking 'X', pressing escape or clicking outside
+                 */
                 cancelable: boolean | string[];
-                /** Set `true` to remove the body scrollbar.
+                /**
+                 * Set `true` to remove the body scrollbar.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts. */
+but will set the body to a fixed position, which may break some layouts.
+                 */
                 clipScroll: boolean;
-                /** Trap focus inside the modal */
+                /**
+                 * Trap focus inside the modal
+                 */
                 trapFocus: boolean;
-                /** This enables the `alertdialog` role, allowing assistive technologies and browsers to distinguish alert modals from other modals.
-Alert modals interrupt the user's workflow to communicate an important messages and acquire an explicit response. */
+                /**
+                 * This enables the `alertdialog` role, allowing assistive technologies and browsers to distinguish alert modals from other modals.
+Alert modals interrupt the user's workflow to communicate an important messages and acquire an explicit response.
+                 */
                 alert: boolean;
-                /** Accessibility aria-label to be passed to the div wrapper element */
+                /**
+                 * Accessibility aria-label to be passed to the div wrapper element
+                 */
                 ariaLabel: string;
-                /** Automatically focus modal when active */
+                /**
+                 * Automatically focus modal when active
+                 */
                 autoFocus: boolean;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Close icon name */
+                /**
+                 * Close icon name
+                 */
                 closeIcon: string;
-                /** Size of close icon */
+                /**
+                 * Size of close icon
+                 */
                 closeIconSize: string;
-                /** Accessibility label for the close button */
+                /**
+                 * Accessibility label for the close button
+                 */
                 ariaCloseLabel: string;
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Class of the root element when active */
+                /**
+                 * Class of the root element when active
+                 */
                 activeClass: ClassDefinition;
-                /** Class of the overlay element */
+                /**
+                 * Class of the overlay element
+                 */
                 overlayClass: ClassDefinition;
-                /** Class of the content element */
+                /**
+                 * Class of the content element
+                 */
                 contentClass: ClassDefinition;
-                /** Class of the content element when fullscreen */
+                /**
+                 * Class of the content element when fullscreen
+                 */
                 fullScreenClass: ClassDefinition;
-                /** Class of the close button element */
+                /**
+                 * Class of the close button element
+                 */
                 closeClass: ClassDefinition;
-                /** Class of the body when modal is open and scroll is clipped */
+                /**
+                 * Class of the body when modal is open and scroll is clipped
+                 */
                 scrollClipClass: ClassDefinition;
-                /** Class of the body when modal is open and scroll is keeped */
+                /**
+                 * Class of the body when modal is open and scroll is keeped
+                 */
                 scrollKeepClass: ClassDefinition;
             }>;
         notification?: ComponentConfigBase &
             Partial<{
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Enable rounded style */
+                /**
+                 * Enable rounded style
+                 */
                 rounded: boolean;
-                /** Which position the notification will appear when programmatically */
+                /**
+                 * Which position the notification will appear when programmatically
+                 */
                 position: "bottom-left" | "bottom-right" | "bottom" | "top-left" | "top-right" | "top";
-                /** Custom animation (transition name) */
+                /**
+                 * Custom animation (transition name)
+                 */
                 animation: string;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon size */
+                /**
+                 * Icon size
+                 */
                 iconSize: string;
-                /** Close icon name */
+                /**
+                 * Close icon name
+                 */
                 closeIcon: string;
-                /** Size of close icon */
+                /**
+                 * Size of close icon
+                 */
                 closeIconSize: string;
-                /** Accessibility label for the close button */
+                /**
+                 * Accessibility label for the close button
+                 */
                 ariaCloseLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when positioned */
+                /**
+                 * Class of the root element when positioned
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element when rounded */
+                /**
+                 * Class of the root element when rounded
+                 */
                 roundedClass: ClassDefinition;
-                /** Class of the close button element */
+                /**
+                 * Class of the close button element
+                 */
                 closeClass: ClassDefinition;
-                /** Class of the content element */
+                /**
+                 * Class of the content element
+                 */
                 contentClass: ClassDefinition;
-                /** Class of the icon element on the left */
+                /**
+                 * Class of the icon element on the left
+                 */
                 iconClass: ClassDefinition;
-                /** Class of the wrapper element */
+                /**
+                 * Class of the wrapper element
+                 */
                 wrapperClass: ClassDefinition;
-                /** Hide notification after duration (in miliseconds) */
+                /**
+                 * Hide notification after duration (in miliseconds)
+                 */
                 duration: number;
-                /** If notice should queue with others notices. */
+                /**
+                 * If notice should queue with others notices.
+                 */
                 queue: boolean;
-                /** Class of the notice wrapper element */
+                /**
+                 * Class of the notice wrapper element
+                 */
                 noticeClass: ClassDefinition;
-                /** Class of the notice wrapper element when positioned */
+                /**
+                 * Class of the notice wrapper element when positioned
+                 */
                 noticePositionClass: ClassDefinition;
-                /** Class of the notice container element */
+                /**
+                 * Class of the notice container element
+                 */
                 noticeContainerClass: ClassDefinition;
             }>;
         pagination?: ComponentConfigBase &
             Partial<{
-                /** Items count for each page */
+                /**
+                 * Items count for each page
+                 */
                 perPage: number | string;
-                /** Enable rounded button style */
+                /**
+                 * Enable rounded button style
+                 */
                 rounded: boolean;
-                /** Pagination size */
+                /**
+                 * Pagination size
+                 */
                 size: string;
-                /** Enable simple style */
+                /**
+                 * Enable simple style
+                 */
                 simple: boolean;
-                /** Buttons order */
+                /**
+                 * Buttons order
+                 * @deprecated will be renamed to `position`
+                 */
                 order: "centered" | "left" | "right";
-                /** Buttons position order */
+                /**
+                 * Buttons position order
+                 */
                 position: "centered" | "left" | "right";
-                /** Pagination button tag name */
+                /**
+                 * Pagination button tag name
+                 */
                 buttonTag: DynamicComponent;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon to use for previous button */
+                /**
+                 * Icon to use for previous button
+                 */
                 iconPrev: string;
-                /** Icon to use for next button */
+                /**
+                 * Icon to use for next button
+                 */
                 iconNext: string;
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Accessibility label for the next page button. */
+                /**
+                 * Accessibility label for the next page button.
+                 */
                 ariaNextLabel: string;
-                /** Accessibility label for the previous page button. */
+                /**
+                 * Accessibility label for the previous page button.
+                 */
                 ariaPreviousLabel: string;
-                /** Accessibility label for the page button. */
+                /**
+                 * Accessibility label for the page button.
+                 */
                 ariaPageLabel: string;
-                /** Accessibility label for the current page button. */
+                /**
+                 * Accessibility label for the current page button.
+                 */
                 ariaCurrentLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Class of the root element with order */
+                /**
+                 * Class of the root element with order
+                 * @deprecated use `positionClass` instead
+                 */
                 orderClass: ClassDefinition;
-                /** Class of the root element with position */
+                /**
+                 * Class of the root element with position
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element when in `simple` mode */
+                /**
+                 * Class of the root element when in `simple` mode
+                 */
                 simpleClass: ClassDefinition;
-                /** Class of the page info in `simple` mode */
+                /**
+                 * Class of the page info in `simple` mode
+                 */
                 infoClass: ClassDefinition;
-                /** Class of the items list element */
+                /**
+                 * Class of the items list element
+                 */
                 listClass: ClassDefinition;
-                /** Class of the list item element */
+                /**
+                 * Class of the list item element
+                 */
                 listItemClass: ClassDefinition;
-                /** Class of the ellipsis element */
+                /**
+                 * Class of the ellipsis element
+                 */
                 ellipsisClass: ClassDefinition;
-                /** Class of the button element */
+                /**
+                 * Class of the button element
+                 */
                 buttonClass: ClassDefinition;
-                /** Class of the button element when rounded */
+                /**
+                 * Class of the button element when rounded
+                 */
                 roundedClass: ClassDefinition;
-                /** Class of the current button element */
+                /**
+                 * Class of the current button element
+                 */
                 buttonCurrentClass: ClassDefinition;
-                /** Class of the prev button element */
+                /**
+                 * Class of the prev button element
+                 */
                 buttonPrevClass: ClassDefinition;
-                /** Class of the next button element */
+                /**
+                 * Class of the next button element
+                 */
                 buttonNextClass: ClassDefinition;
-                /** Class of the prev or next button when disabled */
+                /**
+                 * Class of the prev or next button when disabled
+                 */
                 buttonDisabledClass: ClassDefinition;
-                /** Class configuration for the internal button components */
+                /**
+                 * Class configuration for the internal button components
+                 */
                 buttonClasses: Record<string, any>;
             }>;
         radio?: ComponentConfigBase &
             Partial<{
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Size of the control */
+                /**
+                 * Size of the control
+                 */
                 size: string;
-                /** Same as native autocomplete options to use in HTML5 validation */
+                /**
+                 * Same as native autocomplete options to use in HTML5 validation
+                 */
                 autocomplete: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the root element when checked */
+                /**
+                 * Class of the root element when checked
+                 */
                 checkedClass: ClassDefinition;
-                /** Class of the native input element */
+                /**
+                 * Class of the native input element
+                 */
                 inputClass: ClassDefinition;
-                /** Class of the label element */
+                /**
+                 * Class of the label element
+                 */
                 labelClass: ClassDefinition;
             }>;
         select?: ComponentConfigBase &
             Partial<{
-                /** Vertical size of input */
+                /**
+                 * Vertical size of input
+                 */
                 size: string;
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Makes input full width when inside a grouped or addon field */
+                /**
+                 * Makes input full width when inside a grouped or addon field
+                 */
                 expanded: boolean;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon to be shown */
+                /**
+                 * Icon to be shown
+                 */
                 icon: string;
-                /** Icon to be added on the right side */
+                /**
+                 * Icon to be added on the right side
+                 */
                 iconRight: string;
-                /** Same as native autocomplete options to use in HTML5 validation */
+                /**
+                 * Same as native autocomplete options to use in HTML5 validation
+                 */
                 autocomplete: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the root element when rounded */
+                /**
+                 * Class of the root element when rounded
+                 */
                 roundedClass: ClassDefinition;
-                /** Class of the root element when has icon right */
+                /**
+                 * Class of the root element when has icon right
+                 */
                 hasIconRightClass: ClassDefinition;
-                /** Class of the root element when multiple */
+                /**
+                 * Class of the root element when multiple
+                 */
                 multipleClass: ClassDefinition;
-                /** Class of the native select element */
+                /**
+                 * Class of the native select element
+                 */
                 selectClass: ClassDefinition;
-                /** Class of the native select element with placeholder */
+                /**
+                 * Class of the native select element with placeholder
+                 */
                 placeholderClass: ClassDefinition;
-                /** Class of the native select element when arrowed */
+                /**
+                 * Class of the native select element when arrowed
+                 */
                 arrowedClass: ClassDefinition;
-                /** Class of the native select element with left icon space */
+                /**
+                 * Class of the native select element with left icon space
+                 */
                 iconLeftSpaceClass: ClassDefinition;
-                /** Class of the native select element with right icon space */
+                /**
+                 * Class of the native select element with right icon space
+                 */
                 iconRightSpaceClass: ClassDefinition;
-                /** Class of the left icon element */
+                /**
+                 * Class of the left icon element
+                 */
                 iconLeftClass: ClassDefinition;
-                /** Class of the right icon element */
+                /**
+                 * Class of the right icon element
+                 */
                 iconRightClass: ClassDefinition;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
-                /** Show an overlay like modal */
+                /**
+                 * Show an overlay like modal
+                 */
                 overlay: boolean;
-                /** Sidebar position */
+                /**
+                 * Sidebar position
+                 */
                 position: "bottom" | "left" | "right" | "top";
-                /** Show sidebar in fullheight */
+                /**
+                 * Show sidebar in fullheight
+                 */
                 fullheight: boolean;
-                /** Show sidebar in fullwidth */
+                /**
+                 * Show sidebar in fullwidth
+                 */
                 fullwidth: boolean;
-                /** Show a small sidebar */
+                /**
+                 * Show a small sidebar
+                 */
                 reduce: boolean;
-                /** Custom layout on mobile */
+                /**
+                 * Custom layout on mobile
+                 */
                 mobile: "expanded" | "hidden" | "reduced";
-                /** Expand sidebar on hover when reduced or mobile is reduce */
+                /**
+                 * Expand sidebar on hover when reduced or mobile is reduce
+                 */
                 expandOnHover: boolean;
-                /** Custom animation (transition name) */
+                /**
+                 * Custom animation (transition name)
+                 */
                 animation: string;
-                /** Is Sidebar cancleable by pressing escape or clicking outside. */
+                /**
+                 * Is Sidebar cancleable by pressing escape or clicking outside.
+                 */
                 cancelable: boolean | string[];
-                /** Set `true` to remove the body scrollbar.
+                /**
+                 * Set `true` to remove the body scrollbar.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
-but will set the body to a fixed position, which may break some layouts. */
+but will set the body to a fixed position, which may break some layouts.
+                 */
                 clipScroll: boolean;
-                /** Trap focus inside the sidebar */
+                /**
+                 * Trap focus inside the sidebar
+                 */
                 trapFocus: boolean;
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Class of the root element when active */
+                /**
+                 * Class of the root element when active
+                 */
                 activeClass: ClassDefinition;
-                /** Class of the root element when teleported */
+                /**
+                 * Class of the root element when teleported
+                 */
                 teleportClass: ClassDefinition;
-                /** Class of the root element when inlined */
+                /**
+                 * Class of the root element when inlined
+                 */
                 inlineClass: ClassDefinition;
-                /** Class of the overlay element */
+                /**
+                 * Class of the overlay element
+                 */
                 overlayClass: ClassDefinition;
-                /** Class of the content element */
+                /**
+                 * Class of the content element
+                 */
                 contentClass: ClassDefinition;
-                /** Class of the content element when hidden */
+                /**
+                 * Class of the content element when hidden
+                 */
                 hiddenClass: ClassDefinition;
-                /** Class of the content element when visible */
+                /**
+                 * Class of the content element when visible
+                 */
                 visibleClass: ClassDefinition;
-                /** Class of the content element with position */
+                /**
+                 * Class of the content element with position
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the content element when is fullheight */
+                /**
+                 * Class of the content element when is fullheight
+                 */
                 fullheightClass: ClassDefinition;
-                /** Class of the content element when is fullwidth */
+                /**
+                 * Class of the content element when is fullwidth
+                 */
                 fullwidthClass: ClassDefinition;
-                /** Class of the content element when reduced */
+                /**
+                 * Class of the content element when reduced
+                 */
                 reduceClass: ClassDefinition;
-                /** Class of the content element when expanded on hover */
+                /**
+                 * Class of the content element when expanded on hover
+                 */
                 expandOnHoverClass: ClassDefinition;
-                /** Class of the body when is visible and scroll is clipped */
+                /**
+                 * Class of the body when is visible and scroll is clipped
+                 */
                 scrollClipClass: ClassDefinition;
-                /** Class of the body when is visible and scroll is keeped */
+                /**
+                 * Class of the body when is visible and scroll is keeped
+                 */
                 scrollKeepClass: ClassDefinition;
             }>;
         skeleton?: ComponentConfigBase &
             Partial<{
-                /** Show a loading animation */
+                /**
+                 * Show a loading animation
+                 */
                 animated: boolean;
-                /** Enable rounded style */
+                /**
+                 * Enable rounded style
+                 */
                 rounded: boolean;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with position */
+                /**
+                 * Class of the root element with position
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the item element */
+                /**
+                 * Class of the item element
+                 */
                 itemClass: ClassDefinition;
-                /** Class of the item element when rounded */
+                /**
+                 * Class of the item element when rounded
+                 */
                 roundedClass: ClassDefinition;
-                /** Class of the item element when animated */
+                /**
+                 * Class of the item element when animated
+                 */
                 animatedClass: ClassDefinition;
-                /** Class of the item element with size */
+                /**
+                 * Class of the item element with size
+                 */
                 sizeClass: ClassDefinition;
             }>;
         slider?: ComponentConfigBase &
             Partial<{
-                /** Color of the slider */
+                /**
+                 * Color of the slider
+                 */
                 variant: string;
-                /** Vertical size of slider */
+                /**
+                 * Vertical size of slider
+                 */
                 size: string;
-                /** Show tooltip when thumb is being dragged */
+                /**
+                 * Show tooltip when thumb is being dragged
+                 */
                 tooltip: boolean;
-                /** Color of the tooltip */
+                /**
+                 * Color of the tooltip
+                 */
                 tooltipVariant: string;
-                /** Rounded thumb */
+                /**
+                 * Rounded thumb
+                 */
                 rounded: boolean;
-                /** Define v-model format */
+                /**
+                 * Define v-model format
+                 */
                 format: "percent" | "raw";
-                /** Accessibility aria-label to to be passed to the slider thumb element. */
+                /**
+                 * Accessibility aria-label to to be passed to the slider thumb element.
+                 */
                 ariaLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the slider track element. */
+                /**
+                 * Class of the slider track element.
+                 */
                 trackClass: ClassDefinition;
-                /** Class of the filled part of the slider */
+                /**
+                 * Class of the filled part of the slider
+                 */
                 fillClass: ClassDefinition;
-                /** Class of the filled part of the slider with variant */
+                /**
+                 * Class of the filled part of the slider with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the thumb wrapper element */
+                /**
+                 * Class of the thumb wrapper element
+                 */
                 thumbWrapperClass: ClassDefinition;
-                /** Class to the thumb wrapper element when the slider is dragged */
+                /**
+                 * Class to the thumb wrapper element when the slider is dragged
+                 */
                 thumbWrapperDraggingClass: ClassDefinition;
-                /** Class of the thumb element */
+                /**
+                 * Class of the thumb element
+                 */
                 thumbClass: ClassDefinition;
-                /** Class of the thumb element when rounded */
+                /**
+                 * Class of the thumb element when rounded
+                 */
                 thumbRoundedClass: ClassDefinition;
-                /** Class of the thumb element when is dragged */
+                /**
+                 * Class of the thumb element when is dragged
+                 */
                 thumbDraggingClass: ClassDefinition;
-                /** Class of the slider tick element */
+                /**
+                 * Class of the slider tick element
+                 */
                 tickClass: ClassDefinition;
-                /** Class of the slider tick element when is hidden */
+                /**
+                 * Class of the slider tick element when is hidden
+                 */
                 tickHiddenClass: ClassDefinition;
-                /** Class of the slider tick label element */
+                /**
+                 * Class of the slider tick label element
+                 */
                 tickLabelClass: ClassDefinition;
             }>;
         steps?: ComponentConfigBase &
             Partial<{
-                /** Step marker icon */
+                /**
+                 * Step marker icon
+                 */
                 icon: string;
-                /** Icon pack */
+                /**
+                 * Icon pack
+                 */
                 iconPack: string;
-                /** Class of the step item element. */
+                /**
+                 * Class of the step item element.
+                 */
                 stepClass: ClassDefinition;
-                /** Class of the step item element when active */
+                /**
+                 * Class of the step item element when active
+                 */
                 stepActiveClass: ClassDefinition;
-                /** Class of the step item element with variant (default value by parent steps component) */
+                /**
+                 * Class of the step item element with variant (default value by parent steps component)
+                 */
                 stepVariantClass: ClassDefinition;
-                /** Class of the step item element when positioned */
+                /**
+                 * Class of the step item element when positioned
+                 */
                 stepPositionClass: ClassDefinition;
-                /** Class of the step item element when clickable */
+                /**
+                 * Class of the step item element when clickable
+                 */
                 stepClickableClass: ClassDefinition;
-                /** Class of the step item element when disabled */
+                /**
+                 * Class of the step item element when disabled
+                 */
                 stepDisabledClass: ClassDefinition;
-                /** Class of the step item element before the active one */
+                /**
+                 * Class of the step item element before the active one
+                 */
                 stepPreviousClass: ClassDefinition;
-                /** Class of the step item element after the active one */
+                /**
+                 * Class of the step item element after the active one
+                 */
                 stepNextClass: ClassDefinition;
-                /** Class of the step item label element */
+                /**
+                 * Class of the step item label element
+                 */
                 stepLabelClass: ClassDefinition;
-                /** Class of the step item icon element */
+                /**
+                 * Class of the step item icon element
+                 */
                 stepIconClass: ClassDefinition;
-                /** Class of the step panel element */
+                /**
+                 * Class of the step panel element
+                 */
                 stepPanelClass: ClassDefinition;
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Step size */
+                /**
+                 * Step size
+                 */
                 size: string;
-                /** Icon to use for navigation button */
+                /**
+                 * Icon to use for navigation button
+                 */
                 iconPrev: string;
-                /** Icon to use for navigation button */
+                /**
+                 * Icon to use for navigation button
+                 */
                 iconNext: string;
-                /** Step navigation is animated */
+                /**
+                 * Step navigation is animated
+                 */
                 animated: boolean;
-                /** Transition animation name */
+                /**
+                 * Transition animation name
+                 */
                 animation: [string, string] | [string, string, string, string];
-                /** Apply animation on the initial render */
+                /**
+                 * Apply animation on the initial render
+                 */
                 animateInitially: boolean;
-                /** Position of the marker label */
+                /**
+                 * Position of the marker label
+                 */
                 labelPosition: "bottom" | "left" | "right";
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Accessibility aria-label to be passed to the tablist wrapper element */
+                /**
+                 * Accessibility aria-label to be passed to the tablist wrapper element
+                 */
                 ariaLabel: string;
-                /** Accessibility next button aria label */
+                /**
+                 * Accessibility next button aria label
+                 */
                 ariaNextLabel: string;
-                /** Accessibility previous button aria label */
+                /**
+                 * Accessibility previous button aria label
+                 */
                 ariaPreviousLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Size of the root element with size */
+                /**
+                 * Size of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element when is vertical */
+                /**
+                 * Class of the root element when is vertical
+                 */
                 verticalClass: ClassDefinition;
-                /** Class of the root element when is vertical and has position */
+                /**
+                 * Class of the root element when is vertical and has position
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the list container element */
+                /**
+                 * Class of the list container element
+                 */
                 listClass: ClassDefinition;
-                /** Class of the list container when animated */
+                /**
+                 * Class of the list container when animated
+                 */
                 animatedClass: ClassDefinition;
-                /** Class of the item divider element */
+                /**
+                 * Class of the item divider element
+                 */
                 dividerClass: ClassDefinition;
-                /** Class of the item marker element */
+                /**
+                 * Class of the item marker element
+                 */
                 markerClass: ClassDefinition;
-                /** Class of the item marker element when rounded */
+                /**
+                 * Class of the item marker element when rounded
+                 */
                 markerRoundedClass: ClassDefinition;
-                /** Class of the panel container element */
+                /**
+                 * Class of the panel container element
+                 */
                 contentClass: ClassDefinition;
-                /** Class of the panel container element when transitioning */
+                /**
+                 * Class of the panel container element when transitioning
+                 */
                 transitioningClass: ClassDefinition;
-                /** Class of the navigation element */
+                /**
+                 * Class of the navigation element
+                 */
                 navigationClass: ClassDefinition;
             }>;
         switch?: ComponentConfigBase &
             Partial<{
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Color of the switch when is passive */
+                /**
+                 * Color of the switch when is passive
+                 */
                 passiveVariant: string;
-                /** Size of the control */
+                /**
+                 * Size of the control
+                 */
                 size: string;
-                /** Rounded style */
+                /**
+                 * Rounded style
+                 */
                 rounded: boolean;
-                /** Label position */
+                /**
+                 * Label position
+                 */
                 right: string;
-                /** Same as native autocomplete options to use in HTML5 validation */
+                /**
+                 * Same as native autocomplete options to use in HTML5 validation
+                 */
                 autocomplete: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element with passive variant */
+                /**
+                 * Class of the root element with passive variant
+                 */
                 passiveVariantClass: ClassDefinition;
-                /** Class of the root element with position */
+                /**
+                 * Class of the root element with position
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the root element when rounded */
+                /**
+                 * Class of the root element when rounded
+                 */
                 roundedClass: ClassDefinition;
-                /** Class of the root element when checked */
+                /**
+                 * Class of the root element when checked
+                 */
                 checkedClass: ClassDefinition;
-                /** Class of the native input element */
+                /**
+                 * Class of the native input element
+                 */
                 inputClass: ClassDefinition;
-                /** Class of the label element */
+                /**
+                 * Class of the label element
+                 */
                 labelClass: ClassDefinition;
             }>;
         table?: ComponentConfigBase &
             Partial<{
-                /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
+                /**
+                 * Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended)
+                 */
                 rowKey: undefined;
-                /** Define individual class for a row */
+                /**
+                 * Define individual class for a row
+                 */
                 rowClass: ((row: unknown, index: number) => string);
-                /** Border to all cells */
+                /**
+                 * Border to all cells
+                 */
                 bordered: boolean;
-                /** Whether table is striped */
+                /**
+                 * Whether table is striped
+                 */
                 striped: boolean;
-                /** Makes the cells narrower */
+                /**
+                 * Makes the cells narrower
+                 */
                 narrowed: boolean;
-                /** Rows are highlighted when hovering */
+                /**
+                 * Rows are highlighted when hovering
+                 */
                 hoverable: boolean;
-                /** Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering. */
+                /**
+                 * Table can be focused and user can select rows. Rows can be navigate with keyboard arrows and are highlighted when hovering.
+                 */
                 selectable: boolean;
-                /** Show header */
+                /**
+                 * Show header
+                 */
                 showHeader: boolean;
-                /** Position of the checkbox (if checkable) */
+                /**
+                 * Position of the checkbox (if checkable)
+                 */
                 checkboxPosition: "left" | "right";
-                /** Color of the checkbox (if checkable) */
+                /**
+                 * Color of the checkbox (if checkable)
+                 */
                 checkboxVariant: string;
-                /** Custom method to verify if a row is checkable (if checkable) */
+                /**
+                 * Custom method to verify if a row is checkable (if checkable)
+                 */
                 isRowCheckable: ((row: unknown) => boolean);
-                /** Columns won't be sorted on clientside, use with `sort` event to sort in your backend */
+                /**
+                 * Columns won't be sorted on clientside, use with `sort` event to sort in your backend
+                 */
                 backendSorting: boolean;
-                /** Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc'] */
+                /**
+                 * Sets the default sort column and order — e.g. 'first_name' or ['first_name', 'desc']
+                 */
                 defaultSort: string | [string, "desc" | "asc"];
-                /** Sets the default sort column direction on the first click */
+                /**
+                 * Sets the default sort column direction on the first click
+                 */
                 defaultSortDirection: "asc" | "desc";
-                /** Sets the header sorting icon */
+                /**
+                 * Sets the header sorting icon
+                 */
                 sortIcon: string;
-                /** Sets the size of the sorting icon */
+                /**
+                 * Sets the size of the sorting icon
+                 */
                 sortIconSize: string;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Controls the visibility of the trigger that toggles the detailed rows (if detailed) */
+                /**
+                 * Controls the visibility of the trigger that toggles the detailed rows (if detailed)
+                 */
                 isDetailedVisible: ((row: unknown) => boolean);
-                /** Allow detail icon and column to be visible (if detailed) */
+                /**
+                 * Allow detail icon and column to be visible (if detailed)
+                 */
                 showDetailIcon: boolean;
-                /** Icon name of detail action (if detailed) */
+                /**
+                 * Icon name of detail action (if detailed)
+                 */
                 detailIcon: string;
-                /**  */
+                /**
+                 * Transition name to use when toggling row details (if detailed)
+                 */
                 detailTransition: string;
-                /** Adds pagination to the table */
+                /**
+                 * Adds pagination to the table
+                 */
                 paginated: boolean;
-                /** How many rows per page (if paginated) */
+                /**
+                 * How many rows per page (if paginated)
+                 */
                 perPage: number | string;
-                /** Pagination position (if paginated) */
+                /**
+                 * Pagination position (if paginated)
+                 */
                 paginationPosition: "both" | "bottom" | "top";
-                /** Size of pagination (if paginated) */
+                /**
+                 * Size of pagination (if paginated)
+                 */
                 paginationSize: string;
-                /** Enable rounded pagination buttons (if paginated) */
+                /**
+                 * Enable rounded pagination buttons (if paginated)
+                 */
                 paginationRounded: boolean;
-                /** Enable simple style pagination (if paginated) */
+                /**
+                 * Enable simple style pagination (if paginated)
+                 */
                 paginationSimple: boolean;
-                /** Pagination buttons order (if paginated) */
+                /**
+                 * Pagination buttons order (if paginated)
+                 */
                 paginationOrder: "centered" | "left" | "right";
-                /** Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend */
+                /**
+                 * Columns won't be filtered on clientside, use with `searchable` prop to the columns to filter in your backend
+                 */
                 backendFiltering: boolean;
-                /** Icon of the column search input */
+                /**
+                 * Icon of the column search input
+                 */
                 filterIcon: string;
-                /** Placeholder of the column search input */
+                /**
+                 * Placeholder of the column search input
+                 */
                 filterPlaceholder: string;
-                /** Filtering debounce time (in milliseconds) */
+                /**
+                 * Filtering debounce time (in milliseconds)
+                 */
                 filterDebounce: number;
-                /** Label to be shown when the table is empty */
+                /**
+                 * Label to be shown when the table is empty
+                 */
                 emptyLabel: string;
-                /** Icon to be shown when the table is empty */
+                /**
+                 * Icon to be shown when the table is empty
+                 */
                 emptyIcon: string;
-                /** Size of empty icon */
+                /**
+                 * Size of empty icon
+                 */
                 emptyIconSize: string;
-                /** Icon for the loading state */
+                /**
+                 * Icon for the loading state
+                 */
                 loadingIcon: string;
-                /** Label for the loading state */
+                /**
+                 * Label for the loading state
+                 */
                 loadingLabel: string;
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Rows appears as cards on mobile (collapse rows) */
+                /**
+                 * Rows appears as cards on mobile (collapse rows)
+                 */
                 mobileCards: boolean;
-                /** Select placeholder text when nothing is selected (if mobileCards) */
+                /**
+                 * Select placeholder text when nothing is selected (if mobileCards)
+                 */
                 mobileSortPlaceholder: string;
-                /** Accessibility label for the pagination next page button. */
+                /**
+                 * Accessibility label for the pagination next page button.
+                 */
                 ariaNextLabel: string;
-                /** Accessibility label for the pagination previous page button. */
+                /**
+                 * Accessibility label for the pagination previous page button.
+                 */
                 ariaPreviousLabel: string;
-                /** Accessibility label for the pagination page button. */
+                /**
+                 * Accessibility label for the pagination page button.
+                 */
                 ariaPageLabel: string;
-                /** Accessibility label for the pagination current page button. */
+                /**
+                 * Accessibility label for the pagination current page button.
+                 */
                 ariaCurrentLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Class of the sortable form wrapper on mobile */
+                /**
+                 * Class of the sortable form wrapper on mobile
+                 */
                 mobileSortClass: ClassDefinition;
-                /** Class of the table wrapper element */
+                /**
+                 * Class of the table wrapper element
+                 */
                 wrapperClass: ClassDefinition;
-                /** Class of the table wrapper element when header is sticky */
+                /**
+                 * Class of the table wrapper element when header is sticky
+                 */
                 stickyHeaderClass: ClassDefinition;
-                /** Class of the table wrapper element when its content is scrollable */
+                /**
+                 * Class of the table wrapper element when its content is scrollable
+                 */
                 scrollableClass: ClassDefinition;
-                /** Class of the Table */
+                /**
+                 * Class of the Table
+                 */
                 tableClass: ClassDefinition;
-                /** Class of the table elemnet when bordered */
+                /**
+                 * Class of the table elemnet when bordered
+                 */
                 borderedClass: ClassDefinition;
-                /** Class of the table element when striped */
+                /**
+                 * Class of the table element when striped
+                 */
                 stripedClass: ClassDefinition;
-                /** Class of the table element when narrowed */
+                /**
+                 * Class of the table element when narrowed
+                 */
                 narrowedClass: ClassDefinition;
-                /** Class of the table element when hoverable */
+                /**
+                 * Class of the table element when hoverable
+                 */
                 hoverableClass: ClassDefinition;
-                /** Class of the table element when it is empty */
+                /**
+                 * Class of the table element when it is empty
+                 */
                 emptyClass: ClassDefinition;
-                /** Class of the table `th` element */
+                /**
+                 * Class of the table `th` element
+                 */
                 thClass: ClassDefinition;
-                /** Class of the table `th` element with position */
+                /**
+                 * Class of the table `th` element with position
+                 */
                 thPositionClass: ClassDefinition;
-                /** Class of the table `th` element when checkable */
+                /**
+                 * Class of the table `th` element when checkable
+                 */
                 thCheckboxClass: ClassDefinition;
-                /** Class of the table `th` element when checkbox is sticky */
+                /**
+                 * Class of the table `th` element when checkbox is sticky
+                 */
                 thStickyClass: ClassDefinition;
-                /** Class of the table `th` element of the detail column of triggers */
+                /**
+                 * Class of the table `th` element of the detail column of triggers
+                 */
                 thDetailedClass: ClassDefinition;
-                /** Class of the table `th` element when sortable */
+                /**
+                 * Class of the table `th` element when sortable
+                 */
                 thSortableClass: ClassDefinition;
-                /** Class of the table `th` element that is currently sorted */
+                /**
+                 * Class of the table `th` element that is currently sorted
+                 * @deprecated use `thSortedClass` instead
+                 */
                 thCurrentSortClass: ClassDefinition;
-                /** Class of the table `th` element when sorted */
+                /**
+                 * Class of the table `th` element when sorted
+                 */
                 thSortedClass: ClassDefinition;
-                /** Class of the table `th` element that is unsortable */
+                /**
+                 * Class of the table `th` element that is unsortable
+                 * @deprecated will be removed
+                 */
                 thUnselectableClass: ClassDefinition;
-                /** Class of the table `th` subheading element */
+                /**
+                 * Class of the table `th` subheading element
+                 */
                 thSubheadingClass: ClassDefinition;
-                /** Class of the table header label element */
+                /**
+                 * Class of the table header label element
+                 */
                 thLabelClass: ClassDefinition;
-                /** Class of the table header sort icon element */
+                /**
+                 * Class of the table header sort icon element
+                 */
                 thSortIconClass: ClassDefinition;
-                /** Class of the table `tr` element */
+                /**
+                 * Class of the table `tr` element
+                 */
                 trClass: ClassDefinition;
-                /** Class of the table `tr` element when selected */
+                /**
+                 * Class of the table `tr` element when selected
+                 */
                 trSelectedClass: ClassDefinition;
-                /** Class of the table `tr` element when checkable and checked */
+                /**
+                 * Class of the table `tr` element when checkable and checked
+                 */
                 trCheckedClass: ClassDefinition;
-                /** Class of the table `tr` element when detailed */
+                /**
+                 * Class of the table `tr` element when detailed
+                 */
                 trDetailedClass: ClassDefinition;
-                /** Class of the table `tr` element when table is empty */
+                /**
+                 * Class of the table `tr` element when table is empty
+                 */
                 trEmptyClass: ClassDefinition;
-                /** Class of the table `td` element */
+                /**
+                 * Class of the table `td` element
+                 */
                 tdClass: ClassDefinition;
-                /** Class of the table `td` element with position */
+                /**
+                 * Class of the table `td` element with position
+                 */
                 tdPositionClass: ClassDefinition;
-                /** Class of the table `td` element when column is sticky */
+                /**
+                 * Class of the table `td` element when column is sticky
+                 */
                 tdStickyClass: ClassDefinition;
-                /** Class of the table `td` element when row is checkable */
+                /**
+                 * Class of the table `td` element when row is checkable
+                 */
                 tdCheckboxClass: ClassDefinition;
-                /** Class of the table `td` element that contains the chevron to trigger details */
+                /**
+                 * Class of the table `td` element that contains the chevron to trigger details
+                 * @deprecated use `tdDetailClass` instead
+                 */
                 tdDetailedChevronClass: ClassDefinition;
-                /** Class of the table `td` element that contains the detail trigger */
+                /**
+                 * Class of the table `td` element that contains the detail trigger
+                 */
                 tdDetailClass: ClassDefinition;
-                /** Class of the Table pagination wrapper element */
+                /**
+                 * Class of the Table pagination wrapper element
+                 */
                 paginationWrapperClass: ClassDefinition;
-                /** Class of the table footer element */
+                /**
+                 * Class of the table footer element
+                 */
                 footerClass: ClassDefinition;
-                /** Class configuration for the internal loading component */
+                /**
+                 * Class configuration for the internal loading component
+                 */
                 loadingClasses: Record<string, any>;
             }>;
         tabs?: ComponentConfigBase &
             Partial<{
-                /** Icon shown to the left of the label */
+                /**
+                 * Icon shown to the left of the label
+                 */
                 icon: string;
-                /** Icon pack */
+                /**
+                 * Icon pack
+                 */
                 iconPack: string;
-                /** Tabs item tag name */
+                /**
+                 * Tabs item tag name
+                 */
                 itemTag: DynamicComponent;
-                /** Class of the tab item element */
+                /**
+                 * Class of the tab item element
+                 */
                 tabClass: ClassDefinition;
-                /** Class of the tab item element with variant */
+                /**
+                 * Class of the tab item element with variant
+                 */
                 tabVariantClass: ClassDefinition;
-                /** Class of the tab item element when active */
+                /**
+                 * Class of the tab item element when active
+                 */
                 tabActiveClass: ClassDefinition;
-                /** Class of the tab item element before the active one */
+                /**
+                 * Class of the tab item element before the active one
+                 */
                 tabPreviousClass: ClassDefinition;
-                /** Class of the tab item element after the active one */
+                /**
+                 * Class of the tab item element after the active one
+                 */
                 tabNextClass: ClassDefinition;
-                /** Class of the tab item element when disabled */
+                /**
+                 * Class of the tab item element when disabled
+                 */
                 tabDisabledClass: ClassDefinition;
-                /** Class of the tab item icon element */
+                /**
+                 * Class of the tab item icon element
+                 */
                 tabIconClass: ClassDefinition;
-                /** Class of the tab item label element */
+                /**
+                 * Class of the tab item label element
+                 */
                 tabLabelClass: ClassDefinition;
-                /** Class of the tab panel element */
+                /**
+                 * Class of the tab panel element
+                 */
                 tabPanelClass: ClassDefinition;
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Tab size */
+                /**
+                 * Tab size
+                 */
                 size: string;
-                /** Show tab in vertical layout */
+                /**
+                 * Show tab in vertical layout
+                 */
                 vertical: boolean;
-                /** Tab type */
+                /**
+                 * Tab type
+                 */
                 type: string;
-                /** Tablist tag name */
+                /**
+                 * Tablist tag name
+                 */
                 tag: DynamicComponent;
-                /** Tab will have an animation */
+                /**
+                 * Tab will have an animation
+                 */
                 animated: boolean;
-                /** Transition animation name */
+                /**
+                 * Transition animation name
+                 */
                 animation: [string, string] | [string, string, string, string];
-                /** Apply animation on the initial render */
+                /**
+                 * Apply animation on the initial render
+                 */
                 animateInitially: boolean;
-                /** Accessibility aria-label to be passed to the tablist wrapper element */
+                /**
+                 * Accessibility aria-label to be passed to the tablist wrapper element
+                 */
                 ariaLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with position */
+                /**
+                 * Class of the root element with position
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with type */
+                /**
+                 * Class of the root element with type
+                 */
                 typeClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Class of the root element when vertical */
+                /**
+                 * Class of the root element when vertical
+                 */
                 verticalClass: ClassDefinition;
-                /** Class of the root element when multilined */
+                /**
+                 * Class of the root element when multilined
+                 */
                 multilineClass: ClassDefinition;
-                /** Class of the list container element */
+                /**
+                 * Class of the list container element
+                 */
                 listClass: ClassDefinition;
-                /** Class of the panel container element */
+                /**
+                 * Class of the panel container element
+                 */
                 contentClass: ClassDefinition;
-                /** Class of the panel container element when transitioning */
+                /**
+                 * Class of the panel container element when transitioning
+                 */
                 transitioningClass: ClassDefinition;
             }>;
         tag?: ComponentConfigBase &
             Partial<{
-                /** Color variant of the breadcrumb */
+                /**
+                 * Color variant of the breadcrumb
+                 */
                 variant: string;
-                /** Size of the control */
+                /**
+                 * Size of the control
+                 */
                 size: string;
-                /** Enable rounded style */
+                /**
+                 * Enable rounded style
+                 */
                 rounded: boolean;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Close icon name */
+                /**
+                 * Close icon name
+                 */
                 closeIcon: string;
-                /** Size of close icon */
+                /**
+                 * Size of close icon
+                 */
                 closeIconSize: string;
-                /** Accessibility label for the close button */
+                /**
+                 * Accessibility label for the close button
+                 */
                 ariaCloseLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the root element when badge style */
+                /**
+                 * Class of the root element when badge style
+                 */
                 badgeClass: ClassDefinition;
-                /** Class of the root element when rounded */
+                /**
+                 * Class of the root element when rounded
+                 */
                 roundedClass: ClassDefinition;
-                /** Class of the label element */
+                /**
+                 * Class of the label element
+                 */
                 labelClass: ClassDefinition;
-                /** Class of the icon element to the left of the tag */
+                /**
+                 * Class of the icon element to the left of the tag
+                 */
                 iconClass: ClassDefinition;
-                /** Class of the tag item close button element */
+                /**
+                 * Class of the tag item close button element
+                 */
                 closeClass: ClassDefinition;
             }>;
         taginput?: ComponentConfigBase &
             Partial<{
-                /** Vertical size of the input control */
+                /**
+                 * Vertical size of the input control
+                 */
                 size: string;
-                /** Color of the each item */
+                /**
+                 * Color of the each item
+                 */
                 variant: string;
-                /** Show counter when maxlength or maxtags props are passed */
+                /**
+                 * Show counter when maxlength or maxtags props are passed
+                 */
                 counter: boolean;
-                /** Opens a dropdown with choices when the input field is focused */
+                /**
+                 * Opens a dropdown with choices when the input field is focused
+                 */
                 openOnFocus: boolean;
-                /** Keep open dropdown list after select */
+                /**
+                 * Keep open dropdown list after select
+                 */
                 keepOpen: boolean;
-                /** The first option will always be pre-selected (easier to just hit enter or tab) */
+                /**
+                 * The first option will always be pre-selected (easier to just hit enter or tab)
+                 */
                 keepFirst: boolean;
-                /** Allows adding new items */
+                /**
+                 * Allows adding new items
+                 */
                 allowNew: boolean;
-                /** Allows adding the same item multiple time */
+                /**
+                 * Allows adding the same item multiple time
+                 */
                 allowDuplicates: boolean;
-                /** Makes the component check if list reached scroll start or end and emit scroll events */
+                /**
+                 * Makes the component check if list reached scroll start or end and emit scroll events
+                 */
                 checkScroll: boolean;
-                /** Add close/delete button to the item */
+                /**
+                 * Add close/delete button to the item
+                 */
                 closeable: boolean;
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon to be shown */
+                /**
+                 * Icon to be shown
+                 */
                 icon: string;
-                /** Icon name of close icon on selected item */
+                /**
+                 * Icon name of close icon on selected item
+                 */
                 closeIcon: string;
-                /** Accessibility label for the close button */
+                /**
+                 * Accessibility label for the close button
+                 */
                 ariaCloseLabel: string;
-                /** Native options to use in HTML5 validation */
+                /**
+                 * Native options to use in HTML5 validation
+                 */
                 autocomplete: string;
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the root element with size */
+                /**
+                 * Class of the root element with size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the inner container element */
+                /**
+                 * Class of the inner container element
+                 */
                 containerClass: ClassDefinition;
-                /** Class of the tag item element */
+                /**
+                 * Class of the tag item element
+                 */
                 itemClass: ClassDefinition;
-                /** Class of the counter element */
+                /**
+                 * Class of the counter element
+                 */
                 counterClass: ClassDefinition;
-                /** Class configuration for the underlying autocomplete component */
+                /**
+                 * Class configuration for the underlying autocomplete component
+                 */
                 autocompleteClasses: Record<string, any>;
             }>;
         timepicker?: ComponentConfigBase &
             Partial<{
-                /** Makes input full width when inside a grouped or addon field */
+                /**
+                 * Makes input full width when inside a grouped or addon field
+                 */
                 expanded: boolean;
-                /** Size of the button */
+                /**
+                 * Size of the button
+                 */
                 size: string;
-                /** Open dropdown on focus */
+                /**
+                 * Open dropdown on focus
+                 */
                 openOnFocus: boolean;
-                /** Close dropdown on click */
+                /**
+                 * Close dropdown on click
+                 */
                 closeOnClick: boolean;
-                /** Custom function to format a date into a string */
+                /**
+                 * Custom function to format a date into a string
+                 */
                 formatter: ((date: Date) => string) | undefined;
-                /** Custom function to parse a string into a date */
+                /**
+                 * Custom function to parse a string into a date
+                 */
                 parser: ((date: string) => Date) | undefined;
-                /** time creator function, default is `new Date()` */
+                /**
+                 * time creator function, default is `new Date()`
+                 */
                 creator: (() => Date);
-                /** Icon pack to use */
+                /**
+                 * Icon pack to use
+                 */
                 iconPack: string;
-                /** Icon to be shown */
+                /**
+                 * Icon to be shown
+                 */
                 icon: string;
-                /** Icon to be added on the right side */
+                /**
+                 * Icon to be added on the right side
+                 */
                 iconRight: string;
-                /** Dropdown content is shown into a modal on mobile */
+                /**
+                 * Dropdown content is shown into a modal on mobile
+                 */
                 mobileModal: boolean;
-                /** Dropdown content is shown into a modal on desktop */
+                /**
+                 * Dropdown content is shown into a modal on desktop
+                 */
                 desktopModal: boolean;
-                /** Enable mobile native input if mobile agent */
+                /**
+                 * Enable mobile native input if mobile agent
+                 */
                 mobileNative: boolean;
-                /** Mobile breakpoint as `max-width` value */
+                /**
+                 * Mobile breakpoint as `max-width` value
+                 */
                 mobileBreakpoint: string;
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Accessibility seconds select aria label */
+                /**
+                 * Accessibility seconds select aria label
+                 */
                 ariaSelectSecondLabel: string;
-                /** Accessibility minutes select aria label */
+                /**
+                 * Accessibility minutes select aria label
+                 */
                 ariaSelectMinuteLabel: string;
-                /** Accessibility hours select aria label */
+                /**
+                 * Accessibility hours select aria label
+                 */
                 ariaSelectHourLabel: string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when on mobile */
+                /**
+                 * Class of the root element when on mobile
+                 */
                 mobileClass: ClassDefinition;
-                /** Class of the root element component size */
+                /**
+                 * Class of the root element component size
+                 */
                 sizeClass: ClassDefinition;
-                /** Class of the dropdown box element where you choose the date */
+                /**
+                 * Class of the dropdown box element where you choose the date
+                 */
                 boxClass: ClassDefinition;
-                /** Class of the select separator element */
+                /**
+                 * Class of the select separator element
+                 */
                 separatorClass: ClassDefinition;
-                /** Class of the footer element */
+                /**
+                 * Class of the footer element
+                 */
                 footerClass: ClassDefinition;
-                /** Class for the underlaying dropdown component */
+                /**
+                 * Class for the underlaying dropdown component
+                 */
                 dropdownClass: ClassDefinition;
-                /** Class for the HTML input element */
+                /**
+                 * Class for the HTML input element
+                 */
                 inputClass: ClassDefinition;
-                /** Class configuration for the internal input component */
+                /**
+                 * Class configuration for the internal input component
+                 */
                 inputClasses: Record<string, any>;
-                /** Class configuration for the internal dropdown component */
+                /**
+                 * Class configuration for the internal dropdown component
+                 */
                 dropdownClasses: Record<string, any>;
-                /** Class configuration for the internal select component */
+                /**
+                 * Class configuration for the internal select component
+                 */
                 selectClasses: Record<string, any>;
             }>;
         tooltip?: ComponentConfigBase &
             Partial<{
-                /** Color of the tooltip */
+                /**
+                 * Color of the tooltip
+                 */
                 variant: string;
-                /** Position of the Tooltip relative to the trigger */
+                /**
+                 * Position of the Tooltip relative to the trigger
+                 */
                 position: "auto" | "bottom-left" | "bottom-right" | "bottom" | "left" | "right" | "top-left" | "top-right" | "top";
-                /** Tooltip default animation */
+                /**
+                 * Tooltip default animation
+                 */
                 animation: string;
-                /** Tooltip trigger tag name */
+                /**
+                 * Tooltip trigger tag name
+                 */
                 triggerTag: DynamicComponent;
-                /** Tooltip trigger events */
+                /**
+                 * Tooltip trigger events
+                 */
                 triggers: ("focus" | "click" | "contextmenu" | "hover")[];
-                /** Tooltip auto close options (pressing escape, clicking the content or outside) */
+                /**
+                 * Tooltip auto close options (pressing escape, clicking the content or outside)
+                 */
                 closeable: boolean | ("content" | "escape" | "outside")[];
-                /** Append the component to another part of the DOM.
+                /**
+                 * Append the component to another part of the DOM.
 Set `true` to append the component to the body.
-In addition, any CSS selector string or an actual DOM node can be used. */
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
                 teleport: boolean | object | string;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when teleported */
+                /**
+                 * Class of the root element when teleported
+                 */
                 teleportClass: ClassDefinition;
-                /** Class of the trigger element */
+                /**
+                 * Class of the trigger element
+                 */
                 triggerClass: ClassDefinition;
-                /** Class of the content element */
+                /**
+                 * Class of the content element
+                 */
                 contentClass: ClassDefinition;
-                /** Class of the content element with position */
+                /**
+                 * Class of the content element with position
+                 */
                 positionClass: ClassDefinition;
-                /** Class of the content element with variant */
+                /**
+                 * Class of the content element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the content element when is multiline */
+                /**
+                 * Class of the content element when is multiline
+                 */
                 multilineClass: ClassDefinition;
-                /** Class of the content element when is always visible */
+                /**
+                 * Class of the content element when is always visible
+                 */
                 alwaysClass: ClassDefinition;
-                /** Class of the arrow element */
+                /**
+                 * Class of the arrow element
+                 */
                 arrowClass: ClassDefinition;
-                /** Class of the arrow element with position */
+                /**
+                 * Class of the arrow element with position
+                 */
                 arrowPositionClass: ClassDefinition;
-                /** Class of the arrow element with variant */
+                /**
+                 * Class of the arrow element with variant
+                 */
                 arrowVariantClass: ClassDefinition;
             }>;
         upload?: ComponentConfigBase &
             Partial<{
-                /** Color variant of the control */
+                /**
+                 * Color variant of the control
+                 */
                 variant: string;
-                /** Upload will be expanded (full-width) */
+                /**
+                 * Upload will be expanded (full-width)
+                 */
                 expanded: boolean;
-                /** Class of the root element */
+                /**
+                 * Class of the root element
+                 */
                 rootClass: ClassDefinition;
-                /** Class of the root element when expanded */
+                /**
+                 * Class of the root element when expanded
+                 */
                 expandedClass: ClassDefinition;
-                /** Class of the root element when disabled */
+                /**
+                 * Class of the root element when disabled
+                 */
                 disabledClass: ClassDefinition;
-                /** Class of the root element with variant */
+                /**
+                 * Class of the root element with variant
+                 */
                 variantClass: ClassDefinition;
-                /** Class of the dragable container element */
+                /**
+                 * Class of the dragable container element
+                 */
                 draggableClass: ClassDefinition;
-                /** Class of the dragable container element when hovered */
+                /**
+                 * Class of the dragable container element when hovered
+                 */
                 draggableHoveredClass: ClassDefinition;
             }>;
     }
