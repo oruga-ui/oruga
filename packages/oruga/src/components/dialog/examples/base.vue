@@ -18,8 +18,6 @@ const isLoading = ref(false);
             :content="content"
             :subtitle="subtitle"
             :loading="isLoading"
-            confirm-button="Confirm"
-            cancel-button="Cancel"
             closeable />
     </section>
 </template>
