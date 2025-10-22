@@ -116,12 +116,12 @@ function deactivate(newIndex: number): void {
 }
 
 /** Transition after-enter hook. */
-function afterEnter(): void {
+function onTransitionStart(): void {
     isTransitioning.value = true;
 }
 
 /** Transition before-leave hook. */
-function beforeLeave(): void {
+function onTransitionEnd(): void {
     isTransitioning.value = false;
 }
 
@@ -174,8 +174,10 @@ const panelClasses = defineClasses(["tabPanelClass", "o-tabs__panel"]);
         :css="parent.animated"
         :name="transitionName"
         :appear="parent.animateInitially"
-        @after-enter="afterEnter"
-        @before-leave="beforeLeave">
+        @before-enter="onTransitionStart"
+        @after-enter="onTransitionEnd"
+        @before-leave="onTransitionStart"
+        @after-leave="onTransitionEnd">
         <div
             v-show="isActive && visible"
             v-bind="$attrs"
