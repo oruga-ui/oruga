@@ -132,7 +132,7 @@ function afterEnter(): void {
 
 /** Transition before-leave hook. */
 function beforeLeave(): void {
-    isTransitioning.value = true;
+    isTransitioning.value = false;
 }
 
 // #region --- Computed Component Classes ---
@@ -208,9 +208,9 @@ const panelClasses = defineClasses(["stepPanelClass", "o-steps__panel"]);
             :hidden="!isActive"
             :aria-labelledby="`tab-${item.identifier}`"
             aria-roledescription="item">
-            <!-- 
+            <!--
                 @slot Step item content
-                @binding {boolean} active - if item is shown 
+                @binding {boolean} active - if item is shown
             -->
             <slot :active="isActive && visible">
                 <!-- injected component -->
