@@ -3036,6 +3036,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 listClass: ClassDefinition;
                 /**
+                 * Class of the list container when animated
+                 */
+                animatedClass: ClassDefinition;
+                /**
                  * Class of the panel container element
                  */
                 contentClass: ClassDefinition;
