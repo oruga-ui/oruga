@@ -44,9 +44,9 @@ const props = withDefaults(defineProps<NotificationNoticeProps<C>>(), {
 const emits = defineEmits<{
     /**
      * on component close event
-     * @param value {string} - close event method
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string] | CloseEventArgs<C>];
+    close: [...args: Partial<[Event] | CloseEventArgs<C>>];
 }>();
 
 const notificationRef = useTemplateRef("notificationComponent");
@@ -167,7 +167,7 @@ function setAutoClose(): void {
         if (timer) clearTimeout(timer);
         // set new timer
         timer = setTimeout(() => {
-            if (isActive.value) close("timeout");
+            if (isActive.value) close();
         }, props.duration);
     }
 }
@@ -181,14 +181,14 @@ function onMouseEnter(): void {
     clearInterval(timer);
 }
 
-function onMouseLeave(): void {
+function onMouseLeave(event: Event): void {
     if (isPaused)
         // close when mouse leave and is paused before
-        close("mouseleave");
+        close(event);
 }
 
 /** set active to false and emit close event */
-function close(...args: [] | [string] | CloseEventArgs<C>): void {
+function close(...args: Partial<[Event] | CloseEventArgs<C>>): void {
     isActive.value = false;
     if (timer) clearTimeout(timer);
     emits("close", ...args);

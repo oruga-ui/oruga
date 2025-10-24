@@ -21,6 +21,7 @@ import {
     usePreventScrolling,
     getTeleportDefault,
     useTrapFocus,
+    useEventListener,
 } from "@/composables";
 import type { CloseEventArgs } from "../programmatic";
 
@@ -46,8 +47,10 @@ const props = withDefaults(defineProps<ModalProps<C>>(), {
     width: () => getDefault("modal.width", 960),
     animation: () => getDefault("modal.animation", "zoom-out"),
     overlay: () => getDefault("modal.overlay", true),
-    cancelable: () =>
-        getDefault("modal.cancelable", ["escape", "x", "outside"]),
+    cancelable: () => getDefault("modal.cancelable"),
+    closeable: () => getDefault("modal.closeable", true),
+    closeOnOutside: () => getDefault("modal.closeOnOutside", true),
+    closeOnEscape: () => getDefault("modal.closeOnEscape", true),
     trapFocus: () => getDefault("modal.trapFocus", true),
     alert: () => getDefault("modal.alert", false),
     ariaLabel: () => getDefault("modal.ariaLabel"),
@@ -71,10 +74,10 @@ const emits = defineEmits<{
      */
     "update:active": [value: boolean];
     /**
-     * on component close event
-     * @param value {string} - close event method
+     * on active state changes to false
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string] | CloseEventArgs<C>];
+    close: [...args: Partial<[Event] | CloseEventArgs<C>>];
 }>();
 
 const { vTrapFocus } = useTrapFocus();
@@ -92,10 +95,12 @@ const _teleport = computed(() =>
         : { to: props.teleport, disabled: false },
 );
 
-const showX = computed(() =>
-    Array.isArray(props.cancelable)
-        ? props.cancelable.indexOf("x") >= 0
-        : props.cancelable,
+const showX = computed(
+    () =>
+        props.closeable ??
+        (Array.isArray(props.cancelable)
+            ? props.cancelable.indexOf("x") >= 0
+            : props.cancelable),
 );
 
 const customStyle = computed(() =>
@@ -119,48 +124,51 @@ onMounted(() => {
 
 // --- Events Feature ---
 
-if (isClient)
+if (isClient) {
+    // register onKeyup event listener when is active
+    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
+
     if (!props.overlay)
         // register outside click event listener when is active
         useClickOutside(contentRef, onClickedOutside, {
             trigger: isActive,
         });
+}
 
-/** Close fixed sidebar if clicked outside. */
+/** Keyup event listener that is bound to the root element. */
+function onKeyup(event: KeyboardEvent): void {
+    if (!props.closeOnEscape) return;
+    if (!isActive.value) return;
+    if (!checkCanelable("escape")) return;
+    if (event.key === "Escape" || event.key === "Esc") close(event);
+}
+
+/** Click outside event listener. */
 function onClickedOutside(event: Event): void {
+    if (!props.closeOnOutside) return;
     if (!isActive.value || !isAnimated.value) return;
+    if (!checkCanelable("outside")) return;
     if (
         props.overlay ||
         (contentRef.value && !event.composedPath().includes(contentRef.value))
     )
         event.preventDefault();
-    cancel("outside");
+    close(event);
 }
 
-/** Escape key press event bound to the component root. */
-function onEscapePress(): void {
-    if (!isActive.value) return;
-    cancel("escape");
-}
-
-/**
- * Check if method is cancelable.
- * Call close() with action `cancel`.
- * @param method Cancel method
- */
-function cancel(method: string): void {
-    // check if method is cancelable
-    if (
+/** check if method is cancelable (for deprecreated check) */
+function checkCanelable(
+    method: Exclude<typeof props.cancelable, boolean>[number],
+): boolean {
+    return (
         (typeof props.cancelable === "boolean" && !props.cancelable) ||
         !props.cancelable ||
         (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
-    )
-        return;
-    close(method);
+    );
 }
 
 /** set active to false and emit close event */
-function close(...args: [] | [string] | CloseEventArgs<C>): void {
+function close(...args: Partial<[Event] | CloseEventArgs<C>>): void {
     isActive.value = false;
     emits("close", ...args);
 }
@@ -223,8 +231,7 @@ defineExpose({ close });
                 :tabindex="-1"
                 :role="alert ? 'alertdialog' : 'dialog'"
                 :aria-label="ariaLabel"
-                :aria-modal="isActive"
-                @keyup.escape="onEscapePress">
+                :aria-modal="isActive">
                 <div
                     v-if="overlay"
                     :class="overlayClasses"
@@ -259,7 +266,7 @@ defineExpose({ close });
                         :size="closeIconSize"
                         :label="ariaCloseLabel"
                         :classes="closeClasses"
-                        @click="cancel('x')">
+                        @click="checkCanelable('x') && close($event)">
                         <!--
                             @slot Override the close icon
                         -->

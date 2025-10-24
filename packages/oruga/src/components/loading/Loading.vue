@@ -32,6 +32,8 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     label: undefined,
     animation: () => getDefault("loading.animation", "fade"),
     cancelable: false,
+    closeOnOutside: true,
+    closeOnEscape: true,
     icon: () => getDefault("loading.icon", "loading"),
     iconPack: () => getDefault("loading.iconPack"),
     iconSpin: () => getDefault("loading.iconSpin", true),
@@ -51,10 +53,10 @@ const emits = defineEmits<{
      */
     "update:fullPage": [value: boolean];
     /**
-     * on component close event
-     * @param value {string} - close event method
+     * on active state changes to false
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string] | unknown[]];
+    close: [event?: Event];
 }>();
 
 const rootRef = useTemplateRef("rootElement");
@@ -73,34 +75,36 @@ watch(isActive, (value) => {
 
 if (isClient) {
     // register onKeyPress event when is active
-    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
 }
 
-/** Keypress event that is bound to the document. */
-function onKeyPress(event: KeyboardEvent): void {
+/** Keyup event listener that is bound to the root element. */
+function onKeyup(event: KeyboardEvent): void {
     if (!isActive.value) return;
-    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
+    if (!checkCanelable("escape")) return;
+    if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
-/**
- * Check if method is cancelable.
- * Call close() with action `cancel`.
- * @param method Cancel method
- */
-function cancel(method: string): void {
-    // check if method is cancelable
-    if (
+/** Click outside event listener, when clicked on the overlay. */
+function clickedOutside(event: Event): void {
+    if (!props.closeOnOutside) return;
+    if (!checkCanelable("outside")) return;
+    close(event);
+}
+
+/** check if method is cancelable (for deprecreated check) */
+function checkCanelable(method: string): boolean {
+    return (
+        (typeof props.cancelable === "boolean" && !props.cancelable) ||
         !props.cancelable ||
         (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
-    )
-        return;
-    close(method);
+    );
 }
 
 /** set active to false and emit close event */
-function close(...args: [] | [string]): void {
+function close(event?: Event): void {
     isActive.value = false;
-    emits("close", ...args);
+    emits("close", event);
 }
 
 // --- Computed Component Classes ---
@@ -134,7 +138,7 @@ defineExpose({ close });
             <div
                 :class="overlayClasses"
                 :tabindex="-1"
-                @click="cancel('outside')" />
+                @click="clickedOutside" />
             <!--
                 @slot Override icon and label
                 @binding {close} close - function to close the component

@@ -48,9 +48,9 @@ const emits = defineEmits<{
     "update:active": [value: boolean];
     /**
      * on component close event
-     * @param value {string} - close event method
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string]];
+    close: [event?: Event];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: true });
@@ -74,9 +74,9 @@ const computedIcon = computed(() => {
 });
 
 /** set active to false and emit close event */
-function close(...args: [] | [string]): void {
+function close(event?: Event): void {
     isActive.value = false;
-    emits("close", ...args);
+    emits("close", event);
 }
 
 // --- Animation Feature ---
@@ -150,7 +150,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 :size="closeIconSize"
                 :label="ariaCloseLabel"
                 :classes="closeClasses"
-                @click="close('x')">
+                @click="close($event)">
                 <!--
                     @slot Override the close icon
                 -->

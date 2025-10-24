@@ -5,7 +5,6 @@ import {
     type ComponentInternalInstance,
     type EmitsToProps,
     type MaybeRefOrGetter,
-    type VNode,
     type VNodeTypes,
 } from "vue";
 
@@ -36,17 +35,17 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
      */
     appId?: string;
 } & Omit<ProgrammaticComponentProps<C>, "component"> & // component props
-    EmitsToProps<Omit<ProgrammaticComponentEmits<C>, "destroy">>; // component emit props
+    EmitsToProps<Pick<Required<ProgrammaticComponentEmits<C>>, "close">>; // component emit props
 
 /** public options interface for programmatically called components */
 export type ProgrammaticComponentOptions<C extends VNodeTypes> = EmitsToProps<
-    Pick<ProgrammaticComponentEmits<C>, "close">
+    Pick<Required<ProgrammaticComponentEmits<C>>, "close">
 > &
     // make the type extendable
     Record<string, any>;
 
 /** useProgrammatic composable `_create` function return value */
-export type ProgrammaticExpose<C extends VNodeTypes = VNode> =
+export type ProgrammaticExpose<C extends VNodeTypes = VNodeTypes> =
     ProgrammaticComponentExpose<C>;
 
 export abstract class ProgrammaticFactory {
@@ -68,7 +67,7 @@ export abstract class ProgrammaticFactory {
         this._registry.walk((entry) => entry.exposed?.close(...args));
     }
 
-    abstract open(...args: any[]): ProgrammaticExpose;
+    abstract open(...args: any[]): ReturnType<typeof this._create>;
 
     /**
      * Create a new programmatic component instance.

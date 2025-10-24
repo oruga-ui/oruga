@@ -50,7 +50,7 @@ export type TaginputProps<T> = {
     createItem?: (value: T | string) => T;
     /** Makes the component check if list reached scroll start or end and emit scroll events */
     checkScroll?: boolean;
-    /** Add close/delete button to the item */
+    /** Add close button to close the item */
     closeable?: boolean;
     /**
      * Icon pack to use

@@ -8,10 +8,7 @@ import {
 
 export type MaybeElement =
     | Element
-    | Document
-    | Window
     | HTMLElement
-    | SVGElement
     | Component
     | ComponentPublicInstance
     | undefined
@@ -19,7 +16,7 @@ export type MaybeElement =
 
 export type UnRefElementReturn<T extends MaybeElement = MaybeElement> =
     T extends ComponentPublicInstance
-        ? Exclude<MaybeElement, ComponentPublicInstance>
+        ? Exclude<MaybeElement, ComponentPublicInstance | Component>
         : T extends Component
           ? HTMLElement
           : T | undefined;
