@@ -1,8 +1,9 @@
-import { type Component, type MaybeRefOrGetter } from "vue";
+import { type Component } from "vue";
 import {
     ProgrammaticFactory,
     type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
+    type ProgrammaticTarget,
 } from "../programmatic";
 
 import Modal from "./Modal.vue";
@@ -15,7 +16,6 @@ declare module "../../index" {
     }
 }
 
-/** useModalProgrammatic composable options */
 export type ModalProgrammaticOptions<C extends Component> = Readonly<
     ModalProps<C>
 > &
@@ -30,7 +30,7 @@ export class ModalProgrammaticFactory extends ProgrammaticFactory {
      */
     open<C extends Component>(
         options: string | ModalProgrammaticOptions<C>,
-        target?: MaybeRefOrGetter<string | HTMLElement | null>,
+        target?: ProgrammaticTarget,
     ): ProgrammaticExpose<typeof Modal<C>> {
         const _options: ModalProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
