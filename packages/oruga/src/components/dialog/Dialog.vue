@@ -205,7 +205,12 @@ const cancelButtonClasses = defineClasses([
 
         <!-- Body -->
         <div
-            v-if="$slots['default'] || $slots['content'] || content"
+            v-if="
+                $slots['default'] ||
+                $slots['content'] ||
+                $props.component ||
+                content
+            "
             :class="bodyClasses">
             <!--
                 @slot Override the default dialog body
