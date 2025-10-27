@@ -69,7 +69,7 @@ const emits = defineEmits<{
      * on active state changes to false
      * @param event {Event} - native event
      */
-    close: [...args: Partial<[Event] | CloseEventArgs<C>>];
+    close: [...args: [] | [Event] | CloseEventArgs<C>];
 }>();
 
 const { vTrapFocus } = useTrapFocus();
@@ -135,16 +135,16 @@ if (isClient) {
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
     if (!props.closeOnEscape) return;
-    if (!isActive.value) return;
     if (!checkCanelable("escape")) return;
+    if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener. */
 function clickedOutside(event: Event): void {
     if (!props.closeOnOutside) return;
-    if (props.inline || !isActive.value || !isAnimated.value) return;
     if (!checkCanelable("outside")) return;
+    if (props.inline || !isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
         (contentRef.value && !event.composedPath().includes(contentRef.value))
@@ -165,7 +165,7 @@ function checkCanelable(
 }
 
 /** set active to false and emit close event */
-function close(...args: Partial<[Event] | CloseEventArgs<C>>): void {
+function close(...args: [] | [Event] | CloseEventArgs<C>): void {
     isActive.value = false;
     emits("close", ...args);
 }

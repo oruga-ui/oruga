@@ -50,7 +50,7 @@ const emits = defineEmits<{
      * on component close event
      * @param event {Event} - native event
      */
-    close: [event?: Event];
+    close: [...args: [] | [Event]];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: true });
@@ -74,12 +74,12 @@ const computedIcon = computed(() => {
 });
 
 /** set active to false and emit close event */
-function close(event?: Event): void {
+function close(...args: [] | [Event]): void {
     isActive.value = false;
-    emits("close", event);
+    emits("close", ...args);
 }
 
-// --- Animation Feature ---
+// #region --- Animation Feature ---
 
 const isAnimated = ref(props.active);
 
@@ -93,7 +93,9 @@ function beforeLeave(): void {
     isAnimated.value = false;
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Animation Feature ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-notification"],
@@ -130,6 +132,8 @@ const contentClasses = defineClasses([
 ]);
 
 const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>

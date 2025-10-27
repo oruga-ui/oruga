@@ -104,16 +104,16 @@ if (isClient) {
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
     if (!props.closeOnEscape) return;
-    if (!isActive.value) return;
     if (!checkCanelable("escape")) return;
+    if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Close tooltip if clicked outside. */
 function onClickedOutside(event: Event): void {
     if (!props.closeOnOutside) return;
-    if (!isActive.value || props.always) return;
     if (!checkCanelable("outside")) return;
+    if (!isActive.value || props.always) return;
     close(event);
 }
 

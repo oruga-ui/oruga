@@ -71,7 +71,7 @@ watch(isActive, (value) => {
     if (isFullPage.value) toggleScroll(value);
 });
 
-// --- Events Feature ---
+// #region --- Events Feature ---
 
 if (isClient) {
     // register onKeyPress event when is active
@@ -80,8 +80,9 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!isActive.value) return;
+    if (!props.closeOnEscape) return;
     if (!checkCanelable("escape")) return;
+    if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
@@ -107,7 +108,9 @@ function close(event?: Event): void {
     emits("close", event);
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Events Feature ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-loading"],
@@ -120,10 +123,14 @@ const iconClasses = defineClasses(["iconClass", "o-loading__icon"]);
 
 const labelClasses = defineClasses(["labelClass", "o-loading__label"]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>

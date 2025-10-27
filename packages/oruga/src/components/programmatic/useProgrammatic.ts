@@ -67,7 +67,7 @@ export abstract class ProgrammaticFactory {
         this._registry.walk((entry) => entry.exposed?.close(...args));
     }
 
-    abstract open(...args: any[]): ReturnType<typeof this._create>;
+    abstract open(...args: any[]): ProgrammaticExpose;
 
     /**
      * Create a new programmatic component instance.

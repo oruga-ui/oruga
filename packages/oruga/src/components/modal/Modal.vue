@@ -77,7 +77,7 @@ const emits = defineEmits<{
      * on active state changes to false
      * @param event {Event} - native event
      */
-    close: [...args: Partial<[Event] | CloseEventArgs<C>>];
+    close: [...args: [] | [Event] | CloseEventArgs<C>];
 }>();
 
 const { vTrapFocus } = useTrapFocus();
@@ -93,14 +93,6 @@ const _teleport = computed(() =>
     typeof props.teleport === "boolean"
         ? { to: getTeleportDefault(), disabled: !props.teleport }
         : { to: props.teleport, disabled: false },
-);
-
-const showX = computed(
-    () =>
-        props.closeable ??
-        (Array.isArray(props.cancelable)
-            ? props.cancelable.indexOf("x") >= 0
-            : props.cancelable),
 );
 
 const customStyle = computed(() =>
@@ -122,7 +114,15 @@ onMounted(() => {
     if (isActive.value && props.overlay) toggleScroll(isActive.value);
 });
 
-// --- Events Feature ---
+// #region --- Events Feature ---
+
+const showX = computed(
+    () =>
+        props.closeable ??
+        (Array.isArray(props.cancelable)
+            ? props.cancelable.indexOf("x") >= 0
+            : props.cancelable),
+);
 
 if (isClient) {
     // register onKeyup event listener when is active
@@ -138,16 +138,16 @@ if (isClient) {
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
     if (!props.closeOnEscape) return;
-    if (!isActive.value) return;
     if (!checkCanelable("escape")) return;
+    if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener. */
 function onClickedOutside(event: Event): void {
     if (!props.closeOnOutside) return;
-    if (!isActive.value || !isAnimated.value) return;
     if (!checkCanelable("outside")) return;
+    if (!isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
         (contentRef.value && !event.composedPath().includes(contentRef.value))
@@ -168,12 +168,14 @@ function checkCanelable(
 }
 
 /** set active to false and emit close event */
-function close(...args: Partial<[Event] | CloseEventArgs<C>>): void {
+function close(...args: [] | [Event] | CloseEventArgs<C>): void {
     isActive.value = false;
     emits("close", ...args);
 }
 
-// --- Animation Feature ---
+// #endregion --- Events Feature ---
+
+// #region --- Animation Feature ---
 
 const isAnimated = ref(props.active);
 
@@ -187,7 +189,9 @@ function beforeLeave(): void {
     isAnimated.value = false;
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Animation Feature ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-modal"],
@@ -209,10 +213,14 @@ const contentClasses = defineClasses(
 
 const closeClasses = defineClasses(["closeClass", "o-modal__close"]);
 
-// --- Expose Public Functionalities ---
+// #endregion --- Computed Component Classes ---
+
+// #region --- Expose Public Functionalities ---
 
 /** expose functionalities for programmatic usage */
 defineExpose({ close });
+
+// #endregion --- Expose Public Functionalities ---
 </script>
 
 <template>

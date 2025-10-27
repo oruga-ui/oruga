@@ -35,9 +35,6 @@ export type CloseEventArgs<T extends VNodeTypes> =
     NonNullable<ComponentProps<T>["onClose"]> extends (...args: any[]) => any
         ? Parameters<ComponentProps<T>["onClose"]>
         : never[];
-// Parameters<ComponentProps<T>["onClose"]> extends never
-//     ? unknown[]
-//     : Parameters<ComponentProps<T>["onClose"]>;
 
 export type ProgrammaticComponentEmits<C extends VNodeTypes> = {
     /**
