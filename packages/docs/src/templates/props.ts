@@ -102,8 +102,8 @@ export function renderer(
             const deprecated = mdclean(
                 String((prop.tags.deprecated[0] as ParamTag).description),
             );
-            name = `<s> ${name} </s>`;
-            description = `${description} - ${deprecated}`;
+            name = `<s>${name}</s>`;
+            description = `<div>Deprecated: ${deprecated}</div><hr /><div><s>${description}</s></div>`;
         }
 
         // extract special type defintions
