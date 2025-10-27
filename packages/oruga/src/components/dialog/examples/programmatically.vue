@@ -4,10 +4,26 @@ import { useOruga } from "@oruga-ui/oruga-next";
 
 const oruga = useOruga();
 
-function openDialog(): void {
+function openConfirmDialog(): void {
     oruga.dialog.open({
-        component: ModalForm,
-        cancelable: false,
+        title: "Save Dialog",
+        content: "Are you sure you want to save this?",
+        confirmButton: "Save",
+        confirmVariant: "success",
+        cancelButton: "Cancel",
+    });
+}
+
+function openImageDialog(): void {
+    // here we use a render function to create an dynamic inline component (https://vuejs.org/guide/extras/render-function)
+    const vnode = h("p", { style: { "text-align": "center" } }, [
+        "This is the Oruga Logo!",
+    ]);
+
+    oruga.dialog.open({
+        component: vnode,
+        imageAlt: "Oruga logo",
+        imageSrc: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4",
     });
 }
 </script>
@@ -16,10 +32,16 @@ function openDialog(): void {
     <section class="odocs-spaced">
         <p>
             <o-button
-                label="Open Dialog"
+                label="Open Confirm Dialog"
                 size="medium"
                 variant="primary"
-                @click.prevent="openDialog()" />
+                @click.prevent="openConfirmDialog()" />
+
+            <o-button
+                label="Open Oruga Image"
+                size="medium"
+                variant="primary"
+                @click.prevent="openImageDialog()" />
         </p>
     </section>
 </template>
