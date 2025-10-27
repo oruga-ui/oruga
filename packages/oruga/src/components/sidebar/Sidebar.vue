@@ -124,7 +124,7 @@ onMounted(() => {
 // --- Events Feature ---
 
 if (isClient) {
-    // register onKeyPress event listener when is active
+    // register onKeyup event listener when is active
     useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
 
     if (!props.overlay)

@@ -74,7 +74,7 @@ watch(isActive, (value) => {
 // #region --- Events Feature ---
 
 if (isClient) {
-    // register onKeyPress event when is active
+    // register onKeyup event when is active
     useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
 }
 
