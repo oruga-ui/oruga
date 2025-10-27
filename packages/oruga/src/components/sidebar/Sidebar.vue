@@ -19,9 +19,9 @@ import {
     useTrapFocus,
     getTeleportDefault,
 } from "@/composables";
-import type { CloseEventArgs } from "../programmatic";
 
 import type { SidebarProps } from "./props";
+import type { CloseEventArgs } from "../programmatic";
 
 /**
  * A sidebar to use as overlay.
@@ -47,7 +47,9 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     mobile: () => getDefault("sidebar.mobile"),
     expandOnHover: () => getDefault("sidebar.expandOnHover", false),
     animation: () => getDefault("sidebar.animation"),
-    cancelable: () => getDefault("sidebar.cancelable", ["escape", "outside"]),
+    cancelable: () => getDefault("sidebar.cancelable"),
+    closeOnOutside: () => getDefault("sidebar.closeOnOutside", true),
+    closeOnEscape: () => getDefault("sidebar.closeOnEscape", true),
     trapFocus: () => getDefault("sidebar.trapFocus", true),
     clipScroll: () => getDefault("sidebar.clipScroll", false),
     mobileBreakpoint: () => getDefault("sidebar.mobileBreakpoint"),
@@ -64,10 +66,10 @@ const emits = defineEmits<{
      */
     "update:active": [value: boolean];
     /**
-     * on component close event
-     * @param value {string} - close event method
+     * on active state changes to false
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string] | CloseEventArgs<C>];
+    close: [...args: [] | [Event] | CloseEventArgs<C>];
 }>();
 
 const { vTrapFocus } = useTrapFocus();
@@ -122,55 +124,55 @@ onMounted(() => {
 // --- Events Feature ---
 
 if (isClient) {
-    // register onKeyPress event listener when is active
-    useEventListener(rootRef, "keyup", onKeyPress, { trigger: isActive });
+    // register onKeyup event listener when is active
+    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
 
     if (!props.overlay)
         // register outside click event listener when is active
         useClickOutside(contentRef, clickedOutside, { trigger: isActive });
 }
 
-/** Keypress event that is bound to the document. */
-function onKeyPress(event: KeyboardEvent): void {
+/** Keyup event listener that is bound to the root element. */
+function onKeyup(event: KeyboardEvent): void {
+    if (!props.closeOnEscape) return;
+    if (!checkCanelable("escape")) return;
     if (!isActive.value) return;
-    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
+    if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
-/** Close fixed sidebar if clicked outside. */
+/** Click outside event listener. */
 function clickedOutside(event: Event): void {
+    if (!props.closeOnOutside) return;
+    if (!checkCanelable("outside")) return;
     if (props.inline || !isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
         (contentRef.value && !event.composedPath().includes(contentRef.value))
     )
         event.preventDefault();
-    cancel("outside");
+    close(event);
 }
 
-/**
- * Check if method is cancelable.
- * Call close() with action `cancel`.
- * @param method Cancel method
- */
-function cancel(method: string): void {
-    // check if method is cancelable
-    if (
+/** check if method is cancelable (for deprecreated check) */
+function checkCanelable(
+    method: Exclude<typeof props.cancelable, boolean>[number],
+): boolean {
+    return (
         (typeof props.cancelable === "boolean" && !props.cancelable) ||
         !props.cancelable ||
         (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
-    )
-        return;
-    close(method);
+    );
 }
 
 /** set active to false and emit close event */
-function close(...args: [] | [string] | CloseEventArgs<C>): void {
+function close(...args: [] | [Event] | CloseEventArgs<C>): void {
     isActive.value = false;
     emits("close", ...args);
 }
 
 // --- Animation Feature ---
 
+// TODO: check this
 const isAnimated = ref(props.active);
 
 /** Transition after-enter hook */

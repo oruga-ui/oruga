@@ -1540,7 +1540,7 @@ See icon library documentation for custom classes.
                  */
                 animation: string;
                 /**
-                 * Icon name to show, unnecessary when default slot is used.
+                 * Icon name to show, unnecessary when default slot is used
                  */
                 icon: string;
                 /**
@@ -1677,13 +1677,26 @@ Use menu only in situations where your dropdown is related to a navigation menu.
                  */
                 animation: string;
                 /**
-                 * Show an overlay
+                 * Show an overlay background
                  */
                 overlay: boolean;
                 /**
-                 * Is Modal cancleable by clicking 'X', pressing escape or clicking outside
+                 * Is Modal cancelable by clicking 'X', pressing escape or clicking outside
+                 * @deprecated use `closeable`, `closeOnOutside` and `closeOnEscape`
                  */
                 cancelable: boolean | string[];
+                /**
+                 * Adds close button to the header
+                 */
+                closeable: boolean;
+                /**
+                 * Close when clicked outside of the panel
+                 */
+                closeOnOutside: boolean;
+                /**
+                 * Close when pressing escape key
+                 */
+                closeOnEscape: boolean;
                 /**
                  * Set `true` to remove the body scrollbar.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
@@ -2131,7 +2144,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
         sidebar?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Show an overlay like modal
+                 * Show an overlay background
                  */
                 overlay: boolean;
                 /**
@@ -2163,9 +2176,18 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 animation: string;
                 /**
-                 * Is Sidebar cancleable by pressing escape or clicking outside.
+                 * Is Sidebar cancelable by pressing escape or clicking outside.
+                 * @deprecated use `closeOnOutside` and `closeOnEscape`
                  */
                 cancelable: boolean | string[];
+                /**
+                 * Close when clicked outside of the panel
+                 */
+                closeOnOutside: boolean;
+                /**
+                 * Close when pressing escape key
+                 */
+                closeOnEscape: boolean;
                 /**
                  * Set `true` to remove the body scrollbar.
 When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,
@@ -3162,7 +3184,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 checkScroll: boolean;
                 /**
-                 * Add close/delete button to the item
+                 * Add close button to close the item
                  */
                 closeable: boolean;
                 /**
@@ -3373,8 +3395,17 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 triggers: ("focus" | "click" | "contextmenu" | "hover")[];
                 /**
                  * Tooltip auto close options (pressing escape, clicking the content or outside)
+                 * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
                  */
                 closeable: boolean | ("content" | "escape" | "outside")[];
+                /**
+                 * Close when clicked outside of the panel
+                 */
+                closeOnOutside: boolean;
+                /**
+                 * Close when pressing escape key
+                 */
+                closeOnEscape: boolean;
                 /**
                  * Append the component to another part of the DOM.
 Set `true` to append the component to the body.

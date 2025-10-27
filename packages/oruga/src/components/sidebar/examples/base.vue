@@ -37,7 +37,7 @@ const position = ref<"left" | "top" | "bottom" | "right">("left");
                 v-if="fullwidth || fullheight || !overlay"
                 icon-left="times"
                 label="Close"
-                @click="close()" />
+                @click="close($event)" />
             <img
                 width="128"
                 src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"

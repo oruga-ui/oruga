@@ -46,8 +46,13 @@ export type TooltipProps = {
     /**
      * Tooltip auto close options (pressing escape, clicking the content or outside)
      * @values true, false, content, outside, escape
+     * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead
      */
     closeable?: Array<"content" | "outside" | "escape"> | boolean;
+    /** Close when clicked outside of the panel */
+    closeOnOutside?: boolean;
+    /** Close when pressing escape key */
+    closeOnEscape?: boolean;
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.

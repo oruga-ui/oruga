@@ -9,7 +9,7 @@ defineProps({
 });
 
 defineEmits<{
-    close: [value: { action: string; method?: string }];
+    close: [value: Event];
 }>();
 </script>
 
@@ -22,9 +22,7 @@ defineEmits<{
                     clickable
                     native-type="button"
                     icon="times"
-                    @click="
-                        $emit('close', { action: 'cancel', method: 'x' })
-                    " />
+                    @click="$emit('close', $event)" />
             </header>
             <section class="modal-card-body">
                 <o-field label="Email">
@@ -52,9 +50,7 @@ defineEmits<{
                 <o-button
                     label="Close"
                     type="button"
-                    @click="
-                        $emit('close', { action: 'cancel', method: 'close' })
-                    " />
+                    @click="$emit('close', $event)" />
                 <o-button label="Login" variant="primary" />
             </footer>
         </div>

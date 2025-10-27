@@ -19,14 +19,14 @@ export type TagProps = {
     badge?: boolean;
     /** Enable rounded style */
     rounded?: boolean;
-    /** Adds an icon to the left of the tag. */
+    /** Adds an icon to the left of the tag */
     icon?: string;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
      */
     iconPack?: string;
-    /** Add close/delete button to the item */
+    /** Add close button to close the item */
     closeable?: boolean;
     /** Close icon name */
     closeIcon?: string;
