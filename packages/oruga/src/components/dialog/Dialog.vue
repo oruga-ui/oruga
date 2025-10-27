@@ -1,5 +1,11 @@
-<script setup lang="ts">
-import { computed, nextTick, onMounted, useTemplateRef } from "vue";
+<script setup lang="ts" generic="C extends Component">
+import {
+    computed,
+    nextTick,
+    onMounted,
+    useTemplateRef,
+    type Component,
+} from "vue";
 
 import OLoading from "@/components/loading/Loading.vue";
 import OButton from "@/components/button/Button.vue";
@@ -21,7 +27,7 @@ defineOptions({
     configField: "dialog",
 });
 
-const props = withDefaults(defineProps<DialogProps>(), {
+const props = withDefaults(defineProps<DialogProps<C>>(), {
     override: undefined,
     title: undefined,
     subtitle: undefined,
@@ -199,7 +205,12 @@ const cancelButtonClasses = defineClasses([
 
         <!-- Body -->
         <div
-            v-if="$slots['default'] || $slots['content'] || content"
+            v-if="
+                $slots['default'] ||
+                $slots['content'] ||
+                $props.component ||
+                content
+            "
             :class="bodyClasses">
             <!--
                 @slot Override the default dialog body
