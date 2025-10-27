@@ -135,42 +135,59 @@ function inspectClass(
                     :class="{
                         inspector__highlight: index === selectedElementIndex,
                     }">
-                    <td v-if="!data.subitem">{{ data.class }}</td>
+                    <td v-if="!data.subitem">
+                        <s v-if="data.deprecated">{{ data.class }}</s>
+                        <span v-else>{{ data.class }}</span>
+                    </td>
                     <td v-else>
                         ▷
                         <a :href="`#${data.subitem}-component`">
-                            {{ data.class }}
+                            <s v-if="data.deprecated">{{ data.class }}</s>
+                            <span v-else>{{ data.class }}</span>
                         </a>
                     </td>
                     <td>
-                        <span>{{ addDotToTheEnd(data.description) }}</span>
-                        <span v-if="data.relatedComponent">
+                        <template v-if="data.deprecated">
+                            <div>
+                                <b>deprecated</b>
+                                <template
+                                    v-if="typeof data.deprecated === 'string'">
+                                    -
+                                    {{ data.deprecated }}
+                                </template>
+                            </div>
+                            <div>
+                                <s> {{ addDotToTheEnd(data.description) }} </s>
+                            </div>
+                        </template>
+                        <div v-else>
+                            {{ addDotToTheEnd(data.description) }}
+                        </div>
+                        <div v-if="data.relatedComponent">
                             More details
                             <a
                                 target="_blank"
-                                :href="`/components/${data.relatedComponent}.html#class-props`">
+                                :href="`/components/${data.relatedComponent}.html#class-inspector`">
                                 here.
                             </a>
-                        </span>
-                        <span v-if="data.info">
+                        </div>
+                        <div v-if="data.info">
                             <br />👉 <i><span v-html="data.info"></span></i>
-                        </span>
+                        </div>
                     </td>
                     <td>
-                        <span v-if="data.properties">
-                            <code
-                                style="white-space: nowrap; padding: 0"
-                                v-html="setByProperties(data.properties)">
-                            </code>
-                        </span>
+                        <code
+                            v-if="data.properties"
+                            style="white-space: nowrap; padding: 0"
+                            v-html="setByProperties(data.properties)">
+                        </code>
                     </td>
                     <td>
-                        <span v-if="data.suffixes">
-                            <code
-                                style="white-space: nowrap; padding: 0"
-                                v-html="setByProperties(data.suffixes)">
-                            </code>
-                        </span>
+                        <code
+                            v-if="data.suffixes"
+                            style="white-space: nowrap; padding: 0"
+                            v-html="setByProperties(data.suffixes)">
+                        </code>
                     </td>
                     <td>
                         <VPButton
