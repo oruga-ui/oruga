@@ -5,7 +5,6 @@ import {
     type ComponentInternalInstance,
     type EmitsToProps,
     type MaybeRefOrGetter,
-    type VNode,
     type VNodeTypes,
 } from "vue";
 
@@ -36,20 +35,20 @@ export type ProgrammaticOptions<C extends VNodeTypes> = {
      */
     appId?: string;
 } & Omit<ProgrammaticComponentProps<C>, "component"> & // component props
-    EmitsToProps<Omit<ProgrammaticComponentEmits<C>, "destroy">>; // component emit props
+    EmitsToProps<Pick<Required<ProgrammaticComponentEmits<C>>, "close">>; // component emit props
 
 /** public options interface for programmatically called components */
 export type ProgrammaticComponentOptions<C extends VNodeTypes> = EmitsToProps<
-    Pick<ProgrammaticComponentEmits<C>, "close">
+    Pick<Required<ProgrammaticComponentEmits<C>>, "close">
 > &
     // make the type extendable
     Record<string, any>;
 
 /** programmatic component public interface */
-export type ProgrammaticExpose<C extends VNodeTypes = VNode> =
+export type ProgrammaticExpose<C extends VNodeTypes = VNodeTypes> =
     ProgrammaticComponentExpose<C>;
 
-/** target to render the programmatic component into  */
+/** target container to render the programmatic component into  */
 export type ProgrammaticTarget = MaybeRefOrGetter<string | HTMLElement | null>;
 
 export abstract class ProgrammaticFactory {

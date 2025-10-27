@@ -15,7 +15,6 @@ declare module "../../index" {
     }
 }
 
-/** useLoadingProgrammatic composable options */
 export type LoadingProgrammaticOptions = Readonly<LoadingProps> &
     ProgrammaticComponentOptions<typeof Loading>;
 
