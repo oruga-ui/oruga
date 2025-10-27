@@ -276,7 +276,15 @@ const rootClasses = defineClasses(
     ],
 );
 
-const tablistClasses = defineClasses(["listClass", "o-tabs__list"]);
+const tablistClasses = defineClasses(
+    ["listClass", "o-tabs__list"],
+    [
+        "animatedClass",
+        "o-tabs__list--animated",
+        null,
+        computed(() => props.animated),
+    ],
+);
 
 const contentClasses = defineClasses(
     ["contentClass", "o-tabs__content"],

@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<PaginationProps>(), {
     size: () => getDefault("pagination.size"),
     simple: () => getDefault("pagination.simple", false),
     rounded: () => getDefault("pagination.rounded", false),
-    order: () => getDefault("pagination.order", "right"),
+    order: () => getDefault("pagination.order"),
     position: () => getDefault("pagination.position", "right"),
     buttonTag: () => getDefault("pagination.buttonTag", PlainButton),
     iconPack: () => getDefault("pagination.iconPack"),
@@ -250,7 +250,7 @@ const rootClasses = defineClasses(
         "positionClass",
         "o-pagination--",
         computed(() => props.position),
-        computed(() => !!props.position),
+        computed(() => !props.order && !!props.position),
     ],
     [
         "sizeClass",

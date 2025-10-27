@@ -2,7 +2,7 @@
 
 exports[`OTabs tests > OTab with OTabItem integration tests > test render correctly 1`] = `
 "<div data-oruga="tabs" class="o-tabs o-tabs--default">
-  <div class="o-tabs__list" role="tablist" aria-orientation="horizontal">
+  <div class="o-tabs__list o-tabs__list--animated" role="tablist" aria-orientation="horizontal">
     <!--
                 @slot Additional slot before tabs
             --><button type="button" id="tab-1" class="o-tabs__tab o-tabs__tab--active" role="tab" tabindex="0" aria-current="true" aria-controls="tabpanel-1" aria-selected="true">
@@ -18,9 +18,9 @@ exports[`OTabs tests > OTab with OTabItem integration tests > test render correc
             -->
     <transition-stub appear="false" persisted="true" css="true">
       <div id="tabpanel-1" data-oruga="tabs-item" data-id="tabs-1" class="o-tabs__panel" role="tabpanel" aria-labelledby="tab-1" aria-roledescription="item">
-        <!-- 
+        <!--
                 @slot Override tab panel content
-                @binding {boolean} active - if item is shown 
+                @binding {boolean} active - if item is shown
             -->
         <!-- injected component -->
         <!-- default content prop -->ABC
@@ -44,7 +44,7 @@ exports[`OTabs tests > OTabItem > render correctly 1`] = `
 
 exports[`OTabs tests > render correctly 1`] = `
 "<div data-oruga="tabs" class="o-tabs o-tabs--default">
-  <div class="o-tabs__list" role="tablist" aria-orientation="horizontal">
+  <div class="o-tabs__list o-tabs__list--animated" role="tablist" aria-orientation="horizontal">
     <!--
                 @slot Additional slot before tabs
             -->

@@ -2,6 +2,9 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Confirm from "./confirm.vue";
+import ConfirmCode from "./confirm.vue?raw";
+
 import Image from "./image.vue";
 import ImageCode from "./image.vue?raw";
 
@@ -23,11 +26,20 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
+    <h3 id="confirm">Confirm Check</h3>
+    <p>
+        The component can be used to require decisions or show critical
+        information. Using the <code>confirmButton</code> and
+        <code>cancelButton</code> properties confirm checks can be made.
+    </p>
+    <ExampleViewer :component="Confirm" :code="ConfirmCode" />
+
     <h3 id="slots">Slots</h3>
     <p>
         The component provides <code>header</code>, <code>title</code>,
-        <code>subtitle</code>, <code>content</code> and <code>footer</code> as
-        named slot templates to customise content.
+        <code>subtitle</code>, <code>content</code>, <code>footer</code> as well
+        as <code>confirmButton</code> and <code>cancelButton</code> named slots
+        templates to customise HTML content.
     </p>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 

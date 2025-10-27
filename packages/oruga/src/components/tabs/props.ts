@@ -78,6 +78,8 @@ export type TabsClasses = Partial<{
     multilineClass: ComponentClass;
     /** Class of the list container element */
     listClass: ComponentClass;
+    /** Class of the list container when animated */
+    animatedClass: ComponentClass;
     /** Class of the panel container element */
     contentClass: ComponentClass;
     /** Class of the panel container element when transitioning */
