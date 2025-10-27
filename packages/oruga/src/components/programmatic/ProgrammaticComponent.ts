@@ -27,14 +27,14 @@ export type ProgrammaticComponentProps<C extends VNodeTypes> = {
      * @see https://vuejs.org/api/render-function.html#h
      */
     props?: ComponentProps<C> | { container?: HTMLElement };
-    /** Programmatic component registry instance */
+    /** Programmatic component registry instance. */
     registry?: InstanceRegistry<ComponentInternalInstance>;
 };
 
 export type CloseEventArgs<T extends VNodeTypes> =
-    Parameters<ComponentProps<T>["onClose"]> extends never
-        ? unknown[]
-        : Parameters<ComponentProps<T>["onClose"]>;
+    NonNullable<ComponentProps<T>["onClose"]> extends (...args: any[]) => any
+        ? Parameters<ComponentProps<T>["onClose"]>
+        : never[];
 
 export type ProgrammaticComponentEmits<C extends VNodeTypes> = {
     /**
