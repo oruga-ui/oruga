@@ -13,6 +13,7 @@ import {
     getTeleportDefault,
     getScrollingParent,
     unrefElement,
+    type MaybeElement,
 } from "@/composables";
 
 type Position = "top" | "bottom" | "left" | "right";
@@ -34,7 +35,7 @@ const props = defineProps({
         required: true,
     },
     trigger: {
-        type: Object as PropType<HTMLElement | Component>,
+        type: Object as PropType<MaybeElement>,
         default: undefined,
     },
     /**
@@ -182,7 +183,7 @@ function updatePositioning(): void {
     if (!props.teleport) return;
 
     const content = unrefElement(contentRef);
-    const trigger = unrefElement(props.trigger);
+    const trigger = unrefElement(() => props.trigger);
 
     // set content position
     if (content && trigger) {

@@ -7,7 +7,7 @@ export type SidebarProps<C extends Component = Component> = {
     override?: boolean;
     /** Whether siedbar is active or not, use v-model:active to make it two-way binding */
     active?: boolean;
-    /** Show an overlay like modal */
+    /** Show an overlay background */
     overlay?: boolean;
     /** Display the Sidebear inline */
     inline?: boolean;
@@ -32,10 +32,15 @@ export type SidebarProps<C extends Component = Component> = {
     /** Custom animation (transition name) */
     animation?: string;
     /**
-     * Is Sidebar cancleable by pressing escape or clicking outside.
+     * Is Sidebar cancelable by pressing escape or clicking outside.
      * @values escape, outside, true, false
+     * @deprecated use `closeOnOutside` and `closeOnEscape`
      */
     cancelable?: string[] | boolean;
+    /** Close when clicked outside of the panel */
+    closeOnOutside?: boolean;
+    /** Close when pressing escape key */
+    closeOnEscape?: boolean;
     /**
      * Set `true` to remove the body scrollbar.
      * When `false`, a non-scrollable scrollbar will be kept to avoid moving the background,

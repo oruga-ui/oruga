@@ -46,7 +46,7 @@ export type NotificationProps = {
      * @values small, medium, large
      */
     iconSize?: string;
-    /** Add close button to the item that closes the notification */
+    /** Add close button to close the item */
     closeable?: boolean;
     /** Close icon name */
     closeIcon?: string;

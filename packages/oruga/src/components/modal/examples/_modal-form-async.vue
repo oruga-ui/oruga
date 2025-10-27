@@ -1,11 +1,15 @@
 <script setup lang="ts">
+defineOptions({
+    inheritAttrs: false,
+});
+
 defineProps({
     title: { type: String, default: "" },
     message: { type: String, default: "" },
 });
 
 defineEmits<{
-    close: [value: { action: string; method?: string }];
+    close: [event: Event];
 }>();
 </script>
 
@@ -18,9 +22,7 @@ defineEmits<{
                     clickable
                     type="button"
                     icon="times"
-                    @click.prevent="
-                        $emit('close', { action: 'cancel', method: 'x' })
-                    " />
+                    @click.prevent="$emit('close', $event)" />
             </header>
 
             <section class="modal-card-body">
@@ -28,13 +30,11 @@ defineEmits<{
             </section>
 
             <footer class="modal-card-foot">
-                <o-button
-                    label="No"
-                    @click.prevent="$emit('close', { action: 'no' })" />
+                <o-button label="No" @click.prevent="$emit('close', $event)" />
                 <o-button
                     label="Yes"
                     variant="primary"
-                    @click.prevent="$emit('close', { action: 'yes' })" />
+                    @click.prevent="$emit('close', $event)" />
             </footer>
         </div>
     </form>

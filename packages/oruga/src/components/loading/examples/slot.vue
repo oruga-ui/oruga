@@ -31,8 +31,9 @@ function openLoading(): void {
             sapien laoreet elit
             <o-loading
                 v-model:active="isLoading"
-                :full-page="isFullPage"
-                :cancelable="true">
+                close-on-outside
+                close-on-escape
+                :full-page="isFullPage">
                 <o-icon pack="fas" icon="sync-alt" size="large" spin />
             </o-loading>
         </p>

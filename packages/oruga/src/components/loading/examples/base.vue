@@ -24,15 +24,17 @@ function openLoading(): void {
                 v-model="isFullPage"
                 label="Display loader over full page" />
         </o-field>
+
         <p style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
             sapien laoreet elit
             <o-loading
                 v-model:active="isLoading"
-                :full-page="isFullPage"
                 label="Loading..."
-                :cancelable="true" />
+                close-on-outside
+                close-on-escape
+                :full-page="isFullPage" />
         </p>
     </section>
 </template>

@@ -48,9 +48,9 @@ const emits = defineEmits<{
     "update:active": [value: boolean];
     /**
      * on component close event
-     * @param value {string} - close event method
+     * @param event {Event} - native event
      */
-    close: [...args: [] | [string]];
+    close: [...args: [] | [Event]];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: true });
@@ -74,12 +74,12 @@ const computedIcon = computed(() => {
 });
 
 /** set active to false and emit close event */
-function close(...args: [] | [string]): void {
+function close(...args: [] | [Event]): void {
     isActive.value = false;
     emits("close", ...args);
 }
 
-// --- Animation Feature ---
+// #region --- Animation Feature ---
 
 const isAnimated = ref(props.active);
 
@@ -93,7 +93,9 @@ function beforeLeave(): void {
     isAnimated.value = false;
 }
 
-// --- Computed Component Classes ---
+// #endregion --- Animation Feature ---
+
+// #region --- Computed Component Classes ---
 
 const rootClasses = defineClasses(
     ["rootClass", "o-notification"],
@@ -130,6 +132,8 @@ const contentClasses = defineClasses([
 ]);
 
 const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
+
+// #endregion --- Computed Component Classes ---
 </script>
 
 <template>
@@ -150,7 +154,7 @@ const closeClasses = defineClasses(["closeClass", "o-notification__close"]);
                 :size="closeIconSize"
                 :label="ariaCloseLabel"
                 :classes="closeClasses"
-                @click="close('x')">
+                @click="close($event)">
                 <!--
                     @slot Override the close icon
                 -->
