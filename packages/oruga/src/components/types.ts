@@ -952,43 +952,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
             }>;
         dialog?: ComponentConfigBase &
             Partial<{
-                /** Adds close button to the header */
-                closeable: boolean;
-                /** Icon pack to use for the close icon */
-                iconPack: string;
-                /** Close icon name */
-                closeIcon: string;
-                /** Close icon size */
-                closeIconSize: string;
-                /** Accessibility label for the close button */
-                ariaCloseLabel: string;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the header element */
-                headerClass: ClassDefinition;
-                /** Class of the header title element */
-                titleClass: ClassDefinition;
-                /** Class of the header close element */
-                closeClass: ClassDefinition;
-                /** Class of the image container */
-                imageClass: ClassDefinition;
-                /** Class of the image figure element */
-                figureClass: ClassDefinition;
-                /** Class of the body element */
-                bodyClass: ClassDefinition;
-                /** Class of the body content element */
-                contentClass: ClassDefinition;
-                /** Class of the footer element */
-                footerClass: ClassDefinition;
-                /** Class of the footer element with position */
-                footerPositionClass: ClassDefinition;
-                /** Class of the confirm button element */
-                confirmButtunClass: ClassDefinition;
-                /** Class of the cancel button element */
-                cancelButtonClass: ClassDefinition;
-            }>;
-        dialog?: ComponentConfigBase &
-            Partial<{
                 /**
                  * Adds close button to the header
                  */

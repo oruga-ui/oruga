@@ -54,15 +54,15 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
 
 const emits = defineEmits<{
     /**
-     * confirm button click event
-     * @param event {Event} native event
-     */
-    confirm: [event: Event];
-    /**
      * close button click event
      * @param event {Event} native event
      */
     close: [event: Event];
+    /**
+     * confirm button click event
+     * @param event {Event} native event
+     */
+    confirm: [event: Event];
 }>();
 
 const rootRef = useTemplateRef("rootElement");
