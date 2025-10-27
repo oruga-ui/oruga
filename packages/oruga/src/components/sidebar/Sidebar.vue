@@ -19,9 +19,9 @@ import {
     useTrapFocus,
     getTeleportDefault,
 } from "@/composables";
-import type { CloseEventArgs } from "../programmatic";
 
 import type { SidebarProps } from "./props";
+import type { CloseEventArgs } from "../programmatic";
 
 /**
  * A sidebar to use as overlay.

@@ -12,9 +12,9 @@ import ONotification from "./Notification.vue";
 
 import { getDefault } from "@/utils/config";
 import { defineClasses, getActiveClasses } from "@/composables";
-import type { CloseEventArgs } from "../programmatic";
 
 import type { NotificationNoticeProps } from "./props";
+import type { CloseEventArgs } from "../programmatic";
 
 /**
  * Notification Notice is an extension of the Notification component and is used for the programmatic usage.
