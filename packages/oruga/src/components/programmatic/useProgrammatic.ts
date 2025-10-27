@@ -27,7 +27,7 @@ declare module "../../index" {
     }
 }
 
-/** useProgrammatic composable `open` function options */
+/** programmatic component options */
 export type ProgrammaticOptions<C extends VNodeTypes> = {
     /**
      * Specify the template `id` for the programmatic container element.
@@ -44,9 +44,12 @@ export type ProgrammaticComponentOptions<C extends VNodeTypes> = EmitsToProps<
     // make the type extendable
     Record<string, any>;
 
-/** useProgrammatic composable `_create` function return value */
+/** programmatic component public interface */
 export type ProgrammaticExpose<C extends VNodeTypes = VNodeTypes> =
     ProgrammaticComponentExpose<C>;
+
+/** target container to render the programmatic component into  */
+export type ProgrammaticTarget = MaybeRefOrGetter<string | HTMLElement | null>;
 
 export abstract class ProgrammaticFactory {
     /** programmatic instance registry for the factory instance */
@@ -79,7 +82,7 @@ export abstract class ProgrammaticFactory {
     protected _create<C extends VNodeTypes>(
         component: C,
         options: ProgrammaticOptions<C>,
-        target?: MaybeRefOrGetter<string | HTMLElement | null>,
+        target?: ProgrammaticTarget,
     ): ProgrammaticExpose<C> {
         options = { registry: this._registry, ...options };
 
@@ -96,6 +99,7 @@ export abstract class ProgrammaticFactory {
         // create app container
         let container: HTMLDivElement | undefined =
             document.createElement("div");
+        // set the HTML #id of the programmatic app
         container.id = options.appId || "programmatic-app";
 
         // place the app container into the target element
@@ -128,7 +132,7 @@ export abstract class ProgrammaticFactory {
         if (VueInstance)
             app._context = Object.assign(app._context, VueInstance._context);
 
-        // render the new vue instance into the container
+        // render the new vue instance into the container element
         const instance = app.mount(container);
 
         // return exposed programmatic functionalities from the mounted component instance
@@ -147,7 +151,7 @@ export class ProgrammaticComponentFactory extends ProgrammaticFactory {
     public open<C extends VNodeTypes>(
         component: C,
         options?: ProgrammaticOptions<C>,
-        target?: MaybeRefOrGetter<string | HTMLElement | null>,
+        target?: ProgrammaticTarget,
     ): ProgrammaticExpose<C> {
         return this._create(component, options ?? {}, target);
     }

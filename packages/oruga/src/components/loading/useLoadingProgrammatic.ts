@@ -1,8 +1,8 @@
-import { type MaybeRefOrGetter } from "vue";
 import {
     ProgrammaticFactory,
     type ProgrammaticComponentOptions,
     type ProgrammaticExpose,
+    type ProgrammaticTarget,
 } from "../programmatic";
 
 import Loading from "./Loading.vue";
@@ -15,7 +15,6 @@ declare module "../../index" {
     }
 }
 
-/** useLoadingProgrammatic composable options */
 export type LoadingProgrammaticOptions = Readonly<LoadingProps> &
     ProgrammaticComponentOptions<typeof Loading>;
 
@@ -28,7 +27,7 @@ export class LoadingProgrammaticFactory extends ProgrammaticFactory {
      */
     public open(
         options: string | LoadingProgrammaticOptions,
-        target?: MaybeRefOrGetter<string | HTMLElement | null>,
+        target?: ProgrammaticTarget,
     ): ProgrammaticExpose<typeof Loading> {
         const _options: LoadingProgrammaticOptions =
             typeof options === "string" ? { label: options } : options;

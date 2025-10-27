@@ -8,6 +8,8 @@ import {
 
 export type MaybeElement =
     | Element
+    | Document
+    | Window
     | HTMLElement
     | Component
     | ComponentPublicInstance
