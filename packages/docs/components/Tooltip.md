@@ -52,7 +52,7 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 | ------------- | ----------------------------------------- | -------------------------------- |
 | update:active | **value** `boolean` - updated active prop | active prop two-way binding      |
 | close         | **event** `Event` - native event          | on active state changes to false |
-| open          |                                           | on active state changes to true  |
+| open          | **event** `Event` - native event          | on active state changes to true  |
 
 ### Slots
 
