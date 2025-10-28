@@ -70,16 +70,16 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 ### Events
 
-| Event name         | Properties                                                              | Description                                      |
-| ------------------ | ----------------------------------------------------------------------- | ------------------------------------------------ |
-| update:model-value | **value** `unknown \| unknown[]` - updated modelValue prop              | modelValue prop two-way binding                  |
-| update:active      | **value** `boolean` - updated active prop                               | active prop two-way binding                      |
-| select             | **value** `unknown` - selected value                                    | on select event - fired before update:modelValue |
-| change             | **value** `unknown \| unknown[]` - selected value                       |
-| open               | **method** `string` - open method<br/>**event** `Event` - native event  | on open event                                    |
-| close              | **method** `string` - close method<br/>**event** `Event` - native event | on close event                                   |
-| scroll-start       |                                                                         | the list inside the dropdown reached the start   |
-| scroll-end         |                                                                         | the list inside the dropdown reached it's end    |
+| Event name         | Properties                                                 | Description                                      |
+| ------------------ | ---------------------------------------------------------- | ------------------------------------------------ |
+| update:model-value | **value** `unknown \| unknown[]` - updated modelValue prop | modelValue prop two-way binding                  |
+| update:active      | **value** `boolean` - updated active prop                  | active prop two-way binding                      |
+| select             | **value** `unknown` - selected value                       | on select event - fired before update:modelValue |
+| change             | **value** `unknown \| unknown[]` - selected value          |
+| open               | **event** `Event` - native event                           | on active state changes to true                  |
+| close              | **event** `Event` - native event                           | on active state changes to false                 |
+| scroll-start       |                                                            | the list inside the dropdown reached the start   |
+| scroll-end         |                                                            | the list inside the dropdown reached it's end    |
 
 ### Slots
 
