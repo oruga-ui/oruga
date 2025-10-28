@@ -172,7 +172,7 @@ function inspectClass(
                             </a>
                         </div>
                         <div v-if="data.info">
-                            <br />👉 <i><span v-html="data.info"></span></i>
+                            👉 <i><span v-html="data.info"></span></i>
                         </div>
                     </td>
                     <td>
