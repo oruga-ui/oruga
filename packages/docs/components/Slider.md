@@ -46,7 +46,7 @@ Use it with the [Field](/components/Field) component to access all the functiona
 | min               | Minimum value                                                         | number                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                    |
 | v-model           | The input value state                                                 | [number, number] \| number     | -                                                                               |                                                                                                                                                            |
 | override          | Override existing theme classes completely                            | boolean                        | -                                                                               |                                                                                                                                                            |
-| range             | Enable range slider                                                   | boolean                        | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                     |
+| range             | Enable range slider                                                   | boolean                        | -                                                                               |                                                                                                                                                            |
 | rounded           | Rounded thumb                                                         | boolean                        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;rounded: false<br>}</code>            |
 | size              | Vertical size of slider                                               | string                         | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;size: undefined<br>}</code>           |
 | step              | Step interval of ticks                                                | number                         | -                                                                               | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                    |
@@ -84,11 +84,11 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 ### Props
 
-| Prop name | Description                                | Type             | Values | Default                                                |
-| --------- | ------------------------------------------ | ---------------- | ------ | ------------------------------------------------------ |
-| label     | Tick label                                 | number \| string | -      |                                                        |
-| override  | Override existing theme classes completely | boolean          | -      |                                                        |
-| value     | Value of single tick                       | number           | -      | <code style='white-space: nowrap; padding: 0;'></code> |
+| Prop name | Description                                | Type             | Values | Default |
+| --------- | ------------------------------------------ | ---------------- | ------ | ------- |
+| label     | Tick label                                 | number \| string | -      |         |
+| override  | Override existing theme classes completely | boolean          | -      |         |
+| value     | Value of single tick                       | number           | -      |         |
 
 ### Slots
 
