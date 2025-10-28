@@ -39,8 +39,17 @@ export type TooltipProps = {
     /**
      * Tooltip trigger events
      * @values hover, click, focus, contextmenu
+     * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
      */
     triggers?: Array<"click" | "hover" | "contextmenu" | "focus">;
+    /** Show when clicked on the trigger */
+    openOnClick?: boolean;
+    /** Show when hover over the trigger */
+    openOnHover?: boolean;
+    /** Show when right clicked on the trigger */
+    openOnContextmenu?: boolean;
+    /** Show when trigger get focused */
+    openOnFocus?: boolean;
     /** Tooltip delay before it appears (number in ms) */
     delay?: number;
     /**

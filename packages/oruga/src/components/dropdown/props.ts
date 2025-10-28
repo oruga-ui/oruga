@@ -59,6 +59,16 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
      * @values click, hover, contextmenu, focus
      */
     triggers?: ("click" | "keydown" | "hover" | "contextmenu" | "focus")[];
+    /** Show when clicked on the trigger */
+    openOnClick?: boolean;
+    /** Show when the trigger has focus and a key is pressed */
+    openOnKeydown?: boolean;
+    /** Show when hover over the trigger */
+    openOnHover?: boolean;
+    /** Show when right clicked on the trigger */
+    openOnContextmenu?: boolean;
+    /** Show when trigger get focused */
+    openOnFocus?: boolean;
     /** Dropdown delay before it appears (number in ms) */
     delay?: number;
     /** Keep dropdown list open when item get selected */
