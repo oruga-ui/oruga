@@ -67,6 +67,8 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     keepFirst?: boolean;
     /** Close Dropdown when clicked outside */
     closeOnOutside?: boolean;
+    /** Close when pressing escape key */
+    closeOnEscape?: boolean;
     /** Close Dropdown when page get scrolled */
     closeOnScroll?: boolean;
     /** Select current focused item when focused */

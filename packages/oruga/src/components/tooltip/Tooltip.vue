@@ -85,8 +85,8 @@ watch(
 );
 
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
-const contentRef = useTemplateRef<HTMLElement | Component>("contentRef");
 const triggerRef = useTemplateRef<HTMLElement | Component>("triggerRef");
+const contentRef = ref<HTMLElement | Component | null>(null);
 
 // #region --- Event Handler ---
 

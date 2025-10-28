@@ -6,6 +6,7 @@ import {
     watch,
     useId,
     toValue,
+    useTemplateRef,
     type Component,
 } from "vue";
 
@@ -66,6 +67,7 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     keepFirst: () => getDefault("dropdown.keepFirst", false),
     closeOnOutside: () => getDefault("dropdown.closeOnOutside", true),
     closeOnScroll: () => getDefault("dropdown.closeOnScroll", false),
+    closeOnEscape: () => getDefault("dropdown.closeOnEscape", true),
     selectOnFocus: () => getDefault("dropdown.selectOnFocus", false),
     selectOnClose: () => getDefault("dropdown.selectOnClose", false),
     expanded: false,
@@ -126,7 +128,8 @@ const emits = defineEmits<{
     "scroll-end": [];
 }>();
 
-const triggerRef = ref<HTMLElement>();
+const rootRef = useTemplateRef<HTMLElement>("rootElement");
+const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
 const menuRef = ref<HTMLElement | Component | null>(null);
 
 // provided data is a computed ref to ensure reactivity
@@ -205,24 +208,6 @@ const hoverable = computed(() => props.triggers.includes("hover"));
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 
-// set infinite scroll handler
-if (isClient && props.scrollable && props.checkScroll)
-    useScrollEvents(menuRef, {
-        onScrollEnd: () => emits("scroll-end"),
-        onScrollStart: () => emits("scroll-start"),
-    });
-
-// set click outside handler
-if (isClient && props.closeOnOutside)
-    useClickOutside([menuRef, triggerRef], onClickedOutside, {
-        trigger: isActive,
-        passive: true,
-    });
-
-// set scroll page event
-if (isClient && props.closeOnScroll)
-    useEventListener(window, "scroll", onPageScroll, { passive: true });
-
 watch(
     isActive,
     (value) => {
@@ -251,10 +236,43 @@ watch(
 
 // #region --- Trigger Handler ---
 
+if (isClient) {
+    // register onKeyup event listener when is active
+    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
+
+    // set click outside handler
+    useClickOutside([menuRef, triggerRef], onClickedOutside, {
+        trigger: isActive,
+        passive: true,
+    });
+
+    // set infinite scroll handler
+    if (props.scrollable && props.checkScroll)
+        useScrollEvents(
+            menuRef,
+            {
+                onScrollEnd: () => emits("scroll-end"),
+                onScrollStart: () => emits("scroll-start"),
+            },
+            { passive: true },
+        );
+
+    // set scroll page event
+    if (props.closeOnScroll)
+        useEventListener(window, "scroll", onPageScroll, { passive: true });
+}
+
+/** Keyup event listener that is bound to the root element. */
+function onKeyup(event: KeyboardEvent): void {
+    if (!props.closeOnEscape) return;
+    if (!isActive.value || props.inline) return;
+    if (event.key === "Escape" || event.key === "Esc") close("escape", event);
+}
+
 /** Close dropdown if clicked outside. */
 function onClickedOutside(event: Event): void {
-    if (!isActive.value || props.inline) return;
     if (!props.closeOnOutside) return;
+    if (!isActive.value || props.inline) return;
     close("outside", event);
 }
 
@@ -465,10 +483,6 @@ function onEndPressed(event: Event): void {
     setFocus(item);
 }
 
-function onEscape(event: Event): void {
-    close("escape", event);
-}
-
 /**
  * Get the first 'viable' child, starting at startingIndex and in the direction specified
  * by the boolean parameter forward. In other words, first try to select the child at index
@@ -572,6 +586,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
 
 <template>
     <div
+        ref="rootElement"
         data-oruga="dropdown"
         :class="rootClasses"
         @mouseleave="onTriggerHoverLeave"
@@ -596,8 +611,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
             @contextmenu="onTriggerContextMenu"
             @mouseenter="onTriggerHover"
             @focus.capture="onTriggerFocus"
-            @keydown.tab="onEscape"
-            @keydown.escape="onEscape"
+            @keydown.tab="close('tab', $event)"
             @keydown.enter="onEnter"
             @keydown.space="onEnter"
             @keydown.up.prevent="onUpPressed"

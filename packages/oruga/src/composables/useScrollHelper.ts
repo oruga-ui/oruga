@@ -3,7 +3,11 @@ import { isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import { unrefElement } from "./unrefElement";
 import { useDebounce } from "./useDebounce";
-import { useEventListener, type EventTarget } from "./useEventListener";
+import {
+    useEventListener,
+    type EventListenerOptions,
+    type EventTarget,
+} from "./useEventListener";
 
 /** Call a function when the scoll reaches the end or the start of an element.
  * This is useful for infinite scroll lists.
@@ -23,6 +27,7 @@ export function useScrollEvents(
         onScrollStart?: () => void;
         debounce?: number;
     },
+    listenerOptions: EventListenerOptions = { passive: true },
 ): () => void {
     if (!getCurrentScope())
         throw new Error(
@@ -36,9 +41,12 @@ export function useScrollEvents(
     );
 
     if (isClient)
-        useEventListener(element, "scroll", debouncedCheckScroll, {
-            passive: true,
-        });
+        useEventListener(
+            element,
+            "scroll",
+            debouncedCheckScroll,
+            listenerOptions,
+        );
 
     /** Check if the scroll list inside the dropdown reached the top or it's end. */
     function checkScroll(): void {
