@@ -137,16 +137,14 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!props.closeOnEscape) return;
-    if (!checkCanelable("escape")) return;
+    if (!(props.closeOnEscape || checkCancelable("escape"))) return;
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener. */
 function onClickedOutside(event: Event): void {
-    if (!props.closeOnOutside) return;
-    if (!checkCanelable("outside")) return;
+    if (!(props.closeOnOutside || checkCancelable("outside"))) return;
     if (!isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
@@ -157,7 +155,7 @@ function onClickedOutside(event: Event): void {
 }
 
 /** check if method is cancelable (for deprecreated check) */
-function checkCanelable(
+function checkCancelable(
     method: Exclude<typeof props.cancelable, boolean>[number],
 ): boolean {
     return (
@@ -274,7 +272,7 @@ defineExpose({ close });
                         :size="closeIconSize"
                         :label="ariaCloseLabel"
                         :classes="closeClasses"
-                        @click="checkCanelable('x') && close($event)">
+                        @click="checkCancelable('x') && close($event)">
                         <!--
                             @slot Override the close icon
                         -->

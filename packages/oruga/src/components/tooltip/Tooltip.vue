@@ -62,15 +62,14 @@ const emits = defineEmits<{
      * @param event {Event} - native event
      */
     close: [event: Event];
-    /** on active state changes to true */
-    open: [];
+    /**
+     * on active state changes to true
+     * @param event {Event} - native event
+     */
+    open: [event: Event];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });
-
-watch(isActive, (value) => {
-    if (value) emits("open");
-});
 
 const tooltipId = useId();
 
@@ -103,62 +102,62 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!props.closeOnEscape) return;
-    if (!checkCanelable("escape")) return;
+    if (!(props.closeOnEscape || checkCancelable("escape"))) return;
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Close tooltip if clicked outside. */
 function onClickedOutside(event: Event): void {
-    if (!props.closeOnOutside) return;
-    if (!checkCanelable("outside")) return;
+    if (!(props.closeOnOutside || checkCancelable("outside"))) return;
     if (!isActive.value || props.always) return;
     close(event);
 }
 
 function onHoverLeave(event: Event): void {
-    if (!checkCanelable("content")) return;
+    if (!(props.closeable || checkCancelable("content"))) return;
     close(event);
 }
 
-function onClick(): void {
+function onClick(event: Event): void {
     if (!props.triggers.includes("click")) return;
     // if not active, toggle after clickOutside event
     // this fixes toggling programmatic
-    nextTick(() => setTimeout(() => open()));
+    nextTick(() => setTimeout(() => open(event)));
 }
 
 function onContextMenu(event: Event): void {
     if (!props.triggers.includes("contextmenu")) return;
     event.preventDefault();
-    open();
+    open(event);
 }
 
-function onFocus(): void {
+function onFocus(event: Event): void {
     if (!props.triggers.includes("focus")) return;
-    open();
+    open(event);
 }
 
-function onHover(): void {
+function onHover(event: Event): void {
     if (!props.triggers.includes("hover")) return;
-    open();
+    open(event);
 }
 
-function open(): void {
+function open(event: Event): void {
     if (props.disabled) return;
     if (props.delay) {
         timer.value = setTimeout(() => {
             isActive.value = true;
-            timer.value = null;
+            timer.value = undefined;
+            emits("open", event);
         }, props.delay);
     } else {
-        isActive.value = true;
+        nextTick(() => (isActive.value = true));
+        emits("open", event);
     }
 }
 
 /** check if method is cancelable (for deprecreated check) */
-function checkCanelable(
+function checkCancelable(
     method: Exclude<typeof props.closeable, boolean>[number],
 ): boolean {
     return (
