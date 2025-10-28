@@ -73,7 +73,6 @@ const props = withDefaults(defineProps<AutocompleteProps<T>>(), {
     rounded: false,
     disabled: false,
     maxlength: undefined,
-    checkScroll: () => getDefault("autocomplete.checkScroll", false),
     debounce: () => getDefault("autocomplete.debounce", 400),
     keepFirst: () => getDefault("autocomplete.keepFirst", false),
     clearOnSelect: () => getDefault("autocomplete.clearOnSelect", false),
@@ -426,7 +425,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
         selectable
         :keep-open="keepOpen"
         :keep-first="keepFirst"
-        :check-scroll="checkScroll"
         :select-on-close="selectOnClose"
         :disabled="disabled"
         :desktop-modal="desktopModal"

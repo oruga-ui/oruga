@@ -24,8 +24,6 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     selectable?: boolean;
     /** Menu content will be scrollable */
     scrollable?: boolean;
-    /** Makes the component check if menu reached scroll start or end and emit scroll events */
-    checkScroll?: boolean;
     /** Max height of dropdown content */
     maxHeight?: Numberish;
     /** Height of the listbox, a scrollbar is defined if height of list exceeds this value */
