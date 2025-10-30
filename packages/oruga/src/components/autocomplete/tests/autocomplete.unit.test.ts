@@ -159,7 +159,7 @@ describe("OAutocomplete tests", () => {
         expect(dropdown.exists()).toBeTruthy();
         expect(dropdown.isVisible()).toBeTruthy();
 
-        await input.trigger("keydown", { key: "Escape" });
+        await input.trigger("keyup", { key: "Escape" });
 
         expect(dropdown.isVisible()).toBeFalsy();
     });

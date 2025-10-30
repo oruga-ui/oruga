@@ -298,7 +298,7 @@ describe("ODropdown tests", () => {
             expect(menu.isVisible()).toBeTruthy();
 
             // emit escape clicked event
-            await trigger.trigger("keydown", { key: "Escape" });
+            await trigger.trigger("keyup", { key: "Escape" });
             await nextTick(); // await dom update
 
             expect(wrapper.classes("o-dropdown--active")).toBeFalsy();
