@@ -207,6 +207,7 @@ const inspectData: InspectData<
     },
     thCurrentSortClass: {
         class: "thCurrentSortClass",
+        deprecated: "use `thSortedClass` instead",
         description:
             "Class of the table `th` element that is currently sorted.",
         info: "Click on 'First Name' header to sort elements and see it in action!",
@@ -218,6 +219,7 @@ const inspectData: InspectData<
     },
     thUnselectableClass: {
         class: "thUnselectableClass",
+        deprecated: "will be removed",
         description: "Class of the Table `th` element that is unsortable.",
         properties: ["headerSelectable", "sortable"],
     },
@@ -300,6 +302,7 @@ const inspectData: InspectData<
     },
     tdDetailedChevronClass: {
         class: "tdDetailedChevronClass",
+        deprecated: "use `tdDetailClass` instead",
         description:
             "Class of the table `td` element that contains the chevron to trigger details.",
         properties: ["detailed"],

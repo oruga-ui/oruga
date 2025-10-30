@@ -59,10 +59,6 @@ declare module "../index" {
                  */
                 maxHeight: Numberish;
                 /**
-                 * Makes the component check if list reached scroll start or end and emit scroll events
-                 */
-                checkScroll: boolean;
-                /**
                  * Icon pack to use
                  */
                 iconPack: string;
@@ -1023,10 +1019,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
-                /**
-                 * Makes the component check if menu reached scroll start or end and emit scroll events
-                 */
-                checkScroll: boolean;
                 /**
                  * Max height of dropdown content
                  */
@@ -3179,10 +3171,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Allows adding the same item multiple time
                  */
                 allowDuplicates: boolean;
-                /**
-                 * Makes the component check if list reached scroll start or end and emit scroll events
-                 */
-                checkScroll: boolean;
                 /**
                  * Add close button to close the item
                  */
