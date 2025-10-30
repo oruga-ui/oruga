@@ -203,10 +203,14 @@ function getFirstViableItem(startingIndex: number, delta: 1 | -1): ListItem<T> {
 
 // set infinite scroll handler
 if (isClient && props.scrollHeight)
-    useScrollEvents(containerRef, {
-        onScrollEnd: () => emits("scroll-end"),
-        onScrollStart: () => emits("scroll-start"),
-    });
+    useScrollEvents(
+        containerRef,
+        {
+            onScrollEnd: () => emits("scroll-end"),
+            onScrollStart: () => emits("scroll-start"),
+        },
+        { passive: true },
+    );
 
 // #endregion --- Scroll Handler ---
 

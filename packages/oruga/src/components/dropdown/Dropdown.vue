@@ -74,7 +74,6 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     position: () => getDefault("dropdown.position", "bottom-left"),
     scrollable: false,
     maxHeight: () => getDefault("dropdown.maxHeight", 200),
-    checkScroll: () => getDefault("dropdown.checkScroll", false),
     menuId: () => useId(),
     menuTag: () => getDefault("dropdown.menuTag", "div"),
     triggerTag: () => getDefault("dropdown.triggerTag", "div"),
@@ -111,17 +110,15 @@ const emits = defineEmits<{
      */
     change: [value: ModelValue];
     /**
-     * on open event
-     * @param method {string} open method
+     * on active state changes to true
      * @param event {Event} - native event
      */
-    open: [method: string, event: Event];
+    open: [event: Event];
     /**
-     * on close event
-     * @param method {string} close method
+     * on active state changes to false
      * @param event {Event} - native event
      */
-    close: [method: string, event: Event];
+    close: [event: Event];
     /** the list inside the dropdown reached the start */
     "scroll-start": [];
     /** the list inside the dropdown reached it's end */
@@ -247,7 +244,7 @@ if (isClient) {
     });
 
     // set infinite scroll handler
-    if (props.scrollable && props.checkScroll)
+    if (props.scrollable)
         useScrollEvents(
             menuRef,
             {
@@ -266,83 +263,83 @@ if (isClient) {
 function onKeyup(event: KeyboardEvent): void {
     if (!props.closeOnEscape) return;
     if (!isActive.value || props.inline) return;
-    if (event.key === "Escape" || event.key === "Esc") close("escape", event);
+    if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Close dropdown if clicked outside. */
 function onClickedOutside(event: Event): void {
     if (!props.closeOnOutside) return;
     if (!isActive.value || props.inline) return;
-    close("outside", event);
+    close(event);
 }
 
 /** Close dropdown if page get scrolled. */
 function onPageScroll(event: Event): void {
     if (!isActive.value || props.inline) return;
     if (!props.closeOnScroll) return;
-    close("scroll", event);
+    close(event);
 }
 
 function onTriggerClick(event: Event): void {
     // check if is mobile native and hoverable together
-    if (isMobileNative && hoverable.value) toggle("click", event);
+    if (isMobileNative && hoverable.value) toggle(event);
     // check normal click conditions
     if (!props.triggers.includes("click")) return;
-    toggle("click", event);
+    toggle(event);
 }
 
 function onTriggerContextMenu(event: Event): void {
     if (!props.triggers.includes("contextmenu")) return;
     event.preventDefault();
-    open("contextmenu", event);
+    open(event);
 }
 
 function onTriggerFocus(event: Event): void {
     if (!props.triggers.includes("focus")) return;
-    open("focus", event);
+    open(event);
 }
 
 function onTriggerHover(event: Event): void {
     if (isMobileNative) return;
     if (!props.triggers.includes("hover")) return;
-    open("hover", event);
+    open(event);
 }
 
 function onTriggerHoverLeave(event: Event): void {
     if (isMobileNative) return;
     if (!props.triggers.includes("hover")) return;
-    close("outside", event);
+    close(event);
 }
 
 /** Toggle dropdown if it's not disabled. */
-function toggle(method: string, event: Event): void {
+function toggle(event: Event): void {
     if (props.disabled) return;
-    if (!isActive.value) open(method, event);
-    else close(method, event);
+    if (!isActive.value) open(event);
+    else close(event);
 }
 
 let timer: ReturnType<typeof setTimeout> | undefined;
 
-function open(method: string, event: Event): void {
+function open(event: Event): void {
     if (props.disabled) return;
     if (isActive.value) return;
     if (props.delay) {
         timer = setTimeout(() => {
             isActive.value = true;
-            emits("open", method, event);
             timer = undefined;
+            emits("open", event);
         }, props.delay);
     } else {
         // if not active, toggle after clickOutside event
         // this fixes toggling programmatic
         nextTick(() => (isActive.value = true));
-        emits("open", method, event);
+        emits("open", event);
     }
 }
 
-function close(method: string, event: Event): void {
+function close(event: Event): void {
     if (!isActive.value) return;
-    emits("close", method, event);
+    emits("close", event);
 
     // select item when dropdown closed
     if (props.selectOnClose && focusedItem.value?.data.value)
@@ -398,7 +395,7 @@ function selectItem(item: DropdownChildItem<T>, event?: Event): void {
 
     triggerRef.value?.focus();
     if (props.keepOpen || !isActive.value || !event) return;
-    close("content", event);
+    close(event);
 }
 
 // #endregion --- Select Feature ---
@@ -440,12 +437,12 @@ function setFocus(item: DropdownChildItem<T>): void {
 }
 
 function onUpPressed(event: Event): void {
-    if (!isActive.value) return open("keydown", event);
+    if (!isActive.value) return open(event);
     moveFocus(-1);
 }
 
 function onDownPressed(event: Event): void {
-    if (!isActive.value) return open("keydown", event);
+    if (!isActive.value) return open(event);
     moveFocus(1);
 }
 
@@ -464,7 +461,7 @@ function onHomePressed(event: Event): void {
     if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
         event.preventDefault();
 
-    open("keydown", event);
+    open(event);
     if (!isNotEmpty.value) return;
     const item = getFirstViableItem(0, 1);
     setFocus(item);
@@ -477,7 +474,7 @@ function onEndPressed(event: Event): void {
     if (target.tagName !== "INPUT" && target.tagName !== "TEXTAREA")
         event.preventDefault();
 
-    open("keydown", event);
+    open(event);
     if (!isNotEmpty.value) return;
     const item = getFirstViableItem(childItems.value.length - 1, -1);
     setFocus(item);
@@ -611,7 +608,7 @@ defineExpose({ $trigger: triggerRef, $content: menuRef, value: vmodel });
             @contextmenu="onTriggerContextMenu"
             @mouseenter="onTriggerHover"
             @focus.capture="onTriggerFocus"
-            @keydown.tab="close('tab', $event)"
+            @keydown.tab="close($event)"
             @keydown.enter="onEnter"
             @keydown.space="onEnter"
             @keydown.up.prevent="onUpPressed"

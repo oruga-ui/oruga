@@ -27,7 +27,7 @@ export function useScrollEvents(
         onScrollStart?: () => void;
         debounce?: number;
     },
-    listenerOptions: EventListenerOptions = { passive: true },
+    listenerOptions?: EventListenerOptions,
 ): () => void {
     if (!getCurrentScope())
         throw new Error(

@@ -48,8 +48,6 @@ export type TaginputProps<T> = {
     validateItem?: (value: T | string) => boolean;
     /** Function to create a new item to push into v-model (items) */
     createItem?: (value: T | string) => T;
-    /** Makes the component check if list reached scroll start or end and emit scroll events */
-    checkScroll?: boolean;
     /** Add close button to close the item */
     closeable?: boolean;
     /**

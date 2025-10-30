@@ -64,8 +64,6 @@ export type AutocompleteProps<T> = {
     selectableFooter?: boolean;
     /** Max height of dropdown content */
     maxHeight?: Numberish;
-    /** Makes the component check if list reached scroll start or end and emit scroll events */
-    checkScroll?: boolean;
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
