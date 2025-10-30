@@ -33,6 +33,8 @@ export type InspectClassDescription<
     suffixes?: string[];
     /** disables the inspect button */
     nospec?: boolean;
+    /** show deprecation warning */
+    deprecated?: true | string;
     /** related component name */
     relatedComponent?: string;
     /** related class of another component */

@@ -72,7 +72,6 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     position: () => getDefault("dropdown.position", "bottom-left"),
     scrollable: false,
     maxHeight: () => getDefault("dropdown.maxHeight", 200),
-    checkScroll: () => getDefault("dropdown.checkScroll", false),
     menuId: () => useId(),
     menuTag: () => getDefault("dropdown.menuTag", "div"),
     triggerTag: () => getDefault("dropdown.triggerTag", "div"),
@@ -114,12 +113,12 @@ const emits = defineEmits<{
      */
     change: [value: ModelValue];
     /**
-     * on open event
+     * on active state changes to true
      * @param event {Event} - native event
      */
     open: [event: Event];
     /**
-     * on close event
+     * on active state changes to false
      * @param event {Event} - native event
      */
     close: [event: Event];
@@ -210,11 +209,15 @@ const toggleScroll = usePreventScrolling(props.clipScroll);
 
 if (isClient) {
     // set infinite scroll handler
-    if (props.scrollable && props.checkScroll)
-        useScrollEvents(menuRef, {
-            onScrollEnd: () => emits("scroll-end"),
-            onScrollStart: () => emits("scroll-start"),
-        });
+    if (props.scrollable)
+        useScrollEvents(
+            menuRef,
+            {
+                onScrollEnd: () => emits("scroll-end"),
+                onScrollStart: () => emits("scroll-start"),
+            },
+            { passive: true },
+        );
 
     // set click outside handler
     if (props.closeOnOutside)
