@@ -34,9 +34,12 @@ import TriggersCode from "./triggers.vue?raw";
 
     <h3 id="triggers">Triggers</h3>
     <p>
-        The action to trigger the tooltip can be customized using the
-        <code>triggers</code> prop. The action that closes the tooltip can be
-        customized using the <code>closaeble</code> prop.
+        The component accepts several different trigger variants, such as
+        <code>openOnClick</code> or <code>openOnContextmenu</code> to only open
+        on right click instead of left click. By default, only
+        <code>openOnHover</code> is set. The action that close the component can
+        also be customized using the <code>closeable</code>,
+        <code>closeOnOutside</code> and <code>closeOnEscape</code> props.
     </p>
     <ExampleViewer :component="Triggers" :code="TriggersCode" />
 

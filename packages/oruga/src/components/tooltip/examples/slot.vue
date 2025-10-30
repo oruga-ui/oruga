@@ -12,8 +12,9 @@
 
             <o-tooltip
                 variant="primary"
-                :triggers="['click']"
-                :auto-close="['outside', 'escape']">
+                open-on-click
+                close-on-outside
+                close-on-escape>
                 <o-button label="Action" />
 
                 <template #content>

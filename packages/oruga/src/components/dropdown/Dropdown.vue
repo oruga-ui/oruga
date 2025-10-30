@@ -202,7 +202,9 @@ const menuStyle = computed(() => ({
     overflow: props.scrollable ? "auto" : null,
 }));
 
-const hoverable = computed(() => props.triggers.includes("hover"));
+const hoverable = computed(
+    () => props.openOnHover || props.triggers.includes("hover"),
+);
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 

@@ -1042,15 +1042,11 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Dropdown will be triggered by any events
                  */
-                triggers: ("focus" | "click" | "contextmenu" | "keydown" | "hover")[];
+                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
                 /**
                  * Show when clicked on the trigger
                  */
                 openOnClick: boolean;
-                /**
-                 * Show when the trigger has focus and a key is pressed
-                 */
-                openOnKeydown: boolean;
                 /**
                  * Show when hover over the trigger
                  */

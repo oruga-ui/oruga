@@ -11,17 +11,14 @@ const active = ref(true);
                 <o-switch v-model="active" label="Toggle" />
             </o-field>
 
-            <o-tooltip
-                label="I'm never closing"
-                :triggers="['click']"
-                :closeable="['outside']">
+            <o-tooltip label="I'm never closing" open-on-click close-on-outside>
                 <o-button label="Click me" />
             </o-tooltip>
 
             <o-tooltip
                 label="I'm never closing"
-                :triggers="['contextmenu']"
-                :closeable="['outside']">
+                open-on-contextmenu
+                close-on-outside>
                 <o-button label="Right click me" />
             </o-tooltip>
 
@@ -37,8 +34,13 @@ const active = ref(true);
                 variant="danger"
                 label="Tooltip right"
                 position="right"
-                :triggers="[]"
+                :open-on-click="false"
+                :open-on-contextmenu="false"
+                :open-on-focus="false"
+                :open-on-hover="false"
                 :closeable="false"
+                :close-on-escape="false"
+                :close-on-outside="false"
                 :active="active">
                 <o-button label="Toggled" />
             </o-tooltip>
