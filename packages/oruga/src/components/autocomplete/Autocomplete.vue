@@ -426,7 +426,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
         :open-on-contextmenu="false"
         :open-on-focus="false"
         :open-on-hover="false"
-        :open-on-keydown="false"
         :keep-open="keepOpen"
         :keep-first="keepFirst"
         :select-on-close="selectOnClose"

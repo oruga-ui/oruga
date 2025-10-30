@@ -77,7 +77,6 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     triggerTag: () => getDefault("dropdown.triggerTag", "div"),
     triggers: () => getDefault("dropdown.triggers", []),
     openOnClick: () => getDefault("tooltip.openOnClick", true),
-    openOnKeydown: () => getDefault("tooltip.openOnKeydown", false),
     openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
     openOnHover: () => getDefault("tooltip.openOnHover", false),
     openOnFocus: () => getDefault("tooltip.openOnFocus", false),

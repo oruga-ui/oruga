@@ -59,8 +59,6 @@ export type DropdownProps<T, IsMultiple extends boolean = false> = {
     triggers?: ("click" | "keydown" | "hover" | "contextmenu" | "focus")[];
     /** Show when clicked on the trigger */
     openOnClick?: boolean;
-    /** Show when the trigger has focus and a key is pressed */
-    openOnKeydown?: boolean;
     /** Show when hover over the trigger */
     openOnHover?: boolean;
     /** Show when right clicked on the trigger */
