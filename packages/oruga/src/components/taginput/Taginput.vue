@@ -61,7 +61,6 @@ const props = withDefaults(defineProps<TaginputProps<T>>(), {
     allowDuplicates: () => getDefault("taginput.allowDuplicates", false),
     validateItem: () => true,
     createItem: (item: T | string) => item as T,
-    checkScroll: () => getDefault("taginput.checkScroll", false),
     closeable: () => getDefault("taginput.closeable", true),
     iconPack: () => getDefault("taginput.iconPack"),
     icon: () => getDefault("taginput.icon"),
@@ -357,7 +356,6 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                 :open-on-focus="openOnFocus"
                 :keep-first="keepFirst"
                 :keep-open="keepOpen"
-                :check-scroll="checkScroll"
                 :teleport="teleport"
                 :has-counter="false"
                 :use-html5-validation="false"
@@ -395,7 +393,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
 
                 <template v-if="$slots.empty" #empty>
                     <!--
-                        @slot Define content for empty state 
+                        @slot Define content for empty state
                     -->
                     <slot name="empty" />
                 </template>
