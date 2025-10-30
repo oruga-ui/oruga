@@ -1056,6 +1056,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 closeOnOutside: boolean;
                 /**
+                 * Close when pressing escape key
+                 */
+                closeOnEscape: boolean;
+                /**
                  * Close Dropdown when page get scrolled
                  */
                 closeOnScroll: boolean;
