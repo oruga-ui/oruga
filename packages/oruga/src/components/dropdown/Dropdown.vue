@@ -207,30 +207,6 @@ const hoverable = computed(() => props.triggers.includes("hover"));
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
 
-if (isClient) {
-    // set infinite scroll handler
-    if (props.scrollable)
-        useScrollEvents(
-            menuRef,
-            {
-                onScrollEnd: () => emits("scroll-end"),
-                onScrollStart: () => emits("scroll-start"),
-            },
-            { passive: true },
-        );
-
-    // set click outside handler
-    if (props.closeOnOutside)
-        useClickOutside([menuRef, triggerRef], onClickedOutside, {
-            trigger: isActive,
-            passive: true,
-        });
-
-    // set scroll page event
-    if (props.closeOnScroll)
-        useEventListener(window, "scroll", onPageScroll, { passive: true });
-}
-
 watch(
     isActive,
     (value) => {
@@ -258,6 +234,33 @@ watch(
 );
 
 // #region --- Trigger Handler ---
+
+if (isClient) {
+    // set infinite scroll handler
+    if (props.scrollable)
+        useScrollEvents(
+            menuRef,
+            {
+                onScrollEnd: () => emits("scroll-end"),
+                onScrollStart: () => emits("scroll-start"),
+            },
+            { passive: true },
+        );
+
+    // set click outside handler
+    if (props.closeOnOutside)
+        useClickOutside([menuRef, triggerRef], onClickedOutside, {
+            trigger: isActive,
+            passive: true,
+        });
+
+    // set scroll page event
+    if (props.closeOnScroll)
+        useEventListener(window, "scroll", onPageScroll, {
+            trigger: isActive,
+            passive: true,
+        });
+}
 
 /** Close dropdown if clicked outside. */
 function onClickedOutside(event: Event): void {
