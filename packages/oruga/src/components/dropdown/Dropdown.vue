@@ -206,13 +206,13 @@ if (isClient) {
     // set infinite scroll handler
     if (props.scrollable)
         useScrollEvents(
-        menuRef,
-        {
+            menuRef,
+            {
                 onScrollEnd: () => emits("scroll-end"),
                 onScrollStart: () => emits("scroll-start"),
             },
-        { passive: true },
-    );
+            { passive: true },
+        );
 
     // set click outside handler
     if (props.closeOnOutside)
