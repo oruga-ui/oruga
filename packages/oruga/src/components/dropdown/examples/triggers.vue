@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const active = ref(false);
+const isActive = ref(false);
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const active = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown :triggers="['hover']">
+            <o-dropdown open-on-hover>
                 <template #trigger="{ active }">
                     <o-button
                         variant="info"
@@ -33,7 +33,7 @@ const active = ref(false);
                 <o-dropdown-item label="Something else" />
             </o-dropdown>
 
-            <o-dropdown :triggers="['contextmenu']">
+            <o-dropdown open-on-contextmenu>
                 <template #trigger>
                     <o-button label="Right click" />
                 </template>
@@ -82,8 +82,13 @@ const active = ref(false);
         <br />
         <p>
             <o-field grouped>
-                <o-dropdown v-model:active="active" :triggers="[]">
-                    <template #trigger> Click the button beside! </template>
+                <o-dropdown v-model:active="isActive" :open-on-click="false">
+                    <template #trigger="{ active }">
+                        <o-icon
+                            variant="success"
+                            :icon="active ? 'caret-up' : 'caret-down'" />
+                        Click the button beside!
+                    </template>
 
                     <o-dropdown-item label="Action" />
                     <o-dropdown-item label="Another action" />
@@ -92,8 +97,8 @@ const active = ref(false);
 
                 <o-button
                     label="Open / Close"
-                    variant="primary"
-                    @click="active = !active" />
+                    variant="secondary"
+                    @click="isActive = !isActive" />
             </o-field>
         </p>
     </section>

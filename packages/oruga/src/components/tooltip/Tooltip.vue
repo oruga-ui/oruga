@@ -43,7 +43,11 @@ const props = withDefaults(defineProps<TooltipProps>(), {
     animation: () => getDefault("tooltip.animation", "fade"),
     multiline: false,
     triggerTag: () => getDefault("tooltip.triggerTag", "div"),
-    triggers: () => getDefault("tooltip.triggers", ["hover", "focus"]),
+    triggers: () => getDefault("tooltip.triggers", []),
+    openOnClick: () => getDefault("tooltip.openOnClick", false),
+    openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
+    openOnHover: () => getDefault("tooltip.openOnHover", true),
+    openOnFocus: () => getDefault("tooltip.openOnFocus", true),
     delay: undefined,
     closeable: () => getDefault("tooltip.closeable", true),
     closeOnEscape: () => getDefault("tooltip.closeOnEscape", true),
@@ -120,25 +124,26 @@ function onHoverLeave(event: Event): void {
 }
 
 function onClick(event: Event): void {
-    if (!props.triggers.includes("click")) return;
+    if (!(props.openOnClick || props.triggers.includes("click"))) return;
     // if not active, toggle after clickOutside event
     // this fixes toggling programmatic
     nextTick(() => setTimeout(() => open(event)));
 }
 
 function onContextMenu(event: Event): void {
-    if (!props.triggers.includes("contextmenu")) return;
+    if (!(props.openOnContextmenu || props.triggers.includes("contextmenu")))
+        return;
     event.preventDefault();
     open(event);
 }
 
 function onFocus(event: Event): void {
-    if (!props.triggers.includes("focus")) return;
+    if (!(props.openOnFocus || props.triggers.includes("focus"))) return;
     open(event);
 }
 
 function onHover(event: Event): void {
-    if (!props.triggers.includes("hover")) return;
+    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
     open(event);
 }
 

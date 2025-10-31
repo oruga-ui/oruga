@@ -198,10 +198,6 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 watch(isActive, onActiveChange);
 
-const triggers = computed(() =>
-    isTrueish(props.pickerProps.openOnFocus) ? ["click"] : [],
-);
-
 if (isClient) useEventListener(document, "keyup", onKeyup);
 
 /** Keypress event that is bound to the document. */
@@ -332,7 +328,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus });
             ref="dropdownComponent"
             v-bind="dropdownBind"
             v-model:active="isActive"
-            :triggers="triggers"
+            :open-on-click="pickerProps.openOnFocus"
             :position="pickerProps.position"
             :disabled="pickerProps.disabled"
             :inline="pickerProps.inline"

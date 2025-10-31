@@ -1042,7 +1042,23 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 /**
                  * Dropdown will be triggered by any events
                  */
-                triggers: ("focus" | "click" | "contextmenu" | "keydown" | "hover")[];
+                triggers: ("focus" | "click" | "contextmenu" | "hover")[];
+                /**
+                 * Show when clicked on the trigger
+                 */
+                openOnClick: boolean;
+                /**
+                 * Show when hover over the trigger
+                 */
+                openOnHover: boolean;
+                /**
+                 * Show when right clicked on the trigger
+                 */
+                openOnContextmenu: boolean;
+                /**
+                 * Show when trigger get focused
+                 */
+                openOnFocus: boolean;
                 /**
                  * Keep dropdown list open when item get selected
                  */
@@ -3379,8 +3395,25 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 triggerTag: DynamicComponent;
                 /**
                  * Tooltip trigger events
+                 * @deprecated will be removed - use `triggerOnClick`, `triggerOnHover`, `triggerOnContextmenu` and `triggerOnFocus, instead
                  */
                 triggers: ("focus" | "click" | "contextmenu" | "hover")[];
+                /**
+                 * Show when clicked on the trigger
+                 */
+                openOnClick: boolean;
+                /**
+                 * Show when hover over the trigger
+                 */
+                openOnHover: boolean;
+                /**
+                 * Show when right clicked on the trigger
+                 */
+                openOnContextmenu: boolean;
+                /**
+                 * Show when trigger get focused
+                 */
+                openOnFocus: boolean;
                 /**
                  * Tooltip auto close options (pressing escape, clicking the content or outside)
                  * @deprecated will be only boolean - use `closeOnOutside` and `closeOnEscape` instead

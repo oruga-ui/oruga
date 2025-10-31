@@ -75,7 +75,11 @@ const props = withDefaults(defineProps<DropdownProps<T, IsMultiple>>(), {
     menuId: () => useId(),
     menuTag: () => getDefault("dropdown.menuTag", "div"),
     triggerTag: () => getDefault("dropdown.triggerTag", "div"),
-    triggers: () => getDefault("dropdown.triggers", ["click"]),
+    triggers: () => getDefault("dropdown.triggers", []),
+    openOnClick: () => getDefault("tooltip.openOnClick", true),
+    openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
+    openOnHover: () => getDefault("tooltip.openOnHover", false),
+    openOnFocus: () => getDefault("tooltip.openOnFocus", false),
     delay: undefined,
     desktopModal: () => getDefault("dropdown.desktopModal", false),
     mobileModal: () => getDefault("dropdown.mobileModal", true),
@@ -198,33 +202,11 @@ const menuStyle = computed(() => ({
     overflow: props.scrollable ? "auto" : null,
 }));
 
-const hoverable = computed(() => props.triggers.includes("hover"));
+const hoverable = computed(
+    () => props.openOnHover || props.triggers.includes("hover"),
+);
 
 const toggleScroll = usePreventScrolling(props.clipScroll);
-
-if (isClient) {
-    // set infinite scroll handler
-    if (props.scrollable)
-        useScrollEvents(
-            menuRef,
-            {
-                onScrollEnd: () => emits("scroll-end"),
-                onScrollStart: () => emits("scroll-start"),
-            },
-            { passive: true },
-        );
-
-    // set click outside handler
-    if (props.closeOnOutside)
-        useClickOutside([menuRef, triggerRef], onClickedOutside, {
-            trigger: isActive,
-            passive: true,
-        });
-
-    // set scroll page event
-    if (props.closeOnScroll)
-        useEventListener(window, "scroll", onPageScroll, { passive: true });
-}
 
 watch(
     isActive,
@@ -254,17 +236,44 @@ watch(
 
 // #region --- Trigger Handler ---
 
+if (isClient) {
+    // set infinite scroll handler
+    if (props.scrollable)
+        useScrollEvents(
+            menuRef,
+            {
+                onScrollEnd: () => emits("scroll-end"),
+                onScrollStart: () => emits("scroll-start"),
+            },
+            { passive: true },
+        );
+
+    // set click outside handler
+    if (props.closeOnOutside)
+        useClickOutside([menuRef, triggerRef], onClickedOutside, {
+            trigger: isActive,
+            passive: true,
+        });
+
+    // set scroll page event
+    if (props.closeOnScroll)
+        useEventListener(window, "scroll", onPageScroll, {
+            trigger: isActive,
+            passive: true,
+        });
+}
+
 /** Close dropdown if clicked outside. */
 function onClickedOutside(event: Event): void {
-    if (!isActive.value || props.inline) return;
     if (!props.closeOnOutside) return;
+    if (!isActive.value || props.inline) return;
     close(event);
 }
 
 /** Close dropdown if page get scrolled. */
 function onPageScroll(event: Event): void {
-    if (!isActive.value || props.inline) return;
     if (!props.closeOnScroll) return;
+    if (!isActive.value || props.inline) return;
     close(event);
 }
 
@@ -272,30 +281,31 @@ function onTriggerClick(event: Event): void {
     // check if is mobile native and hoverable together
     if (isMobileNative && hoverable.value) toggle(event);
     // check normal click conditions
-    if (!props.triggers.includes("click")) return;
+    if (!(props.openOnClick || props.triggers.includes("click"))) return;
     toggle(event);
 }
 
 function onTriggerContextMenu(event: Event): void {
-    if (!props.triggers.includes("contextmenu")) return;
+    if (!(props.openOnContextmenu || props.triggers.includes("contextmenu")))
+        return;
     event.preventDefault();
     open(event);
 }
 
 function onTriggerFocus(event: Event): void {
-    if (!props.triggers.includes("focus")) return;
+    if (!(props.openOnFocus || props.triggers.includes("focus"))) return;
     open(event);
 }
 
 function onTriggerHover(event: Event): void {
     if (isMobileNative) return;
-    if (!props.triggers.includes("hover")) return;
+    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
     open(event);
 }
 
 function onTriggerHoverLeave(event: Event): void {
     if (isMobileNative) return;
-    if (!props.triggers.includes("hover")) return;
+    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
     close(event);
 }
 
@@ -327,15 +337,15 @@ function open(event: Event): void {
 
 function close(event: Event): void {
     if (!isActive.value) return;
-    emits("close", event);
 
     // select item when dropdown closed
     if (props.selectOnClose && focusedItem.value?.data.value)
         selectItem(focusedItem.value);
 
+    if (timer) clearTimeout(timer);
     isActive.value = false;
     focusedItem.value = undefined;
-    if (timer) clearTimeout(timer);
+    emits("close", event);
 }
 
 // #endregion --- Trigger Handler ---
