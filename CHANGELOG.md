@@ -1,12 +1,38 @@
+# [0.12.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.12.0-pre.1...v0.12.0-pre.2) (2025-10-31)
+
+
+### Bug Fixes
+
+* **pagination:** solve depreacted pagination order prop issues ([#1439](https://github.com/oruga-ui/oruga/issues/1439)) ([b625ef0](https://github.com/oruga-ui/oruga/commit/b625ef02dace3334982c34bb0b3e879abbf62851))
+* **steps|tabs:** clear transitioning class after transition end ([#1443](https://github.com/oruga-ui/oruga/issues/1443)) ([22cbfe0](https://github.com/oruga-ui/oruga/commit/22cbfe0c6446a6f038a840ebe0adcb9b8af633b0))
+
+
+### Features
+
+* **dialog:** add programmatic interface ([#1438](https://github.com/oruga-ui/oruga/issues/1438)) ([ce98766](https://github.com/oruga-ui/oruga/commit/ce9876693b6eef21d915873c5ab5283f29908159))
+* **dialog:** convert card into dialog component ([#1436](https://github.com/oruga-ui/oruga/issues/1436)) ([0986bc7](https://github.com/oruga-ui/oruga/commit/0986bc7543a89fb35767a15b763d474147f51229))
+* **dropdown:** remove `checkScroll` and always emit events when `scrollable` ([#1451](https://github.com/oruga-ui/oruga/issues/1451)) ([0d51b7a](https://github.com/oruga-ui/oruga/commit/0d51b7aa4c177da2e57e7ece9a7becc631bb7af3))
+* **dropdown:** remove `method` argument from open/close event ([#1449](https://github.com/oruga-ui/oruga/issues/1449)) ([358d124](https://github.com/oruga-ui/oruga/commit/358d1243f73f59a478f5da7315ab0f46634a6a14))
+* **programmatic:** enhance programmatic types ([#1445](https://github.com/oruga-ui/oruga/issues/1445)) ([3efb78a](https://github.com/oruga-ui/oruga/commit/3efb78a7a41b49f9ecc41b31d0d4cd63f63f3a27))
+* split `trigger` array props into individual props ([#1452](https://github.com/oruga-ui/oruga/issues/1452)) ([f737261](https://github.com/oruga-ui/oruga/commit/f7372616b5af19af90075c05b18b9e04e0f13a73))
+* split up `closeable` array props into individual props ([#1444](https://github.com/oruga-ui/oruga/issues/1444)) ([63d1e93](https://github.com/oruga-ui/oruga/commit/63d1e93b137840d54255821387231e3944b5d44b))
+
+
+### BREAKING CHANGES
+
+* **dropdown:** Dropdown `open` and `close` event arguments has changed
+
+
+
 # [0.12.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.11.6...v0.12.0-pre.1) (2025-10-04)
 
 
 ### BREAKING CHANGES
 
 * **autocomplete:** rename class `itemGroupTitleClass` to `itemGroupClass`
-* **steps:** `variantClass` got removed from the Steps component
 * **pagination:** the pagination button template has changed
-* **uploard:** rename `hoveredClass` to `draggableHoveredClass`
+* **steps:** `variantClass` got removed from the Steps component
+* **upload:** rename `hoveredClass` to `draggableHoveredClass`
 
 ### Bug Fixes
 
