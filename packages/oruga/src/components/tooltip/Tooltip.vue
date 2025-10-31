@@ -43,7 +43,11 @@ const props = withDefaults(defineProps<TooltipProps>(), {
     animation: () => getDefault("tooltip.animation", "fade"),
     multiline: false,
     triggerTag: () => getDefault("tooltip.triggerTag", "div"),
-    triggers: () => getDefault("tooltip.triggers", ["hover", "focus"]),
+    triggers: () => getDefault("tooltip.triggers", []),
+    openOnClick: () => getDefault("tooltip.openOnClick", false),
+    openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
+    openOnHover: () => getDefault("tooltip.openOnHover", true),
+    openOnFocus: () => getDefault("tooltip.openOnFocus", true),
     delay: undefined,
     closeable: () => getDefault("tooltip.closeable", true),
     closeOnEscape: () => getDefault("tooltip.closeOnEscape", true),
@@ -62,15 +66,14 @@ const emits = defineEmits<{
      * @param event {Event} - native event
      */
     close: [event: Event];
-    /** on active state changes to true */
-    open: [];
+    /**
+     * on active state changes to true
+     * @param event {Event} - native event
+     */
+    open: [event: Event];
 }>();
 
 const isActive = defineModel<boolean>("active", { default: false });
-
-watch(isActive, (value) => {
-    if (value) emits("open");
-});
 
 const tooltipId = useId();
 
@@ -122,38 +125,41 @@ function onHoverLeave(event: Event): void {
     close(event);
 }
 
-function onClick(): void {
-    if (!props.triggers.includes("click")) return;
+function onClick(event: Event): void {
+    if (!(props.openOnClick || props.triggers.includes("click"))) return;
     // if not active, toggle after clickOutside event
     // this fixes toggling programmatic
-    nextTick(() => setTimeout(() => open()));
+    nextTick(() => setTimeout(() => open(event)));
 }
 
 function onContextMenu(event: Event): void {
-    if (!props.triggers.includes("contextmenu")) return;
+    if (!(props.openOnContextmenu || props.triggers.includes("contextmenu")))
+        return;
     event.preventDefault();
-    open();
+    open(event);
 }
 
-function onFocus(): void {
-    if (!props.triggers.includes("focus")) return;
-    open();
+function onFocus(event: Event): void {
+    if (!(props.openOnFocus || props.triggers.includes("focus"))) return;
+    open(event);
 }
 
-function onHover(): void {
-    if (!props.triggers.includes("hover")) return;
-    open();
+function onHover(event: Event): void {
+    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
+    open(event);
 }
 
-function open(): void {
+function open(event: Event): void {
     if (props.disabled) return;
     if (props.delay) {
         timer.value = setTimeout(() => {
             isActive.value = true;
-            timer.value = null;
+            timer.value = undefined;
+            emits("open", event);
         }, props.delay);
     } else {
-        isActive.value = true;
+        nextTick(() => (isActive.value = true));
+        emits("open", event);
     }
 }
 

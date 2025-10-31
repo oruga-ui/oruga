@@ -420,9 +420,12 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: inputValue });
         :class="rootClasses"
         :menu-id="menuId"
         :menu-tag="menuTag"
-        :triggers="[]"
         scrollable
         selectable
+        :open-on-click="false"
+        :open-on-contextmenu="false"
+        :open-on-focus="false"
+        :open-on-hover="false"
         :keep-open="keepOpen"
         :keep-first="keepFirst"
         :select-on-close="selectOnClose"
