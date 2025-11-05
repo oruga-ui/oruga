@@ -330,6 +330,7 @@ defineExpose({ checkHtml5Validity, focus: setFocus, value: selectedItems });
                     :key="option.key"
                     :label="option.label"
                     :variant="variant"
+                    :size="size"
                     :class="itemClasses"
                     :closeable="closeable && !disabled"
                     :close-icon="closeIcon"
