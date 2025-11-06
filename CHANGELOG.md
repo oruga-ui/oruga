@@ -1,3 +1,23 @@
+# [0.12.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.12.0-pre.2...v0.12.0-pre.3) (2025-11-06)
+
+
+### Bug Fixes
+
+* **dialog:** correct programmatic type inheritance ([#1457](https://github.com/oruga-ui/oruga/issues/1457)) ([288f9fa](https://github.com/oruga-ui/oruga/commit/288f9fab5066a5e35a3b8604a83b70d7ee9e66b6))
+* **taginput:** forward input size to tag items ([#1454](https://github.com/oruga-ui/oruga/issues/1454)) ([cfc46d3](https://github.com/oruga-ui/oruga/commit/cfc46d3747d9385a9ade01a3cec75bd5ad9745e9))
+
+
+### Features
+
+* **sidebar:** remove prop `reduce` & `expandOnHover` | update `mobile` prop ([#1456](https://github.com/oruga-ui/oruga/issues/1456)) ([68a0f2e](https://github.com/oruga-ui/oruga/commit/68a0f2ef8d8c67e700d90c486bca6cd6a763d10a))
+
+
+### BREAKING CHANGES
+
+* **sidebar:** The props `expandOnHover` and `reduce` and related classes were removed from the Sidebar component.
+
+
+
 # [0.12.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.12.0-pre.1...v0.12.0-pre.2) (2025-10-31)
 
 
