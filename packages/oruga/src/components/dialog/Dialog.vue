@@ -18,6 +18,7 @@ import type { DialogProps } from "./props";
 
 /**
  * A flexible and extensible content container.
+ * @experimental
  * @displayName Dialog
  * @style _dialog.scss
  */
