@@ -77,8 +77,6 @@ const isActive = defineModel<boolean>("active", { default: false });
 
 const tooltipId = useId();
 
-const timer = ref();
-
 const autoPosition = ref(props.position);
 
 /** update autoPosition on prop change */
@@ -88,8 +86,8 @@ watch(
 );
 
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
-const contentRef = useTemplateRef<HTMLElement | Component>("contentRef");
 const triggerRef = useTemplateRef<HTMLElement | Component>("triggerRef");
+const contentRef = ref<HTMLElement>();
 
 // #region --- Event Handler ---
 
@@ -147,12 +145,14 @@ function onHover(event: Event): void {
     open(event);
 }
 
+let timer: ReturnType<typeof setTimeout> | undefined;
+
 function open(event: Event): void {
     if (props.disabled) return;
     if (props.delay) {
-        timer.value = setTimeout(() => {
+        timer = setTimeout(() => {
             isActive.value = true;
-            timer.value = undefined;
+            timer = undefined;
             emits("open", event);
         }, props.delay);
     } else {
@@ -173,7 +173,7 @@ function checkCancelable(
 }
 
 function close(event: Event): void {
-    if (timer.value) clearTimeout(timer.value);
+    if (timer) clearTimeout(timer);
     isActive.value = false;
     emits("close", event);
 }

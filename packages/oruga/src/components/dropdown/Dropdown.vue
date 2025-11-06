@@ -6,6 +6,7 @@ import {
     watch,
     useId,
     toValue,
+    useTemplateRef,
     type Component,
 } from "vue";
 
@@ -127,8 +128,8 @@ const emits = defineEmits<{
     "scroll-end": [];
 }>();
 
-const triggerRef = ref<HTMLElement>();
-const menuRef = ref<HTMLElement | Component | null>(null);
+const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
+const menuRef = ref<HTMLElement | Component>();
 
 // provided data is a computed ref to ensure reactivity
 const provideData = computed<DropdownComponent<T>>(() => ({

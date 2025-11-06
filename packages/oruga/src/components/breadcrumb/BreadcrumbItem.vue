@@ -78,7 +78,7 @@ const iconRightClasses = defineClasses(
         :data-id="`breadcrumb-${item.identifier}`"
         :class="rootClasses"
         :aria-current="active ? 'page' : undefined">
-        <!-- 
+        <!--
             @slot Item seperator
         -->
         <slot name="seperator"> </slot>
@@ -97,7 +97,7 @@ const iconRightClasses = defineClasses(
                 :size="iconSize"
                 :class="iconLeftClasses" />
 
-            <!-- 
+            <!--
                 @slot Override label
             -->
             <slot>
