@@ -4,7 +4,7 @@ exports[`OBreadcrumb tests > render correctly 1`] = `
 "<nav data-oruga="breadcrumb" class="o-breadcrumb" style="--seperator: '/';" aria-label="Breadcrumb">
   <ol class="o-breadcrumb__list">
     <!--
-                @slot Place breadcrumb items here 
+                @slot Place breadcrumb items here
             -->
     <li data-oruga="breadcrumb-item" data-id="breadcrumb-1" class="o-breadcrumb__item o-breadcrumb__item--active" aria-current="page">
       <!-- 
