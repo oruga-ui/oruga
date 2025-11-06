@@ -43,9 +43,7 @@ const props = withDefaults(defineProps<SidebarProps<C>>(), {
     position: () => getDefault("sidebar.position", "left"),
     fullheight: () => getDefault("sidebar.fullheight", false),
     fullwidth: () => getDefault("sidebar.fullwidth", false),
-    reduce: () => getDefault("sidebar.reduce", false),
     mobile: () => getDefault("sidebar.mobile"),
-    expandOnHover: () => getDefault("sidebar.expandOnHover", false),
     animation: () => getDefault("sidebar.animation"),
     cancelable: () => getDefault("sidebar.cancelable"),
     closeOnOutside: () => getDefault("sidebar.closeOnOutside", true),
@@ -218,30 +216,13 @@ const contentClasses = defineClasses(
         "fullwidthClass",
         "o-sidebar__content--fullwidth",
         null,
-        computed(
-            () =>
-                props.fullwidth ||
-                (isMobile.value && props.mobile === "expanded"),
-        ),
+        computed(() => props.fullwidth),
     ],
     [
-        "reduceClass",
-        "o-sidebar__content--reduced",
-        null,
-        computed(
-            () =>
-                props.reduce || (isMobile.value && props.mobile === "reduced"),
-        ),
-    ],
-    [
-        "expandOnHoverClass",
-        "o-sidebar__content--hover-expand",
-        null,
-        computed(
-            () =>
-                props.expandOnHover &&
-                (!isMobile.value || props.mobile !== "expanded"),
-        ),
+        "contentMobileClass",
+        "o-sidebar__content--",
+        computed(() => props.mobile),
+        computed(() => isMobile.value && !!props.mobile),
     ],
     ["visibleClass", "o-sidebar__content--visible", null, isActive],
     [
