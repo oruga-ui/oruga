@@ -39,7 +39,7 @@ export class DialogProgrammaticFactory extends ProgrammaticFactory {
         options: string | DialogProgrammaticOptions<C>,
         modalOptions?: DialogModalProgrammaticOptions,
         target?: ProgrammaticTarget,
-    ): ProgrammaticExpose<typeof Modal<C>> {
+    ): ProgrammaticExpose<typeof Modal<typeof Dialog<C>>> {
         const dialogOptions: DialogProgrammaticOptions<C> =
             typeof options === "string" ? { content: options } : options;
 
@@ -51,7 +51,7 @@ export class DialogProgrammaticFactory extends ProgrammaticFactory {
         };
 
         // create programmatic component
-        return this._create(
+        return this._create<typeof Modal<typeof Dialog<C>>>(
             Modal,
             {
                 props: componentProps, // component specific props
