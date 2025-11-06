@@ -86,7 +86,7 @@ const listClasses = defineClasses(["listClass", "o-breadcrumb__list"]);
         :aria-label="ariaLabel">
         <ol :class="listClasses">
             <!--
-                @slot Place breadcrumb items here 
+                @slot Place breadcrumb items here
             -->
             <slot>
                 <OBreadcrumbItem

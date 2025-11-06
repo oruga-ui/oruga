@@ -18,22 +18,34 @@ export function renderer(
     requiresMd: ContentAndDependencies[],
     { isSubComponent }: SubTemplateOptions,
 ): string {
-    const { displayName, description, tags, functional, docsBlocks } = doc;
-    const { deprecated, author, since, version, see, link, style } = tags || {};
+    const { displayName, description, tags, docsBlocks } = doc;
+    const {
+        deprecated,
+        author,
+        since,
+        version,
+        see,
+        link,
+        style,
+        experimental,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        requires,
+        ...badges
+    } = tags || {};
     const component = getFilenameWithoutExtension(fileName);
 
     const tag = (component.match(/[A-Z][a-z]+/g) || []).join("-").toLowerCase();
 
-    const requires = !component;
     return `
 ${isSubComponent ? "" : `# ${deprecated ? `~~${displayName}~~` : displayName}`}
 
 ${
-    requires || isSubComponent
-        ? ""
-        : `<section class="odocs-head">
+    !isSubComponent
+        ? `
+<section class="odocs-head">
+${experimental ? `<Badge type="warning" text="experimental" />` : ""}
+${badges ? Object.keys(badges).map((b) => `<Badge text="${b}" />`) : ""}
 ${deprecated ? `> **Deprecated** ${(deprecated[0] as ParamTag).description}\n` : ""}
-${functional ? renderedUsage.functionalTag : ""}
 ${author ? author.map((a) => `Author: ${(a as ParamTag).description}\n`) : ""}
 ${since ? `Since: ${(since[0] as ParamTag).description}\n` : ""}
 ${version ? `Version: ${(version[0] as ParamTag).description}\n` : ""}
@@ -42,6 +54,7 @@ ${link ? link.map((l) => `[See](${(l as ParamTag).description})\n`) : ""}
 ${docsBlocks ? docsBlocks : ""}
 </section>
 `
+        : ""
 }
 ${
     isSubComponent
