@@ -6,6 +6,9 @@ const overlay = ref(true);
 const fullheight = ref(true);
 const fullwidth = ref(false);
 const position = ref<"left" | "top" | "bottom" | "right">("left");
+const mobile = ref<
+    "reduced" | "expanded" | "fullwidth" | "fullheight" | "hidden"
+>("fullwidth");
 </script>
 
 <template>
@@ -22,6 +25,16 @@ const position = ref<"left" | "top" | "bottom" | "right">("left");
                     <option value="bottom">Bottom</option>
                 </o-select>
             </o-field>
+            <o-field label="Override layout for small screens">
+                <o-select v-model="mobile">
+                    <option :value="null"></option>
+                    <option value="reduced">Reduced</option>
+                    <option value="expanded">Expanded</option>
+                    <option value="fullwidth">Fullwidth</option>
+                    <option value="fullheight">Fullheight</option>
+                    <option value="hidden">Hidden</option>
+                </o-select>
+            </o-field>
         </o-field>
 
         <o-button label="Show Sidebar" @click="active = true" />
@@ -32,9 +45,10 @@ const position = ref<"left" | "top" | "bottom" | "right">("left");
             :fullheight="fullheight"
             :fullwidth="fullwidth"
             :overlay="overlay"
-            :position="position">
+            :position="position"
+            :mobile="mobile">
             <o-button
-                v-if="fullwidth || fullheight || !overlay"
+                v-if="fullwidth || fullheight || !overlay || mobile"
                 icon-left="times"
                 label="Close"
                 @click="close($event)" />

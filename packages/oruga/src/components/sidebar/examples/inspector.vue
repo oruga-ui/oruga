@@ -86,20 +86,12 @@ const inspectData: InspectData<SidebarClasses, SidebarProps> = {
             data.fullwidth = true;
         },
     },
-    reduceClass: {
-        class: "reduceClass",
-        description: "Class of the content element when reduced.",
-        properties: ["reduce"],
+    contentMobileClass: {
+        class: "contentMobileClass",
+        description: "Class of the content element with small screen modifier.",
+        properties: ["mobile"],
         action: (data): void => {
-            data.reduce = true;
-        },
-    },
-    expandOnHoverClass: {
-        class: "expandOnHoverClass",
-        description: "Class of the content element when expanded on hover.",
-        properties: ["expandOnHover"],
-        action: (data): void => {
-            data.expandOnHover = true;
+            data.mobile = "reduced";
         },
     },
     scrollClipClass: {
