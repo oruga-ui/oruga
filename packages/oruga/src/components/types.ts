@@ -2168,17 +2168,9 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 fullwidth: boolean;
                 /**
-                 * Show a small sidebar
+                 * Override layout for small screens
                  */
-                reduce: boolean;
-                /**
-                 * Custom layout on mobile
-                 */
-                mobile: "expanded" | "hidden" | "reduced";
-                /**
-                 * Expand sidebar on hover when reduced or mobile is reduce
-                 */
-                expandOnHover: boolean;
+                mobile: "expanded" | "fullheight" | "fullwidth" | "hidden" | "reduced";
                 /**
                  * Custom animation (transition name)
                  */
@@ -2245,6 +2237,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 contentClass: ClassDefinition;
                 /**
+                 * Class of the content element with small screen modifier
+                 */
+                contentMobileClass: ClassDefinition;
+                /**
                  * Class of the content element when hidden
                  */
                 hiddenClass: ClassDefinition;
@@ -2264,14 +2260,6 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the content element when is fullwidth
                  */
                 fullwidthClass: ClassDefinition;
-                /**
-                 * Class of the content element when reduced
-                 */
-                reduceClass: ClassDefinition;
-                /**
-                 * Class of the content element when expanded on hover
-                 */
-                expandOnHoverClass: ClassDefinition;
                 /**
                  * Class of the body when is visible and scroll is clipped
                  */
