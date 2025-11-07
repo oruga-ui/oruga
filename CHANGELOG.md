@@ -1,64 +1,15 @@
-# [0.12.0-pre.3](https://github.com/oruga-ui/oruga/compare/v0.12.0-pre.2...v0.12.0-pre.3) (2025-11-06)
+# [0.12.0](https://github.com/oruga-ui/oruga/compare/v0.12.0-pre.3...v0.12.0) (2025-11-07)
 
-
-### Bug Fixes
-
-* **dialog:** correct programmatic type inheritance ([#1457](https://github.com/oruga-ui/oruga/issues/1457)) ([288f9fa](https://github.com/oruga-ui/oruga/commit/288f9fab5066a5e35a3b8604a83b70d7ee9e66b6))
-* **taginput:** forward input size to tag items ([#1454](https://github.com/oruga-ui/oruga/issues/1454)) ([cfc46d3](https://github.com/oruga-ui/oruga/commit/cfc46d3747d9385a9ade01a3cec75bd5ad9745e9))
-
-
-### Features
-
-* **sidebar:** remove prop `reduce` & `expandOnHover` | update `mobile` prop ([#1456](https://github.com/oruga-ui/oruga/issues/1456)) ([68a0f2e](https://github.com/oruga-ui/oruga/commit/68a0f2ef8d8c67e700d90c486bca6cd6a763d10a))
-
-
-### BREAKING CHANGES
-
-* **sidebar:** The props `expandOnHover` and `reduce` and related classes were removed from the Sidebar component.
-
-
-
-# [0.12.0-pre.2](https://github.com/oruga-ui/oruga/compare/v0.12.0-pre.1...v0.12.0-pre.2) (2025-10-31)
-
-
-### Bug Fixes
-
-* **pagination:** solve depreacted pagination order prop issues ([#1439](https://github.com/oruga-ui/oruga/issues/1439)) ([b625ef0](https://github.com/oruga-ui/oruga/commit/b625ef02dace3334982c34bb0b3e879abbf62851))
-* **steps|tabs:** clear transitioning class after transition end ([#1443](https://github.com/oruga-ui/oruga/issues/1443)) ([22cbfe0](https://github.com/oruga-ui/oruga/commit/22cbfe0c6446a6f038a840ebe0adcb9b8af633b0))
-
-
-### Features
-
-* **dialog:** add programmatic interface ([#1438](https://github.com/oruga-ui/oruga/issues/1438)) ([ce98766](https://github.com/oruga-ui/oruga/commit/ce9876693b6eef21d915873c5ab5283f29908159))
-* **dialog:** convert card into dialog component ([#1436](https://github.com/oruga-ui/oruga/issues/1436)) ([0986bc7](https://github.com/oruga-ui/oruga/commit/0986bc7543a89fb35767a15b763d474147f51229))
-* **dropdown:** remove `checkScroll` and always emit events when `scrollable` ([#1451](https://github.com/oruga-ui/oruga/issues/1451)) ([0d51b7a](https://github.com/oruga-ui/oruga/commit/0d51b7aa4c177da2e57e7ece9a7becc631bb7af3))
-* **dropdown:** remove `method` argument from open/close event ([#1449](https://github.com/oruga-ui/oruga/issues/1449)) ([358d124](https://github.com/oruga-ui/oruga/commit/358d1243f73f59a478f5da7315ab0f46634a6a14))
-* **programmatic:** enhance programmatic types ([#1445](https://github.com/oruga-ui/oruga/issues/1445)) ([3efb78a](https://github.com/oruga-ui/oruga/commit/3efb78a7a41b49f9ecc41b31d0d4cd63f63f3a27))
-* split `trigger` array props into individual props ([#1452](https://github.com/oruga-ui/oruga/issues/1452)) ([f737261](https://github.com/oruga-ui/oruga/commit/f7372616b5af19af90075c05b18b9e04e0f13a73))
-* split up `closeable` array props into individual props ([#1444](https://github.com/oruga-ui/oruga/issues/1444)) ([63d1e93](https://github.com/oruga-ui/oruga/commit/63d1e93b137840d54255821387231e3944b5d44b))
-
-
-### BREAKING CHANGES
-
-* **dropdown:** Dropdown `open` and `close` event arguments has changed
-
-
-
-# [0.12.0-pre.1](https://github.com/oruga-ui/oruga/compare/v0.11.6...v0.12.0-pre.1) (2025-10-04)
-
-
-### BREAKING CHANGES
-
-* **autocomplete:** rename class `itemGroupTitleClass` to `itemGroupClass`
-* **pagination:** the pagination button template has changed
-* **steps:** `variantClass` got removed from the Steps component
-* **upload:** rename `hoveredClass` to `draggableHoveredClass`
 
 ### Bug Fixes
 
 * **carousel:** solve tab navigation issues when has no indicators ([#1432](https://github.com/oruga-ui/oruga/issues/1432)) ([28d9823](https://github.com/oruga-ui/oruga/commit/28d982363eff36536f753b2c30e4d8aff2e85b6a))
+* **dialog:** correct programmatic type inheritance ([#1457](https://github.com/oruga-ui/oruga/issues/1457)) ([288f9fa](https://github.com/oruga-ui/oruga/commit/288f9fab5066a5e35a3b8604a83b70d7ee9e66b6))
 * **drodown:** don't prevent home/end keys for elements with native key behavior ([#1419](https://github.com/oruga-ui/oruga/issues/1419)) ([b7b9324](https://github.com/oruga-ui/oruga/commit/b7b93248e1c4140e3a884f48808c5399e3adc5cd))
 * **dropdown:** clear focused item on hover out ([#1418](https://github.com/oruga-ui/oruga/issues/1418)) ([9e31b94](https://github.com/oruga-ui/oruga/commit/9e31b944370c2c25190886bd1d4e17f8237f2c78))
+* **pagination:** solve depreacted pagination order prop issues ([#1439](https://github.com/oruga-ui/oruga/issues/1439)) ([b625ef0](https://github.com/oruga-ui/oruga/commit/b625ef02dace3334982c34bb0b3e879abbf62851))
+* **steps|tabs:** clear transitioning class after transition end ([#1443](https://github.com/oruga-ui/oruga/issues/1443)) ([22cbfe0](https://github.com/oruga-ui/oruga/commit/22cbfe0c6446a6f038a840ebe0adcb9b8af633b0))
+* **taginput:** forward input size to tag items ([#1454](https://github.com/oruga-ui/oruga/issues/1454)) ([cfc46d3](https://github.com/oruga-ui/oruga/commit/cfc46d3747d9385a9ade01a3cec75bd5ad9745e9))
 
 
 ### Features
@@ -67,14 +18,32 @@
 * **card:** add OCard component ([#1384](https://github.com/oruga-ui/oruga/issues/1384)) ([2222bee](https://github.com/oruga-ui/oruga/commit/2222beef91ee33ca57d2cb69ea05038b3738f851))
 * **carousel:** add `options` prop ([#1429](https://github.com/oruga-ui/oruga/issues/1429)) ([d57fb7d](https://github.com/oruga-ui/oruga/commit/d57fb7db6d04a60ba0aab1af79ffee1b6a396585))
 * **carousel:** add default slide template with `title`, `subtitle` and `image` ([#1416](https://github.com/oruga-ui/oruga/issues/1416)) ([d96f555](https://github.com/oruga-ui/oruga/commit/d96f55516bcaef6b6dea037ef913c207c03d0abd))
+* **dialog:** add programmatic interface ([#1438](https://github.com/oruga-ui/oruga/issues/1438)) ([ce98766](https://github.com/oruga-ui/oruga/commit/ce9876693b6eef21d915873c5ab5283f29908159))
+* **dialog:** convert card into dialog component ([#1436](https://github.com/oruga-ui/oruga/issues/1436)) ([0986bc7](https://github.com/oruga-ui/oruga/commit/0986bc7543a89fb35767a15b763d474147f51229))
+* **dropdown:** remove `checkScroll` and always emit events when `scrollable` ([#1451](https://github.com/oruga-ui/oruga/issues/1451)) ([0d51b7a](https://github.com/oruga-ui/oruga/commit/0d51b7aa4c177da2e57e7ece9a7becc631bb7af3))
+* **dropdown:** remove `method` argument from open/close event ([#1449](https://github.com/oruga-ui/oruga/issues/1449)) ([358d124](https://github.com/oruga-ui/oruga/commit/358d1243f73f59a478f5da7315ab0f46634a6a14))
 * **listbox:** add OListbox component ([#1380](https://github.com/oruga-ui/oruga/issues/1380)) ([0ded5de](https://github.com/oruga-ui/oruga/commit/0ded5de90fbe54bee1173141750a1262925290f6))
 * **pagination:** use OButton component instead of custom button ([#1386](https://github.com/oruga-ui/oruga/issues/1386)) ([a7f22f3](https://github.com/oruga-ui/oruga/commit/a7f22f30c615b87abae8ca5eb20b666132c1d074))
 * **programmatic:** use factory pattern for programmatic interfaces ([#1395](https://github.com/oruga-ui/oruga/issues/1395)) ([1017e08](https://github.com/oruga-ui/oruga/commit/1017e081c07372d60e033c218d87a24a8b5a9b96))
+* **sidebar:** remove prop `reduce` & `expandOnHover` | update `mobile` prop ([#1456](https://github.com/oruga-ui/oruga/issues/1456)) ([68a0f2e](https://github.com/oruga-ui/oruga/commit/68a0f2ef8d8c67e700d90c486bca6cd6a763d10a))
 * **steps:** remove root variantClass ([#1410](https://github.com/oruga-ui/oruga/issues/1410)) ([0d77beb](https://github.com/oruga-ui/oruga/commit/0d77bebb03e42b434bedcf13f0aa743d2e759315))
+* **programmatic:** enhance programmatic types ([#1445](https://github.com/oruga-ui/oruga/issues/1445)) ([3efb78a](https://github.com/oruga-ui/oruga/commit/3efb78a7a41b49f9ecc41b31d0d4cd63f63f3a27))
 * **table:** move slots `before` and `after` out of `default` slot ([#1428](https://github.com/oruga-ui/oruga/issues/1428)) ([6661827](https://github.com/oruga-ui/oruga/commit/6661827be3077fe2895d8ff497042948f1d7272b))
 * **table:** unify class names ([#1406](https://github.com/oruga-ui/oruga/issues/1406)) ([cfd21d5](https://github.com/oruga-ui/oruga/commit/cfd21d5781184dc3b37439104c65abf0b4ff9584))
 * **tabs:** add TabItem `variant` class ([#1409](https://github.com/oruga-ui/oruga/issues/1409)) ([a0b9f82](https://github.com/oruga-ui/oruga/commit/a0b9f82ae1c1413a8df5c3d05ca4e1df3aa303a7))
 * **upload:** adjust classes ([#1398](https://github.com/oruga-ui/oruga/issues/1398)) ([324616c](https://github.com/oruga-ui/oruga/commit/324616c83b8d9a757b6b943d743d56586eb19ad4)), closes [#1398](https://github.com/oruga-ui/oruga/issues/1398)
+* split `trigger` array props into individual props ([#1452](https://github.com/oruga-ui/oruga/issues/1452)) ([f737261](https://github.com/oruga-ui/oruga/commit/f7372616b5af19af90075c05b18b9e04e0f13a73))
+* split up `closeable` array props into individual props ([#1444](https://github.com/oruga-ui/oruga/issues/1444)) ([63d1e93](https://github.com/oruga-ui/oruga/commit/63d1e93b137840d54255821387231e3944b5d44b))
+
+
+### BREAKING CHANGES
+
+* **autocomplete:** rename class `itemGroupTitleClass` to `itemGroupClass`
+* **dropdown:** Dropdown `open` and `close` event arguments has changed
+* **pagination:** the pagination button template has changed
+* **sidebar:** The props `expandOnHover` and `reduce` and related classes were removed from the Sidebar component.
+* **steps:** `variantClass` got removed from the Steps component
+* **upload:** rename `hoveredClass` to `draggableHoveredClass`
 
 
 
