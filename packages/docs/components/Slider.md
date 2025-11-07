@@ -114,30 +114,41 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                 | Default                                      |
-| ----------------------------- | -------------------------------------------- |
-| $slider-background            | transparent                                  |
-| $slider-margin                | 1em 0                                        |
-| $slider-mark-size             | 0.75rem                                      |
-| $slider-font-size             | var(--#{$prefix}base-font-size)              |
-| $slider-rounded-borded-radius | var( --#{$prefix}base-border-radius-rounded) |
-| $slider-thumb-background      | var(--#{$prefix}white)                       |
-| $slider-thumb-border          | 1px solid var(--#{$prefix}grey-light)        |
-| $slider-thumb-radius          | var(--#{$prefix}base-border-radius)          |
-| $slider-thumb-shadow          | none                                         |
-| $slider-thumb-to-track-ratio  | 2                                            |
-| $slider-thumb-transform       | scale(1.25)                                  |
-| $slider-tick-background       | var(--#{$prefix}primary)                     |
-| $slider-tick-radius           | var(--#{$prefix}base-border-radius)          |
-| $slider-tick-to-track-ratio   | 0.5                                          |
-| $slider-tick-width            | 3px                                          |
-| $slider-track-background      | var(--#{$prefix}grey-lighter)                |
-| $slider-fill-background       | var(--#{$prefix}primary)                     |
-| $slider-track-border-radius   | var(--#{$prefix}base-border-radius)          |
-| $slider-track-border          | 0px solid var(--#{$prefix}grey)              |
-| $slider-track-disabled        | 0.5                                          |
-| $slider-track-radius          | var(--#{$prefix}base-border-radius)          |
-| $slider-track-shadow          | 0px 0px 0px var(--#{$prefix}grey)            |
+| SASS Variable                       | Default                                                               |
+| ----------------------------------- | --------------------------------------------------------------------- |
+| $slider-padding                     | 1em 0                                                                 |
+| $slider-disabled-opacity            | h.useVar("control-disabled-opacity")                                  |
+| $slider-font-size                   | h.useVar("font-size")                                                 |
+| $slider-track-to-thumb-ratio        | 2                                                                     |
+| $slider-track-height                | calc( h.useVar("slider-thumb-size") / $slider-track-to-thumb-ratio)   |
+| $slider-track-box-shadow            | h.useVar("control-box-shadow")                                        |
+| $slider-track-border-width          | 0px                                                                   |
+| $slider-track-border-style          | solid                                                                 |
+| $slider-track-border-color          | h.useVar("grey")                                                      |
+| $slider-track-border-radius         | h.useVar("border-radius")                                             |
+| $slider-track-background-color      | h.useVar("grey-lighter")                                              |
+| $slider-fill-box-shadow             | h.useVar("control-focus-box-shadow")                                  |
+| $slider-fill-background-color       | h.useVar("primary")                                                   |
+| $slider-thumb-size                  | h.useVar("slider-font-size")                                          |
+| $slider-thumb-font-size             | calc(0.85 \* h.useVar("slider-font-size"))                            |
+| $slider-thumb-font-weight           | h.useVar("font-weight")                                               |
+| $slider-thumb-line-height           | h.useVar("line-height")                                               |
+| $slider-thumb-box-shadow            | none                                                                  |
+| $slider-thumb-border-width          | 1px                                                                   |
+| $slider-thumb-border-style          | solid                                                                 |
+| $slider-thumb-border-color          | h.useVar("grey-light")                                                |
+| $slider-thumb-border-radius         | h.useVar("border-radius")                                             |
+| $slider-thumb-border-radius-rounded | h.useVar("border-radius-rounded")                                     |
+| $slider-thumb-background-color      | h.useVar("control-brackground-color")                                 |
+| $slider-thumb-transform             | scale(1.25)                                                           |
+| $slider-tick-to-track-ratio         | 0.5                                                                   |
+| $slider-tick-size                   | calc( h.useVar("slider-track-height") \* $slider-tick-to-track-ratio) |
+| $slider-tick-color                  | h.useVar("font-color")                                                |
+| $slider-tick-font-size              | 0.75em                                                                |
+| $slider-tick-font-weight            | h.useVar("font-weight")                                               |
+| $slider-tick-line-height            | h.useVar("line-height")                                               |
+| $slider-tick-background-color       | h.useVar("primary")                                                   |
+| $slider-tick-radius                 | h.useVar("border-radius")                                             |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
 

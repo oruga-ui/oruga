@@ -83,20 +83,20 @@ The component implements the W3C ARIA APG [Tooltip Pattern](https://www.w3.org/W
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                    | Default                            |
-| -------------------------------- | ---------------------------------- |
-| $tooltip-arrow-margin            | 2px                                |
-| $tooltip-arrow-size              | 5px                                |
-| $tooltip-background-color        | var(--#{$prefix}primary)           |
-| $tooltip-color                   | var(--#{$prefix}primary-invert)    |
-| $tooltip-content-box-shadow      | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) |
-| $tooltip-content-font-size       | 0.85rem                            |
-| $tooltip-content-max-width       | 300px                              |
-| $tooltip-content-multiline-width | 300px                              |
-| $tooltip-content-padding         | 0.35rem 0.75rem                    |
-| $tooltip-content-radius-large    | 6px                                |
-| $tooltip-content-weight-normal   | 400                                |
-| $tooltip-content-zindex          | 38                                 |
+| SASS Variable                     | Default                          |
+| --------------------------------- | -------------------------------- |
+| $tooltip-zindex                   | map.get(vars.$zindex, "tooltip") |
+| $tooltip-content-font-size        | 0.85rem                          |
+| $tooltip-content-color            | h.useVar("white")                |
+| $tooltip-content-font-weight      | h.useVar("font-weight")          |
+| $tooltip-content-line-height      | h.useVar("line-height")          |
+| $tooltip-content-padding          | 0.35em 0.75em                    |
+| $tooltip-content-multiline-width  | 300px                            |
+| $tooltip-content-box-shadow       | h.useVar("overlay-box-shadow")   |
+| $tooltip-content-background-color | h.useVar("grey-darkest")         |
+| $tooltip-content-border-radius    | h.useVar("border-radius")        |
+| $tooltip-arrow-margin             | 2px                              |
+| $tooltip-arrow-size               | 5px                              |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tooltip.scss)
 

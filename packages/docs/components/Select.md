@@ -90,24 +90,25 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                 | Default                                               |
-| ----------------------------- | ----------------------------------------------------- |
-| $select-background-color      | #fff                                                  |
-| $select-border-color          | var(--#{$prefix}grey-lighter)                         |
-| $select-border-style          | solid                                                 |
-| $select-border-width          | 1px                                                   |
-| $select-border-radius         | var(--#{$prefix}base-border-radius)                   |
-| $select-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
-| $select-box-shadow            | $control-box-shadow                                   |
-| $select-color                 | #363636                                               |
-| $select-icon-zindex           | 4                                                     |
-| $select-height                | $control-height                                       |
-| $select-line-height           | var(--#{$prefix}base-line-height)                     |
-| $select-margin                | 0                                                     |
-| $select-padding               | $control-padding-vertical $control-padding-horizontal |
-| $select-arrow-color           | $select-color                                         |
-| $select-arrow-size            | 1rem                                                  |
-| $select-placeholder-opacity   | var(--#{$prefix}base-disabled-opacity)                |
+| SASS Variable                 | Default                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| $select-height                | h.useVar("control-height")                                                  |
+| $select-padding               | h.useVar("control-padding-vertical") h.useVar("control-padding-horizontal") |
+| $select-disabled-opacity      | h.useVar("control-disabled-opacity")                                        |
+| $select-color                 | h.useVar("font-color")                                                      |
+| $select-font-size             | h.useVar("font-size")                                                       |
+| $select-font-weight           | h.useVar("font-weight")                                                     |
+| $select-line-height           | h.useVar("line-height")                                                     |
+| $select-box-shadow            | h.useVar("control-box-shadow-inset")                                        |
+| $select-background-color      | h.useVar("control-brackground-color")                                       |
+| $select-border-color          | h.useVar("control-border-color")                                            |
+| $select-border-style          | solid                                                                       |
+| $select-border-width          | h.useVar("control-border-width")                                            |
+| $select-border-radius         | h.useVar("border-radius")                                                   |
+| $select-border-radius-rounded | h.useVar("border-radius-rounded")                                           |
+| $select-multiple-padding      | h.useVar("control-spacer")                                                  |
+| $select-arrow-color           | vars.$font-color                                                            |
+| $select-arrow-size            | 1em                                                                         |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
 

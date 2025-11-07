@@ -89,20 +89,23 @@ The component supports the W3C ARIA APG [Dialog (Modal) Pattern](https://www.w3.
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                              | Default                                      |
-| ------------------------------------------ | -------------------------------------------- |
-| $modal-content-background-color            | var(--#{$prefix}white)                       |
-| $modal-content-border-radius               | var(--#{$prefix}base-border-radius)          |
-| $modal-overlay-background-color            | hsla(0, 0%, 4%, 0.86)                        |
-| $modal-close-border-radius                 | var( --#{$prefix}base-border-radius-rounded) |
-| $modal-close-right                         | 20px                                         |
-| $modal-close-top                           | 20px                                         |
-| $modal-close-size                          | 32px                                         |
-| $modal-close-color                         | var(--#{$prefix}white)                       |
-| $modal-content-fullscreen-background-color | $control-brackground-color                   |
-| $modal-content-max-height                  | calc(100vh - 160px)                          |
-| $modal-content-margin                      | 0 auto                                       |
-| $modal-zindex                              | 40                                           |
+| SASS Variable                   | Default                               |
+| ------------------------------- | ------------------------------------- |
+| $modal-zindex                   | map.get(vars.$zindex, "fixed")        |
+| $modal-overlay-background-color | h.useVar("overlay-background-color")  |
+| $modal-overlay-zindex           | map.get(vars.$zindex, "overlay")      |
+| $modal-content-zindex           | map.get(vars.$zindex, "modal")        |
+| $modal-content-max-height       | calc(100vh - 160px)                   |
+| $modal-content-max-width        | calc(100vw - 160px)                   |
+| $modal-content-box-shadow       | h.useVar("overlay-box-shadow")        |
+| $modal-content-border-radius    | h.useVar("border-radius")             |
+| $modal-content-background-color | h.useVar("control-brackground-color") |
+| $modal-close-top                | 20px                                  |
+| $modal-close-right              | 20px                                  |
+| $modal-close-color              | h.useVar("white")                     |
+| $modal-close-size               | 2rem                                  |
+| $modal-close-border-radius      | h.useVar("border-radius-rounded")     |
+| $modal-close-background-color   | h.useVar("control-shadow-color")      |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_modal.scss)
 

@@ -72,14 +72,23 @@ The **Tag** component (also known as _Badge_) is a small but versatile element. 
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable              | Default                                      |
-| -------------------------- | -------------------------------------------- |
-| $tag-color                 | var(--#{$prefix}grey-dark)                   |
-| $tag-background-color      | $control-brackground-color                   |
-| $tag-border-radius         | var(--#{$prefix}base-border-radius)          |
-| $tag-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded) |
-| $tag-padding               | 0 0.75em                                     |
-| $tag-icon-margin           | 0.5em                                        |
+| SASS Variable              | Default                           |
+| -------------------------- | --------------------------------- |
+| $tag-padding               | 0 0.75em                          |
+| $tag-color                 | h.useVar("font-color")            |
+| $tag-font-size             | h.useVar("font-size")             |
+| $tag-font-weight           | h.useVar("font-weight")           |
+| $tag-line-height           | h.useVar("line-height")           |
+| $tag-height                | h.useVar("control-height")        |
+| $tag-icon-spacer           | h.useVar("control-spacer")        |
+| $tag-close-color           | h.useVar("font-color")            |
+| $tag-box-shadow            | unset                             |
+| $tag-background-color      | h.useVar("grey-lightest")         |
+| $tag-border-color          | transparent                       |
+| $tag-border-style          | solid                             |
+| $tag-border-width          | h.useVar("control-border-width")  |
+| $tag-border-radius         | h.useVar("border-radius")         |
+| $tag-border-radius-rounded | h.useVar("border-radius-rounded") |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tag.scss)
 

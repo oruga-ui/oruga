@@ -138,37 +138,39 @@ The component implements the W3C ARIA APG [Carousel Pattern](https://www.w3.org/
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                          | Default                                                                           |
-| -------------------------------------- | --------------------------------------------------------------------------------- |
-| $carousel-arrow-background             | var(--#{$prefix}white)                                                            |
-| $carousel-arrow-color                  | var(--#{$prefix}primary)                                                          |
-| $carousel-arrow-icon-spaced            | 1.5rem                                                                            |
-| $carousel-arrow-top                    | 50%                                                                               |
-| $carousel-arrow-size                   | 1.5rem                                                                            |
-| $carousel-arrow-border-radius          | var( --#{$prefix}base-border-radius-rounded)                                      |
-| $carousel-arrow-border                 | 1px solid $carousel-arrow-background                                              |
-| $carousel-arrow-transition             | var(--#{$prefix}transition-duration)    var(--#{$prefix}transition-timing)        |
-| $carousel-autoplay-top                 | 1em                                                                               |
-| $carousel-autoplay-left                | $carousel-arrow-icon-spaced                                                       |
-| $carousel-autoplay-right               | unset                                                                             |
-| $carousel-autoplay-bottom              | unset                                                                             |
-| $carousel-indicators-background        | rgba(var(--#{$prefix}white), 0.5)                                                 |
-| $carousel-indicators-padding           | 0.5rem                                                                            |
-| $carousel-indicator-margin             | 0 0.5rem 0 0                                                                      |
-| $carousel-indicator-color              | var(--#{$prefix}primary)                                                          |
-| $carousel-indicator-background         | var(--#{$prefix}white)                                                            |
-| $carousel-indicator-border             | 1px solid $carousel-indicator-color                                               |
-| $carousel-indicator-active-background  | $carousel-indicator-color                                                         |
-| $carousel-indicator-active-border      | 1px solid $carousel-indicator-color                                               |
-| $carousel-indicator-transition         | var(--#{$prefix}transition-duration)    var(--#{$prefix}transition-timing)        |
-| $carousel-indicator-size               | 10px                                                                              |
-| $carousel-indicator-dots-border-radius | var( --#{$prefix}base-border-radius)                                              |
-| $carousel-indicator-lines-height       | 5px                                                                               |
-| $carousel-indicator-lines-width        | 25px                                                                              |
-| $carousel-items-transition             | all var(--#{$prefix}transition-duration)    var(--#{$prefix}transition-timing) 0s |
-| $carousel-item-border                  | 2px solid transparent                                                             |
-| $carousel-overlay-background           | hsla(0, 0%, 4%, 0.86)                                                             |
-| $carousel-overlay-zindex               | 40                                                                                |
+| SASS Variable                         | Default                                                              |
+| ------------------------------------- | -------------------------------------------------------------------- |
+| $carousel-arrow-icon-spacer           | 1.5rem                                                               |
+| $carousel-arrow-top                   | 50%                                                                  |
+| $carousel-arrow-size                  | 1.5rem                                                               |
+| $carousel-arrow-color                 | h.useVar("primary")                                                  |
+| $carousel-arrow-border-width          | 1px                                                                  |
+| $carousel-arrow-border-style          | solid                                                                |
+| $carousel-arrow-border-color          | h.useVar("white")                                                    |
+| $carousel-arrow-border-radius         | h.useVar("border-radius-rounded")                                    |
+| $carousel-arrow-background-color      | $carousel-arrow-border-color                                         |
+| $carousel-arrow-transition            | h.useVar("transition-duration") h.useVar("transition-timing")        |
+| $carousel-autoplay-top                | 1em                                                                  |
+| $carousel-autoplay-left               | $carousel-arrow-icon-spacer                                          |
+| $carousel-autoplay-right              | unset                                                                |
+| $carousel-autoplay-bottom             | unset                                                                |
+| $carousel-indicators-background       | rgba(h.useVar("white"), 0.5)                                         |
+| $carousel-indicators-padding          | 0.5rem                                                               |
+| $carousel-indicator-spacer            | 0.5rem                                                               |
+| $carousel-indicator-size              | 0.75em                                                               |
+| $carousel-indicator-lines-height      | 5px                                                                  |
+| $carousel-indicator-lines-width       | 25px                                                                 |
+| $carousel-indicator-color             | h.useVar("primary")                                                  |
+| $carousel-indicator-border            | 1px solid $carousel-indicator-color                                  |
+| $carousel-indicator-background        | h.useVar("white")                                                    |
+| $carousel-indicator-transition        | h.useVar("transition-duration") h.useVar("transition-timing")        |
+| $carousel-indicator-dots-radius       | h.useVar("border-radius")                                            |
+| $carousel-indicator-active-background | $carousel-indicator-color                                            |
+| $carousel-indicator-active-border     | 1px solid $carousel-indicator-color                                  |
+| $carousel-items-transition            | all h.useVar("transition-duration") h.useVar("transition-timing") 0s |
+| $carousel-item-border                 | 2px solid transparent                                                |
+| $carousel-overlay-background-color    | h.useVar( "overlay-background-color")                                |
+| $carousel-overlay-zindex              | map.get(vars.$zindex, "overlay")                                     |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)
 

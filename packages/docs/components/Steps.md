@@ -131,26 +131,26 @@ Breaking things down into multiple steps can improve the user experience by keep
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                       | Default                                      |
-| ----------------------------------- | -------------------------------------------- |
-| $steps-title-background-color       | hsl(0, 0%, 100%)                             |
-| $steps-title-padding                | 0.2em                                        |
-| $steps-title-font-weight            | 500                                          |
-| $steps-marker-background            | var(--#{$prefix}grey-light)                  |
-| $steps-marker-color                 | var(--#{$prefix}primary-invert)              |
-| $steps-marker-border                | 0.2em solid #fff                             |
-| $steps-marker-font-weight           | 700                                          |
-| $steps-marker-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded) |
-| $steps-color                        | var(--#{$prefix}grey-lighter)                |
-| $steps-previous-color               | var(--#{$prefix}primary)                     |
-| $steps-active-color                 | var(--#{$prefix}primary)                     |
-| $steps-divider-height               | 0.2em                                        |
-| $steps-vertical-padding             | 1em 0                                        |
-| $steps-item-line-height             | var(--#{$prefix}base-line-height)            |
-| $steps-link-color                   | hsl(0, 0%, 29%)                              |
-| $steps-content-spacer               | 1rem                                         |
-| $steps-content-padding              | 1rem                                         |
-| $steps-font-size                    | var(--#{$prefix}base-font-size)              |
+| SASS Variable                                                                       | Default                                 |
+| ----------------------------------------------------------------------------------- | --------------------------------------- |
+| $steps-disabled-opacity                                                             | h.useVar("control-disabled-opacity")    |
+| $steps-vertical-padding                                                             | calc(2 \* h.useVar("control-spacer")) 0 |
+| $steps-step-color                                                                   | h.useVar("font-color")                  |
+| $steps-step-font-size                                                               | h.useVar("font-size")                   |
+| $steps-step-font-weight                                                             | 500                                     |
+| $steps-step-line-height                                                             | h.useVar("line-height")                 |
+| $steps-step-border-color                                                            | h.useVar( "control-brackground-color")  |
+| // color scheme is inverted for steps$steps-step-background-color                   | h.useVar( "control-border-color")       |
+| // color scheme is inverted for steps$steps-step-active-border-color                | h.useVar("primary")                     |
+| $steps-step-active-background-color                                                 | h.useVar("primary-invert")              |
+| $steps-step-previous-border-color                                                   | $steps-step-active-background-color     |
+| // previus is the inverted active color scheme$steps-step-previous-background-color | $steps-step-active-border-color         |
+| // previus is the inverted active color scheme$steps-step-border-radius             | h.useVar("border-radius")               |
+| $steps-step-border-radius-rounded                                                   | h.useVar("border-radius-rounded")       |
+| $steps-step-divider-height                                                          | 0.2em                                   |
+| $steps-step-label-padding                                                           | 0.2em                                   |
+| $steps-step-label-background-color                                                  | h.useVar("white")                       |
+| $steps-content-padding                                                              | calc(2 \* h.useVar("control-spacer"))   |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_steps.scss)
 

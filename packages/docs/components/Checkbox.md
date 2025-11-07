@@ -84,23 +84,24 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                        | Default                                |
-| ------------------------------------ | -------------------------------------- |
-| $checkbox-active-background-color    | var(--#{$prefix}primary)               |
-| $checkbox-background-color           | var(--#{$prefix}primary)               |
-| $checkbox-box-shadow                 | $control-box-shadow                    |
-| $checkbox-border-color               | var(--#{$prefix}primary)               |
-| $checkbox-border-style               | solid                                  |
-| $checkbox-border-radius              | var(--#{$prefix}base-border-radius)    |
-| $checkbox-border-width               | 2px                                    |
-| $checkbox-checked-box-shadow-length  | 0 0 0.5em                              |
-| $checkbox-checked-box-shadow-opacity | 0.8                                    |
-| $checkbox-checkmark-color            | $primary-invert                        |
-| $checkbox-disabled-opacity           | var(--#{$prefix}base-disabled-opacity) |
-| $checkbox-label-padding              | 0 0 0 0.5em                            |
-| $checkbox-margin-sibiling            | 0.5em                                  |
-| $checkbox-size                       | 1rem                                   |
-| $checkbox-line-height                | 1.5                                    |
+| SASS Variable                     | Default                                     |
+| --------------------------------- | ------------------------------------------- |
+| $checkbox-spacer                  | h.useVar("control-spacer")                  |
+| $checkbox-height                  | 1.2em                                       |
+| $checkbox-width                   | 1.2em                                       |
+| $checkbox-color                   | h.useVar("font-color")                      |
+| $checkbox-font-size               | h.useVar("font-size")                       |
+| $checkbox-font-weight             | h.useVar("font-weight")                     |
+| $checkbox-line-height             | h.useVar("line-height")                     |
+| $checkbox-box-shadow              | h.useVar("control-box-shadow-inset")        |
+| $checkbox-border-color            | h.useVar("primary")                         |
+| $checkbox-border-width            | calc(2 \* h.useVar("control-border-width")) |
+| $checkbox-border-style            | solid                                       |
+| $checkbox-border-radius           | h.useVar("border-radius")                   |
+| $checkbox-background-color        | h.useVar("primary")                         |
+| $checkbox-active-background-color | h.useVar("primary")                         |
+| $checkbox-checkmark-color         | vars.$primary-invert                        |
+| $checkbox-disabled-opacity        | h.useVar("control-disabled-opacity")        |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
 

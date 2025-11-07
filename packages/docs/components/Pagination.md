@@ -86,27 +86,31 @@ The component uses the [Button](/components/Button) component for the navigation
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                               | Default                                      |
-| ------------------------------------------- | -------------------------------------------- |
-| $pagination-disabled-opacity                | var(--#{$prefix}base-disabled-opacity)       |
-| $pagination-ellipsis-color                  | var(--#{$prefix}grey-light)                  |
-| $pagination-button-border-color             | var(--#{$prefix}grey-light)                  |
-| $pagination-button-border-radius            | var(--#{$prefix}base-border-radius)          |
-| $pagination-button-border                   | 1px solid transparent                        |
-| $pagination-button-color                    | var(--#{$prefix}black)                       |
-| $pagination-button-background-color         | transparent                                  |
-| $pagination-button-background-color-hover   | var( --#{$prefix}grey-lighter)               |
-| $pagination-button-current-background-color | var(--#{$prefix}primary)                     |
-| $pagination-button-current-border-color     | var(--#{$prefix}primary)                     |
-| $pagination-button-current-color            | #fff                                         |
-| $pagination-button-height                   | 2.25em                                       |
-| $pagination-button-hover-border-color       | var(--#{$prefix}grey-light)                  |
-| $pagination-button-line-height              | var(--#{$prefix}base-line-height)            |
-| $pagination-button-margin                   | 0.25rem                                      |
-| $pagination-button-min-width                | 2.25em                                       |
-| $pagination-button-padding                  | 0.5em 0.5em                                  |
-| $pagination-margin                          | -0.25rem                                     |
-| $pagination-rounded-border-radius           | var( --#{$prefix}base-border-radius-rounded) |
+| SASS Variable                               | Default                                 |
+| ------------------------------------------- | --------------------------------------- |
+| $pagination-spacer                          | calc(0.5 \* h.useVar("control-spacer")) |
+| $pagination-disabled-opacity                | h.useVar("control-disabled-opacity")    |
+| $pagination-ellipsis-color                  | h.useVar("grey-light")                  |
+| $pagination-button-color                    | h.useVar("font-color")                  |
+| $pagination-button-font-size                | h.useVar("font-size")                   |
+| $pagination-button-font-weight              | h.useVar("font-weight")                 |
+| $pagination-button-line-height              | h.useVar("line-height")                 |
+| $pagination-button-height                   | 2.25em                                  |
+| $pagination-button-min-width                | $pagination-button-height               |
+| $pagination-button-padding                  | h.useVar("control-spacer")              |
+| $pagination-button-box-shadow               | none                                    |
+| $pagination-button-border-width             | h.useVar("control-border-width")        |
+| $pagination-button-border-color             | h.useVar("control-border-color")        |
+| $pagination-button-border-style             | solid                                   |
+| $pagination-button-border-radius            | h.useVar("border-radius")               |
+| $pagination-button-border-radius-rounded    | h.useVar( "border-radius-rounded")      |
+| $pagination-button-background-color         | h.useVar( "control-brackground-color")  |
+| $pagination-button-hover-color              | $pagination-button-color                |
+| $pagination-button-hover-background-color   | $pagination-button-background-color     |
+| $pagination-button-hover-border-color       | $pagination-button-border-color         |
+| $pagination-button-current-color            | h.useVar("white")                       |
+| $pagination-button-current-background-color | h.useVar("primary")                     |
+| $pagination-button-current-border-color     | h.useVar("primary")                     |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
 
