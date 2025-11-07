@@ -151,31 +151,32 @@ The component implements the W3C ARIA APG [Combobox Pattern](https://www.w3.org/
 
 | SASS Variable                          | Default                                                                      |
 | -------------------------------------- | ---------------------------------------------------------------------------- |
-| $dropdown-disabled-opacity             | var(--#{$prefix}base-disabled-opacity)                                       |
-| $dropdown-item-active-background-color | var(--#{$prefix}primary)                                                     |
-| $dropdown-item-active-color            | var(--#{$prefix}primary-invert)                                              |
-| $dropdown-item-color                   | #000000                                                                      |
-| $dropdown-item-disabled-opacity        | var( --#{$prefix}base-disabled-opacity)                                      |
-| $dropdown-item-font-size               | var(--#{$prefix}base-font-size)                                              |
-| $dropdown-item-hover-background-color  | $control-brackground-color                                                   |
-| $dropdown-item-hover-color             | #000000                                                                      |
-| $dropdown-item-line-height             | var(--#{$prefix}base-line-height)                                            |
-| $dropdown-item-padding                 | 0.375rem 1rem                                                                |
-| $dropdown-item-font-weight             | 400                                                                          |
-| $dropdown-menu-background              | #ffffff                                                                      |
-| $dropdown-menu-border-radius           | var(--#{$prefix}base-border-radius)                                          |
-| $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $dropdown-disabled-opacity             | h.useVar("control-disabled-opacity")                                         |
+| $dropdown-menu-zindex                  | map.get(vars.$zindex, "dropdown")                                            |
 | $dropdown-menu-spacer                  | 0px                                                                          |
-| $dropdown-menu-margin                  | 0                                                                            |
-| $dropdown-menu-padding                 | 0.5rem 0 0.5rem 0                                                            |
-| $dropdown-menu-width                   | 12rem                                                                        |
-| $dropdown-menu-zindex                  | 50                                                                           |
-| $dropdown-mobile-max-height            | calc(100vh - 120px)                                                          |
-| $dropdown-mobile-max-width             | 460px                                                                        |
-| $dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                          |
-| $dropdown-mobile-overlay-zindex        | 55                                                                           |
-| $dropdown-mobile-width                 | calc(100vw - 40px)                                                           |
-| $dropdown-mobile-zindex                | 60                                                                           |
+| $dropdown-menu-padding                 | h.useVar("control-spacer") 0                                                 |
+| $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $dropdown-menu-background-color        | h.useVar("control-brackground-color")                                        |
+| $dropdown-menu-border-color            | h.useVar("control-border-color")                                             |
+| $dropdown-menu-border-style            | solid                                                                        |
+| $dropdown-menu-border-width            | h.useVar("control-border-width")                                             |
+| $dropdown-menu-border-radius           | h.useVar("border-radius")                                                    |
+| $dropdown-item-padding                 | 0.25rem 1rem                                                                 |
+| $dropdown-item-color                   | h.useVar("font-color")                                                       |
+| $dropdown-item-font-size               | h.useVar("font-size")                                                        |
+| $dropdown-item-font-weight             | h.useVar("font-weight")                                                      |
+| $dropdown-item-line-height             | h.useVar("line-height")                                                      |
+| $dropdown-item-background-color        | transparent                                                                  |
+| $dropdown-item-active-color            | h.useVar("primary-invert")                                                   |
+| $dropdown-item-active-background-color | h.useVar("primary")                                                          |
+| $dropdown-item-hover-background-color  | h.useVar("grey-lighter")                                                     |
+| $dropdown-item-hover-color             | h.useVar("font-color")                                                       |
+| $dropdown-modal-zindex                 | map.get(vars.$zindex, "modal")                                               |
+| $dropdown-modal-max-height             | min(50vh, calc(100vh - 160px))                                               |
+| $dropdown-modal-max-width              | min(50vw, calc(100vw - 160px))                                               |
+| $dropdown-modal-min-width              | min(80vw, 400px)                                                             |
+| $dropdown-overlay-background-color     | h.useVar( "overlay-background-color")                                        |
+| $dropdown-overlay-zindex               | map.get(vars.$zindex, "overlay")                                             |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 

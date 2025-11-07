@@ -74,13 +74,17 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                        | Default                                 |
-| ------------------------------------ | --------------------------------------- |
-| $upload-draggable-border             | 1px dashed var(--#{$prefix}grey-light)  |
-| $upload-draggable-border-radius      | var(--#{$prefix}base-border-radius)     |
-| $upload-draggable-disabled-opacity   | var( --#{$prefix}base-disabled-opacity) |
-| $upload-draggable-hover-border-color | var(--#{$prefix}grey)                   |
-| $upload-draggable-padding            | 2em                                     |
+| SASS Variable                            | Default                               |
+| ---------------------------------------- | ------------------------------------- |
+| $upload-draggable-padding                | calc(4 \* h.useVar("control-spacer")) |
+| $upload-disabled-opacity                 | h.useVar("control-disabled-opacity")  |
+| $upload-draggable-background-color       | h.useVar( "control-background-color") |
+| $upload-draggable-border-color           | h.useVar("control-border-color")      |
+| $upload-draggable-border-style           | dashed                                |
+| $upload-draggable-border-radius          | h.useVar("border-radius")             |
+| $upload-draggable-border-width           | h.useVar("control-border-width")      |
+| $upload-draggable-hover-border-color     | h.useVar("secondary")                 |
+| $upload-draggable-hover-background-color | h.useVar( "control-background-color") |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_upload.scss)
 

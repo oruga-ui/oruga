@@ -223,45 +223,52 @@ It allows tabular data to be displayed in a responsive way with special case cel
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                          | Default                                                                                     |
-| -------------------------------------- | ------------------------------------------------------------------------------------------- |
-| $table-background-color                | #fff                                                                                        |
-| $table-background                      | $control-brackground-color                                                                  |
-| $table-boder                           | 1px solid transparent                                                                       |
-| $table-border-radius                   | var(--#{$prefix}base-border-radius)                                                         |
-| $table-card-box-shadow                 | 0 2px 3px rgba(var(--#{$prefix}black), 0.1),    0 0 0 1px rgba(var(--#{$prefix}black), 0.1) |
-| $table-card-cell-font-weight           | 600                                                                                         |
-| $table-card-cell-padding               | 0 0.5em 0 0                                                                                 |
-| $table-card-cell-text-align            | left                                                                                        |
-| $table-card-detail-margin              | -1rem 0 0 0                                                                                 |
-| $table-card-margin                     | 0 0 1rem 0                                                                                  |
-| $table-color                           | black                                                                                       |
-| $table-current-sort-border-color       | var(--#{$prefix}grey)                                                                       |
-| $table-current-sort-font-weight        | 700                                                                                         |
-| $table-current-sort-hover-border-color | var(--#{$prefix}grey)                                                                       |
-| $table-detail-background               | #fafafa                                                                                     |
-| $table-detail-box-shadow               | inset 0 1px 3px var(--#{$prefix}grey)                                                       |
-| $table-detail-chevron-color            | var(--#{$prefix}primary)                                                                    |
-| $table-detail-chevron-width            | 40px                                                                                        |
-| $table-detail-padding                  | 1rem                                                                                        |
-| $table-focus-border-color              | var(--#{$prefix}primary)                                                                    |
-| $table-focus-box-shadow                | 0 0 0 0.125em rgba(var(--#{$prefix}primary), 0.25)                                          |
-| $table-hoverable-background-color      | #fafafa                                                                                     |
-| $table-narrow-padding                  | 0.25em 0.5em                                                                                |
-| $table-row-active-background-color     | var(--#{$prefix}primary)                                                                    |
-| $table-row-active-color                | var(--#{$prefix}primary-invert)                                                             |
-| $table-sticky-header-height            | 300px                                                                                       |
-| $table-sticky-zindex                   | 1                                                                                           |
-| $table-striped-background-color        | #fafafa                                                                                     |
-| $table-td-border                       | 1px solid var(--#{$prefix}grey-lighter)                                                     |
-| $table-td-padding                      | 0.5em 0.75em                                                                                |
-| $table-th-border                       | 2px solid var(--#{$prefix}grey-lighter)                                                     |
-| $table-th-checkbox-width               | 40px                                                                                        |
-| $table-th-color                        | #363636                                                                                     |
-| $table-th-detail-width                 | 14px                                                                                        |
-| $table-th-font-weight                  | 600                                                                                         |
-| $table-th-padding                      | 0.5em 0.75em                                                                                |
-| $table-pagination-padding              | 0.5em 0                                                                                     |
+| SASS Variable                             | Default                                                                                |
+| ----------------------------------------- | -------------------------------------------------------------------------------------- |
+| $table-color                              | h.useVar("font-color")                                                                 |
+| $table-border-width                       | h.useVar("control-border-width")                                                       |
+| $table-border-style                       | solid                                                                                  |
+| $table-border-color                       | transparent                                                                            |
+| $table-border-radius                      | h.useVar("border-radius")                                                              |
+| $table-background-color                   | h.useVar("control-brackground-color")                                                  |
+| $table-focus-border-color                 | h.useVar("primary")                                                                    |
+| $table-focus-box-shadow                   | vars.$control-focus-box-shadow h.useVar("focus")                                       |
+| $table-sticky-zindex                      | 1                                                                                      |
+| $table-sticky-header-height               | 300px                                                                                  |
+| $table-tr-hover-background-color          | h.useVar("grey-lightest")                                                              |
+| $table-tr-narrow-padding                  | calc(0.5 \* h.useVar("control-spacer")) h.useVar("control-spacer")                     |
+| $table-tr-striped-background-color        | h.useVar("grey-lightest")                                                              |
+| $table-tr-selected-background-color       | h.useVar("primary")                                                                    |
+| $table-tr-selected-color                  | h.useVar("primary-invert")                                                             |
+| $table-th-color                           | h.useVar("font-color")                                                                 |
+| $table-th-font-size                       | h.useVar("font-size")                                                                  |
+| $table-th-font-weight                     | 600                                                                                    |
+| $table-th-line-height                     | h.useVar("line-height")                                                                |
+| $table-th-border-width                    | calc(2 \* h.useVar("control-border-width"))                                            |
+| $table-th-border-style                    | solid                                                                                  |
+| $table-th-border-color                    | h.useVar("control-border-color")                                                       |
+| $table-th-checkbox-width                  | 40px                                                                                   |
+| $table-th-padding                         | h.useVar("control-spacer") calc(1.5 \* h.useVar("control-spacer"))                     |
+| $table-th-current-sort-border-color       | h.useVar("grey")                                                                       |
+| $table-th-current-sort-font-weight        | 700                                                                                    |
+| $table-th-current-sort-hover-border-color | h.useVar("grey")                                                                       |
+| $table-td-border-width                    | h.useVar("control-border-width")                                                       |
+| $table-td-border-style                    | solid                                                                                  |
+| $table-td-border-color                    | h.useVar("control-border-color")                                                       |
+| $table-td-padding                         | h.useVar("control-spacer") calc(1.5 \* h.useVar("control-spacer"))                     |
+| $table-tr-detail-background-color         | h.useVar("grey-lightest")                                                              |
+| $table-tr-detail-box-shadow               | h.useVar("control-box-shadow")                                                         |
+| $table-tr-detail-padding                  | calc(2 \* h.useVar("control-spacer"))                                                  |
+| $table-td-detail-chevron-color            | h.useVar("primary")                                                                    |
+| $table-td-detail-chevron-width            | 40px                                                                                   |
+| $table-tr-empty-padding                   | h.useVar("control-spacer") calc(1.5 \* h.useVar("control-spacer"))                     |
+| $table-pagination-padding                 | h.useVar("control-spacer") 0                                                           |
+| $table-card-box-shadow                    | 0 2px 3px h.useVar("control-shadow-color"), 0 0 0 1px h.useVar("control-shadow-color") |
+| $table-card-cell-font-weight              | 600                                                                                    |
+| $table-card-cell-padding                  | 0 0.5em 0 0                                                                            |
+| $table-card-cell-text-align               | left                                                                                   |
+| $table-card-detail-margin                 | -1rem 0 0 0                                                                            |
+| $table-card-margin                        | 0 0 1rem 0                                                                             |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_table.scss)
 

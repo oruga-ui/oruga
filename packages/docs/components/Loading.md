@@ -74,12 +74,15 @@ The **Loading** component allows you to display a loading state for use on a glo
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable            | Default                  |
-| ------------------------ | ------------------------ |
-| $loading-overlay-legacy  | #7f7f7f                  |
-| $loading-overlay         | rgba(255, 255, 255, 0.5) |
-| $loading-zindex          | 29                       |
-| $loading-fullpage-zindex | 999                      |
+| SASS Variable                     | Default                         |
+| --------------------------------- | ------------------------------- |
+| $loading-spacer                   | h.useVar("control-spacer")      |
+| $loading-color                    | h.useVar("font-color")          |
+| $loading-font-size                | h.useVar("font-size")           |
+| $loading-font-weight              | h.useVar("font-weight")         |
+| $loading-zindex                   | map.get(vars.$zindex, "sticky") |
+| $loading-fullpage-zindex          | map.get(vars.$zindex, "fixed")  |
+| $loading-overlay-background-color | rgba(255, 255, 255, 0.5)        |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_loading.scss)
 

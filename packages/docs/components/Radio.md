@@ -78,17 +78,25 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                     | Default                                |
-| --------------------------------- | -------------------------------------- |
-| $radio-active-background-color    | $primary                               |
-| $radio-checked-box-shadow-length  | 0 0 0.5em                              |
-| $radio-checked-box-shadow-opacity | 0.8                                    |
-| $radio-box-shadow                 | $control-box-shadow                    |
-| $radio-disabled-opacity           | var(--#{$prefix}base-disabled-opacity) |
-| $radio-label-padding              | 0 0 0 0.5em                            |
-| $radio-margin-sibiling            | 0.5em                                  |
-| $radio-size                       | 1rem                                   |
-| $radio-line-height                | 1.25                                   |
+| SASS Variable                     | Default                                     |
+| --------------------------------- | ------------------------------------------- |
+| $radio-spacer                     | h.useVar("control-spacer")                  |
+| $radio-disabled-opacity           | h.useVar("control-disabled-opacity")        |
+| $radio-width                      | 1em                                         |
+| $radio-height                     | 1em                                         |
+| $radio-color                      | h.useVar("font-color")                      |
+| $radio-font-size                  | h.useVar("font-size")                       |
+| $radio-font-weight                | h.useVar("font-weight")                     |
+| $radio-line-height                | h.useVar("line-height")                     |
+| $radio-box-shadow                 | h.useVar("control-box-shadow-inset")        |
+| $radio-border-color               | h.useVar("primary")                         |
+| $radio-border-style               | solid                                       |
+| $radio-border-radius              | h.useVar("border-radius-rounded")           |
+| $radio-border-width               | calc(2 \* h.useVar("control-border-width")) |
+| $radio-background-color           | h.useVar("white")                           |
+| $radio-active-background-color    | h.useVar("primary")                         |
+| $radio-checked-box-shadow-length  | 0 0 0.5em                                   |
+| $radio-checked-box-shadow-opacity | 0.8                                         |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_radio.scss)
 

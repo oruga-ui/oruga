@@ -106,11 +106,11 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable               | Default            |
-| --------------------------- | ------------------ |
-| $taginput-counter-font-size | 0.75em             |
-| $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
-| $taginput-item-margin       | 0.275em            |
+| SASS Variable               | Default                    |
+| --------------------------- | -------------------------- |
+| $taginput-counter-font-size | 0.85rem                    |
+| $taginput-counter-spacer    | h.useVar("control-spacer") |
+| $taginput-item-spacer       | h.useVar("control-spacer") |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
 
@@ -122,7 +122,7 @@ See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/a
 | SASS Variable      | Default |
 | ------------------ | ------- |
 | $taginput-height   | 100%    |
-| $taginput-tag-size | 0.9em   |
+| $taginput-tag-size | 1em     |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_taginput.scss)
 

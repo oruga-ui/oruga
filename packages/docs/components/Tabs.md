@@ -129,34 +129,30 @@ The component implements the W3C ARIA APG [Tabs Pattern](https://www.w3.org/WAI/
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                              | Default                                |
-| ------------------------------------------ | -------------------------------------- |
-| $tabs-disabled-opacity                     | var(--#{$prefix}base-disabled-opacity) |
-| $tabs-font-size                            | var(--#{$prefix}base-font-size)        |
-| $tabs-icon-margin                          | 0 0.5em 0 0                            |
-| $tabs-content-padding                      | 1rem                                   |
-| $tabs-margin-bottom                        | 1.5rem                                 |
-| $tabs-border-bottom-color                  | var(--#{$prefix}grey-lighter)          |
-| $tabs-border-bottom-style                  | solid                                  |
-| $tabs-border-bottom-width                  | 1px                                    |
-| $tabs-tab-color                            | hsl(0, 0%, 29%)                        |
-| $tabs-tab-active-border-bottom-color       | var(--#{$prefix}primary)               |
-| $tabs-tab-active-color                     | var(--#{$prefix}primary)               |
-| $tabs-tab-padding                          | 0.5em 1em                              |
-| $tabs-boxed-tab-radius                     | var(--#{$prefix}base-border-radius)    |
-| $tabs-boxed-tab-hover-background-color     | hsl(0, 0%, 96%)                        |
-| $tabs-boxed-tab-hover-border-bottom-color  | hsl(0, 0%, 86%)                        |
-| $tabs-boxed-tab-active-background-color    | hsl(0, 0%, 100%)                       |
-| $tabs-boxed-tab-active-border-color        | hsl(0, 0%, 86%)                        |
-| $tabs-boxed-tab-active-border-bottom-color | transparent                            |
-| $tabs-toggle-tab-border-color              | hsl(0, 0%, 86%)                        |
-| $tabs-toggle-tab-border-style              | solid                                  |
-| $tabs-toggle-tab-border-width              | 1px                                    |
-| $tabs-toggle-tab-hover-background-color    | hsl(0, 0%, 96%)                        |
-| $tabs-toggle-tab-hover-border-color        | hsl(0, 0%, 71%)                        |
-| $tabs-toggle-tab-active-background-color   | var(--#{$prefix}primary)               |
-| $tabs-toggle-tab-active-border-color       | var(--#{$prefix}primary)               |
-| $tabs-toggle-tab-active-color              | var(--#{$prefix}primary-invert)        |
+| SASS Variable                     | Default                                                          |
+| --------------------------------- | ---------------------------------------------------------------- |
+| $tabs-sapcer                      | h.useVar("control-spacer")                                       |
+| $tabs-disabled-opacity            | h.useVar("control-disabled-opacity")                             |
+| $tabs-tab-padding                 | h.useVar("control-spacer") calc(2 \* h.useVar("control-spacer")) |
+| $tabs-tab-icon-margin             | 0 h.useVar("control-spacer") 0 0                                 |
+| $tabs-tab-color                   | h.useVar("font-color")                                           |
+| $tabs-tab-font-size               | h.useVar("font-size")                                            |
+| $tabs-tab-font-weight             | h.useVar("font-weight")                                          |
+| $tabs-tab-line-height             | h.useVar("line-height")                                          |
+| $tabs-tab-border-width            | h.useVar("control-border-width")                                 |
+| $tabs-tab-border-style            | solid                                                            |
+| $tabs-tab-border-color            | h.useVar("control-border-color")                                 |
+| $tabs-tab-border-radius           | h.useVar("border-radius")                                        |
+| $tabs-tab-background-color        | transparent                                                      |
+| $tabs-tab-hover-color             | $tabs-tab-color                                                  |
+| $tabs-tab-hover-background-color  | hsl(0, 0%, 96%)                                                  |
+| $tabs-tab-hover-border-color      | hsl(0, 0%, 86%)                                                  |
+| $tabs-tab-hover-border-radius     | $tabs-tab-border-radius                                          |
+| $tabs-tab-active-color            | h.useVar("primary")                                              |
+| $tabs-tab-active-background-color | h.useVar("primary-invert")                                       |
+| $tabs-tab-active-border-color     | h.useVar("primary")                                              |
+| $tabs-tab-active-border-radius    | $tabs-tab-border-radius                                          |
+| $tabs-content-padding             | calc(2 \* h.useVar("control-spacer"))                            |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tabs.scss)
 

@@ -90,26 +90,27 @@ Combine it with the [Field](/components/Field) component to access all functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                | Default                                               |
-| ---------------------------- | ----------------------------------------------------- |
-| $input-background-color      | #ffffff                                               |
-| $input-border-color          | var(--#{$prefix}grey-lighter)                         |
-| $input-border-style          | solid                                                 |
-| $input-border-width          | 1px                                                   |
-| $input-border-radius         | var(--#{$prefix}base-border-radius)                   |
-| $input-rounded-border-radius | var( --#{$prefix}base-border-radius-rounded)          |
-| $input-box-shadow            | $control-box-shadow                                   |
-| $input-color                 | #363636                                               |
-| $input-icon-zindex           | 4                                                     |
-| $input-height                | $control-height                                       |
-| $input-line-height           | var(--#{$prefix}base-line-height)                     |
-| $input-margin                | 0                                                     |
-| $input-padding               | $control-padding-vertical $control-padding-horizontal |
-| $input-counter-font-size     | 0.75rem                                               |
-| $input-counter-margin        | 0.25rem 0.5rem                                        |
-| $input-textarea-max-height   | 600px                                                 |
-| $input-textarea-min-height   | 120px                                                 |
-| $input-textarea-padding      | 0.625em                                               |
+| SASS Variable                | Default                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------- |
+| $input-color                 | h.useVar("font-color")                                                      |
+| $input-font-size             | h.useVar("font-size")                                                       |
+| $input-font-weight           | h.useVar("font-weight")                                                     |
+| $input-line-height           | h.useVar("line-height")                                                     |
+| $input-height                | h.useVar("control-height")                                                  |
+| $input-padding               | h.useVar("control-padding-vertical") h.useVar("control-padding-horizontal") |
+| $input-disabled-opacity      | h.useVar("control-disabled-opacity")                                        |
+| $input-box-shadow            | h.useVar("control-box-shadow-inset")                                        |
+| $input-border-width          | h.useVar("control-border-width")                                            |
+| $input-border-style          | solid                                                                       |
+| $input-border-color          | h.useVar("control-border-color")                                            |
+| $input-border-radius         | h.useVar("border-radius")                                                   |
+| $input-border-radius-rounded | h.useVar("border-radius-rounded")                                           |
+| $input-background-color      | h.useVar("control-brackground-color")                                       |
+| $input-textarea-min-height   | 120px                                                                       |
+| $input-textarea-max-height   | 600px                                                                       |
+| $input-textarea-padding      | h.useVar("control-spacer")                                                  |
+| $input-counter-font-size     | 0.75rem                                                                     |
+| $input-counter-padding       | 0.25rem 0.5rem                                                              |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_input.scss)
 

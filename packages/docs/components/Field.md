@@ -70,15 +70,19 @@ The **Field** component is used to add functionality to controls and to attach/g
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable             | Default      |
-| ------------------------- | ------------ |
-| $field-label-color        | #363636      |
-| $field-label-font-weight  | 600          |
-| $field-margin-bottom      | 0.75rem      |
-| $field-message-font-size  | 0.75rem      |
-| $field-message-margin-top | 0.25rem      |
-| $field-spacer             | 0.5rem       |
-| $field-horizontal-spacer  | 0 1.5rem 0 0 |
+| SASS Variable              | Default                    |
+| -------------------------- | -------------------------- |
+| $field-spacer              | h.useVar("control-spacer") |
+| $field-margin-bottom       | calc(1.5 \* $field-spacer) |
+| $field-label-color         | h.useVar("font-color")     |
+| $field-label-font-size     | h.useVar("font-size")      |
+| $field-label-font-weight   | 600                        |
+| $field-label-line-height   | h.useVar("line-height")    |
+| $field-message-spacer      | calc(0.5 \* $field-spacer) |
+| $field-message-color       | h.useVar("secondary")      |
+| $field-message-font-size   | 0.75em                     |
+| $field-message-font-weight | h.useVar("font-weight")    |
+| $field-message-line-height | h.useVar("line-height")    |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
 

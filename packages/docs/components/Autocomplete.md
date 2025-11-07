@@ -121,12 +121,7 @@ Use it with the [Field](/components/Field) component to access all functionaliti
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                             | Default                    |
-| ----------------------------------------- | -------------------------- |
-| $autocomplete-item-hover-background-color | $control-brackground-color |
-
-See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
-
+<p>The theme does not have any custom variables for this component.</p>
 </div>
 <div class="theme-bulma">
 

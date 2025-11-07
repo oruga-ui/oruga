@@ -121,23 +121,23 @@ It is designed to mimic the push notifications that have been popularized by mob
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                        | Default                                      |
-| ------------------------------------ | -------------------------------------------- |
-| $notification-background-color       | var(--#{$prefix}primary)                     |
-| $notification-border-radius          | 4px                                          |
-| $notification-padding                | 1.75em 1.75em                                |
-| $notification-margin-bottom          | 1.5rem                                       |
-| $notification-animantion             | append-animate 0.3s linear                   |
-| $notification-color                  | var(--#{$prefix}white)                       |
-| $notification-close-border-radius    | var( --#{$prefix}base-border-radius-rounded) |
-| $notification-close-right            | 0.5rem                                       |
-| $notification-close-top              | 0.5rem                                       |
-| $notification-close-size             | 20px                                         |
-| $notification-close-color            | var(--#{$prefix}white)                       |
-| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)                         |
-| $notification-icon-margin-right      | 1rem                                         |
-| $notification-notices-padding        | 2em                                          |
-| $notification-notices-zindex         | 1000                                         |
+| SASS Variable                        | Default                                           |
+| ------------------------------------ | ------------------------------------------------- |
+| $notification-spacer                 | calc(2 \* h.useVar("control-spacer"))             |
+| $notification-padding                | 1.75em 1.75em                                     |
+| $notification-animation              | append-animate h.useVar("animation-speed") linear |
+| $notification-color                  | h.useVar("primary-invert")                        |
+| $notification-background-color       | h.useVar("primary")                               |
+| $notification-border-radius          | h.useVar("border-radius")                         |
+| $notification-close-top              | 0.5em                                             |
+| $notification-close-right            | 0.5em                                             |
+| $notification-close-color            | h.useVar("white")                                 |
+| $notification-close-size             | 1.5rem                                            |
+| $notification-close-border-radius    | h.useVar("border-radius-rounded")                 |
+| $notification-close-background-color | h.useVar("control-shadow-color")                  |
+| $notification-notices-padding        | 2em                                               |
+| $notification-notices-max-width      | 600px                                             |
+| $notification-notices-zindex         | map.get(vars.$zindex, "tooltip")                  |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
 

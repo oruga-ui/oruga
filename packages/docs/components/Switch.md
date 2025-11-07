@@ -84,18 +84,26 @@ Use it with the [Field](/components/Field) component to access all the functiona
 
 > Current theme ➜ _[Oruga](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                 | Default                                                   |
-| ----------------------------- | --------------------------------------------------------- |
-| $switch-spacer                | 0.5em                                                     |
-| $switch-width                 | 2.75em                                                    |
-| $switch-height                | 1.5em                                                     |
-| $switch-background            | var(--#{$prefix}grey-light)                               |
-| $switch-toggle-background     | $control-brackground-color                                |
-| $switch-border                | $control-border-width solid var(--#{$prefix}grey-lighter) |
-| $switch-border-radius         | var(--#{$prefix}base-border-radius)                       |
-| $switch-border-radius-rounded | var( --#{$prefix}base-border-radius-rounded)              |
-| $switch-checked-background    | var(--#{$prefix}primary)                                  |
-| $switch-disabled-opacity      | var(--#{$prefix}base-disabled-opacity)                    |
+| SASS Variable                    | Default                              |
+| -------------------------------- | ------------------------------------ |
+| $switch-spacer                   | h.useVar("control-spacer")           |
+| $switch-width                    | 2.75em                               |
+| $switch-height                   | 1.5em                                |
+| $switch-color                    | h.useVar("font-color")               |
+| $switch-font-size                | h.useVar("font-size")                |
+| $switch-font-weight              | h.useVar("font-weight")              |
+| $switch-line-height              | h.useVar("line-height")              |
+| $switch-box-shadow               | h.useVar("control-box-shadow-inset") |
+| $switch-border-color             | h.useVar("grey-lighter")             |
+| $switch-border-style             | solid                                |
+| $switch-border-width             | h.useVar("control-border-width")     |
+| $switch-border-radius            | h.useVar("border-radius")            |
+| $switch-border-radius-rounded    | h.useVar("border-radius-rounded")    |
+| $switch-background-color         | h.useVar("grey-light")               |
+| $switch-toggle-background-color  | vars.$control-brackground-color      |
+| $switch-checked-background-color | h.useVar("primary")                  |
+| $switch-checked-border-color     | h.useVar("primary")                  |
+| $switch-disabled-opacity         | h.useVar("control-disabled-opacity") |
 
 See ➜ 📄 [SCSS file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_switch.scss)
 
