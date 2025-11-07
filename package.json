@@ -1,10 +1,13 @@
 {
   "name": "root",
-  "version": "0.12.0-pre.3",
+  "version": "0.12.0",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
-  "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
+  "author": "Walter Tommasi <tommsi20@gmail.com>",
+  "maintainers": [
+    "Marcel Moravek (https://github.com/mlmoravek)"
+  ],
   "workspaces": [
     "packages/oruga",
     "packages/examples",
