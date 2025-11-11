@@ -1,4 +1,4 @@
-name: Lint commits
+name: Commit Lint
 on:
   push:
     branches: [develop]
@@ -18,6 +18,10 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
       - name: Install dependencies 📦
-        run: npm install @commitlint/cli
+        run: npm install @commitlint/cli @commitlint/config-conventional
+      - name: Run PR title check 💬
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "${{ github.event.pull_request.title }}" | npx commitlint
       - name: Run commit message check 💬
-        run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
+        if: ${{ github.event_name != 'pull_request' }}
+        run: npx commitlint --from HEAD~1 --to HEAD
