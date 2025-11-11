@@ -22,4 +22,4 @@ jobs:
       - name: Install dependencies 📦
         run: npm install @commitlint/cli @commitlint/config-conventional
       - name: Run commit message check 💬
-        run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
+        run: ${{ github.event.pull_request.title }} | npx commitlint
