@@ -17,6 +17,8 @@ jobs:
           node-version: 22.x
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
+      - name : Print Title of PR
+        run: echo The Title of your PR is ${{ github.event.pull_request.title }}
       - name: Install dependencies 📦
         run: npm install @commitlint/cli @commitlint/config-conventional
       - name: Run commit message check 💬
