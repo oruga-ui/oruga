@@ -18,6 +18,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
       - name: Install dependencies 📦
-        run: npm install @commitlint/cli
+        run: npm install @commitlint/cli @commitlint/config-conventional
       - name: Run commit message check 💬
         run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
