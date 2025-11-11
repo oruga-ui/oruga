@@ -1,4 +1,4 @@
-# Contributor Covenant 3.0 Code of Conduct
+# Contributor Covenant Code of Conduct
 
 ## Our Pledge
 
