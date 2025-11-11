@@ -17,9 +17,14 @@ jobs:
           node-version: 22.x
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
-      - name : Print Title of PR
-        run: echo The Title of your PR is ${{ github.event.pull_request.title }}
       - name: Install dependencies 📦
         run: npm install @commitlint/cli @commitlint/config-conventional
-      - name: Run commit message check 💬
+      - name : Print Title of PR
+        if: ${{ GITHUB_EVENT_NAME == 'pull_request' }}
+        run: echo The Title of your PR is ${{ github.event.pull_request.title }}
+      - name: Run commit message check PR 💬
+        if: ${{ GITHUB_EVENT_NAME != 'pull_request' }}
+        run: echo "${{ github.event.pull_request.title }}" | npx commitlint
+      - name: Run commit message check Push 💬
+        if: ${{ GITHUB_EVENT_NAME == 'push' && GITHUB_EVENT_NAME != 'pull_request' }}
         run: echo "${{ github.event.pull_request.title }}" | npx commitlint
