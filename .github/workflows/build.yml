@@ -1,4 +1,4 @@
-name: Build Oruga
+name: Build Package
 on:
   push:
     branches: [develop]

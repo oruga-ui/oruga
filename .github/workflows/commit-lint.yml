@@ -1,4 +1,4 @@
-name: Lint commits
+name: Commit Lint
 on:
   push:
     branches: [develop]
@@ -19,12 +19,9 @@ jobs:
           cache: "npm"
       - name: Install dependencies 📦
         run: npm install @commitlint/cli @commitlint/config-conventional
-      - name : Print Title of PR
-        if: ${{ github.event.pull_request.title == 'pull_request' }}
-        run: echo The Title of your PR is ${{ github.event.pull_request.title }}
-      - name: Run commit message check PR 💬
-        if: ${{ github.event.pull_request.title != 'pull_request' }}
+      - name: Run PR title check 💬
+        if: ${{ github.event_name == 'pull_request' }}
         run: echo "${{ github.event.pull_request.title }}" | npx commitlint
-      - name: Run commit message check Push 💬
-        if: ${{  github.event.type == 'push' && github.event.pull_request.title != 'pull_request' }}
-        run: echo "${{ github.event.pull_request.title }}" | npx commitlint
+      - name: Run commit message check 💬
+        if: ${{ github.event_name != 'pull_request' }}
+        run: npx commitlint --from HEAD~1 --to HEAD
