@@ -116,13 +116,7 @@ onMounted(() => {
 
 // #region --- Events Feature ---
 
-const showX = computed(
-    () =>
-        props.closeable ??
-        (Array.isArray(props.cancelable)
-            ? props.cancelable.indexOf("x") >= 0
-            : props.cancelable),
-);
+const showX = computed(() => props.closeable ?? !checkCancelable("x"));
 
 if (isClient) {
     // register onKeyup event listener when is active
@@ -137,14 +131,14 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!(props.closeOnEscape || checkCancelable("escape"))) return;
+    if (!props.closeOnEscape || checkCancelable("escape")) return;
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener. */
 function onClickedOutside(event: Event): void {
-    if (!(props.closeOnOutside || checkCancelable("outside"))) return;
+    if (!props.closeOnOutside || checkCancelable("outside")) return;
     if (!isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
@@ -154,14 +148,16 @@ function onClickedOutside(event: Event): void {
     close(event);
 }
 
-/** check if method is cancelable (for deprecreated check) */
+/** Check if the method is not in cancelable (for deprecreated check) */
 function checkCancelable(
     method: Exclude<typeof props.cancelable, boolean>[number],
 ): boolean {
     return (
-        (typeof props.cancelable === "boolean" && !props.cancelable) ||
-        !props.cancelable ||
-        (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
+        typeof props.cancelable !== "undefined" &&
+        ((typeof props.cancelable === "boolean" && !props.cancelable) ||
+            !props.cancelable ||
+            (Array.isArray(props.cancelable) &&
+                !props.cancelable.includes(method)))
     );
 }
 
@@ -272,7 +268,7 @@ defineExpose({ close });
                         :size="closeIconSize"
                         :label="ariaCloseLabel"
                         :classes="closeClasses"
-                        @click="checkCancelable('x') && close($event)">
+                        @click="close($event)">
                         <!--
                             @slot Override the close icon
                         -->
