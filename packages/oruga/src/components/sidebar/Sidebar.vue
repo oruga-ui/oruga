@@ -125,21 +125,21 @@ if (isClient) {
     // register onKeyup event listener when is active
     useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
 
-    if (!props.overlay)
+    if (!props.overlay && !props.inline)
         // register outside click event listener when is active
         useClickOutside(contentRef, clickedOutside, { trigger: isActive });
 }
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!(props.closeOnEscape || checkCancelable("escape"))) return;
+    if (!props.closeOnEscape || checkNotCancelable("escape")) return;
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener. */
 function clickedOutside(event: Event): void {
-    if (!(props.closeOnOutside || checkCancelable("outside"))) return;
+    if (!props.closeOnOutside || checkNotCancelable("outside")) return;
     if (props.inline || !isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
@@ -149,14 +149,16 @@ function clickedOutside(event: Event): void {
     close(event);
 }
 
-/** check if method is cancelable (for deprecreated check) */
-function checkCancelable(
+/** Check if the method is not in cancelable (for deprecreated check) */
+function checkNotCancelable(
     method: Exclude<typeof props.cancelable, boolean>[number],
 ): boolean {
     return (
-        (typeof props.cancelable === "boolean" && !props.cancelable) ||
-        !props.cancelable ||
-        (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
+        typeof props.cancelable !== "undefined" &&
+        ((typeof props.cancelable === "boolean" && !props.cancelable) ||
+            !props.cancelable ||
+            (Array.isArray(props.cancelable) &&
+                !props.cancelable.includes(method)))
     );
 }
 
