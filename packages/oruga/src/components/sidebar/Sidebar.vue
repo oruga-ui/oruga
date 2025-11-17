@@ -132,14 +132,14 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!props.closeOnEscape || checkCancelable("escape")) return;
+    if (!props.closeOnEscape || checkNotCancelable("escape")) return;
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener. */
 function clickedOutside(event: Event): void {
-    if (!props.closeOnOutside || checkCancelable("outside")) return;
+    if (!props.closeOnOutside || checkNotCancelable("outside")) return;
     if (props.inline || !isActive.value || !isAnimated.value) return;
     if (
         props.overlay ||
@@ -150,7 +150,7 @@ function clickedOutside(event: Event): void {
 }
 
 /** Check if the method is not in cancelable (for deprecreated check) */
-function checkCancelable(
+function checkNotCancelable(
     method: Exclude<typeof props.cancelable, boolean>[number],
 ): boolean {
     return (
