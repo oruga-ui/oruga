@@ -7,6 +7,14 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
+    positionClass: {
+        class: "positionClass",
+        description: "Class of the root element with position.",
+        properties: ["position"],
+        action: (data) => {
+            data.position = "centered";
+        },
+    },
     headerClass: {
         class: "headerClass",
         description: "Class of the header element.",
@@ -15,8 +23,8 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         class: "titleClass",
         description: "Class of the header title element.",
     },
-    subtitle: {
-        class: "subtitle",
+    subtitleClass: {
+        class: "subtitleClass",
         description: "Class of the header subtitle element.",
     },
     closeClass: {

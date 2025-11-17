@@ -5,6 +5,8 @@ import type { ComponentProps } from "vue-component-type-helpers";
 export type DialogProps<C extends Component = Component> = {
     /** Override existing theme classes completely */
     override?: boolean;
+    /** Text alignment in its entirety */
+    position?: "centered" | "left" | "right";
     /** Dialog header title, unnecessary when title slot is used */
     title?: string;
     /** Dialog header subtitle, unnecessary when subtitle slot is used */
@@ -67,12 +69,14 @@ export type DialogProps<C extends Component = Component> = {
 export type DialogClasses = Partial<{
     /** Class of the root element */
     rootClass: ComponentClass;
+    /** Class of the root element with position */
+    positionClass: ComponentClass;
     /** Class of the header element */
     headerClass: ComponentClass;
     /** Class of the header title element */
     titleClass: ComponentClass;
     /** Class of the header subtitle element */
-    subtitle: ComponentClass;
+    subtitleClass: ComponentClass;
     /** Class of the header close element */
     closeClass: ComponentClass;
     /** Class of the image container */
