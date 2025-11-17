@@ -1,3 +1,13 @@
+## [0.12.1](https://github.com/oruga-ui/oruga/compare/v0.12.0...v0.12.1) (2025-11-17)
+
+
+### Bug Fixes
+
+* **modal:** correct close properties behavior ([#1468](https://github.com/oruga-ui/oruga/issues/1468)) ([54b3c48](https://github.com/oruga-ui/oruga/commit/54b3c4889de8825ab13b70192b62ae5328ade24a))
+* **sidebar:** correct close properties behavior ([#1469](https://github.com/oruga-ui/oruga/issues/1469)) ([239a3f8](https://github.com/oruga-ui/oruga/commit/239a3f8a5b3cf616be033a40f378240bfdb2dd88))
+
+
+
 # [0.12.0](https://github.com/oruga-ui/oruga/compare/v0.11.6...v0.12.0) (2025-11-07)
 
 
