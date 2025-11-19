@@ -1509,10 +1509,6 @@ See icon library documentation for custom classes.
                  */
                 filterClass: ClassDefinition;
                 /**
-                 * Class of the list container element
-                 */
-                containerClass: ClassDefinition;
-                /**
                  * Class of the list element
                  */
                 listClass: ClassDefinition;

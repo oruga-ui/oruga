@@ -74,10 +74,6 @@ const inspectData: InspectData<
         class: "filterClass",
         description: "Class of the filter wrapper element.",
     },
-    containerClass: {
-        class: "containerClass",
-        description: "Class of the list container element.",
-    },
     listClass: {
         class: "listClass",
         description: "Class of the list element.",
