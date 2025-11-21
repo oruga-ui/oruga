@@ -22,11 +22,7 @@ const active = ref(true);
                 <o-button label="Right click me" />
             </o-tooltip>
 
-            <o-tooltip
-                label="I'm never closing"
-                :active="active"
-                always
-                position="top">
+            <o-tooltip label="I'm never closing" active always position="top">
                 <o-button label="Always" />
             </o-tooltip>
 
@@ -34,13 +30,8 @@ const active = ref(true);
                 variant="danger"
                 label="Tooltip right"
                 position="right"
-                :open-on-click="false"
-                :open-on-contextmenu="false"
-                :open-on-focus="false"
                 :open-on-hover="false"
                 :closeable="false"
-                :close-on-escape="false"
-                :close-on-outside="false"
                 :active="active">
                 <o-button label="Toggled" />
             </o-tooltip>
