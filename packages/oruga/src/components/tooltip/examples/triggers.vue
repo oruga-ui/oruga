@@ -22,7 +22,7 @@ const active = ref(true);
                 <o-button label="Right click me" />
             </o-tooltip>
 
-            <o-tooltip label="I'm never closing" active always position="top">
+            <o-tooltip label="I'm never closing" always position="top">
                 <o-button label="Always" />
             </o-tooltip>
 
