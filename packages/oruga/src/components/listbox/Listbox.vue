@@ -430,6 +430,11 @@ function onFocusin(event: FocusEvent): void {
     emits("focus", event);
 }
 
+/** List hover leave event handler. */
+function onHoverLeave(): void {
+    focusedItem.value = undefined;
+}
+
 function onBlur(event: Event): void {
     // clear focus
     isFocused.value = false;
@@ -738,6 +743,7 @@ const emptyClasses = defineClasses(["emptyClass", "o-listbox__empty"]);
             :aria-disabled="disabled"
             @focusin="onFocusin"
             @blur="onBlur"
+            @mouseleave="onHoverLeave"
             @keydown="onListKeyDown">
             <transition-group :name="animation">
                 <!--
