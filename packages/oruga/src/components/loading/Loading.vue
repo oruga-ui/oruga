@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<LoadingProps>(), {
     fullPage: true,
     label: undefined,
     animation: () => getDefault("loading.animation", "fade"),
-    cancelable: false,
+    cancelable: undefined,
     closeOnOutside: false,
     closeOnEscape: false,
     icon: () => getDefault("loading.icon", "loading"),
@@ -75,28 +75,33 @@ watch(isActive, (value) => {
 
 if (isClient) {
     // register onKeyup event when is active
-    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyup, {
+        trigger: isActive,
+        passive: true,
+    });
 }
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!(props.closeOnEscape || checkCancelable("escape"))) return;
+    if (!props.closeOnEscape || checkNotCloseable("escape")) return;
     if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Click outside event listener, when clicked on the overlay. */
 function clickedOutside(event: Event): void {
-    if (!(props.closeOnOutside || checkCancelable("outside"))) return;
+    if (!props.closeOnOutside || checkNotCloseable("outside")) return;
     close(event);
 }
 
 /** check if method is cancelable (for deprecreated check) */
-function checkCancelable(method: string): boolean {
+function checkNotCloseable(method: string): boolean {
     return (
-        (typeof props.cancelable === "boolean" && !props.cancelable) ||
-        !props.cancelable ||
-        (Array.isArray(props.cancelable) && !props.cancelable.includes(method))
+        typeof props.cancelable !== "undefined" &&
+        ((typeof props.cancelable === "boolean" && !props.cancelable) ||
+            !props.cancelable ||
+            (Array.isArray(props.cancelable) &&
+                !props.cancelable.includes(method)))
     );
 }
 
