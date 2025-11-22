@@ -249,7 +249,6 @@ const arrowClasses = defineClasses(
             :is="triggerTag"
             ref="triggerRef"
             :class="triggerClasses"
-            aria-haspopup="true"
             :aria-describedby="tooltipId"
             @click="onClick"
             @contextmenu="onContextMenu"

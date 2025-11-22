@@ -10,7 +10,7 @@ exports[`OSlider tests > render correctly 1`] = `
              -->
     <div data-oruga="slider-thumb" class="o-slider__thumb-wrapper" style="left: 0%;">
       <div data-oruga="tooltip" class="o-tooltip">
-        <div class="o-tooltip__trigger" aria-haspopup="true" aria-describedby="v-0">
+        <div class="o-tooltip__trigger" aria-describedby="v-0">
           <!--
                 @slot Tooltip trigger slot
                 @binding {boolean} active - tooltip active state
