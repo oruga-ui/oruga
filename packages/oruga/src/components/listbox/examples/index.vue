@@ -28,9 +28,10 @@ import ScrollCode from "./scroll.vue?raw";
 
     <h3 id="multiple">Multiple</h3>
     <p>
-        The <code>v-model</code> can be used to bind the selected value. When
-        the <code>multiple</code> prop is used, more than one value can be
-        selected.
+        The <code>v-model</code> can be used to bind the selected value. By
+        default the component allows a single option to be chosen. When the
+        <code>multiple</code> prop is used, the component become a multi-select
+        listbox that allows multiple options to be selected.
     </p>
     <ExampleViewer :component="Multiple" :code="MultipleCode" />
 

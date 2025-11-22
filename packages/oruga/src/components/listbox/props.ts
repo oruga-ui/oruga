@@ -80,8 +80,6 @@ export type ListboxClasses = Partial<{
     emptyClass: ComponentClass;
     /** Class of the filter wrapper element */
     filterClass: ComponentClass;
-    /** Class of the list container element */
-    containerClass: ComponentClass;
     /** Class of the list element */
     listClass: ComponentClass;
     /**
@@ -105,6 +103,8 @@ export type ListItemProps<T> = {
     disabled?: boolean;
     /** Define whether the item is visible or not */
     hidden?: boolean;
+    /** Item is clickable and emit an event */
+    clickable?: boolean;
     /** Defines a string value that labels an interactive element. */
     ariaLabel?: string;
     /** Identifier of the underlying input element. */
