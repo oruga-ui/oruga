@@ -5,11 +5,14 @@ import BaseCode from "./base.vue?raw";
 import Confirm from "./confirm.vue";
 import ConfirmCode from "./confirm.vue?raw";
 
+import Slots from "./slots.vue";
+import SlotsCode from "./slots.vue?raw";
+
 import Image from "./image.vue";
 import ImageCode from "./image.vue?raw";
 
-import Slots from "./slots.vue";
-import SlotsCode from "./slots.vue?raw";
+import Position from "./position.vue";
+import PositionCode from "./position.vue?raw";
 
 import Form from "./form.vue";
 import FormCode from "./form.vue?raw";
@@ -22,14 +25,15 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     <h3 id="base">Base</h3>
     <p>
         A simple dialog is created with a <code>title</code> and
-        <code>content</code> property.
+        <code>content</code> property, seperated in <i>header</i>,
+        <i>body</i> and possible <i>footer</i> sections.
     </p>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
     <h3 id="confirm">Confirm Check</h3>
     <p>
         The component can be used to require decisions or show critical
-        information. Using the <code>confirmButton</code> and
+        information for confirmation. Using the <code>confirmButton</code> and
         <code>cancelButton</code> properties confirm checks can be made.
     </p>
     <ExampleViewer :component="Confirm" :code="ConfirmCode" />
@@ -44,8 +48,17 @@ import ProgrammaticallyCode from "./programmatically.vue?raw";
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 
     <h3 id="image">Image</h3>
-    <p>You can place an image <i>below</i> the header.</p>
+    <p>You can place an image in the <i>content</i> section.</p>
     <ExampleViewer :component="Image" :code="ImageCode" />
+
+    <h3 id="position">Position</h3>
+    <p>
+        You can quickly change the text alignment of any dialog in its entirety
+        with the <code>position</code> property. Additionally, the footer
+        buttons can be aligned on its own by the
+        <code>buttonPosition</code> property.
+    </p>
+    <ExampleViewer :component="Position" :code="PositionCode" />
 
     <h3 id="form">Form</h3>
     <p>A useful purpose for a dialog is to display forms in it.</p>

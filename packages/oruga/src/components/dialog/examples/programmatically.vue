@@ -11,6 +11,7 @@ function openConfirmDialog(): void {
         confirmButton: "Save",
         confirmVariant: "success",
         cancelButton: "Cancel",
+        buttonPosition: "right",
     });
 }
 

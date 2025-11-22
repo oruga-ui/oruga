@@ -46,11 +46,12 @@ const props = withDefaults(defineProps<DialogProps<C>>(), {
     props: undefined,
     events: undefined,
     confirmButton: undefined,
-    disableConfirm: undefined,
     confirmVariant: undefined,
+    disableConfirm: undefined,
     cancelButton: undefined,
-    disableCancel: undefined,
     cancelVariant: undefined,
+    disableCancel: undefined,
+    buttonPosition: undefined,
 });
 
 const emits = defineEmits<{
@@ -95,7 +96,15 @@ function onConfirm(event: Event): void {
 
 // #region --- Computed Component Classes ---
 
-const rootClasses = defineClasses(["rootClass", "o-dialog"]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-dialog"],
+    [
+        "positionClass",
+        "o-dialog--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+);
 
 const headerClasses = defineClasses(["headerClass", "o-dialog__header"]);
 
@@ -192,18 +201,6 @@ const cancelButtonClasses = defineClasses([
             </CloseButton>
         </header>
 
-        <!-- Image -->
-        <div v-if="$slots['image'] || imageSrc" :class="imageClasses">
-            <!--
-                @slot Override the image
-            -->
-            <slot name="image">
-                <figure :class="figureClasses">
-                    <img :src="imageSrc" :alt="imageAlt" />
-                </figure>
-            </slot>
-        </div>
-
         <!-- Body -->
         <div
             v-if="
@@ -213,6 +210,18 @@ const cancelButtonClasses = defineClasses([
                 content
             "
             :class="bodyClasses">
+            <!-- Image -->
+            <div v-if="$slots['image'] || imageSrc" :class="imageClasses">
+                <!--
+                    @slot Override the image
+                -->
+                <slot name="image">
+                    <figure :class="figureClasses">
+                        <img :src="imageSrc" :alt="imageAlt" />
+                    </figure>
+                </slot>
+            </div>
+
             <!--
                 @slot Override the default dialog body
                 @binding {(event: Event): void} close - function to emit a `close` event

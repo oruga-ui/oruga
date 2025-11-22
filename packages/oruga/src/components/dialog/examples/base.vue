@@ -11,7 +11,9 @@ const isLoading = ref(false);
 
 <template>
     <section>
-        <o-switch v-model="isLoading" label="Loading state" />
+        <o-field grouped>
+            <o-switch v-model="isLoading" label="Loading state" />
+        </o-field>
 
         <o-dialog
             :title="title"
