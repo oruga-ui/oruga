@@ -3378,6 +3378,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 animation: string;
                 /**
+                 * Limit the tooltip content width
+                 */
+                maxWidth: string;
+                /**
                  * Tooltip trigger tag name
                  */
                 triggerTag: DynamicComponent;
@@ -3447,6 +3451,7 @@ In addition, any CSS selector string or an actual DOM node can be used.
                 variantClass: ClassDefinition;
                 /**
                  * Class of the content element when is multiline
+                 * @deprecated `multiple` prop will be removed
                  */
                 multilineClass: ClassDefinition;
                 /**
