@@ -84,7 +84,6 @@ if (isClient) {
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
     if (!props.closeOnEscape || checkNotCloseable("escape")) return;
-    if (!isActive.value) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
@@ -107,6 +106,7 @@ function checkNotCloseable(method: string): boolean {
 
 /** set active to false and emit close event */
 function close(event?: Event): void {
+    if (!isActive.value) return;
     isActive.value = false;
     emits("close", event);
 }
