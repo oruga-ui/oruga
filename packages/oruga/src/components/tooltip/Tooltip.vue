@@ -93,6 +93,7 @@ const contentRef = ref<HTMLElement>();
 
 const contentStyle = computed(() => ({
     maxWidth: props.maxWidth ? toCssDimension(props.maxWidth) : undefined,
+    whiteSpace: props.maxWidth ? "wrap" : undefined,
 }));
 
 // #region --- Event Handler ---
