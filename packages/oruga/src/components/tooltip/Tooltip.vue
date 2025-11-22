@@ -12,6 +12,7 @@ import {
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
 import { getDefault } from "@/utils/config";
+import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -20,7 +21,6 @@ import {
 } from "@/composables";
 
 import type { TooltipProps } from "./props";
-import { toCssDimension } from "@/utils/helpers";
 
 /**
  * Display a brief helper text to your user.
