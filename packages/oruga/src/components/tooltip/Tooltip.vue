@@ -20,6 +20,7 @@ import {
 } from "@/composables";
 
 import type { TooltipProps } from "./props";
+import { toCssDimension } from "@/utils/helpers";
 
 /**
  * Display a brief helper text to your user.
@@ -42,6 +43,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
     disabled: false,
     animation: () => getDefault("tooltip.animation", "fade"),
     multiline: false,
+    maxWidth: () => getDefault("tooltip.maxWidth"),
     triggerTag: () => getDefault("tooltip.triggerTag", "div"),
     triggers: () => getDefault("tooltip.triggers", []),
     openOnClick: () => getDefault("tooltip.openOnClick", false),
@@ -88,6 +90,10 @@ watch(
 const rootRef = useTemplateRef<HTMLElement>("rootElement");
 const triggerRef = useTemplateRef<HTMLElement | Component>("triggerRef");
 const contentRef = ref<HTMLElement>();
+
+const contentStyle = computed(() => ({
+    maxWidth: props.maxWidth ? toCssDimension(props.maxWidth) : undefined,
+}));
 
 // #region --- Event Handler ---
 
@@ -208,6 +214,7 @@ const contentClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
+    // @deprecated `multiline` will be removed later
     [
         "multilineClass",
         "o-tooltip__content--multiline",
@@ -276,6 +283,7 @@ const arrowClasses = defineClasses(
                     :id="tooltipId"
                     :ref="(el) => (contentRef = setContent(el as HTMLElement))"
                     :class="contentClasses"
+                    :style="contentStyle"
                     role="tooltip">
                     <span :class="arrowClasses"></span>
 

@@ -32,8 +32,13 @@ export type TooltipProps = {
     disabled?: boolean;
     /** Tooltip default animation */
     animation?: string;
-    /** Tooltip will be multilined */
+    /**
+     * Tooltip will be multilined
+     * @deprecated use `maxWidth` instead
+     */
     multiline?: boolean;
+    /** Limit the tooltip content width */
+    maxWidth?: string;
     /** Tooltip trigger tag name */
     triggerTag?: DynamicComponent;
     /**
@@ -84,7 +89,10 @@ export type TooltipClasses = Partial<{
     positionClass: ComponentClass;
     /** Class of the content element with variant */
     variantClass: ComponentClass;
-    /** Class of the content element when is multiline */
+    /**
+     * Class of the content element when is multiline
+     * @deprecated `multiple` prop will be removed
+     */
     multilineClass: ComponentClass;
     /** Class of the content element when is always visible */
     alwaysClass: ComponentClass;
