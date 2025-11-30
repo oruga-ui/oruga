@@ -7,12 +7,50 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         class: "rootClass",
         description: "Class of the root element.",
     },
-    positionClass: {
-        class: "positionClass",
-        description: "Class of the root element with position.",
-        properties: ["position"],
+    mobileClass: {
+        class: "mobileClass",
+        description: "Class of the root element when on mobile.",
+        info: "Switch to mobile view to see it in action!",
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    activeClass: {
+        class: "activeClass",
+        description: "Class of the root element when active.",
+        properties: ["active"],
+        action: (data): void => {
+            data.active = true;
+        },
+    },
+    textPositionClass: {
+        class: "textPositionClass",
+        description: "Class of the root element with text position.",
+        properties: ["textPosition"],
+        suffixes: ["left", "center", "right"],
         action: (data) => {
-            data.position = "centered";
+            data.textPosition = "center";
+        },
+    },
+    backdropClass: {
+        class: "backdropClass",
+        description: "Class of the backdrop overlay element.",
+        properties: ["backdrop"],
+        action: (data): void => {
+            data.active = true;
+            data.backdrop = true;
+        },
+    },
+    wrapperClass: {
+        class: "wrapperClass",
+        description: "Class of the wrapper element.",
+    },
+    fullScreenClass: {
+        class: "fullScreenClass",
+        description: "Class of the wrapper element when fullscreen",
+        properties: ["fullScreen"],
+        action: (data): void => {
+            data.fullScreen = true;
         },
     },
     headerClass: {
@@ -55,9 +93,9 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         class: "footerPositionClass",
         description: "Class of the footer element with position.",
         properties: ["buttonPosition"],
-        suffixes: ["left", "centered", "right"],
+        suffixes: ["left", "center", "right"],
         action: (data) => {
-            data.buttonPosition = "centered";
+            data.buttonPosition = "center";
         },
     },
     confirmButtunClass: {
@@ -74,6 +112,26 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
         properties: ["cancelButton"],
         action: (data) => {
             data.cancelButton = "Cancel";
+        },
+    },
+    scrollClipClass: {
+        class: "scrollClipClass",
+        description:
+            "Class of the body when dialog is active and has blockScroll.",
+        properties: ["blockScroll"],
+        action: (data): void => {
+            data.active = true;
+            data.blockScroll = true;
+        },
+    },
+    scrollKeepClass: {
+        class: "scrollKeepClass",
+        description:
+            "Class of the body when dialog is active and has not blockScroll.",
+        properties: ["blockScroll"],
+        action: (data): void => {
+            data.active = true;
+            data.blockScroll = false;
         },
     },
 };

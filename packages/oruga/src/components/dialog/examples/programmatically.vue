@@ -36,13 +36,13 @@ function openImageDialog(): void {
                 label="Open Confirm Dialog"
                 size="medium"
                 variant="primary"
-                @click.prevent="openConfirmDialog()" />
+                @click="openConfirmDialog()" />
 
             <o-button
                 label="Open Oruga Image"
                 size="medium"
                 variant="primary"
-                @click.prevent="openImageDialog()" />
+                @click="openImageDialog()" />
         </p>
     </section>
 </template>

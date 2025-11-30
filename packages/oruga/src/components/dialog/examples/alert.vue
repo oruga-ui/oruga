@@ -7,17 +7,21 @@ const isActive = ref(false);
 <template>
     <section>
         <o-button
-            label="Open Image Dialog"
+            label="Open Alert Dialog"
             size="medium"
             variant="primary"
             @click="isActive = true" />
 
         <o-dialog
             v-model:active="isActive"
-            title="Advanced Dialog"
-            content="Some quick example text to build on the dialog title and make up the bulk of the dialog's content."
+            alert
+            title="Delete Dialog"
+            content="Are you sure you want to delete this?"
             text-position="center"
-            image-alt="Oruga Logo"
-            image-src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
+            button-position="center"
+            cancel-button="Cancel"
+            confirm-button="Delete"
+            confirm-variant="danger"
+            close-on-confirm />
     </section>
 </template>
