@@ -186,7 +186,9 @@ function cancel(): void {
     if (!isActive.value || !rootRef.value) return;
 
     // trigger dialog close event
-    rootRef.value.requestClose();
+    if(typeof rootRef.value.requestClose === "function")
+        rootRef.value.requestClose();
+    else rootRef.value.close();
 }
 
 /** confirm button click event */
@@ -436,7 +438,7 @@ defineExpose({ close: cancel });
                                 autofocus
                                 @click="cancel()"
                                 @keyup.right="focusConfirmButton">
-                                <!-- 
+                                <!--
                                     @slot Define the cancel button label
                                  -->
                                 <slot name="cancelButton">
@@ -455,7 +457,7 @@ defineExpose({ close: cancel });
                                 autofocus
                                 @click="confirm"
                                 @keyup.left="focusCancelButton">
-                                <!-- 
+                                <!--
                                     @slot Define the confirm button label
                                  -->
                                 <slot name="confirmButton">
