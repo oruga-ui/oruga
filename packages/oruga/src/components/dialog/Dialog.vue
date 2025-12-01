@@ -186,10 +186,11 @@ function cancel(): void {
     if (!isActive.value || !rootRef.value) return;
 
     // trigger dialog close event
-    if (typeof rootRef.value.requestClose === "function")
-        // requestClose is a fairly new web API that is not yet supported in all environments
-        rootRef.value.requestClose();
-    else rootRef.value.close();
+    // if (typeof rootRef.value.requestClose === "function")
+    //     // requestClose is a fairly new web API that is not yet supported in all environments
+    //     rootRef.value.requestClose();
+    // else
+    rootRef.value.close();
 }
 
 /** confirm button click event */
