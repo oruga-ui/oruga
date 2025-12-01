@@ -53,15 +53,15 @@ export function useScrollEvents(
         const el = unrefElement(element);
         if (!el) return;
         if (options.onScroll) options.onScroll();
+        const { offsetTop, scrollTop, clientHeight, scrollHeight } = el;
 
-        const trashhold = el.offsetTop;
-        if (el.clientHeight !== el.scrollHeight) {
+        const trashhold = offsetTop;
+        if (clientHeight !== scrollHeight) {
             if (
-                Math.ceil(el.scrollTop + el.clientHeight + trashhold) >=
-                el.scrollHeight
+                Math.ceil(scrollTop + clientHeight + trashhold) >= scrollHeight
             ) {
                 if (options.onScrollEnd) options.onScrollEnd();
-            } else if (el.scrollTop <= trashhold) {
+            } else if (scrollTop <= trashhold) {
                 if (options.onScrollStart) options.onScrollStart();
             }
         }
@@ -144,6 +144,10 @@ export function scrollElementInView(
 
     if (!parent || !element) return;
 
+    // The 'offsetTop' is the distance from the outer border of the element (including margin)
+    // to the top padding edge of the offsetParent, the closest positioned ancestor element.
+    // The 'offsetHeight' is the height of an element, including vertical padding and borders, as an integer.
+    // The 'scrollTop' is the number of pixels by which an element's content is scrolled from its top edge.
     const { offsetHeight, offsetTop } = element;
     const { offsetHeight: parentOffsetHeight, scrollTop } = parent;
 

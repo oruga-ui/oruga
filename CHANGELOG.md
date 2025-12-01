@@ -1,3 +1,30 @@
+## [0.12.2](https://github.com/oruga-ui/oruga/compare/v0.12.1...v0.12.2) (2025-11-22)
+
+
+### Bug Fixes
+
+* **loading:** fix close properties behavior ([#1475](https://github.com/oruga-ui/oruga/issues/1475)) ([c713353](https://github.com/oruga-ui/oruga/commit/c71335333b2ffdcce36b11c35f3f47494a1e18be))
+* **tooltip:** correct the trigger behaviours so that they are more aligned with their names ([#1474](https://github.com/oruga-ui/oruga/issues/1474)) ([2c0d310](https://github.com/oruga-ui/oruga/commit/2c0d31055c5912a5e01e466f61aeb49bdfd2b3de))
+* **tooltip:** remove incorrectly used `aria-haspopup` attribute ([#1476](https://github.com/oruga-ui/oruga/issues/1476)) ([f60fee1](https://github.com/oruga-ui/oruga/commit/f60fee1da4ee834a18fb22a96e6a1a68417b09b6))
+
+
+### Features
+
+* **listbox:** enhance listbox component ([#1472](https://github.com/oruga-ui/oruga/issues/1472)) ([df82e16](https://github.com/oruga-ui/oruga/commit/df82e16bd6402707bef965c87ca19a78f1ef32e0))
+* **tooltip:** add `maxWidth` property | deprecate `multiline` property ([#1477](https://github.com/oruga-ui/oruga/issues/1477)) ([5fd6e4d](https://github.com/oruga-ui/oruga/commit/5fd6e4d4adc9e81cbaf99955acdaca655aea7170))
+
+
+
+## [0.12.1](https://github.com/oruga-ui/oruga/compare/v0.12.0...v0.12.1) (2025-11-17)
+
+
+### Bug Fixes
+
+* **modal:** correct close properties behavior ([#1468](https://github.com/oruga-ui/oruga/issues/1468)) ([54b3c48](https://github.com/oruga-ui/oruga/commit/54b3c4889de8825ab13b70192b62ae5328ade24a))
+* **sidebar:** correct close properties behavior ([#1469](https://github.com/oruga-ui/oruga/issues/1469)) ([239a3f8](https://github.com/oruga-ui/oruga/commit/239a3f8a5b3cf616be033a40f378240bfdb2dd88))
+
+
+
 # [0.12.0](https://github.com/oruga-ui/oruga/compare/v0.11.6...v0.12.0) (2025-11-07)
 
 

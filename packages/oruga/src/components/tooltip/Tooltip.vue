@@ -12,6 +12,7 @@ import {
 import PositionWrapper from "../utils/PositionWrapper.vue";
 
 import { getDefault } from "@/utils/config";
+import { toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     defineClasses,
@@ -42,16 +43,17 @@ const props = withDefaults(defineProps<TooltipProps>(), {
     disabled: false,
     animation: () => getDefault("tooltip.animation", "fade"),
     multiline: false,
+    maxWidth: () => getDefault("tooltip.maxWidth"),
     triggerTag: () => getDefault("tooltip.triggerTag", "div"),
     triggers: () => getDefault("tooltip.triggers", []),
     openOnClick: () => getDefault("tooltip.openOnClick", false),
     openOnContextmenu: () => getDefault("tooltip.openOnContextmenu", false),
     openOnHover: () => getDefault("tooltip.openOnHover", true),
-    openOnFocus: () => getDefault("tooltip.openOnFocus", true),
+    openOnFocus: () => getDefault("tooltip.openOnFocus", false),
     delay: undefined,
     closeable: () => getDefault("tooltip.closeable", true),
-    closeOnEscape: () => getDefault("tooltip.closeOnEscape", true),
-    closeOnOutside: () => getDefault("tooltip.closeOnOutside", true),
+    closeOnEscape: () => getDefault("tooltip.closeOnEscape", false),
+    closeOnOutside: () => getDefault("tooltip.closeOnOutside", false),
     teleport: () => getDefault("dropdown.teleport", false),
 });
 
@@ -89,12 +91,20 @@ const rootRef = useTemplateRef<HTMLElement>("rootElement");
 const triggerRef = useTemplateRef<HTMLElement | Component>("triggerRef");
 const contentRef = ref<HTMLElement>();
 
+const contentStyle = computed(() => ({
+    maxWidth: props.maxWidth ? toCssDimension(props.maxWidth) : undefined,
+    whiteSpace: props.maxWidth ? "wrap" : undefined,
+}));
+
 // #region --- Event Handler ---
 
 // set click outside handler
 if (isClient) {
     // register onKeyup event listener when is active
-    useEventListener(rootRef, "keyup", onKeyup, { trigger: isActive });
+    useEventListener(rootRef, "keyup", onKeyup, {
+        trigger: isActive,
+        passive: true,
+    });
 
     useClickOutside([contentRef, triggerRef], onClickedOutside, {
         trigger: isActive,
@@ -104,44 +114,46 @@ if (isClient) {
 
 /** Keyup event listener that is bound to the root element. */
 function onKeyup(event: KeyboardEvent): void {
-    if (!(props.closeOnEscape || checkCancelable("escape"))) return;
-    if (!isActive.value) return;
+    if (!props.closeOnEscape && checkNotCloseable("escape")) return;
     if (event.key === "Escape" || event.key === "Esc") close(event);
 }
 
 /** Close tooltip if clicked outside. */
 function onClickedOutside(event: Event): void {
-    if (!(props.closeOnOutside || checkCancelable("outside"))) return;
-    if (!isActive.value || props.always) return;
+    if (!props.closeOnOutside && checkNotCloseable("outside")) return;
     close(event);
 }
 
 function onHoverLeave(event: Event): void {
-    if (!(props.closeable || checkCancelable("content"))) return;
+    if (props.closeOnOutside && checkNotCloseable("content")) return;
     close(event);
 }
 
 function onClick(event: Event): void {
-    if (!(props.openOnClick || props.triggers.includes("click"))) return;
+    if (!props.openOnClick && !props.triggers.includes("click")) return;
     // if not active, toggle after clickOutside event
     // this fixes toggling programmatic
     nextTick(() => setTimeout(() => open(event)));
 }
 
 function onContextMenu(event: Event): void {
-    if (!(props.openOnContextmenu || props.triggers.includes("contextmenu")))
+    if (!props.openOnContextmenu && !props.triggers.includes("contextmenu"))
         return;
     event.preventDefault();
     open(event);
 }
 
 function onFocus(event: Event): void {
-    if (!(props.openOnFocus || props.triggers.includes("focus"))) return;
+    if (!props.openOnFocus && !props.triggers.includes("focus")) return;
     open(event);
 }
 
 function onHover(event: Event): void {
-    if (!(props.openOnHover || props.triggers.includes("hover"))) return;
+    if (
+        (!props.openOnHover || props.openOnClick || props.openOnContextmenu) &&
+        !props.triggers.includes("hover")
+    )
+        return;
     open(event);
 }
 
@@ -162,17 +174,14 @@ function open(event: Event): void {
 }
 
 /** check if method is cancelable (for deprecreated check) */
-function checkCancelable(
+function checkNotCloseable(
     method: Exclude<typeof props.closeable, boolean>[number],
 ): boolean {
-    return (
-        (typeof props.closeable === "boolean" && !props.closeable) ||
-        !props.closeable ||
-        (Array.isArray(props.closeable) && !props.closeable.includes(method))
-    );
+    return !Array.isArray(props.closeable) || !props.closeable.includes(method);
 }
 
 function close(event: Event): void {
+    if (!isActive.value || !props.closeable) return;
     if (timer) clearTimeout(timer);
     isActive.value = false;
     emits("close", event);
@@ -208,6 +217,7 @@ const contentClasses = defineClasses(
         computed(() => props.variant),
         computed(() => !!props.variant),
     ],
+    // @deprecated `multiline` will be removed later
     [
         "multilineClass",
         "o-tooltip__content--multiline",
@@ -247,7 +257,6 @@ const arrowClasses = defineClasses(
             :is="triggerTag"
             ref="triggerRef"
             :class="triggerClasses"
-            aria-haspopup="true"
             :aria-describedby="tooltipId"
             @click="onClick"
             @contextmenu="onContextMenu"
@@ -276,6 +285,7 @@ const arrowClasses = defineClasses(
                     :id="tooltipId"
                     :ref="(el) => (contentRef = setContent(el as HTMLElement))"
                     :class="contentClasses"
+                    :style="contentStyle"
                     role="tooltip">
                     <span :class="arrowClasses"></span>
 
