@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+const isActive = ref(false);
+
 function onClose(): void {
     alert("close");
 }
 function onLogin(): void {
     alert("login");
 }
-
-const isActive = ref(false);
 </script>
 
 <template>
