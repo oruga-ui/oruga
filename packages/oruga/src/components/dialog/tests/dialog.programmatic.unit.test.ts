@@ -64,7 +64,7 @@ describe("useDialogProgrammatic tests", () => {
         const content = "My Dialog Content";
 
         // open element
-        const { close } = factory.open(content, {}, "#my-cool-container");
+        const { close } = factory.open(content, "#my-cool-container");
 
         // check element exist
         const modal = document.body.querySelector('[data-oruga="modal"]');
