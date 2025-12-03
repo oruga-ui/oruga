@@ -14,7 +14,7 @@
     "paths": {
       "@/*": ["../oruga/src/*"],
       "@oruga-ui/oruga-next": ["../oruga/src/index"]
-    },
+    }
   },
   "include": [
     "src/**/*.ts",

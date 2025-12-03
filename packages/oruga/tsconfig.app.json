@@ -21,7 +21,7 @@
       "@/*": ["src/*"],
       "@docs": ["../docs/src/types"],
       "@oruga-ui/oruga-next": ["src/index"]
-    },
+    }
   },
   "include": [
     "../docs/src/types.ts",
