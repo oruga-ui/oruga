@@ -81,7 +81,7 @@
     "@vitest/browser": "^3.2.4",
     "@vitest/coverage-istanbul": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
-    "@vue/tsconfig": "^0.7.0",
+    "@vue/tsconfig": "^0.8.1",
     "core-js": "3.45.1",
     "jest-axe": "^10.0.0",
     "jsdom": "^26.1.0",

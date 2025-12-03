@@ -1,14 +1,15 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "extends": [
+    "@vue/tsconfig/tsconfig.dom.json",
+    "@vue/tsconfig/tsconfig.lib.json"
+  ],
   "compilerOptions": {
     "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "importHelpers": true,
-    "moduleResolution": "Node",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "skipLibCheck": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
 
@@ -19,7 +20,6 @@
       "@docs": ["../docs/src/types"],
       "@oruga-ui/oruga-next": ["src/index"]
     },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "../docs/src/types.ts",

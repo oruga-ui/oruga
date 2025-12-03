@@ -2,9 +2,8 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
     "allowJs": true,
+
     "baseUrl": ".",
     "types": ["node", "vite/client", "vitepress/client"],
     "paths": {
