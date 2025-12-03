@@ -55,6 +55,7 @@ export class DialogProgrammaticFactory extends ProgrammaticFactory {
             Modal,
             {
                 props: componentProps, // component specific props
+                // @ts-ignore will be reworked later
                 onClose: dialogOptions.onClose, // on close event handler
             },
             target, // target the component get rendered into
