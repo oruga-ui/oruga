@@ -1,12 +1,3 @@
-export type ThemeConfig = {
-    label: string;
-    key: string;
-    path: string;
-    git: string;
-    src: string;
-    cdn: string;
-};
-
 export type InspectData<
     T extends object = object,
     P extends object = object,
