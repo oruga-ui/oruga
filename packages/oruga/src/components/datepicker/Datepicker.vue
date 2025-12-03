@@ -295,7 +295,7 @@ const computedDayNames = computed(() =>
  * dates are set by props, range of years will fall within those dates.
  */
 const listOfYears = computed<OptionsPropItem<number>[]>(() => {
-    let latestYear = _initialDate.getFullYear() + props.yearsRange[1];
+    let latestYear = _initialDate.getFullYear() + (props.yearsRange[1] ?? 0);
     if (props.maxDate && props.maxDate.getFullYear() < latestYear) {
         latestYear = Math.max(
             props.maxDate.getFullYear(),
@@ -303,7 +303,7 @@ const listOfYears = computed<OptionsPropItem<number>[]>(() => {
         );
     }
 
-    let earliestYear = _initialDate.getFullYear() + props.yearsRange[0];
+    let earliestYear = _initialDate.getFullYear() + (props.yearsRange[0] ?? 0);
     if (props.minDate && props.minDate.getFullYear() > earliestYear) {
         earliestYear = Math.min(
             props.minDate.getFullYear(),

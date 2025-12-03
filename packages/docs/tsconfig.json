@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "allowJs": true,
+    // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
+    "noUncheckedIndexedAccess": false,
 
     "baseUrl": ".",
     "types": ["node", "vite/client", "vitepress/client"],

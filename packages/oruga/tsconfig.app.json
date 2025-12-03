@@ -12,6 +12,8 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
+    // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
+    "noUncheckedIndexedAccess": false,
 
     "baseUrl": ".",
     "types": ["vite/client", "./components.d.ts"],
