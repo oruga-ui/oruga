@@ -36,12 +36,17 @@ export type CloseEventArgs<T extends VNodeTypes> =
         ? Parameters<ComponentProps<T>["onClose"]>
         : never[];
 
+/** The ProgrammaticComponent close funtion definition. */
+type CloseFunction<C extends VNodeTypes> = (
+    ...args: CloseEventArgs<C> | []
+) => void;
+
 export type ProgrammaticComponentEmits<C extends VNodeTypes> = {
     /**
      * On component close event.
      * This get called when the component emits `close` or the exposed `close` function get called.
      */
-    close?: (...args: CloseEventArgs<C>) => void;
+    close?: CloseFunction<C>;
     /** On component destroy event which get called when the component should be destroyed. */
     destroy?: () => void;
 };
@@ -53,9 +58,9 @@ export type ProgrammaticComponentEmits<C extends VNodeTypes> = {
 
 export type ProgrammaticComponentExpose<C extends VNodeTypes> = {
     /** Call the close event of the component. */
-    close: (...args: CloseEventArgs<C>) => void;
+    close: CloseFunction<C>;
     /** Promise which get resolved on the close event. */
-    promise: Promise<CloseEventArgs<C>>;
+    promise: Promise<Parameters<CloseFunction<C>>>;
 };
 
 export const ProgrammaticComponent = defineComponent<
@@ -72,8 +77,10 @@ export const ProgrammaticComponent = defineComponent<
             throw new Error("ProgrammaticComponent initialisation failed.");
 
         // create response promise
-        let resolve: (args: CloseEventArgs<C>) => void;
-        const promise = new Promise<CloseEventArgs<C>>((p1) => (resolve = p1));
+        let resolve: (args: Parameters<CloseFunction<C>>) => void;
+        const promise = new Promise<Parameters<CloseFunction<C>>>(
+            (p1) => (resolve = p1),
+        );
 
         // add component instance to instance register
         onMounted(() => props.registry?.add(vm));
@@ -81,7 +88,7 @@ export const ProgrammaticComponent = defineComponent<
         // remove component instance from instance register
         onUnmounted(() => props.registry?.remove(vm));
 
-        function close(...args: CloseEventArgs<C>): void {
+        const close: CloseFunction<C> = (...args) => {
             // emit `onClose` event
             emit("close", ...args);
 
@@ -94,7 +101,7 @@ export const ProgrammaticComponent = defineComponent<
                     window.requestAnimationFrame(() => emit("destroy"));
                 else emit("destroy");
             });
-        }
+        };
 
         /** expose public functionalities for programmatic usage */
         expose({ close, promise } satisfies ProgrammaticComponentExpose<C>);

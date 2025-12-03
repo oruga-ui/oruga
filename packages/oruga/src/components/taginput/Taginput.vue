@@ -215,9 +215,12 @@ function addItem(item?: T | string): void {
 
 function removeItem(index: number, event?: Event): void {
     if (!selectedItems.value?.length) return;
-    const item = selectedItems.value.at(index);
+    const item = selectedItems.value[index];
     if (!item) return;
-    selectedItems.value = selectedItems.value.toSpliced(index, 1);
+    // create a new array without the removed item at index for reactivity
+    const items = selectedItems.value.slice();
+    items.splice(index, 1);
+    selectedItems.value = items;
     emits("remove", item);
     if (event) event.stopPropagation();
     if (props.openOnFocus && autocompleteRef.value) setFocus();
