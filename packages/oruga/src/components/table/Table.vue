@@ -879,7 +879,11 @@ function removeCheckedRow(row: TableRow<T>): void {
         isRowEqual(r, row.value),
     );
     if (idx >= 0)
-        tableCheckedRows.value = tableCheckedRows.value.toSpliced(idx, 1);
+        // remove the item at idx
+        tableCheckedRows.value = [
+            ...tableCheckedRows.value.slice(0, idx),
+            ...tableCheckedRows.value.slice(idx + 1),
+        ];
 }
 
 // #endregion --- Checkable Feature ---
@@ -918,7 +922,11 @@ function closeDetailRow(row: TableRow<T>): void {
         isRowEqual(r, row.value),
     );
     if (idx >= 0)
-        visibleDetailedRows.value = visibleDetailedRows.value.toSpliced(idx, 1);
+        // remove the item at idx
+        visibleDetailedRows.value = [
+            ...visibleDetailedRows.value.slice(0, idx),
+            ...visibleDetailedRows.value.slice(idx + 1),
+        ];
 }
 
 function isDetailRowVisible(row: TableRow<T>): boolean {

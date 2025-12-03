@@ -3,22 +3,18 @@
   "compilerOptions": {
     "outDir": "dist",
     "importHelpers": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
-    "strictNullChecks": false,
-    "resolveJsonModule": true,
-    "allowJs": true,
+    // @vue/tsconfig comes with noUncheckedIndexedAccess enabled
+    "noUncheckedIndexedAccess": false,
 
     "baseUrl": ".",
     "types": ["node", "vite/client"],
     "paths": {
       "@/*": ["../oruga/src/*"],
       "@oruga-ui/oruga-next": ["../oruga/src/index"]
-    },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    }
   },
   "include": [
     "src/**/*.ts",

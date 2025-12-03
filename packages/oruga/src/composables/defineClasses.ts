@@ -75,13 +75,13 @@ export function defineClasses(
     ...args: ComputedClass[] | [...ComputedClass[], DefineClassesOptions]
 ): Ref<ClassBinding[]> {
     // extract last argument if its the option object
-    const options = Array.isArray(args.at(-1))
+    const options = Array.isArray(args[args.length - 1])
         ? undefined
-        : (args.at(-1) as DefineClassesOptions);
+        : (args[args.length - 1] as DefineClassesOptions);
 
     // get class defintion list based on options are given or not
     const classDefinitions = (
-        Array.isArray(args.at(-1)) ? args : args.slice(0, -1)
+        Array.isArray(args[args.length - 1]) ? args : args.slice(0, -1)
     ) as ComputedClass[];
 
     // getting a hold of the internal instance of the component in setup()
