@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "license": "MIT",
