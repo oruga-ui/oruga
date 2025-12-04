@@ -35,11 +35,7 @@ describe("useDialogProgrammatic tests", () => {
         expect(handler).not.toHaveBeenCalled();
 
         // check element exist
-        const modal = document.body.querySelector('[data-oruga="modal"]');
-        expect(modal).not.toBeNull();
-
-        // check element exist
-        const dialog = modal?.querySelector('[data-oruga="dialog"]');
+        const dialog = document.body.querySelector('[data-oruga="dialog"]');
         expect(dialog).not.toBeNull();
 
         expect(dialog?.innerHTML).toContain(content);
@@ -49,8 +45,10 @@ describe("useDialogProgrammatic tests", () => {
         vi.runAllTimers();
 
         // check element does not exist
-        const modalAgain = document.body.querySelector('[data-oruga="modal"]');
-        expect(modalAgain).toBeNull();
+        const dialogAgain = document.body.querySelector(
+            '[data-oruga="dialog"]',
+        );
+        expect(dialogAgain).toBeNull();
 
         await flushPromises(); // await promise finished
         expect(handler).toHaveBeenCalledOnce();
@@ -64,14 +62,10 @@ describe("useDialogProgrammatic tests", () => {
         const content = "My Dialog Content";
 
         // open element
-        const { close } = factory.open(content, {}, "#my-cool-container");
+        const { close } = factory.open(content, "#my-cool-container");
 
         // check element exist
-        const modal = document.body.querySelector('[data-oruga="modal"]');
-        expect(modal).not.toBeNull();
-
-        // check element exist
-        const dialog = modal?.querySelector('[data-oruga="dialog"]');
+        const dialog = document.body.querySelector('[data-oruga="dialog"]');
         expect(dialog).not.toBeNull();
 
         let bodyElements = document.body.querySelectorAll("body > *");
@@ -82,8 +76,10 @@ describe("useDialogProgrammatic tests", () => {
         vi.runAllTimers();
 
         // check element does not exist
-        const modalAgain = document.body.querySelector('[data-oruga="modal"]');
-        expect(modalAgain).toBeNull();
+        const dialogAgain = document.body.querySelector(
+            '[data-oruga="dialog"]',
+        );
+        expect(dialogAgain).toBeNull();
 
         // check container still exists
         bodyElements = document.body.querySelectorAll("body > *");
@@ -91,6 +87,8 @@ describe("useDialogProgrammatic tests", () => {
     });
 
     test("test mounting with custom component correctly", async () => {
+        const onClose = vi.fn();
+
         const component = createVNode({
             template: `<button @click="$emit('close', 'abc')">Fancy Label</button>`,
         });
@@ -98,15 +96,12 @@ describe("useDialogProgrammatic tests", () => {
         // open element
         factory.open({
             component,
+            onClose,
             props: { "data-oruga": "programmatic" },
         });
 
         // check element exist
-        const modal = document.body.querySelector('[data-oruga="modal"]');
-        expect(modal).not.toBeNull();
-
-        // check element exist
-        const dialog = modal?.querySelector('[data-oruga="dialog"]');
+        const dialog = document.body.querySelector('[data-oruga="dialog"]');
         expect(dialog).not.toBeNull();
 
         const button = dialog?.querySelector<HTMLElement>(
@@ -119,8 +114,12 @@ describe("useDialogProgrammatic tests", () => {
         vi.runAllTimers();
 
         // check element does not exist
-        const modalAgain = document.body.querySelector('[data-oruga="modal"]');
-        expect(modalAgain).toBeNull();
+        const dialogAgain = document.body.querySelector(
+            '[data-oruga="dialog"]',
+        );
+        expect(dialogAgain).toBeNull();
+
+        expect(onClose).toHaveBeenCalledOnce();
     });
 
     test("test internal close (x) event working correctly", async () => {
@@ -128,7 +127,7 @@ describe("useDialogProgrammatic tests", () => {
         const onClose = vi.fn();
 
         // open element
-        factory.open({ content, onClose });
+        factory.open({ content, closeable: true, onClose });
 
         // check element exist
         let el = document.body.querySelector<HTMLElement>(
@@ -172,6 +171,6 @@ describe("useDialogProgrammatic tests", () => {
         el = document.body.querySelector("button");
         expect(el).toBeNull();
 
-        expect(onClose).toHaveBeenCalledWith({ action: "ok" });
+        expect(onClose).toHaveBeenCalledOnce();
     });
 });

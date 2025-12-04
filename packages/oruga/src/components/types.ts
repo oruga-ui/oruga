@@ -949,9 +949,41 @@ In addition, any CSS selector string or an actual DOM node can be used.
         dialog?: ComponentConfigBase &
             Partial<{
                 /**
-                 * Adds close button to the header
+                 * Custom animation (transition name)
+                 */
+                animation: string;
+                /**
+                 * Show an backdrop overlay background; make it a modal dialog
+                 */
+                backdrop: boolean;
+                /**
+                 * Max width of the dialog
+                 */
+                maxWidth: Numberish;
+                /**
+                 * Max height of the dialog
+                 */
+                maxHeight: Numberish;
+                /**
+                 * Adds close button to the header to hide the dialog
                  */
                 closeable: boolean;
+                /**
+                 * Close the dialog when clicked outside of the panel
+                 */
+                closeOnBackdrop: boolean;
+                /**
+                 * Close the dialog when pressing escape key
+                 */
+                closeOnEscape: boolean;
+                /**
+                 * Close the dialog when the confirm button is preset
+                 */
+                closeOnConfirm: boolean;
+                /**
+                 * Whether background scrollbar should be blocked/removed when dialog is visible
+                 */
+                blockScroll: boolean;
                 /**
                  * Icon pack to use for the close icon
                  */
@@ -969,9 +1001,47 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 ariaCloseLabel: string;
                 /**
+                 * Mobile breakpoint as `max-width` value
+                 */
+                mobileBreakpoint: string;
+                /**
+                 * Append the component to another part of the DOM.
+Set `true` to append the component to the body.
+In addition, any CSS selector string or an actual DOM node can be used.
+                 */
+                teleport: boolean | object | string;
+                /**
                  * Class of the root element
                  */
                 rootClass: ClassDefinition;
+                /**
+                 * Class of the root element when on mobile
+                 */
+                mobileClass: ClassDefinition;
+                /**
+                 * Class of the root element when active
+                 */
+                activeClass: ClassDefinition;
+                /**
+                 * Class of the root element when teleported
+                 */
+                teleportClass: ClassDefinition;
+                /**
+                 * Class of the root element with text-position
+                 */
+                textPositionClass: ClassDefinition;
+                /**
+                 * Class of the backdrop overlay element
+                 */
+                backdropClass: ClassDefinition;
+                /**
+                 * Class of the wrapper element
+                 */
+                wrapperClass: ClassDefinition;
+                /**
+                 * Class of the wrapper element when fullscreen
+                 */
+                fullScreenClass: ClassDefinition;
                 /**
                  * Class of the header element
                  */
@@ -980,6 +1050,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the header title element
                  */
                 titleClass: ClassDefinition;
+                /**
+                 * Class of the header subtitle element
+                 */
+                subtitleClass: ClassDefinition;
                 /**
                  * Class of the header close element
                  */
@@ -1016,6 +1090,14 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  * Class of the cancel button element
                  */
                 cancelButtonClass: ClassDefinition;
+                /**
+                 * Class of the body when modal is open and scroll is clipped
+                 */
+                scrollClipClass: ClassDefinition;
+                /**
+                 * Class of the body when modal is open and scroll is keeped
+                 */
+                scrollKeepClass: ClassDefinition;
             }>;
         dropdown?: ComponentConfigBase &
             Partial<{
