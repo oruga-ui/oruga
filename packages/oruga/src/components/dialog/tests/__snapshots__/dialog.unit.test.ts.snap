@@ -1,59 +1,112 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ODialog test > render correctly 1`] = `
-"<div data-oruga="dialog" class="o-dialog" header="Advanced Header" footer="Advanced Card Footer">
-  <!-- Header -->
-  <header class="o-dialog__header">
-    <!--
-                @slot Override the header
-                @binding {(event: Event): void} close - function to emit a \`close\` event
-            -->
-    <p class="o-dialog__header-title">
-      <!--
-                        @slot Override the header title, default is title prop
-                    -->Adcanced Title
-    </p>
-    <p class="o-dialog__header-subtitle">
-      <!--
-                        @slot Override the header subtitle, default is subtitle prop
-                    -->Advanced subtitle
-    </p>
-    <!--v-if-->
-  </header><!-- Image -->
-  <!--v-if-->
-  <!-- Body -->
-  <div class="o-dialog__body">
-    <!--
-                @slot Override the default dialog body
-                @binding {(event: Event): void} close - function to emit a \`close\` event
-                @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
-            -->
-    <!-- injected component for programmatic usage -->
-    <p class="o-dialog__body-content">
-      <!--
-                        @slot Override the body content, default is content prop
-                        @binding {(event: Event): void} close - function to emit a \`close\` event
-                        @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
-                    -->Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-    </p>
-  </div><!-- Loading -->
-  <transition-stub name="fade" appear="false" persisted="false" css="true">
-    <!--v-if-->
-  </transition-stub><!-- Footer -->
-  <footer class="o-dialog__footer">
-    <!--
-                @slot Override the footer
-                @binding {(event: Event): void} close - function to emit a \`close\` event
-                @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
-            --><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__cancel-button"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
+"<teleport-stub to="[object HTMLBodyElement]" disabled="true">
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="dialog" closedby="closerequest" aria-describedby="v-0">
+      <!--v-if-->
+      <div class="o-dialog__wrapper" style="max-width: 80vw; max-height: 80vh;">
+        <!-- Header -->
+        <header class="o-dialog__header">
+          <!--
+                            @slot Override the header
+                            @binding {(event: Event): void} close - function to emit a \`close\` event
+                        -->
+          <p id="v-0" class="o-dialog__header-title">
+            <!--
+                                    @slot Override the header title, default is title prop
+                                -->Adcanced Title
+          </p>
+          <p class="o-dialog__header-subtitle">
+            <!--
+                                    @slot Override the header subtitle, default is subtitle prop
+                                -->Advanced subtitle
+          </p>
+          <!--v-if-->
+        </header><!-- Body -->
+        <div class="o-dialog__body">
+          <!-- Image -->
+          <!--v-if-->
+          <!--
+                            @slot Override the default dialog body
+                            @binding {(event: Event): void} close - function to emit a \`close\` event
+                            @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
+                        -->
+          <!-- injected component for programmatic usage -->
+          <p class="o-dialog__body-content">
+            <!--
+                                    @slot Override the body content, default is content prop
+                                    @binding {(event: Event): void} close - function to emit a \`close\` event
+                                    @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
+                                -->Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div><!-- Loading -->
+        <transition-stub name="fade" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub><!-- Footer -->
+        <footer class="o-dialog__footer">
+          <!--
+                            @slot Override the footer
+                            @binding {(event: Event): void} close - function to emit a \`close\` event
+                            @binding {(event: Event): void} confirm - function to emit a \`confirm\` event
+                        --><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__cancel-button" autofocus=""><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
                     @slot Override the label, default is label prop
-                -->CANCEL</span>
-      <!--v-if--></span>
-    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__confirm-button"><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
+                --><!--
+                                    @slot Define the cancel button label
+                                 -->CANCEL</span>
+            <!--v-if--></span>
+          </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-dialog__confirm-button" autofocus=""><span class="o-button__wrapper"><!--v-if--><span class="o-button__label"><!--
                     @slot Override the label, default is label prop
-                -->OK</span>
-      <!--v-if--></span>
-    </button>
-  </footer>
-</div>"
+                --><!--
+                                    @slot Define the confirm button label
+                                 -->OK</span>
+            <!--v-if--></span>
+          </button>
+        </footer>
+      </div>
+    </dialog>
+  </transition-stub>
+</teleport-stub>"
+`;
+
+exports[`ODialog test > test alert case 1`] = `
+"<teleport-stub to="[object HTMLBodyElement]" disabled="true">
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="alertdialog" closedby="closerequest">
+      <div class="o-dialog__backdrop"></div>
+      <div class="o-dialog__wrapper" style="max-width: 80vw; max-height: 80vh;">
+        <!-- Header -->
+        <!--v-if-->
+        <!-- Body -->
+        <!--v-if-->
+        <!-- Loading -->
+        <transition-stub name="fade" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub><!-- Footer -->
+        <!--v-if-->
+      </div>
+    </dialog>
+  </transition-stub>
+</teleport-stub>"
+`;
+
+exports[`ODialog test > test modal case 1`] = `
+"<teleport-stub to="[object HTMLBodyElement]" disabled="true">
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <dialog data-oruga="dialog" class="o-dialog o-dialog--active" role="dialog" closedby="any">
+      <div class="o-dialog__backdrop"></div>
+      <div class="o-dialog__wrapper" style="max-width: 80vw; max-height: 80vh;">
+        <!-- Header -->
+        <!--v-if-->
+        <!-- Body -->
+        <!--v-if-->
+        <!-- Loading -->
+        <transition-stub name="fade" appear="false" persisted="false" css="true">
+          <!--v-if-->
+        </transition-stub><!-- Footer -->
+        <!--v-if-->
+      </div>
+    </dialog>
+  </transition-stub>
+</teleport-stub>"
 `;

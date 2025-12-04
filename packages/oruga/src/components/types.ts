@@ -1023,6 +1023,10 @@ In addition, any CSS selector string or an actual DOM node can be used.
                  */
                 activeClass: ClassDefinition;
                 /**
+                 * Class of the root element when teleported
+                 */
+                teleportClass: ClassDefinition;
+                /**
                  * Class of the root element with text-position
                  */
                 textPositionClass: ClassDefinition;

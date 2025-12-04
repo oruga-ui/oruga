@@ -128,7 +128,7 @@ const hasBackdrop = computed(
 );
 
 /** Specifies the types of user actions that can be used to close the dialog. */
-const closedby = computed(() => {
+const closedBy = computed(() => {
     // The dialog can be dismissed when the user clicks or taps outside it,
     // and with a platform-specific user action or a developer-specified mechanism.
     if (hasBackdrop.value && props.closeOnBackdrop && !props.alert)
@@ -219,6 +219,12 @@ const rootClasses = defineClasses(
     ["rootClass", "o-dialog"],
     ["mobileClass", "o-dialog--mobile", null, isMobile],
     ["activeClass", "o-dialog--active", null, isActive],
+    [
+        "teleportClass",
+        "o-dialog--teleport",
+        null,
+        computed(() => !!props.teleport),
+    ],
 );
 
 const backdropClasses = defineClasses(["backdropClass", "o-dialog__backdrop"]);
@@ -301,7 +307,7 @@ defineExpose({ close: cancel });
                 data-oruga="dialog"
                 :class="rootClasses"
                 :role="alert ? 'alertdialog' : 'dialog'"
-                :closedby="closedby"
+                :closedBy="closedBy"
                 :aria-label="ariaLabel"
                 :aria-describedby="title ? titleId : ariaDescribedby"
                 @close="onClose"
@@ -438,7 +444,7 @@ defineExpose({ close: cancel });
                                 :variant="cancelVariant"
                                 :disabled="disableCancel"
                                 autofocus
-                                @click="cancel()"
+                                @click="cancel"
                                 @keyup.right="focusConfirmButton">
                                 <!--
                                     @slot Define the cancel button label

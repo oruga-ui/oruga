@@ -116,6 +116,8 @@ export type DialogClasses = Partial<{
     mobileClass: ComponentClass;
     /** Class of the root element when active */
     activeClass: ComponentClass;
+    /** Class of the root element when teleported */
+    teleportClass: ComponentClass;
     /** Class of the root element with text-position */
     textPositionClass: ComponentClass;
     /** Class of the backdrop overlay element */

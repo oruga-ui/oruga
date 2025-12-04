@@ -11,41 +11,68 @@ describe("ODialog axe test", () => {
 
     const a11yCases: { title: string; props?: DialogProps<Component> }[] = [
         {
-            title: "axe checkbox - base case",
-            props: { label: "Checkbox Label" },
+            title: "axe dialog - base case",
+            props: {
+                title: "Adcanced Title",
+                subtitle: "Advanced subtitle",
+                content:
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                confirmButton: "OK",
+                cancelButton: "CANCEL",
+            },
         },
         {
-            title: "axe checkbox - indeterminate case",
-            props: { label: "Checkbox Label", indeterminate: true },
+            title: "axe dialog - modal case case",
+            props: {
+                backdrop: true,
+                title: "Adcanced Title",
+                subtitle: "Advanced subtitle",
+                content:
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                confirmButton: "OK",
+                cancelButton: "CANCEL",
+            },
         },
         {
-            title: "axe checkbox - id case",
-            props: { label: "Checkbox Label", id: "my-id" },
+            title: "axe dialog - alert case",
+            props: {
+                alert: true,
+                title: "Adcanced Title",
+                subtitle: "Advanced subtitle",
+                content:
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                confirmButton: "OK",
+                cancelButton: "CANCEL",
+            },
         },
         {
-            title: "axe checkbox - variant case",
-            props: { label: "Checkbox Label", variant: "success" },
-        },
-        {
-            title: "axe checkbox - size case",
-            props: { label: "Checkbox Label", size: "large" },
-        },
-        {
-            title: "axe checkbox - required case",
-            props: { label: "Checkbox Label", required: true },
-        },
-        {
-            title: "axe checkbox - disabled case",
-            props: { label: "Checkbox Label", disabled: true },
+            title: "axe dialog - with aria",
+            props: {
+                title: "Adcanced Title",
+                subtitle: "Advanced subtitle",
+                content:
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                confirmButton: "OK",
+                cancelButton: "CANCEL",
+                ariaLabel: "Some Dialog",
+            },
         },
     ];
 
     test.each(a11yCases)("$title", async ({ props }) => {
         const wrapper = mount(ODialog, {
             props: { active: true, ...props },
+            global: {
+                stubs: {
+                    // intentionally stubs transition component
+                    // to avoid potentially flaky snapshots
+                    transition: true,
+                    teleport: true,
+                },
+            },
             attachTo: document.body,
         });
-        await nextTick(); // await child items got rendered
+        await nextTick(); // await all content got rendered
 
         expect(await axe(wrapper.element)).toHaveNoViolations();
     });

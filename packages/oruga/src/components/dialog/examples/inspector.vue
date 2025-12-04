@@ -23,6 +23,15 @@ const inspectData: InspectData<DialogClasses, DialogProps> = {
             data.active = true;
         },
     },
+    teleportClass: {
+        class: "teleportClass",
+        description: "Class of the root element when teleported.",
+        properties: ["teleport"],
+        action: (data): void => {
+            data.teleport = true;
+            data.active = true;
+        },
+    },
     textPositionClass: {
         class: "textPositionClass",
         description: "Class of the root element with text position.",

@@ -12,7 +12,7 @@ const isActive = ref(false);
             variant="primary"
             @click="isActive = true" />
 
-        <o-dialog v-model:active="isActive">
+        <o-dialog v-model:active="isActive" closeable>
             <template #title>Advanced Dialog</template>
 
             <template #subtitle>Dialog subtitle</template>
