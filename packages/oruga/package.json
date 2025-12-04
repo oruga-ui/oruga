@@ -6,17 +6,14 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "type": "module",
-  "main": "dist/cjs/index.cjs",
-  "module": "dist/esm/index.mjs",
-  "unpkg": "dist/oruga.js",
+  "main": "dist/index.umd.cjs",
+  "module": "dist/index.js",
+  "unpkg": "./dist/index.umd.cjs",
+  "jsdelivr": "./dist/index.umd.cjs",
   "typings": "dist/types/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.mjs",
-      "require": "./dist/cjs/index.cjs"
-    },
-    "./*": "./*",
+    ".": "./dist/oruga.js",
+    "./*": "./dist/*",
     "./volar": {
       "types": "./volar.d.ts"
     }
@@ -24,15 +21,11 @@
   "files": [
     "dist",
     "src",
-    "nuxt",
-    "types/*.d.ts",
     "volar.d.ts",
+    "LICENSE",
     "README.md"
   ],
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oruga-ui/oruga.git"
@@ -60,8 +53,9 @@
     "test": "vitest --browser.headless=true",
     "test:coverage": "vitest run --coverage",
     "test:ts": "vue-tsc --noEmit --skipLibCheck --project tsconfig.app.json",
-    "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
-    "publish:lib:pre": "cp ../../README.md . && npm run build:lib && npm publish --tag pre"
+    "prepublish": "cp ../../README.md . && cp ../../LICENSE .",
+    "publish:lib": "npm run prepublish && npm run build:lib && npm publish",
+    "publish:lib:pre": "npm run prepublish && npm run build:lib && npm publish --tag pre"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
