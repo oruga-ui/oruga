@@ -1,3 +1,17 @@
+## [0.12.3](https://github.com/oruga-ui/oruga/compare/v0.12.2...v0.12.3) (2025-12-04)
+
+
+### Bug Fixes
+
+* replace child items debounced sorting with `flush: "post"` watcher ([#1484](https://github.com/oruga-ui/oruga/issues/1484)) ([aece462](https://github.com/oruga-ui/oruga/commit/aece46286f8151f2eaae4761108ff6e24c9e6f04))
+
+
+### Features
+
+* **dialog:** rewrite dialog component ([#1485](https://github.com/oruga-ui/oruga/issues/1485)) ([969e0aa](https://github.com/oruga-ui/oruga/commit/969e0aabb310dd9d283ff7bf281d482092c64826))
+
+
+
 ## [0.12.2](https://github.com/oruga-ui/oruga/compare/v0.12.1...v0.12.2) (2025-11-22)
 
 
